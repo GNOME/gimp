@@ -198,6 +198,53 @@ static GimpImage *the_gimage = NULL;
 extern GSList *display_list; /* from gdisplay.c */
 
 
+#ifdef GDK_USE_UTF8_MBS
+
+/* On Windows, this version of GIMP uses a branch of GTK+ 1.3.0 which
+ * uses UTF-8, except for two calls: gtk_file_selection_get_filename(),
+ * and gtk_file_selection_set_filename(), which use the current codepage.
+ *
+ * In retrospect, it might have been enough not to make GTK+ 1.3.0 use
+ * Unicode on Windows, but to stick to the current codepage, similar
+ * as GTK+ 1.2.x on Unix. But too late to change now. I didn't realize
+ * when doing the port that GTK+ 2.0 was going totally Unicode, and
+ * that I might have waited for that when I wanted Unicode support.
+ *
+ * This version of GIMP just barely works with non-ASCII filenames.
+ * The convention in this version of GIMP is that filenames stored and
+ * passed around are in the system codepage. When retrieved from or
+ * passed to GTK (other than the two APIs mentioned above) we have to
+ * convert back and forth. But there are still lots of places where
+ * the system codepage filenames are not converted even if they
+ * sprintfed together with internationalised messages that *are* in
+ * UTF-8. It's best to avoid non-ASCII filenames, sorry.
+ *
+ * Tor Lillqvist, 2002-12-16
+ */
+
+/* Check that a string does not have UTF-8 encoded non-ASCII characters */
+static gboolean
+is_not_utf8 (const gchar *string)
+{
+  gunichar c;
+
+  while (*string)
+    {
+      c = g_utf8_get_char (string);
+      if (c & 0x80000000)
+	return TRUE;
+      if (c > 0x7F)
+	return FALSE;
+      string = g_utf8_next_char (string);
+    }
+  return TRUE;
+}
+
+#define ASSERT_NOT_UTF8(filename) g_assert (is_not_utf8 (filename))
+#define ASSERT_UTF8(filename) g_assert (g_utf8_validate (filename, -1, NULL))
+
+#endif
+
 void
 file_ops_pre_init (void)
 {
@@ -458,6 +505,10 @@ file_save_callback (GtkWidget *widget,
 	  filename     = g_strdup (gimage_filename (gdisplay->gimage));
 	  raw_filename = g_basename (filename);
 	  
+#ifdef GDK_USE_UTF8_MBS
+	  ASSERT_NOT_UTF8 (filename);
+#endif
+
 	  status = file_save (gdisplay->gimage,
 			      filename,
 			      raw_filename,
@@ -466,7 +517,13 @@ file_save_callback (GtkWidget *widget,
 	  if (status != PDB_SUCCESS &&
 	      status != PDB_CANCEL)
 	    {
+#ifdef GDK_USE_UTF8_MBS
+	      gchar *utf8_filename = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+	      g_message (_("Save failed.\n%s"), utf8_filename);
+	      g_free (utf8_filename);
+#else
 	      g_message (_("Save failed.\n%s"), filename);
+#endif
 	    }
 
 	  g_free (filename);
@@ -622,12 +679,25 @@ file_revert_callback (GtkWidget *widget,
     {
       gchar *text;
 
+#ifdef GDK_USE_UTF8_MBS
+      gchar *utf8_filename = g_filename_to_utf8 (gimage_filename (gimage), -1, NULL, NULL, NULL);
+      const gchar *utf8_basename = g_basename (utf8_filename);
+
+      text = g_strdup_printf (_("Reverting %s to\n"
+				"%s\n\n"
+				"(You will lose all your changes\n"
+				"including all undo information)"),
+			      utf8_basename,
+			      utf8_filename);
+      g_free (utf8_filename);
+#else
       text = g_strdup_printf (_("Reverting %s to\n"
 				"%s\n\n"
 				"(You will lose all your changes\n"
 				"including all undo information)"),
 			      g_basename (gimage_filename (gimage)),
 			      gimage_filename (gimage));
+#endif
 
       query_box = gimp_query_boolean_box (_("Revert Image?"),
 					  gimp_standard_help_func,
@@ -728,6 +798,30 @@ file_open_image (gchar          *filename,
   gint i;
   struct stat statbuf;
 
+#ifdef GDK_USE_UTF8_MBS
+  ASSERT_NOT_UTF8 (filename);
+  ASSERT_NOT_UTF8 (raw_filename);
+#endif
+
+#ifdef G_PLATFORM_WIN32
+  {
+    guchar *p = filename;
+    gboolean non_ascii = FALSE;
+    static gboolean warned = FALSE;
+
+    while (*p)
+      if (*p++ > 0x7F)
+	non_ascii = TRUE;
+    
+    if (non_ascii && !warned)
+      {
+	g_message ("This version of GIMP does not fully support non-ASCII\n"
+		   "filenames. This will be fixed in GIMP 1.4.");
+	warned = TRUE;
+      }
+  }
+#endif
+
   *status = PDB_CANCEL;  /* inhibits error messages by caller */
 
   if (!file_proc)
@@ -737,9 +831,20 @@ file_open_image (gchar          *filename,
     {
       /*  no errors when making thumbnails  */
       if (run_mode == RUN_INTERACTIVE)
-	g_message (_("%s failed.\n"
-		     "%s: Unknown file type."),
-		   open_mode, filename);
+	{
+#ifdef GDK_USE_UTF8_MBS
+	  gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+						     NULL, NULL, NULL);
+	  g_message (_("%s failed.\n"
+		       "%s: Unknown file type."),
+		     open_mode, utf8_filename);
+	  g_free (utf8_filename);
+#else
+	  g_message (_("%s failed.\n"
+		       "%s: Unknown file type."),
+		     open_mode, filename);
+#endif
+	}
 
       return NULL;
     }
@@ -754,9 +859,20 @@ file_open_image (gchar          *filename,
 	{
 	  /*  no errors when making thumbnails  */
 	  if (run_mode == RUN_INTERACTIVE)
-	    g_message (_("%s failed.\n"
-			 "%s is not a regular file."),
-		       open_mode, filename);
+	    {
+#ifdef GDK_USE_UTF8_MBS
+	      gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+							 NULL, NULL, NULL);
+	      g_message (_("%s failed.\n"
+			   "%s is not a regular file."),
+			 open_mode, utf8_filename);
+	      g_free (utf8_filename);
+#else
+	      g_message (_("%s failed.\n"
+			   "%s is not a regular file."),
+			 open_mode, filename);
+#endif
+	    }
 
 	  return NULL;
 	}
@@ -775,9 +891,20 @@ file_open_image (gchar          *filename,
 	{
 	  /*  no errors when making thumbnails  */
 	  if (run_mode == RUN_INTERACTIVE)
-	    g_message (_("%s failed.\n"
-			 "%s: Permission denied."),
-		       open_mode, filename);
+	    {
+#ifdef GDK_USE_UTF8_MBS
+	      gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+							 NULL, NULL, NULL);
+	      g_message (_("%s failed.\n"
+			   "%s: Permission denied."),
+			 open_mode, utf8_filename);
+	      g_free (utf8_filename);
+#else
+	      g_message (_("%s failed.\n"
+			   "%s: Permission denied."),
+			 open_mode, filename);
+#endif
+	    }
 
 	  return NULL;
 	}
@@ -827,6 +954,11 @@ file_open_with_proc (gchar         *filename,
   GDisplay  *gdisplay;
   gchar     *absolute;
   gint       status;
+
+#ifdef GDK_USE_UTF8_MBS
+  ASSERT_NOT_UTF8 (filename);
+  ASSERT_NOT_UTF8 (raw_filename);
+#endif
 
   if ((gimage = file_open_image (filename,
 				 raw_filename,
@@ -986,6 +1118,10 @@ file_save_thumbnail (GimpImage  *gimage,
   FILE *fp;
   struct stat statbuf;
 
+#ifdef GDK_USE_UTF8_MBS
+  ASSERT_NOT_UTF8 (full_source_filename);
+#endif
+
   if (stat (full_source_filename, &statbuf) != 0)
     {
       return FALSE;
@@ -1140,6 +1276,11 @@ file_save (GimpImage   *gimage,
   gint i;
   struct stat statbuf;
 
+#ifdef GDK_USE_UTF8_MBS
+  ASSERT_NOT_UTF8 (filename);
+  ASSERT_NOT_UTF8 (raw_filename);
+#endif
+
   if (gimage_active_drawable (gimage) == NULL)
     return PDB_EXECUTION_ERROR;
 
@@ -1150,9 +1291,18 @@ file_save (GimpImage   *gimage,
 
   if (!file_proc)
     {
+#ifdef GDK_USE_UTF8_MBS
+      gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+						 NULL, NULL, NULL);
+      g_message (_("Save failed.\n"
+		   "%s: Unknown file type."),
+		 utf8_filename);
+      g_free (utf8_filename);
+#else
       g_message (_("Save failed.\n"
 		   "%s: Unknown file type."),
 		 filename);
+#endif
 
       return PDB_CANCEL;  /* inhibits error messages by caller */
     }
@@ -1165,9 +1315,18 @@ file_save (GimpImage   *gimage,
 
       if (! (statbuf.st_mode & S_IFREG))
         {
+#ifdef GDK_USE_UTF8_MBS
+	  gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+						     NULL, NULL, NULL);
+	  g_message (_("Save failed.\n"
+		       "%s is not a regular file."),
+		     utf8_filename);
+	  g_free (utf8_filename);
+#else
 	  g_message (_("Save failed.\n"
 		       "%s is not a regular file."),
 		     filename);
+#endif
 
           return PDB_CANCEL;  /* inhibits error messages by caller */
         }
@@ -1184,9 +1343,18 @@ file_save (GimpImage   *gimage,
               (statbuf.st_uid != euid) &&
               (statbuf.st_gid != egid))))
         {
+#ifdef GDK_USE_UTF8_MBS
+	  gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+						     NULL, NULL, NULL);
+	  g_message (_("Save failed.\n"
+		       "%s: Permission denied."),
+		     utf8_filename);
+	  g_free (utf8_filename);
+#else
 	  g_message (_("Save failed.\n"
 		       "%s: Permission denied."),
 		     filename);
+#endif
 
           return PDB_CANCEL;  /* inhibits error messages by caller */
         }
@@ -1268,6 +1436,10 @@ readXVThumb (const gchar  *fnam,
   guchar *buf;
   gint twofivefive;
   void *ptr;
+
+#ifdef GDK_USE_UTF8_MBS
+  ASSERT_NOT_UTF8 (fnam);
+#endif
 
   *w = *h = 0;
   *imginfo = NULL;
@@ -1359,6 +1531,16 @@ set_preview (const gchar *fullfname,
   gboolean thumb_may_be_outdated = FALSE;
   gboolean show_generate_label = TRUE;
 
+#ifdef GDK_USE_UTF8_MBS
+  gchar *utf8_fullfname;
+  gchar *utf8_fname;
+
+  ASSERT_NOT_UTF8 (fullfname);
+
+  utf8_fullfname = g_filename_to_utf8 (fullfname, -1, NULL, NULL, NULL);
+  utf8_fname = g_basename (utf8_fullfname);
+#endif
+
   pname = g_dirname (fullfname);
   fname = g_basename (fullfname); /* Don't free this! */
   tname = g_strconcat (pname, G_DIR_SEPARATOR_S,
@@ -1383,7 +1565,12 @@ set_preview (const gchar *fullfname,
 
   g_free (tname);
 
+#ifdef GDK_USE_UTF8_MBS
+  gtk_frame_set_label (GTK_FRAME (open_options_frame), utf8_fname);
+  g_free (utf8_fullfname);
+#else
   gtk_frame_set_label (GTK_FRAME (open_options_frame), fname);
+#endif
 
   g_free (preview_fullname);
   preview_fullname = g_strdup (fullfname);
@@ -1490,7 +1677,7 @@ file_open_clistrow_callback (GtkWidget *widget,
   gchar *fullfname = NULL;
 
   fullfname = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fileload));
-
+  
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
   set_preview (fullfname, NULL, 0, 0);
 }
@@ -1528,13 +1715,19 @@ file_open_genbutton_callback (GtkWidget *widget,
   toplist = clist_to_slist (GTK_CLIST(fs->file_list));
     
   dirname = g_dirname (gtk_file_selection_get_filename (fs));
-  
+
   for (list = toplist; list; list = g_slist_next (list))
     {
+#ifdef GDK_USE_UTF8_MBS
+      gchar *tmp = g_filename_from_utf8 ((gchar *) list->data, -1, NULL, NULL, NULL);
+      full_filename = g_strconcat (dirname, G_DIR_SEPARATOR_S, tmp, NULL);
+      g_free (tmp);
+#else
       full_filename = g_strconcat (dirname, G_DIR_SEPARATOR_S,
                                    (gchar *) list->data, NULL);
-      
+#endif
       err = stat (full_filename, &buf);
+
       
       if (! (err == 0 && (buf.st_mode & S_IFDIR)))
         { /* Is not directory. */
@@ -1606,6 +1799,10 @@ file_open_ok_callback (GtkWidget *widget,
   if (strlen (raw_filename) == 0)
     return;
 
+#ifdef GDK_USE_UTF8_MBS
+  raw_filename = g_filename_from_utf8 (raw_filename, -1, NULL, NULL, NULL);
+#endif
+
   err = stat (full_filename, &buf);
 
   if (err == 0 && (buf.st_mode & S_IFDIR))
@@ -1638,7 +1835,14 @@ file_open_ok_callback (GtkWidget *widget,
     }
   else if (status != PDB_CANCEL)
     {
+#ifdef GDK_USE_UTF8_MBS
+      gchar *utf8_full_filename = g_filename_to_utf8 (full_filename, -1,
+						      NULL, NULL, NULL);
+      g_message (_("Open failed.\n%s"), utf8_full_filename);
+      g_free (utf8_full_filename);
+#else
       g_message (_("Open failed.\n%s"), full_filename);
+#endif
     }
 
   /*
@@ -1652,15 +1856,23 @@ file_open_ok_callback (GtkWidget *widget,
 
     list = clist_to_slist (GTK_CLIST (fs->file_list));
 
+#ifndef GDK_USE_UTF8_MBS
     raw_filename = g_strdup (raw_filename);
+#endif
     dirname = g_dirname (gtk_file_selection_get_filename (fs));
 
     while (list)
       {
+#ifdef GDK_USE_UTF8_MBS
+	gchar *tmp = g_filename_from_utf8 ((gchar *) list->data, -1,
+					   NULL, NULL, NULL);
+	full_filename = g_strconcat (dirname, G_DIR_SEPARATOR_S, tmp, NULL);
+        if (strcmp (tmp, raw_filename))
+#else
         full_filename = g_strconcat (dirname, G_DIR_SEPARATOR_S,
 				     (gchar *) list->data, NULL);
-
         if (strcmp (list->data, raw_filename))
+#endif
           { /* don't load current selection twice */
 
             err = stat (full_filename, &buf);
@@ -1679,7 +1891,14 @@ file_open_ok_callback (GtkWidget *widget,
                   }
                 else if (status != PDB_CANCEL)
                   {
+#ifdef GDK_USE_UTF8_MBS
+		    gchar *utf8_full_filename =
+		      g_filename_to_utf8 (full_filename, -1, NULL, NULL, NULL);
+                    g_message (_("Open failed.\n%s"), utf8_full_filename);
+		    g_free (utf8_full_filename);
+#else
                     g_message (_("Open failed.\n%s"), full_filename);
+#endif
                   }
               }
           }
@@ -1687,6 +1906,9 @@ file_open_ok_callback (GtkWidget *widget,
         g_free (full_filename);
         g_free (list->data);
         list = g_slist_next (list);
+#ifdef GDK_USE_UTF8_MBS
+	g_free (tmp);
+#endif
       }
 
     g_slist_free (list);
@@ -1736,6 +1958,11 @@ file_save_with_proc (GImage *gimage,
 {
     gint status = PDB_EXECUTION_ERROR;
 
+#ifdef GDK_USE_UTF8_MBS
+    ASSERT_NOT_UTF8 (full_filename);
+    ASSERT_NOT_UTF8 (raw_filename);
+#endif
+
     if (gimage != NULL)
       {
 	gimage_set_save_proc (gimage, save_proc);
@@ -1752,7 +1979,16 @@ file_save_with_proc (GImage *gimage,
     /* If there was an error but file_save() didn't print an error
      * message, then we'd better. */
     if (status != PDB_SUCCESS && status != PDB_CANCEL)
-      g_message (_("Save failed.\n%s"), full_filename);
+      {
+#ifdef GDK_USE_UTF8_MBS
+	gchar *utf8_full_filename = g_filename_to_utf8 (full_filename, -1,
+							NULL, NULL, NULL);
+	g_message (_("Save failed.\n%s"), utf8_full_filename);
+	g_free (utf8_full_filename);
+#else
+	g_message (_("Save failed.\n%s"), full_filename);
+#endif
+      }
      
     /* always make file save dialog sensitive */
     gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
@@ -1776,6 +2012,14 @@ file_save_ok_callback (GtkWidget *widget,
   raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
 
   g_assert (filename && raw_filename);
+
+#ifdef GDK_USE_UTF8_MBS
+  {
+    gchar *tmp = raw_filename;
+    raw_filename = g_filename_from_utf8 (raw_filename, -1, NULL, NULL, NULL);
+    g_free (tmp);
+  }
+#endif
 
   for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
     {
@@ -1887,8 +2131,19 @@ file_overwrite (GtkWidget *parent,
   overwrite_data->full_filename = filename;
   overwrite_data->raw_filename  = raw_filename;
 
-  overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
+#ifdef GDK_USE_UTF8_MBS
 
+  ASSERT_NOT_UTF8 (filename);
+  ASSERT_NOT_UTF8 (raw_filename);
+
+  {
+    gchar *utf8_filename = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+    overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), utf8_filename);
+    g_free (utf8_filename);
+  }
+#else 
+  overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
+#endif
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
 				      "save/file_exists.html",
@@ -1964,7 +2219,14 @@ file_revert_confirm_callback (GtkWidget *widget,
 	}
       else if (status != PDB_CANCEL)
 	{
+#ifdef GDK_USE_UTF8_MBS
+	  gchar *utf8_filename = g_filename_to_utf8 (filename, -1,
+						     NULL, NULL, NULL);
+	  g_message (_("Revert failed.\n%s"), utf8_filename);
+	  g_free (utf8_filename);
+#else
 	  g_message (_("Revert failed.\n%s"), filename);
+#endif
 	}
     }
 }

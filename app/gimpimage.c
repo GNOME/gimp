@@ -3469,13 +3469,24 @@ gimp_image_base_type_with_alpha (const GimpImage *gimage)
   return RGB_GIMAGE;
 }
 
+#ifdef GDK_USE_UTF8_MBS
+/* Note: Returns UTF-8 */
+#endif
+
 gchar *
 gimp_image_filename (GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (gimage->has_filename)
+#ifdef GDK_USE_UTF8_MBS
+    /* Yes, this leaks memory. So shoot me. The back-and-forth
+     * UTF-8 conversions are a mess anyway. Sigh.
+     */
+    return g_filename_to_utf8 (gimage->filename, -1, NULL, NULL, NULL);
+#else
     return gimage->filename;
+#endif
   else
     return _("Untitled");
 }

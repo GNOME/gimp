@@ -90,7 +90,6 @@ static void      save_idea_manager                 (IdeaManager *ideas);
 static IdeaManager *ideas     = NULL;
 static GList       *idea_list = NULL;
 
-
 /*  the ops buttons  */
 static GtkSignalFunc open_ext_callbacks[] = 
 {
@@ -260,8 +259,13 @@ save_to_ideas (gpointer data,
   gchar *title;
 
   title = GTK_LABEL (GTK_BIN (data)->child)->label;
-
-  fprintf ((FILE *) user_data, "%d %s\n", (int) strlen (title), title);
+#ifdef GDK_USE_UTF8_MBS
+  title = g_filename_from_utf8 (title, -1, NULL, NULL, NULL);
+#endif
+  fprintf ((FILE *) user_data, "%d %s\n", strlen (title), title);
+#ifdef GDK_USE_UTF8_MBS
+  g_free (title);
+#endif
 }
 
 static void
@@ -308,7 +312,13 @@ save_to_list (gpointer data,
   gchar *title;
 
   title = g_strdup (GTK_LABEL (GTK_BIN (data)->child)->label);
-
+#ifdef GDK_USE_UTF8_MBS
+  {
+    gchar *tmp = title;
+    title = g_filename_from_utf8 (title, -1, NULL, NULL, NULL);
+    g_free (tmp);
+  }
+#endif
   idea_list = g_list_append (idea_list, title);
 }
 
@@ -333,7 +343,14 @@ list_item_callback (GtkWidget      *widget,
   if (GTK_IS_LIST_ITEM (widget) &&
       event->type == GDK_2BUTTON_PRESS)
     {
-      open_or_raise (GTK_LABEL (GTK_BIN (widget)->child)->label, FALSE);
+      gchar *label = GTK_LABEL (GTK_BIN (widget)->child)->label;
+#ifdef GDK_USE_UTF8_MBS
+      label = g_filename_from_utf8 (label, -1, NULL, NULL, NULL);
+#endif
+      open_or_raise (label, FALSE);
+#ifdef GDK_USE_UTF8_MBS
+      g_free (label);
+#endif
     }
 
   return FALSE;
@@ -344,14 +361,21 @@ check_needed (gpointer data,
 	      gpointer user_data)
 {
   BoolCharPair *pair;
+  gchar *label;
 
   pair = (BoolCharPair *) user_data;
-
-  if (strcmp (pair->string, GTK_LABEL (GTK_BIN (data)->child)->label) == 0)
+  label = GTK_LABEL (GTK_BIN (data)->child)->label;
+#ifdef GDK_USE_UTF8_MBS
+  label = g_filename_from_utf8 (label, -1, NULL, NULL, NULL);
+#endif
+  if (strcmp (pair->string, label) == 0)
     {
       pair->boole = TRUE;
       pair->data  = data;
     }
+#ifdef GDK_USE_UTF8_MBS
+  g_free (label);
+#endif
 }
 
 static void
@@ -376,6 +400,10 @@ idea_add_in_position_with_select (gchar    *title,
 {
   BoolCharPair  pair;
 
+#ifdef GDK_USE_UTF8_MBS
+  gchar *utf8_title = g_filename_to_utf8 (title, -1, NULL, NULL, NULL);
+#endif
+
   pair.boole  = FALSE;
   pair.string = title;
   pair.data   = NULL;
@@ -389,7 +417,11 @@ idea_add_in_position_with_select (gchar    *title,
 	  GtkWidget *listitem;
 	  GList     *list = NULL;
 
+#ifdef GDK_USE_UTF8_MBS
+	  listitem = gtk_list_item_new_with_label (utf8_title);
+#else
 	  listitem = gtk_list_item_new_with_label (title);
+#endif
 	  list = g_list_append (list, listitem);
 
 	  if (position < 0)
@@ -408,9 +440,14 @@ idea_add_in_position_with_select (gchar    *title,
 	}
       else /* move entry to top */
 	{
-	  gchar *title;
-
-	  title = g_strdup (GTK_LABEL (GTK_BIN (pair.data)->child)->label);
+	  gchar *title = g_strdup (GTK_LABEL (GTK_BIN (pair.data)->child)->label);
+#ifdef GDK_USE_UTF8_MBS
+	  {
+	    gchar *tmp = title;
+	    title = g_filename_from_utf8 (title, -1, NULL, NULL, NULL);
+	    g_free (tmp);
+	  }
+#endif
 	  gtk_container_remove (GTK_CONTAINER (ideas->list),
 				GTK_WIDGET (pair.data));
 	  idea_add_in_position_with_select (title, 0, TRUE);
@@ -531,6 +568,13 @@ idea_move (GtkWidget *widget,
   if (position != orig_position)
     {
       title = g_strdup (GTK_LABEL (GTK_BIN (widget)->child)->label);
+#ifdef GDK_USE_UTF8_MBS
+      {
+	gchar *tmp = title;
+	title = g_filename_from_utf8 (title, -1, NULL, NULL, NULL);
+	g_free (tmp);
+      }
+#endif
       gtk_container_remove (GTK_CONTAINER (ideas->list), widget);
       idea_add_in_position_with_select (title, position, select);
       g_free (title); 
@@ -544,11 +588,19 @@ idea_open_callback (GtkWidget   *widget,
 		    gpointer     data)
 {
   GtkWidget *selected;
+  gchar *label;
 
   if (GTK_LIST (ideas->list)->selection)
     {
       selected = GTK_LIST (ideas->list)->selection->data;
-      open_or_raise (GTK_LABEL (GTK_BIN (selected)->child)->label, FALSE);
+      label = GTK_LABEL (GTK_BIN (selected)->child)->label;
+#ifdef GDK_USE_UTF8_MBS
+      label = g_filename_from_utf8 (label, -1, NULL, NULL, NULL);
+#endif
+      open_or_raise (label, FALSE);
+#ifdef GDK_USE_UTF8_MBS
+      g_free (label);
+#endif
     }
   else
     {
@@ -561,11 +613,19 @@ idea_open_or_raise_callback (GtkWidget   *widget,
 			     gpointer     data)
 {
   GtkWidget *selected;
+  gchar *label;
 
   if (GTK_LIST (ideas->list)->selection)
     {
       selected = GTK_LIST (ideas->list)->selection->data;
-      open_or_raise (GTK_LABEL (GTK_BIN (selected)->child)->label, TRUE);
+      label = GTK_LABEL (GTK_BIN (selected)->child)->label;
+#ifdef GDK_USE_UTF8_MBS
+      label = g_filename_from_utf8 (label, -1, NULL, NULL, NULL);
+#endif
+      open_or_raise (label, TRUE);
+#ifdef GDK_USE_UTF8_MBS
+      g_free (label);
+#endif
     }
   else
     {
