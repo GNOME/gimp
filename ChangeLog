@@ -1,3 +1,8 @@
+2005-03-16  Sven Neumann  <sven@gimp.org>
+
+	* app/base/gimphistogram.c: fixed checks for uncalculated histogram.
+	Fixes bug #170570.
+
 2005-03-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpnewrectselecttool.c
@@ -8,7 +13,8 @@
 
 	* app/paint-funcs/paint-funcs.c
 	* app/paint-funcs/paint-funcs-generic.h: fix bug #143315. When the
-	visibility of the Alpha channel is turned off, it should make alpha=255.
+	visibility of the Alpha channel is turned off, it should make
+	alpha=255.
 
 2005-03-13  Manish Singh  <yosh@gimp.org>
 

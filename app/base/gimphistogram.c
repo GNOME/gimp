@@ -140,7 +140,7 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
@@ -171,7 +171,7 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       bin < 0 || bin >= 256 ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -235,7 +235,7 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
 	    gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_BLUE, start, end));
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       start > end ||
       channel >= histogram->n_channels)
     return 0.0;
@@ -265,7 +265,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -311,7 +311,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -361,7 +361,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values ||
+  if (! histogram->values[0] ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
