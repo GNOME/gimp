@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VERSION="1.2.5"
-PACKAGE="po-plug-ins"
+PACKAGE="gimp-std-plugins"
 
 if [ "x$1" = "x--help" ]; then
 
