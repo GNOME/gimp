@@ -43,8 +43,8 @@ bounds_checking (GDisplay *gdisp)
 
 void
 resize_display (GDisplay *gdisp,
-		gint      resize_window,
-		gint      redisplay)
+		gboolean  resize_window,
+		gboolean  redisplay)
 {
   /* freeze the active tool */
   active_tool_control (PAUSE, (void *) gdisp);
@@ -89,7 +89,7 @@ shrink_wrap_display (GDisplay *gdisp)
 
 void
 change_scale (GDisplay *gdisp,
-	      gint      dir)
+	      ZoomType  zoom_type)
 {
   guchar scalesrc, scaledest;
   gdouble offset_x, offset_y;
@@ -105,7 +105,7 @@ change_scale (GDisplay *gdisp,
   offset_x *= ((double) scalesrc / (double) scaledest);
   offset_y *= ((double) scalesrc / (double) scaledest);
 
-  switch (dir)
+  switch (zoom_type)
     {
     case ZOOMIN :
       if (scalesrc > 1)
@@ -124,12 +124,12 @@ change_scale (GDisplay *gdisp,
       break;
 
     default :
-      scalesrc = dir%100;
+      scalesrc = zoom_type % 100;
       if (scalesrc < 1)
 	scalesrc = 1;
       else if (scalesrc > 0x10)
 	scalesrc = 0x10;
-      scaledest = dir/100;
+      scaledest = zoom_type / 100;
       if (scaledest < 1)
 	scaledest = 1;
       else if (scaledest > 0x10)

@@ -20,17 +20,21 @@
 
 #include "gdisplay.h"
 
-#define ZOOMIN  0
-#define ZOOMOUT 1
+typedef enum
+{
+  ZOOMIN,
+  ZOOMOUT
+} ZoomType;
 
 /*  Functions  */
 
-void change_scale (GDisplay *, int);
-void resize_display (GDisplay *, int, int);
-void shrink_wrap_display (GDisplay *);
-void setup_scale (GDisplay *);
-void scale_image (GDisplay *, long, long, long, long);
-void bounds_checking (GDisplay *);
-
+void   change_scale        (GDisplay *gdisp,
+			    ZoomType  zoom_type);
+void   resize_display      (GDisplay *gdisp,
+			    gboolean  resize_window,
+			    gboolean  redisplay);
+void   shrink_wrap_display (GDisplay *gdisp);
+void   setup_scale         (GDisplay *gdisp);
+void   bounds_checking     (GDisplay *gdisp);
 
 #endif  /*  __SCALE_H__  */

@@ -1622,7 +1622,7 @@ rgb_to_gray(unsigned char *rgb,		/* I - RGB pixels */
       *gray = lut->composite[((rgb[0] * LUM_RED +
 			       rgb[1] * LUM_GREEN +
 			       rgb[2] * LUM_BLUE) *
-			      rgb[3] / 255 + 255 - rgb[3])];
+			      rgb[3] / 25500 + 255 - rgb[3])];
       gray ++;
       rgb += bpp;
       width --;

@@ -17,7 +17,10 @@
  */
 #include <stdlib.h>
 
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -28,10 +31,6 @@
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
-
-/*  types of magnify operations  */
-#define ZOOMIN  0
-#define ZOOMOUT 1
 
 /*  the magnify structures  */
 
@@ -56,6 +55,10 @@ struct _MagnifyOptions
   /* gint      allow_resize_windows; (from gimprc) */
   gint         allow_resize_d;
   GtkWidget   *allow_resize_w;
+
+  ZoomType     type;
+  ZoomType     type_d;
+  GtkWidget   *type_w[2];
 };
 
 
@@ -67,12 +70,17 @@ static MagnifyOptions *magnify_options = NULL;
 static void   magnify_button_press      (Tool *, GdkEventButton *, gpointer);
 static void   magnify_button_release    (Tool *, GdkEventButton *, gpointer);
 static void   magnify_motion            (Tool *, GdkEventMotion *, gpointer);
+static void   magnify_modifier_update   (Tool *, GdkEventKey *,    gpointer);
 static void   magnify_cursor_update     (Tool *, GdkEventMotion *, gpointer);
 static void   magnify_control           (Tool *, ToolAction,       gpointer);
 
 /*  magnify utility functions  */
-static void   zoom_in                   (int *, int *, int);
-static void   zoom_out                  (int *, int *, int);
+static void   zoom_in                   (gint *src,
+					 gint *dest,
+					 gint  scale);
+static void   zoom_out                  (gint *src,
+					 gint *dest,
+					 gint  scale);
 
 
 /*  magnify tool options functions  */
@@ -84,6 +92,9 @@ magnify_options_reset (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				options->allow_resize_d);
+
+  gtk_toggle_button_set_active
+    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 }
 
 static MagnifyOptions *
@@ -92,6 +103,7 @@ magnify_options_new (void)
   MagnifyOptions *options;
 
   GtkWidget *vbox;
+  GtkWidget *frame;
 
   /*  the new magnify tool options structure  */
   options = g_new (MagnifyOptions, 1);
@@ -99,6 +111,7 @@ magnify_options_new (void)
 		     _("Magnify Tool"),
 		     magnify_options_reset);
   options->allow_resize_d = allow_resize_windows;
+  options->type_d         = options->type = ZOOMIN;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -114,9 +127,24 @@ magnify_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), options->allow_resize_w, FALSE, FALSE, 0);
   gtk_widget_show (options->allow_resize_w);
 
+  /*  tool toggle  */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+                           gimp_radio_button_update,
+                           &options->type, (gpointer) options->type,
+
+                           _("Zoom in"), (gpointer) ZOOMIN,
+                           &options->type_w[0],
+                           _("Zoom out"), (gpointer) ZOOMOUT,
+                           &options->type_w[1],
+
+                           NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   return options;
 }
-
 
 /*  magnify utility functions  */
 
@@ -182,11 +210,6 @@ magnify_button_press (Tool           *tool,
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
 
-  if (bevent->state & GDK_SHIFT_MASK)
-    magnify->op = ZOOMOUT;
-  else
-    magnify->op = ZOOMIN;  /*  default  */
-
   draw_core_start (magnify->core,
 		   gdisp->canvas->window,
 		   tool);
@@ -240,6 +263,8 @@ magnify_button_release (Tool           *tool,
       else
 	scale = MIN ((width / w), (height / h));
 
+      magnify->op = magnify_options->type;
+
       switch (magnify->op)
 	{
 	case ZOOMIN:
@@ -287,6 +312,28 @@ magnify_motion (Tool           *tool,
 
 
 static void
+magnify_modifier_update (Tool        *tool,
+			 GdkEventKey *kevent,
+			 gpointer     gdisp_ptr)
+{
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      break;
+    case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
+      if (magnify_options->type == ZOOMIN)
+        gtk_toggle_button_set_active
+	  (GTK_TOGGLE_BUTTON (magnify_options->type_w[ZOOMOUT]), TRUE);
+      else
+        gtk_toggle_button_set_active
+	  (GTK_TOGGLE_BUTTON (magnify_options->type_w[ZOOMIN]), TRUE);
+      break;
+    }
+}
+  
+static void
 magnify_cursor_update (Tool           *tool,
 		       GdkEventMotion *mevent,
 		       gpointer        gdisp_ptr)
@@ -295,7 +342,14 @@ magnify_cursor_update (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+  if (magnify_options->type == ZOOMIN)
+    {
+      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_IN_CURSOR);
+    }
+  else
+    {
+      gdisplay_install_tool_cursor (gdisp, GIMP_ZOOM_OUT_CURSOR);
+   }
 }
 
 
@@ -379,6 +433,7 @@ tools_new_magnify (void)
   tool->button_press_func   = magnify_button_press;
   tool->button_release_func = magnify_button_release;
   tool->motion_func         = magnify_motion;
+  tool->modifier_key_func   = magnify_modifier_update;
   tool->cursor_update_func  = magnify_cursor_update;
   tool->control_func        = magnify_control;
 

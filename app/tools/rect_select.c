@@ -154,7 +154,8 @@ rect_select_button_press (Tool           *tool,
   rect_sel->center = FALSE;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
@@ -306,41 +307,47 @@ rect_select_motion (Tool           *tool,
     }
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-  if (rect_sel->fixed_size) {
-    if (mevent->state & GDK_SHIFT_MASK) {
-      ratio = (double)(rect_sel->fixed_height /
-		       (double)rect_sel->fixed_width);
-      tw = x - ox;
-      th = y - oy;
-       /* 
-        * This is probably an inefficient way to do it, but it gives
-        * nicer, more predictable results than the original agorithm
-        */
+  if (rect_sel->fixed_size)
+    {
+      if (mevent->state & GDK_SHIFT_MASK)
+	{
+	  ratio = (double)(rect_sel->fixed_height /
+			   (double)rect_sel->fixed_width);
+	  tw = x - ox;
+	  th = y - oy;
+	  /* 
+	   * This is probably an inefficient way to do it, but it gives
+	   * nicer, more predictable results than the original agorithm
+	   */
  
-       if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
-         {
-           w = tw;
-           h = (int)(tw * ratio);
-           /* h should have the sign of th */
-           if ((th < 0 && h > 0) || (th > 0 && h < 0))
-             h = -h;
-         } 
-       else 
-         {
-           h = th;
-           w = (int)(th / ratio);
-           /* w should have the sign of tw */
-           if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
-             w = -w;
-         }
-     } else {
-       w = (x - ox > 0 ? rect_sel->fixed_width  : -rect_sel->fixed_width);
-       h = (y - oy > 0 ? rect_sel->fixed_height : -rect_sel->fixed_height);
-     }
-  } else {
-    w = (x - ox);
-    h = (y - oy);
-  }
+	  if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
+	    {
+	      w = tw;
+	      h = (int)(tw * ratio);
+	      /* h should have the sign of th */
+	      if ((th < 0 && h > 0) || (th > 0 && h < 0))
+		h = -h;
+	    } 
+	  else 
+	    {
+	      h = th;
+	      w = (int)(th / ratio);
+	      /* w should have the sign of tw */
+	      if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
+		w = -w;
+	    }
+	}
+      else
+	{
+	  w = (x - ox > 0 ? rect_sel->fixed_width  : -rect_sel->fixed_width);
+	  h = (y - oy > 0 ? rect_sel->fixed_height : -rect_sel->fixed_height);
+	}
+    }
+  else
+    {
+      w = (x - ox);
+      h = (y - oy);
+    }
 
   /*  If the shift key is down, then make the rectangle square (or ellipse circular) */
   if ((mevent->state & GDK_SHIFT_MASK) && !rect_sel->fixed_size)
@@ -502,25 +509,25 @@ rect_select_cursor_update (Tool           *tool,
   rect_sel = (RectSelect*)tool->private;
 
   switch (rect_sel->op)
-  {
-   case SELECTION_ADD:
-     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
-     break;
-   case SELECTION_SUB:
-     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
-     break;
-   case SELECTION_INTERSECT: 
-     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1U_CURSOR);
-     break;
-   case SELECTION_REPLACE:
-     gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
-     break;
-   case SELECTION_MOVE_MASK:
-     gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
-     break;
-   case SELECTION_MOVE: 
-     gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
-  }
+    {
+    case SELECTION_ADD:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
+      break;
+    case SELECTION_SUB:
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+      break;
+    case SELECTION_INTERSECT: 
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
+      break;
+    case SELECTION_REPLACE:
+      gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+      break;
+    case SELECTION_MOVE_MASK:
+      gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+      break;
+    case SELECTION_MOVE: 
+      gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+    }
 }
 
 void

@@ -1,4 +1,23 @@
-Wed Mar  1 00:46:09 CET 2000  Sven Neumann <sven@gimp.org
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* cursors/*: a proper naming scheme for all cursor files. Added
+	zoom_in and zoom_out cursors.
+
+	* app/bezier_select.c
+	* app/by_color_select.c
+	* app/cursorutil.[ch]
+	* app/rect_select.c
+	* app/scale.[ch]: changed according to the new cursor names. Some
+	minor fixes.
+
+	* app/magnify.[ch]: made the zoom_in/zoom_out toggle a proper
+	tool_toggle and show cursors for the two modes.
+
+	* plug-ins/print/print-util.c: patch from Robert Kravitz which
+	fixes printing layers with alpha.
+
+Wed Mar  1 00:46:09 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/layers_dialog.c
 	* app/menus.c: remove ellipses from menu entries

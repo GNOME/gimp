@@ -30,30 +30,34 @@
 
 typedef enum
 {
-  GIMP_MOUSE1_CURSOR = (GDK_LAST_CURSOR + 2),
-  GIMP_MOUSE1P_CURSOR,
-  GIMP_MOUSE1M_CURSOR,
-  GIMP_MOUSE1U_CURSOR,
-  GIMP_COLOR_PICKER_CURSOR,
-  GIMP_MOUSE1AP_CURSOR,
-  GIMP_MOUSE1CP_CURSOR,
-  GIMP_MOUSE1MM_CURSOR,
-  GIMP_MOUSE1SELP_CURSOR,
-  GIMP_MOUSE1SELM_CURSOR,
-  GIMP_MOUSE1SELU_CURSOR,
-  GIMP_MOUSE1SEL_CURSOR,
+  GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
+  GIMP_MOUSE_ADD_CURSOR,
+  GIMP_MOUSE_SUBTRACT_CURSOR,
+  GIMP_MOUSE_INTERSECT_CURSOR,
+  GIMP_MOUSE_POINT_CURSOR,
+  GIMP_MOUSE_RECTANGLE_CURSOR,
+  GIMP_MOUSE_MOVE_CURSOR,
+  GIMP_SELECTION_CURSOR,
+  GIMP_SELECTION_ADD_CURSOR,
+  GIMP_SELECTION_SUBTRACT_CURSOR,
+  GIMP_SELECTION_INTERSECT_CURSOR,
   GIMP_BAD_CURSOR,
+  GIMP_COLOR_PICKER_CURSOR,
+  GIMP_ZOOM_IN_CURSOR,
+  GIMP_ZOOM_OUT_CURSOR,
   GIMP_LAST_CURSOR_ENTRY
 } GimpCursorType;
 
-void change_win_cursor (GdkWindow *, GdkCursorType);
-void unset_win_cursor  (GdkWindow *);
+void       change_win_cursor                (GdkWindow     *win,
+					     GdkCursorType  curtype);
+void       unset_win_cursor                 (GdkWindow     *win);
 
-void gimp_add_busy_cursors_until_idle (void);
-void gimp_add_busy_cursors            (void);
-gint gimp_remove_busy_cursors         (gpointer);
+void       gimp_add_busy_cursors_until_idle (void);
+void       gimp_add_busy_cursors            (void);
+gint       gimp_remove_busy_cursors         (gpointer       data);
 
-gboolean gtkutil_compress_motion (GtkWidget *widget,
-				  gdouble *lastmotion_x, gdouble *lastmotion_y);
+gboolean   gtkutil_compress_motion          (GtkWidget     *widget,
+					     gdouble       *lastmotion_x,
+					     gdouble       *lastmotion_y);
 
 #endif /*  __CURSORUTIL_H__  */

@@ -22,9 +22,9 @@
 
 /*  magnify functions  */
 
-void          magnify_draw         (Tool *);
-Tool *        tools_new_magnify    (void);
-void          tools_free_magnify   (Tool *);
+Tool * tools_new_magnify    (void);
+void   tools_free_magnify   (Tool *tool);
 
+void   magnify_draw         (Tool *tool);
 
 #endif  /*  __MAGNIFY_H__  */

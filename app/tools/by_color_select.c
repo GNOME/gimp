@@ -454,13 +454,13 @@ by_color_select_cursor_update (Tool           *tool,
 	switch (by_col_sel->operation)
 	  {
 	  case SELECTION_ADD:
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
 	    break;
 	  case SELECTION_SUB:
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
 	    break;
 	  case SELECTION_INTERSECT: 
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1U_CURSOR);
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
 	    break;
 	  case SELECTION_REPLACE:
 	    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);

@@ -1443,12 +1443,12 @@ points_in_box(BezierPoint *points,
   return c;
 }
 
-static int
-bezier_point_on_curve(GDisplay     *gdisp,
-		      BezierSelect *bezier_sel,
-		      gint         x,
-		      gint         y,
-		      gint         halfwidth)
+static gint
+bezier_point_on_curve (GDisplay     *gdisp,
+		       BezierSelect *bezier_sel,
+		       gint          x,
+		       gint          y,
+		       gint          halfwidth)
 {
   BezierCheckPnts chkpnts;
   BezierPoint * points;
@@ -1462,41 +1462,45 @@ bezier_point_on_curve(GDisplay     *gdisp,
   chkpnts.halfwidth = halfwidth;
   chkpnts.found = FALSE;
 
-  if(cnt)
+  if (cnt)
     cnt->count = 0;
   points = bezier_sel->points;
   start_pt = bezier_sel->points;
 
-  if(bezier_sel->num_points >= 4)
+  if (bezier_sel->num_points >= 4)
     {
-      do {
-	point_counts = count_points_on_curve(points);
-	if(point_counts >= 4)
-	  {
-	    do {
-	      if(points_in_box(points,x,y))
+      do
+	{
+	  point_counts = count_points_on_curve(points);
+	  if (point_counts >= 4)
+	    {
+	      do
 		{
-		  bezier_draw_segment (bezier_sel, points,
-				       SUBDIVIDE, IMAGE_COORDS,
-				       bezier_check_points,
-				       &chkpnts);
+		  if (points_in_box (points, x, y))
+		    {
+		      bezier_draw_segment (bezier_sel, points,
+					   SUBDIVIDE, IMAGE_COORDS,
+					   bezier_check_points,
+					   &chkpnts);
+		    }
+		  points = next_anchor (points, &next_curve);
+		  /* 	  g_print ("next_anchor = %p\n",points); */
 		}
-	      points = next_anchor(points,&next_curve);
-	      /* 	  g_print ("next_anchor = %p\n",points); */
-	    } while (points != start_pt && points);
-	    if(cnt)
-	      cnt->count++;
-	    start_pt = next_curve;
-	    points = next_curve;
-	  }
-	else
-	  break; /* must be last curve since only this one is allowed < 4
-		  * points.
-		  */
-      } while(next_curve);
+	      while (points != start_pt && points);
+	      if (cnt)
+		cnt->count++;
+	      start_pt = next_curve;
+	      points = next_curve;
+	    }
+	  else
+	    break; /* must be last curve since only this one is allowed < 4
+		    * points.
+		    */
+	}
+      while (next_curve);
     }
 
-  return (chkpnts.found);
+  return chkpnts.found;
 }
 
 static void
@@ -1512,120 +1516,132 @@ bezier_select_cursor_update (Tool           *tool,
   gint halfwidth,dummy;
   gint x,y;
 
-  gdisp = (GDisplay *)gdisp_ptr;
+  gdisp = (GDisplay *) gdisp_ptr;
 
   bezier_sel = tool->private;
 
   if(gdisp != tool->gdisp_ptr || bezier_sel->core->draw_state == INVISIBLE)
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1_CURSOR);
+      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
       return;
     }
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
 
   /* get halfwidth in image coord */
-  gdisplay_untransform_coords (gdisp, mevent->x + BEZIER_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, mevent->x + BEZIER_HALFWIDTH, 0,
+			       &halfwidth, &dummy, TRUE, 0);
   halfwidth -= x;
 
-  on_control_pnt = bezier_on_control_point(gdisp,bezier_sel,x,y,halfwidth);
+  on_control_pnt = bezier_on_control_point (gdisp, bezier_sel, x, y, halfwidth);
 
-  on_curve = bezier_point_on_curve(gdisp,bezier_sel,x,y,halfwidth);
+  on_curve = bezier_point_on_curve (gdisp, bezier_sel, x, y, halfwidth);
 
-  if(bezier_sel->mask && bezier_sel->closed &&
-     channel_value(bezier_sel->mask, x, y) && 
-     !on_control_pnt &&
-     (!on_curve || ModeEdit != EXTEND_ADD))
+  if (bezier_sel->mask && bezier_sel->closed &&
+      channel_value(bezier_sel->mask, x, y) && 
+      !on_control_pnt &&
+      (!on_curve || ModeEdit != EXTEND_ADD))
     {
       in_selection_area = TRUE;
-      if ((mevent->state & GDK_SHIFT_MASK) && !(mevent->state & GDK_CONTROL_MASK))
-	gdisplay_install_tool_cursor (gdisp,GIMP_MOUSE1SELP_CURSOR );
-      else if ((mevent->state & GDK_CONTROL_MASK) && !(mevent->state & GDK_SHIFT_MASK))
-	gdisplay_install_tool_cursor (gdisp,GIMP_MOUSE1SELM_CURSOR );
-      else if ((mevent->state & GDK_CONTROL_MASK) && (mevent->state & GDK_SHIFT_MASK))
-	gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1SELU_CURSOR);
-      else
-	gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1SEL_CURSOR);
-      return;
-    }
-
-  if(mevent->state & GDK_MOD1_MASK)
-    {
-      /* Moving curve */
-      if(mevent->state & GDK_SHIFT_MASK)
+      if ((mevent->state & GDK_SHIFT_MASK) &&
+	  !(mevent->state & GDK_CONTROL_MASK))
 	{
-	  /* moving on 1 curve */
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1MM_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_ADD_CURSOR);
+	}
+      else if ((mevent->state & GDK_CONTROL_MASK) &&
+	       !(mevent->state & GDK_SHIFT_MASK))
+	{
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_SUBTRACT_CURSOR);
+	}
+      else if ((mevent->state & GDK_CONTROL_MASK) &&
+	       (mevent->state & GDK_SHIFT_MASK))
+	{
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_INTERSECT_CURSOR);
 	}
       else
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1MM_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_CURSOR);
+	}
+      return;
+    }
+
+  if (mevent->state & GDK_MOD1_MASK)
+    {
+      /* Moving curve */
+      if (mevent->state & GDK_SHIFT_MASK)
+	{
+	  /* moving on 1 curve */
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_MOVE_CURSOR);
+	}
+      else
+	{
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_MOVE_CURSOR);
 	}
     }
   else
     {
-      switch(ModeEdit)
+      switch (ModeEdit)
 	{
 	case EXTEND_NEW:
-	  if(on_control_pnt && bezier_sel->closed)
+	  if (on_control_pnt && bezier_sel->closed)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1CP_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_RECTANGLE_CURSOR);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
-	  else if(on_curve)
+	  else if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1AP_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1AP_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
 	    }
 	  break;
 	case EXTEND_ADD:
-	  if(on_curve)
+	  if (on_curve)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
 /* 	      g_print ("add to curve cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	case EXTEND_EDIT:
-	  if(on_control_pnt)
+	  if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1CP_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_RECTANGLE_CURSOR);
 /* 	      g_print ("edit control point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	case EXTEND_REMOVE:
-	  if(on_control_pnt && mevent->state & GDK_SHIFT_MASK)
+	  if (on_control_pnt && mevent->state & GDK_SHIFT_MASK)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
 	      g_print ("delete whole curve cursor\n");
 	    }
-	  else if(on_control_pnt)
+	  else if (on_control_pnt)
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
 /* 	      g_print ("remove point cursor\n"); */
 	    }
 	  else
 	    {
-	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1_CURSOR);
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
 	default:
 	  g_print ("In default\n");
-	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1_CURSOR);
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR);
 	  break;
 	}
     }
