@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2003 Free Software Foundation, Inc.
+# Copyright (C) 2001-2004 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -6,14 +6,14 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
 # translators@gnome.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# GNOME PL Team <translators@gnome.pl>, 1999-2003
+# GNOME PL Team <translators@gnome.pl>, 1999-2004
 # Artur Polaczyński <artie@kmfms.com>, 1999,2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-04-26 12:24+0200\n"
 "PO-Revision-Date: 2004-01-22 10:37+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -1405,14 +1405,18 @@ msgid "Shadow Weight (%)"
 msgstr "Siła cienia (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motowy stron WWW/Gimp.Org/_Duży nagłówek..."
+"<Toolbox>/Dodatki/Script-Fu/Motowy stron WWW/Classic.Gimp.Org/_Duży "
+"nagłówek..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Gimp.Org/_Mały nagłówek..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Classic.Gimp.Org/_Mały "
+"nagłówek..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1454,31 +1458,35 @@ msgstr "Kolor cienia"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Gimp.Org/E_tykieta przycisku "
-"podrzędnego na tubie..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Classic.Gimp.Org/E_tykieta "
+"przycisku podrzędnego na tubie..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Gimp.Org/Ety_kieta 2. przycisku "
-"podrzędnego na tubie..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Classic.Gimp.Org/Ety_kieta 2. "
+"przycisku podrzędnego na tubie..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Gimp.Org/_Ogólne etykiety "
-"tuby..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Classic.Gimp.Org/_Ogólne "
+"etykiety tuby..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Gimp.Org/_Etykieta przycisku na "
-"tubie..."
+"<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Classic.Gimp.Org/_Etykieta "
+"przycisku na tubie..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
