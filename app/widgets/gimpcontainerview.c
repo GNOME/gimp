@@ -763,6 +763,56 @@ gimp_container_view_item_context (GimpContainerView *view,
   gimp_container_view_context_item (view, viewable);
 }
 
+void
+gimp_container_view_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case GIMP_CONTAINER_VIEW_PROP_CONTAINER:
+      gimp_container_view_set_container (view, g_value_get_object (value));
+      break;
+    case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
+      gimp_container_view_set_context (view, g_value_get_object (value));
+      break;
+    case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
+      gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+void
+gimp_container_view_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case GIMP_CONTAINER_VIEW_PROP_CONTAINER:
+      g_value_set_object (value, gimp_container_view_get_container (view));
+      break;
+    case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
+      g_value_set_object (value, gimp_container_view_get_context (view));
+      break;
+    case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
+      g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 static void
 gimp_container_view_clear_items (GimpContainerView *view)
 {

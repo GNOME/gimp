@@ -1,3 +1,19 @@
+2004-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontainercombobox.[ch]: added new widget, almost
+	finished.
+
+	* app/widgets/gimpcontainerview.[ch]: added convenience functions
+	to get and set the GimpContainerView properties.
+
+	* app/widgets/gimpcontainerbox.c: use the convenience functions.
+
+	* app/gui/file-new-dialog.c: use the new GimpContainerComboBox.
+
+	* etc/templaterc: use "pixels" as the unit for pixel sized templates.
+
 2004-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpchanneltreeview.c

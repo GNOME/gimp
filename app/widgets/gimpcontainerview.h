@@ -26,6 +26,15 @@
 #include "gimpeditor.h"
 
 
+enum
+{
+  GIMP_CONTAINER_VIEW_PROP_0,
+  GIMP_CONTAINER_VIEW_PROP_CONTAINER,
+  GIMP_CONTAINER_VIEW_PROP_CONTEXT,
+  GIMP_CONTAINER_VIEW_PROP_REORDERABLE
+};
+
+
 #define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_interface_get_type ())
 #define GIMP_CONTAINER_VIEW(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerView))
 #define GIMP_IS_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
@@ -122,6 +131,17 @@ void      gimp_container_view_item_activated   (GimpContainerView *view,
                                                 GimpViewable      *item);
 void      gimp_container_view_item_context     (GimpContainerView *view,
                                                 GimpViewable      *item);
+
+/*  convenience functions  */
+
+void      gimp_container_view_set_property     (GObject      *object,
+                                                guint         property_id,
+                                                const GValue *value,
+                                                GParamSpec   *pspec);
+void      gimp_container_view_get_property     (GObject      *object,
+                                                guint         property_id,
+                                                GValue       *value,
+                                                GParamSpec   *pspec);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

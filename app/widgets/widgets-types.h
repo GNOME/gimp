@@ -90,6 +90,7 @@ typedef struct _GimpUndoEditor          GimpUndoEditor;
 
 typedef struct _GimpContainerView       GimpContainerView; /* dummy typedef */
 typedef struct _GimpContainerBox        GimpContainerBox;
+typedef struct _GimpContainerComboBox   GimpContainerComboBox;
 typedef struct _GimpContainerGridView   GimpContainerGridView;
 typedef struct _GimpContainerTreeView   GimpContainerTreeView;
 

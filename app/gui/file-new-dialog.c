@@ -36,7 +36,8 @@
 #include "core/gimpimage-new.h"
 #include "core/gimptemplate.h"
 
-#include "widgets/gimpcontainermenuimpl.h"
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
 
@@ -52,7 +53,7 @@ typedef struct
   GtkWidget    *dialog;
   GtkWidget    *confirm_dialog;
 
-  GtkWidget    *template_menu;
+  GtkWidget    *combo;
   GtkWidget    *editor;
 
   Gimp         *gimp;
@@ -81,7 +82,6 @@ file_new_dialog_new (Gimp *gimp)
   FileNewDialog *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *table;
-  GtkWidget     *optionmenu;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -124,22 +124,13 @@ file_new_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  optionmenu = gtk_option_menu_new ();
+  dialog->combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Template:"),  1.0, 0.5,
-                             optionmenu, 1, FALSE);
+                             dialog->combo, 1, FALSE);
 
-  dialog->template_menu = gimp_container_menu_new (gimp->templates,
-                                                   NULL, 16, 0);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu),
-                            dialog->template_menu);
-  gtk_widget_show (dialog->template_menu);
-
-  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (dialog->template_menu),
-                                   NULL);
-
-  g_signal_connect (dialog->template_menu, "select_item",
+  g_signal_connect (dialog->combo, "select_item",
                     G_CALLBACK (file_new_template_select),
                     dialog);
 
@@ -168,7 +159,7 @@ file_new_dialog_set (GtkWidget    *widget,
 
   if (template)
     {
-      gimp_container_menu_select_item (GIMP_CONTAINER_MENU (dialog->template_menu),
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
                                        GIMP_VIEWABLE (template));
     }
   else
