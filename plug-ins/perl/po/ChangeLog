@@ -1,3 +1,8 @@
+2001-09-05  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po: Rename to....
+	* zh_TW.po: this, to prevent future encoding naming problem.
+
 2001-08-30  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Started on the Swedish translation.

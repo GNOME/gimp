@@ -1,3 +1,7 @@
+2001-09-05  Abel Cheung  <maddog@linux.org.hk>
+
+	* configure.in: Rename zh_TW.Big5 to zh_TW in ALL_LINGUAS.
+
 2001-08-29  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_core.c:
