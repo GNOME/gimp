@@ -20,6 +20,29 @@
 
 struct _PixelRow;
 
+#define ROW_FUNC_a_a(name) \
+void \
+name##_row_u16 ( \
+                struct _PixelRow *, \
+                struct _PixelRow * \
+               );
+
+ROW_FUNC_a_a (x_add);
+ROW_FUNC_a_a (x_sub);
+ROW_FUNC_a_a (x_min);
+ROW_FUNC_a_a (invert);
+
+#undef ROW_FUNC_a_a
+
+void
+absdiff_row_u16 (
+                 struct _PixelRow *,
+                 struct _PixelRow *,
+                 struct _PixelRow *,
+                 gfloat,
+                 int
+                 );
+
 void
 copy_row_u16 (
 	      struct _PixelRow * src,

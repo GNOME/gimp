@@ -36,6 +36,75 @@ static unsigned char no_mask = OPAQUE_8BIT;
 
 
 void 
+x_add_row_u8  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  guint8 *src          = (guint8*) pixelrow_data (src_row);
+  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MIN (255, src[b] + dest[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+
+void 
+x_sub_row_u8  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  guint8 *src          = (guint8*) pixelrow_data (src_row);
+  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MAX (0, dest[b] - src[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+
+void 
+x_min_row_u8  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  guint8 *src          = (guint8*) pixelrow_data (src_row);
+  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MIN (src[b], dest[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+
+void 
 invert_row_u8  (
                 PixelRow * dest_row,
                 PixelRow * mask_row

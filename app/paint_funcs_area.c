@@ -239,57 +239,94 @@ paint_funcs_area_free  (
 /*    AREA FUNCTIONS                              */
 /**************************************************/
 
-typedef void (*InvertFunc) (PixelRow*, PixelRow*);
-static InvertFunc invert_area_funcs (Tag);
-
-
-static InvertFunc 
-invert_area_funcs (
-                   Tag tag
-                   )
-	  
+static int
+check_precision (
+                 PixelArea * a1,
+                 PixelArea * a2,
+                 PixelArea * a3
+                 )
 {
-  switch (tag_precision (tag))
-    {
-    case PRECISION_U8:
-      return invert_row_u8;
-    case PRECISION_U16:
-    case PRECISION_FLOAT:
-    case PRECISION_NONE:
-    default:
-      g_warning ("bad precision");
-    } 
+  Tag t1 = pixelarea_tag (a1);
 
-  return NULL;
+  if (a2)
+    if (tag_precision (pixelarea_tag (a2)) != tag_precision (t1))
+      return 1;
+
+  if (a3)
+    if (tag_precision (pixelarea_tag (a3)) != tag_precision (t1))
+      return 1;
+
+  return 0;
 }
- 
-void
-invert_area (
-             PixelArea * image,
-             PixelArea * mask
-             )
-{
-  void * pag;
-  Tag tag = pixelarea_tag (image); 
-  InvertFunc invert_row = invert_area_funcs (tag);
-  /* put in tags check*/
+  
 
-  for (pag = pixelarea_register (2, image, mask);
-       pag != NULL;
-       pag = pixelarea_process (pag))
-    {
-      PixelRow irow;
-      PixelRow mrow;
-      gint h = pixelarea_height (image);
-      while (h--)
-        {
-          pixelarea_getdata (image, &irow, h);
-          pixelarea_getdata (mask, &mrow, h);
-          (*invert_row) (&irow, &mrow);
-        }
-    }
+
+
+/* ---------------------------------------------------------
+
+       area functions with func (Area*, Area*) signature
+
+   --------------------------------------------------------- */
+
+#define AREA_FUNC_a_a(name) \
+ \
+typedef void (*name##Func) (PixelRow*, PixelRow*); \
+static name##Func name##_area_funcs (Tag); \
+ \
+static name##Func  \
+name##_area_funcs ( \
+                   Tag tag \
+                   ) \
+{ \
+  switch (tag_precision (tag)) \
+    { \
+    case PRECISION_U8: \
+      return name##_row_u8; \
+    case PRECISION_U16: \
+      return name##_row_u16; \
+    case PRECISION_FLOAT: \
+    case PRECISION_NONE: \
+    default: \
+      g_warning ("xx bad precision"); \
+    }  \
+  return NULL; \
+} \
+ \
+void \
+name##_area ( \
+             PixelArea * a1, \
+             PixelArea * a2 \
+             ) \
+{ \
+  name##Func name##_row = name##_area_funcs (pixelarea_tag (a1)); \
+  void * pag; \
+  for (pag = pixelarea_register (2, a1, a2); \
+       pag != NULL; \
+       pag = pixelarea_process (pag)) \
+    { \
+      PixelRow r1; \
+      PixelRow r2; \
+      gint h = pixelarea_height (a1); \
+      while (h--) \
+        { \
+          pixelarea_getdata (a1, &r1, h); \
+          pixelarea_getdata (a2, &r2, h); \
+          (*name##_row) (&r1, &r2); \
+        } \
+    } \
 }
 
+
+
+AREA_FUNC_a_a (x_add);
+AREA_FUNC_a_a (x_sub);
+AREA_FUNC_a_a (x_min);
+AREA_FUNC_a_a (invert);
+
+#undef AREA_FUNC_a_a
+
+
+/* ---------------------------------------------------------*/
 
 typedef void (*AbsDiffFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat, int);
 static AbsDiffFunc absdiff_area_funcs (Tag);
@@ -306,10 +343,11 @@ absdiff_area_funcs (
     case PRECISION_U8:
       return absdiff_row_u8;
     case PRECISION_U16:
+      return absdiff_row_u16;
     case PRECISION_FLOAT:
     case PRECISION_NONE:
     default:
-      g_warning ("bad precision");
+      g_warning ("qq bad precision");
     } 
 
   return NULL;
@@ -327,7 +365,12 @@ absdiff_area (
   void * pag;
   Tag tag = pixelarea_tag (image); 
   AbsDiffFunc absdiff_row = absdiff_area_funcs (tag);
-  /* put in tags check*/
+
+  if (check_precision (image, mask, NULL))
+    {
+      g_warning ("aq bad precision");
+      return;
+    }
 
   for (pag = pixelarea_register (2, image, mask);
        pag != NULL;
@@ -346,6 +389,8 @@ absdiff_area (
 }
 
 
+
+/* ---------------------------------------------------------*/
 
 typedef void (*ColorRowFunc) (PixelRow*, PixelRow*);
 static ColorRowFunc color_area_funcs (Tag);
@@ -2019,7 +2064,7 @@ scale_row_resample_funcs (
     return scale_row_resample_float;	
   case PRECISION_NONE:
   default:
-    g_warning ("bad precision");
+    g_warning ("ff bad precision");
     break;
   }
   return NULL;

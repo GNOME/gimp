@@ -108,15 +108,20 @@ int channel_get_count = 0;
 /**************************/
 /*  Function definitions  */
 
-#define FIXME
-#if 0
-static void
-channel_validate (TileManager *tm, Tile *tile, int level)
+static guint
+channel_validate (Canvas * c, int x, int y, void * data)
 {
+  int xx = canvas_portion_x (c, x, y);
+  int yy = canvas_portion_y (c, x, y);
+  int ww = canvas_portion_width (c, xx, yy);
+  int hh = canvas_portion_height (c, xx, yy);
+  guchar * d = canvas_portion_data (c, xx, yy);
+  
   /*  Set the contents of the tile to empty  */
-  memset (tile->data, TRANSPARENT_OPACITY, tile->ewidth * tile->eheight);
+  memset (d, 0, ww * hh * canvas_bytes (c));
+
+  return 1;
 }
-#endif
 
 
 
@@ -497,10 +502,10 @@ channel_new_mask (int gimage_ID, int width, int height, Precision p)
                              "Selection Mask", 0.5, &black);
 
   /*  Set the validate procedure  */
-#define FIXME
-  /*tile_manager_set_validate_proc (GIMP_DRAWABLE(new_channel)->tiles, channel_validate);*/
+ canvas_portion_init_setup (GIMP_DRAWABLE(new_channel)->tiles,
+                            channel_validate, NULL);
 
-  return new_channel;
+ return new_channel;
 }
 
 
@@ -923,8 +928,6 @@ void
 channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
 {
   PixelArea maskPR;
-  unsigned char *data;
-  int val;
   int x2;
   void * pr;
 
@@ -1195,19 +1198,13 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 }
 
 
-#define FIXME /* precision wrappers */
 void
 channel_combine_mask (Channel *mask, Channel *add_on, int op,
 		      int off_x, int off_y)
 {
   PixelArea srcPR, destPR;
-  unsigned char *src;
-  unsigned char *dest;
-  int val;
   int x1, y1, x2, y2;
-  int x, y;
   int w, h;
-  void * pr;
 
   x1 = BOUNDS (off_x, 0, drawable_width (GIMP_DRAWABLE(mask)));
   y1 = BOUNDS (off_y, 0, drawable_height (GIMP_DRAWABLE(mask)));
@@ -1219,49 +1216,36 @@ channel_combine_mask (Channel *mask, Channel *add_on, int op,
   w = (x2 - x1);
   h = (y2 - y1);
 
-  pixelarea_init (&srcPR, GIMP_DRAWABLE(add_on)->tiles,
+  pixelarea_init (&srcPR, drawable_data (GIMP_DRAWABLE(add_on)),
                   (x1 - off_x), (y1 - off_y),
                   w, h,
                   FALSE);
 
-  pixelarea_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
+  pixelarea_init (&destPR, drawable_data (GIMP_DRAWABLE(mask)),
                   x1, y1,
                   w, h,
                   TRUE);
 
-  for (pr = pixelarea_register (2, &srcPR, &destPR); 
-	pr != NULL; 
-	pr = pixelarea_process (pr))
+  switch (op)
     {
-      src = pixelarea_data (&srcPR);
-      dest = pixelarea_data (&destPR);
-
-      for (y = 0; y < pixelarea_height (&srcPR); y++)
-	{
-	  for (x = 0; x < pixelarea_width (&srcPR); x++)
-	    {
-	      switch (op)
-		{
-		case ADD: case REPLACE:
-		  val = dest[x] + src[x];
-		  if (val > 255) val = 255;
-		  break;
-		case SUB:
-		  val = dest[x] - src[x];
-		  if (val < 0) val = 0;
-		  break;
-		case INTERSECT:
-		  val = MINIMUM(dest[x], src[x]);
-		  break;
-		default:
-		  val = 0;
-		  break;
-		}
-	      dest[x] = val;
-	    }
-	  src += pixelarea_rowstride (&srcPR);
-	  dest += pixelarea_rowstride (&destPR);
-	}
+    case ADD:
+    case REPLACE:
+      x_add_area (&srcPR, &destPR);
+      break;
+    case SUB:
+      x_sub_area (&srcPR, &destPR);
+      break;
+    case INTERSECT:
+      x_min_area (&srcPR, &destPR);
+      break;
+    default:
+      {
+        COLOR16_NEW (black, pixelarea_tag (&destPR));
+        COLOR16_INIT (black);
+        palette_get_black (&black);
+        color_area (&destPR, &black);
+      }
+      break;
     }
 
   mask->bounds_known = FALSE;

@@ -20,11 +20,20 @@
 
 struct _PixelRow;
 
-void
-invert_row_u8 (
-               struct _PixelRow *,
-               struct _PixelRow *
+#define ROW_FUNC_a_a(name) \
+void \
+name##_row_u8 ( \
+               struct _PixelRow *, \
+               struct _PixelRow * \
                );
+
+ROW_FUNC_a_a (x_add);
+ROW_FUNC_a_a (x_sub);
+ROW_FUNC_a_a (x_min);
+ROW_FUNC_a_a (invert);
+
+#undef ROW_FUNC_a_a
+
 
 void
 absdiff_row_u8 (
