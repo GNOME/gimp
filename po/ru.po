@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.21\n"
-"POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-14 21:46+00:00\n"
+"POT-Creation-Date: 2000-07-05 15:49+0000\n"
+"PO-Revision-Date: 2000-07-05 15:55+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +123,7 @@ msgstr "Выход"
 #: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
 #: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
+#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -282,7 +282,7 @@ msgstr "Яркость-Контрастность не действует на индексированные изображения."
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
-#: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
+#: app/resize.c:192 app/resize.c:1324 app/threshold.c:271
 #: app/user_install.c:1189 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
@@ -1037,7 +1037,7 @@ msgstr "Сохранить кривые"
 msgid "Load/Save Curves"
 msgstr "Загрузка/Сохранение кривых"
 
-#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1441 app/levels.c:1459
+#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1452 app/levels.c:1470
 #: app/paths_dialog.c:1905
 #, c-format
 msgid "Unable to open file %s"
@@ -1606,7 +1606,7 @@ msgstr "безымянное"
 msgid "Layer type %d not supported."
 msgstr "Слои типа %d не поддерживаются."
 
-#: app/gimphelp.c:166
+#: app/gimphelp.c:169
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -2834,15 +2834,15 @@ msgstr "Уровни на входе:"
 msgid "Output Levels:"
 msgstr "Уровни на выходе:"
 
-#: app/levels.c:1052
+#: app/levels.c:1063
 msgid "Load Levels"
 msgstr "Загрузить уровни"
 
-#: app/levels.c:1067
+#: app/levels.c:1078
 msgid "Save Levels"
 msgstr "Сохранить уровни"
 
-#: app/levels.c:1396
+#: app/levels.c:1407
 msgid "Load/Save Levels"
 msgstr "Загрузка/Сохранение уровней"
 
@@ -4912,15 +4912,15 @@ msgstr "X:"
 msgid "Print Size & Display Unit"
 msgstr "Единицы измерения для печати и изображения"
 
-#: app/resize.c:1238
+#: app/resize.c:1236
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Ошибка масштабирования: и ширина и высота должны быть больше нуля."
 
-#: app/resize.c:1319
+#: app/resize.c:1317
 msgid "Layer Too Small"
 msgstr "Слой слишком мал"
 
-#: app/resize.c:1323
+#: app/resize.c:1321
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -5046,12 +5046,14 @@ msgstr "След. совет"
 #: app/tips_dialog.c:285
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
-"There should be a file called gimp_tips.txt in the\n"
-"GIMP data directory.  Please check your installation."
+"There should be a file called gimp_tips.txt in\n"
+"the tips subdirectory of the GIMP data directory.\n"
+"Please check your installation."
 msgstr ""
 "Похоже Ваш файл советов GIMP содержит ошибку!\n"
 "Это должен быть файл gimp_tips.ru.txt в\n"
-"каталоге данных GIMP. Пожалуйста проверьте Вашу установку."
+"подкаталоге советов в каталоге данных GIMP.\n"
+"Пожалуйста проверьте Вашу установку."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -6298,16 +6300,16 @@ msgstr "Вертикальная:"
 
 #: app/user_install.c:1352
 msgid ""
-"GIMP can obtain this information from your X-server.\n"
-"However, most X-servers do not return useful values."
+"GIMP can obtain this information from the windowing system.\n"
+"However, usually this does not give useful values."
 msgstr ""
-"GIMP может получить эту информацию от вашего X-сервера.\n"
-"Однако большинство X-серверов возвращают бесполезные значения."
+"GIMP может получить эту информацию от вашей оконной системы.\n"
+"Однако обычно они возвращают бесполезные значения."
 
 #: app/user_install.c:1359
 #, c-format
-msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Получить разрешение с X-сервера (сейчас %d x %d dpi)"
+msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
+msgstr "Получить разрешение от оконной системы (сейчас %d x %d dpi)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."
