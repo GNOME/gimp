@@ -1,3 +1,22 @@
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpprogressbox.[ch]: new GtkVBox subclass featuring
+	a label and a progressbar. Implements GimpProgressIterface.
+
+	* app/widgets/gimpprogressdialog.[ch]: replaced label and progress
+	by a GimpProgressBox. Delegate most progress functionality to it.
+
+	* app/widgets/gimpwidgets-utils.[ch]: factored out utility
+	function gimp_dialog_set_sensitive().
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_sensitive):
+	use it.
+
+	* app/gui/file-open-location-dialog.c (file_open_location_response):
+	embed the called file procedure's progress using a GimpProgressBox.
+
 2004-08-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfiledialog.[ch]

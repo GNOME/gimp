@@ -72,5 +72,8 @@ void          gimp_rgb_set_gdk_color     (GimpRGB         *rgb,
 void          gimp_window_set_hint       (GtkWindow       *window,
                                           GimpWindowHint   hint);
 
+void          gimp_dialog_set_sensitive  (GtkDialog       *dialog,
+                                          gboolean         sensitive);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

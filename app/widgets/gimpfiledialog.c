@@ -46,6 +46,7 @@
 #include "gimppreview.h"
 #include "gimppreviewrendererimagefile.h"
 #include "gimpthumbbox.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -336,31 +337,9 @@ void
 gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
                                 gboolean        sensitive)
 {
-  GList *children;
-  GList *list;
-
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
-  children =
-    gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      /*  skip the last item (the action area) */
-      if (! g_list_next (list))
-        break;
-
-      gtk_widget_set_sensitive (list->data, sensitive);
-    }
-
-  g_list_free (children);
-
-  if (sensitive)
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
-                                       GTK_RESPONSE_CANCEL, sensitive);
-
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
-                                     GTK_RESPONSE_OK, sensitive);
+  gimp_dialog_set_sensitive (GTK_DIALOG (dialog), sensitive);
 
   dialog->busy     = ! sensitive;
   dialog->canceled = FALSE;

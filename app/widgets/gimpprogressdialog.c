@@ -29,6 +29,7 @@
 
 #include "core/gimpprogress.h"
 
+#include "gimpprogressbox.h"
 #include "gimpprogressdialog.h"
 
 #include "gimp-intl.h"
@@ -107,6 +108,15 @@ gimp_progress_dialog_class_init (GimpProgressDialogClass *klass)
 static void
 gimp_progress_dialog_init (GimpProgressDialog *dialog)
 {
+  dialog->box = gimp_progress_box_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (dialog->box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
+                     dialog->box);
+  gtk_widget_show (dialog->box);
+
+  gtk_dialog_add_button (GTK_DIALOG (dialog),
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 }
 
 static void
@@ -123,7 +133,9 @@ static void
 gimp_progress_dialog_response (GtkDialog *dialog,
                                gint       response_id)
 {
-  if (response_id == GTK_RESPONSE_CANCEL)
+  GimpProgressDialog *progress_dialog = GIMP_PROGRESS_DIALOG (dialog);
+
+  if (GIMP_PROGRESS_BOX (progress_dialog->box)->cancelable)
     gimp_progress_cancel (GIMP_PROGRESS (dialog));
 }
 
@@ -134,18 +146,12 @@ gimp_progress_dialog_progress_start (GimpProgress *progress,
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
-  if (! dialog->progress_active)
+  if (gimp_progress_start (GIMP_PROGRESS (dialog->box), message, cancelable))
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progressbar);
-
-      gtk_label_set_text (GTK_LABEL (dialog->label), message);
-      gtk_progress_bar_set_fraction (bar, 0.0);
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                          GTK_RESPONSE_CANCEL, cancelable);
 
       gtk_window_present (GTK_WINDOW (dialog));
-
-      dialog->progress_active = TRUE;
 
       return progress;
     }
@@ -158,18 +164,14 @@ gimp_progress_dialog_progress_end (GimpProgress *progress)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
-  if (dialog->progress_active)
+  if (GIMP_PROGRESS_BOX (dialog->box)->active)
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progressbar);
+      gimp_progress_end (GIMP_PROGRESS (dialog->box));
 
-      gtk_label_set_text (GTK_LABEL (dialog->label), "");
-      gtk_progress_bar_set_fraction (bar, 0.0);
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                          GTK_RESPONSE_CANCEL, FALSE);
 
       gtk_widget_hide (GTK_WIDGET (dialog));
-
-      dialog->progress_active = FALSE;
     }
 }
 
@@ -179,10 +181,7 @@ gimp_progress_dialog_progress_set_text (GimpProgress *progress,
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      gtk_label_set_text (GTK_LABEL (dialog->label), message);
-    }
+  gimp_progress_set_text (GIMP_PROGRESS (dialog->box), message);
 }
 
 static void
@@ -191,15 +190,7 @@ gimp_progress_dialog_progress_set_value (GimpProgress *progress,
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progressbar);
-
-      gtk_progress_bar_set_fraction (bar, percentage);
-
-      if (GTK_WIDGET_DRAWABLE (dialog->progressbar))
-        gdk_window_process_updates (dialog->progressbar->window, TRUE);
-    }
+  gimp_progress_set_value (GIMP_PROGRESS (dialog->box), percentage);
 }
 
 static gdouble
@@ -207,45 +198,15 @@ gimp_progress_dialog_progress_get_value (GimpProgress *progress)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
-  if (dialog->progress_active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progressbar);
-
-      return gtk_progress_bar_get_fraction (bar);
-    }
-
-  return 0.0;
+  return gimp_progress_get_value (GIMP_PROGRESS (dialog->box));
 }
 
 GtkWidget *
 gimp_progress_dialog_new (void)
 {
-  GimpProgressDialog *dialog;
-  GtkWidget          *vbox;
-
-  dialog = g_object_new (GIMP_TYPE_PROGRESS_DIALOG,
-                         "title",     _("Progress"),
-                         "role",      "progress",
-                         "resizable", FALSE,
-                         NULL);
-
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  dialog->label = gtk_label_new ("");
-  gtk_misc_set_alignment (GTK_MISC (dialog->label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->label, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->label);
-
-  dialog->progressbar = gtk_progress_bar_new ();
-  gtk_widget_set_size_request (dialog->progressbar, 150, 20);
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->progressbar, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->progressbar);
-
-  return GTK_WIDGET (dialog);
+  return g_object_new (GIMP_TYPE_PROGRESS_DIALOG,
+                       "title",     _("Progress"),
+                       "role",      "progress",
+                       "resizable", FALSE,
+                       NULL);
 }

@@ -28,19 +28,22 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpprogress.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpprogressbox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-location-dialog.h"
 
 #include "gimp-intl.h"
 
 
-static void      file_open_location_response   (GtkWidget          *dialog,
+static void      file_open_location_response   (GtkDialog          *dialog,
                                                 gint                response_id,
                                                 Gimp               *gimp);
 
@@ -123,65 +126,80 @@ file_open_location_dialog_show (Gimp      *gimp,
 }
 
 static void
-file_open_location_response (GtkWidget *dialog,
+file_open_location_response (GtkDialog *dialog,
                              gint       response_id,
                              Gimp      *gimp)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  GtkWidget   *entry;
+  GtkWidget   *box;
+  const gchar *text = NULL;
+
+  if (response_id != GTK_RESPONSE_OK)
     {
-      GtkWidget   *entry;
-      const gchar *text = NULL;
+      box = g_object_get_data (G_OBJECT (dialog), "progress-box");
 
-      gtk_widget_set_sensitive (dialog, FALSE);
+      if (box && GIMP_PROGRESS_BOX (box)->active)
+        gimp_progress_cancel (GIMP_PROGRESS (box));
+      else
+        gtk_widget_destroy (GTK_WIDGET (dialog));
 
-      entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
-
-      text = gtk_entry_get_text (GTK_ENTRY (entry));
-
-      if (text && strlen (text))
-        {
-          GimpImage         *image;
-          gchar             *uri;
-          gchar             *filename;
-          GError            *error = NULL;
-          GimpPDBStatusType  status;
-
-          filename = g_filename_from_uri (text, NULL, NULL);
-
-          if (filename)
-            {
-              uri = g_filename_to_uri (filename, NULL, NULL);
-              g_free (filename);
-            }
-          else
-            {
-              uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
-            }
-#ifdef __GNUC__
-#warning FIXME: add progress bar to open location dialog
-#endif
-          image = file_open_with_proc_and_display (gimp,
-                                                   gimp_get_user_context (gimp),
-                                                   NULL,
-                                                   uri, text, NULL,
-                                                   &status, &error);
-
-          if (image == NULL && status != GIMP_PDB_CANCEL)
-            {
-              gchar *filename = file_utils_uri_to_utf8_filename (uri);
-
-              g_message (_("Opening '%s' failed:\n\n%s"),
-                         filename, error->message);
-              g_clear_error (&error);
-
-              g_free (filename);
-            }
-
-          g_free (uri);
-        }
+      return;
     }
 
-  gtk_widget_destroy (dialog);
+  gimp_dialog_set_sensitive (dialog, FALSE);
+
+  entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
+
+  text = gtk_entry_get_text (GTK_ENTRY (entry));
+
+  if (text && strlen (text))
+    {
+      GimpImage         *image;
+      gchar             *uri;
+      gchar             *filename;
+      GError            *error = NULL;
+      GimpPDBStatusType  status;
+
+      filename = g_filename_from_uri (text, NULL, NULL);
+
+      if (filename)
+        {
+          uri = g_filename_to_uri (filename, NULL, NULL);
+          g_free (filename);
+        }
+      else
+        {
+          uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
+        }
+
+      box = gimp_progress_box_new ();
+      gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+      gtk_box_pack_end (GTK_BOX (dialog->vbox), box, FALSE, FALSE, 0);
+      gtk_widget_show (box);
+
+      g_object_set_data (G_OBJECT (dialog), "progress-box", box);
+
+      image = file_open_with_proc_and_display (gimp,
+                                               gimp_get_user_context (gimp),
+                                               GIMP_PROGRESS (box),
+                                               uri, text, NULL,
+                                               &status, &error);
+
+      if (image == NULL && status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+          g_clear_error (&error);
+
+          g_free (filename);
+        }
+
+      g_free (uri);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static gboolean

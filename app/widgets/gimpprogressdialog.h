@@ -41,9 +41,7 @@ struct _GimpProgressDialog
 {
   GimpDialog  parent_instance;
 
-  gboolean    progress_active;
-  GtkWidget  *label;
-  GtkWidget  *progressbar;
+  GtkWidget  *box;
 };
 
 struct _GimpProgressDialogClass
