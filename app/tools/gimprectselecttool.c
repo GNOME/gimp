@@ -27,6 +27,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
@@ -534,34 +535,39 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
   if (options->auto_shrink)
     {
+      gint off_x = 0;
+      gint off_y = 0;
       gint x2, y2;
 
-      x = CLAMP (x, 0, tool->gdisp->gimage->width);
-      y = CLAMP (y, 0, tool->gdisp->gimage->height);
-      w = CLAMP (w, 0, tool->gdisp->gimage->width  - x);
-      h = CLAMP (h, 0, tool->gdisp->gimage->height - y);
-
-      if (w < 1 || h < 1)
-        return;
+      if (! gimp_rectangle_intersect (x, y, w, h,
+                                      0, 0,
+                                      tool->gdisp->gimage->width,
+                                      tool->gdisp->gimage->height,
+                                      &x, &y, &w, &h))
+        {
+          return;
+        }
 
       if (! options->shrink_merged)
         {
-          GimpDrawable *drawable;
-          GimpItem     *item;
-          gint          off_x, off_y;
-          gint          width, height;
+          GimpItem *item;
+          gint      width, height;
 
-          drawable = gimp_image_active_drawable (tool->gdisp->gimage);
-          item     = GIMP_ITEM (drawable);
+          item = GIMP_ITEM (gimp_image_active_drawable (tool->gdisp->gimage));
 
           gimp_item_offsets (item, &off_x, &off_y);
           width  = gimp_item_width  (item);
           height = gimp_item_height (item);
 
-          x = CLAMP (x, off_x, off_x + width);
-          y = CLAMP (y, off_y, off_y + height);
-          w = CLAMP (w, 0, off_x + width  - x);
-          h = CLAMP (h, 0, off_y + height - y);
+          if (! gimp_rectangle_intersect (x, y, w, h,
+                                          off_x, off_y, width, height,
+                                          &x, &y, &w, &h))
+            {
+              return;
+            }
+
+          x -= off_x;
+          y -= off_y;
         }
 
       if (gimp_image_crop_auto_shrink (tool->gdisp->gimage,
@@ -574,6 +580,9 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
           w = x2 - x;
           h = y2 - y;
         }
+
+      x += off_x;
+      y += off_y;
     }
 
   GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_tool)->rect_select (rect_tool,

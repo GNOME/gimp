@@ -1,3 +1,12 @@
+2004-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectselecttool.c
+	(gimp_rect_select_tool_rect_select): don't try to CLAMP() the
+	passed in rectangle to valid image/drawable coordinates manually
+	when auto-shrinking the selection. Instead, use
+	gimp_rectangle_intersect(). Also honor the active drawable's
+	offsets. Fixes bug #133467.
+
 2004-02-05  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-pdb.c (pygimp_param_from_tuple): Translate
