@@ -147,6 +147,7 @@ int       default_type = RGB;
 double    default_xresolution = 72.0;
 double    default_yresolution = 72.0;
 GUnit     default_resolution_units = UNIT_INCH;
+int       default_dot_for_dot = TRUE;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
@@ -292,11 +293,12 @@ static ParseFunc funcs[] =
   { "last-tip-shown",            TT_INT,        &last_tip, NULL },
   { "show-tool-tips",            TT_BOOLEAN,    &show_tool_tips, NULL },
   { "dont-show-tool-tips",       TT_BOOLEAN,    NULL, &show_tool_tips },
-  { "default-image-size",        TT_POSITION, &default_width, &default_height },
+  { "default-image-size",        TT_POSITION,   &default_width, &default_height },
   { "default-image-type",        TT_IMAGETYPE,  &default_type, NULL },
   { "default-xresolution",       TT_DOUBLE,     &default_xresolution, NULL },
   { "default-yresolution",       TT_DOUBLE,     &default_yresolution, NULL },
-  { "default-resolution-units",  TT_XUNIT,    &default_resolution_units, NULL },
+  { "default-resolution-units",  TT_XUNIT,      &default_resolution_units, NULL },
+  { "default-dot-for-dot",       TT_BOOLEAN,	&default_dot_for_dot, NULL },
   { "plug-in",                   TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",               TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",                 TT_XMENUPATH,  NULL, NULL },

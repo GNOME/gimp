@@ -65,6 +65,7 @@ extern int       default_type;
 extern GUnit     default_resolution_units;
 extern double    default_xresolution;
 extern double    default_yresolution;
+extern int       default_dot_for_dot;
 extern int       save_session_info;
 extern int       save_device_status;
 extern int       always_restore_session;

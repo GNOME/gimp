@@ -663,11 +663,11 @@ create_display_shell (GDisplay* gdisp,
     s_width  = gdk_screen_width ();
     s_height = gdk_screen_height ();
 
-    scalesrc = gdisp->scale & 0x00ff;
-    scaledest = gdisp->scale >> 8;
+    scalesrc  = SCALESRC (gdisp);
+    scaledest = SCALEDEST (gdisp);
 
-    n_width  = (width * scaledest) / scalesrc;
-    n_height = (height * scaledest) / scalesrc;
+    n_width  = SCALEX (gdisp, width);
+    n_height = SCALEX (gdisp, height);
 
     /*  Limit to the size of the screen...  */
     while (n_width > s_width || n_height > s_height)
@@ -678,8 +678,10 @@ create_display_shell (GDisplay* gdisp,
 	  if (scalesrc < 0xff)
 	    scalesrc++;
 
-	n_width = (width * scaledest) / scalesrc;
-	n_height = (height * scaledest) / scalesrc;
+	n_width  = width * 
+	  (scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
+	n_height = height *
+	  (scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
       }
 
     gdisp->scale = (scaledest << 8) + scalesrc;

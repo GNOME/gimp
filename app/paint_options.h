@@ -76,15 +76,8 @@ struct _PaintOptions
 
 
 /*  the default pressure_options for non_gui use  */
-static PaintPressureOptions non_gui_pressure_options =
-{
-  NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL,
-  FALSE, FALSE, NULL
-};
+extern PaintPressureOptions non_gui_pressure_options;
+
 
 /*  paint tool options functions  */
 

@@ -100,7 +100,7 @@ gdisplay_new (GimpImage    *gimage,
 
   gdisp->offset_x = gdisp->offset_y = 0;
   gdisp->scale = scale;
-  gdisp->dot_for_dot = TRUE;
+  gdisp->dot_for_dot = default_dot_for_dot;
   gdisp->gimage = gimage;
   gdisp->window_info_dialog = NULL;
   gdisp->window_nav_dialog = NULL;

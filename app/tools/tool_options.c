@@ -28,6 +28,18 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  declared extern in paint_options.h  */
+PaintPressureOptions non_gui_pressure_options = 
+{
+  NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL,
+  FALSE, FALSE, NULL
+};
+
+
 /*  a list of all PaintOptions  */
 static GSList  *paint_options_list = NULL;
 

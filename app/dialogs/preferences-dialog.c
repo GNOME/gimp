@@ -93,6 +93,7 @@ static double     old_default_xresolution;
 static double     old_default_yresolution;
 static GUnit      old_default_resolution_units;
 static int        old_default_type;
+static int        old_default_dot_for_dot;
 static int        old_stingy_memory_use;
 static int        old_tile_cache_size;
 static int        old_install_cmap;
@@ -561,6 +562,11 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "default-resolution-units");
   if (default_type != old_default_type)
     update = g_list_append (update, "default-image-type");
+  if (default_dot_for_dot != old_default_dot_for_dot)
+    {
+      update = g_list_append (update, "default-dot-for-dot");
+      remove = g_list_append (remove, "dont-default-dot-for-dot");
+    }
   if (preview_size != old_preview_size)
     update = g_list_append (update, "preview-size");
   if (nav_preview_size != old_nav_preview_size)
@@ -704,6 +710,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   default_yresolution = old_default_yresolution;
   default_resolution_units = old_default_resolution_units;
   default_type = old_default_type;
+  default_dot_for_dot = old_default_dot_for_dot;
   monitor_xres = old_monitor_xres;
   monitor_yres = old_monitor_yres;
   using_xserver_resolution = old_using_xserver_resolution;
@@ -803,6 +810,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
     } 
+  else if (data == &default_dot_for_dot)
+    default_dot_for_dot = GTK_TOGGLE_BUTTON (widget)->active;
   else if ((data == &transparency_type) ||
 	   (data == &transparency_size))
     {
@@ -1302,6 +1311,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_default_yresolution = default_yresolution;
   old_default_resolution_units = default_resolution_units;
   old_default_type = default_type;
+  old_default_dot_for_dot = default_dot_for_dot;
   old_stingy_memory_use = edit_stingy_memory_use;
   old_tile_cache_size = edit_tile_cache_size;
   old_install_cmap = edit_install_cmap;
@@ -1855,7 +1865,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   vbox2 = file_prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
 
   button =
-    gtk_check_button_new_with_label(_("Perfect-but-slow Pointer Tracking"));
+    gtk_check_button_new_with_label (_("Perfect-but-slow Pointer Tracking"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
@@ -1864,13 +1874,28 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &perfectmouse);
   gtk_widget_show (button);
 
-  button = gtk_check_button_new_with_label(_("Disable Cursor Updating"));
+  button = gtk_check_button_new_with_label (_("Disable Cursor Updating"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				no_cursor_updating);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &no_cursor_updating);
+  gtk_widget_show (button);
+
+  /* Dot for dot */
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (vbox), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				default_dot_for_dot);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &default_dot_for_dot);
   gtk_widget_show (button);
 
   /* Interface / Tool Options */
