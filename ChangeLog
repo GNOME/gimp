@@ -1,3 +1,8 @@
+2004-11-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_preview.c
+	* plug-ins/imagemap/imap_selection.c: undeprecated.
+
 2004-11-28  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dobject.c: copy the style of the object when

@@ -23,11 +23,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
@@ -66,7 +61,7 @@
 static Preview_t*
 preview_user_data(GtkWidget *preview)
 {
-   return (Preview_t*) gtk_object_get_user_data(GTK_OBJECT(preview));
+  return (Preview_t*) g_object_get_data (G_OBJECT (preview), "preview");
 }
 
 gint
@@ -307,28 +302,28 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
 void
 add_preview_motion_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(preview->preview, "motion_notify_event", 
+   g_signal_connect(preview->preview, "motion_notify_event",
 		    func, NULL);
 }
 
 void
 add_enter_notify_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(preview->preview, "enter_notify_event", 
+   g_signal_connect(preview->preview, "enter_notify_event",
 		    func, NULL);
 }
 
 void
 add_leave_notify_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(preview->preview, "leave_notify_event", 
+   g_signal_connect(preview->preview, "leave_notify_event",
 		    func, NULL);
 }
 
 void
 add_preview_button_press_event(Preview_t *preview, GCallback func)
 {
-   g_signal_connect(preview->preview, "button_press_event", 
+   g_signal_connect(preview->preview, "button_press_event",
 		    func, NULL);
 }
 
@@ -343,7 +338,7 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
 {
    preview->widget_width = preview->width * zoom_factor;
    preview->widget_height = preview->height * zoom_factor;
-   gtk_widget_set_size_request (preview->preview, preview->widget_width, 
+   gtk_widget_set_size_request (preview->preview, preview->widget_width,
                                 preview->widget_height);
    gtk_widget_queue_resize(preview->window);
    render_preview(preview, &preview->src_rgn);
@@ -394,8 +389,8 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 }
 
 static void
-preview_size_allocate (GtkWidget *widget, 
-                       GtkAllocation *allocation, 
+preview_size_allocate (GtkWidget *widget,
+                       GtkAllocation *allocation,
                        gpointer preview_void)
 {
   Preview_t * preview;
@@ -420,7 +415,7 @@ make_preview(GimpDrawable *drawable)
    data->drawable = drawable;
    data->preview = preview = gimp_preview_area_new ();
 
-   gtk_object_set_user_data(GTK_OBJECT(preview), data);
+   g_object_set_data (G_OBJECT (preview), "preview", data);
    gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
    g_signal_connect_after(preview, "expose_event",
 			  G_CALLBACK(preview_expose), data);
@@ -433,11 +428,11 @@ make_preview(GimpDrawable *drawable)
    g_signal_connect(preview, "drag_data_received",
 		    G_CALLBACK(handle_drop), NULL);
 
-   data->widget_width = data->width = 
+   data->widget_width = data->width =
        gimp_drawable_width(drawable->drawable_id);
-   data->widget_height = data->height = 
+   data->widget_height = data->height =
        gimp_drawable_height(drawable->drawable_id);
-   gtk_widget_set_size_request (preview, data->widget_width, 
+   gtk_widget_set_size_request (preview, data->widget_width,
                                 data->widget_height);
 
    data->window = window = gtk_scrolled_window_new(NULL, NULL);
