@@ -1,5 +1,10 @@
 2004-05-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppickbutton.c: applied patch from Philip
+	Lafleur that fixes color picking for XInput devices (bug #143166).
+
+2004-05-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_grid):
 	fixed handling of grid offsets in the grid drawing routine.
 
