@@ -1,3 +1,9 @@
+2004-11-27  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/spyrogimp.scm: Force number of teeth
+	to be integer values. Changed default for Outer teeth to give a
+	more interesting image. Detabified file. Fixes bug #158448. 
+
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
@@ -234,7 +240,7 @@
 	* menus/image-menu.xml.in: put the Quit item back for now. We
 	should think about this again in the next development cycle.
 
-2004-11-21  Kevin Cozens  <kcozens@cvs.gimp.org>
+2004-11-22  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: Fixed incorrect
 	comparison in if statement. Partial(?) fix for bug #138662. 

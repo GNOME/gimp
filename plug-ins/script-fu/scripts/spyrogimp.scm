@@ -120,12 +120,12 @@
          (poly (if (= shape 1) 4   ; A frame has four sides.
                               (if (> shape 1) (+ shape 1) 0)))
 
-	 (2pi (* 2 *pi*))
+         (2pi (* 2 *pi*))
         
-	 (drw-width (- x2 x1))
-	 (drw-height (- y2 y1))
-	 (half-width (/ drw-width 2))
-	 (half-height (/ drw-height 2))
+         (drw-width (- x2 x1))
+         (drw-height (- y2 y1))
+         (half-width (/ drw-width 2))
+         (half-height (/ drw-height 2))
          (midx (+ x1 half-width))
          (midy (+ y1 half-height))
 
@@ -145,8 +145,8 @@
          ; Indexes
          (grad-index 0)  ; for array: grada
          (point-index 0) ; for array: *points*
-	 (index 0)
-	 )
+         (index 0)
+         )
 
 
     ; Do one step of the loop.
@@ -306,6 +306,9 @@
          (y2 (car (cdddr bounds)))
        )
 
+    (set! oteeth (trunc (+ oteeth 0.5)))
+    (set! iteeth (trunc (+ iteeth 0.5)))
+
     (script-fu-spyrogimp-internal img drw 
              x1 y1 x2 y2
              type shape
@@ -318,44 +321,44 @@
 
 
 (script-fu-register "script-fu-spyrogimp"
-		    _"_Spyrogimp..."
-		    _"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-		    "Elad Shahar <elad@wisdom.weizmann.ac.il>"
-		    "Elad Shahar"
-		    "June 2003"
-		    "RGB*, INDEXED*, GRAY*"
-		    SF-IMAGE       "Image"         0
-		    SF-DRAWABLE    "Drawable"      0
+                    _"_Spyrogimp..."
+                    _"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
+                    "Elad Shahar <elad@wisdom.weizmann.ac.il>"
+                    "Elad Shahar"
+                    "June 2003"
+                    "RGB*, INDEXED*, GRAY*"
+                    SF-IMAGE       "Image"         0
+                    SF-DRAWABLE    "Drawable"      0
 
-		    SF-OPTION     _"Type"         '(_"Spyrograph"
-						    _"Epitrochoid"
-						    _"Lissajous")
-		    SF-OPTION     _"Shape"        '(_"Circle"
-						    _"Frame"
-						    _"Triangle"
-						    _"Square"
-						    _"Pentagon"
-						    _"Hexagon"
-						    _"Polygon: 7 sides"
-						    _"Polygon: 8 sides"
-						    _"Polygon: 9 sides"
-						    _"Polygon: 10 sides")
-		    SF-ADJUSTMENT _"Outer teeth"   '(90 1 120 1 10 0 0)
-		    SF-ADJUSTMENT _"Inner teeth"   '(70 1 120 1 10 0 0)
-		    SF-ADJUSTMENT _"Margin (pixels)" '(0 -10000 10000 1 10 0 1)
-		    SF-ADJUSTMENT _"Hole ratio"    '(0.4 0.0 1.0 0.01 0.1 2 0)
-		    SF-ADJUSTMENT _"Start angle"   '(0 0 359 1 10 0 0)
+                    SF-OPTION     _"Type"         '(_"Spyrograph"
+                                                    _"Epitrochoid"
+                                                    _"Lissajous")
+                    SF-OPTION     _"Shape"        '(_"Circle"
+                                                    _"Frame"
+                                                    _"Triangle"
+                                                    _"Square"
+                                                    _"Pentagon"
+                                                    _"Hexagon"
+                                                    _"Polygon: 7 sides"
+                                                    _"Polygon: 8 sides"
+                                                    _"Polygon: 9 sides"
+                                                    _"Polygon: 10 sides")
+                    SF-ADJUSTMENT _"Outer teeth"   '(86 1 120 1 10 0 0)
+                    SF-ADJUSTMENT _"Inner teeth"   '(70 1 120 1 10 0 0)
+                    SF-ADJUSTMENT _"Margin (pixels)" '(0 -10000 10000 1 10 0 1)
+                    SF-ADJUSTMENT _"Hole ratio"    '(0.4 0.0 1.0 0.01 0.1 2 0)
+                    SF-ADJUSTMENT _"Start angle"   '(0 0 359 1 10 0 0)
 
-		    SF-OPTION     _"Tool"          '(_"Pencil"
-						     _"Brush"
-						     _"Airbrush")
-		    SF-BRUSH      _"Brush"         '("Circle (01)" 1.0 -1 0)
+                    SF-OPTION     _"Tool"          '(_"Pencil"
+                                                     _"Brush"
+                                                     _"Airbrush")
+                    SF-BRUSH      _"Brush"         '("Circle (01)" 1.0 -1 0)
 
-		    SF-OPTION     _"Color method"  '(_"Solid Color" 
-						     _"Gradient: Loop Sawtooth" 
-						     _"Gradient: Loop Triangle")
-		    SF-COLOR      _"Color"         '(0 0 0)
-		    SF-GRADIENT   _"Gradient"       "Deep Sea")
+                    SF-OPTION     _"Color method"  '(_"Solid Color" 
+                                                     _"Gradient: Loop Sawtooth" 
+                                                     _"Gradient: Loop Triangle")
+                    SF-COLOR      _"Color"         '(0 0 0)
+                    SF-GRADIENT   _"Gradient"       "Deep Sea")
 
 (script-fu-menu-register "script-fu-spyrogimp"
-			 _"<Image>/Script-Fu/Render")
+                         _"<Image>/Script-Fu/Render")
