@@ -1,3 +1,8 @@
+Wed Apr 26 22:35:36 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	On request of Martin Weber <martweb@gmx.net>:
+	* plug-ins/bmp/bmpwrite.c: fix Bitmap_Head.biPlanes = channels.
+
 2000-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf.c (xcf_load_image_props): when reading PROP_UNIT, check
