@@ -1,3 +1,8 @@
+2003-08-12  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gifload.c: revert one of Sven's -pedantic
+	changes from July which caused GIF-loading bogosity.
+
 2003-08-12  Ville Pätsi  <drc@gimp.org>
 	* gimp.spec.in: Disable separate debug packages
 

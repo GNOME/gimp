@@ -481,7 +481,7 @@ static int
 DoExtension (FILE *fd,
 	     int   label)
 {
-  static gchar  buf[256];
+  static guchar buf[256];
   gchar        *str;
 
   switch (label)
