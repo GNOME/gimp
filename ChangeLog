@@ -1,3 +1,8 @@
+2002-01-27  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-new-dialog.c: moved the memory size information out
+	of the frame label to avoid redrawing the whole frame for every change.
+
 2002-01-25  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: CPPFLAGS: added -DGTK_DISABLE_DEPRECATED

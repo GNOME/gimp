@@ -44,8 +44,8 @@ typedef struct
 
   GtkWidget          *confirm_dialog;
 
-  GtkWidget          *size_frame;
   GtkWidget          *size_se;
+  GtkWidget          *memsize_label;
   GtkWidget          *resolution_se;
   GtkWidget          *couple_resolutions;
 
@@ -136,13 +136,13 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (top_vbox);
 
   /*  Image size frame  */
-  info->size_frame = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (top_vbox), info->size_frame, FALSE, FALSE, 0);
-  gtk_widget_show (info->size_frame);
+  frame = gtk_frame_new (_("Image Size"));
+  gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (info->size_frame), vbox);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (7, 2, FALSE);
@@ -218,6 +218,10 @@ file_new_dialog_create (Gimp      *gimp,
   label = gtk_label_new (_("Pixels"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  info->memsize_label = gtk_label_new (NULL);
+  gtk_box_pack_end (GTK_BOX (hbox), info->memsize_label, FALSE, FALSE, 0);
+  gtk_widget_show (info->memsize_label);
 
   /*  add the "height in pixels" spinbutton to the main table  */
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
@@ -668,8 +672,7 @@ file_new_image_size_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   NewImageInfo *info;
-  gchar *text;
-  gchar *label;
+  gchar        *text;
 
   info = (NewImageInfo*) data;
 
@@ -680,10 +683,7 @@ file_new_image_size_callback (GtkWidget *widget,
 
   info->size = gimp_image_new_calculate_size (info->values);
 
-  label = g_strdup_printf (_("Image Size: %s"),
-			   text = gimp_image_new_get_size_string (info->size));
-  gtk_frame_set_label (GTK_FRAME (info->size_frame), label);
-
-  g_free (label);
+  text = gimp_image_new_get_size_string (info->size);
+  gtk_label_set_text (GTK_LABEL (info->memsize_label), text);
   g_free (text);
 }
