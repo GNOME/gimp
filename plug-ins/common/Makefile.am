@@ -70,6 +70,7 @@ libexec_PROGRAMS = \
 	exchange \
 	film \
 	flarefx \
+	fp \
 	fractaltrace \
 	gauss \
 	gbr \
@@ -733,6 +734,19 @@ flarefx_SOURCES = \
 	flarefx.c
 
 flarefx_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+fp_SOURCES = \
+	fp.c
+
+fp_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\

@@ -1624,7 +1624,6 @@ plug-ins/common/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
-plug-ins/fp/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile

@@ -42,6 +42,7 @@
     'exchange' => { libdep => 'gtk', ui => 1 },
     'film' => { libdep => 'gtk', ui => 1 },
     'flarefx' => { libdep => 'gtk', ui => 1 },
+    'fp' => { libdep => 'gtk', ui => 1 },
     'fractaltrace' => { libdep => 'gtk', ui => 1 },
     'gauss' => { libdep => 'gtk', ui => 1 },
     'gbr' => { libdep => 'gtk', ui => 1 },

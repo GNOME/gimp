@@ -1,3 +1,18 @@
+2004-10-11  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/fp/fp.c: Moved from here...
+
+	* plug-ins/common/fp.c: ... to here.
+
+	* plug-ins/common/plugin-defs.pl: changed accordingly.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/fp: Removed directory.
+
 2004-10-11  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/jigsaw.c: ported to GimpAspectPreview.

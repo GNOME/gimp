@@ -40,7 +40,6 @@ SUBDIRS = \
 	faxg3			\
 	fits			\
 	flame			\
-	fp			\
 	gfig			\
 	gflare			\
 	gfli			\
