@@ -16,14 +16,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MAGNIFY_H__
-#define __MAGNIFY_H__
+#ifndef __GIMP_MAGNIFY_TOOL_H__
+#define __GIMP_MAGNIFY_TOOL_H__
 
 
-Tool * tools_new_magnify  (void);
-void   tools_free_magnify (Tool *tool);
-
-void   magnify_draw       (Tool *tool);
+#include "gimpdrawtool.h"
 
 
-#endif  /*  __MAGNIFY_H__  */
+#define GIMP_TYPE_MAGNIFY_TOOL            (gimp_magnify_tool_get_type ())
+#define GIMP_MAGNIFY_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyTool))
+#define GIMP_IS_MAGNIFY_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_MAGNIFY_TOOL))
+#define GIMP_MAGNIFY_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MAGNIFY_TOOL, GimpMagnifyToolClass))
+#define GIMP_IS_MAGNIFY_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MAGNIFY_TOOL))
+
+
+typedef struct _GimpMagnifyTool      GimpMagnifyTool;
+typedef struct _GimpMagnifyToolClass GimpMagnifyToolClass;
+
+struct _GimpMagnifyTool
+{
+  GimpDrawTool  parent_instance;
+
+  gint          x, y;       /*  upper left hand coordinate  */
+  gint          w, h;       /*  width and height            */
+
+  GimpZoomType  op;         /*  magnify operation           */
+};
+
+struct _GimpMagnifyToolClass
+{
+  GimpDrawToolClass parent_class;
+};
+
+
+void       gimp_magnify_tool_register (void);
+
+GtkType    gimp_magnify_tool_get_type (void);
+
+
+#endif  /*  __GIMP_MAGNIFY_TOOL_H__  */

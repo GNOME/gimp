@@ -1,3 +1,20 @@
+2001-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/appenums.h: renamed ZoomType to GimpZoomZype and added it
+	here.
+
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/nav_window.c
+	* app/scale.[ch]: changed accordingly.
+
+	* app/tools/Makefile.am
+	* app/tools/magnify.[ch]: back as object.
+
+	* app/tools/tool.c: removed the old ToolInfo entry.
+
+	* app/tools/tools.c: register it.
+
 2001-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am

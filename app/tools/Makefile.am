@@ -62,8 +62,8 @@ libapptools_la_SOURCES = \
 ##	iscissors.h		\
 ##	levels.c		\
 ##	levels.h		\
-##	magnify.c		\
-##	magnify.h		\
+	magnify.c		\
+	magnify.h		\
 	measure.c		\
 	measure.h		\
 	move.c			\

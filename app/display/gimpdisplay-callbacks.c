@@ -338,7 +338,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  state |= GDK_BUTTON4_MASK;
 	  if (state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, ZOOMIN);
+	      change_scale (gdisp, GIMP_ZOOM_IN);
 	    }
 	  else
 	    {
@@ -356,7 +356,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  state |= GDK_BUTTON5_MASK;
 	  if (state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, ZOOMOUT);
+	      change_scale (gdisp, GIMP_ZOOM_OUT);
 	    }
 	  else
 	    {

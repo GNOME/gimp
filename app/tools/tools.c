@@ -42,6 +42,7 @@
 #include "fuzzy_select.h"
 #include "gimpimage.h"
 #include "ink.h"
+#include "magnify.h"
 #include "measure.h"
 #include "move.h"
 #include "gimppaintbrushtool.h"
@@ -62,6 +63,7 @@ register_tools (void)
   gimp_paintbrush_tool_register ();
   gimp_bucket_fill_tool_register ();
   gimp_measure_tool_register ();
+  gimp_magnify_tool_register ();
   gimp_crop_tool_register ();
   gimp_color_picker_tool_register ();
   gimp_text_tool_register ();

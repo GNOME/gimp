@@ -847,7 +847,7 @@ nav_window_preview_events (GtkWidget *widget,
 	case 4:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, ZOOMIN);
+	      change_scale (gdisp, GIMP_ZOOM_IN);
 	    }
 	  else
 	    {
@@ -864,7 +864,7 @@ nav_window_preview_events (GtkWidget *widget,
 	case 5:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      change_scale (gdisp, ZOOMOUT);
+	      change_scale (gdisp, GIMP_ZOOM_OUT);
 	    }
 	  else
 	    {
@@ -935,10 +935,10 @@ nav_window_preview_events (GtkWidget *widget,
 	  ty = iwd->dispy + 1;
 	  break;
 	case GDK_equal:
-	  change_scale (gdisp, ZOOMIN);
+	  change_scale (gdisp, GIMP_ZOOM_IN);
 	  break;
 	case GDK_minus:
-	  change_scale (gdisp, ZOOMOUT);
+	  change_scale (gdisp, GIMP_ZOOM_OUT);
 	  break;
 	default:
 	  break;
@@ -1071,7 +1071,7 @@ navwindow_zoomin (GtkWidget *widget,
   if(!iwd || iwd->frozen == TRUE)
     return;
 
-  change_scale (iwd->gdisp, ZOOMIN);
+  change_scale (iwd->gdisp, GIMP_ZOOM_IN);
 }
 
 static void
@@ -1085,7 +1085,7 @@ navwindow_zoomout (GtkWidget *widget,
   if (!iwd || iwd->frozen == TRUE)
     return;
 
-  change_scale (iwd->gdisp, ZOOMOUT);
+  change_scale (iwd->gdisp, GIMP_ZOOM_OUT);
 }
 
 static void

@@ -98,12 +98,12 @@ shrink_wrap_display (GDisplay *gdisp)
 
 
 void
-change_scale (GDisplay *gdisp,
-	      ZoomType  zoom_type)
+change_scale (GDisplay     *gdisp,
+	      GimpZoomType  zoom_type)
 {
-  guchar scalesrc, scaledest;
+  guchar  scalesrc, scaledest;
   gdouble offset_x, offset_y;
-  glong sx, sy;
+  glong   sx, sy;
 
   /* user zoom control, so resolution versions not needed -- austin */
   scalesrc = SCALESRC (gdisp);
@@ -117,7 +117,7 @@ change_scale (GDisplay *gdisp,
 
   switch (zoom_type)
     {
-    case ZOOMIN :
+    case GIMP_ZOOM_IN:
       if (scalesrc > 1)
 	scalesrc--;
       else
@@ -127,7 +127,7 @@ change_scale (GDisplay *gdisp,
 	  return;
       break;
 
-    case ZOOMOUT :
+    case GIMP_ZOOM_OUT:
       if (scaledest > 1)
 	scaledest--;
       else
@@ -137,7 +137,7 @@ change_scale (GDisplay *gdisp,
 	  return;
       break;
 
-    default :
+    default:
       scalesrc = zoom_type % 100;
       if (scalesrc < 1)
 	scalesrc = 1;

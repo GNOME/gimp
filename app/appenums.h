@@ -124,8 +124,6 @@ typedef enum
   ONCE_END_COLOR   /* paint once, but keep painting with the end color */
 } GradientPaintMode;
 
-
-/* gradient paint modes */
 typedef enum
 {
   LINEAR_INTERPOLATION,
@@ -146,6 +144,12 @@ typedef enum
   VERTICAL,
   UNKNOWN
 } OrientationType;
+
+typedef enum /*< skip >*/
+{
+  GIMP_ZOOM_IN,
+  GIMP_ZOOM_OUT
+} GimpZoomType;
 
 /*  Procedural database types  */
 typedef enum

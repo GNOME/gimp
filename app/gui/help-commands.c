@@ -502,7 +502,7 @@ view_zoomin_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  change_scale (gdisp, ZOOMIN);
+  change_scale (gdisp, GIMP_ZOOM_IN);
 }
 
 void
@@ -512,7 +512,7 @@ view_zoomout_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  change_scale (gdisp, ZOOMOUT);
+  change_scale (gdisp, GIMP_ZOOM_OUT);
 }
 
 static void

@@ -20,21 +20,14 @@
 #define __SCALE_H__
 
 
-typedef enum
-{
-  ZOOMIN,
-  ZOOMOUT
-} ZoomType;
-
-
-void   change_scale        (GDisplay *gdisp,
-			    ZoomType  zoom_type);
-void   resize_display      (GDisplay *gdisp,
-			    gboolean  resize_window,
-			    gboolean  redisplay);
-void   shrink_wrap_display (GDisplay *gdisp);
-void   setup_scale         (GDisplay *gdisp);
-void   bounds_checking     (GDisplay *gdisp);
+void   change_scale        (GDisplay     *gdisp,
+			    GimpZoomType  zoom_type);
+void   resize_display      (GDisplay     *gdisp,
+			    gboolean      resize_window,
+			    gboolean      redisplay);
+void   shrink_wrap_display (GDisplay     *gdisp);
+void   setup_scale         (GDisplay     *gdisp);
+void   bounds_checking     (GDisplay     *gdisp);
 
 
 #endif  /*  __SCALE_H__  */
