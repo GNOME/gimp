@@ -1,3 +1,10 @@
+2002-06-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tiler.c: converted Make Seamless plug-in so it now 
+	uses a tile iterator. It's now about 10 times faster than the original
+	implementation. Also includes fix for #67686 which was caused by
+	rounding error in integer calculations.
+
 2002-06-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.[ch]: removed gdisp->scale,
