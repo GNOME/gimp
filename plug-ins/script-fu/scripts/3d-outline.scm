@@ -32,8 +32,10 @@
 				      s-offset-y)
   (let* ((width (car (gimp-drawable-width logo-layer)))
          (height (car (gimp-drawable-height logo-layer)))
-         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-         (pattern (car (gimp-layer-new img width height RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
+         (bg-layer (car (gimp-layer-new img width height
+					RGB-IMAGE "Background" 100 NORMAL-MODE)))
+         (pattern (car (gimp-layer-new img width height
+				       RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
     (gimp-selection-none img)
@@ -50,7 +52,7 @@
     (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
 
     (gimp-drawable-set-visible pattern FALSE)
-    (set! layer2 (car (gimp-image-merge-visible-layers img 1)))
+    (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (plug-in-edge 1 img layer2 2 1 0)
     (set! layer3 (car (gimp-layer-copy layer2 TRUE)))
     (gimp-image-add-layer img layer3 2)
@@ -59,14 +61,15 @@
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
     (gimp-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-    (plug-in-bump-map noninteractive img pattern layer2 110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
+    (plug-in-bump-map noninteractive img pattern layer2
+		      110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
     (set! pattern-mask (car (gimp-layer-create-mask pattern ADD-ALPHA-MASK)))
     (gimp-layer-add-mask pattern pattern-mask)
 
     (gimp-selection-all img)
     (gimp-edit-copy layer3)
-    (set! floating_sel (car (gimp-edit-paste pattern-mask 0)))
+    (set! floating_sel (car (gimp-edit-paste pattern-mask FALSE)))
     (gimp-floating-sel-anchor floating_sel)
 
     (gimp-layer-remove-mask pattern MASK-APPLY)

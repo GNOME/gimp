@@ -1,5 +1,20 @@
 2003-12-16  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am: link against libgimpthumb.
+
+	* app/app-sections.txt: updated.
+
+	* app/app-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: updated XInclude
+	namespace URL.
+
+2003-12-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimpthumb/libgimpthumb-docs.sgml
 	* libgimpthumb/libgimpthumb-sections.txt
 	* libgimpthumb/tmpl/gimpthumb-enums.sgml

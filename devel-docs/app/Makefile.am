@@ -91,6 +91,7 @@ GTKDOC_LIBS = \
         $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la        \
         $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la        \
         $(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la    \
+        $(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la    \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la  \
         $(GTK_LIBS)                                                     \
         $(LIBART_LIBS)                                                  \

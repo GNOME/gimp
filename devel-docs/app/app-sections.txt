@@ -878,7 +878,6 @@ GIMP_IMAGE_GET_CLASS
 
 <SECTION>
 <FILE>gimpimagefile</FILE>
-GimpImagefileState
 <TITLE>GimpImagefile</TITLE>
 GimpImagefile
 gimp_imagefile_new
@@ -923,6 +922,8 @@ GIMP_IMAGE_MAP_GET_CLASS
 <FILE>gimpitem</FILE>
 <TITLE>GimpItem</TITLE>
 GimpItem
+gimp_item_sink
+gimp_item_is_floating
 gimp_item_removed
 gimp_item_configure
 gimp_item_duplicate
@@ -1087,6 +1088,9 @@ gimp_object_name_changed
 gimp_object_name_free
 gimp_object_name_collate
 gimp_object_get_memsize
+gimp_g_list_get_memsize
+gimp_g_slist_get_memsize
+gimp_g_hash_table_get_memsize
 gimp_g_object_get_memsize
 <SUBSECTION Standard>
 GimpObjectClass
@@ -4056,7 +4060,9 @@ gimp_histogram_view_get_histogram
 gimp_histogram_view_set_channel
 gimp_histogram_view_get_channel
 gimp_histogram_view_set_scale
+gimp_histogram_view_get_scale
 gimp_histogram_view_set_range
+gimp_histogram_view_get_range
 <SUBSECTION Standard>
 GimpHistogramViewClass
 GIMP_HISTOGRAM_VIEW
@@ -4712,7 +4718,7 @@ app_run
 
 <SECTION>
 <FILE>batch</FILE>
-batch_init
+batch_run
 </SECTION>
 
 <SECTION>
@@ -5331,9 +5337,11 @@ GimpContextPropMask
 GimpConvertPaletteType
 GimpGradientSegmentType
 GimpGradientSegmentColor
+GimpImageScaleCheckType
 GimpMaskApplyMode
 GimpMergeType
 GimpOffsetType
+GimpPDBCompatMode
 <SUBSECTION Standard>
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
@@ -5610,7 +5618,7 @@ gimp_image_rotate
 <FILE>gimpimage-scale</FILE>
 <TITLE>GimpImage-scale</TITLE>
 gimp_image_scale
-gimp_image_check_scaling
+gimp_image_scale_check
 </SECTION>
 
 <SECTION>
@@ -6753,6 +6761,7 @@ NetExec
 ProcArg
 ProcRecord
 procedural_db_init
+procedural_db_init_procs
 procedural_db_free
 procedural_db_register
 procedural_db_unregister

@@ -339,12 +339,12 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
 
 /**
  * gimp_composite_init:
+ * @use_cpu_accel: whether to use accelerated routines like MMX
  *
  * Initialise the Gimp Compositing subsystem.  This includes checking
  * for user options and environment, installing the generic set of
  * compositing operation handlers, followed by overloading those which
  * are supported by the current cpu/hardware.
- *
  **/
 void
 gimp_composite_init (gboolean use_cpu_accel)
