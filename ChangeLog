@@ -1,3 +1,12 @@
+2004-01-15  Sven Neumann  <sven@gimp.org>
+
+	* data/misc/Makefile.am: added a "validate" rule that attempts to
+	validate the generated gimp.desktop file using desktop-file-validate
+	(from desktop-file-utils). Run it on 'make dist'.
+
+	* tips/Makefile.am: for consistency, moved the existing validation
+	code to a rule called "validate".
+
 2004-01-14  Manish Singh  <yosh@gimp.org>
 
 	* app/config/gimpconfig-utils.c: #include "file/file-utils.h" for

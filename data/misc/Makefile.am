@@ -60,3 +60,13 @@ if DESKTOP_DATADIR
 		&& rm -f gimp-$(LT_RELEASE).keys \
 	; fi
 endif
+
+validate: gimp.desktop
+	( dfvalidate=`which desktop-file-validate`; \
+	  if test x$$dfvalidate != x && test -x $$dfvalidate; then \
+            $$dfvalidate $< || ( echo "* $< INVALID *"; exit 1 ) \
+	  else \
+	    echo "Can't find desktop-file-validate to validate $<; proceed with fingers crossed..."; \
+          fi )
+
+dist-hook: validate
