@@ -149,6 +149,8 @@ LDADD = \
 	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
+CLEANFILES = y.tab.h
+
 ## The following rules are not necessary for most users.  They are
 ## only used by the maintainers who modify the symbols and grammar
 ## that are used for parsing the map files.  These rules are very

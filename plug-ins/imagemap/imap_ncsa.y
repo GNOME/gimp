@@ -22,9 +22,11 @@
  *
  */
 
+#include "config.h"
+
 #include <math.h>
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
 
 #include "imap_circle.h"
 #include "imap_file.h"

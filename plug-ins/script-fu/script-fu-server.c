@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <glib.h>		/* For G_OS_WIN32 */
 
 #ifndef G_OS_WIN32
@@ -34,18 +36,17 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include "config.h"
-
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif /* HAVE_SYS_SELECT_H */
+
+#include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
 #include "script-fu-intl.h"
 
-#include "gtk/gtk.h"
 #include "siod-wrapper.h"
 #include "script-fu-server.h"
 
