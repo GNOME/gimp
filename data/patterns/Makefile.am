@@ -6,8 +6,8 @@ patterndata_DATA = \
 	3dgreen.pat		\
 	Craters.pat		\
 	Moonfoot.pat		\
-   Stripes1px.pat \
-   Stripes2px.pat \
+	Stripes1px.pat		\
+	Stripes2px.pat		\
 	amethyst.pat		\
 	bark.pat		\
 	blue.pat		\
