@@ -1,249 +1,243 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# GIMP plug-ins' po
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# SHIRASAKI Yasuhiro <yasuhiro@awa.tohoku.ac.jp>, 1999.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-06-05 14:12-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp 1.1.7\n"
+"POT-Creation-Date: 1999-07-03 23:47+0900\n"
+"PO-Revision-Date: 1999-07-05 03:30-0900\n"
+"Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
+"Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/CML_explorer/CML_explorer.c:226
+#: plug-ins/common/CML_explorer.c:226
 msgid "Keep image's values"
-msgstr "Keep image's values"
+msgstr "画像の明度を保持"
 
-#: plug-ins/CML_explorer/CML_explorer.c:228
+#: plug-ins/common/CML_explorer.c:228
 msgid "Keep the first value"
-msgstr ""
+msgstr "最初の明度を保持"
 
-#: plug-ins/CML_explorer/CML_explorer.c:230
+#: plug-ins/common/CML_explorer.c:230
 msgid "Fill with parameter k"
-msgstr ""
+msgstr "パラメータ k で塗る"
 
-#: plug-ins/CML_explorer/CML_explorer.c:232
+#: plug-ins/common/CML_explorer.c:232
 msgid "k{x(1-x)}^p"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:234
+#: plug-ins/common/CML_explorer.c:234
 msgid "k{x(1-x)}^p stepped"
-msgstr ""
+msgstr "段階化 k{x(1-x)}^p"
 
-#: plug-ins/CML_explorer/CML_explorer.c:236
+#: plug-ins/common/CML_explorer.c:236
 msgid "kx^p"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:238
+#: plug-ins/common/CML_explorer.c:238
 msgid "kx^p stepped"
-msgstr ""
+msgstr "段階化 kx^p"
 
-#: plug-ins/CML_explorer/CML_explorer.c:240
+#: plug-ins/common/CML_explorer.c:240
 msgid "k(1 - x^p)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:242
+#: plug-ins/common/CML_explorer.c:242
 msgid "k(1 - x^p) stepped"
-msgstr ""
+msgstr "段階化 k(1 - x^p)"
 
-#: plug-ins/CML_explorer/CML_explorer.c:244
+#: plug-ins/common/CML_explorer.c:244
 msgid "Delta function"
-msgstr ""
+msgstr "デルタ関数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:246
+#: plug-ins/common/CML_explorer.c:246
 msgid "Delta function stepped"
-msgstr ""
+msgstr "段階化デルタ関数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:248
+#: plug-ins/common/CML_explorer.c:248
 msgid "sin^p-based function"
-msgstr ""
+msgstr "sin^p 型関数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:250
+#: plug-ins/common/CML_explorer.c:250
 msgid "sin^p, stepped"
-msgstr ""
+msgstr "段階化 sin^p"
 
-#: plug-ins/CML_explorer/CML_explorer.c:256
+#: plug-ins/common/CML_explorer.c:256
 msgid "None"
-msgstr ""
+msgstr "なし"
 
-#: plug-ins/CML_explorer/CML_explorer.c:258
+#: plug-ins/common/CML_explorer.c:258
 msgid "Max (x, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:260
+#: plug-ins/common/CML_explorer.c:260
 msgid "Max (x+d, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:262
+#: plug-ins/common/CML_explorer.c:262
 msgid "Max (x-d, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:264
-msgid "Mix (x, -)"
+#: plug-ins/common/CML_explorer.c:264
+msgid "Min (x, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:266
+#: plug-ins/common/CML_explorer.c:266
 msgid "Min (x+d, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:268
+#: plug-ins/common/CML_explorer.c:268
 msgid "Min (x-d, -)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:270
+#: plug-ins/common/CML_explorer.c:270
 msgid "Max (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:272
+#: plug-ins/common/CML_explorer.c:272
 msgid "Max (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:274
+#: plug-ins/common/CML_explorer.c:274
 msgid "Max (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:276
+#: plug-ins/common/CML_explorer.c:276
 msgid "Max (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:278
+#: plug-ins/common/CML_explorer.c:278
 msgid "Min (x+d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:280
+#: plug-ins/common/CML_explorer.c:280
 msgid "Min (x+d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:282
+#: plug-ins/common/CML_explorer.c:282
 msgid "Min (x-d, -), (x < 0.5)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:284
+#: plug-ins/common/CML_explorer.c:284
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:290
+#: plug-ins/common/CML_explorer.c:290
 msgid "Standard"
-msgstr ""
+msgstr "標準"
 
-#: plug-ins/CML_explorer/CML_explorer.c:292
+#: plug-ins/common/CML_explorer.c:292
 msgid "Use average value"
-msgstr ""
+msgstr "平均値を使う"
 
-#: plug-ins/CML_explorer/CML_explorer.c:294
+#: plug-ins/common/CML_explorer.c:294
 msgid "Use reverse value"
-msgstr ""
+msgstr "逆数を使う"
 
-#: plug-ins/CML_explorer/CML_explorer.c:296
+#: plug-ins/common/CML_explorer.c:296
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "(0,10) の乱数乗する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:298
+#: plug-ins/common/CML_explorer.c:298
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "(0,1) の乱数乗する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:300
+#: plug-ins/common/CML_explorer.c:300
 msgid "With gradient power (0,1)"
-msgstr ""
+msgstr "(0,1) の傾斜乗する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:302
+#: plug-ins/common/CML_explorer.c:302
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "(0,1) の乱数倍する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:304
+#: plug-ins/common/CML_explorer.c:304
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "(0,2) の乱数倍する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:306
+#: plug-ins/common/CML_explorer.c:306
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "(0,1) の傾斜倍する"
 
-#: plug-ins/CML_explorer/CML_explorer.c:308
+#: plug-ins/common/CML_explorer.c:308
 msgid "With p and random (0,1)"
-msgstr ""
+msgstr "p と (0,1) の乱数で"
 
-#: plug-ins/CML_explorer/CML_explorer.c:313
+#: plug-ins/common/CML_explorer.c:313
 msgid "All black"
-msgstr ""
+msgstr "全黒"
 
 #. 0
-#: plug-ins/CML_explorer/CML_explorer.c:314
+#: plug-ins/common/CML_explorer.c:314
 msgid "All gray"
-msgstr ""
+msgstr "全灰"
 
 #. 1
-#: plug-ins/CML_explorer/CML_explorer.c:315
+#: plug-ins/common/CML_explorer.c:315
 msgid "All white"
-msgstr ""
+msgstr "全白"
 
 #. 2
-#: plug-ins/CML_explorer/CML_explorer.c:316
+#: plug-ins/common/CML_explorer.c:316
 msgid "The first row of the image"
-msgstr ""
+msgstr "画像の最初の列"
 
 #. 3
-#: plug-ins/CML_explorer/CML_explorer.c:317
+#: plug-ins/common/CML_explorer.c:317
 msgid "Continuous gradient"
-msgstr ""
+msgstr "連続的なグラデーション"
 
 #. 4
-#: plug-ins/CML_explorer/CML_explorer.c:318
+#: plug-ins/common/CML_explorer.c:318
 msgid "Continuous grad. w/o gap"
-msgstr ""
+msgstr "ギャップ無しの連続的グラデーション"
 
-#: plug-ins/CML_explorer/CML_explorer.c:320
+#: plug-ins/common/CML_explorer.c:320
 msgid "Random, ch. independent"
-msgstr ""
+msgstr "乱数, チャンネル非依存"
 
-#: plug-ins/CML_explorer/CML_explorer.c:322
+#: plug-ins/common/CML_explorer.c:322
 msgid "Random shared"
-msgstr ""
+msgstr "共通乱数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:324
+#: plug-ins/common/CML_explorer.c:324
 msgid "Randoms from seed"
-msgstr ""
+msgstr "種を元にした乱数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:326
+#: plug-ins/common/CML_explorer.c:326
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "共通種を元にした乱数"
 
-#: plug-ins/CML_explorer/CML_explorer.c:380
-#: plug-ins/CML_explorer/CML_explorer.c:388
-#: plug-ins/CML_explorer/CML_explorer.c:1431
-#: plug-ins/CML_explorer/CML_explorer.c:1755
-#: plug-ins/decompose/decompose.c:135
+#: plug-ins/common/CML_explorer.c:380 plug-ins/common/CML_explorer.c:388
+#: plug-ins/common/CML_explorer.c:1431 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:135
 msgid "Hue"
-msgstr ""
+msgstr "色相"
 
-#: plug-ins/CML_explorer/CML_explorer.c:381
-#: plug-ins/CML_explorer/CML_explorer.c:389
-#: plug-ins/CML_explorer/CML_explorer.c:1435
-#: plug-ins/CML_explorer/CML_explorer.c:1755
-#: plug-ins/decompose/decompose.c:136
+#: plug-ins/common/CML_explorer.c:381 plug-ins/common/CML_explorer.c:389
+#: plug-ins/common/CML_explorer.c:1435 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:136
 msgid "Saturation"
-msgstr ""
+msgstr "彩度"
 
-#: plug-ins/CML_explorer/CML_explorer.c:382
-#: plug-ins/CML_explorer/CML_explorer.c:390
-#: plug-ins/CML_explorer/CML_explorer.c:1439
-#: plug-ins/CML_explorer/CML_explorer.c:1755
-#: plug-ins/decompose/decompose.c:137
+#: plug-ins/common/CML_explorer.c:382 plug-ins/common/CML_explorer.c:390
+#: plug-ins/common/CML_explorer.c:1439 plug-ins/common/CML_explorer.c:1755
+#: plug-ins/common/decompose.c:137
 msgid "Value"
-msgstr ""
+msgstr "明度"
 
-#: plug-ins/CML_explorer/CML_explorer.c:387
+#: plug-ins/common/CML_explorer.c:387
 msgid "NULL"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:494
+#: plug-ins/common/CML_explorer.c:494
 msgid "Make an image of Coupled-Map Lattice"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:495
+#: plug-ins/common/CML_explorer.c:495
 msgid ""
 "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula "
 "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
@@ -251,87 +245,87 @@ msgid ""
 "parameter file."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1327
+#: plug-ins/common/CML_explorer.c:1327
 msgid "Coupled-Map-Lattice Explorer"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1344 plug-ins/ps/ps.c:2423
+#: plug-ins/common/CML_explorer.c:1344 plug-ins/common/ps.c:2448
 msgid "Preview"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1385
+#: plug-ins/common/CML_explorer.c:1385
 msgid "New seed"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1391
+#: plug-ins/common/CML_explorer.c:1391
 msgid "Fix seed"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1397
+#: plug-ins/common/CML_explorer.c:1397
 msgid "Random seed"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1409
+#: plug-ins/common/CML_explorer.c:1409
 msgid "Load"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1412
+#: plug-ins/common/CML_explorer.c:1412
 msgid "Save"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1429
+#: plug-ins/common/CML_explorer.c:1429
 msgid "Hue settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1433
+#: plug-ins/common/CML_explorer.c:1433
 msgid "Saturation settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1437
+#: plug-ins/common/CML_explorer.c:1437
 msgid "Value (grayimage) settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1441
+#: plug-ins/common/CML_explorer.c:1441
 msgid "Advanced settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1443
+#: plug-ins/common/CML_explorer.c:1443
 msgid "Advanced"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1455
+#: plug-ins/common/CML_explorer.c:1455
 msgid "Other parameter settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1459
+#: plug-ins/common/CML_explorer.c:1459
 msgid "Channel independed parameters"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1463
+#: plug-ins/common/CML_explorer.c:1463
 msgid "Initial value"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1469
+#: plug-ins/common/CML_explorer.c:1469
 msgid "Zoom scale"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1474
+#: plug-ins/common/CML_explorer.c:1474
 msgid "Start offset"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1494
+#: plug-ins/common/CML_explorer.c:1494
 msgid "Seed of random (only for \"from seed\" modes)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1498
+#: plug-ins/common/CML_explorer.c:1498
 msgid "Seed"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1508
+#: plug-ins/common/CML_explorer.c:1508
 msgid "Switch to \"from seed\" with the last seed"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1515
+#: plug-ins/common/CML_explorer.c:1515
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
@@ -339,212 +333,209 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1532
+#: plug-ins/common/CML_explorer.c:1532
 msgid "Others"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1539
+#: plug-ins/common/CML_explorer.c:1539
 msgid "Misc operations"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1544
+#: plug-ins/common/CML_explorer.c:1544
 msgid "Copy settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1548
+#: plug-ins/common/CML_explorer.c:1548
 msgid "Source ch."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1554
-#: plug-ins/CML_explorer/CML_explorer.c:1588
+#: plug-ins/common/CML_explorer.c:1554 plug-ins/common/CML_explorer.c:1588
 msgid "Destination ch."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1560
+#: plug-ins/common/CML_explorer.c:1560
 msgid "Do copy parameters"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1578
+#: plug-ins/common/CML_explorer.c:1578
 msgid "Selective load settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1582
+#: plug-ins/common/CML_explorer.c:1582
 msgid "Source ch. in file"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1608
+#: plug-ins/common/CML_explorer.c:1608
 msgid "Misc ops."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1644
+#: plug-ins/common/CML_explorer.c:1644
 msgid "Function type"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1651
+#: plug-ins/common/CML_explorer.c:1651
 msgid "Composition"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1658
+#: plug-ins/common/CML_explorer.c:1658
 msgid "Misc arrange"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1665
+#: plug-ins/common/CML_explorer.c:1665
 msgid "Use cyclic range"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1670
+#: plug-ins/common/CML_explorer.c:1670
 msgid "Mod. rate"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1677
+#: plug-ins/common/CML_explorer.c:1677
 msgid "Env. sensitivity"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1684
+#: plug-ins/common/CML_explorer.c:1684
 msgid "Diffusion dist."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1691
+#: plug-ins/common/CML_explorer.c:1691
 msgid "# of subranges"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1698
+#: plug-ins/common/CML_explorer.c:1698
 msgid "P(ower factor)"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1705
+#: plug-ins/common/CML_explorer.c:1705
 msgid "Parameter k"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1712
+#: plug-ins/common/CML_explorer.c:1712
 msgid "Range low"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1719
+#: plug-ins/common/CML_explorer.c:1719
 msgid "Range high"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1738
+#: plug-ins/common/CML_explorer.c:1738
 msgid "Plot the graph of the settings"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1772
+#: plug-ins/common/CML_explorer.c:1772
 msgid "Ch. sensitivity"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1779
+#: plug-ins/common/CML_explorer.c:1779
 msgid "Mutation rate"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1786
+#: plug-ins/common/CML_explorer.c:1786
 msgid "Mutation dist."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1815
+#: plug-ins/common/CML_explorer.c:1815
 msgid "Graph of the current settings"
 msgstr ""
 
 #. Action Area
-#: plug-ins/CML_explorer/CML_explorer.c:1820
-#: plug-ins/CML_explorer/CML_explorer.c:2681
-#: plug-ins/CML_explorer/CML_explorer.c:2777
-#: plug-ins/apply_lens/apply_lens.c:420 plug-ins/blur/blur.c:619
-#: plug-ins/bmp/bmpwrite.c:428 plug-ins/bumpmap/bumpmap.c:970
-#: plug-ins/checkerboard/checkerboard.c:381 plug-ins/compose/compose.c:816
-#: plug-ins/convmatrix/convmatrix.c:706 plug-ins/cubism/cubism.c:338
-#: plug-ins/decompose/decompose.c:914 plug-ins/depthmerge/depthmerge.c:746
-#: plug-ins/destripe/destripe.c:695 plug-ins/gif/gif.c:1263
-#: plug-ins/jpeg/jpeg.c:1000 plug-ins/mail/mail.c:491
-#: plug-ins/oilify/oilify.c:460 plug-ins/png/png.c:1180
-#: plug-ins/print/print.c:1279 plug-ins/ps/ps.c:1998 plug-ins/ps/ps.c:2265
-#: plug-ins/xbm/xbm.c:959 plug-ins/xpm/xpm.c:763
+#: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1820
+#: plug-ins/common/CML_explorer.c:2681 plug-ins/common/CML_explorer.c:2777
+#: plug-ins/common/apply_lens.c:420 plug-ins/common/blur.c:619
+#: plug-ins/common/bumpmap.c:970 plug-ins/common/checkerboard.c:381
+#: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
+#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:914
+#: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
+#: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
+#: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
+#: plug-ins/common/png.c:825 plug-ins/common/ps.c:2023
+#: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
+#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1830
+#: plug-ins/common/CML_explorer.c:1830
 msgid "The Graph"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:1922
+#: plug-ins/common/CML_explorer.c:1922
 msgid "Warning: the source and the destination are the same channel."
 msgstr ""
 
 #. Action Area
-#: plug-ins/CML_explorer/CML_explorer.c:2010
+#: plug-ins/common/CML_explorer.c:2010
 msgid "Execute"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2019
+#: plug-ins/common/CML_explorer.c:2019
 msgid "Execute and Exit"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2027
+#: plug-ins/common/CML_explorer.c:2027
 msgid "Exit"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2045
+#: plug-ins/common/CML_explorer.c:2045
 msgid "Save parameters to"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2108
-#: plug-ins/CML_explorer/CML_explorer.c:2301
+#: plug-ins/common/CML_explorer.c:2108 plug-ins/common/CML_explorer.c:2301
 #, c-format
 msgid "Error: could not open \"%s\""
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2173
+#: plug-ins/common/CML_explorer.c:2173
 msgid "CML file operation warning"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2180
+#: plug-ins/common/CML_explorer.c:2180
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2223
+#: plug-ins/common/CML_explorer.c:2223
 msgid "Load parameters from"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2225
+#: plug-ins/common/CML_explorer.c:2225
 msgid "Selective load from"
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2324
+#: plug-ins/common/CML_explorer.c:2324
 msgid "Error: it's not CML parameter file."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2331
+#: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: it's an old format file."
 msgstr ""
 
-#: plug-ins/CML_explorer/CML_explorer.c:2333
+#: plug-ins/common/CML_explorer.c:2333
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
 
 #. cancel button
-#: plug-ins/CML_explorer/CML_explorer.c:2690
-#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/apply_lens/apply_lens.c:430
-#: plug-ins/blur/blur.c:621 plug-ins/bmp/bmpwrite.c:437
-#: plug-ins/bumpmap/bumpmap.c:979 plug-ins/checkerboard/checkerboard.c:390
-#: plug-ins/colorify/colorify.c:319 plug-ins/compose/compose.c:825
-#: plug-ins/convmatrix/convmatrix.c:723 plug-ins/cubism/cubism.c:347
-#: plug-ins/decompose/decompose.c:924 plug-ins/depthmerge/depthmerge.c:756
-#: plug-ins/destripe/destripe.c:704 plug-ins/gif/gif.c:1172
-#: plug-ins/jpeg/jpeg.c:1009 plug-ins/mail/mail.c:502
-#: plug-ins/oilify/oilify.c:469 plug-ins/png/png.c:1189
-#: plug-ins/print/print.c:1166 plug-ins/print/print.c:1272
-#: plug-ins/ps/ps.c:2008 plug-ins/ps/ps.c:2275 plug-ins/xbm/xbm.c:707
-#: plug-ins/xbm/xbm.c:969 plug-ins/xpm/xpm.c:772
+#: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
+#: plug-ins/common/CML_explorer.c:2690 plug-ins/common/apply_lens.c:430
+#: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:979
+#: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
+#: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
+#: plug-ins/common/cubism.c:347 plug-ins/common/decompose.c:924
+#: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
+#: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
+#: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
+#: plug-ins/common/png.c:834 plug-ins/common/ps.c:2033
+#: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
+#: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
+#: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
-msgstr ""
+msgstr "各種ライト効果を画像に適用する"
 
 #: plug-ins/Lighting/lighting_main.c:173
 msgid "No help yet"
-msgstr ""
+msgstr "ヘルプ無し"
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects"
@@ -552,150 +543,150 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
-msgstr ""
+msgstr "点光源"
 
 #: plug-ins/Lighting/lighting_ui.c:35
 msgid "Directional light"
-msgstr ""
+msgstr "指向性光源"
 
 #: plug-ins/Lighting/lighting_ui.c:36
 msgid "Spot light"
-msgstr ""
+msgstr "スポット光源"
 
 #: plug-ins/Lighting/lighting_ui.c:37
 msgid "No light"
-msgstr ""
+msgstr "光源無し"
 
 #: plug-ins/Lighting/lighting_ui.c:43
 msgid "From image"
-msgstr ""
+msgstr "画像から"
 
 #: plug-ins/Lighting/lighting_ui.c:44
 msgid "Waves"
-msgstr ""
+msgstr "三角型"
 
 #: plug-ins/Lighting/lighting_ui.c:50
 msgid "Linear"
-msgstr ""
+msgstr "線形"
 
 #: plug-ins/Lighting/lighting_ui.c:51
 msgid "Logarithmic"
-msgstr ""
+msgstr "対数型"
 
 #: plug-ins/Lighting/lighting_ui.c:52
 msgid "Sinusoidal"
-msgstr ""
+msgstr "波状"
 
 #: plug-ins/Lighting/lighting_ui.c:53
 msgid "Spherical"
-msgstr ""
+msgstr "球面"
 
 #: plug-ins/Lighting/lighting_ui.c:569
 msgid "General options"
-msgstr ""
+msgstr "一般オプション"
 
 #: plug-ins/Lighting/lighting_ui.c:572
 msgid "Use bump mapping"
-msgstr ""
+msgstr "バンプマップを使う"
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Use environment mapping"
-msgstr ""
+msgstr "環境マップを使う"
 
 #. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
 #. (GtkSignalFunc)togglerefraction_update);
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Transparent background"
-msgstr ""
+msgstr "透過背景"
 
 #: plug-ins/Lighting/lighting_ui.c:580
 msgid "Create new image"
-msgstr ""
+msgstr "新規画像作成"
 
 #: plug-ins/Lighting/lighting_ui.c:582
 msgid "High preview quality"
-msgstr ""
+msgstr "高品位プレビュー"
 
 #: plug-ins/Lighting/lighting_ui.c:584
 msgid "Enable tooltips"
-msgstr ""
+msgstr "簡易説明を表示する"
 
 #: plug-ins/Lighting/lighting_ui.c:587
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr ""
+msgstr "バンプマップの有効/無効 (画像深度)"
 
 #: plug-ins/Lighting/lighting_ui.c:588
 msgid "Enable/disable environment mapping (reflection)"
-msgstr ""
+msgstr "環境マップの有効/無効 (反射)"
 
 #. gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer");
 #: plug-ins/Lighting/lighting_ui.c:590
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
+msgstr "バンプ高が 0 の部分は出力画像を透明にする"
 
 #: plug-ins/Lighting/lighting_ui.c:591
 msgid "Create a new image when applying filter"
-msgstr ""
+msgstr "フィルタ適用時に新規画像を作成する"
 
 #: plug-ins/Lighting/lighting_ui.c:592
 msgid "Enable/disable high quality previews"
-msgstr ""
+msgstr "高品位プレビューの有効/無効"
 
 #: plug-ins/Lighting/lighting_ui.c:593
 msgid "Enable/disable tooltip messages"
-msgstr ""
+msgstr "簡易説明の有効/無効"
 
 #: plug-ins/Lighting/lighting_ui.c:612
 msgid "Antialiasing options"
-msgstr ""
+msgstr "アンチエイリアシングオプション"
 
 #: plug-ins/Lighting/lighting_ui.c:615
 msgid "Enable antialiasing"
-msgstr ""
+msgstr "アンチエイリアシングする"
 
 #: plug-ins/Lighting/lighting_ui.c:618
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
+msgstr "ギザギザした縁を滑らかにするかどうか (アンチエイリアシング)"
 
 #: plug-ins/Lighting/lighting_ui.c:628
 msgid "Depth:"
-msgstr ""
+msgstr "深度:"
 
 #: plug-ins/Lighting/lighting_ui.c:633
 msgid "Threshold:"
-msgstr ""
+msgstr "閾値:"
 
 #: plug-ins/Lighting/lighting_ui.c:645
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
+msgstr "アンチアエイリアシングの品位. 高い程, 綺麗だが遅い."
 
 #: plug-ins/Lighting/lighting_ui.c:646
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
+msgstr "ピクセル値がこの値よりも小さくなったら止まる"
 
 #: plug-ins/Lighting/lighting_ui.c:669
 msgid "Light settings"
-msgstr ""
+msgstr "光源設定"
 
 #: plug-ins/Lighting/lighting_ui.c:673
 msgid "Lightsource type:"
-msgstr ""
+msgstr "光源種:"
 
 #: plug-ins/Lighting/lighting_ui.c:678
 msgid "Lightsource color"
-msgstr ""
+msgstr "光源色:"
 
 #: plug-ins/Lighting/lighting_ui.c:685
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "適用する光源の種類"
 
 #: plug-ins/Lighting/lighting_ui.c:686
 msgid "Set light source color (white is default)"
-msgstr ""
+msgstr "光源の色を設定する (基本は白)"
 
 #: plug-ins/Lighting/lighting_ui.c:688
 msgid "Position"
-msgstr ""
+msgstr "位置"
 
 #: plug-ins/Lighting/lighting_ui.c:691 plug-ins/Lighting/lighting_ui.c:713
 msgid "X:"
@@ -711,221 +702,223 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:699
 msgid "Light source X position in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中の光源の X 位置"
 
 #: plug-ins/Lighting/lighting_ui.c:700
 msgid "Light source Y position in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中の光源の Y 位置"
 
 #: plug-ins/Lighting/lighting_ui.c:701
 msgid "Light source Z position in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中の光源の Z 位置"
 
 #: plug-ins/Lighting/lighting_ui.c:710
 msgid "Direction vector"
-msgstr ""
+msgstr "方向ベクトル"
 
 #: plug-ins/Lighting/lighting_ui.c:717
 msgid "Light source X direction in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中での光源の向きの X 方向要素"
 
 #: plug-ins/Lighting/lighting_ui.c:718
 msgid "Light source Y direction in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中での光源の向きの Y 方向要素"
 
 #: plug-ins/Lighting/lighting_ui.c:719
 msgid "Light source Z direction in XYZ space"
-msgstr ""
+msgstr "XYZ 空間中での光源の向きの Z 方向要素"
 
 #: plug-ins/Lighting/lighting_ui.c:751
 msgid "Intensity levels"
-msgstr ""
+msgstr "強度レベル"
 
 #: plug-ins/Lighting/lighting_ui.c:756
 msgid "Ambient:"
-msgstr ""
+msgstr "飽和度:"
 
 #: plug-ins/Lighting/lighting_ui.c:757 plug-ins/Lighting/lighting_ui.c:808
 msgid "Diffuse:"
-msgstr ""
+msgstr "拡散:"
 
 #: plug-ins/Lighting/lighting_ui.c:797
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "直接光が当たっていない場合に見える元の色の量"
 
 #: plug-ins/Lighting/lighting_ui.c:798
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "光源に照らされた場合の元の色の強度"
 
 #: plug-ins/Lighting/lighting_ui.c:803
 msgid "Reflectivity"
-msgstr ""
+msgstr "反射性"
 
 #: plug-ins/Lighting/lighting_ui.c:809
 msgid "Specular:"
-msgstr ""
+msgstr "反射:"
 
 #: plug-ins/Lighting/lighting_ui.c:810
 msgid "Hightlight:"
-msgstr ""
+msgstr "ハイライト:"
 
 #: plug-ins/Lighting/lighting_ui.c:824
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "大きな値にすると物体がより光を反射する (明るく見える)"
 
 #: plug-ins/Lighting/lighting_ui.c:825
 msgid "Controls how intense the highlights will be"
-msgstr ""
+msgstr "ハイライトの強度を制御する"
 
 #: plug-ins/Lighting/lighting_ui.c:826
 msgid "Higher values makes the highlights more focused"
-msgstr ""
+msgstr "大きな値にするとハイライトがくっきりする"
 
 #: plug-ins/Lighting/lighting_ui.c:888
 msgid "Bumpmap settings"
-msgstr ""
+msgstr "バンプマップ設定"
 
 #: plug-ins/Lighting/lighting_ui.c:894
 msgid "Bumpmap image:"
-msgstr ""
+msgstr "バンプマップ画像:"
 
 #: plug-ins/Lighting/lighting_ui.c:913
 msgid "Minimum height:"
-msgstr ""
+msgstr "最小の高さ:"
 
 #: plug-ins/Lighting/lighting_ui.c:915
 msgid "Maximum height:"
-msgstr ""
+msgstr "最大の高さ:"
 
 #: plug-ins/Lighting/lighting_ui.c:923
 msgid "Autostretch to fit value range"
-msgstr ""
+msgstr "明度域を自動的に調整する"
 
 #: plug-ins/Lighting/lighting_ui.c:946
 msgid "Environment settings"
-msgstr ""
+msgstr "環境設定"
 
 #: plug-ins/Lighting/lighting_ui.c:953
 msgid "Environment image:"
-msgstr ""
+msgstr "環境画像:"
 
 #: plug-ins/Lighting/lighting_ui.c:987
 msgid "Options"
-msgstr ""
+msgstr "オプション"
 
 #: plug-ins/Lighting/lighting_ui.c:993
 msgid "Light"
-msgstr ""
+msgstr "光源"
 
 #: plug-ins/Lighting/lighting_ui.c:999
 msgid "Material"
-msgstr ""
+msgstr "物質"
 
 #: plug-ins/Lighting/lighting_ui.c:1007
 msgid "Bump"
-msgstr ""
+msgstr "バンプ"
 
 #: plug-ins/Lighting/lighting_ui.c:1016
 msgid "Env"
-msgstr ""
+msgstr "環境"
 
 #: plug-ins/Lighting/lighting_ui.c:1037
 msgid "Lighting effects"
-msgstr ""
+msgstr "ライト効果"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
 #: plug-ins/Lighting/lighting_ui.c:1061
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #: plug-ins/Lighting/lighting_ui.c:1063
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Apply filter with current settings"
-msgstr ""
+msgstr "現在の設定でフィルタを適用する"
 
 #: plug-ins/Lighting/lighting_ui.c:1073
 msgid "Close filter without doing anything"
-msgstr ""
+msgstr "何もせずにフィルタを閉じる"
 
 #: plug-ins/Lighting/lighting_ui.c:1093
 msgid "  Preview!  "
-msgstr ""
+msgstr "  プレビュー!  "
 
 #: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Recompute preview image"
-msgstr ""
+msgstr "プレビュー画像を再計算する"
 
 #: plug-ins/Lighting/lighting_ui.c:1097
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "拡大 (画像を大きくする)"
 
 #: plug-ins/Lighting/lighting_ui.c:1099
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "縮小 (画像を小さくする)"
 
-#: plug-ins/apply_lens/apply_lens.c:136
+#: plug-ins/common/apply_lens.c:136
 msgid "Apply a lens effect"
-msgstr ""
+msgstr "レンズ効果適用"
 
-#: plug-ins/apply_lens/apply_lens.c:137
+#: plug-ins/common/apply_lens.c:137
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
 msgstr ""
+"このプラグインは画像に対して楕円レンズを描画するために Snell "
+"の法則を用いている"
 
-#: plug-ins/apply_lens/apply_lens.c:141
+#: plug-ins/common/apply_lens.c:141
 msgid "<Image>/Filters/Glass Effects/Apply Lens"
 msgstr ""
 
-#: plug-ins/apply_lens/apply_lens.c:200
+#: plug-ins/common/apply_lens.c:200
 msgid "Applying lens..."
-msgstr ""
+msgstr "レンズ効果適用..."
 
-#: plug-ins/apply_lens/apply_lens.c:414
+#: plug-ins/common/apply_lens.c:414
 msgid "Lens effect"
-msgstr ""
+msgstr "レンズ効果"
 
 #.
 #. *  Parameter settings
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/apply_lens/apply_lens.c:439 plug-ins/blur/blur.c:607
-#: plug-ins/checkerboard/checkerboard.c:399 plug-ins/cubism/cubism.c:356
-#: plug-ins/jpeg/jpeg.c:1018 plug-ins/oilify/oilify.c:478
-#: plug-ins/png/png.c:1200 plug-ins/xpm/xpm.c:781
+#: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
+#: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
+#: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
+#: plug-ins/common/png.c:845 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
-msgstr ""
+msgstr "パラメータ設定"
 
-#: plug-ins/apply_lens/apply_lens.c:448
+#: plug-ins/common/apply_lens.c:448
 msgid "Keep original surroundings"
-msgstr ""
+msgstr "オリジナルの周辺部を残す"
 
-#: plug-ins/apply_lens/apply_lens.c:461
+#: plug-ins/common/apply_lens.c:461
 msgid "Set surroundings to index 0"
-msgstr ""
+msgstr "周辺部をインデックス 0 にする"
 
-#: plug-ins/apply_lens/apply_lens.c:462
+#: plug-ins/common/apply_lens.c:462
 msgid "Set surroundings to background color"
-msgstr ""
+msgstr "周辺部を背景色にする"
 
-#: plug-ins/apply_lens/apply_lens.c:475
+#: plug-ins/common/apply_lens.c:475
 msgid "Make surroundings transparent"
-msgstr ""
+msgstr "周辺部を透明にする"
 
-#: plug-ins/apply_lens/apply_lens.c:490
+#: plug-ins/common/apply_lens.c:490
 msgid "Lens refraction index: "
-msgstr ""
+msgstr "レンズ屈折度: "
 
-#: plug-ins/autostretch_hsv/autostretch_hsv.c:82
+#: plug-ins/common/autostretch_hsv.c:82
 msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
-msgstr ""
+msgstr "指定された描画対象のコントラストを時動的に可能な値域全体に広げる."
 
-#: plug-ins/autostretch_hsv/autostretch_hsv.c:83
+#: plug-ins/common/autostretch_hsv.c:83
 msgid ""
 "This simple plug-in does an automatic contrast stretch.  For each channel in "
 "the image, it finds the minimum and maximum values... it uses those values "
@@ -934,832 +927,847 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
+"このシンプルなプラグインは自動コントラスト伸長を行うものです. "
+"画像のそれぞれのチャンネルに対して最小値と最大値を調べて, "
+"チャンネル個々のヒストグラムをコントラスト値域全域に伸長します. "
+"多くの画像に対しては思った通りの結果が得られますが, "
+"ときどきクズ画像を生成してしまいます :) "
+"この版ではコントラスト自動伸長プラグインとは違い, HSV "
+"空間で動作して色相が保存されます."
 
-#: plug-ins/autostretch_hsv/autostretch_hsv.c:87
+#: plug-ins/common/autostretch_hsv.c:87
 msgid "<Image>/Image/Colors/Auto-Stretch HSV"
-msgstr ""
+msgstr "<Image>/画像/色/HSV 自動伸長"
 
-#: plug-ins/autostretch_hsv/autostretch_hsv.c:119
+#: plug-ins/common/autostretch_hsv.c:119
 msgid "Auto-Stretching HSV..."
-msgstr ""
+msgstr "HSV 自動伸長中..."
 
-#: plug-ins/blur/blur.c:194
+#: plug-ins/common/blur.c:194
 msgid "Apply a 3x3 blurring convolution kernel to the specified drawable."
-msgstr ""
+msgstr "3x3 のぼかしコンボリューションカーネルを指定された描画対象に適用する."
 
-#: plug-ins/blur/blur.c:195
+#: plug-ins/common/blur.c:195
 msgid ""
 "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You "
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
+"このプラグインは 3x3 のぼかしを用いて指定された描画対象をぼかす. "
+"ぼかすピクセルの割合と適用する回数を設定する事ができる. "
+"インデックス画像はサポートされていない."
 
-#: plug-ins/blur/blur.c:208
+#: plug-ins/common/blur.c:208
 msgid "<Image>/Filters/Blur/Blur"
 msgstr ""
 
-#: plug-ins/blur/blur.c:620
+#: plug-ins/common/blur.c:620
 msgid "Accept settings and apply filter to image"
-msgstr ""
+msgstr "設定に基づいてフィルタを画像に適用する"
 
-#: plug-ins/blur/blur.c:622
+#: plug-ins/common/blur.c:622
 msgid "Close plug-in without making any changes"
-msgstr ""
+msgstr "画像を変更せずにプラグインを終了する"
 
 #.
 #. *  Randomization seed initialization controls
 #.
-#: plug-ins/blur/blur.c:626
+#: plug-ins/common/blur.c:626
 msgid "Randomization Seed:"
-msgstr ""
+msgstr "乱数の種:"
 
 #.
 #. *  Time button
 #.
-#: plug-ins/blur/blur.c:637
+#: plug-ins/common/blur.c:637
 msgid "Current Time"
-msgstr ""
+msgstr "現在時刻"
 
-#: plug-ins/blur/blur.c:638
+#: plug-ins/common/blur.c:638
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
+msgstr "現在時刻から乱数発生用の種をつくり出す - 十分良い乱数になる"
 
 #.
 #. *  User button
 #.
-#: plug-ins/blur/blur.c:648
+#: plug-ins/common/blur.c:648
 msgid "Other Value"
-msgstr ""
+msgstr "他の値"
 
-#: plug-ins/blur/blur.c:649
+#: plug-ins/common/blur.c:649
 msgid ""
 "Enable user-entered value for random number generator seed - this allows you "
 "to repeat a given \"random\" operation"
 msgstr ""
+"ユーザが入力した値を乱数種として用いる - 一定の \"乱数\" "
+"操作を繰り返すことができる"
 
-#: plug-ins/blur/blur.c:661
+#: plug-ins/common/blur.c:661
 msgid "Value for seeding the random number generator"
-msgstr ""
+msgstr "乱数発生器のための乱数種"
 
 #.
 #. *  Randomization percentage label & scale (1 to 100)
 #.
-#: plug-ins/blur/blur.c:666
+#: plug-ins/common/blur.c:666
 msgid "Randomization %:"
-msgstr ""
+msgstr "乱数度 %:"
 
-#: plug-ins/blur/blur.c:669
+#: plug-ins/common/blur.c:669
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "フィルタを通すピクセルの割合"
 
 #.
 #. *  Repeat count label & scale (1 to 100)
 #.
-#: plug-ins/blur/blur.c:674
+#: plug-ins/common/blur.c:674
 msgid "Repeat:"
-msgstr ""
+msgstr "繰り返し:"
 
-#: plug-ins/blur/blur.c:677
+#: plug-ins/common/blur.c:677
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "フィルタを適用する回数"
 
 #: plug-ins/bmp/bmp.c:105 plug-ins/bmp/bmp.c:106
 msgid "Loads files of Windows BMP file format"
-msgstr ""
+msgstr "Windows BMP ファイル形式のファイルを読み込む"
 
 #: plug-ins/bmp/bmp.c:117 plug-ins/bmp/bmp.c:118
 msgid "Saves files in Windows BMP file format"
-msgstr ""
+msgstr "Windows BMP ファイル形式でファイルを保存する"
 
-#: plug-ins/bmp/bmpread.c:27 plug-ins/gifload/gifload.c:287
-#: plug-ins/jpeg/jpeg.c:494 plug-ins/png/png.c:700 plug-ins/png/png.c:702
-#: plug-ins/xbm/xbm.c:523 plug-ins/xpm/xpm.c:300
+#: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
+#: plug-ins/common/jpeg.c:494 plug-ins/common/png.c:345
+#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
+#: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "%s 読み込み中:"
 
 #: plug-ins/bmp/bmpread.c:39
 #, c-format
 msgid "%s: can't open \"%s\"\n"
-msgstr ""
+msgstr "%s: \"%s\" を開けない\n"
 
 #: plug-ins/bmp/bmpread.c:47
 #, c-format
 msgid "%s: not a valid BMP file %s\n"
-msgstr ""
+msgstr "%s: %s は不正な BMP ファイルです\n"
 
 #: plug-ins/bmp/bmpread.c:55 plug-ins/bmp/bmpread.c:73
 #: plug-ins/bmp/bmpread.c:95
 #, c-format
 msgid "%s: error reading BMP file header\n"
-msgstr ""
+msgstr "%s: BMP ファイルヘッダ読み込み中にエラー発生\n"
 
 #: plug-ins/bmp/bmpread.c:70
 msgid "OS/2 unsupported!\n"
-msgstr ""
+msgstr "OS/2 形式はサポートされていません!\n"
 
 #: plug-ins/bmp/bmpread.c:117
 #, c-format
 msgid "%s: too many colors: %u\n"
-msgstr ""
+msgstr "%s: 色数が多すぎます: %u\n"
 
 #: plug-ins/bmp/bmpread.c:165
 #, c-format
 msgid "%s: bad colormap\n"
-msgstr ""
+msgstr "%s: 不正なカラーマップです\n"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
-#: plug-ins/bmp/bmpread.c:224 plug-ins/compose/compose.c:562
-#: plug-ins/decompose/decompose.c:472 plug-ins/gifload/gifload.c:828
-#: plug-ins/jpeg/jpeg.c:611 plug-ins/png/png.c:810 plug-ins/xbm/xbm.c:612
+#: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
+#: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
+#: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:455
+#: plug-ins/common/xbm.c:612
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: plug-ins/bmp/bmpwrite.c:83
 msgid "bmp: cannot operate on unknown image types or alpha images"
-msgstr ""
+msgstr "bmp: 不明な画像種や透明度を持った画像に対しては使用できません"
 
 #: plug-ins/bmp/bmpwrite.c:140
 #, c-format
 msgid "can't open %s\n"
-msgstr ""
+msgstr "%s が開けません\n"
 
-#: plug-ins/bmp/bmpwrite.c:154 plug-ins/jpeg/jpeg.c:759 plug-ins/png/png.c:950
-#: plug-ins/png/png.c:952 plug-ins/ps/ps.c:680 plug-ins/xbm/xbm.c:777
-#: plug-ins/xpm/xpm.c:611 plug-ins/xwd/xwd.c:503
+#: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:759
+#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
+#: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
+#: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
-msgstr ""
+msgstr "%s 保存中:"
 
 #: plug-ins/bmp/bmpwrite.c:421
 msgid "Save as BMP"
-msgstr ""
+msgstr "BMP 形式で保存する"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:446
 msgid "Save Options"
-msgstr ""
+msgstr "保存オプション"
 
 #: plug-ins/bmp/bmpwrite.c:454
 msgid "RLE encoded"
-msgstr ""
+msgstr "RLE エンコード"
 
-#: plug-ins/borderaverage/borderaverage.c:98
+#: plug-ins/common/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
 msgstr ""
 
-#: plug-ins/borderaverage/borderaverage.c:339
+#: plug-ins/common/borderaverage.c:339
 msgid "Border Size"
-msgstr ""
+msgstr "縁サイズ"
 
-#: plug-ins/borderaverage/borderaverage.c:339
+#: plug-ins/common/borderaverage.c:339
 msgid "Thickness"
-msgstr ""
+msgstr "太さ"
 
-#: plug-ins/borderaverage/borderaverage.c:342
+#: plug-ins/common/borderaverage.c:342
 msgid "Number of colors"
-msgstr ""
+msgstr "色数"
 
-#: plug-ins/borderaverage/borderaverage.c:345
+#: plug-ins/common/borderaverage.c:345
 msgid "Bucket Size:"
-msgstr ""
+msgstr "バケツサイズ:"
 
-#: plug-ins/bumpmap/bumpmap.c:298
+#: plug-ins/common/bumpmap.c:298
 msgid "Linear map"
-msgstr ""
+msgstr "線形マップ"
 
-#: plug-ins/bumpmap/bumpmap.c:299
+#: plug-ins/common/bumpmap.c:299
 msgid "Spherical map"
-msgstr ""
+msgstr "球面マップ"
 
-#: plug-ins/bumpmap/bumpmap.c:300
+#: plug-ins/common/bumpmap.c:300
 msgid "Sinusoidal map"
-msgstr ""
+msgstr "波型マップ"
 
-#: plug-ins/bumpmap/bumpmap.c:346
+#: plug-ins/common/bumpmap.c:346
 msgid "Create an embossing effect using an image as a bump map"
-msgstr ""
+msgstr "画像を凸凹マップとして使用して浮き彫り効果を出す"
 
-#: plug-ins/bumpmap/bumpmap.c:354
+#: plug-ins/common/bumpmap.c:354
 msgid "<Image>/Filters/Map/Bump Map"
 msgstr ""
 
-#: plug-ins/bumpmap/bumpmap.c:500
+#: plug-ins/common/bumpmap.c:500
 msgid "Bump-mapping..."
-msgstr ""
+msgstr "バンプマップ中..."
 
 #. Bump map menu
-#: plug-ins/bumpmap/bumpmap.c:830 plug-ins/bumpmap/bumpmap.c:939
+#: plug-ins/common/bumpmap.c:830 plug-ins/common/bumpmap.c:939
 msgid "Bump map"
-msgstr ""
+msgstr "バンプマップ"
 
 #. Compensate darkening
-#: plug-ins/bumpmap/bumpmap.c:884
+#: plug-ins/common/bumpmap.c:884
 msgid "Compensate for darkening"
-msgstr ""
+msgstr "暗くならない様に補償する"
 
 #. Invert bumpmap
-#: plug-ins/bumpmap/bumpmap.c:895
+#: plug-ins/common/bumpmap.c:895
 msgid "Invert bumpmap"
-msgstr ""
+msgstr "反転バンプマップ"
 
 #. Controls
-#: plug-ins/bumpmap/bumpmap.c:958
+#: plug-ins/common/bumpmap.c:958
 msgid "Azimuth"
-msgstr ""
+msgstr "方向"
 
-#: plug-ins/bumpmap/bumpmap.c:959
+#: plug-ins/common/bumpmap.c:959
 msgid "Elevation"
-msgstr ""
+msgstr "持ち上げ"
 
-#: plug-ins/bumpmap/bumpmap.c:960
+#: plug-ins/common/bumpmap.c:960
 msgid "Depth"
-msgstr ""
+msgstr "掘り込み"
 
-#: plug-ins/bumpmap/bumpmap.c:961
+#: plug-ins/common/bumpmap.c:961
 msgid "X offset"
-msgstr ""
+msgstr "X オフセット"
 
-#: plug-ins/bumpmap/bumpmap.c:962
+#: plug-ins/common/bumpmap.c:962
 msgid "Y offset"
-msgstr ""
+msgstr "Y オフセット"
 
-#: plug-ins/bumpmap/bumpmap.c:963
+#: plug-ins/common/bumpmap.c:963
 msgid "Waterlevel"
-msgstr ""
+msgstr "水位"
 
-#: plug-ins/bumpmap/bumpmap.c:964
+#: plug-ins/common/bumpmap.c:964
 msgid "Ambient"
-msgstr ""
+msgstr "周辺部"
 
-#: plug-ins/bz2/bz2.c:293 plug-ins/bz2/bz2.c:358
+#: plug-ins/common/bz2.c:293 plug-ins/common/bz2.c:358
 #, c-format
 msgid "bz2: fork failed: %s\n"
-msgstr ""
+msgstr "bz2: fork 失敗: %s\n"
 
-#: plug-ins/bz2/bz2.c:300 plug-ins/bz2/bz2.c:365
+#: plug-ins/common/bz2.c:300 plug-ins/common/bz2.c:365
 #, c-format
 msgid "bz2: fopen failed: %s\n"
-msgstr ""
+msgstr "bz2: fopen 失敗: %s\n"
 
-#: plug-ins/bz2/bz2.c:306 plug-ins/bz2/bz2.c:371
+#: plug-ins/common/bz2.c:306 plug-ins/common/bz2.c:371
 #, c-format
 msgid "bz2: dup2 failed: %s\n"
-msgstr ""
+msgstr "gz2: dup2 失敗: %s\n"
 
-#: plug-ins/bz2/bz2.c:310
+#: plug-ins/common/bz2.c:310
 #, c-format
 msgid "bz2: exec failed: bzip2: %s\n"
-msgstr ""
+msgstr "gz2: 実行失敗: bzip2: %s\n"
 
-#: plug-ins/bz2/bz2.c:324 plug-ins/bz2/bz2.c:389
+#: plug-ins/common/bz2.c:324 plug-ins/common/bz2.c:389
 #, c-format
 msgid "bz2: bzip2 exited abnormally on file %s\n"
-msgstr ""
+msgstr "bz2: bzip2 がファイル %s に対して不正終了した\n"
 
-#: plug-ins/bz2/bz2.c:375
+#: plug-ins/common/bz2.c:375
 #, c-format
 msgid "bz2: exec failed: bunzip2: %s\n"
-msgstr ""
+msgstr "bz2: 実行失敗: bunzip2: %s\n"
 
-#: plug-ins/bz2/bz2.c:443
+#: plug-ins/common/bz2.c:443
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr ""
+msgstr "bz2: bzip2 圧縮されたファイルは正しい拡張子無しでは開けません\n"
 
-#: plug-ins/checkerboard/checkerboard.c:97
+#: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
-msgstr ""
+msgstr "格子模様を画像に加える"
 
-#: plug-ins/checkerboard/checkerboard.c:102
+#: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Checkerboard"
 msgstr ""
 
-#: plug-ins/checkerboard/checkerboard.c:164
+#: plug-ins/common/checkerboard.c:164
 msgid "Adding Checkerboard..."
-msgstr ""
+msgstr "格子模様を付加中..."
 
-#: plug-ins/checkerboard/checkerboard.c:374
+#: plug-ins/common/checkerboard.c:374
 msgid "Checkerboard"
-msgstr ""
+msgstr "格子模様"
 
-#: plug-ins/checkerboard/checkerboard.c:407
+#: plug-ins/common/checkerboard.c:407
 msgid "Psychobilly"
-msgstr ""
+msgstr "歪みをいれる"
 
-#: plug-ins/checkerboard/checkerboard.c:415
+#: plug-ins/common/checkerboard.c:415
 msgid "Check Size"
-msgstr ""
+msgstr "格子の大きさ"
 
-#: plug-ins/colorify/colorify.c:122
+#: plug-ins/common/colorify.c:122
 msgid "Similar to the \"Color\" mode for layers."
-msgstr ""
+msgstr "レイヤーの「色」モードに似ている"
 
-#: plug-ins/colorify/colorify.c:123
+#: plug-ins/common/colorify.c:123
 msgid "Makes an average of the RGB channels and uses it to set the color"
-msgstr ""
+msgstr "RGB チャンネルの平均値を用いて色を設定する"
 
-#: plug-ins/colorify/colorify.c:126
+#: plug-ins/common/colorify.c:126
 msgid "<Image>/Filters/Colors/Colorify"
 msgstr ""
 
-#: plug-ins/colorify/colorify.c:194
+#: plug-ins/common/colorify.c:194
 msgid "Colorifying..."
-msgstr ""
+msgstr "単色塗り中..."
 
-#: plug-ins/colorify/colorify.c:304
+#: plug-ins/common/colorify.c:308
 msgid "Colorify"
-msgstr ""
+msgstr "単色塗り"
 
-#: plug-ins/colorify/colorify.c:310
+#: plug-ins/common/colorify.c:314
 msgid "Ok"
-msgstr ""
+msgstr "了解"
 
-#: plug-ins/colorify/colorify.c:327 plug-ins/print/print.c:1023
-#: plug-ins/xpm/xpm.c:406
+#: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
+#: plug-ins/print/print.c:848
 msgid "Color"
-msgstr ""
+msgstr "カラー"
 
-#: plug-ins/colorify/colorify.c:340
+#: plug-ins/common/colorify.c:344
 msgid "Custom Color: "
-msgstr ""
+msgstr "カスタムカラー: "
 
-#: plug-ins/colorify/colorify.c:430
+#: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
-msgstr ""
+msgstr "単色塗りカスタムカラー"
 
-#: plug-ins/compose/compose.c:125 plug-ins/decompose/decompose.c:129
+#: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
 msgid "RGB"
 msgstr ""
 
-#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Red:"
-msgstr ""
+msgstr "赤:"
 
-#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Green:     "
-msgstr ""
+msgstr "緑:"
 
-#: plug-ins/compose/compose.c:125 plug-ins/compose/compose.c:127
+#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
 msgid "Blue:"
-msgstr ""
+msgstr "青:"
 
-#: plug-ins/compose/compose.c:126
+#: plug-ins/common/compose.c:126
 msgid "rgb-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:127
+#: plug-ins/common/compose.c:127
 msgid "RGBA"
 msgstr ""
 
-#: plug-ins/compose/compose.c:127
+#: plug-ins/common/compose.c:127
 msgid "Alpha:"
-msgstr ""
+msgstr "アルファ:"
 
-#: plug-ins/compose/compose.c:128
+#: plug-ins/common/compose.c:128
 msgid "rgba-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:129 plug-ins/decompose/decompose.c:133
+#: plug-ins/common/compose.c:129 plug-ins/common/decompose.c:133
 msgid "HSV"
 msgstr ""
 
-#: plug-ins/compose/compose.c:129
+#: plug-ins/common/compose.c:129
 msgid "Hue:"
-msgstr ""
+msgstr "色相:"
 
-#: plug-ins/compose/compose.c:129
+#: plug-ins/common/compose.c:129
 msgid "Saturation:"
-msgstr ""
+msgstr "彩度:"
 
-#: plug-ins/compose/compose.c:129
+#: plug-ins/common/compose.c:129
 msgid "Value:"
-msgstr ""
+msgstr "明度:"
 
-#: plug-ins/compose/compose.c:130
+#: plug-ins/common/compose.c:130
 msgid "hsv-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:131 plug-ins/decompose/decompose.c:138
+#: plug-ins/common/compose.c:131 plug-ins/common/decompose.c:138
 msgid "CMY"
 msgstr ""
 
-#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Cyan:"
-msgstr ""
+msgstr "シアン:"
 
-#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Magenta:   "
-msgstr ""
+msgstr "マゼンダ:"
 
-#: plug-ins/compose/compose.c:131 plug-ins/compose/compose.c:133
+#: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
 msgid "Yellow:"
-msgstr ""
+msgstr "黄"
 
-#: plug-ins/compose/compose.c:132
+#: plug-ins/common/compose.c:132
 msgid "cmy-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:133 plug-ins/decompose/decompose.c:143
+#: plug-ins/common/compose.c:133 plug-ins/common/decompose.c:143
 msgid "CMYK"
 msgstr ""
 
-#: plug-ins/compose/compose.c:133
+#: plug-ins/common/compose.c:133
 msgid "Black:"
-msgstr ""
+msgstr "黒:"
 
-#: plug-ins/compose/compose.c:134
+#: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
 msgstr ""
 
-#: plug-ins/compose/compose.c:228
+#: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
-msgstr ""
+msgstr "いくつかのグレースケール画像から画像を合成する"
 
-#: plug-ins/compose/compose.c:229
+#: plug-ins/common/compose.c:229
 msgid "This function creates a new image from multiple gray images"
-msgstr ""
+msgstr "この関数はいくつかのグレースケール画像から画像を合成します"
 
-#: plug-ins/compose/compose.c:234
+#: plug-ins/common/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
-msgstr ""
+msgstr "<Image>/画像/チャンネル操作/RGB 画像合成"
 
-#: plug-ins/compose/compose.c:241
+#: plug-ins/common/compose.c:241
 msgid "Compose an image from multiple drawables of gray images"
-msgstr ""
+msgstr "複数のグレースケール描画対象から画像を合成する"
 
-#: plug-ins/compose/compose.c:242
+#: plug-ins/common/compose.c:242
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
-msgstr ""
+msgstr "この関数は複数のグレースケール描画対象から画像を合成します"
 
-#: plug-ins/compose/compose.c:305
+#: plug-ins/common/compose.c:305
 #, c-format
 msgid "compose: Could not get layers for image %d"
-msgstr ""
+msgstr "compose: 画像 %d に対するレイヤーが得られません"
 
-#: plug-ins/compose/compose.c:354
+#: plug-ins/common/compose.c:354
 msgid "Composing..."
-msgstr ""
+msgstr "合成中..."
 
-#: plug-ins/compose/compose.c:421
+#: plug-ins/common/compose.c:421
 msgid "compose: drawables have different size"
-msgstr ""
+msgstr "compose: 描画対象の大きさが異なっています"
 
-#: plug-ins/compose/compose.c:438
+#: plug-ins/common/compose.c:438
 msgid "compose: images have different size"
-msgstr ""
+msgstr "compose: 画像の大きさが異なっています"
 
-#: plug-ins/compose/compose.c:451
+#: plug-ins/common/compose.c:451
 msgid "compose: error in getting layer IDs"
-msgstr ""
+msgstr "compose: レイヤーID 取得中にエラー発生"
 
-#: plug-ins/compose/compose.c:468
+#: plug-ins/common/compose.c:468
 #, c-format
 msgid "compose: image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "copose: 画像がグレースケールではありません (bpp=%d)"
 
-#: plug-ins/compose/compose.c:483 plug-ins/compose/compose.c:498
+#: plug-ins/common/compose.c:483 plug-ins/common/compose.c:498
 msgid "compose: not enough memory"
-msgstr ""
+msgstr "compose: メモリ不足"
 
-#: plug-ins/compose/compose.c:809
+#: plug-ins/common/compose.c:809
 msgid "Compose"
-msgstr ""
+msgstr "RGB 画像合成"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/compose/compose.c:841
+#: plug-ins/common/compose.c:841
 msgid "Compose channels:"
-msgstr ""
+msgstr "チャンネル合成法:"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/compose/compose.c:855
+#: plug-ins/common/compose.c:855
 msgid "Channel representations:"
-msgstr ""
+msgstr "チャンネル選択:"
 
-#: plug-ins/convmatrix/convmatrix.c:76
+#: plug-ins/common/convmatrix.c:76
 msgid "Grey"
-msgstr ""
+msgstr "グレー"
 
-#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:130
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:130
 msgid "Red"
-msgstr ""
+msgstr "赤"
 
-#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:131
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:131
 msgid "Green"
-msgstr ""
+msgstr "緑"
 
-#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:132
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:132
 msgid "Blue"
-msgstr ""
+msgstr "青"
 
-#: plug-ins/convmatrix/convmatrix.c:76 plug-ins/decompose/decompose.c:148
+#: plug-ins/common/convmatrix.c:76 plug-ins/common/decompose.c:148
 msgid "Alpha"
-msgstr ""
+msgstr "アルファ"
 
-#: plug-ins/convmatrix/convmatrix.c:80
+#: plug-ins/common/convmatrix.c:80
 msgid "Extend"
-msgstr ""
+msgstr "拡張"
 
-#: plug-ins/convmatrix/convmatrix.c:80
+#: plug-ins/common/convmatrix.c:80
 msgid "Wrap"
-msgstr ""
+msgstr "回り込み"
 
 #. Action area
-#: plug-ins/convmatrix/convmatrix.c:80 plug-ins/gif/gif.c:1163
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1163
 msgid "Crop"
-msgstr ""
+msgstr "切抜き"
 
-#: plug-ins/convmatrix/convmatrix.c:173
+#: plug-ins/common/convmatrix.c:173
 msgid "A generic 5x5 convolution matrix"
-msgstr ""
+msgstr "汎用 5x5 コンボリューション行列"
 
-#: plug-ins/convmatrix/convmatrix.c:178
+#: plug-ins/common/convmatrix.c:178
 msgid "<Image>/Filters/Generic/Convolution Matrix"
 msgstr ""
 
-#: plug-ins/convmatrix/convmatrix.c:239
+#: plug-ins/common/convmatrix.c:239
 msgid "Applying convolution"
-msgstr ""
+msgstr "コンボリューション適用"
 
-#: plug-ins/convmatrix/convmatrix.c:700
+#: plug-ins/common/convmatrix.c:700
 msgid "Convolution Matrix"
-msgstr ""
+msgstr "コンボリューション行列"
 
-#: plug-ins/convmatrix/convmatrix.c:715
+#: plug-ins/common/convmatrix.c:715
 msgid "Defaults"
-msgstr ""
+msgstr "デフォルト"
 
 #. Outbox:YABox:Frame
-#: plug-ins/convmatrix/convmatrix.c:741
+#: plug-ins/common/convmatrix.c:741
 msgid "Matrix"
-msgstr ""
+msgstr "行列"
 
 #. divisor
-#: plug-ins/convmatrix/convmatrix.c:788
+#: plug-ins/common/convmatrix.c:788
 msgid "Divisor"
-msgstr ""
+msgstr "割る数"
 
 #. Offset
-#: plug-ins/convmatrix/convmatrix.c:803 plug-ins/depthmerge/depthmerge.c:728
+#: plug-ins/common/convmatrix.c:803 plug-ins/common/depthmerge.c:728
 msgid "Offset"
-msgstr ""
+msgstr "オフセット"
 
-#: plug-ins/convmatrix/convmatrix.c:823
+#: plug-ins/common/convmatrix.c:823
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #. Alpha-weighting
-#: plug-ins/convmatrix/convmatrix.c:832
+#: plug-ins/common/convmatrix.c:832
 msgid "Alpha-weighting"
-msgstr ""
+msgstr "アルファ加重"
 
 #. Wrap-modes
 #. OutBox:Inbox:Frame
-#: plug-ins/convmatrix/convmatrix.c:847
+#: plug-ins/common/convmatrix.c:847
 msgid "Border"
-msgstr ""
+msgstr "縁"
 
 #. OutBox:Inbox:Frame
-#: plug-ins/convmatrix/convmatrix.c:875
+#: plug-ins/common/convmatrix.c:875
 msgid "Channels"
-msgstr ""
+msgstr "チャンネル"
 
-#: plug-ins/cubism/cubism.c:181
+#: plug-ins/common/cubism.c:181
 msgid "Convert the input drawable into a collection of rotated squares"
-msgstr ""
+msgstr "入力描画対象を回転した正方形の集合に変換する"
 
-#: plug-ins/cubism/cubism.c:186
+#: plug-ins/common/cubism.c:186
 msgid "<Image>/Filters/Artistic/Cubism"
 msgstr ""
 
-#: plug-ins/cubism/cubism.c:298
+#: plug-ins/common/cubism.c:298
 msgid "Cubistic Transformation"
-msgstr ""
+msgstr "キュービズム変換"
 
-#: plug-ins/cubism/cubism.c:331
+#: plug-ins/common/cubism.c:331
 msgid "Cubism"
-msgstr ""
+msgstr "キュービズム"
 
-#: plug-ins/cubism/cubism.c:364
+#: plug-ins/common/cubism.c:364
 msgid "Use Background Color"
-msgstr ""
+msgstr "背景色を使用"
 
-#: plug-ins/cubism/cubism.c:372
+#: plug-ins/common/cubism.c:372
 msgid "Tile Size"
-msgstr ""
+msgstr "タイルサイズ"
 
-#: plug-ins/cubism/cubism.c:388
+#: plug-ins/common/cubism.c:388
 msgid "Tile Saturation"
-msgstr ""
+msgstr "タイル彩度"
 
-#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:130
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:130
 msgid "red"
-msgstr ""
+msgstr "赤"
 
-#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:131
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:131
 msgid "green"
-msgstr ""
+msgstr "緑"
 
-#: plug-ins/decompose/decompose.c:129 plug-ins/decompose/decompose.c:132
+#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
 msgid "blue"
-msgstr ""
+msgstr "青"
 
-#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:135
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:135
 msgid "hue"
-msgstr ""
+msgstr "色相"
 
-#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:136
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:136
 msgid "saturation"
-msgstr ""
+msgstr "彩度"
 
-#: plug-ins/decompose/decompose.c:133 plug-ins/decompose/decompose.c:137
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
 msgid "value"
-msgstr ""
+msgstr "明度"
 
-#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:140
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:140
 msgid "cyan"
-msgstr ""
+msgstr "シアン"
 
-#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:141
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
 msgid "magenta"
-msgstr ""
+msgstr "マゼンダ"
 
-#: plug-ins/decompose/decompose.c:138 plug-ins/decompose/decompose.c:142
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
 msgid "yellow"
-msgstr ""
+msgstr "黄"
 
-#: plug-ins/decompose/decompose.c:140
+#: plug-ins/common/decompose.c:140
 msgid "Cyan"
-msgstr ""
+msgstr "シアン"
 
-#: plug-ins/decompose/decompose.c:141
+#: plug-ins/common/decompose.c:141
 msgid "Magenta"
-msgstr ""
+msgstr "マゼンダ"
 
-#: plug-ins/decompose/decompose.c:142
+#: plug-ins/common/decompose.c:142
 msgid "Yellow"
-msgstr ""
+msgstr "黄"
 
-#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:145
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:145
 msgid "cyan_k"
-msgstr ""
+msgstr "シアン_k"
 
-#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:146
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:146
 msgid "magenta_k"
-msgstr ""
+msgstr "マゼンダ_k"
 
-#: plug-ins/decompose/decompose.c:143 plug-ins/decompose/decompose.c:147
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:147
 msgid "yellow_k"
-msgstr ""
+msgstr "黄_k"
 
-#: plug-ins/decompose/decompose.c:144
+#: plug-ins/common/decompose.c:144
 msgid "black"
-msgstr ""
+msgstr "黒"
 
-#: plug-ins/decompose/decompose.c:145
+#: plug-ins/common/decompose.c:145
 msgid "Cyan_K"
-msgstr ""
+msgstr "シアン_K"
 
-#: plug-ins/decompose/decompose.c:146
+#: plug-ins/common/decompose.c:146
 msgid "Magenta_K"
-msgstr ""
+msgstr "マゼンダ_K"
 
-#: plug-ins/decompose/decompose.c:147
+#: plug-ins/common/decompose.c:147
 msgid "Yellow_K"
-msgstr ""
+msgstr "黄_K"
 
-#: plug-ins/decompose/decompose.c:148
+#: plug-ins/common/decompose.c:148
 msgid "alpha"
-msgstr ""
+msgstr "アルファ"
 
-#: plug-ins/decompose/decompose.c:216
+#: plug-ins/common/decompose.c:216
 msgid "Decompose an image into different types of channels"
-msgstr ""
+msgstr "画像を異なった種類のチャンネルに分解する"
 
-#: plug-ins/decompose/decompose.c:217
+#: plug-ins/common/decompose.c:217
 msgid ""
 "This function creates new gray images with different channel information in "
 "each of them"
-msgstr ""
+msgstr "この関数は画像の各チャンネルの情報を元に新しいグレースケール画像を生成する"
 
-#: plug-ins/decompose/decompose.c:222
+#: plug-ins/common/decompose.c:222
 msgid "<Image>/Image/Channel Ops/Decompose"
-msgstr ""
+msgstr "<Image>/画像/チャンネル操作/チャンネル分解"
 
-#: plug-ins/decompose/decompose.c:303
+#: plug-ins/common/decompose.c:303
 msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
-msgstr ""
+msgstr "plug_in_decompose: RGB* 画像に対してのみ実行可"
 
-#: plug-ins/decompose/decompose.c:309
+#: plug-ins/common/decompose.c:309
 msgid "Decomposing..."
-msgstr ""
+msgstr "チャンネル分解中..."
 
-#: plug-ins/decompose/decompose.c:374
+#: plug-ins/common/decompose.c:374
 msgid "decompose: not an RGB image"
-msgstr ""
+msgstr "decompose: RGB 画像ではない"
 
-#: plug-ins/decompose/decompose.c:380
+#: plug-ins/common/decompose.c:380
 msgid "decompose: No alpha channel available"
-msgstr ""
+msgstr "decompose: アルファチャンネルが無い"
 
-#: plug-ins/decompose/decompose.c:409
+#: plug-ins/common/decompose.c:409
 msgid "decompose: out of memory"
-msgstr ""
+msgstr "decompose: メモリ不足"
 
-#: plug-ins/decompose/decompose.c:901 plug-ins/decompose/decompose.c:907
+#: plug-ins/common/decompose.c:901 plug-ins/common/decompose.c:907
 msgid "Decompose"
-msgstr ""
+msgstr "チャンネル分解"
 
 #. parameter settings
-#: plug-ins/decompose/decompose.c:934
+#: plug-ins/common/decompose.c:934
 msgid "Extract channels:"
-msgstr ""
+msgstr "取り出すチャンネル:"
 
-#: plug-ins/depthmerge/depthmerge.c:194
+#: plug-ins/common/depthmerge.c:194
 msgid "Combine two images using corresponding depth maps (z-buffers)"
-msgstr ""
+msgstr "2つの画像を対応する深度マップ(z-バッファ)を用いて結合する"
 
-#: plug-ins/depthmerge/depthmerge.c:195
+#: plug-ins/common/depthmerge.c:195
 msgid ""
 "Taking as input two full-colour, full-alpha images and two corresponding "
 "grayscale depth maps, this plug-in combines the images based on which is "
 "closer (has a lower depth map value) at each point."
-msgstr ""
+msgstr "このプラグインはフルカラー, フルアルファ画像と対応する2つのグレースケール深度マップを元に, 各点においてマップ値を比較し, 小さいマップ値の点を用いて新しい画像を作成する."
 
-#: plug-ins/depthmerge/depthmerge.c:202
+#: plug-ins/common/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge"
 msgstr ""
 
-#: plug-ins/depthmerge/depthmerge.c:369
+#: plug-ins/common/depthmerge.c:369
 msgid "Depth-merging..."
-msgstr ""
+msgstr "深度統合中..."
 
-#: plug-ins/depthmerge/depthmerge.c:609
+#: plug-ins/common/depthmerge.c:609
 msgid "Depth Merge"
-msgstr ""
+msgstr "深度統合"
 
-#: plug-ins/depthmerge/depthmerge.c:647
+#: plug-ins/common/depthmerge.c:647
 msgid "Source 1"
-msgstr ""
+msgstr "画像源 1"
 
-#: plug-ins/depthmerge/depthmerge.c:664 plug-ins/depthmerge/depthmerge.c:698
+#: plug-ins/common/depthmerge.c:664 plug-ins/common/depthmerge.c:698
 msgid "Depth Map"
-msgstr ""
+msgstr "深度マップ"
 
-#: plug-ins/depthmerge/depthmerge.c:681
+#: plug-ins/common/depthmerge.c:681
 msgid "Source 2"
-msgstr ""
+msgstr "画像源 2"
 
-#: plug-ins/depthmerge/depthmerge.c:723
+#: plug-ins/common/depthmerge.c:723
 msgid "Overlap"
-msgstr ""
+msgstr "重なり"
 
-#: plug-ins/depthmerge/depthmerge.c:733
+#: plug-ins/common/depthmerge.c:733
 msgid "Scale 1"
-msgstr ""
+msgstr "スケール 1"
 
-#: plug-ins/depthmerge/depthmerge.c:738
+#: plug-ins/common/depthmerge.c:738
 msgid "Scale 2"
-msgstr ""
+msgstr "スケール 2"
 
-#: plug-ins/depthmerge/depthmerge.c:1181
+#: plug-ins/common/depthmerge.c:1181
 msgid ""
 "Warning: I don't _like_ this color space.  This is a suggestion, not a "
 "threat.\n"
-msgstr ""
+msgstr "警告: この色空間は「好き」ではないということを一応示しておく.\n"
 
-#: plug-ins/destripe/destripe.c:151
+#: plug-ins/common/destripe.c:151
 msgid ""
 "Destripe filter, used to remove vertical stripes caused by cheap scanners."
-msgstr ""
+msgstr "安いスキャナで発生する縦線を取り除く非ストライプ化フィルタ"
 
-#: plug-ins/destripe/destripe.c:152
+#: plug-ins/common/destripe.c:152
 msgid "This plug-in tries to remove vertical stripes from an image."
-msgstr ""
+msgstr "このプラグインは画像中の縦線の取り除きを試みる."
 
-#: plug-ins/destripe/destripe.c:155
+#: plug-ins/common/destripe.c:155
 msgid "<Image>/Filters/Enhance/Destripe"
 msgstr ""
 
-#: plug-ins/destripe/destripe.c:358
+#: plug-ins/common/destripe.c:358
 msgid "Destriping..."
-msgstr ""
+msgstr "非ストライプ化中..."
 
-#: plug-ins/destripe/destripe.c:589
+#: plug-ins/common/destripe.c:589
 msgid "Destripe"
-msgstr ""
+msgstr "非ストライプ化"
 
-#: plug-ins/destripe/destripe.c:663
+#: plug-ins/common/destripe.c:663
 msgid "Histogram"
-msgstr ""
+msgstr "ヒストグラム"
 
 #. button = gtk_check_button_new_with_label("Recursive");
 #. gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
@@ -1773,36 +1781,38 @@ msgstr ""
 #.
 #. * Box size (radius) control...
 #.
-#: plug-ins/destripe/destripe.c:687
+#: plug-ins/common/destripe.c:687
 msgid "Width"
-msgstr ""
+msgstr "幅"
 
-#: plug-ins/gif/gif.c:408
+#: plug-ins/common/gif.c:408
 msgid "saves files in Compuserve GIF file format"
-msgstr ""
+msgstr "Compuserve GIF ファイル形式で保存する"
 
-#: plug-ins/gif/gif.c:682
+#: plug-ins/common/gif.c:682
 msgid "GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"
-msgstr ""
+msgstr "GIF: これ以上単純には減色できません. 不透明として保存します.\n"
 
-#: plug-ins/gif/gif.c:938
+#: plug-ins/common/gif.c:938
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
+"GIF: RGB 画像は GIF 形式で保存できません - インデックス形式\n"
+"もしくはグレースケールに変換してください\n"
 
-#: plug-ins/gif/gif.c:957
+#: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
-msgstr ""
+msgstr "GIF: %s が開けない\n"
 
-#: plug-ins/gif/gif.c:1064
+#: plug-ins/common/gif.c:1064
 msgid ""
 "Transparent colour *might* be incorrect on viewers which don't support "
 "transparency."
-msgstr ""
+msgstr "透明色は透明色を理解しない表示プログラムでは正常に表示されません."
 
-#: plug-ins/gif/gif.c:1196
+#: plug-ins/common/gif.c:1196
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -1812,352 +1822,366 @@ msgid ""
 "You may choose whether to crop all of the layers to\n"
 "the image borders, or cancel this save."
 msgstr ""
+"GIF 形式で保存しようとしている画像中に実画像サイズより\n"
+"大きなレイヤーが含まれています. GIF 形式ではこれは許可\n"
+"されていません.\n"
+"\n"
+"全てのレイヤーを画像サイズ以下に切り詰めるか, キャンセル\n"
+"してください."
 
-#: plug-ins/gif/gif.c:1252
+#: plug-ins/common/gif.c:1252
 msgid "Save as GIF"
-msgstr ""
+msgstr "GIF 形式で保存"
 
 #. regular gif parameter settings
-#: plug-ins/gif/gif.c:1286
+#: plug-ins/common/gif.c:1286
 msgid "GIF Options"
-msgstr ""
+msgstr "GIF オプション"
 
-#: plug-ins/gif/gif.c:1294 plug-ins/png/png.c:1209
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:854
 msgid "Interlace"
-msgstr ""
+msgstr "インターレース"
 
-#: plug-ins/gif/gif.c:1306
+#: plug-ins/common/gif.c:1306
 msgid "GIF Comment: "
-msgstr ""
+msgstr "GIF コメント: "
 
-#: plug-ins/gif/gif.c:1339 plug-ins/gif/gif.c:1340
+#: plug-ins/common/gif.c:1339 plug-ins/common/gif.c:1340
 msgid "Made with GIMP"
 msgstr ""
 
 #. additional animated gif parameter settings
-#: plug-ins/gif/gif.c:1365
+#: plug-ins/common/gif.c:1365
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "アニメ GIF オプション"
 
-#: plug-ins/gif/gif.c:1373
+#: plug-ins/common/gif.c:1373
 msgid "Loop forever"
-msgstr ""
+msgstr "無限ループ"
 
-#: plug-ins/gif/gif.c:1386
+#: plug-ins/common/gif.c:1386
 msgid "Delay between frames where unspecified: "
-msgstr ""
+msgstr "指定しない場合のフレーム間の時間: "
 
-#: plug-ins/gif/gif.c:1400
+#: plug-ins/common/gif.c:1400
 msgid " milliseconds"
-msgstr ""
+msgstr " ミリ秒"
 
-#: plug-ins/gif/gif.c:1411
+#: plug-ins/common/gif.c:1411
 msgid "Frame disposal where unspecified: "
-msgstr ""
+msgstr "指定しない場合のフレーム配置: "
 
-#: plug-ins/gif/gif.c:1421
+#: plug-ins/common/gif.c:1421
 msgid "I don't care"
-msgstr ""
+msgstr "気にしない"
 
-#: plug-ins/gif/gif.c:1427
+#: plug-ins/common/gif.c:1427
 msgid "Cumulative layers (combine)"
-msgstr ""
+msgstr "累積レイヤー (結合)"
 
-#: plug-ins/gif/gif.c:1433
+#: plug-ins/common/gif.c:1433
 msgid "One frame per layer (replace)"
-msgstr ""
+msgstr "レイヤー毎に1フレーム (置換)"
 
-#: plug-ins/gif/gif.c:1491
+#: plug-ins/common/gif.c:1491
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
-msgstr ""
+msgstr "GIF: bpptocolors - えぇっ! 色数多すぎ: %d\n"
 
-#: plug-ins/gif/gif.c:1507
+#: plug-ins/common/gif.c:1507
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
-msgstr ""
+msgstr "GIF: bpptocolors - えぇっ! bpp==%d !\n"
 
-#: plug-ins/gifload/gifload.c:134
+#: plug-ins/common/gifload.c:134
 msgid "loads files of Compuserve GIF file format"
-msgstr ""
+msgstr "Compuserve GIF ファイル形式の画像を読み込む"
 
-#: plug-ins/gifload/gifload.c:279
+#: plug-ins/common/gifload.c:279
 #, c-format
 msgid "GIF: can't open \"%s\"\n"
-msgstr ""
+msgstr "GIF: \"%s\" が開けない\n"
 
-#: plug-ins/gifload/gifload.c:294
+#: plug-ins/common/gifload.c:294
 msgid "GIF: error reading magic number\n"
-msgstr ""
+msgstr "GIF: マジックナンバー読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:300
+#: plug-ins/common/gifload.c:300
 msgid "GIF: not a GIF file\n"
-msgstr ""
+msgstr "GIF: GIF ファイルではない\n"
 
-#: plug-ins/gifload/gifload.c:309
+#: plug-ins/common/gifload.c:309
 msgid "GIF: bad version number, not '87a' or '89a'\n"
-msgstr ""
+msgstr "GIF: バージョンが不正, '87a' でも '89a' でもない\n"
 
-#: plug-ins/gifload/gifload.c:315
+#: plug-ins/common/gifload.c:315
 msgid "GIF: failed to read screen descriptor\n"
-msgstr ""
+msgstr "GIF: スクリーン記述部読み込み失敗\n"
 
-#: plug-ins/gifload/gifload.c:331
+#: plug-ins/common/gifload.c:331
 msgid "GIF: error reading global colormap\n"
-msgstr ""
+msgstr "GIF: グローバルカラーマップ読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:338
+#: plug-ins/common/gifload.c:338
 msgid "GIF: warning - non-square pixels\n"
-msgstr ""
+msgstr "GIF: 警告 - 正方ピクセルではない\n"
 
-#: plug-ins/gifload/gifload.c:349 plug-ins/gifload/gifload.c:803
+#: plug-ins/common/gifload.c:349 plug-ins/common/gifload.c:803
 msgid "GIF: EOF / read error on image data\n"
-msgstr ""
+msgstr "GIF: EOF / 画像データ読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:364
+#: plug-ins/common/gifload.c:364
 msgid "GIF: OF / read error on extension function code\n"
-msgstr ""
+msgstr "GIF: OF / 拡張ファンクションコード読み込みエラー\n"
 
 #. Not a valid start character
-#: plug-ins/gifload/gifload.c:374
+#: plug-ins/common/gifload.c:374
 #, c-format
 msgid "GIF: bogus character 0x%02x, ignoring\n"
-msgstr ""
+msgstr "GIF: 不正なキャラクタ 0x%02x, 無視します\n"
 
-#: plug-ins/gifload/gifload.c:382
+#: plug-ins/common/gifload.c:382
 msgid "GIF: couldn't read left/top/width/height\n"
-msgstr ""
+msgstr "GIF: 右上/幅/高さが読めない\n"
 
-#: plug-ins/gifload/gifload.c:394
+#: plug-ins/common/gifload.c:394
 msgid "GIF: error reading local colormap\n"
-msgstr ""
+msgstr "GIF: ローカルカラーマップ読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:452
+#: plug-ins/common/gifload.c:452
 msgid "GIF: bad colormap\n"
-msgstr ""
+msgstr "GIF: 不正なカラーマップ\n"
 
-#: plug-ins/gifload/gifload.c:568
+#: plug-ins/common/gifload.c:568
 msgid "GIF: error in getting DataBlock size\n"
-msgstr ""
+msgstr "GIF: DataBlock サイズ読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:576
+#: plug-ins/common/gifload.c:576
 msgid "GIF: error in reading DataBlock\n"
-msgstr ""
+msgstr "GIF: DataBlock 読み込みエラー\n"
 
-#: plug-ins/gifload/gifload.c:607
+#: plug-ins/common/gifload.c:607
 msgid "GIF: ran off the end of by bits\n"
-msgstr ""
+msgstr "GIF: ビット足りず\n"
 
-#: plug-ins/gifload/gifload.c:718
+#: plug-ins/common/gifload.c:718
 msgid "GIF: missing EOD in data stream (common occurence)"
-msgstr ""
+msgstr "GIF: EOD がデータストリーム中に無かった (よくある事)"
 
-#: plug-ins/gifload/gifload.c:735
+#: plug-ins/common/gifload.c:735
 msgid "GIF: circular table entry BIG ERROR\n"
-msgstr ""
+msgstr "GIF: 循環したテーブル内容, 重傷エラー\n"
 
-#: plug-ins/gifload/gifload.c:809
+#: plug-ins/common/gifload.c:809
 msgid "GIF: error while reading\n"
-msgstr ""
+msgstr "GIF: 読み込み中にエラー\n"
 
-#: plug-ins/gifload/gifload.c:830
+#: plug-ins/common/gifload.c:830
 #, c-format
 msgid "Background (%dms)"
-msgstr ""
+msgstr "背景 (%dms)"
 
-#: plug-ins/gifload/gifload.c:877
+#: plug-ins/common/gifload.c:877
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "フレーム %d"
 
-#: plug-ins/gifload/gifload.c:879
+#: plug-ins/common/gifload.c:879
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr ""
+msgstr "フレーム %d (%dms)"
 
 #. 'don't care'
-#: plug-ins/gifload/gifload.c:885 plug-ins/gifload/gifload.c:887
+#: plug-ins/common/gifload.c:885 plug-ins/common/gifload.c:887
 msgid " (combine)"
-msgstr ""
+msgstr "(結合)"
 
-#: plug-ins/gifload/gifload.c:886
+#: plug-ins/common/gifload.c:886
 msgid " (replace)"
-msgstr ""
+msgstr "(置換)"
 
-#: plug-ins/gifload/gifload.c:892
+#: plug-ins/common/gifload.c:892
 msgid " (unknown disposal)"
-msgstr ""
+msgstr " (不明な配置)"
 
-#: plug-ins/gifload/gifload.c:893
+#: plug-ins/common/gifload.c:893
 msgid ""
 "GIF: Hmm... please forward this GIF to the GIF plugin author!\n"
 "  (adam@foxbox.org)\n"
 msgstr ""
+"GIF: ふむ... この GIF ファイルを GIF プラグイン作者に送ってください!\n"
+"  (adam@foxbox.org)\n"
 
-#: plug-ins/gifload/gifload.c:896
+#: plug-ins/common/gifload.c:896
 msgid "GIF: Something got corrupted.\n"
-msgstr ""
+msgstr "GIF: 何やら失敗したようだ.\n"
 
-#: plug-ins/gifload/gifload.c:925
+#: plug-ins/common/gifload.c:925
 #, c-format
 msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
-msgstr ""
+msgstr "GIF: %d を %d%s GIF 画像から読み込み中, ncols=%d\n"
 
-#: plug-ins/gifload/gifload.c:926
+#: plug-ins/common/gifload.c:926
 msgid " interlaced"
-msgstr ""
+msgstr " インターレース"
 
-#: plug-ins/gifload/gifload.c:930
+#: plug-ins/common/gifload.c:930
 msgid ""
 "GIF: Ouchie!  Can't handle non-alpha RGB frames.\n"
 "     Please mail the plugin author.  (adam@gimp.org)\n"
 msgstr ""
+"GIF: 痛っ! アルファチャンネル無しの RGB フレームは取り扱えない.\n"
+"     プラグイン作者にメールを送ってください.  (adam@gimp.org)\n"
 
-#: plug-ins/gifload/gifload.c:1022
+#: plug-ins/common/gifload.c:1022
 msgid "GIF: too much input data, ignoring extra...\n"
-msgstr ""
+msgstr "GIF: 入力データが大きすぎます. 余計な分は無視します...\n"
 
-#: plug-ins/jpeg/jpeg.c:176
+#: plug-ins/common/jpeg.c:176
 msgid "loads files of the jpeg file format"
-msgstr ""
+msgstr "jpeg ファイル形式の画像を読み込む"
 
-#: plug-ins/jpeg/jpeg.c:487
+#: plug-ins/common/jpeg.c:487
 #, c-format
 msgid "can't open \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" が開けない\n"
 
-#: plug-ins/jpeg/jpeg.c:603
+#: plug-ins/common/jpeg.c:603
 #, c-format
 msgid ""
 "don't know how to load JPEGs\n"
 "with %d color channels"
 msgstr ""
+"色チャンネル数 %d の JPEG\n"
+"は読み込めない"
 
-#: plug-ins/jpeg/jpeg.c:648
+#: plug-ins/common/jpeg.c:648
 #, c-format
 msgid ""
 "unknown density unit %d\n"
 "assuming dots per inch"
 msgstr ""
+"不明な密度単位 %d です.\n"
+"ドット/インチとします"
 
-#: plug-ins/jpeg/jpeg.c:993
+#: plug-ins/common/jpeg.c:993
 msgid "Save as Jpeg"
-msgstr ""
+msgstr "Jpeg 形式で保存"
 
-#: plug-ins/jpeg/jpeg.c:1026
+#: plug-ins/common/jpeg.c:1026
 msgid "Quality"
-msgstr ""
+msgstr "品質"
 
-#: plug-ins/jpeg/jpeg.c:1042
+#: plug-ins/common/jpeg.c:1042
 msgid "Smoothing"
-msgstr ""
+msgstr "スムージング"
 
-#: plug-ins/jpeg/jpeg.c:1058
+#: plug-ins/common/jpeg.c:1058
 msgid "Optimize"
-msgstr ""
+msgstr "最適化"
 
-#: plug-ins/jpeg/jpeg.c:1066
+#: plug-ins/common/jpeg.c:1066
 msgid "Progressive"
-msgstr ""
+msgstr "プログレッシブ"
 
-#: plug-ins/jpeg/jpeg.c:1079
+#: plug-ins/common/jpeg.c:1079
 msgid "Image Comments"
-msgstr ""
+msgstr "画像コメント"
 
-#: plug-ins/mail/mail.c:212
+#: plug-ins/common/mail.c:212
 msgid "pipe files to uuencode then mail them"
-msgstr ""
+msgstr "メール送信前に uuencode を通す"
 
-#: plug-ins/mail/mail.c:213
+#: plug-ins/common/mail.c:213
 msgid "You need to have uuencode and mail installed"
-msgstr ""
+msgstr "uuencode と mail がインストールされていなければなりません"
 
-#: plug-ins/mail/mail.c:217
+#: plug-ins/common/mail.c:217
 msgid "<Image>/File/Mail image"
-msgstr ""
+msgstr "<Image>/ファイル/画像送信"
 
-#: plug-ins/mail/mail.c:486
+#: plug-ins/common/mail.c:486
 msgid "Send to mail"
-msgstr ""
+msgstr "メールで送る"
 
 #. filename label
-#: plug-ins/mail/mail.c:620
+#: plug-ins/common/mail.c:620
 msgid "Filename:"
-msgstr ""
+msgstr "ファイル名:"
 
 #. Encapsulation label
-#: plug-ins/mail/mail.c:674
+#: plug-ins/common/mail.c:674
 msgid "Encapsulation:"
-msgstr ""
+msgstr "梱包方法:"
 
 #. Encapsulation radiobutton
-#: plug-ins/mail/mail.c:683
+#: plug-ins/common/mail.c:683
 msgid "Uuencode"
 msgstr ""
 
-#: plug-ins/mail/mail.c:685
+#: plug-ins/common/mail.c:685
 msgid "MIME"
 msgstr ""
 
-#: plug-ins/mail/mail.c:799
+#: plug-ins/common/mail.c:799
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr ""
+msgstr "mail: ファイル拡張子に関するエラーが発生しました\n"
 
-#: plug-ins/oilify/oilify.c:122
+#: plug-ins/common/oilify.c:122
 msgid "Modify the specified drawable to resemble an oil painting"
-msgstr ""
+msgstr "指定した描画対象を油絵のようにする"
 
-#: plug-ins/oilify/oilify.c:123
+#: plug-ins/common/oilify.c:123
 msgid ""
 "This function performs the well-known oil-paint effect on the specified "
 "drawable.  The size of the input mask is specified by 'mask_size'."
-msgstr ""
+msgstr "この関数は指定した描画対象を良く知られた油絵のように変換する. 入力マスクは 'mask_size' で指定する."
 
-#: plug-ins/oilify/oilify.c:127
+#: plug-ins/common/oilify.c:127
 msgid "<Image>/Filters/Artistic/Oilify"
 msgstr ""
 
-#: plug-ins/oilify/oilify.c:198
+#: plug-ins/common/oilify.c:198
 msgid "Oil Painting..."
-msgstr ""
+msgstr "油絵化中..."
 
-#: plug-ins/oilify/oilify.c:453
+#: plug-ins/common/oilify.c:453
 msgid "Oilify"
-msgstr ""
+msgstr "油絵化"
 
-#: plug-ins/oilify/oilify.c:486
+#: plug-ins/common/oilify.c:486
 msgid "Use intensity algorithm"
-msgstr ""
+msgstr "強度アルゴリズムを使用する"
 
-#: plug-ins/oilify/oilify.c:494
+#: plug-ins/common/oilify.c:494
 msgid "Mask Size"
-msgstr ""
+msgstr "マスクサイズ"
 
-#: plug-ins/png/png.c:504
+#: plug-ins/common/png.c:149
 msgid "Loads files in PNG file format"
-msgstr ""
+msgstr "PNG ファイル形式の画像を読み込む"
 
-#: plug-ins/png/png.c:505
+#: plug-ins/common/png.c:150
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
-msgstr ""
+msgstr "このプラグインは Portable Network Graphics (PNG) ファイルを読み込む."
 
-#: plug-ins/png/png.c:1171
+#: plug-ins/common/png.c:816
 msgid "PNG Options"
-msgstr ""
+msgstr "PNG オプション"
 
-#: plug-ins/png/png.c:1216
+#: plug-ins/common/png.c:861
 msgid "Compression level"
-msgstr ""
+msgstr "圧縮レベル"
 
 #: plug-ins/print/print-escp2.c:209 plug-ins/print/print-pcl.c:232
 #: plug-ins/print/print-ps.c:345
 msgid "Letter"
-msgstr ""
+msgstr "レター"
 
 #: plug-ins/print/print-escp2.c:210 plug-ins/print/print-pcl.c:233
 #: plug-ins/print/print-ps.c:346
 msgid "Legal"
-msgstr ""
+msgstr "リーガル"
 
 #: plug-ins/print/print-escp2.c:211 plug-ins/print/print-pcl.c:234
 #: plug-ins/print/print-ps.c:347
@@ -2167,7 +2191,7 @@ msgstr ""
 #: plug-ins/print/print-escp2.c:212 plug-ins/print/print-pcl.c:235
 #: plug-ins/print/print-ps.c:348
 msgid "Tabloid"
-msgstr ""
+msgstr "タブロイド"
 
 #: plug-ins/print/print-escp2.c:213 plug-ins/print/print-pcl.c:236
 #: plug-ins/print/print-ps.c:349
@@ -2193,43 +2217,43 @@ msgstr ""
 #: plug-ins/print/print-escp2.c:510 plug-ins/print/print-pcl.c:613
 #: plug-ins/print/print-ps.c:697
 msgid "Printing..."
-msgstr ""
+msgstr "印刷中..."
 
 #: plug-ins/print/print-pcl.c:241
 msgid "Plain"
-msgstr ""
+msgstr "標準"
 
 #: plug-ins/print/print-pcl.c:242
 msgid "Premium"
-msgstr ""
+msgstr "上質紙"
 
 #: plug-ins/print/print-pcl.c:243
 msgid "Glossy"
-msgstr ""
+msgstr "光沢紙"
 
 #: plug-ins/print/print-pcl.c:244
 msgid "Transparency"
-msgstr ""
+msgstr "透明 OHP フィルム"
 
 #: plug-ins/print/print-pcl.c:248
 msgid "Manual"
-msgstr ""
+msgstr "手差し"
 
 #: plug-ins/print/print-pcl.c:249
 msgid "Tray 1"
-msgstr ""
+msgstr "トレー 1"
 
 #: plug-ins/print/print-pcl.c:250
 msgid "Tray 2"
-msgstr ""
+msgstr "トレー 2"
 
 #: plug-ins/print/print-pcl.c:251
 msgid "Tray 3"
-msgstr ""
+msgstr "トレー 3"
 
 #: plug-ins/print/print-pcl.c:252
 msgid "Tray 4"
-msgstr ""
+msgstr "トレー 4"
 
 #: plug-ins/print/print-pcl.c:256
 msgid "150 DPI"
@@ -2243,135 +2267,135 @@ msgstr ""
 msgid "600 DPI"
 msgstr ""
 
-#: plug-ins/print/print.c:406
+#: plug-ins/print/print.c:229
 msgid "PostScript Level 1"
 msgstr ""
 
-#: plug-ins/print/print.c:408
+#: plug-ins/print/print.c:231
 msgid "PostScript Level 2"
 msgstr ""
 
-#: plug-ins/print/print.c:410
+#: plug-ins/print/print.c:233
 msgid "HP DeskJet 500, 520"
 msgstr ""
 
-#: plug-ins/print/print.c:412
+#: plug-ins/print/print.c:235
 msgid "HP DeskJet 500C, 540C"
 msgstr ""
 
-#: plug-ins/print/print.c:414
+#: plug-ins/print/print.c:237
 msgid "HP DeskJet 550C, 560C"
 msgstr ""
 
-#: plug-ins/print/print.c:416
+#: plug-ins/print/print.c:239
 msgid "HP DeskJet 600 series"
 msgstr ""
 
-#: plug-ins/print/print.c:418
+#: plug-ins/print/print.c:241
 msgid "HP DeskJet 800 series"
 msgstr ""
 
-#: plug-ins/print/print.c:420
+#: plug-ins/print/print.c:243
 msgid "HP DeskJet 1100C, 1120C"
 msgstr ""
 
-#: plug-ins/print/print.c:422
+#: plug-ins/print/print.c:245
 msgid "HP DeskJet 1200C, 1600C"
 msgstr ""
 
-#: plug-ins/print/print.c:424
+#: plug-ins/print/print.c:247
 msgid "HP LaserJet II series"
 msgstr ""
 
-#: plug-ins/print/print.c:426
+#: plug-ins/print/print.c:249
 msgid "HP LaserJet III series"
 msgstr ""
 
-#: plug-ins/print/print.c:428
+#: plug-ins/print/print.c:251
 msgid "HP LaserJet 4 series"
 msgstr ""
 
-#: plug-ins/print/print.c:430
+#: plug-ins/print/print.c:253
 msgid "HP LaserJet 4V, 4Si"
 msgstr ""
 
-#: plug-ins/print/print.c:432
+#: plug-ins/print/print.c:255
 msgid "HP LaserJet 5 series"
 msgstr ""
 
-#: plug-ins/print/print.c:434
+#: plug-ins/print/print.c:257
 msgid "HP LaserJet 5Si"
 msgstr ""
 
-#: plug-ins/print/print.c:436
+#: plug-ins/print/print.c:259
 msgid "HP LaserJet 6 series"
 msgstr ""
 
-#: plug-ins/print/print.c:438
+#: plug-ins/print/print.c:261
 msgid "EPSON Stylus Color"
 msgstr ""
 
-#: plug-ins/print/print.c:440
+#: plug-ins/print/print.c:263
 msgid "EPSON Stylus Color Pro"
 msgstr ""
 
-#: plug-ins/print/print.c:442
+#: plug-ins/print/print.c:265
 msgid "EPSON Stylus Color Pro XL"
 msgstr ""
 
-#: plug-ins/print/print.c:444
+#: plug-ins/print/print.c:267
 msgid "EPSON Stylus Color 1500"
 msgstr ""
 
-#: plug-ins/print/print.c:446
+#: plug-ins/print/print.c:269
 msgid "EPSON Stylus Color 400"
 msgstr ""
 
-#: plug-ins/print/print.c:448
+#: plug-ins/print/print.c:271
 msgid "EPSON Stylus Color 500"
 msgstr ""
 
-#: plug-ins/print/print.c:450
+#: plug-ins/print/print.c:273
 msgid "EPSON Stylus Color 600"
 msgstr ""
 
-#: plug-ins/print/print.c:452
+#: plug-ins/print/print.c:275
 msgid "EPSON Stylus Color 800"
 msgstr ""
 
-#: plug-ins/print/print.c:454
+#: plug-ins/print/print.c:277
 msgid "EPSON Stylus Color 1520"
 msgstr ""
 
-#: plug-ins/print/print.c:456
+#: plug-ins/print/print.c:279
 msgid "EPSON Stylus Color 3000"
 msgstr ""
 
-#: plug-ins/print/print.c:509
+#: plug-ins/print/print.c:332
 msgid "This plug-in prints images from The GIMP."
-msgstr ""
+msgstr "このプラグインで GIMP から印刷できます"
 
-#: plug-ins/print/print.c:510
+#: plug-ins/print/print.c:333
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
-msgstr ""
+msgstr "PostScript や PCL, ESC/P2 プリンタに画像を印刷します"
 
-#: plug-ins/print/print.c:514
+#: plug-ins/print/print.c:337
 msgid "<Image>/File/Print"
-msgstr ""
+msgstr "<Image>/ファイル/印刷"
 
-#: plug-ins/print/print.c:827
+#: plug-ins/print/print.c:650
 msgid "Auto"
-msgstr ""
+msgstr "自動"
 
-#: plug-ins/print/print.c:828
+#: plug-ins/print/print.c:651
 msgid "Portrait"
-msgstr ""
+msgstr "縦置き"
 
-#: plug-ins/print/print.c:829
+#: plug-ins/print/print.c:652
 msgid "Landscape"
-msgstr ""
+msgstr "横置き"
 
-#: plug-ins/print/print.c:860
+#: plug-ins/print/print.c:685
 #, c-format
 msgid "Print v%s"
 msgstr ""
@@ -2379,354 +2403,353 @@ msgstr ""
 #.
 #. * Media size option menu...
 #.
-#: plug-ins/print/print.c:910
+#: plug-ins/print/print.c:735
 msgid "Media Size:"
-msgstr ""
+msgstr "用紙サイズ:"
 
 #.
 #. * Media type option menu...
 #.
-#: plug-ins/print/print.c:926
+#: plug-ins/print/print.c:751
 msgid "Media Type:"
-msgstr ""
+msgstr "用紙の種類:"
 
 #.
 #. * Media source option menu...
 #.
-#: plug-ins/print/print.c:942
+#: plug-ins/print/print.c:767
 msgid "Media Source:"
-msgstr ""
+msgstr "給紙方法:"
 
 #.
 #. * Orientation option menu...
 #.
-#: plug-ins/print/print.c:958
+#: plug-ins/print/print.c:783
 msgid "Orientation:"
-msgstr ""
+msgstr "印刷方向:"
 
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/print/print.c:988 plug-ins/ps/ps.c:1974
+#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
 msgid "Resolution:"
-msgstr ""
+msgstr "解像度:"
 
 #.
 #. * Output type toggles...
 #.
-#: plug-ins/print/print.c:1004
+#: plug-ins/print/print.c:829
 msgid "Output Type:"
-msgstr ""
+msgstr "出力の種類:"
 
-#: plug-ins/print/print.c:1013
+#: plug-ins/print/print.c:838
 msgid "B&W"
-msgstr ""
+msgstr "白黒"
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/print.c:1036
+#: plug-ins/print/print.c:861
 msgid "Scaling:"
-msgstr ""
+msgstr "拡大縮小:"
 
-#: plug-ins/print/print.c:1071
+#: plug-ins/print/print.c:896
 msgid "Percent"
-msgstr ""
+msgstr "パーセント"
 
-#: plug-ins/print/print.c:1080
+#: plug-ins/print/print.c:905
 msgid "PPI"
 msgstr ""
 
 #.
 #. * Brightness slider...
 #.
-#: plug-ins/print/print.c:1092
+#: plug-ins/print/print.c:917
 msgid "Brightness:"
-msgstr ""
+msgstr "明るさ:"
 
 #.
 #. * Printer option menu...
 #.
-#: plug-ins/print/print.c:1127
+#: plug-ins/print/print.c:952
 msgid "Printer:"
-msgstr ""
+msgstr "プリンタ:"
 
-#: plug-ins/print/print.c:1153 plug-ins/print/print.c:1186
+#: plug-ins/print/print.c:978 plug-ins/print/print.c:1011
 msgid "Setup"
-msgstr ""
+msgstr "設定"
 
-#: plug-ins/print/print.c:1173
+#: plug-ins/print/print.c:998
 msgid "Print"
-msgstr ""
+msgstr "印刷"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/print.c:1208
+#: plug-ins/print/print.c:1033
 msgid "Driver:"
-msgstr ""
+msgstr "ドライバ:"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/print.c:1233
+#: plug-ins/print/print.c:1058
 msgid "PPD File:"
-msgstr ""
+msgstr "PPD ファイル:"
 
-#: plug-ins/print/print.c:1246
+#: plug-ins/print/print.c:1071
 msgid "Browse"
-msgstr ""
+msgstr "場所を指定する"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/print.c:1256
+#: plug-ins/print/print.c:1081
 msgid "Command:"
-msgstr ""
+msgstr "コマンド:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/print.c:1291
+#: plug-ins/print/print.c:1116
 msgid "Print To File?"
-msgstr ""
+msgstr "ファイルに出力?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/print.c:1301
+#: plug-ins/print/print.c:1126
 msgid "PPD File?"
-msgstr ""
+msgstr "PPD ファイル?"
 
-#: plug-ins/print/print.c:2287
+#: plug-ins/print/print.c:2112
 msgid "File"
-msgstr ""
+msgstr "ファイル"
 
-#: plug-ins/ps/ps.c:319 plug-ins/ps/ps.c:320
+#: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
 msgid "load file of PostScript/PDF file format"
-msgstr ""
+msgstr "PostScript/PDF ファイル形式の画像を読み込む"
 
-#: plug-ins/ps/ps.c:343
+#: plug-ins/common/ps.c:344
 msgid "save file in PostScript file format"
-msgstr ""
+msgstr "PostScript ファイル形式で保存する"
 
-#: plug-ins/ps/ps.c:344
+#: plug-ins/common/ps.c:345
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
 msgstr ""
+"PostScript による保存はアルファチャンネル情報が失われるがの全ての画像形式に\n"
+"対して有効である"
 
-#: plug-ins/ps/ps.c:549
+#: plug-ins/common/ps.c:550
 msgid "PS: can't open file for reading"
-msgstr ""
+msgstr "PS: 読み込みファイルが開けない"
 
-#: plug-ins/ps/ps.c:556
+#: plug-ins/common/ps.c:557
 #, c-format
 msgid "Interpreting and Loading %s:"
-msgstr ""
+msgstr "%s を解釈読み込み中:"
 
-#: plug-ins/ps/ps.c:566
+#: plug-ins/common/ps.c:565
 msgid "PS: can't interprete file"
-msgstr ""
+msgstr "PS: ファイルが解釈できない"
 
-#: plug-ins/ps/ps.c:573
-msgid "PS: out of memory"
-msgstr ""
-
-#: plug-ins/ps/ps.c:653
+#: plug-ins/common/ps.c:647
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "PostScript による保存はアルファチャンネルを取り扱えない"
 
-#: plug-ins/ps/ps.c:664
+#: plug-ins/common/ps.c:658
 msgid "PS: cannot operate on unknown image types"
-msgstr ""
+msgstr "PS: 不明な画像種は取り扱えない"
 
-#: plug-ins/ps/ps.c:673
+#: plug-ins/common/ps.c:667
 msgid "PS: can't open file for writing"
-msgstr ""
+msgstr "PS: 書き出しファイルが開けない"
 
-#: plug-ins/ps/ps.c:1947
+#: plug-ins/common/ps.c:1713 plug-ins/common/ps.c:1810
+#: plug-ins/common/ps.c:1903 plug-ins/common/ps.c:1972
 msgid "write error occured"
-msgstr ""
+msgstr "書き出しエラー発生"
 
-#: plug-ins/ps/ps.c:1974 plug-ins/ps/ps.c:2239
+#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
 msgid "Width:"
-msgstr ""
+msgstr "幅:"
 
-#: plug-ins/ps/ps.c:1974 plug-ins/ps/ps.c:2239
+#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
 msgid "Height:"
-msgstr ""
+msgstr "高さ:"
 
-#: plug-ins/ps/ps.c:1974
+#: plug-ins/common/ps.c:1999
 msgid "Pages:"
-msgstr ""
+msgstr "ページ:"
 
-#: plug-ins/ps/ps.c:1976
+#: plug-ins/common/ps.c:2001
 msgid "b/w"
-msgstr ""
+msgstr "白黒"
 
-#: plug-ins/ps/ps.c:1976
+#: plug-ins/common/ps.c:2001
 msgid "gray"
-msgstr ""
+msgstr "グレースケール"
 
-#: plug-ins/ps/ps.c:1976
+#: plug-ins/common/ps.c:2001
 msgid "colour"
-msgstr ""
+msgstr "カラー"
 
-#: plug-ins/ps/ps.c:1976
+#: plug-ins/common/ps.c:2001
 msgid "automatic"
-msgstr ""
+msgstr "自動"
 
-#: plug-ins/ps/ps.c:1978
+#: plug-ins/common/ps.c:2003
 msgid "none"
-msgstr ""
+msgstr "無し"
 
-#: plug-ins/ps/ps.c:1978
+#: plug-ins/common/ps.c:2003
 msgid "weak"
-msgstr ""
+msgstr "少し"
 
-#: plug-ins/ps/ps.c:1978
+#: plug-ins/common/ps.c:2003
 msgid "strong"
-msgstr ""
+msgstr "強く"
 
-#: plug-ins/ps/ps.c:1991
+#: plug-ins/common/ps.c:2016
 msgid "Load PostScript"
-msgstr ""
+msgstr "PostScript 読み込み"
 
 #. Rendering
-#: plug-ins/ps/ps.c:2024
+#: plug-ins/common/ps.c:2049
 msgid "Rendering"
-msgstr ""
+msgstr "レンダリング"
 
-#: plug-ins/ps/ps.c:2064
+#: plug-ins/common/ps.c:2089
 msgid "try BoundingBox"
-msgstr ""
+msgstr "境界枠を調べる"
 
 #. Colouring
-#: plug-ins/ps/ps.c:2077
+#: plug-ins/common/ps.c:2102
 msgid "Colouring"
-msgstr ""
+msgstr "カラーリング"
 
-#: plug-ins/ps/ps.c:2113
+#: plug-ins/common/ps.c:2138
 msgid "Graphic antialiasing"
-msgstr ""
+msgstr "グラフィックアンチエイリアシング"
 
-#: plug-ins/ps/ps.c:2114
+#: plug-ins/common/ps.c:2139
 msgid "Text antialiasing"
-msgstr ""
+msgstr "文字アンチエイリアシング"
 
-#: plug-ins/ps/ps.c:2239
+#: plug-ins/common/ps.c:2264
 msgid "X-offset:"
-msgstr ""
+msgstr "X-オフセット:"
 
-#: plug-ins/ps/ps.c:2239
+#: plug-ins/common/ps.c:2264
 msgid "Y-offset:"
-msgstr ""
+msgstr "Y-オフセット:"
 
-#: plug-ins/ps/ps.c:2241
+#: plug-ins/common/ps.c:2266
 msgid "0"
 msgstr ""
 
-#: plug-ins/ps/ps.c:2241
+#: plug-ins/common/ps.c:2266
 msgid "90"
 msgstr ""
 
-#: plug-ins/ps/ps.c:2241
+#: plug-ins/common/ps.c:2266
 msgid "180"
 msgstr ""
 
-#: plug-ins/ps/ps.c:2241
+#: plug-ins/common/ps.c:2266
 msgid "270"
 msgstr ""
 
-#: plug-ins/ps/ps.c:2243
+#: plug-ins/common/ps.c:2268
 msgid "Inch"
-msgstr ""
+msgstr "インチ"
 
-#: plug-ins/ps/ps.c:2243
+#: plug-ins/common/ps.c:2268
 msgid "Millimeter"
-msgstr ""
+msgstr "ミリメートル"
 
-#: plug-ins/ps/ps.c:2258
+#: plug-ins/common/ps.c:2283
 msgid "Save PostScript"
-msgstr ""
+msgstr "PostScript 保存"
 
 #. Image Size
-#: plug-ins/ps/ps.c:2299
+#: plug-ins/common/ps.c:2324
 msgid "Image Size"
-msgstr ""
+msgstr "画像サイズ"
 
-#: plug-ins/ps/ps.c:2338
+#: plug-ins/common/ps.c:2363
 msgid "keep aspect ratio"
-msgstr ""
+msgstr "アスペクト比を保つ"
 
 #. Unit
-#: plug-ins/ps/ps.c:2348
+#: plug-ins/common/ps.c:2373
 msgid "Unit"
-msgstr ""
+msgstr "単位"
 
 #. Rotation
-#: plug-ins/ps/ps.c:2379
+#: plug-ins/common/ps.c:2404
 msgid "Rotation"
-msgstr ""
+msgstr "回転"
 
 #. Format
-#: plug-ins/ps/ps.c:2406
+#: plug-ins/common/ps.c:2431
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
-#: plug-ins/ps/ps.c:2414
+#: plug-ins/common/ps.c:2439
 msgid "Encapsulated PostScript"
-msgstr ""
+msgstr "カプセルに包まれた PostScript"
 
-#: plug-ins/ps/ps.c:2440
+#: plug-ins/common/ps.c:2465
 msgid "Preview size"
-msgstr ""
+msgstr "プレビューサイズ"
 
-#: plug-ins/xbm/xbm.c:163
+#: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
-msgstr ""
+msgstr "X10 や X11 ビットマップ (XBM) ファイル形式の画像を読み込む"
 
-#: plug-ins/xbm/xbm.c:164
+#: plug-ins/common/xbm.c:164
 msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
 "format for flat black-and-white (two color indexed) images."
-msgstr ""
+msgstr "X10 や X11 のビットマップ (XBM) ファイル形式の画像を読み込む. XBM は白黒画像に対する可逆ファイル形式である."
 
-#: plug-ins/xbm/xbm.c:230
+#: plug-ins/common/xbm.c:230
 msgid "Made with Gimp"
 msgstr ""
 
-#: plug-ins/xbm/xbm.c:518
+#: plug-ins/common/xbm.c:518
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
-msgstr ""
+msgstr "XBM: \"%s\" が開けない\n"
 
-#: plug-ins/xbm/xbm.c:583
+#: plug-ins/common/xbm.c:583
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
-msgstr ""
+msgstr "XBM: ヘッダが読み込めない (ftell == %ld)\n"
 
-#: plug-ins/xbm/xbm.c:589
+#: plug-ins/common/xbm.c:589
 msgid "XBM: no image width specified\n"
-msgstr ""
+msgstr "XBM: 画像幅が指定されていない\n"
 
-#: plug-ins/xbm/xbm.c:595
+#: plug-ins/common/xbm.c:595
 msgid "XBM: no image height specified\n"
-msgstr ""
+msgstr "XBM: 画像の高さが指定されていない\n"
 
-#: plug-ins/xbm/xbm.c:601
+#: plug-ins/common/xbm.c:601
 msgid "XBM: no image data type specified\n"
-msgstr ""
+msgstr "XBM: 画像の種類が指定されていない\n"
 
-#: plug-ins/xbm/xbm.c:692
+#: plug-ins/common/xbm.c:692
 msgid "XBM: can only save two color indexed images\n"
-msgstr ""
+msgstr "XBM: 2色インデックス画像のみ保存できます\n"
 
-#: plug-ins/xbm/xbm.c:697
+#: plug-ins/common/xbm.c:697
 msgid "XBM Warning"
-msgstr ""
+msgstr "XBM 警告"
 
-#: plug-ins/xbm/xbm.c:727
+#: plug-ins/common/xbm.c:727
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -2734,119 +2757,127 @@ msgid ""
 "Please convert it to a black and white\n"
 "(1-bit) indexed image and try again."
 msgstr ""
+"XBM 形式で保存しようとしている画像は\n"
+"2色以上の画像です.\n"
+"\n"
+"保存する前に白黒 (1-bit) インデックス\n"
+"画像に変換してください."
 
-#: plug-ins/xbm/xbm.c:799
+#: plug-ins/common/xbm.c:799
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr ""
+msgstr "XBM: \"%s\" が作れない\n"
 
-#: plug-ins/xbm/xbm.c:949
+#: plug-ins/common/xbm.c:949
 msgid "Save as XBM"
-msgstr ""
+msgstr "XBM 形式で保存"
 
 #. parameter settings
-#: plug-ins/xbm/xbm.c:980
+#: plug-ins/common/xbm.c:980
 msgid "XBM Options"
-msgstr ""
+msgstr "XBM オプション"
 
-#: plug-ins/xbm/xbm.c:995
+#: plug-ins/common/xbm.c:995
 msgid "Description: "
-msgstr ""
+msgstr "説明: "
 
 #. X10 format
-#: plug-ins/xbm/xbm.c:1011
+#: plug-ins/common/xbm.c:1011
 msgid "X10 format bitmap"
-msgstr ""
+msgstr "X10 形式ビットマップ"
 
-#: plug-ins/xbm/xbm.c:1024
+#: plug-ins/common/xbm.c:1024
 msgid "Identifier prefix: "
-msgstr ""
+msgstr "識別子プレフィックス: "
 
-#: plug-ins/xpm/xpm.c:170
+#: plug-ins/common/xpm.c:170
 msgid "loads files of the xpm file format"
-msgstr ""
+msgstr "xpm ファイル形式の画像を読み込む"
 
-#: plug-ins/xpm/xpm.c:182
+#: plug-ins/common/xpm.c:182
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
-msgstr ""
+msgstr "xpm ファイル形式で画像を保存する (16 bit ディスプレイを使用しているなら...)"
 
-#: plug-ins/xpm/xpm.c:756
+#: plug-ins/common/xpm.c:756
 msgid "Save as Xpm"
-msgstr ""
+msgstr "Xpm 形式で保存"
 
-#: plug-ins/xpm/xpm.c:790
+#: plug-ins/common/xpm.c:790
 msgid "Alpha Threshold"
-msgstr ""
+msgstr "アルファ閾値"
 
-#: plug-ins/xwd/xwd.c:222 plug-ins/xwd/xwd.c:223
+#: plug-ins/common/xwd.c:226 plug-ins/common/xwd.c:227
 msgid "load file of the XWD file format"
-msgstr ""
+msgstr "XWD ファイル形式の画像を読み込む"
 
-#: plug-ins/xwd/xwd.c:234
+#: plug-ins/common/xwd.c:238
 msgid "saves files in the XWD file format"
-msgstr ""
+msgstr "XWD ファイル形式で画像を保存する"
 
-#: plug-ins/xwd/xwd.c:235
+#: plug-ins/common/xwd.c:239
 msgid "XWD saving handles all image types except those with alpha channels."
-msgstr ""
+msgstr "XWD ではアルファチャンネル情報が失われる以外は全ての画像種を保存できる"
 
-#: plug-ins/xwd/xwd.c:331
+#: plug-ins/common/xwd.c:335
 msgid "can't open file for reading"
-msgstr ""
+msgstr "読み込むファイルが開けない"
 
-#: plug-ins/xwd/xwd.c:347
+#: plug-ins/common/xwd.c:351
 msgid "can't open file as XWD file"
-msgstr ""
+msgstr "XWD ファイル形式のファイルが開けない"
 
-#: plug-ins/xwd/xwd.c:362
+#: plug-ins/common/xwd.c:366
 msgid "can't get memory for colormap"
-msgstr ""
+msgstr "カラーマップのためのメモリが取得できない"
 
-#: plug-ins/xwd/xwd.c:380
+#: plug-ins/common/xwd.c:384
 msgid "can't read color entries"
-msgstr ""
+msgstr "色情報が読み込めない"
 
-#: plug-ins/xwd/xwd.c:444
+#: plug-ins/common/xwd.c:448
 msgid "this image depth/format is not supported"
-msgstr ""
+msgstr "この色深度/形式は使用できません"
 
-#: plug-ins/xwd/xwd.c:448
+#: plug-ins/common/xwd.c:452
 #, c-format
 msgid ""
 "load_image (xwd): XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
 "Currently this is not supported.\n"
 msgstr ""
+"load_image (xwd): XWD-ファイル %s は形式 %d, 深度 %d\n"
+"ピクセル当たり %d です.\n"
+"現在この形式は利用できません.\n"
 
-#: plug-ins/xwd/xwd.c:476
+#: plug-ins/common/xwd.c:480
 msgid "XWD save cannot handle images with alpha channels"
-msgstr ""
+msgstr "XWD による保存はアルファチャンネルを持った画像を取り扱えません"
 
-#: plug-ins/xwd/xwd.c:487
+#: plug-ins/common/xwd.c:491
 msgid "cannot operate on unknown image types"
-msgstr ""
+msgstr "不明な画像種は扱えません"
 
-#: plug-ins/xwd/xwd.c:496
+#: plug-ins/common/xwd.c:500
 msgid "can't open file for writing"
-msgstr ""
+msgstr "書き出しファイルが開けません"
 
-#: plug-ins/xwd/xwd.c:1148
+#: plug-ins/common/xwd.c:1152
 msgid "EOF encountered on "
-msgstr ""
+msgstr "EOF が現れました "
 
-#: plug-ins/xwd/xwd.c:1246 plug-ins/xwd/xwd.c:1408 plug-ins/xwd/xwd.c:1605
-#: plug-ins/xwd/xwd.c:1854
+#: plug-ins/common/xwd.c:1250 plug-ins/common/xwd.c:1412
+#: plug-ins/common/xwd.c:1609 plug-ins/common/xwd.c:1858
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "読み込み中に EOF が現れた"
 
-#: plug-ins/xwd/xwd.c:1294
+#: plug-ins/common/xwd.c:1298
 msgid "No memory for mapping colors"
-msgstr ""
+msgstr "色をマップするためのメモリが無い"
 
-#: plug-ins/xwd/xwd.c:1978
+#: plug-ins/common/xwd.c:1982
 msgid "Error during writing indexed/grey image"
-msgstr ""
+msgstr "インデックス/グレースケール画像保存中のエラー"
 
-#: plug-ins/xwd/xwd.c:2067
+#: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "rgb 画像保存中のエラー"
