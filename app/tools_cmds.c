@@ -79,6 +79,7 @@ static ProcRecord scale_proc;
 static ProcRecord shear_proc;
 static ProcRecord smudge_proc;
 static ProcRecord smudge_default_proc;
+static ProcRecord transform_2d_proc;
 
 void
 register_tools_procs (void)
@@ -112,6 +113,7 @@ register_tools_procs (void)
   procedural_db_register (&shear_proc);
   procedural_db_register (&smudge_proc);
   procedural_db_register (&smudge_default_proc);
+  procedural_db_register (&transform_2d_proc);
 }
 
 static Argument *
@@ -2876,4 +2878,158 @@ static ProcRecord smudge_default_proc =
   0,
   NULL,
   { { smudge_default_invoker } }
+};
+
+static Argument *
+transform_2d_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gboolean interpolation;
+  gdouble source_x;
+  gdouble source_y;
+  gdouble scale_x;
+  gdouble scale_y;
+  gdouble angle;
+  gdouble dest_x;
+  gdouble dest_y;
+  GimpImage *gimage;
+  TileManager *float_tiles, *new_tiles;
+  gboolean new_layer;
+  GimpMatrix3 matrix;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  interpolation = args[1].value.pdb_int ? TRUE : FALSE;
+
+  source_x = args[2].value.pdb_float;
+
+  source_y = args[3].value.pdb_float;
+
+  scale_x = args[4].value.pdb_float;
+
+  scale_y = args[5].value.pdb_float;
+
+  angle = args[6].value.pdb_float;
+
+  dest_x = args[7].value.pdb_float;
+
+  dest_y = args[8].value.pdb_float;
+
+  if (success)
+    {
+      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+	
+      /* Start a transform undo group */
+      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+	
+      /* Cut/Copy from the specified drawable */
+      float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+    
+      /* Assemble the transformation matrix */
+      gimp_matrix3_identity  (matrix);
+      gimp_matrix3_translate (matrix, -source_x, -source_y);
+      gimp_matrix3_scale     (matrix, scale_x, scale_y);
+      gimp_matrix3_rotate    (matrix, angle);
+      gimp_matrix3_translate (matrix, dest_x, dest_y);
+	
+      /* Transform the buffer */
+      new_tiles = transform_core_do (gimage, drawable, float_tiles,
+				     interpolation, matrix, NULL, NULL);
+	
+      /* Free the cut/copied buffer */
+      tile_manager_destroy (float_tiles);
+	
+      if (new_tiles)
+	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+      else
+	success = FALSE;
+    
+      /* Push the undo group end */
+      undo_push_group_end (gimage);
+    }
+
+  return_args = procedural_db_return_args (&transform_2d_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+
+  return return_args;
+}
+
+static ProcArg transform_2d_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "interpolation",
+    "Whether to use interpolation"
+  },
+  {
+    PDB_FLOAT,
+    "source_x",
+    "X coordinate of the transformation center"
+  },
+  {
+    PDB_FLOAT,
+    "source_y",
+    "Y coordinate of the transformation center"
+  },
+  {
+    PDB_FLOAT,
+    "scale_x",
+    "Amount to scale in x direction"
+  },
+  {
+    PDB_FLOAT,
+    "scale_y",
+    "Amount to scale in y direction"
+  },
+  {
+    PDB_FLOAT,
+    "angle",
+    "The angle of rotation (radians)"
+  },
+  {
+    PDB_FLOAT,
+    "dest_x",
+    "X coordinate of where the centre goes"
+  },
+  {
+    PDB_FLOAT,
+    "dest_y",
+    "Y coordinate of where the centre goes"
+  }
+};
+
+static ProcArg transform_2d_outargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The transformed drawable"
+  }
+};
+
+static ProcRecord transform_2d_proc =
+{
+  "gimp_transform_2d",
+  "Transform the specified drawable in 2d.",
+  "This tool transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting drawable. The transformation is done by scaling the image by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y). The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  9,
+  transform_2d_inargs,
+  1,
+  transform_2d_outargs,
+  { { transform_2d_invoker } }
 };

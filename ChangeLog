@@ -1,3 +1,10 @@
+2000-04-24  Sven Neumann <sven@gimp.org>
+
+	* app/internal_procs.c
+	* app/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb: added transform_2d PDB procedure as
+	suggested by David Hodson <hodsond@ozemail.com.au>
+
 2000-04-24  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp_splash.ppm: Prepare for the 1.2.. Let us celebrate that

@@ -1314,6 +1314,90 @@ CODE
     );
 }
 
+sub transform_2d {
+    $blurb = <<'BLURB';
+Transform the specified drawable in 2d.
+BLURB
+
+    $help = <<'HELP';
+This tool transforms the specified drawable if no selection exists. If a 
+selection exists, the portion of the drawable which lies under the 
+selection is cut from the drawable and made into a floating selection which 
+is then transformed. The interpolation parameter can be set to TRUE to 
+indicate that either linear or cubic interpolation should be used to smooth 
+the resulting drawable. The transformation is done by scaling the image by 
+the x and y scale factors about the point (source_x, source_y), then rotating 
+around the same point, then translating that point to the new position 
+(dest_x, dest_y). The return value is the ID of the rotated drawable. If 
+there was no selection, this will be equal to the drawable ID supplied as 
+input. Otherwise, this will be the newly created and transformed drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'interpolation', type => 'boolean',
+	  desc => 'Whether to use interpolation' },
+	{ name => 'source_x', type => 'float',
+	  desc => 'X coordinate of the transformation center' },
+	{ name => 'source_y', type => 'float',
+	  desc => 'Y coordinate of the transformation center' },
+	{ name => 'scale_x', type => 'float',
+	  desc => 'Amount to scale in x direction' },
+	{ name => 'scale_y', type => 'float',
+	  desc => 'Amount to scale in y direction' },
+	{ name => 'angle', type => 'float',
+	  desc => 'The angle of rotation (radians)' },
+	{ name => 'dest_x', type => 'float',
+	  desc => 'X coordinate of where the centre goes' },
+	{ name => 'dest_y', type => 'float',
+	  desc => 'Y coordinate of where the centre goes' }
+    );
+
+    @outargs = ( &drawable_out_arg('transformed') );
+
+    %invoke = (
+	headers => [ qw("transform_core.h"
+			"tile_manager_pvt.h") ],
+	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
+		  'gboolean new_layer', 'GimpMatrix3 matrix' ],
+	code => <<'CODE'
+{
+  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+    
+  /* Start a transform undo group */
+  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+    
+  /* Cut/Copy from the specified drawable */
+  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+
+  /* Assemble the transformation matrix */
+  gimp_matrix3_identity  (matrix);
+  gimp_matrix3_translate (matrix, -source_x, -source_y);
+  gimp_matrix3_scale     (matrix, scale_x, scale_y);
+  gimp_matrix3_rotate    (matrix, angle);
+  gimp_matrix3_translate (matrix, dest_x, dest_y);
+    
+  /* Transform the buffer */
+  new_tiles = transform_core_do (gimage, drawable, float_tiles,
+				 interpolation, matrix, NULL, NULL);
+    
+  /* Free the cut/copied buffer */
+  tile_manager_destroy (float_tiles);
+    
+  if (new_tiles)
+    success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
+  else
+    success = FALSE;
+
+  /* Push the undo group end */
+  undo_push_group_end (gimage);
+}
+CODE
+    );
+}
+
 
 sub smudge {
     $blurb  = <<'BLURB';
@@ -1452,7 +1536,7 @@ sub ink {
 	    flip free_select fuzzy_select
 	    paintbrush paintbrush_default
 	    pencil perspective rect_select rotate scale shear
-	    smudge smudge_default);
+	    smudge smudge_default transform_2d);
 %exports = (app => [@procs]);
 
 $desc = 'Tool procedures';
