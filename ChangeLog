@@ -1,3 +1,9 @@
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/curve_bend.c: don't use GDK_TOP_LEFT_ARROW
+	to restore the default cursor, simply pass NULL to
+	gdk_window_set_cursor().
+
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.[ch]: added "GimpPaintInfo *paint_info"

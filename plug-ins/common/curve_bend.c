@@ -143,8 +143,7 @@ struct _BenderDialog
   GdkPixmap *pixmap;
   GtkWidget *filechooser;
 
-  GdkCursor *cursor_wait;
-  GdkCursor *cursor_acitve;
+  GdkCursor *cursor_busy;
 
   GimpDrawable *drawable;
   int        color;
@@ -1251,10 +1250,9 @@ bender_new_dialog (GimpDrawable *drawable)
                     G_CALLBACK (bender_response),
                     cd);
 
-  /*  active and waiting cursor  */
+  /*  busy cursor  */
   display = gtk_widget_get_display (cd->shell);
-  cd->cursor_wait   = gdk_cursor_new_for_display (display, GDK_WATCH);
-  cd->cursor_acitve = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
+  cd->cursor_busy = gdk_cursor_new_for_display (display, GDK_WATCH);
 
   /*  The main hbox  */
   main_hbox = gtk_hbox_new (FALSE, 12);
@@ -1463,7 +1461,8 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
-                           _("Mirror the active curve to the other border"), NULL);
+                           _("Mirror the active curve to the other border"),
+                           NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_copy_inv_callback),
@@ -1531,12 +1530,12 @@ static void
 bender_update (BenderDialog *cd,
                int           update)
 {
-  int i;
-  int other;
+  gint i;
+  gint other;
 
   if (update & UP_PREVIEW)
     {
-      gdk_window_set_cursor(GTK_WIDGET(cd->shell)->window, cd->cursor_wait);
+      gdk_window_set_cursor (GTK_WIDGET (cd->shell)->window, cd->cursor_busy);
       gdk_flush ();
 
       if (cd->preview_layer_id2 >= 0)
@@ -1548,7 +1547,7 @@ bender_update (BenderDialog *cd,
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
 
-      gdk_window_set_cursor(GTK_WIDGET(cd->shell)->window, cd->cursor_acitve);
+      gdk_window_set_cursor (GTK_WIDGET (cd->shell)->window, NULL);
     }
   if (update & UP_PREVIEW_EXPOSE)
     {
