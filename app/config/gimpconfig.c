@@ -116,7 +116,49 @@ gimp_config_iface_deserialize (GObject  *object,
 static GObject *
 gimp_config_iface_duplicate (GObject *object)
 {
-  GObject *dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  GParameter    *construct_params   = NULL;
+  gint           n_construct_params = 0;
+  guint          i;
+  GObject       *dup;
+
+  klass = G_OBJECT_GET_CLASS (object);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  construct_params = g_new0 (GParameter, n_property_specs);
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec *prop_spec = property_specs[i];
+
+      if ((prop_spec->flags & G_PARAM_READABLE) &&
+          (prop_spec->flags & G_PARAM_WRITABLE) &&
+          (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+        {
+          GParameter *construct_param;
+
+          construct_param = &construct_params[n_construct_params++];
+
+          construct_params->name = prop_spec->name;
+
+          g_value_init (&construct_params->value, prop_spec->value_type);
+          g_object_get_property (object, prop_spec->name,
+                                 &construct_param->value);
+        }
+    }
+
+  g_free (property_specs);
+
+  dup = g_object_newv (G_TYPE_FROM_INSTANCE (object),
+                       n_construct_params, construct_params);
+
+  for (i = 0; i < n_construct_params; i++)
+    g_value_unset (&construct_params[i].value);
+
+  g_free (construct_params);
 
   gimp_config_copy_properties (object, dup);
 

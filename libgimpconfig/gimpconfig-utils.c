@@ -95,14 +95,19 @@ gimp_config_connect_notify (GObject    *src,
                             GParamSpec *param_spec,
                             GObject    *dest)
 {
-  GValue value = { 0, };
+  if ((param_spec->flags & G_PARAM_READABLE) &&
+      (param_spec->flags & G_PARAM_WRITABLE) &&
+      ! (param_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+    {
+      GValue value = { 0, };
 
-  g_value_init (&value, param_spec->value_type);
+      g_value_init (&value, param_spec->value_type);
 
-  g_object_get_property (src,  param_spec->name, &value);
-  g_object_set_property (dest, param_spec->name, &value);
+      g_object_get_property (src,  param_spec->name, &value);
+      g_object_set_property (dest, param_spec->name, &value);
 
-  g_value_unset (&value);
+      g_value_unset (&value);
+    }
 }
 
 /**
@@ -182,8 +187,9 @@ gimp_config_copy_properties (GObject *src,
 
       prop_spec = property_specs[i];
 
-      if (prop_spec->flags & G_PARAM_READABLE &&
-	  prop_spec->flags & G_PARAM_WRITABLE)
+      if ((prop_spec->flags & G_PARAM_READABLE) &&
+	  (prop_spec->flags & G_PARAM_WRITABLE) &&
+          ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
 	{
           if (G_IS_PARAM_SPEC_OBJECT (prop_spec) &&
               (prop_spec->flags & GIMP_PARAM_AGGREGATE))
@@ -264,7 +270,8 @@ gimp_config_reset_properties (GObject *object)
 
       prop_spec = property_specs[i];
 
-      if (prop_spec->flags & G_PARAM_WRITABLE)
+      if ((prop_spec->flags & G_PARAM_WRITABLE) &&
+          ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
         {
           if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
             {

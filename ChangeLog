@@ -1,5 +1,22 @@
 2003-09-29  Michael Natterer  <mitch@gimp.org>
 
+	Fixed handling of G_PARAM_CONSTRUCT_ONLY properties:
+
+	* app/config/gimpconfig.c (gimp_config_iface_duplicate): build
+	a GParameter array of G_PARAM_CONSTRUCT_ONLY properties and
+	use g_object_newv() instead of g_object_new() to create the
+	copy.
+
+	* app/config/gimpconfig-utils.c
+	(gimp_config_copy_properties)
+	(gimp_consif_reset_properties): don't try to copy/reset
+	G_PARAM_CONSTRUCT_ONLY properties because it is impossible.
+
+	(gimp_config_connect_notify): ditto. Also don't try to read
+	from unreadable or write to unwritable properties.
+
+2003-09-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c: minor cleanups.
 
 	(gimp_crop_tool_modifier_key): s/crop-type/crop-mode/. Fixes tool
