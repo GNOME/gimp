@@ -435,7 +435,8 @@ EXTRA_DIST = \
 	colormap_dialog.i.h	\
 	colormap_dialog.p.h	\
 	colormap_dialog.t.h	\
-	makefile.cygwin		\
+	makefile.mingw		\
+	makefile.mingw.in	\
 	makefile.msc		\
 	gimp.rc			\
 	gimp.sym		\
@@ -472,6 +473,9 @@ files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
 	done
+
+makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
+	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 # GCG stuff
 # 

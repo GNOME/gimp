@@ -1,3 +1,35 @@
+2000-08-24  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Update, tell people the MSVC makefiles are not
+	up-to-date.
+
+	* */makefile.msc: Add warning about being outdated.
+
+	* */makefile.cygwin: Remove.
+
+	* */makefile.mingw.in: New files replacing the makefile.cygwin files.
+
+	* */Makefile.am: Change correspondingly.
+
+	* configure.in: Generate corresponding makefile.mingw files.
+
+	* app/about_dialog.c: Include <gdk/gdkconfig.h> for
+	GDK_USE_UTF8_MBS. Add UTF-8 version of a string.
+
+	* libgimp/gimp.c: Remove horrible Win32 hack, not needed any longer.
+
+	* plug-ins/common/jpeg.c: Use g_message, not g_warning.
+
+	* plug-ins/common/winclipboard.c
+	* plug-ins/common/winprint.c: Remove COMPAT_CRUFT.
+
+	* plug-ins/Lighting/lighing_apply.c: Fix for non-interactive mode
+	bug, supplied by Piet van Oostrum.
+
+	* tips/makefile.mingw: New file.
+
+	* tips/Makefile.am: Add it.
+	
 2000-08-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpcompat.h

@@ -1,3 +1,5 @@
+## WARNING: Outdated.
+
 ## Makefile for building gimp.exe with Microsoft C
 ## Use: nmake -f makefile.msc
 

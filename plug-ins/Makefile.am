@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
 EXTRA_DIST = \
-	makefile.cygwin		\
+	makefile.mingw		\
+	makefile.mingw.in	\
 	makefile.msc		\
 	twain/README		\
 	twain/tw_dump.c		\
@@ -72,3 +73,6 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/plug-ins/makefile.mingw.in
+	cd $(top_builddir) && CONFIG_FILES=plug-ins/$@ CONFIG_HEADERS= $(SHELL) ./config.status

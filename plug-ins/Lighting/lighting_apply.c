@@ -94,13 +94,15 @@ compute_image (void)
     {
       gimp_pixel_rgn_init (&bump_region, gimp_drawable_get(mapvals.bumpmap_id),
         0, 0, width, height, FALSE, FALSE);
-      precompute_init(width,height);
     }
+  precompute_init(width,height);
 
   if (!mapvals.env_mapped || mapvals.envmap_id==-1)
      ray_func = get_ray_color;
   else
     {
+      env_width = gimp_drawable_width (mapvals.envmap_id);
+      env_height = gimp_drawable_height (mapvals.envmap_id);
       gimp_pixel_rgn_init (&env_region, gimp_drawable_get(mapvals.envmap_id),
         0, 0, env_width, env_height, FALSE, FALSE);
       ray_func = get_ray_color_ref;

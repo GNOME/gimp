@@ -768,8 +768,11 @@ gimp-remote.1
 gimp.spec
 libgimp/gimpfeatures.h
 libgimp/Makefile
+libgimp/makefile.mingw
 app/Makefile
+app/makefile.mingw
 plug-ins/Makefile
+plug-ins/makefile.mingw
 plug-ins/perl/config.pl
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
@@ -810,6 +813,7 @@ plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 modules/Makefile
+modules/makefile.mingw
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
 devel-docs/pdb/Makefile

@@ -17,8 +17,9 @@ INCLUDES = \
 
 EXTRA_DIST = \
 	gimpfeatures.h.in	\
+	makefile.mingw		\
+	makefile.mingw.in	\
 	makefile.msc		\
-	makefile.cygwin		\
 	gimp.def		\
 	gimpui.def
 
@@ -280,3 +281,6 @@ files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
 	done
+
+makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimp/makefile.mingw.in
+	cd $(top_builddir) && CONFIG_FILES=libgimp/$@ CONFIG_HEADERS= $(SHELL) ./config.status

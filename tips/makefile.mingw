@@ -1,0 +1,43 @@
+DEST = /install/gimp
+
+UTF8TXT = $(addsuffix .utf8,$(basename $(wildcard *.*.txt)))
+
+all : $(UTF8TXT)
+
+install : all
+	for f in gimp_tips.txt $(UTF8TXT); do cp $$f $(DEST)/tips/`basename $$f .utf8`.txt; done
+
+.SUFFIXES: .utf8
+
+%.cs.utf8: %.cs.txt
+	iconv -f ISO-8859-2 -t UTF-8 $< >$@
+
+%.de.utf8: %.de.txt
+	iconv -f ISO-8859-1 -t UTF-8 $< >$@
+
+%.es.utf8: %.es.txt
+	iconv -f ISO-8859-1 -t UTF-8 $< >$@
+
+%.fr.utf8: %.fr.txt
+	iconv -f ISO-8859-1 -t UTF-8 $< >$@
+
+%.it.utf8: %.it.txt
+	iconv -f ISO-8859-1 -t UTF-8 $< >$@
+
+%.ja.utf8: %.ja.txt
+	iconv -f EUC-JP -t UTF-8 $< >$@
+
+%.ko.utf8: %.ko.txt
+	iconv -f EUC-KR -t UTF-8 $< >$@
+
+%.pl.utf8: %.pl.txt
+	iconv -f ISO-8859-2 -t UTF-8 $< >$@
+
+%.ru.utf8: %.ru.txt
+	iconv -f KOI8-R -t UTF-8 $< >$@
+
+%.uk.utf8: %.uk.txt
+	iconv -f KOI8-U -t UTF-8 $< >$@
+
+clean:
+	-rm *.utf8

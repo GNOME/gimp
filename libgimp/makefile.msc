@@ -1,3 +1,5 @@
+## WARNING: Outdated.
+
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 

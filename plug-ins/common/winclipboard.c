@@ -510,7 +510,7 @@ CB_PasteImage (gboolean interactive,
 			|| (3 != oldBPP) || (24 != nBitsPS))
 		{
 			/* create new image */
-			image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? INDEXED : RGB);
+			image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? GIMP_INDEXED : GIMP_RGB);
 			gimp_image_undo_disable(image_ID);
 			drawable_ID = gimp_layer_new (image_ID, _("Background"), nWidth, nHeight, 
 										  nBitsPS <= 8 ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE, 

@@ -1,3 +1,5 @@
+## WARNING: Outdated.
+
 # Makefile to build the GIMP plug-ins with Microsoft nmake and compiler
 
 # I don't want to use many hand-written makefiles, so this is quite complex.

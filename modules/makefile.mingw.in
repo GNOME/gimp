@@ -1,20 +1,20 @@
-## Makefile for building gimp modules with gcc
-## Use: make -f makefile.cygwin
+## Makefile for building GIMP modules with gcc on Win32.
+## You should use GNU make running on cygwin.
+## Use: make -f makefile.mingw
 
 # Change this to wherever you install gimp.
 # This is what I use as installation target, from where the installer-builder
 # will pick it up.
-GIMP = /install/gimp
-
-################################################################
-
-# Nothing much configurable below
+BIN = /install/gimp/modules
 
 TOP = ../..
 
-GIMP_VER = 1.1
-
 include ../build/win32/make.mingw
+
+# Possibly override GIMP version from build/win32/module.defs
+GIMP_VER = @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+
+################################################################
 
 DEFINES = -DMODULE_COMPILATION 
 INCLUDES = -I . -I .. 
@@ -22,13 +22,11 @@ DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
 
 LDFLAGS = -s
 
-BIN = $(GIMP)/modules
-
-MODULES = \
-	colorsel_gtk-$(GIMP_VER).dll \
-	colorsel_triangle-$(GIMP_VER).dll \
-	colorsel_water-$(GIMP_VER).dll \
-	cdisplay_gamma-$(GIMP_VER).dll \
+MODULES =					\
+	colorsel_gtk-$(GIMP_VER).dll		\
+	colorsel_triangle-$(GIMP_VER).dll	\
+	colorsel_water-$(GIMP_VER).dll		\
+	cdisplay_gamma-$(GIMP_VER).dll		\
 	cdisplay_highcontrast-$(GIMP_VER).dll
 
 all : \
@@ -38,7 +36,7 @@ install : all
 	for m in $(MODULES); do $(INSTALL) $$m $(BIN); done
 
 ../config.h : ../config.h.win32
-	cp ../config.h.win32 $@
+	cp $@ $<
 
 colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.o module.def
 	$(GLIB)/build-dll colorsel_gtk $(GIMP_VER) module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp $(GTK_LIBS) $(GLIB_LIBS)
@@ -54,3 +52,9 @@ cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.o module.def
 
 cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.o module.def
 	$(GLIB)/build-dll cdisplay_highcontrast $(GIMP_VER) module.def cdisplay_highcontrast.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS)
+
+# Hack to get an updated makefile.mingw automatically after updating
+# makefile.mingw.in. Only for developer use.
+makefile.mingw: makefile.mingw.in
+	sed -e 's,@GIMP[_]MAJOR_VERSION@,@GIMP_MAJOR_VERSION@,' \
+	    -e 's,@GIMP[_]MINOR_VERSION@,@GIMP_MINOR_VERSION@,' <$< >$@

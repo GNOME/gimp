@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkconfig.h>	/* For GDK_USE_UTF8_MBS */
 #include <gdk/gdkkeysyms.h>
 
 #include "about_dialog.h"
@@ -108,7 +109,11 @@ static gchar *hadja_text[] =
 {
   "Hadjaha!",
   "Nej!",
+#ifndef GDK_USE_UTF8_MBS
   "Tv‰rtom!"
+#else
+  "Tv√§rtom!"
+#endif
 };
 
 void

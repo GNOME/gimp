@@ -737,7 +737,7 @@ load_image (gchar        *filename,
 
   if ((infile = fopen (filename, "rb")) == NULL)
     {
-      g_warning (_("can't open \"%s\"\n"), filename);
+      g_message (_("can't open \"%s\"\n"), filename);
       gimp_quit ();
     }
 

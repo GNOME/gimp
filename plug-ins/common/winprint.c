@@ -353,7 +353,7 @@ run (gchar   *name,
 	  
 	  /* Is the image indexed?  If so we need the colourmap. */
 	  
-	  if (gimp_image_base_type(param[1].data.d_image) == INDEXED)
+	  if (gimp_image_base_type(param[1].data.d_image) == GIMP_INDEXED)
 	    cmap = gimp_image_get_cmap(param[1].data.d_image, &ncolours);
 	  else
 	    {

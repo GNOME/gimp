@@ -1,0 +1,263 @@
+## Makefile for building gimp.exe with gcc on Win32.
+## You should use GNU make running on cygwin.
+## Use: make -f makefile.mingw
+
+# Change this to wherever you want to install gimp.exe.
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+BIN = /install/gimp/bin
+
+TOP = ../..
+
+include ../build/win32/make.mingw
+
+# Possibly override GIMP version from build/win32/module.defs
+GIMP_VER = @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+
+################################################################
+
+DEFINES = -DREGEX_MALLOC -DHAVE_CONFIG_H -DG_LOG_DOMAIN=\"Gimp\"
+INCLUDES = -I . -I ..
+DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
+
+all :						\
+	../config.h				\
+	libgimpim.a				\
+	colormap_dialog.c			\
+	gimp.exe
+
+install : gimp.exe
+	$(INSTALL) gimp.exe $(BIN)
+
+../config.h : ../config.h.win32
+	cp $@ $<
+
+gimpim_OBJECTS =				\
+	gimpdrawable.o				\
+	gimpimage.o				\
+	gimpobject.o				\
+	gimppreviewcache.o			\
+	gimpset.o				\
+	gimpsignal.o
+
+libgimpim.a : $(gimpim_OBJECTS)
+	ar cr libgimpim.a $(gimpim_OBJECTS)
+	
+gimp_OBJECTS =					\
+	about_dialog.o				\
+	airbrush.o				\
+	airbrush_blob.o				\
+	app_procs.o				\
+	asupsample.o				\
+	batch.o					\
+	bezier_select.o				\
+	blend.o					\
+	blob.o					\
+	boundary.o				\
+	brightness_contrast.o			\
+	brush_edit.o				\
+	brush_scale.o				\
+	brush_select.o				\
+	brush_select_cmds.o			\
+	brushes_cmds.o				\
+	bucket_fill.o				\
+	by_color_select.o			\
+	channel.o				\
+	channel_cmds.o				\
+	channels_dialog.o			\
+	channel_ops.o				\
+	channel_ops_cmds.o			\
+	clone.o					\
+	color_area.o				\
+	color_balance.o				\
+	color_cmds.o				\
+	color_notebook.o			\
+	color_panel.o				\
+	color_picker.o				\
+	color_select.o				\
+	color_transfer.o			\
+	colormaps.o				\
+	colormap_dialog.o			\
+	commands.o				\
+	context_manager.o			\
+	convert.o				\
+	convert_cmds.o				\
+	convolve.o				\
+	crop.o					\
+	cursorutil.o				\
+	curves.o				\
+	datafiles.o				\
+	desaturate.o				\
+	devices.o				\
+	dialog_handler.o			\
+	disp_callbacks.o			\
+	display_cmds.o				\
+	docindex.o				\
+	dodgeburn.o				\
+	draw_core.o				\
+	drawable.o				\
+	drawable_cmds.o				\
+	edit_cmds.o				\
+	edit_selection.o			\
+	ellipse_select.o			\
+	eraser.o				\
+	errorconsole.o				\
+	errors.o				\
+	equalize.o				\
+	fileops.o				\
+	fileops_cmds.o				\
+	flip_tool.o				\
+	floating_sel.o				\
+	floating_sel_cmds.o			\
+	file_new_dialog.o			\
+	free_select.o				\
+	fuzzy_select.o				\
+	gdisplay.o				\
+	gdisplay_color.o			\
+	gdisplay_color_ui.o			\
+	gdisplay_ops.o				\
+	general.o				\
+	gimage.o				\
+	gimage_mask.o				\
+	gimpbrush.o				\
+	gimpbrushgenerated.o			\
+	gimpbrushlist.o				\
+	gimpbrushpipe.o				\
+	gimpcontext.o				\
+	gimpcontextpreview.o			\
+	gimpdnd.o				\
+	gimphelp.o				\
+	gimphistogram.o				\
+	gimplist.o				\
+	gimplut.o				\
+	gimpparasite.o				\
+	gimpprogress.o				\
+	gimprc.o				\
+	gimprc_cmds.o				\
+	gimpui.o				\
+	gimpunit.o				\
+	global_edit.o				\
+	gradient.o				\
+	gradient_cmds.o				\
+	gradient_select.o			\
+	gradient_select_cmds.o			\
+	gradients_cmds.o			\
+	guides_cmds.o				\
+	gtkwrapbox.o				\
+	gtkhwrapbox.o				\
+	gtkvwrapbox.o				\
+	gximage.o				\
+	help_cmds.o				\
+	histogramwidget.o			\
+	histogram_tool.o			\
+	hue_saturation.o			\
+	image_cmds.o				\
+	image_map.o				\
+	image_new.o				\
+	image_render.o				\
+	indicator_area.o			\
+	info_dialog.o				\
+	info_window.o				\
+	ink.o					\
+	interface.o				\
+	internal_procs.o			\
+	invert.o				\
+	iscissors.o				\
+	layer.o					\
+	layer_cmds.o				\
+	layer_select.o				\
+	layers_dialog.o				\
+	lc_dialog.o				\
+	levels.o				\
+	lut_funcs.o				\
+	magnify.o				\
+	main.o					\
+	measure.o				\
+	menus.o					\
+	message_cmds.o				\
+	misc_cmds.o				\
+	module_db.o				\
+	move.o					\
+	nav_window.o				\
+	ops_buttons.o				\
+	palette.o				\
+	palette_cmds.o				\
+	palette_select.o			\
+	paint_core.o				\
+	paint_funcs.o				\
+	paintbrush.o				\
+	parasite_cmds.o				\
+	parasitelist.o				\
+	path.o					\
+	paths_cmds.o				\
+	paths_dialog.o				\
+	pattern_select.o			\
+	pattern_select_cmds.o			\
+	patterns.o				\
+	patterns_cmds.o				\
+	pencil.o				\
+	perspective_tool.o			\
+	pixel_processor.o			\
+	pixel_region.o				\
+	plug_in.o				\
+	plug_in_cmds.o				\
+	posterize.o				\
+	preferences_dialog.o			\
+	procedural_db.o				\
+	procedural_db_cmds.o			\
+	qmask.o					\
+	rect_select.o				\
+	regex.o					\
+	resize.o				\
+	rotate_tool.o				\
+	scale.o					\
+	scale_tool.o				\
+	scan_convert.o				\
+	scroll.o				\
+	selection.o				\
+	selection_cmds.o			\
+	session.o				\
+	shear_tool.o				\
+	smudge.o				\
+	temp_buf.o				\
+	text_tool.o				\
+	text_tool_cmds.o			\
+	threshold.o				\
+	tile.o					\
+	tile_cache.o				\
+	tile_manager.o				\
+	tile_swap.o				\
+	tips_dialog.o				\
+	tool_options.o				\
+	tools.o					\
+	tools_cmds.o				\
+	transform_core.o			\
+	transform_tool.o			\
+	undo.o					\
+	undo_cmds.o				\
+	undo_history.o				\
+	unit_cmds.o				\
+	user_install.o				\
+	xcf.o
+
+gimpres.o : gimp.rc wilber.ico
+	windres gimp.rc gimpres.o
+
+gimp.def: gimp.sym
+	echo EXPORTS >$@
+	cat $< >>$@
+
+gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
+# This is sickening.
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
+	$(CC) $(CFLAGS) -Wl,gimp.exp -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) gimpres.o -lgdi32 -luser32 -lshell32
+	$(DLLTOOL) --dllname gimp.exe gimp.def --output-lib libgimp.a $(gimp_OBJECTS)
+
+# Hack to get an updated makefile.mingw automatically after updating
+# makefile.mingw.in. Only for developer use.
+makefile.mingw: makefile.mingw.in
+	sed -e 's,@GIMP[_]MAJOR_VERSION@,@GIMP_MAJOR_VERSION@,' \
+	    -e 's,@GIMP[_]MINOR_VERSION@,@GIMP_MINOR_VERSION@,' <$< >$@
