@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.0\n"
 "POT-Creation-Date: 2000-12-28 11:03+0100\n"
-"PO-Revision-Date: 2000-12-30 02:20+01:00\n"
+"PO-Revision-Date: 2001-01-06 23:53+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5929,7 +5929,7 @@ msgstr "Sobel svisle"
 
 #: plug-ins/common/sobel.c:288
 msgid "Keep Sign of Result (one Direction only)"
-msgstr "Zachovat znaménko výsledku (pouze heden smìr)"
+msgstr "Zachovat znaménko výsledku (pouze jeden smìr)"
 
 #: plug-ins/common/sobel.c:361
 msgid "Sobel Edge Detecting..."
