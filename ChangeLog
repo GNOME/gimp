@@ -1,3 +1,7 @@
+2002-10-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.[ch]: derive it from GtkScale.
+
 2002-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorscale.[ch]: added some API and
