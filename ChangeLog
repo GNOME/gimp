@@ -1,3 +1,7 @@
+2001-03-22  Stanislav Brabec  <utx@penguin.cz>
+
+        * app/bucket_fill.c: Bucket fill threshold=0 must be allowed.
+
 2001-03-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: applied patch from 
