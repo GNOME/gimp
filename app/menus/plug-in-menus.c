@@ -26,10 +26,10 @@
 
 #include "gui-types.h"
 
-#include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
 #include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in-run.h"
 
 #include "widgets/gimpitemfactory.h"
 

@@ -21,6 +21,8 @@ libappplug_in_a_SOURCES = \
 	plug-ins.h		\
 	plug-in-def.c		\
 	plug-in-def.h		\
+	plug-in-message.c	\
+	plug-in-message.h	\
 	plug-in-params.c	\
 	plug-in-params.h	\
 	plug-in-proc.c		\
@@ -28,4 +30,8 @@ libappplug_in_a_SOURCES = \
 	plug-in-progress.c	\
 	plug-in-progress.h	\
 	plug-in-rc.c		\
-	plug-in-rc.h
+	plug-in-rc.h		\
+	plug-in-run.c		\
+	plug-in-run.h		\
+	plug-in-shm.c		\
+	plug-in-shm.h

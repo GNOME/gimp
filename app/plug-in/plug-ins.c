@@ -50,6 +50,7 @@
 #include "plug-in-proc.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
+#include "plug-in-run.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -317,7 +318,7 @@ plug_ins_exit (Gimp *gimp)
 {
   GSList *list;
 
-  plug_in_kill (gimp);
+  plug_in_exit (gimp);
 
   for (list = locale_domain_defs; list; list = g_slist_next (list))
     {

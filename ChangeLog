@@ -1,3 +1,35 @@
+2003-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.[ch]: renamed plug_in->busy to
+	plug_in->in_temp_proc. Added a stack of GMainLoops to each
+	plug-in. Added the "current_return_vals" to the PlugIn
+	struct. Renamed plug_in_kill() to plug_in_exit(). Removed
+	the stuff added below. Cleanup.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-message.[ch]
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-in-shm.[ch]: new files taking out functionality
+	from the overloaded plug-in.c. Added the code back in that implements
+	temp proc return messages (inside an #ifdef) because i don't
+	really get why it was removed on Sep 19 1998.
+
+	* app/plug-in/plug-ins.c: changed accordingly.
+
+	* app/plug-in/plug-in-def.c
+	* app/plug-in/plug-in-params.c: removed inclusion of <gtk/gtk.h>.
+
+	* app/gui/file-save-dialog.c
+	* app/gui/paths-dialog.c
+	* app/gui/plug-in-commands.c
+	* app/gui/plug-in-menus.c
+	* app/pdb/procedural_db.c
+	* app/widgets/gimphelp.c: changed plug-in includes accordingly.
+
+	* app/gui/plug-in-commands.c: don't use "the_gimp" from
+	"app_procs.h" but get it from the GimpItemFactory that invoked the
+	plug-in callback.
+
 2003-01-30  Nathan Summers  <rock@gimp.org>
 
 	* app/tools/gimptoolgui.[ch]: GimpToolGui, a new class descended 

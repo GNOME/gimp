@@ -29,14 +29,14 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc.h"
+
+#include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
 
 #include "plug-in-commands.h"
-
-#include "app_procs.h"
 
 
 #define return_if_no_display(gdisp,data) \
@@ -55,15 +55,21 @@ plug_in_run_cmd_callback (GtkWidget *widget,
                           gpointer   data,
                           guint      action)
 {
-  GimpDisplay *gdisplay;
-  ProcRecord  *proc_rec;
-  Argument    *args;
-  gint         i;
-  gint         gdisp_ID = -1;
-  gint         argc     = 0; /* calm down a gcc warning.  */
+  GtkItemFactory *item_factory;
+  Gimp           *gimp;
+  GimpDisplay    *gdisplay;
+  ProcRecord     *proc_rec;
+  Argument       *args;
+  gint            i;
+  gint            gdisp_ID = -1;
+  gint            argc     = 0; /* calm down a gcc warning.  */
+
+  item_factory = gtk_item_factory_from_widget (widget);
+
+  gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
   /* get the active gdisplay */
-  gdisplay = gimp_context_get_display (gimp_get_user_context (the_gimp));
+  gdisplay = gimp_context_get_display (gimp_get_user_context (gimp));
 
   proc_rec = (ProcRecord *) data;
 
@@ -132,7 +138,7 @@ plug_in_run_cmd_callback (GtkWidget *widget,
     }
 
   /* run the plug-in procedure */
-  plug_in_run (the_gimp, proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
+  plug_in_run (gimp, proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
   if (proc_rec->proc_type == GIMP_PLUGIN)
     last_plug_in = proc_rec;

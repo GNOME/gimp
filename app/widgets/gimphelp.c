@@ -40,8 +40,7 @@
 
 #include "pdb/procedural_db.h"
 
-#include "plug-in/plug-ins.h"
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-in-run.h"
 
 #include "gimphelp.h"
 

@@ -34,8 +34,8 @@ struct _PlugIn
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */
-  guint         recurse : 1;      /*  Have we called 'gtk_main' recursively?  */
-  guint         busy : 1;         /*  Is the plug-in busy with a temp proc?   */
+  guint         recurse : 1;      /*  Do we have an own GMainLoop?            */
+  guint         in_temp_proc : 1; /*  Is the plug-in busy with a temp proc?   */
   pid_t         pid;              /*  Plug-ins process id                     */
   gchar        *args[7];          /*  Plug-ins command line arguments         */
 
@@ -51,6 +51,10 @@ struct _PlugIn
 
   GSList       *temp_proc_defs;   /*  Temporary procedures                    */
 
+  GList        *main_loops;       /*  Stack of recursive main loops           */
+  Argument     *return_vals;      /*  The return value we wait for            */
+  gint          n_return_vals;
+
   GimpProgress *progress;         /*  Progress dialog                         */
 
   PlugInDef    *plug_in_def;      /*  Valid only during query() and init()    */
@@ -58,7 +62,7 @@ struct _PlugIn
 
 
 void       plug_in_init       (Gimp       *gimp);
-void       plug_in_kill       (Gimp       *gimp);
+void       plug_in_exit       (Gimp       *gimp);
 
 void       plug_in_call_query (Gimp       *gimp,
                                PlugInDef  *plug_in_def);
@@ -87,28 +91,14 @@ gboolean   plug_in_open       (PlugIn     *plug_in);
 void       plug_in_close      (PlugIn     *plug_in,
                                gboolean    kill_it);
 
-/*  Run a plug-in as if it were a procedure database procedure
- */
-Argument * plug_in_run        (Gimp       *gimp,
-                               ProcRecord *proc_rec,
-                               Argument   *args,
-                               gint        argc,
-                               gboolean    synchronous,
-                               gboolean    destroy_values,
-                               gint        gdisp_ID);
+void       plug_in_push           (PlugIn          *plug_in);
+void       plug_in_pop            (void);
 
-/*  Run the last plug-in again with the same arguments. Extensions
- *  are exempt from this "privelege".
- */
-void       plug_in_repeat     (Gimp       *gimp,
-                               gint        display_ID,
-                               gint        image_ID,
-                               gint        drawable_ID,
-                               gboolean    with_interface);
+void       plug_in_main_loop      (PlugIn          *plug_in);
+void       plug_in_main_loop_quit (PlugIn          *plug_in);
 
 
-extern PlugIn     *current_plug_in;
-extern ProcRecord *last_plug_in;
+extern PlugIn *current_plug_in;
 
 
 #endif /* __PLUG_IN_H__ */

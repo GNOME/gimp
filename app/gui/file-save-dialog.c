@@ -38,8 +38,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/plug-in.h"
 #include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in-run.h"
 
 #include "file/file-save.h"
 #include "file/file-utils.h"
@@ -245,7 +245,7 @@ file_save_ok_callback (GtkWidget *widget,
             args[2].arg_type      = GIMP_PDB_DRAWABLE;
             args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
 
-            plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, 0);
+            plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, -1);
 
             g_free (args);
 

@@ -30,7 +30,7 @@
 
 #include "core/gimp.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-in-run.h"
 
 #include "procedural_db.h"
 
