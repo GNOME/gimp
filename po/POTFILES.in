@@ -94,7 +94,7 @@ app/gui/dialogs-menu.c
 app/gui/documents-menu.c
 app/gui/drawable-commands.c
 app/gui/edit-commands.c
-app/gui/error-console-dialog.c
+app/gui/error-console-menu.c
 app/gui/file-commands.c
 app/gui/file-dialog-utils.c
 app/gui/file-new-dialog.c
@@ -255,6 +255,7 @@ app/widgets/gimpdock.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdnd.c
 app/widgets/gimpdrawabletreeview.c
+app/widgets/gimperrorconsole.c
 app/widgets/gimpfontselection.c
 app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpgradienteditor.c
