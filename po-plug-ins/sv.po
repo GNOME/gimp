@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-12 16:40+0100\n"
-"PO-Revision-Date: 2003-01-12 16:40+0100\n"
+"POT-Creation-Date: 2003-01-14 23:13+0100\n"
+"PO-Revision-Date: 2003-01-14 23:20+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6332,8 +6332,8 @@ msgid "Or_igin at bottom left"
 msgstr "Ur_sprung från nere till vänster"
 
 #: plug-ins/common/threshold_alpha.c:107
-msgid "<Image>/Layer/Alpha/Threshold Alpha..."
-msgstr "<Image>/Lager/Alfa/Tröskla alfa..."
+msgid "<Image>/Layer/Transparency/Threshold Alpha..."
+msgstr "<Image>/Lager/Transparens/Tröskla alfa..."
 
 #: plug-ins/common/threshold_alpha.c:149
 msgid "The layer preserves transparency."
