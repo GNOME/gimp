@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.26\n"
-"POT-Creation-Date: 2000-10-02 11:47+0200\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 2000-10-02 11:43+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -47,7 +47,7 @@ msgstr "À propos"
 #: plug-ins/common/despeckle.c:620 plug-ins/common/destripe.c:550
 #: plug-ins/common/diffraction.c:534 plug-ins/common/displace.c:298
 #: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:522
-#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:278
+#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:279
 #: plug-ins/common/film.c:1182 plug-ins/common/flarefx.c:332
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:361
@@ -102,7 +102,7 @@ msgstr "À propos"
 #: plug-ins/ifscompose/ifscompose.c:786
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
-#: plug-ins/print/gimp_main_window.c:742 plug-ins/rcm/rcm_dialog.c:727
+#: plug-ins/print/gimp_main_window.c:816 plug-ins/rcm/rcm_dialog.c:727
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
@@ -129,7 +129,7 @@ msgstr "Valider"
 #: plug-ins/common/destripe.c:552 plug-ins/common/diffraction.c:536
 #: plug-ins/common/displace.c:300 plug-ins/common/edge.c:652
 #: plug-ins/common/emboss.c:524 plug-ins/common/engrave.c:226
-#: plug-ins/common/exchange.c:280 plug-ins/common/film.c:1184
+#: plug-ins/common/exchange.c:281 plug-ins/common/film.c:1184
 #: plug-ins/common/flarefx.c:334 plug-ins/common/fractaltrace.c:727
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:363 plug-ins/common/gauss_rle.c:446
@@ -186,7 +186,7 @@ msgstr "Valider"
 #: plug-ins/ifscompose/ifscompose.c:794
 #: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
-#: plug-ins/print/gimp_main_window.c:236 plug-ins/print/gimp_main_window.c:744
+#: plug-ins/print/gimp_main_window.c:270 plug-ins/print/gimp_main_window.c:818
 #: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:342
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
@@ -198,7 +198,7 @@ msgstr "Annuler"
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1202
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
-#: plug-ins/common/exchange.c:295 plug-ins/common/fractaltrace.c:746
+#: plug-ins/common/exchange.c:296 plug-ins/common/fractaltrace.c:746
 #: plug-ins/common/glasstile.c:276 plug-ins/common/grid.c:680
 #: plug-ins/common/illusion.c:580 plug-ins/common/iwarp.c:1160
 #: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
@@ -214,7 +214,7 @@ msgstr "Annuler"
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:901
 #: plug-ins/imagemap/imap_edit_area_info.c:287
-#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:261
+#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:295
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
 msgid "Preview"
 msgstr "Aperçu"
@@ -460,9 +460,9 @@ msgstr "Densité de couleur"
 #: plug-ins/FractalExplorer/Dialogs.c:673 plug-ins/common/AlienMap.c:1439
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
 #: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
-#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
+#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:354
 #: plug-ins/common/noisify.c:588 plug-ins/common/noisify.c:624
-#: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:135
+#: plug-ins/fp/fp_gtk.c:20
 msgid "Red:"
 msgstr "Rouge :"
 
@@ -473,9 +473,9 @@ msgstr "Change l'intensité du canal rouge."
 #: plug-ins/FractalExplorer/Dialogs.c:683 plug-ins/common/AlienMap.c:1448
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
 #: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
+#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:382
 #: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:635
-#: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:149
+#: plug-ins/fp/fp_gtk.c:21
 msgid "Green:"
 msgstr "Vert :"
 
@@ -486,9 +486,9 @@ msgstr "Change l'intensité du canal vert."
 #: plug-ins/FractalExplorer/Dialogs.c:693 plug-ins/common/AlienMap.c:1457
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
 #: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
+#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:411
 #: plug-ins/common/noisify.c:610 plug-ins/common/noisify.c:646
-#: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:163
+#: plug-ins/fp/fp_gtk.c:22
 msgid "Blue:"
 msgstr "Bleu :"
 
@@ -917,6 +917,7 @@ msgstr "Régler la couleur de la source de lumière"
 
 #: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
+#: plug-ins/print/gimp_main_window.c:335
 msgid "Position"
 msgstr "Position"
 
@@ -1274,23 +1275,23 @@ msgstr "Arrière :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:354
+#: plug-ins/print/gimp_main_window.c:397
 msgid "Top:"
 msgstr "Dessus :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:376
+#: plug-ins/print/gimp_main_window.c:431
 msgid "Bottom:"
 msgstr "Bas :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:343
+#: plug-ins/print/gimp_main_window.c:386
 msgid "Left:"
 msgstr "Gauche :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:365
+#: plug-ins/print/gimp_main_window.c:408
 msgid "Right:"
 msgstr "Droite :"
 
@@ -1795,9 +1796,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
-#: plug-ins/print/gimp_color_window.c:349
-#: plug-ins/print/gimp_main_window.c:999
-#: plug-ins/print/gimp_main_window.c:1069
+#: plug-ins/print/gimp_main_window.c:1080
 msgid "Standard"
 msgstr "Standard"
 
@@ -2251,7 +2250,7 @@ msgstr "Centrer"
 msgid "Right Edge"
 msgstr "Bordure Droite"
 
-#: plug-ins/common/align_layers.c:478 plug-ins/common/align_layers.c:511
+#: plug-ins/common/align_layers.c:478
 msgid "Horizontal Base:"
 msgstr "Base Horizontale :"
 
@@ -2274,6 +2273,10 @@ msgstr "Bordure Haute"
 #: plug-ins/common/align_layers.c:507
 msgid "Bottom Edge"
 msgstr "Bordure Basse"
+
+#: plug-ins/common/align_layers.c:511
+msgid "Vertical Base:"
+msgstr "Base verticale :"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -2305,7 +2308,7 @@ msgstr "Jouer une animation : "
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:822
 #: plug-ins/ifscompose/ifscompose.c:1238 plug-ins/imagemap/imap_menu.c:227
-#: plug-ins/print/gimp_color_window.c:85
+#: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
 msgstr "Fermer"
 
@@ -2619,7 +2622,7 @@ msgstr "Coloriser"
 #: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
-#: plug-ins/print/gimp_main_window.c:504
+#: plug-ins/print/gimp_main_window.c:745
 msgid "Color"
 msgstr "Couleur"
 
@@ -2689,7 +2692,7 @@ msgstr "Teinte :"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
-#: plug-ins/print/gimp_color_window.c:177 plug-ins/rcm/rcm_dialog.c:453
+#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:453
 msgid "Saturation:"
 msgstr "Saturation:"
 
@@ -2707,17 +2710,17 @@ msgid "CMY"
 msgstr "Trichromie"
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:23
+#: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
 msgid "Cyan:"
 msgstr "Cyan :"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:25
+#: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
 msgid "Magenta:"
 msgstr "Magenta :"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:24
+#: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
 msgid "Yellow:"
 msgstr "Jaune :"
 
@@ -3270,7 +3273,7 @@ msgstr "Créer histogramme"
 #: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
-#: plug-ins/print/gimp_main_window.c:387
+#: plug-ins/print/gimp_main_window.c:625
 msgid "Width:"
 msgstr "Largeur :"
 
@@ -3299,7 +3302,7 @@ msgid "Sharp edges"
 msgstr "Bords nets"
 
 #: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
-#: plug-ins/print/gimp_color_window.c:107
+#: plug-ins/print/gimp_color_window.c:178
 msgid "Brightness:"
 msgstr "Luminosité:"
 
@@ -3426,7 +3429,7 @@ msgstr "Limiter la largeur de ligne"
 #: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
-#: plug-ins/print/gimp_main_window.c:398
+#: plug-ins/print/gimp_main_window.c:639
 msgid "Height:"
 msgstr "Hauteur :"
 
@@ -3434,44 +3437,44 @@ msgstr "Hauteur :"
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
 msgstr "<Image>/Filtres/Couleurs/Palette/Échanger deux couleurs..."
 
-#: plug-ins/common/exchange.c:222
+#: plug-ins/common/exchange.c:223
 msgid "Color Exchange..."
 msgstr "Échange de couleurs..."
 
 #. set up the dialog
-#: plug-ins/common/exchange.c:273
+#: plug-ins/common/exchange.c:274
 msgid "Color Exchange"
 msgstr "Échange de couleurs..."
 
-#: plug-ins/common/exchange.c:321
+#: plug-ins/common/exchange.c:322
 msgid "To Color"
 msgstr "Couleur d'arrivée"
 
-#: plug-ins/common/exchange.c:321
+#: plug-ins/common/exchange.c:322
 msgid "From Color"
 msgstr "Couleur d'origine"
 
-#: plug-ins/common/exchange.c:334
+#: plug-ins/common/exchange.c:335
 msgid "Color Exchange: To Color"
 msgstr "Échange de couleurs : Couleur d'arrivée"
 
-#: plug-ins/common/exchange.c:335
+#: plug-ins/common/exchange.c:336
 msgid "Color Exchange: From Color"
 msgstr "Échange de couleurs : Couleur d'origine"
 
-#: plug-ins/common/exchange.c:369
+#: plug-ins/common/exchange.c:370
 msgid "Red Threshold:"
 msgstr "Seuil sur le rouge :"
 
-#: plug-ins/common/exchange.c:397
+#: plug-ins/common/exchange.c:398
 msgid "Green Threshold:"
 msgstr "Seuil sur le vert :"
 
-#: plug-ins/common/exchange.c:426
+#: plug-ins/common/exchange.c:427
 msgid "Blue Threshold:"
 msgstr "Seuil sur le bleu :"
 
-#: plug-ins/common/exchange.c:444
+#: plug-ins/common/exchange.c:445
 msgid "Lock Thresholds"
 msgstr "Verrouiller les seuils"
 
@@ -5321,7 +5324,7 @@ msgstr "Charger PostScript"
 msgid "Rendering"
 msgstr "Interprétation"
 
-#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
 msgstr "Résolution :"
 
@@ -5397,7 +5400,7 @@ msgstr ""
 msgid "Unit"
 msgstr "Unité"
 
-#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:317
+#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
 msgstr "Pouce"
 
@@ -7045,7 +7048,7 @@ msgstr "L'imprimante ne supporte pas les bitmaps"
 msgid "StartPage failed"
 msgstr "La page de départ a échoué"
 
-#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:276
+#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:270
 msgid "Printing..."
 msgstr "Impression en cours..."
 
@@ -7437,12 +7440,12 @@ msgstr "Enregistrer flamme"
 msgid "Flame"
 msgstr "Flamme"
 
-#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:121
+#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:193
 msgid "Contrast:"
 msgstr "Contraste :"
 
 #: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:401
-#: plug-ins/print/gimp_color_window.c:205
+#: plug-ins/print/gimp_color_window.c:285
 msgid "Gamma:"
 msgstr "Gamma :"
 
@@ -10368,7 +10371,7 @@ msgid "Anti-Clockwise"
 msgstr "Sens inverse des aiguilles"
 
 #: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
-#: plug-ins/print/gimp_main_window.c:473
+#: plug-ins/print/gimp_main_window.c:469
 msgid "Orientation:"
 msgstr "Orientation :"
 
@@ -11947,7 +11950,7 @@ msgstr "Étendre"
 msgid "Render Options"
 msgstr "Options de rendu"
 
-#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:462
+#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
 msgstr "Auto"
 
@@ -12178,8 +12181,10 @@ msgstr "Autre"
 #. * always first in the list, else call bsearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:905
-#: plug-ins/print/print.c:906 plug-ins/print/print.c:1078
+#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:954
+#: plug-ins/print/print.c:955 plug-ins/print/print.c:1036
+#: plug-ins/print/print.c:1037 plug-ins/print/print.c:1136
+#: plug-ins/print/print.c:1137 plug-ins/print/print.c:1373
 msgid "File"
 msgstr "Fichier"
 
@@ -12820,27 +12825,32 @@ msgstr "Coin du calque"
 msgid "Page Curl..."
 msgstr "Coin de page..."
 
-#: plug-ins/print/gimp_color_window.c:80
+#: plug-ins/print/gimp_color_window.c:135
 msgid "Print Color Adjust"
 msgstr "Ajustez les couleurs d'impression"
 
-#: plug-ins/print/gimp_color_window.c:191
+#: plug-ins/print/gimp_color_window.c:140
+#, fuzzy
+msgid "Set Defaults"
+msgstr "Valeurs par défaut"
+
+#: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
 msgstr "Densité :"
 
-#: plug-ins/print/gimp_color_window.c:219
+#: plug-ins/print/gimp_color_window.c:300
 msgid "Dither Algorithm:"
 msgstr "Algorithme de tramage :"
 
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:221
+#: plug-ins/print/gimp_main_window.c:255
 #, c-format
 msgid "%s -- Print v%s"
 msgstr "%s -- Impression v%s"
 
-#: plug-ins/print/gimp_main_window.c:230
+#: plug-ins/print/gimp_main_window.c:264
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -12848,7 +12858,7 @@ msgstr ""
 "Imprimer et enregistrer\n"
 "les réglages"
 
-#: plug-ins/print/gimp_main_window.c:232
+#: plug-ins/print/gimp_main_window.c:266
 msgid ""
 "Save\n"
 "Settings"
@@ -12856,172 +12866,195 @@ msgstr ""
 "Enregistrer\n"
 "les réglages"
 
-#: plug-ins/print/gimp_main_window.c:234
+#: plug-ins/print/gimp_main_window.c:268
 msgid "Print"
 msgstr "Impression"
 
-#: plug-ins/print/gimp_main_window.c:303
+#: plug-ins/print/gimp_main_window.c:346
 msgid "Center Image"
 msgstr "Centrer l'image"
 
-#: plug-ins/print/gimp_main_window.c:314
+#: plug-ins/print/gimp_main_window.c:357
 msgid "Units:"
 msgstr "Unités :"
 
-#: plug-ins/print/gimp_main_window.c:326
+#: plug-ins/print/gimp_main_window.c:369
 msgid "cm"
 msgstr "cm"
+
+#: plug-ins/print/gimp_main_window.c:420
+#, fuzzy
+msgid "Right Border:"
+msgstr "Bordure :"
+
+#: plug-ins/print/gimp_main_window.c:443
+#, fuzzy
+msgid "Bottom Border:"
+msgstr "Bordure Basse"
+
+#: plug-ins/print/gimp_main_window.c:455
+msgid "Portrait"
+msgstr "Portrait"
+
+#: plug-ins/print/gimp_main_window.c:458
+msgid "Landscape"
+msgstr "Paysage"
+
+#: plug-ins/print/gimp_main_window.c:461
+msgid "Upside down"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:464
+#, fuzzy
+msgid "Seascape"
+msgstr "Paysage"
 
 #.
 #. *  Printer settings frame...
 #.
-#: plug-ins/print/gimp_main_window.c:405
+#: plug-ins/print/gimp_main_window.c:476
 msgid "Printer Settings"
 msgstr "Réglages de l'imprimante"
 
-#: plug-ins/print/gimp_main_window.c:427
+#: plug-ins/print/gimp_main_window.c:498
 msgid "Media Size:"
 msgstr "Taille du support (papier) :"
 
-#: plug-ins/print/gimp_main_window.c:436
+#: plug-ins/print/gimp_main_window.c:507
 msgid "Media Type:"
 msgstr "Type de support :"
 
-#: plug-ins/print/gimp_main_window.c:445
+#: plug-ins/print/gimp_main_window.c:516
 msgid "Media Source:"
 msgstr "Source du support :"
 
-#: plug-ins/print/gimp_main_window.c:454
+#: plug-ins/print/gimp_main_window.c:525
 msgid "Ink Type:"
 msgstr "Type d'encre :"
-
-#: plug-ins/print/gimp_main_window.c:465
-msgid "Portrait"
-msgstr "Portrait"
-
-#: plug-ins/print/gimp_main_window.c:468
-msgid "Landscape"
-msgstr "Paysage"
-
-#: plug-ins/print/gimp_main_window.c:491
-msgid "Output Type:"
-msgstr "Type de Sortie :"
-
-#: plug-ins/print/gimp_main_window.c:494
-msgid "B&W"
-msgstr "N&B"
-
-#: plug-ins/print/gimp_main_window.c:516
-msgid "Output Level:"
-msgstr "Niveau de sortie :"
-
-#: plug-ins/print/gimp_main_window.c:520
-msgid "Normal Scale"
-msgstr "Échelle normale"
-
-#: plug-ins/print/gimp_main_window.c:532
-msgid "Experimental Linear Scale"
-msgstr "Échelle linéaire (expérimentale)"
-
-#.
-#. * Image type
-#.
-#: plug-ins/print/gimp_main_window.c:545
-msgid "Image Type"
-msgstr "Type d'image"
-
-#: plug-ins/print/gimp_main_window.c:555
-msgid "Line Art"
-msgstr "Crayon"
-
-#: plug-ins/print/gimp_main_window.c:566
-msgid "Solid Colors"
-msgstr "Tons continus"
-
-#: plug-ins/print/gimp_main_window.c:577
-msgid "Photograph"
-msgstr "Photographie"
-
-#: plug-ins/print/gimp_main_window.c:588
-msgid "Monochrome"
-msgstr "Monochrome"
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/gimp_main_window.c:601
-msgid "Scaling and Color Settings"
-msgstr "Réglages d'échelle et de couleur"
+#: plug-ins/print/gimp_main_window.c:540
+#, fuzzy
+msgid "Scaling"
+msgstr "Échelle :"
 
-#: plug-ins/print/gimp_main_window.c:627 plug-ins/print/gimp_main_window.c:635
+#: plug-ins/print/gimp_main_window.c:567 plug-ins/print/gimp_main_window.c:576
 msgid "Scaling:"
 msgstr "Échelle :"
 
-#: plug-ins/print/gimp_main_window.c:650
+#: plug-ins/print/gimp_main_window.c:591
 msgid "Percent"
 msgstr "Pourcent"
 
-#: plug-ins/print/gimp_main_window.c:660
+#: plug-ins/print/gimp_main_window.c:601
 msgid "PPI"
 msgstr "points par pouce"
 
-#: plug-ins/print/gimp_main_window.c:669
+#: plug-ins/print/gimp_main_window.c:610
 msgid "Set Image Scale"
 msgstr "Réglage de l'échelle de l'image"
 
-#: plug-ins/print/gimp_main_window.c:682
+#.
+#. * Image type
+#.
+#: plug-ins/print/gimp_main_window.c:656
+#, fuzzy
+msgid "Image Settings"
+msgstr "Paramètres de Teinte"
+
+#: plug-ins/print/gimp_main_window.c:676
+msgid "Line Art"
+msgstr "Crayon"
+
+#: plug-ins/print/gimp_main_window.c:687
+msgid "Solid Colors"
+msgstr "Tons continus"
+
+#: plug-ins/print/gimp_main_window.c:698
+msgid "Photograph"
+msgstr "Photographie"
+
+#: plug-ins/print/gimp_main_window.c:709
+msgid "Monochrome"
+msgstr "Monochrome"
+
+#: plug-ins/print/gimp_main_window.c:724
 msgid "Adjust Color"
 msgstr "Ajuster les couleurs"
 
-#: plug-ins/print/gimp_main_window.c:715
+#.
+#. * Output type toggles...
+#.
+#: plug-ins/print/gimp_main_window.c:736
+msgid "Output Type:"
+msgstr "Type de Sortie :"
+
+#: plug-ins/print/gimp_main_window.c:755
+msgid "B&W"
+msgstr "N&B"
+
+#: plug-ins/print/gimp_main_window.c:789
 msgid "Printer:"
 msgstr "Imprimante :"
 
-#: plug-ins/print/gimp_main_window.c:724 plug-ins/print/gimp_main_window.c:737
+#: plug-ins/print/gimp_main_window.c:798 plug-ins/print/gimp_main_window.c:811
 msgid "Setup"
 msgstr "Configuration"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/gimp_main_window.c:766
-msgid "Driver:"
-msgstr "Pilote :"
+#: plug-ins/print/gimp_main_window.c:840
+#, fuzzy
+msgid "Printer Model:"
+msgstr "Mode de dessin :"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/gimp_main_window.c:802
+#: plug-ins/print/gimp_main_window.c:876
 msgid "PPD File:"
 msgstr "Fichier PPD :"
 
-#: plug-ins/print/gimp_main_window.c:817
+#: plug-ins/print/gimp_main_window.c:891
 msgid "Browse"
 msgstr "Parcourir"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/gimp_main_window.c:829
+#: plug-ins/print/gimp_main_window.c:903
 msgid "Command:"
 msgstr "Commande :"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:844
+#: plug-ins/print/gimp_main_window.c:918
 msgid "Print To File?"
 msgstr "Imprimer dans un fichier ?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:858
+#: plug-ins/print/gimp_main_window.c:932
 msgid "PPD File?"
 msgstr "Fichier PPD ?"
 
-#: plug-ins/print/print.c:234
+#: plug-ins/print/print.c:223 plug-ins/print/print.c:232
 msgid "<Image>/File/Print..."
+msgstr "<Image>/Ficher/Imprimer..."
+
+#: plug-ins/print/print.c:241
+#, fuzzy
+msgid "<Image>/File/Print (Gtk)..."
+msgstr "<Image>/Ficher/Imprimer..."
+
+#: plug-ins/print/print.c:249
+#, fuzzy
+msgid "<Image>/File/Print (Gimp)..."
 msgstr "<Image>/Ficher/Imprimer..."
 
 #: plug-ins/rcm/rcm.c:118
@@ -13300,6 +13333,24 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Erreur : le fichier de propriétés XJT %s est vide"
+
+#~ msgid "Output Level:"
+#~ msgstr "Niveau de sortie :"
+
+#~ msgid "Normal Scale"
+#~ msgstr "Échelle normale"
+
+#~ msgid "Experimental Linear Scale"
+#~ msgstr "Échelle linéaire (expérimentale)"
+
+#~ msgid "Image Type"
+#~ msgstr "Type d'image"
+
+#~ msgid "Scaling and Color Settings"
+#~ msgstr "Réglages d'échelle et de couleur"
+
+#~ msgid "Driver:"
+#~ msgstr "Pilote :"
 
 #~ msgid "Env"
 #~ msgstr "Réflexion"
@@ -15137,9 +15188,6 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 
 #~ msgid "Exit"
 #~ msgstr "Quitter"
-
-#~ msgid "Vertical Base:"
-#~ msgstr "Base verticale :"
 
 #~ msgid ""
 #~ "Transparent colour *might* be incorrect on viewers which don't support "

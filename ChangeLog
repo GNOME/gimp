@@ -1,3 +1,7 @@
+Wed Oct  4 16:18:11 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.27 release (1.2pre)
+
 2000-10-05  Simon Budig  <simon@gimp.org>
 
 	* app/paths_dialog.c: Made the import path command work as

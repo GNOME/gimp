@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-10-02 13:03+0200\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 2000-10-02 13:03+0200\n"
 "Last-Translator: Christian Meyer <cm@ggtt.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -118,7 +118,7 @@ msgstr "Beenden"
 #. the cancel button
 #: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:508
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
 #: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
@@ -279,7 +279,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:506
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
 #: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
@@ -833,72 +833,72 @@ msgstr ""
 "Fehler beim Verändern der Bildgröße:\n"
 "Breite und Höhe müssen größer als Null sein."
 
-#: app/convert.c:500
+#: app/convert.c:505
 msgid "Indexed Color Conversion"
 msgstr "Indizierte Farbumwandlung"
 
-#: app/convert.c:519
+#: app/convert.c:524
 msgid "General Palette Options"
 msgstr "Generelle Einstellungen für Farbpalette"
 
-#: app/convert.c:532
+#: app/convert.c:537
 msgid "Generate Optimal Palette:"
 msgstr "Erstelle optimale Palette:"
 
-#: app/convert.c:565
+#: app/convert.c:570
 msgid "# of Colors:"
 msgstr "Anzahl der Farben:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:581
+#: app/convert.c:586
 msgid "Custom Palette Options"
 msgstr "Einstellungen für eigene Farbpalette"
 
-#: app/convert.c:587
+#: app/convert.c:592
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Unbenutzte Farben aus fertiger Palette entfernen"
 
-#: app/convert.c:599
+#: app/convert.c:604
 msgid "Use Custom Palette:"
 msgstr "Benutze eigene Palette:"
 
-#: app/convert.c:633
+#: app/convert.c:638
 msgid "Use WWW-Optimized Palette"
 msgstr "Benutze WWW-optimierte Palette"
 
-#: app/convert.c:649
+#: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Benutze Schwarz/Weiß (1-Bit) Palette"
 
-#: app/convert.c:660
+#: app/convert.c:665
 msgid "Dither Options"
 msgstr "Rasterung"
 
-#: app/convert.c:673
+#: app/convert.c:678
 msgid "No Color Dithering"
 msgstr "Keine Farbrasterung"
 
-#: app/convert.c:687
+#: app/convert.c:692
 msgid "Positioned Color Dithering"
 msgstr "Geordnete Farbrasterung"
 
-#: app/convert.c:701
+#: app/convert.c:706
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg Farbrasterung (reduziertes Farbbluten)"
 
-#: app/convert.c:714
+#: app/convert.c:719
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg Farbrasterung (normal)"
 
-#: app/convert.c:728
+#: app/convert.c:733
 msgid "Enable Dithering of Transparency"
 msgstr "Aktiviere Rasterung für Transparenz"
 
-#: app/convert.c:757
+#: app/convert.c:762
 msgid "[ Warning ]"
 msgstr "[ Warnung ]"
 
-#: app/convert.c:767
+#: app/convert.c:772
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -911,7 +911,7 @@ msgstr ""
 "Sie beabsichtigen aus diesem Bild eine transparente oder animierte GIF-Datei "
 "zu erzeugen."
 
-#: app/convert.c:978
+#: app/convert.c:983
 msgid "Select Custom Palette"
 msgstr "Wählen sie eine Palette"
 
@@ -1043,7 +1043,7 @@ msgid "Load/Save Curves"
 msgstr "Öffne/Sichere Kurven"
 
 #: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
-#: app/paths_dialog.c:1905
+#: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Kann Datei %s nicht öffnen"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-09-22 11:39-0700\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -33,31 +33,31 @@ msgstr "대하여"
 #: plug-ins/common/aa.c:344 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
-#: plug-ins/common/bumpmap.c:848 plug-ins/common/checkerboard.c:349
+#: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:403
 #: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:800
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
 #: plug-ins/common/curve_bend.c:1369 plug-ins/common/decompose.c:874
 #: plug-ins/common/deinterlace.c:271 plug-ins/common/depthmerge.c:643
-#: plug-ins/common/despeckle.c:619 plug-ins/common/destripe.c:550
+#: plug-ins/common/despeckle.c:620 plug-ins/common/destripe.c:550
 #: plug-ins/common/diffraction.c:534 plug-ins/common/displace.c:298
 #: plug-ins/common/edge.c:650 plug-ins/common/emboss.c:522
-#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:278
-#: plug-ins/common/film.c:1182 plug-ins/common/flarefx.c:331
+#: plug-ins/common/engrave.c:224 plug-ins/common/exchange.c:279
+#: plug-ins/common/film.c:1182 plug-ins/common/flarefx.c:332
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
-#: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:360
-#: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
+#: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:361
+#: plug-ins/common/gauss_rle.c:444 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1141
-#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:259
+#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:260
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
-#: plug-ins/common/grid.c:658 plug-ins/common/gtm.c:375
-#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:560
-#: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2485
+#: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
+#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
+#: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:465 plug-ins/common/mapcolor.c:558
-#: plug-ins/common/max_rgb.c:347 plug-ins/common/mblur.c:763
+#: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:348
-#: plug-ins/common/noisify.c:488 plug-ins/common/nova.c:465
+#: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
@@ -67,17 +67,17 @@ msgstr "대하여"
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
 #: plug-ins/common/shift.c:376 plug-ins/common/sinus.c:1704
-#: plug-ins/common/smooth_palette.c:402 plug-ins/common/snoise.c:512
+#: plug-ins/common/smooth_palette.c:403 plug-ins/common/snoise.c:512
 #: plug-ins/common/sobel.c:251 plug-ins/common/sparkle.c:349
 #: plug-ins/common/spheredesigner.c:2232 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1589
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:383
-#: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
+#: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
-#: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
-#: plug-ins/common/wind.c:1011 plug-ins/common/wmf.c:931
+#: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1151 plug-ins/common/xpm.c:800
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
 #: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:895
@@ -97,7 +97,7 @@ msgstr "대하여"
 #: plug-ins/ifscompose/ifscompose.c:786
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
-#: plug-ins/print/gimp_main_window.c:742 plug-ins/rcm/rcm_dialog.c:727
+#: plug-ins/print/gimp_main_window.c:816 plug-ins/rcm/rcm_dialog.c:727
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
@@ -114,32 +114,32 @@ msgstr "확인"
 #: plug-ins/common/CML_explorer.c:2256 plug-ins/common/aa.c:346
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
-#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:850
+#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:405 plug-ins/common/compose.c:778
 #: plug-ins/common/convmatrix.c:804 plug-ins/common/csource.c:655
 #: plug-ins/common/cubism.c:305 plug-ins/common/curve_bend.c:1371
 #: plug-ins/common/decompose.c:876 plug-ins/common/deinterlace.c:273
-#: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:621
+#: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:622
 #: plug-ins/common/destripe.c:552 plug-ins/common/diffraction.c:536
 #: plug-ins/common/displace.c:300 plug-ins/common/edge.c:652
 #: plug-ins/common/emboss.c:524 plug-ins/common/engrave.c:226
-#: plug-ins/common/exchange.c:280 plug-ins/common/film.c:1184
-#: plug-ins/common/flarefx.c:333 plug-ins/common/fractaltrace.c:727
+#: plug-ins/common/exchange.c:281 plug-ins/common/film.c:1184
+#: plug-ins/common/flarefx.c:334 plug-ins/common/fractaltrace.c:727
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
-#: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
+#: plug-ins/common/gauss_rle.c:363 plug-ins/common/gauss_rle.c:446
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1143 plug-ins/common/gif.c:1214
-#: plug-ins/common/glasstile.c:261 plug-ins/common/gpb.c:271
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:660
+#: plug-ins/common/glasstile.c:262 plug-ins/common/gpb.c:271
+#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
-#: plug-ins/common/illusion.c:562 plug-ins/common/iwarp.c:1146
-#: plug-ins/common/jigsaw.c:2487 plug-ins/common/jpeg.c:1597
+#: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
+#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:467
-#: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:349
+#: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
-#: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:490
-#: plug-ins/common/nova.c:467 plug-ins/common/oilify.c:460
+#: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:491
+#: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
@@ -149,17 +149,17 @@ msgstr "확인"
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:375
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
-#: plug-ins/common/smooth_palette.c:404 plug-ins/common/snoise.c:514
+#: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:273
 #: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:385
-#: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
+#: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
-#: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
+#: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:1013 plug-ins/common/wmf.c:933
+#: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
 #: plug-ins/common/xbm.c:1153 plug-ins/common/xpm.c:802
 #: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
 #: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
@@ -181,7 +181,7 @@ msgstr "확인"
 #: plug-ins/ifscompose/ifscompose.c:794
 #: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
-#: plug-ins/print/gimp_main_window.c:236 plug-ins/print/gimp_main_window.c:744
+#: plug-ins/print/gimp_main_window.c:270 plug-ins/print/gimp_main_window.c:818
 #: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:342
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
@@ -193,23 +193,23 @@ msgstr "취소"
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1202
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
-#: plug-ins/common/exchange.c:295 plug-ins/common/fractaltrace.c:746
-#: plug-ins/common/glasstile.c:275 plug-ins/common/grid.c:679
-#: plug-ins/common/illusion.c:579 plug-ins/common/iwarp.c:1160
-#: plug-ins/common/jigsaw.c:2510 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/max_rgb.c:363 plug-ins/common/nlfilt.c:575
-#: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:326
+#: plug-ins/common/exchange.c:296 plug-ins/common/fractaltrace.c:746
+#: plug-ins/common/glasstile.c:276 plug-ins/common/grid.c:680
+#: plug-ins/common/illusion.c:580 plug-ins/common/iwarp.c:1160
+#: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
+#: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:575
+#: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2909
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
-#: plug-ins/common/wind.c:1030 plug-ins/flame/flame.c:940
+#: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
 #: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2485
 #: plug-ins/gflare/gflare.c:3493 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:901
 #: plug-ins/imagemap/imap_edit_area_info.c:287
-#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:261
+#: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:295
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
 msgid "Preview"
 msgstr "미리보기"
@@ -356,7 +356,7 @@ msgstr "파일에서 포인트 경로 읽기"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:802
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
-#: plug-ins/common/sample_colorize.c:1371
+#: plug-ins/common/sample_colorize.c:1372
 #: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:897 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:792 plug-ins/sel2path/sel2path.c:339
@@ -468,9 +468,9 @@ msgstr "색상화"
 #: plug-ins/FractalExplorer/Dialogs.c:673 plug-ins/common/AlienMap.c:1439
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
 #: plug-ins/common/diffraction.c:600 plug-ins/common/diffraction.c:639
-#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:353
-#: plug-ins/common/noisify.c:587 plug-ins/common/noisify.c:623
-#: plug-ins/fp/fp_gtk.c:20 plug-ins/print/gimp_color_window.c:135
+#: plug-ins/common/diffraction.c:678 plug-ins/common/exchange.c:354
+#: plug-ins/common/noisify.c:588 plug-ins/common/noisify.c:624
+#: plug-ins/fp/fp_gtk.c:20
 msgid "Red:"
 msgstr "빨간색:"
 
@@ -482,9 +482,9 @@ msgstr "능력 설명자 변경"
 #: plug-ins/FractalExplorer/Dialogs.c:683 plug-ins/common/AlienMap.c:1448
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
 #: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:381
-#: plug-ins/common/noisify.c:598 plug-ins/common/noisify.c:634
-#: plug-ins/fp/fp_gtk.c:21 plug-ins/print/gimp_color_window.c:149
+#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:382
+#: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:635
+#: plug-ins/fp/fp_gtk.c:21
 #, fuzzy
 msgid "Green:"
 msgstr "녹색"
@@ -497,9 +497,9 @@ msgstr "능력 설명자 변경"
 #: plug-ins/FractalExplorer/Dialogs.c:693 plug-ins/common/AlienMap.c:1457
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
 #: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:410
-#: plug-ins/common/noisify.c:609 plug-ins/common/noisify.c:645
-#: plug-ins/fp/fp_gtk.c:22 plug-ins/print/gimp_color_window.c:163
+#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:411
+#: plug-ins/common/noisify.c:610 plug-ins/common/noisify.c:646
+#: plug-ins/fp/fp_gtk.c:22
 msgid "Blue:"
 msgstr "파란색:"
 
@@ -870,7 +870,7 @@ msgid "Enable/disable jagged edges removal(antialiasing)"
 msgstr "톱니 같은 들쑥날쑥한 것 제거 가능/불가능 (앤티앨리어싱)"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:589
+#: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
 #: plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "깊이(depth):"
@@ -881,7 +881,7 @@ msgstr "앤티앨리어싱 특성. 더 높게 하지만 더 느리게"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
 #: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:829
-#: plug-ins/common/wind.c:1137 plug-ins/gflare/gflare.c:3015
+#: plug-ins/common/wind.c:1138 plug-ins/gflare/gflare.c:3015
 msgid "Threshold:"
 msgstr "발단규모(Threshold):"
 
@@ -935,6 +935,7 @@ msgstr "라이트 근원지 색깔"
 
 #: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
+#: plug-ins/print/gimp_main_window.c:335
 msgid "Position"
 msgstr "위치"
 
@@ -943,8 +944,8 @@ msgstr "위치"
 #: plug-ins/Lighting/lighting_ui.c:615 plug-ins/Lighting/lighting_ui.c:667
 #: plug-ins/MapObject/mapobject_ui.c:747 plug-ins/MapObject/mapobject_ui.c:799
 #: plug-ins/MapObject/mapobject_ui.c:1040
-#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:785
-#: plug-ins/common/nova.c:609 plug-ins/common/papertile.c:285
+#: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:786
+#: plug-ins/common/nova.c:610 plug-ins/common/papertile.c:285
 #: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
 #: plug-ins/gap/gap_mov_dialog.c:2103 plug-ins/gflare/gflare.c:2867
 #: plug-ins/ifscompose/ifscompose.c:518
@@ -961,8 +962,8 @@ msgstr " XYZ 공간중 라이트 근원지 X위치"
 #: plug-ins/MapObject/mapobject_ui.c:760 plug-ins/MapObject/mapobject_ui.c:811
 #: plug-ins/MapObject/mapobject_ui.c:1051
 #: plug-ins/MapObject/mapobject_ui.c:1093
-#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:803
-#: plug-ins/common/nova.c:627 plug-ins/common/papertile.c:294
+#: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
+#: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
 #: plug-ins/common/xbm.c:1244 plug-ins/gap/gap_mov_dialog.c:2121
 #: plug-ins/gflare/gflare.c:2871 plug-ins/ifscompose/ifscompose.c:532
 msgid "Y:"
@@ -1007,7 +1008,7 @@ msgid "Intensity Levels"
 msgstr "강도 등급"
 
 #: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:1081
+#: plug-ins/common/bumpmap.c:1082
 msgid "Ambient:"
 msgstr "환경:"
 
@@ -1041,7 +1042,7 @@ msgid "Controls how intense the highlights will be"
 msgstr "하이라이트를 강하게 조정"
 
 #: plug-ins/Lighting/lighting_ui.c:855 plug-ins/MapObject/mapobject_ui.c:987
-#: plug-ins/common/jigsaw.c:2597
+#: plug-ins/common/jigsaw.c:2598
 #, fuzzy
 msgid "Highlight:"
 msgstr "하이라이트:"
@@ -1162,7 +1163,7 @@ msgstr "빛"
 msgid "Material"
 msgstr "도구"
 
-#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:843
+#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:844
 #, fuzzy
 msgid "Bump Map"
 msgstr "충돌(Bump) 맵"
@@ -1177,7 +1178,7 @@ msgstr "환경 매핑(environment mapping) 사용"
 msgid "Lighting Effects"
 msgstr "조명 효과"
 
-#: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:708
+#: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:709
 #: plug-ins/gap/gap_mov_dialog.c:496
 #, fuzzy
 msgid "Update Preview"
@@ -1326,26 +1327,26 @@ msgstr "검은색:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:354
+#: plug-ins/print/gimp_main_window.c:397
 #, fuzzy
 msgid "Top:"
 msgstr "어디로 :"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
-#: plug-ins/print/gimp_main_window.c:376
+#: plug-ins/print/gimp_main_window.c:431
 #, fuzzy
 msgid "Bottom:"
 msgstr "왼쪽  아래"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:343
+#: plug-ins/print/gimp_main_window.c:386
 #, fuzzy
 msgid "Left:"
 msgstr "왼쪽  위"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
-#: plug-ins/print/gimp_main_window.c:365
+#: plug-ins/print/gimp_main_window.c:408
 #, fuzzy
 msgid "Right:"
 msgstr "빛"
@@ -1382,8 +1383,8 @@ msgstr ""
 msgid "Size"
 msgstr "크기"
 
-#: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:744
-#: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:503
+#: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
+#: plug-ins/common/nlfilt.c:410 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:811 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2902
 #: plug-ins/imagemap/imap_circle.c:273
@@ -1490,7 +1491,7 @@ msgstr "%s: 잘못된 컬러맵\n"
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
-#: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:240
+#: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
@@ -1864,9 +1865,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "최소 (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
-#: plug-ins/print/gimp_color_window.c:349
-#: plug-ins/print/gimp_main_window.c:999
-#: plug-ins/print/gimp_main_window.c:1069
+#: plug-ins/print/gimp_main_window.c:1080
 msgid "Standard"
 msgstr "표준"
 
@@ -2303,27 +2302,27 @@ msgstr "모든 나타난 계층 선택"
 #.
 #: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:405 plug-ins/common/blur.c:631
-#: plug-ins/common/bumpmap.c:982 plug-ins/common/checkerboard.c:361
-#: plug-ins/common/cubism.c:315 plug-ins/common/despeckle.c:728
+#: plug-ins/common/bumpmap.c:983 plug-ins/common/checkerboard.c:361
+#: plug-ins/common/cubism.c:315 plug-ins/common/despeckle.c:729
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
-#: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
-#: plug-ins/common/glasstile.c:293 plug-ins/common/grid.c:719
-#: plug-ins/common/illusion.c:596 plug-ins/common/jpeg.c:1643
-#: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:380
-#: plug-ins/common/nlfilt.c:389 plug-ins/common/noisify.c:523
-#: plug-ins/common/nova.c:477 plug-ins/common/oilify.c:470
+#: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:373
+#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
+#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
+#: plug-ins/common/nlfilt.c:389 plug-ins/common/noisify.c:524
+#: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
 #: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:610 plug-ins/common/shift.c:389
-#: plug-ins/common/smooth_palette.c:413 plug-ins/common/snoise.c:525
+#: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
 #: plug-ins/common/unsharp.c:797 plug-ins/common/video.c:2167
-#: plug-ins/common/vpropagate.c:976 plug-ins/common/waves.c:399
-#: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1047
+#: plug-ins/common/vpropagate.c:977 plug-ins/common/waves.c:399
+#: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1048
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
@@ -2365,7 +2364,7 @@ msgstr "중간"
 msgid "Right Edge"
 msgstr "오른쪽 위"
 
-#: plug-ins/common/align_layers.c:478 plug-ins/common/align_layers.c:511
+#: plug-ins/common/align_layers.c:478
 msgid "Horizontal Base:"
 msgstr ""
 
@@ -2389,6 +2388,11 @@ msgstr ""
 #, fuzzy
 msgid "Bottom Edge"
 msgstr "아래-왼쪽"
+
+#: plug-ins/common/align_layers.c:511
+#, fuzzy
+msgid "Vertical Base:"
+msgstr "구"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -2414,7 +2418,7 @@ msgstr "에니메이션 되돌리기: "
 
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:676 plug-ins/common/plugindetails.c:1009
-#: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
+#: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:3159
@@ -2422,7 +2426,7 @@ msgstr "에니메이션 되돌리기: "
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:822
 #: plug-ins/ifscompose/ifscompose.c:1238 plug-ins/imagemap/imap_menu.c:227
-#: plug-ins/print/gimp_color_window.c:85
+#: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
 msgstr "닫기"
 
@@ -2539,13 +2543,13 @@ msgid "Blinds"
 msgstr ""
 
 #. attach labels
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:769
+#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:770
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
 msgstr ""
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:770
+#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 #, fuzzy
@@ -2630,77 +2634,77 @@ msgstr ""
 msgid "256 (nonsense?)"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:366
+#: plug-ins/common/bumpmap.c:367
 #, fuzzy
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/필터/맵/충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:521
+#: plug-ins/common/bumpmap.c:522
 msgid "Bump-mapping..."
 msgstr "충돌(Bump)-매핑..."
 
-#: plug-ins/common/bumpmap.c:934
+#: plug-ins/common/bumpmap.c:935
 #, fuzzy
 msgid "Map Type"
 msgstr "미디어 유형:"
 
-#: plug-ins/common/bumpmap.c:938
+#: plug-ins/common/bumpmap.c:939
 #, fuzzy
 msgid "Linear Map"
 msgstr "선형 맵"
 
-#: plug-ins/common/bumpmap.c:939
+#: plug-ins/common/bumpmap.c:940
 #, fuzzy
 msgid "Spherical Map"
 msgstr "구 맵"
 
-#: plug-ins/common/bumpmap.c:940
+#: plug-ins/common/bumpmap.c:941
 #, fuzzy
 msgid "Sinuosidal Map"
 msgstr "사인곡선 맵"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:953
+#: plug-ins/common/bumpmap.c:954
 #, fuzzy
 msgid "Compensate for Darkening"
 msgstr "어두움 보정"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:963
+#: plug-ins/common/bumpmap.c:964
 #, fuzzy
 msgid "Invert Bumpmap"
 msgstr "충돌(bump) 맵 반대로(invert)"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:973
+#: plug-ins/common/bumpmap.c:974
 #, fuzzy
 msgid "Tile Bumpmap"
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:1004
+#: plug-ins/common/bumpmap.c:1005
 #, fuzzy
 msgid "Bump Map:"
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:1023 plug-ins/common/emboss.c:571
+#: plug-ins/common/bumpmap.c:1024 plug-ins/common/emboss.c:571
 #, fuzzy
 msgid "Azimuth:"
 msgstr "방위"
 
-#: plug-ins/common/bumpmap.c:1032 plug-ins/common/emboss.c:580
+#: plug-ins/common/bumpmap.c:1033 plug-ins/common/emboss.c:580
 #, fuzzy
 msgid "Elevation:"
 msgstr "앙각"
 
-#: plug-ins/common/bumpmap.c:1052 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1053 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "X 옵셋:"
 
-#: plug-ins/common/bumpmap.c:1062 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1063 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Y 옵셋:"
 
-#: plug-ins/common/bumpmap.c:1072
+#: plug-ins/common/bumpmap.c:1073
 #, fuzzy
 msgid "Waterlevel:"
 msgstr "수평면"
@@ -2766,7 +2770,7 @@ msgstr "색상화"
 #: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
-#: plug-ins/print/gimp_main_window.c:504
+#: plug-ins/print/gimp_main_window.c:745
 msgid "Color"
 msgstr "색상"
 
@@ -2822,7 +2826,7 @@ msgid "RGBA"
 msgstr ""
 
 #: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:401
-#: plug-ins/common/noisify.c:573 plug-ins/common/noisify.c:656
+#: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
 msgid "Alpha:"
 msgstr "알파"
 
@@ -2842,7 +2846,7 @@ msgstr "색조:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:459
-#: plug-ins/print/gimp_color_window.c:177 plug-ins/rcm/rcm_dialog.c:453
+#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:453
 msgid "Saturation:"
 msgstr "채도:"
 
@@ -2860,18 +2864,18 @@ msgid "CMY"
 msgstr ""
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:23
+#: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
 msgid "Cyan:"
 msgstr "청록색:"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:25
+#: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
 #, fuzzy
 msgid "Magenta:"
 msgstr "진홍색"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:24
+#: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
 msgid "Yellow:"
 msgstr "황색:"
 
@@ -3380,7 +3384,7 @@ msgstr "스케일 1"
 msgid "Scale 2:"
 msgstr "스케일 2"
 
-#: plug-ins/common/despeckle.c:181
+#: plug-ins/common/despeckle.c:182
 #, fuzzy
 msgid "<Image>/Filters/Enhance/Despeckle..."
 msgstr "<Image>/필터/강화/줄무늬없애기"
@@ -3411,12 +3415,12 @@ msgstr "<Image>/필터/강화/줄무늬없애기"
 #.
 #. * Let the user know what we're doing...
 #.
-#: plug-ins/common/despeckle.c:403
+#: plug-ins/common/despeckle.c:404
 #, fuzzy
 msgid "Despeckling..."
 msgstr "줄무늬 없애는 중..."
 
-#: plug-ins/common/despeckle.c:612
+#: plug-ins/common/despeckle.c:613
 #, fuzzy
 msgid "Despeckle"
 msgstr "줄무늬 없애는 중..."
@@ -3424,27 +3428,27 @@ msgstr "줄무늬 없애는 중..."
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:701
+#: plug-ins/common/despeckle.c:702
 #, fuzzy
 msgid "Type"
 msgstr "유형:"
 
-#: plug-ins/common/despeckle.c:710 plug-ins/gimpressionist/orientation.c:198
+#: plug-ins/common/despeckle.c:711 plug-ins/gimpressionist/orientation.c:198
 #: plug-ins/gimpressionist/size.c:196
 msgid "Adaptive"
 msgstr "적응성있게"
 
-#: plug-ins/common/despeckle.c:719
+#: plug-ins/common/despeckle.c:720
 #, fuzzy
 msgid "Recursive"
 msgstr "크기조정"
 
-#: plug-ins/common/despeckle.c:757
+#: plug-ins/common/despeckle.c:758
 #, fuzzy
 msgid "Black Level:"
 msgstr "검은색:"
 
-#: plug-ins/common/despeckle.c:770
+#: plug-ins/common/despeckle.c:771
 #, fuzzy
 msgid "White Level:"
 msgstr "수평면"
@@ -3471,9 +3475,9 @@ msgstr "히스토그램"
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
-#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:406
+#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
-#: plug-ins/print/gimp_main_window.c:387
+#: plug-ins/print/gimp_main_window.c:625
 msgid "Width:"
 msgstr "넓이:"
 
@@ -3507,7 +3511,7 @@ msgid "Sharp edges"
 msgstr "가장자리 페인트"
 
 #: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
-#: plug-ins/print/gimp_color_window.c:107
+#: plug-ins/print/gimp_color_window.c:178
 msgid "Brightness:"
 msgstr "밝기:"
 
@@ -3649,10 +3653,10 @@ msgstr ""
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2644
-#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:438
+#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
-#: plug-ins/print/gimp_main_window.c:398
+#: plug-ins/print/gimp_main_window.c:639
 msgid "Height:"
 msgstr "높이:"
 
@@ -3661,51 +3665,51 @@ msgstr "높이:"
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/exchange.c:222
+#: plug-ins/common/exchange.c:223
 #, fuzzy
 msgid "Color Exchange..."
 msgstr "색상 강화..."
 
 #. set up the dialog
-#: plug-ins/common/exchange.c:273
+#: plug-ins/common/exchange.c:274
 #, fuzzy
 msgid "Color Exchange"
 msgstr "색상 강화..."
 
-#: plug-ins/common/exchange.c:321
+#: plug-ins/common/exchange.c:322
 #, fuzzy
 msgid "To Color"
 msgstr "색상"
 
-#: plug-ins/common/exchange.c:321
+#: plug-ins/common/exchange.c:322
 #, fuzzy
 msgid "From Color"
 msgstr "전경 색상"
 
-#: plug-ins/common/exchange.c:334
+#: plug-ins/common/exchange.c:335
 msgid "Color Exchange: To Color"
 msgstr ""
 
-#: plug-ins/common/exchange.c:335
+#: plug-ins/common/exchange.c:336
 msgid "Color Exchange: From Color"
 msgstr ""
 
-#: plug-ins/common/exchange.c:369
+#: plug-ins/common/exchange.c:370
 #, fuzzy
 msgid "Red Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/exchange.c:397
+#: plug-ins/common/exchange.c:398
 #, fuzzy
 msgid "Green Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/exchange.c:426
+#: plug-ins/common/exchange.c:427
 #, fuzzy
 msgid "Blue Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/exchange.c:444
+#: plug-ins/common/exchange.c:445
 #, fuzzy
 msgid "Lock Thresholds"
 msgstr "발단규모(Threshold)"
@@ -3768,7 +3772,7 @@ msgid "Select Film Color"
 msgstr "선택"
 
 #: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
-#: plug-ins/common/nova.c:499 plug-ins/gimpressionist/color.c:76
+#: plug-ins/common/nova.c:500 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
 msgstr "색상:"
 
@@ -3853,28 +3857,28 @@ msgstr "새로운 높이 :"
 msgid "Reset to Defaults"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/common/flarefx.c:217
+#: plug-ins/common/flarefx.c:218
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/FlareFX..."
 msgstr "<Image>/필터/라이트 효과/조명 효과"
 
-#: plug-ins/common/flarefx.c:290
+#: plug-ins/common/flarefx.c:291
 #, fuzzy
 msgid "Render Flare..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/flarefx.c:326
+#: plug-ins/common/flarefx.c:327
 msgid "FlareFX"
 msgstr ""
 
 #. to avoid side effects while initialization
-#: plug-ins/common/flarefx.c:771
+#: plug-ins/common/flarefx.c:772
 #, fuzzy
 msgid "Center of FlareFX"
 msgstr "브러쉬의 중앙"
 
 #. show / hide cursor
-#: plug-ins/common/flarefx.c:845 plug-ins/common/nova.c:668
+#: plug-ins/common/flarefx.c:846 plug-ins/common/nova.c:669
 #, fuzzy
 msgid "Show Cursor"
 msgstr "색상"
@@ -3923,48 +3927,48 @@ msgstr ""
 msgid "IIR Gaussian Blur"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:386 plug-ins/common/gauss_rle.c:381
+#: plug-ins/common/gauss_iir.c:386 plug-ins/common/gauss_rle.c:382
 msgid "Blur Horizontally"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:394 plug-ins/common/gauss_rle.c:389
+#: plug-ins/common/gauss_iir.c:394 plug-ins/common/gauss_rle.c:390
 msgid "Blur Vertically"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:405 plug-ins/common/gauss_rle.c:400
+#: plug-ins/common/gauss_iir.c:405 plug-ins/common/gauss_rle.c:401
 #: plug-ins/common/sel_gauss.c:270
 #, fuzzy
 msgid "Blur Radius:"
 msgstr "반경"
 
 #. parameter settings
-#: plug-ins/common/gauss_iir.c:460 plug-ins/common/gauss_rle.c:455
+#: plug-ins/common/gauss_iir.c:460 plug-ins/common/gauss_rle.c:456
 #, fuzzy
 msgid "Blur Radius"
 msgstr "반경"
 
-#: plug-ins/common/gauss_iir.c:475 plug-ins/common/gauss_rle.c:470
-#: plug-ins/common/jigsaw.c:2544 plug-ins/common/spread.c:410
+#: plug-ins/common/gauss_iir.c:475 plug-ins/common/gauss_rle.c:471
+#: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
 msgid "Horizontal:"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:474
-#: plug-ins/common/jigsaw.c:2557 plug-ins/common/spread.c:414
+#: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:475
+#: plug-ins/common/jigsaw.c:2558 plug-ins/common/spread.c:414
 #, fuzzy
 msgid "Vertical:"
 msgstr "구"
 
-#: plug-ins/common/gauss_rle.c:178
+#: plug-ins/common/gauss_rle.c:179
 #, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
 msgstr "<Image>/필터/흐릿하게/흐릿하게"
 
-#: plug-ins/common/gauss_rle.c:250
+#: plug-ins/common/gauss_rle.c:251
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
 msgstr ""
 
-#: plug-ins/common/gauss_rle.c:301 plug-ins/common/gauss_rle.c:355
-#: plug-ins/common/gauss_rle.c:438
+#: plug-ins/common/gauss_rle.c:302 plug-ins/common/gauss_rle.c:356
+#: plug-ins/common/gauss_rle.c:439
 msgid "RLE Gaussian Blur"
 msgstr ""
 
@@ -4137,25 +4141,25 @@ msgstr "프레임 %d"
 msgid "Frame %d (%dms)"
 msgstr "프레임 %d (%dms)"
 
-#: plug-ins/common/glasstile.c:137
+#: plug-ins/common/glasstile.c:138
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects/Glass Tile..."
 msgstr "<Image>/필터/글레스 효과/렌즈 적용"
 
-#: plug-ins/common/glasstile.c:214
+#: plug-ins/common/glasstile.c:215
 msgid "Glass Tile..."
 msgstr ""
 
-#: plug-ins/common/glasstile.c:254
+#: plug-ins/common/glasstile.c:255
 msgid "Glass Tile"
 msgstr ""
 
-#: plug-ins/common/glasstile.c:306
+#: plug-ins/common/glasstile.c:307
 #, fuzzy
 msgid "Tile Width:"
 msgstr "새로운 넓이 :"
 
-#: plug-ins/common/glasstile.c:319 plug-ins/mosaic/mosaic.c:663
+#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
 #, fuzzy
 msgid "Tile Height:"
 msgstr "타일 높이:"
@@ -4259,53 +4263,53 @@ msgstr "<Image>/필터/색/테두리 평균"
 msgid "Gradient Map..."
 msgstr "색감변화도"
 
-#: plug-ins/common/grid.c:157
+#: plug-ins/common/grid.c:158
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/grid.c:241
+#: plug-ins/common/grid.c:242
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:653 plug-ins/gfig/gfig.c:3396
+#: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr ""
 
-#: plug-ins/common/grid.c:771
+#: plug-ins/common/grid.c:772
 #, fuzzy
 msgid "Intersection"
 msgstr "반복"
 
-#: plug-ins/common/grid.c:772
+#: plug-ins/common/grid.c:773
 #, fuzzy
 msgid "Width: "
 msgstr "넓이:"
 
 #. attach labels
-#: plug-ins/common/grid.c:829
+#: plug-ins/common/grid.c:830
 #, fuzzy
 msgid "Spacing: "
 msgstr "스케일링"
 
 #. attach labels
-#: plug-ins/common/grid.c:889
+#: plug-ins/common/grid.c:890
 #, fuzzy
 msgid "Offset: "
 msgstr "옵셋"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:919
+#: plug-ins/common/grid.c:920
 msgid "Horizontal Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:929
+#: plug-ins/common/grid.c:930
 msgid "Vertical Color"
 msgstr ""
 
-#: plug-ins/common/grid.c:939
+#: plug-ins/common/grid.c:940
 msgid "Intersection Color"
 msgstr ""
 
@@ -4480,21 +4484,21 @@ msgstr "타일 채도"
 msgid "Blacken"
 msgstr "검은색"
 
-#: plug-ins/common/illusion.c:116
+#: plug-ins/common/illusion.c:117
 #, fuzzy
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/필터/맵/충돌(Bump) 맵"
 
-#: plug-ins/common/illusion.c:180
+#: plug-ins/common/illusion.c:181
 #, fuzzy
 msgid "Illusion..."
 msgstr "색상화 중..."
 
-#: plug-ins/common/illusion.c:555
+#: plug-ins/common/illusion.c:556
 msgid "Illusion"
 msgstr ""
 
-#: plug-ins/common/illusion.c:611
+#: plug-ins/common/illusion.c:612
 #, fuzzy
 msgid "Division:"
 msgstr "나누기"
@@ -4587,7 +4591,7 @@ msgid "Max Depth:"
 msgstr "깊이(depth)"
 
 #. parameter settings
-#: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1383
+#: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
 #: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:219
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3032
 msgid "Settings"
@@ -4598,79 +4602,79 @@ msgstr "설정"
 msgid "IWarp"
 msgstr "왜곡되게"
 
-#: plug-ins/common/jigsaw.c:393
+#: plug-ins/common/jigsaw.c:394
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
 msgstr "<Image>/필터/랜더/채커보드"
 
-#: plug-ins/common/jigsaw.c:449
+#: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2480
+#: plug-ins/common/jigsaw.c:2481
 msgid "Jigsaw"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2532
+#: plug-ins/common/jigsaw.c:2533
 #, fuzzy
 msgid "Number of Tiles"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2547
+#: plug-ins/common/jigsaw.c:2548
 #, fuzzy
 msgid "Number of pieces going across"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2560
+#: plug-ins/common/jigsaw.c:2561
 #, fuzzy
 msgid "Number of pieces going down"
 msgstr "색상 개수"
 
-#: plug-ins/common/jigsaw.c:2571
+#: plug-ins/common/jigsaw.c:2572
 msgid "Bevel Edges"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2583
+#: plug-ins/common/jigsaw.c:2584
 #, fuzzy
 msgid "Bevel Width:"
 msgstr "새로운 넓이 :"
 
-#: plug-ins/common/jigsaw.c:2587
+#: plug-ins/common/jigsaw.c:2588
 msgid "Degree of slope of each piece's edge"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2601
+#: plug-ins/common/jigsaw.c:2602
 msgid "The amount of highlighting on the edges of each piece"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2618
+#: plug-ins/common/jigsaw.c:2619
 msgid "Jigsaw Style"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2622
+#: plug-ins/common/jigsaw.c:2623
 #, fuzzy
 msgid "Square"
 msgstr "정사각형"
 
-#: plug-ins/common/jigsaw.c:2623
+#: plug-ins/common/jigsaw.c:2624
 #, fuzzy
 msgid "Curved"
 msgstr "빨간색"
 
-#: plug-ins/common/jigsaw.c:2627
+#: plug-ins/common/jigsaw.c:2628
 msgid "Each piece has straight sides"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2628
+#: plug-ins/common/jigsaw.c:2629
 msgid "Each piece has curved sides"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2636
+#: plug-ins/common/jigsaw.c:2637
 #, fuzzy
 msgid "Disable Tooltips"
 msgstr "도구 팁 가능"
 
-#: plug-ins/common/jigsaw.c:2644
+#: plug-ins/common/jigsaw.c:2645
 msgid "Toggle Tooltips on/off"
 msgstr ""
 
@@ -4984,28 +4988,28 @@ msgstr "목적 채널"
 msgid "To:"
 msgstr "어디로 :"
 
-#: plug-ins/common/max_rgb.c:128
+#: plug-ins/common/max_rgb.c:129
 #, fuzzy
 msgid "<Image>/Filters/Colors/Max RGB..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/max_rgb.c:164
+#: plug-ins/common/max_rgb.c:165
 msgid "Max RGB: Can only operate on RGB drawables."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:225
+#: plug-ins/common/max_rgb.c:226
 msgid "Max RGB: Scanning..."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:342
+#: plug-ins/common/max_rgb.c:343
 msgid "Max RGB"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:384
+#: plug-ins/common/max_rgb.c:385
 msgid "Hold the Maximal Channels"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:386
+#: plug-ins/common/max_rgb.c:387
 msgid "Hold the Minimal Channels"
 msgstr ""
 
@@ -5172,31 +5176,31 @@ msgstr "에니메이션 최적화..."
 msgid "Edge Enhancement"
 msgstr ""
 
-#: plug-ins/common/noisify.c:140
+#: plug-ins/common/noisify.c:141
 #, fuzzy
 msgid "<Image>/Filters/Noise/Noisify..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/noisify.c:216
+#: plug-ins/common/noisify.c:217
 #, fuzzy
 msgid "Adding Noise..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/noisify.c:483
+#: plug-ins/common/noisify.c:484
 #, fuzzy
 msgid "Noisify"
 msgstr "오일화"
 
-#: plug-ins/common/noisify.c:535
+#: plug-ins/common/noisify.c:536
 msgid "Independent"
 msgstr ""
 
-#: plug-ins/common/noisify.c:548 plug-ins/common/noisify.c:562
+#: plug-ins/common/noisify.c:549 plug-ins/common/noisify.c:563
 #, fuzzy
 msgid "Gray:"
 msgstr "그레이"
 
-#: plug-ins/common/noisify.c:670
+#: plug-ins/common/noisify.c:671
 #, fuzzy, c-format
 msgid "Channel #%d:"
 msgstr "채널"
@@ -5210,37 +5214,37 @@ msgstr "<Image>/이미지/색/통일화"
 msgid "Normalizing..."
 msgstr "통일화 중..."
 
-#: plug-ins/common/nova.c:226
+#: plug-ins/common/nova.c:227
 #, fuzzy
 msgid "<Image>/Filters/Light Effects/SuperNova..."
 msgstr "<Image>/필터/라이트 효과/조명 효과"
 
-#: plug-ins/common/nova.c:307
+#: plug-ins/common/nova.c:308
 #, fuzzy
 msgid "Rendering SuperNova..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/nova.c:460
+#: plug-ins/common/nova.c:461
 msgid "SuperNova"
 msgstr ""
 
-#: plug-ins/common/nova.c:492
+#: plug-ins/common/nova.c:493
 #, fuzzy
 msgid "SuperNova Color Picker"
 msgstr "Script-Fu 색상 채취"
 
-#: plug-ins/common/nova.c:515
+#: plug-ins/common/nova.c:516
 #, fuzzy
 msgid "Spokes:"
 msgstr "단계모드:"
 
-#: plug-ins/common/nova.c:527 plug-ins/common/sparkle.c:453
+#: plug-ins/common/nova.c:528 plug-ins/common/sparkle.c:453
 #, fuzzy
 msgid "Random Hue:"
 msgstr "씨앗(seed) 랜덤"
 
 #. to avoid side effects while initialization
-#: plug-ins/common/nova.c:595
+#: plug-ins/common/nova.c:596
 #, fuzzy
 msgid "Center of SuperNova"
 msgstr "브러쉬의 중앙"
@@ -5735,7 +5739,7 @@ msgstr "PostScript 읽기"
 msgid "Rendering"
 msgstr "랜더링"
 
-#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
 msgstr "해상도:"
 
@@ -5821,7 +5825,7 @@ msgstr ""
 msgid "Unit"
 msgstr "단위"
 
-#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:317
+#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
 msgstr "인치"
 
@@ -5948,62 +5952,62 @@ msgstr ""
 msgid "Amplitude:"
 msgstr ""
 
-#: plug-ins/common/rotate.c:160
+#: plug-ins/common/rotate.c:161
 #, fuzzy
 msgid "<Image>/Layers/Rotate/90 degrees"
 msgstr "<Image>/이미지/변환/계층/90도 회전"
 
-#: plug-ins/common/rotate.c:171
+#: plug-ins/common/rotate.c:172
 msgid "<Image>/Layers/Rotate/180 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:182
+#: plug-ins/common/rotate.c:183
 #, fuzzy
 msgid "<Image>/Layers/Rotate/270 degrees"
 msgstr "<Image>/이미지/변환/계층/270도 회전"
 
-#: plug-ins/common/rotate.c:194
+#: plug-ins/common/rotate.c:195
 #, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
 msgstr "<Image>/이미지/변환/회전하기"
 
-#: plug-ins/common/rotate.c:205
+#: plug-ins/common/rotate.c:206
 #, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
 msgstr "<Image>/이미지/변환/회전하기"
 
-#: plug-ins/common/rotate.c:216
+#: plug-ins/common/rotate.c:217
 #, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
 msgstr "<Image>/이미지/변환/회전하기"
 
-#: plug-ins/common/rotate.c:525
+#: plug-ins/common/rotate.c:526
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "만약 셀력션이 있다면 전체 이미지를 회전할수 없습니다."
 
-#: plug-ins/common/rotate.c:531
+#: plug-ins/common/rotate.c:532
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr "만약 유동적인 셀렉션이 있다면 전체 이미지를 회전할수 없습니다."
 
-#: plug-ins/common/rotate.c:541
+#: plug-ins/common/rotate.c:542
 msgid "Sorry, channels and masks can not be rotated."
 msgstr ""
 
-#: plug-ins/common/rotate.c:547
+#: plug-ins/common/rotate.c:548
 msgid "Rotating..."
 msgstr "회전중..."
 
-#: plug-ins/common/sample_colorize.c:305
+#: plug-ins/common/sample_colorize.c:306
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/sample_colorize.c:1362
+#: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
 msgstr ""
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
-#: plug-ins/common/sample_colorize.c:1367 plug-ins/common/tileit.c:564
+#: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:564
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 #: plug-ins/gdyntext/gdyntext_ui.c:586 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
@@ -6011,82 +6015,82 @@ msgstr ""
 msgid "Apply"
 msgstr "적용"
 
-#: plug-ins/common/sample_colorize.c:1369
+#: plug-ins/common/sample_colorize.c:1370
 msgid "Get Sample Colors"
 msgstr ""
 
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1403
+#: plug-ins/common/sample_colorize.c:1404
 #, fuzzy
 msgid "Destination:"
 msgstr "목적 채널"
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1422
+#: plug-ins/common/sample_colorize.c:1423
 #, fuzzy
 msgid "Sample:"
 msgstr "스케일:"
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1441
+#: plug-ins/common/sample_colorize.c:1442
 msgid "** From GRADIENT **"
 msgstr ""
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1449
+#: plug-ins/common/sample_colorize.c:1450
 msgid "** From INVERSE GRADIENT **"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1464
-#: plug-ins/common/sample_colorize.c:1489
+#: plug-ins/common/sample_colorize.c:1465
+#: plug-ins/common/sample_colorize.c:1490
 #, fuzzy
 msgid "Show Selection"
 msgstr "셀렉션을 반대로(Invert)"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1474
-#: plug-ins/common/sample_colorize.c:1499
+#: plug-ins/common/sample_colorize.c:1475
+#: plug-ins/common/sample_colorize.c:1500
 #, fuzzy
 msgid "Show Color"
 msgstr "색상"
 
-#: plug-ins/common/sample_colorize.c:1605
+#: plug-ins/common/sample_colorize.c:1606
 #, fuzzy
 msgid "In Level:"
 msgstr "안 :"
 
-#: plug-ins/common/sample_colorize.c:1658
+#: plug-ins/common/sample_colorize.c:1659
 #, fuzzy
 msgid "Out Level:"
 msgstr "바깥 :"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1699
+#: plug-ins/common/sample_colorize.c:1700
 #, fuzzy
 msgid "Hold Intensity"
 msgstr "강도 등급"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1709
+#: plug-ins/common/sample_colorize.c:1710
 msgid "Original Intensity"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1726
+#: plug-ins/common/sample_colorize.c:1727
 msgid "Use Subcolors"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1736
+#: plug-ins/common/sample_colorize.c:1737
 msgid "Smooth Samplecolors"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:2735
+#: plug-ins/common/sample_colorize.c:2736
 msgid "Sample Analyze..."
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:3100
+#: plug-ins/common/sample_colorize.c:3101
 msgid "Remap Colorized..."
 msgstr ""
 
@@ -6346,20 +6350,20 @@ msgstr ""
 msgid "Blend"
 msgstr "파란색"
 
-#: plug-ins/common/smooth_palette.c:83
+#: plug-ins/common/smooth_palette.c:84
 #, fuzzy
 msgid "<Image>/Filters/Colors/Smooth Palette..."
 msgstr "<Image>/필터/색/색상화"
 
-#: plug-ins/common/smooth_palette.c:172
+#: plug-ins/common/smooth_palette.c:173
 msgid "Deriving smooth palette..."
 msgstr ""
 
-#: plug-ins/common/smooth_palette.c:397
+#: plug-ins/common/smooth_palette.c:398
 msgid "Smooth Palette"
 msgstr ""
 
-#: plug-ins/common/smooth_palette.c:447
+#: plug-ins/common/smooth_palette.c:448
 #, fuzzy
 msgid "Search Time:"
 msgstr "찾기 :"
@@ -6778,7 +6782,7 @@ msgstr "상수 적용"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/struc.c:1304 plug-ins/common/wind.c:1088
+#: plug-ins/common/struc.c:1304 plug-ins/common/wind.c:1089
 msgid "Direction"
 msgstr "방향"
 
@@ -7023,170 +7027,170 @@ msgstr "<Image>/필터/맵/충돌(Bump) 맵"
 msgid "Tiler..."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:72
+#: plug-ins/common/uniteditor.c:73
 #, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/common/uniteditor.c:167 plug-ins/common/uniteditor.c:623
+#: plug-ins/common/uniteditor.c:168 plug-ins/common/uniteditor.c:624
 #, fuzzy
 msgid "New Unit"
 msgstr "단위"
 
-#: plug-ins/common/uniteditor.c:195
+#: plug-ins/common/uniteditor.c:196
 msgid "ID:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:207
+#: plug-ins/common/uniteditor.c:208
 #, fuzzy
 msgid "Factor:"
 msgstr "제(곱 지수)"
 
-#: plug-ins/common/uniteditor.c:218
+#: plug-ins/common/uniteditor.c:219
 #, fuzzy
 msgid "Digits:"
 msgstr "나누기"
 
-#: plug-ins/common/uniteditor.c:231
+#: plug-ins/common/uniteditor.c:232
 msgid "Symbol:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:244
+#: plug-ins/common/uniteditor.c:245
 #, fuzzy
 msgid "Abbreviation:"
 msgstr "앙각"
 
-#: plug-ins/common/uniteditor.c:257
+#: plug-ins/common/uniteditor.c:258
 #, fuzzy
 msgid "Singular:"
 msgstr "비추는 곳:"
 
-#: plug-ins/common/uniteditor.c:270
+#: plug-ins/common/uniteditor.c:271
 msgid "Plural:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:307
+#: plug-ins/common/uniteditor.c:308
 msgid "Unit factor must not be 0."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:317
+#: plug-ins/common/uniteditor.c:318
 msgid "All text fields must contain a value."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:518
+#: plug-ins/common/uniteditor.c:519
 #, fuzzy
 msgid "Unit Editor"
 msgstr "크기 맵 편집기"
 
-#: plug-ins/common/uniteditor.c:523 plug-ins/gimpressionist/presets.c:656
+#: plug-ins/common/uniteditor.c:524 plug-ins/gimpressionist/presets.c:656
 #, fuzzy
 msgid "Refresh"
 msgstr " 새로고침 "
 
-#: plug-ins/common/uniteditor.c:536
+#: plug-ins/common/uniteditor.c:537
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:538
+#: plug-ins/common/uniteditor.c:539
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:540
+#: plug-ins/common/uniteditor.c:541
 msgid "How many units make up an inch."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:541
+#: plug-ins/common/uniteditor.c:542
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:547
+#: plug-ins/common/uniteditor.c:548
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:550
+#: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:552
+#: plug-ins/common/uniteditor.c:553
 msgid "The unit's singular form."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:553
+#: plug-ins/common/uniteditor.c:554
 msgid "The unit's plural form."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:569
+#: plug-ins/common/uniteditor.c:570
 #, fuzzy
 msgid "Saved"
 msgstr "저장"
 
-#: plug-ins/common/uniteditor.c:570
+#: plug-ins/common/uniteditor.c:571
 msgid "ID"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:571
+#: plug-ins/common/uniteditor.c:572
 #, fuzzy
 msgid "Factor"
 msgstr "백터"
 
-#: plug-ins/common/uniteditor.c:572
+#: plug-ins/common/uniteditor.c:573
 #, fuzzy
 msgid "Digits"
 msgstr "하이라이트:"
 
-#: plug-ins/common/uniteditor.c:573
+#: plug-ins/common/uniteditor.c:574
 msgid "Symbol"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:574
+#: plug-ins/common/uniteditor.c:575
 msgid "Abbr."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:575
+#: plug-ins/common/uniteditor.c:576
 #, fuzzy
 msgid "Singular"
 msgstr "사인곡선"
 
-#: plug-ins/common/uniteditor.c:576
+#: plug-ins/common/uniteditor.c:577
 msgid "Plural"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:630
+#: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:632
+#: plug-ins/common/uniteditor.c:633
 #, fuzzy
 msgid "Duplicate Unit"
 msgstr "프레임범위 복사"
 
-#: plug-ins/common/uniteditor.c:639
+#: plug-ins/common/uniteditor.c:640
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:642
+#: plug-ins/common/uniteditor.c:643
 msgid "Don't Save Unit"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:649
+#: plug-ins/common/uniteditor.c:650
 #, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "선택된 미리조절 삭제"
 
-#: plug-ins/common/uniteditor.c:654
+#: plug-ins/common/uniteditor.c:655
 #, fuzzy
 msgid "Save Unit"
 msgstr "포인트 저장"
 
-#: plug-ins/common/uniteditor.c:661
+#: plug-ins/common/uniteditor.c:662
 #, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
 msgstr "선택된 미리조절 삭제"
@@ -7279,98 +7283,98 @@ msgstr "회전하기"
 msgid "<Image>/Filters/Colors/Value Invert"
 msgstr "<Image>/필터/색/테두리 평균"
 
-#: plug-ins/common/vpropagate.c:159
+#: plug-ins/common/vpropagate.c:160
 msgid "More White (Larger Value)"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:162
+#: plug-ins/common/vpropagate.c:163
 msgid "More Black (Smaller Value)"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:165
+#: plug-ins/common/vpropagate.c:166
 msgid "Middle Value to Peaks"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:168
+#: plug-ins/common/vpropagate.c:169
 msgid "Foreground to Peaks"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:171
+#: plug-ins/common/vpropagate.c:172
 msgid "Only Foreground"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:174
+#: plug-ins/common/vpropagate.c:175
 #, fuzzy
 msgid "Only Background"
 msgstr "배경"
 
-#: plug-ins/common/vpropagate.c:177
+#: plug-ins/common/vpropagate.c:178
 msgid "More Opaque"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:180
+#: plug-ins/common/vpropagate.c:181
 #, fuzzy
 msgid "More Transparent"
 msgstr "투명함"
 
-#: plug-ins/common/vpropagate.c:217
+#: plug-ins/common/vpropagate.c:218
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/필터/색/테두리 평균"
 
-#: plug-ins/common/vpropagate.c:364
+#: plug-ins/common/vpropagate.c:365
 #, fuzzy
 msgid "Value propagating..."
 msgstr "색상 변화"
 
-#: plug-ins/common/vpropagate.c:930
+#: plug-ins/common/vpropagate.c:931
 msgid "Value Propagate"
 msgstr ""
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:950
+#: plug-ins/common/vpropagate.c:951
 msgid "Propagate Mode"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:986
+#: plug-ins/common/vpropagate.c:987
 #, fuzzy
 msgid "Lower Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/vpropagate.c:995
+#: plug-ins/common/vpropagate.c:996
 #, fuzzy
 msgid "Upper Threshold:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/vpropagate.c:1004
+#: plug-ins/common/vpropagate.c:1005
 msgid "Propagating Rate:"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:1016
+#: plug-ins/common/vpropagate.c:1017
 #, fuzzy
 msgid "To Left"
 msgstr "위-왼쪽"
 
-#: plug-ins/common/vpropagate.c:1019
+#: plug-ins/common/vpropagate.c:1020
 #, fuzzy
 msgid "To Right"
 msgstr "라이트 없음"
 
-#: plug-ins/common/vpropagate.c:1022
+#: plug-ins/common/vpropagate.c:1023
 #, fuzzy
 msgid "To Top"
 msgstr "어디로 :"
 
-#: plug-ins/common/vpropagate.c:1025
+#: plug-ins/common/vpropagate.c:1026
 #, fuzzy
 msgid "To Bottom"
 msgstr "왼쪽  아래"
 
-#: plug-ins/common/vpropagate.c:1038
+#: plug-ins/common/vpropagate.c:1039
 msgid "Propagating Alpha Channel"
 msgstr ""
 
-#: plug-ins/common/vpropagate.c:1048
+#: plug-ins/common/vpropagate.c:1049
 msgid "Propagating Value Channel"
 msgstr ""
 
@@ -7561,26 +7565,26 @@ msgstr ""
 msgid "Pasting..."
 msgstr "프린팅..."
 
-#: plug-ins/common/wind.c:204
+#: plug-ins/common/wind.c:205
 #, fuzzy
 msgid "<Image>/Filters/Distorts/Wind..."
 msgstr "<Image>/필터/미술적/모자이크"
 
-#: plug-ins/common/wind.c:416
+#: plug-ins/common/wind.c:417
 #, fuzzy
 msgid "Rendering Blast..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/wind.c:547
+#: plug-ins/common/wind.c:548
 #, fuzzy
 msgid "Rendering Wind..."
 msgstr "타일 랜더링..."
 
-#: plug-ins/common/wind.c:961
+#: plug-ins/common/wind.c:962
 msgid "Wind Strength must be greater than 0."
 msgstr ""
 
-#: plug-ins/common/wind.c:1006 plug-ins/common/wind.c:1073
+#: plug-ins/common/wind.c:1007 plug-ins/common/wind.c:1074
 #, fuzzy
 msgid "Wind"
 msgstr "넓이"
@@ -7588,22 +7592,22 @@ msgstr "넓이"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:1070 plug-ins/maze/maze_face.c:302
+#: plug-ins/common/wind.c:1071 plug-ins/maze/maze_face.c:302
 #, fuzzy
 msgid "Style"
 msgstr "진행"
 
-#: plug-ins/common/wind.c:1074
+#: plug-ins/common/wind.c:1075
 #, fuzzy
 msgid "Blast"
 msgstr "검은색"
 
-#: plug-ins/common/wind.c:1091
+#: plug-ins/common/wind.c:1092
 #, fuzzy
 msgid "Left"
 msgstr "왼쪽  위"
 
-#: plug-ins/common/wind.c:1092
+#: plug-ins/common/wind.c:1093
 #, fuzzy
 msgid "Right"
 msgstr "빛"
@@ -7611,34 +7615,34 @@ msgstr "빛"
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:1105
+#: plug-ins/common/wind.c:1106
 msgid "Edge Affected"
 msgstr ""
 
-#: plug-ins/common/wind.c:1109
+#: plug-ins/common/wind.c:1110
 #, fuzzy
 msgid "Leading"
 msgstr "읽기 %s:"
 
-#: plug-ins/common/wind.c:1110
+#: plug-ins/common/wind.c:1111
 #, fuzzy
 msgid "Trailing"
 msgstr "스케일링"
 
-#: plug-ins/common/wind.c:1111
+#: plug-ins/common/wind.c:1112
 msgid "Both"
 msgstr ""
 
-#: plug-ins/common/wind.c:1141
+#: plug-ins/common/wind.c:1142
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1154 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:1155 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr "능력:"
 
-#: plug-ins/common/wind.c:1158
+#: plug-ins/common/wind.c:1159
 #, fuzzy
 msgid "Higher values increase the magnitude of the effect"
 msgstr "높은 값은 하이라이트에 많이 집중되게 합니다."
@@ -7666,7 +7670,7 @@ msgstr ""
 msgid "StartPage failed"
 msgstr "시작 각도:"
 
-#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:276
+#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:270
 msgid "Printing..."
 msgstr "프린팅..."
 
@@ -8089,12 +8093,12 @@ msgstr "Xpm으로 저장"
 msgid "Flame"
 msgstr "파일이름:"
 
-#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:121
+#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:193
 msgid "Contrast:"
 msgstr ""
 
 #: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:401
-#: plug-ins/print/gimp_color_window.c:205
+#: plug-ins/print/gimp_color_window.c:285
 msgid "Gamma:"
 msgstr "감마:"
 
@@ -11122,7 +11126,7 @@ msgid "Anti-Clockwise"
 msgstr "앤티앨리어싱"
 
 #: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
-#: plug-ins/print/gimp_main_window.c:473
+#: plug-ins/print/gimp_main_window.c:469
 msgid "Orientation:"
 msgstr "적응성:"
 
@@ -12735,7 +12739,7 @@ msgstr "능력:"
 msgid "Render Options"
 msgstr "두번째 옵션"
 
-#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:462
+#: plug-ins/ifscompose/ifscompose.c:908 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
 msgstr "자동"
 
@@ -12982,8 +12986,10 @@ msgstr "다른 것들"
 #. * always first in the list, else call bsearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:905
-#: plug-ins/print/print.c:906 plug-ins/print/print.c:1078
+#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:954
+#: plug-ins/print/print.c:955 plug-ins/print/print.c:1036
+#: plug-ins/print/print.c:1037 plug-ins/print/print.c:1136
+#: plug-ins/print/print.c:1137 plug-ins/print/print.c:1373
 msgid "File"
 msgstr "파일"
 
@@ -13671,16 +13677,21 @@ msgstr "새로운 이미지 생성"
 msgid "Page Curl..."
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:80
+#: plug-ins/print/gimp_color_window.c:135
 msgid "Print Color Adjust"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:191
+#: plug-ins/print/gimp_color_window.c:140
+#, fuzzy
+msgid "Set Defaults"
+msgstr " 초기값으로 재설정"
+
+#: plug-ins/print/gimp_color_window.c:269
 #, fuzzy
 msgid "Density:"
 msgstr "한번긋기 농도:"
 
-#: plug-ins/print/gimp_color_window.c:219
+#: plug-ins/print/gimp_color_window.c:300
 #, fuzzy
 msgid "Dither Algorithm:"
 msgstr "떨림 크기"
@@ -13688,204 +13699,223 @@ msgstr "떨림 크기"
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:221
+#: plug-ins/print/gimp_main_window.c:255
 #, fuzzy, c-format
 msgid "%s -- Print v%s"
 msgstr "프린트 v%s"
 
-#: plug-ins/print/gimp_main_window.c:230
+#: plug-ins/print/gimp_main_window.c:264
 #, fuzzy
 msgid ""
 "Print and\n"
 "Save Settings"
 msgstr "설정"
 
-#: plug-ins/print/gimp_main_window.c:232
+#: plug-ins/print/gimp_main_window.c:266
 #, fuzzy
 msgid ""
 "Save\n"
 "Settings"
 msgstr "설정"
 
-#: plug-ins/print/gimp_main_window.c:234
+#: plug-ins/print/gimp_main_window.c:268
 msgid "Print"
 msgstr "프린트"
 
-#: plug-ins/print/gimp_main_window.c:303
+#: plug-ins/print/gimp_main_window.c:346
 #, fuzzy
 msgid "Center Image"
 msgstr "이미지 환경:"
 
-#: plug-ins/print/gimp_main_window.c:314
+#: plug-ins/print/gimp_main_window.c:357
 #, fuzzy
 msgid "Units:"
 msgstr "단위"
 
-#: plug-ins/print/gimp_main_window.c:326
+#: plug-ins/print/gimp_main_window.c:369
 msgid "cm"
 msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:420
+#, fuzzy
+msgid "Right Border:"
+msgstr "테두리"
+
+#: plug-ins/print/gimp_main_window.c:443
+#, fuzzy
+msgid "Bottom Border:"
+msgstr "아래-왼쪽"
+
+#: plug-ins/print/gimp_main_window.c:455
+msgid "Portrait"
+msgstr "묘사"
+
+#: plug-ins/print/gimp_main_window.c:458
+msgid "Landscape"
+msgstr "풍경"
+
+#: plug-ins/print/gimp_main_window.c:461
+msgid "Upside down"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:464
+#, fuzzy
+msgid "Seascape"
+msgstr "풍경"
 
 #.
 #. *  Printer settings frame...
 #.
-#: plug-ins/print/gimp_main_window.c:405
+#: plug-ins/print/gimp_main_window.c:476
 #, fuzzy
 msgid "Printer Settings"
 msgstr "파라미터 설정"
 
-#: plug-ins/print/gimp_main_window.c:427
+#: plug-ins/print/gimp_main_window.c:498
 msgid "Media Size:"
 msgstr "미디어 크기:"
 
-#: plug-ins/print/gimp_main_window.c:436
+#: plug-ins/print/gimp_main_window.c:507
 msgid "Media Type:"
 msgstr "미디어 유형:"
 
-#: plug-ins/print/gimp_main_window.c:445
+#: plug-ins/print/gimp_main_window.c:516
 msgid "Media Source:"
 msgstr "원본 미디어:"
 
-#: plug-ins/print/gimp_main_window.c:454
+#: plug-ins/print/gimp_main_window.c:525
 #, fuzzy
 msgid "Ink Type:"
 msgstr "미디어 유형:"
 
-#: plug-ins/print/gimp_main_window.c:465
-msgid "Portrait"
-msgstr "묘사"
-
-#: plug-ins/print/gimp_main_window.c:468
-msgid "Landscape"
-msgstr "풍경"
-
-#: plug-ins/print/gimp_main_window.c:491
-msgid "Output Type:"
-msgstr "출력 유형:"
-
-#: plug-ins/print/gimp_main_window.c:494
-msgid "B&W"
-msgstr "B&W"
-
-#: plug-ins/print/gimp_main_window.c:516
-#, fuzzy
-msgid "Output Level:"
-msgstr "바깥 :"
-
-#: plug-ins/print/gimp_main_window.c:520
-#, fuzzy
-msgid "Normal Scale"
-msgstr "확대 비율"
-
-#: plug-ins/print/gimp_main_window.c:532
-msgid "Experimental Linear Scale"
-msgstr ""
-
-#.
-#. * Image type
-#.
-#: plug-ins/print/gimp_main_window.c:545
-#, fuzzy
-msgid "Image Type"
-msgstr "이미지 유형: "
-
-#: plug-ins/print/gimp_main_window.c:555
-#, fuzzy
-msgid "Line Art"
-msgstr "선형"
-
-#: plug-ins/print/gimp_main_window.c:566
-#, fuzzy
-msgid "Solid Colors"
-msgstr "배경 색상 사용"
-
-#: plug-ins/print/gimp_main_window.c:577
-msgid "Photograph"
-msgstr ""
-
-#: plug-ins/print/gimp_main_window.c:588
-msgid "Monochrome"
-msgstr ""
-
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/gimp_main_window.c:601
+#: plug-ins/print/gimp_main_window.c:540
 #, fuzzy
-msgid "Scaling and Color Settings"
-msgstr "색상 앤트리를 읽을 수 없습니다."
+msgid "Scaling"
+msgstr "스케일링"
 
-#: plug-ins/print/gimp_main_window.c:627 plug-ins/print/gimp_main_window.c:635
+#: plug-ins/print/gimp_main_window.c:567 plug-ins/print/gimp_main_window.c:576
 msgid "Scaling:"
 msgstr "스케일링"
 
-#: plug-ins/print/gimp_main_window.c:650
+#: plug-ins/print/gimp_main_window.c:591
 msgid "Percent"
 msgstr "퍼센트"
 
-#: plug-ins/print/gimp_main_window.c:660
+#: plug-ins/print/gimp_main_window.c:601
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:669
+#: plug-ins/print/gimp_main_window.c:610
 #, fuzzy
 msgid "Set Image Scale"
 msgstr "프레임 범위 선택"
 
-#: plug-ins/print/gimp_main_window.c:682
+#.
+#. * Image type
+#.
+#: plug-ins/print/gimp_main_window.c:656
+#, fuzzy
+msgid "Image Settings"
+msgstr "색상 설정"
+
+#: plug-ins/print/gimp_main_window.c:676
+#, fuzzy
+msgid "Line Art"
+msgstr "선형"
+
+#: plug-ins/print/gimp_main_window.c:687
+#, fuzzy
+msgid "Solid Colors"
+msgstr "배경 색상 사용"
+
+#: plug-ins/print/gimp_main_window.c:698
+msgid "Photograph"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:709
+msgid "Monochrome"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:724
 #, fuzzy
 msgid "Adjust Color"
 msgstr "보통 색상: "
 
-#: plug-ins/print/gimp_main_window.c:715
+#.
+#. * Output type toggles...
+#.
+#: plug-ins/print/gimp_main_window.c:736
+msgid "Output Type:"
+msgstr "출력 유형:"
+
+#: plug-ins/print/gimp_main_window.c:755
+msgid "B&W"
+msgstr "B&W"
+
+#: plug-ins/print/gimp_main_window.c:789
 msgid "Printer:"
 msgstr "프린터:"
 
-#: plug-ins/print/gimp_main_window.c:724 plug-ins/print/gimp_main_window.c:737
+#: plug-ins/print/gimp_main_window.c:798 plug-ins/print/gimp_main_window.c:811
 msgid "Setup"
 msgstr "셋업"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/gimp_main_window.c:766
-msgid "Driver:"
-msgstr "드라이버:"
+#: plug-ins/print/gimp_main_window.c:840
+#, fuzzy
+msgid "Printer Model:"
+msgstr "페인트모드"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/gimp_main_window.c:802
+#: plug-ins/print/gimp_main_window.c:876
 msgid "PPD File:"
 msgstr "PPD 파일:"
 
-#: plug-ins/print/gimp_main_window.c:817
+#: plug-ins/print/gimp_main_window.c:891
 msgid "Browse"
 msgstr "찾아보기"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/gimp_main_window.c:829
+#: plug-ins/print/gimp_main_window.c:903
 msgid "Command:"
 msgstr "명령:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:844
+#: plug-ins/print/gimp_main_window.c:918
 msgid "Print To File?"
 msgstr "파일로 프린트 할까요?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/gimp_main_window.c:858
+#: plug-ins/print/gimp_main_window.c:932
 msgid "PPD File?"
 msgstr "PPD 파일로?"
 
-#: plug-ins/print/print.c:234
+#: plug-ins/print/print.c:223 plug-ins/print/print.c:232
 #, fuzzy
 msgid "<Image>/File/Print..."
+msgstr "<Image>/파일/프린트"
+
+#: plug-ins/print/print.c:241
+#, fuzzy
+msgid "<Image>/File/Print (Gtk)..."
+msgstr "<Image>/파일/프린트"
+
+#: plug-ins/print/print.c:249
+#, fuzzy
+msgid "<Image>/File/Print (Gimp)..."
 msgstr "<Image>/파일/프린트"
 
 #: plug-ins/rcm/rcm.c:118
@@ -14185,6 +14215,25 @@ msgstr ""
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Output Level:"
+#~ msgstr "바깥 :"
+
+#, fuzzy
+#~ msgid "Normal Scale"
+#~ msgstr "확대 비율"
+
+#, fuzzy
+#~ msgid "Image Type"
+#~ msgstr "이미지 유형: "
+
+#, fuzzy
+#~ msgid "Scaling and Color Settings"
+#~ msgstr "색상 앤트리를 읽을 수 없습니다."
+
+#~ msgid "Driver:"
+#~ msgstr "드라이버:"
 
 #~ msgid "Env"
 #~ msgstr "환경"

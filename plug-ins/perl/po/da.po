@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.13\n"
-"POT-Creation-Date: Wed Aug 30 00:31:39 2000\n"
+"POT-Creation-Date: Wed Oct  4 16:01:46 2000\n"
 "PO-Revision-Date: 2000-05-18 11:20+0200\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"

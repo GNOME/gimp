@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-09-21 15:48+0200\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: 2000-09-28 01:22+02:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -2225,4 +2225,3 @@ msgstr "Anchura"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Trabajar en copia"
-

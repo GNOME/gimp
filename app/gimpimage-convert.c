@@ -90,18 +90,23 @@
 #include <string.h>
 
 #include "appenv.h"
+#include "brightness_contrast.h"
 #include "color_balance.h"
 #include "convert.h"
 #include "cursorutil.h"
+#include "curves.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "fsdither.h"
 #include "gdisplay.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
+#include "levels.h"
 #include "undo.h"
 #include "palette.h"
 #include "palette_select.h"
+#include "posterize.h"
+#include "threshold.h"
 
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpmath.h"
@@ -321,7 +326,7 @@ typedef void (* Pass2i_Func) (QuantizeObj *);
 typedef void (* Pass2_Func) (QuantizeObj *, Layer *, TileManager *);
 typedef void (* Cleanup_Func) (QuantizeObj *);
 typedef unsigned long ColorFreq;
-typedef ColorFreq *Histogram;
+typedef ColorFreq *CFHistogram;
 
 struct _Color
 {
@@ -340,8 +345,8 @@ struct _QuantizeObj
   int desired_number_of_colors;     /* Number of colors we will allow    */
   int actual_number_of_colors;      /* Number of colors actually needed  */
   Color cmap[256];  		    /* colormap created by quantization  */
-  unsigned long index_used_count[256]; /* how many times an index was used */
-  Histogram histogram;              /* holds the histogram               */
+  gulong index_used_count[256];     /* how many times an index was used */
+  CFHistogram histogram;            /* holds the histogram               */
 
   int want_alpha_dither;
   int error_freedom;                /* 0=much bleed, 1=controlled bleed */
@@ -408,17 +413,17 @@ static void indexed_palette_select_destroy_callback (GtkWidget *widget, gpointer
 static void rgb_converter       (Layer *, TileManager *, int);
 static void grayscale_converter (Layer *, TileManager *, int);
 
-static void zero_histogram_gray     (Histogram);
-static void zero_histogram_rgb      (Histogram);
-static void generate_histogram_gray (Histogram, Layer *, int alpha_dither);
-static void generate_histogram_rgb  (Histogram, Layer *, int col_limit, int alpha_dither);
+static void zero_histogram_gray     (CFHistogram);
+static void zero_histogram_rgb      (CFHistogram);
+static void generate_histogram_gray (CFHistogram, Layer *, int alpha_dither);
+static void generate_histogram_rgb  (CFHistogram, Layer *, int col_limit, int alpha_dither);
 
 static QuantizeObj* initialize_median_cut (int, int, ConvertDitherType,
 					   ConvertPaletteType, int);
 
 static void
 compute_color_rgb (QuantizeObj *quantobj,
-		   Histogram    histogram,
+		   CFHistogram  histogram,
 		   boxptr       boxp,
 		   int          icolor);
 
@@ -1590,7 +1595,7 @@ grayscale_converter (Layer       *layer,
  */
 
 static void
-zero_histogram_gray (Histogram histogram)
+zero_histogram_gray (CFHistogram histogram)
 {
   int i;
 
@@ -1600,7 +1605,7 @@ zero_histogram_gray (Histogram histogram)
 
 
 static void
-zero_histogram_rgb (Histogram histogram)
+zero_histogram_rgb (CFHistogram histogram)
 {
   int r, g, b;
 
@@ -1612,9 +1617,9 @@ zero_histogram_rgb (Histogram histogram)
 
 
 static void
-generate_histogram_gray (Histogram  histogram,
-			 Layer     *layer,
-			 int        alpha_dither)
+generate_histogram_gray (CFHistogram  histogram,
+			 Layer       *layer,
+			 int          alpha_dither)
 {
   PixelRegion srcPR;
   unsigned char *data;
@@ -1641,10 +1646,10 @@ generate_histogram_gray (Histogram  histogram,
 
 
 static void
-generate_histogram_rgb (Histogram  histogram,
-			Layer     *layer,
-			int        col_limit,
-			int        alpha_dither)
+generate_histogram_rgb (CFHistogram  histogram,
+			Layer       *layer,
+			int          col_limit,
+			int          alpha_dither)
 {
   PixelRegion srcPR;
   unsigned char *data;
@@ -1882,8 +1887,8 @@ find_biggest_volume (boxptr boxlist,
 
 
 static void
-update_box_gray (Histogram histogram,
-		 boxptr    boxp)
+update_box_gray (CFHistogram histogram,
+		 boxptr      boxp)
 /* Shrink the min/max bounds of a box to enclose only nonzero elements, */
 /* and recompute its volume and population */
 {
@@ -1934,8 +1939,8 @@ update_box_gray (Histogram histogram,
 }
 
 static void
-update_box_rgb (Histogram histogram,
-		boxptr    boxp)
+update_box_rgb (CFHistogram histogram,
+		boxptr      boxp)
 /* Shrink the min/max bounds of a box to enclose only nonzero elements, */
 /* and recompute its volume, population and error */
 {
@@ -2203,10 +2208,10 @@ update_box_rgb (Histogram histogram,
 
 
 static int
-median_cut_gray (Histogram histogram,
-		 boxptr    boxlist,
-		 int       numboxes,
-		 int       desired_colors)
+median_cut_gray (CFHistogram histogram,
+		 boxptr      boxlist,
+		 int         numboxes,
+		 int         desired_colors)
 /* Repeatedly select and split the largest box until we have enough boxes */
 {
   int lb;
@@ -2255,10 +2260,10 @@ median_cut_gray (Histogram histogram,
 }
 
 static int
-median_cut_rgb (Histogram histogram,
-		boxptr    boxlist,
-		int       numboxes,
-		int       desired_colors)
+median_cut_rgb (CFHistogram histogram,
+		boxptr      boxlist,
+		int         numboxes,
+		int         desired_colors)
 /* Repeatedly select and split the largest box until we have enough boxes */
 {
   int n,lb;
@@ -2344,7 +2349,7 @@ median_cut_rgb (Histogram histogram,
 
 static void
 compute_color_gray (QuantizeObj *quantobj,
-		    Histogram    histogram,
+		    CFHistogram  histogram,
 		    boxptr       boxp,
 		    int          icolor)
 /* Compute representative color for a box, put it in colormap[icolor] */
@@ -2389,7 +2394,7 @@ compute_color_gray (QuantizeObj *quantobj,
 
 static void
 compute_color_rgb (QuantizeObj *quantobj,
-		   Histogram    histogram,
+		   CFHistogram  histogram,
 		   boxptr       boxp,
 		   int          icolor)
 /* Compute representative color for a box, put it in colormap[icolor] */
@@ -2447,7 +2452,7 @@ compute_color_rgb (QuantizeObj *quantobj,
 
 static void
 select_colors_gray (QuantizeObj *quantobj,
-		    Histogram    histogram)
+		    CFHistogram  histogram)
 /* Master routine for color selection */
 {
   boxptr boxlist;
@@ -2476,7 +2481,7 @@ select_colors_gray (QuantizeObj *quantobj,
 
 static void
 select_colors_rgb (QuantizeObj *quantobj,
-		   Histogram    histogram)
+		   CFHistogram  histogram)
 /* Master routine for color selection */
 {
   boxptr boxlist;
@@ -2803,7 +2808,7 @@ find_best_colors (QuantizeObj *quantobj,
 
 static void
 fill_inverse_cmap_gray (QuantizeObj *quantobj,
-			Histogram    histogram,
+			CFHistogram  histogram,
 			int          pixel)
 /* Fill the inverse-colormap entries in the update box that contains */
 /* histogram cell R/G/B.  (Only that one cell MUST be filled, but */
@@ -2839,7 +2844,7 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
 
 static void
 fill_inverse_cmap_rgb (QuantizeObj *quantobj,
-		       Histogram    histogram,
+		       CFHistogram  histogram,
 		       int          R,
 		       int          G,
 		       int          B)
@@ -2966,7 +2971,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 				 TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq * cachep;
   unsigned char *src, *dest;
   int row, col;
@@ -3027,7 +3032,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 				    TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq* cachep;
   Color* color;
   unsigned char *src, *dest;
@@ -3104,7 +3109,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 				TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq * cachep;
   unsigned char *src, *dest;
   int R, G, B;
@@ -3179,7 +3184,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 				   TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq* cachep;
   Color* color;
   unsigned char *src, *dest;
@@ -3460,7 +3465,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 				 TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq *cachep;
   Color *color;
   int *error_limiter;
@@ -3656,7 +3661,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 				TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
-  Histogram histogram = quantobj->histogram;
+  CFHistogram histogram = quantobj->histogram;
   ColorFreq *cachep;
   Color *color;
   int *error_limiter;

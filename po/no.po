@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-09-27 12:25-0700\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 2000-09-04 22:32+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -114,18 +114,18 @@ msgid "Quit"
 msgstr "Avslutt"
 
 #. the cancel button
-#: app/app_procs.c:754 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
-#: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
+#: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
-#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:379
 #: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
-#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
-#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1462
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:346
+#: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1462
 #: app/qmask.c:278 app/resize.c:194 app/resize.c:1324
-#: app/resolution_calibrate.c:111 app/threshold.c:275 app/user_install.c:549
+#: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
 #: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
 msgstr "Avbryt"
@@ -266,60 +266,60 @@ msgstr "Blanding..."
 msgid "Blend: "
 msgstr "Bland: "
 
-#: app/brightness_contrast.c:127 app/brightness_contrast.c:209
+#: app/brightness_contrast.c:126 app/brightness_contrast.c:215
 #: app/tools.c:1049
 msgid "Brightness-Contrast"
 msgstr "Lysstyrke-Kontrast"
 
-#: app/brightness_contrast.c:163
+#: app/brightness_contrast.c:169
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 
-#: app/brightness_contrast.c:214 app/channel_ops.c:91
+#: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
-#: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
-#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
+#: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
+#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
-#: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
-#: app/posterize.c:198 app/preferences_dialog.c:1458 app/qmask.c:276
+#: app/layers_dialog.c:4019 app/levels.c:342 app/module_db.c:314
+#: app/posterize.c:203 app/preferences_dialog.c:1458 app/qmask.c:276
 #: app/resize.c:192 app/resize.c:1324 app/resolution_calibrate.c:109
-#: app/threshold.c:271 modules/cdisplay_gamma.c:330
+#: app/threshold.c:276 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:721
-#: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
-#: app/hue_saturation.c:372 app/levels.c:339 app/posterize.c:200
-#: app/threshold.c:273 app/tools.c:1542 app/transform_core.c:406
+#: app/brightness_contrast.c:222 app/by_color_select.c:721
+#: app/color_balance.c:278 app/curves.c:565 app/file_new_dialog.c:355
+#: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
+#: app/threshold.c:278 app/tools.c:1542 app/transform_core.c:406
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Nullstill"
 
 #. Create the brightness scale widget
-#: app/brightness_contrast.c:234
+#: app/brightness_contrast.c:240
 msgid "Brightness:"
 msgstr "Lysstyrke:"
 
 #. Create the contrast scale widget
-#: app/brightness_contrast.c:265
+#: app/brightness_contrast.c:271
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:404 app/hue_saturation.c:562 app/levels.c:570
-#: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
+#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
+#: app/fileops.c:404 app/hue_saturation.c:567 app/levels.c:575
+#: app/palette.c:3216 app/posterize.c:244 app/threshold.c:353
 msgid "Preview"
 msgstr "Forhåndsvis"
 
-#: app/brush_edit.c:210
+#: app/brush_edit.c:223
 msgid "Brush Editor"
 msgstr "Penseleditor"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:723
+#: app/brush_edit.c:229 app/brush_select.c:281 app/by_color_select.c:723
 #: app/color_notebook.c:123 app/color_picker.c:297 app/colormap_dialog.i.c:173
 #: app/crop.c:1068 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
@@ -332,19 +332,19 @@ msgid "Close"
 msgstr "Lukk"
 
 #. the feather radius scale
-#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:201
+#: app/brush_edit.c:287 app/color_picker.c:181 app/tool_options.c:201
 msgid "Radius:"
 msgstr "Radius:"
 
-#: app/brush_edit.c:288
+#: app/brush_edit.c:300
 msgid "Hardness:"
 msgstr "Hardhet:"
 
-#: app/brush_edit.c:300
+#: app/brush_edit.c:313
 msgid "Aspect Ratio:"
 msgstr "Aspektrate:"
 
-#: app/brush_edit.c:312 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
+#: app/brush_edit.c:326 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Vinkel:"
 
@@ -555,18 +555,18 @@ msgstr "Slett kanal"
 msgid "Empty Channel Copy"
 msgstr "Kopier tom kanal"
 
-#: app/channels_dialog.c:1433 app/color_balance.c:343 app/color_select.c:250
-#: app/curves.c:583 app/histogram_tool.c:303 app/levels.c:370
+#: app/channels_dialog.c:1433 app/color_balance.c:348 app/color_select.c:250
+#: app/curves.c:588 app/histogram_tool.c:303 app/levels.c:375
 msgid "Red"
 msgstr "Rød"
 
-#: app/channels_dialog.c:1437 app/color_balance.c:368 app/color_select.c:251
-#: app/curves.c:584 app/histogram_tool.c:304 app/levels.c:371
+#: app/channels_dialog.c:1437 app/color_balance.c:373 app/color_select.c:251
+#: app/curves.c:589 app/histogram_tool.c:304 app/levels.c:376
 msgid "Green"
 msgstr "Grønn"
 
-#: app/channels_dialog.c:1441 app/color_balance.c:393 app/color_select.c:252
-#: app/curves.c:585 app/histogram_tool.c:305 app/levels.c:372
+#: app/channels_dialog.c:1441 app/color_balance.c:398 app/color_select.c:252
+#: app/curves.c:590 app/histogram_tool.c:305 app/levels.c:377
 msgid "Blue"
 msgstr "Blå"
 
@@ -629,47 +629,47 @@ msgid "No patterns available for this operation."
 msgstr "Ingen mønstre tilgjengelig for denne operasjonen."
 
 #. The shell and main vbox
-#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:1021
+#: app/color_balance.c:167 app/color_balance.c:271 app/tools.c:1021
 msgid "Color Balance"
 msgstr "Fargebalanse"
 
-#: app/color_balance.c:206
+#: app/color_balance.c:211
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Fargebalanse virker kun på RGB fargeobjekter."
 
-#: app/color_balance.c:255 app/dodgeburn.c:183
+#: app/color_balance.c:260 app/dodgeburn.c:183
 msgid "Shadows"
 msgstr "Skygger"
 
-#: app/color_balance.c:256 app/dodgeburn.c:181
+#: app/color_balance.c:261 app/dodgeburn.c:181
 msgid "Midtones"
 msgstr "Mellomtoner"
 
-#: app/color_balance.c:257 app/dodgeburn.c:179
+#: app/color_balance.c:262 app/dodgeburn.c:179
 msgid "Highlights"
 msgstr "Lyse toner"
 
-#: app/color_balance.c:288
+#: app/color_balance.c:293
 msgid "Color Levels:"
 msgstr "Fargenivåer:"
 
 #. Create the cyan-red scale widget
-#: app/color_balance.c:328
+#: app/color_balance.c:333
 msgid "Cyan"
 msgstr "Cyan"
 
 #. Create the magenta-green scale widget
-#: app/color_balance.c:353
+#: app/color_balance.c:358
 msgid "Magenta"
 msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
-#: app/color_balance.c:378
+#: app/color_balance.c:383
 msgid "Yellow"
 msgstr "Gul"
 
 #. The preserve luminosity toggle
-#: app/color_balance.c:431
+#: app/color_balance.c:436
 msgid "Preserve Luminosity"
 msgstr "Bevar luminositet"
 
@@ -748,15 +748,15 @@ msgstr "S"
 msgid "V"
 msgstr "V"
 
-#: app/color_select.c:241 app/hue_saturation.c:352
+#: app/color_select.c:241 app/hue_saturation.c:357
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:242 app/hue_saturation.c:354
+#: app/color_select.c:242 app/hue_saturation.c:359
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:243 app/hue_saturation.c:356
+#: app/color_select.c:243 app/hue_saturation.c:361
 msgid "B"
 msgstr "B"
 
@@ -770,8 +770,8 @@ msgstr "Glød"
 msgid "Saturation"
 msgstr "Metning"
 
-#: app/color_select.c:249 app/curves.c:582 app/histogram_tool.c:302
-#: app/layers_dialog.c:386 app/levels.c:369 app/paint_funcs.c:98
+#: app/color_select.c:249 app/curves.c:587 app/histogram_tool.c:302
+#: app/layers_dialog.c:386 app/levels.c:374 app/paint_funcs.c:98
 #: app/tool_options.c:932
 msgid "Value"
 msgstr "Verdi"
@@ -831,72 +831,72 @@ msgstr ""
 "Feil under endring av størrelse: Både bredde og høyde må være større enn "
 "null."
 
-#: app/convert.c:498
+#: app/convert.c:505
 msgid "Indexed Color Conversion"
 msgstr "Indeksert fargekonversjon"
 
-#: app/convert.c:517
+#: app/convert.c:524
 msgid "General Palette Options"
 msgstr "Generelle alternativer for palett"
 
-#: app/convert.c:530
+#: app/convert.c:537
 msgid "Generate Optimal Palette:"
 msgstr "Generér optimal palett:"
 
-#: app/convert.c:563
+#: app/convert.c:570
 msgid "# of Colors:"
 msgstr "antall farger:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:579
+#: app/convert.c:586
 msgid "Custom Palette Options"
 msgstr "Egendefinerte alternativer for palett"
 
-#: app/convert.c:585
+#: app/convert.c:592
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Fjern ubrukte farger fra endelig palett"
 
-#: app/convert.c:597
+#: app/convert.c:604
 msgid "Use Custom Palette:"
 msgstr "Bruk egendefinert palett:"
 
-#: app/convert.c:631
+#: app/convert.c:638
 msgid "Use WWW-Optimized Palette"
 msgstr "Bruk WWW-optimert palett"
 
-#: app/convert.c:647
+#: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Bruk sort/hvit (1-bit) palett"
 
-#: app/convert.c:658
+#: app/convert.c:665
 msgid "Dither Options"
 msgstr "Alternativer for dithering"
 
-#: app/convert.c:671
+#: app/convert.c:678
 msgid "No Color Dithering"
 msgstr "Ingen dithering av farger"
 
-#: app/convert.c:685
+#: app/convert.c:692
 msgid "Positioned Color Dithering"
 msgstr "Posisjonert dithering av farger"
 
-#: app/convert.c:699
+#: app/convert.c:706
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg fargedithering (redusert fargelekkasje)"
 
-#: app/convert.c:712
+#: app/convert.c:719
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg dithering (normal)"
 
-#: app/convert.c:726
+#: app/convert.c:733
 msgid "Enable Dithering of Transparency"
 msgstr "Slå på dithering av gjennomsiktighet"
 
-#: app/convert.c:755
+#: app/convert.c:762
 msgid "[ Warning ]"
 msgstr " [ Advarsel ]"
 
-#: app/convert.c:765
+#: app/convert.c:772
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -907,7 +907,7 @@ msgstr ""
 "Du bør ikke generere en palett med mer enn 255 farger hvis du ønsker å lage "
 "en gjennomsiktig eller animert GIF-fil av dette bildet."
 
-#: app/convert.c:965
+#: app/convert.c:983
 msgid "Select Custom Palette"
 msgstr "Velg egendefinert palett"
 
@@ -988,58 +988,58 @@ msgid "Auto Shrink"
 msgstr "Autokrymp"
 
 #. The shell and main vbox
-#: app/curves.c:393 app/curves.c:553 app/tools.c:1161
+#: app/curves.c:392 app/curves.c:558 app/tools.c:1161
 msgid "Curves"
 msgstr "Kurver"
 
-#: app/curves.c:434
+#: app/curves.c:439
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurver for indekserte tegnede objekter kan ikke justeres."
 
-#: app/curves.c:575
+#: app/curves.c:580
 msgid "Modify Curves for Channel:"
 msgstr "Endre kurver for kanal:"
 
-#: app/curves.c:586 app/levels.c:373
+#: app/curves.c:591 app/levels.c:378
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:665
+#: app/curves.c:670
 msgid "Curve Type:"
 msgstr "Kurvetype:"
 
-#: app/curves.c:672
+#: app/curves.c:677
 msgid "Smooth"
 msgstr "Jevn"
 
-#: app/curves.c:673
+#: app/curves.c:678
 msgid "Free"
 msgstr "Fritt"
 
-#: app/curves.c:699 app/levels.c:598 app/module_db.c:865
+#: app/curves.c:704 app/levels.c:603 app/module_db.c:865
 msgid "Load"
 msgstr "Last"
 
-#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2047
+#: app/curves.c:712 app/devices.c:753 app/levels.c:613 app/palette.c:2047
 #: app/preferences_dialog.c:364 app/preferences_dialog.c:1460
 msgid "Save"
 msgstr "Lagre"
 
-#: app/curves.c:1273
+#: app/curves.c:1278
 msgid "Load Curves"
 msgstr "Last kurver"
 
-#: app/curves.c:1288
+#: app/curves.c:1293
 msgid "Save Curves"
 msgstr "Lagre kurver"
 
-#: app/curves.c:1579
+#: app/curves.c:1584
 msgid "Load/Save Curves"
 msgstr "Laste/Lagre kurver"
 
-#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1452 app/levels.c:1470
-#: app/paths_dialog.c:1905
+#: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
+#: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Kan ikke åpne fil %s"
@@ -1525,24 +1525,24 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Ingen utvalg til stykning!"
 
-#: app/gimpbrush.c:273
+#: app/gimpbrush.c:282
 msgid "Error in GIMP brush file...aborting."
 msgstr "Feil i GIMP penselfil...avbryter."
 
-#: app/gimpbrush.c:280 app/patterns.c:212
+#: app/gimpbrush.c:290 app/patterns.c:211
 msgid "Unnamed"
 msgstr "Uten navn"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:310
 msgid "GIMP brush file appears to be truncated."
 msgstr "GIMP penselfil ser ut til å være avkuttet."
 
-#: app/gimpbrush.c:301
+#: app/gimpbrush.c:314
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
 
-#: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
+#: app/gimpbrushlist.c:195 app/gimpbrushlist.c:206
 #, c-format
 msgid ""
 "Warning: Failed to load brush\n"
@@ -1551,7 +1551,7 @@ msgstr ""
 "Advarsel: Klarte ikke å lese børste\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:206
+#: app/gimpbrushlist.c:217
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
@@ -1560,7 +1560,7 @@ msgstr ""
 "Advarsel: Klarte ikke å lese bildebørste\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:215
+#: app/gimpbrushlist.c:228
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
@@ -1569,19 +1569,18 @@ msgstr ""
 "Advarsel: Klarte ikke å lese bilderør\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:309
+#: app/gimpbrushpipe.c:315
 msgid "Brush pipes should have at least one brush."
 msgstr "Rør av pensler må ha minst en pensel."
 
-#: app/gimpbrushpipe.c:404
-msgid ""
-"Failed to load one of the\n"
-"brushes in the brush pipe."
+#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
+#, fuzzy
+msgid "Failed to load one of the brushes in the brush pipe."
 msgstr ""
 "Klarte ikke å laste en av\n"
 "penselene i penselrøret."
 
-#: app/gimpbrushpipe.c:466
+#: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
 msgstr "Klarte ikke å lese bildebørste."
 
@@ -2230,46 +2229,46 @@ msgid "Information on Channel:"
 msgstr "Informasjon om kanal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:245 app/hue_saturation.c:365 app/tools.c:1077
+#: app/hue_saturation.c:244 app/hue_saturation.c:370 app/tools.c:1077
 msgid "Hue-Saturation"
 msgstr "Glød/Metning"
 
-#: app/hue_saturation.c:283
+#: app/hue_saturation.c:288
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Glød-Metning opererer kun på tegnede objekter i RGB."
 
-#: app/hue_saturation.c:351
+#: app/hue_saturation.c:356
 msgid "Master"
 msgstr "Mester"
 
-#: app/hue_saturation.c:353
+#: app/hue_saturation.c:358
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:355
+#: app/hue_saturation.c:360
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:357
+#: app/hue_saturation.c:362
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:442
+#: app/hue_saturation.c:447
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Justeringer for Glød / Lys / Metning"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:454
+#: app/hue_saturation.c:459
 msgid "Hue:"
 msgstr "Glød:"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:488
+#: app/hue_saturation.c:493
 msgid "Lightness:"
 msgstr "Lysverdi:"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:522
+#: app/hue_saturation.c:527
 msgid "Saturation:"
 msgstr "Metning:"
 
@@ -2799,7 +2798,7 @@ msgid "Layers, Channels & Paths"
 msgstr "Lag, kanaler og stier"
 
 #. The Auto-button
-#: app/lc_dialog.c:147 app/levels.c:588
+#: app/lc_dialog.c:147 app/levels.c:593
 msgid "Auto"
 msgstr "Auto"
 
@@ -2812,35 +2811,35 @@ msgid "Channels"
 msgstr "Kanaler"
 
 #. The shell and main vbox
-#: app/levels.c:197 app/levels.c:332 app/tools.c:1189
+#: app/levels.c:196 app/levels.c:337 app/tools.c:1189
 msgid "Levels"
 msgstr "Nivåer"
 
-#: app/levels.c:235
+#: app/levels.c:240
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Nivåer for indekserte tengnede objekter kan ikke justeres."
 
-#: app/levels.c:361
+#: app/levels.c:366
 msgid "Modify Levels for Channel:"
 msgstr "Endre nivåer for kanal:"
 
-#: app/levels.c:385
+#: app/levels.c:390
 msgid "Input Levels:"
 msgstr "Nivåer inn:"
 
-#: app/levels.c:494
+#: app/levels.c:499
 msgid "Output Levels:"
 msgstr "Nivåer ut:"
 
-#: app/levels.c:1063
+#: app/levels.c:1068
 msgid "Load Levels"
 msgstr "Laste nivåer"
 
-#: app/levels.c:1078
+#: app/levels.c:1083
 msgid "Save Levels"
 msgstr "Lagre nivåer"
 
-#: app/levels.c:1407
+#: app/levels.c:1412
 msgid "Load/Save Levels"
 msgstr "Laste/Lagre nivåer"
 
@@ -4154,22 +4153,25 @@ msgstr "Mønsterutvalg"
 msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
-#: app/patterns.c:188
-#, c-format
-msgid "Unknown GIMP version #%d in \"%s\"\n"
+#: app/patterns.c:187
+#, fuzzy, c-format
+msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
 msgstr "Ukjent GIMP versjon #%d i \"%s\"\n"
 
-#: app/patterns.c:205
-msgid "Error in GIMP pattern file...aborting."
+#: app/patterns.c:204
+#, fuzzy, c-format
+msgid "Error in GIMP pattern file \"%s\""
 msgstr "Feil i GIMP mønsterfil...avbryter."
 
 #: app/patterns.c:219
-msgid "GIMP pattern file appears to be truncated."
+#, fuzzy, c-format
+msgid "GIMP pattern file \"%s\" appears to be truncated."
 msgstr "GIMP mønsterfil ser ut til å være kuttet."
 
-#: app/patterns.c:283
-msgid "Pattern load failed"
-msgstr "Lasting av mønster feilet"
+#: app/patterns.c:278
+#, fuzzy, c-format
+msgid "Error loading pattern \"%s\""
+msgstr "Feil under åpning av fil: %s\n"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4231,15 +4233,15 @@ msgstr ""
 "Du bør lagre dine bilder og starte GIMP på nytt\n"
 "for å være på den sikre siden."
 
-#: app/posterize.c:148
+#: app/posterize.c:153
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisering opererer ikke å indekserte tegnede objekter."
 
-#: app/posterize.c:193 app/tools.c:1105
+#: app/posterize.c:198 app/tools.c:1105
 msgid "Posterize"
 msgstr "Posterisering"
 
-#: app/posterize.c:215
+#: app/posterize.c:220
 msgid "Posterize Levels:"
 msgstr "Nivåer for posterisering:"
 
@@ -5047,15 +5049,15 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Tekstlag"
 
-#: app/threshold.c:171 app/threshold.c:266 app/tools.c:1133
+#: app/threshold.c:170 app/threshold.c:271 app/tools.c:1133
 msgid "Threshold"
 msgstr "Terskel"
 
-#: app/threshold.c:207
+#: app/threshold.c:212
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Terskel opererer ikke på indekserte tegnede objekter."
 
-#: app/threshold.c:288
+#: app/threshold.c:293
 msgid "Threshold Range:"
 msgstr "Terskelområde:"
 
@@ -6399,3 +6401,6 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
+
+#~ msgid "Pattern load failed"
+#~ msgstr "Lasting av mønster feilet"

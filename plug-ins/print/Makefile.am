@@ -10,6 +10,7 @@ print_SOURCES = \
 	print-canon.c		\
 	print-dither.c		\
 	print-escp2.c		\
+	print-intl.h		\
 	print-pcl.c		\
 	print-ps.c		\
 	print-util.c		\
@@ -17,7 +18,6 @@ print_SOURCES = \
 	print.h			\
 	quickmatrix257.h	\
 	ran.367.179.h		\
-	\
 	print-image-gimp.c	\
 	print.c			\
 	gimp_color_window.c	\

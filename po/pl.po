@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.23\n"
-"POT-Creation-Date: 2000-09-27 12:25-0700\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 2000-04-04 22:06+02:00\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -117,18 +117,18 @@ msgid "Quit"
 msgstr "Zakoñcz"
 
 #. the cancel button
-#: app/app_procs.c:754 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
-#: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
+#: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
-#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:379
 #: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
-#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
-#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1462
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:346
+#: app/palette.c:1818 app/posterize.c:207 app/preferences_dialog.c:1462
 #: app/qmask.c:278 app/resize.c:194 app/resize.c:1324
-#: app/resolution_calibrate.c:111 app/threshold.c:275 app/user_install.c:549
+#: app/resolution_calibrate.c:111 app/threshold.c:280 app/user_install.c:549
 #: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
 msgstr "Anuluj"
@@ -269,62 +269,62 @@ msgstr "Zlewanie..."
 msgid "Blend: "
 msgstr "Zlewanie: "
 
-#: app/brightness_contrast.c:127 app/brightness_contrast.c:209
+#: app/brightness_contrast.c:126 app/brightness_contrast.c:215
 #: app/tools.c:1049
 msgid "Brightness-Contrast"
 msgstr "Jasno¶æ i kontrast"
 
-#: app/brightness_contrast.c:163
+#: app/brightness_contrast.c:169
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Nie mo¿na modyfikowaæ jasno¶ci i kontrastu w trybie indeksowanym."
 
-#: app/brightness_contrast.c:214 app/channel_ops.c:91
+#: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
-#: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
-#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
+#: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
+#: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
-#: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
-#: app/posterize.c:198 app/preferences_dialog.c:1458 app/qmask.c:276
+#: app/layers_dialog.c:4019 app/levels.c:342 app/module_db.c:314
+#: app/posterize.c:203 app/preferences_dialog.c:1458 app/qmask.c:276
 #: app/resize.c:192 app/resize.c:1324 app/resolution_calibrate.c:109
-#: app/threshold.c:271 modules/cdisplay_gamma.c:330
+#: app/threshold.c:276 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:721
-#: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
-#: app/hue_saturation.c:372 app/levels.c:339 app/posterize.c:200
-#: app/threshold.c:273 app/tools.c:1542 app/transform_core.c:406
+#: app/brightness_contrast.c:222 app/by_color_select.c:721
+#: app/color_balance.c:278 app/curves.c:565 app/file_new_dialog.c:355
+#: app/hue_saturation.c:377 app/levels.c:344 app/posterize.c:205
+#: app/threshold.c:278 app/tools.c:1542 app/transform_core.c:406
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Zresetuj"
 
 #. Create the brightness scale widget
-#: app/brightness_contrast.c:234
+#: app/brightness_contrast.c:240
 #, fuzzy
 msgid "Brightness:"
 msgstr "Jasno¶æ"
 
 #. Create the contrast scale widget
-#: app/brightness_contrast.c:265
+#: app/brightness_contrast.c:271
 #, fuzzy
 msgid "Contrast:"
 msgstr "Kontrast"
 
 #. The preview toggle
-#: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
-#: app/fileops.c:404 app/hue_saturation.c:562 app/levels.c:570
-#: app/palette.c:3216 app/posterize.c:239 app/threshold.c:348
+#: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
+#: app/fileops.c:404 app/hue_saturation.c:567 app/levels.c:575
+#: app/palette.c:3216 app/posterize.c:244 app/threshold.c:353
 msgid "Preview"
 msgstr "Podgl±d"
 
-#: app/brush_edit.c:210
+#: app/brush_edit.c:223
 msgid "Brush Editor"
 msgstr "Edytor pêdzli"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:723
+#: app/brush_edit.c:229 app/brush_select.c:281 app/by_color_select.c:723
 #: app/color_notebook.c:123 app/color_picker.c:297 app/colormap_dialog.i.c:173
 #: app/crop.c:1068 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
@@ -337,19 +337,19 @@ msgid "Close"
 msgstr "Zamknij"
 
 #. the feather radius scale
-#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:201
+#: app/brush_edit.c:287 app/color_picker.c:181 app/tool_options.c:201
 msgid "Radius:"
 msgstr "Promieñ:"
 
-#: app/brush_edit.c:288
+#: app/brush_edit.c:300
 msgid "Hardness:"
 msgstr "Twardo¶æ:"
 
-#: app/brush_edit.c:300
+#: app/brush_edit.c:313
 msgid "Aspect Ratio:"
 msgstr "Wspó³czynnik proporcji:"
 
-#: app/brush_edit.c:312 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
+#: app/brush_edit.c:326 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "K±t:"
 
@@ -560,18 +560,18 @@ msgstr "Usuñ kana³"
 msgid "Empty Channel Copy"
 msgstr ""
 
-#: app/channels_dialog.c:1433 app/color_balance.c:343 app/color_select.c:250
-#: app/curves.c:583 app/histogram_tool.c:303 app/levels.c:370
+#: app/channels_dialog.c:1433 app/color_balance.c:348 app/color_select.c:250
+#: app/curves.c:588 app/histogram_tool.c:303 app/levels.c:375
 msgid "Red"
 msgstr "Czerwony"
 
-#: app/channels_dialog.c:1437 app/color_balance.c:368 app/color_select.c:251
-#: app/curves.c:584 app/histogram_tool.c:304 app/levels.c:371
+#: app/channels_dialog.c:1437 app/color_balance.c:373 app/color_select.c:251
+#: app/curves.c:589 app/histogram_tool.c:304 app/levels.c:376
 msgid "Green"
 msgstr "Zielony"
 
-#: app/channels_dialog.c:1441 app/color_balance.c:393 app/color_select.c:252
-#: app/curves.c:585 app/histogram_tool.c:305 app/levels.c:372
+#: app/channels_dialog.c:1441 app/color_balance.c:398 app/color_select.c:252
+#: app/curves.c:590 app/histogram_tool.c:305 app/levels.c:377
 msgid "Blue"
 msgstr "Niebieski"
 
@@ -634,47 +634,47 @@ msgid "No patterns available for this operation."
 msgstr "Brak wzorów dla tej operacji."
 
 #. The shell and main vbox
-#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:1021
+#: app/color_balance.c:167 app/color_balance.c:271 app/tools.c:1021
 msgid "Color Balance"
 msgstr "Balans kolorów"
 
-#: app/color_balance.c:206
+#: app/color_balance.c:211
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Balans koloru mo¿e byæ wykorzystywany tylko w trybie RGB."
 
-#: app/color_balance.c:255 app/dodgeburn.c:183
+#: app/color_balance.c:260 app/dodgeburn.c:183
 msgid "Shadows"
 msgstr "Cienie"
 
-#: app/color_balance.c:256 app/dodgeburn.c:181
+#: app/color_balance.c:261 app/dodgeburn.c:181
 msgid "Midtones"
 msgstr "Pó³tony"
 
-#: app/color_balance.c:257 app/dodgeburn.c:179
+#: app/color_balance.c:262 app/dodgeburn.c:179
 msgid "Highlights"
 msgstr "¦wiat³a"
 
-#: app/color_balance.c:288
+#: app/color_balance.c:293
 msgid "Color Levels:"
 msgstr ""
 
 #. Create the cyan-red scale widget
-#: app/color_balance.c:328
+#: app/color_balance.c:333
 msgid "Cyan"
 msgstr "Niebiesko-zielony (Cyan)"
 
 #. Create the magenta-green scale widget
-#: app/color_balance.c:353
+#: app/color_balance.c:358
 msgid "Magenta"
 msgstr "Purpurowy (Magenta)"
 
 #. Create the yellow-blue scale widget
-#: app/color_balance.c:378
+#: app/color_balance.c:383
 msgid "Yellow"
 msgstr "¯ó³ty"
 
 #. The preserve luminosity toggle
-#: app/color_balance.c:431
+#: app/color_balance.c:436
 msgid "Preserve Luminosity"
 msgstr "Zachowanie luminancji"
 
@@ -753,15 +753,15 @@ msgstr ""
 msgid "V"
 msgstr ""
 
-#: app/color_select.c:241 app/hue_saturation.c:352
+#: app/color_select.c:241 app/hue_saturation.c:357
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:242 app/hue_saturation.c:354
+#: app/color_select.c:242 app/hue_saturation.c:359
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:243 app/hue_saturation.c:356
+#: app/color_select.c:243 app/hue_saturation.c:361
 msgid "B"
 msgstr "B"
 
@@ -775,8 +775,8 @@ msgstr "Odcieñ"
 msgid "Saturation"
 msgstr "Nasycenie"
 
-#: app/color_select.c:249 app/curves.c:582 app/histogram_tool.c:302
-#: app/layers_dialog.c:386 app/levels.c:369 app/paint_funcs.c:98
+#: app/color_select.c:249 app/curves.c:587 app/histogram_tool.c:302
+#: app/layers_dialog.c:386 app/levels.c:374 app/paint_funcs.c:98
 #: app/tool_options.c:932
 msgid "Value"
 msgstr "Warto¶æ"
@@ -834,72 +834,72 @@ msgstr "Obramowanie zaznaczenia o:"
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "B³±d zmiany rozmiaru: Szeroko¶æ i wysoko¶æ musz± byæ wiêksze od zera."
 
-#: app/convert.c:498
+#: app/convert.c:505
 msgid "Indexed Color Conversion"
 msgstr "Konwersja koloru indeksowanego"
 
-#: app/convert.c:517
+#: app/convert.c:524
 msgid "General Palette Options"
 msgstr "Ogólne opcje palety"
 
-#: app/convert.c:530
+#: app/convert.c:537
 msgid "Generate Optimal Palette:"
 msgstr "Optymalna paleta:"
 
-#: app/convert.c:563
+#: app/convert.c:570
 msgid "# of Colors:"
 msgstr "Liczba kolorów:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:579
+#: app/convert.c:586
 msgid "Custom Palette Options"
 msgstr "Opcje palety u¿ytkownika"
 
-#: app/convert.c:585
+#: app/convert.c:592
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Usuniêcie nieu¿ywanych kolorów z ostatecznej palety"
 
-#: app/convert.c:597
+#: app/convert.c:604
 msgid "Use Custom Palette:"
 msgstr "Paleta u¿ytkownika:"
 
-#: app/convert.c:631
+#: app/convert.c:638
 msgid "Use WWW-Optimized Palette"
 msgstr "Paleta zoptymalizowana dla WWW"
 
-#: app/convert.c:647
+#: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Paleta czarno-bia³a (1-bitowa)"
 
-#: app/convert.c:658
+#: app/convert.c:665
 msgid "Dither Options"
 msgstr "Opcje ditheringu"
 
-#: app/convert.c:671
+#: app/convert.c:678
 msgid "No Color Dithering"
 msgstr "Bez ditherowania koloru"
 
-#: app/convert.c:685
+#: app/convert.c:692
 msgid "Positioned Color Dithering"
 msgstr "Pozycyjne ditherowanie koloru"
 
-#: app/convert.c:699
+#: app/convert.c:706
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Dithering kolorów Floyda-Steinberga (ograniczone zlewanie kolorów)"
 
-#: app/convert.c:712
+#: app/convert.c:719
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Dithering kolorów Floyda-Steinberga (zwyk³y)"
 
-#: app/convert.c:726
+#: app/convert.c:733
 msgid "Enable Dithering of Transparency"
 msgstr "Dithering prze¼roczysto¶ci"
 
-#: app/convert.c:755
+#: app/convert.c:762
 msgid "[ Warning ]"
 msgstr "[ Ostrze¿enie ]"
 
-#: app/convert.c:765
+#: app/convert.c:772
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -910,7 +910,7 @@ msgstr ""
 "Nie powiniene¶ tworzyæ palety wiêkszej ni¿ 255 kolorów je¶li zamierzasz "
 "tworzyæ przezroczyste lub animowane pliki GIF z tego obrazu."
 
-#: app/convert.c:965
+#: app/convert.c:983
 msgid "Select Custom Palette"
 msgstr "Wybór palety u¿ytkownika"
 
@@ -991,58 +991,58 @@ msgid "Auto Shrink"
 msgstr "Automatyczne zmniejszanie"
 
 #. The shell and main vbox
-#: app/curves.c:393 app/curves.c:553 app/tools.c:1161
+#: app/curves.c:392 app/curves.c:558 app/tools.c:1161
 msgid "Curves"
 msgstr "Krzywe"
 
-#: app/curves.c:434
+#: app/curves.c:439
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Krzywe w trybie indeksowanym nie mog± byæ zmieniane."
 
-#: app/curves.c:575
+#: app/curves.c:580
 msgid "Modify Curves for Channel:"
 msgstr "Modyfikacja krzywych kana³u:"
 
-#: app/curves.c:586 app/levels.c:373
+#: app/curves.c:591 app/levels.c:378
 msgid "Alpha"
 msgstr "Alfa"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:665
+#: app/curves.c:670
 msgid "Curve Type:"
 msgstr "Typ krzywej:"
 
-#: app/curves.c:672
+#: app/curves.c:677
 msgid "Smooth"
 msgstr "Wyg³ad¼"
 
-#: app/curves.c:673
+#: app/curves.c:678
 msgid "Free"
 msgstr "Swobodnie"
 
-#: app/curves.c:699 app/levels.c:598 app/module_db.c:865
+#: app/curves.c:704 app/levels.c:603 app/module_db.c:865
 msgid "Load"
 msgstr "Wczytaj"
 
-#: app/curves.c:707 app/devices.c:753 app/levels.c:608 app/palette.c:2047
+#: app/curves.c:712 app/devices.c:753 app/levels.c:613 app/palette.c:2047
 #: app/preferences_dialog.c:364 app/preferences_dialog.c:1460
 msgid "Save"
 msgstr "Zapisz"
 
-#: app/curves.c:1273
+#: app/curves.c:1278
 msgid "Load Curves"
 msgstr "Wczytaj krzywe"
 
-#: app/curves.c:1288
+#: app/curves.c:1293
 msgid "Save Curves"
 msgstr "Zapisz krzywe"
 
-#: app/curves.c:1579
+#: app/curves.c:1584
 msgid "Load/Save Curves"
 msgstr "Wczytaj/Zapisz krzywe"
 
-#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1452 app/levels.c:1470
-#: app/paths_dialog.c:1905
+#: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
+#: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nie mo¿na otworzyæ pliku %s"
@@ -1503,24 +1503,24 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr ""
 
-#: app/gimpbrush.c:273
+#: app/gimpbrush.c:282
 msgid "Error in GIMP brush file...aborting."
 msgstr "B³±d w pliku z pêdzlami GIMP-a...rezygnacja."
 
-#: app/gimpbrush.c:280 app/patterns.c:212
+#: app/gimpbrush.c:290 app/patterns.c:211
 msgid "Unnamed"
 msgstr "BezNazwy"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:310
 msgid "GIMP brush file appears to be truncated."
 msgstr "Plik z pêdzlami GIMP-a wydaje siê byæ obciêty."
 
-#: app/gimpbrush.c:301
+#: app/gimpbrush.c:314
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Nieznana wersja #%d formatu pêdzli w \"%s\"\n"
 
-#: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
+#: app/gimpbrushlist.c:195 app/gimpbrushlist.c:206
 #, c-format
 msgid ""
 "Warning: Failed to load brush\n"
@@ -1529,7 +1529,7 @@ msgstr ""
 "Ostrze¿enie: Nie powiod³o siê wczytanie pêdzla\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:206
+#: app/gimpbrushlist.c:217
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
@@ -1538,24 +1538,22 @@ msgstr ""
 "Ostrze¿enie: Nie powiod³o siê wczytanie piksmapy pêdzla\n"
 "\"%s\""
 
-#: app/gimpbrushlist.c:215
+#: app/gimpbrushlist.c:228
 #, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
 msgstr ""
 
-#: app/gimpbrushpipe.c:309
+#: app/gimpbrushpipe.c:315
 msgid "Brush pipes should have at least one brush."
 msgstr ""
 
-#: app/gimpbrushpipe.c:404
-msgid ""
-"Failed to load one of the\n"
-"brushes in the brush pipe."
+#: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
+msgid "Failed to load one of the brushes in the brush pipe."
 msgstr ""
 
-#: app/gimpbrushpipe.c:466
+#: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
 msgstr "Wczytanie piksmapy pêdzla nie powiod³o siê."
 
@@ -2197,48 +2195,48 @@ msgid "Information on Channel:"
 msgstr "Infformacje o kanale:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:245 app/hue_saturation.c:365 app/tools.c:1077
+#: app/hue_saturation.c:244 app/hue_saturation.c:370 app/tools.c:1077
 msgid "Hue-Saturation"
 msgstr "Odcieñ i nasycenie"
 
-#: app/hue_saturation.c:283
+#: app/hue_saturation.c:288
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Odcieñ i nasycenie kolorów mog± byæ wykorzystywane tylko w trybie RGB."
 
-#: app/hue_saturation.c:351
+#: app/hue_saturation.c:356
 msgid "Master"
 msgstr "Ca³o¶æ"
 
-#: app/hue_saturation.c:353
+#: app/hue_saturation.c:358
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:355
+#: app/hue_saturation.c:360
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:357
+#: app/hue_saturation.c:362
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:442
+#: app/hue_saturation.c:447
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Ustawienia odcieni / jasno¶ci / nasycenia"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:454
+#: app/hue_saturation.c:459
 #, fuzzy
 msgid "Hue:"
 msgstr "Odcieñ"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:488
+#: app/hue_saturation.c:493
 #, fuzzy
 msgid "Lightness:"
 msgstr "Jasno¶æ"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:522
+#: app/hue_saturation.c:527
 #, fuzzy
 msgid "Saturation:"
 msgstr "Nasycenie"
@@ -2769,7 +2767,7 @@ msgid "Layers, Channels & Paths"
 msgstr "Warstwy, kana³y i ¶cie¿ki"
 
 #. The Auto-button
-#: app/lc_dialog.c:147 app/levels.c:588
+#: app/lc_dialog.c:147 app/levels.c:593
 msgid "Auto"
 msgstr "Aut."
 
@@ -2782,35 +2780,35 @@ msgid "Channels"
 msgstr "Kana³y"
 
 #. The shell and main vbox
-#: app/levels.c:197 app/levels.c:332 app/tools.c:1189
+#: app/levels.c:196 app/levels.c:337 app/tools.c:1189
 msgid "Levels"
 msgstr "Poziomy"
 
-#: app/levels.c:235
+#: app/levels.c:240
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/levels.c:361
+#: app/levels.c:366
 msgid "Modify Levels for Channel:"
 msgstr "Modyfikacja poziomów kana³u:"
 
-#: app/levels.c:385
+#: app/levels.c:390
 msgid "Input Levels:"
 msgstr "Poziomy wej¶ciowe:"
 
-#: app/levels.c:494
+#: app/levels.c:499
 msgid "Output Levels:"
 msgstr "Poziomy wyj¶ciowe:"
 
-#: app/levels.c:1063
+#: app/levels.c:1068
 msgid "Load Levels"
 msgstr "Wczytaj poziomy"
 
-#: app/levels.c:1078
+#: app/levels.c:1083
 msgid "Save Levels"
 msgstr "Zapisz poziomy"
 
-#: app/levels.c:1407
+#: app/levels.c:1412
 msgid "Load/Save Levels"
 msgstr "Wczytaj/Zapisz poziomy"
 
@@ -4119,22 +4117,25 @@ msgstr "Wybór wzoru"
 msgid "No Patterns available"
 msgstr "Brak wzorów"
 
-#: app/patterns.c:188
-#, c-format
-msgid "Unknown GIMP version #%d in \"%s\"\n"
+#: app/patterns.c:187
+#, fuzzy, c-format
+msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
 msgstr "Nieznana wersja GIMP-a #%d w \"%s\"\n"
 
-#: app/patterns.c:205
-msgid "Error in GIMP pattern file...aborting."
+#: app/patterns.c:204
+#, fuzzy, c-format
+msgid "Error in GIMP pattern file \"%s\""
 msgstr "B³±d w pliku z wzorami GIMP-a...rezygnacja"
 
 #: app/patterns.c:219
-msgid "GIMP pattern file appears to be truncated."
+#, fuzzy, c-format
+msgid "GIMP pattern file \"%s\" appears to be truncated."
 msgstr "Plik z wzorami GIMP-a wydaje siê byæ obciêty."
 
-#: app/patterns.c:283
-msgid "Pattern load failed"
-msgstr "Wczytanie wzoru nie powiod³o siê"
+#: app/patterns.c:278
+#, fuzzy, c-format
+msgid "Error loading pattern \"%s\""
+msgstr "B³±d przy otwieraniu pliku: %s\n"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4190,15 +4191,15 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/posterize.c:148
+#: app/posterize.c:153
 msgid "Posterize does not operate on indexed drawables."
 msgstr ""
 
-#: app/posterize.c:193 app/tools.c:1105
+#: app/posterize.c:198 app/tools.c:1105
 msgid "Posterize"
 msgstr "Izochelia"
 
-#: app/posterize.c:215
+#: app/posterize.c:220
 msgid "Posterize Levels:"
 msgstr ""
 
@@ -4993,15 +4994,15 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Warstwa tekstowa"
 
-#: app/threshold.c:171 app/threshold.c:266 app/tools.c:1133
+#: app/threshold.c:170 app/threshold.c:271 app/tools.c:1133
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: app/threshold.c:207
+#: app/threshold.c:212
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Progowanie nie funkcjonuje w trybie indeksowanym"
 
-#: app/threshold.c:288
+#: app/threshold.c:293
 msgid "Threshold Range:"
 msgstr "Zakres progowania"
 
@@ -6266,6 +6267,9 @@ msgstr ""
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historia kolorów"
+
+#~ msgid "Pattern load failed"
+#~ msgstr "Wczytanie wzoru nie powiod³o siê"
 
 #~ msgid "From X Server"
 #~ msgstr "Od X-serwera"

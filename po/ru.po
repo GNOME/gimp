@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.25\n"
-"POT-Creation-Date: 2000-10-02 16:27+0400\n"
+"POT-Creation-Date: 2000-10-04 16:01-0700\n"
 "PO-Revision-Date: 2000-10-02 16:39+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -115,7 +115,7 @@ msgstr "Выход"
 #. the cancel button
 #: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:508
+#: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
 #: app/curves.c:567 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
 #: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
@@ -276,7 +276,7 @@ msgstr "Яркость-Контрастность не действует на индексированные изображения."
 
 #: app/brightness_contrast.c:220 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:506
+#: app/color_balance.c:276 app/color_notebook.c:123 app/convert.c:511
 #: app/curves.c:563 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:375
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
@@ -828,72 +828,72 @@ msgstr "Выбрать рамку по:"
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Ошибка изменения размера: и ширина и высота должны быть больше нуля."
 
-#: app/convert.c:500
+#: app/convert.c:505
 msgid "Indexed Color Conversion"
 msgstr "Преобразование индексированных цветов"
 
-#: app/convert.c:519
+#: app/convert.c:524
 msgid "General Palette Options"
 msgstr "Общие параметры палитры"
 
-#: app/convert.c:532
+#: app/convert.c:537
 msgid "Generate Optimal Palette:"
 msgstr "Создать оптимальную палитру:"
 
-#: app/convert.c:565
+#: app/convert.c:570
 msgid "# of Colors:"
 msgstr "Число цветов:"
 
 #. create the custom_frame here, it'll be added later
-#: app/convert.c:581
+#: app/convert.c:586
 msgid "Custom Palette Options"
 msgstr "Параметры собственной палитры"
 
-#: app/convert.c:587
+#: app/convert.c:592
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Удалить неиспользуемые цвета из окончательной палитры"
 
-#: app/convert.c:599
+#: app/convert.c:604
 msgid "Use Custom Palette:"
 msgstr "Использовать свою палитру:"
 
-#: app/convert.c:633
+#: app/convert.c:638
 msgid "Use WWW-Optimized Palette"
 msgstr "Использовать WWW-оптимизированную палитру"
 
-#: app/convert.c:649
+#: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Использовать чернобелую (1-бит) палитру"
 
-#: app/convert.c:660
+#: app/convert.c:665
 msgid "Dither Options"
 msgstr "Параметры смешивания"
 
-#: app/convert.c:673
+#: app/convert.c:678
 msgid "No Color Dithering"
 msgstr "Без смешивания цветов"
 
-#: app/convert.c:687
+#: app/convert.c:692
 msgid "Positioned Color Dithering"
 msgstr "Позиционное смешивание цветов"
 
-#: app/convert.c:701
+#: app/convert.c:706
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Смешивание цветов по Флойду-Стейнбергу (уменьшенное растекание)"
 
-#: app/convert.c:714
+#: app/convert.c:719
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Смешивание цветов по Флойду-Стейнбергу (нормальное)"
 
-#: app/convert.c:728
+#: app/convert.c:733
 msgid "Enable Dithering of Transparency"
 msgstr "Включить прозрачное размывание"
 
-#: app/convert.c:757
+#: app/convert.c:762
 msgid "[ Warning ]"
 msgstr "[ Внимание ]"
 
-#: app/convert.c:767
+#: app/convert.c:772
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -906,7 +906,7 @@ msgstr ""
 "намереваетесь создать прозрачный или анимированный GIF-файл из этого "
 "изображения."
 
-#: app/convert.c:978
+#: app/convert.c:983
 msgid "Select Custom Palette"
 msgstr "Выбрать свою палитру"
 
@@ -1038,7 +1038,7 @@ msgid "Load/Save Curves"
 msgstr "Загрузка/Сохранение кривых"
 
 #: app/curves.c:1629 app/curves.c:1647 app/levels.c:1457 app/levels.c:1475
-#: app/paths_dialog.c:1905
+#: app/paths_dialog.c:1904
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Не удалось открыть файл %s"
