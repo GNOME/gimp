@@ -1,3 +1,9 @@
+Thu Jun  3 20:59:11 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* tips/Makefile.am
+	* tips/gimp_tips.de.txt: (new file) German translation of the 
+	tips_file. Someone needs to add this to de.po so it is used.
+
 1999-06-03  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/disp_callbacks.[ch]
@@ -31,7 +37,7 @@
 Thu Jun  3 16:51:18 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Improved the line draw preview a bit. It's still 
-	not perfect, but should work better with respect to mutliple modifiers
+	not perfect, but should work better with respect to multiple modifiers
 	being pressed. Prototyped all functions in paint_core.c while I was 
 	on it.
 

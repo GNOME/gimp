@@ -1,0 +1,162 @@
+# Übersetzung durch Sven Neumann <sven@gimp.org>
+#
+# Diese Übersetzung kann noch ein wenig Überarbeitung vertragen.
+# Insbesondere die Verweise auf Menüeinträge sollten überprüft werden,
+# wenn die deutsche Übersetzung der Menüeinträge soweit vorangeschritten
+# ist. Fühlt Euch frei, diese Datei entsprechend zu ändern ;-)
+ 
+                            Willkommen bei GIMP !
+
+Fast alle Operationen werden durch Drücken der rechten Maustaste
+in einem Bild ausgeführt. Keine Angst, fast alle Fehler können 
+rückgängig gemacht werden... 
+
+# Tips für Anfänger
+#
+
+GIMP benutzt Ebenen um Bilder zu organisieren. Diese kann man sich
+als ein Stapel von Folien oder Filtern vorstellen. Sieht man durch
+diese Folien hindurch, so entsteht das Bild durch Überlagerung ihrer 
+Inhalte.
+
+Viele Ebenen-Operationen werden durch Klicken mit der rechten 
+Maustaste auf den Namen der Ebene im Ebenen-Dialog durchgeführt.
+(Dialoge->Ebenen und Kanäle) 
+
+Einige Bildformate wie GIF und XPM benutzen eine Tabelle von Farben.
+Vor dem Abspeichern muß das Bild daher in das indizierte Farbformat
+umgewandelt werden. Diese Funktion findet sich im Bild-Menü.
+
+Das Fenster mit den Werkzeug-Optionen wird durch durch 
+Doppelklick auf die Symbole in der Werkzeugleiste geöffnet.
+
+Der Name einer Ebene kann durch Doppelklick auf 
+den Namen im Ebenen-Dialog geändert werden.
+
+Ebenen mit dem Namen "Hintergrund" haben eine spezielle Bedeutung. 
+Ihnen fehlt Transparenz und es kann ihnen keine Maske hinzugefügt 
+werden. Ein rechter Mausklick im Ebenen-Dialog öffnet ein Menü, 
+das es erlaubt, der Ebene Transparenz hinzuzufügen.
+
+Mit den Malwerkzeugen (Pinsel, Sprühpistole und Bleistift) kann
+eine gerade Linie zum letzten gezeichneten Punkt gezogen werden,
+indem beim Klicken die Shift-Taste gedrückt wird.
+
+Die meisten Plugins bearbeiten nur die aktive Ebene des aktuellen 
+Bildes. In vielen Fällen müssen die Ebenen daher vereinigt werden
+(Ebenen->Flatten Image) wenn das Plugin auf das gesamte Bild 
+angewendet werden soll.
+
+Die meisten Bildformate können nicht mit mehreren Ebenen umgehen 
+und speichern daher nur die aktive Ebene. Um alle Bildinformationen
+wie Ebenen, Kanäle und Hilfslinien abzuspeichern, steht das 
+GIMP-eigene Format XCF zur Verfügung.
+
+Nicht alle Effekte können auf alle Bildtypen angewendet werden. Dies 
+wird durch einen grauen Menüeintrag angezeigt. Es ist dann nötig, das 
+Bild ins RGB-Format umzuwandeln, dem Bild Transparenz hinzuzufügen 
+oder die Ebenen des Bildes zu vereinigen.
+
+# Tips für Benutzer mit Grundkenntnissen
+#
+
+Der Dateiauswahl-Dialog vervollständigt Dateinamen sowie man es von
+der Shell gewöhnt ist. Es genügt den Beginn eines Dateinamens einzugeben,
+Tab zu drücken und, voila, das Ende wird ergänzt.
+
+Tastaturkürzel können einfach zugewiesen und verändert werden, 
+indem der entsprechende Menüeintrag mit der Maus ausgewählt 
+und dann bei gedrückter Maustaste die neue Tastenkombination 
+gedrückt wird.
+
+
+# -- Brauchen wir diesen Tip? -- (Sven)
+# All the old channel operations have been replaced with the more
+# powerful and flexible Layer and Layer Mode operations.  They may 
+# take getting used to, but they are simply a better way to operate.
+
+Paßt das Bild nicht vollständig in das Fenster, kann der 
+Ausschnitt mit der mittleren Maustaste verschoben werden.
+
+Durch Anklicken der Lineale am Rande des Bildes können Hilfslinien 
+auf das Bild gezogen und dort plaziert werden. Hilfslinien erlauben
+ein genaues Plazieren von Ebenen und Selektionen. 
+
+GIMP erlaubt es, Bilder beim Abspeichern automatisch mit gzip oder 
+bzip2 zu komprimieren (vorausgesetzt diese Programme sind installiert). 
+Dazu muß nur beim Abspeichern die Endung .gz beziehungsweise .bz2 
+angehängt werden. Natürlich werden die Bilder beim Laden automatisch
+entpackt.
+
+Wird beim Erstellen einer Selektion während des Mausklicks die 
+Shift-Taste gedrückt, so wird die neue Selektion einer bestehenden
+hinzugefügt. Wird die Ctrl-Taste (bzw. Strg-Taste) gedrückt, so
+wird die neue Selektion von der bestehenden subtrahiert.
+  
+Durch Drücken der Shift- bzw. der Ctrl-Taste während des Erstellens
+einer Selektion kann ein Quadrat oder ein Kreis erzeugt werden,
+beziehungsweise die Selektion auf den Startpunkt zentriert werden.
+
+# Tips für fortgeschrittene Benutzer
+#
+
+Durch horizontales Verschieben der Maus kann beim Benutzen des 
+Zauberstabs der Schwellwert für die Auswahl verändert werden.
+
+Im Ebenen-Dialog werden durch Mausklick auf das Augensymbol bei
+gedrückter Shift-Taste alle anderen Ebenen unsichtbar gemacht.
+Ein weiterer Klick bei gedrückter Shift-Taste läßt alle Ebenen
+wieder sichtbar werden.
+
+Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei 
+gedrückter Ctrl-Taste wird die Wirkung der Maske an- und 
+ausgeschaltet.
+
+Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei 
+gedrückter Alt-Taste kann die Maske unabhängig von ihrer Ebene
+betrachtet werden.
+
+Alt-Tab erlaubt es, durch die Ebenen eines Bildes zu schalten
+(wenn der Fenstermanager diese Tastenkombination nicht abfängt).
+
+Wird beim Anwenden des Farbeimers die Shift-Taste gedrückt, so 
+wird statt der Vordergrund- die Hintergrundfarbe verwendet.
+
+Wird mit dem Transformationswerkzeug im Rotationsmodus die 
+Ctrl-Taste gedrückt, so können für den Winkel nur Vielfache 
+von 15° eingestellt werden.
+
+Selektionen können mit gedrückter Alt-Taste verschoben werden,
+ohne das ihr Inhalt mitverschoben wird.
+
+Wenn Schriften zu pixelig erscheinen, kann es daran liegen, daß
+die Schrift nicht skalierbar ist. Die meisten X-Server unterstützen
+skalierbare Type 1 PostScript Schriften. Besorgen und installieren
+Sie sich solche Schriften.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+# Soweit ich weiß, ist dieses Problem inzwischen gelöst... (Sven)
+
+# When installing a new version, be sure to 
+# delete your ~/.gimp directory first.
+
+Einfache Formen wie Ellipsen und Rechtecke können gezeichnet werden, 
+indem eine bestehende Selektion mit dem aktuellen Pinsel nachgezeichnet
+wird. Dazu steht der Befehl Edit->Stroke zur Verfügung. Komplexere
+Formen können mit dem GFig-Plugin (Filters->Render->Gfig) gezeichnet
+werden.
+
+Um eine perfekt runde Selektion zu erzeugen, muß die Shift-Taste beim
+Erstellen der Selektion gehalten werden. Um diesen Kreis präzise zu 
+plazieren, können Hilfslinien benutzt werden. Diese werden an die 
+Tangente des gewünschten Kreises plaziert und die Selektion dann aus 
+dem Schnittpunkt dieser Linien aufgezogen. 
+
+# (end of tips)
+
+
+
