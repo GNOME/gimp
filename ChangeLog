@@ -1,3 +1,16 @@
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-transparency-[16|24].png: new icon.
+
+	* libgimpwidgets/gimpstock.[ch]: register as GIMP_STOCK_TRANSPARENCY.
+
+	* app/gui/image-menu.c
+	* app/gui/layers-menu.c: use the new icon for "Add Alpha Channel".
+
+	* app/widgets/gimplayertreeview.c: replaced the "Keep Trans."
+	button with a check button plus the new icon (bug #121784).
+
 2003-09-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem-linked.[ch]: made gimp_item_linked_get_list()

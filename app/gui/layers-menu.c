@@ -139,7 +139,8 @@ GimpItemFactoryEntry layers_menu_entries[] =
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Add Alpha C_hannel"), NULL,
-      layers_alpha_add_cmd_callback, 0 },
+      layers_alpha_add_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TRANSPARENCY },
     NULL,
     GIMP_HELP_LAYER_ALPHA_ADD, NULL },
   { { N_("/Al_pha to Selection"), NULL,

@@ -163,6 +163,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PATH                 "gimp-path"
 #define GIMP_STOCK_TEMPLATE             "gimp-template"
 #define GIMP_STOCK_INDEXED_PALETTE      "gimp-indexed-palette"
+#define GIMP_STOCK_TRANSPARENCY         "gimp-transparency"
 
 #define GIMP_STOCK_IMAGES               "gimp-images"
 #define GIMP_STOCK_LAYERS               "gimp-layers"

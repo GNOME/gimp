@@ -85,6 +85,7 @@ STOCK_MENU_IMAGES = \
 	stock-text-layer-16.png				\
 	stock-toilet-paper-16.png			\
 	stock-tool-options-16.png			\
+	stock-transparency-16.png			\
 	stock-undo-history-16.png			\
 	stock-video-16.png				\
 	stock-warning-16.png				\
@@ -149,6 +150,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-template-24.png			\
 	stock-text-layer-24.png			\
 	stock-toilet-paper-24.png		\
+	stock-transparency-24.png		\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-video-24.png			\

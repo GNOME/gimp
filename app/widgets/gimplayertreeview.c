@@ -236,6 +236,9 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   GimpDrawableTreeView  *drawable_view;
   GtkWidget             *abox;
   GtkWidget             *hbox;
+  GtkWidget             *toggle;
+  GtkWidget             *image;
+  GtkIconSize            icon_size;
   PangoAttribute        *attr;
 
   tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
@@ -266,29 +269,36 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_widget_show (view->paint_mode_menu);
 
   gimp_help_set_help_data (view->paint_mode_menu,
-			   NULL, "#paint_mode_menu");
+                           NULL, "#paint_mode_menu");
 
   /*  Preserve transparency toggle  */
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
+  abox = gtk_alignment_new (1.0, 0.5, 0.0, 1.0);
+  gtk_box_pack_end (GTK_BOX (hbox), abox, TRUE, TRUE, 0);
   gtk_widget_show (abox);
 
-  view->preserve_trans_toggle =
-    gtk_toggle_button_new_with_label (_("Keep Trans."));
-  gtk_container_add (GTK_CONTAINER (abox), view->preserve_trans_toggle);
-  gtk_widget_show (view->preserve_trans_toggle);
+  view->preserve_trans_toggle = toggle = gtk_check_button_new ();
+  gtk_container_add (GTK_CONTAINER (abox), toggle);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (view->preserve_trans_toggle, "toggled",
+  gtk_widget_style_get (GTK_WIDGET (view),
+                        "button_icon_size", &icon_size,
+                        NULL);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_TRANSPARENCY, icon_size);
+  gtk_container_add (GTK_CONTAINER (toggle), image);
+  gtk_widget_show (image);
+
+  g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_layer_tree_view_preserve_button_toggled),
 		    view);
 
-  gimp_help_set_help_data (view->preserve_trans_toggle,
+  gimp_help_set_help_data (toggle,
 			   _("Keep Transparency"), "#keep_trans_button");
 
   gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 0,
 			     _("Mode:"), 1.0, 0.5,
-			     hbox, 2, TRUE);
+			     hbox, 2, FALSE);
 
   /*  Opacity scale  */
 

@@ -86,7 +86,7 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
   if (! set)
     {
       set = gtk_icon_set_new ();
-      gtk_icon_factory_add (factory, stock_id, set);     
+      gtk_icon_factory_add (factory, stock_id, set);
       gtk_icon_set_unref (set);
 
       fallback = TRUE;
@@ -119,7 +119,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE,     NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE, NULL,   0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_GRAVITY_EAST,             NULL,        0, 0, LIBGIMP_DOMAIN }, 
+  { GIMP_STOCK_GRAVITY_EAST,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRAVITY_NORTH,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRAVITY_NORTH_EAST,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRAVITY_NORTH_WEST,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -195,6 +195,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TEMPLATE,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INDEXED_PALETTE,          NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_UNDO_HISTORY,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TRANSPARENCY,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -335,6 +336,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_24          },
   { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_24             },
+  { GIMP_STOCK_TRANSPARENCY,             stock_transparency_24             },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
@@ -429,6 +431,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_16          },
   { GIMP_STOCK_UNDO_HISTORY,             stock_undo_history_16             },
+  { GIMP_STOCK_TRANSPARENCY,             stock_transparency_16             },
 
   { GIMP_STOCK_LINKED,                   stock_linked_12                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_12                      },

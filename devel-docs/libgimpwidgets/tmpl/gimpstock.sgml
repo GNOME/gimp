@@ -723,6 +723,13 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TRANSPARENCY ##### -->
+<para>
+<inlinegraphic fileref="stock-transparency-24.png" format="png"></inlinegraphic><inlinegraphic fileref="stock-transparency-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_DEFAULT_COLORS ##### -->
 <para>
 <inlinegraphic fileref="stock-default-colors-12.png" format="png"></inlinegraphic>
