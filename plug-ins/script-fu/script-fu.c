@@ -160,7 +160,7 @@ script_fu_query (void)
 
   gimp_install_procedure ("plug_in_script_fu_eval",
 			  "Evaluate scheme code",
-			  "Evaluate the code under the scheme interpeter "
+			  "Evaluate the code under the scheme interpreter "
                           "(primarily for batch mode)",
 			  "Manish Singh",
 			  "Manish Singh",
