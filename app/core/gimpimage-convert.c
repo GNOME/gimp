@@ -27,6 +27,9 @@
    */
 
 /*
+ * 98/04/13 - avoid a division by zero when converting an empty gray-scale
+ *  image (who would like to do such a thing anyway??)  [Sven ] 
+ *
  * 98/03/23 - fixed a longstanding fencepost - hopefully the *right*
  *  way, *again*.  (anyone ELSE want a go?  okay, just kidding... :))
  *  [Adam]
@@ -1482,9 +1485,21 @@ compute_color_gray (QuantizeObj *quantobj,
 	}
     }
 
-  quantobj->cmap[icolor].red = (gtotal + (total >> 1)) / total;
-  quantobj->cmap[icolor].green = quantobj->cmap[icolor].red;
-  quantobj->cmap[icolor].blue = quantobj->cmap[icolor].red;
+  if (total != 0)
+    {
+      quantobj->cmap[icolor].red = (gtotal + (total >> 1)) / total;
+      quantobj->cmap[icolor].green = quantobj->cmap[icolor].red;
+      quantobj->cmap[icolor].blue = quantobj->cmap[icolor].red;
+    }
+   else /* The only situation where total==0 is if the image was null or
+	*  all-transparent.  In that case we just put a dummy value in
+	*  the colourmap.
+	*/
+    {
+      quantobj->cmap[icolor].red =
+	quantobj->cmap[icolor].green =
+	quantobj->cmap[icolor].blue = 0;
+    }
 }
 
 static void
