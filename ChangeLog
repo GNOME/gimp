@@ -1,3 +1,13 @@
+2003-01-08  Simon Budig  <simon@gimp.or>
+
+	* tools/gimp-remote.c: Implemented a heuristics that tries to
+	start the gimp in the same directory as gimp-remote-1.3.
+	If this fails it falls back to the regular PATH search.
+
+	For sanity checks this feature requires that the command name
+	starts with "gimp-remote". If you do weird symlinks the heuristics
+	will fall back to the PATH search silently.
+
 2003-01-08  Sven Neumann  <sven@gimp.org>
 
 	*  plug-ins/gfig/images/stock-*.png: a new set of icons drawn by

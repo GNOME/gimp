@@ -38,11 +38,6 @@
  *                                                Simon
  */
 
-/* TODO:
- *
- * Should try to execv the gimp in the same path as the gimp-remote
- * executable, then fall back to execvp ("gimp", argv).
- */
 
 #include "config.h"
 
@@ -174,23 +169,76 @@ usage (const gchar *name)
 }
 
 static void
-start_new_gimp (GString *file_list)
+start_new_gimp (gchar *argv0, GString *file_list)
 {     
   gint    i;
   gchar **argv;
+  gchar  *gimp, *path, *name, *pwd;
+  const gchar *spath;
   
   file_list = g_string_prepend (file_list, "gimp\n");
   argv = g_strsplit (file_list->str, "\n", 0);
   g_string_free (file_list, TRUE);
+
+  /* We are searching for the path the gimp-remote executable lives in */
+
+  /*
+   * the "_" environment variable usually gets set by the sh-family of
+   * shells. We have to sanity-check it. If we do not find anything
+   * usable in it try argv[0], then fall back to search the path.
+   */
+
+  gimp = NULL;
+  spath = NULL;
+
+  for (i=0; i < 2; i++)
+    {
+      if (i == 0)
+        spath = g_getenv ("_");
+      else if (i == 1)
+        spath = argv0;
+
+      if (spath)
+        {
+          name = g_path_get_basename (spath);
+
+          if (!strncmp (name, "gimp-remote", 11))
+            {
+              if (g_path_is_absolute (spath))
+                {
+                  path = g_path_get_dirname (spath);
+                  gimp = g_strconcat (path, G_DIR_SEPARATOR_S,
+                                      "gimp-1.3", NULL);
+                  g_free (path);
+                }
+              else
+                {
+                  pwd = g_get_current_dir ();
+                  path = g_path_get_dirname (spath);
+                  gimp = g_strconcat (pwd, G_DIR_SEPARATOR_S, path,
+                                      G_DIR_SEPARATOR_S, "gimp-1.3", NULL);
+                  g_free (path);
+                  g_free (pwd);
+                }
+            }
+
+          g_free (name);
+        }
+
+      if (gimp)
+        break;
+    }
 
   for (i = 1; argv[i]; i++)
     {
       if (g_ascii_strncasecmp ("file:", argv[i], 5) == 0)
 	argv[i] += 5;
     }
+
+  execv (gimp, argv);
   execvp ("gimp-1.3", argv);
 	  
-  /*  if execvp returns, there was an arror  */
+  /*  if execv and execvp return, there was an arror  */
   g_printerr ("Couldn't start gimp-1.3 for the following reason: %s\n",
               g_strerror (errno));
   exit (-1);
@@ -302,7 +350,7 @@ main (gint    argc,
   if (!gimp_window)
     {
       if (start_new)
-        start_new_gimp (file_list);
+        start_new_gimp (argv[0], file_list);
       
       g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
       return EXIT_FAILURE;
