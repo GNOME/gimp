@@ -5,14 +5,14 @@
 # _constructivas_ son bienvenidos.
 #
 # Copyright (C) 2000 Free Software Foundation, Inc.
+# Oscar Cebellán Ramos <cebaman@bigfoot.com>
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Mon Oct 30 21:57:54 2000\n"
-"PO-Revision-Date: 2000-09-23 18:02+0200\n"
-"Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
+"POT-Creation-Date: Sun Oct  1 20:10:59 2000\n"
+"PO-Revision-Date: 2000-09-30 02:20+02:00\n"
+"Last-Translator: Oscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -44,7 +44,7 @@ msgstr ""
 "valores primero\n"
 "       los argumentos del guión son\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -65,29 +65,29 @@ msgstr ""
 "                                      (para más información, vea "
 "Gimp::Net(3))\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr ""
+msgstr "$_ no es una etiqueta de importación válida para el paquete $pkg"
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_: opción no válida, prueba $0 --help\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_: opción desconocida/no válida de guardar fichero"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
-msgstr ""
+msgstr "$function: el nombre del argumento '$p->[1]' contiene carácteres no válidos, sólo 0-9, a-z y _ están permitidos."
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
+msgstr "$function: argumento/valor de retorno '$p->[1]' tiene un tipo no válido '$p->[0]'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -97,11 +97,11 @@ msgstr ""
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
-msgstr ""
+msgstr "$function: el nombre de la función tiene carácteres inusuales, hacerlo correctamente es usar sólo 0-9, a-z y _"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s: no es un entero\n"
 
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
@@ -174,7 +174,7 @@ msgstr ""
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Editar/Repetir & Duplicar..."
+msgstr "<Image>/Editar/Repetir y duplicar..."
 
 #: examples/animate_cells:0
 msgid "<Image>/Filters/Animation/Animate Cells..."
@@ -194,7 +194,7 @@ msgstr "<Image>/Filtros/Desenfoque/Desenfoque 2x2"
 
 #: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filtros/Colores/Color a Alfa..."
+msgstr "<Image>/Filtros/Colores/Color a alfa..."
 
 #: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
@@ -219,11 +219,11 @@ msgstr "<Image>/Filtros/Distorsión/Dar viento..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr ""
+msgstr "<Image>/Filtros/Detección de Bordes/Deteción de bordes 2x2"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtros/Realce/Realce de Contraste 2x2"
+msgstr "<Image>/Filtros/Realce/Realce de contraste 2x2"
 
 #: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
@@ -248,31 +248,37 @@ msgstr "<Image>/Filtros/Logulizador/Imigre-26"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filtros/Logulizador/Texto de Periódico"
+msgstr "<Image>/Filtros/Logulizador/Texto de periódico"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr ""
+msgstr "<Image>/Filtros/Logulizador/Cromado espectacular"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr ""
+msgstr "<Image>/Filtros/Logulizador/Texto rápido"
 
 #: examples/translogo:0
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr ""
+msgstr "<Image>/Filtros/Logulizador/Logotipo transparente"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr ""
+msgstr "<Image>/Filtros/Logulizador/Cabecera página Web"
 
+# //O No se si sería mejor poner textura en lugar de Imagen
 #: examples/image_tile:0
+#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr ""
+msgstr "<Image>/Filtros/Aplicación/Imagen de baldosas..."
 
+# //O No se si es muy correcto.
+# //R Se refiere a aplicar, a hacer corresponder ("mapping") unos píxeles 
+# con otros.
 #: examples/pixelmap:0
+#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr ""
+msgstr "<Image>/Filtros/Aplicación/Aplicar píxeles..."
 
 #: examples/xachlego:0
 msgid "<Image>/Filters/Map/Xach Blocks..."
@@ -304,15 +310,15 @@ msgstr ""
 
 #: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Añadir polvo..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr ""
+msgstr "<Image>/Filtros/Render/Añadir fulgor"
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Metal rayado..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
@@ -324,23 +330,25 @@ msgstr ""
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Iluminar bordes..."
 
 #: examples/randomblends:0
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Mezclas aleatorias..."
 
 #: examples/stampify:0
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Estampar..."
 
 #: examples/tex-to-float:0
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Cadena de TeX..."
 
+# //O Otra traducción rara, sobre la capa que se aplica crea un texto aplicando un "BumMap" (con la elección de imagen actual (current image)), y parece como las montañas vistas desde un avión, bueno con mucha imaginación ;-) 
+# //R A mí me vale
 #: examples/terral_text:0
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr ""
+msgstr "<Image>/Filtros/Render/Texto montañoso..."
 
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
@@ -348,91 +356,96 @@ msgstr ""
 
 #: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr ""
+msgstr "<Image>/Filtros/Web/Preparar para GIF..."
 
+# //O ¡Sólo en plan cachondo! ;-) no creo que sea una traducción válida, je je
+# //R Venga, vale :D
 #: examples/webify:0
 msgid "<Image>/Filters/Web/Webify..."
-msgstr ""
+msgstr "<Image>/Filtros/Web/EnWEBar..."
 
 #: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
-msgstr ""
+msgstr "<Image>/Guías/Guías centrales..."
 
 #: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
-msgstr ""
+msgstr "<Image>/Guías/Rejilla de guías..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/Guías/Quitar guías..."
 
 #: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
-msgstr ""
+msgstr "<Image>/Guías/A selección..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr ""
+msgstr "<Image>/Imagen/Alfa/Alfa a color..."
 
+# //O Supongo que se referirá a eliminar el canal Alfa, aunque no se si será
+# mejor borrar o "limpiar"
+# //R Creo que mejor limpiar
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/Imagen/Alfa/Limpiar alfa..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr ""
+msgstr "<Image>/Capas/Centrar capa"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr ""
+msgstr "<Image>/Capas/Pila/Reordenar capas..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr ""
+msgstr "<Image>/Seleccionar/Redondear selección rectangular..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr ""
+msgstr "<Image>/Seleccionar/Redonda..."
 
 #: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
-msgstr ""
+msgstr "<Image>/Seleccionar/Triángulo..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr ""
+msgstr "<Image>/Video/Consola VCR..."
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
-msgstr ""
+msgstr "<Image>/Vista/Superficie 3D..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "¡Añadido <Load> llamado sin los 3 argumentos estándar!\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "¡Añadido <Save> llamado sin los 5 argumentos estándar!\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Animación/Valla publicitaria..."
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Animación/Girar plano..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr ""
+msgstr "<Toolbox>/Exts/Crear imagenes"
 
 #: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Ejemplo Gimp::Fu..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr ""
+msgstr "<Toolbox>/Exts/Logotipo de página Web..."
 
 #: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
@@ -444,63 +457,63 @@ msgstr "<Toolbox>/Exts/Editor de parásitos..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr ""
+msgstr "<Toolbox>/Exts/Añadido de ejemplo en Perl"
 
 #: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Perl/Centro de control..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr ""
+msgstr "<Toolbox>/Exts/Perl/Servidor"
 
 #: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Ladrillos..."
 
 #: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Tabla de fuentes..."
 
 #: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Proporción áurea..."
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Logotipos/Texto en llamas"
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Logotipos/Acero fulgurante"
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Logotipos/Bisel interior..."
 
 #: examples/pixelmap:0
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Generador de píxeles..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Povray/Preferencias..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Povray/Textura..."
 
 #: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Arte Aleatorio nº1..."
 
 #: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Sellos..."
 
 #: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Render/Ying-Yang..."
 
 #: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
@@ -563,7 +576,7 @@ msgstr "Mapa de relieve"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "No puedo llamar '$AUTOLOAD' esta vez"
 
@@ -775,7 +788,7 @@ msgstr "Este módulo se creó sin soporte para PDL."
 msgid "Unable to convert a reference to type '%s'"
 msgstr "No puedo convertir una referencia a tipo '%s'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
@@ -796,7 +809,7 @@ msgstr "Tipo de argumento no soportado: $type"
 msgid "Visual Scriptor"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "WARNING"
 msgstr "AVISO"
 
@@ -970,7 +983,7 @@ msgstr "no se encontró la función '$exe' en este guión (debe ser una de"
 msgid "function name contains dashes instead of underscores"
 msgstr "el nombre de la función tiene guiones en vez de subrayados ( _ )"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "función/macro \"$name\" no encontrada en $class"
 
@@ -1026,18 +1039,22 @@ msgstr "especificación de parásito ilegal, se esperaba referencia"
 msgid "illegal type for colour specification"
 msgstr "tipo ilegal para especificación de color"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr "el interfaz '$interface_type' no está soportado."
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+# //O No está soportada ni lo estará...
+#: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "La etiqueta 'interface=...' ya no está soportada\n"
 
+# //O No se si 'spawn' hace referencia a alguna forma extraña de conexión, si es así sin traducir no queda mal, si es una forma de acceder a una variable tampoco quedará mal, digo yo.
+# //R Ni idea. Lo dejamos así mejor.
+#
 #: Perl-Server:0
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
+msgstr "GIMP_HOST inválido: 'spawn' no es un método de conexión válido para el servidor"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
@@ -1107,17 +1124,17 @@ msgstr "petición QUIT recibida"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
-msgstr ""
+msgstr "registro llamado con demasiados o incorrectos argumentos\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr "retrollamada requerida 'net' no encontrada\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr "retrollamada requerida 'query' no encontrada\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr "retrollamada requerida 'run' no encontrada\n"
 
@@ -1196,44 +1213,44 @@ msgstr "no puedo crear socket unix de escucha: $!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "no puedo crear par de sockets para comunicaciones gimp: $!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
-msgstr ""
+msgstr "no puedo hacer fork: $!"
 
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
-msgstr ""
+msgstr "no puedo abrir $rgb_db_path"
 
 #: Perl-Server:0
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr ""
+msgstr "no puedo abrir socket de comunicaciones Gimp::Net : $!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr ""
+msgstr "no puedo leer '$fn': $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr ""
+msgstr "no puedo leer fichero temporal $tmp: $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "orden no autorizada recibida; abortando conexión"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr ""
+msgstr "el tamaño de la URL es demasiado grande ($max > 1023)\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr ""
+msgstr "autorización errónea; abortando conexión"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr ""
+msgstr "xlfd_unpack: XLFD no concordante '$fontname'\n"

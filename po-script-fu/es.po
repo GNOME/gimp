@@ -8,9 +8,9 @@
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-10-30 21:58-0800\n"
-"PO-Revision-Date: 2000-09-28 01:22+02:00\n"
+"Project-Id-Version: GIMP 1.1.29\n"
+"POT-Creation-Date: 2000-08-30 00:31-0700\n"
+"PO-Revision-Date: 2000-10-23 18:59+02:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -576,9 +576,10 @@ msgstr "<Toolbox>/Exts/Script-Fu/Misc./Esfera..."
 # la cosa se queda así, ¿que te parece?
 # //R Demasiado Ondular. Deberíamos dejarlo en inglés hasta que encontremos algo mejor.
 # //O Pues nada, de momento en ingles sin traducir
+# //R Al parecer es un nombre propio, se deja como está
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Script-Fu/Patrones/Truchet 3D..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -610,9 +611,10 @@ msgstr "<Toolbox>/Exts/Script-Fu/Patrones/Trocoide..."
 
 # //O Pues nada, otro ondulado...
 # //R Lo mismo, creo que deberías dejarlo en inglés de momento.
+# //R Nombre propio
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Exts/Script-Fu/Patrones/Truchet..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
@@ -986,7 +988,7 @@ msgstr "Tamaño del Búfer (% Altura del Texto)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr "Radio de Desenfoque del Mapa de Relieve (Capa Alfa)"
+msgstr "Radio de Desenfoque de la Aplicación de Relieve (Capa Alfa)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
@@ -1100,7 +1102,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr "Ajustes predeterminados del Mapa de Relieve"
+msgstr "Ajustes predeterminados de la Aplicación de Relieve"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
@@ -1230,7 +1232,7 @@ msgstr "Color Final"
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr "Mapa de Entorno"
+msgstr "Aplicación de Entorno"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
@@ -1490,9 +1492,8 @@ msgstr "Desplazamiento Y del Brillo"
 
 # //R Quizás "tasa de choques"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
 msgid "Hit Rate"
-msgstr "Ratio de Aciertos"
+msgstr "Tasa de choques"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
