@@ -50,6 +50,7 @@
 
 enum
 {
+  SET_VIEWABLE,
   CLICKED,
   DOUBLE_CLICKED,
   CONTEXT,
@@ -79,6 +80,9 @@ static gboolean    gimp_view_enter_notify_event   (GtkWidget        *widget,
                                                    GdkEventCrossing *event);
 static gboolean    gimp_view_leave_notify_event   (GtkWidget        *widget,
                                                    GdkEventCrossing *event);
+
+static void        gimp_view_real_set_viewable    (GimpView         *view,
+                                                   GimpViewable     *viewable);
 
 static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
                                                    GimpView         *view);
@@ -129,6 +133,16 @@ gimp_view_class_init (GimpViewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  view_signals[SET_VIEWABLE] =
+    g_signal_new ("set-viewable",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpViewClass, set_viewable),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_VIEWABLE);
+
   view_signals[CLICKED] =
     g_signal_new ("clicked",
                   G_TYPE_FROM_CLASS (klass),
@@ -172,6 +186,7 @@ gimp_view_class_init (GimpViewClass *klass)
   widget_class->enter_notify_event   = gimp_view_enter_notify_event;
   widget_class->leave_notify_event   = gimp_view_leave_notify_event;
 
+  klass->set_viewable                = gimp_view_real_set_viewable;
   klass->clicked                     = NULL;
   klass->double_clicked              = NULL;
   klass->context                     = NULL;
@@ -500,8 +515,7 @@ gimp_view_button_release_event (GtkWidget      *widget,
 
       if (view->clickable && view->in_button)
         {
-          g_signal_emit (widget, view_signals[CLICKED], 0,
-                         view->press_state);
+          g_signal_emit (widget, view_signals[CLICKED], 0, view->press_state);
         }
     }
   else
@@ -544,6 +558,60 @@ gimp_view_leave_notify_event (GtkWidget        *widget,
   return FALSE;
 }
 
+static void
+gimp_view_real_set_viewable (GimpView     *view,
+                             GimpViewable *viewable)
+{
+  GType viewable_type = G_TYPE_NONE;
+
+  if (viewable == view->viewable)
+    return;
+
+  if (viewable)
+    {
+      viewable_type = G_TYPE_FROM_INSTANCE (viewable);
+
+      g_return_if_fail (g_type_is_a (viewable_type,
+                                     view->renderer->viewable_type));
+    }
+
+  if (view->viewable)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (view->viewable),
+                                    (gpointer *) &view->viewable);
+
+      if (! viewable && ! view->renderer->is_popup)
+        {
+          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (view),
+                                               G_TYPE_FROM_INSTANCE (view->viewable)))
+            {
+              gtk_drag_source_unset (GTK_WIDGET (view));
+            }
+        }
+    }
+  else if (viewable && ! view->renderer->is_popup)
+    {
+      if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (view),
+                                            GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                                            viewable_type,
+                                            GDK_ACTION_COPY))
+        {
+          gimp_dnd_viewable_source_add (GTK_WIDGET (view),
+                                        viewable_type,
+                                        gimp_view_drag_viewable,
+                                        NULL);
+        }
+    }
+
+  gimp_view_renderer_set_viewable (view->renderer, viewable);
+  view->viewable = viewable;
+
+  if (view->viewable)
+    {
+      g_object_add_weak_pointer (G_OBJECT (view->viewable),
+                                 (gpointer *) &view->viewable);
+    }
+  }
 
 /*  public functions  */
 
@@ -668,62 +736,25 @@ gimp_view_new_full_by_types (GType    view_type,
   return GTK_WIDGET (view);
 }
 
+GimpViewable *
+gimp_view_get_viewable (GimpView *view)
+{
+  g_return_val_if_fail (GIMP_IS_VIEW (view), NULL);
+
+  return view->viewable;
+}
+
 void
 gimp_view_set_viewable (GimpView     *view,
                         GimpViewable *viewable)
 {
-  GType viewable_type = G_TYPE_NONE;
-
   g_return_if_fail (GIMP_IS_VIEW (view));
   g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   if (viewable == view->viewable)
     return;
 
-  if (viewable)
-    {
-      viewable_type = G_TYPE_FROM_INSTANCE (viewable);
-
-      g_return_if_fail (g_type_is_a (viewable_type,
-                                     view->renderer->viewable_type));
-    }
-
-  if (view->viewable)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (view->viewable),
-                                    (gpointer *) &view->viewable);
-
-      if (! viewable && ! view->renderer->is_popup)
-        {
-          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (view),
-                                               G_TYPE_FROM_INSTANCE (view->viewable)))
-            {
-              gtk_drag_source_unset (GTK_WIDGET (view));
-            }
-        }
-    }
-  else if (viewable && ! view->renderer->is_popup)
-    {
-      if (gimp_dnd_drag_source_set_by_type (GTK_WIDGET (view),
-                                            GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                                            viewable_type,
-                                            GDK_ACTION_COPY))
-        {
-          gimp_dnd_viewable_source_add (GTK_WIDGET (view),
-                                        viewable_type,
-                                        gimp_view_drag_viewable,
-                                        NULL);
-        }
-    }
-
-  gimp_view_renderer_set_viewable (view->renderer, viewable);
-  view->viewable = viewable;
-
-  if (view->viewable)
-    {
-      g_object_add_weak_pointer (G_OBJECT (view->viewable),
-                                 (gpointer *) &view->viewable);
-    }
+  g_signal_emit (view, view_signals[SET_VIEWABLE], 0, viewable);
 }
 
 void

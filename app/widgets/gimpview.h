@@ -58,6 +58,8 @@ struct _GimpViewClass
   GtkWidgetClass       parent_class;
 
   /*  signals  */
+  void        (* set_viewable)     (GimpView        *view,
+                                    GimpViewable    *viewable);
   void        (* clicked)          (GimpView        *view,
                                     GdkModifierType  modifier_state);
   void        (* double_clicked)   (GimpView        *view);
@@ -92,10 +94,11 @@ GtkWidget * gimp_view_new_full_by_types (GType          view_type,
                                          gboolean       clickable,
                                          gboolean       show_popup);
 
-void        gimp_view_set_viewable      (GimpView      *view,
-                                         GimpViewable  *viewable);
-void        gimp_view_set_expand        (GimpView      *view,
-                                         gboolean       expand);
+GimpViewable * gimp_view_get_viewable    (GimpView     *view);
+void           gimp_view_set_viewable    (GimpView     *view,
+                                          GimpViewable *viewable);
+void           gimp_view_set_expand      (GimpView     *view,
+                                          gboolean      expand);
 
 
 #endif /* __GIMP_VIEW_H__ */

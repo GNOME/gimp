@@ -1,5 +1,16 @@
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpview.[ch]: virtualized GimpView::set_viewable.
+
+	* app/widgets/gimptoolbox-image-area.c: hook into "set_viewable"
+	and add an XDS drag source.
+
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpdnd.c: unset the XdndDirectSave0 property when
+	the drag ends, minor cleanups.
+
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpdnd-xds.[ch]: new files.
 
