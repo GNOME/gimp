@@ -270,17 +270,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
-#ifdef __GNUC__
-#warning GTK_ENABLE_BROKEN
-#endif
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

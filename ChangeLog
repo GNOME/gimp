@@ -1,3 +1,9 @@
+2002-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gif.c: removed GTK_ENABLE_BROKEN and _DEPRECATED
+	#defines and #includes because this plug-in has already been
+	ported.
+
 2002-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontainer.c: fixed warning, coding style.
