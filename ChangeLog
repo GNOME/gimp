@@ -1,3 +1,8 @@
+2002-11-26  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/colorify.c: use gimpmisc region iterator funcs.
+
 2002-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimprc.[ch]: added "gboolean verbose" to GimpRc and

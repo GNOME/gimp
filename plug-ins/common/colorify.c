@@ -89,6 +89,8 @@ static GimpRGB button_color[] =
   { 1.0, 1.0, 1.0, 1.0 },
 };
 
+static GimpRunMode run_mode;
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
@@ -141,7 +143,6 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpRunMode    run_mode;
   GimpPDBStatusType  status;
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -204,18 +205,24 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
+static void 
+colorify_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  gint lum = lum_red_lookup[src[0]] +
+    lum_green_lookup[src[1]] +
+    lum_blue_lookup[src[2]]; /* luminosity */
+  
+  dest[0] = final_red_lookup[lum];
+  dest[1] = final_green_lookup[lum];
+  dest[2] = final_blue_lookup[lum];
+  
+  if (bpp == 4)
+    dest[3] = src[3];
+}
+
 static void
 colorify (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn;
-  GimpPixelRgn dest_rgn;
-  gpointer     pr;
-  gint  progress = 0;
-  gint  max_progress;
-  gint  sel_x1, sel_x2, sel_y1, sel_y2;
-  gint  sel_width, sel_height;
-  gint  has_alpha;
-  gint  x, y;
   gint  i;
 
   for (i = 0; i < 256; i ++)
@@ -228,67 +235,7 @@ colorify (GimpDrawable *drawable)
       final_blue_lookup[i]  = i * cvals.color.b;
     }
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  max_progress = sel_width * sel_height;
-
-  if (max_progress <= 0)
-    return;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      guchar *src  = src_rgn.data;
-      guchar *dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  guchar *s = src;
-	  guchar *d = dest;
-
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      gint lum = lum_red_lookup[s[0]] +
-	                 lum_green_lookup[s[1]] +
-	                 lum_blue_lookup[s[2]]; /* luminosity */
-
-	      d[0] = final_red_lookup[lum];
-	      d[1] = final_green_lookup[lum];
-	      d[2] = final_blue_lookup[lum];
-
-              if (has_alpha)
-		d[3] = s[3];
-
-	      s += src_rgn.bpp;
-	      d += dest_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	  dest += dest_rgn.rowstride;
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
-    }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE); 
-  gimp_drawable_update (drawable->drawable_id,
-			sel_x1, sel_y1, sel_width, sel_height);
+  gimp_rgn_iterate2 (drawable, run_mode, colorify_func, NULL);
 }
 
 static gboolean
@@ -363,7 +310,7 @@ colorify_dialog (GimpRGB *color)
       gtk_container_add (GTK_CONTAINER (button), color_area);
       g_signal_connect (G_OBJECT (button), "clicked",
 			G_CALLBACK (predefined_color_callback),
-                        color_area);
+                        &button_color[i]);
       gtk_widget_show (color_area);
 
       gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
@@ -392,9 +339,6 @@ static void
 predefined_color_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GimpRGB  color;
-
-  gimp_color_area_get_color (GIMP_COLOR_AREA (data), &color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (custum_color_button), 
-                               &color);
+			       (GimpRGB*) data);
 }

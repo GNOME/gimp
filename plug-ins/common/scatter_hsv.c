@@ -24,7 +24,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -76,6 +75,8 @@ static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
 
 static gint preview_width  = PREVIEW_WIDTH;
 static gint preview_height = PREVIEW_HEIGHT;
+
+static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -161,7 +162,6 @@ run (gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode       run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
@@ -209,73 +209,38 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
+static void 
+scatter_hsv_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  guchar h, s, v;
+
+  h = src[0];
+  s = src[1];
+  v = src[2];
+	      
+  scatter_hsv_scatter (&h, &s, &v);
+
+  dest[0] = h;
+  dest[1] = s;
+  dest[2] = v;
+
+  if (bpp == 4)
+    dest[3] = src[3];
+}
+
 static GimpPDBStatusType
 scatter_hsv (gint32 drawable_id)
 {
   GimpDrawable *drawable;
-  GimpPixelRgn  src_rgn, dest_rgn;
-  guchar    *src, *dest;
-  gpointer   pr;
-  gint       x, y, x1, x2, y1, y2;
-  gint       gap, total, processed = 0;
-  
+
   drawable = gimp_drawable_get (drawable_id);
-  gap = (gimp_drawable_has_alpha (drawable_id)) ? 1 : 0;
-  gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-  total = (x2 - x1) * (y2 - y1);
-  if (total < 1)
-    return GIMP_PDB_EXECUTION_ERROR;
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   gimp_progress_init (_("Scatter HSV: Scattering..."));
-  pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-  
-  for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-    {
-      int offset;
 
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  src = src_rgn.data + y * src_rgn.rowstride;
-	  dest = dest_rgn.data + y * dest_rgn.rowstride;
-	  offset = 0;
+  gimp_rgn_iterate2 (drawable, run_mode, scatter_hsv_func, NULL);
 
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      guchar	h, s, v;
-
-	      h = *(src + offset);
-	      s = *(src + offset + 1);
-	      v = *(src + offset + 2);
-	      
-	      scatter_hsv_scatter (&h, &s, &v);
-
-	      *(dest + offset    ) = (guchar) h;
-	      *(dest + offset + 1) = (guchar) s;
-	      *(dest + offset + 2) = (guchar) v;
-
-	      offset += 3;
-	      if (gap)
-		{
-		  *(dest + offset) = *(src + offset);
-		  offset++;
-		}
-	      /* the function */
-	      if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-		gimp_progress_update ((double) processed /(double) total); 
-	    }
-	}
-  }
-
-  gimp_progress_update (1.0);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
  
   return GIMP_PDB_SUCCESS;
