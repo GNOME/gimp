@@ -1,5 +1,8 @@
 2000-01-06  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
+	* plug-ins/perl/examples/fit-text (growfont): Fixed some really
+	bad perl and removed a debugging print.
+
 	* plug-ins/perl/examples/innerbevel: removed calls to "get_state"
 	because that function appears to have been deprecated into
 	nonexistence in Gimp::Fu.... 
