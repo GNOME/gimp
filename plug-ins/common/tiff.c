@@ -682,7 +682,10 @@ load_image (gchar *filename)
   }
 
   if (bps == 16)
-    g_message (_("TIFF warning: the image you are loading has 16 bits per channel.\nGIMP can only handle 8 bit, so it will be converted for you.\nInformation will be lost because of this conversion."
+    g_message (_("TIFF warning: the image you are loading has 16 bits per"
+		 "channel.\nGIMP can only handle 8 bit, so it will be"
+		 "converted for you.\nInformation will be lost because of"
+		 "this conversion."));
 
   if (worst_case) {
     load_rgba (tif, channel);

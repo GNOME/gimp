@@ -1,3 +1,8 @@
+2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tiff.c (load_image): fix compilation error and
+	split warning string over multiple lines.
+
 2003-01-10  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c (app_init)
