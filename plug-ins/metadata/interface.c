@@ -21,19 +21,20 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <glib.h>
 #include <glib/gstdio.h>
+
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -43,7 +44,6 @@
 #define _O_BINARY 0
 #endif
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -53,8 +53,10 @@
 #include "xmp-model.h"
 #include "xmp-gen.h"
 
+
 #define RESPONSE_IMPORT   1
 #define RESPONSE_EXPORT   2
+
 
 typedef struct
 {
@@ -71,8 +73,8 @@ value_edited (GtkCellRendererText *cell,
 	      const gchar         *new_text,
 	      gpointer             data)
 {
-  GtkTreeModel *model = (GtkTreeModel *)data;
-  GtkTreePath  *path = gtk_tree_path_new_from_string (path_string);
+  GtkTreeModel *model = data;
+  GtkTreePath  *path  = gtk_tree_path_new_from_string (path_string);
   GtkTreeIter   iter;
   gchar        *old_text;
 
@@ -226,7 +228,11 @@ add_description_tab (GtkWidget    *notebook)
 				  GTK_POLICY_AUTOMATIC);
   text_view = gtk_text_view_new ();
   text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
-  gtk_text_buffer_set_text (text_buffer, "FIXME:\nThese widgets are currently disconnected from the XMP model.\nPlease use the Advanced tab.", -1); /*FIXME*/
+  gtk_text_buffer_set_text (text_buffer,
+                            "FIXME:\n"
+                            "These widgets are currently disconnected from the XMP model.\n"
+                            "Please use the Advanced tab.",
+                            -1); /*FIXME*/
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Description:"), 0.0, 0.5,
@@ -254,9 +260,9 @@ add_description_tab (GtkWidget    *notebook)
 }
 
 static void
-add_copyright_tab (GtkWidget    *notebook)
+add_copyright_tab (GtkWidget *notebook)
 {
-  GtkWidget     *label;
+  GtkWidget *label;
 
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
@@ -265,9 +271,9 @@ add_copyright_tab (GtkWidget    *notebook)
 }
 
 static void
-add_origin_tab (GtkWidget    *notebook)
+add_origin_tab (GtkWidget *notebook)
 {
-  GtkWidget     *label;
+  GtkWidget *label;
 
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
@@ -276,9 +282,9 @@ add_origin_tab (GtkWidget    *notebook)
 }
 
 static void
-add_camera1_tab (GtkWidget    *notebook)
+add_camera1_tab (GtkWidget *notebook)
 {
-  GtkWidget     *label;
+  GtkWidget *label;
 
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
@@ -287,9 +293,9 @@ add_camera1_tab (GtkWidget    *notebook)
 }
 
 static void
-add_camera2_tab (GtkWidget    *notebook)
+add_camera2_tab (GtkWidget *notebook)
 {
-  GtkWidget     *label;
+  GtkWidget *label;
 
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
@@ -359,10 +365,10 @@ import_dialog_response (GtkWidget *dlg,
   g_return_if_fail (mgui != NULL);
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar    *filename;
-      gchar    *buffer;
-      guint     buffer_length;
-      GError   *error = NULL;
+      gchar  *filename;
+      gchar  *buffer;
+      guint   buffer_length;
+      GError *error = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));
 
@@ -403,15 +409,19 @@ file_import_dialog (GtkWidget   *parent,
 
   if (! dlg)
     {
-      dlg =
-        gtk_file_chooser_dialog_new (_("Import XMP from file"),
-                                     GTK_WINDOW (parent),
-                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+      dlg = gtk_file_chooser_dialog_new (_("Import XMP from file"),
+                                         GTK_WINDOW (parent),
+                                         GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                         GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-                                     NULL);
+                                         NULL);
+
+      gtk_dialog_set_alternative_button_order (dlg,
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
 
       /* FIXME: gimp_help_connect? */
       gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_OK);
@@ -423,6 +433,7 @@ file_import_dialog (GtkWidget   *parent,
                         G_CALLBACK (import_dialog_response),
                         mgui);
     }
+
   gtk_window_present (GTK_WINDOW (dlg));
 }
 
@@ -435,12 +446,13 @@ export_dialog_response (GtkWidget *dlg,
   MetadataGui *mgui = data;
 
   g_return_if_fail (mgui != NULL);
+
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar    *filename;
-      gchar    *buffer;
-      guint     buffer_length;
-      int       fd;
+      gchar *filename;
+      gchar *buffer;
+      guint  buffer_length;
+      int    fd;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));
 
@@ -448,6 +460,7 @@ export_dialog_response (GtkWidget *dlg,
       buffer_length = xmp_estimate_size (mgui->xmp_model);
       buffer = g_new (gchar, buffer_length);
       xmp_generate_block (mgui->xmp_model, buffer, buffer_length);
+
       fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
       if (fd < 0)
         {
@@ -458,7 +471,10 @@ export_dialog_response (GtkWidget *dlg,
           g_free (filename);
           return;
         }
-      fprintf (stderr, "\nwriting %d bytes to %s...\n", strlen(buffer), filename);
+
+      fprintf (stderr, "\nwriting %d bytes to %s...\n",
+               strlen (buffer), filename);
+
       if (write (fd, buffer, strlen (buffer)) < 0)
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
@@ -468,6 +484,7 @@ export_dialog_response (GtkWidget *dlg,
           g_free (filename);
           return;
         }
+
       if (close (fd) < 0)
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
@@ -477,6 +494,7 @@ export_dialog_response (GtkWidget *dlg,
           g_free (filename);
           return;
         }
+
       g_free (buffer);
       g_free (filename);
     }
@@ -493,15 +511,19 @@ file_export_dialog (GtkWidget   *parent,
 
   if (! dlg)
     {
-      dlg =
-        gtk_file_chooser_dialog_new (_("Export XMP to file"),
-                                     GTK_WINDOW (parent),
-                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+      dlg = gtk_file_chooser_dialog_new (_("Export XMP to file"),
+                                         GTK_WINDOW (parent),
+                                         GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                         GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-                                     NULL);
+                                         NULL);
+
+      gtk_dialog_set_alternative_button_order (dlg,
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
 
       /* FIXME: gimp_help_connect? */
       gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_OK);
@@ -513,6 +535,7 @@ file_export_dialog (GtkWidget   *parent,
                         G_CALLBACK (export_dialog_response),
                         mgui);
     }
+
   gtk_window_present (GTK_WINDOW (dlg));
 }
 
@@ -524,6 +547,7 @@ metadata_dialog_response (GtkWidget *widget,
   MetadataGui *mgui = data;
 
   g_return_if_fail (mgui != NULL);
+
   switch (response_id)
     {
     case RESPONSE_IMPORT:
@@ -548,10 +572,11 @@ gboolean
 metadata_dialog (gint32    image_ID,
                  XMPModel *xmp_model)
 {
-  MetadataGui   mgui;
-  GtkWidget    *notebook;
+  MetadataGui  mgui;
+  GtkWidget   *notebook;
 
   gimp_ui_init ("metadata", FALSE);
+
   mgui.dlg = gimp_dialog_new (_("Image Properties"), "metadata",
                               NULL, 0,
                               gimp_standard_help_func, "plug-in-metadata",
@@ -562,6 +587,13 @@ metadata_dialog (gint32    image_ID,
                               GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  gtk_dialog_set_alternative_button_order (mgui.dlg,
+                                           RESPONSE_IMPORT,
+                                           RESPONSE_EXPORT,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (mgui.dlg, "response",
                     G_CALLBACK (metadata_dialog_response),
@@ -582,6 +614,7 @@ metadata_dialog (gint32    image_ID,
   mgui.auto_icon = gtk_widget_render_icon (mgui.dlg, GIMP_STOCK_WILBER,
                                            GTK_ICON_SIZE_MENU, NULL);
   update_icons (&mgui);
+
   mgui.run_ok = FALSE;
 
   /* add the tabs to the notebook */
@@ -601,5 +634,6 @@ metadata_dialog (gint32    image_ID,
   /* clean up and return */
   g_object_unref (mgui.auto_icon);
   g_object_unref (mgui.edit_icon);
+
   return mgui.run_ok;
 }
