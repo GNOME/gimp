@@ -1,3 +1,7 @@
+Wed Mar 24 11:05:38 CET 1999 Marc Lehmann <pcg@goof.com>
+
+	* configure.in: use AC_PATH_PROGS to find perl.
+
 Tue Mar 23 12:59:20 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* configure.in
