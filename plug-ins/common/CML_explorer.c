@@ -454,15 +454,20 @@ query (void)
     { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     { PARAM_IMAGE, "image", "Input image (not used)"},
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." },
+    { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Make an image of Coupled-Map Lattice",
-			  "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a prameter file is passed as the 4th arg. You can control CML_explorer via parameter file.",
+			  "Make an image of Coupled-Map Lattice (CML). CML is "
+			  "a kind of Cellula Automata on continuous (value) "
+			  "domain. In RUN_NONINTERACTIVE, the name of a "
+			  "prameter file is passed as the 4th arg. You can "
+			  "control CML_explorer via parameter file.",
 			  /*  Or do you want to call me with over 50 args? */
-			  "Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/",
+			  "Shuji Narazaki (narazaki@InetQ.or.jp); "
+			  "http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
 			  "1997",
 			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
@@ -1158,27 +1163,8 @@ CML_explorer_dialog (void)
   GtkWidget *pframe;
   GtkWidget *hseparator;
   GtkWidget *button;
-  guchar  *color_cube;
-  gchar	 **argv;
-  gint     argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (SHORT_NAME);
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
 			 gimp_plugin_help_func, "filters/cml_explorer.html",

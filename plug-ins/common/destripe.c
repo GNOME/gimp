@@ -44,7 +44,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -53,6 +52,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /*
  * Constants...
@@ -134,20 +134,21 @@ query (void)
     { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
     { PARAM_INT32,	"avg_width",	"Averaging filter width (default = 36)" }
   };
-  static GParamDef	*return_vals = NULL;
-  static int		nargs        = sizeof(args) / sizeof(args[0]),
-			nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Destripe filter, used to remove vertical stripes caused by cheap scanners.",
-			  "This plug-in tries to remove vertical stripes from an image.",
-			  "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
+			  "Destripe filter, used to remove vertical stripes "
+			  "caused by cheap scanners.",
+			  "This plug-in tries to remove vertical stripes from "
+			  "an image.",
+			  "Marc Lehmann <pcg@goof.com>",
+			  "Marc Lehmann <pcg@goof.com>",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Enhance/Destripe..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -538,31 +539,8 @@ destripe_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("destripe");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-#ifdef SIGBUS
-  signal (SIGBUS, SIG_DFL);
-#endif
-  signal (SIGSEGV, SIG_DFL);
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("destripe", TRUE);
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
 			    gimp_plugin_help_func, "filters/destripe.html",

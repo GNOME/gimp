@@ -66,6 +66,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef enum
 {
   EXTEND,
@@ -169,21 +170,17 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    /*	PARAM_FLOATARRAY, "matrix", "The 5x5 convolution matrix"},
-	{PARAM_INT32, "alpha_alg", "Enable weighting by alpha channel"},
-	{PARAM_FLOAT, "divisor", "Divisor"},
-	{PARAM_FLOAT, "offset", "Offset"},
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    /*	{ PARAM_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
+	{ PARAM_INT32, "alpha_alg", "Enable weighting by alpha channel" },
+	{ PARAM_FLOAT, "divisor", "Divisor" },
+	{ PARAM_FLOAT, "offset", "Offset" },
 
-	{PARAM_INT32ARRAY, "channels", "Mask of the channels to be filtered"},
-	{PARAM_INT32, "bmode", "Mode for treating image borders"}
+	{ PARAM_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
+	{ PARAM_INT32, "bmode", "Mode for treating image borders" }
     */
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = (int)(sizeof(args) / sizeof(args[0]));
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_convmatrix",
 			  "A generic 5x5 convolution matrix",
@@ -194,8 +191,8 @@ query (void)
 			  N_("<Image>/Filters/Generic/Convolution Matrix..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -789,18 +786,11 @@ dialog (void)
   GtkWidget *inbox;
   GtkWidget *yetanotherbox;
   GtkWidget *frame;
-  gchar    buffer[32];
-  gchar  **argv;
-  gint     argc;
-  gint     x, y, i;
-  GSList  *group;
+  gchar   buffer[32];
+  gint    x, y, i;
+  GSList *group;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("convmatrix");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("convmatrix", FALSE);
 
   dlg = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
 			 gimp_plugin_help_func, "filters/convmatrix.html",

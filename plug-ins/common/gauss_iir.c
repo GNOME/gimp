@@ -28,6 +28,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gdouble radius;
@@ -126,7 +127,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
     { PARAM_INT32, "horizontal", "Blur in horizontal direction" },
-    { PARAM_INT32, "vertical", "Blur in vertical direction" },
+    { PARAM_INT32, "vertical", "Blur in vertical direction" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -140,11 +141,19 @@ query (void)
   };
   static gint nargs2 = sizeof (args2) / sizeof (args2[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure ("plug_in_gauss_iir",
 			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radius less than 1.0 are invalid as they will generate spurious results.",
+			  "Applies a gaussian blur to the drawable, with "
+			  "specified radius of affect.  The standard deviation "
+			  "of the normal distribution used to modify pixel "
+			  "values is calculated based on the supplied radius.  "
+			  "Horizontal and vertical blurring can be "
+			  "independently invoked by specifying only one to "
+			  "run.  The IIR gaussian blurring works best for "
+			  "large radius values and for images which are not "
+			  "computer-generated.  Values for radius less than "
+			  "1.0 are invalid as they will generate spurious "
+			  "results.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
@@ -156,7 +165,18 @@ query (void)
 
   gimp_install_procedure ("plug_in_gauss_iir2",
 			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  This radius can be specified indepently on for the horizontal and the vertical direction. The IIR gaussian blurring works best for large radius values and for images which are not computer-generated.  Values for radii less than 1.0 would generate spurious results. Therefore they are interpreted as 0.0, which means that the computation for this orientation is skipped.",
+			  "Applies a gaussian blur to the drawable, with "
+			  "specified radius of affect.  The standard deviation "
+			  "of the normal distribution used to modify pixel "
+			  "values is calculated based on the supplied radius.  "
+			  "This radius can be specified indepently on for the "
+			  "horizontal and the vertical direction. The IIR "
+			  "gaussian blurring works best for large radius "
+			  "values and for images which are not "
+			  "computer-generated.  Values for radii less than "
+			  "1.0 would generate spurious results. Therefore "
+			  "they are interpreted as 0.0, which means that the "
+			  "computation for this orientation is skipped.",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "1995-2000",
@@ -334,15 +354,8 @@ gauss_iir_dialog (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss_iir");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("gauss_iir", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
 			 gimp_plugin_help_func, "filters/gauss_iir.html",
@@ -424,15 +437,8 @@ gauss_iir2_dialog (gint32     image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss_iir2");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("gauss_iir2", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
 			 gimp_plugin_help_func, "filters/gauss_iir.html",

@@ -37,8 +37,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -60,10 +60,10 @@ static gint   dialog          (gint32 image_ID, GDrawable *drawable);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 gint sx1, sy1, sx2, sy2;
@@ -104,33 +104,29 @@ void query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32,    "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE,    "image",    "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable"},
+    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",    "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
 
-    {PARAM_INT32,    "hwidth",   "Horizontal Width   (>= 0)"},
-    {PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 1)"},
-    {PARAM_INT32,    "hoffset",  "Horizontal Offset  (>= 0)"},
-    {PARAM_COLOR,    "hcolor",   "Horizontal Colour"},
-    {PARAM_INT8,     "hopacity", "Horizontal Opacity (0...255)"},
+    { PARAM_INT32,    "hwidth",   "Horizontal Width   (>= 0)" },
+    { PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 1)" },
+    { PARAM_INT32,    "hoffset",  "Horizontal Offset  (>= 0)" },
+    { PARAM_COLOR,    "hcolor",   "Horizontal Colour" },
+    { PARAM_INT8,     "hopacity", "Horizontal Opacity (0...255)" },
 
-    {PARAM_INT32,    "vwidth",   "Vertical Width   (>= 0)"},
-    {PARAM_INT32,    "vspace",   "Vertical Spacing (>= 1)"},
-    {PARAM_INT32,    "voffset",  "Vertical Offset  (>= 0)"},
-    {PARAM_COLOR,    "vcolor",   "Vertical Colour"},
-    {PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)"},
+    { PARAM_INT32,    "vwidth",   "Vertical Width   (>= 0)" },
+    { PARAM_INT32,    "vspace",   "Vertical Spacing (>= 1)" },
+    { PARAM_INT32,    "voffset",  "Vertical Offset  (>= 0)" },
+    { PARAM_COLOR,    "vcolor",   "Vertical Colour" },
+    { PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)" },
 
-    {PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)"},
-    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)"},
-    {PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)"},
-    {PARAM_COLOR,    "icolor",   "Intersection Colour"},
-    {PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)"},
+    { PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)" },
+    { PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)" },
+    { PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)" },
+    { PARAM_COLOR,    "icolor",   "Intersection Colour" },
+    { PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_grid",
 			  "Draws a grid.",
@@ -142,8 +138,8 @@ void query (void)
 			  N_("<Image>/Filters/Render/Pattern/Grid..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -557,15 +553,8 @@ dialog (gint32     image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
-  gchar    **argv;
-  gint       argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("grid");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("grid", FALSE);
 
   dlg = gimp_dialog_new (_("Grid"), "grid",
 			 gimp_plugin_help_func, "filters/grid.html",

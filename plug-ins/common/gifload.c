@@ -131,17 +131,15 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_gif_load",
                           "loads files of Compuserve GIF file format",

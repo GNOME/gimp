@@ -28,6 +28,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gdouble radius;
@@ -120,7 +121,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
     { PARAM_INT32, "horizontal", "Blur in horizontal direction" },
-    { PARAM_INT32, "vertical", "Blur in vertical direction" },
+    { PARAM_INT32, "vertical", "Blur in vertical direction" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -134,34 +135,51 @@ query (void)
   };
   static gint nargs2 = sizeof (args2) / sizeof (args2[0]);
 
-  static GParamDef *return_vals = NULL;
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_gauss_rle",
 			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  Horizontal and vertical blurring can be independently invoked by specifying only one to run.  The RLE gaussian blurring performs most efficiently on computer-generated images or images with large areas of constant intensity.  Values for radii less than 1.0 are invalid as they would generate spurious results.",
+			  "Applies a gaussian blur to the drawable, with "
+			  "specified radius of affect.  The standard deviation "
+			  "of the normal distribution used to modify pixel "
+			  "values is calculated based on the supplied radius.  "
+			  "Horizontal and vertical blurring can be "
+			  "independently invoked by specifying only one to "
+			  "run.  The RLE gaussian blurring performs most "
+			  "efficiently on computer-generated images or images "
+			  "with large areas of constant intensity.  Values for "
+			  "radii less than 1.0 are invalid as they would "
+			  "generate spurious results.",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1995-1996",
 			  NULL,
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 
   gimp_install_procedure ("plug_in_gauss_rle2",
 			  "Applies a gaussian blur to the specified drawable.",
-			  "Applies a gaussian blur to the drawable, with specified radius of affect.  The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius.  This radius can be specified indepently on for the horizontal and the vertical direction. The RLE gaussian blurring performs most efficiently on computer-generated images or images with large areas of constant intensity.  Values for radii less than 1.0 would generate spurious results. Therefore they are interpreted as 0.0, which means that the computation for this orientation is skipped.",
+			  "Applies a gaussian blur to the drawable, with "
+			  "specified radius of affect.  The standard deviation "
+			  "of the normal distribution used to modify pixel "
+			  "values is calculated based on the supplied radius.  "
+			  "This radius can be specified indepently on for the "
+			  "horizontal and the vertical direction. The RLE "
+			  "gaussian blurring performs most efficiently on "
+			  "computer-generated images or images with large "
+			  "areas of constant intensity.  Values for radii "
+			  "less than 1.0 would generate spurious results. "
+			  "Therefore they are interpreted as 0.0, which means "
+			  "that the computation for this orientation is "
+			  "skipped.",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "Spencer Kimball, Peter Mattis & Sven Neumann",
 			  "1995-2000",
 			  N_("<Image>/Filters/Blur/Gaussian Blur (RLE)..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs2, nreturn_vals,
-			  args2, return_vals);
+			  nargs2, 0,
+			  args2, NULL);
 }
 
 static void
@@ -229,7 +247,7 @@ run (gchar   *name,
       
       if (!(bvals.horizontal || bvals.vertical))
 	{
-	  gimp_message ( _("gauss_rle: you must specify either horizontal or vertical (or both)"));
+	  g_message ( _("gauss_rle: you must specify either horizontal or vertical (or both)"));
 	  status = STATUS_CALLING_ERROR;
 	}
 
@@ -266,7 +284,7 @@ run (gchar   *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_rle2", &b2vals);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -331,15 +349,8 @@ gauss_rle_dialog (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss_rle");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("gauss_rle", FALSE);
 
   dlg = gimp_dialog_new (_("RLE Gaussian Blur"), "gauss_rle",
 			 gimp_plugin_help_func, "filters/gauss_rle.html",
@@ -421,15 +432,8 @@ gauss_rle2_dialog (gint32     image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss_rle2");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("gauss_rle2", FALSE);
 
   dlg = gimp_dialog_new (_("RLE Gaussian Blur"), "gauss_rle",
 			 gimp_plugin_help_func, "filters/gauss_rle.html",

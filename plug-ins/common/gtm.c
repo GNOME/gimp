@@ -63,6 +63,7 @@
 
 #include "pixmaps/eek.xpm"
 
+
 /* Typedefs */
 
 typedef struct
@@ -153,11 +154,9 @@ query (void)
     { PARAM_IMAGE, "image", "Input image" },
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
+    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_GTM_save",
                           "GIMP Table Magic",
@@ -363,17 +362,10 @@ save_dialog (image_ID)
   GtkObject *adj;
   GtkWidget *entry;
   GtkWidget *toggle;
-  gchar **argv;
-  gint    argc;
 
   bint.run = FALSE;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gtm");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("gtm", FALSE);
 
   dlg = gimp_dialog_new (_("GIMP Table Magic"), "gtm",
 			 gimp_plugin_help_func, "filters/gtm.html",

@@ -42,6 +42,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 enum
 {
   FUNCTION_BUMPMAP = 0,
@@ -152,26 +153,22 @@ query (void)
     { PARAM_FLOAT, "azimuth", "The Light Angle (degrees)" },
     { PARAM_FLOAT, "elevation", "The Elevation Angle (degrees)" },
     { PARAM_INT32, "depth", "The Filter Width" },
-    { PARAM_INT32, "embossp", "Emboss or Bumpmap" },
+    { PARAM_INT32, "embossp", "Emboss or Bumpmap" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef *rets = NULL;
-  static gint nrets = 0;
-
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_emboss",
 			  "Emboss filter",
-			  "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
+			  "Emboss or Bumpmap the given drawable, specifying "
+			  "the angle and elevation for the light source.",
 			  "Eric L. Hernes, John Schlag",
 			  "Eric L. Hernes",
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Emboss..."),
 			  "RGB",
 			  PROC_PLUG_IN,
-			  nargs, nrets,
-			  args, rets);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -517,15 +514,8 @@ pluginCoreIA (struct piArgs *argp)
   GtkWidget *preview;
   GtkWidget *frame;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("emboss");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("emboss", TRUE);
 
   dlg = gimp_dialog_new (_("Emboss"), "emboss",
 			 gimp_plugin_help_func, "filters/emboss.html",
@@ -748,17 +738,7 @@ mw_preview_new (GtkWidget        *parent,
   GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
-  guchar *color_cube;
    
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
   frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);

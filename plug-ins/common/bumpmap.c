@@ -102,7 +102,6 @@
 
 #include "config.h"
 
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
@@ -348,11 +347,9 @@ query (void)
     { PARAM_INT32,    "ambient",    "Ambient lighting factor" },
     { PARAM_INT32,    "compensate", "Compensate for darkening" },
     { PARAM_INT32,    "invert",     "Invert bumpmap" },
-    { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" },
+    { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_bump_map",
 			  "Create an embossing effect using an image as a "
@@ -838,33 +835,10 @@ bumpmap_dialog (void)
   GtkWidget *menu;
   GtkWidget *button;
   GtkObject *adj;
-  gint       argc;
-  gchar    **argv;
-  guchar    *color_cube;
   gint       i;
   gint       row;
 
-#if 0 
-  g_print  ("bumpmap: waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("bumpmap");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("bumpmap", TRUE);
 
   dialog = gimp_dialog_new (_("Bump Map"), "bumpmap",
 			    gimp_plugin_help_func, "filters/bumpmap.html",

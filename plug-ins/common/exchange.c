@@ -38,6 +38,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define	SCALE_WIDTH  128
 #define PREVIEW_SIZE 128
 
@@ -91,7 +92,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 /* run program */
-MAIN()
+MAIN ()
 
 /* tell GIMP who we are */
 static void
@@ -110,11 +111,9 @@ query (void)
     { PARAM_INT8, "toblue", "Blue value (to)" },
     { PARAM_INT8, "red_threshold", "Red threshold" },
     { PARAM_INT8, "green_threshold", "Green threshold" },
-    { PARAM_INT8, "blue_threshold", "Blue threshold" },
+    { PARAM_INT8, "blue_threshold", "Blue threshold" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_exchange",
 			  "Color Exchange",
@@ -262,26 +261,9 @@ doDialog (void)
   GtkObject *red_threshold   = NULL;
   GtkObject *green_threshold = NULL;
   GtkObject *blue_threshold  = NULL;
-  guchar  *color_cube;
-  gchar	 **argv;
-  gint     argc;
-  gint     framenumber;
+  gint  framenumber;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("exchange");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  /* stuff for preview */
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ()); 
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]); 
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("exchange", TRUE);
 
   /* load pixelregion */
   gimp_pixel_rgn_init (&origregion, drw,
@@ -541,9 +523,9 @@ scale_callback (GtkAdjustment *adj,
 		gpointer       data)
 {
   GtkObject *object;
-  guchar *val = data;
-  guint handler;
-  gint i;
+  guchar    *val = data;
+  guint      handler;
+  gint       i;
 
   *val = (guchar) adj->value;
 
@@ -582,10 +564,10 @@ update_preview (void)
 }
 
 static void
-real_exchange (gint x1,
-	       gint y1,
-	       gint x2,
-	       gint y2,
+real_exchange (gint     x1,
+	       gint     y1,
+	       gint     x2,
+	       gint     y2,
 	       gboolean do_preview)
 {
   GPixelRgn  srcPR, destPR;

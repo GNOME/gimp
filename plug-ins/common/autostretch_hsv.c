@@ -29,7 +29,6 @@
    others it may be total crap :) This version operates in HSV space
    and preserves hue, unlike the original Contrast Autostretch. */
 
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -39,62 +38,68 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
-static void      autostretch_hsv (GDrawable * drawable);
-static void      indexed_autostretch_hsv (gint32 image_ID);
+static void      autostretch_hsv         (GDrawable *drawable);
+static void      indexed_autostretch_hsv (gint32     image_ID);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_autostretch_hsv",
-			  "Automatically stretch the contrast of the specified drawable to cover all possible ranges.",
-			  "This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
+			  "Automatically stretch the contrast of the specified "
+			  "drawable to cover all possible ranges.",
+			  "This simple plug-in does an automatic contrast "
+			  "stretch.  For each channel in the image, it finds "
+			  "the minimum and maximum values... it uses those "
+			  "values to stretch the individual histograms to the "
+			  "full contrast range.  For some images it may do "
+			  "just what you want; for others it may be total "
+			  "crap :).  This version differs from Contrast "
+			  "Autostretch in that it works in HSV space, and "
+			  "preserves hue.",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "1997",
 			  N_("<Image>/Image/Colors/Auto/Stretch HSV"),
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -113,7 +118,8 @@ run (char    *name,
   image_ID = param[1].data.d_image;
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init (_("Auto-Stretching HSV..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -208,9 +214,12 @@ autostretch_hsv (GDrawable *drawable)
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1) * 2;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
 
@@ -242,10 +251,14 @@ autostretch_hsv (GDrawable *drawable)
     }
 
   /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
       dest = dest_rgn.data;

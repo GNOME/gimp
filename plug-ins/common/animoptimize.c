@@ -55,14 +55,16 @@
  *   User interface
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
 
+#include <libgimp/gimp.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 
 typedef enum
@@ -75,12 +77,12 @@ typedef enum
 
 
 /* Declare local functions. */
-static void query(void);
-static void run(char *name,
-		int nparams,
-		GParam * param,
-		int *nreturn_vals,
-		GParam ** return_vals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
 static      gint32 do_optimizations   (GRunModeType run_mode);
 
@@ -102,84 +104,82 @@ static int is_ms_tag (const char *str,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
 
-
-
 /* Global widgets'n'stuff */
-guint      width,height;
-gint32     image_id;
-gint32     new_image_id;
-gint32     total_frames;
-guint      frame_number;
-gint32*    layers;
-GDrawable* drawable;
-gboolean   playing = FALSE;
-GImageType imagetype;
-GDrawableType drawabletype_alpha;
-guchar     pixelstep;
-guchar*    palette;
-gint       ncolours;
-gboolean   optimize;
+static guint          width,height;
+static gint32         image_id;
+static gint32         new_image_id;
+static gint32         total_frames;
+static gint32        *layers;
+static GDrawable     *drawable;
+static GImageType     imagetype;
+static GDrawableType  drawabletype_alpha;
+static guchar         pixelstep;
+static guchar        *palette;
+static gint           ncolours;
+static gboolean       optimize;
 
 
+MAIN ()
 
-MAIN()
-
-static void query()
+static void
+query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE, "image", "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
   static GParamDef return_args[] =
   {
-    {PARAM_IMAGE, "result", "Resulting image"},
+    { PARAM_IMAGE, "result", "Resulting image" }
   };
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_args = sizeof(return_args) / sizeof(return_args[0]);
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_args = sizeof (return_args) / sizeof (return_args[0]);
 
-  INIT_I18N();
+  gimp_install_procedure ("plug_in_animationoptimize",
+			  "This plugin applies various optimizations to"
+			  " a GIMP layer-based animation.",
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "1997-98",
+			  N_("<Image>/Filters/Animation/Animation Optimize"),
+			  "RGB*, INDEXED*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_args,
+			  args, return_args);
 
-  gimp_install_procedure("plug_in_animationoptimize",
-			 "This plugin applies various optimizations to"
-			 " a GIMP layer-based animation.",
-			 "",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "1997-98",
-			 N_("<Image>/Filters/Animation/Animation Optimize"),
-			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs, nreturn_args,
-			 args, return_args);
-
-  gimp_install_procedure("plug_in_animationunoptimize",
-			 "This plugin 'simplifies' a GIMP layer-based"
-			 " animation that has been AnimationOptimized.  This"
-			 " makes the animation much easier to work with if,"
-			 " for example, the optimized version is all you"
-			 " have.",
-			 "",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "1997-98",
-			 N_("<Image>/Filters/Animation/Animation UnOptimize"),
-			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
-			 nargs, nreturn_args,
-			 args, return_args);
+  gimp_install_procedure ("plug_in_animationunoptimize",
+			  "This plugin 'simplifies' a GIMP layer-based"
+			  " animation that has been AnimationOptimized.  This"
+			  " makes the animation much easier to work with if,"
+			  " for example, the optimized version is all you"
+			  " have.",
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "1997-98",
+			  N_("<Image>/Filters/Animation/Animation UnOptimize"),
+			  "RGB*, INDEXED*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_args,
+			  args, return_args);
 }
 
-static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
-		GParam ** return_vals)
+static void
+run (gchar   *name,
+     gint     n_params,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[2];
   GRunModeType run_mode;
@@ -282,22 +282,22 @@ do_optimizations(GRunModeType run_mode)
 
   frame_sizebytes = width * height * pixelstep;
 
-  this_frame = g_malloc(frame_sizebytes);
-  last_frame = g_malloc(frame_sizebytes);
-  opti_frame = g_malloc(frame_sizebytes);
+  this_frame = g_malloc (frame_sizebytes);
+  last_frame = g_malloc (frame_sizebytes);
+  opti_frame = g_malloc (frame_sizebytes);
 
-  total_alpha(this_frame, width*height, pixelstep);
-  total_alpha(last_frame, width*height, pixelstep);
+  total_alpha (this_frame, width*height, pixelstep);
+  total_alpha (last_frame, width*height, pixelstep);
 
   new_image_id = gimp_image_new(width, height, imagetype);
 
   if (imagetype == INDEXED)
     {
-      palette = gimp_image_get_cmap(image_id, &ncolours);
-      gimp_image_set_cmap(new_image_id, palette, ncolours);
+      palette = gimp_image_get_cmap (image_id, &ncolours);
+      gimp_image_set_cmap (new_image_id, palette, ncolours);
     }
 
-  if ( (this_frame == NULL) || (last_frame == NULL) || (opti_frame == NULL) )
+  if ((this_frame == NULL) || (last_frame == NULL) || (opti_frame == NULL))
     g_error(_("Not enough memory to allocate buffers for optimization.\n"));
 
   for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
@@ -317,17 +317,17 @@ do_optimizations(GRunModeType run_mode)
 
       /* Image has been closed/etc since we got the layer list? */
       /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-      if (gimp_drawable_width(drawable->id)==0)
+      if (gimp_drawable_width (drawable->id) == 0)
 	{
-	  gimp_quit();
+	  gimp_quit ();
 	}
 
       this_delay = get_frame_duration (this_frame_num);
       dispose    = get_frame_disposal (this_frame_num);
 
-      if (dispose==DISPOSE_REPLACE)
+      if (dispose == DISPOSE_REPLACE)
 	{
-	  total_alpha(this_frame, width*height, pixelstep);
+	  total_alpha (this_frame, width * height, pixelstep);
 	}
 
       /* only get a new 'raw' drawable-data buffer if this and
@@ -335,20 +335,19 @@ do_optimizations(GRunModeType run_mode)
 
       if ((rawwidth*rawheight*rawbpp)
 	  !=
-	  ((gimp_drawable_width(drawable->id)*
-	    gimp_drawable_height(drawable->id)*
-	    gimp_drawable_bpp(drawable->id))))
+	  ((gimp_drawable_width (drawable->id)*
+	    gimp_drawable_height (drawable->id)*
+	    gimp_drawable_bpp (drawable->id))))
 	{
-	  if (rawframe != NULL) g_free(rawframe);
-	  rawframe = g_malloc((gimp_drawable_width(drawable->id)) *
-			      (gimp_drawable_height(drawable->id)) *
-			      (gimp_drawable_bpp(drawable->id)));
+	  if (rawframe != NULL) g_free (rawframe);
+	  rawframe = g_malloc ((gimp_drawable_width (drawable->id)) *
+			       (gimp_drawable_height (drawable->id)) *
+			       (gimp_drawable_bpp (drawable->id)));
 	}
-	
-      rawwidth = gimp_drawable_width(drawable->id);
-      rawheight = gimp_drawable_height(drawable->id);
-      rawbpp = gimp_drawable_bpp(drawable->id);
 
+      rawwidth = gimp_drawable_width (drawable->id);
+      rawheight = gimp_drawable_height (drawable->id);
+      rawbpp = gimp_drawable_bpp (drawable->id);
 
       /* Initialise and fetch the whole raw new frame */
 
@@ -1089,4 +1088,3 @@ remove_ms_tag (char *dest, char *src)
 
   dest[offset] = '\0';
 }
-

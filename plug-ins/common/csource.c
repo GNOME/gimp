@@ -60,7 +60,6 @@ static void	run		(gchar   *name,
 static gint	save_image	(Config  *config,
 				 gint32   image_ID,
 				 gint32   drawable_ID);
-static void     init_gtk        (void);
 static gboolean	run_save_dialog	(Config  *config);
 
 
@@ -99,12 +98,10 @@ query (void)
     { PARAM_IMAGE, "image", "Input image" },
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
+    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure ("file_csource_save",
                           "Dump image data in RGB(A) format for C source",
                           "FIXME: write help",
@@ -172,7 +169,7 @@ run (gchar   *name,
       if (!config.comment)
 	config.comment = g_strdup (DEFAULT_COMMENT);     
 
-      init_gtk ();
+      gimp_ui_init ("csource", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
 				  (CAN_HANDLE_RGB |
 				   CAN_HANDLE_ALPHA));
@@ -637,20 +634,6 @@ save_dialog_ok_callback (GtkWidget *widget,
   config.comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("csource");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gboolean

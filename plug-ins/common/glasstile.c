@@ -42,6 +42,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* --- Typedefs --- */
 typedef struct
 {
@@ -99,13 +100,9 @@ query (void)
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "tilex", "Tile width (10 - 50)" },
-    { PARAM_INT32, "tiley", "Tile height (10 - 50)" },
+    { PARAM_INT32, "tiley", "Tile height (10 - 50)" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0; 
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_glasstile",
 			  "Divide the image into square glassblocks",
@@ -116,8 +113,8 @@ query (void)
 			  N_("<Image>/Filters/Glass Effects/Glass Tile..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -187,7 +184,8 @@ run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ( _("Glass Tile..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -219,15 +217,8 @@ glass_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("glasstile");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("glasstile", FALSE);
 
   dlg = gimp_dialog_new (_("Glass Tile"), "glasstile",
 			 gimp_plugin_help_func, "filters/glasstile.html",

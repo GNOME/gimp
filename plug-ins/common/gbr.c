@@ -76,7 +76,6 @@ static gint   save_image     (gchar  *filename,
 			      gint32  image_ID,
 			      gint32  drawable_ID);
 
-static void   init_gtk       (void);
 static gint   save_dialog    (void);
 static void   ok_callback    (GtkWidget *widget, 
 			      gpointer   data);
@@ -101,11 +100,11 @@ query (void)
   {
     { PARAM_INT32,  "run_mode",       "Interactive, non-interactive" },
     { PARAM_STRING, "filename",       "The name of the file to load" },
-    { PARAM_STRING, "raw_filename",   "The name of the file to load" },
+    { PARAM_STRING, "raw_filename",   "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,  "image",          "Output image" },
+    { PARAM_IMAGE,  "image",          "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -119,11 +118,9 @@ query (void)
     { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
     { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
     { PARAM_INT32,    "spacing",      "Spacing of the brush" },
-    { PARAM_STRING,   "description",  "Short description of the brush" },
+    { PARAM_STRING,   "description",  "Short description of the brush" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_gbr_load",
                           "loads files of the .gbr file format",
@@ -205,7 +202,7 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
-	  init_gtk ();
+	  gimp_ui_init ("gbr", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR", 
 				      CAN_HANDLE_GRAY);
 	  if (export == EXPORT_CANCEL)
@@ -440,20 +437,6 @@ save_image (char   *filename,
   close(fd);
   
   return TRUE;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gbr");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint 

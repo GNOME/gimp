@@ -55,6 +55,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /** qbist renderer ***********************************************************/
 
 #define MAX_TRANSFORMS	36
@@ -315,7 +316,7 @@ GPlugInInfo PLUG_IN_INFO =
   run	 /* run_proc   */
 };
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -625,31 +626,11 @@ dialog_create (void)
   GtkWidget *bbox;
   GtkWidget *button;
   GtkWidget *table;
-
-  guchar *color_cube;
-  gchar **argv;
-  gint argc;
-
-  gint i;
+  gint  i;
 
   srand (time (NULL));
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gqbist");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1], 
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("gqbist", TRUE);
 
   dialog = gimp_dialog_new (_("G-Qbist 1.10"), "gqbist",
 			    gimp_plugin_help_func, "filters/gqbist.html",

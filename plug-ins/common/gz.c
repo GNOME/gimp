@@ -137,7 +137,7 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_STRING, "raw_filename", "The name entered" }
   };
   static GParamDef load_return_vals[] =
   {
@@ -156,8 +156,6 @@ query (void)
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_gz_load",
                           "loads files compressed with gzip",

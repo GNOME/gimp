@@ -46,12 +46,15 @@
  *   (Thanks to Michael Lamertz)
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -78,10 +81,10 @@ static guchar *	 get_samples	(GDrawable *drawable );
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
-  query,   /* query_proc */
-  run,	   /* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run,	 /* run_proc   */
 };
 
 MAIN ()
@@ -93,25 +96,30 @@ query()
     {
       { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
       { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
+      { PARAM_DRAWABLE, "drawable", "Input drawable" }
    };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_gradmap",
-                          "Map the contents of the specified drawable with active gradient",
-                          " This plug-in maps the contents of the specified drawable with active gradient. It calculates luminosity of each pixel and replaces the pixel by the sample of active gradient at the position proportional to that luminosity. Complete black pixel becomes the leftmost color of the gradient, and complete white becomes the rightmost. Works on both Grayscale and RGB image with/without alpha channel.",
+                          "Map the contents of the specified drawable with "
+			  "active gradient",
+                          " This plug-in maps the contents of the specified "
+			  "drawable with active gradient. It calculates "
+			  "luminosity of each pixel and replaces the pixel "
+			  "by the sample of active gradient at the position "
+			  "proportional to that luminosity. Complete black "
+			  "pixel becomes the leftmost color of the gradient, "
+			  "and complete white becomes the rightmost. Works on "
+			  "both Grayscale and RGB image with/without alpha "
+			  "channel.",
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",
 			  N_("<Image>/Filters/Colors/Map/Gradient Map"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -140,21 +148,22 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color	*/
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
-	{
-	  gimp_progress_init ( _("Gradient Map..."));
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
+    {
+      gimp_progress_init ( _("Gradient Map..."));
+      gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  gradmap (drawable);
+      gradmap (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	}
-      else
-	{
-	  /* gimp_message ("gradmap: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
-	}
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
+    }
+  else
+    {
+      /* g_message ("gradmap: cannot operate on indexed color images"); */
+      status = STATUS_EXECUTION_ERROR;
+    }
 
   values[0].data.d_status = status;
 
@@ -274,4 +283,3 @@ get_samples (GDrawable *drawable)
   g_free (f_samples);
   return b_samples;
 }
-

@@ -41,6 +41,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 typedef struct
 {
   gchar icon_name[256];
@@ -64,7 +65,6 @@ static gint   save_image    (gchar   *filename,
 			     gint32   image_ID,
 			     gint32   drawable_ID);
 
-static void   init_gtk       (void);
 static gint   save_dialog    (void);
 
 static void   ok_callback    (GtkWidget *widget,
@@ -99,7 +99,7 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { PARAM_STRING, "raw_filename", "The name of the file to load" }
   };
   static GParamDef load_return_vals[] =
   {
@@ -119,8 +119,6 @@ query (void)
     { PARAM_STRING, "icon_name", "The name of the icon" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_gicon_load",
                           "loads files of the .ico file format",
@@ -203,7 +201,7 @@ run (gchar   *name,
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
-	  init_gtk ();
+	  gimp_ui_init ("gicon", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIcon", 
 				      (CAN_HANDLE_GRAY |
 				       CAN_HANDLE_ALPHA));
@@ -426,20 +424,6 @@ save_image (char   *filename,
     }
 
   return TRUE;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gicon");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gint

@@ -82,11 +82,11 @@ query (void)
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_STRING, "filename", "Filename to load image from" },
     { PARAM_STRING, "raw_filename", "Name entered" },
-    { PARAM_STRING, "palette_filename", "Filename to load palette from" },
+    { PARAM_STRING, "palette_filename", "Filename to load palette from" }
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -102,8 +102,6 @@ query (void)
     { PARAM_STRING, "palette_filename", "Filename to save palette to" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_cel_load",
 			  "Loads files in KISS CEL file format",
@@ -606,15 +604,9 @@ palette_ok (GtkWidget  *widget,
 static void
 palette_dialog (gchar *title)
 {
-  gchar **argv;
-  gint argc = 1;
   GtkWidget *dialog;
 
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("CEL file-filter");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("CEL", FALSE);
 
   dialog = gtk_file_selection_new (title);
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);

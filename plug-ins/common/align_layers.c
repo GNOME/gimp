@@ -139,12 +139,10 @@ query (void)
     { PARAM_IMAGE, "image", "Input image"},
     { PARAM_DRAWABLE, "drawable", "Input drawable (not used)"},
     { PARAM_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
-    { PARAM_INT32, "use-bottom", "use the bottom layer as the base of alignment"},
+    { PARAM_INT32, "use-bottom", "use the bottom layer as the base of alignment"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-  
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Align visible layers",
 			  "Align visible layers",
@@ -416,17 +414,10 @@ align_layers_dialog (void)
   GtkWidget *optionmenu;
   GtkWidget *toggle;
   GtkObject *adj;
-  gchar	**argv;
-  gint	  argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
+  gimp_ui_init (SHORT_NAME, FALSE);
 
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  
-  dlg = gimp_dialog_new (_("Align Visible Layers"), "align_layers",
+  dlg = gimp_dialog_new (_("Align Visible Layers"), SHORT_NAME,
 			 gimp_plugin_help_func, "filters/align_layers.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,

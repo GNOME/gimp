@@ -36,10 +36,11 @@
 #include <libgimp/gimpui.h>
 #include <libgimp/parasiteio.h>
 
-#include "libgimp/stdplugins-intl.h"
-
 #include "app/brush_header.h"
 #include "app/pattern_header.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 #define DUMMY_PATTERN_NAME "x"
 
@@ -51,7 +52,7 @@
 static struct
 {
   /* Use by both gpb and gih: */
-  guint spacing;
+  guint  spacing;
   guchar description[MAXDESCLEN+1];
 } info =
 /* Initialize to this, change if non-interactive later */
@@ -93,8 +94,6 @@ static void   run      (gchar   *name,
 			gint    *nreturn_vals,
 			GParam **return_vals);
 
-static void   init_gtk (void);
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -103,6 +102,7 @@ GPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
+
 
 MAIN ()
 
@@ -117,7 +117,7 @@ query (void)
     { PARAM_STRING,   "filename",     "The name of the file to save the brush in" },
     { PARAM_STRING,   "raw_filename", "The name of the file to save the brush in" },
     { PARAM_INT32,    "spacing",      "Spacing of the brush" },
-    { PARAM_STRING,   "description",  "Short description of the brush" },
+    { PARAM_STRING,   "description",  "Short description of the brush" }
   };
   static gint ngpb_save_args = (sizeof (gpb_save_args) /
 				sizeof (gpb_save_args[0]));
@@ -130,12 +130,10 @@ query (void)
     { PARAM_STRING,   "filename",     "The name of the file to save the brush pipe in" },
     { PARAM_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
     { PARAM_INT32,    "spacing",      "Spacing of the brush" },
-    { PARAM_STRING,   "description",  "Short description of the brush pipe" },
+    { PARAM_STRING,   "description",  "Short description of the brush pipe" }
   };
   static gint ngih_save_args = (sizeof (gih_save_args) /
 				sizeof (gih_save_args[0]));
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_gpb_save",
                           "saves images in GIMP pixmap brush format", 
@@ -168,20 +166,6 @@ query (void)
   gimp_register_save_handler ("file_gih_save",
 			      "gih",
 			      "");
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gpb");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static void
@@ -950,7 +934,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_ALPHA | 
@@ -1014,7 +998,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
-	  init_gtk ();
+	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_ALPHA | 

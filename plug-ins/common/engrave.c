@@ -35,6 +35,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 
 #define SCALE_WIDTH     125
@@ -107,11 +108,7 @@ query (void)
     { PARAM_INT32, "height", "Resolution in pixels" },
     { PARAM_INT32, "limit", "If true, limit line width" }
   };
-  static GParamDef *return_vals = NULL;
-  static gint nargs = sizeof(args) / sizeof(args[0]);
-  static gint nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_engrave",
 			  "Engrave the contents of the specified drawable",
@@ -122,8 +119,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Engrave..."),
 			  "RGBA, GRAYA",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -147,14 +144,14 @@ run (gchar   *name,
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
-      gimp_get_data("plug_in_engrave", &pvals);
+      gimp_get_data ("plug_in_engrave", &pvals);
 
       /*  First acquire information with a dialog  */
       if (!engrave_dialog ())
@@ -216,15 +213,8 @@ engrave_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
-  gchar **argv;
-  gint argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("engrave");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("engrave", FALSE);
 
   dlg = gimp_dialog_new (_("Engrave"), "engrave",
 			 gimp_plugin_help_func, "filters/engrave.html",

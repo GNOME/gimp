@@ -171,7 +171,7 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs_ni = sizeof(args_ni) / sizeof (args_ni[0]);
 
@@ -183,7 +183,7 @@ query (void)
     { PARAM_FLOAT, "blur_pct", "Randomization percentage (1 - 100)" },
     { PARAM_FLOAT, "blur_rcount", "Repeat count(1 - 100)" },
     { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
-    { PARAM_INT32, "blur_seed", "Seed value (used only if seed type is 11)" },
+    { PARAM_INT32, "blur_seed", "Seed value (used only if seed type is 11)" }
   };
   static gint nargs = sizeof(args) / sizeof (args[0]);
 
@@ -192,8 +192,6 @@ query (void)
   const gchar *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
   const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
-
-  INIT_I18N();
 
   gimp_install_procedure ("plug_in_blur_randomize",
 			  (gchar *) blurb,
@@ -257,8 +255,8 @@ run (gchar   *name,
   /*
    *  Make sure the drawable type is appropriate.
    */
-  if (gimp_drawable_is_rgb(drawable->id) ||
-      gimp_drawable_is_gray(drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       switch (run_mode)
 	{
@@ -266,8 +264,8 @@ run (gchar   *name,
 	   *  If we're running interactively, pop up the dialog box.
 	   */
 	case RUN_INTERACTIVE:
-	  gimp_get_data(PLUG_IN_NAME, &pivals);
-	  if (!blur_dialog())        /* return on Cancel */
+	  gimp_get_data (PLUG_IN_NAME, &pivals);
+	  if (!blur_dialog ())        /* return on Cancel */
 	    return;
 	  break;
 
@@ -604,15 +602,8 @@ blur_dialog (void)
   GtkWidget *table;
   GtkWidget *seed_hbox;
   GtkObject *adj;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("blur");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("blur", FALSE);
 
   dlg = gimp_dialog_new (BLUR_VERSION, "blur",
 			 gimp_plugin_help_func, "filters/blur.html",

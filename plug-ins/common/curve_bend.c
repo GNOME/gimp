@@ -42,6 +42,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_curve_bend"
 #define PLUG_IN_VERSION     "v1.1.17 (2000/02/16)"
@@ -617,48 +618,45 @@ MAIN ()
 static void 
 query (void)
 {
-  static GParamDef args[] = {
-                  { PARAM_INT32,      "run_mode", "Interactive, non-interactive"},
-                  { PARAM_IMAGE,      "image", "Input image" },
-                  { PARAM_DRAWABLE,   "drawable", "Input drawable (must be a layer without layermask)"},
-                  { PARAM_FLOAT,      "rotation", "Direction {angle 0 to 360 degree } of the bend effect"},
-                  { PARAM_INT32,      "smoothing", "Smoothing { TRUE, FALSE }"},
-                  { PARAM_INT32,      "antialias", "Antialias { TRUE, FALSE }"},
-                  { PARAM_INT32,      "work_on_copy", "{ TRUE, FALSE } TRUE: copy the drawable and bend the copy"},
-                  { PARAM_INT32,      "curve_type", " { 0, 1 } 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) "},
-                  { PARAM_INT32,      "argc_upper_point_x", "{2 <= argc <= 17} "},
-                  { PARAM_FLOATARRAY, "upper_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-                  { PARAM_INT32,      "argc_upper_point_y", "{2 <= argc <= 17} "},
-                  { PARAM_FLOATARRAY, "upper_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-                  { PARAM_INT32,      "argc_lower_point_x", "{2 <= argc <= 17} "},
-                  { PARAM_FLOATARRAY, "lower_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
-                  { PARAM_INT32,      "argc_lower_point_y", "{2 <= argc <= 17} "},
-                  { PARAM_FLOATARRAY, "lower_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
-                  { PARAM_INT32,      "argc_upper_val_y", "{ 256 } "},
-                  { PARAM_INT8ARRAY,  "upper_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"},
-                  { PARAM_INT32,      "argc_lower_val_y", "{ 256 } "},
-                  { PARAM_INT8ARRAY,  "lower_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
+  static GParamDef args[] =
+  {
+    { PARAM_INT32,      "run_mode", "Interactive, non-interactive"},
+    { PARAM_IMAGE,      "image", "Input image" },
+    { PARAM_DRAWABLE,   "drawable", "Input drawable (must be a layer without layermask)"},
+    { PARAM_FLOAT,      "rotation", "Direction {angle 0 to 360 degree } of the bend effect"},
+    { PARAM_INT32,      "smoothing", "Smoothing { TRUE, FALSE }"},
+    { PARAM_INT32,      "antialias", "Antialias { TRUE, FALSE }"},
+    { PARAM_INT32,      "work_on_copy", "{ TRUE, FALSE } TRUE: copy the drawable and bend the copy"},
+    { PARAM_INT32,      "curve_type", " { 0, 1 } 0 == smooth (use 17 points), 1 == freehand (use 256 val_y) "},
+    { PARAM_INT32,      "argc_upper_point_x", "{2 <= argc <= 17} "},
+    { PARAM_FLOATARRAY, "upper_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
+    { PARAM_INT32,      "argc_upper_point_y", "{2 <= argc <= 17} "},
+    { PARAM_FLOATARRAY, "upper_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
+    { PARAM_INT32,      "argc_lower_point_x", "{2 <= argc <= 17} "},
+    { PARAM_FLOATARRAY, "lower_point_x", "array of 17 x point_koords { 0.0 <= x <= 1.0 or -1 for unused point }"},
+    { PARAM_INT32,      "argc_lower_point_y", "{2 <= argc <= 17} "},
+    { PARAM_FLOATARRAY, "lower_point_y", "array of 17 y point_koords { 0.0 <= y <= 1.0 or -1 for unused point }"},
+    { PARAM_INT32,      "argc_upper_val_y", "{ 256 } "},
+    { PARAM_INT8ARRAY,  "upper_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"},
+    { PARAM_INT32,      "argc_lower_val_y", "{ 256 } "},
+    { PARAM_INT8ARRAY,  "lower_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
   };
-  static int nargs = sizeof(args) / sizeof(args[0]);
+  static gint nargs = sizeof (args) / sizeof (args[0]);
   
   static GParamDef return_vals[] =
   {
     { PARAM_LAYER, "bent_layer", "the handled layer" }
   };
-  static int nreturn_vals = sizeof(return_vals) / sizeof(return_vals[0]);
-
+  static gint nreturn_vals = sizeof(return_vals) / sizeof(return_vals[0]);
 
   static GParamDef args_iter[] =
   {
-    {PARAM_INT32, "run_mode", "non-interactive"},
-    {PARAM_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)"},
-    {PARAM_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)"},
-    {PARAM_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name"},
+    { PARAM_INT32, "run_mode", "non-interactive" },
+    { PARAM_INT32, "total_steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
+    { PARAM_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
+    { PARAM_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
   };
-  static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);
-
-  static GParamDef *return_iter = NULL;
-  static int nreturn_iter = 0;
+  static gint nargs_iter = sizeof (args_iter) / sizeof (args_iter[0]);
 
   /* the actual installation of the bend plugin */
   gimp_install_procedure (PLUG_IN_NAME,
@@ -688,8 +686,7 @@ query (void)
                           args,
                           return_vals);
  
- 
-  /* the installation of the Iterator extension for the bend plugin */
+   /* the installation of the Iterator extension for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,
                           "This extension calculates the modified values for one iterationstep for the call of plug_in_curve_bend",
                           "",
@@ -699,8 +696,8 @@ query (void)
                           NULL,    /* do not appear in menus */
                           NULL,
                           PROC_EXTENSION,
-                          nargs_iter, nreturn_iter,
-                          args_iter, return_iter);
+                          nargs_iter, 0,
+                          args_iter, NULL);
 }
 
 static void
@@ -1248,25 +1245,10 @@ BenderDialog *
 do_dialog (GDrawable *drawable)
 {
   BenderDialog *cd;
-  int i;
-  gint argc = 1;
-  guchar     *color_cube;
-  gchar **argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("CurveBend");
-
+  gint  i;
 
   /* Init GTK  */
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
-
+  gimp_ui_init ("curve_bend", TRUE);
 
   /*  The curve_bend dialog  */
   cd = bender_new_dialog (drawable);
@@ -3681,4 +3663,3 @@ p_main_bend (BenderDialog *cd,
 
    return dst_drawable->id;
 }	/* end p_main_bend */
-

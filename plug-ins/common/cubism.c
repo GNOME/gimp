@@ -31,6 +31,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define SCALE_WIDTH    125
 #define BLACK            0
 #define BG               1
@@ -42,13 +43,8 @@
 
 typedef struct
 {
-  gdouble x, y;
-} Vertex;
-
-typedef struct
-{
-  gint npts;
-  Vertex pts[MAX_POINTS];
+  gint        npts;
+  GimpVector2 pts[MAX_POINTS];
 } Polygon;
 
 typedef struct
@@ -73,49 +69,50 @@ static void      run    (gchar      *name,
 			 GParam    **return_vals);
 static void      cubism (GDrawable  *drawable);
 
-static void      render_cubism        (GDrawable * drawable);
-static void      fill_poly_color      (Polygon *  poly,
-				       GDrawable * drawable,
-				       guchar *   col);
+static void      render_cubism        (GDrawable *drawable);
+static void      fill_poly_color      (Polygon   *poly,
+				       GDrawable *drawable,
+				       guchar    *col);
 static void      convert_segment      (gint       x1,
 				       gint       y1,
 				       gint       x2,
 				       gint       y2,
 				       gint       offset,
-				       gint *     min,
-				       gint *     max);
+				       gint      *min,
+				       gint      *max);
 static void      randomize_indices    (gint       count,
-				       gint *     indices);
+				       gint      *indices);
 static gdouble   fp_rand              (gdouble    val);
 static gint      int_rand             (gint       val);
-static gdouble   calc_alpha_blend     (gdouble *  vec,
+static gdouble   calc_alpha_blend     (gdouble   *vec,
 				       gdouble    one_over_dist,
 				       gdouble    x,
 				       gdouble    y);
-static void      polygon_add_point    (Polygon *  poly,
+static void      polygon_add_point    (Polygon   *poly,
 				       gdouble    x,
 				       gdouble    y);
-static void      polygon_translate    (Polygon *  poly,
+static void      polygon_translate    (Polygon   *poly,
 				       gdouble    tx,
 				       gdouble    ty);
-static void      polygon_rotate       (Polygon *  poly,
+static void      polygon_rotate       (Polygon   *poly,
 				       gdouble    theta);
-static gint      polygon_extents      (Polygon *  poly,
-				       gdouble *  min_x,
-				       gdouble *  min_y,
-				       gdouble *  max_x,
-				       gdouble *  max_y);
-static void      polygon_reset        (Polygon *  poly);
+static gint      polygon_extents      (Polygon   *poly,
+				       gdouble   *min_x,
+				       gdouble   *min_y,
+				       gdouble   *max_x,
+				       gdouble   *max_y);
+static void      polygon_reset        (Polygon   *poly);
 
 static gint      cubism_dialog        (void);
-static void      cubism_ok_callback   (GtkWidget     *widget,
-				       gpointer       data);
+static void      cubism_ok_callback   (GtkWidget *widget,
+				       gpointer   data);
 
 /*
  *  Local variables
  */
 
 static guchar bg_col[4];
+
 static CubismVals cvals =
 {
   10.0,        /* tile_size */
@@ -130,10 +127,10 @@ static CubismInterface cint =
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -155,12 +152,8 @@ query (void)
     { PARAM_FLOAT, "tile_saturation", "Expand tiles by this amount" },
     { PARAM_INT32, "bg_color", "Background color: { BLACK (0), BG (1) }" }
   };
-  static GParamDef *return_vals = NULL;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
   gimp_install_procedure ("plug_in_cubism",
 			  "Convert the input drawable into a collection of rotated squares",
 			  "Help not yet written for this plug-in",
@@ -170,8 +163,8 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Cubism..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -236,7 +229,8 @@ run (gchar   *name,
 
   /*  Render the cubism effect  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->id) ||
+       gimp_drawable_is_gray (active_drawable->id)))
     {
       /*  set cache size  */
       gimp_tile_cache_ntiles (SQR (4 * cvals.tile_size * cvals.tile_saturation) / SQR (gimp_tile_width ()));
@@ -298,15 +292,8 @@ cubism_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("cubism");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("cubism", FALSE);
 
   dlg = gimp_dialog_new (_("Cubism"), "cubism",
 			 gimp_plugin_help_func, "filters/cubism.html",
@@ -432,7 +419,7 @@ render_cubism (GDrawable *drawable)
     }
 
   num_tiles = (rows + 1) * (cols + 1);
-  random_indices = (gint *) malloc (sizeof (gint) * num_tiles);
+  random_indices = g_new (gint, num_tiles);
   for (i = 0; i < num_tiles; i++)
     random_indices[i] = i;
 
@@ -482,7 +469,7 @@ render_cubism (GDrawable *drawable)
     }
 
   gimp_progress_update (1.0);
-  free (random_indices);
+  g_free (random_indices);
 }
 
 static inline gdouble
@@ -566,8 +553,8 @@ fill_poly_color (Polygon   *poly,
   size_y = (max_y - min_y) * supersample;
   size_x = (max_x - min_x) * supersample;
 
-  min_scanlines = min_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = max_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = min_scanlines_iter = g_new (gint, size_y);
+  max_scanlines = max_scanlines_iter = g_new (gint, size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
@@ -576,7 +563,7 @@ fill_poly_color (Polygon   *poly,
 
   if(poly->npts) {
     gint poly_npts = poly->npts;
-    Vertex *curptr;
+    GimpVector2 *curptr;
 
     xs = (gint) (poly->pts[poly_npts-1].x);
     ys = (gint) (poly->pts[poly_npts-1].y);
@@ -680,9 +667,9 @@ fill_poly_color (Polygon   *poly,
 	}
     }
 
-  free (vals);
-  free (min_scanlines);
-  free (max_scanlines);
+  g_free (vals);
+  g_free (min_scanlines);
+  g_free (max_scanlines);
 }
 
 static void

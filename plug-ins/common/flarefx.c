@@ -46,6 +46,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* --- Defines --- */
 #define ENTRY_WIDTH   75
 #define PREVIEW_SIZE 100
@@ -191,11 +192,7 @@ query (void)
     { PARAM_INT32, "posx", "X-position" },
     { PARAM_INT32, "posy", "Y-position" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0; 
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_flarefx",
 			  "Add lens flare effects",
@@ -206,8 +203,8 @@ query (void)
 			  N_("<Image>/Filters/Light Effects/FlareFX..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -273,7 +270,8 @@ run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) ||
+	  gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init (_("Render Flare..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
@@ -304,31 +302,8 @@ flare_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("flarefx");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), 19); /* SIGSTOP */
-#endif
+  gimp_ui_init ("flarefx", TRUE);
 
   dlg = gimp_dialog_new (_("FlareFX"), "flarefx",
 			 gimp_plugin_help_func, "filters/flarefx.html",

@@ -32,7 +32,6 @@ static void       run        (gchar      *name,
 			      GParam     *param, 
 			      gint       *nreturn_vals, 
 			      GParam    **return_vals);
-static void       init_gtk   (void);
 static gboolean   aa_savable (gint32      drawable_ID);
 static gboolean   save_aa    (gint        output_type, 
 			      gchar      *filename, 
@@ -83,8 +82,6 @@ query (void)
     {PARAM_STRING,   "file_type",    "File type to use"}
   };
   static gint nsave_args = sizeof(save_args) / sizeof(save_args[0]);
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_aa_save",
 			  "Saves files in various text formats",
@@ -158,7 +155,7 @@ run (gchar   *name,
     case RUN_INTERACTIVE:
     case RUN_WITH_LAST_VALS:
       INIT_I18N_UI();
-      init_gtk ();
+      gimp_ui_init ("aa", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
 				  (CAN_HANDLE_GRAY |
 				   CAN_HANDLE_ALPHA));
@@ -330,20 +327,6 @@ aa_savable (gint32 drawable_ID)
 /* 
  * User Interface dialog thingie.
  */
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("aa");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-}
 
 static gint 
 type_dialog (int selected) 

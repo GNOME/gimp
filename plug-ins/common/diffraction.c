@@ -23,7 +23,6 @@
 
 #include "config.h"
 
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
@@ -37,6 +36,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /***** Magic numbers *****/
 #define ITERATIONS      100
@@ -151,7 +151,7 @@ static gdouble param_lut2[ITERATIONS + 1];
 
 /***** Functions *****/
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -174,12 +174,7 @@ query (void)
     { PARAM_FLOAT, 	  "scattering",   "Scattering (Speed vs. quality)" },
     { PARAM_FLOAT, 	  "polarization", "Polarization" }
   };
-
-  static GParamDef *return_vals = NULL;
-  static gint       nargs = sizeof(args) / sizeof(args[0]);
-  static gint       nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_diffraction",
 			  "Generate diffraction patterns",
@@ -190,10 +185,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Diffraction Patterns..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -530,32 +523,8 @@ diffraction_dialog (void)
   GtkWidget *label;
   GtkWidget *button;
   GtkObject *adj;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
 
-#if 0
-  g_print ("Waiting... (pid %d)\n", getpid ());
-  kill (getpid (), SIGSTOP);
-#endif
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("diffraction");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("diffraction", TRUE);
 
   dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
 			    gimp_plugin_help_func, "filters/diffraction.html",

@@ -26,32 +26,34 @@
  *           Initial release.
  */
 
-
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      guillotine (gint32 image_ID);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
+static void      guillotine (gint32 image_ID);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 
@@ -64,13 +66,9 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_guillotine",
 			  "Slice up the image into subimages, cutting along the image's Guides.  Fooey to you and your broccoli, Pokey.",
@@ -81,17 +79,15 @@ query (void)
 			  N_("<Image>/Image/Transforms/Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
-
-
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -120,17 +116,19 @@ run (char    *name,
 }
 
 
-int unexciting (const void *a, const void *b)
+static gint
+unexciting (const void *a,
+	    const void *b)
 {
-  gint j = *(gint*)a;
-  gint k = *(gint*)b;
+  gint j = * (gint *) a;
+  gint k = * (gint *) b;
 
-  return (j-k);
+  return (j - k);
 }
 
 
 static void
-guillotine(gint32 image_ID)
+guillotine (gint32 image_ID)
 {
   gint num_vguides;
   gint num_hguides;
@@ -147,7 +145,7 @@ guillotine(gint32 image_ID)
   guide_num = gimp_image_find_next_guide(image_ID, 0);
 
   /* Count the guides so we can allocate appropriate memory */
-  if (guide_num>0)
+  if (guide_num > 0)
     {
       do
 	{
@@ -158,12 +156,12 @@ guillotine(gint32 image_ID)
 	    case ORIENTATION_HORIZONTAL:
 	      num_hguides++; break;
 	    default:
-	      printf("Aie!  Aie!  Aie!\n");
-	      gimp_quit();
+	      g_print ("Aie!  Aie!  Aie!\n");
+	      gimp_quit ();
 	    }
-	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
+	  guide_num = gimp_image_find_next_guide (image_ID, guide_num);
 	}
-      while (guide_num>0);
+      while (guide_num > 0);
     }
 
   if (num_vguides+num_hguides)

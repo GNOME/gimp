@@ -34,6 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define DEBUG
 
 #ifndef LERP
@@ -179,7 +180,7 @@ query (void)
     { PARAM_FLOAT,    "overlap",   "Overlap" },
     { PARAM_FLOAT,    "offset",    "Depth relative offset" },
     { PARAM_FLOAT,    "scale1",    "Depth relative scale 1" },
-    { PARAM_FLOAT,    "scale2",    "Depth relative scale 2" },
+    { PARAM_FLOAT,    "scale2",    "Depth relative scale 2" }
   };
   static gint numArgs = sizeof (args) / sizeof (GParamDef);
 
@@ -626,31 +627,12 @@ DepthMerge_dialog (DepthMerge *dm)
   GtkWidget *tempMenu;
   GtkWidget *numericParameterTable;
   GtkObject *adj;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
 
   dm->interface = g_new (DepthMergeInterface, 1);
   dm->interface->active = FALSE;
   dm->interface->run    = FALSE;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("depthmerge", TRUE);
 
   dm->interface->dialog =
     gimp_dialog_new (_("Depth Merge"), "depthmerge",

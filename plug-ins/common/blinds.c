@@ -61,6 +61,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /***** Magic numbers *****/
 
 /* Don't make preview >255!!! It won't work for horizontal blinds */
@@ -147,10 +148,10 @@ static BlindVals bvals =
 };
 
 /* Stuff for the preview bit */
-static gint   sel_x1, sel_y1, sel_x2, sel_y2;
-static gint   sel_width, sel_height;
-static gint   preview_width, preview_height;
-static gint   has_alpha;
+static gint  sel_x1, sel_y1, sel_x2, sel_y2;
+static gint  sel_width, sel_height;
+static gint  preview_width, preview_height;
+static gint  has_alpha;
 
 
 MAIN ()
@@ -168,14 +169,12 @@ query (void)
     { PARAM_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
     { PARAM_INT32, "backgndg_trans", "background transparent; FALSE,TRUE" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_blinds",
-			  "Adds a blinds effect to the image. Rather like putting the image on a set of window blinds and the closing or opening the blinds",
+			  "Adds a blinds effect to the image. Rather like "
+			  "putting the image on a set of window blinds and "
+			  "the closing or opening the blinds",
 			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",
@@ -183,8 +182,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Blinds..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -311,26 +310,8 @@ blinds_dialog (void)
   GtkWidget *table;
   GtkObject *size_data;
   GtkWidget *toggle;
-  guchar *color_cube;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("blinds");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  /* Get the stuff for the preview window...*/
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-  
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("blinds", TRUE);
 
   cache_preview (); /* Get the preview image and store it also set has_alpha */
 

@@ -47,6 +47,7 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Maximum number of pictures per film */
 #define MAX_FILM_PICTURES   64
 #define COLOR_BUTTON_WIDTH  50
@@ -242,8 +243,6 @@ query (void)
     { PARAM_IMAGE, "new_image", "Output image" }
   };
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
-
-  INIT_I18N ();
 
   gimp_install_procedure ("plug_in_film",
 			  "Compose several images to a roll film",
@@ -1174,29 +1173,10 @@ film_dialog (gint32 image_ID)
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *sep;
-  guchar *color_cube;
   gint32 *image_id_list;
   gint    nimages, j, row;
 
-  gchar **argv;
-  gint argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("film");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1], color_cube[2],
-			      color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("film", TRUE);
 
   dlg = gimp_dialog_new (_("Film"), "film",
 			 gimp_plugin_help_func, "filters/film.html",
@@ -1518,11 +1498,11 @@ static void
 film_ok_callback (GtkWidget *widget,
                   gpointer   data)
 {
-  gint num_images;
-  gchar *s;
+  gint       num_images;
+  gchar     *s;
   GtkWidget *label;
-  GList *tmp_list;
-  gint32 image_ID;
+  GList     *tmp_list;
+  gint32     image_ID;
 
   /* Read font family */
   s = gtk_entry_get_text (GTK_ENTRY (filmint.font_entry));

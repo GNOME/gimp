@@ -33,7 +33,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define PRV_WIDTH 40
+
+#define PRV_WIDTH  40
 #define PRV_HEIGHT 20
 
 typedef struct
@@ -75,15 +76,15 @@ static GRunModeType run_mode;
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static C2AValues pvals = 
 { 
-  {255, 255, 255} /* white default */
+  { 255, 255, 255 } /* white default */
 };
 
 static C2AInterface pint = 
@@ -106,25 +107,23 @@ query (void)
     { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE,    "image",    "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_COLOR,    "color",    "Color to remove"},
+    { PARAM_COLOR,    "color",    "Color to remove" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_colortoalpha",
 			  "Convert the color in an image to alpha",
-			  "This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly.",
+			  "This replaces as much of a given color as possible "
+			  "in each pixel with a corresponding amount of alpha, "
+			  "then readjusts the color accordingly.",
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
 			  "7th Aug 1999",
 			  N_("<Image>/Filters/Colors/Color to Alpha..."),
 			  "RGBA",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -394,26 +393,7 @@ colortoalpha_dialog (GDrawable *drawable)
   GtkWidget *button;
   GtkWidget *label;
 
-  guchar  *color_cube;
-  gchar  **argv;
-  gint     argc;
-  
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("colortoalpha");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("colortoalpha", TRUE);
 
   dlg = gimp_dialog_new (_("Color to Alpha"), "colortoalpha",
 			 gimp_plugin_help_func, "filters/colortoalpha.html",

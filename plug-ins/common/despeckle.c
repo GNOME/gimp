@@ -54,24 +54,25 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /*
  * Constants...
  */
 
-#define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.3.2 - 17 May 1998"
-#define PREVIEW_SIZE		128
-#define SCALE_WIDTH		80
-#define ENTRY_WIDTH		40
-#define MAX_RADIUS		20
+#define PLUG_IN_NAME	 "plug_in_despeckle"
+#define PLUG_IN_VERSION	 "1.3.2 - 17 May 1998"
+#define PREVIEW_SIZE	 128
+#define SCALE_WIDTH	 80
+#define ENTRY_WIDTH	 40
+#define MAX_RADIUS	 20
 
-#define FILTER_ADAPTIVE		0x01
-#define FILTER_RECURSIVE	0x02
+#define FILTER_ADAPTIVE	 0x01
+#define FILTER_RECURSIVE 0x02
 
-#define despeckle_radius	(despeckle_vals[0])	/* Radius of filter */
-#define filter_type		(despeckle_vals[1])	/* Type of filter */
-#define black_level		(despeckle_vals[2])	/* Black level */
-#define white_level		(despeckle_vals[3])	/* White level */
+#define despeckle_radius (despeckle_vals[0])	/* Radius of filter */
+#define filter_type	 (despeckle_vals[1])	/* Type of filter */
+#define black_level	 (despeckle_vals[2])	/* Black level */
+#define white_level	 (despeckle_vals[3])	/* White level */
 
 /*
  * Local functions...
@@ -167,23 +168,21 @@ query (void)
     { PARAM_INT32,	"black",	"Black level (0 to 255)" },
     { PARAM_INT32,	"white",	"White level (0 to 255)" }
   };
-  static GParamDef	*return_vals = NULL;
-  static int		nargs        = sizeof(args) / sizeof(args[0]),
-			nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Despeckle filter, typically used to \'despeckle\' a photographic image.",
-			  "This plug-in selectively performs a median or adaptive box filter on an image.",
+			  "Despeckle filter, typically used to \'despeckle\' "
+			  "a photographic image.",
+			  "This plug-in selectively performs a median or "
+			  "adaptive box filter on an image.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Enhance/Despeckle..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 
@@ -606,27 +605,9 @@ despeckle_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
-  gint     argc;
-  gchar	 **argv;
-  guchar  *color_cube;
-  gchar   *plugin_name;
+  gchar *plugin_name;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("despeckle");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
-
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  gimp_ui_init ("despeckle", TRUE);
 
   plugin_name = g_strdup_printf ("%s %s", _("Despeckle"), PLUG_IN_VERSION);
 

@@ -47,6 +47,7 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Declare local functions
  */
 static void      query  (void);
@@ -190,12 +191,10 @@ query (void)
     { PARAM_IMAGE, "new_image", "Output gray image" },
     { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
     { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
+    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
-
-  INIT_I18N ();
 
   gimp_install_procedure ("plug_in_decompose",
 			  "Decompose an image into different types of channels",
@@ -843,16 +842,9 @@ decompose_dialog (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GSList *group;
-  gchar **argv;
-  gint    argc;
   gint    j;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("decompose");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("decompose", FALSE);
 
   dlg = gimp_dialog_new (_("Decompose"), "decompose",
 			 gimp_plugin_help_func, "filters/decompose.html",

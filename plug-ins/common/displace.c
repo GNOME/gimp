@@ -52,6 +52,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Some useful macros */
 
 #define ENTRY_WIDTH     75
@@ -150,7 +151,7 @@ static DisplaceInterface dint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -165,22 +166,25 @@ query ()
     { PARAM_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
     { PARAM_INT32, "displace_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
-  INIT_I18N();
   gimp_install_procedure ("plug_in_displace",
 			  "Displace the contents of the specified drawable",
-			  "Displaces the contents of the specified drawable by the amounts specified by 'amount_x' and 'amount_y' multiplied by the intensity of corresponding pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must be of type GRAY_IMAGE for this operation to succeed.",
-			  "Stephen Robert Norris & (ported to 1.0 by) Spencer Kimball",
+			  "Displaces the contents of the specified drawable "
+			  "by the amounts specified by 'amount_x' and "
+			  "'amount_y' multiplied by the intensity of "
+			  "corresponding pixels in the 'displace_map' "
+			  "drawables.  Both 'displace_map' drawables must be "
+			  "of type GRAY_IMAGE for this operation to succeed.",
+			  "Stephen Robert Norris & (ported to 1.0 by) "
+			  "Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",
-              N_("<Image>/Filters/Map/Displace..."),
+			  N_("<Image>/Filters/Map/Displace..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -282,21 +286,9 @@ displace_dialog (GDrawable *drawable)
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *sep;
-  GSList  *group = NULL;
-  gchar  **argv;
-  gint     argc;
+  GSList *group = NULL;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("displace");
-
-#if 0
-  g_print ("displace: pid = %d\n", (int) getpid ());
-  kill (getpid (), SIGSTOP);
-#endif 
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("displace", FALSE);
 
   dlg = gimp_dialog_new (_("Displace"), "displace",
 			 gimp_plugin_help_func, "filters/displace.html",

@@ -35,6 +35,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 enum
 {
   ODD_FIELDS,
@@ -56,10 +57,10 @@ static gint      deinterlace_dialog (void);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static gint DeinterlaceValue = EVEN_FIELDS;
@@ -74,25 +75,25 @@ query (void)
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image (unused)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "evenodd", "0 = keep odd, 1 = keep even" },
+    { PARAM_INT32, "evenodd", "0 = keep odd, 1 = keep even" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_deinterlace",
 			  "Deinterlace",
-			  "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
+			  "Deinterlace is useful for processing images from "
+			  "video capture cards. When only the odd or even "
+			  "fields get captured, deinterlace can be used to "
+			  "interpolate between the existing fields to correct "
+			  "this.",
 			  "Andrew Kieschnick",
 			  "Andrew Kieschnick",
 			  "1997",
 			  N_("<Image>/Filters/Enhance/Deinterlace..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -259,16 +260,8 @@ deinterlace_dialog (void)
   GtkWidget *dlg;
   GtkWidget *vbox;
   GtkWidget *frame;
-  gchar **argv;
-  gint    argc;
 
-  /* Set args */
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("deinterlace");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
+  gimp_ui_init ("deinterlace", FALSE);
 
   dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
 			 gimp_plugin_help_func, "filters/deinterlace.html",

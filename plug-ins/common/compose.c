@@ -227,8 +227,6 @@ query (void)
   static gint drw_nargs = sizeof (args) / sizeof (args[0]);
   static gint drw_nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
-  INIT_I18N ();
-
   gimp_install_procedure ("plug_in_compose",
 			  "Compose an image from multiple gray images",
 			  "This function creates a new image from "
@@ -752,10 +750,8 @@ compose_dialog (gchar  *compose_type,
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *image_option_menu, *image_menu;
-  GSList  *group;
-  gchar  **argv;
-  gint     argc;
-  gint     j, compose_idx, sensitive;
+  GSList *group;
+  gint    j, compose_idx, sensitive;
 
   /* Check default compose type */
   compose_idx = -1;
@@ -770,12 +766,7 @@ compose_dialog (gchar  *compose_type,
   composeint.width  = gimp_drawable_width (drawable_ID);
   composeint.height = gimp_drawable_height (drawable_ID);
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("compose");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("compose", TRUE);
 
   dlg = gimp_dialog_new (_("Compose"), "compose",
 			 gimp_plugin_help_func, "filters/compose.html",

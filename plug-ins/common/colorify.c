@@ -41,6 +41,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_NAME    "plug_in_colorify"
 #define PLUG_IN_VERSION "1.1"
 
@@ -108,8 +109,6 @@ static ButtonColor button_color[] =
   { 255, 255, 255 },
 };
 
-GtkWidget *custum_color_button = NULL;
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,
@@ -118,8 +117,18 @@ GPlugInInfo PLUG_IN_INFO =
   run,
 };
 
-gint lum_red_lookup[256], lum_green_lookup[256], lum_blue_lookup[256];
-gint final_red_lookup[256], final_green_lookup[256], final_blue_lookup[256];
+static gint       sel_x1, sel_x2, sel_y1, sel_y2;
+static gint       sel_width, sel_height;
+static GtkWidget *preview;
+static GtkWidget *custum_color_button = NULL;
+
+static gint lum_red_lookup[256];
+static gint lum_green_lookup[256];
+static gint lum_blue_lookup[256];
+static gint final_red_lookup[256];
+static gint final_green_lookup[256];
+static gint final_blue_lookup[256];
+
 
 MAIN ()
 
@@ -131,31 +140,23 @@ query (void)
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_COLOR, "color", "Color to apply"},
+    { PARAM_COLOR, "color", "Color to apply"}
   };
-
-  static GParamDef *return_vals  = NULL;
-  static int        nargs        = sizeof(args) / sizeof(args[0]);
-  static int        nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_colorify",
 			  "Similar to the \"Color\" mode for layers.",
-			  "Makes an average of the RGB channels and uses it to set the color",
+			  "Makes an average of the RGB channels and uses it "
+			  "to set the color",
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
 			  "0.0.1",
 			  N_("<Image>/Filters/Colors/Colorify..."), 
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
-
-gint sel_x1, sel_x2, sel_y1, sel_y2, sel_width, sel_height;
-GtkWidget *preview;
-GtkWidget *c_dialog;
 
 static void
 run (gchar   *name,
@@ -314,16 +315,9 @@ colorify_dialog (guchar red,
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *table;
-  gchar **argv;
-  gint    argc;
-  gint    i;
+  gint  i;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("colorify");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
+  gimp_ui_init ("colorify", TRUE);
 
   dialog = gimp_dialog_new (_("Colorify"), "colorify",
 			    gimp_plugin_help_func, "filters/colorify.html",
@@ -439,6 +433,3 @@ predefined_color_callback (GtkWidget *widget,
 
   gimp_color_button_update (GIMP_COLOR_BUTTON (custum_color_button));
 }
-
-
-

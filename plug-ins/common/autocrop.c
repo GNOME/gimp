@@ -9,13 +9,17 @@
  * Cleaned up the code a bit, while I was at it. 
  */ 
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions. */
 static void query (void);
@@ -47,7 +51,7 @@ GPlugInInfo PLUG_IN_INFO =
 
 static gint bytes;
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -56,7 +60,7 @@ query (void)
   {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 

@@ -46,7 +46,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 
@@ -54,6 +53,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 #ifdef RCSID
 static gchar rcsid[] = "$Id$";
@@ -72,7 +72,7 @@ enum
 
 typedef struct
 {
-  gdouble  amount;
+  gdouble amount;
   gint    wrapmode;
 } EdgeVals;
 
@@ -142,7 +142,7 @@ static EdgeInterface eint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -152,11 +152,12 @@ query ()
     { PARAM_FLOAT, "amount", "Edge detection amount" },
     { PARAM_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
+
   gchar *help_string =
-    " Perform edge detection on the contents of the specified drawable. It applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image).";
+    "Perform edge detection on the contents of the specified drawable. It "
+    "applies, I think, convolution with 3x3 kernel. AMOUNT is an arbitrary "
+    "constant, WRAPMODE is like displace plug-in (useful for tilable image).";
 
   gimp_install_procedure ("plug_in_edge",
 			  "Perform edge detection on the contents of the specified drawable",
@@ -167,8 +168,8 @@ query ()
 			  N_("<Image>/Filters/Edge-Detect/Edge..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -633,20 +634,13 @@ edge_dialog (GDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *toggle;
   GtkObject *scale_data;
-  GSList  *group = NULL;
-  gchar	 **argv;
-  gint	   argc;
+  GSList *group = NULL;
 
   gint	use_wrap  = (evals.wrapmode == WRAP);
   gint	use_smear = (evals.wrapmode == SMEAR);
   gint	use_black = (evals.wrapmode == BLACK);
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("edge");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("edge", FALSE);
 
   dlg = gimp_dialog_new (_("Edge Detection"), "edge",
 			 gimp_plugin_help_func, "filters/edge.html",

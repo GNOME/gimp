@@ -65,7 +65,7 @@ GPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-MAIN()
+MAIN ()
 
 /******************************************************************************/
 
@@ -113,9 +113,9 @@ query (void)
     { PARAM_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
     { PARAM_INT32,    "depth",        "trace depth"                      },
     { PARAM_INT32,    "outside_type", "outside type"
-                                      "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" },
+                                      "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "transform image with the Mandelbrot Fractal",
@@ -557,19 +557,11 @@ dialog_preview_store (void)
 static void
 dialog_preview_init (void)
 {
-  guchar  *cube;
   pixel_t  pixel;
   gint     x, y;
   gdouble  cx, cy;
 
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (cube[0], cube[1], cube[2], cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-
-  if(image.width < image.height)
+  if (image.width < image.height)
     preview.scale = (gdouble)selection.height / (gdouble)PREVIEW_SIZE;
   else
     preview.scale = (gdouble)selection.width / (gdouble)PREVIEW_SIZE;
@@ -723,12 +715,7 @@ dialog_show (void)
   GtkWidget *pframe;
   GtkObject *adj;
 
-  gint    argc = 1;
-  gchar **argv = g_new (gchar *, 1);
-  argv[0]      = "fractaltrace";
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("fractaltrace", TRUE);
 
   dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
 			    gimp_plugin_help_func, "filters/fractaltrace.html",

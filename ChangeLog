@@ -1,5 +1,11 @@
 2000-04-30  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/[a-g]*.c: use gimp_ui_init(). Minor cleanups like
+	reordering includes consistently and removing trailing commas from
+	enums and param defs.
+
+2000-04-30  Michael Natterer  <mitch@gimp.org>
+
 	* gimprc.in
 	* app/gimprc.[ch]: replaced "color-cube" by "min-colors".
 

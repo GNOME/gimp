@@ -275,6 +275,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
 
@@ -320,7 +321,6 @@ static gint   save_image               (gchar   *filename,
 					gint32   image_ID,
 					gint32   drawable_ID,
 					gint32   orig_image_ID);
-static void   init_gtk                 (void);
 
 static gboolean boundscheck            (gint32 image_ID);
 static gboolean badbounds_dialog       (void);
@@ -386,7 +386,6 @@ query (void)
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-  INIT_I18N();
   gimp_install_procedure ("file_gif_save",
                           "saves files in Compuserve GIF file format",
                           "FIXME: write help for gif_save",
@@ -428,7 +427,7 @@ run (gchar   *name,
   if (strcmp (name, "file_gif_save") == 0)
     {
       INIT_I18N_UI();
-      init_gtk ();
+      gimp_ui_init ("gif", FALSE);
 
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -1123,20 +1122,6 @@ save_image (gchar  *filename,
 		  useBPP, Red, Green, Blue, GetPixel);
 
   return TRUE;
-}
-
-static void 
-init_gtk (void)
-{
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gif");
-  
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 }
 
 static gboolean

@@ -31,6 +31,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 /* Variables set in dialog box */
 typedef struct data
 {
@@ -90,11 +91,7 @@ query (void)
     { PARAM_INT32, "check_mode", "Regular or Physcobilly" },
     { PARAM_INT32, "check_size", "Size of the checks" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_checkerboard",
 			  "Adds a checkerboard pattern to an image",
@@ -105,8 +102,8 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Checkerboard..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -341,15 +338,8 @@ check_dialog (void)
   GtkWidget *toggle;
   GtkWidget *table;
   GtkObject *size_data;
-  gchar **argv;
-  gint    argc;
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("checkerboard");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("checkerboard", FALSE);
 
   dlg = gimp_dialog_new (_("Checkerboard"), "checkerboard",
 			 gimp_plugin_help_func, "filters/checkerboard.html",

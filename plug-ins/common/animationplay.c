@@ -197,75 +197,65 @@ static int is_ms_tag (const char *str,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
 
 /* Global widgets'n'stuff */
-guchar*    preview_data;
+static guchar    *preview_data;
 #ifdef RAPH_IS_HOME
-static GtkWidget* drawing_area = NULL;
-static GtkWidget* shape_drawing_area = NULL;
-guchar*    shape_drawing_area_data = NULL;
-guchar*    drawing_area_data = NULL;
+static GtkWidget *drawing_area = NULL;
+static GtkWidget *shape_drawing_area = NULL;
+static guchar    *shape_drawing_area_data = NULL;
+static guchar    *drawing_area_data = NULL;
 #else
 static GtkPreview* preview = NULL;
 #endif
-GtkProgressBar* progress;
-guint      width,height;
-guchar*    preview_alpha1_data;
-guchar*    preview_alpha2_data;
-gint32     image_id;
-gint32     total_frames;
-guint      frame_number;
-gint32*    layers;
-GDrawable* drawable;
-gboolean   playing = FALSE;
-int        timer = 0;
-GImageType imagetype;
-guchar*    palette;
-gint       ncolours;
-GtkWidget *psbutton;
-
-
+static GtkProgressBar *progress;
+static guint           width, height;
+static guchar         *preview_alpha1_data;
+static guchar         *preview_alpha2_data;
+static gint32          image_id;
+static gint32          total_frames;
+static guint           frame_number;
+static gint32         *layers;
+static GDrawable      *drawable;
+static gboolean        playing = FALSE;
+static gint            timer = 0;
+static GImageType      imagetype;
+static guchar         *palette;
+static gint            ncolours;
+static GtkWidget      *psbutton;
 
 /* for shaping */
-gchar    *shape_preview_mask;
-GtkWidget *shape_window;
+static gchar      *shape_preview_mask;
+static GtkWidget  *shape_window;
 #ifdef RAPH_IS_HOME
 #else
-GtkWidget *shape_fixed;
-GtkPreview *shape_preview;
-GdkPixmap *shape_pixmap;
+static GtkWidget  *shape_fixed;
+static GtkPreview *shape_preview;
+static GdkPixmap  *shape_pixmap;
 #endif
 typedef struct _cursoroffset {gint x,y;} CursorOffset;
-gint shaping = 0;
-static GdkWindow *root_win = NULL;
+static gint        shaping = 0;
+static GdkWindow  *root_win = NULL;
 
 
-
-
-
-
-MAIN()
+MAIN ()
 
 static void 
 query (void)
 {
   static GParamDef args[] =
   {
-    {PARAM_INT32,    "run_mode", "Interactive, non-interactive"},
-    {PARAM_IMAGE,    "image",    "Input image"},
-    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",    "Input image" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args) / sizeof(args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N ();
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_animationplay",
 			  "This plugin allows you to preview a GIMP layer-based animation.",
@@ -276,8 +266,8 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation Playback..."),
 			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void 
@@ -653,9 +643,6 @@ static void
 build_dialog (GImageType  basetype,
 	      char       *imagename)
 {
-  gchar** argv;
-  gint argc;
-
   gchar* windowname;
   CursorOffset* icon_pos;
   GtkAdjustment *adj;
@@ -670,34 +657,7 @@ build_dialog (GImageType  basetype,
   GtkWidget* eventbox;
   GdkCursor* cursor;
 
-#ifndef RAPH_IS_HOME
-  guchar* color_cube;
-#endif
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("animationplay");
-  gtk_init (&argc, &argv);
-
-#ifdef RAPH_IS_HOME
-  gdk_rgb_init ();
-#endif
-
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-#ifdef RAPH_IS_HOME
-  gtk_widget_set_default_visual (gdk_rgb_get_visual());
-  gtk_widget_set_default_colormap (gdk_rgb_get_cmap());
-#else
-  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
-#endif
+  gimp_ui_init ("animationplay", TRUE);
 
   windowname = g_strconcat (_("Animation Playback: "), imagename, NULL);
 

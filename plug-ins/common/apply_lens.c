@@ -68,16 +68,16 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
-static void drawlens (GDrawable *drawable);
+static void drawlens    (GDrawable *drawable);
 
 static gint lens_dialog (GDrawable *drawable);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL, /* init_proc */
-  NULL, /* quit_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run, /* run_proc */
+  run,   /* run_proc   */
 };
 
 typedef struct
@@ -119,14 +119,9 @@ query (void)
     { PARAM_FLOAT, "refraction", "Lens refraction index" },
     { PARAM_INT32, "keep_surroundings", "Keep lens surroundings" },
     { PARAM_INT32, "set_background", "Set lens surroundings to bkgr value" },
-    { PARAM_INT32, "set_transparent", "Set lens surroundings transparent" },
+    { PARAM_INT32, "set_transparent", "Set lens surroundings transparent" }
   };
-
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof(args)/ sizeof(args[0]);
-  static int nreturn_vals = 0;
-
-  INIT_I18N();
+  static gint nargs = sizeof (args)/ sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_applylens",
 			  "Apply a lens effect",
@@ -137,8 +132,8 @@ query (void)
 			  N_("<Image>/Filters/Glass Effects/Apply Lens..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -382,19 +377,12 @@ lens_dialog (GDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  gchar **argv;
-  gint argc;
   GSList *group = NULL;
   GDrawableType drawtype;
 
   drawtype = gimp_drawable_type (drawable->id);
 
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("apply_lens");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
+  gimp_ui_init ("apply_lens", FALSE);
 
   dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
 			 gimp_plugin_help_func, "filters/apply_lens.html",
