@@ -4,7 +4,7 @@
 >Paste</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -25,6 +25,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -42,6 +43,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="../../image/edit/copy.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -55,6 +57,7 @@ ALIGN="right"
 VALIGN="bottom"
 ><A
 HREF="../../image/edit/paste_into.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -71,66 +74,64 @@ NAME="IMAGE-EDIT-PASTE"
 >Paste</A
 ></H1
 ><A
-NAME="AEN775"
+NAME="AEN767"
 ></A
 ><P
 >    The <SPAN
 CLASS="GUIMENUITEM"
 >Paste</SPAN
 > function puts whatever is in
-    the <SPAN
+    The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> clipboard from the last <A
+>
+    <A
+HREF="../../glossary.html#GLOSSARY-CLIPBOARD"
+>      Clipboard
+    </A
+>
+    from the last
+    <A
 HREF="../../image/edit/copy.html"
-><SPAN
+>      <SPAN
 CLASS="GUIMENUITEM"
 >Copy</SPAN
-></A
 >
-    or <A
+    </A
+> or
+    <A
 HREF="../../image/edit/cut.html"
-><SPAN
+>      <SPAN
 CLASS="GUIMENUITEM"
 >Cut</SPAN
-></A
 >
-    command into the current image. The pasted section will remain as
-    a <SPAN
-CLASS="QUOTE"
->"Floating Selection"</SPAN
-> which appears as a separate
-    layer in the <A
+    </A
+>
+    command into the current image. The pasted section will be placed as a
+    <A
+HREF="../../glossary.html#GLOSSARY-FLOATING-SELECTION"
+>      Floating Selection
+    </A
+>
+    and is shown as a separate layer in the
+    <A
 HREF="../../dialogs/layers/layers.html"
->Layers
-    Dialog</A
-> which can be opened by <SPAN
-CLASS="GUIMENU"
->Image Menu</SPAN
-> &gt;
-    <SPAN
-CLASS="GUISUBMENU"
->Dialogs</SPAN
-> &gt; <SPAN
-CLASS="GUIMENUITEM"
->Layers,
-    Channels and Paths...</SPAN
->. This selection can be moved
-    just as any floating selection can. Once the selection is properly
-    located, click elsewhere on the image to merge the pasted section
-    back into the current layer or <SPAN
-CLASS="MOUSEBUTTON"
->right</SPAN
->
-    click the entry in the layers dialog, and
-    click <SPAN
-CLASS="GUIMENUITEM"
->Anchor Layer</SPAN
-> or <SPAN
-CLASS="GUIMENUITEM"
->New
-    Layer</SPAN
+>      Layers Dialog
+    </A
 >.
+  </P
+><P
+>    If there is an existing selection on the canvas, it will be used to align
+    the pasted data. Any data pasted when a selection already exists will be
+    pasted using the selection as a center point. If the selection is to be
+    used as a clipping region for the pasted data, this can be achieved by
+    using the
+    <A
+HREF="../../image/edit/paste_into.html"
+>      Paste Into
+    </A
+>
+    command.
   </P
 ><DIV
 CLASS="NOTE"
@@ -165,7 +166,7 @@ CLASS="SIMPLESECT"
 ><H2
 CLASS="SIMPLESECT"
 ><A
-NAME="AEN794"
+NAME="AEN783"
 >Additional Information</A
 ></H2
 ><P
@@ -184,6 +185,7 @@ CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -195,6 +197,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="../../image/edit/copy.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -203,6 +206,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD
@@ -211,6 +215,7 @@ ALIGN="right"
 VALIGN="top"
 ><A
 HREF="../../image/edit/paste_into.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -226,6 +231,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../image/index.html"
+ACCESSKEY="U"
 >Up</A
 ></TD
 ><TD

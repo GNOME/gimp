@@ -4,7 +4,7 @@
 >Offset</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -25,6 +25,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -42,6 +43,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="../image/image/colors/auto/equalize.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -55,6 +57,7 @@ ALIGN="right"
 VALIGN="bottom"
 ><A
 HREF="../dialogs/set_canvas_size.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -71,50 +74,87 @@ NAME="DIALOGS-OFFSET"
 >Offset</A
 ></H1
 ><A
-NAME="AEN1371"
+NAME="AEN1301"
 ></A
 ><P
->    Offset moves the current layer or channel
-    up, down, left, or right by the chosen number of pixels. When the
-    edges overrun the dimensions of the layer, you can decide if they
-    are wrapped or not. Offset can be used to
-    place layers or floating selections at a specific position in the
-    image.
+>    The <SPAN
+CLASS="GUIMENUITEM"
+>Offset</SPAN
+> command is used to move layers in a
+    mathematical fashion.
   </P
 ><P
->    Offset is useful if you want to move layers
-    a very exact amount or if you'd like to move them without
-    extending the layer border. The other important application of
-    this command is to create seamless tiles for patterns.
-  </P
+></P
+><DIV
+CLASS="VARIABLELIST"
 ><P
->    If the <SPAN
-CLASS="QUOTE"
->"<SPAN
+><B
+>Offest Options</B
+></P
+><DL
+><DT
+>Offset X/Y</DT
+><DD
+><P
+>          These two input boxes allow specification of the distance to move
+          the layer. The default unit is pixels.
+        </P
+></DD
+><DT
+>Wrap Around</DT
+><DD
+><P
+>          If this option is checked areas that move off the image boundary
+          will be wrapped to the opposing side.
+        </P
+></DD
+><DT
+>Fill Type</DT
+><DD
+><P
+>          If <SPAN
 CLASS="GUIBUTTON"
 >Wrap Around</SPAN
->"</SPAN
-> button is
-    checked, the parts of the image that move outside the layer border
-    will turn up on the other side of the image. If you don't want
-    this, you can choose to fill the empty area with the background
-    color or with transparency.
-  </P
+> is not being used, the area
+          that remains when a layer is moved can be replaced with either the
+          <SPAN
+CLASS="GUIBUTTON"
+>Background</SPAN
+> color fill or a
+          <SPAN
+CLASS="GUIBUTTON"
+>Transparent</SPAN
+> fill.
+        </P
+></DD
+><DT
+>Offset by (x/2),(y/2)</DT
+><DD
+><P
+>          This button will automatically fill the X and Y Offset input boxes
+          with values that will move the layer half of its width right and
+          half of its height down. This is useful for working with seamless
+          tiles.
+        </P
+></DD
+></DL
+></DIV
 ><DIV
 CLASS="SIMPLESECT"
 ><H2
 CLASS="SIMPLESECT"
 ><A
-NAME="AEN1378"
+NAME="AEN1326"
 >Additional Information</A
 ></H2
 ><P
->      Default Keyboard Shortcut: <B
-CLASS="KEYCAP"
->Shift</B
->-<B
+>      Default Keyboard Shortcut:
+      <B
 CLASS="KEYCAP"
 >Ctrl</B
+>-<B
+CLASS="KEYCAP"
+>Shift</B
 >-<B
 CLASS="KEYCAP"
 >O</B
@@ -127,6 +167,7 @@ CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -138,6 +179,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="../image/image/colors/auto/equalize.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -146,6 +188,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD
@@ -154,6 +197,7 @@ ALIGN="right"
 VALIGN="top"
 ><A
 HREF="../dialogs/set_canvas_size.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -169,6 +213,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../image/index.html"
+ACCESSKEY="U"
 >Up</A
 ></TD
 ><TD

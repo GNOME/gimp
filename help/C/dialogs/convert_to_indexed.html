@@ -4,7 +4,7 @@
 >Convert to Indexed </TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -25,6 +25,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -42,6 +43,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="../image/image/mode/convert_to_grayscale.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -55,6 +57,7 @@ ALIGN="right"
 VALIGN="bottom"
 ><A
 HREF="../image/image/colors/desaturate.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -71,22 +74,25 @@ NAME="DIALOGS-CONVERT-TO-INDEXED"
 >Convert to Indexed</A
 ></H1
 ><A
-NAME="AEN1264"
+NAME="AEN1213"
 ></A
 ><P
->    This mode enables you to convert <SPAN
+>    This conversion tool will convert non-indexed images to indexed ones.
+    This includes conversion from <SPAN
 CLASS="ACRONYM"
 >RGB</SPAN
-> or grayscale images
-    to indexed images. An indexed image is an image which only has the colors
-    specified in its color palette.  The color palette is saved in the image
-    file. The maximum number of colors in an indexed image is 256. If you want
-    to make transparent <SPAN
+> or grayscale images.
+    An indexed image contains only those colors specified in its color
+    palette. The maximal number of colors supported by The
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> for indexed images is 256. Transparent
+    <SPAN
 CLASS="ACRONYM"
 >GIF</SPAN
-> images, then you can only use a
-    maximum of 255 colors since the last color will be used to determine if the
-    pixel is opaque or transparent.
+> images can only have a maximum of 255 colors as
+    the last color is used to describe the transparency.
   </P
 ><DIV
 CLASS="SIMPLESECT"
@@ -100,109 +106,38 @@ NAME="PALETTEOPTIONS"
 ></P
 ><DIV
 CLASS="VARIABLELIST"
+><P
+><B
+>General Palette Options</B
+></P
 ><DL
 ><DT
-><SPAN
-CLASS="GUILABEL"
->Generate optimal palette</SPAN
-></DT
+>Generate Optimal Palette</DT
 ><DD
 ><P
->	    For the most part, this option is the best to use when
-	    creating an indexed image.
-	    <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
-> will evaluate your colors
-	    and create a color palette suitable for the image. You can
-	    specify the number of colors that you want to have in your
-	    indexed image, but remember that you can't have more than
-	    255 colors if are about to create an indexed image with
-	    transparency.
-	  </P
+>            This option allows user specified palette depth. Unless a more
+            specific depth is required for some reason, this option is the
+            most useful of the three palette options.
+          </P
 ></DD
 ><DT
-><SPAN
-CLASS="GUILABEL"
->Use custom palette</SPAN
-></DT
+>Use Custom Palette</DT
 ><DD
 ><P
->	    If you want to use a predefined palette, you have to use
-	    this option. You then choose your palette from the drop
-	    down menu. By default it's <SPAN
-CLASS="GUILABEL"
->Web
-	    palette</SPAN
->. The <SPAN
-CLASS="GUILABEL"
->Web palette</SPAN
->
-	    is the palette used by web browsers such as
-	    <SPAN
-CLASS="APPLICATION"
->Netscape</SPAN
->.  This will help you
-	    create web-safe indexed images.
-	    <DIV
-CLASS="NOTE"
-><P
-></P
-><TABLE
-CLASS="NOTE"
-WIDTH="90%"
-BORDER="0"
-><TR
-><TD
-WIDTH="25"
-ALIGN="CENTER"
-VALIGN="TOP"
-><IMG
-SRC="../stylesheet-images/note.gif"
-HSPACE="5"
-ALT="Note"></TD
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-><P
->		There is some debate over indexing against the
-		Web palette. 
-	      </P
-></TD
-></TR
-></TABLE
-></DIV
->
-	  </P
+>            This option provides selection of a predefined palettes to choose
+            from. Conversion to one of these palettes will ensure that only
+            colors used in the named palette will be used. Of the custom
+            palettes, the Web palette is most useful. It provides a palette
+            of colors that are considered to be web safe.
+          </P
 ></DD
 ><DT
-><SPAN
-CLASS="GUILABEL"
->Custom Palette Options</SPAN
-></DT
+>Use Black/White (1-bit) Palette</DT
 ><DD
 ><P
->	    <SPAN
-CLASS="GUIBUTTON"
->Remove unused colors from final
-	    palette</SPAN
->: If the palette contains colors that
-	    aren't used in the indexed image, you can remove the extra
-	    colors and make the image file size smaller. This is a
-	    good option so keep it enabled.
-	  </P
-></DD
-><DT
-><SPAN
-CLASS="GUILABEL"
->Use black/white (1-bit) palette
-	</SPAN
-></DT
-><DD
-><P
->	    This option will create a monochrome image only built up
-	    of black and white pixels.
-	  </P
+>            This option will convert the image to one that uses only two
+            colors. Black or white.
+          </P
 ></DD
 ></DL
 ></DIV
@@ -216,175 +151,127 @@ NAME="DITHERING"
 >Dithering</A
 ></H2
 ><P
->      An indexed image can only be built up of a maximum of 256
-      colors. Most of the time this is quite limiting and you will not
-      be able to have all the colors in your image represented in this
-      limited color space. The image might look like it is built up of
-      <SPAN
-CLASS="QUOTE"
->"bands"</SPAN
-> or <SPAN
-CLASS="QUOTE"
->"color areas"</SPAN
->. To make
-      indexed images look better, you can dither them. This means that
-      two or more colors are mixed to mimic the missing color. The
-      disadvantage is that the image can look like it's built up of
-      <SPAN
-CLASS="QUOTE"
->"dots"</SPAN
->.
+>      Dithering refers to algorithms which are used to allow images with
+      reduced color sets to mimic colors that are not within the palette.
     </P
 ><P
->      <P
 ></P
 ><DIV
 CLASS="VARIABLELIST"
+><P
+><B
+>Dither Options</B
+></P
 ><DL
 ><DT
-><SPAN
-CLASS="GUILABEL"
-> No color dithering </SPAN
-></DT
+>No Color Dithering</DT
 ><DD
 ><P
->	      Will disable dithering completely.
-	    </P
-></DD
-><DT
-><SPAN
-CLASS="GUILABEL"
-> Positioned color dithering </SPAN
-></DT
-><DD
-><P
->	      Use this option when you are dealing with animations
-	      such as <SPAN
-CLASS="ACRONYM"
->GIF</SPAN
-> animations. The problem
-	      with dithering in animations is that the dithering will
-	      not be constant. If you choose positioned dithering
-	      instead, the dithering in constant areas will remain
-	      constant across your frames. It is not as good as
-	      <SPAN
-CLASS="GUILABEL"
->Floyd Steinberg dithering</SPAN
->, but is
-	      better than no dithering at all.
-	    </P
-></DD
-><DT
-><SPAN
-CLASS="GUILABEL"
-> Floyd Steinberg color dithering
-	  (reduced color bleeding) </SPAN
-></DT
-><DD
-><P
->	      With normal Floyd Steinberg dithering, you may
-	      experience too much color bleeding. This is very visible
-	      when you index gradients, causing an unnatural look. If
-	      you encounter this effect, it is advisable to use this
-	      option (i.e Floyd Steinberg dithering reduced colour
-	      bleeding).
-	    </P
-></DD
-><DT
-><SPAN
-CLASS="GUILABEL"
-> Floyd Steinberg dithering (normal)
-	  </SPAN
-></DT
-><DD
-><P
->	      This is the best option to use when you are indexing
-	      images. It is only in special cases that you will use the
-	      other dithering methods available.
-	    </P
-></DD
-><DT
-><SPAN
-CLASS="GUILABEL"
-> Enable dithering of transparency
-	  </SPAN
-></DT
-><DD
-><P
->	      Indexed images only have one transparency mode &mdash;
-	      either it is off (the pixel is totally solid) or on (the
-	      pixel is totally transparent). This makes it very
-	      difficult to index images with smooth transitions from
-	      opaque to transparent. When you enable dithering of
-	      transparency, <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
-> will try
-	      to mimic the smooth transition by dithering pixels on
-	      and off.
-	      <DIV
-CLASS="NOTE"
-><P
-></P
-><TABLE
-CLASS="NOTE"
-WIDTH="90%"
-BORDER="0"
-><TR
-><TD
-WIDTH="25"
-ALIGN="CENTER"
-VALIGN="TOP"
-><IMG
-SRC="../stylesheet-images/note.gif"
-HSPACE="5"
-ALT="Note"></TD
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-><P
->            A good alternative to transparency dithering is the <A
-HREF="../filters/semiflatten.html"
->            <SPAN
-CLASS="MOUSEBUTTON"
->Right</SPAN
->click &gt;
-            <SPAN
-CLASS="GUIMENU"
->Filters</SPAN
-> &gt;
-            <SPAN
-CLASS="GUISUBMENU"
->Colors</SPAN
-> &gt;
-            <SPAN
-CLASS="GUIMENUITEM"
->Semi-Flatten</SPAN
-> </A
-> function.
+>            Disables dithering of colors entirely.
           </P
-></TD
-></TR
-></TABLE
-></DIV
+></DD
+><DT
+>Positioned Color Dithering</DT
+><DD
+><P
+>            Positional dithering is for use with animations. Animations can
+            contain many frames and each frame is converted at the same time.
+            With the more complex dithering systems, the colors in each from
+            may differ slightly and in these situations the animation may
+            look poor when playing. Positional dithering ensures that there
+            is balanced dithering across the frames leading to smoother
+            results for animations.
+          </P
+></DD
+><DT
+>Floyd-Steinberg Color Dithering (Reduced Color Bleeding)</DT
+><DD
+><P
+>            This option utilizes
+            <A
+HREF="../glossary.html#GLOSSARY-FLOYD-STEINBERG"
+>              Floyd-Steinberg
+            </A
 >
-	    </P
+            dithering to enhance the image. In particular, this option helps
+            to reduce bleeding in high contrast images or images with high
+            levels of color saturation.
+          </P
+></DD
+><DT
+>Floyd-Steinberg Color Dithering (Normal)</DT
+><DD
+><P
+>            This option (as above) utilizes
+            <A
+HREF="../glossary.html#GLOSSARY-FLOYD-STEINBERG"
+>              Floyd Steinberg
+            </A
+>
+            dithering to enhance the image. Unlike the previous type, Normal
+            mode does not make any attempt to adjust the results for color
+            saturation.
+          </P
+></DD
+><DT
+>Enable Dithering of Transparency</DT
+><DD
+><P
+>            Indexed images that have transparency information cannot contain
+            partial transparency information. Transparency can either be on
+            or off. To help in situations where this is not suitable, the
+            <SPAN
+CLASS="GUIBUTTON"
+>Enable Dithering of Transparency</SPAN
+> option
+            can be enabled so that areas of subtle transparency can be
+            faked by using dithering.
+          </P
 ></DD
 ></DL
 ></DIV
->
-    </P
 ></DIV
 ><DIV
 CLASS="SIMPLESECT"
 ><H2
 CLASS="SIMPLESECT"
 ><A
-NAME="AEN1343"
+NAME="CUSTOMOPTIONS"
+>Custom Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Custom Palette Options</B
+></P
+><DL
+><DT
+>Remove Unused Colors from Final Palette</DT
+><DD
+><P
+>            This option is only available when a custom palette is used. If
+            there are any colors in the palette that are not in the image,
+            this option will remove them from the image palette. This will
+            reduce the file size of the indexed image. This option is
+            recommended.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN1272"
 >Additional Information</A
 ></H2
 ><P
->      efault Keyboard Shortcut:
+>      Default Keyboard Shortcut:
         <B
 CLASS="KEYCAP"
 >Alt</B
@@ -400,6 +287,7 @@ CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -411,6 +299,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="../image/image/mode/convert_to_grayscale.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -419,6 +308,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD
@@ -427,6 +317,7 @@ ALIGN="right"
 VALIGN="top"
 ><A
 HREF="../image/image/colors/desaturate.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -442,6 +333,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../image/index.html"
+ACCESSKEY="U"
 >Up</A
 ></TD
 ><TD

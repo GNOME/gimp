@@ -4,7 +4,7 @@
 >Clear</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -25,6 +25,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -42,6 +43,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="../../dialogs/paste_named.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -55,6 +57,7 @@ ALIGN="right"
 VALIGN="bottom"
 ><A
 HREF="../../image/edit/fill.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -71,61 +74,58 @@ NAME="IMAGE-EDIT-CLEAR"
 >Clear</A
 ></H1
 ><A
-NAME="AEN884"
+NAME="AEN864"
 ></A
 ><P
 >    The <SPAN
 CLASS="GUIMENUITEM"
 >Clear</SPAN
-> function allows you to delete
-    everything contained in the current selection. If nothing is selected,
-    <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
-> will clear everything in the current
-    layer. If the layer has an alpha channel (transparency), the cleared
-    area is made transparent <A
-NAME="AEN889"
-HREF="#FTN.AEN889"
->[1]</A
-> Without an alpha channel,
-    the cleared selection is filled with the current background color.  If
-    you have made a selection and click <SPAN
-CLASS="GUIMENUITEM"
->clear</SPAN
+> function allows the user to delete
+    everything contained within the current selection. If there is no current
+    selection, the contents of the active layer will be removed. If the
+    active layer has an
+    <A
+HREF="../../glossary.html#GLOSSARY-ALPHA"
+>      Alpha
+    </A
+>
+    channel, the deleted selection will be made transparent. The original
+    color can be restored to the transparent area using the
+    <A
+HREF="../../tools/eraser.html"
+>      Eraser
+    </A
+>
+    tool if it is set to Anti-Erase. If the layer does not have an alpha
+    channel, the deleted area will be filled using the current background
+    color.
+  </P
+><P
+>    Clearing a selection will not delete the selection itself. Unlike
+    <A
+HREF="../../image/edit/cut.html"
+>      Cut
+    </A
 >,
-    the selection will still remain once the
-    <SPAN
-CLASS="GUIMENUITEM"
->clear</SPAN
-> function is completed.  Unlike
-    <SPAN
-CLASS="GUIMENUITEM"
->Cut</SPAN
->, <SPAN
-CLASS="GUIMENUITEM"
->Clear</SPAN
-> does
-    not put the contents into the <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
+    clear will not place the deleted contents in the
+    <A
+HREF="../../glossary.html#GLOSSARY-CLIPBOARD"
+>      Clipboard
+    </A
 >
-    clipboard.  The current contents of the <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
->
-    clipboard are unaffected.
+    and the contents of the clipboard are unaffected.
   </P
 ><DIV
 CLASS="SIMPLESECT"
 ><H2
 CLASS="SIMPLESECT"
 ><A
-NAME="AEN898"
+NAME="AEN873"
 >Additional Information</A
 ></H2
 ><P
->      Default Keyboard Shortcut: <B
+>      Default Keyboard Shortcut:
+      <B
 CLASS="KEYCAP"
 >Ctrl</B
 >-<B
@@ -135,43 +135,12 @@ CLASS="KEYCAP"
     </P
 ></DIV
 ></DIV
-><H3
-CLASS="FOOTNOTES"
->Notes</H3
-><TABLE
-BORDER="0"
-CLASS="FOOTNOTES"
-WIDTH="100%"
-><TR
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-WIDTH="5%"
-><A
-NAME="FTN.AEN889"
-HREF="../../image/edit/clear.html#AEN889"
->[1]</A
-></TD
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-WIDTH="95%"
-><P
->The color information of the
-    selection is not destroyed, just made transparent. The
-    <SPAN
-CLASS="GUIBUTTON"
->anti-erase</SPAN
-> function of the Eraser tool can
-    return the area to opaque.</P
-></TD
-></TR
-></TABLE
 ><DIV
 CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -183,6 +152,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="../../dialogs/paste_named.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -191,6 +161,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD
@@ -199,6 +170,7 @@ ALIGN="right"
 VALIGN="top"
 ><A
 HREF="../../image/edit/fill.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -214,6 +186,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../image/index.html"
+ACCESSKEY="U"
 >Up</A
 ></TD
 ><TD

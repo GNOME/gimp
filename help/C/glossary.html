@@ -4,7 +4,7 @@
 >Glossary</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -19,6 +19,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -36,6 +37,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="gimp_license.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -57,18 +59,18 @@ WIDTH="100%"></DIV
 CLASS="GLOSSARY"
 ><H1
 ><A
-NAME="AEN10569"
+NAME="AEN10516"
 >Glossary</A
 ></H1
 ><A
-NAME="AEN10571"
+NAME="AEN10518"
 ></A
 ><DIV
 CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10573"
+NAME="AEN10520"
 >A</A
 ></H1
 ><DL
@@ -108,7 +110,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10583"
+NAME="AEN10530"
 >B</A
 ></H1
 ><DL
@@ -148,7 +150,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10590"
+NAME="AEN10537"
 >C</A
 ></H1
 ><DL
@@ -182,6 +184,48 @@ CLASS="APPLICATION"
 > user.
       </P
 ></DD
+><DT
+><A
+NAME="GLOSSARY-CLIPBOARD"
+><B
+>Clipboard</B
+></A
+></DT
+><DD
+><P
+>        Clipboard is the term used to describe a temporary area of memory
+        that is used to transfer data between applications or documents. The
+        GIMP uses slightly different clipboard approaches when used under
+        differnt operating systems. Under Linux/XFree, the XFree clipboard is
+        used for text and The GIMP internal image clipboard is used for
+        images that are being transferred between image documents. When The
+        GIMP is used with other operating systems, differences may be
+        apparent. Any differences should be outlined in the operating system
+        specific documentation for the individual GIMP package.
+      </P
+><P
+>        The most fundamental operations provided by a clipboard interface
+        allow for Cut, Copy, and Paste. Cut is used to denote the removal of
+        an item that is sent to the clipboard. Copy leaves the item in the
+        document and copies it to the clipboard. Paste copies to the document
+        whatever happens to be in the clipboard. The GIMP will make an
+        intelligent decision about what to paste depending upon the target.
+        If the target is a canvas, then paste operation will use the image
+        clipboard. If the target is a text entry box, then the paste
+        operation will use the text clipboard.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN10550"
+>D</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-DITHERING"
@@ -224,7 +268,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10603"
+NAME="AEN10557"
 >F</A
 ></H1
 ><DL
@@ -289,6 +333,53 @@ CLASS="ACRONYM"
         also used to transport other data such as tables and matrices.
       </P
 ></DD
+><DT
+><A
+NAME="GLOSSARY-FLOATING-SELECTION"
+><B
+>Floating Selection</B
+></A
+></DT
+><DD
+><P
+>        Floating selections are similar in function to
+        <A
+HREF="glossary.html#GLOSSARY-LAYERS"
+>          layers
+        </A
+>
+        except that floating selections must be anchored
+        before work can resume on any other layers in the image. While a
+        selection is floating, any number of functions can be used to alter
+        the image data contained within the float.
+      </P
+><P
+>        There are two methods available for anchoring a float. The first, and
+        most useful, is to change the float into a new layer. This is
+        achieved by creating a new layer while the float is active. The
+        second method involves anchoring the float to an already existing
+        layer. This is done by clicking anywhere on the image except on the
+        float. Doing so will merge the float with the background layer.
+      </P
+><P
+>        Any pasted selection will be first rendered as a floating selection.
+      </P
+></DD
+><DT
+><A
+NAME="GLOSSARY-FLOYD-STEINBERG"
+><B
+>Floyd-Steinberg Dithering</B
+></A
+></DT
+><DD
+><P
+>        This method of dithering looks at the current pixel color and
+        retrieving the closest values from the palette. These colors are then
+        distributed to the pixel areas below and to the right of the original
+        pixel.
+      </P
+></DD
 ></DL
 ></DIV
 ><DIV
@@ -296,7 +387,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10621"
+NAME="AEN10586"
 >G</A
 ></H1
 ><DL
@@ -367,7 +458,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10638"
+NAME="AEN10603"
 >H</A
 ></H1
 ><DL
@@ -460,7 +551,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10659"
+NAME="AEN10624"
 >I</A
 ></H1
 ><DL
@@ -527,7 +618,37 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10677"
+NAME="AEN10642"
+>L</A
+></H1
+><DL
+><DT
+><A
+NAME="GLOSSARY-LAYERS"
+><B
+>Layers</B
+></A
+></DT
+><DD
+><P
+>        Layers are an extremely important aspect to many if not all imaging
+        applications and The GIMP is no exception. There is good coverage of
+        layers in the
+        <A
+HREF="layers/index.html#LAYERS-LAYERS-INTRODUCTION"
+>          Layers Introduction
+        </A
+>.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN10649"
 >M</A
 ></H1
 ><DL
@@ -946,10 +1067,38 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10850"
+NAME="AEN10822"
 >N</A
 ></H1
 ><DL
+><DT
+><A
+NAME="GLOSSARY-NAMED-BUFFER"
+><B
+>Named Buffer</B
+></A
+></DT
+><DD
+><P
+>        A Named Buffer is not unlike a
+        <A
+HREF="glossary.html#GLOSSARY-CLIPBOARD"
+>          Clipboard
+        </A
+>
+        except that a Named Buffer is a specific clipboard that can contain a
+        single cut or copy. Each Named Buffer must be named appropriately to
+        ensure that no confusion about the contents of a buffer ensues. Using
+        the interface supplied with the
+        <A
+HREF="dialogs/paste_named.html"
+>          Paste Named
+        </A
+>
+        command, the user has the opportunity to permanently and irreversably
+        delete any of the listed named buffers.
+      </P
+></DD
 ><DT
 ><A
 NAME="GLOSSARY-NOISE"
@@ -973,7 +1122,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10856"
+NAME="AEN10834"
 >P</A
 ></H1
 ><DL
@@ -1029,7 +1178,37 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10872"
+NAME="AEN10850"
+>R</A
+></H1
+><DL
+><DT
+><A
+NAME="GLOSSARY-RGBA"
+><B
+>RGBA</B
+></A
+></DT
+><DD
+><P
+>        <SPAN
+CLASS="ACRONYM"
+>RGBA</SPAN
+> is an acronym for Red Green Blue Alpha. This
+        acronym is used to describe color using four eight bit spaces. Each
+        color represents one channel that contains color amounts from 0 to
+        255 for each channel. Thus Red:255 and Green:0, Blue:0, Alpha:0,
+        indicates a layer or image that contains only pure red.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN10857"
 >S</A
 ></H1
 ><DL
@@ -1118,7 +1297,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10896"
+NAME="AEN10881"
 >T</A
 ></H1
 ><DL
@@ -1163,7 +1342,7 @@ CLASS="GLOSSDIV"
 ><H1
 CLASS="GLOSSDIV"
 ><A
-NAME="AEN10909"
+NAME="AEN10894"
 >X</A
 ></H1
 ><DL
@@ -1219,6 +1398,7 @@ CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -1230,6 +1410,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="gimp_license.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -1238,6 +1419,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD

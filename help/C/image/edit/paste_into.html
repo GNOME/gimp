@@ -4,7 +4,7 @@
 >Paste Into</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+CONTENT="Modular DocBook HTML Stylesheet Version 1.71
 "><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
@@ -25,6 +25,7 @@ TEXT="#000000"
 ><DIV
 CLASS="NAVHEADER"
 ><TABLE
+SUMMARY="Header navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -42,6 +43,7 @@ ALIGN="left"
 VALIGN="bottom"
 ><A
 HREF="../../image/edit/paste.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -55,6 +57,7 @@ ALIGN="right"
 VALIGN="bottom"
 ><A
 HREF="../../image/edit/paste_as_new.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -71,27 +74,48 @@ NAME="IMAGE-EDIT-PASTE-INTO"
 >Paste Into</A
 ></H1
 ><A
-NAME="AEN802"
+NAME="AEN791"
 ></A
 ><P
 >    The <SPAN
 CLASS="GUIMENUITEM"
 >Paste Into</SPAN
-> command performs the
-    same function as the <A
+> command acts in a similar
+    method to the
+    <A
 HREF="../../image/edit/paste.html"
-><SPAN
+>      <SPAN
 CLASS="GUIMENUITEM"
 >Paste</SPAN
-></A
 >
-    command, except it pastes into the current selection. The
-    clipboard contents are centered in the current selection and
-    cropped as needed.  If no selection is made, the
-    function is the same as <SPAN
+    </A
+>
+    command. The primary difference becomes apparent if there is a selection
+    within the canvas. Unlike a <SPAN
 CLASS="GUIMENUITEM"
 >Paste</SPAN
->.
+> which will
+    merely center the pasted image data over the selection and remove the old
+    selection replacing it with its own, <SPAN
+CLASS="GUIMENUITEM"
+>Paste
+    Into</SPAN
+> will clip the pasted data using the existing
+    selection. The new selection can be moved as per normal, but will always
+    remain clipped by the original selection area.
+  </P
+><P
+>    If no selection exists, the command will place the data from the
+    <A
+HREF="../../glossary.html#GLOSSARY-CLIPBOARD"
+>      Clipboard
+    </A
+>
+    in the center of the canvas as per the
+    <SPAN
+CLASS="GUIMENUITEM"
+>Paste</SPAN
+> command.
   </P
 ></DIV
 ><DIV
@@ -99,6 +123,7 @@ CLASS="NAVFOOTER"
 ><HR
 ALIGN="LEFT"
 WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
 WIDTH="100%"
 BORDER="0"
 CELLPADDING="0"
@@ -110,6 +135,7 @@ ALIGN="left"
 VALIGN="top"
 ><A
 HREF="../../image/edit/paste.html"
+ACCESSKEY="P"
 >Prev</A
 ></TD
 ><TD
@@ -118,6 +144,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../contents.html"
+ACCESSKEY="H"
 >Home</A
 ></TD
 ><TD
@@ -126,6 +153,7 @@ ALIGN="right"
 VALIGN="top"
 ><A
 HREF="../../image/edit/paste_as_new.html"
+ACCESSKEY="N"
 >Next</A
 ></TD
 ></TR
@@ -141,6 +169,7 @@ ALIGN="center"
 VALIGN="top"
 ><A
 HREF="../../image/index.html"
+ACCESSKEY="U"
 >Up</A
 ></TD
 ><TD
