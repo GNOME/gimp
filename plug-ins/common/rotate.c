@@ -525,7 +525,8 @@ rotate (void)
 	  gimp_drawable_detach (active_drawable);
 	  return;
 	}
-      if ( gimp_layer_is_floating_selection (active_drawable->drawable_id) ) 
+      if ( gimp_drawable_is_layer (active_drawable->drawable_id) &&
+           gimp_layer_is_floating_selection (active_drawable->drawable_id) ) 
 	{
 	  gimp_message (_("You can not rotate the whole image if there's a floating selection."));
 	  gimp_drawable_detach (active_drawable);

@@ -1,3 +1,8 @@
+2002-08-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/rotate.c (rotate): check if the active drawable
+	is a layer before using gimp_layer functions on it.
+
 2002-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask.c (gimp_image_mask_float): fixed a bug
