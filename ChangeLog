@@ -1,5 +1,9 @@
 2001-01-01  Michael Natterer  <mitch@gimp.org>
 
+	* TODO.xml: added a TODO item for "Save a Copy..."
+
+2001-01-01  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/libgck/gck/gck.h
 	* plug-ins/libgck/gck/gckcolor.c: removed the GckRGB color type
 	and all it's functions.

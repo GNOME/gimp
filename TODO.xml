@@ -235,6 +235,19 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Implement "Save a Copy..."</title>
+      <description>
+	<p>
+	  Add a "Save a Copy" function which works as "Save as" but leaves
+	  the image's name untouched.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
     <entry size="medium" difficulty="medium" status="0%" target="1.4">
       <title>Better keyboard navigation</title>
       <description>
