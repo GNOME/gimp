@@ -1,3 +1,10 @@
+Sun Feb 21 20:43:00 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpunitmenu.[ch]: new files
+	Added the gimpunitmenu-widget Michael Natterer contributed.
+	Now lets see how this integrates with the gimpentry-widget...
+
 Sat Feb 20 16:12:33 CST 1999 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/tips_dialog.c: Add default to Cancel button, remove
