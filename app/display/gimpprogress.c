@@ -146,8 +146,8 @@ gimp_progress_start (GimpDisplay *gdisp,
 
       gtk_window_set_resizable (GTK_WINDOW (progress->dialog), FALSE);
 
-      vbox = gtk_vbox_new (FALSE, 10);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
+      vbox = gtk_vbox_new (FALSE, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (progress->dialog)->vbox),
                          vbox);
       gtk_widget_show (vbox);

@@ -174,7 +174,6 @@ stroke_dialog_new (GimpItem    *item,
     GtkWidget *stroke_editor;
 
     stroke_editor = gimp_stroke_editor_new (options, image->yresolution);
-    gtk_container_set_border_width (GTK_CONTAINER (stroke_editor), 4);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
@@ -205,8 +204,7 @@ stroke_dialog_new (GimpItem    *item,
     GtkWidget     *combo;
     GimpPaintInfo *paint_info;
 
-    hbox = gtk_hbox_new (FALSE, 4);
-    gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+    hbox = gtk_hbox_new (FALSE, 6);
     gtk_container_add (GTK_CONTAINER (frame), hbox);
     gtk_widget_show (hbox);
 
@@ -219,7 +217,7 @@ stroke_dialog_new (GimpItem    *item,
 
     combo = gimp_container_combo_box_new (image->gimp->paint_info_list, NULL,
                                           16, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
     g_signal_connect (combo, "select_item",

@@ -146,7 +146,7 @@ gradient_select_new (Gimp        *gimp,
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), gsp->view);
   gtk_widget_show (gsp->view);
 

@@ -832,7 +832,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
 {
   GimpTool  *tool = GIMP_TOOL (mtool);
   GtkWidget *dialog;
-  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *label;
 
@@ -848,14 +847,11 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
-
   table = gtk_table_new (2, 5, TRUE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), table);
   gtk_widget_show (table);
 
 

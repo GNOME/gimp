@@ -142,13 +142,12 @@ convert_dialog_new (GimpImage *gimage,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   /*  'generate palette'  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_radio_button_new_with_label (NULL,
@@ -195,14 +194,10 @@ convert_dialog_new (GimpImage *gimage,
        * already have the 'Web' GIMP palette installed on their
        * system.
        */
-      hbox = gtk_hbox_new (FALSE, 0);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
       toggle = gtk_radio_button_new_with_label (group,
                                                 _("Use WWW-Optimized Palette"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -213,14 +208,10 @@ convert_dialog_new (GimpImage *gimage,
     }
 
   /*  'mono palette'  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   toggle = gtk_radio_button_new_with_label (group,
                                             _("Use Black and White (1-Bit) Palette"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -242,7 +233,7 @@ convert_dialog_new (GimpImage *gimage,
 			&dialog->remove_dups);
 
       /* 'custom' palette from dialog */
-      hbox = gtk_hbox_new (FALSE, 4);
+      hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -275,11 +266,11 @@ convert_dialog_new (GimpImage *gimage,
 			 dialog->custom_palette_button);
 
       /*  add the remove-duplicates toggle  */
-      hbox = gtk_hbox_new (FALSE, 4);
+      hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      gtk_box_pack_start (GTK_BOX (hbox), remove_toggle, FALSE, FALSE, 20);
+      gtk_box_pack_start (GTK_BOX (hbox), remove_toggle, TRUE, TRUE, 20);
       gtk_widget_show (remove_toggle);
     }
 
@@ -302,15 +293,11 @@ convert_dialog_new (GimpImage *gimage,
   gtk_widget_show(vbox);
 
   /*  the alpha-dither toggle  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   toggle =
     gtk_check_button_new_with_label (_("Enable Dithering of Transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->alpha_dither);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),

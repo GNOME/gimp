@@ -174,13 +174,13 @@ brush_select_new (Gimp                 *gimp,
                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);
   gtk_widget_show (bsp->view);
 
   /*  Create the frame and the table for the options  */
   table = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_scale->parent;
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
 
   /*  Create the opacity scale widget  */
@@ -204,7 +204,7 @@ brush_select_new (Gimp                 *gimp,
 			      gimp_context_get_paint_mode (bsp->context));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Mode:"), 0.0, 0.5,
-			     bsp->paint_mode_menu, 2, TRUE);
+			     bsp->paint_mode_menu, 2, FALSE);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 

@@ -140,8 +140,8 @@ layer_select_new (GimpImage *gimage,
   gtk_container_add (GTK_CONTAINER (frame1), frame2);
   gtk_widget_show (frame2);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (frame2), hbox);
   gtk_widget_show (hbox);
 

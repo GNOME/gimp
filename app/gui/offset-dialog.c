@@ -150,6 +150,7 @@ offset_dialog_new (GimpDrawable *drawable,
   off_d->off_se = gimp_size_entry_new (1, off_d->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE, 10,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE);
+
   gtk_table_set_col_spacing (GTK_TABLE (off_d->off_se), 0, 4);
   gtk_table_set_col_spacing (GTK_TABLE (off_d->off_se), 1, 4);
   gtk_table_set_row_spacing (GTK_TABLE (off_d->off_se), 0, 2);
@@ -190,8 +191,7 @@ offset_dialog_new (GimpDrawable *drawable,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1, 0);
 
-  button = gtk_button_new_with_mnemonic (_("Offset by (x/_2),(y/2)"));
-  gtk_container_set_border_width (GTK_CONTAINER (button), 2);
+  button = gtk_button_new_with_mnemonic (_("Offset by  x/_2, y/2"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

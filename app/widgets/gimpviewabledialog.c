@@ -143,7 +143,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_container_add (GTK_CONTAINER (ebox), frame);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);

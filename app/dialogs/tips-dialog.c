@@ -184,8 +184,8 @@ tips_dialog_create (Gimp *gimp)
       gtk_widget_show (image);
     }
 
-  hbox = gtk_hbox_new (FALSE, 15);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -210,7 +210,7 @@ tips_dialog_create (Gimp *gimp)
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
-  gtk_box_set_spacing (GTK_BOX (bbox), 5);
+  gtk_box_set_spacing (GTK_BOX (bbox), 6);
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 

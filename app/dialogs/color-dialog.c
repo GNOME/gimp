@@ -154,7 +154,7 @@ color_notebook_new (GimpViewable          *viewable,
                                      cnp->shell);
 
   cnp->selection = gimp_color_selection_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (cnp->selection), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (cnp->selection), 12);
   gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (cnp->selection),
                                        show_alpha);
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (cnp->selection), color);

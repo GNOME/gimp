@@ -143,13 +143,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
                                    status->num_devices);
 
   status->table = gtk_table_new (status->num_devices * 3, 7, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (status->table), 4);
-  gtk_table_set_col_spacing (GTK_TABLE (status->table), 1, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (status->table), 2, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (status->table), 3, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (status->table), 4, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (status->table), 5, 4);
-  gtk_container_add (GTK_CONTAINER (status), status->table);
+  gtk_container_set_border_width (GTK_CONTAINER (status->table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (status->table), 6);
   gtk_widget_show (status->table);
 
   for (list = gdk_display_list_devices (display), i = 0;

@@ -99,9 +99,8 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_widget_show (frame->menu);
 
   table = gtk_table_new (GIMP_COLOR_FRAME_ROWS, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 

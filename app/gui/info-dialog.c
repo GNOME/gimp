@@ -360,7 +360,7 @@ info_dialog_new_extended (GimpViewable *viewable,
   if (in_notebook)
     {
       info_notebook = gtk_notebook_new ();
-      gtk_container_set_border_width (GTK_CONTAINER (info_table), 4);
+      gtk_container_set_border_width (GTK_CONTAINER (info_table), 6);
       gtk_notebook_append_page (GTK_NOTEBOOK (info_notebook),
 				info_table,
 				gtk_label_new (_("General")));

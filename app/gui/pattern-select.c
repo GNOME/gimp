@@ -144,7 +144,7 @@ pattern_select_new (Gimp        *gimp,
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);
   gtk_widget_show (psp->view);
 

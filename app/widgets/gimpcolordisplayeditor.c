@@ -303,12 +303,11 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   /*  the config frame  */
 
-  editor->config_frame = gtk_frame_new (NULL);
+  editor->config_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (editor), editor->config_frame, FALSE, FALSE, 0);
   gtk_widget_show (editor->config_frame);
 
-  editor->config_box = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (editor->config_box), 4);
+  editor->config_box = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (editor->config_frame), editor->config_box);
   gtk_widget_show (editor->config_box);
 
