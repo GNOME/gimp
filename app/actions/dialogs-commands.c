@@ -178,7 +178,7 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                 substring = strstr (identifier, "list");
 
               if (! substring)
-                substring = strstr (identifier, "grid");
+                substring = strstr (identifier, "tree");
 
               if (substring)
                 {

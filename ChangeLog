@@ -1,4 +1,9 @@
-2003-02-24  Michael Natterer  <mitch@convergence.de>
+2003-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/dialogs-commands.c (dialogs_toggle_view_cmd_callback):
+	fixed strstr() call so we can switch back from tree views again.
+
+2003-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay-foreach.[ch]: removed
 	gimp_displays_invalidate() again.
