@@ -1062,7 +1062,7 @@ dialog (void)
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("Spatial Oversample:"), SCALE_WIDTH, 0,
 			      config.cp.spatial_oversample,
-			      0, 1, 0.01, 0.1, 0,
+			      1, 4, 0.01, 0.1, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",

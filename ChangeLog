@@ -1,3 +1,8 @@
+2003-04-11  Raphael Quinet  <quinet@gamers.org>
+
+	* plug-ins/flame/flame.c (dialog): merged fix for bug #110443
+	from HEAD branch.
+
 2003-04-09  Sven Neumann  <sven@gimp.org>
 
 	* app/edit_selection.c (edit_selection_motion): merged fix for
