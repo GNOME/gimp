@@ -1,3 +1,9 @@
+2003-11-02  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: added Histogram to the dialog menus.
+
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcursor.[ch] (gimp_cursor_new): added a

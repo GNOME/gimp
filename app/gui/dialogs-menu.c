@@ -78,8 +78,10 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            GIMP_STOCK_CHANNELS,              GIMP_HELP_CHANNEL_DIALOG),
   ADD_TAB (N_("/Add Tab/_Paths"),            "gimp-vectors-list",
            GIMP_STOCK_PATHS,                 GIMP_HELP_PATH_DIALOG),
-  ADD_TAB (N_("/Add Tab/_Indexed Palette"),  "gimp-indexed-palette",
+  ADD_TAB (N_("/Add Tab/Inde_xed Palette"),  "gimp-indexed-palette",
            GIMP_STOCK_INDEXED_PALETTE,       GIMP_HELP_INDEXED_PALETTE_DIALOG),
+  ADD_TAB (N_("/Add Tab/Histogra_m"),        "gimp-histogram-editor",
+           GIMP_STOCK_HISTOGRAM,             GIMP_HELP_HISTOGRAM_DIALOG),
   ADD_TAB (N_("/Add Tab/_Selection Editor"), "gimp-selection-editor",
            GIMP_STOCK_TOOL_RECT_SELECT,      GIMP_HELP_SELECTION_DIALOG),
   ADD_TAB (N_("/Add Tab/Na_vigation"),       "gimp-navigation-view",
@@ -106,7 +108,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/I_mages"),           "gimp-image-list",
+  ADD_TAB (N_("/Add Tab/_Images"),           "gimp-image-list",
            GIMP_STOCK_IMAGES,                GIMP_HELP_IMAGE_DIALOG),
   ADD_TAB (N_("/Add Tab/Document Histor_y"), "gimp-document-list",
            GTK_STOCK_OPEN,                   GIMP_HELP_DOCUMENT_DIALOG),
