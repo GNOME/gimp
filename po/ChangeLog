@@ -1,3 +1,10 @@
+2001-07-19  Sven Neumann  <sven@gimp.org>
+
+	* lt.po: added new lithuanian translation provided by 
+	Mantas Kriauciunas <mantelis@centras.lt>
+
+	* hr.po: fixed fatal error
+	
 2001-07-19  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.

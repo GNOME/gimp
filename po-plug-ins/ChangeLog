@@ -1,3 +1,10 @@
+2001-07-19  Sven Neumann  <sven@gimp.org>
+
+	* lt.po: added empty po file.
+
+	* hr.po
+	* fi.po: fixed fatal errors.
+
 2001-07-14  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* nn.po: Updated Norwegian (nynorsk) translation.
