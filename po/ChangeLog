@@ -1,3 +1,7 @@
+2002-11-02  Christian Rose  <menthos@menthos.com>
+
+	* sv.po: Updated Swedish translation.
+
 2002-11-01  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
@@ -5,7 +9,6 @@
 2002-10-30  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: moved modules to libgimp translation domain.
-
 	* de.po: updated german translation.
 
 2002-10-30  Wang Jian  <lark@linux.net.cn>
@@ -17,7 +20,6 @@
 
 	* POTFILES.in: removed app/tools/tools-enums.c, added
 	libgimptool/gimptoolenums.c.
-
 	* de.po: updated german translation.
 
 2002-10-29  Christian Rose  <menthos@menthos.com>

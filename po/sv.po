@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-10-29 01:04+0100\n"
-"PO-Revision-Date: 2002-10-29 01:05+0100\n"
+"POT-Creation-Date: 2002-11-02 16:01+0100\n"
+"PO-Revision-Date: 2002-11-02 16:02+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -273,7 +273,7 @@ msgstr "Klistra in"
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: app/undo.c:3616
+#: app/undo.c:3616 app/tools/gimptexttool.c:148
 msgid "Text"
 msgstr "Text"
 
@@ -812,7 +812,7 @@ msgstr "FG till BG (HSV moturs)"
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "FG till BG (HSV medurs-nyans)"
 
-#: app/core/gimpbrush.c:510
+#: app/core/gimpbrush.c:511
 #, c-format
 msgid ""
 "Fatal parsing error (unknown version %d):\n"
@@ -821,7 +821,7 @@ msgstr ""
 "Ödesdigert tolkningsfel (okänd version %d):\n"
 "Penselfil \"%s\""
 
-#: app/core/gimpbrush.c:531 app/core/gimpbrush.c:559 app/core/gimpbrush.c:578
+#: app/core/gimpbrush.c:532 app/core/gimpbrush.c:560 app/core/gimpbrush.c:579
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
@@ -830,12 +830,12 @@ msgstr ""
 "Ödesdigert tolkningsfel:\n"
 "Penselfilen \"%s\" verkar vara avklippt."
 
-#: app/core/gimpbrush.c:539 app/core/gimpbrushpipe.c:330
+#: app/core/gimpbrush.c:540 app/core/gimpbrushpipe.c:330
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
-#: app/core/gimpbrush.c:547 app/core/gimpbrushpipe.c:332
+#: app/core/gimpbrush.c:548 app/core/gimpbrushpipe.c:332
 #: app/core/gimpcontext.c:1212 app/core/gimpgradient.c:354
 #: app/core/gimppalette.c:345 app/core/gimppattern.c:346
 msgid "Unnamed"
@@ -1635,19 +1635,19 @@ msgstr "Kanalattribut"
 msgid "Edit Channel Attributes"
 msgstr "Redigera kanalattribut"
 
-#: app/gui/color-notebook.c:399
+#: app/gui/color-notebook.c:397
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:420
+#: app/gui/color-notebook.c:418
 msgid "Old:"
 msgstr "Gammal:"
 
-#: app/gui/color-notebook.c:442
+#: app/gui/color-notebook.c:439
 msgid "Revert to old color"
 msgstr "Återgå till gammal färg"
 
-#: app/gui/color-notebook.c:516
+#: app/gui/color-notebook.c:474
 msgid "Add the current color to the color history"
 msgstr "Lägg till aktuell färg till färghistoriken"
 
@@ -1894,11 +1894,6 @@ msgstr "Displaynavigation"
 msgid "Navigation"
 msgstr "Navigation"
 
-#: app/gui/dialogs-constructors.c:1159 app/gui/dialogs-constructors.c:1197
-#, c-format
-msgid "%s Options"
-msgstr "Alternativ för %s"
-
 #: app/gui/drawable-commands.c:72
 msgid "Desaturate operates only on RGB color drawables."
 msgstr "Avfärga fungerar endast på RGB-bilder."
@@ -1957,12 +1952,12 @@ msgstr ""
 "%s"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:438
+#: app/gui/file-commands.c:184 app/gui/file-save-dialog.c:444
 #, c-format
 msgid "Saving '%s' failed."
 msgstr "Sparande av filen \"%s\" misslyckades."
 
-#: app/gui/file-commands.c:215
+#: app/gui/file-commands.c:229
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -1970,7 +1965,7 @@ msgstr ""
 "Återgång misslyckades.\n"
 "Inget filnamn är associerat med den här bilden."
 
-#: app/gui/file-commands.c:229
+#: app/gui/file-commands.c:243
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -1985,11 +1980,11 @@ msgstr ""
 "(Du kommer att förlora alla dina\n"
 "ändringar, inklusive all ångrainformation)"
 
-#: app/gui/file-commands.c:237
+#: app/gui/file-commands.c:251
 msgid "Revert Image"
 msgstr "Återgå till gammal bild"
 
-#: app/gui/file-commands.c:321
+#: app/gui/file-commands.c:337
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2083,11 +2078,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Bekräfta bildstorlek"
 
-#: app/gui/file-open-dialog.c:181 app/gui/file-open-dialog.c:198
+#: app/gui/file-open-dialog.c:208 app/gui/file-open-dialog.c:232
 msgid "Open Image"
 msgstr "Öppna bild"
 
-#: app/gui/file-open-dialog.c:244
+#: app/gui/file-open-dialog.c:278
 msgid ""
 "Click to update preview\n"
 "<Ctrl> Click to force update even if preview is up-to-date"
@@ -2097,28 +2092,28 @@ msgstr ""
 "förhandsvisningen är aktuell"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:256 app/tools/gimpimagemaptool.c:225
+#: app/gui/file-open-dialog.c:290 app/tools/gimpimagemaptool.c:225
 msgid "_Preview"
 msgstr "_Förhandsgranskning"
 
-#: app/gui/file-open-dialog.c:309 app/gui/file-open-dialog.c:428
+#: app/gui/file-open-dialog.c:343 app/gui/file-open-dialog.c:462
 msgid "No Selection"
 msgstr "Ingen markering"
 
-#: app/gui/file-open-dialog.c:517 app/gui/file-open-dialog.c:547
+#: app/gui/file-open-dialog.c:551 app/gui/file-open-dialog.c:581
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatyrbild %d av %d"
 
-#: app/gui/file-save-dialog.c:174 app/gui/file-save-dialog.c:234
+#: app/gui/file-save-dialog.c:172 app/gui/file-save-dialog.c:240
 msgid "Save Image"
 msgstr "Spara bild"
 
-#: app/gui/file-save-dialog.c:213
+#: app/gui/file-save-dialog.c:219
 msgid "Save a Copy of the Image"
 msgstr "Spara en kopia av bilden"
 
-#: app/gui/file-save-dialog.c:371
+#: app/gui/file-save-dialog.c:377
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2127,7 +2122,7 @@ msgstr ""
 "Filen \"%s\" existerar.\n"
 "Skriva över den?"
 
-#: app/gui/file-save-dialog.c:374
+#: app/gui/file-save-dialog.c:380
 msgid "File Exists!"
 msgstr "Filen existerar!"
 
@@ -5587,14 +5582,6 @@ msgstr "Startar tillägg: "
 msgid "Starting Extensions"
 msgstr "Startar tillägg"
 
-#: app/tools/tools-enums.c:13
-msgid "Crop"
-msgstr "Beskär"
-
-#: app/tools/tools-enums.c:14
-msgid "Resize"
-msgstr "Ändra storlek"
-
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush"
 msgstr "Airbrush"
@@ -6110,8 +6097,8 @@ msgid "Hard Edge"
 msgstr "Hård kant"
 
 #: app/tools/gimpfliptool.c:94
-msgid "Flip Tool"
-msgstr "Vändverktyg"
+msgid "Flip"
+msgstr "Vänd"
 
 #: app/tools/gimpfliptool.c:95
 msgid "Flip the layer or selection"
@@ -6274,8 +6261,8 @@ msgid "R_eset Color"
 msgstr "_Återställ färg"
 
 #: app/tools/gimpinktool.c:256
-msgid "Ink Tool"
-msgstr "Bläckverktyg"
+msgid "Ink"
+msgstr "Bläck"
 
 #: app/tools/gimpinktool.c:257
 msgid "Draw in ink"
@@ -6323,8 +6310,8 @@ msgid "Shape"
 msgstr "Form"
 
 #: app/tools/gimpiscissorstool.c:276
-msgid "Intelligent Scissors"
-msgstr "Intelligent sax"
+msgid "Scissors"
+msgstr "Saxar"
 
 #: app/tools/gimpiscissorstool.c:277
 msgid "Select shapes from image"
@@ -6371,7 +6358,7 @@ msgstr "Välj svart punkt"
 msgid "Pick Gray Point"
 msgstr "Välj grå punkt"
 
-#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:155
+#: app/tools/gimplevelstool.c:527
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -6454,8 +6441,8 @@ msgid "Use Info Window"
 msgstr "Använd informationsfönster"
 
 #: app/tools/gimpmovetool.c:119
-msgid "Move Tool"
-msgstr "Flyttaverktyg"
+msgid "Move"
+msgstr "Flytta"
 
 #: app/tools/gimpmovetool.c:120
 msgid "Move layers & selections"
@@ -6498,9 +6485,9 @@ msgstr "Måla med luddiga penseldrag"
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Verktyg/Målarverktyg/Pensel"
 
-#: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
-msgid "Path Tool"
-msgstr "Slingverktyg"
+#: app/tools/gimppathtool.c:116
+msgid "Path"
+msgstr "Slinga"
 
 #: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
@@ -6523,8 +6510,8 @@ msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Verktyg/Målarverktyg/Penna"
 
 #: app/tools/gimpperspectivetool.c:82
-msgid "Perspective Tool"
-msgstr "Perspektivverktyg"
+msgid "Perspective"
+msgstr "Perspektiv"
 
 #: app/tools/gimpperspectivetool.c:83
 msgid "Change perspective of the layer or selection"
@@ -6630,9 +6617,9 @@ msgstr "Centrera X:"
 msgid "Rotating..."
 msgstr "Roterar..."
 
-#: app/tools/gimpscaletool.c:97
-msgid "Scale Tool"
-msgstr "Skalningsverktyg"
+#: app/tools/gimpscaletool.c:97 app/tools/gimpscaletool.c:179
+msgid "Scale"
+msgstr "Skala"
 
 #: app/tools/gimpscaletool.c:98
 msgid "Scale the layer or selection"
@@ -6641,10 +6628,6 @@ msgstr "Skala lagret eller markeringen"
 #: app/tools/gimpscaletool.c:99
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Verktyg/Transformeringsverktyg/Skala"
-
-#: app/tools/gimpscaletool.c:179
-msgid "Scale"
-msgstr "Skala"
 
 #: app/tools/gimpscaletool.c:181
 msgid "Scaling Information"
@@ -6658,9 +6641,9 @@ msgstr "Aktuell bredd:"
 msgid "Scale Ratio X:"
 msgstr "X-skalningsförhållande:"
 
-#: app/tools/gimpsheartool.c:99
-msgid "Shear Tool"
-msgstr "Lutningsverktyg"
+#: app/tools/gimpsheartool.c:99 app/tools/gimpsheartool.c:173
+msgid "Shear"
+msgstr "Luta"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear the layer or selection"
@@ -6669,10 +6652,6 @@ msgstr "Luta lagret eller markeringen"
 #: app/tools/gimpsheartool.c:101
 msgid "/Tools/Transform Tools/Shear"
 msgstr "/Verktyg/Transformeringsverktyg/Luta"
-
-#: app/tools/gimpsheartool.c:173
-msgid "Shear"
-msgstr "Luta"
 
 #: app/tools/gimpsheartool.c:175
 msgid "Shearing Information"
@@ -6697,10 +6676,6 @@ msgstr "Smeta bilden"
 #: app/tools/gimpsmudgetool.c:59
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Verktyg/Målarverktyg/Smeta"
-
-#: app/tools/gimptexttool.c:148
-msgid "Text Tool"
-msgstr "Textverktyg"
 
 #: app/tools/gimptexttool.c:149
 msgid "Add text to the image"
@@ -6789,16 +6764,16 @@ msgstr ""
 "lager som innehåller lagermasker."
 
 #: app/tools/gimpvectortool.c:115
-msgid "Vector Tool"
-msgstr "Vektorverktyg"
+msgid "Vectors"
+msgstr "Vektorer"
 
 #: app/tools/gimpvectortool.c:116
 msgid "Vector angles and lengths"
 msgstr "Vektorvinklar och -längder"
 
 #: app/tools/gimpvectortool.c:117
-msgid "/Tools/Vector"
-msgstr "/Verktyg/Vektor"
+msgid "/Tools/Vectors"
+msgstr "/Verktyg/Vektorer"
 
 #: app/tools/paint_options.c:182
 msgid "Brush:"
@@ -6839,6 +6814,10 @@ msgstr "Använd färg från färgskala"
 #: app/tools/paint_options.c:564
 msgid "Type:"
 msgstr "Typ:"
+
+#: app/tools/path_tool.c:1413
+msgid "Path Tool"
+msgstr "Slingverktyg"
 
 #: app/tools/selection_options.c:112
 msgid "Replace the current selection"
@@ -7033,7 +7012,7 @@ msgstr "Redigera"
 msgid "Refresh"
 msgstr "Uppdatera"
 
-#: app/widgets/gimpdatafactoryview.c:402
+#: app/widgets/gimpdatafactoryview.c:410
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -7042,7 +7021,7 @@ msgstr ""
 "Är du säker att du vill ta bort\n"
 "\"%s\" från listan och från disk?"
 
-#: app/widgets/gimpdatafactoryview.c:406
+#: app/widgets/gimpdatafactoryview.c:414
 msgid "Delete Data Object"
 msgstr "Ta bort dataobjekt"
 
@@ -7446,46 +7425,6 @@ msgstr "XCF-fel: XCF-filversion %d som inte stöds påträffad"
 msgid "open failed on %s: %s\n"
 msgstr "öppnande av %s misslyckades: %s\n"
 
-#: modules/cdisplay_gamma.c:89
-msgid "Gamma color display filter"
-msgstr "Gammafärgvisningsfilter"
-
-#: modules/cdisplay_gamma.c:316
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:89
-msgid "High Contrast color display filter"
-msgstr "Färgvisningsfilter, högkontrast"
-
-#: modules/cdisplay_highcontrast.c:155
-msgid "Contrast"
-msgstr "Kontrast"
-
-#: modules/cdisplay_highcontrast.c:314
-msgid "Contrast Cycles:"
-msgstr "Kontrastcykler:"
-
-#: modules/colorsel_triangle.c:107
-msgid "Painter-style triangle color selector"
-msgstr "Triangelfärgväljare i Painter-stil"
-
-#: modules/colorsel_triangle.c:179
-msgid "Triangle"
-msgstr "Triangel"
-
-#: modules/colorsel_water.c:103
-msgid "Watercolor style color selector"
-msgstr "Färgväljare i vattenfärgsstil"
-
-#: modules/colorsel_water.c:175
-msgid "Watercolor"
-msgstr "Vattenfärg"
-
-#: modules/colorsel_water.c:249
-msgid "Pressure"
-msgstr "Tryck"
-
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Skapa och redigera bilder eller fotografier"
@@ -7493,6 +7432,74 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#: libgimptool/gimptoolenums.c:14
+msgid "Crop"
+msgstr "Beskär"
+
+#: libgimptool/gimptoolenums.c:15
+msgid "Resize"
+msgstr "Ändra storlek"
+
+#~ msgid "%s Options"
+#~ msgstr "Alternativ för %s"
+
+#~ msgid "Flip Tool"
+#~ msgstr "Vändverktyg"
+
+#~ msgid "Ink Tool"
+#~ msgstr "Bläckverktyg"
+
+#~ msgid "Intelligent Scissors"
+#~ msgstr "Intelligent sax"
+
+#~ msgid "Move Tool"
+#~ msgstr "Flyttaverktyg"
+
+#~ msgid "Perspective Tool"
+#~ msgstr "Perspektivverktyg"
+
+#~ msgid "Scale Tool"
+#~ msgstr "Skalningsverktyg"
+
+#~ msgid "Shear Tool"
+#~ msgstr "Lutningsverktyg"
+
+#~ msgid "Text Tool"
+#~ msgstr "Textverktyg"
+
+#~ msgid "Vector Tool"
+#~ msgstr "Vektorverktyg"
+
+#~ msgid "Gamma color display filter"
+#~ msgstr "Gammafärgvisningsfilter"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
+
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Färgvisningsfilter, högkontrast"
+
+#~ msgid "Contrast"
+#~ msgstr "Kontrast"
+
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Kontrastcykler:"
+
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "Triangelfärgväljare i Painter-stil"
+
+#~ msgid "Triangle"
+#~ msgstr "Triangel"
+
+#~ msgid "Watercolor style color selector"
+#~ msgstr "Färgväljare i vattenfärgsstil"
+
+#~ msgid "Watercolor"
+#~ msgstr "Vattenfärg"
+
+#~ msgid "Pressure"
+#~ msgstr "Tryck"
 
 #~ msgid "H"
 #~ msgstr "N"
@@ -7677,9 +7684,6 @@ msgstr "GIMP (ostabil)"
 
 #~ msgid "Buffer"
 #~ msgstr "Buffert"
-
-#~ msgid "Path"
-#~ msgstr "Slinga"
 
 #~ msgid "EEK: can't undo"
 #~ msgstr "IIK: kan inte ångra"
@@ -8376,23 +8380,14 @@ msgstr "GIMP (ostabil)"
 #~ msgid "By-Color Selection"
 #~ msgstr "Markera per färg"
 
-#~ msgid "Move"
-#~ msgstr "Flytta"
-
 #~ msgid "/Tools/Transform Tools/Magnify"
 #~ msgstr "/Verktyg/Transformeringsverktyg/Förstora"
 
 #~ msgid "Rotation, scaling, shearing, perspective."
 #~ msgstr "Rotering, skalning, luta, perspektiv."
 
-#~ msgid "Flip"
-#~ msgstr "Vänd"
-
 #~ msgid "Draw sharp pencil strokes"
 #~ msgstr "Måla med skarpa penndrag"
-
-#~ msgid "Ink"
-#~ msgstr "Bläck"
 
 #~ msgid "By Color Select"
 #~ msgstr "Markera per färg"
