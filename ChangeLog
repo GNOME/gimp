@@ -1,3 +1,16 @@
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockbook.c: fixed a bug i introduced when making
+	the tab_height configurable: need to connect the signals of the
+	new tab_widget created in style_set(), otherwise we get the
+	functionality of a plain GtkNotebook...
+
+	* app/widgets/gimpfontselection.c: make the minimal width of the
+	entry even smaller so users can choose to put it in a small dock.
+
+	* app/widgets/gimppaletteeditor.c: fixed "Zoom All" zoom ratio
+	calculation.
+
 2002-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/base/Makefile.am

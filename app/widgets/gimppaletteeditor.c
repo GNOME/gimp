@@ -1000,7 +1000,7 @@ palette_editor_zoom_all_callback (GtkWidget         *widget,
       rows = MAX (1, rows);
 
       editor->zoom_factor =
-        (((gdouble) window_height - SPACING) / (gdouble) rows - SPACING) /
+        (((gdouble) window_height - 2 * SPACING) / (gdouble) rows - SPACING) /
         ENTRY_HEIGHT;
 
       palette_editor_redraw_zoom (editor);

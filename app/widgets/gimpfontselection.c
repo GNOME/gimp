@@ -133,7 +133,7 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   gtk_widget_show (fontsel->valid);
 
   fontsel->entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (fontsel->entry), 16);
+  gtk_entry_set_width_chars (GTK_ENTRY (fontsel->entry), 8);
   gtk_box_pack_start (GTK_BOX (fontsel), fontsel->entry, TRUE, TRUE, 0);
   gtk_widget_show (fontsel->entry);
 
