@@ -36,7 +36,7 @@ static void   gimp_pixmap_realize           (GtkWidget       *widget);
 static void   gimp_pixmap_create_from_xpm_d (GimpPixmap      *pixmap);
 
 
-static GtkPixmapClass *parent_class = NULL;
+static GtkImageClass *parent_class = NULL;
 
 
 GType
@@ -59,7 +59,7 @@ gimp_pixmap_get_type (void)
         (GInstanceInitFunc) gimp_pixmap_init,
       };
 
-      pixmap_type = g_type_register_static (GTK_TYPE_PIXMAP,
+      pixmap_type = g_type_register_static (GTK_TYPE_IMAGE,
 					    "GimpPixmap",
 					    &pixmap_info, 0);
     }
@@ -100,7 +100,6 @@ gimp_pixmap_new (gchar **xpm_data)
 
   pixmap = g_object_new (GIMP_TYPE_PIXMAP, NULL);
 
-  gtk_pixmap_set_build_insensitive (GTK_PIXMAP (pixmap), TRUE);
   gimp_pixmap_set (pixmap, xpm_data);
 
   return GTK_WIDGET (pixmap);
@@ -179,7 +178,7 @@ gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap)
 						 pixmap->xpm_data);
     }
 
-  gtk_pixmap_set (GTK_PIXMAP (pixmap), gdk_pixmap, mask);
+  gtk_image_set_from_pixmap (GTK_IMAGE (pixmap), gdk_pixmap, mask);
 
   if (gdk_pixmap)
     g_object_unref (gdk_pixmap);

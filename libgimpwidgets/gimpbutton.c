@@ -212,6 +212,7 @@ gimp_button_button_release (GtkWidget      *widget,
 
       gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
       gtk_widget_queue_draw (widget);
+      gdk_window_process_updates (widget->window, TRUE);
    }
 
   return TRUE;

@@ -53,14 +53,14 @@ typedef struct _GimpPixmapClass  GimpPixmapClass;
 
 struct _GimpPixmap
 {
-  GtkPixmap   parent_instance;
+  GtkImage   parent_instance;
 
-  gchar     **xpm_data;
+  gchar    **xpm_data;
 };
 
 struct _GimpPixmapClass
 {
-  GtkPixmapClass  parent_class;
+  GtkImageClass  parent_class;
 };
 
 

@@ -276,7 +276,7 @@ gimp_offset_area_resize (GimpOffsetArea *offset_area)
   width  = ratio * (gdouble) width;
   height = ratio * (gdouble) height;
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (offset_area), width, height);
+  gtk_widget_set_size_request (GTK_WIDGET (offset_area), width, height);
 }
 
 static gboolean
