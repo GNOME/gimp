@@ -1,3 +1,27 @@
+2002-01-30  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/file-open-dialog.c: ported to the new treeviewized file
+	selection widget. Unfortunately, multiple selections aren't supported
+	anymore so it's still broke. I'll make a patch to gtk to address this
+	after I get some sleep.
+
+	* app/widgets/gimppreview.h
+	* libgimpwidgets/gimpcolorarea.h
+	* plug-ins/FractalExplorer/Events.c
+	* plug-ins/common/film.c 
+	* plug-ins/common/plugindetails.c 
+	* plug-ins/fp/fp_misc.c 
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_misc.c: REALLY REALLY ugly hack to get things to
+	build under the latest enum deprecations. Of course, we'll remove
+	these when these files compile with deprecation turned on
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: warning cleanup
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpoffsetarea.c: need a custom marshaller for
+	our signal since the gtk marshaller we used went away.
+
 2002-01-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: added a call to gtk_widget_show() that

@@ -61,30 +61,21 @@
 
 #include "undo.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtkclist.h>
-
 #include "libgimp/gimpintl.h"
 
 
 /*  local function prototypes  */
 
-static void     file_open_dialog_create      (Gimp      *gimp);
-static void     file_open_genbutton_callback (GtkWidget *widget,
-                                              gpointer   data);
-static void     file_open_clistrow_callback  (GtkWidget *widget,
-                                              gint       row,
-                                              gint       column,
-                                              GdkEvent  *event,
-                                              gpointer   data);
-static void     file_open_ok_callback        (GtkWidget *widget,
-                                              gpointer   data);
-static void     file_open_type_callback      (GtkWidget *widget,
-                                              gpointer   data);
-static GSList * clist_to_slist               (GtkCList  *file_list);
+static void     file_open_dialog_create       (Gimp             *gimp);
+static void     file_open_genbutton_callback  (GtkWidget        *widget,
+					       gpointer          data);
+static void     file_open_selchanged_callback (GtkTreeSelection *sel,
+                                               gpointer          data);
+static void     file_open_ok_callback         (GtkWidget        *widget,
+                                               gpointer          data);
+static void     file_open_type_callback       (GtkWidget        *widget,
+                                               gpointer          data);
+static GSList * tvsel_to_slist                (GtkTreeView      *file_list);
 
 
 
@@ -183,6 +174,7 @@ static void
 file_open_dialog_create (Gimp *gimp)
 {
   GtkFileSelection *file_sel;
+  GtkTreeSelection *sel;
 
   fileload = gtk_file_selection_new (_("Open Image"));
 
@@ -209,13 +201,12 @@ file_open_dialog_create (Gimp *gimp)
 
   gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
 
-  gtk_clist_set_selection_mode
-    (GTK_CLIST (GTK_FILE_SELECTION (fileload)->file_list),
-     GTK_SELECTION_EXTENDED);
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GTK_FILE_SELECTION (fileload)->file_list));
+  gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
 
-  /* Catch file-clist clicks so we can update the preview thumbnail */
-  g_signal_connect (G_OBJECT (file_sel->file_list), "select_row",
-		    G_CALLBACK (file_open_clistrow_callback),
+  /* Catch file-list clicks so we can update the preview thumbnail */
+  g_signal_connect (G_OBJECT (sel), "changed",
+		    G_CALLBACK (file_open_selchanged_callback),
 		    fileload);
 
   /*  Connect the "F1" help key  */
@@ -560,24 +551,24 @@ set_preview (Gimp        *gimp,
 }
 
 static void
-file_open_clistrow_callback (GtkWidget *widget,
-			     gint       row,
-                             gint       column,
-                             GdkEvent  *event,
-                             gpointer   data)
+file_open_selchanged_callback (GtkTreeSelection *sel,
+			       gpointer          data)
 {
   GtkFileSelection *fileload;
   Gimp             *gimp;
   const gchar      *fullfname;
 
-  fileload = GTK_FILE_SELECTION (data);
+  if (gtk_tree_selection_get_selected (sel, NULL, NULL))
+    {
+      fileload = GTK_FILE_SELECTION (data);
 
-  gimp = GIMP (g_object_get_data (G_OBJECT (fileload), "gimp"));
+      gimp = GIMP (g_object_get_data (G_OBJECT (fileload), "gimp"));
 
-  fullfname = gtk_file_selection_get_filename (fileload);
+      fullfname = gtk_file_selection_get_filename (fileload);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
-  set_preview (gimp, fullfname, NULL, 0, 0);
+      gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
+      set_preview (gimp, fullfname, NULL, 0, 0);
+    }
 }
 
 static void
@@ -614,8 +605,8 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   /* new mult-file preview make: */  
 
-  /* Have to read the clist before touching anything else */
-  toplist = clist_to_slist (GTK_CLIST (fs->file_list));
+  /* Have to read the list before touching anything else */
+  toplist = tvsel_to_slist (GTK_TREE_VIEW (fs->file_list));
 
   dirname = g_path_get_dirname (gtk_file_selection_get_filename (fs));
   
@@ -746,12 +737,12 @@ file_open_ok_callback (GtkWidget *widget,
 
 
   /*
-   * Now deal with multiple selections from the filesel clist
+   * Now deal with multiple selections from the filesel list
    */
 
-  /* Have to read the clist before touching anything else */
+  /* Have to read the list before touching anything else */
 
-  list = clist_to_slist (GTK_CLIST (fs->file_list));
+  list = tvsel_to_slist (GTK_TREE_VIEW (fs->file_list));
   
   raw_filename = g_strdup (raw_filename);
   dirname = g_path_get_dirname (full_filename);
@@ -801,27 +792,27 @@ file_open_ok_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 }
 
-static GSList *
-clist_to_slist (GtkCList *file_list)
+static void
+tvsel_to_slist_helper (GtkTreeModel *model,
+		       GtkTreePath  *path,
+		       GtkTreeIter  *iter,
+		       gpointer      data)
 {
-  GSList *list = NULL;
-  GList  *row;
-  gint    rownum;
-  gchar  *temp;
+  GSList **list = data;
+  gchar   *filename;
+
+  gtk_tree_model_get (model, iter, 0, &filename, -1);
+  *list = g_slist_prepend (*list, filename);
+}
+
+static GSList *
+tvsel_to_slist (GtkTreeView *file_list)
+{
+  GtkTreeSelection *sel;
+  GSList           *list = NULL;
   
-  for (row = file_list->row_list, rownum = 0;
-       row; 
-       row = g_list_next (row), rownum++)
-    {
-      if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
-        {
-          if (gtk_clist_get_cell_type (file_list, rownum, 0) == GTK_CELL_TEXT)
-            {
-              gtk_clist_get_text (file_list, rownum, 0, &temp);
-              list = g_slist_prepend (list, g_strdup (temp));
-            }
-        }
-    }
+  sel = gtk_tree_view_get_selection (file_list);
+  gtk_tree_selection_selected_foreach (sel, tvsel_to_slist_helper, &list);
 
   return list;
 }

@@ -42,6 +42,15 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 
 #include <gtk/gtk.h>
 
+#ifdef GTK_DISABLE_DEPRECATED
+/* eeek... really bad hack for the time being */
+typedef enum
+{
+  GTK_PREVIEW_COLOR,
+  GTK_PREVIEW_GRAYSCALE
+} GtkPreviewType;
+#endif
+
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif

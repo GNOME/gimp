@@ -276,7 +276,9 @@ procedure_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
-      gtk_tree_model_get (dbbrowser->store, &iter, 1, &func, -1);
+      gtk_tree_model_get (GTK_TREE_MODEL (dbbrowser->store), &iter,
+			  1, &func,
+			  -1);
       dialog_select (dbbrowser, func);
       g_free (func);
     }
@@ -623,7 +625,7 @@ dialog_search_callback (GtkWidget   *widget,
 
   if (num_procs > 0)
     {
-      gtk_tree_model_get_iter_root (dbbrowser->store, &iter);
+      gtk_tree_model_get_iter_root (GTK_TREE_MODEL (dbbrowser->store), &iter);
       gtk_tree_selection_select_iter (dbbrowser->sel, &iter);
     }
 

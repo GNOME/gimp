@@ -4,6 +4,15 @@
 #include "Events.h"
 #include "Dialogs.h"
 
+#ifdef GTK_DISABLE_DEPRECATED
+/* eeek... really bad hack for the time being */
+typedef enum
+{
+  GTK_PREVIEW_COLOR,
+  GTK_PREVIEW_GRAYSCALE
+} GtkPreviewType;
+#endif
+
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif

@@ -22,15 +22,11 @@
 
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpwidgetsmarshal.h"
 #include "gimpoffsetarea.h"
 
 
@@ -103,7 +99,7 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
 		  NULL, NULL,
-		  gtk_marshal_VOID__INT_INT, 
+		  _gimp_widgets_marshal_VOID__INT_INT, 
 		  G_TYPE_NONE, 2,
 		  G_TYPE_INT,
 		  G_TYPE_INT);

@@ -29,6 +29,13 @@
 #define __GIMP_COLOR_AREA_H__
 
 #ifdef GTK_DISABLE_DEPRECATED
+/* eeek... really bad hack for the time being */
+typedef enum
+{
+  GTK_PREVIEW_COLOR,
+  GTK_PREVIEW_GRAYSCALE
+} GtkPreviewType;
+
 #undef GTK_DISABLE_DEPRECATED
 #define GIMP_IGNORE_ME_PLEASE_FOOBAR
 #endif

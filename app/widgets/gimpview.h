@@ -23,6 +23,15 @@
 #define __GIMP_PREVIEW_H__
 
 
+#if defined(GTK_DISABLE_DEPRECATED) && !defined(__GIMP_COLOR_AREA_H__)
+/* eeek... really bad hack for the time being */
+typedef enum
+{
+  GTK_PREVIEW_COLOR,
+  GTK_PREVIEW_GRAYSCALE
+} GtkPreviewType;
+#endif
+
 #undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtkpreview.h>

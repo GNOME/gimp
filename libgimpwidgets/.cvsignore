@@ -6,3 +6,5 @@ _libs
 .libs
 .deps
 *.la
+gimpwidgetsmarshal.h
+gimpwidgetsmarshal.c

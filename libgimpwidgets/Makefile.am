@@ -16,15 +16,9 @@ INCLUDES = @STRIP_BEGIN@ \
 	-I$(includedir)		\
 @STRIP_END@
 
-EXTRA_DIST = \
-	makefile.mingw		\
-	makefile.mingw.in	\
-	makefile.msc		\
-	gimpwidgets.def
-
 lib_LTLIBRARIES = libgimpwidgets-1.3.la
 
-libgimpwidgets_1_3_la_SOURCES = @STRIP_BEGIN@ \
+libgimpwidgets_1_3_la_sources = @STRIP_BEGIN@ \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -58,6 +52,26 @@ libgimpwidgets_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpunitmenu.h		\
 @STRIP_END@
 
+libgimpwidgets_1_3_la_built_sources = @STRIP_BEGIN@ \
+	gimpwidgetsmarshal.c	\
+	gimpwidgetsmarshal.h	\
+@STRIP_END@
+
+libgimpwidgets_1_3_la_extra_sources = @STRIP_BEGIN@ \
+	gimpwidgetsmarshal.list	\
+@STRIP_END@
+
+EXTRA_DIST = \
+	makefile.mingw				\
+	makefile.mingw.in			\
+	makefile.msc				\
+	gimpwidgets.def				\
+	$(libgimpwidgets_1_3_la_extra_sources)
+
+libgimpwidgets_1_3_la_SOURCES = 		\
+	$(libgimpwidgets_1_3_la_built_sources)	\
+	$(libgimpwidgets_1_3_la_sources)
+
 libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
@@ -84,3 +98,22 @@ libgimpwidgets_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-gwmh xgen-gwmc
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
+	$(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header >> xgen-gwmh \
+	&& (cmp -s xgen-gwmh $(@F) || cp xgen-gwmh $(@F)) \
+	&& rm -f xgen-gwmh xgen-gwmh~
+
+$(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
+	echo "#include \"gimpwidgetsmarshal.h\"" >> xgen-gwmc \
+	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-gwmc \
+	&& cp xgen-gwmc $(@F) \
+	&& rm -f xgen-gwmc xgen-gwmc~
+
