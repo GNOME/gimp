@@ -95,8 +95,9 @@ rotate_tool_transform (Tool     *tool,
 					tool);
 	  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
 
+	  /*  this looks strange (-180, 181), but it works  */
 	  widget = info_dialog_add_scale (transform_info, "", &angle_val,
-					  -180, 180, 0.01, 0.1, 1, -1,
+					  -180, 181, 0.01, 0.1, 1, -1,
 					  (GtkSignalFunc) rotate_angle_changed,
 					  tool);
 	  gtk_widget_set_usize (widget, 180, 0);

@@ -1,3 +1,14 @@
+Fri Jul  9 16:47:04 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpmatrix.[ch]: added a few functions to test for
+	matrix properties
+
+	* app/transform_core.c: if we are doing a simple transformation
+	(e.g. rotating by 90 degrees), turn off interpolation
+
+	* app/rotate_tool.c: persuade the slider that a rotate angle of
+	180 degrees is perfectly ok
+
 1999-07-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/crop.c: mysteriously, using the new tool constructor fixed

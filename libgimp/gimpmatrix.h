@@ -38,9 +38,19 @@ void          gimp_matrix_yshear          (GimpMatrix, double);
 double        gimp_matrix_determinant     (GimpMatrix);
 void          gimp_matrix_invert          (GimpMatrix m, GimpMatrix m_inv);
 void          gimp_matrix_duplicate       (GimpMatrix src, GimpMatrix target);
+int           gimp_matrix_is_diagonal     (GimpMatrix m);
+int           gimp_matrix_is_identity     (GimpMatrix m);
+int           gimp_matrix_is_simple       (GimpMatrix m);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif  /*  __GIMPMATRIX_H__  */
+
+
+
+
+
+
+

@@ -1026,6 +1026,10 @@ transform_core_do (GImage          *gimage,
   int newval;
 
   alpha = 0;
+  
+  /*  turn interpolation off for simple transformations (e.g. rot90)  */
+  if (gimp_matrix_is_simple (matrix))
+    interpolation = FALSE;
 
   /*  Get the background color  */
   gimage_get_background (gimage, drawable, bg_col);
@@ -1062,7 +1066,7 @@ transform_core_do (GImage          *gimage,
       gimp_matrix_invert (matrix, m);
     }
 
-  paths_transform_current_path(gimage,matrix,FALSE);
+  paths_transform_current_path (gimage, matrix, FALSE);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
@@ -1128,6 +1132,7 @@ transform_core_do (GImage          *gimage,
       ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
       tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
       d = dest;
+
       for (x = tx1; x < tx2; x++)
 	{
 	  /*  normalize homogeneous coords  */

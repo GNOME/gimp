@@ -17,9 +17,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "gimpmatrix.h"
+#include <glib.h>
 #include <math.h>
 #include <string.h>
+#include "gimpmatrix.h"
+
+#define EPSILON 1e-6
 
 void
 gimp_matrix_transform_point (GimpMatrix m, double x, double y,
@@ -175,5 +178,74 @@ gimp_matrix_invert (GimpMatrix m, GimpMatrix m_inv)
 void
 gimp_matrix_duplicate (GimpMatrix src, GimpMatrix target)
 {
-  memcpy(&target[0][0], &src[0][0], sizeof(GimpMatrix));
+  memcpy (&target[0][0], &src[0][0], sizeof(GimpMatrix));
 }
+
+
+/*  functions to test for matrix properties  */
+
+int
+gimp_matrix_is_diagonal (GimpMatrix m)
+{
+  int i,j;
+
+  for (i = 0; i < 3; i++)
+    {
+      for (j = 0; j < 3; j++)
+	{
+	  if (i != j && fabs (m[i][j]) > EPSILON)
+	    return FALSE;
+	}
+    }
+  return TRUE;
+}
+
+int
+gimp_matrix_is_identity (GimpMatrix m)
+{
+  int i,j;
+
+  for (i = 0; i < 3; i++)
+    {
+      for (j = 0; j < 3; j++)
+	{
+	  if (i == j)
+	    {
+	      if (fabs (m[i][j] - 1.0) > EPSILON)
+		return FALSE;
+	    }
+	  else
+	    {
+	      if (fabs (m[i][j]) > EPSILON)
+		return FALSE;
+	    }
+	}
+    }
+  return TRUE;
+}
+
+/*  Check if we'll need to interpolate when applying this matrix. 
+    This function returns TRUE if all entries of the upper left 
+    2x2 matrix are either 0 or 1 
+ */
+int
+gimp_matrix_is_simple (GimpMatrix m)
+{
+  double absm;
+  int i,j;
+
+  for (i = 0; i < 2; i++)
+    {
+      for (j = 0; j < 2; j++)
+	{
+	  absm = fabs (m[i][j]);
+	  if (absm > EPSILON && fabs (absm - 1.0) > EPSILON)
+	    return FALSE;
+	}
+    }
+  return TRUE;
+}
+
+
+
+
