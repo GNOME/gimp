@@ -127,7 +127,7 @@ gimp_coords_scalarprod (const GimpCoords *a,
  */
 
 gdouble
-gimp_coords_length2 (const GimpCoords *a)
+gimp_coords_length_squared (const GimpCoords *a)
 {
   GimpCoords upscaled_a;
 
@@ -145,7 +145,7 @@ gimp_coords_length2 (const GimpCoords *a)
 gdouble
 gimp_coords_length (const GimpCoords *a)
 {
-  return sqrt (gimp_coords_length2 (a));
+  return sqrt (gimp_coords_length_squared (a));
 }
 
 gboolean

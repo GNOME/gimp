@@ -23,31 +23,31 @@
 #define __GIMP_COORDS_H__
 
 
-void     gimp_coords_mix         (const gdouble     amul,
-                                  const GimpCoords *a,
-                                  const gdouble     bmul,
-                                  const GimpCoords *b,
-                                  GimpCoords       *ret_val);
-void     gimp_coords_average     (const GimpCoords *a,
-                                  const GimpCoords *b,
-                                  GimpCoords       *ret_average);
-void     gimp_coords_add         (const GimpCoords *a,
-                                  const GimpCoords *b,
-                                  GimpCoords       *ret_add);
-void     gimp_coords_difference  (const GimpCoords *a,
-                                  const GimpCoords *b,
-                                  GimpCoords       *difference);
-void     gimp_coords_scale       (const gdouble     f,
-                                  const GimpCoords *a,
-                                  GimpCoords       *ret_product);
+void     gimp_coords_mix            (const gdouble     amul,
+                                     const GimpCoords *a,
+                                     const gdouble     bmul,
+                                     const GimpCoords *b,
+                                     GimpCoords       *ret_val);
+void     gimp_coords_average        (const GimpCoords *a,
+                                     const GimpCoords *b,
+                                     GimpCoords       *ret_average);
+void     gimp_coords_add            (const GimpCoords *a,
+                                     const GimpCoords *b,
+                                     GimpCoords       *ret_add);
+void     gimp_coords_difference     (const GimpCoords *a,
+                                     const GimpCoords *b,
+                                     GimpCoords       *difference);
+void     gimp_coords_scale          (const gdouble     f,
+                                     const GimpCoords *a,
+                                     GimpCoords       *ret_product);
 
-gdouble  gimp_coords_scalarprod  (const GimpCoords *a,
-                                  const GimpCoords *b);
-gdouble  gimp_coords_length      (const GimpCoords *a);
-gdouble  gimp_coords_length2     (const GimpCoords *a);
+gdouble  gimp_coords_scalarprod     (const GimpCoords *a,
+                                     const GimpCoords *b);
+gdouble  gimp_coords_length         (const GimpCoords *a);
+gdouble  gimp_coords_length_squared (const GimpCoords *a);
 
-gboolean gimp_coords_equal       (const GimpCoords *a,
-                                  const GimpCoords *b);
+gboolean gimp_coords_equal          (const GimpCoords *a,
+                                     const GimpCoords *b);
 
 
 #endif /* __GIMP_COORDS_H__ */

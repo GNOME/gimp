@@ -694,8 +694,8 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
   gimp_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
 
   if (!depth || (gimp_bezier_coords_is_straight (beziercoords, precision)
-                 && gimp_coords_length2 (&point1) < precision
-                 && gimp_coords_length2 (&point2) < precision))
+                 && gimp_coords_length_squared (&point1) < precision
+                 && gimp_coords_length_squared (&point2) < precision))
     {
       GimpCoords line, dcoord;
       gdouble length2, scalar;
@@ -1782,7 +1782,7 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
                           &(beziercoords[0]),
                           &line);
 
-  if (gimp_coords_length2 (&line) < precision * precision)
+  if (gimp_coords_length_squared (&line) < precision * precision)
     {
       gimp_coords_difference (&(beziercoords[1]),
                               &(beziercoords[0]),
@@ -1790,8 +1790,8 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
       gimp_coords_difference (&(beziercoords[2]),
                               &(beziercoords[3]),
                               &tan2);
-      if ((gimp_coords_length2 (&tan1) < precision * precision) &&
-          (gimp_coords_length2 (&tan2) < precision * precision))
+      if ((gimp_coords_length_squared (&tan1) < precision * precision) &&
+          (gimp_coords_length_squared (&tan2) < precision * precision))
         {
           return 1;
         }
@@ -1823,8 +1823,8 @@ gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
       gimp_coords_mix (1.0, &tan1, - s1, &line, &d1);
       gimp_coords_mix (1.0, &tan2, - s2, &line, &d2);
 
-      if ((gimp_coords_length2 (&d1) > precision * precision) ||
-          (gimp_coords_length2 (&d2) > precision * precision))
+      if ((gimp_coords_length_squared (&d1) > precision * precision) ||
+          (gimp_coords_length_squared (&d2) > precision * precision))
         {
           /* The control points are too far away from the baseline */
           return 0;
