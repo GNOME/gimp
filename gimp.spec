@@ -506,7 +506,6 @@ cat gimp-perl gimp-perl-plugin-files >gimp-perl-files
 %{prefix}/share/gimp/gimp_splash.ppm
 %{prefix}/share/gimp/gimp1_1_splash.ppm
 %{prefix}/share/gimp/ps-menurc
-%{prefix}/share/gimp/gtkrc.forest2
 
 
 %defattr (0555, bin, bin)

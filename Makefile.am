@@ -116,8 +116,7 @@ gimpdata_DATA = \
 	gimp_logo.ppm		 \
 	gimp_splash.ppm		 \
 	gimp1_1_splash.ppm	 \
-	ps-menurc		 \
-	gtkrc.forest2
+	ps-menurc
 
 gimpdata_SCRIPTS = user_install
 

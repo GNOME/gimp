@@ -45,9 +45,9 @@ Many of the developers hang out there.  Some of the Byxnet servers are:
 
 	irc.gimp.org:6667
 
-You can customize the look of the interface quite a bit my editing the
-~/.gimp/gtkrc file. A sample file, gtkrc.forest, is included (Thanks to
-Tuomas Kuosmanen)
+The look of GIMP's interface can be customized like any other GTK app
+by editing the ~/.gtkrc file. Additionally GIMP reads ~/.gimp/gtkrc
+so you can have settings that only apply to The GIMP. 
 
 Included is a set of keybindings similar to those in Adobe Photoshop (tm).
 You can find them in the ps-menurc file.  To use them, copy this file to

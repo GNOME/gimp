@@ -291,9 +291,9 @@ install_help (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  font_strong = gdk_fontset_load ( _("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
-  font_emphasis = gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
-  font = gdk_fontset_load ( _("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"));
+  font_strong = gdk_fontset_load (_("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
+  font_emphasis = gdk_font_load (_("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"));
+  font = gdk_fontset_load (_("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"));
 
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (text);

@@ -11,11 +11,6 @@ style "ruler"
   font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
 }
 
-style "default"
-{
-  font = "-adobe-helvetica-medium-r-normal--*-100-*-*-*-*-*-*"
-}
-
 style "tooltips"
 {
   bg[NORMAL] = { 0.94, 0.90, 0.54 }
@@ -24,4 +19,3 @@ style "tooltips"
 widget "gtk-tooltips" style "tooltips"
 
 widget_class "*Ruler*" style "ruler"
-widget_class "*" style "default"

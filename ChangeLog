@@ -1,3 +1,17 @@
+Mon Feb  7 20:05:19 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* README
+	* gimp.spec
+	* gtkrc
+	* user_install
+	* gtkrc.forest2: changed the notice on user_install about Gimp's 
+	gtkrc, removed the hardcoded font in our gtkrc (left the ruler
+	font in there however) and removed gtkrc.forest2 since it is
+	already distributed with GTK themes.
+
+	* app/install.c: marked another hardcoded font for translation.
+
 Mon Feb  7 19:26:26 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimphelp.c: fixed one of those errors you only notice if
