@@ -254,6 +254,19 @@ gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
   return image_data;
 }
 
+/**
+ * gimp_drawable_attach_new_parasite:
+ * @drawable_ID: the ID of the #GimpDrawable to attach the #GimpParasite to.
+ * @name: the name of the #GimpParasite to create and attach.
+ * @flags: the flags set on the #GimpParasite.
+ * @size: the size of the parasite data in bytes.
+ * @data: a pointer to the data attached with the #GimpParasite.
+ *
+ * Convenience function that creates a parasite and attaches it
+ * to the GIMP.
+ *
+ * See Also: gimp_drawable_parasite_attach()
+ */
 void
 gimp_drawable_attach_new_parasite (gint32          drawable, 
 				   const gchar    *name, 

@@ -150,6 +150,17 @@ struct _GimpParam
 
 
 
+/**
+ * MAIN():
+ *
+ * A macro that expands to the appropriate main() function for the
+ * platform being compiled for.
+ *
+ * To use this macro, simply place a line that contains just the code
+ * MAIN() at the toplevel of your file.  No semicolon should be used. 
+ *
+ */
+
 #ifdef G_OS_WIN32
 
 void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
