@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
+"POT-Creation-Date: 2000-08-23 01:07+0300\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1618,11 +1618,11 @@ msgstr ""
 
 #: app/gimpimage.c:1183
 msgid "attach parasite to image"
-msgstr "причепити паразита до зображення"
+msgstr "причеплення паразита до зображення"
 
 #: app/gimpimage.c:1208
 msgid "detach parasite from image"
-msgstr "в╕дчепити паризита в╕д зображення"
+msgstr "в╕дчеплення паризита в╕д зображення"
 
 #: app/gimpimage.c:2312
 msgid "Layer cannot be raised any further"
@@ -2865,108 +2865,126 @@ msgstr "Зб╕льшити"
 msgid "Zoom out"
 msgstr "Зменшити"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr ""
+"\n"
+"Нев╕рний параметр.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "Верс╕я GIMP"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Використання: %s [параметр ...] [файли ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Допустим╕ параметри:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Вив╕д ц╕╓╖ дов╕дки.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Вив╕д ╕нформац╕╖ про верс╕ю.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <команди>     Запустити в командному режим╕.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
 msgstr ""
-"  -g --gimprc <gimprc>     Використовувати альтернативний файл gimprc.\n"
+"\n"
+"Використання: %s [параметр ...] [файл ...]\n"
+"\n"
+
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Запустити без ╕нтерфейсу користувача.\n"
+msgid "Options:\n"
+msgstr "Параметри:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Спробувати в╕дновити збережений сеанс.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b, --batch <команди>    Запустити в командному режим╕.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
 msgstr ""
-"  --no-data                Не завантажувати шаблон╕в, град╕╓нт╕в, пал╕тр, "
-"пензл╕в.\n"
+"  -c, --console-messages   Показувати попередження на консол╕ зам╕сть "
+"д╕алогових в╕кон.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr ""
+"  -d, --no-data            Не завантажувати шаблон╕в, град╕╓нт╕в, пал╕тр, "
+"пензл╕в.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i --no-interface        Запустити без ╕нтерфейсу користувача.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr ""
+"  -g, --gimprc <gimprc>    Використовувати альтернативний файл gimprc.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help               Вив╕д ц╕╓╖ дов╕дки.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session    Спробувати в╕дновити збережений сеанс.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash          Не показувати в╕кно запуску.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Не додавати зображення до в╕кна запуску.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version            Вив╕д ╕нформац╕╖ про верс╕ю.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Показувати пов╕домлення при запуску.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Не показувати в╕кно запуску.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Не додавати зображення до в╕кна запуску.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Не використовувати колективну пам'ять м╕ж GIMP та "
-"його доповненнями.\n"
+"доповненнями.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Не використовувати розширення X Shared Memory.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Показувати попередження на консол╕ зам╕сть "
-"д╕алогових в╕кон.\n"
-
-#: app/main.c:315
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Дозволити налагодження обробник╕в си╜нал╕в для "
-"нефатальних си╜гал╕в.\n"
+"нефатальних си╜нал╕в.\n"
 
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr "                          Режим налагодження для фатальних си╜нал╕в.\n"
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <дисплей>      Використовувати вказаний X-дисплей.\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Використовувати альтернативний системный файл "
 "gimprc.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr ""
+"                       Режим налагодження для фатальних си╜нал╕в.\n"
+"\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Це консольне в╕кно закри╓ться на протяз╕ десяти секунд)\n"
 
@@ -3527,7 +3545,7 @@ msgstr "/Ф╕льтри/Спотворення"
 
 #: app/menus.c:546
 msgid "/Filters/Artistic"
-msgstr "/Ф╕льтри/╤н╕тац╕я"
+msgstr "/Ф╕льтри/╤м╕тац╕я"
 
 #: app/menus.c:548
 msgid "/Filters/Map"

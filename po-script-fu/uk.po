@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-08-19 09:14-0700\n"
+"POT-Creation-Date: 2000-08-23 13:16+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -468,7 +468,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Ком╕кс..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Холодний метал..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -560,7 +560,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Шаблони/Камуфляж..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
@@ -668,59 +668,59 @@ msgstr ""
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Иаст╕ питання розробник╕в"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Част╕ питання розробник╕в"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Помилки GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Помилки GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Кер╕вництво GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Кер╕вництво GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Новини GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Новини GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Уроки GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Уроки GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Документац╕я"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Документац╕я"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Звантаження"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Звантаження"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Мистецтво GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Мистецтво GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Посилання"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Посилання"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Списки розсилки"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Списки розсилки"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/Ресурси"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/Ресурси"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Розш./Переглядач WWW/GIMP.ORG/GIMP"
+msgstr "<Toolbox>/Розш./Перегляд WWW/GIMP.ORG/GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Gimp-Savvy.com"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
@@ -728,11 +728,11 @@ msgstr ""
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr ""
+msgstr "<Toolbox>/Розш./Перегляд WWW/Ре╓стр доповнень"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Розш./Переглядач WWW/Част╕ питання користувач╕в"
+msgstr "<Toolbox>/Розш./Перегляд WWW/Част╕ питання користувач╕в"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
