@@ -1,5 +1,5 @@
 # Serbian translation of gimp
-# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003, 2004.
 #
 # This file is distributed under the same license as the gimp package.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 00:54+0100\n"
-"PO-Revision-Date: 2004-01-10 04:09+0100\n"
+"POT-Creation-Date: 2004-01-23 12:54+0100\n"
+"PO-Revision-Date: 2004-01-23 12:55+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,28 +27,28 @@ msgstr "Skript-Fu konzola dozvoljava samo interaktivno korištenje"
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konzola"
 
-#: plug-ins/script-fu/script-fu-console.c:190
+#: plug-ins/script-fu/script-fu-console.c:191
 msgid "SIOD Output"
 msgstr "SIOD izlaz"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:263
+#: plug-ins/script-fu/script-fu-console.c:264
 msgid "Current Command"
 msgstr "Trenutna naredba"
 
-#: plug-ins/script-fu/script-fu-console.c:282
+#: plug-ins/script-fu/script-fu-console.c:283
 msgid "Browse..."
 msgstr "Traži..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Ne može da otvori protok na cevovodu SIOD izlaza"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:588
 msgid "Unable to open the SIOD output pipe"
 msgstr "Ne mogu da otvorim cevovod SIOD izlaza"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Skript-Fu provera je dozvoljena samo kao ne-interaktivni poziv"
 
@@ -109,26 +109,26 @@ msgstr "Skript-Fu izbor preliva"
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu izbor četke"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1955
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Vrste Slika:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1992
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -502,8 +502,7 @@ msgstr "Delta Vrednost Boje"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr ""
-"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -559,8 +558,7 @@ msgstr "Gore"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr ""
-"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -678,6 +676,7 @@ msgstr "Vrijednost bafera (% Visine Teksta)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
 msgid "Filename"
 msgstr "Naziv Datoteke"
 
@@ -1158,7 +1157,7 @@ msgstr "<Toolbox>/Proširenja/Skript-Fu/Logotip/Kristal..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr "<Image>/Skript-Fu/Selekcija/Oskudna selekcija..."
+msgstr "<Image>/Skript-Fu/Izbor/Oskudna selekcija..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
@@ -1262,7 +1261,7 @@ msgstr "Redova/Kolona"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Skript-Fu/Selekcija/Iščezavanje..."
+msgstr "<Image>/Skript-Fu/Izbor/Iščezavanje..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1959,7 +1958,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr "<Image>/Skript-Fu/Selekcija/U četku..."
+msgstr "<Image>/Skript-Fu/Izbor/U četku..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "Brush Name"
@@ -1967,11 +1966,29 @@ msgstr "Ime četke"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr "<Image>/Skript-Fu/Selekcija/U sliku"
+msgstr "<Image>/Skript-Fu/Izbor/U sliku"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+msgstr ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+msgstr "<Image>/Skript-Fu/Izbor/U _mustru..."
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+msgid "Pattern Name"
+msgstr "Ime mustre"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Skript-Fu/Selekcija/Okruglo..."
+msgstr "<Image>/Skript-Fu/Izbor/_Okruglo..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
