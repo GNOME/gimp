@@ -330,7 +330,7 @@
     <title>Paint</title>
     <xi:include href="xml/paint-types.xml"/>
     <xi:include href="xml/paint-enums.xml"/>
-    <xi:include href="xml/paint.xml"/>
+    <xi:include href="xml/gimp-paint.xml"/>
 
     <chapter id="app-paint-paint-core">
       <title>The Paint Core &amp; Options</title>
@@ -441,7 +441,7 @@
 
     <chapter id="app-tools-glue">
       <title>Initialization &amp; Glue Code</title>
-      <xi:include href="xml/tools.xml"/>
+      <xi:include href="xml/gimp-tools.xml"/>
       <xi:include href="xml/tool_manager.xml"/>
     </chapter>
 

@@ -64,8 +64,7 @@ GTKDOC_CFLAGS = \
 unused_symbols = \
 	-u gimp_container_get_filtered_name_array	\
 	-u gimp_xml_parser_new				\
-	-u gimp_xml_parser_parse_file			\
-	-u gimp_xml_parser_free
+	-u gimp_drawable_stroke_vectors
 
 GTKDOC_LIBS = \
 	$(unused_symbols)				\

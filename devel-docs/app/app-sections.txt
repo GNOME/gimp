@@ -635,6 +635,7 @@ gimp_drawable_bytes_with_alpha
 gimp_drawable_alpha_changed
 gimp_drawable_cmap
 gimp_drawable_get_color_at
+gimp_drawable_stroke_vectors
 <SUBSECTION Standard>
 GimpDrawableClass
 GIMP_DRAWABLE
@@ -3178,7 +3179,6 @@ gimp_vectors_get_distance
 gimp_vectors_interpolate
 gimp_vectors_bounds
 gimp_vectors_make_bezier
-gimp_vectors_art_stroke
 <SUBSECTION Standard>
 GimpVectorsClass
 GIMP_VECTORS
@@ -3648,11 +3648,13 @@ GIMP_DOCK_GET_CLASS
 
 <SECTION>
 <FILE>gimpdockable</FILE>
+GimpDockableGetMenuFunc
 GimpDockableGetPreviewFunc
 GimpDockableSetContextFunc
 <TITLE>GimpDockable</TITLE>
 GimpDockable
 gimp_dockable_new
+gimp_dockable_get_menu
 gimp_dockable_get_tab_widget
 gimp_dockable_set_context
 <SUBSECTION Standard>
@@ -5015,6 +5017,9 @@ GimpBlendMode
 GIMP_TYPE_BUCKET_FILL_MODE
 gimp_bucket_fill_mode_get_type
 GimpBucketFillMode
+GIMP_TYPE_CAP_STYLE
+gimp_cap_style_get_type
+GimpCapStyle
 GIMP_TYPE_CHANNEL_OPS
 gimp_channel_ops_get_type
 GimpChannelOps
@@ -5036,15 +5041,18 @@ GimpFillType
 GIMP_TYPE_GRADIENT_TYPE
 gimp_gradient_type_get_type
 GimpGradientType
-GIMP_TYPE_GRID_TYPE
-gimp_grid_type_get_type
-GimpGridType
+GIMP_TYPE_GRID_STYLE
+gimp_grid_style_get_type
+GimpGridStyle
 GIMP_TYPE_IMAGE_BASE_TYPE
 gimp_image_base_type_get_type
 GimpImageBaseType
 GIMP_TYPE_IMAGE_TYPE
 gimp_image_type_get_type
 GimpImageType
+GIMP_TYPE_JOIN_STYLE
+gimp_join_style_get_type
+GimpJoinStyle
 GIMP_TYPE_ORIENTATION_TYPE
 gimp_orientation_type_get_type
 GimpOrientationType
@@ -5462,7 +5470,10 @@ GimpScanConvert
 gimp_scan_convert_new
 gimp_scan_convert_free
 gimp_scan_convert_add_points
+gimp_scan_convert_add_polyline
 gimp_scan_convert_to_channel
+gimp_scan_convert_render
+gimp_scan_convert_stroke
 </SECTION>
 
 <SECTION>
@@ -5659,7 +5670,8 @@ dialogs_show_toolbox_cmd_callback
 dialogs_create_toplevel_cmd_callback
 dialogs_create_dockable_cmd_callback
 dialogs_add_tab_cmd_callback
-dialogs_remove_tab_cmd_callback
+dialogs_close_tab_cmd_callback
+dialogs_detach_tab_cmd_callback
 dialogs_toggle_view_cmd_callback
 dialogs_preview_size_cmd_callback
 dialogs_tab_style_cmd_callback
@@ -6335,9 +6347,9 @@ GimpPaintRegisterFunc
 </SECTION>
 
 <SECTION>
-<FILE>paint</FILE>
-paint_init
-paint_exit
+<FILE>gimp-paint</FILE>
+gimp_paint_init
+gimp_paint_exit
 </SECTION>
 
 <SECTION>
@@ -6617,8 +6629,6 @@ gimp_tool_options_gui
 <FILE>tool_manager</FILE>
 tool_manager_init
 tool_manager_exit
-tool_manager_restore
-tool_manager_save
 tool_manager_get_active
 tool_manager_select_tool
 tool_manager_push_tool
@@ -6632,8 +6642,6 @@ tool_manager_arrow_key_active
 tool_manager_modifier_key_active
 tool_manager_oper_update_active
 tool_manager_cursor_update_active
-tool_manager_register_tool
-tool_manager_get_info_by_type
 </SECTION>
 
 <SECTION>
@@ -6667,9 +6675,11 @@ GimpToolRegisterFunc
 </SECTION>
 
 <SECTION>
-<FILE>tools</FILE>
-tools_init
-tools_exit
+<FILE>gimp-tools</FILE>
+gimp_tools_init
+gimp_tools_exit
+gimp_tools_save
+gimp_tools_restore
 </SECTION>
 
 <SECTION>
@@ -6817,6 +6827,7 @@ gimp_paint_mode_menu_new
 <FILE>gimpwidgets-utils</FILE>
 gimp_message_box
 gimp_menu_position
+gimp_button_menu_position
 gimp_table_attach_stock
 gimp_get_icon_size
 gimp_get_mod_name_shift

@@ -1,3 +1,9 @@
+2003-09-24  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt: udpated.
+
 2003-09-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml: added a chapter id to
