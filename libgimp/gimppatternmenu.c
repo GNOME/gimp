@@ -125,9 +125,7 @@ gimp_pattern_select_widget_new (const gchar            *title,
 
   pattern_sel->preview = gimp_preview_area_new ();
   gtk_widget_add_events (pattern_sel->preview,
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK);
+                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_widget_set_size_request (pattern_sel->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), pattern_sel->preview);
   gtk_widget_show (pattern_sel->preview);

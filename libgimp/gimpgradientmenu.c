@@ -22,11 +22,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -52,6 +47,8 @@ struct _GradientSelect
   gchar                   *gradient_name;      /* Local copy */
   gint                     sample_size;
   gboolean                 reverse;
+  gint                     width;
+  gdouble                 *gradient_data;      /* Local copy */
 
   const gchar             *temp_gradient_callback;
 };
@@ -61,16 +58,16 @@ struct _GradientSelect
 
 static void gimp_gradient_select_widget_callback (const gchar    *name,
                                                   gint            width,
-                                                  const gdouble  *grad_data,
+                                                  const gdouble  *gradient_data,
                                                   gint            closing,
                                                   gpointer        data);
 static void gimp_gradient_select_widget_clicked  (GtkWidget      *widget,
                                                   GradientSelect *gradient_sel);
 static void gimp_gradient_select_widget_destroy  (GtkWidget      *widget,
                                                   GradientSelect *gradient_sel);
-static void gimp_gradient_select_preview_update  (GtkWidget      *preview,
-                                                  gint            width,
-                                                  const gdouble  *grad_data);
+static void gimp_gradient_select_preview_expose  (GtkWidget      *preview,
+                                                  GdkEventExpose *event,
+                                                  GradientSelect *gradient_sel);
 
 
 /**
@@ -94,8 +91,6 @@ gimp_gradient_select_widget_new (const gchar             *title,
                                  gpointer                 data)
 {
   GradientSelect *gradient_sel;
-  gint            width;
-  gdouble        *grad_data;
 
   g_return_val_if_fail (callback != NULL, NULL);
 
@@ -120,28 +115,23 @@ gimp_gradient_select_widget_new (const gchar             *title,
                     G_CALLBACK (gimp_gradient_select_widget_destroy),
                     gradient_sel);
 
-  gradient_sel->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (gradient_sel->preview),
-		    CELL_WIDTH, CELL_HEIGHT);
+  gradient_sel->preview = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (gradient_sel->preview, CELL_WIDTH, CELL_HEIGHT);
   gtk_container_add (GTK_CONTAINER (gradient_sel->button),
                      gradient_sel->preview);
   gtk_widget_show (gradient_sel->preview);
+
+  g_signal_connect (gradient_sel->preview, "expose_event",
+                    G_CALLBACK (gimp_gradient_select_preview_expose),
+                    gradient_sel);
 
   /* Do initial gradient setup */
   gradient_sel->gradient_name =
     gimp_gradients_get_gradient_data (gradient_name,
                                       gradient_sel->sample_size,
                                       gradient_sel->reverse,
-                                      &width,
-                                      &grad_data);
-
-  if (gradient_sel->gradient_name)
-    {
-      gimp_gradient_select_preview_update (gradient_sel->preview,
-                                           width, grad_data);
-
-      g_free (grad_data);
-    }
+                                      &gradient_sel->width,
+                                      &gradient_sel->gradient_data);
 
   g_object_set_data (G_OBJECT (gradient_sel->button),
                      GRADIENT_SELECT_DATA_KEY, gradient_sel);
@@ -201,23 +191,23 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
   else
     {
       gchar   *name;
+      gdouble *gradient_data;
       gint     width;
-      gdouble *grad_data;
 
       name = gimp_gradients_get_gradient_data (gradient_name,
 					       gradient_sel->sample_size,
                                                gradient_sel->reverse,
                                                &width,
-					       &grad_data);
+					       &gradient_data);
 
       if (name)
 	{
-	  gimp_gradient_select_widget_callback (name, width,
-                                                grad_data, FALSE,
-                                                gradient_sel);
+	  gimp_gradient_select_widget_callback (name,
+                                                width, gradient_data,
+                                                FALSE, gradient_sel);
 
 	  g_free (name);
-	  g_free (grad_data);
+          g_free (gradient_data);
 	}
     }
 }
@@ -228,20 +218,24 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
 static void
 gimp_gradient_select_widget_callback (const gchar   *name,
                                       gint           width,
-                                      const gdouble *grad_data,
+                                      const gdouble *gradient_data,
                                       gint           closing,
                                       gpointer       data)
 {
   GradientSelect *gradient_sel = (GradientSelect *) data;
 
   g_free (gradient_sel->gradient_name);
-  gradient_sel->gradient_name = g_strdup (name);
+  g_free (gradient_sel->gradient_data);
 
-  gimp_gradient_select_preview_update (gradient_sel->preview,
-                                       width, grad_data);
+  gradient_sel->gradient_name = g_strdup (name);
+  gradient_sel->width         = width;
+  gradient_sel->gradient_data = g_memdup (gradient_data,
+                                          width * 4 * sizeof (gdouble));
+
+  gtk_widget_queue_draw (gradient_sel->preview);
 
   if (gradient_sel->callback)
-    gradient_sel->callback (name, width, grad_data, closing, gradient_sel->data);
+    gradient_sel->callback (name, width, gradient_data, closing, gradient_sel->data);
 
   if (closing)
     gradient_sel->temp_gradient_callback = NULL;
@@ -280,13 +274,14 @@ gimp_gradient_select_widget_destroy (GtkWidget      *widget,
 
   g_free (gradient_sel->title);
   g_free (gradient_sel->gradient_name);
+  g_free (gradient_sel->gradient_data);
   g_free (gradient_sel);
 }
 
 static void
-gimp_gradient_select_preview_update (GtkWidget     *preview,
-                                     gint           width,
-                                     const gdouble *grad_data)
+gimp_gradient_select_preview_expose (GtkWidget      *widget,
+                                     GdkEventExpose *event,
+                                     GradientSelect *gradient_sel)
 {
   const gdouble *src;
   gdouble        r, g, b, a;
@@ -297,15 +292,12 @@ gimp_gradient_select_preview_update (GtkWidget     *preview,
   guchar        *odd;
   gint           x, y;
 
-  width /= 4;
-  width = MIN (width, CELL_WIDTH);
-
   /*  Draw the gradient  */
-  src = grad_data;
-  p0  = even = g_malloc (width * 3);
-  p1  = odd  = g_malloc (width * 3);
+  src = gradient_sel->gradient_data;
+  p0  = even = g_malloc (gradient_sel->width * 3);
+  p1  = odd  = g_malloc (gradient_sel->width * 3);
 
-  for (x = 0; x < width; x++)
+  for (x = 0; x < gradient_sel->width; x++)
     {
       r = src[x * 4 + 0];
       g = src[x * 4 + 1];
@@ -332,18 +324,20 @@ gimp_gradient_select_preview_update (GtkWidget     *preview,
       *p1++ = (c1 + (b - c1) * a) * 255.0;
     }
 
-  for (y = 0; y < CELL_HEIGHT; y++)
+  for (y = event->area.y; y < event->area.y + event->area.height; y++)
     {
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (preview),
-			      odd, 0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (preview),
-			      even, 0, y, width);
+      guchar *buf = ((y / GIMP_CHECK_SIZE_SM) & 1) ? odd : even;
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+                                    widget->style->fg_gc[widget->state],
+                                    event->area.x, y,
+                                    event->area.width, 1,
+                                    GDK_RGB_DITHER_MAX,
+                                    buf + event->area.x,
+                                    gradient_sel->width * 3,
+                                    - event->area.x, - event->area.y);
     }
 
-  g_free (even);
   g_free (odd);
-
-  gtk_widget_queue_draw (preview);
+  g_free (even);
 }

@@ -1,3 +1,11 @@
+2004-08-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpgradientmenu.c: use a GtkDrawingArea instead of
+	GtkPreview.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c: minor cleanup.
+
 2004-08-07  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/jigsaw.c: ported to GimpPreviewArea, did some

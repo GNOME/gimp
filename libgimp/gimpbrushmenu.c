@@ -140,9 +140,7 @@ gimp_brush_select_widget_new (const gchar          *title,
 
   brush_sel->preview = gimp_preview_area_new ();
   gtk_widget_add_events (brush_sel->preview,
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK);
+                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_widget_set_size_request (brush_sel->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), brush_sel->preview);
   gtk_widget_show (brush_sel->preview);
