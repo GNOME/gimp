@@ -1,3 +1,8 @@
+Thu May 13 19:17:58 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* libgimp/gimp.[ch]: implement gimp_default_display.
+        * libgimp/gimpfeatures.h: add feature test macro for the above.
+
 Sun May 16 18:23:12 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/module_db.c: We weren't initialising refs variable before using
@@ -153,6 +158,7 @@ Wed May 12 12:13:57 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/*: minor cleanups (no functional changes)
 
+>>>>>>> 1.1106
 Wed May 12 15:14:25 EEST 1999 Lauri Alanko <nether@gimp.org>
 
 	* plug-ins/gfig/gfig.c: Updated calls to gimp_paintbrush to its

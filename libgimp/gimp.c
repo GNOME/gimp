@@ -331,6 +331,12 @@ gimp_progress_update (gdouble percentage)
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
+gint32
+gimp_default_display (void)
+{
+  return _gdisp_ID;
+}
+
 
 void
 gimp_message (const gchar *message)

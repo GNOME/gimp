@@ -271,6 +271,10 @@ void gimp_progress_init (char *message);
  */
 void gimp_progress_update (gdouble percentage);
 
+/* Returns the default gdisplay (given at plug-in config time).
+ */
+gint32 gimp_default_display (void);
+
 
 /* Pops up a dialog box with "message". Useful for status and
  * error reports. If "message" is NULL, do nothing.

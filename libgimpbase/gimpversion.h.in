@@ -42,6 +42,8 @@ extern "C" {
 
 #define GIMP_HAVE_FEATURES_1_1_5			1-1-5
 
+#define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
