@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <glib.h>
 
@@ -155,9 +156,7 @@ static void     rotate_pointers          (gpointer *p,
 /* MMX stuff */
 extern gboolean use_mmx;
 
-#define USE_GCC_INTEL_MMX
-
-#ifdef USE_GCC_INTEL_MMX
+#ifdef HAVE_ASM_MMX
 extern int use_mmx;
 
 #define MMX_PIXEL_OP(x) \
@@ -4266,6 +4265,10 @@ shrink_line (gdouble           *dest,
   register const gdouble inv_step = 1.0 / step;
   gdouble position;
 
+  fprintf(stderr, "shrink_line bytes=%d old_width=%d width=%d interp=%d "
+	  "step=%f inv_step=%f\n",
+          bytes, old_width, width, interp, step, inv_step);
+
   for (b = 0; b < bytes; b++)
   {
     
@@ -4357,6 +4360,9 @@ scale_region (PixelRegion *srcPR,
 
   width = destPR->w;
   height = destPR->h;
+
+  fprintf(stderr, "scale_region: (%d x %d) -> (%d x %d)\n",
+	  orig_width, orig_height, width, height);
 
   /*  find the ratios of old y to new y  */
   y_rat = (double) orig_height / (double) height;
@@ -4546,6 +4552,9 @@ subsample_region (PixelRegion *srcPR,
   orig_height = srcPR->h / subsample;
   width = destPR->w;
   height = destPR->h;
+
+  fprintf(stderr, "subsample_region: (%d x %d) -> (%d x %d)\n",
+	  orig_width, orig_height, width, height);
 
   /*  Some calculations...  */
   bytes = destPR->bytes;
