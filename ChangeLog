@@ -1,3 +1,9 @@
+2004-07-30  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/CML_explorer.c: Transformed one GtkPreview to a
+	GimpPreviewArea and the other to a simple GtkDrawingArea, since this
+	makes the code simpler.
+
 2004-07-30  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_draw):

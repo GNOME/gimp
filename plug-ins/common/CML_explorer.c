@@ -27,10 +27,10 @@
  *
  *  Similar models are summaried as follows:
  *
- *			Value	 Time	  Space
- *  Coupled-Map Lattice	cont.	 discrete discrete
- *  Celluar Automata	discrete discrete discrete
- *  Diffrential Eq.	cont.	 cont.	  cont.
+ *                      Value    Time     Space
+ *  Coupled-Map Lattice cont.    discrete discrete
+ *  Celluar Automata    discrete discrete discrete
+ *  Diffrential Eq.     cont.    cont.    cont.
  *
  *  (But this program uses a parameter: hold-rate to avoid very fast changes.
  *  Thus time is rather continuous than discrete.
@@ -53,11 +53,11 @@
  *    ; This is a parameter file for CML_explorer
  *    ; File format version: 1.0
  *    ;
- *    	Hue
+ *      Hue
  *
  *  The old format for CML_explorer included in gimp-0.99.[89] is:
  *    ; CML parameter file (version: 1.0)
- *    ;	Hue
+ *    ; Hue
  *
  * (This file format is interpreted as format version 0.99 now.)
  *
@@ -75,11 +75,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -237,7 +232,7 @@ static const gchar *initial_value_names[CML_INITIAL_NUM_VALUES] =
   N_("Randoms from seed (shared)")
 };
 
-#define CML_PARAM_NUM	15
+#define CML_PARAM_NUM   15
 
 typedef struct
 {
@@ -245,8 +240,8 @@ typedef struct
   gint    composition;
   gint    arrange;
   gint    cyclic_range;
-  gdouble mod_rate;		/* diff / old-value */
-  gdouble env_sensitivity;	/* self-diff : env-diff */
+  gdouble mod_rate;             /* diff / old-value */
+  gdouble env_sensitivity;      /* self-diff : env-diff */
   gint    diffusion_dist;
   gdouble ch_sensitivity;
   gint    range_num;
@@ -317,66 +312,66 @@ static const gchar *load_channel_names[] =
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static GimpPDBStatusType CML_main_function     (gboolean   preview_p);
 static void              CML_compute_next_step (gint       size,
-						gdouble  **h,
-						gdouble  **s,
-						gdouble  **v,
-						gdouble  **hn,
-						gdouble  **sn,
-						gdouble  **vn,
-						gdouble  **haux,
-						gdouble  **saux,
-						gdouble  **vaux);
+                                                gdouble  **h,
+                                                gdouble  **s,
+                                                gdouble  **v,
+                                                gdouble  **hn,
+                                                gdouble  **sn,
+                                                gdouble  **vn,
+                                                gdouble  **haux,
+                                                gdouble  **saux,
+                                                gdouble  **vaux);
 static gdouble           CML_next_value        (gdouble   *vec,
-						gint       pos,
-						gint       size,
-						gdouble    c1,
-						gdouble    c2,
-						CML_PARAM *param,
-						gdouble    aux);
+                                                gint       pos,
+                                                gint       size,
+                                                gdouble    c1,
+                                                gdouble    c2,
+                                                CML_PARAM *param,
+                                                gdouble    aux);
 static gdouble           logistic_function     (CML_PARAM *param,
-						gdouble    x,
-						gdouble    power);
+                                                gdouble    x,
+                                                gdouble    power);
 
 
-static gint	   CML_explorer_dialog           (void);
+static gint        CML_explorer_dialog           (void);
 static GtkWidget * CML_dialog_channel_panel_new  (CML_PARAM *param,
-						  gint       channel_id);
+                                                  gint       channel_id);
 static GtkWidget * CML_dialog_advanced_panel_new (void);
 
 static void     CML_explorer_toggle_entry_init   (WidgetEntry *widget_entry,
-						  GtkWidget   *widget,
-						  gpointer     value_ptr);
+                                                  GtkWidget   *widget,
+                                                  gpointer     value_ptr);
 
 static void     CML_explorer_int_entry_init      (WidgetEntry *widget_entry,
-						  GtkObject   *object,
-						  gpointer     value_ptr);
+                                                  GtkObject   *object,
+                                                  gpointer     value_ptr);
 
 static void     CML_explorer_double_entry_init   (WidgetEntry *widget_entry,
-						  GtkObject   *object,
-						  gpointer     value_ptr);
+                                                  GtkObject   *object,
+                                                  gpointer     value_ptr);
 
 static void     CML_explorer_menu_update         (GtkWidget   *widget,
-						  gpointer     data);
+                                                  gpointer     data);
 static void     CML_initial_value_menu_update    (GtkWidget   *widget,
-						  gpointer     data);
+                                                  gpointer     data);
 static void     CML_explorer_menu_entry_init     (WidgetEntry *widget_entry,
-						  GtkWidget   *widget,
-						  gpointer     value_ptr);
+                                                  GtkWidget   *widget,
+                                                  gpointer     value_ptr);
 
 static void    preview_update                      (void);
 static void    function_graph_new                  (GtkWidget *widget,
-						    gpointer  *data);
+                                                    gpointer  *data);
 static void    CML_set_or_randomize_seed_callback  (GtkWidget *widget,
-						    gpointer   data);
+                                                    gpointer   data);
 static void    CML_copy_parameters_callback        (GtkWidget *widget,
-						    gpointer   data);
+                                                    gpointer   data);
 static void    CML_initial_value_sensitives_update (void);
 
 static void    CML_save_to_file_callback   (GtkWidget        *widget,
@@ -388,18 +383,18 @@ static gboolean force_overwrite            (const gchar      *filename,
                                             GtkWidget        *parent);
 
 static void    CML_preview_update_callback (GtkWidget        *widget,
-					    gpointer          data);
+                                            gpointer          data);
 static void    CML_load_from_file_callback (GtkWidget        *widget,
-					    gpointer          data);
+                                            gpointer          data);
 static gboolean CML_load_parameter_file     (const gchar     *filename,
-					     gboolean         interactive_mode);
+                                             gboolean         interactive_mode);
 static void    CML_load_from_file_response (GtkWidget        *dialog,
                                             gint              response_id,
                                             gpointer          data);
 static gint    parse_line_to_gint          (FILE             *file,
-					    gboolean         *flag);
+                                            gboolean         *flag);
 static gdouble parse_line_to_gdouble       (FILE             *file,
-					    gboolean         *flag);
+                                            gboolean         *flag);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -419,7 +414,7 @@ typedef struct
   gint       logic;
 } CML_sensitive_widget_table;
 
-#define	RANDOM_SENSITIVES_NUM 5
+#define RANDOM_SENSITIVES_NUM 5
 
 static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
 {
@@ -459,22 +454,22 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Make an image of Coupled-Map Lattice",
-			  "Make an image of Coupled-Map Lattice (CML). CML is "
-			  "a kind of Cellula Automata on continuous (value) "
-			  "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "
-			  "prameter file is passed as the 4th arg. You can "
-			  "control CML_explorer via parameter file.",
-			  /*  Or do you want to call me with over 50 args? */
-			  "Shuji Narazaki (narazaki@InetQ.or.jp); "
-			  "http://www.inetq.or.jp/~narazaki/TheGIMP/",
-			  "Shuji Narazaki",
-			  "1997",
-			  N_("CML _Explorer..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Make an image of Coupled-Map Lattice",
+                          "Make an image of Coupled-Map Lattice (CML). CML is "
+                          "a kind of Cellula Automata on continuous (value) "
+                          "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "
+                          "prameter file is passed as the 4th arg. You can "
+                          "control CML_explorer via parameter file.",
+                          /*  Or do you want to call me with over 50 args? */
+                          "Shuji Narazaki (narazaki@InetQ.or.jp); "
+                          "http://www.inetq.or.jp/~narazaki/TheGIMP/",
+                          "Shuji Narazaki",
+                          "1997",
+                          N_("CML _Explorer..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Render/Pattern"));
@@ -507,15 +502,15 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (! CML_explorer_dialog ())
-	return;
+        return;
       break;
     case GIMP_RUN_NONINTERACTIVE:
       {
-	gchar *filename = param[3].data.d_string;
+        gchar *filename = param[3].data.d_string;
 
-	if (! CML_load_parameter_file (filename, FALSE))
-	  return;
-	break;
+        if (! CML_load_parameter_file (filename, FALSE))
+          return;
+        break;
       }
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &VALS);
@@ -573,10 +568,10 @@ CML_main_function (gboolean preview_p)
       dest_has_alpha = FALSE;
       dest_bpp       = 3;
 
-      if (PREVIEW_WIDTH < x2 - x1)	/* preview < drawable (selection) */
-	x2 = x1 + PREVIEW_WIDTH;
+      if (PREVIEW_WIDTH < x2 - x1)      /* preview < drawable (selection) */
+        x2 = x1 + PREVIEW_WIDTH;
       if (PREVIEW_HEIGHT < y2 - y1)
-	y2 = y1 + PREVIEW_HEIGHT;
+        y2 = y1 + PREVIEW_HEIGHT;
     }
   width_by_pixel = x2 - x1;
   height_by_pixel = y2 - y1;
@@ -623,12 +618,12 @@ CML_main_function (gboolean preview_p)
 
   if (! preview_p)
     gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1,
-			 width_by_pixel, height_by_pixel,
-			 TRUE, TRUE);
+                         width_by_pixel, height_by_pixel,
+                         TRUE, TRUE);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1,
-		       width_by_pixel, height_by_pixel,
-		       FALSE, FALSE);
+                       width_by_pixel, height_by_pixel,
+                       FALSE, FALSE);
 
   gr = g_rand_new ();
   if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
@@ -637,127 +632,127 @@ CML_main_function (gboolean preview_p)
   for (index = 0; index < cell_num; index++)
     {
       switch (VALS.hue.arrange)
-	{
-	case RAND_POWER0:
-	  haux [index] = g_rand_double_range (gr, 0, 10);
-	  break;
-	case RAND_POWER2:
-	case MULTIPLY_GRADIENT:
-	  haux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
-	  break;
-	case RAND_POWER1:
-	case MULTIPLY_RANDOM0:
-	  haux [index] = g_rand_double (gr);
-	  break;
-	case MULTIPLY_RANDOM1:
-	  haux [index] = g_rand_double_range (gr, 0, 2);
-	  break;
-	case RAND_AND_P:
-	  haux [index] = ((index % (2 * VALS.hue.diffusion_dist) == 0) ?
+        {
+        case RAND_POWER0:
+          haux [index] = g_rand_double_range (gr, 0, 10);
+          break;
+        case RAND_POWER2:
+        case MULTIPLY_GRADIENT:
+          haux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
+          break;
+        case RAND_POWER1:
+        case MULTIPLY_RANDOM0:
+          haux [index] = g_rand_double (gr);
+          break;
+        case MULTIPLY_RANDOM1:
+          haux [index] = g_rand_double_range (gr, 0, 2);
+          break;
+        case RAND_AND_P:
+          haux [index] = ((index % (2 * VALS.hue.diffusion_dist) == 0) ?
                           g_rand_double (gr) : VALS.hue.power);
-	  break;
-	default:
-	  haux [index] = VALS.hue.power;
-	  break;
-	}
+          break;
+        default:
+          haux [index] = VALS.hue.power;
+          break;
+        }
       switch (VALS.sat.arrange)
-	{
-	case RAND_POWER0:
-	  saux [index] = g_rand_double_range (gr, 0, 10);
-	  break;
-	case RAND_POWER2:
-	case MULTIPLY_GRADIENT:
-	  saux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
-	  break;
-	case RAND_POWER1:
-	case MULTIPLY_RANDOM0:
-	  saux [index] = g_rand_double (gr);
-	  break;
-	case MULTIPLY_RANDOM1:
-	  saux [index] = g_rand_double_range (gr, 0, 2);
-	  break;
-	case RAND_AND_P:
-	  saux [index] = ((index % (2 * VALS.sat.diffusion_dist) == 0) ?
+        {
+        case RAND_POWER0:
+          saux [index] = g_rand_double_range (gr, 0, 10);
+          break;
+        case RAND_POWER2:
+        case MULTIPLY_GRADIENT:
+          saux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
+          break;
+        case RAND_POWER1:
+        case MULTIPLY_RANDOM0:
+          saux [index] = g_rand_double (gr);
+          break;
+        case MULTIPLY_RANDOM1:
+          saux [index] = g_rand_double_range (gr, 0, 2);
+          break;
+        case RAND_AND_P:
+          saux [index] = ((index % (2 * VALS.sat.diffusion_dist) == 0) ?
                           g_rand_double (gr) : VALS.sat.power);
-	  break;
-	default:
-	  saux [index] = VALS.sat.power;
-	  break;
-	}
+          break;
+        default:
+          saux [index] = VALS.sat.power;
+          break;
+        }
       switch (VALS.val.arrange)
-	{
-	case RAND_POWER0:
-	  vaux [index] = g_rand_double_range (gr, 0, 10);
-	  break;
-	case RAND_POWER2:
-	case MULTIPLY_GRADIENT:
-	  vaux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
-	  break;
-	case RAND_POWER1:
-	case MULTIPLY_RANDOM0:
-	  vaux [index] = g_rand_double (gr);
-	  break;
-	case MULTIPLY_RANDOM1:
-	  vaux [index] = g_rand_double_range (gr, 0, 2);
-	  break;
-	case RAND_AND_P:
-	  vaux [index] = ((index % (2 * VALS.val.diffusion_dist) == 0) ?
+        {
+        case RAND_POWER0:
+          vaux [index] = g_rand_double_range (gr, 0, 10);
+          break;
+        case RAND_POWER2:
+        case MULTIPLY_GRADIENT:
+          vaux [index] = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
+          break;
+        case RAND_POWER1:
+        case MULTIPLY_RANDOM0:
+          vaux [index] = g_rand_double (gr);
+          break;
+        case MULTIPLY_RANDOM1:
+          vaux [index] = g_rand_double_range (gr, 0, 2);
+          break;
+        case RAND_AND_P:
+          vaux [index] = ((index % (2 * VALS.val.diffusion_dist) == 0) ?
                           g_rand_double (gr) : VALS.val.power);
-	  break;
-	default:
-	  vaux [index] = VALS.val.power;
-	  break;
-	}
+          break;
+        default:
+          vaux [index] = VALS.val.power;
+          break;
+        }
       switch (VALS.initial_value)
-	{
-	case 0:
-	case 1:
-	case 2:
-	  hues[index] = sats[index] = vals[index] = 0.5 * (VALS.initial_value);
-	  break;
-	case 3:			/* use the values of the image (drawable) */
-	  break;		/* copy from the drawable after this loop */
-	case 4:			/* grandient 1 */
-	  hues[index] = sats[index] = vals[index]
-	    = (gdouble) (index % 256) / (gdouble) 256;
-	  break;		/* gradinet 2 */
-	case 5:
-	  hues[index] = sats[index] = vals[index]
-	    = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
-	  break;
-	case CML_INITIAL_RANDOM_INDEPENDENT:
-	case CML_INITIAL_RANDOM_FROM_SEED:
-	  hues[index] = g_rand_double (gr);
-	  sats[index] = g_rand_double (gr);
-	  vals[index] = g_rand_double (gr);
-	  break;
-	case CML_INITIAL_RANDOM_SHARED:
-	case CML_INITIAL_RANDOM_FROM_SEED_SHARED:
-	  hues[index] = sats[index] = vals[index] = g_rand_double (gr);
-	  break;
-	}
+        {
+        case 0:
+        case 1:
+        case 2:
+          hues[index] = sats[index] = vals[index] = 0.5 * (VALS.initial_value);
+          break;
+        case 3:                 /* use the values of the image (drawable) */
+          break;                /* copy from the drawable after this loop */
+        case 4:                 /* grandient 1 */
+          hues[index] = sats[index] = vals[index]
+            = (gdouble) (index % 256) / (gdouble) 256;
+          break;                /* gradinet 2 */
+        case 5:
+          hues[index] = sats[index] = vals[index]
+            = (gdouble) abs ((index % 511) - 255) / (gdouble) 256;
+          break;
+        case CML_INITIAL_RANDOM_INDEPENDENT:
+        case CML_INITIAL_RANDOM_FROM_SEED:
+          hues[index] = g_rand_double (gr);
+          sats[index] = g_rand_double (gr);
+          vals[index] = g_rand_double (gr);
+          break;
+        case CML_INITIAL_RANDOM_SHARED:
+        case CML_INITIAL_RANDOM_FROM_SEED_SHARED:
+          hues[index] = sats[index] = vals[index] = g_rand_double (gr);
+          break;
+        }
     }
 
   if (VALS.initial_value == 3)
     {
-      int	index;
+      int       index;
 
       for (index = 0;
            index < MIN (cell_num, width_by_pixel / VALS.scale);
            index++)
-	{
-	  guchar buffer[4];
-	  int	rgbi[3];
-	  int	i;
+        {
+          guchar buffer[4];
+          int   rgbi[3];
+          int   i;
 
-	  gimp_pixel_rgn_get_pixel (&src_rgn, buffer,
-				    x1 + (index * VALS.scale), y1);
-	  for (i = 0; i < 3; i++) rgbi[i] = buffer[i];
-	  gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
-	  hues[index] = (gdouble) rgbi[0] / (gdouble) 255;
-	  sats[index] = (gdouble) rgbi[1] / (gdouble) 255;
-	  vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
-	}
+          gimp_pixel_rgn_get_pixel (&src_rgn, buffer,
+                                    x1 + (index * VALS.scale), y1);
+          for (i = 0; i < 3; i++) rgbi[i] = buffer[i];
+          gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
+          hues[index] = (gdouble) rgbi[0] / (gdouble) 255;
+          sats[index] = (gdouble) rgbi[1] / (gdouble) 255;
+          vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
+        }
     }
 
   if (! preview_p)
@@ -766,75 +761,74 @@ CML_main_function (gboolean preview_p)
   /* rolling start */
   for (index = 0; index < VALS.start_offset; index++)
     CML_compute_next_step (cell_num, &hues, &sats, &vals, &newh, &news, &newv,
-			   &haux, &saux, &vaux);
+                           &haux, &saux, &vaux);
 
   /* rendering */
   for (dy = 0; dy < height_by_pixel; dy += VALS.scale)
     {
-      gint i = 0;
       gint r, g, b, h, s, v;
       gint offset_x, offset_y, dest_offset;
 
       if (height_by_pixel < dy + keep_height)
-	keep_height = height_by_pixel - dy;
+        keep_height = height_by_pixel - dy;
 
       if ((VALS.hue.function == CML_KEEP_VALUES) ||
-	  (VALS.sat.function == CML_KEEP_VALUES) ||
-	  (VALS.val.function == CML_KEEP_VALUES))
-	gimp_pixel_rgn_get_rect (&src_rgn, src_buffer,
-				 x1, y1 + dy, width_by_pixel, keep_height);
+          (VALS.sat.function == CML_KEEP_VALUES) ||
+          (VALS.val.function == CML_KEEP_VALUES))
+        gimp_pixel_rgn_get_rect (&src_rgn, src_buffer,
+                                 x1, y1 + dy, width_by_pixel, keep_height);
 
       CML_compute_next_step (cell_num,
                              &hues, &sats, &vals,
                              &newh, &news, &newv,
-			     &haux, &saux, &vaux);
+                             &haux, &saux, &vaux);
 
       for (dx = 0; dx < cell_num; dx++)
-	{
-	  h = r = HCANNONIZE (VALS.hue, hues[dx]);
-	  s = g = CANNONIZE (VALS.sat, sats[dx]);
-	  v = b = CANNONIZE (VALS.val, vals[dx]);
+        {
+          h = r = HCANNONIZE (VALS.hue, hues[dx]);
+          s = g = CANNONIZE (VALS.sat, sats[dx]);
+          v = b = CANNONIZE (VALS.val, vals[dx]);
 
-	  if (! dest_is_gray)
-	    gimp_hsv_to_rgb_int (&r, &g, &b);
+          if (! dest_is_gray)
+            gimp_hsv_to_rgb_int (&r, &g, &b);
 
-	  /* render destination */
-	  for (offset_y = 0;
-	       (offset_y < VALS.scale) && (dy + offset_y < height_by_pixel);
-	       offset_y++)
-	    for (offset_x = 0;
-		 (offset_x < VALS.scale) && (dx * VALS.scale + offset_x < width_by_pixel);
-		 offset_x++)
-	      {
-		if ((VALS.hue.function == CML_KEEP_VALUES) ||
-		    (VALS.sat.function == CML_KEEP_VALUES) ||
-		    (VALS.val.function == CML_KEEP_VALUES))
-		  {
-		    int	rgbi[3];
-		    int	i;
+          /* render destination */
+          for (offset_y = 0;
+               (offset_y < VALS.scale) && (dy + offset_y < height_by_pixel);
+               offset_y++)
+            for (offset_x = 0;
+                 (offset_x < VALS.scale) && (dx * VALS.scale + offset_x < width_by_pixel);
+                 offset_x++)
+              {
+                if ((VALS.hue.function == CML_KEEP_VALUES) ||
+                    (VALS.sat.function == CML_KEEP_VALUES) ||
+                    (VALS.val.function == CML_KEEP_VALUES))
+                  {
+                    int rgbi[3];
+                    int i;
 
-		    for (i = 0; i < src_bpp; i++)
-		      rgbi[i] = src_buffer[offset_y * src_bpl
+                    for (i = 0; i < src_bpp; i++)
+                      rgbi[i] = src_buffer[offset_y * src_bpl
                                            + (dx * VALS.scale + offset_x) * src_bpp + i];
-		    if (src_is_gray && (VALS.val.function == CML_KEEP_VALUES))
+                    if (src_is_gray && (VALS.val.function == CML_KEEP_VALUES))
                       {
                         b = rgbi[0];
                       }
-		    else
-		      {
-			gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
+                    else
+                      {
+                        gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
 
-			r = (VALS.hue.function == CML_KEEP_VALUES) ? rgbi[0] : h;
-			g = (VALS.sat.function == CML_KEEP_VALUES) ? rgbi[1] : s;
-			b = (VALS.val.function == CML_KEEP_VALUES) ? rgbi[2] : v;
-			gimp_hsv_to_rgb_int (&r, &g, &b);
-		      }
-		  }
+                        r = (VALS.hue.function == CML_KEEP_VALUES) ? rgbi[0] : h;
+                        g = (VALS.sat.function == CML_KEEP_VALUES) ? rgbi[1] : s;
+                        b = (VALS.val.function == CML_KEEP_VALUES) ? rgbi[2] : v;
+                        gimp_hsv_to_rgb_int (&r, &g, &b);
+                      }
+                  }
 
-		dest_offset = (offset_y * dest_bpl +
+                dest_offset = (offset_y * dest_bpl +
                                (dx * VALS.scale + offset_x) * dest_bpp);
 
-		if (dest_is_gray)
+                if (dest_is_gray)
                   {
                     dest_buffer[dest_offset++] = b;
                     if (preview_p)
@@ -843,29 +837,31 @@ CML_main_function (gboolean preview_p)
                         dest_buffer[dest_offset++] = b;
                       }
                   }
-		else
-		  {
-		    dest_buffer[dest_offset++] = r;
-		    dest_buffer[dest_offset++] = g;
-		    dest_buffer[dest_offset++] = b;
-		  }
-		if (dest_has_alpha)
-		  dest_buffer[dest_offset] = 255;
+                else
+                  {
+                    dest_buffer[dest_offset++] = r;
+                    dest_buffer[dest_offset++] = g;
+                    dest_buffer[dest_offset++] = b;
+                  }
+                if (dest_has_alpha)
+                  dest_buffer[dest_offset] = 255;
 
-		if ((!preview_p) &&
+                if ((!preview_p) &&
                     (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-		  gimp_progress_update ((gdouble) processed / (gdouble) total);
-	      }
-	}
+                  gimp_progress_update ((gdouble) processed / (gdouble) total);
+              }
+        }
 
       if (preview_p)
-	for (i = 0; i < keep_height; i++)
-	  gtk_preview_draw_row (GTK_PREVIEW (preview),
-				dest_buffer + dest_bpl * i, 0, dy + i,
-				width_by_pixel);
+        gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                                0, dy,
+                                width_by_pixel, keep_height,
+                                GIMP_RGB_IMAGE,
+                                dest_buffer,
+                                dest_bpl);
       else
-	gimp_pixel_rgn_set_rect (&dest_rgn, dest_buffer, x1, y1 + dy,
-				 width_by_pixel, keep_height);
+        gimp_pixel_rgn_set_rect (&dest_rgn, dest_buffer, x1, y1 + dy,
+                                 width_by_pixel, keep_height);
     }
   if (preview_p)
     {
@@ -888,59 +884,59 @@ CML_main_function (gboolean preview_p)
 
 static void
 CML_compute_next_step (gint      size,
-		       gdouble **h,
-		       gdouble **s,
-		       gdouble **v,
-		       gdouble **hn,
-		       gdouble **sn,
-		       gdouble **vn,
-		       gdouble **haux,
-		       gdouble **saux,
-		       gdouble **vaux)
+                       gdouble **h,
+                       gdouble **s,
+                       gdouble **v,
+                       gdouble **hn,
+                       gdouble **sn,
+                       gdouble **vn,
+                       gdouble **haux,
+                       gdouble **saux,
+                       gdouble **vaux)
 {
-  gint	index;
+  gint  index;
 
   for (index = 0; index < size; index++)
     (*hn)[index] = CML_next_value (*h, index, size,
-				   (*s)[POS_IN_TORUS (index, size)],
-				   (*v)[POS_IN_TORUS (index, size)],
-				   &VALS.hue,
-				   (*haux)[POS_IN_TORUS (index , size)]);
+                                   (*s)[POS_IN_TORUS (index, size)],
+                                   (*v)[POS_IN_TORUS (index, size)],
+                                   &VALS.hue,
+                                   (*haux)[POS_IN_TORUS (index , size)]);
   for (index = 0; index < size; index++)
     (*sn)[index] = CML_next_value (*s, index, size,
-				   (*v)[POS_IN_TORUS (index   , size)],
-				   (*h)[POS_IN_TORUS (index   , size)],
-				   &VALS.sat,
-				   (*saux)[POS_IN_TORUS (index , size)]);
+                                   (*v)[POS_IN_TORUS (index   , size)],
+                                   (*h)[POS_IN_TORUS (index   , size)],
+                                   &VALS.sat,
+                                   (*saux)[POS_IN_TORUS (index , size)]);
   for (index = 0; index < size; index++)
     (*vn)[index] = CML_next_value (*v, index, size,
-				   (*h)[POS_IN_TORUS (index   , size)],
-				   (*s)[POS_IN_TORUS (index   , size)],
-				   &VALS.val,
-				   (*vaux)[POS_IN_TORUS (index , size)]);
+                                   (*h)[POS_IN_TORUS (index   , size)],
+                                   (*s)[POS_IN_TORUS (index   , size)],
+                                   &VALS.val,
+                                   (*vaux)[POS_IN_TORUS (index , size)]);
 
-#define GD_SWAP(x, y)	{ gdouble *tmp = *x; *x = *y; *y = tmp; }
+#define GD_SWAP(x, y)   { gdouble *tmp = *x; *x = *y; *y = tmp; }
   GD_SWAP (h, hn);
   GD_SWAP (s, sn);
   GD_SWAP (v, vn);
-#undef	SWAP
+#undef  SWAP
 }
 
-#define	AVE_DIST(x, y)	(((x) * (x) + (y) * (y))/ 2.0)
-#define LOGISTICS(x)	logistic_function (param, x, power)
-#define ENV_FACTOR(x)	(param->env_sensitivity * LOGISTICS (x))
-#define C_ENV_FACTOR(x)	(param->mod_rate * ENV_FACTOR (x))
-#define CHN_FACTOR(x)	(param->ch_sensitivity * LOGISTICS (x))
-#define C_CHN_FACTOR(x)	(param->mod_rate * CHN_FACTOR (x))
+#define AVE_DIST(x, y)  (((x) * (x) + (y) * (y))/ 2.0)
+#define LOGISTICS(x)    logistic_function (param, x, power)
+#define ENV_FACTOR(x)   (param->env_sensitivity * LOGISTICS (x))
+#define C_ENV_FACTOR(x) (param->mod_rate * ENV_FACTOR (x))
+#define CHN_FACTOR(x)   (param->ch_sensitivity * LOGISTICS (x))
+#define C_CHN_FACTOR(x) (param->mod_rate * CHN_FACTOR (x))
 
 static gdouble
 CML_next_value (gdouble   *vec,
-		gint       pos,
-		gint       size,
-		gdouble    c1,
-		gdouble    c2,
-		CML_PARAM *param,
-		gdouble    power)
+                gint       pos,
+                gint       size,
+                gdouble    c1,
+                gdouble    c2,
+                CML_PARAM *param,
+                gdouble    power)
 {
   gdouble val = vec[pos];
   gdouble diff = 0;
@@ -958,11 +954,11 @@ CML_next_value (gdouble   *vec,
     case ANTILOG:
       self_diff = self_mod_rate * LOGISTICS (1 - vec[pos]);
       for (index = 1; index <= param->diffusion_dist / 2; index++)
-	env_factor += ENV_FACTOR (1 - vec[POS_IN_TORUS (pos + index, size)])
-	  + ENV_FACTOR (1 - vec[POS_IN_TORUS (pos - index, size)]);
+        env_factor += ENV_FACTOR (1 - vec[POS_IN_TORUS (pos + index, size)])
+          + ENV_FACTOR (1 - vec[POS_IN_TORUS (pos - index, size)]);
       if ((param->diffusion_dist % 2) == 1)
-	env_factor += (ENV_FACTOR (1 - vec[POS_IN_TORUS (pos + index, size)])
-		       + ENV_FACTOR (1 - vec[POS_IN_TORUS (pos - index, size)])) / 2;
+        env_factor += (ENV_FACTOR (1 - vec[POS_IN_TORUS (pos + index, size)])
+                       + ENV_FACTOR (1 - vec[POS_IN_TORUS (pos - index, size)])) / 2;
       env_factor /= (gdouble) param->diffusion_dist;
       by_env = env_factor + (CHN_FACTOR (1 - c1) + CHN_FACTOR (1 - c2)) / 2;
       diff = param->mod_rate * (self_diff + by_env);
@@ -971,9 +967,9 @@ CML_next_value (gdouble   *vec,
     case AVERAGE:
       self_diff = self_mod_rate * LOGISTICS (vec[pos]);
       for (index = 1; index <= param->diffusion_dist / 2; index++)
-	env_factor += vec[POS_IN_TORUS (pos + index, size)] + vec[POS_IN_TORUS (pos - index, size)];
+        env_factor += vec[POS_IN_TORUS (pos + index, size)] + vec[POS_IN_TORUS (pos - index, size)];
       if ((param->diffusion_dist % 2) == 1)
-	env_factor += (vec[POS_IN_TORUS (pos + index, size)] + vec[POS_IN_TORUS (pos - index, size)]) / 2;
+        env_factor += (vec[POS_IN_TORUS (pos + index, size)] + vec[POS_IN_TORUS (pos - index, size)]) / 2;
       env_factor /= (gdouble) param->diffusion_dist;
       by_env = ENV_FACTOR (env_factor) + (CHN_FACTOR (c1) + CHN_FACTOR (c2)) / 2;
       diff = param->mod_rate * (self_diff + by_env);
@@ -983,22 +979,22 @@ CML_next_value (gdouble   *vec,
     case MULTIPLY_RANDOM1:
     case MULTIPLY_GRADIENT:
       {
-	gdouble	tmp;
+        gdouble tmp;
 
-	tmp = power;
-	power = param->power;
-	self_diff = self_mod_rate * LOGISTICS (vec[pos]);
-	for (index = 1; index <= param->diffusion_dist / 2; index++)
-	  env_factor += ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
-	    + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)]);
-	if ((param->diffusion_dist % 2) == 1)
-	  env_factor += (ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
-			 + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)])) / 2;
-	env_factor /= (gdouble) param->diffusion_dist;
-	by_env = (env_factor + CHN_FACTOR (c1) + CHN_FACTOR (c2)) / 2;
-	diff = pow (param->mod_rate * (self_diff + by_env), tmp);
-	val = hold_rate * vec[pos] + diff;
-	break;
+        tmp = power;
+        power = param->power;
+        self_diff = self_mod_rate * LOGISTICS (vec[pos]);
+        for (index = 1; index <= param->diffusion_dist / 2; index++)
+          env_factor += ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
+            + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)]);
+        if ((param->diffusion_dist % 2) == 1)
+          env_factor += (ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
+                         + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)])) / 2;
+        env_factor /= (gdouble) param->diffusion_dist;
+        by_env = (env_factor + CHN_FACTOR (c1) + CHN_FACTOR (c2)) / 2;
+        diff = pow (param->mod_rate * (self_diff + by_env), tmp);
+        val = hold_rate * vec[pos] + diff;
+        break;
       }
     case STANDARD:
     case RAND_POWER0:
@@ -1009,11 +1005,11 @@ CML_next_value (gdouble   *vec,
       self_diff = self_mod_rate * LOGISTICS (vec[pos]);
 
       for (index = 1; index <= param->diffusion_dist / 2; index++)
-	env_factor += ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
-	  + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)]);
+        env_factor += ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
+          + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)]);
       if ((param->diffusion_dist % 2) == 1)
-	env_factor += (ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
-		       + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)])) / 2;
+        env_factor += (ENV_FACTOR (vec[POS_IN_TORUS (pos + index, size)])
+                       + ENV_FACTOR (vec[POS_IN_TORUS (pos - index, size)])) / 2;
       env_factor /= (gdouble) param->diffusion_dist;
       by_env = env_factor + (CHN_FACTOR (c1) + CHN_FACTOR (c2)) / 2;
       diff = param->mod_rate * (self_diff + by_env);
@@ -1028,9 +1024,9 @@ CML_next_value (gdouble   *vec,
   if (param->cyclic_range)
     {
       if (1.0 < val)
-	val = val - (int) val;
+        val = val - (int) val;
       else if (val < 0.0)
-	val = val - floor (val);
+        val = val - floor (val);
     }
   else
     /* The range of val should be [0,1], not [0,1).
@@ -1048,8 +1044,8 @@ CML_next_value (gdouble   *vec,
 
 static gdouble
 logistic_function (CML_PARAM *param,
-		   gdouble    x,
-		   gdouble    power)
+                   gdouble    x,
+                   gdouble    power)
 {
   gdouble x1 = x;
   gdouble result = 0;
@@ -1099,16 +1095,16 @@ logistic_function (CML_PARAM *param,
       break;
     case CML_SIN_CURVE:
       if (1.0 < power)
-	result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
+        result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
       else
-	result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
+        result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
       if (x1 < 0.5) result = 1 - result;
       break;
     case CML_SIN_CURVE_STEP:
       if (1.0 < power)
-	result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
+        result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
       else
-	result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
+        result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
       if (x1 < 0.5) result = 1 - result;
       result = (result + step) / (gdouble) n;
       break;
@@ -1125,22 +1121,22 @@ logistic_function (CML_PARAM *param,
       break;
     case COMP_MAX_LINEAR_P1L:
       if (x < 0.5)
-	result = MAX ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MAX ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MAX_LINEAR_P1U:
       if (0.5 < x)
-	result = MAX ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MAX ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MAX_LINEAR_M1:
       result = MAX ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MAX_LINEAR_M1L:
       if (x < 0.5)
-	result = MAX ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MAX ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MAX_LINEAR_M1U:
       if (0.5 < x)
-	result = MAX ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MAX ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MIN_LINEAR:
       result = MIN ((gdouble) x, (gdouble) result);
@@ -1150,22 +1146,22 @@ logistic_function (CML_PARAM *param,
       break;
     case COMP_MIN_LINEAR_P1L:
       if (x < 0.5)
-	result = MIN ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MIN ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MIN_LINEAR_P1U:
       if (0.5 < x)
-	result = MIN ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MIN ((gdouble) x + (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MIN_LINEAR_M1:
       result = MIN ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MIN_LINEAR_M1L:
       if (x < 0.5)
-	result = MIN ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MIN ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     case COMP_MIN_LINEAR_M1U:
       if (0.5 < x)
-	result = MIN ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
+        result = MIN ((gdouble) x - (gdouble) 1 / (gdouble) 256, (gdouble) result);
       break;
     }
   return result;
@@ -1188,12 +1184,12 @@ CML_explorer_dialog (void)
 
   dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
                          NULL, 0,
-			 gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, HELP_ID,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   CML_preview_defer = TRUE;
 
@@ -1215,9 +1211,9 @@ CML_explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview),
-		    PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview,
+                               PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -1289,19 +1285,19 @@ CML_explorer_dialog (void)
 
     page = CML_dialog_channel_panel_new (&VALS.hue, 0);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new_with_mnemonic (_("_Hue")));
+                              gtk_label_new_with_mnemonic (_("_Hue")));
 
     page = CML_dialog_channel_panel_new (&VALS.sat, 1);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new_with_mnemonic (_("Sat_uration")));
+                              gtk_label_new_with_mnemonic (_("Sat_uration")));
 
     page = CML_dialog_channel_panel_new (&VALS.val, 2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new_with_mnemonic (_("_Value")));
+                              gtk_label_new_with_mnemonic (_("_Value")));
 
     page = CML_dialog_advanced_panel_new ();
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new_with_mnemonic (_("_Advanced")));
+                              gtk_label_new_with_mnemonic (_("_Advanced")));
 
     {
       GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1336,7 +1332,7 @@ CML_explorer_dialog (void)
                         &VALS.initial_value);
 
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
-				    combo, &VALS.initial_value);
+                                    combo, &VALS.initial_value);
       label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                          _("Initial value:"), 0.0, 0.5,
                                          combo, 2, FALSE);
@@ -1344,25 +1340,25 @@ CML_explorer_dialog (void)
       g_object_unref (group);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Zoom scale:"), SCALE_WIDTH, 3,
-				  VALS.scale, 1, 10, 1, 2, 0,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Zoom scale:"), SCALE_WIDTH, 3,
+                                  VALS.scale, 1, 10, 1, 2, 0,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
-				   adj, &VALS.scale);
+                                   adj, &VALS.scale);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Start offset:"), SCALE_WIDTH, 3,
-				  VALS.start_offset, 0, 100, 1, 10, 0,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Start offset:"), SCALE_WIDTH, 3,
+                                  VALS.start_offset, 0, 100, 1, 10, 0,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
-				   adj, &VALS.start_offset);
+                                   adj, &VALS.start_offset);
 
       frame =
-	gimp_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
+        gimp_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1373,20 +1369,20 @@ CML_explorer_dialog (void)
       gtk_widget_show (table);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				  _("Seed:"), SCALE_WIDTH, 0,
-				  VALS.seed, 0, (guint32) -1, 1, 10, 0,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Seed:"), SCALE_WIDTH, 0,
+                                  VALS.seed, 0, (guint32) -1, 1, 10, 0,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
-				   adj, &VALS.seed);
+                                   adj, &VALS.seed);
 
       random_sensitives[3].widget = table;
       random_sensitives[3].logic  = FALSE;
 
       button =
-	gtk_button_new_with_label
-	(_("Switch to \"From seed\" with the last seed"));
+        gtk_button_new_with_label
+        (_("Switch to \"From seed\" with the last seed"));
       gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
       gtk_widget_show (button);
 
@@ -1398,15 +1394,15 @@ CML_explorer_dialog (void)
       random_sensitives[4].logic  = TRUE;
 
       gimp_help_set_help_data (button,
-			       _("\"Fix seed\" button is an alias of me.\n"
-				 "The same seed produces the same image, "
-				 "if (1) the widths of images are same "
-				 "(this is the reason why image on drawable "
-				 "is different from preview), and (2) all "
-				 "mutation rates equal to zero."), NULL);
+                               _("\"Fix seed\" button is an alias of me.\n"
+                                 "The same seed produces the same image, "
+                                 "if (1) the widths of images are same "
+                                 "(this is the reason why image on drawable "
+                                 "is different from preview), and (2) all "
+                                 "mutation rates equal to zero."), NULL);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-				gtk_label_new_with_mnemonic (_("O_thers")));
+                                gtk_label_new_with_mnemonic (_("O_thers")));
     }
 
     {
@@ -1461,7 +1457,7 @@ CML_explorer_dialog (void)
 
       button = gtk_button_new_with_label (_("Copy parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
@@ -1509,7 +1505,7 @@ CML_explorer_dialog (void)
       gtk_size_group_add_widget (group, label);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-				gtk_label_new_with_mnemonic (_("_Misc Ops.")));
+                                gtk_label_new_with_mnemonic (_("_Misc Ops.")));
     }
   }
 
@@ -1532,7 +1528,7 @@ CML_explorer_dialog (void)
 
 static GtkWidget *
 CML_dialog_channel_panel_new (CML_PARAM *param,
-			      gint       channel_id)
+                              gint       channel_id)
 {
   GtkWidget *table;
   GtkWidget *combo;
@@ -1556,10 +1552,10 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
                     &param->function);
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				combo, &param->function);
+                                combo, &param->function);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Function type:"), 0.0, 0.5,
-			     combo, 2, FALSE);
+                             _("Function type:"), 0.0, 0.5,
+                             combo, 2, FALSE);
   index++;
 
   combo = gimp_int_combo_box_new_array (COMP_NUM_VALUES, composition_names);
@@ -1572,10 +1568,10 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
                     &param->composition);
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				combo, &param->composition);
+                                combo, &param->composition);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Composition:"), 0.0, 0.5,
-			     combo, 2, FALSE);
+                             _("Composition:"), 0.0, 0.5,
+                             combo, 2, FALSE);
   index++;
 
   combo = gimp_int_combo_box_new_array (ARRANGE_NUM_VALUES, arrange_names);
@@ -1586,91 +1582,91 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
                     &param->arrange);
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				combo, &param->arrange);
+                                combo, &param->arrange);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-			     _("Misc arrange:"), 0.0, 0.5,
-			     combo, 2, FALSE);
+                             _("Misc arrange:"), 0.0, 0.5,
+                             combo, 2, FALSE);
   index++;
 
   toggle = gtk_check_button_new_with_label (_("Use cyclic range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				param->cyclic_range);
+                                param->cyclic_range);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, index, index + 1);
   CML_explorer_toggle_entry_init (&widget_pointers[channel_id][index],
-				  toggle, &param->cyclic_range);
+                                  toggle, &param->cyclic_range);
   gtk_widget_show (toggle);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Mod. rate:"), SCALE_WIDTH, 5,
-			      param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Mod. rate:"), SCALE_WIDTH, 5,
+                              param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->mod_rate);
+                                  adj, &param->mod_rate);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Env. sensitivity:"), SCALE_WIDTH, 5,
-			      param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Env. sensitivity:"), SCALE_WIDTH, 5,
+                              param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->env_sensitivity);
+                                  adj, &param->env_sensitivity);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Diffusion dist.:"), SCALE_WIDTH, 5,
-			      param->diffusion_dist, 2, 10, 1, 2, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Diffusion dist.:"), SCALE_WIDTH, 5,
+                              param->diffusion_dist, 2, 10, 1, 2, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
-			       adj, &param->diffusion_dist);
+                               adj, &param->diffusion_dist);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("# of subranges:"), SCALE_WIDTH, 5,
-			      param->range_num, 1, 10, 1, 2, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("# of subranges:"), SCALE_WIDTH, 5,
+                              param->range_num, 1, 10, 1, 2, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
-			       adj, &param->range_num);
+                               adj, &param->range_num);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("P(ower factor):"), SCALE_WIDTH, 5,
-			      param->power, 0.0, 10.0, 0.1, 1.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("P(ower factor):"), SCALE_WIDTH, 5,
+                              param->power, 0.0, 10.0, 0.1, 1.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->power);
+                                  adj, &param->power);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Parameter k:"), SCALE_WIDTH, 5,
-			      param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Parameter k:"), SCALE_WIDTH, 5,
+                              param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->parameter_k);
+                                  adj, &param->parameter_k);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range low:"), SCALE_WIDTH, 5,
-			      param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Range low:"), SCALE_WIDTH, 5,
+                              param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->range_l);
+                                  adj, &param->range_l);
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range high:"), SCALE_WIDTH, 5,
-			      param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Range high:"), SCALE_WIDTH, 5,
+                              param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
-				  adj, &param->range_h);
+                                  adj, &param->range_h);
   index++;
 
   chank = g_new (gpointer, 2);
@@ -1679,7 +1675,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   button = gtk_button_new_with_label (_("Plot a graph of the settings"));
   gtk_table_attach_defaults (GTK_TABLE (table), button,
-			     0, 3, index, index + 1);
+                             0, 3, index, index + 1);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -1722,33 +1718,33 @@ CML_dialog_advanced_panel_new (void)
       index = 0;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Ch. sensitivity:"), SCALE_WIDTH, 0,
-				  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Ch. sensitivity:"), SCALE_WIDTH, 0,
+                                  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
-								  widget_offset],
-				      adj, &param->ch_sensitivity);
+                                                                  widget_offset],
+                                      adj, &param->ch_sensitivity);
       index++;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Mutation rate:"), SCALE_WIDTH, 0,
-				  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Mutation rate:"), SCALE_WIDTH, 0,
+                                  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
-								  widget_offset],
-				      adj, &param->mutation_rate);
+                                                                  widget_offset],
+                                      adj, &param->mutation_rate);
       index++;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-				  _("Mutation dist.:"), SCALE_WIDTH, 0,
-				  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
+                                  _("Mutation dist.:"), SCALE_WIDTH, 0,
+                                  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
-								  widget_offset],
-				      adj, &param->mutation_dist);
+                                                                  widget_offset],
+                                      adj, &param->mutation_dist);
     }
   return vbox;
 }
@@ -1760,23 +1756,72 @@ preview_update (void)
     CML_main_function (TRUE);
 }
 
+static gboolean
+function_graph_expose (GtkWidget      *widget,
+                       GdkEventExpose *ev,
+                       gpointer       *data)
+{
+  gint       x, y, last_y;
+  gint       rgbi[3];
+  guchar    *buffer;
+  gint       channel_id = GPOINTER_TO_INT (data[0]);
+  CML_PARAM *param      = data[1];
+
+  buffer = g_new (guchar, 256*256*3);
+  for (x = 0; x < 256; x++)
+    {
+      /* hue */
+      rgbi[0] = rgbi[1] = rgbi[2] = 127;
+      if ((0 <= channel_id) && (channel_id <= 2))
+        rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
+      gimp_hsv_to_rgb_int (rgbi, rgbi+1, rgbi+2);
+      for (y = 0; y < 256; y++)
+      {
+        buffer[(y*256+x)*3+0] = rgbi[0];
+        buffer[(y*256+x)*3+1] = rgbi[1];
+        buffer[(y*256+x)*3+2] = rgbi[2];
+      }
+    }
+
+  gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+                      0, 0, 256, 256,
+                      GDK_RGB_DITHER_NORMAL,
+                      buffer,
+                      3 * 256);
+
+  g_free (buffer);
+
+  gdk_draw_line (widget->window, widget->style->white_gc, 0,255, 255, 0);
+  
+  y = 255 * CLAMP (logistic_function (param, 0, param->power),
+                     0, 1.0);
+  for (x = 0; x < 256; x++)
+    {
+      last_y = y;
+      /* curve */
+      y = 255 * CLAMP (logistic_function (param, x/(gdouble)255, param->power),
+                       0, 1.0);
+      gdk_draw_line (widget->window, widget->style->black_gc,
+                     x, 255-last_y, x, 255-y);
+    }
+  return TRUE;
+}
+
 static void
 function_graph_new (GtkWidget *widget,
-		    gpointer  *data)
+                    gpointer  *data)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *preview;
-  gint	     channel_id = GPOINTER_TO_INT (data[0]);
-  CML_PARAM *param      = data[1];
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
                          gtk_widget_get_toplevel (widget), 0,
-			 gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, HELP_ID,
 
-			 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-			 NULL);
+                         NULL);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -1784,54 +1829,12 @@ function_graph_new (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 256, 256);
+  preview = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (preview, 256, 256);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
-
-  {
-    gint   x, y, last_y, yy;
-    guchar rgbc[3];
-    gint   rgbi[3];
-    guchar black[] = { 0, 0, 0 };
-    guchar white[] = { 255, 255, 255 };
-
-    for (x = 0; x < 256; x++)
-      {
-#define FAST_AND_FULLCOLOR	1
-#ifdef FAST_AND_FULLCOLOR
-	/* hue */
-	rgbi[0] = rgbi[1] = rgbi[2] = 127;
-	if ((0 <= channel_id) && (channel_id <= 2))
-	  rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
-	gimp_hsv_to_rgb_int (rgbi, rgbi+1, rgbi+2);
-	for (y = 0; y < 3; y++)
-	  rgbc[y] = rgbi[y];
-#endif
-	for (y = 0; y < 256; y++)
-	  gtk_preview_draw_row (GTK_PREVIEW (preview),
-#ifdef FAST_AND_FULLCOLOR
-				rgbc,
-#else
-				white,
-#endif
-				x, y, 1);
-      }
-    y = 255 * CLAMP (logistic_function (param, x / (gdouble) 255, param->power),
-		     0, 1.0);
-    for (x = 0; x < 256; x++)
-      {
-	last_y = y;
-	/* curve */
-	gtk_preview_draw_row (GTK_PREVIEW (preview), white, x, 255 - x, 1);
-	y = 255 * CLAMP (logistic_function (param, x/(gdouble)255, param->power),
-			 0, 1.0);
-	for (yy = MIN (y, last_y); yy <= MAX (y, last_y); yy++)
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), black, x, 255 - yy, 1);
-      }
-  }
+  g_signal_connect (preview, "expose_event",
+                    G_CALLBACK (function_graph_expose), data);
 
   gtk_widget_show (dlg);
 
@@ -1842,7 +1845,7 @@ function_graph_new (GtkWidget *widget,
 
 static void
 CML_set_or_randomize_seed_callback (GtkWidget *widget,
-				    gpointer   data)
+                                    gpointer   data)
 {
   CML_preview_defer = TRUE;
 
@@ -1875,7 +1878,7 @@ CML_set_or_randomize_seed_callback (GtkWidget *widget,
 
 static void
 CML_copy_parameters_callback (GtkWidget *widget,
-			      gpointer   data)
+                              gpointer   data)
 {
   gint index;
   WidgetEntry *widgets;
@@ -1900,8 +1903,8 @@ CML_copy_parameters_callback (GtkWidget *widget,
 static void
 CML_initial_value_sensitives_update (void)
 {
-  gint	i = 0;
-  gint	flag1, flag2;
+  gint  i = 0;
+  gint  flag1, flag2;
 
   flag1 = (CML_INITIAL_RANDOM_INDEPENDENT <= VALS.initial_value)
     & (VALS.initial_value <= CML_INITIAL_RANDOM_FROM_SEED_SHARED);
@@ -1911,12 +1914,12 @@ CML_initial_value_sensitives_update (void)
   for (; i < G_N_ELEMENTS (random_sensitives) ; i++)
     if (random_sensitives[i].widget)
       gtk_widget_set_sensitive (random_sensitives[i].widget,
-				flag1 & (random_sensitives[i].logic == flag2));
+                                flag1 & (random_sensitives[i].logic == flag2));
 }
 
 static void
 CML_preview_update_callback (GtkWidget *widget,
-			     gpointer   data)
+                             gpointer   data)
 {
   WidgetEntry seed_widget = widget_pointers[3][3];
 
@@ -1934,7 +1937,7 @@ CML_preview_update_callback (GtkWidget *widget,
 
 static void
 CML_save_to_file_callback (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -1953,8 +1956,8 @@ CML_save_to_file_callback (GtkWidget *widget,
       gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (dialog, "response",
-			G_CALLBACK (CML_save_to_file_response),
-			NULL);
+                        G_CALLBACK (CML_save_to_file_response),
+                        NULL);
       g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
@@ -2072,12 +2075,12 @@ force_overwrite (const gchar *filename,
 
   dlg = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
                          parent, GTK_DIALOG_MODAL,
-			 gimp_standard_help_func, HELP_ID,
+                         gimp_standard_help_func, HELP_ID,
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
@@ -2106,7 +2109,7 @@ force_overwrite (const gchar *filename,
 
 static void
 CML_load_from_file_callback (GtkWidget *widget,
-			     gpointer   data)
+                             gpointer   data)
 {
   static GtkWidget *dialog = NULL;
 
@@ -2125,8 +2128,8 @@ CML_load_from_file_callback (GtkWidget *widget,
       gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
 
       g_signal_connect (dialog, "response",
-			G_CALLBACK (CML_load_from_file_response),
-			NULL);
+                        G_CALLBACK (CML_load_from_file_response),
+                        NULL);
       g_signal_connect (dialog, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
@@ -2193,7 +2196,7 @@ CML_load_from_file_response (GtkWidget *dialog,
 
 static gboolean
 CML_load_parameter_file (const gchar *filename,
-			 gboolean     interactive_mode)
+                         gboolean     interactive_mode)
 {
   FILE      *file;
   gint       channel_id;
@@ -2220,111 +2223,111 @@ CML_load_parameter_file (const gchar *filename,
 
       version = parse_line_to_gdouble (file, &flag); /* old format returns 1 */
       if (version == 1.0)
-	version = 0.99;
+        version = 0.99;
       else if (! flag)
-	{
-	  flag = TRUE;
-	  version = parse_line_to_gdouble (file, &flag); /* maybe new format */
-	  if (flag)
-	    fgets (line, CML_LINE_SIZE - 1, file); /* one more comment line */
-	}
+        {
+          flag = TRUE;
+          version = parse_line_to_gdouble (file, &flag); /* maybe new format */
+          if (flag)
+            fgets (line, CML_LINE_SIZE - 1, file); /* one more comment line */
+        }
       if (version == 0)
-	{
-	  if (interactive_mode)
-	    gimp_message (_("Error: it's not CML parameter file."));
-	  fclose(file);
-	  return FALSE;
-	}
+        {
+          if (interactive_mode)
+            gimp_message (_("Error: it's not CML parameter file."));
+          fclose(file);
+          return FALSE;
+        }
       if (interactive_mode)
-	{
-	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    g_message (_("Warning: '%s' is an old format file."),
+        {
+          if (version < PARAM_FILE_FORMAT_VERSION)
+            g_message (_("Warning: '%s' is an old format file."),
                        gimp_filename_to_utf8 (filename));
-	  if (PARAM_FILE_FORMAT_VERSION < version)
-	    g_message (_("Warning: '%s' is a parameter file for newer "
+          if (PARAM_FILE_FORMAT_VERSION < version)
+            g_message (_("Warning: '%s' is a parameter file for newer "
                          "CML_explorer than me."),
                        gimp_filename_to_utf8 (filename));
-	}
+        }
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
-	{
-	  /* patched by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu> */
-	  if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip channel name */
-	    {
-	      flag = FALSE;
-	      break;
-	    }
-	  ch[channel_id].function = parse_line_to_gint (file, &flag);
-	  if (version < 1.0)
-	    ch[channel_id].function = old2new_function_id [ch[channel_id].function];
-	  if (1.0 <= version)
-	    ch[channel_id].composition = parse_line_to_gint (file, &flag);
-	  else
-	    ch[channel_id].composition = COMP_NONE;
-	  ch[channel_id].arrange = parse_line_to_gint (file, &flag);
-	  ch[channel_id].cyclic_range = parse_line_to_gint (file, &flag);
-	  ch[channel_id].mod_rate = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].env_sensitivity = parse_line_to_gdouble (file, &flag);
-	  if (1.0 <= version)
-	    ch[channel_id].diffusion_dist = parse_line_to_gint (file, &flag);
-	  else
-	    ch[channel_id].diffusion_dist = 2;
-	  ch[channel_id].ch_sensitivity = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].range_num = parse_line_to_gint (file, &flag);
-	  ch[channel_id].power = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].parameter_k = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].range_l = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].range_h = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].mutation_rate = parse_line_to_gdouble (file, &flag);
-	  ch[channel_id].mutation_dist = parse_line_to_gdouble (file, &flag);
-	}
+        {
+          /* patched by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu> */
+          if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip channel name */
+            {
+              flag = FALSE;
+              break;
+            }
+          ch[channel_id].function = parse_line_to_gint (file, &flag);
+          if (version < 1.0)
+            ch[channel_id].function = old2new_function_id [ch[channel_id].function];
+          if (1.0 <= version)
+            ch[channel_id].composition = parse_line_to_gint (file, &flag);
+          else
+            ch[channel_id].composition = COMP_NONE;
+          ch[channel_id].arrange = parse_line_to_gint (file, &flag);
+          ch[channel_id].cyclic_range = parse_line_to_gint (file, &flag);
+          ch[channel_id].mod_rate = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].env_sensitivity = parse_line_to_gdouble (file, &flag);
+          if (1.0 <= version)
+            ch[channel_id].diffusion_dist = parse_line_to_gint (file, &flag);
+          else
+            ch[channel_id].diffusion_dist = 2;
+          ch[channel_id].ch_sensitivity = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].range_num = parse_line_to_gint (file, &flag);
+          ch[channel_id].power = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].parameter_k = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].range_l = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].range_h = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].mutation_rate = parse_line_to_gdouble (file, &flag);
+          ch[channel_id].mutation_dist = parse_line_to_gdouble (file, &flag);
+        }
       if (flag)
-	{
-	  gint dummy;
+        {
+          gint dummy;
 
-	  if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip a line */
-	    dummy = 1;
-	  else
-	    {
-	      initial_value = parse_line_to_gint (file, &dummy);
-	      scale = parse_line_to_gint (file, &dummy);
-	      start_offset = parse_line_to_gint (file, &dummy);
-	      seed = parse_line_to_gint (file, &dummy);
-	    }
-	  if (! dummy)
-	    {
-	      initial_value = 0;
-	      scale = 1;
-	      start_offset = 0;
-	      seed = 0;
-	    }
-	}
+          if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip a line */
+            dummy = 1;
+          else
+            {
+              initial_value = parse_line_to_gint (file, &dummy);
+              scale = parse_line_to_gint (file, &dummy);
+              start_offset = parse_line_to_gint (file, &dummy);
+              seed = parse_line_to_gint (file, &dummy);
+            }
+          if (! dummy)
+            {
+              initial_value = 0;
+              scale = 1;
+              start_offset = 0;
+              seed = 0;
+            }
+        }
       fclose (file);
     }
 
   if (! flag)
     {
       if (interactive_mode)
-	gimp_message (_("Error: failed to load parameters"));
+        gimp_message (_("Error: failed to load parameters"));
     }
   else
     {
       if ((selective_load_source == 0) || (selective_load_destination == 0))
-	{
-	  VALS.hue = ch[0];
-	  VALS.sat = ch[1];
-	  VALS.val = ch[2];
+        {
+          VALS.hue = ch[0];
+          VALS.sat = ch[1];
+          VALS.val = ch[2];
 
-	  VALS.initial_value = initial_value;
-	  VALS.scale = scale;
-	  VALS.start_offset = start_offset;
-	  VALS.seed = seed;
-	}
+          VALS.initial_value = initial_value;
+          VALS.scale = scale;
+          VALS.start_offset = start_offset;
+          VALS.seed = seed;
+        }
       else
-	{
-	  memcpy ((CML_PARAM *)&VALS + (selective_load_destination - 1),
-		  (void *)&ch[selective_load_source - 1],
-		  sizeof (CML_PARAM));
-	}
+        {
+          memcpy ((CML_PARAM *)&VALS + (selective_load_destination - 1),
+                  (void *)&ch[selective_load_source - 1],
+                  sizeof (CML_PARAM));
+        }
 
       strncpy (VALS.last_file_name, filename,
                sizeof (VALS.last_file_name) - 1);
@@ -2334,7 +2337,7 @@ CML_load_parameter_file (const gchar *filename,
 
 static gint
 parse_line_to_gint (FILE     *file,
-		    gboolean *flag)
+                    gboolean *flag)
 {
   gchar  line[CML_LINE_SIZE];
   gchar *str;
@@ -2343,15 +2346,15 @@ parse_line_to_gint (FILE     *file,
     return 0;
   if (fgets (line, CML_LINE_SIZE - 1, file) == NULL)
     {
-      *flag = FALSE;		/* set FALSE if fail to parse */
+      *flag = FALSE;            /* set FALSE if fail to parse */
       return 0;
     }
   str = &line[0];
   while (*str != ':')
     if (*str == '\000')
       {
-	*flag = FALSE;
-	return 0;
+        *flag = FALSE;
+        return 0;
       }
     else
       {
@@ -2363,7 +2366,7 @@ parse_line_to_gint (FILE     *file,
 
 static gdouble
 parse_line_to_gdouble (FILE     *file,
-		       gboolean *flag)
+                       gboolean *flag)
 {
   gchar    line[CML_LINE_SIZE];
   gchar   *str;
@@ -2373,15 +2376,15 @@ parse_line_to_gdouble (FILE     *file,
 
   if (fgets (line, CML_LINE_SIZE - 1, file) == NULL)
     {
-      *flag = FALSE;		/* set FALSE if fail to parse */
+      *flag = FALSE;            /* set FALSE if fail to parse */
       return 0.0;
     }
   str = &line[0];
   while (*str != ':')
     if (*str == '\000')
       {
-	*flag = FALSE;
-	return 0.0;
+        *flag = FALSE;
+        return 0.0;
       }
     else
       {
@@ -2396,7 +2399,7 @@ parse_line_to_gdouble (FILE     *file,
 
 static void
 CML_explorer_toggle_update (GtkWidget *widget,
-			    gpointer   data)
+                            gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
@@ -2407,13 +2410,13 @@ static void
 CML_explorer_toggle_entry_change_value (WidgetEntry *widget_entry)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget_entry->widget),
-				*(gint *) (widget_entry->value));
+                                *(gint *) (widget_entry->value));
 }
 
 static void
 CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
-				GtkWidget   *widget,
-				gpointer     value_ptr)
+                                GtkWidget   *widget,
+                                gpointer     value_ptr)
 {
   g_signal_connect (widget, "toggled",
                     G_CALLBACK (CML_explorer_toggle_update),
@@ -2428,7 +2431,7 @@ CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
 
 static void
 CML_explorer_int_adjustment_update (GtkAdjustment *adjustment,
-				    gpointer       data)
+                                    gpointer       data)
 {
   gimp_int_adjustment_update (adjustment, data);
 
@@ -2445,8 +2448,8 @@ CML_explorer_int_entry_change_value (WidgetEntry *widget_entry)
 
 static void
 CML_explorer_int_entry_init (WidgetEntry *widget_entry,
-			     GtkObject   *adjustment,
-			     gpointer     value_ptr)
+                             GtkObject   *adjustment,
+                             gpointer     value_ptr)
 {
   g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (CML_explorer_int_adjustment_update),
@@ -2461,7 +2464,7 @@ CML_explorer_int_entry_init (WidgetEntry *widget_entry,
 
 static void
 CML_explorer_double_adjustment_update (GtkAdjustment *adjustment,
-				       gpointer       data)
+                                       gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
 
@@ -2478,8 +2481,8 @@ CML_explorer_double_entry_change_value (WidgetEntry *widget_entry)
 
 static void
 CML_explorer_double_entry_init (WidgetEntry *widget_entry,
-				GtkObject   *adjustment,
-				gpointer     value_ptr)
+                                GtkObject   *adjustment,
+                                gpointer     value_ptr)
 {
   g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (CML_explorer_double_adjustment_update),
@@ -2494,7 +2497,7 @@ CML_explorer_double_entry_init (WidgetEntry *widget_entry,
 
 static void
 CML_explorer_menu_update (GtkWidget *widget,
-			  gpointer   data)
+                          gpointer   data)
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
@@ -2503,7 +2506,7 @@ CML_explorer_menu_update (GtkWidget *widget,
 
 static void
 CML_initial_value_menu_update (GtkWidget *widget,
-			       gpointer   data)
+                               gpointer   data)
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
@@ -2520,8 +2523,8 @@ CML_explorer_menu_entry_change_value (WidgetEntry *widget_entry)
 
 static void
 CML_explorer_menu_entry_init (WidgetEntry *widget_entry,
-			      GtkWidget   *widget,
-			      gpointer     value_ptr)
+                              GtkWidget   *widget,
+                              gpointer     value_ptr)
 {
   widget_entry->widget  = widget;
   widget_entry->value   = value_ptr;
