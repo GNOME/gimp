@@ -4,7 +4,7 @@
 	* app/base/tile-cache.c
 	* app/base/tile-private.h
 	* app/base/tile-swap.c
-	* app/base/tile.c: in an attempt to safe this code from bit-rot,
+	* app/base/tile.c: in an attempt to save this code from bit-rot,
 	ported the experimental threaded tile-swapper to gthread.
 
 2005-02-13  Sven Neumann  <sven@gimp.org>
