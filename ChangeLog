@@ -1,3 +1,8 @@
+Thu Aug 26 14:16:12 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimpbrushpreview.c: #include gimpbrushpipe.h and gimpbrushpipeP.h
+	instead of gimpbrushpixmap.h
+
 Thu Aug 26 22:10:11 MEST 1999  Sven Neumann <svengimp.org>
 
 	* app/gimpbrushpreview.[ch]

@@ -20,7 +20,8 @@
  */
 
 #include "gimpbrushpreview.h"
-#include "gimpbrushpixmap.h"
+#include "gimpbrushpipe.h"
+#include "gimpbrushpipeP.h"
 #include "brush_scale.h"
 #include "temp_buf.h"
 
