@@ -105,6 +105,33 @@ static void update_color_preview (ColorSelectP, GtkWidget *, gint);
 static void color_select_update_hsv_values (ColorSelectP);
 
 
+#ifdef __EMX__
+struct main_funcs_struc {
+  gchar *name;
+  void (*func)();
+};
+struct main_funcs_struc *gimp_main_funcs = NULL;
+
+static gpointer
+get_main_func(gchar *name)
+{
+  struct main_funcs_struc *x;
+  if (gimp_main_funcs == NULL)
+    return NULL;
+  for (x = gimp_main_funcs; x->name; x++)
+  {
+    if (!strcmp(x->name, name))
+      return (gpointer) x->func;
+  }
+}
+typedef GimpColorSelectorID (*color_reg_func)(const char *,
+                                              GimpColorSelectorMethods *);
+typedef gboolean (*color_unreg_func) (GimpColorSelectorID,
+                                      void (*)(void *),
+                                      void *);
+#endif
+
+
 /*************************************************************/
 
 /* globaly exported init function */
@@ -113,9 +140,15 @@ module_init (GimpModuleInfo **inforet)
 {
   GimpColorSelectorID id;
 
+#ifndef __EMX__
   id = gimp_color_selector_register ("Triangle", &methods);
 
   if (id)
+#else
+  color_reg_func reg_func;
+  reg_func = (color_reg_func) get_main_func("gimp_color_selector_register");
+  if (reg_func && (id = (*reg_func) ("Triangle", &methods)))
+#endif
   {
     info.shutdown_data = id;
     *inforet = &info;
@@ -133,7 +166,15 @@ module_unload (void *shutdown_data,
 	       void (*completed_cb)(void *),
 	       void *completed_data)
 {
+#ifndef __EMX__
   gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
+#else
+  color_unreg_func unreg_func;
+  unreg_func = (color_unreg_func) get_main_func("gimp_color_selector_unregister"
+);
+  if (unreg_func)
+    (*unreg_func) (shutdown_data, completed_cb, completed_data);
+#endif
 }
 
 
@@ -166,6 +207,8 @@ static GtkWidget * colorsel_triangle_new (int r, int g, int b,
 
   coldata->callback = callback;
   coldata->data = callback_data;
+
+  /* gtk_rc_parse ("colorselrc"); */
 
   preview = create_color_preview (coldata);
   coldata->preview = preview;

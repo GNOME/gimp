@@ -1,5 +1,8 @@
 Wed May 19 19:48:10 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* modules/colorsel_gtk.c : 
+	* modules/colorsel_triangle.c:  OS/2 patches.
+
 	* plug-ins/bz2/bz2.c: OS/2 patches. spawn(),,
 
 Wed May 19 01:05:08 MEST 1999 Sven Neumann <sven@gimp.org>
