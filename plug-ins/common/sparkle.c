@@ -686,7 +686,7 @@ sparkle (GimpDrawable *drawable,
             {
               if (has_alpha && s[alpha] == 0)
                 {
-                  memset (dest, 0, alpha);
+                  memset (d, 0, alpha);
                 }
               else
                 {
@@ -921,6 +921,7 @@ fspike (GimpPixelRgn *src_rgn,
   gint    ok;
   GimpRGB gimp_color;
   guchar  pixel[MAX_CHANNELS];
+  guchar  chosen_color[MAX_CHANNELS];
   guchar  color[MAX_CHANNELS];
 
   theta = angle;
@@ -935,24 +936,36 @@ fspike (GimpPixelRgn *src_rgn,
 
     case FOREGROUND:
       gimp_context_get_foreground (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
+      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
+                          &chosen_color[2]);
       break;
 
     case BACKGROUND:
       gimp_context_get_background (&gimp_color);
-      gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
+      gimp_rgb_get_uchar (&gimp_color, &chosen_color[0], &chosen_color[1],
+                          &chosen_color[2]);
       break;
     }
 
   /* draw the major spikes */
   for (i = 0; i < svals.spike_pts; i++)
     {
-      if (svals.colortype == NATURAL)
-        gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
+      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
 
-      color[0] = pixel[0];
-      color[1] = pixel[1];
-      color[2] = pixel[2];
+      if (svals.colortype == NATURAL)
+        {
+          color[0] = pixel[0];
+          color[1] = pixel[1];
+          color[2] = pixel[2];
+        }
+      else
+        {
+          color[0] = chosen_color[0];
+          color[1] = chosen_color[1];
+          color[2] = chosen_color[2];
+        }
+
+      color[3] = pixel[3];
 
       if (svals.inverse)
         {
@@ -960,6 +973,7 @@ fspike (GimpPixelRgn *src_rgn,
           color[1] = 255 - color[1];
           color[2] = 255 - color[2];
         }
+
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
           r = 255 - color[0];
