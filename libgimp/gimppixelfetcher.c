@@ -56,6 +56,16 @@ static guchar * gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
 
 /*  public functions  */
 
+/**
+ * gimp_pixel_fetcher_new:
+ * @drawable: the #GimpDrawable the new region will be attached to.
+ * @shadow:   a #gboolean indicating whether the region is attached to
+ *            the shadow tiles or the real %drawable tiles.
+ *
+ * Initialize a pixel region from the drawable.
+ *
+ * Return value: a pointer to a #GimpPixelRgn structure (or NULL).
+ **/
 GimpPixelFetcher *
 gimp_pixel_fetcher_new (GimpDrawable *drawable,
                         gboolean      shadow)
@@ -99,6 +109,12 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable,
   return pf;
 }
 
+/**
+ * gimp_pixel_fetcher_destroy:
+ * @pf: a pointer to a previously initialized #GimpPixelFetcher.
+ *
+ * Close a previously initializd pixel region.
+ **/
 void
 gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
 {
@@ -110,6 +126,13 @@ gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
   g_free (pf);
 }
 
+/**
+ * gimp_pixel_fetcher_set_edge_mode:
+ * @pf:   a pointer to a previously initialized #GimpPixelFetcher.
+ * @mode: the new edge mode from #GimpPixelFetcherEdgeMode.
+ *
+ * Change the edage mode of a previously initialized pixel region.
+ **/
 void
 gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
                                   GimpPixelFetcherEdgeMode  mode)
@@ -119,6 +142,13 @@ gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
   pf->mode = mode;
 }
 
+/**
+ * gimp_pixel_fetcher_set_bg_color:
+ * @pf:    a pointer to a previously initialized #GimpPixelFetcher.
+ * @color: the color to be used as bg color.
+ *
+ * Change the background color of a previously initialized pixel region.
+ **/
 void
 gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf,
                                  const GimpRGB    *color)
@@ -141,6 +171,15 @@ gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf,
     }
 }
 
+/**
+ * gimp_pixel_fetcher_get_pixel:
+ * @pf:    a pointer to a previously initialized #GimpPixelFetcher.
+ * @x:     the x coordinate of the pixel to get.
+ * @y:     the y coordinate of the pixel to get.
+ * @pixel: the memory location where to return the pixel.
+ *
+ * Get a pixel from the pixel region.
+ **/
 void
 gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
                               gint              x,
@@ -214,6 +253,15 @@ gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
   while (--i);
 }
 
+/**
+ * gimp_pixel_fetcher_put_pixel:
+ * @pf:    a pointer to a previously initialized #GimpPixelFetcher.
+ * @x:     the x coordinate of the pixel to set.
+ * @y:     the y coordinate of the pixel to set.
+ * @pixel: the pixel to set.
+ *
+ * Set a pixel in the pixel region.
+ **/
 void
 gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
                               gint              x,

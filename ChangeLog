@@ -1,3 +1,8 @@
+2004-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimppixelfetcher.c: added docs derived from a patch from
+	Cai Qian (bug #156271).
+
 2004-11-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: changed label of default action
