@@ -60,16 +60,24 @@ plug_in_progress_start (PlugIn      *plug_in,
   if (plug_in->progress)
     {
       if (plug_in->progress_active)
-        plug_in_progress_end (plug_in);
-
-      if (gimp_progress_start (plug_in->progress, message, TRUE))
         {
-          g_signal_connect (plug_in->progress, "cancel",
-                            G_CALLBACK (plug_in_progress_cancel),
-                            plug_in);
+          gimp_progress_set_text (plug_in->progress, message);
+          gimp_progress_set_value (plug_in->progress, 0.0);
 
-          plug_in->progress_active = TRUE;
+          return;
         }
+
+      if (! gimp_progress_start (plug_in->progress, message, TRUE))
+        {
+          gimp_progress_set_text (plug_in->progress, message);
+          gimp_progress_set_value (plug_in->progress, 0.0);
+        }
+
+      g_signal_connect (plug_in->progress, "cancel",
+                        G_CALLBACK (plug_in_progress_cancel),
+                        plug_in);
+
+      plug_in->progress_active = TRUE;
     }
 }
 
@@ -79,7 +87,7 @@ plug_in_progress_update (PlugIn  *plug_in,
 {
   g_return_if_fail (plug_in != NULL);
 
-  if (! plug_in->progress && plug_in->progress_active)
+  if (! (plug_in->progress && plug_in->progress_active))
     plug_in_progress_start (plug_in, NULL, -1);
 
   if (plug_in->progress && plug_in->progress_active)

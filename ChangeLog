@@ -1,3 +1,19 @@
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpprogress.c: some progress cleanup.
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_start): no
+	need to warn if there is already a progress active, just silently
+	return NULL as all other GimpProgressInterface implementors.
+
+	* app/plug-in/plug-in-progress.c: several progress fixes.
+	It's still a mess.
+
+	* plug-ins/common/url.c: don't show progress depending on
+	run_mode. Run the actual file plug-in with the same run_mode we
+	were invoked with.
+
 2004-08-11  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-open-location-dialog.c

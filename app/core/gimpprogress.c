@@ -189,7 +189,7 @@ gimp_progress_update_and_flush (gint     min,
                                 gpointer data)
 {
   gimp_progress_set_value (GIMP_PROGRESS (data),
-                           (gfloat) (current - min) / (gfloat) (max - min));
+                           (gdouble) (current - min) / (gdouble) (max - min));
 
   while (g_main_context_pending (NULL))
     g_main_context_iteration (NULL, TRUE);

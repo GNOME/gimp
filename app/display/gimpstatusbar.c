@@ -292,11 +292,11 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 
       statusbar->progress_active = TRUE;
 
+      if (GTK_WIDGET_DRAWABLE (bar))
+        gdk_window_process_updates (bar->window, TRUE);
+
       return progress;
     }
-
-  g_warning ("%s: progress bar already active for statusbar %p",
-             G_STRFUNC, statusbar);
 
   return NULL;
 }
@@ -326,7 +326,12 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
 
   if (statusbar->progress_active)
     {
+      GtkWidget *bar = statusbar->progressbar;
+
       gimp_statusbar_replace (statusbar, "progress", message);
+
+      if (GTK_WIDGET_DRAWABLE (bar))
+        gdk_window_process_updates (bar->window, TRUE);
     }
 }
 

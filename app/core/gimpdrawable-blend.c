@@ -1023,7 +1023,8 @@ gradient_fill_region (GimpImage        *gimage,
 				      max_depth, threshold,
 				      gradient_render_pixel, &rbd,
 				      gradient_put_pixel, &ppd,
-				      gimp_progress_update_and_flush,
+				      progress ?
+                                      gimp_progress_update_and_flush : NULL,
                                       progress);
 
       g_free (ppd.row_data);
@@ -1133,8 +1134,9 @@ gradient_fill_region (GimpImage        *gimage,
             {
               curr_progress += PR->w * PR->h;
 
-              gimp_progress_update_and_flush (0, max_progress, curr_progress,
-                                              progress);
+              gimp_progress_set_value (progress,
+                                       (gdouble) curr_progress /
+                                       (gdouble) max_progress);
             }
         }
     }
