@@ -1090,7 +1090,7 @@ user_install_tuning (void)
   /*  tile cache size  */
   add_label (GTK_BOX (tuning_page),
 	     _("GIMP uses a limited amount of memory to store image data, the so-called\n"
-	       "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+	       "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 	       "the amount of memory used by other running processes."));
 
   hbox = gtk_hbox_new (FALSE, 8);

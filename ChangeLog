@@ -1,3 +1,8 @@
+2000-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/user_install.c: applied patch from Ben Gertzfield which fixes
+	a misuse of "it's", changing it to "its".
+
 2000-10-14  Daniel Egger  <egger@suse.de>
 
 	* README.i18n: Added a few words about "Tip of the Day" translations
