@@ -1,3 +1,9 @@
+2004-07-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse):
+	moved variable declarations to the scope they are being used in,
+	removed trailing whitespace, minor cleanups.
+
 2004-07-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpchannel-combine.c: put in two lines accidentally

@@ -194,19 +194,20 @@ gimp_channel_combine_rect (GimpChannel    *mask,
 /**
  * gimp_channel_combine_ellipse:
  * @mask:      the channel with which to combine the ellipse
- * @op:        whether to replace, add to, or subtract from the current contents
+ * @op:        whether to replace, add to, or subtract from the current
+ *             contents
  * @x:         x coordinate of upper left corner of ellipse
  * @y:         y coordinate of upper left corner of ellipse
  * @w:         width of ellipse bounding box
  * @h:         height of ellipse bounding box
  * @antialias: if %TRUE, antialias the ellipse
  *
- * Mainly used for elliptical selections.  If @op is %GIMP_CHANNEL_OP_REPLACE or
- * %GIMP_CHANNEL_OP_ADD, sets  pixels within the ellipse to 255.  If @op is
- * %GIMP_CHANNEL_OP_SUBTRACT, sets pixels within to zero.  If antialiasing is
- * turned on, a pixels that impinge on the edge of the ellipse 
- * are set to intermediate values, depending on how much they
- * overlap.
+ * Mainly used for elliptical selections.  If @op is
+ * %GIMP_CHANNEL_OP_REPLACE or %GIMP_CHANNEL_OP_ADD, sets pixels
+ * within the ellipse to 255.  If @op is %GIMP_CHANNEL_OP_SUBTRACT,
+ * sets pixels within to zero.  If @antialias is %TRUE, pixels that
+ * impinge on the edge of the ellipse are set to intermediate values,
+ * depending on how much they overlap.
  **/
 void
 gimp_channel_combine_ellipse (GimpChannel    *mask,
@@ -218,44 +219,36 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                               gboolean        antialias)
 {
   gint   i, j;
-  gint   x0, x1, x2;
-  gint   val, last;
   gfloat a, b;
   gfloat a_sqr, b_sqr, aob_sqr;
-  gfloat y_sqr;
-  gfloat xj, yi;
-  gfloat xdist, ydist;
   gfloat cx, cy;
-  gfloat rad;
-  gfloat dist;
-  gfloat r;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (!w || !h)
     return;
 
-  a = w / 2.;
-  b = h / 2.;
+  a = w / 2.0;
+  b = h / 2.0;
 
-  a_sqr = (w * w / 4.0);
-  b_sqr = (h * h / 4.0);
+  a_sqr = SQR (a);
+  b_sqr = SQR (b);
+
   aob_sqr = a_sqr / b_sqr;
 
-  cx = x + w / 2.0;
-  cy = y + h / 2.0;
+  cx = x + a;
+  cy = y + b;
 
   for (i = y; i < (y + h); i++)
     {
       if (i >= 0 && i < GIMP_ITEM (mask)->height)
         {
-          /*  Non-antialiased code  */
           if (!antialias)
             {
-              y_sqr = (i + 0.5 - cy) * (i + 0.5 - cy);
-              rad = sqrt (a_sqr - a_sqr * y_sqr / (double) b_sqr);
-              x1 = ROUND (cx - rad);
-              x2 = ROUND (cx + rad);
+              gfloat y_sqr = (i + 0.5 - cy) * (i + 0.5 - cy);
+              gfloat rad   = sqrt (a_sqr - a_sqr * y_sqr / (gdouble) b_sqr);
+              gint   x1    = ROUND (cx - rad);
+              gint   x2    = ROUND (cx + rad);
 
               switch (op)
                 {
@@ -269,12 +262,11 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                   break;
 
                 default:
-                  g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
+                  g_return_if_reached ();
                   break;
                 }
             }
-          /*  antialiasing  */
-          else
+          else  /*  antialiasing  */
             {
               /* algorithm changed 7-18-04, because the previous one did not
                * work well for eccentric ellipses.  The new algorithm
@@ -283,9 +275,18 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                * ellipse as the distance to the hypotenuse of a right triangle
                * whose legs are the X and Y distances.  (WES)
                */
+
+              gint   val, last;
+              gint   x0;
+              gfloat xj, yi;
+              gfloat xdist, ydist;
+              gfloat r;
+              gfloat dist;
+
               x0 = x;
-              last = 0;
               yi = ABS (i + 0.5 - cy);
+
+              last = 0;
 
               for (j = x; j < (x + w); j++)
                 {
@@ -294,26 +295,28 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                   if (yi < b)
                     xdist = xj - a * sqrt (1 - yi * yi / b_sqr);
                   else
-                    xdist = 100.;  /* anything large will work */
+                    xdist = 100.0;  /* anything large will work */
 
                   if (xj < a)
                     ydist = yi - b * sqrt (1 - xj * xj / a_sqr);
                   else
-                    ydist = 100.;  /* anything large will work */
-                  
+                    ydist = 100.0;  /* anything large will work */
+
                   r = hypot (xdist, ydist);
                   if (r < 0.001)
                     dist = 0.;
                   else
-                    dist = xdist * ydist / r; /* trig formula for dist to hypotenuse */
+                    dist = xdist * ydist / r; /* trig formula for distance
+                                               * to hypotenuse
+                                               */
 
-                  if (xdist < 0.)
+                  if (xdist < 0.0)
                     dist *= -1;
 
                   if (dist < -0.5)
                     val = 255;
                   else if (dist < 0.5)
-                    val = (int) (255 * (1 - (dist + 0.5)));
+                    val = (gint) (255 * (1 - (dist + 0.5)));
                   else
                     val = 0;
 
@@ -331,7 +334,7 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                           break;
 
                         default:
-                          g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
+                          g_return_if_reached ();
                           break;
                         }
                     }
@@ -340,8 +343,10 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                     {
                       x0 = j;
                       last = val;
-                      /* because we are symetric accross the y axis we can
-                         skip ahead a bit if we are inside the ellipse*/
+
+                      /*  because we are symetric accross the y axis we can
+                       *  skip ahead a bit if we are inside the ellipse
+                       */
                       if (val == 255 && j < cx)
                         j = cx + (cx - j) - 1;
                     }
@@ -361,16 +366,15 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                       break;
 
                     default:
-                      g_warning ("Only ADD, REPLACE, and SUBTRACT are valid for channel_combine!");
+                      g_return_if_reached ();
                       break;
                     }
                 }
             }
-
 	}
     }
 
-  /*  Determine new boundary  */
+  /*  determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && !mask->empty)
     {
       if (x < mask->x1)
@@ -391,7 +395,9 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
       mask->y2    = y + h;
     }
   else
-    mask->bounds_known = FALSE;
+    {
+      mask->bounds_known = FALSE;
+    }
 
   mask->x1 = CLAMP (mask->x1, 0, GIMP_ITEM (mask)->width);
   mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
