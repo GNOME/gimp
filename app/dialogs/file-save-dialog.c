@@ -36,6 +36,7 @@
 
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
 
 #include "file-save-dialog.h"
 
@@ -50,8 +51,8 @@ static void       file_save_dialog_response    (GtkWidget     *save_dialog,
 static void       file_save_overwrite          (GtkWidget     *save_dialog,
                                                 const gchar   *uri,
                                                 const gchar   *raw_filename);
-static void       file_save_overwrite_callback (GtkWidget     *widget,
-                                                gboolean       overwrite,
+static void       file_save_overwrite_response (GtkWidget     *dialog,
+                                                gint           response_id,
                                                 gpointer       data);
 static gboolean   file_save_dialog_save_image  (GtkWidget     *save_dialog,
                                                 GimpImage     *gimage,
@@ -148,74 +149,78 @@ file_save_overwrite (GtkWidget   *save_dialog,
                      const gchar *uri,
                      const gchar *raw_filename)
 {
-  OverwriteData *overwrite_data;
-  GtkWidget     *query_box;
+  OverwriteData *overwrite_data = g_new0 (OverwriteData, 1);
+  GtkWidget     *dialog;
+  GtkWidget     *box;
   gchar         *filename;
-  gchar         *message;
-
-  overwrite_data = g_new0 (OverwriteData, 1);
 
   overwrite_data->save_dialog  = save_dialog;
   overwrite_data->uri          = g_strdup (uri);
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
+  dialog = gimp_dialog_new (_("File exists"), "gimp-file-overwrite",
+                            save_dialog, 0,
+                            gimp_standard_help_func, NULL,
+
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("_Replace"),    GTK_RESPONSE_OK,
+
+                            NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (file_save_overwrite_response),
+                    overwrite_data);
+
+  box = gimp_message_box_new (GIMP_STOCK_WARNING);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
+
   filename = file_utils_uri_to_utf8_filename (uri);
-  message = g_strdup_printf (_("A file named '%s' already exists.\n\n"
-                               "Do you want to replace it with the image "
-                               "you are saving?"), filename);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                     _("A file named '%s' already exists."),
+                                     filename);
   g_free (filename);
 
-  query_box = gimp_query_boolean_box (_("File exists!"),
-                                      save_dialog,
-                                      gimp_standard_help_func, NULL,
-                                      GIMP_STOCK_QUESTION,
-                                      message,
-                                      _("Replace"), GTK_STOCK_CANCEL,
-                                      NULL, NULL,
-                                      file_save_overwrite_callback,
-                                      overwrite_data);
-
-  g_free (message);
-
-  gtk_window_set_transient_for (GTK_WINDOW (query_box),
-                                GTK_WINDOW (save_dialog));
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+                             _("Do you want to replace it with the image "
+                               "you are saving?"));
 
   gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (save_dialog), FALSE);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
                                      GTK_RESPONSE_CANCEL, FALSE);
 
-  gtk_widget_show (query_box);
+  gtk_widget_show (dialog);
 }
 
 static void
-file_save_overwrite_callback (GtkWidget *widget,
-                              gboolean   overwrite,
+file_save_overwrite_response (GtkWidget *dialog,
+                              gint       response_id,
                               gpointer   data)
 {
   OverwriteData  *overwrite_data = data;
-  GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
+  GimpFileDialog *save_dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
                                      GTK_RESPONSE_CANCEL, TRUE);
 
-  if (overwrite)
-    {
-      gtk_widget_hide (widget);
+  gtk_widget_destroy (dialog);
 
+  if (response_id == GTK_RESPONSE_OK)
+    {
       if (file_save_dialog_save_image (overwrite_data->save_dialog,
-                                       dialog->gimage,
+                                       save_dialog->gimage,
                                        overwrite_data->uri,
                                        overwrite_data->raw_filename,
-                                       dialog->file_proc,
-                                       dialog->set_uri_and_proc,
-                                       dialog->set_image_clean))
+                                       save_dialog->file_proc,
+                                       save_dialog->set_uri_and_proc,
+                                       save_dialog->set_image_clean))
         {
           gtk_widget_hide (overwrite_data->save_dialog);
         }
-
     }
 
-  gimp_file_dialog_set_sensitive (dialog, TRUE);
+  gimp_file_dialog_set_sensitive (save_dialog, TRUE);
 
   g_free (overwrite_data->uri);
   g_free (overwrite_data->raw_filename);

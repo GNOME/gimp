@@ -1,5 +1,15 @@
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/widgets-enums.[ch]: changed the description for
+	GIMP_HELP_BROWSER_GIMP.
+
+	* app/dialogs/file-save-dialog.c:
+	* app/widgets/gimphelp.c: use a GimpDialog embedding a
+	GimpMessageBox instead of gimp_query_boolean_box which looks
+	somewhat old fashioned.
+
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c: improved error messages on missing help
 	browser plug-in.
 

@@ -100,8 +100,8 @@ GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HELP_BROWSER_GIMP,        /*< desc="Internal"    >*/
-  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web browser" >*/
+  GIMP_HELP_BROWSER_GIMP,        /*< desc="GIMP help browser" >*/
+  GIMP_HELP_BROWSER_WEB_BROWSER  /*< desc="Web browser"       >*/
 } GimpHelpBrowserType;
 
 

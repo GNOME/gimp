@@ -43,6 +43,7 @@
 
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
+#include "gimpmessagebox.h"
 
 #include "gimp-intl.h"
 
@@ -63,14 +64,20 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help        (gpointer       data);
-static gboolean  gimp_help_internal    (Gimp          *gimp);
-static void      gimp_help_call        (Gimp          *gimp,
-                                        const gchar   *procedure,
-                                        const gchar   *help_domain,
-                                        const gchar   *help_locales,
-                                        const gchar   *help_id);
-static gchar *   gimp_help_get_locales (GimpGuiConfig *config);
+static gint      gimp_idle_help          (gpointer       data);
+
+static gboolean  gimp_help_browser       (Gimp          *gimp);
+static void      gimp_help_browser_error (Gimp          *gimp,
+                                          const gchar   *title,
+                                          const gchar   *primary,
+                                          const gchar   *text);
+
+static void      gimp_help_call          (Gimp          *gimp,
+                                          const gchar   *procedure,
+                                          const gchar   *help_domain,
+                                          const gchar   *help_locales,
+                                          const gchar   *help_id);
+static gchar *   gimp_help_get_locales   (GimpGuiConfig *config);
 
 
 /*  public functions  */
@@ -128,7 +135,7 @@ gimp_idle_help (gpointer data)
 
   if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
-      if (gimp_help_internal (idle_help->gimp))
+      if (gimp_help_browser (idle_help->gimp))
         procedure = "extension_gimp_help_browser_temp";
     }
 
@@ -153,23 +160,8 @@ gimp_idle_help (gpointer data)
   return FALSE;
 }
 
-static void
-gimp_help_internal_not_found_callback (GtkWidget *widget,
-				       gboolean   use_web_browser,
-				       gpointer   data)
-{
-  Gimp *gimp = GIMP (data);
-
-  if (use_web_browser)
-    g_object_set (gimp->config,
-		  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-		  NULL);
-
-  gtk_main_quit ();
-}
-
 static gboolean
-gimp_help_internal (Gimp *gimp)
+gimp_help_browser (Gimp *gimp)
 {
   static gboolean  busy = FALSE;
   ProcRecord      *proc_rec;
@@ -190,20 +182,11 @@ gimp_help_internal (Gimp *gimp)
 
       if (! proc_rec)
 	{
-	  GtkWidget *dialog =
-	    gimp_query_boolean_box (_("Help browser not found"),
-				    NULL, NULL, NULL, GIMP_STOCK_WARNING,
-				    _("Could not find GIMP help browser.\n\n"
-                                      "The GIMP help browser plug-in appears "
-                                      "to be missing from your installation."),
-				    _("Use _web browser instead"),
-				    GTK_STOCK_CANCEL,
-				    NULL, NULL,
-				    gimp_help_internal_not_found_callback,
-				    gimp);
-	  gtk_widget_show (dialog);
-	  gtk_main ();
-
+          gimp_help_browser_error (gimp,
+                                   _("Help browser not found"),
+                                   _("Could not find GIMP help browser."),
+                                   _("The GIMP help browser plug-in appears "
+                                     "to be missing from your installation."));
           busy = FALSE;
 
 	  return FALSE;
@@ -225,19 +208,10 @@ gimp_help_internal (Gimp *gimp)
 
   if (! proc_rec)
     {
-      GtkWidget *dialog =
-        gimp_query_boolean_box (_("Help browser doesn't start"),
-                                NULL, NULL, NULL, GIMP_STOCK_WARNING,
-                                _("Could not start the GIMP help browser "
-                                  "plug-in."),
-                                _("Use web browser instead"),
-                                GTK_STOCK_CANCEL,
-                                NULL, NULL,
-                                gimp_help_internal_not_found_callback,
-                                gimp);
-      gtk_widget_show (dialog);
-      gtk_main ();
-
+      gimp_help_browser_error (gimp,
+                               _("Help browser doesn't start"),
+                               _("Could not start the GIMP help browser plug-in."),
+                               NULL);
       busy = FALSE;
 
       return FALSE;
@@ -246,6 +220,40 @@ gimp_help_internal (Gimp *gimp)
   busy = FALSE;
 
   return TRUE;
+}
+
+static void
+gimp_help_browser_error (Gimp        *gimp,
+                         const gchar *title,
+                         const gchar *primary,
+                         const gchar *text)
+{
+  GtkWidget *dialog;
+  GtkWidget *box;
+
+  dialog = gimp_dialog_new (title, "gimp-help-error",
+                            NULL, 0,
+                            NULL, NULL,
+
+                            GTK_STOCK_CANCEL,              GTK_RESPONSE_CANCEL,
+                            _("Use _web browser instead"), GTK_RESPONSE_OK,
+
+                            NULL);
+
+  box = gimp_message_box_new (GIMP_STOCK_WARNING);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), primary);
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), text);
+
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    g_object_set (gimp->config,
+		  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+		  NULL);
+
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -347,3 +355,4 @@ gimp_help_get_locales (GimpGuiConfig *config)
 
   return locale;
 }
+
