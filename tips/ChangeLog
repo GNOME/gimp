@@ -1,3 +1,7 @@
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
+	* pa.po: fixed a broken entity.
+
 2004-10-02  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
