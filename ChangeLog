@@ -1,3 +1,7 @@
+2003-03-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/compose.c: added some stock icons to the dialog.
+
 2003-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c: use GIMP_STOCK_IMAGE as default_stock_id.

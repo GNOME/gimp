@@ -64,11 +64,11 @@ static void      run    (gchar       *name,
 			 gint        *nreturn_vals,
 			 GimpParam  **return_vals);
 
-static gint32    compose (gchar  *compose_type,
-                          gint32 *compose_ID,
-                          gint    compose_by_drawable);
+static gint32    compose (const gchar *compose_type,
+                          gint32      *compose_ID,
+                          gboolean     compose_by_drawable);
 
-static gint32    create_new_image (gchar          *filename,
+static gint32    create_new_image (const gchar    *filename,
 				   guint           width,
 				   guint           height,
 				   GimpImageType   gdtype,
@@ -76,20 +76,20 @@ static gint32    create_new_image (gchar          *filename,
 				   GimpDrawable  **drawable,
 				   GimpPixelRgn   *pixel_rgn);
 
-static void  compose_rgb  (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_rgba (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_hsv  (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_cmy  (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_cmyk (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr470 (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr709 (guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr470f(guchar **src, gint *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr709f(guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_rgb       (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_rgba      (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_hsv       (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_cmy       (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_cmyk      (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470  (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709  (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470f (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709f (guchar **src, gint *incr, gint numpix, guchar *dst);
 
-static gint      compose_dialog (gchar    *compose_type,
+static gboolean  compose_dialog (gchar    *compose_type,
                                  gint32    drawable_ID);
 
-static gint      check_gray     (gint32    image_id,
+static gboolean  check_gray     (gint32    image_id,
 				 gint32    drawable_id,
 				 gpointer  data);
 
@@ -108,59 +108,92 @@ static void      compose_type_toggle_update  (GtkWidget *widget,
 /* Description of a composition */
 typedef struct
 {
-  gchar  *compose_type;            /* Type of composition ("RGB", "RGBA",...) */
-  gint    num_images;              /* Number of input images needed */
-  gchar  *channel_name[MAX_COMPOSE_IMAGES];  /* channel names for dialog */
-  gchar  *filename;                /* Name of new image */
-                                   /* Compose functon */
-  void  (*compose_fun) (guchar **src, gint *incr_src, gint numpix, guchar *dst);
+  const gchar  *compose_type;  /*  Type of composition ("RGB", "RGBA",...)  */
+  gint          num_images;    /*  Number of input images needed            */
+                               /*  Channel names and stock ids for dialog   */
+  const gchar  *channel_name[MAX_COMPOSE_IMAGES];
+  const gchar  *channel_icon[MAX_COMPOSE_IMAGES];
+  const gchar  *filename;      /*  Name of new image                        */
+                               /*  Compose functon                          */
+  void  (*compose_fun) (guchar **src,
+                        gint    *incr_src,
+                        gint     numpix,
+                        guchar  *dst);
 } COMPOSE_DSC;
 
 /* Array of available compositions. */
-#define CHNL_NA "-"
 
 static COMPOSE_DSC compose_dsc[] =
 {
-  { N_("RGB"), 3, { N_("Red:"),
-		    N_("Green:"),
-		    N_("Blue:"),
-		    CHNL_NA }, "rgb-compose",  compose_rgb },
-  { N_("RGBA"), 4, { N_("Red:"),
-                     N_("Green:"),
-                     N_("Blue:"),
-                     N_("Alpha:") }, "rgba-compose",  compose_rgba },
-  { N_("HSV"),  3, { N_("Hue:"),
-                     N_("Saturation:"),
-                     N_("Value:"),
-                     CHNL_NA }, "hsv-compose",  compose_hsv },
-  { N_("CMY"),  3, { N_("Cyan:"),
-                     N_("Magenta:"),
-                     N_("Yellow:"),
-                     CHNL_NA }, "cmy-compose",  compose_cmy },
-  { N_("CMYK"), 4, { N_("Cyan:"),
-                     N_("Magenta:"),
-                     N_("Yellow:"),
-                     N_("Black:") }, "cmyk-compose", compose_cmyk },
-  { "YCbCr_ITU_R470", 
-               3, { N_("Luma_y470:"),
-                    N_("Blueness_cb470:"),
-                    N_("Redness_cr470:"),
-                    CHNL_NA }, "ycbcr470-compose",  compose_ycbcr470 },
-  { "YCbCr_ITU_R709", 
-               3, { N_("Luma_y709:"),
-                    N_("Blueness_cb709:"),
-                    N_("Redness_cr709:"),
-                    CHNL_NA }, "ycbcr709-compose",  compose_ycbcr709 },
-  { "YCbCr_ITU_R470_256", 
-               3, { N_("Luma_y470f:"),
-                    N_("Blueness_cb470f:"),
-                    N_("Redness_cr470f:"),
-                    CHNL_NA }, "ycbcr470F-compose",  compose_ycbcr470f },
-  { "YCbCr_ITU_R709_256", 
-               3, { N_("Luma_y709f:"),
-                    N_("Blueness_cb709f:"),
-                    N_("Redness_cr709f:"),
-                    CHNL_NA }, "ycbcr709F-compose",  compose_ycbcr709f },
+  { N_("RGB"), 3,
+    { N_("Red:"),
+      N_("Green:"),
+      N_("Blue:"),
+      NULL },
+    { GIMP_STOCK_CHANNEL_RED,
+      GIMP_STOCK_CHANNEL_GREEN,
+      GIMP_STOCK_CHANNEL_BLUE,
+      NULL },
+    "rgb-compose",  compose_rgb },
+  { N_("RGBA"), 4,
+    { N_("Red:"),
+      N_("Green:"),
+      N_("Blue:"),
+      N_("Alpha:") },
+    { GIMP_STOCK_CHANNEL_RED,
+      GIMP_STOCK_CHANNEL_GREEN,
+      GIMP_STOCK_CHANNEL_BLUE,
+      GIMP_STOCK_CHANNEL_ALPHA },
+    "rgba-compose",  compose_rgba },
+  { N_("HSV"),  3,
+    { N_("Hue:"),
+      N_("Saturation:"),
+      N_("Value:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "hsv-compose",  compose_hsv },
+  { N_("CMY"),  3,
+    { N_("Cyan:"),
+      N_("Magenta:"),
+      N_("Yellow:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "cmy-compose",  compose_cmy },
+  { N_("CMYK"), 4,
+    { N_("Cyan:"),
+      N_("Magenta:"),
+      N_("Yellow:"),
+      N_("Black:") },
+    { NULL, NULL, NULL, NULL },
+    "cmyk-compose", compose_cmyk },
+  { "YCbCr_ITU_R470", 3,
+    { N_("Luma_y470:"),
+      N_("Blueness_cb470:"),
+      N_("Redness_cr470:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "ycbcr470-compose",  compose_ycbcr470 },
+  { "YCbCr_ITU_R709", 3,
+    { N_("Luma_y709:"),
+      N_("Blueness_cb709:"),
+      N_("Redness_cr709:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "ycbcr709-compose", compose_ycbcr709 },
+  { "YCbCr_ITU_R470_256", 3,
+    { N_("Luma_y470f:"),
+      N_("Blueness_cb470f:"),
+      N_("Redness_cr470f:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "ycbcr470F-compose",  compose_ycbcr470f },
+  { "YCbCr_ITU_R709_256", 3,
+    { N_("Luma_y709f:"),
+      N_("Blueness_cb709f:"),
+      N_("Redness_cr709f:"),
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "ycbcr709F-compose",  compose_ycbcr709f },
 };
 
 #define MAX_COMPOSE_TYPES (G_N_ELEMENTS (compose_dsc))
@@ -175,14 +208,15 @@ typedef struct
 /* Dialog structure */
 typedef struct
 {
-  gint width, height;                     /* Size of selected image */
+  gint       width, height;                     /* Size of selected image */
 
   GtkWidget *channel_label[MAX_COMPOSE_IMAGES]; /* The labels to change */
+  GtkWidget *channel_icon[MAX_COMPOSE_IMAGES];  /* The icons  */
   GtkWidget *channel_menu[MAX_COMPOSE_IMAGES];  /* The menues */
 
-  gint32 select_ID[MAX_COMPOSE_IMAGES];    /* Image Ids selected by menu */
-  gint   compose_flag[MAX_COMPOSE_TYPES];  /* toggle data of compose type */
-  gint   run;
+  gint32     select_ID[MAX_COMPOSE_IMAGES];     /* Image Ids selected by menu */
+  gint       compose_flag[MAX_COMPOSE_TYPES];   /* toggle data of compose type */
+  gboolean   run;
 } ComposeInterface;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -203,6 +237,7 @@ static ComposeInterface composeint =
 {
   0, 0,     /* width, height */
   { NULL }, /* Label Widgets */
+  { NULL }, /* Icon Widgets */
   { NULL }, /* Menu Widgets */
   { 0 },    /* Image IDs from menues */
   { 0 },    /* Compose type toggle flags */
@@ -345,8 +380,9 @@ run (gchar      *name,
 	}
       else
 	{
-	  composevals.compose_ID[0] =
-	    compose_by_drawable ? param[2].data.d_int32 : param[1].data.d_int32;
+	  composevals.compose_ID[0] = (compose_by_drawable ?
+                                       param[2].data.d_int32 :
+                                       param[1].data.d_int32);
 	  composevals.compose_ID[1] = param[3].data.d_int32;
 	  composevals.compose_ID[2] = param[4].data.d_int32;
 	  composevals.compose_ID[3] = param[5].data.d_int32;
@@ -398,9 +434,9 @@ run (gchar      *name,
 
 /* Compose an image from several gray-images */
 static gint32
-compose (gchar  *compose_type,
-         gint32 *compose_ID,
-         gint    compose_by_drawable)
+compose (const gchar *compose_type,
+         gint32      *compose_ID,
+         gboolean     compose_by_drawable)
 {
   gint width, height, tile_height, scan_lines;
   gint num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
@@ -544,15 +580,15 @@ compose (gchar  *compose_type,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar          *filename,
+create_new_image (const gchar    *filename,
                   guint           width,
                   guint           height,
                   GimpImageType   gdtype,
                   gint32         *layer_ID,
-                  GimpDrawable     **drawable,
-                  GimpPixelRgn      *pixel_rgn)
+                  GimpDrawable  **drawable,
+                  GimpPixelRgn   *pixel_rgn)
 {
-  gint32 image_ID;
+  gint32            image_ID;
   GimpImageBaseType gitype;
 
   if ((gdtype == GIMP_GRAY_IMAGE) || (gdtype == GIMP_GRAYA_IMAGE))
@@ -563,7 +599,7 @@ create_new_image (gchar          *filename,
     gitype = GIMP_RGB;
 
   image_ID = gimp_image_new (width, height, gitype);
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image_ID, (gchar *) filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
 			      gdtype, 100, GIMP_NORMAL_MODE);
@@ -677,8 +713,8 @@ compose_hsv (guchar **src,
 
 static void
 compose_cmy (guchar **src,
-             gint            *incr_src,
-             gint             numpix,
+             gint    *incr_src,
+             gint     numpix,
              guchar  *dst)
 {
   register guchar *cyan_src = src[0];
@@ -771,9 +807,9 @@ compose_cmyk (guchar **src,
 
 static void
 compose_ycbcr470 (guchar **src,
-             gint    *incr_src,
-             gint     numpix,
-             guchar  *dst)
+                  gint    *incr_src,
+                  gint     numpix,
+                  guchar  *dst)
 {
   register guchar *y_src = src[0];
   register guchar *cb_src = src[1];
@@ -809,9 +845,9 @@ compose_ycbcr470 (guchar **src,
 
 static void
 compose_ycbcr709 (guchar **src,
-             gint    *incr_src,
-             gint     numpix,
-             guchar  *dst)
+                  gint    *incr_src,
+                  gint     numpix,
+                  guchar  *dst)
 {
   register guchar *y_src = src[0];
   register guchar *cb_src = src[1];
@@ -847,9 +883,9 @@ compose_ycbcr709 (guchar **src,
 
 static void
 compose_ycbcr470f (guchar **src,
-             gint    *incr_src,
-             gint     numpix,
-             guchar  *dst)
+                   gint    *incr_src,
+                   gint     numpix,
+                   guchar  *dst)
 {
   register guchar *y_src = src[0];
   register guchar *cb_src = src[1];
@@ -885,9 +921,9 @@ compose_ycbcr470f (guchar **src,
 
 static void
 compose_ycbcr709f (guchar **src,
-             gint    *incr_src,
-             gint     numpix,
-             guchar  *dst)
+                   gint    *incr_src,
+                   gint     numpix,
+                   guchar  *dst)
 {
   register guchar *y_src = src[0];
   register guchar *cb_src = src[1];
@@ -921,7 +957,7 @@ compose_ycbcr709f (guchar **src,
 }
 
 
-static gint
+static gboolean
 compose_dialog (gchar  *compose_type,
                 gint32  drawable_ID)
 {
@@ -932,9 +968,10 @@ compose_dialog (gchar  *compose_type,
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *table;
+  GtkWidget *image;
   GtkWidget *image_option_menu, *image_menu;
-  GSList *group;
-  gint    j, compose_idx, sensitive;
+  GSList    *group;
+  gint       j, compose_idx;
 
   /* Check default compose type */
   compose_idx = -1;
@@ -995,49 +1032,56 @@ compose_dialog (gchar  *compose_type,
   gtk_container_set_border_width (GTK_CONTAINER (right_vbox), 4);
   gtk_container_add (GTK_CONTAINER (right_frame), right_vbox);
 
-  table = gtk_table_new (MAX_COMPOSE_IMAGES, 2, FALSE);
+  table = gtk_table_new (MAX_COMPOSE_IMAGES, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  /* Channel names */
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     {
-      composeint.channel_label[j] = label =
-	gtk_label_new (gettext (compose_dsc[compose_idx].channel_name[j]));
+      const gchar *text;
+
+      image = gtk_image_new_from_stock (compose_dsc[compose_idx].channel_icon[j],
+                                        GTK_ICON_SIZE_BUTTON);
+      composeint.channel_icon[j] = image;
+      gtk_table_attach (GTK_TABLE (table), image, 0, 1, j, j+1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (image);
+
+      text = (compose_dsc[compose_idx].channel_name[j] ?
+              gettext (compose_dsc[compose_idx].channel_name[j]) : NULL);
+      composeint.channel_label[j] = label = gtk_label_new (text);
+
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
+      gtk_table_attach (GTK_TABLE (table), label, 1, 2, j, j+1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
-    }
-  /* Set sensitivity of last label */
-  sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
-                       CHNL_NA) != 0);
-  gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
 
-  /* Menues to select images */
-  for (j = 0; j <  MAX_COMPOSE_IMAGES; j++)
-    {
       composeint.select_ID[j] = drawable_ID;
       composeint.channel_menu[j] = image_option_menu = gtk_option_menu_new ();
-      image_menu = gimp_drawable_menu_new (check_gray, image_menu_callback,
+      image_menu = gimp_drawable_menu_new (check_gray,
+                                           image_menu_callback,
 					   &(composeint.select_ID[j]),
 					   composeint.select_ID[j]);
-      gtk_table_attach (GTK_TABLE (table), image_option_menu, 1, 2, j, j+1,
+      gtk_table_attach (GTK_TABLE (table), image_option_menu, 2, 3, j, j+1,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
       gtk_widget_show (image_option_menu);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu), image_menu);
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu),
+                                image_menu);
     }
-  gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
 
+  /* Set sensitivity of last menu */
+  gtk_widget_set_sensitive (composeint.channel_menu[3],
+                            compose_dsc[compose_idx].channel_name[3] != NULL);
+  
   /* Compose types */
   group = NULL;
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
     {
       toggle = gtk_radio_button_new_with_label (group,
-						gettext(compose_dsc[j].compose_type));
+						gettext (compose_dsc[j].compose_type));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (left_vbox), toggle, TRUE, TRUE, 0);
       composeint.compose_flag[j] = (j == compose_idx);
@@ -1058,14 +1102,13 @@ compose_dialog (gchar  *compose_type,
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gdk_flush ();
 
   return composeint.run;
 }
 
 /*  Compose interface functions  */
 
-static gint
+static gboolean
 check_gray (gint32   image_id,
             gint32   drawable_id,
             gpointer data)
@@ -1112,26 +1155,37 @@ static void
 compose_type_toggle_update (GtkWidget *widget,
                             gpointer   data)
 {
-  gint *toggle_val;
-  gint  compose_idx, j;
-  gint  sensitive;
+  gboolean *toggle_val;
+  gint      compose_idx, j;
 
-  toggle_val = (gint *) data;
+  toggle_val = (gboolean *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
+      const gchar *text;
+
       *toggle_val = TRUE;
+
       compose_idx = toggle_val - &(composeint.compose_flag[0]);
+
       for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
-	gtk_label_set_text (GTK_LABEL (composeint.channel_label[j]),
-			    compose_dsc[compose_idx].channel_name[j]);
-      
-      /* Set sensitivity of last label */
-      sensitive = (strcmp (compose_dsc[compose_idx].channel_name[3],
-			   CHNL_NA) != 0);
-      gtk_widget_set_sensitive (composeint.channel_label[3], sensitive);
-      gtk_widget_set_sensitive (composeint.channel_menu[3], sensitive);
+        {
+          text = (compose_dsc[compose_idx].channel_name[j] ?
+                  gettext (compose_dsc[compose_idx].channel_name[j]) : NULL);
+
+          gtk_label_set_text (GTK_LABEL (composeint.channel_label[j]), text);
+
+          gtk_image_set_from_stock (GTK_IMAGE (composeint.channel_icon[j]),
+                                    compose_dsc[compose_idx].channel_icon[j],
+                                    GTK_ICON_SIZE_BUTTON);
+        }
+
+      /* Set sensitivity of last menu */
+      gtk_widget_set_sensitive (composeint.channel_menu[3],
+                                compose_dsc[compose_idx].channel_name[3] != NULL);
     }
   else
-    *toggle_val = FALSE;
+    {
+      *toggle_val = FALSE;
+    }
 }
