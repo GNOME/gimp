@@ -80,6 +80,8 @@
 #  include <fcntl.h>
 #endif
 
+#define LIBGIMP_COMPILATION
+
 #include "gimp.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"

@@ -1,8 +1,52 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+conditional_libgimp_la = libgimp.la
+endif
+
+if OS_WIN32
+libgimp_export_symbols = -export-symbols gimp.def
+libgimpui_export_symbols = -export-symbols gimpui.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimp.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpui.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimp.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpui.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimp.lib gimpui.lib 
+
+install-ms-lib:
+	$(INSTALL) gimp.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpui.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimp.lib
+	-rm $(DESTDIR)$(libdir)/gimpui.lib
+
+gimp.lib: gimp.def
+	lib -name:libgimp-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
+
+gimpui.lib: gimpui.def
+	lib -name:libgimpui-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 gimpincludedir = $(includedir)/libgimp
 
 AM_CPPFLAGS = \
+	-DPREFIX=\""$(prefix)"\"	\
 	-DGIMPDIR=\""$(gimpdir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
@@ -268,13 +312,18 @@ gimpinclude_HEADERS = \
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
+	-release $(LT_RELEASE) \
+	$(no_undefined) \
+	$(libgimp_export_symbols)
 libgimp_la_LIBADD = $(GLIB_LIBS) -lm
 
 libgimpui_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	-release $(LT_RELEASE)
-libgimpui_la_LIBADD = $(GTK_LIBS)
+	-release $(LT_RELEASE) \
+	$(no_undefined) \
+	$(libgimpui_export_symbols)
+
+libgimpui_la_LIBADD = $(GTK_LIBS) $(conditional_libgimp_la)
 
 .PHONY: files
 
@@ -285,3 +334,7 @@ files:
 
 makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimp/makefile.mingw.in
 	cd $(top_builddir) && CONFIG_FILES=libgimp/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

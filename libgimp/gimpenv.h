@@ -30,6 +30,9 @@ extern "C" {
 
 /* For information look into the C source or the html documentation */
 
+#ifdef G_OS_WIN32
+gchar * gimp_toplevel_directory		(void);
+#endif
 
 gchar * gimp_directory                  (void);
 gchar * gimp_personal_rc_file           (gchar     *basename);

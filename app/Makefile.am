@@ -1,5 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+gimp_exp = gimp.exp
+
+gimp.exp : gimp.def
+	dlltool --output-exp $@ --input-def gimp.def
+
+mwindows = -mwindows
+
+INTLLIBS =
+
+noinst_DATA = .libs/libgimpapp.a
+
+.libs/libgimpapp.a: gimp.exe
+	cp libgimp.a $@
+endif
+
 scriptdata =
 
 bin_PROGRAMS = gimp
@@ -424,10 +440,11 @@ EXTRA_DIST = \
 	makefile.msc		\
 	gimp.rc			\
 	gimp.sym		\
-	wilber.ico
+	wilber.ico		\
+	libgimpapp.la
 
 
-gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
+gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
@@ -444,6 +461,7 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
+	$(gimp_exp) \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\

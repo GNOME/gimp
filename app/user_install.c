@@ -994,17 +994,10 @@ user_install_run (void)
 		  quoted_data_dir, quoted_data_dir,
 		  quoted_user_dir, quoted_sysconf_dir);
 
-      if (system (buffer) == -1)
-	executable = FALSE;
       g_free (quoted_data_dir);
       g_free (quoted_user_dir);
       g_free (quoted_sysconf_dir);
 
-      if (executable)
-	add_label (GTK_BOX (log_page),
-		   _("Did you notice any error messages in the console window?\n"
-		     "If not, installation was successful!\n"
-		     "Otherwise, quit and investigate the possible reason..."));
 #else
 #ifndef __EMX__
       g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s %s",
@@ -1023,6 +1016,7 @@ user_install_run (void)
 	    s++;
 	  }
       }
+#endif
 #endif
 
       /* urk - should really use something better than popen(), since
@@ -1057,14 +1051,21 @@ user_install_run (void)
 	    gtk_text_insert (GTK_TEXT (log_text), NULL, NULL, NULL, buffer, -1);
 	  pclose (pfp);
 
+#ifdef G_OS_WIN32
+	  add_label (GTK_BOX (log_page),
+		     _("Did you notice any error messages in the lines above\n"
+		       "or in the console window?\n"
+		       "If not, installation was successful!\n"
+		       "Otherwise, quit and investigate the possible reason..."));
+#else
 	  add_label (GTK_BOX (log_page),
 		     _("Did you notice any error messages in the lines above?\n"
 		       "If not, installation was successful!\n"
 		       "Otherwise, quit and investigate the possible reason..."));
+#endif
 	}
       else
 	executable = FALSE;
-#endif /* !G_OS_WIN32 */
     }
 
   if (executable)

@@ -1,7 +1,8 @@
 # This is your personal gimprc file.  Any variable defined in this file
 # takes precedence over the value defined in the system-wide gimprc:
 # @gimpdatadir@/gimprc
-# (where ${prefix} is @prefix@)
+# (where ${prefix} is @prefix@, which on Windows will be replaced at run-time
+# with the GIMP installation directory))
 # Take a look at that file if you want to see some of the options that
 # can be set here.
 

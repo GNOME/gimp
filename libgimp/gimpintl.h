@@ -30,12 +30,13 @@
  * So be sure to hit me instead of him if something is wrong here
  */ 
 
-#ifndef LOCALEDIR
-#define LOCALEDIR g_strconcat (gimp_data_directory (), \
-			       G_DIR_SEPARATOR_S, \
-			       "locale", \
+#ifdef G_OS_WIN32
+/* Don't use hardcoded path */
+#undef LOCALEDIR
+#define LOCALEDIR g_strconcat (gimp_toplevel_directory (), \
+			       "\\lib\\locale", \
 			       NULL)
-#endif
+#endif /* G_OS_WIN32 */
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>

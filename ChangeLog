@@ -1,3 +1,63 @@
+2001-11-09  Tor Lillqvist  <tml@iki.fi>
+
+	More changes for autoconfiscated build on Win32, and to use same
+	directory structure in the installation directory as on Unix.
+
+	* configure.in: Calculate and substitute LT_CURRENT_MINUS_AGE like
+	in GLib. Set PATHSEP as ':' or ';'. On Win32, use
+	AM_GLIB_GNU_GETTEXT. Some awful hacks so AC_OUTPUT doesn't
+	complain about files we don't have when we don't use "normal"
+	gettextize. Add EXEEXT to TIFF, JPEG, PNG, MPEG and XPM. Check for
+	winsock.h.
+
+	* acconfig.h: Add HAVE_WINSOCK_H.
+
+	* README.win32: Updates.
+
+	* Makefile.am: Install either user_install.bat or user_install.
+	(EXTRA_DIST): Distribute gimp-zip.
+
+	* gimprc.in: Use @PATHSEP@ to separate search path entries.
+
+	* gimprc_user.in: Add comment about the compile-time prefix being
+	replaced at run-time.
+
+	* user_install.bat: Use DOS line terminators, mark as binary.
+
+	* gimp-zip.in: New file, used to build distribution packages on
+	Win32.
+
+	* app/Makefile.am: On Win32, generate an .exp file with exported
+	symbols, and link with it. Copy the libtool-generated import
+	library libgimp.a to libgimpapp.a to avoid clashes with the
+	../libgimp/libgimp library.
+
+	* app/libgimpapp.la: New file. Hand-written libtool wrapper for
+	the gimp.exe import library.
+
+	* app/user_install.c (user_install_run): Use popen on Win32,
+	too. Experimental.
+
+	* libgimp/Makefile.am: Use -no-undefined and -export-symbols on
+	Windows. Install import libraries. Generate also MS import
+	libraries if MS_LIB_AVAILABLE.
+
+	* libgimp/gimp.c: Define LIBGIMP_COMPILATION here.
+
+	* libgimp/gimp.def: Update.
+
+	* libgimp/gimpenv.h
+	* libgimp/gimpenv.c: (gimp_toplevel_directory): New Win32-only
+	function.
+	(gimp_data_directory, gimp_sysconf_directory): Use it.
+	(gimp_path_parse): On Win32, if the path element starts with the
+	compile-time prefix, replace that with the run-time one.
+
+	* libgimp/gimpintl.h: On Win32, use gimp_toplevel_directory to
+	form LOCALEDIR.
+
+	* libgimp/gimpsignal.c: Bypass on Win32.
+
 2001-11-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_main.c: applied a patch from Raphael Quinet

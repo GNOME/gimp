@@ -188,11 +188,18 @@ EXTRA_DIST = \
 	ps-menurc				\
 	gimp.m4					\
 	gimprc.win32				\
+	gimp-zip				\
 	config.h.win32				\
 	po/makefile.mingw			\
 	po-libgimp/makefile.mingw		\
 	po-plug-ins/makefile.mingw		\
 	po-script-fu/makefile.mingw
+
+if OS_WIN32
+user_install = user_install.bat
+else
+user_install = user_install
+endif
 
 
 gimpdata_DATA = \
@@ -207,7 +214,7 @@ gimpsysconf_DATA = \
 	unitrc			\
 	ps-menurc
 
-gimpdata_SCRIPTS = user_install
+gimpdata_SCRIPTS = $(user_install)
 
 man_MANS = gimp.1 gimptool.1 gimp-remote.1 gimprc.5
 

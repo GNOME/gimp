@@ -22,6 +22,7 @@ LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 LT_CURRENT=`expr $GIMP_MICRO_VERSION - $GIMP_INTERFACE_AGE`
 LT_REVISION=$GIMP_INTERFACE_AGE
 LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
+LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
 
 VERSION=$GIMP_VERSION
 PACKAGE=gimp
@@ -56,12 +57,15 @@ AC_MSG_CHECKING([for native Win32])
 case "$host" in
   *-*-mingw*)
     os_win32=yes
+    PATHSEP=';'
     ;;
   *)
     os_win32=no
+    PATHSEP=':'
     ;;
 esac
 AC_MSG_RESULT([$os_win32])
+AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
 
 if test "$os_win32" = "yes"; then
@@ -130,8 +134,20 @@ fi
 
 dnl i18n stuff
 ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko lt nl nn no pl pt_BR ru sk sv tr uk zh_TW"
-
-AM_GNU_GETTEXT
+if test x$os_win32 = xyes; then
+  AM_GLIB_GNU_GETTEXT
+  dnl Awful hacks so AC_OUTPUT doesn't complain...
+  dnl and we don't use the "normal" gettextize stuff anyway
+  mkdir intl
+  touch intl/Makefile.in
+  touch po/Makefile.in.in
+  touch po-libgimp/Makefile.in.in
+  touch plug-ins/perl/po/Makefile.in.in
+  touch po-plug-ins/Makefile.in.in
+  touch po-script-fu/Makefile.in.in
+else
+  AM_GNU_GETTEXT
+fi
 
 dnl Check for GTK+
 if test x$os_win32 = xyes; then
@@ -269,7 +285,7 @@ dnl Test for libtiff
   if test -z "$LIBTIFF"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
-	TIFF='tiff'; LIBTIFF='-ltiff',
+	TIFF='tiff'$EXEEXT; LIBTIFF='-ltiff',
 	[AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
@@ -302,7 +318,7 @@ dnl Test for libjpeg
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; XJT='xjt'; LIBJPEG='-ljpeg'
+	JPEG='jpeg'$EXEEXT; XJT='xjt'; LIBJPEG='-ljpeg'
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
 	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
 	  AC_MSG_WARN(JPEG library does not support progressive saving.))
@@ -337,7 +353,7 @@ dnl Test for libpng
         png_ok=no)
       AC_MSG_RESULT($png_ok)
       if test "$png_ok" = yes; then
-        PNG='png'; LIBPNG="-lpng $LIBZ"
+        PNG='png'$EXEEXT; LIBPNG="-lpng $LIBZ"
       else
         AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
       fi
@@ -350,7 +366,7 @@ dnl Test for libmpeg
   if test -z "$LIBMPEG"; then
     AC_CHECK_LIB(mpeg, GetMPEGFrame,
       [AC_CHECK_HEADER(mpeg.h,
-	MPEG='mpeg'; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
+	MPEG='mpeg'$EXEEXT; LIBMPEG='-lmpeg'; GAP_DECODE_MPEG='gap_decode_mpeg',
 	[AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)])],
       [AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***)])
   fi
@@ -359,7 +375,7 @@ dnl Test for libXpm
   if test -z "$LIBXPM"; then
     AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
       [AC_CHECK_HEADER(X11/xpm.h,
-	XPM='xpm'; LIBXPM='-lXpm',
+	XPM='xpm'$EXEEXT; LIBXPM='-lXpm',
 	[AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
       [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_LIBS)
   fi
@@ -408,6 +424,7 @@ AC_CHECK_HEADER(sys/time.h, AC_DEFINE(HAVE_SYS_TIME_H))
 AC_CHECK_HEADER(sys/times.h, AC_DEFINE(HAVE_SYS_TIMES_H))
 AC_CHECK_HEADER(sys/wait.h, AC_DEFINE(HAVE_SYS_WAIT_H))
 AC_CHECK_HEADER(unistd.h, AC_DEFINE(HAVE_UNISTD_H))
+AC_CHECK_HEADER(winsock.h, AC_DEFINE(HAVE_WINSOCK_H))
 
 AC_TYPE_PID_T
 AC_TYPE_SIGNAL
@@ -739,6 +756,7 @@ AC_SUBST(LT_RELEASE)
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
+AC_SUBST(LT_CURRENT_MINUS_AGE)
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
@@ -807,6 +825,7 @@ gimptool
 gimptool.1
 gimp-remote.1
 gimp.spec
+gimp-zip
 libgimp/gimpfeatures.h
 libgimp/Makefile
 libgimp/makefile.mingw
@@ -854,6 +873,8 @@ plug-ins/print/escputil.1
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
+plug-ins/twain/Makefile
+plug-ins/winsnap/Makefile
 modules/Makefile
 modules/makefile.mingw
 devel-docs/Makefile

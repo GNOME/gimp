@@ -21,6 +21,8 @@
 
 #include <glib.h>
 
+#ifndef G_OS_WIN32
+
 #include "gimpsignal.h"
 
 
@@ -88,3 +90,5 @@ gimp_signal_private (gint                   signum,
 
   return (GimpSignalHandlerFunc) osa.sa_handler;
 }
+
+#endif /* !G_OS_WIN32 */

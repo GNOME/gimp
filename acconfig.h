@@ -38,6 +38,7 @@
 #undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
 #undef HAVE_UNISTD_H
+#undef HAVE_WINSOCK_H
 #undef HAVE_VPRINTF
 #undef HAVE_VSNPRINTF
 

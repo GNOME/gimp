@@ -31,6 +31,7 @@
 #endif
 
 #include "gimpenv.h"
+#include "gimpfeatures.h"
 
 #ifdef G_OS_WIN32
 #define STRICT
@@ -170,6 +171,60 @@ gimp_personal_rc_file (gchar *basename)
 		      NULL);
 }
 
+#ifdef G_OS_WIN32
+gchar *
+gimp_toplevel_directory ()
+{
+  /* Figure it out from the executable name */
+  static gchar *toplevel = NULL;
+  gchar filename[MAX_PATH];
+  gchar *sep1, *sep2;
+  
+  if (toplevel != NULL)
+    return toplevel;
+  
+  if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
+    g_error ("GetModuleFilename failed\n");
+  
+  /* If the executable file name is of the format
+   * <foobar>\bin\gimp.exe or
+   * <foobar>\lib\gimp\GIMP_MAJOR_VERSION.GIMP_MINOR_VERSION\plug-ins\filter.exe,
+   * use <foobar>. Otherwise, use the directory where the
+   * executable is.
+   */
+  
+  sep1 = strrchr (filename, '\\');
+  
+  *sep1 = '\0';
+  
+  sep2 = strrchr (filename, '\\');
+  
+  if (sep2 != NULL)
+    {
+      if (g_strcasecmp (sep2 + 1, "bin") == 0)
+	{
+	  *sep2 = '\0';
+	}
+      else
+	{
+	  gchar test[MAX_PATH];
+	  
+	  sprintf (test, "\\lib\\gimp\\%d.%d\\plug-ins",
+		   GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+	  
+	  if (strlen (filename) > strlen (test) &&
+	      g_strcasecmp (filename + strlen (filename) - strlen (test),
+			    test) == 0)
+	    {
+	      filename[strlen (filename) - strlen (test)] = '\0';
+	    }
+	}
+    }
+  toplevel = g_strdup (filename);
+  return toplevel;
+}
+#endif
+
 /**
  * gimp_data_directory:
  *
@@ -214,33 +269,11 @@ gimp_data_directory (void)
       gimp_data_dir = g_strdup(__XOS2RedirRoot(DATADIR));
 #endif
 #else
-      /* Figure it out from the executable name */
-      gchar filename[MAX_PATH];
-      gchar *sep1, *sep2;
+      gchar *toplevel = gimp_toplevel_directory ();
+      gchar subdir[MAX_PATH];
 
-      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-	g_error ("GetModuleFilename failed\n");
-      
-      /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
-       * <foobar>. Otherwise, use the directory where the executable
-       * is.
-       */
-
-      sep1 = strrchr (filename, G_DIR_SEPARATOR);
-
-      *sep1 = '\0';
-
-      sep2 = strrchr (filename, G_DIR_SEPARATOR);
-
-      if (sep2 != NULL)
-	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0
-	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
-	    *sep2 = '\0';
-	}
-
-      gimp_data_dir = g_strdup (filename);
+      sprintf (subdir, "share\\gimp\\%d.%d", GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+      gimp_data_dir = g_build_filename (toplevel, subdir, NULL);
 #endif
     }
   return gimp_data_dir;
@@ -290,33 +323,11 @@ gimp_sysconf_directory (void)
       gimp_sysconf_dir = g_strdup(__XOS2RedirRoot(SYSCONFDIR));
 #endif
 #else
-      /* Figure it out from the executable name */
-      gchar filename[MAX_PATH];
-      gchar *sep1, *sep2;
+      gchar *toplevel = gimp_toplevel_directory ();
+      gchar subdir[MAX_PATH];
 
-      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
-	g_error ("GetModuleFilename failed\n");
-      
-      /* If the executable file name is of the format
-       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
-       * <foobar>. Otherwise, use the directory where the executable
-       * is.
-       */
-
-      sep1 = strrchr (filename, G_DIR_SEPARATOR);
-
-      *sep1 = '\0';
-
-      sep2 = strrchr (filename, G_DIR_SEPARATOR);
-
-      if (sep2 != NULL)
-	{
-	  if (g_strcasecmp (sep2 + 1, "bin") == 0
-	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
-	    *sep2 = '\0';
-	}
-
-      gimp_sysconf_dir = g_strdup (filename);
+      sprintf (subdir, "etc\\gimp\\%d.%d", GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
+      gimp_sysconf_dir = g_build_filename (toplevel, subdir, NULL);
 #endif
     }
   return gimp_sysconf_dir;
@@ -403,6 +414,31 @@ gimp_path_parse (gchar     *path,
 
 #ifdef __EMX__
       _fnslashify (dir);
+#endif
+
+#if defined (G_OS_WIN32) && defined (PREFIX)
+      {
+	gchar *p;
+
+	/* Yes, I do mean forward slashes below */
+	if (strncmp (dir->str, PREFIX "/", strlen (PREFIX "/")) == 0)
+	  {
+	    /* This is a compile-time entry. Replace the path with the
+	     * real one on this machine. */
+	    g_string_assign (dir, g_strconcat (gimp_toplevel_directory (),
+					       "\\",
+					       dir->str + strlen (PREFIX "/"),
+					       NULL));
+	  }
+	/* Replace forward slashes with backslashes, just for
+	 * completeness */
+	p = dir->str;
+	while ((p = strchr (p, '/')) != NULL)
+	  {
+	    *p = '\\';
+	    p++;
+	  }
+      }
 #endif
 
       if (check)

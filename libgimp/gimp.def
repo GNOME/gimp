@@ -359,6 +359,7 @@ EXPORTS
 	gimp_tile_ref_zero
 	gimp_tile_unref
 	gimp_tile_width
+	gimp_toplevel_directory
 	gimp_transform_2d
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
@@ -412,6 +413,7 @@ EXPORTS
 	gp_tile_ack_write
 	gp_tile_data_write
 	gp_tile_req_write
+	_readchannel
 	set_gimp_PLUG_IN_INFO_PTR
 	wire_clear_error
 	wire_destroy
