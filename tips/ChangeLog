@@ -1,3 +1,8 @@
+2004-06-08  Jordi Mallach  <jordi@sindominio.net>
+
+	* ca.po: Added Catalan translation by
+	Xavier Beà <xbea@pie.xtec.es>.
+
 2004-05-28  Andras Timar  <timar@gnome.hu>
 
 	* Makefile.am (tips_POFILES): added hu.po (Hungarian).
