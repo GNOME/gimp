@@ -1,3 +1,22 @@
+Fri Oct 23 00:58:37 CEST 1998 Marc Lehmann <pcg@goof.com>
+
+	* configure.in: got rid of the ugly but harmless autoconf warning
+	in line 117.
+
+Thu Oct 22 20:28:18 CEST 1998 Marc Lehmann <pcg@goof.com>
+
+	New directory tree plug-ins/perl/*
+	
+	The gimp-perl extension: many, many new files and directories (see
+	plug-ins/perl/MANIFEST for a list).
+	
+	It uses a private ChangeLog in plug-ins/perl/Changes.
+	
+	* configure.in, plug-ins/Makefile.am, INSTALL: changed to accomodate
+	the new extension.
+	
+	* config.h.in: added HAVE_VSNPRINTF, removed duplicate HAVE_VPRINTF.
+	
 Thu Oct 22 04:35:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/checkerboard/checkerboard.c: fixed a buglet that

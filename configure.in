@@ -114,7 +114,10 @@ AC_TRY_RUN([#include <math.h>
     AC_MSG_RESULT(-std1),
     AC_MSG_RESULT()
     CFLAGS=$gimp_save_CFLAGS
-    AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)])))
+    AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)]),
+    AC_MSG_RESULT),
+  AC_MSG_RESULT())
+
 LIBS=$gimp_save_LIBS
 
 dnl NeXTStep cc seems to need this
@@ -456,6 +459,42 @@ if test $ac_cv_path_LPC_COMMAND != ":"; then
   LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
 fi
 
+dnl This is for the gimp-perl plug-in
+AC_ARG_ENABLE(perl, [  --disable-perl          do not build perl extension [by default enabled]])
+if eval "test x$enable_perl != xno"; then
+   AC_CHECK_PROGS(PERL,perl5.00504 perl5.00503 perl5.00502 perl5.00501 perl5.005 perl,perl)
+   AC_MSG_CHECKING(for perl version >= 5.005)
+   if test "`$PERL -e 'print $]>=5.005'`" = "1"; then
+      AC_MSG_RESULT(yes)
+      
+      dnl perl does not allow VPATH builds (yet)
+      if test ! -e plug-ins/perl/Makefile.PL; then
+         mkdir plug-ins
+         cp -r $srcdir/plug-ins/perl plug-ins/perl
+      fi
+      
+      dnl these are gross hacks
+      GIMP_CFLAGS="$CFLAGS -I$srcdir -I\$topdir/../.. $GTK_CFLAGS"
+      GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
+      GIMP_LIBS="$LIBS -L\$topdir/../../libgimp -L\$topdir/../../libgimp/.libs -lgimp"
+      GIMP_LIBS_NOUI="$GIMP_LIBS"
+      GIMPTOOL="../../gimptool"
+      IN_GIMP=1
+      EXTENSIVE_TESTS=0
+      dnl include the autoconf fragment from there
+      sinclude(plug-ins/perl/etc/configure.frag)
+      
+      dnl we ignore prefix
+      echo "echo invoking perl for configuration..." >plug-ins/perl/config.status
+      echo "$PERL Makefile.PL --writemakefile" >>plug-ins/perl/config.status
+      GIMP_PERL=perl
+   else
+      GIMP_PERL=
+      AC_MSG_RESULT(no)
+      AC_MSG_WARN(*** gimp-perl plug-in won't be build (perl5.005 or higher required) ***)
+   fi
+fi
+
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
 
 AC_SUBST(GIMP_MAJOR_VERSION)
@@ -501,6 +540,7 @@ AC_SUBST(LPR_DEF)
 AC_SUBST(LPC_DEF)
 AC_SUBST(MAILER)
 AC_SUBST(THREAD_LIBS)
+AC_SUBST(GIMP_PERL)
 
 dnl Output the Makefiles
 
@@ -513,6 +553,7 @@ Makefile
 po/Makefile.in
 intl/Makefile
 libgimp/Makefile
+plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in
 plug-ins/Makefile
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
@@ -659,6 +700,15 @@ data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile],
-[chmod +x gimptool
-sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile]
+[
+   chmod +x gimptool
+   sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
+   case "$CONFIG_FILES" in
+   *plug-ins/perl*)
+      if test -e plug-ins/perl/config.status; then
+         ( cd plug-ins/perl; . config.status )
+      fi
+      ;;
+   esac
+]
 )
