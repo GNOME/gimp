@@ -29,7 +29,7 @@
  *                        Fit film height to images
  * V 1.03, nn, 20-Dec-97, Initialize layers in film()
  */
-static char ident[] = "@(#) GIMP Film plug-in v1.03 20-Dec-97";
+static char ident[] = "@(#) GIMP Film plug-in v1.03a 1999-07-22";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -906,6 +906,8 @@ draw_number (gint32 layer_ID,
                        PARAM_STRING, "*",       /* slant */
                        PARAM_STRING, "*",       /* set_width */
                        PARAM_STRING, "*",       /* spacing */
+                       PARAM_STRING, "*",
+                       PARAM_STRING, "*",
                        PARAM_END);
 
    if (params[0].data.d_status == STATUS_SUCCESS)
@@ -936,6 +938,8 @@ draw_number (gint32 layer_ID,
                      PARAM_STRING, "*",       /* slant */
                      PARAM_STRING, "*",       /* set_width */
                      PARAM_STRING, "*",       /* spacing */
+                     PARAM_STRING, "*",
+                     PARAM_STRING, "*",
                      PARAM_END);
 
  if (params[0].data.d_status != STATUS_SUCCESS)

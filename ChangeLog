@@ -1,3 +1,7 @@
+Thu Jul 22 21:24:04 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/film.c: Upgraded to gimp-1.1 calling conventions.
+
 1999-07-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/channel_ops.[ch]: new ui for the "Layer Offset" dialog.
