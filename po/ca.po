@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000
+# Softcatala <linux@softcatala.org>, 2000-2001
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.28\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2000-10-21 21:14+0200\n"
-"Last-Translator: Quico Llach <tradgnome@softcatala.org>\n"
+"Project-Id-Version: gimp1 1.2.2\n"
+"POT-Creation-Date: 2001-08-30 08:24+0200\n"
+"PO-Revision-Date: 2001-09-07 17:29+0200\n"
+"Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -318,13 +318,13 @@ msgstr "Editor del pinzell"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
-#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
-#: app/tools.c:1549 app/undo_history.c:759
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/gdisplay_ops.c:310
+#: app/gradient.c:918 app/gradient_select.c:161 app/histogram_tool.c:294
+#: app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:326
+#: app/nav_window.c:1426 app/palette.c:2058 app/palette.c:2074
+#: app/palette.c:3111 app/palette_select.c:70 app/pattern_select.c:178
+#: app/preferences_dialog.c:386 app/tips_dialog.c:163 app/tools.c:1549
+#: app/undo_history.c:759
 msgid "Close"
 msgstr "Tanca"
 
@@ -734,15 +734,15 @@ msgstr "N/D"
 
 #: app/color_select.c:242
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:243
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:244
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:245 app/hue_saturation.c:361
 msgid "R"
@@ -1059,20 +1059,25 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Obre l'entrada seleccionada\n"
+"<Maj> Presenta la finestra si ja és oberta\n"
+"<Ctrl> Carrega el diàleg Imatge"
 
 #: app/docindex.c:121
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Mou les entrades seleccionades més amunt en l'índex"
+msgstr ""
+"Mou l'entrada seleccionada cap amunt en l'índex\n"
+"<Maj> fins al començament"
 
 #: app/docindex.c:125
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Mou les entrades seleccionades més avall en l'índex"
+msgstr ""
+"Mou l'entrada seleccionada cap avall en l'índex\n"
+"<Maj> fins al final"
 
 #: app/docindex.c:129
 msgid "Remove the selected entry from the index"
@@ -1124,35 +1129,6 @@ msgstr "Contorn dur"
 #: app/eraser.c:122 app/paint_funcs.c:106
 msgid "Anti Erase"
 msgstr "Antiesborrat"
-
-#: app/errorconsole.c:173
-#, c-format
-msgid "Error opening file %s: %s"
-msgstr "Error en obrir el fitxer %s: %s"
-
-#: app/errorconsole.c:190
-msgid "Can't save, nothing selected!"
-msgstr "No es pot desar, no hi ha res seleccionat!"
-
-#: app/errorconsole.c:194
-msgid "Save error log to file..."
-msgstr "Desa el registre d'errors a l'arxiu..."
-
-#: app/errorconsole.c:276
-msgid "GIMP Error Console"
-msgstr "Consola d'errors GIMP"
-
-#: app/errorconsole.c:282
-msgid "Clear"
-msgstr "Esborra"
-
-#: app/errorconsole.c:305
-msgid "Write all errors to file..."
-msgstr "Escriu tots els errors al fitxer..."
-
-#: app/errorconsole.c:312
-msgid "Write selection to file..."
-msgstr "Escriu la selecció al fitxer..."
 
 #: app/file_new_dialog.c:195
 #, no-c-format
@@ -1272,11 +1248,15 @@ msgid ""
 "(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
+"S'està deixant %s com\n"
+"%s\n"
+"\n"
+"(Perdreu tots els canvis\n"
+"incloent tota la informació per desfer)"
 
 #: app/fileops.c:633
-#, fuzzy
 msgid "Revert Image?"
-msgstr "Desar la imatge"
+msgstr "Voleu deixar la imatge com abans?"
 
 #: app/fileops.c:638 app/fileops.c:1921
 msgid "Yes"
@@ -1287,18 +1267,22 @@ msgid "No"
 msgstr "No"
 
 #: app/fileops.c:741
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "No es pot omplir el tipus d'imatge desconegut."
+msgstr ""
+"%s ha fallat.\n"
+"%s: tipus de fitxer desconegut."
 
 #: app/fileops.c:758
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s es un fitxer irregular (%s)"
+msgstr ""
+"%s ha fallat.\n"
+"%s no és un fitxer regular."
 
 #: app/fileops.c:779
 #, c-format
@@ -1306,24 +1290,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s ha fallat.\n"
+"%s: permís denegat."
 
 #: app/fileops.c:835 app/fileops.c:1556
 msgid "Open"
 msgstr "Obre"
 
 #: app/fileops.c:1153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "No es pot omplir el tipus d'imatge desconegut."
+msgstr ""
+"No s'ha pogut desar.\n"
+"%s: tipus de fitxer desconegut."
 
 #: app/fileops.c:1168
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s es un fitxer irregular (%s)"
+msgstr ""
+"No s'ha pogut desar.\n"
+"%s no és un fitxer regular."
 
 #: app/fileops.c:1187
 #, c-format
@@ -1331,6 +1321,8 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"No s'ha pogut desar.\n"
+"%s: permís denegat."
 
 #: app/fileops.c:1434
 msgid "(This thumbnail may be out of date)"
@@ -1493,28 +1485,28 @@ msgid "No selection to stroke!"
 msgstr "No hi ha res seleccionat per traçar!"
 
 #: app/gimpbrush.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
+msgstr "Versió desconeguda del format del pinzell #%d en \"%s\"."
 
 #: app/gimpbrush.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Error en el fitxer model del GIMP... avortant"
+msgstr "Error en el fitxer de pinzells del GIMP \"%s\"."
 
 #: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Sense nom"
 
 #: app/gimpbrush.c:338 app/gimpbrush.c:383
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "El fitxer de pinzell GIMP sembla truncat."
+msgstr "El fitxer de pinzells del GIMP sembla truncat: \"%s\"."
 
 #: app/gimpbrush.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "El fitxer de pinzell GIMP sembla truncat."
+msgstr "El fitxer de pinzells del GIMP sembla malmès: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1526,29 +1518,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Advertència: No s'ha pogut carregar el pinzell\n"
+"Advertència: No s'ha pogut carregar el conducte de pinzells\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:296
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "A la paleta del pinzell n'hi hauria de haver almenys un."
+msgstr ""
+"Els conductes de pinzells n'han de tenir almenys un:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:387
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
 msgstr ""
-"No s'han pogut carregar els\n"
-"pinzells a la paleta de pinzells."
+"No s'ha pogut carregar un dels pinzells del conducte de pinzells\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -1573,7 +1567,7 @@ msgstr "Tipus de capa %d no suportat."
 
 #: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "No es pot trobar el navegador de l'ajuda del GIMP"
 
 #: app/gimphelp.c:193
 msgid ""
@@ -1587,7 +1581,7 @@ msgstr ""
 
 #: app/gimphelp.c:196
 msgid "Use Netscape instead"
-msgstr ""
+msgstr "Utilitza el Netscape al seu lloc"
 
 #: app/gimpimage.c:2324
 msgid "Layer cannot be raised any further"
@@ -1746,7 +1740,7 @@ msgstr "Missatge del GIMP"
 msgid "pixel"
 msgstr "píxel"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
 msgid "pixels"
 msgstr "píxels"
 
@@ -2229,9 +2223,8 @@ msgstr "Color / Lluminositat / Ajustaments de la saturació"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
-#, fuzzy
 msgid "Hue:"
-msgstr "Color"
+msgstr "To de color:"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
@@ -2676,9 +2669,8 @@ msgid "Keep Trans."
 msgstr "Deixa trans."
 
 #: app/layers_dialog.c:412
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Transparència"
+msgstr "Conserva la transparència"
 
 #: app/layers_dialog.c:1955
 msgid "Empty Layer Copy"
@@ -2835,11 +2827,12 @@ msgid "Zoom out"
 msgstr "Redueix el zoom"
 
 #: app/main.c:289
-#, fuzzy
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "Les opcions vàlides són:\n"
+msgstr ""
+"\n"
+"Opció no vàlida.\n"
 
 #: app/main.c:305
 msgid "GIMP version"
@@ -2857,9 +2850,8 @@ msgstr ""
 "\n"
 
 #: app/main.c:310
-#, fuzzy
 msgid "Options:\n"
-msgstr "Operacions"
+msgstr "Opcions:\n"
 
 #: app/main.c:311
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
@@ -2947,6 +2939,8 @@ msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
+"                           Mode de depuració per a senyals fatals.\n"
+"\n"
 
 #: app/main.c:345
 msgid "(This console window will close in ten seconds)\n"
@@ -3088,9 +3082,8 @@ msgid "/File/Save As..."
 msgstr "/Fitxer/Anomena i desa..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Fitxer/Reverteix"
+msgstr "/Fitxer/Deixa com abans..."
 
 #: app/menus.c:224
 msgid "/File/Close"
@@ -3823,7 +3816,7 @@ msgstr "Navega: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navega: Sense imatge"
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr "No es disposa de cap pinzell per utilitzar amb aquesta eina."
 
@@ -4131,19 +4124,19 @@ msgid "No Patterns available"
 msgstr "No hi ha patrons disponibles"
 
 #: app/patterns.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
+msgstr "Versió desconeguda del format de patrons #%d en \"%s\"."
 
 #: app/patterns.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Error en el fitxer model del GIMP... avortant"
+msgstr "Error en el fitxer de patrons del GIMP \"%s\"."
 
 #: app/patterns.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "Sembla que el fitxer model del GIMP és truncat"
+msgstr "El fitxer de patrons del GIMP sembla truncat: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -4198,6 +4191,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"El connector ha fallat: \"%s\"\n"
+"(%s)\n"
+"\n"
+"El connector que ha fallat pot haver fet malbé l'estat intern del GIMP.\n"
+"Potser convé que deseu les imatges i torneu a iniciar el GIMP\n"
+"per treballar sobre segur."
 
 #: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
 msgid "Posterize"
@@ -4542,21 +4541,20 @@ msgid "Disable Cursor Updating"
 msgstr "Desactivar l'actualització del cursor"
 
 #: app/preferences_dialog.c:2101
-#, fuzzy
 msgid "Tool Icon"
-msgstr "Opcions d'eina"
+msgstr "Icona Eina"
 
 #: app/preferences_dialog.c:2103
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Icona Eina amb Crosshair"
 
 #: app/preferences_dialog.c:2105
 msgid "Crosshair only"
-msgstr ""
+msgstr "Només Crosshair"
 
 #: app/preferences_dialog.c:2110
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Mode del cursor:"
 
 #: app/preferences_dialog.c:2116 app/preferences_dialog.c:2118
 #: app/tools.c:1541
@@ -4694,7 +4692,7 @@ msgstr "Calibració"
 
 #: app/preferences_dialog.c:2441
 msgid "From windowing system"
-msgstr ""
+msgstr "Del sistema de finestres"
 
 #: app/preferences_dialog.c:2463
 msgid "Manually:"
@@ -5052,16 +5050,16 @@ msgid "Next Tip"
 msgstr "Consell següent"
 
 #: app/tips_dialog.c:288
-#, fuzzy
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"Sembla que s'ha perdut el fitxer on hi ha els consells del vostre GIMP!\n"
-"Haurieu de tenir un fitxer anomenat gimp_tips.txt en el directori\n"
-"de dades GIMP. Si us plau, comproveu la instal·lació."
+"Sembla que el fitxer de consells del GIMP no hi és!\n"
+"Al subdirectori de consells del directori de dades del\n"
+"GIMP ha d'haver un fitxer anomenat gimp_tips.txt.\n"
+"Si us plau, comproveu la instal·lació."
 
 #: app/tool_options.c:126
 msgid "This tool has no options."
@@ -6267,17 +6265,15 @@ msgstr ""
 "sistema."
 
 #: app/user_install.c:1097
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"El GIMP utilitza una quantitat limitada de memòria per emmagatzemar les "
-"dades\n"
-"de la imatge, és la tant anomenada \"Tile Cache\". Haurieu d'ajustar\n"
-"aquesta mida per ajustar-la amb la memòria. Tingueu en compte la quantitat \n"
-"de memòria emprada pels altres processos d'execució."
+"El GIMP utilitza una quantitat limitada de memòria per emmagatzemar les\n"
+"dades de la imatge, anomenada \"Tile Cache\". Us caldrà ajustar-ne la mida\n"
+"per encabir-la a la memòria. Tingueu en compte la quantitat de memòria que\n"
+"utilitzen altres processos en execució."
 
 #: app/user_install.c:1122
 msgid ""
@@ -6298,18 +6294,18 @@ msgid "Swap Directory:"
 msgstr "Directori d'intercanvi:"
 
 #: app/user_install.c:1171
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"El GIMP pot obtenir aquesta informació del teu servidor X.\n"
-"Tantmateix, la majoria de servidors X no retornen valors útils."
+"El GIMP pot obtenir aquesta informació del sistema de finestres.\n"
+"Tanmateix, això no sol proporcionar valors útils."
 
 #: app/user_install.c:1178
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Aconsegueix la resolució del servidor X (actualment, %d x %d ppp)"
+msgstr ""
+"Aconsegueix la resolució del sistema de finestres (actualment, %d x %d ppp)"
 
 #: app/user_install.c:1192
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6369,6 +6365,27 @@ msgstr "Aquarel·la"
 msgid "Color History"
 msgstr "Historial del color"
 
+#~ msgid "Error opening file %s: %s"
+#~ msgstr "Error en obrir el fitxer %s: %s"
+
+#~ msgid "Can't save, nothing selected!"
+#~ msgstr "No es pot desar, no hi ha res seleccionat!"
+
+#~ msgid "Save error log to file..."
+#~ msgstr "Desa el registre d'errors a l'arxiu..."
+
+#~ msgid "GIMP Error Console"
+#~ msgstr "Consola d'errors GIMP"
+
+#~ msgid "Clear"
+#~ msgstr "Esborra"
+
+#~ msgid "Write all errors to file..."
+#~ msgstr "Escriu tots els errors al fitxer..."
+
+#~ msgid "Write selection to file..."
+#~ msgstr "Escriu la selecció al fitxer..."
+
 #~ msgid "Remove"
 #~ msgstr "Elimina"
 
@@ -6399,18 +6416,6 @@ msgstr "Historial del color"
 #~ msgid "Gamma:"
 #~ msgstr "Gamma:"
 
-#, fuzzy
-#~ msgid "High Contrast color display filter"
-#~ msgstr "Filtre de visualització de color gamma"
-
-#, fuzzy
-#~ msgid "High Contrast"
-#~ msgstr "Contrast"
-
-#, fuzzy
-#~ msgid "Contrast Cycles:"
-#~ msgstr "Contrast"
-
 #~ msgid "Error in GIMP brush file...aborting."
 #~ msgstr "Error al fitxer de pinzell GIMP... s'està avortant."
 
@@ -6430,14 +6435,6 @@ msgstr "Historial del color"
 
 #~ msgid "Failed to load pixmap brush."
 #~ msgstr "No s'ha pogut carregar el pinzell del mapa de píxels."
-
-#, fuzzy
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Versió desconeguda del GIMP #%d a \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Error en obrir el fitxer: %s\n"
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Aquest fitxer no es pot pujar."
