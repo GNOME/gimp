@@ -325,6 +325,30 @@ gimp_text_ft2_subst_func (FcPattern *pattern,
   FcPatternAddBool (pattern, FC_ANTIALIAS, text->antialias);
 }
 
+static void
+context_destroyed (PangoFT2FontMap *fontmap)
+{
+  /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
+   *  see also bug #148997 (Text layer rendering leaks font file descriptor)
+   */
+  
+  /*  Pango 1.2 incorrectly calls the destroy function twice for the substitute
+   *  in pango_fc_font_map_finalize and pango_fc_do_finalize. Remove it now
+   *  to avoid segfault. This call will correctly call the destroy function
+   *  once for the old substitute which is what we want. (#154144)
+   */
+  pango_ft2_font_map_set_default_substitute (fontmap, NULL, NULL, NULL);
+  
+  /*  Calling pango_ft2_font_map_substitute_changed() causes the
+   *  font_map cache to be flushed, thereby removing the circular
+   *  reference that causes the leak. With the call above, this is not really
+   *  necessary since Pango clears the cache then also, but it shouldn't hurt
+   */
+  pango_ft2_font_map_substitute_changed (fontmap);
+  
+  g_object_unref (fontmap);
+}
+
 static PangoContext *
 gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
@@ -343,17 +367,14 @@ gimp_text_get_pango_context (GimpText *text,
                                              (GDestroyNotify) g_object_unref);
 
   context = pango_ft2_font_map_create_context (fontmap);
-  g_object_unref (fontmap);
 
   /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
    *  see also bug #148997 (Text layer rendering leaks font file descriptor):
-   *
-   *  Calling pango_ft2_font_map_substitute_changed() causes the
-   *  font_map cache to be flushed, thereby removing the circular
-   *  reference that causes the leak.
+   *  Clear the font_map cache when the context is destroyed to break the
+   *  circular references.
    */
   g_object_weak_ref (G_OBJECT (context),
-                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
+                     (GWeakNotify) context_destroyed,
                      fontmap);
 
   if (text->language)
