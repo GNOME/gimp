@@ -1,3 +1,8 @@
+Mon Jan 17 23:11:10 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/wind.c: Wind used to crash badly when used with
+	an active selection. Should be fixed now.
+
 Mon Jan 17 22:24:00 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/AlienMap2/AlienMap2.c
