@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
-"PO-Revision-Date: 2003-01-30 04:15-0300\n"
+"POT-Creation-Date: 2003-02-28 04:58+0100\n"
+"PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -352,7 +352,7 @@ msgstr "Colar Em"
 
 #: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
-msgstr "_Resetar"
+msgstr "_Restaurar"
 
 #: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
