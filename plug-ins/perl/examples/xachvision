@@ -7,7 +7,7 @@ use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 register "xachvision",
-         "Xach Survielence Camera/XachVision",
+         "Xach Surveillance Camera/XachVision",
          "This makes an interlaced-looking machine vision type thing.",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
