@@ -1,3 +1,8 @@
+Wed Feb 17 23:36:45 1999  Tor Lillqvist  <tml@iki.fi>
+
+	* app/color_balance.c (struct _ColorBalanceDialog): lookup tables
+ 	should be size 256, not 255.
+
 1999-02-16  Jay Cox  <jaycox@earthlink.net>
 
 	* app/gimplutP.h: fixed error in struct declaration

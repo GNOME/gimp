@@ -71,9 +71,9 @@ struct _ColorBalanceDialog
   double       magenta_green[3];
   double       yellow_blue[3];
 
-  guchar       r_lookup[255];
-  guchar       g_lookup[255];
-  guchar       b_lookup[255];
+  guchar       r_lookup[256];
+  guchar       g_lookup[256];
+  guchar       b_lookup[256];
 
   gint         preserve_luminosity;
   gint         preview;
