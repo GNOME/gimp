@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 11:36+0100\n"
-"PO-Revision-Date: 2004-12-05 22:38+0100\n"
+"POT-Creation-Date: 2004-12-07 19:05+0100\n"
+"PO-Revision-Date: 2004-12-07 22:41+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -260,10 +260,10 @@ msgstr "Debuggen"
 msgid "Dialogs"
 msgstr "Dialogen"
 
+# Dokbaar/aanlegbaar/aankoppelbaar
 #: app/actions/actions.c:114
-#, fuzzy
 msgid "Dockable"
-msgstr "Tekengebied"
+msgstr "Aankoppelbaar"
 
 #: app/actions/actions.c:117 app/dialogs/dialogs.c:152
 msgid "Document History"
@@ -405,14 +405,12 @@ msgid "Delete brush"
 msgstr "Penseel verwijderen"
 
 #: app/actions/brushes-actions.c:65
-#, fuzzy
 msgid "_Refresh Brushes"
-msgstr "/Penselen vernieuwen"
+msgstr "_Penselen vernieuwen"
 
 #: app/actions/brushes-actions.c:66
-#, fuzzy
 msgid "Refresh brushes"
-msgstr "/Penselen vernieuwen"
+msgstr "Penselen vernieuwen"
 
 #: app/actions/brushes-actions.c:74
 msgid "_Edit Brush..."
@@ -431,51 +429,43 @@ msgid "_Paste Buffer"
 msgstr "Buffer _plakken"
 
 #: app/actions/buffers-actions.c:47
-#, fuzzy
 msgid "Paste the selected buffer"
-msgstr "Geselecteerd filter naar boven"
+msgstr "De geselecteerde buffer plakken"
 
+# naar/binnen/in
 #: app/actions/buffers-actions.c:52
-#, fuzzy
 msgid "Paste Buffer _Into"
-msgstr "/Buffer plakken in"
+msgstr "Buffer plakken _in"
 
 #: app/actions/buffers-actions.c:53
-#, fuzzy
 msgid "Paste the selected buffer into the selection"
-msgstr "Draai de laag of selectie"
+msgstr "De geselecteerde buffer plakken in de selectie"
 
 #: app/actions/buffers-actions.c:58
-#, fuzzy
 msgid "Paste Buffer as _New"
-msgstr "/Buffer plakken als nieuw"
+msgstr "Buffer plakken als _nieuw"
 
 #: app/actions/buffers-actions.c:59
-#, fuzzy
 msgid "Paste the selected buffer as new image"
-msgstr "Geselecteerd filter naar beginwaarden"
+msgstr "De geselecteerde buffer plakken als nieuwe afbeelding"
 
 #: app/actions/buffers-actions.c:64
-#, fuzzy
 msgid "_Delete Buffer"
-msgstr "/Buffer verwijderen"
+msgstr "Buffer _verwijderen"
 
 #: app/actions/buffers-actions.c:65
-#, fuzzy
 msgid "Delete the selected buffer"
-msgstr "Geselecteerde sjabloon verwijderen"
+msgstr "De geselecteerde buffer verwijderen"
 
 #: app/actions/channels-actions.c:44
 msgid "Channels Menu"
 msgstr "Menu Kanalen"
 
 #: app/actions/channels-actions.c:48
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "/Kanaalattributen bewerken..."
+msgstr "Kanaalattributen be_werken..."
 
 #: app/actions/channels-actions.c:49
-#, fuzzy
 msgid "Edit channel attributes"
 msgstr "Kanaalattributen bewerken"
 
@@ -504,61 +494,52 @@ msgid "Duplicate channel"
 msgstr "Kanaal dupliceren"
 
 #: app/actions/channels-actions.c:72
-#, fuzzy
 msgid "_Delete Channel"
-msgstr "/Kanaal verwijderen"
+msgstr "Kanaal _verwijderen"
 
 #: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
 msgid "Delete channel"
 msgstr "Kanaal verwijderen"
 
+# omhoog/verhogen
 #: app/actions/channels-actions.c:78
-#, fuzzy
 msgid "_Raise Channel"
-msgstr "/Kanaal omhoog"
+msgstr "Kanaal om_hoog"
 
+# d.i. de tooltip
 #: app/actions/channels-actions.c:79
-#, fuzzy
 msgid "Raise channel"
 msgstr "Kanaal verhogen"
 
 #: app/actions/channels-actions.c:84
-#, fuzzy
 msgid "Raise Channel to _Top"
-msgstr "Kanaal bovenaan"
+msgstr "Kanaal _bovenaan"
 
 #: app/actions/channels-actions.c:85
-#, fuzzy
 msgid "Raise channel to top"
-msgstr "Kanaal bovenaan"
+msgstr "Kanaal bovenaan zetten"
 
 #: app/actions/channels-actions.c:90
-#, fuzzy
 msgid "_Lower Channel"
-msgstr "/Kanaal omlaag"
+msgstr "Kanaal om_laag"
 
 #: app/actions/channels-actions.c:91
-#, fuzzy
 msgid "Lower channel"
 msgstr "Kanaal verlagen"
 
 #: app/actions/channels-actions.c:96
-#, fuzzy
 msgid "Lower Channel to _Bottom"
-msgstr "Kanaal onderaan"
+msgstr "Kanaal _onderaan"
 
 #: app/actions/channels-actions.c:97
-#, fuzzy
 msgid "Lower channel to bottom"
-msgstr "Kanaal onderaan"
+msgstr "Kanaal onderaan zetten"
 
 #: app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "/Kanaal naar selectie"
+msgstr "Kanaal naar sele_ctie"
 
 #: app/actions/channels-actions.c:106
-#, fuzzy
 msgid "Channel to selection"
 msgstr "Kanaal naar selectie"
 
@@ -651,34 +632,29 @@ msgid "Edit color"
 msgstr "Kleur bewerken"
 
 #: app/actions/colormap-editor-actions.c:56
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "/Kleur toevoegen uit VG"
+msgstr "Kleur _toevoegen uit VG"
 
 #: app/actions/colormap-editor-actions.c:57
-#, fuzzy
 msgid "Add color from FG"
-msgstr "/Kleur toevoegen uit VG"
+msgstr "Kleur toevoegen uit VG"
 
 #: app/actions/colormap-editor-actions.c:62
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "/Kleur toevoegen uit AG"
+msgstr "Kleur _toevoegen uit AG"
 
 #: app/actions/colormap-editor-actions.c:63
-#, fuzzy
 msgid "Add color from BG"
-msgstr "/Kleur toevoegen uit AG"
+msgstr "Kleur toevoegen uit AG"
 
 #: app/actions/colormap-editor-commands.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Kleur paletingang bewerken"
+msgstr "Kleur-paletingang #%d bewerken"
 
 #: app/actions/colormap-editor-commands.c:76
-#, fuzzy
 msgid "Edit Colormap Entry"
-msgstr "Kleur paletingang bewerken"
+msgstr "Kleur-paletingang bewerken"
 
 #: app/actions/context-actions.c:46
 msgid "_Context"
@@ -741,6 +717,7 @@ msgstr "S_paken"
 msgid "_Hardness"
 msgstr "_Hardheid"
 
+# aspect/gedeelte/verhouding
 #: app/actions/context-actions.c:61
 #, fuzzy
 msgid "_Aspect"
@@ -754,6 +731,7 @@ msgstr "Hoe_k"
 msgid "_Default Colors"
 msgstr "_Standaardkleuren"
 
+# verwisselen/wisselen
 #: app/actions/context-actions.c:70
 msgid "S_wap Colors"
 msgstr "Kleuren _wisselen"
@@ -2511,75 +2489,60 @@ msgid "Delete pattern"
 msgstr "/Patroon verwijderen..."
 
 #: app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "/Patronen vernieuwen"
+msgstr "Patronen _vernieuwen"
 
 #: app/actions/patterns-actions.c:66
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "/Patronen vernieuwen"
+msgstr "Patronen vernieuwen"
 
-# Menu does not work
 #: app/actions/patterns-actions.c:74
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/Patroon bewerken..."
+msgstr "Patroon be_werken..."
 
-# Menu does not work
 #: app/actions/patterns-actions.c:75
-#, fuzzy
 msgid "Edit pattern"
-msgstr "/Patroon bewerken..."
+msgstr "Patroon bewerken..."
 
 #: app/actions/plug-in-actions.c:62
-#, fuzzy
 msgid "Filte_rs"
-msgstr "/Filters"
+msgstr "Filte_rs"
 
 #: app/actions/plug-in-actions.c:63
-#, fuzzy
 msgid "_Blur"
-msgstr "Vervagen"
+msgstr "_Vervagen"
 
 #: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
-msgstr ""
+msgstr "_Projecteren"
 
 #: app/actions/plug-in-actions.c:66
-#, fuzzy
 msgid "_Noise"
-msgstr "Geen"
+msgstr "_Ruis"
 
 #: app/actions/plug-in-actions.c:67
-#, fuzzy
 msgid "Edge-De_tect"
-msgstr "/Filters/Randen"
+msgstr "R_anden"
 
 #: app/actions/plug-in-actions.c:68
-#, fuzzy
 msgid "En_hance"
-msgstr "/Filters/Versterken"
+msgstr "Ver_sterken"
 
 #: app/actions/plug-in-actions.c:69
-#, fuzzy
 msgid "_Generic"
-msgstr "Midden"
+msgstr "_Generiek"
 
 #: app/actions/plug-in-actions.c:70
-#, fuzzy
 msgid "Gla_ss Effects"
-msgstr "/Filters/Glaseffecten"
+msgstr "_Glaseffecten"
 
 #: app/actions/plug-in-actions.c:71
-#, fuzzy
 msgid "_Light Effects"
-msgstr "/Filters/Lichteffecten"
+msgstr "_Lichteffecten"
 
 #: app/actions/plug-in-actions.c:72
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filters/Vervormingen"
+msgstr "_Vervormingen"
 
 #: app/actions/plug-in-actions.c:73
 msgid "_Artistic"
@@ -2587,7 +2550,7 @@ msgstr "_Artistiek"
 
 #: app/actions/plug-in-actions.c:74
 msgid "_Map"
-msgstr ""
+msgstr "Pro_jecteren"
 
 # betere vertaling?
 #: app/actions/plug-in-actions.c:75
@@ -4448,15 +4411,14 @@ msgstr "Naar vorm (rond)"
 msgid "Shaped (dimpled)"
 msgstr "Naar vorm (putjes)"
 
+# korter: spiraal
 #: app/core/core-enums.c:379
-#, fuzzy
 msgid "Spiral (cw)"
 msgstr "Spiraalvormig (met de klok mee)"
 
 #: app/core/core-enums.c:380
-#, fuzzy
 msgid "Spiral (ccw)"
-msgstr "Spiraalvormig (met de klok mee)"
+msgstr "Spiraalvormig (tegen de klok in)"
 
 #: app/core/core-enums.c:410
 msgid "Intersections (dots)"
@@ -4464,14 +4426,13 @@ msgstr "Doorsnedes (punten)"
 
 #: app/core/core-enums.c:411
 msgid "Intersections (crosshairs)"
-msgstr "Doorsnedes (kruizen)"
+msgstr "Doorsnedes (kruisdraden)"
 
 #: app/core/core-enums.c:412
 msgid "Dashed"
 msgstr "Gestreept"
 
 #: app/core/core-enums.c:413
-#, fuzzy
 msgid "Double dashed"
 msgstr "Dubbel gestreept"
 
@@ -4556,9 +4517,11 @@ msgstr "Streep stip stip..."
 msgid "Stock ID"
 msgstr "Standaard ID"
 
+# vertalen?
+# inlijns pixbuf
 #: app/core/core-enums.c:605
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Inline pixbuf"
 
 #: app/core/core-enums.c:606
 msgid "Image file"
@@ -5260,7 +5223,7 @@ msgid "Render Stroke"
 msgstr "Lijn renderen"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:928 app/tools/gimpfliptool.c:82
 msgid "Flip"
 msgstr "Omkeren"
 
@@ -6201,7 +6164,7 @@ msgstr "_Sjabloon:"
 
 #: app/dialogs/image-new-dialog.c:265
 msgid "Confirm Image Size"
-msgstr "Bevestig afbeeldingsgrootte"
+msgstr "Afbeeldingsgrootte bevestigen"
 
 #: app/dialogs/image-new-dialog.c:282 app/dialogs/image-scale-dialog.c:193
 #, c-format
@@ -6213,13 +6176,12 @@ msgstr "U probeert een afbeelding aan te maken met grootte %s."
 msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr ""
+msgstr "Een afbeelding met de gekozen afmetingen zal meer geheugen nodig hebben dan momenteel als \"Maximale afbeeldingsgrootte\" is geconfigureerd in het dialoogvenster Voorkeuren (momenteel %s)."
 
 #  Scaling
 #: app/dialogs/image-scale-dialog.c:164
-#, fuzzy
 msgid "Confirm Scaling"
-msgstr "Schalen"
+msgstr "Schalen bevestigen"
 
 #: app/dialogs/image-scale-dialog.c:199
 #, c-format
@@ -6326,7 +6288,6 @@ msgstr "Afbeeldingsinformatie"
 #  add the information fields
 #. add the information fields
 #: app/dialogs/info-window.c:294
-#, fuzzy
 msgid "Pixel dimensions:"
 msgstr "Pixeldimensies:"
 
@@ -6348,22 +6309,18 @@ msgid "Number of layers:"
 msgstr "Aantal lagen:"
 
 #: app/dialogs/info-window.c:304
-#, fuzzy
 msgid "Size in memory:"
 msgstr "Grootte in geheugen:"
 
 #: app/dialogs/info-window.c:306
-#, fuzzy
 msgid "Display type:"
 msgstr "Weergavetype:"
 
 #: app/dialogs/info-window.c:308
-#, fuzzy
 msgid "Visual class:"
 msgstr "Beeldklasse"
 
 #: app/dialogs/info-window.c:310
-#, fuzzy
 msgid "Visual depth:"
 msgstr "Beelddiepte:"
 
@@ -6536,15 +6493,13 @@ msgstr "Y:"
 
 #  The by half height and half width option
 #: app/dialogs/offset-dialog.c:197
-#, fuzzy
 msgid "Offset by  x/_2, y/2"
-msgstr "Verspringen met (x/2),(y/2)"
+msgstr "Verschuiven met x/_2, y/2"
 
 #. The edge behaviour frame
 #: app/dialogs/offset-dialog.c:206
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Gedrag dialoogvensters"
+msgstr "Randgedrag"
 
 #: app/dialogs/offset-dialog.c:210
 #, fuzzy
@@ -6552,14 +6507,12 @@ msgid "_Wrap around"
 msgstr "Achtergrond"
 
 #: app/dialogs/offset-dialog.c:213
-#, fuzzy
 msgid "Fill with _background color"
-msgstr "Achtergrondkleur bewerken"
+msgstr "Vullen met _achtergrondkleur"
 
 #: app/dialogs/offset-dialog.c:216
-#, fuzzy
 msgid "Make _transparent"
-msgstr "Transparant"
+msgstr "_Transparant maken"
 
 #: app/dialogs/palette-import-dialog.c:171
 msgid "Import Palette"
@@ -6571,7 +6524,7 @@ msgstr "Nieuw palet importeren"
 
 #: app/dialogs/palette-import-dialog.c:179
 msgid "_Import"
-msgstr "Importeren"
+msgstr "_Importeren"
 
 #. The "Source" frame
 #: app/dialogs/palette-import-dialog.c:208
@@ -6580,12 +6533,11 @@ msgstr "Bron selecteren"
 
 #: app/dialogs/palette-import-dialog.c:231
 msgid "I_mage"
-msgstr "Afbeelding"
+msgstr "_Afbeelding"
 
 #: app/dialogs/palette-import-dialog.c:246
-#, fuzzy
 msgid "Palette _file"
-msgstr "Paletnaam:"
+msgstr "Palet_bestand"
 
 #: app/dialogs/palette-import-dialog.c:273
 #, fuzzy
@@ -6598,18 +6550,16 @@ msgid "Import Options"
 msgstr "Importopties"
 
 #: app/dialogs/palette-import-dialog.c:317
-#, fuzzy
 msgid "New import"
 msgstr "Nieuw importeren"
 
 #: app/dialogs/palette-import-dialog.c:319
 msgid "Palette _Name:"
-msgstr "Paletnaam:"
+msgstr "Palet_naam:"
 
 #: app/dialogs/palette-import-dialog.c:325
-#, fuzzy
 msgid "N_umber of colors:"
-msgstr "Aantal kleuren:"
+msgstr "_Aantal kleuren:"
 
 #: app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
@@ -6628,10 +6578,10 @@ msgstr "Vooruitblik"
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "U moet de GIMP herstarten om de volgende veranderingen door te voeren:"
 
+# instellen
 #: app/dialogs/preferences-dialog.c:497
-#, fuzzy
 msgid "Configure Keyboard Shortcuts"
-msgstr "Sneltoetsen"
+msgstr "Sneltoetsen configureren"
 
 #: app/dialogs/preferences-dialog.c:566
 msgid ""
@@ -6652,9 +6602,8 @@ msgid ""
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1053
-#, fuzzy
 msgid "Show _menubar"
-msgstr "Menubalk tonen"
+msgstr "_Menubalk tonen"
 
 #: app/dialogs/preferences-dialog.c:1056
 msgid "Show _rulers"
@@ -6748,9 +6697,11 @@ msgstr "Navigatievooruitblikgrootte:"
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
+# menu-toegangstoetsen tonen
+# (dit zijn de onderstreepte letters?)
 #: app/dialogs/preferences-dialog.c:1359
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "Menu-sneltoetsen tonen (combinatie-toetsen)"
 
 #: app/dialogs/preferences-dialog.c:1362
 #, fuzzy
@@ -6813,7 +6764,6 @@ msgid "Help Browser"
 msgstr "Hulpbrowser"
 
 #: app/dialogs/preferences-dialog.c:1531
-#, fuzzy
 msgid "H_elp browser to use:"
 msgstr "Te gebruiken hulpbrowser:"
 
@@ -6823,14 +6773,12 @@ msgid "Web Browser"
 msgstr "Webbrowser"
 
 #: app/dialogs/preferences-dialog.c:1540
-#, fuzzy
 msgid "Select web browser"
 msgstr "Webbrowser selecteren"
 
 #: app/dialogs/preferences-dialog.c:1543
-#, fuzzy
 msgid "_Web browser to use:"
-msgstr "Te gebruiken webbrowser:"
+msgstr "Te gebruiken _webbrowser:"
 
 #  Snapping Distance
 #. Snapping Distance
@@ -6839,9 +6787,8 @@ msgid "Guide and Grid Snapping"
 msgstr "Magnetische hulplijnen en raster"
 
 #: app/dialogs/preferences-dialog.c:1573
-#, fuzzy
 msgid "_Snap distance:"
-msgstr "Magnetische afstand:"
+msgstr "_Magnetische afstand:"
 
 #  Contiguous Regions
 #. Contiguous Regions
@@ -6850,9 +6797,8 @@ msgid "Finding Contiguous Regions"
 msgstr "Aaneengesloten gebieden vinden"
 
 #: app/dialogs/preferences-dialog.c:1582
-#, fuzzy
 msgid "Default _threshold:"
-msgstr "Standaard drempel:"
+msgstr "Standaard drempelwaarde:"
 
 #  Scaling
 #. Scaling
@@ -6871,14 +6817,12 @@ msgid "Paint Options Shared Between Tools"
 msgstr "Schilderopties gedeeld tussen gereedschappen"
 
 #: app/dialogs/preferences-dialog.c:1607
-#, fuzzy
 msgid "Move Tool"
-msgstr "Verplaats: "
+msgstr "Verplaatsing"
 
 #: app/dialogs/preferences-dialog.c:1611
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "Enkel huidige laag"
+msgstr "Huidige laag of pad wijzigen"
 
 #: app/dialogs/preferences-dialog.c:1624 app/dialogs/preferences-dialog.c:1627
 msgid "Toolbox"
@@ -6897,28 +6841,24 @@ msgid "Show _foreground & background color"
 msgstr "_Voor- en achtergrondkleur tonen"
 
 #: app/dialogs/preferences-dialog.c:1642
-#, fuzzy
 msgid "Show active _brush, pattern & gradient"
-msgstr "/Dialogen/Nieuw dok aanmaken/Penselen, Patronen & Verlopen"
+msgstr "Actieve Penselen, Patronen & Verlopen tonen"
 
 #: app/dialogs/preferences-dialog.c:1646
-#, fuzzy
 msgid "Show active _image"
-msgstr "Afbeelding opslaan"
+msgstr "_Actieve afbeelding tonen"
 
 #: app/dialogs/preferences-dialog.c:1656 app/dialogs/preferences-dialog.c:1659
 msgid "Image Windows"
 msgstr "Afbeeldingsvensters"
 
 #: app/dialogs/preferences-dialog.c:1671
-#, fuzzy
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Gebruik standaard \"stip voor stip\""
+msgstr "Standaard \"stip voor stip\" gebruiken"
 
 #: app/dialogs/preferences-dialog.c:1677
-#, fuzzy
 msgid "Marching _ants speed:"
-msgstr "Snelheid marcherende mieren:"
+msgstr "Snelheid _marcherende mieren:"
 
 #. Zoom & Resize Behavior
 #: app/dialogs/preferences-dialog.c:1681
@@ -6926,24 +6866,20 @@ msgid "Zoom & Resize Behavior"
 msgstr "Gedrag zoomen en schalen"
 
 #: app/dialogs/preferences-dialog.c:1685
-#, fuzzy
 msgid "Resize window on _zoom"
-msgstr "Pas venstergrootte aan bij in- en uitzoomen"
+msgstr "Venstergrootte aanpassen bij _zoomen"
 
 #: app/dialogs/preferences-dialog.c:1688
-#, fuzzy
 msgid "Resize window on image _size change"
-msgstr "Pas venstergrootte aan bij vergroten/verkleinen"
+msgstr "_Venstergrootte aanpassen bij vergroten/verkleinen afbeelding"
 
 #: app/dialogs/preferences-dialog.c:1694
-#, fuzzy
 msgid "Fit to window"
-msgstr "Pas in venster"
+msgstr "In venster passen"
 
 #: app/dialogs/preferences-dialog.c:1696
-#, fuzzy
 msgid "Initial zoom _ratio:"
-msgstr "Aanvankelijke zoomverhouding:"
+msgstr "_Aanvankelijke zoomverhouding:"
 
 #. Mouse Cursors
 #: app/dialogs/preferences-dialog.c:1700
@@ -6963,9 +6899,8 @@ msgid "Cursor _mode:"
 msgstr "Cursor_modus:"
 
 #: app/dialogs/preferences-dialog.c:1716
-#, fuzzy
 msgid "Cursor re_ndering:"
-msgstr "Cursormodus:"
+msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1728
 msgid "Image Window Appearance"
@@ -7000,13 +6935,12 @@ msgid "Show zoom ratio"
 msgstr "Zoomverhouding weergeven"
 
 #: app/dialogs/preferences-dialog.c:1779
-#, fuzzy
 msgid "Show image size"
-msgstr "/Afbeeldingsmenu tonen"
+msgstr "Afbeeldingsgrootte tonen"
 
 #: app/dialogs/preferences-dialog.c:1780
 msgid "Show memory usage"
-msgstr "Laat geheugengebruik zien"
+msgstr "Geheugenverbruik tonen"
 
 #: app/dialogs/preferences-dialog.c:1791
 msgid "Image Title Format"
@@ -7021,32 +6955,29 @@ msgid "Display"
 msgstr "Weergave"
 
 #: app/dialogs/preferences-dialog.c:1893
-#, fuzzy
 msgid "Transparency _type:"
-msgstr "Transparantietype:"
+msgstr "_Transparantietype:"
 
 #: app/dialogs/preferences-dialog.c:1896
-#, fuzzy
 msgid "Check _size:"
-msgstr "Vakgrootte:"
+msgstr "Vak_grootte:"
 
 #: app/dialogs/preferences-dialog.c:1899
 msgid "Get Monitor Resolution"
 msgstr "Beeldscherminformatie"
 
 #: app/dialogs/preferences-dialog.c:1941
-#, fuzzy, c-format
+#, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
-msgstr "Vraag resolutie aan het venstersysteem (momenteel %d × %d dpi)"
+msgstr "Resolutie aan het venstersysteem vragen (momenteel %d × %d dpi)"
 
 #: app/dialogs/preferences-dialog.c:1964
 msgid "_Manually"
-msgstr "Handmatig"
+msgstr "_Handmatig"
 
 #: app/dialogs/preferences-dialog.c:1979
-#, fuzzy
 msgid "C_alibrate..."
-msgstr "Kalibreren"
+msgstr "_Kalibreren..."
 
 #: app/dialogs/preferences-dialog.c:1999 app/dialogs/preferences-dialog.c:2002
 msgid "Input Devices"
@@ -7059,19 +6990,16 @@ msgid "Extended Input Devices"
 msgstr "Uitgebreide invoerapparaten"
 
 #: app/dialogs/preferences-dialog.c:2013
-#, fuzzy
 msgid "Configure E_xtended Input Devices..."
-msgstr "Uitgebreide invoerapparaten configureren"
+msgstr "_Uitgebreide invoerapparaten configureren..."
 
 #: app/dialogs/preferences-dialog.c:2020
-#, fuzzy
 msgid "_Save input device settings on exit"
-msgstr "Sla apparaatinstellingen op bij verlaten"
+msgstr "_Apparaatinstellingen opslaan bij verlaten..."
 
 #: app/dialogs/preferences-dialog.c:2024
-#, fuzzy
 msgid "Save Input Device Settings _Now"
-msgstr "Apparaatinstellingen nu opslaan"
+msgstr "Apparaatinstellingen _nu opslaan"
 
 #: app/dialogs/preferences-dialog.c:2031
 #, fuzzy
@@ -7091,9 +7019,8 @@ msgid "Window Management"
 msgstr "Vensterbeheer"
 
 #: app/dialogs/preferences-dialog.c:2099
-#, fuzzy
 msgid "Window Manager Hints"
-msgstr "Vensterbeheer"
+msgstr "Vensterbeheer hints"
 
 #: app/dialogs/preferences-dialog.c:2105
 #, fuzzy
@@ -7120,19 +7047,16 @@ msgid "Window Positions"
 msgstr "Vensterposities"
 
 #: app/dialogs/preferences-dialog.c:2123
-#, fuzzy
 msgid "_Save window positions on exit"
-msgstr "Sla vensterposities op bij verlaten"
+msgstr "Vensterposities op_slaan bij verlaten"
 
 #: app/dialogs/preferences-dialog.c:2127
-#, fuzzy
 msgid "Save Window Positions _Now"
-msgstr "Vensterposities nu opslaan"
+msgstr "Vensterposities _nu opslaan"
 
 #: app/dialogs/preferences-dialog.c:2134
-#, fuzzy
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "Herstel opgeslagen vensterposities bij opstarten"
+msgstr "_Opgeslagen vensterposities herstellen bij opstarten"
 
 #: app/dialogs/preferences-dialog.c:2149 app/dialogs/preferences-dialog.c:2152
 #: app/dialogs/preferences-dialog.c:2300
@@ -7144,14 +7068,12 @@ msgid "Resource Consumption"
 msgstr "Bronverbruik"
 
 #: app/dialogs/preferences-dialog.c:2170
-#, fuzzy
 msgid "Minimal number of _undo levels:"
-msgstr "Min. aantal niveaus \"Ongedaan maken\":"
+msgstr "_Min. aantal niveaus \"Ongedaan maken\":"
 
 #: app/dialogs/preferences-dialog.c:2173
-#, fuzzy
 msgid "Maximum undo _memory:"
-msgstr "Max. geheugenruimte 'Ongedaan maken':"
+msgstr "Max. _geheugenruimte \"Ongedaan maken\":"
 
 #: app/dialogs/preferences-dialog.c:2176
 #, fuzzy
@@ -7170,9 +7092,8 @@ msgstr "Aantal processoren gebruiken:"
 
 #. Image Thumbnails
 #: app/dialogs/preferences-dialog.c:2189
-#, fuzzy
 msgid "Image Thumbnails"
-msgstr "Geen miniaturen"
+msgstr "Iniaturen"
 
 #: app/dialogs/preferences-dialog.c:2194
 msgid "Size of _thumbnails:"
@@ -7201,13 +7122,11 @@ msgid "Temp folder:"
 msgstr "Tijdelijke map:"
 
 #: app/dialogs/preferences-dialog.c:2234
-#, fuzzy
 msgid "Select Temp Folder"
-msgstr "Themamappen selecteren"
+msgstr "Tijdelijke map selecteren"
 
 #: app/dialogs/preferences-dialog.c:2235
 #: app/dialogs/user-install-dialog.c:1403
-#, fuzzy
 msgid "Swap folder:"
 msgstr "Wisselmap:"
 
@@ -7304,9 +7223,8 @@ msgid "Select Theme Folders"
 msgstr "Themamappen selecteren"
 
 #: app/dialogs/print-size-dialog.c:129
-#, fuzzy
 msgid "Print Size"
-msgstr "Afdrukgrootte:"
+msgstr "Afdrukgrootte"
 
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
@@ -7322,15 +7240,13 @@ msgstr "_Hoogte: "
 #. the resolution labels
 #: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
 #: app/widgets/gimptemplateeditor.c:363
-#, fuzzy
 msgid "_X resolution:"
-msgstr "Resolutie:"
+msgstr "Resolutie _X:"
 
 #: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
 #: app/widgets/gimptemplateeditor.c:370
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "Resolutie:"
+msgstr "Resolutie _Y:"
 
 #: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
 #: app/widgets/gimptemplateeditor.c:383
@@ -7746,7 +7662,6 @@ msgid "Migrate User Settings"
 msgstr "Gebruikersinstellingen overzetten"
 
 #: app/dialogs/user-install-dialog.c:811
-#, fuzzy
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten."
 
@@ -7759,9 +7674,8 @@ msgid "_Migrate GIMP 2.0 user settings"
 msgstr "GIMP 2.0 _gebruikersinstellingen overzetten"
 
 #: app/dialogs/user-install-dialog.c:823
-#, fuzzy
 msgid "Do a _fresh user installation"
-msgstr "GIMP-gebruikersinstallatie"
+msgstr "Een _verse gebruikersinstallatie uitvoeren"
 
 #: app/dialogs/user-install-dialog.c:851
 msgid "Personal GIMP Folder"
@@ -7838,9 +7752,8 @@ msgstr ""
 "rekening met geheugen dat door andere processen wordt gebruikt."
 
 #: app/dialogs/user-install-dialog.c:1375
-#, fuzzy
 msgid "Tile cache size:"
-msgstr "Groote van de tegelcache"
+msgstr "Grootte van Tegelbuffer"
 
 #: app/dialogs/user-install-dialog.c:1387
 msgid ""
@@ -7856,7 +7769,6 @@ msgstr ""
 "kunnen gebruiken (\"/tmp\" of \"/var/tmp\")."
 
 #: app/dialogs/user-install-dialog.c:1398
-#, fuzzy
 msgid "Select swap dir"
 msgstr "Wisselmap selecteren"
 
@@ -7865,9 +7777,8 @@ msgid "Export Path to SVG"
 msgstr "Pad naar SVG exporteren"
 
 #: app/dialogs/vectors-export-dialog.c:78
-#, fuzzy
 msgid "Export the active path"
-msgstr "Huidig pad verplaatsen"
+msgstr "Actieve pad exporteren"
 
 #: app/dialogs/vectors-export-dialog.c:79
 #, fuzzy
@@ -7892,7 +7803,7 @@ msgstr "_Geïmporteerde paden samenvoegen"
 
 #: app/dialogs/vectors-import-dialog.c:109
 msgid "_Scale imported paths to fit image"
-msgstr ""
+msgstr "Geïmporteerde paden _schalen naar afbeeldinging"
 
 #  The name entry hbox, label and entry
 #: app/dialogs/vectors-options-dialog.c:113
@@ -7901,18 +7812,16 @@ msgstr "Padnaam:"
 
 # werkbalkpictogram
 #: app/display/display-enums.c:24
-#, fuzzy
 msgid "Tool icon"
 msgstr "Gereedschapspictogram"
 
 #: app/display/display-enums.c:25
-#, fuzzy
 msgid "Tool icon with crosshair"
-msgstr "Gereedschapspictogram met kruis"
+msgstr "Gereedschapspictogram met kruisdraad"
 
 #: app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr "Alleen kruis"
+msgstr "Alleen kruisdraad"
 
 #: app/display/display-enums.c:55
 msgid "From theme"
@@ -8654,7 +8563,7 @@ msgstr "Verplaatsen"
 # klad/omtrek
 #: app/tools/tools-enums.c:174
 msgid "Outline"
-msgstr ""
+msgstr "Omtrek"
 
 #: app/tools/tools-enums.c:177
 #, fuzzy
@@ -9181,11 +9090,11 @@ msgstr "Betreft:"
 msgid "Flip Type  %s"
 msgstr "Spiegelrichting %s"
 
-#: app/tools/gimpfliptool.c:85
+#: app/tools/gimpfliptool.c:83
 msgid "Flip the layer or selection"
 msgstr "Spiegel de huidige laag of selectie"
 
-#: app/tools/gimpfliptool.c:86
+#: app/tools/gimpfliptool.c:84
 #, fuzzy
 msgid "_Flip"
 msgstr "Omkeren"
@@ -9949,13 +9858,9 @@ msgstr "Behoud breedte  %s"
 msgid "Keep aspect  %s"
 msgstr "Behoud hoogte %s"
 
-#: app/tools/gimptransformtool.c:251
+#: app/tools/gimptransformtool.c:253
 msgid "Transforming..."
 msgstr "Transformatie (bezig)"
-
-#: app/tools/gimptransformtool.c:357
-msgid "Transformations do not work on layers that contain layer masks."
-msgstr "Transformaties werken niet op lagen die laagmaskers bevatten."
 
 # veelhoeken
 #: app/tools/gimpvectoroptions.c:113
@@ -10210,7 +10115,7 @@ msgstr "_Sneltoetsen opnieuw toewijzen"
 #: app/widgets/gimpactionview.c:536
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
+msgstr "Sneltoets \"%s\" is al in gebruik bij \"%s\" in de groep \"%s\"."
 
 #: app/widgets/gimpactionview.c:540
 #, c-format
@@ -11173,11 +11078,11 @@ msgstr "Opgeslagen opties verwijderen..."
 
 #: app/widgets/gimpuimanager.c:495
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "Uw installatie van GIMP is incompleet"
 
 #: app/widgets/gimpuimanager.c:497
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "Controleer dat de menu XML-bestanden correct zijn geïnstalleerd."
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -11188,10 +11093,10 @@ msgstr "[ Basisafbeelding ]"
 msgid "Reorder path"
 msgstr "Pad herschikken"
 
+# pad legen/leeg pad
 #: app/widgets/gimpvectorstreeview.c:289
-#, fuzzy
 msgid "Empty Path"
-msgstr "Nieuw pad"
+msgstr "Leeg pad"
 
 #: app/widgets/gimpviewablebox.c:75
 msgid "Open the brush selection dialog"
@@ -11205,6 +11110,7 @@ msgstr "Open het patroonkeuzedialoogvenster"
 msgid "Open the gradient selection dialog"
 msgstr "Open het verloopkeuzedialoogvenster"
 
+# omgekeerd/omgedraaid/terugdraaien/teruggedraaid
 #: app/widgets/gimpviewablebox.c:167
 msgid "Reverse"
 msgstr "Terugdraaien"
@@ -11342,7 +11248,6 @@ msgid "Landscape"
 msgstr "Liggend"
 
 #: app/widgets/widgets-enums.c:113
-#, fuzzy
 msgid "Pixel values"
 msgstr "Pixelwaarden"
 
@@ -11356,20 +11261,18 @@ msgstr "CMYK"
 
 #: app/widgets/widgets-enums.c:171
 msgid "Black & white"
-msgstr ""
+msgstr "Zwartwit"
 
 #: app/widgets/widgets-enums.c:172
 msgid "Fancy"
-msgstr ""
+msgstr "Chique"
 
 #: app/widgets/widgets-enums.c:199
-#, fuzzy
 msgid "GIMP help browser"
-msgstr "Hulpbrowser"
+msgstr "Hulpbrowser voor GIMP"
 
 #  Web Browser
 #: app/widgets/widgets-enums.c:200
-#, fuzzy
 msgid "Web browser"
 msgstr "Webbrowser"
 
@@ -11382,7 +11285,6 @@ msgid "Icon"
 msgstr "Pictogram"
 
 #: app/widgets/widgets-enums.c:262
-#, fuzzy
 msgid "Current status"
 msgstr "Huidige status"
 
@@ -11391,48 +11293,41 @@ msgid "Description"
 msgstr "Omschrijving"
 
 #: app/widgets/widgets-enums.c:265
-#, fuzzy
 msgid "Icon & text"
 msgstr "Pictogram & tekst"
 
 #: app/widgets/widgets-enums.c:266
-#, fuzzy
 msgid "Icon & desc"
 msgstr "Pictogram & omschrijving"
 
 #: app/widgets/widgets-enums.c:267
-#, fuzzy
 msgid "Status & text"
-msgstr "Status en tekst"
+msgstr "Status & tekst"
 
 #: app/widgets/widgets-enums.c:268
-#, fuzzy
 msgid "Status & desc"
-msgstr "Status en omschrijving"
+msgstr "Status & omschrijving"
 
 #: app/widgets/widgets-enums.c:295
-#, fuzzy
 msgid "View as list"
-msgstr "Als lijst bekijken"
+msgstr "Als lijst weergeven"
 
 #: app/widgets/widgets-enums.c:296
-#, fuzzy
 msgid "View as grid"
-msgstr "Als raster bekijken"
+msgstr "Als raster weergeven"
 
 #: app/widgets/widgets-enums.c:324
-#, fuzzy
 msgid "Normal window"
 msgstr "Normaal venster"
 
 #: app/widgets/widgets-enums.c:325
-#, fuzzy
 msgid "Utility window"
 msgstr "Werktuigvenster"
 
+# zichtbaar houden/bovenaan houden
 #: app/widgets/widgets-enums.c:326
 msgid "Keep above"
-msgstr ""
+msgstr "Zichtbaar houden"
 
 #: app/xcf/xcf-load.c:297
 msgid ""
@@ -11467,7 +11362,7 @@ msgstr "Kan niet zoeken in XCF-bestand: %s"
 
 #: app/xcf/xcf.c:86 app/xcf/xcf.c:143
 msgid "GIMP XCF image"
-msgstr "GIMP XCF afbeelding"
+msgstr "GIMP XCF-afbeelding"
 
 #: app/xcf/xcf.c:282
 #, c-format
@@ -11481,6 +11376,9 @@ msgstr "Afbeeldingen of foto's aanmaken en bewerken"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Afbeelding-editor"
+
+#~ msgid "Transformations do not work on layers that contain layer masks."
+#~ msgstr "Transformaties werken niet op lagen die laagmaskers bevatten."
 
 #~ msgid "Resize Error: Both width and height must be greater than zero."
 #~ msgstr ""
