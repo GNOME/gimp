@@ -386,21 +386,24 @@ plasma (GimpDrawable *drawable,
 
   pft = init_plasma (drawable, preview_mode, gr);
 
-  /*
-   * This first time only puts in the seed pixels - one in each
-   * corner, and one in the center of each edge, plus one in the
-   * center of the image.
-   */
-
-  do_plasma (pft, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0, gr);
-
-  /*
-   * Now we recurse through the images, going further each time.
-   */
-  depth = 1;
-  while (!do_plasma (pft, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, gr))
+  if (ix1 != ix2 && iy1 != iy2)
     {
-      depth++;
+      /*
+       * This first time only puts in the seed pixels - one in each
+       * corner, and one in the center of each edge, plus one in the
+       * center of the image.
+       */
+
+      do_plasma (pft, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0, gr);
+
+      /*
+       * Now we recurse through the images, going further each time.
+       */
+      depth = 1;
+      while (!do_plasma (pft, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, gr))
+        {
+          depth++;
+        }
     }
 
   end_plasma (drawable, pft, gr);
@@ -562,6 +565,9 @@ do_plasma (GimpPixelFetcher *pft,
 
   static gint count = 0;
 
+  xm = (x1 + x2) / 2;
+  ym = (y1 + y2) / 2;
+
   /* Initial pass through - no averaging. */
 
   if (depth == -1)
@@ -575,15 +581,15 @@ do_plasma (GimpPixelFetcher *pft,
       random_rgb (gr, br);
       put_pixel (pft, x2, y2, br);
       random_rgb (gr, mm);
-      put_pixel (pft, (x1 + x2) / 2, (y1 + y2) / 2, mm);
+      put_pixel (pft, xm, ym, mm);
       random_rgb (gr, ml);
-      put_pixel (pft, x1, (y1 + y2) / 2, ml);
+      put_pixel (pft, x1, ym, ml);
       random_rgb (gr, mr);
-      put_pixel (pft, x2, (y1 + y2) / 2, mr);
+      put_pixel (pft, x2, ym, mr);
       random_rgb (gr, mt);
-      put_pixel (pft, (x1 + x2) / 2, y1, mt);
+      put_pixel (pft, xm, y1, mt);
       random_rgb (gr, mb);
-      put_pixel (pft, (x1 + x2) / 2, y2, mb);
+      put_pixel (pft, xm, y2, mb);
 
       return FALSE;
     }
@@ -595,7 +601,6 @@ do_plasma (GimpPixelFetcher *pft,
   if (depth == 0)
     {
       gint ran;
-      gint xave, yave;
 
       if (x1 == x2 && y1 == y2)
         {
@@ -609,33 +614,30 @@ do_plasma (GimpPixelFetcher *pft,
 
       ran = (gint) ((256.0 / (2.0 * scale_depth)) * pvals.turbulence);
 
-      xave = (x1 + x2) / 2;
-      yave = (y1 + y2) / 2;
-
-      if (xave != x1 || xave != x2)
+      if (xm != x1 || xm != x2)
         {
           /* Left. */
           average_pixel (ml, tl, bl, bpp);
           add_random (gr, ml, ran);
-          put_pixel (pft, x1, yave, ml);
+          put_pixel (pft, x1, ym, ml);
 
           if (x1 != x2)
             {
               /* Right. */
               average_pixel (mr, tr, br, bpp);
               add_random (gr, mr, ran);
-              put_pixel (pft, x2, yave, mr);
+              put_pixel (pft, x2, ym, mr);
             }
         }
 
-      if (yave != y1 || yave != y2)
+      if (ym != y1 || ym != y2)
         {
-          if (x1 != xave || yave != y2)
+          if (x1 != xm || ym != y2)
             {
               /* Bottom. */
               average_pixel (mb, bl, br, bpp);
               add_random (gr, mb, ran);
-              put_pixel (pft, xave, y2, mb);
+              put_pixel (pft, xm, y2, mb);
             }
 
           if (y1 != y2)
@@ -643,7 +645,7 @@ do_plasma (GimpPixelFetcher *pft,
               /* Top. */
               average_pixel (mt, tl, tr, bpp);
               add_random (gr, mt, ran);
-              put_pixel (pft, xave, y1, mt);
+              put_pixel (pft, xm, y1, mt);
             }
         }
 
@@ -655,7 +657,7 @@ do_plasma (GimpPixelFetcher *pft,
           average_pixel (mm, mm, tmp, bpp);
 
           add_random (gr, mm, ran);
-          put_pixel (pft, xave, yave, mm);
+          put_pixel (pft, xm, ym, mm);
         }
 
       count++;
@@ -668,16 +670,21 @@ do_plasma (GimpPixelFetcher *pft,
       return x2 - x1 < 3 && y2 - y1 < 3;
     }
 
-  xm = (x1 + x2) >> 1;
-  ym = (y1 + y2) >> 1;
+  if (x1 < x2 || y1 < y2)
+    {
+      /* Top left. */
+      do_plasma (pft, x1, y1, xm, ym, depth - 1, scale_depth + 1, gr);
+      /* Bottom left. */
+      do_plasma (pft, x1, ym, xm ,y2, depth - 1, scale_depth + 1, gr);
+      /* Top right. */
+      do_plasma (pft, xm, y1, x2 , ym, depth - 1, scale_depth + 1, gr);
+      /* Bottom right. */
+      return do_plasma (pft, xm, ym, x2, y2, depth - 1, scale_depth + 1, gr);
+    }
+  else
+    {
+      return TRUE;
+    }
 
-  /* Top left. */
-  do_plasma (pft, x1, y1, xm, ym, depth - 1, scale_depth + 1, gr);
-  /* Bottom left. */
-  do_plasma (pft, x1, ym, xm ,y2, depth - 1, scale_depth + 1, gr);
-  /* Top right. */
-  do_plasma (pft, xm, y1, x2 , ym, depth - 1, scale_depth + 1, gr);
-  /* Bottom right. */
-  return do_plasma (pft, xm, ym, x2, y2, depth - 1, scale_depth + 1, gr);
 }
 
