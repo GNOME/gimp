@@ -10,6 +10,8 @@ EXTRA_DIST = \
 	coord.xpm	\
 	dimension.xpm	\
 	grid.xpm	\
+	java.xpm	\
+	link.xpm	\
 	map_info.xpm	\
 	polygon.xpm	\
 	rectangle.xpm	\

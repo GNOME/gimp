@@ -1,4 +1,4 @@
-/* max_rgb.c -- This is a plug-in for the GIMP (1.0's API)
+/* max_rgb.c -- This is a plug-in for the GIMP
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
  * Time-stamp: <2000-02-08 16:26:24 yasuhiro>
  * Version: 0.35
@@ -41,7 +41,6 @@
 /* Replace them with the right ones */
 #define	PLUG_IN_NAME	     "plug_in_max_rgb"
 #define SHORT_NAME	     "max_rgb"
-#define PROGRESS_UPDATE_NUM  100
 
 static void	query	(void);
 static void	run	(gchar      *name,
@@ -76,7 +75,7 @@ enum
 
 typedef struct
 {
-  gint max_p;  /* gint, gdouble, and so on */
+  gint max_p;
 } ValueType;
 
 typedef struct 
@@ -212,7 +211,7 @@ max_rgb_func (guchar *src, guchar *dest, gint bpp, gpointer data)
   dest[1] = (max_ch & (1 << 1)) ? max : 0;
   dest[2] = (max_ch & (1 << 2)) ? max : 0;
   if (param->has_alpha)
-    dest[3] = src[3];
+    dest[3] = *src;
 }
 
 static void
@@ -223,31 +222,14 @@ main_function (GimpDrawable *drawable,
   
   param.init_value = (pvals.max_p > 0) ? 0 : 255;
   param.flag = (0 < pvals.max_p) ? 1 : -1;
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   if (preview_mode) 
     {
-      gint x, y;
-      gint bpp = preview->bpp;
-
-      param.has_alpha = FALSE; /* no alpha on preview */
-
-      for (y = 0; y < preview->height; y++)
-	{
-	  guchar *src = preview->cache + y * preview->rowstride;
-	  guchar *dest = preview->buffer + y * preview->rowstride;
-
-	  for (x = 0; x < preview->width; x++)
-	    {
-	      max_rgb_func (src, dest, bpp, &param);
-	      dest += bpp;
-	      src += bpp;
-	    }
-	}
-      gtk_widget_queue_draw (preview->widget);
+      gimp_fixme_preview_update (preview, max_rgb_func, &param);
     } 
   else 
     { /* normal mode */
-      param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
       gimp_progress_init ( _("Max RGB: Scanning..."));
 

@@ -30,8 +30,6 @@
  * Algorithm fixes, V2.0 compatibility by David Hodson  hodsond@ozemail.com.au
  */
 
-/* add any necessary includes  */
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -40,11 +38,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -69,26 +62,11 @@ typedef enum
   filter_edge_enhance
 } FilterType;
 
-/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-
-typedef struct
-{
-  gint     width;
-  gint     height;
-  gint     bpp;
-  gdouble  scale;
-  guchar  *bits;
-} mwPreview;
-
-#define PREVIEW_SIZE 100
-
 static gint   do_preview = TRUE;
-static mwPreview *thePreview;
+static GimpFixMePreview *preview;
 
 static GtkWidget * mw_preview_new   (GtkWidget    *parent,
-				     mwPreview    *mwp);
-static mwPreview * mw_preview_build (GimpDrawable *drw);
-
+				     GimpDrawable *drawable);
 
 /* function protos */
 
@@ -100,7 +78,8 @@ static void run   (gchar      *name,
 		   GimpParam **retvals);
 
 static gint pluginCore        (piArgs *argp);
-static gint pluginCoreIA      (piArgs *argp);
+static gint pluginCoreIA      (piArgs *argp, 
+			       GimpDrawable *drawable);
 
 static void nlfilt_do_preview (GtkWidget  *preview);
 
@@ -177,7 +156,7 @@ run (gchar      *name,
 
   switch (param[0].data.d_int32)
     {
-      GimpDrawable *drw;
+      GimpDrawable *drawable;
     case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* XXX: add code here for interactive running */
@@ -187,10 +166,9 @@ run (gchar      *name,
 	  args.radius = (gdouble) 0.3;
 	  args.filter = 0;
 	}
-      drw = gimp_drawable_get (args.drw);
-      thePreview = mw_preview_build (drw);
+      drawable = gimp_drawable_get (args.drw);
 
-      if (pluginCoreIA (&args) == -1)
+      if (pluginCoreIA (&args, drawable) == -1)
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -337,7 +315,7 @@ nlfilt_double_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static gint
-pluginCoreIA (piArgs *argp)
+pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
 {
   gint retval = -1; /* default to error return */
   GtkWidget *dlg;
@@ -376,7 +354,7 @@ pluginCoreIA (piArgs *argp)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = mw_preview_new (hbox, thePreview);
+  preview = mw_preview_new (hbox, drawable);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   nlfilt_do_preview (preview);
 
@@ -432,50 +410,39 @@ pluginCoreIA (piArgs *argp)
   gtk_main ();
   gdk_flush ();
 
-  if (run_flag)
-    {
-      return pluginCore (argp);
-    }
-  else
-    {
-      return retval;
-    }
+  return (run_flag) ? pluginCore (argp) : retval;
 }
 
 static void
 nlfilt_do_preview (GtkWidget *w)
 {
-  static GtkWidget *theWidget = NULL;
   piArgs *ap;
   guchar *dst, *src0, *src1, *src2;
   gint y, rowsize, filtno;
   
-  if (theWidget == NULL)
-    {
-      theWidget = w;
-    }
+  ap = g_object_get_data (G_OBJECT (preview->widget), "piArgs");
 
-  ap = g_object_get_data (G_OBJECT (theWidget), "piArgs");
-
-  rowsize = thePreview->width * thePreview->bpp;
+  rowsize = preview->width * preview->bpp;
   filtno =  nlfiltInit (ap->alpha, ap->radius, ap->filter);
 
-  src0 = thePreview->bits + thePreview->bpp;
+  src0 = preview->cache + preview->bpp;
   src1 = src0 + rowsize;
   src2 = src1 + rowsize;
   dst = g_malloc (rowsize);
 
   /* for preview, don't worry about edge effects */
-  for (y = 1; y < thePreview->height - 1; y++)
+  for (y = 1; y < preview->height - 1; y++)
     {
-      nlfiltRow (src0, src1, src2, dst + thePreview->bpp,
-                 thePreview->width - 2, thePreview->bpp, filtno);
-      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    dst + thePreview->bpp, 1, y, thePreview->width - 2);
+      nlfiltRow (src0, src1, src2, dst + preview->bpp,
+                 preview->width - 2, preview->bpp, filtno);
+      /* 
+	 We should probably fix the edges!
+      */
+      gimp_fixme_preview_do_row (preview, y, preview->width, dst);
       src0 = src1; src1 = src2; src2 += rowsize;
     }
 
-  gtk_widget_queue_draw (theWidget);
+  gtk_widget_queue_draw (preview->widget);
   g_free (dst);
 }
 
@@ -489,68 +456,9 @@ mw_preview_toggle_callback (GtkWidget *widget,
     nlfilt_do_preview (NULL);
 }
 
-static mwPreview *
-mw_preview_build_virgin (GimpDrawable *drw)
-{
-  mwPreview *mwp;
-
-  mwp = g_new (mwPreview, 1);
-
-  if (drw->width > drw->height)
-    {
-      mwp->scale  = (gdouble) drw->width / (gdouble) PREVIEW_SIZE;
-      mwp->width  = PREVIEW_SIZE;
-      mwp->height = drw->height / mwp->scale;
-    }
-  else
-    {
-      mwp->scale  = (gdouble) drw->height / (gdouble) PREVIEW_SIZE;
-      mwp->height = PREVIEW_SIZE;
-      mwp->width  = drw->width / mwp->scale;
-    }
-
-  mwp->bpp  = 3;
-  mwp->bits = NULL;
-
-  return mwp;
-}
-
-static mwPreview *
-mw_preview_build (GimpDrawable *drw)
-{
-  mwPreview *mwp;
-  gint x, y, b;
-  guchar *bc;
-  guchar *drwBits;
-  GimpPixelRgn pr;
-
-  mwp = mw_preview_build_virgin (drw);
-
-  gimp_pixel_rgn_init (&pr, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
-  drwBits = g_new (guchar, drw->width * drw->bpp);
-
-  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
-  for (y = 0; y < mwp->height; y++)
-    {
-      gimp_pixel_rgn_get_row (&pr, drwBits, 0, (int)(y*mwp->scale), drw->width);
-
-      for (x = 0; x < mwp->width; x++)
-        {
-          for (b = 0; b < mwp->bpp; b++)
-            *bc++ = *(drwBits +
-                      ((gint) (x * mwp->scale) * drw->bpp) + b % drw->bpp);
-        }
-    }
-  g_free (drwBits);
-
-  return mwp;
-}
-
 static GtkWidget *
-mw_preview_new (GtkWidget        *parent,
-                mwPreview *mwp)
+mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
 {
-  GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *pframe;
   GtkWidget *vbox;
@@ -570,11 +478,10 @@ mw_preview_new (GtkWidget        *parent,
   gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
   gtk_widget_show (pframe);
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
-  gtk_widget_show (preview);
+  
+  preview = gimp_fixme_preview_new (drawable, FALSE);
+  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
+  gtk_widget_show (preview->widget);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
@@ -585,7 +492,7 @@ mw_preview_new (GtkWidget        *parent,
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 
-  return preview;
+  return preview->widget;
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
@@ -642,11 +549,11 @@ mw_preview_new (GtkWidget        *parent,
 /* Compute the area of the intersection of a triangle */
 /* and a rectangle */
 
-gdouble triang_area(gdouble, gdouble, gdouble, gdouble, gdouble,
-                   gdouble, gdouble, gdouble, gint);
-gdouble rectang_area(gdouble, gdouble, gdouble, gdouble,
-                    gdouble, gdouble, gdouble, gdouble);
-gdouble hex_area(gdouble, gdouble, gdouble, gdouble, gdouble);
+static gdouble triang_area(gdouble, gdouble, gdouble, gdouble, gdouble,
+			   gdouble, gdouble, gdouble, gint);
+static gdouble rectang_area(gdouble, gdouble, gdouble, gdouble,
+			    gdouble, gdouble, gdouble, gdouble);
+static gdouble hex_area(gdouble, gdouble, gdouble, gdouble, gdouble);
 
 gint atfilt0(gint *p);
 gint atfilt1(gint *p);
@@ -1136,7 +1043,7 @@ atfilt5(gint *p) {
 
 /* compute the area of overlap of a hexagon diameter d, */
 /* centered at hx,hy, with a unit square of center sx,sy. */
-gdouble
+static gdouble
 hex_area(gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d) {
    gdouble hx0,hx1,hx2,hy0,hy1,hy2,hy3;
    gdouble sx0,sx1,sy0,sy1;
@@ -1163,7 +1070,7 @@ hex_area(gdouble sx, gdouble sy, gdouble hx, gdouble hy, gdouble d) {
       triang_area(sx0,sy0,sx1,sy1,hx1,hy0,hx2,hy1,SE);
 }
 
-gdouble
+static gdouble
 triang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
             gdouble ty0, gdouble tx1, gdouble ty1, gint tt) {
    gdouble a,b,c,d;
@@ -1240,7 +1147,7 @@ triang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
 }
 
 /* Compute rectangle area */
-gdouble
+static gdouble
 rectang_area(gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
              gdouble ty0, gdouble tx1, gdouble ty1) {
        /* Compute overlapping box */

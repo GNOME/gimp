@@ -34,6 +34,7 @@
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
+#include "imap_stock.h"
 #include "imap_table.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -159,6 +160,26 @@ select_email_cb(GtkWidget *widget, AreaInfoDialog_t *param)
 }
 
 static void
+append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
+	     const gchar *label_name)
+{
+   GtkWidget *hbox, *icon, *label;
+
+   hbox = gtk_hbox_new(FALSE, 1);
+   gtk_widget_show(hbox);
+
+   icon = gtk_image_new_from_stock (icon_name, GTK_ICON_SIZE_MENU);
+   gtk_container_add (GTK_CONTAINER (hbox), icon);
+   gtk_widget_show (icon);
+   
+   label = gtk_label_new_with_mnemonic(label_name);
+   gtk_container_add (GTK_CONTAINER (hbox), label);
+   gtk_widget_show (label);
+
+   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, hbox);
+}
+
+static void
 create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
    BrowseWidget_t *browse;
@@ -251,8 +272,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_table(table, 9, 0, _("ALT te_xt: (optional)"));
    dialog->comment = create_entry_in_table(table, label, 10, 0);
 
-   label = gtk_label_new_with_mnemonic(_("_Link"));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
+   append_page (notebook, table, IMAP_STOCK_LINK, _("_Link")); 
 }
 
 static void
@@ -298,8 +318,8 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->infotab = obj->class->create_info_widget(frame);
 
-   label = gtk_label_new_with_mnemonic(gettext(obj->class->name));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+   append_page (notebook, vbox, obj->class->get_stock_icon_name (),
+		gettext (obj->class->name)); 
 }
 
 static void
@@ -328,8 +348,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_table(table, 9, 0, "on_Blur (HTML 4.0):");
    dialog->blur = create_entry_in_table(table, label, 10, 0);
 
-   label = gtk_label_new_with_mnemonic(_("_JavaScript"));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+   append_page (notebook, vbox, IMAP_STOCK_JAVA, _("_JavaScript"));
 }
 
 static gboolean

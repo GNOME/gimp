@@ -127,49 +127,44 @@ enum
 
 typedef struct
 {
-  gdouble x, y, z, w;
-} vector;
-
-typedef struct
-{
   gshort  xsize, ysize;
   guchar *rgb;
 } image;
 
 typedef struct
 {
-  gshort  numcol;
-  gdouble pos[MAXCOLPERGRADIENT];
-  vector  color[MAXCOLPERGRADIENT];
+  gshort  	numcol;
+  gdouble 	pos[MAXCOLPERGRADIENT];
+  GimpVector4	color[MAXCOLPERGRADIENT];
 } gradient;
 
 typedef struct
 {
-  gint     majtype;
-  gint     type;
-  gulong   flags;
-  vector   color1, color2;
-  gradient gradient;
-  vector   ambient, diffuse;
-  gdouble  oscale;
-  vector   scale, translate, rotate;
-  image    image;
-  vector   reflection;
-  vector   refraction;
-  vector   transparent;
-  gdouble  ior;
-  vector   phongcolor;
-  gdouble  phongsize;
-  gdouble  amount;
-  gdouble  exp;
-  vector   turbulence;
+  gint     	majtype;
+  gint     	type;
+  gulong   	flags;
+  GimpVector4   color1, color2;
+  gradient 	gradient;
+  GimpVector4   ambient, diffuse;
+  gdouble  	oscale;
+  GimpVector4	scale, translate, rotate;
+  image    	image;
+  GimpVector4   reflection;
+  GimpVector4   refraction;
+  GimpVector4   transparent;
+  gdouble  	ior;
+  GimpVector4   phongcolor;
+  gdouble  	phongsize;
+  gdouble  	amount;
+  gdouble  	exp;
+  GimpVector4   turbulence;
 } texture;
 
 typedef struct
 {
   gshort  type;
   gdouble density;
-  vector  color;
+  GimpVector4  color;
   gdouble turbulence;
 } atmos;
 
@@ -186,48 +181,48 @@ typedef struct
 typedef struct
 {
   common com;
-  vector a, b, c;
+  GimpVector4 a, b, c;
 } triangle;
 
 typedef struct
 {
-  common  com;
-  vector  a;
-  gdouble b, r;
+  common	com;
+  GimpVector4	a;
+  gdouble	b, r;
 } disc;
 
 typedef struct
 {
-  common  com;
-  vector  a;
-  gdouble r;
+  common	com;
+  GimpVector4	a;
+  gdouble	r;
 } sphere;
 
 typedef struct
 {
-  common com;
-  vector a, b, c;
+  common 	com;
+  GimpVector4 	a, b, c;
 } cylinder;
 
 typedef struct
 {
-  common  com;
-  vector  a;
-  gdouble b;
+  common  	com;
+  GimpVector4  	a;
+  gdouble 	b;
 } plane;
 
 typedef struct
 {
-  common com;
-  vector color;
-  vector a;
+  common 	com;
+  GimpVector4 	color;
+  GimpVector4 	a;
 } light;
 
 typedef struct
 {
-  vector  v1, v2;
-  gshort  inside;
-  gdouble ior;
+  GimpVector4  	v1, v2;
+  gshort  	inside;
+  gdouble 	ior;
 } ray;
 
 typedef union
@@ -258,7 +253,7 @@ struct world_t
 
 struct camera_t
 {
-  vector location, lookat, up, right;
+  GimpVector4 location, lookat, up, right;
   short  type;
   double fov, tilt;
 };
@@ -299,14 +294,15 @@ struct
 settings = { 1, 1, 1 };
 
 
-static inline void vset      (vector *v, gdouble a, gdouble b, gdouble c);
+static inline void vset      (GimpVector4 *v, gdouble a, gdouble b, gdouble c);
 static void    restartrender (void);
 static void    drawcolor1    (GtkWidget *widget);
 static void    drawcolor2    (GtkWidget *widget);
 static void    render        (void);
 static void    realrender    (GimpDrawable *drawable);
 static void    fileselect    (gint);
-static gint    traceray      (ray * r, vector * col, gint level, gdouble imp);
+static gint    traceray      (ray * r, GimpVector4 * col, gint level, 
+			      gdouble imp);
 static gdouble turbulence    (gdouble *point, gdouble lofreq, gdouble hifreq);
 
 
@@ -482,38 +478,27 @@ struct camera_t camera;
 struct world_t  world;
 
 static inline void
-vcopy (vector * a, vector * b)
+vcopy (GimpVector4 *a, GimpVector4 *b)
 {
-  a->x = b->x;
-  a->y = b->y;
-  a->z = b->z;
-  a->w = b->w;
+  *a = *b;
 }
 
 static inline void
-vcross (vector * r, vector * a, vector * b)
+vcross (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b)
 {
-  vector t;
-  t.x = a->y * b->z - a->z * b->y;
-  t.y = -(a->x * b->z - a->z * b->x);
-  t.z = a->x * b->y - a->y * b->x;
-  vcopy (r, &t);
+  r->x = a->y * b->z - a->z * b->y;
+  r->y = -(a->x * b->z - a->z * b->x);
+  r->z = a->x * b->y - a->y * b->x;
 }
 
 static inline gdouble
-vdot (vector * a, vector * b)
+vdot (GimpVector4 *a, GimpVector4 *b)
 {
-  gdouble s;
-
-  s = a->x * b->x;
-  s += a->y * b->y;
-  s += a->z * b->z;
-
-  return s;
+  return a->x * b->x + a->y * b->y + a->z * b->z;
 }
 
 static inline gdouble
-vdist (vector * a, vector * b)
+vdist (GimpVector4 *a, GimpVector4 *b)
 {
   gdouble x, y, z;
 
@@ -525,28 +510,24 @@ vdist (vector * a, vector * b)
 }
 
 static inline gdouble
-vlen (vector * a)
+vlen (GimpVector4 *a)
 {
-  gdouble l;
-
-  l = sqrt (a->x * a->x + a->y * a->y + a->z * a->z);
-
-  return l;
+  return sqrt (a->x * a->x + a->y * a->y + a->z * a->z);
 }
 
 static inline void
-vnorm (vector * a, gdouble v)
+vnorm (GimpVector4 *a, gdouble v)
 {
   gdouble d;
 
-  d = sqrt (a->x * a->x + a->y * a->y + a->z * a->z);
+  d = vlen (a);
   a->x *= v / d;
   a->y *= v / d;
   a->z *= v / d;
 }
 
 static inline void
-vrotate (vector * axis, gdouble ang, vector * vector)
+vrotate (GimpVector4 *axis, gdouble ang, GimpVector4 *vector)
 {
   gdouble rad = ang / 180.0 * G_PI;
   gdouble ax  = vector->x;
@@ -574,7 +555,7 @@ vrotate (vector * axis, gdouble ang, vector * vector)
 }
 
 static inline void
-vset (vector * v, gdouble a, gdouble b, gdouble c)
+vset (GimpVector4 *v, gdouble a, gdouble b, gdouble c)
 {
   v->x = a;
   v->y = b;
@@ -583,7 +564,7 @@ vset (vector * v, gdouble a, gdouble b, gdouble c)
 }
 
 static inline void
-vcset (vector * v, gdouble a, gdouble b, gdouble c, gdouble d)
+vcset (GimpVector4 *v, gdouble a, gdouble b, gdouble c, gdouble d)
 {
   v->x = a;
   v->y = b;
@@ -592,9 +573,9 @@ vcset (vector * v, gdouble a, gdouble b, gdouble c, gdouble d)
 }
 
 static inline void
-vvrotate (vector * p, vector * rot)
+vvrotate (GimpVector4 *p, GimpVector4 *rot)
 {
-  vector axis;
+  GimpVector4 axis;
 
   if (rot->x != 0.0)
     {
@@ -614,7 +595,7 @@ vvrotate (vector * p, vector * rot)
 }
 
 static inline void
-vsub (vector * a, vector * b)
+vsub (GimpVector4 *a, GimpVector4 *b)
 {
   a->x -= b->x;
   a->y -= b->y;
@@ -623,7 +604,7 @@ vsub (vector * a, vector * b)
 }
 
 static inline void
-vadd (vector * a, vector * b)
+vadd (GimpVector4 *a, GimpVector4 *b)
 {
   a->x += b->x;
   a->y += b->y;
@@ -632,7 +613,7 @@ vadd (vector * a, vector * b)
 }
 
 static inline void
-vneg (vector * a)
+vneg (GimpVector4 *a)
 {
   a->x = -a->x;
   a->y = -a->y;
@@ -641,7 +622,7 @@ vneg (vector * a)
 }
 
 static inline void
-vmul (vector * v, gdouble a)
+vmul (GimpVector4 *v, gdouble a)
 {
   v->x *= a;
   v->y *= a;
@@ -650,7 +631,7 @@ vmul (vector * v, gdouble a)
 }
 
 static inline void
-vvmul (vector * a, vector * b)
+vvmul (GimpVector4 *a, GimpVector4 *b)
 {
   a->x *= b->x;
   a->y *= b->y;
@@ -659,7 +640,7 @@ vvmul (vector * a, vector * b)
 }
 
 static inline void
-vvdiv (vector * a, vector * b)
+vvdiv (GimpVector4 *a, GimpVector4 *b)
 {
   a->x /= b->x;
   a->y /= b->y;
@@ -667,7 +648,7 @@ vvdiv (vector * a, vector * b)
 }
 
 static void
-vmix (vector * r, vector * a, vector * b, gdouble v)
+vmix (GimpVector4 *r, GimpVector4 *a, GimpVector4 *b, gdouble v)
 {
   gdouble i = 1.0 - v;
 
@@ -678,7 +659,7 @@ vmix (vector * r, vector * a, vector * b, gdouble v)
 }
 
 static double
-vmax (vector * a)
+vmax (GimpVector4 *a)
 {
   gdouble max = fabs (a->x);
 
@@ -694,7 +675,7 @@ vmax (vector * a)
 
 #if 0
 static void
-vavg (vector * a)
+vavg (GimpVector4 * a)
 {
   gdouble s;
 
@@ -703,9 +684,8 @@ vavg (vector * a)
 }
 #endif
 
-
 static void
-trianglenormal (vector * n, gdouble *t, triangle * tri)
+trianglenormal (GimpVector4 * n, gdouble *t, triangle * tri)
 {
   triangle tmp;
   vcopy (&tmp.b, &tri->b);
@@ -721,7 +701,7 @@ trianglenormal (vector * n, gdouble *t, triangle * tri)
 static gdouble
 checkdisc (ray * r, disc * disc)
 {
-  vector p, *v = &disc->a;
+  GimpVector4 p, *v = &disc->a;
   gdouble t, d;
   gdouble i, j, k;
 
@@ -747,7 +727,7 @@ checkdisc (ray * r, disc * disc)
 static gdouble
 checksphere (ray * r, sphere * sphere)
 {
-  vector cendir, rdir;
+  GimpVector4 cendir, rdir;
   gdouble dirproj, cdlensq;
   gdouble linear, constant, rsq, quadratic, discriminant;
   gdouble smallzero, solmin, solmax, tolerance = 0.001;
@@ -826,7 +806,7 @@ checkcylinder (ray * r, cylinder * cylinder)
 static gdouble
 checkplane (ray * r, plane * plane)
 {
-  vector *v = &plane->a;
+  GimpVector4 *v = &plane->a;
   gdouble t;
   gdouble i, j, k;
 
@@ -843,10 +823,10 @@ checkplane (ray * r, plane * plane)
 static gdouble
 checktri (ray * r, triangle * tri)
 {
-  vector  ed1, ed2;
-  vector  tvec, pvec, qvec;
+  GimpVector4  ed1, ed2;
+  GimpVector4  tvec, pvec, qvec;
   gdouble det, idet, t, u, v;
-  vector *orig, dir;
+  GimpVector4 *orig, dir;
 
   orig = &r->v1;
   dir = r->v2;
@@ -886,7 +866,7 @@ checktri (ray * r, triangle * tri)
 }
 
 static void
-transformpoint (vector * p, texture * t)
+transformpoint (GimpVector4 * p, texture * t)
 {
   gdouble point[3], f;
 
@@ -907,16 +887,15 @@ transformpoint (vector * p, texture * t)
       p->y += t->turbulence.y * f;
       p->z += t->turbulence.z * f;
     }
-
 }
 
 static void
-checker (vector * q, vector * col, texture * t)
+checker (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gint   c = 0;
-  vector p;
+  GimpVector4 p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   vmul (&p, 0.25);
@@ -939,32 +918,23 @@ checker (vector * q, vector * col, texture * t)
   if ((p.z - (gint) p.z) < 0.5)
     c ^= 1;
 
-  if (c)
-    {
-      vcopy (col, &t->color1);
-    }
-  else
-    {
-      vcopy (col, &t->color2);
-    }
+  *col = (c) ? t->color1 : t->color2;
 }
 
 static void
-gradcolor (vector * col, gradient * t, gdouble val)
+gradcolor (GimpVector4 *col, gradient *t, gdouble val)
 {
   gint    i;
   gdouble d;
-  vector  tmpcol;
+  GimpVector4  tmpcol;
 
-  if (val < 0.0)
-    val = 0.0;
-  if (val > 1.0)
-    val = 1.0;
+  val = CLAMP (val, 0.0, 1.0);
+
   for (i = 0; i < t->numcol; i++)
     {
       if (t->pos[i] == val)
 	{
-	  vcopy (col, &t->color[i]);
+	  *col = t->color[i];
 	  return;
 	}
       if (t->pos[i] > val)
@@ -984,12 +954,12 @@ gradcolor (vector * col, gradient * t, gdouble val)
 }
 
 static void
-marble (vector * q, vector * col, texture * t)
+marble (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gdouble f;
-  vector  p;
+  GimpVector4 p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   f = sin (p.x * 4) / 2 + 0.5;
@@ -1002,12 +972,12 @@ marble (vector * q, vector * col, texture * t)
 }
 
 static void
-lizard (vector * q, vector * col, texture * t)
+lizard (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gdouble f;
-  vector  p;
+  GimpVector4 p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   f = fabs (sin (p.x * 4));
@@ -1020,16 +990,15 @@ lizard (vector * q, vector * col, texture * t)
     gradcolor (col, &t->gradient, f);
   else
     vmix (col, &t->color1, &t->color2, f);
-
 }
 
 static void
-wood (vector * q, vector * col, texture * t)
+wood (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gdouble f;
-  vector  p;
+  GimpVector4 p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   f = fabs (p.x);
@@ -1044,12 +1013,12 @@ wood (vector * q, vector * col, texture * t)
 }
 
 static void
-spiral (vector * q, vector * col, texture * t)
+spiral (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gdouble f;
-  vector  p;
+  GimpVector4 p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   f = fabs (atan2 (p.x, p.z) / G_PI / 2 + p.y + 99999);
@@ -1064,12 +1033,12 @@ spiral (vector * q, vector * col, texture * t)
 }
 
 static void
-spots (vector * q, vector * col, texture * t)
+spots (GimpVector4 *q, GimpVector4 *col, texture *t)
 {
   gdouble f;
-  vector  p, r;
+  GimpVector4 p, r;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   p.x += 10000.0;
@@ -1079,10 +1048,7 @@ spots (vector * q, vector * col, texture * t)
   vset (&r, (gint) (p.x + 0.5), (gint) (p.y + 0.5), (gint) (p.z + 0.5));
   f = vdist (&p, &r);
   f = cos (f * G_PI);
-  if (f < 0.0)
-    f = 0.0;
-  else if (f > 1.0)
-    f = 1.0;
+  f = CLAMP (f, 0.0, 1.0);
   f = pow (f, t->exp);
 
   if (t->flags & GRADIENT)
@@ -1092,12 +1058,12 @@ spots (vector * q, vector * col, texture * t)
 }
 
 static void
-perlin (vector * q, vector * col, texture * t)
+perlin (GimpVector4 * q, GimpVector4 * col, texture * t)
 {
   gdouble f, point[3];
-  vector  p;
+  GimpVector4  p;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   point[0] = p.x;
@@ -1115,13 +1081,13 @@ perlin (vector * q, vector * col, texture * t)
 }
 
 static void
-imagepixel (vector * q, vector * col, texture * t)
+imagepixel (GimpVector4 * q, GimpVector4 * col, texture * t)
 {
-  vector p;
+  GimpVector4 p;
   gint x, y;
   guchar *rgb;
 
-  vcopy (&p, q);
+  p = *q;
   transformpoint (&p, t);
 
   x = (p.x * t->image.xsize);
@@ -1135,11 +1101,11 @@ imagepixel (vector * q, vector * col, texture * t)
 }
 
 static void
-objcolor (vector * col, vector * p, common * obj)
+objcolor (GimpVector4 *col, GimpVector4 *p, common *obj)
 {
   gint     i;
   texture *t;
-  vector   tmpcol;
+  GimpVector4   tmpcol;
 
   vcset (col, 0, 0, 0, 0);
 
@@ -1202,11 +1168,10 @@ objcolor (vector * col, vector * p, common * obj)
     {
       fprintf (stderr, "Warning: object %p has no textures\n", obj);
     }
-
 }
 
 static void
-objnormal (vector * res, common * obj, vector * p)
+objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
 {
   gint i;
 
@@ -1237,8 +1202,8 @@ objnormal (vector * res, common * obj, vector * p)
   for (i = 0; i < obj->numnormal; i++)
     {
       gint     k;
-      vector   tmpcol[6];
-      vector   q[6], nres;
+      GimpVector4   tmpcol[6];
+      GimpVector4   q[6], nres;
       texture *t = &obj->normal[i];
       gdouble  nstep = 0.1;
 
@@ -1320,14 +1285,14 @@ objnormal (vector * res, common * obj, vector * p)
  */
 
 static void
-calclight (vector * col, vector * point, common * obj)
+calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
 {
   gint i, j;
   ray r;
   gdouble d, b, a;
-  vector lcol;
-  vector norm;
-  vector pcol;
+  GimpVector4 lcol;
+  GimpVector4 norm;
+  GimpVector4 pcol;
 
   vcset (col, 0, 0, 0, 0);
 
@@ -1400,14 +1365,14 @@ calclight (vector * col, vector * point, common * obj)
 }
 
 static void
-calcphong (common * obj, ray * r2, vector * col)
+calcphong (common * obj, ray * r2, GimpVector4 * col)
 {
   gint    i, j, o;
   ray     r;
   gdouble d, b;
-  vector  lcol;
-  vector  norm;
-  vector  pcol;
+  GimpVector4  lcol;
+  GimpVector4  norm;
+  GimpVector4  pcol;
   gdouble ps;
 
   vcopy (&pcol, col);
@@ -1458,14 +1423,14 @@ calcphong (common * obj, ray * r2, vector * col)
 }
 
 static int
-traceray (ray * r, vector * col, gint level, gdouble imp)
+traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 {
   gint     i, b = -1;
   gdouble  t = -1.0, min = 0.0;
   gint     type = -1;
   common  *obj, *bobj = NULL;
   gint     hits = 0;
-  vector   p;
+  GimpVector4   p;
 
   if ((level == 0) || (imp < 0.005))
     {
@@ -1529,7 +1494,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
       if (world.flags & SMARTAMBIENT)
 	{
 	  gdouble ambient = 0.3 * exp (-min / world.smartambient);
-	  vector lcol;
+	  GimpVector4 lcol;
 	  objcolor (&lcol, &p, bobj);
 	  vmul (&lcol, ambient);
 	  vadd (col, &lcol);
@@ -1543,7 +1508,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 		  || (bobj->texture[i].type == PHONG)))
 	    {
 
-	      vector refcol, norm, ocol;
+	      GimpVector4 refcol, norm, ocol;
 	      ray ref;
 
 	      objcolor (&ocol, &p, bobj);
@@ -1587,7 +1552,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 
 	  if ((world.quality >= 5) && (col->w < 1.0))
 	    {
-	      vector refcol;
+	      GimpVector4 refcol;
 	      ray ref;
 
 	      vcopy (&ref.v1, &p);
@@ -1604,7 +1569,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 
 	  if ((world.quality >= 5) && (bobj->texture[i].type == TRANSPARENT))
 	    {
-	      vector refcol;
+	      GimpVector4 refcol;
 	      ray ref;
 
 	      vcopy (&ref.v1, &p);
@@ -1624,7 +1589,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 
 	  if ((world.quality >= 5) && (bobj->texture[i].type == SMOKE))
 	    {
-	      vector smcol, raydir, norm;
+	      GimpVector4 smcol, raydir, norm;
 	      double tran;
 	      ray ref;
 
@@ -1649,7 +1614,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 
 	  if ((world.quality >= 5) && (bobj->texture[i].type == REFRACTION))
 	    {
-	      vector refcol, norm, tmpv;
+	      GimpVector4 refcol, norm, tmpv;
 	      ray ref;
 	      double c1, c2, n1, n2, n;
 
@@ -1720,7 +1685,7 @@ traceray (ray * r, vector * col, gint level, gdouble imp)
 
   for (i = 0; i < world.numatmos; i++)
     {
-      vector tmpcol;
+      GimpVector4 tmpcol;
       if (world.atmos[i].type == FOG)
 	{
 	  gdouble v, pt[3];
@@ -1879,7 +1844,6 @@ setvals (texture * t)
 
   noupdate = FALSE;
 }
-
 
 static void
 selectitem (GtkTreeSelection *treeselection,
@@ -2398,10 +2362,10 @@ color1_changed (GimpColorButton *button,
 		gpointer         data)
 {
   texture *t = currenttexture ();
-  if (!t)
-    return;
-
-  gimp_color_button_get_color (button, (GimpRGB *) &t->color1);
+  if (t)
+    {
+      gimp_color_button_get_color (button, (GimpRGB *) &t->color1);
+    }
 }
 
 static void
@@ -2409,10 +2373,10 @@ color2_changed (GimpColorButton *button,
 		gpointer         data)
 {
   texture *t = currenttexture ();
-  if (!t)
-    return;
-  
-  gimp_color_button_get_color (button, (GimpRGB *) &t->color2);
+  if (t)
+    {
+      gimp_color_button_get_color (button, (GimpRGB *) &t->color2);
+    }
 }
 
 static void
@@ -2454,7 +2418,6 @@ drawcolor2 (GtkWidget *w)
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (w),
 			       (const GimpRGB *) &t->color2);
 }
-
 
 static gboolean do_run = FALSE;
 
@@ -2954,7 +2917,7 @@ render (void)
 {
   gint    x, y, p;
   ray     r;
-  vector  col;
+  GimpVector4  col;
   gint    hit;
   gint    tx, ty;
   guchar *dest_row;
@@ -3038,11 +3001,11 @@ render (void)
 }
 
 static void
-realrender (GimpDrawable * drawable)
+realrender (GimpDrawable *drawable)
 {
   gint          x, y;
   ray           r;
-  vector        rcol;
+  GimpVector4   rcol;
   gint          tx, ty;
   gint          x1, y1, x2, y2;
   guchar       *dest;
@@ -3110,7 +3073,7 @@ realrender (GimpDrawable * drawable)
   g_free (ibuffer);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static void

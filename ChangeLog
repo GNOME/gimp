@@ -1,3 +1,13 @@
+2003-03-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/java.xpm
+	* plug-ins/imagemap/link.xpm
+	* plug-ins/imagemap/Makefile
+	* plug-ins/imagemap/imap_stock.[ch]: added 2 new icons.
+
+	* plug-ins/imagemap/imap_edit_area_info.c: start at implementing 
+	enhancement #91396 and #92635.
+
 2003-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask.[ch] (gimp_image_mask_translate)
@@ -3212,6 +3222,11 @@
 	this file.
 
 	* app/text/gimptextlayer.c: changed accordingly.
+
+2003-02-04  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/max_rgb.c: fixed bug with previewing images
+	with alpha channel.
 
 2003-02-04  Sven Neumann  <sven@gimp.org>
 

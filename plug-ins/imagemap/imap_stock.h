@@ -29,6 +29,8 @@
 #define IMAP_STOCK_COORD	       	"imap_coord"
 #define IMAP_STOCK_DIMENSION   		"imap_dimension"
 #define IMAP_STOCK_GRID			"imap_grid"
+#define IMAP_STOCK_JAVA			"imap_java"
+#define IMAP_STOCK_LINK			"imap_link"
 #define IMAP_STOCK_MAP_INFO		"imap-map-info"
 #define IMAP_STOCK_POLYGON		"imap_polygon"
 #define IMAP_STOCK_RECTANGLE		"imap_rectangle"
