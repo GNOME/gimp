@@ -693,7 +693,7 @@ HELP
     @inargs = (
 	&std_image_arg,
 	&layer_arg,
-	{ name => 'mode', type => 'enum MaskApplyMode',
+	{ name => 'mode', type => 'enum GimpMaskApplyMode',
 	  desc => 'Removal mode: { %%desc%% }' }
     );
     $inargs[1]->{desc} .= ' from which to remove mask';

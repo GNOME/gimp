@@ -26,28 +26,10 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-  GIMP_ADD_WHITE_MASK,
-  GIMP_ADD_BLACK_MASK,
-  GIMP_ADD_ALPHA_MASK,
-  GIMP_ADD_SELECTION_MASK,
-  GIMP_ADD_INVERSE_SELECTION_MASK,
-  GIMP_ADD_COPY_MASK,
-  GIMP_ADD_INVERSE_COPY_MASK
-} GimpAddMaskType;
-
-typedef enum
-{
   GIMP_HARD,
   GIMP_SOFT,
   GIMP_PRESSURE
 } GimpBrushApplicationMode;
-
-typedef enum
-{
-  GIMP_FG_BUCKET_FILL,
-  GIMP_BG_BUCKET_FILL,
-  GIMP_PATTERN_BUCKET_FILL
-} GimpBucketFillMode;
 
 typedef enum
 {
@@ -96,11 +78,29 @@ typedef enum
 
 typedef enum
 {
+  GIMP_ADD_WHITE_MASK,
+  GIMP_ADD_BLACK_MASK,
+  GIMP_ADD_ALPHA_MASK,
+  GIMP_ADD_SELECTION_MASK,
+  GIMP_ADD_INVERSE_SELECTION_MASK,
+  GIMP_ADD_COPY_MASK,
+  GIMP_ADD_INVERSE_COPY_MASK
+} GimpAddMaskType;
+
+typedef enum
+{
   GIMP_FG_BG_RGB_MODE,
   GIMP_FG_BG_HSV_MODE,
   GIMP_FG_TRANSPARENT_MODE,
   GIMP_CUSTOM_MODE
 } GimpBlendMode;
+
+typedef enum
+{
+  GIMP_FG_BUCKET_FILL,
+  GIMP_BG_BUCKET_FILL,
+  GIMP_PATTERN_BUCKET_FILL
+} GimpBucketFillMode;
 
 typedef enum
 {
@@ -195,6 +195,12 @@ typedef enum
 
 typedef enum
 {
+  GIMP_MASK_APPLY,
+  GIMP_MASK_DISCARD
+} GimpMaskApplyMode;
+
+typedef enum
+{
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
@@ -239,12 +245,6 @@ typedef enum
   GIMP_BLUE_HUES,
   GIMP_MAGENTA_HUES
 } GimpHueRange;
-
-typedef enum
-{
-  GIMP_APPLY,
-  GIMP_DISCARD
-} GimpMaskApplyMode;
 
 typedef enum
 {

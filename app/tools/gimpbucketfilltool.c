@@ -51,23 +51,23 @@ typedef struct _BucketOptions BucketOptions;
 
 struct _BucketOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions    paint_options;
 
-  gboolean          fill_transparent;
-  gboolean          fill_transparent_d;
-  GtkWidget        *fill_transparent_w;
+  gboolean            fill_transparent;
+  gboolean            fill_transparent_d;
+  GtkWidget          *fill_transparent_w;
 
-  gboolean          sample_merged;
-  gboolean          sample_merged_d;
-  GtkWidget        *sample_merged_w;
+  gboolean            sample_merged;
+  gboolean            sample_merged_d;
+  GtkWidget          *sample_merged_w;
 
-  gdouble           threshold;
-  /* gdouble        threshold_d; (from gimprc) */
-  GtkObject        *threshold_w;
+  gdouble             threshold;
+  /* gdouble          threshold_d; (from gimprc) */
+  GtkObject          *threshold_w;
 
-  BucketFillMode  fill_mode;
-  BucketFillMode  fill_mode_d;
-  GtkWidget      *fill_mode_w[3];
+  GimpBucketFillMode  fill_mode;
+  GimpBucketFillMode  fill_mode_d;
+  GtkWidget          *fill_mode_w[3];
 };
 
 
@@ -262,15 +262,15 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
     {
       switch (options->fill_mode)
         {
-        case FG_BUCKET_FILL:
+        case GIMP_FG_BUCKET_FILL:
           gimp_radio_group_set_active
             (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
-             GINT_TO_POINTER (BG_BUCKET_FILL));
+             GINT_TO_POINTER (GIMP_BG_BUCKET_FILL));
           break;
-        case BG_BUCKET_FILL:
+        case GIMP_BG_BUCKET_FILL:
           gimp_radio_group_set_active
             (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
-             GINT_TO_POINTER (FG_BUCKET_FILL));
+             GINT_TO_POINTER (GIMP_FG_BUCKET_FILL));
           break;
         default:
           break;
@@ -308,13 +308,13 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	    {
 	      switch (options->fill_mode)
 		{
-		case FG_BUCKET_FILL:
+		case GIMP_FG_BUCKET_FILL:
 		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
 		  break;
-		case BG_BUCKET_FILL:
+		case GIMP_BG_BUCKET_FILL:
 		  cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
 		  break;
-		case PATTERN_BUCKET_FILL:
+		case GIMP_PATTERN_BUCKET_FILL:
 		  cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
 		  break;
 		}
@@ -348,7 +348,7 @@ bucket_options_new (GimpToolInfo *tool_info)
   options->fill_transparent = options->fill_transparent_d = TRUE;
   options->sample_merged    = options->sample_merged_d    = FALSE;
   options->threshold        = gimprc.default_threshold;
-  options->fill_mode        = options->fill_mode_d        = FG_BUCKET_FILL;
+  options->fill_mode        = options->fill_mode_d = GIMP_FG_BUCKET_FILL;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -360,15 +360,15 @@ bucket_options_new (GimpToolInfo *tool_info)
                                  GINT_TO_POINTER (options->fill_mode),
 
                                  _("FG Color Fill"),
-                                 GINT_TO_POINTER (FG_BUCKET_FILL),
+                                 GINT_TO_POINTER (GIMP_FG_BUCKET_FILL),
                                  &options->fill_mode_w[0],
 
                                  _("BG Color Fill"),
-                                 GINT_TO_POINTER (BG_BUCKET_FILL),
+                                 GINT_TO_POINTER (GIMP_BG_BUCKET_FILL),
                                  &options->fill_mode_w[1],
 
                                  _("Pattern Fill"),
-                                 GINT_TO_POINTER (PATTERN_BUCKET_FILL),
+                                 GINT_TO_POINTER (GIMP_PATTERN_BUCKET_FILL),
                                  &options->fill_mode_w[2],
 
                                  NULL);

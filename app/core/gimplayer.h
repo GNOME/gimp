@@ -97,12 +97,12 @@ gboolean        gimp_layer_check_scaling       (const GimpLayer      *layer,
                                                 gint                  new_width,
                                                 gint                  new_height);
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
-                                                AddMaskType           mask_type);
+                                                GimpAddMaskType        mask_type);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
                                                 GimpLayerMask        *mask,
                                                 gboolean              push_undo);
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
-                                                MaskApplyMode         mode,
+                                                GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);
 void            gimp_layer_translate           (GimpLayer            *layer,
                                                 gint                  off_x,

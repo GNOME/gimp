@@ -607,7 +607,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
 GimpLayerMask *
 gimp_layer_create_mask (const GimpLayer *layer,
-			AddMaskType      add_mask_type)
+			GimpAddMaskType  add_mask_type)
 {
   PixelRegion    srcPR;
   PixelRegion    destPR;
@@ -639,7 +639,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case ADD_WHITE_MASK:
+    case GIMP_ADD_WHITE_MASK:
       {
         guchar white_mask = OPAQUE_OPACITY;
 
@@ -647,7 +647,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
       break;
 
-    case ADD_BLACK_MASK:
+    case GIMP_ADD_BLACK_MASK:
       {
         guchar black_mask = TRANSPARENT_OPACITY;
 
@@ -655,7 +655,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
       break;
 
-    case ADD_ALPHA_MASK:
+    case GIMP_ADD_ALPHA_MASK:
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	{
 	  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
@@ -667,8 +667,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
 	}
       break;
 
-    case ADD_SELECTION_MASK:
-    case ADD_INVERSE_SELECTION_MASK:
+    case GIMP_ADD_SELECTION_MASK:
+    case GIMP_ADD_INVERSE_SELECTION_MASK:
       {
         GimpDrawable *selection;
 
@@ -684,8 +684,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
       break;
 
-    case ADD_COPY_MASK:
-    case ADD_INVERSE_COPY_MASK:
+    case GIMP_ADD_COPY_MASK:
+    case GIMP_ADD_INVERSE_COPY_MASK:
       {
         TileManager   *copy_tiles;
         GimpImageType  layer_type;
@@ -726,15 +726,15 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case ADD_WHITE_MASK:
-    case ADD_BLACK_MASK:
-    case ADD_ALPHA_MASK:
-    case ADD_SELECTION_MASK:
-    case ADD_COPY_MASK:
+    case GIMP_ADD_WHITE_MASK:
+    case GIMP_ADD_BLACK_MASK:
+    case GIMP_ADD_ALPHA_MASK:
+    case GIMP_ADD_SELECTION_MASK:
+    case GIMP_ADD_COPY_MASK:
       break;
 
-    case ADD_INVERSE_SELECTION_MASK:
-    case ADD_INVERSE_COPY_MASK:
+    case GIMP_ADD_INVERSE_SELECTION_MASK:
+    case GIMP_ADD_INVERSE_COPY_MASK:
       gimp_drawable_invert (GIMP_DRAWABLE (mask));
       break;
     }
@@ -743,9 +743,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
 }
 
 void
-gimp_layer_apply_mask (GimpLayer     *layer,
-		       MaskApplyMode  mode,
-                       gboolean       push_undo)
+gimp_layer_apply_mask (GimpLayer         *layer,
+		       GimpMaskApplyMode  mode,
+                       gboolean           push_undo)
 {
   GimpImage   *gimage;
   gint         off_x;
@@ -775,13 +775,16 @@ gimp_layer_apply_mask (GimpLayer     *layer,
     }
 
   /*  check if applying the mask changes the projection  */
-  if ((mode == APPLY   && (! layer->mask->apply_mask || layer->mask->show_mask)) ||
-      (mode == DISCARD && (  layer->mask->apply_mask || layer->mask->show_mask)))
+  if ((mode == GIMP_MASK_APPLY   && 
+       (! layer->mask->apply_mask || layer->mask->show_mask))
+      ||
+      (mode == GIMP_MASK_DISCARD && 
+       (  layer->mask->apply_mask || layer->mask->show_mask)))
     {
       view_changed = TRUE;
     }
 
-  if (mode == APPLY)
+  if (mode == GIMP_MASK_APPLY)
     {
       if (push_undo)
         {

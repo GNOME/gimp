@@ -48,7 +48,7 @@
 
 /*  local function prototypes  */
 
-static void   gimp_drawable_bucket_fill_region       (BucketFillMode   fill_mode,
+static void   gimp_drawable_bucket_fill_region   (GimpBucketFillMode  fill_mode,
                                                       PixelRegion     *bufPR,
                                                       PixelRegion     *maskPR,
                                                       guchar          *col,
@@ -75,15 +75,15 @@ static void   gimp_drawable_bucket_fill_line_pattern (guchar          *buf,
 /*  public functions  */
 
 void
-gimp_drawable_bucket_fill (GimpDrawable   *drawable,
-                           BucketFillMode  fill_mode,
-                           gint            paint_mode,
-                           gdouble         opacity,
-                           gboolean        fill_transparent,
-                           gdouble         threshold,
-                           gboolean        sample_merged,
-                           gdouble         x,
-                           gdouble         y)
+gimp_drawable_bucket_fill (GimpDrawable       *drawable,
+                           GimpBucketFillMode  fill_mode,
+                           gint                paint_mode,
+                           gdouble             opacity,
+                           gboolean            fill_transparent,
+                           gdouble             threshold,
+                           gboolean            sample_merged,
+                           gdouble             x,
+                           gdouble             y)
 {
   GimpImage   *gimage;
   GimpRGB      color;
@@ -95,17 +95,17 @@ gimp_drawable_bucket_fill (GimpDrawable   *drawable,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (fill_mode == FG_BUCKET_FILL)
+  if (fill_mode == GIMP_FG_BUCKET_FILL)
     {
       gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
                                    &color);
     }
-  else if (fill_mode == BG_BUCKET_FILL)
+  else if (fill_mode == GIMP_BG_BUCKET_FILL)
     {
       gimp_context_get_background (gimp_get_current_context (gimage->gimp),
                                    &color);
     }
-  else if (fill_mode == PATTERN_BUCKET_FILL)
+  else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
       pattern =
         gimp_context_get_pattern (gimp_get_current_context (gimage->gimp));
@@ -133,18 +133,18 @@ gimp_drawable_bucket_fill (GimpDrawable   *drawable,
 }
 
 void
-gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
-                                BucketFillMode  fill_mode,
-                                const GimpRGB  *color,
-                                GimpPattern    *pattern,
-                                gint            paint_mode,
-                                gdouble         opacity,
-                                gboolean        do_seed_fill,
-                                gboolean        fill_transparent,
-                                gdouble         threshold,
-                                gboolean        sample_merged,
-                                gdouble         x,
-                                gdouble         y)
+gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
+                                GimpBucketFillMode  fill_mode,
+                                const GimpRGB      *color,
+                                GimpPattern        *pattern,
+                                gint                paint_mode,
+                                gdouble             opacity,
+                                gboolean            do_seed_fill,
+                                gboolean            fill_transparent,
+                                gdouble             threshold,
+                                gboolean            sample_merged,
+                                gdouble             x,
+                                gdouble             y)
 {
   GimpImage   *gimage;
   TileManager *buf_tiles;
@@ -158,17 +158,17 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
   gboolean     new_buf = FALSE;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (fill_mode != PATTERN_BUCKET_FILL ||
+  g_return_if_fail (fill_mode != GIMP_PATTERN_BUCKET_FILL ||
                     GIMP_IS_PATTERN (pattern));
-  g_return_if_fail ((fill_mode != FG_BUCKET_FILL &&
-                     fill_mode != BG_BUCKET_FILL) || color != NULL);
+  g_return_if_fail ((fill_mode != GIMP_FG_BUCKET_FILL &&
+                     fill_mode != GIMP_BG_BUCKET_FILL) || color != NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (fill_mode == FG_BUCKET_FILL ||
-      fill_mode == BG_BUCKET_FILL)
+  if (fill_mode == GIMP_FG_BUCKET_FILL ||
+      fill_mode == GIMP_BG_BUCKET_FILL)
     {
       guchar tmp_col[MAX_CHANNELS];
 
@@ -176,7 +176,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
 
       gimp_image_transform_color (gimage, drawable, tmp_col, col, GIMP_RGB);
     }
-  else if (fill_mode == PATTERN_BUCKET_FILL)
+  else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
       /*  If the pattern doesn't match the image in terms of color type,
        *  transform it.  (ie  pattern is RGB, image is indexed)
@@ -320,14 +320,14 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
 /*  private functions  */
 
 static void
-gimp_drawable_bucket_fill_region (BucketFillMode  fill_mode,
-                                  PixelRegion    *bufPR,
-                                  PixelRegion    *maskPR,
-                                  guchar         *col,
-                                  TempBuf        *pattern,
-                                  gint            off_x,
-                                  gint            off_y,
-                                  gboolean        has_alpha)
+gimp_drawable_bucket_fill_region (GimpBucketFillMode  fill_mode,
+                                  PixelRegion        *bufPR,
+                                  PixelRegion        *maskPR,
+                                  guchar             *col,
+                                  TempBuf            *pattern,
+                                  gint                off_x,
+                                  gint                off_y,
+                                  gboolean            has_alpha)
 {
   guchar *s, *m;
   gint    y;
@@ -347,14 +347,14 @@ gimp_drawable_bucket_fill_region (BucketFillMode  fill_mode,
 	{
 	  switch (fill_mode)
 	    {
-	    case FG_BUCKET_FILL:
-	    case BG_BUCKET_FILL:
+	    case GIMP_FG_BUCKET_FILL:
+	    case GIMP_BG_BUCKET_FILL:
 	      gimp_drawable_bucket_fill_line_color (s, m,
                                                     col,
                                                     has_alpha,
                                                     bufPR->bytes, bufPR->w);
 	      break;
-	    case PATTERN_BUCKET_FILL:
+	    case GIMP_PATTERN_BUCKET_FILL:
 	      gimp_drawable_bucket_fill_line_pattern (s, m,
                                                       pattern,
                                                       has_alpha,

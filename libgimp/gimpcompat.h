@@ -82,6 +82,13 @@ enum
 
 enum
 {
+  GIMP_APPLY   = GIMP_MASK_APPLY,
+  GIMP_DISCARD = GIMP_MASK_DISCARD
+};
+
+
+enum
+{
   GIMP_CONTINUOUS = GIMP_CONSTANT
 };
 

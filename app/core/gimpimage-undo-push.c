@@ -1917,7 +1917,7 @@ undo_pop_layer_mask (GimpImage *gimage,
     {
       /*  remove layer mask  */
 
-      gimp_layer_apply_mask (lmu->layer, DISCARD, FALSE);
+      gimp_layer_apply_mask (lmu->layer, GIMP_MASK_DISCARD, FALSE);
     }
   else
     {

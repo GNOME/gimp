@@ -156,6 +156,22 @@ typedef enum  /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
+typedef enum  /*< skip >*/
+{
+  GIMP_FG_BUCKET_FILL,
+  GIMP_BG_BUCKET_FILL,
+  GIMP_PATTERN_BUCKET_FILL
+} GimpBucketFillMode;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_FOREGROUND_FILL,
+  GIMP_BACKGROUND_FILL,
+  GIMP_WHITE_FILL,
+  GIMP_TRANSPARENT_FILL,
+  GIMP_NO_FILL
+} GimpFillType;
+
 typedef enum  /*< pdb-skip >*/ /*< skip >*/
 {
   GIMP_GRAD_LINEAR = 0,
@@ -181,6 +197,23 @@ typedef enum  /*< skip >*/
   GIMP_INDEXED_IMAGE,
   GIMP_INDEXEDA_IMAGE
 } GimpImageType;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_ADD_WHITE_MASK,
+  GIMP_ADD_BLACK_MASK,
+  GIMP_ADD_ALPHA_MASK,
+  GIMP_ADD_SELECTION_MASK,
+  GIMP_ADD_INVERSE_SELECTION_MASK,
+  GIMP_ADD_COPY_MASK,
+  GIMP_ADD_INVERSE_COPY_MASK
+} GimpAddMaskType;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_MASK_APPLY,
+  GIMP_MASK_DISCARD
+} GimpMaskApplyMode;
 
 typedef enum  /*< skip >*/
 {

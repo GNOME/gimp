@@ -299,7 +299,7 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
 
       flush = ! active_layer->mask->apply_mask || active_layer->mask->show_mask;
 
-      gimp_layer_apply_mask (active_layer, APPLY, TRUE);
+      gimp_layer_apply_mask (active_layer, GIMP_MASK_APPLY, TRUE);
 
       if (flush)
 	gdisplays_flush ();
@@ -320,7 +320,7 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
 
       flush = active_layer->mask->apply_mask || active_layer->mask->show_mask;
 
-      gimp_layer_apply_mask (active_layer, DISCARD, TRUE);
+      gimp_layer_apply_mask (active_layer, GIMP_MASK_DISCARD, TRUE);
 
       if (flush)
 	gdisplays_flush ();
@@ -425,7 +425,7 @@ struct _NewLayerOptions
   GimpImage    *gimage;
 };
 
-static GimpFillType  fill_type  = TRANSPARENT_FILL;
+static GimpFillType  fill_type  = GIMP_TRANSPARENT_FILL;
 static gchar        *layer_name = NULL;
 
 static void
@@ -525,7 +525,7 @@ layers_new_layer_query (GimpImage *gimage,
 
       gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
                                   gimp_get_user_context (gimage->gimp),
-                                  TRANSPARENT_FILL);
+                                  GIMP_TRANSPARENT_FILL);
       gimp_layer_translate (new_layer, off_x, off_y);
       gimp_image_add_layer (gimage, new_layer, -1);
 
@@ -651,10 +651,10 @@ layers_new_layer_query (GimpImage *gimage,
      &options->fill_type,
      GINT_TO_POINTER (options->fill_type),
 
-     _("Foreground"),  GINT_TO_POINTER (FOREGROUND_FILL),  NULL,
-     _("Background"),  GINT_TO_POINTER (BACKGROUND_FILL),  NULL,
-     _("White"),       GINT_TO_POINTER (WHITE_FILL),       NULL,
-     _("Transparent"), GINT_TO_POINTER (TRANSPARENT_FILL), NULL,
+     _("Foreground"),  GINT_TO_POINTER (GIMP_FOREGROUND_FILL),  NULL,
+     _("Background"),  GINT_TO_POINTER (GIMP_BACKGROUND_FILL),  NULL,
+     _("White"),       GINT_TO_POINTER (GIMP_WHITE_FILL),       NULL,
+     _("Transparent"), GINT_TO_POINTER (GIMP_TRANSPARENT_FILL), NULL,
 
      NULL);
 
@@ -796,9 +796,9 @@ typedef struct _AddMaskOptions AddMaskOptions;
 
 struct _AddMaskOptions
 {
-  GtkWidget   *query_box;
-  GimpLayer   *layer;
-  AddMaskType  add_mask_type;
+  GtkWidget       *query_box;
+  GimpLayer       *layer;
+  GimpAddMaskType  add_mask_type;
 };
 
 static void
@@ -832,7 +832,7 @@ layers_add_mask_query (GimpLayer *layer)
   /*  The new options structure  */
   options = g_new (AddMaskOptions, 1);
   options->layer         = layer;
-  options->add_mask_type = ADD_WHITE_MASK;
+  options->add_mask_type = GIMP_ADD_WHITE_MASK;
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
   
@@ -864,7 +864,7 @@ layers_add_mask_query (GimpLayer *layer)
   /*  The radio frame and box  */
   if (gimage->selection_mask)
     {
-      options->add_mask_type = ADD_SELECTION_MASK;
+      options->add_mask_type = GIMP_ADD_SELECTION_MASK;
 
       frame =
         gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
@@ -873,21 +873,21 @@ layers_add_mask_query (GimpLayer *layer)
                                GINT_TO_POINTER (options->add_mask_type),
 
                                _("Selection"),
-                               GINT_TO_POINTER (ADD_SELECTION_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_SELECTION_MASK), NULL,
                                _("Inverse Selection"),
-                               GINT_TO_POINTER (ADD_INVERSE_SELECTION_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_INVERSE_SELECTION_MASK), NULL,
 
                                _("Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_COPY_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_COPY_MASK), NULL,
                                _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_INVERSE_COPY_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_INVERSE_COPY_MASK), NULL,
 
                                _("White (Full Opacity)"),
-                               GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_WHITE_MASK), NULL,
                                _("Black (Full Transparency)"),
-                               GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_BLACK_MASK), NULL,
                                _("Layer's Alpha Channel"),
-                               GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_ALPHA_MASK), NULL,
 
                                NULL);
     }
@@ -900,16 +900,16 @@ layers_add_mask_query (GimpLayer *layer)
                                GINT_TO_POINTER (options->add_mask_type),
 
                                _("Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_COPY_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_COPY_MASK), NULL,
                                _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (ADD_INVERSE_COPY_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_INVERSE_COPY_MASK), NULL,
 
                                _("White (Full Opacity)"),
-                               GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_WHITE_MASK), NULL,
                                _("Black (Full Transparency)"),
-                               GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_BLACK_MASK), NULL,
                                _("Layer's Alpha Channel"),
-                               GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+                               GINT_TO_POINTER (GIMP_ADD_ALPHA_MASK), NULL,
 
                                NULL);
     }

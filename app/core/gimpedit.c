@@ -335,21 +335,21 @@ gimp_edit_fill (GimpImage    *gimage,
 
   switch (fill_type)
     {
-    case FOREGROUND_FILL:
+    case GIMP_FOREGROUND_FILL:
       gimp_image_get_foreground (gimage, drawable, col);
       break;
 
-    case BACKGROUND_FILL:
+    case GIMP_BACKGROUND_FILL:
       gimp_image_get_background (gimage, drawable, col);
       break;
 
-    case WHITE_FILL:
+    case GIMP_WHITE_FILL:
       col[RED_PIX]   = 255;
       col[GREEN_PIX] = 255;
       col[BLUE_PIX]  = 255;
       break;
 
-    case TRANSPARENT_FILL:
+    case GIMP_TRANSPARENT_FILL:
       col[RED_PIX]   = 0;
       col[GREEN_PIX] = 0;
       col[BLUE_PIX]  = 0;
@@ -357,7 +357,7 @@ gimp_edit_fill (GimpImage    *gimage,
 	col [gimp_drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
       break;
 
-    case NO_FILL:
+    case GIMP_NO_FILL:
       return TRUE;  /*  nothing to do, but the fill succeded  */
 
     default:

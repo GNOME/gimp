@@ -38,23 +38,6 @@
 
 typedef enum
 {
-  ADD_WHITE_MASK,
-  ADD_BLACK_MASK,
-  ADD_ALPHA_MASK,
-  ADD_SELECTION_MASK,
-  ADD_INVERSE_SELECTION_MASK,
-  ADD_COPY_MASK,
-  ADD_INVERSE_COPY_MASK
-} AddMaskType;
-
-typedef enum
-{
-  APPLY,
-  DISCARD
-} MaskApplyMode;
-
-typedef enum
-{
   HORIZONTAL,
   VERTICAL,
   UNKNOWN
@@ -75,15 +58,6 @@ typedef enum
   CHANNEL_OP_REPLACE,
   CHANNEL_OP_INTERSECT
 } ChannelOps;
-
-typedef enum
-{
-  FOREGROUND_FILL,
-  BACKGROUND_FILL,
-  WHITE_FILL,
-  TRANSPARENT_FILL,
-  NO_FILL
-} GimpFillType;
 
 typedef enum
 {
@@ -117,13 +91,6 @@ typedef enum
 
   NODESTRUCT_DITHER = 4 /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
 } ConvertDitherType;
-
-typedef enum
-{
-  FG_BUCKET_FILL,
-  BG_BUCKET_FILL,
-  PATTERN_BUCKET_FILL
-} BucketFillMode;
 
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {

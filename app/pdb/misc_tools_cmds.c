@@ -30,7 +30,6 @@
 
 #include "base/base-enums.h"
 #include "core/core-enums.h"
-#include "core/core-types.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
@@ -251,7 +250,7 @@ bucket_fill_invoker (Gimp     *gimp,
     success = FALSE;
 
   fill_mode = args[1].value.pdb_int;
-  if (fill_mode < FG_BUCKET_FILL || fill_mode > PATTERN_BUCKET_FILL)
+  if (fill_mode < GIMP_FG_BUCKET_FILL || fill_mode > GIMP_PATTERN_BUCKET_FILL)
     success = FALSE;
 
   paint_mode = args[2].value.pdb_int;
@@ -300,7 +299,7 @@ static ProcArg bucket_fill_inargs[] =
   {
     GIMP_PDB_INT32,
     "fill_mode",
-    "The type of fill: { FG_BUCKET_FILL (0), BG_BUCKET_FILL (1), PATTERN_BUCKET_FILL (2) }"
+    "The type of fill: { GIMP_FG_BUCKET_FILL (0), GIMP_BG_BUCKET_FILL (1), GIMP_PATTERN_BUCKET_FILL (2) }"
   },
   {
     GIMP_PDB_INT32,

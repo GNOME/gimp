@@ -161,27 +161,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
 	},
-    AddMaskType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
-			  ADD_SELECTION_MASK ADD_INVERSE_SELECTION_MASK
-			  ADD_COPY_MASK ADD_INVERSE_COPY_MASK) ],
-	  mapping => { ADD_WHITE_MASK => '0',
-		       ADD_BLACK_MASK => '1',
-		       ADD_ALPHA_MASK => '2',
-		       ADD_SELECTION_MASK => '3',
-		       ADD_INVERSE_SELECTION_MASK => '4',
-		       ADD_COPY_MASK => '5',
-		       ADD_INVERSE_COPY_MASK => '6' }
-	},
-    MaskApplyMode =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(APPLY DISCARD) ],
-	  mapping => { APPLY => '0',
-		       DISCARD => '1' }
-	},
     OrientationType =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
@@ -199,17 +178,6 @@ package Gimp::CodeGen::enums;
 		       CHANNEL_OP_SUBTRACT => '1',
 		       CHANNEL_OP_REPLACE => '2',
 		       CHANNEL_OP_INTERSECT => '3' }
-	},
-    GimpFillType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
-			  TRANSPARENT_FILL NO_FILL) ],
-	  mapping => { FOREGROUND_FILL => '0',
-		       BACKGROUND_FILL => '1',
-		       WHITE_FILL => '2',
-		       TRANSPARENT_FILL => '3',
-		       NO_FILL => '4' }
 	},
     GimpOffsetType =>
 	{ contig => 1,
@@ -249,14 +217,6 @@ package Gimp::CodeGen::enums;
 		       FSLOWBLEED_DITHER => '2',
 		       FIXED_DITHER => '3',
 		       NODESTRUCT_DITHER => '4' }
-	},
-    BucketFillMode =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
-	  mapping => { FG_BUCKET_FILL => '0',
-		       BG_BUCKET_FILL => '1',
-		       PATTERN_BUCKET_FILL => '2' }
 	},
     GimpImageBaseType =>
 	{ contig => 1,
@@ -318,6 +278,26 @@ package Gimp::CodeGen::enums;
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
 	},
+    GimpBucketFillMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FG_BUCKET_FILL GIMP_BG_BUCKET_FILL
+			  GIMP_PATTERN_BUCKET_FILL) ],
+	  mapping => { GIMP_FG_BUCKET_FILL => '0',
+		       GIMP_BG_BUCKET_FILL => '1',
+		       GIMP_PATTERN_BUCKET_FILL => '2' }
+	},
+    GimpFillType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_FOREGROUND_FILL GIMP_BACKGROUND_FILL
+			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL GIMP_NO_FILL) ],
+	  mapping => { GIMP_FOREGROUND_FILL => '0',
+		       GIMP_BACKGROUND_FILL => '1',
+		       GIMP_WHITE_FILL => '2',
+		       GIMP_TRANSPARENT_FILL => '3',
+		       GIMP_NO_FILL => '4' }
+	},
     GimpImageType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -330,6 +310,28 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAYA_IMAGE => '3',
 		       GIMP_INDEXED_IMAGE => '4',
 		       GIMP_INDEXEDA_IMAGE => '5' }
+	},
+    GimpAddMaskType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_ADD_WHITE_MASK GIMP_ADD_BLACK_MASK
+			  GIMP_ADD_ALPHA_MASK GIMP_ADD_SELECTION_MASK
+			  GIMP_ADD_INVERSE_SELECTION_MASK GIMP_ADD_COPY_MASK
+			  GIMP_ADD_INVERSE_COPY_MASK) ],
+	  mapping => { GIMP_ADD_WHITE_MASK => '0',
+		       GIMP_ADD_BLACK_MASK => '1',
+		       GIMP_ADD_ALPHA_MASK => '2',
+		       GIMP_ADD_SELECTION_MASK => '3',
+		       GIMP_ADD_INVERSE_SELECTION_MASK => '4',
+		       GIMP_ADD_COPY_MASK => '5',
+		       GIMP_ADD_INVERSE_COPY_MASK => '6' }
+	},
+    GimpMaskApplyMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_MASK_APPLY GIMP_MASK_DISCARD) ],
+	  mapping => { GIMP_MASK_APPLY => '0',
+		       GIMP_MASK_DISCARD => '1' }
 	},
     GimpTransferMode =>
 	{ contig => 1,

@@ -1662,7 +1662,7 @@ image_remove_layer_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   mode = args[2].value.pdb_int;
-  if (mode < APPLY || mode > DISCARD)
+  if (mode < GIMP_MASK_APPLY || mode > GIMP_MASK_DISCARD)
     success = FALSE;
 
   if (success)
@@ -1686,7 +1686,7 @@ static ProcArg image_remove_layer_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "mode",
-    "Removal mode: { APPLY (0), DISCARD (1) }"
+    "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) }"
   }
 };
 

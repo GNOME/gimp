@@ -20,23 +20,23 @@ Enums and definitions.
 
 </para>
 
-@GIMP_WHITE_MASK: 
-@GIMP_BLACK_MASK: 
-@GIMP_ALPHA_MASK: 
-@GIMP_SELECTION_MASK: 
-@GIMP_INV_SELECTION_MASK: 
-@GIMP_COPY_MASK: 
-@GIMP_INV_COPY_MASK: 
+@GIMP_ADD_WHITE_MASK: 
+@GIMP_ADD_BLACK_MASK: 
+@GIMP_ADD_ALPHA_MASK: 
+@GIMP_ADD_SELECTION_MASK: 
+@GIMP_ADD_INVERSE_SELECTION_MASK: 
+@GIMP_ADD_COPY_MASK: 
+@GIMP_ADD_INVERSE_COPY_MASK: 
 
 <!-- ##### ENUM GimpBlendMode ##### -->
 <para>
 
 </para>
 
-@GIMP_FG_BG_RGB: 
-@GIMP_FG_BG_HSV: 
-@GIMP_FG_TRANS: 
-@GIMP_CUSTOM: 
+@GIMP_FG_BG_RGB_MODE: 
+@GIMP_FG_BG_HSV_MODE: 
+@GIMP_FG_TRANSPARENT_MODE: 
+@GIMP_CUSTOM_MODE: 
 
 <!-- ##### ENUM GimpBrushApplicationMode ##### -->
 <para>
@@ -72,10 +72,10 @@ Enums and definitions.
 
 </para>
 
-@GIMP_ADD: 
-@GIMP_SUB: 
-@GIMP_REPLACE: 
-@GIMP_INTERSECT: 
+@GIMP_CHANNEL_OP_ADD: 
+@GIMP_CHANNEL_OP_SUBTRACT: 
+@GIMP_CHANNEL_OP_REPLACE: 
+@GIMP_CHANNEL_OP_INTERSECT: 
 
 <!-- ##### ENUM GimpChannelType ##### -->
 <para>
@@ -150,11 +150,11 @@ Enums and definitions.
 
 </para>
 
-@GIMP_FG_IMAGE_FILL: 
-@GIMP_BG_IMAGE_FILL: 
-@GIMP_WHITE_IMAGE_FILL: 
-@GIMP_TRANS_IMAGE_FILL: 
-@GIMP_NO_IMAGE_FILL: 
+@GIMP_FOREGROUND_FILL: 
+@GIMP_BACKGROUND_FILL: 
+@GIMP_WHITE_FILL: 
+@GIMP_TRANSPARENT_FILL: 
+@GIMP_NO_FILL: 
 
 <!-- ##### ENUM GimpImageBaseType ##### -->
 <para>
@@ -257,8 +257,8 @@ Enums and definitions.
 
 </para>
 
-@GIMP_APPLY: 
-@GIMP_DISCARD: 
+@GIMP_MASK_APPLY: 
+@GIMP_MASK_DISCARD: 
 
 <!-- ##### ENUM GimpMergeType ##### -->
 <para>
@@ -284,7 +284,7 @@ Enums and definitions.
 
 </para>
 
-@GIMP_CONTINUOUS: 
+@GIMP_CONSTANT: 
 @GIMP_INCREMENTAL: 
 
 <!-- ##### ENUM GimpRepeatMode ##### -->

@@ -300,7 +300,7 @@ HELP
 
     @inargs = (
 	&layer_arg,
- 	{ name => 'mask_type', type => 'enum AddMaskType',
+ 	{ name => 'mask_type', type => 'enum GimpAddMaskType',
 	  desc => 'The type of mask: { %%desc%% }' }
     );
     $inargs[0]->{desc} .= ' to which to add the mask';
@@ -312,7 +312,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (mask = gimp_layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
+success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
 CODE
     );
 }

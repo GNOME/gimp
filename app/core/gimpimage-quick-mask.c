@@ -89,7 +89,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
 
                   gimp_drawable_fill_by_type (GIMP_DRAWABLE (mask),
                                               gimp_get_current_context (gimage->gimp),
-                                              TRANSPARENT_FILL);
+                                              GIMP_TRANSPARENT_FILL);
                 }
               else /* if selection */
                 {

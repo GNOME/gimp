@@ -64,25 +64,25 @@ gimp_image_new_init (Gimp *gimp)
   /* Available Fill Types */
 
   new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = FOREGROUND_FILL;
+  new_fill_type->type = GIMP_FOREGROUND_FILL;
   new_fill_type->name = _("Foreground");
 
   gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
 
   new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = BACKGROUND_FILL;
+  new_fill_type->type = GIMP_BACKGROUND_FILL;
   new_fill_type->name = _("Background");
 
   gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
 
   new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = WHITE_FILL;
+  new_fill_type->type = GIMP_WHITE_FILL;
   new_fill_type->name = _("White");
 
   gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
 
   new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = TRANSPARENT_FILL;
+  new_fill_type->type = GIMP_TRANSPARENT_FILL;
   new_fill_type->name = _("Transparent");
 
   gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
@@ -96,7 +96,7 @@ gimp_image_new_init (Gimp *gimp)
   gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
   gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_units;
   gimp->image_new_last_values.type        = gimp->config->default_type;
-  gimp->image_new_last_values.fill_type   = BACKGROUND_FILL;
+  gimp->image_new_last_values.fill_type   = GIMP_BACKGROUND_FILL;
 
   gimp->have_current_cut_buffer = FALSE;
 }
@@ -187,9 +187,9 @@ gimp_image_new_calculate_memsize (GimpImageNewValues *values)
 {
   gint channels;
 
-  channels = ((values->type == GIMP_RGB ? 3 : 1)      /* color     */ +
-              (values->fill_type == TRANSPARENT_FILL) /* alpha     */ +
-              1                                       /* selection */);
+  channels = ((values->type == GIMP_RGB ? 3 : 1)           /* color     */ +
+              (values->fill_type == GIMP_TRANSPARENT_FILL) /* alpha     */ +
+              1                                            /* selection */);
 
   return channels * values->width * values->height;
 }
@@ -244,12 +244,12 @@ gimp_image_new_create_image (Gimp               *gimp,
 
   switch (values->fill_type)
     {
-    case FOREGROUND_FILL:
-    case BACKGROUND_FILL:
-    case WHITE_FILL:
+    case GIMP_FOREGROUND_FILL:
+    case GIMP_BACKGROUND_FILL:
+    case GIMP_WHITE_FILL:
       type = (values->type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
       break;
-    case TRANSPARENT_FILL:
+    case GIMP_TRANSPARENT_FILL:
       type = (values->type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
       break;
     default:

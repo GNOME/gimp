@@ -532,7 +532,7 @@ file_new_reset_callback (GtkWidget *widget,
      GINT_TO_POINTER (info->gimp->config->default_type));
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w[0]),
-                               GINT_TO_POINTER (BACKGROUND_FILL));
+                               GINT_TO_POINTER (GIMP_BACKGROUND_FILL));
 }
 
 static void

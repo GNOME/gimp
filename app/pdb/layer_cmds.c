@@ -30,7 +30,6 @@
 
 #include "base/base-enums.h"
 #include "core/core-enums.h"
-#include "core/core-types.h"
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
@@ -313,11 +312,11 @@ layer_create_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   mask_type = args[1].value.pdb_int;
-  if (mask_type < ADD_WHITE_MASK || mask_type > ADD_INVERSE_COPY_MASK)
+  if (mask_type < GIMP_ADD_WHITE_MASK || mask_type > GIMP_ADD_INVERSE_COPY_MASK)
     success = FALSE;
 
   if (success)
-    success = (mask = gimp_layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
+    success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
 
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 
@@ -337,7 +336,7 @@ static ProcArg layer_create_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "mask_type",
-    "The type of mask: { ADD_WHITE_MASK (0), ADD_BLACK_MASK (1), ADD_ALPHA_MASK (2), ADD_SELECTION_MASK (3), ADD_INVERSE_SELECTION_MASK (4), ADD_COPY_MASK (5), ADD_INVERSE_COPY_MASK (6) }"
+    "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_SELECTION_MASK (3), GIMP_ADD_INVERSE_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5), GIMP_ADD_INVERSE_COPY_MASK (6) }"
   }
 };
 

@@ -80,10 +80,10 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 }
 
 static void
-gimp_display_shell_bucket_fill (GimpImage      *gimage,
-                                BucketFillMode  fill_mode,
-                                const GimpRGB  *color,
-                                GimpPattern    *pattern)
+gimp_display_shell_bucket_fill (GimpImage          *gimage,
+                                GimpBucketFillMode  fill_mode,
+                                const GimpRGB      *color,
+                                GimpPattern        *pattern)
 {
   GimpDrawable *drawable;
   GimpToolInfo *tool_info;
@@ -134,7 +134,7 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
   if (GIMP_IS_PATTERN (viewable))
     {
       gimp_display_shell_bucket_fill (gdisp->gimage,
-                                      PATTERN_BUCKET_FILL,
+                                      GIMP_PATTERN_BUCKET_FILL,
                                       NULL,
                                       GIMP_PATTERN (viewable));
     }
@@ -150,7 +150,7 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
   gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
 
   gimp_display_shell_bucket_fill (gdisp->gimage,
-                                  FG_BUCKET_FILL,
+                                  GIMP_FG_BUCKET_FILL,
                                   color,
                                   NULL);
 }

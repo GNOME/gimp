@@ -150,7 +150,7 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'fill_mode', type => 'enum BucketFillMode',
+	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
 	  desc => 'The type of fill: { %%desc%% }' },
 	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
 	  desc => 'The paint application mode: { %%desc%% }' },
