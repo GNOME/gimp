@@ -24,6 +24,7 @@ typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 /* externed variables  */
 extern GtkWidget *tool_widgets[];
 extern GtkWidget *popup_shell;
+extern GtkTooltips *tool_tips;
 
 /* function declarations */
 GtkWidget *  create_pixmap_widget (GdkWindow *, char **, int, int);

@@ -1,3 +1,9 @@
+Sat Dec 13 23:37:59 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* mkbrush.scm updated
+
+	* Added support for tooltips in preferences
+
 Sun Dec 14 00:06:00 CST 1997 Shawn T. Amundson <amundson@gimp.org>
 
 	* configure.in: Changed gimp lib dir to lib/gimp/MAJOR.MINOR 

@@ -4,13 +4,6 @@
 ; Make-Brush - a script for the script-fu program
 ; by Seth Burgess 1997 <sjburges@ou.edu>
 ;
-; ======================================================================
-; NOTE: This will crash with an ugly error if home dir is not set correctly,
-;       or ~/.gimp/brushes/ is not writable.  To change it from /home/seth
-;       permanently, change the value on the next to last line to reflect
-;       your home directory.  Be sure to escape the quotes!
-; ======================================================================
-;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
@@ -37,7 +30,9 @@
      (old-fg-color (car (gimp-palette-get-foreground)))
      (old-bg-color (car (gimp-palette-get-background)))
 
-     (set! data-dir (car (gimp-gimprc-query "gimp_dir"))) 
+     ; construct variables 
+
+     (data-dir (car (gimp-gimprc-query "gimp_dir"))) 
      (filename (string-append data-dir
                "/brushes/r" 
                (number->string width) 
@@ -65,7 +60,7 @@
     (gimp-edit-fill    img drawable) 
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
+    (gimp-brushes-refresh) 
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -79,7 +74,7 @@
   )
 ) 
 
-; Register with the GDB
+; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular"
             "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular"
@@ -91,7 +86,7 @@
             SF-VALUE "Description" "\"Rectangle\""
             SF-VALUE "Width" "20"
             SF-VALUE "Height" "20"
-            SF-VALUE "Spacking" "20"
+            SF-VALUE "Spacing" "20"
             )
 
 
@@ -108,7 +103,7 @@
      (old-fg-color (car (gimp-palette-get-foreground)))
      (old-bg-color (car (gimp-palette-get-background)))
      
-    (set! data-dir (car (gimp-gimprc-query "gimp_dir"))) 
+    (data-dir (car (gimp-gimprc-query "gimp_dir"))) 
     (filename (string-append data-dir
                "/brushes/r" 
                (number->string width) 
@@ -143,7 +138,7 @@
     (gimp-edit-fill    img drawable) 
     (file-gbr-save 1 img drawable filename "" 25 desc)
     
-    (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
+    (gimp-brushes-refresh) 
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -157,7 +152,7 @@
   )
 ) 
 
-; Register with the GDB
+; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
             "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered"
@@ -186,9 +181,9 @@
 
      ; Construct variables...
 
-     (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
+     (data-dir (car (gimp-gimprc-query "gimp_dir")))
      (filename (string-append data-dir
-			      "/brushes/r" 
+			      "/brushes/e" 
 			      (number->string width) 
 			      "x" 
 			      (number->string height) 
@@ -214,7 +209,7 @@
     (gimp-edit-fill    img drawable) 
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
+    (gimp-brushes-refresh) 
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -228,7 +223,7 @@
   )
 ) 
 
-; Register with the GDB
+; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical"
             "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical"
@@ -258,9 +253,9 @@
      (old-bg-color (car (gimp-palette-get-background)))
 
      ; Construct variables...
-     (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
+     (data-dir (car (gimp-gimprc-query "gimp_dir")))
      (filename (string-append data-dir
-			      "/brushes/r" 
+			      "/brushes/e" 
 			      (number->string width) 
 			      "x" 
 			      (number->string height) 
@@ -294,7 +289,7 @@
     (gimp-edit-fill    img drawable) 
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
-    (gimp-brushes-refresh) ; My own modification!  You'll need my diff.
+    (gimp-brushes-refresh) 
     (gimp-brushes-set-brush desc)
 
 ; Terminate, restoring old bg.
@@ -308,7 +303,7 @@
   )
 ) 
 
-; Register with the GDB
+; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
             "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered"

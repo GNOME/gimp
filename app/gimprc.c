@@ -111,7 +111,7 @@ int       default_height = 256;
 int       default_type = RGB;
 int       show_tips = TRUE;
 int       last_tip = -1;
-int       show_tool_tips = FALSE;
+int       show_tool_tips = TRUE;
 
 static int get_next_token (void);
 static int peek_next_token (void);
@@ -215,6 +215,7 @@ static ParseFunc funcs[] =
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
   { "show-tool-tips",        TT_BOOLEAN,    &show_tool_tips, NULL },
+  { "dont-show-tool-tips",   TT_BOOLEAN,    NULL, &show_tool_tips },
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 

@@ -114,6 +114,7 @@ static   int          old_allow_resize_windows;
 static   int          old_auto_save;
 static   int          old_preview_size;
 static   int          old_no_cursor_updating;
+static   int          old_show_tool_tips;
 static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
 static   int          old_default_width;
@@ -582,6 +583,11 @@ file_prefs_ok_callback (GtkWidget *widget,
       
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
+
+  if (show_tool_tips)
+    gtk_tooltips_enable (tool_tips);
+  else
+    gtk_tooltips_disable (tool_tips);
 }
 
 static void
@@ -630,6 +636,11 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "cursor-updating");
       remove = g_list_append (remove, "no-cursor-updating");
+    }
+  if (show_tool_tips != old_show_tool_tips)
+    {
+      update = g_list_append (update, "show-tool-tips");
+      remove = g_list_append (remove, "dont-show-tool-tips");
     }
   if (cubic_interpolation != old_cubic_interpolation)
     update = g_list_append (update, "cubic-interpolation");
@@ -742,6 +753,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   allow_resize_windows = old_allow_resize_windows;
   auto_save = old_auto_save;
   no_cursor_updating = old_no_cursor_updating;
+  show_tool_tips = old_show_tool_tips;
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
   default_width = old_default_width;
@@ -791,6 +803,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     auto_save = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&no_cursor_updating)
     no_cursor_updating = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&show_tool_tips)
+    show_tool_tips = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&cubic_interpolation)
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&confirm_on_close)
@@ -949,6 +963,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_auto_save = auto_save;
       old_preview_size = preview_size;
       old_no_cursor_updating = no_cursor_updating;
+      old_show_tool_tips = show_tool_tips;
       old_cubic_interpolation = cubic_interpolation;
       old_confirm_on_close = confirm_on_close;
       old_default_width = default_width;
@@ -1247,6 +1262,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &no_cursor_updating);
+      gtk_widget_show (button);
+
+      button = gtk_check_button_new_with_label("Show tool tips");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   show_tool_tips);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &show_tool_tips);
       gtk_widget_show (button);
 
       hbox = gtk_hbox_new (FALSE, 2);

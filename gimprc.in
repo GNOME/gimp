@@ -139,7 +139,7 @@
 
 # Tooltips
 #  Comment this out to disable the tooltips in the toolbox
-(show-tool-tips)
+# (dont-show-tool-tips)
 
 # Controlling ruler visibility
 #  The default behavior is for rulers to be ON
