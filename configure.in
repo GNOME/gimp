@@ -1601,6 +1601,7 @@ plug-ins/xjt/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/FractalExplorer/examples/Makefile
 plug-ins/Lighting/Makefile
+plug-ins/Lighting/images/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
 plug-ins/common/Makefile

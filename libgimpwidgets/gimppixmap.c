@@ -26,6 +26,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimppixmap.h"
 
 
@@ -70,9 +71,7 @@ gimp_pixmap_get_type (void)
 static void
 gimp_pixmap_class_init (GimpPixmapClass *klass)
 {
-  GtkWidgetClass *widget_class;
-
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -96,9 +95,7 @@ gimp_pixmap_init (GimpPixmap *pixmap)
 GtkWidget *
 gimp_pixmap_new (gchar **xpm_data)
 {
-  GimpPixmap *pixmap;
-
-  pixmap = g_object_new (GIMP_TYPE_PIXMAP, NULL);
+  GimpPixmap *pixmap = g_object_new (GIMP_TYPE_PIXMAP, NULL);
 
   gimp_pixmap_set (pixmap, xpm_data);
 

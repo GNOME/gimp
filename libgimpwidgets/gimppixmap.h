@@ -20,6 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef GIMP_DISABLE_DEPRECATED
+
 #ifndef __GIMP_PIXMAP_H__
 #define __GIMP_PIXMAP_H__
 
@@ -70,3 +72,6 @@ void        gimp_pixmap_set      (GimpPixmap  *pixmap,
 G_END_DECLS
 
 #endif /* __GIMP_PIXMAP_H__ */
+
+#endif /* GIMP_DISABLE_DEPRECATED */
+

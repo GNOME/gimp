@@ -1,10 +1,40 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppixmap.[ch]: declared GimpPixmap as deprecated.
+
+	* libgimpwidgets/gimpwidgets.[ch]: ditto for gimp_pixmap_button_new().
+
+	* plug-ins/Lighting/ChangeLog: removed outdated and unused ChangeLog.
+
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/Lighting/*.xpm: removed XPM files...
+
+	* configure.in
+	* plug-ins/Lighting/images: ... and added them as PNG images here.
+	These should be redone with antialiased edges.
+
+	* plug-ins/Lighting/lighting_stock.[ch]
+	* plug-ins/Lighting/lighting_ui.c: register stock icons and use
+	those instead of GimpPixmaps.
+
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/MapObject/*.xpm: removed duplicated XPM files.
+
+	* plug-ins/MapObject/mapobject_stock.[ch]: register stock icons
+	reusing the generated header from the Lighting plug-in.
+
+	* plug-ins/MapObject/mapobject_ui.c: use them.
+
+	* plug-ins/pagecurl/pagecurl.c: undef GIMP_DISABLE_DEPRECATED until
+	GimpPixmap has been replaced here as well.
+	
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
-	* plug-ins/gimpressionist/presets.c: fixed Bug # 147483 (gimpressionist 
+	* plug-ins/gimpressionist/presets.c: fixed bug #147483 (gimpressionist 
 	will delete global presets if the user running GIMP has priviliges to 
-	do so ). This was done by creating a function to check if a preset is 
-	global, and by making sure the delete button is in-sensitive when this
-	is the case.
+	do so). This was done by creating a function to check if a preset is 
+	global, and by making sure the delete button is in-sensitive when
+	this is the case.
 
 2004-07-13  Sven Neumann  <sven@gimp.org>
 

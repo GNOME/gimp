@@ -13,19 +13,9 @@
 #include "mapobject_apply.h"
 #include "mapobject_preview.h"
 #include "mapobject_main.h"
+#include "mapobject_stock.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-#include "amb1.xpm"
-#include "amb2.xpm"
-#include "diffint1.xpm"
-#include "diffint2.xpm"
-#include "diffref1.xpm"
-#include "diffref2.xpm"
-#include "specref1.xpm"
-#include "specref2.xpm"
-#include "high1.xpm"
-#include "high2.xpm"
 
 
 GdkGC         *gc          = NULL;
@@ -826,8 +816,8 @@ create_material_page (void)
   GtkWidget    *label;
   GtkWidget    *hbox;
   GtkWidget    *spinbutton;
+  GtkWidget    *image;
   GtkObject    *adj;
-  GtkWidget    *pixmap;
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -848,10 +838,11 @@ create_material_page (void)
 
   /* Ambient intensity */
 
-  pixmap = gimp_pixmap_new (amb1_xpm);
+  image = gtk_image_new_from_stock (STOCK_INTENSITY_AMBIENT_LOW,
+                                    GTK_ICON_SIZE_BUTTON);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("Ambient:"), 0.0, 0.5,
-                                     pixmap, 1, FALSE);
+                                     image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
@@ -868,17 +859,19 @@ create_material_page (void)
 			   _("Amount of original color to show where no "
 			     "direct light falls"), NULL);
 
-  pixmap = gimp_pixmap_new (amb2_xpm);
-  gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 0, 1,
+  image = gtk_image_new_from_stock (STOCK_INTENSITY_AMBIENT_HIGH,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image, 3, 4, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (image);
 
   /* Diffuse intensity */
 
-  pixmap = gimp_pixmap_new (diffint1_xpm);
+  image = gtk_image_new_from_stock (STOCK_INTENSITY_DIFFUSE_LOW,
+                                    GTK_ICON_SIZE_BUTTON);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                      _("Diffuse:"), 0.0, 0.5,
-                                     pixmap, 1, FALSE);
+                                     image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
@@ -895,10 +888,11 @@ create_material_page (void)
 			   _("Intensity of original color when lit by a light "
 			     "source"), NULL);
 
-  pixmap = gimp_pixmap_new (diffint2_xpm);
-  gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 1, 2,
+  image = gtk_image_new_from_stock (STOCK_INTENSITY_DIFFUSE_HIGH,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image, 3, 4, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (image);
 
   frame = gimp_frame_new (_("Reflectivity"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
@@ -916,10 +910,11 @@ create_material_page (void)
 
   /* Diffuse reflection */
 
-  pixmap = gimp_pixmap_new (diffref1_xpm);
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_DIFFUSE_LOW,
+                                    GTK_ICON_SIZE_BUTTON);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("Diffuse:"), 0.0, 0.5,
-                                     pixmap, 1, FALSE);
+                                     image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_ref,
@@ -936,17 +931,19 @@ create_material_page (void)
 			   _("Higher values makes the object reflect more "
 			     "light (appear lighter)"), NULL);
 
-  pixmap = gimp_pixmap_new (diffref2_xpm);
-  gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 0, 1,
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_DIFFUSE_HIGH,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image, 3, 4, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (image);
 
   /* Specular reflection */
 
-  pixmap = gimp_pixmap_new (specref1_xpm);
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_SPECULAR_LOW,
+                                    GTK_ICON_SIZE_BUTTON);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                      _("Specular:"), 0.0, 0.5,
-                                     pixmap, 1, FALSE);
+                                     image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
@@ -963,17 +960,19 @@ create_material_page (void)
 			   _("Controls how intense the highlights will be"),
 			   NULL);
 
-  pixmap = gimp_pixmap_new (specref2_xpm);
-  gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 1, 2,
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_SPECULAR_HIGH,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image, 3, 4, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (image);
 
   /* Highlight */
 
-  pixmap = gimp_pixmap_new (high1_xpm);
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_HIGHLIGHT_LOW,
+                                    GTK_ICON_SIZE_BUTTON);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                                      _("Highlight:"), 0.0, 0.5,
-                                     pixmap, 1, FALSE);
+                                     image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
@@ -990,10 +989,11 @@ create_material_page (void)
 			   _("Higher values makes the highlights more focused"),
 			   NULL);
 
-  pixmap = gimp_pixmap_new (high2_xpm);
-  gtk_table_attach (GTK_TABLE (table), pixmap, 3, 4, 2, 3,
+  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_HIGHLIGHT_HIGH,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image, 3, 4, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (image);
 
   gtk_widget_show (page);
 

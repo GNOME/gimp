@@ -31,9 +31,12 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpchainbutton.h"
-#include "gimppixmap.h"
+
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
+
+#undef GIMP_DISABLE_DEPRECATED
+#include "gimppixmap.h"
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
