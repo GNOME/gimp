@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 13:32+0900\n"
+"POT-Creation-Date: 1999-09-09 21:03+0900\n"
 "PO-Revision-Date: 1999-09-09 14:00+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "Keep image's values"
-msgstr "画像の明度を保持"
+msgstr "画像の値を保持"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "Keep the first value"
-msgstr "最初の明度を保持"
+msgstr "最初の値を保持"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Fill with parameter k"
@@ -242,7 +242,11 @@ msgid ""
 "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
 "prameter file is passed as the 4th arg. You can control CML_explorer via "
 "parameter file."
-msgstr "Coupled-Map Lattice (CML) 画像を作成する. CML は連続値域上のセルラーオートマタの一種である. RUN_NONINTERACTIVE の場合には第 4 引数として, パラメータファイル名を渡す. そうすることで CML_explorer をパラメータファイルを通して制御できる."
+msgstr ""
+"Coupled-Map Lattice (CML) 画像を作成する. CML "
+"は連続値域上のセルラーオートマタの一種である. RUN_NONINTERACTIVE "
+"の場合には第 4 引数として, パラメータファイル名を渡す. そうすることで "
+"CML_explorer をパラメータファイルを通して制御できる."
 
 #: plug-ins/common/CML_explorer.c:1325
 msgid "Coupled-Map-Lattice Explorer"
@@ -450,9 +454,10 @@ msgstr "現在の設定のグラフ"
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
 #: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
-#: plug-ins/sel2path/sel2path.c:350
+#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
+#: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
+#: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
+#: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
 msgid "OK"
 msgstr "了解"
 
@@ -513,7 +518,8 @@ msgstr "警告: 古い形式のファイルです."
 
 #: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr "警告: ふむ, この CML explorer よりも新しい版のためのパラメータファイルです."
+msgstr ""
+"警告: ふむ, この CML explorer よりも新しい版のためのパラメータファイルです."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
@@ -526,7 +532,8 @@ msgstr "警告: ふむ, この CML explorer よりも新しい版のためのパラメータファイルで
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
 #: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
+#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
+#: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 #: plug-ins/sel2path/sel2path.c:359
@@ -892,7 +899,8 @@ msgstr "レンズ効果"
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "パラメータ設定"
 
@@ -916,7 +924,19 @@ msgstr "周辺部を透明にする"
 msgid "Lens refraction index: "
 msgstr "レンズ屈折度: "
 
-#: plug-ins/common/autostretch_hsv.c:82
+#: plug-ins/common/autocrop.c:62
+msgid "Automagically crops a picture."
+msgstr "自動的に画像を切り抜く"
+
+#: plug-ins/common/autocrop.c:67
+msgid "<Image>/Image/Transforms/Autocrop"
+msgstr "<Image>/画像/変形/自動切り抜き"
+
+#: plug-ins/common/autocrop.c:105
+msgid "Cropping..."
+msgstr "切り抜いています..."
+
+#: plug-ins/common/autostretch_hsv.c:82 plug-ins/common/c_astretch.c:78
 msgid ""
 "Automatically stretch the contrast of the specified drawable to cover all "
 "possible ranges."
@@ -1243,6 +1263,31 @@ msgstr "bz2: 実行失敗: bunzip2: %s\n"
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr "bz2: bzip2 圧縮されたファイルは正しい拡張子無しでは開けません\n"
 
+#: plug-ins/common/c_astretch.c:79
+msgid ""
+"This simple plug-in does an automatic contrast stretch.  For each channel in "
+"the image, it finds the minimum and maximum values... it uses those values "
+"to stretch the individual histograms to the full contrast range.  For some "
+"images it may do just what you want; for others it may be total crap :)"
+msgstr ""
+"このシンプルなプラグインは自動コントラスト伸長を行うものです. "
+"画像のそれぞれのチャンネルに対して最小値と最大値を調べて, "
+"チャンネル個々のヒストグラムをコントラスト値域全域に伸長します. "
+"多くの画像に対しては思った通りの結果が得られますが, "
+"ときどきクズ画像を生成してしまいます :)"
+
+#: plug-ins/common/c_astretch.c:83
+msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
+msgstr "<Image>/画像/色/コントラスト自動伸長"
+
+#: plug-ins/common/c_astretch.c:115
+msgid "Auto-Stretching Contrast..."
+msgstr "コントラスト自動伸長中..."
+
+#: plug-ins/common/c_astretch.c:156
+msgid "c_astretch: cmap was NULL!  Quitting...\n"
+msgstr "c_astretch: cmap が NULL です! 終了します...\n"
+
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
 msgstr "格子模様を画像に加える"
@@ -1303,6 +1348,41 @@ msgstr "カスタムカラー: "
 #: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
 msgstr "単色塗りカスタムカラー"
+
+#: plug-ins/common/color_enhance.c:84
+msgid ""
+"Automatically stretch the saturation of the specified drawable to cover all "
+"possible ranges."
+msgstr "指定された描画対象の彩度を自動的に可能な値域全体に広げる."
+
+#: plug-ins/common/color_enhance.c:85
+msgid ""
+"This simple plug-in does an automatic saturation stretch.  For each channel "
+"in the image, it finds the minimum and maximum values... it uses those "
+"values to stretch the individual histograms to the full range.  For some "
+"images it may do just what you want; for others it may be total crap :).  "
+"This version differs from Contrast Autostretch in that it works in HSV "
+"space, and preserves hue."
+msgstr ""
+"このシンプルなプラグインは自動彩度伸長を行うものです. "
+"画像のそれぞれのチャンネルに対して最小値と最大値を調べて, "
+"チャンネル個々のヒストグラムをコントラスト値域全域に伸長します. "
+"多くの画像に対しては思った通りの結果が得られますが, "
+"ときどきクズ画像を生成してしまいます :) "
+"この版ではコントラスト自動伸長プラグインとは違い, HSV "
+"空間で動作して色相が保存されます."
+
+#: plug-ins/common/color_enhance.c:89
+msgid "<Image>/Image/Colors/Color Enhance"
+msgstr "<Image>/画像/色/色強調"
+
+#: plug-ins/common/color_enhance.c:121
+msgid "Color Enhance..."
+msgstr "色を強調しています..."
+
+#: plug-ins/common/color_enhance.c:163
+msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
+msgstr "Color_Enhance: cmap が NULL です! 終了します...\n"
 
 #: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
 msgid "RGB"
@@ -2041,6 +2121,37 @@ msgstr ""
 msgid "GIF: too much input data, ignoring extra...\n"
 msgstr "GIF: 入力データが大きすぎます. 余計な分は無視します...\n"
 
+#: plug-ins/common/guillotine.c:76
+msgid ""
+"Slice up the image into subimages, cutting along the image's Guides.  Fooey "
+"to you and your broccoli, Pokey."
+msgstr "画像をガイドにそって部分画像に切り分けます."
+
+#: plug-ins/common/guillotine.c:77
+msgid "This function takes an image and blah blah.  Hooray!"
+msgstr "この関数は画像に対して「いち、にの、さん!」をします"
+
+#: plug-ins/common/guillotine.c:81
+msgid "<Image>/Image/Transforms/Guillotine"
+msgstr "<Image>/画像/変形/ギロチン"
+
+#: plug-ins/common/guillotine.c:114
+msgid "Guillotine..."
+msgstr "ギロチンで切断しています..."
+
+#: plug-ins/common/guillotine.c:161
+msgid "Aie!  Aie!  Aie!\n"
+msgstr "アイエ! アイエ! アイエ!\n"
+
+#: plug-ins/common/guillotine.c:171
+#, c-format
+msgid "Yay... found %d horizontal guides and %d vertical guides.\n"
+msgstr "やー... %d の水平ガイドと %d の鉛直ガイドがある.\n"
+
+#: plug-ins/common/guillotine.c:176
+msgid "Poopy, no guides.\n"
+msgstr "ガイドがありません.\n"
+
 #: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
 msgid "loads files in the JPEG file format"
 msgstr "JPEG ファイル形式の画像を読み込む"
@@ -2204,6 +2315,34 @@ msgstr ""
 #: plug-ins/common/mail.c:793
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "mail: ファイル拡張子に関するエラーが発生しました\n"
+
+#: plug-ins/common/normalize.c:78
+msgid ""
+"Normalize the contrast of the specified drawable to cover all possible "
+"ranges."
+msgstr "指定された描画対象のコントラストを自動的に可能な値域全体に正規化する."
+
+#: plug-ins/common/normalize.c:79
+msgid ""
+"This plugin performs almost the same operation as the 'contrast autostretch' "
+"plugin, except that it won't allow the colour channels to normalize "
+"independently.  This is actually what most people probably want instead of "
+"contrast-autostretch; use c-a only if you wish to remove an undesirable "
+"colour-tint from a source image which is supposed to contain pure-white and "
+"pure-black."
+msgstr "このプラグインは「コントラスト自動伸長」プラグインと同様なものですが, 個々のチャンネルに対して操作を行うようなことはしません. 多くの人はコントラスト自動伸長ではなく, こちらの機能の方を望んでいるようです. コントラスト自動伸長の方を用いるのは, 元画像が本来白黒なのに画像に色が着いてしまっている場合にそれを取り除くためだけでしょう."
+
+#: plug-ins/common/normalize.c:83
+msgid "<Image>/Image/Colors/Normalize"
+msgstr "<Image>/画像/色/正規化"
+
+#: plug-ins/common/normalize.c:115
+msgid "Normalizing..."
+msgstr "正規化しています..."
+
+#: plug-ins/common/normalize.c:155
+msgid "normalize: cmap was NULL!  Quitting...\n"
+msgstr "normalize: cmap が NULL です! 終了します...\n"
 
 #: plug-ins/common/oilify.c:122
 msgid "Modify the specified drawable to resemble an oil painting"
@@ -2606,43 +2745,6 @@ msgstr "PPD ファイル?"
 msgid "File"
 msgstr "ファイル"
 
-#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
-msgid "Converts a selection to a path (with advanced user menu)"
-msgstr "選択領域をパスに変換(詳細メニュー表示)"
-
-#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
-msgid "Converts a selection to a path"
-msgstr "選択領域をパスに変換"
-
-#: plug-ins/sel2path/sel2path.c:158
-msgid "<Image>/Select/To Path"
-msgstr "<Image>/選択/パスに変換"
-
-#: plug-ins/sel2path/sel2path.c:203
-msgid "No selection to convert"
-msgstr "変換する選択領域がありません"
-
-#: plug-ins/sel2path/sel2path.c:367
-msgid "Default Values"
-msgstr "デフォルト値"
-
-#: plug-ins/sel2path/sel2path.c:556
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr "print_spline: 不正な角度 (%d)"
-
-#: plug-ins/sel2path/sel2path.c:564
-msgid "selection_to_path"
-msgstr "選択領域からされたパス"
-
-#: plug-ins/sel2path/sel2path.c:590
-msgid "gimp_image_get_selection failed"
-msgstr "gimp_image_get_selection 失敗"
-
-#: plug-ins/sel2path/sel2path.c:598
-msgid "Internal error. Selection bpp > 1"
-msgstr "内部エラー. 選択 bpp > 1"
-
 #: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
 msgid "load file of PostScript/PDF file format"
 msgstr "PostScript/PDF ファイル形式の画像を読み込む"
@@ -2821,6 +2923,141 @@ msgstr "カプセルに包まれた PostScript"
 #: plug-ins/common/ps.c:2465
 msgid "Preview size"
 msgstr "プレビューサイズ"
+
+#: plug-ins/common/rotate.c:152
+msgid "Rotates a layer or the whole image by 90, 180 or 270 degrees"
+msgstr "レイヤーまたは画像全体を 90, 180, 270 度 回転させる"
+
+#: plug-ins/common/rotate.c:153
+msgid ""
+"This plug-in does rotate the active layer or the whole image clockwise by "
+"multiples of 90 degrees. When the whole image is choosen, the image is "
+"resized if necessary."
+msgstr "このプラグインは有効なレイヤーもしくは画像全体を時計周りに 90, 180, 270 度回転させます. 画像全体を回転させる場合には, 必要に応じて画像の大きさが変更されます."
+
+#: plug-ins/common/rotate.c:157
+msgid "<Image>/Image/Transforms/Rotate"
+msgstr "<Image>/画像/変形/回転"
+
+#: plug-ins/common/rotate.c:506
+msgid "You can not rotate the whole image if there's a selection."
+msgstr "選択領域がある場合には画像全体を回転させることができません."
+
+#: plug-ins/common/rotate.c:512
+msgid "You can not rotate the whole image if there's a floating selection."
+msgstr "フロート選択がある場合には画像全体を回転させることができません.<"
+
+#: plug-ins/common/rotate.c:518
+msgid "Rotating..."
+msgstr "回転しています..."
+
+#: plug-ins/common/rotate.c:599
+msgid "Rotate"
+msgstr "回転"
+
+#. parameter settings
+#: plug-ins/common/rotate.c:625
+msgid "Rotate clockwise by"
+msgstr "時計周りに回転"
+
+#. label: degrees
+#: plug-ins/common/rotate.c:698
+msgid "degrees"
+msgstr "度"
+
+#. check button
+#: plug-ins/common/rotate.c:712
+msgid "Rotate the whole image"
+msgstr "画像全体を回転"
+
+#: plug-ins/common/rotators.c:50
+msgid "<Image>/Image/Transforms/Image"
+msgstr "<Image>/画像/変形/画像"
+
+#: plug-ins/common/rotators.c:51
+msgid "<Image>/Image/Transforms/Layer"
+msgstr "<Image>/画像/変形/レイヤー"
+
+#: plug-ins/common/rotators.c:70
+msgid "Rotates the given layer 90 degrees clockwise."
+msgstr "指定されたレイヤーを時計周りに 90 度回転させる."
+
+#: plug-ins/common/rotators.c:75
+msgid "<Image>/Image/Transforms/Layer/Rotate 90"
+msgstr "<Image>/画像/変形/画像/90度回転"
+
+#: plug-ins/common/rotators.c:82
+msgid "Rotates the given layer 90 degrees anticlockwise."
+msgstr "指定されたレイヤーを反時計周りに 90 度回転させる."
+
+#: plug-ins/common/rotators.c:87
+msgid "<Image>/Image/Transforms/Layer/Rotate 270"
+msgstr "<Image>/画像/変形/レイヤー/270度回転"
+
+#: plug-ins/common/rotators.c:94
+msgid "Rotates the given image 90 degrees clockwise."
+msgstr "指定された画像を時計周りに 90 度回転させる."
+
+#: plug-ins/common/rotators.c:99
+msgid "<Image>/Image/Transforms/Image/Rotate 90"
+msgstr "<Image>/画像/変形/レイヤー/90度回転"
+
+#: plug-ins/common/rotators.c:106
+msgid "Rotates the current image 90 degrees anticlockwise."
+msgstr "指定された画像を反時計周りに 90 度回転させる."
+
+#: plug-ins/common/rotators.c:111
+msgid "<Image>/Image/Transforms/Image/Rotate 270"
+msgstr "<Image>/画像/変形/画像/270度回転"
+
+#: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
+msgid "Converts a selection to a path (with advanced user menu)"
+msgstr "選択領域をパスに変換(詳細メニュー表示)"
+
+#: plug-ins/sel2path/sel2path.c:153 plug-ins/sel2path/sel2path.c:154
+msgid "Converts a selection to a path"
+msgstr "選択領域をパスに変換"
+
+#: plug-ins/sel2path/sel2path.c:158
+msgid "<Image>/Select/To Path"
+msgstr "<Image>/選択/パスに変換"
+
+#: plug-ins/sel2path/sel2path.c:203
+msgid "No selection to convert"
+msgstr "変換する選択領域がありません"
+
+#: plug-ins/sel2path/sel2path.c:367
+msgid "Default Values"
+msgstr "デフォルト値"
+
+#: plug-ins/sel2path/sel2path.c:556
+#, c-format
+msgid "print_spline: strange degree (%d)"
+msgstr "print_spline: 不正な角度 (%d)"
+
+#: plug-ins/sel2path/sel2path.c:564
+msgid "selection_to_path"
+msgstr "選択領域からされたパス"
+
+#: plug-ins/sel2path/sel2path.c:590
+msgid "gimp_image_get_selection failed"
+msgstr "gimp_image_get_selection 失敗"
+
+#: plug-ins/sel2path/sel2path.c:598
+msgid "Internal error. Selection bpp > 1"
+msgstr "内部エラー. 選択 bpp > 1"
+
+#: plug-ins/common/threshold_alpha.c:196
+msgid "<Image>/Image/Alpha/Threshold Alpha"
+msgstr "<Image>/画像/アルファ/アルファチャンネル閾値"
+
+#: plug-ins/common/threshold_alpha.c:300
+msgid "threshold_alpha (0.13):coloring transparency..."
+msgstr "半透明部分を切り分けています..."
+
+#: plug-ins/common/threshold_alpha.c:354
+msgid "Threshold"
+msgstr "閾値"
 
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
@@ -3002,101 +3239,22 @@ msgstr "インデックス/グレースケール画像保存中のエラー"
 msgid "Error during writing rgb image"
 msgstr "rgb 画像保存中のエラー"
 
-#~ msgid "Automagically crops a picture."
-#~ msgstr "自動的に画像を切り抜く"
+#: plug-ins/common/zealouscrop.c:64
+msgid ""
+"Automagically crops unused space from the edges and middle of a picture."
+msgstr "画像の空きを切り詰めて絵を真中にもってくる."
 
-#~ msgid "<Image>/Image/Transforms/Autocrop"
-#~ msgstr "<Image>/画像/変形/自動切り抜き"
+#: plug-ins/common/zealouscrop.c:69
+msgid "<Image>/Image/Transforms/Zealous Crop"
+msgstr "<Image>/画像/変形/最小枠で切り抜き"
 
-#~ msgid "Cropping..."
-#~ msgstr "切り抜いています..."
+#: plug-ins/common/zealouscrop.c:105
+msgid "ZealousCropping(tm)..."
+msgstr "最小枠で切り抜いています..."
 
-#~ msgid ""
-#~ "This simple plug-in does an automatic contrast stretch.  For each channel in "
-#~ "the image, it finds the minimum and maximum values... it uses those values "
-#~ "to stretch the individual histograms to the full contrast range.  For some "
-#~ "images it may do just what you want; for others it may be total crap :)"
-#~ msgstr ""
-#~ "このシンプルなプラグインは自動コントラスト伸長を行うものです. "
-#~ "画像のそれぞれのチャンネルに対して最小値と最大値を調べて, "
-#~ "チャンネル個々のヒストグラムをコントラスト値域全域に伸長します. "
-#~ "多くの画像に対しては思った通りの結果が得られますが, "
-#~ "ときどきクズ画像を生成してしまいます :)"
-
-#~ msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
-#~ msgstr "<Image>/画像/色/コントラスト自動伸長"
-
-#~ msgid "Auto-Stretching Contrast..."
-#~ msgstr "コントラスト自動伸長中..."
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr "c_astretch: cmap が NULL です! 終了します...\n"
-
-#~ msgid ""
-#~ "Automatically stretch the saturation of the specified drawable to cover all "
-#~ "possible ranges."
-#~ msgstr "指定された描画対象の彩度を自動的に可能な値域全体に広げる."
-
-#~ msgid ""
-#~ "This simple plug-in does an automatic saturation stretch.  For each channel "
-#~ "in the image, it finds the minimum and maximum values... it uses those "
-#~ "values to stretch the individual histograms to the full range.  For some "
-#~ "images it may do just what you want; for others it may be total crap :).  "
-#~ "This version differs from Contrast Autostretch in that it works in HSV "
-#~ "space, and preserves hue."
-#~ msgstr ""
-#~ "このシンプルなプラグインは自動彩度伸長を行うものです. "
-#~ "画像のそれぞれのチャンネルに対して最小値と最大値を調べて, "
-#~ "チャンネル個々のヒストグラムをコントラスト値域全域に伸長します. "
-#~ "多くの画像に対しては思った通りの結果が得られますが, "
-#~ "ときどきクズ画像を生成してしまいます :) "
-#~ "この版ではコントラスト自動伸長プラグインとは違い, HSV "
-#~ "空間で動作して色相が保存されます."
-
-#~ msgid "<Image>/Image/Colors/Color Enhance"
-#~ msgstr "<Image>/画像/色/色強調"
-
-#~ msgid "Color Enhance..."
-#~ msgstr "色を強調しています..."
-
-#~ msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-#~ msgstr "Color_Enhance: cmap が NULL です! 終了します...\n"
-
-#~ msgid "This function takes an image and blah blah.  Hooray!"
-#~ msgstr "この関数は画像に対して「いち、にの、さん!」をします"
-
-#~ msgid "<Image>/Image/Transforms/Guillotine"
-#~ msgstr "<Image>/画像/変形/ギロチン"
-
-#~ msgid ""
-#~ "Normalize the contrast of the specified drawable to cover all possible "
-#~ "ranges."
-#~ msgstr ""
-#~ "指定された描画対象のコントラストを自動的に可能な値域全体に正規化する."
-
-#~ msgid ""
-#~ "This plugin performs almost the same operation as the 'contrast autostretch' "
-#~ "plugin, except that it won't allow the colour channels to normalize "
-#~ "independently.  This is actually what most people probably want instead of "
-#~ "contrast-autostretch; use c-a only if you wish to remove an undesirable "
-#~ "colour-tint from a source image which is supposed to contain pure-white and "
-#~ "pure-black."
-#~ msgstr ""
-#~ "このプラグインは「コントラスト自動伸長」プラグインと同様なものですが, "
-#~ "個々のチャンネルに対して操作を行うようなことはしません. "
-#~ "多くの人はコントラスト自動伸長ではなく, "
-#~ "こちらの機能の方を望んでいるようです. コントラスト自動伸長の方を用いるのは, "
-#~ "元画像が本来白黒なのに画像に色が着いてしまっている場合にそれを取り除くためだあ
-#~ "韻任靴腓Ξ"
-
-#~ msgid "<Image>/Image/Colors/Normalize"
-#~ msgstr "<Image>/画像/色/正規化"
-
-#~ msgid "Normalizing..."
-#~ msgstr "正規化しています..."
-
-#~ msgid "normalize: cmap was NULL!  Quitting...\n"
-#~ msgstr "normalize: cmap が NULL です! 終了します...\n"
+#: plug-ins/common/zealouscrop.c:209
+msgid "ZealousCrop(tm): Nothing to be done.\n"
+msgstr "ZealousCrop(tm): やる事がありません.\n"
 
 #~ msgid "Makes a GIMP palette from an indexed image"
 #~ msgstr "インデックス画像から GIMP パレットを作成する"
@@ -3116,54 +3274,6 @@ msgstr "rgb 画像保存中のエラー"
 
 #~ msgid "Export GIMP Palette"
 #~ msgstr "GIMP パレットのエクスポート"
-
-#~ msgid "<Image>/Image/Transforms/Rotate"
-#~ msgstr "<Image>/画像/変形/回転"
-
-#~ msgid "Rotating..."
-#~ msgstr "回転しています..."
-
-#~ msgid "Rotate"
-#~ msgstr "回転"
-
-#~ msgid "degrees"
-#~ msgstr "度"
-
-#~ msgid "Rotate the whole image"
-#~ msgstr "画像全体を回転"
-
-#~ msgid "<Image>/Image/Transforms/Image"
-#~ msgstr "<Image>/画像/変形/画像"
-
-#~ msgid "<Image>/Image/Transforms/Layer"
-#~ msgstr "<Image>/画像/変形/レイヤー"
-
-#~ msgid "<Image>/Image/Transforms/Layer/Rotate 90"
-#~ msgstr "<Image>/画像/変形/画像/90度回転"
-
-#~ msgid "<Image>/Image/Transforms/Layer/Rotate 270"
-#~ msgstr "<Image>/画像/変形/レイヤー/270度回転"
-
-#~ msgid "<Image>/Image/Transforms/Image/Rotate 90"
-#~ msgstr "<Image>/画像/変形/レイヤー/90度回転"
-
-#~ msgid "<Image>/Image/Transforms/Image/Rotate 270"
-#~ msgstr "<Image>/画像/変形/画像/270度回転"
-
-#~ msgid "<Image>/Image/Alpha/Threshold Alpha"
-#~ msgstr "<Image>/画像/アルファ/アルファチャンネル閾値"
-
-#~ msgid "threshold_alpha (0.13):coloring transparency..."
-#~ msgstr "半透明部分を切り分けています..."
-
-#~ msgid "Threshold"
-#~ msgstr "閾値"
-
-#~ msgid "<Image>/Image/Transforms/Zealous Crop"
-#~ msgstr "<Image>/画像/変形/最小枠で切り抜き"
-
-#~ msgid "ZealousCropping(tm)..."
-#~ msgstr "最小枠で切り抜いています..."
 
 #~ msgid "sel_pixel_value [%d,%d] out of bounds"
 #~ msgstr "sel_pixel_value [%d,%d] 範囲外"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 13:32+0900\n"
+"POT-Creation-Date: 1999-09-09 21:03+0900\n"
 "PO-Revision-Date: 1999-09-09 14:00+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -90,7 +90,7 @@ msgid "Gradients"
 msgstr "グラデーション"
 
 #: app/app_procs.c:708 app/app_procs.c:709 app/app_procs.c:734
-#: app/app_procs.c:735 app/menus.c:94 app/menus.c:109
+#: app/app_procs.c:735 app/menus.c:96 app/menus.c:111
 msgid "/File/Quit"
 msgstr "/ファイル/終了"
 
@@ -110,9 +110,9 @@ msgstr "終了"
 #: app/gdisplay_color.c:462 app/gdisplay_color_ui.c:74 app/gdisplay_ops.c:352
 #: app/gimpprogress.c:135 app/global_edit.c:712 app/gradient.c:1553
 #: app/gradient.c:4599 app/gradient.c:5178 app/hue_saturation.c:362
-#: app/interface.c:938 app/interface.c:1035 app/layers_dialog.c:3297
-#: app/layers_dialog.c:3528 app/layers_dialog.c:3663 app/layers_dialog.c:3800
-#: app/layers_dialog.c:4116 app/levels.c:351 app/posterize.c:196
+#: app/interface.c:938 app/interface.c:1035 app/layers_dialog.c:3299
+#: app/layers_dialog.c:3530 app/layers_dialog.c:3665 app/layers_dialog.c:3802
+#: app/layers_dialog.c:4118 app/levels.c:351 app/posterize.c:196
 #: app/preferences_dialog.c:1505 app/qmask.c:255 app/resize.c:116
 #: app/threshold.c:279
 msgid "Cancel"
@@ -381,8 +381,8 @@ msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 #: app/curves.c:527 app/file_new_dialog.c:207 app/file_new_dialog.c:396
 #: app/gdisplay_color.c:455 app/gdisplay_color_ui.c:73
 #: app/hue_saturation.c:361 app/interface.c:1034 app/interface.c:1412
-#: app/layers_dialog.c:3296 app/layers_dialog.c:3527 app/layers_dialog.c:3662
-#: app/layers_dialog.c:4115 app/levels.c:350 app/module_db.c:263
+#: app/layers_dialog.c:3298 app/layers_dialog.c:3529 app/layers_dialog.c:3664
+#: app/layers_dialog.c:4117 app/levels.c:350 app/module_db.c:263
 #: app/posterize.c:195 app/preferences_dialog.c:1501 app/qmask.c:254
 #: app/resize.c:115 app/threshold.c:278
 msgid "OK"
@@ -610,11 +610,11 @@ msgid "Fill Options"
 msgstr "塗りつぶしオプション"
 
 #: app/channel_ops.c:180 app/image_new.c:70 app/image_new.c:224
-#: app/layers_dialog.c:3302
+#: app/layers_dialog.c:3304
 msgid "Background"
 msgstr "背景"
 
-#: app/channel_ops.c:192 app/image_new.c:80 app/layers_dialog.c:3304
+#: app/channel_ops.c:192 app/image_new.c:80 app/layers_dialog.c:3306
 msgid "Transparent"
 msgstr "透明"
 
@@ -651,39 +651,39 @@ msgstr ""
 msgid "Delete Channel"
 msgstr "チャンネル削除"
 
-#: app/channels_dialog.c:625 app/menus.c:288
+#: app/channels_dialog.c:625 app/menus.c:290
 msgid "/New Channel"
 msgstr "/新規チャンネル"
 
-#: app/channels_dialog.c:628 app/menus.c:289
+#: app/channels_dialog.c:628 app/menus.c:291
 msgid "/Raise Channel"
 msgstr "/チャンネル上昇"
 
-#: app/channels_dialog.c:631 app/menus.c:290
+#: app/channels_dialog.c:631 app/menus.c:292
 msgid "/Lower Channel"
 msgstr "/チャンネル下降"
 
-#: app/channels_dialog.c:634 app/menus.c:291
+#: app/channels_dialog.c:634 app/menus.c:293
 msgid "/Duplicate Channel"
 msgstr "/チャンネル複製"
 
-#: app/channels_dialog.c:637 app/menus.c:293
+#: app/channels_dialog.c:637 app/menus.c:295
 msgid "/Channel to Selection"
 msgstr "/チャンネルを選択領域へ"
 
-#: app/channels_dialog.c:640 app/menus.c:294
+#: app/channels_dialog.c:640 app/menus.c:296
 msgid "/Add to Selection"
 msgstr "/選択領域に加える"
 
-#: app/channels_dialog.c:641 app/menus.c:295
+#: app/channels_dialog.c:641 app/menus.c:297
 msgid "/Subtract From Selection"
 msgstr "/選択領域から引く"
 
-#: app/channels_dialog.c:642 app/menus.c:296
+#: app/channels_dialog.c:642 app/menus.c:298
 msgid "/Intersect With Selection"
 msgstr "/選択領域との交わり"
 
-#: app/channels_dialog.c:644 app/menus.c:298
+#: app/channels_dialog.c:644 app/menus.c:300
 msgid "/Delete Channel"
 msgstr "/チャンネル削除"
 
@@ -1092,7 +1092,7 @@ msgid "Width:"
 msgstr "幅:"
 
 #: app/crop.c:1055 app/file_new_dialog.c:457 app/file_new_dialog.c:475
-#: app/layers_dialog.c:3357 app/resize.c:246 app/resize.c:271 app/resize.c:515
+#: app/layers_dialog.c:3359 app/resize.c:246 app/resize.c:271 app/resize.c:515
 #: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:431
 msgid "Height:"
 msgstr "高さ:"
@@ -1407,15 +1407,15 @@ msgid "Save failed: "
 msgstr "保存失敗: "
 
 #: app/fileops.c:1548 app/fileops.c:1549 app/fileops.c:1561 app/fileops.c:1562
-#: app/menus.c:67 app/menus.c:101
+#: app/menus.c:69 app/menus.c:103
 msgid "/File/Open"
 msgstr "/ファイル/開く"
 
-#: app/fileops.c:1550 app/fileops.c:1566 app/gdisplay.c:1632 app/menus.c:102
+#: app/fileops.c:1550 app/fileops.c:1566 app/gdisplay.c:1632 app/menus.c:104
 msgid "/File/Save"
 msgstr "/ファイル/保存"
 
-#: app/fileops.c:1551 app/fileops.c:1567 app/gdisplay.c:1633 app/menus.c:103
+#: app/fileops.c:1551 app/fileops.c:1567 app/gdisplay.c:1633 app/menus.c:105
 msgid "/File/Save as"
 msgstr "/ファイル/別名で保存"
 
@@ -1499,12 +1499,12 @@ msgstr "インデックス-未描画"
 msgid "indexed"
 msgstr "インデックス"
 
-#: app/gdisplay.c:1634 app/menus.c:104
+#: app/gdisplay.c:1634 app/menus.c:106
 msgid "/File/Revert"
 msgstr "/ファイル/復帰"
 
 #: app/gdisplay.c:1635 app/gdisplay_ops.c:303 app/gdisplay_ops.c:318
-#: app/gdisplay_ops.c:365 app/menus.c:108
+#: app/gdisplay_ops.c:365 app/menus.c:110
 msgid "/File/Close"
 msgstr "/ファイル/閉じる"
 
@@ -1512,47 +1512,47 @@ msgstr "/ファイル/閉じる"
 msgid "/Edit"
 msgstr "/編集"
 
-#: app/gdisplay.c:1640 app/menus.c:113
+#: app/gdisplay.c:1640 app/menus.c:115
 msgid "/Edit/Cut"
 msgstr "/編集/カット"
 
-#: app/gdisplay.c:1641 app/menus.c:114
+#: app/gdisplay.c:1641 app/menus.c:116
 msgid "/Edit/Copy"
 msgstr "/編集/コピー"
 
-#: app/gdisplay.c:1642 app/menus.c:115
+#: app/gdisplay.c:1642 app/menus.c:117
 msgid "/Edit/Paste"
 msgstr "/編集/ペースト"
 
-#: app/gdisplay.c:1643 app/menus.c:116
+#: app/gdisplay.c:1643 app/menus.c:118
 msgid "/Edit/Paste Into"
 msgstr "/編集/選択領域内にペースト"
 
-#: app/gdisplay.c:1644 app/menus.c:117
+#: app/gdisplay.c:1644 app/menus.c:119
 msgid "/Edit/Paste As New"
 msgstr "/編集/新規にペースト"
 
-#: app/gdisplay.c:1645 app/menus.c:119
+#: app/gdisplay.c:1645 app/menus.c:121
 msgid "/Edit/Clear"
 msgstr "/編集/消去"
 
-#: app/gdisplay.c:1646 app/menus.c:120
+#: app/gdisplay.c:1646 app/menus.c:122
 msgid "/Edit/Fill"
 msgstr "/編集/塗りつぶし"
 
-#: app/gdisplay.c:1647 app/menus.c:121
+#: app/gdisplay.c:1647 app/menus.c:123
 msgid "/Edit/Stroke"
 msgstr "/編集/ストローク描画"
 
-#: app/gdisplay.c:1648 app/menus.c:125
+#: app/gdisplay.c:1648 app/menus.c:127
 msgid "/Edit/Cut Named"
 msgstr "/編集/名前を付けてカット"
 
-#: app/gdisplay.c:1649 app/menus.c:126
+#: app/gdisplay.c:1649 app/menus.c:128
 msgid "/Edit/Copy Named"
 msgstr "/編集/名前を付けてコピー"
 
-#: app/gdisplay.c:1650 app/menus.c:127
+#: app/gdisplay.c:1650 app/menus.c:129
 msgid "/Edit/Paste Named"
 msgstr "/編集/名前を選んでペースト"
 
@@ -1560,7 +1560,7 @@ msgstr "/編集/名前を選んでペースト"
 msgid "/Select"
 msgstr "/選択"
 
-#: app/gdisplay.c:1654 app/menus.c:142
+#: app/gdisplay.c:1654 app/menus.c:144
 msgid "/Select/Save To Channel"
 msgstr "/選択/新規チャンネルに保存"
 
@@ -1568,27 +1568,27 @@ msgstr "/選択/新規チャンネルに保存"
 msgid "/View"
 msgstr "/表示"
 
-#: app/gdisplay.c:1659 app/menus.c:161
+#: app/gdisplay.c:1659 app/menus.c:163
 msgid "/View/Toggle Selection"
 msgstr "/表示/選択領域の表示"
 
-#: app/gdisplay.c:1660 app/menus.c:162
+#: app/gdisplay.c:1660 app/menus.c:164
 msgid "/View/Toggle Rulers"
 msgstr "/表示/ものさし"
 
-#: app/gdisplay.c:1662 app/menus.c:164
+#: app/gdisplay.c:1662 app/menus.c:166
 msgid "/View/Toggle Guides"
 msgstr "/表示/ガイド表示"
 
-#: app/gdisplay.c:1663 app/menus.c:165
+#: app/gdisplay.c:1663 app/menus.c:167
 msgid "/View/Snap To Guides"
 msgstr "/表示/ガイドにスナップ"
 
-#: app/gdisplay.c:1664 app/menus.c:163
+#: app/gdisplay.c:1664 app/menus.c:165
 msgid "/View/Toggle Statusbar"
 msgstr "/表示/状態表示"
 
-#: app/gdisplay.c:1666 app/menus.c:156
+#: app/gdisplay.c:1666 app/menus.c:158
 msgid "/View/Dot for dot"
 msgstr "/表示/点に点を対応させる"
 
@@ -1608,15 +1608,15 @@ msgstr "/画像/チャンネル操作"
 msgid "/Image/Alpha"
 msgstr "/画像/アルファ"
 
-#: app/gdisplay.c:1675 app/menus.c:184
+#: app/gdisplay.c:1675 app/menus.c:186
 msgid "/Image/RGB"
 msgstr "/画像/RGB"
 
-#: app/gdisplay.c:1676 app/menus.c:185
+#: app/gdisplay.c:1676 app/menus.c:187
 msgid "/Image/Grayscale"
 msgstr "/画像/グレースケール"
 
-#: app/gdisplay.c:1677 app/menus.c:186
+#: app/gdisplay.c:1677 app/menus.c:188
 msgid "/Image/Indexed"
 msgstr "/画像/インデックス"
 
@@ -1632,11 +1632,11 @@ msgstr "/画像/色/閾値"
 msgid "/Image/Colors/Posterize"
 msgstr "/画像/色/ポスター化"
 
-#: app/gdisplay.c:1683 app/menus.c:173
+#: app/gdisplay.c:1683 app/menus.c:175
 msgid "/Image/Colors/Equalize"
 msgstr "/画像/色/平準化"
 
-#: app/gdisplay.c:1684 app/menus.c:174
+#: app/gdisplay.c:1684 app/menus.c:176
 msgid "/Image/Colors/Invert"
 msgstr "/画像/色/反転"
 
@@ -1660,15 +1660,15 @@ msgstr "/画像/色/カーブ"
 msgid "/Image/Colors/Levels"
 msgstr "/画像/色/レベル"
 
-#: app/gdisplay.c:1691 app/menus.c:176
+#: app/gdisplay.c:1691 app/menus.c:178
 msgid "/Image/Colors/Desaturate"
 msgstr "/画像/色/脱色"
 
-#: app/gdisplay.c:1693 app/menus.c:181
+#: app/gdisplay.c:1693 app/menus.c:183
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/画像/アルファ/アルファチャンネルを追加"
 
-#: app/gdisplay.c:1696 app/menus.c:179
+#: app/gdisplay.c:1696 app/menus.c:181
 msgid "/Image/Channel Ops/Offset"
 msgstr "/画像/チャンネル操作/オフセット"
 
@@ -1676,51 +1676,51 @@ msgstr "/画像/チャンネル操作/オフセット"
 msgid "/Layers/Stack"
 msgstr "/レイヤー/重なり"
 
-#: app/gdisplay.c:1702 app/menus.c:195
+#: app/gdisplay.c:1702 app/menus.c:197
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/レイヤー/重なり/レイヤーを前面へ"
 
-#: app/gdisplay.c:1704 app/menus.c:196
+#: app/gdisplay.c:1704 app/menus.c:198
 msgid "/Layers/Stack/Next Layer"
 msgstr "/レイヤー/重なり/レイヤーを前面へ"
 
-#: app/gdisplay.c:1706 app/menus.c:197
+#: app/gdisplay.c:1706 app/menus.c:199
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/レイヤー/重なり/レイヤーを前面へ"
 
-#: app/gdisplay.c:1708 app/menus.c:198
+#: app/gdisplay.c:1708 app/menus.c:200
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/レイヤー/重なり/レイヤーを背面へ"
 
-#: app/gdisplay.c:1710 app/menus.c:199
+#: app/gdisplay.c:1710 app/menus.c:201
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/レイヤー/重なり/レイヤーを最前面へ"
 
-#: app/gdisplay.c:1712 app/menus.c:200
+#: app/gdisplay.c:1712 app/menus.c:202
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/レイヤー/重なり/レイヤーを最背面へ"
 
-#: app/gdisplay.c:1716 app/menus.c:202
+#: app/gdisplay.c:1716 app/menus.c:204
 msgid "/Layers/Anchor Layer"
 msgstr "/レイヤー/レイヤーを固定"
 
-#: app/gdisplay.c:1717 app/menus.c:203
+#: app/gdisplay.c:1717 app/menus.c:205
 msgid "/Layers/Merge Visible Layers"
 msgstr "/レイヤー/可視レイヤーの統合"
 
-#: app/gdisplay.c:1718 app/menus.c:204
+#: app/gdisplay.c:1718 app/menus.c:206
 msgid "/Layers/Flatten Image"
 msgstr "/レイヤー/画像の統合"
 
-#: app/gdisplay.c:1719 app/menus.c:205
+#: app/gdisplay.c:1719 app/menus.c:207
 msgid "/Layers/Alpha To Selection"
 msgstr "/レイヤー/不透明部分を選択領域に"
 
-#: app/gdisplay.c:1720 app/menus.c:206
+#: app/gdisplay.c:1720 app/menus.c:208
 msgid "/Layers/Mask To Selection"
 msgstr "/レイヤー/レイヤーマスクを選択領域に"
 
-#: app/gdisplay.c:1721 app/menus.c:207
+#: app/gdisplay.c:1721 app/menus.c:209
 msgid "/Layers/Add Alpha Channel"
 msgstr "/レイヤー/アルファチャンネルを追加"
 
@@ -2668,11 +2668,11 @@ msgstr "画像深度が変更されました, 元の画像は復元できません"
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: app/image_new.c:65 app/layers_dialog.c:3301
+#: app/image_new.c:65 app/layers_dialog.c:3303
 msgid "Foreground"
 msgstr "前景"
 
-#: app/image_new.c:75 app/layers_dialog.c:3303
+#: app/image_new.c:75 app/layers_dialog.c:3305
 msgid "White"
 msgstr "白"
 
@@ -3373,7 +3373,7 @@ msgstr "比較(暗)"
 msgid "Lighten Only"
 msgstr "比較(明)"
 
-#: app/layers_dialog.c:274 app/layers_dialog.c:3347
+#: app/layers_dialog.c:274 app/layers_dialog.c:3349
 msgid "New Layer"
 msgstr "新規レイヤー"
 
@@ -3413,83 +3413,83 @@ msgstr "透明保護"
 msgid "layers_dialog_update(): layersD->layer_widgets not empty!"
 msgstr "layers_dialog_update(): layerD->layer_widgets が空ではありません!"
 
-#: app/layers_dialog.c:1007 app/menus.c:260
+#: app/layers_dialog.c:1007 app/menus.c:262
 msgid "/Stack/Previous Layer"
 msgstr "/重なり/前面のレイヤー"
 
-#: app/layers_dialog.c:1008 app/menus.c:261
+#: app/layers_dialog.c:1008 app/menus.c:263
 msgid "/Stack/Next Layer"
 msgstr "/重なり/背面のレイヤー"
 
-#: app/layers_dialog.c:1010 app/menus.c:262
+#: app/layers_dialog.c:1010 app/menus.c:264
 msgid "/Stack/Raise Layer"
 msgstr "/重なり/レイヤーを前面へ"
 
-#: app/layers_dialog.c:1014 app/menus.c:263
+#: app/layers_dialog.c:1014 app/menus.c:265
 msgid "/Stack/Lower Layer"
 msgstr "/重なり/レイヤーを背面へ"
 
-#: app/layers_dialog.c:1018 app/menus.c:264
+#: app/layers_dialog.c:1018 app/menus.c:266
 msgid "/Stack/Layer to Top"
 msgstr "/重なり/レイヤーを最前面へ"
 
-#: app/layers_dialog.c:1020 app/menus.c:265
+#: app/layers_dialog.c:1020 app/menus.c:267
 msgid "/Stack/Layer to Bottom"
 msgstr "/重なり/レイヤーを最背面へ"
 
-#: app/layers_dialog.c:1023 app/menus.c:259
+#: app/layers_dialog.c:1023 app/menus.c:261
 msgid "/New Layer"
 msgstr "/新規レイヤー"
 
-#: app/layers_dialog.c:1026 app/menus.c:266
+#: app/layers_dialog.c:1026 app/menus.c:268
 msgid "/Duplicate Layer"
 msgstr "/レイヤー複製"
 
-#: app/layers_dialog.c:1029 app/menus.c:267
+#: app/layers_dialog.c:1029 app/menus.c:269
 msgid "/Anchor Layer"
 msgstr "/レイヤーを固定"
 
-#: app/layers_dialog.c:1032 app/menus.c:268
+#: app/layers_dialog.c:1032 app/menus.c:270
 msgid "/Delete Layer"
 msgstr "/レイヤー削除"
 
-#: app/layers_dialog.c:1035 app/menus.c:270
+#: app/layers_dialog.c:1035 app/menus.c:272
 msgid "/Scale Layer"
 msgstr "/レイヤー拡大縮小"
 
-#: app/layers_dialog.c:1036 app/menus.c:271
+#: app/layers_dialog.c:1036 app/menus.c:273
 msgid "/Resize Layer"
 msgstr "/レイヤーサイズ変更"
 
-#: app/layers_dialog.c:1038 app/menus.c:273
+#: app/layers_dialog.c:1038 app/menus.c:275
 msgid "/Merge Visible Layers"
 msgstr "/可視レイヤーの統合"
 
-#: app/layers_dialog.c:1039 app/menus.c:274
+#: app/layers_dialog.c:1039 app/menus.c:276
 msgid "/Merge Down"
 msgstr "/下のレイヤーと結合"
 
-#: app/layers_dialog.c:1040 app/menus.c:275
+#: app/layers_dialog.c:1040 app/menus.c:277
 msgid "/Flatten Image"
 msgstr "/画像の統合"
 
-#: app/layers_dialog.c:1042 app/menus.c:277
+#: app/layers_dialog.c:1042 app/menus.c:279
 msgid "/Add Layer Mask"
 msgstr "/レイヤーマスク追加"
 
-#: app/layers_dialog.c:1043 app/menus.c:278
+#: app/layers_dialog.c:1043 app/menus.c:280
 msgid "/Apply Layer Mask"
 msgstr "/レイヤーマスク適用"
 
-#: app/layers_dialog.c:1044 app/menus.c:279
+#: app/layers_dialog.c:1044 app/menus.c:281
 msgid "/Alpha to Selection"
 msgstr "/不透明部分を選択領域に"
 
-#: app/layers_dialog.c:1045 app/menus.c:280
+#: app/layers_dialog.c:1045 app/menus.c:282
 msgid "/Mask to Selection"
 msgstr "/レイヤーマスクを選択領域に"
 
-#: app/layers_dialog.c:1046 app/menus.c:281
+#: app/layers_dialog.c:1046 app/menus.c:283
 msgid "/Add Alpha Channel"
 msgstr "/アルファチャンネルを追加"
 
@@ -3509,11 +3509,11 @@ msgstr ""
 "layers_dialog_drop_new_layer_callback():\n"
 "新規レイヤーを割り当てられません"
 
-#: app/layers_dialog.c:2029 app/layers_dialog.c:3114 app/layers_dialog.c:3567
+#: app/layers_dialog.c:2029 app/layers_dialog.c:3116 app/layers_dialog.c:3569
 msgid "Floating Selection"
 msgstr "フローティング選択"
 
-#: app/layers_dialog.c:3236
+#: app/layers_dialog.c:3238
 msgid ""
 "new_layer_query_ok_callback():\n"
 "could not allocate new layer"
@@ -3521,72 +3521,72 @@ msgstr ""
 "new_layer_query_ok_callback():\n"
 "新規レイヤーを割り当てられません"
 
-#: app/layers_dialog.c:3317
+#: app/layers_dialog.c:3319
 msgid "New Layer Options"
 msgstr "新規レイヤーオプション"
 
 #. The name label and entry
-#: app/layers_dialog.c:3337
+#: app/layers_dialog.c:3339
 msgid "Layer Name:"
 msgstr "レイヤー名:"
 
 #. The size labels
-#: app/layers_dialog.c:3351
+#: app/layers_dialog.c:3353
 msgid "Layer Width:"
 msgstr "レイヤー幅:"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3410
+#: app/layers_dialog.c:3412
 msgid "Layer Fill Type"
 msgstr "レイヤー塗りつぶし種"
 
-#: app/layers_dialog.c:3541
+#: app/layers_dialog.c:3543
 msgid "Edit Layer Attributes"
 msgstr "レイヤーの属性を変更"
 
-#: app/layers_dialog.c:3559
+#: app/layers_dialog.c:3561
 msgid "Layer name:"
 msgstr "レイヤー名:"
 
-#: app/layers_dialog.c:3667
+#: app/layers_dialog.c:3669
 msgid "White (Full Opacity)"
 msgstr "白 (完全不透明)"
 
-#: app/layers_dialog.c:3668
+#: app/layers_dialog.c:3670
 msgid "Black (Full Transparency)"
 msgstr "黒 (完全透明)"
 
-#: app/layers_dialog.c:3669
+#: app/layers_dialog.c:3671
 msgid "Layer's Alpha Channel"
 msgstr "レイヤーのアルファチャンネル"
 
-#: app/layers_dialog.c:3681
+#: app/layers_dialog.c:3683
 msgid "Add Mask Options"
 msgstr "レイヤーマスク追加オプション"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3696
+#: app/layers_dialog.c:3698
 msgid "Initialize Layer Mask to:"
 msgstr "レイヤーマスクの初期化方法:"
 
-#: app/layers_dialog.c:3798
+#: app/layers_dialog.c:3800
 msgid "Apply"
 msgstr "適用"
 
-#: app/layers_dialog.c:3799
+#: app/layers_dialog.c:3801
 msgid "Discard"
 msgstr "破棄"
 
-#: app/layers_dialog.c:3810
+#: app/layers_dialog.c:3812
 msgid "Layer Mask Options"
 msgstr "レイヤーマスクオプション"
 
 #. The name entry hbox, label and entry
-#: app/layers_dialog.c:3825
+#: app/layers_dialog.c:3827
 msgid "Apply layer mask?"
 msgstr "レイヤーマスクを適用しますか?"
 
-#: app/layers_dialog.c:3884 app/layers_dialog.c:3983
+#: app/layers_dialog.c:3886 app/layers_dialog.c:3985
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3594,27 +3594,27 @@ msgstr ""
 "幅または高さが不正です.\n"
 "両方とも正数でなければいけません."
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4122
 msgid "Expanded as necessary"
 msgstr "必要に応じて拡大"
 
-#: app/layers_dialog.c:4121
+#: app/layers_dialog.c:4123
 msgid "Clipped to image"
 msgstr "画像サイズに切り取り"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4124
 msgid "Clipped to bottom layer"
 msgstr "最背面レイヤーサイズに切り取り"
 
-#: app/layers_dialog.c:4135
+#: app/layers_dialog.c:4137
 msgid "Layer Merge Options"
 msgstr "レイヤー結合オプション"
 
-#: app/layers_dialog.c:4151
+#: app/layers_dialog.c:4153
 msgid "Final, Merged Layer should be:"
 msgstr "最終的に結合されたレイヤーは:"
 
-#: app/layers_dialog.c:4153
+#: app/layers_dialog.c:4155
 msgid "Final, Anchored Layer should be:"
 msgstr "最終的に固定されたレイヤーは:"
 
@@ -3856,437 +3856,445 @@ msgid "/File/Dialogs"
 msgstr "/ファイル/ダイアログ"
 
 #: app/menus.c:49
+msgid "/Image/Transforms"
+msgstr "/画像/変形"
+
+#: app/menus.c:50
 msgid "/Layers"
 msgstr "/レイヤー"
 
-#: app/menus.c:50
+#: app/menus.c:51
 msgid "/Tools"
 msgstr "/道具"
 
-#: app/menus.c:51
+#: app/menus.c:52
 msgid "/Dialogs"
 msgstr "/ダイアログ"
 
-#: app/menus.c:52
+#: app/menus.c:53
 msgid "/View/Zoom"
 msgstr "/表示/拡大率"
 
-#: app/menus.c:65 app/menus.c:99
+#: app/menus.c:54
+msgid "/Stack"
+msgstr "/重なり"
+
+#: app/menus.c:67 app/menus.c:101
 msgid "/File/tearoff1"
 msgstr "/ファイル/tearoff1"
 
-#: app/menus.c:66 app/menus.c:100
+#: app/menus.c:68 app/menus.c:102
 msgid "/File/New"
 msgstr "/ファイル/新規"
 
-#: app/menus.c:68
+#: app/menus.c:70
 msgid "/File/Acquire"
 msgstr "/ファイル/取り込み"
 
-#: app/menus.c:69
+#: app/menus.c:71
 msgid "/File/About..."
 msgstr "/ファイル/GIMP について..."
 
-#: app/menus.c:70 app/menus.c:105
+#: app/menus.c:72 app/menus.c:107
 msgid "/File/Preferences..."
 msgstr "/ファイル/環境設定..."
 
-#: app/menus.c:71
+#: app/menus.c:73
 msgid "/File/Tip of the day"
 msgstr "/ファイル/今日の技"
 
-#: app/menus.c:73
+#: app/menus.c:75
 msgid "/File/Dialogs/Brushes..."
 msgstr "/ファイル/ダイアログ/ブラシ..."
 
-#: app/menus.c:74
+#: app/menus.c:76
 msgid "/File/Dialogs/Patterns..."
 msgstr "/ファイル/ダイアログ/パターン..."
 
-#: app/menus.c:75
+#: app/menus.c:77
 msgid "/File/Dialogs/Palette..."
 msgstr "/ファイル/ダイアログ/パレット..."
 
-#: app/menus.c:76
+#: app/menus.c:78
 msgid "/File/Dialogs/Gradient..."
 msgstr "/ファイル/ダイアログ/グラデーション..."
 
-#: app/menus.c:77
+#: app/menus.c:79
 msgid "/File/Dialogs/Layers & Channels..."
 msgstr "/ファイル/ダイアログ/レイヤー & チャンネル..."
 
-#: app/menus.c:78
+#: app/menus.c:80
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/ファイル/ダイアログ/道具オプション..."
 
-#: app/menus.c:79
+#: app/menus.c:81
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/ファイル/ダイアログ/入力デバイス..."
 
-#: app/menus.c:80
+#: app/menus.c:82
 msgid "/File/Dialogs/Device Status..."
 msgstr "/ファイル/ダイアログ/デバイスの状態..."
 
-#: app/menus.c:81
+#: app/menus.c:83
 msgid "/File/Dialogs/Document Index..."
 msgstr "/ファイル/ダイアログ/文書目次..."
 
-#: app/menus.c:82
+#: app/menus.c:84
 msgid "/File/Dialogs/Error Console..."
 msgstr "/ファイル/ダイアログ/エラーコンソール..."
 
-#: app/menus.c:83
+#: app/menus.c:85
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/ファイル/ダイアログ/ディスプレイフィルタ..."
 
-#: app/menus.c:85
+#: app/menus.c:87
 msgid "/Xtns/tearoff1"
 msgstr ""
 
-#: app/menus.c:86
+#: app/menus.c:88
 msgid "/Xtns/Module Browser"
 msgstr "/Xtns/モジュールブラウザ"
 
-#: app/menus.c:87 app/menus.c:88 app/menus.c:93 app/menus.c:106
+#: app/menus.c:89 app/menus.c:90 app/menus.c:95 app/menus.c:108
 msgid "/File/---"
 msgstr "/ファイル/---"
 
-#: app/menus.c:98
+#: app/menus.c:100
 msgid "/tearoff1"
 msgstr ""
 
-#: app/menus.c:110
+#: app/menus.c:112
 msgid "/File/---moved"
 msgstr "/ファイル/---移動済"
 
-#: app/menus.c:112
+#: app/menus.c:114
 msgid "/Edit/tearoff1"
 msgstr "/編集/tearoff1"
 
-#: app/menus.c:118 app/menus.c:124 app/menus.c:128
+#: app/menus.c:120 app/menus.c:126 app/menus.c:130
 msgid "/Edit/---"
 msgstr "/編集/---"
 
-#: app/menus.c:122
+#: app/menus.c:124
 msgid "/Edit/Undo"
 msgstr "/編集/取り消し"
 
-#: app/menus.c:123
+#: app/menus.c:125
 msgid "/Edit/Redo"
 msgstr "/編集/やりなおし"
 
-#: app/menus.c:130
+#: app/menus.c:132
 msgid "/Select/tearoff1"
 msgstr "/選択/tearoff1"
 
-#: app/menus.c:131
+#: app/menus.c:133
 msgid "/Select/Invert"
 msgstr "/選択/反転"
 
-#: app/menus.c:132
+#: app/menus.c:134
 msgid "/Select/All"
 msgstr "/選択/全てを選択"
 
-#: app/menus.c:133
+#: app/menus.c:135
 msgid "/Select/None"
 msgstr "/選択/なし"
 
-#: app/menus.c:134
+#: app/menus.c:136
 msgid "/Select/Float"
 msgstr "/選択/フロート化"
 
-#: app/menus.c:135 app/menus.c:141
+#: app/menus.c:137 app/menus.c:143
 msgid "/Select/---"
 msgstr "/選択/---"
 
-#: app/menus.c:136
+#: app/menus.c:138
 msgid "/Select/Feather"
 msgstr "/選択/境界をぼかす"
 
-#: app/menus.c:137
+#: app/menus.c:139
 msgid "/Select/Sharpen"
 msgstr "/選択/シャープ化"
 
-#: app/menus.c:138
+#: app/menus.c:140
 msgid "/Select/Shrink"
 msgstr "/選択/選択領域の縮小"
 
-#: app/menus.c:139
+#: app/menus.c:141
 msgid "/Select/Grow"
 msgstr "/選択/選択領域の拡大"
 
-#: app/menus.c:140
+#: app/menus.c:142
 msgid "/Select/Border"
 msgstr "/選択/縁取り"
 
-#: app/menus.c:144
+#: app/menus.c:146
 msgid "/View/tearoff1"
 msgstr "/表示/tearoff1"
 
-#: app/menus.c:145
+#: app/menus.c:147
 msgid "/View/Zoom In"
 msgstr "/表示/拡大表示"
 
-#: app/menus.c:146
+#: app/menus.c:148
 msgid "/View/Zoom Out"
 msgstr "/表示/縮小表示"
 
-#: app/menus.c:147
+#: app/menus.c:149
 msgid "/View/Zoom/16:1"
 msgstr "/表示/拡大率/16:1"
 
-#: app/menus.c:148
+#: app/menus.c:150
 msgid "/View/Zoom/8:1"
 msgstr "/表示/拡大率/8:1"
 
-#: app/menus.c:149
+#: app/menus.c:151
 msgid "/View/Zoom/4:1"
 msgstr "/表示/拡大率/4:1"
 
-#: app/menus.c:150
+#: app/menus.c:152
 msgid "/View/Zoom/2:1"
 msgstr "/表示/拡大率/2:1"
 
-#: app/menus.c:151
+#: app/menus.c:153
 msgid "/View/Zoom/1:1"
 msgstr "/表示/拡大率/1:1"
 
-#: app/menus.c:152
+#: app/menus.c:154
 msgid "/View/Zoom/1:2"
 msgstr "/表示/拡大率/1:2"
 
-#: app/menus.c:153
+#: app/menus.c:155
 msgid "/View/Zoom/1:4"
 msgstr "/表示/拡大率/1:4"
 
-#: app/menus.c:154
+#: app/menus.c:156
 msgid "/View/Zoom/1:8"
 msgstr "/表示/拡大率/1:8"
 
-#: app/menus.c:155
+#: app/menus.c:157
 msgid "/View/Zoom/1:16"
 msgstr "/表示/拡大率/1:16"
 
-#: app/menus.c:157
+#: app/menus.c:159
 msgid "/View/Window Info..."
 msgstr "/表示/ウィンドウ情報..."
 
-#: app/menus.c:158
+#: app/menus.c:160
 msgid "/View/Window Nav..."
 msgstr "/表示/ウィンドウなび..."
 
-#: app/menus.c:160 app/menus.c:166
+#: app/menus.c:162 app/menus.c:168
 msgid "/View/---"
 msgstr "/表示/---"
 
-#: app/menus.c:168
+#: app/menus.c:170
 msgid "/View/New View"
 msgstr "/表示/新規表示"
 
-#: app/menus.c:169
+#: app/menus.c:171
 msgid "/View/Shrink Wrap"
 msgstr "/表示/画像の大きさの窓で表示"
 
-#: app/menus.c:171
+#: app/menus.c:173
 msgid "/Image/tearoff1"
 msgstr "/画像/tearoff1"
 
-#: app/menus.c:172
+#: app/menus.c:174
 msgid "/Image/Colors/tearoff1"
 msgstr "/画像/色/tearoff1"
 
-#: app/menus.c:175
+#: app/menus.c:177
 msgid "/Image/Colors/---"
 msgstr "/画像/色/---"
 
-#: app/menus.c:177
+#: app/menus.c:179
 msgid "/Image/Channel Ops/tearoff1"
 msgstr "/画像/チャンネル操作/tearoff1"
 
-#: app/menus.c:178
+#: app/menus.c:180
 msgid "/Image/Channel Ops/Duplicate"
 msgstr "/画像/チャンネル操作/複製"
 
-#: app/menus.c:180
+#: app/menus.c:182
 msgid "/Image/Alpha/tearoff1"
 msgstr "/画像/アルファ/tearoff1"
 
-#: app/menus.c:183 app/menus.c:187 app/menus.c:190
+#: app/menus.c:185 app/menus.c:189 app/menus.c:192
 msgid "/Image/---"
 msgstr "/画像/---"
 
-#: app/menus.c:188
+#: app/menus.c:190
 msgid "/Image/Resize"
 msgstr "/画像/サイズ変更"
 
-#: app/menus.c:189
+#: app/menus.c:191
 msgid "/Image/Scale"
 msgstr "/画像/拡大縮小"
 
-#: app/menus.c:192
+#: app/menus.c:194
 msgid "/Layers/tearoff1"
 msgstr "/レイヤー/tearoff1"
 
-#: app/menus.c:193
+#: app/menus.c:195
 msgid "/Layers/Layers & Channels..."
 msgstr "/レイヤー/レイヤー & チャンネル..."
 
-#: app/menus.c:194
+#: app/menus.c:196
 msgid "/Layers/Stack/tearoff1"
 msgstr "/レイヤー/重なり/tearoff1"
 
-#: app/menus.c:201 app/menus.c:208
+#: app/menus.c:203 app/menus.c:210
 msgid "/Layers/---"
 msgstr "/レイヤー/---"
 
-#: app/menus.c:210
+#: app/menus.c:212
 msgid "/Tools/tearoff1"
 msgstr "/道具/tearoff1"
 
-#: app/menus.c:211
+#: app/menus.c:213
 msgid "/Tools/Toolbox"
 msgstr "/道具/道具箱"
 
-#: app/menus.c:212
+#: app/menus.c:214
 msgid "/Tools/Default Colors"
 msgstr "/道具/最初の色に戻す"
 
-#: app/menus.c:213
+#: app/menus.c:215
 msgid "/Tools/Swap Colors"
 msgstr "/道具/前景色と背景色の交換"
 
-#: app/menus.c:214
+#: app/menus.c:216
 msgid "/Tools/---"
 msgstr "/道具/---"
 
 #. the tool entries themselves are built on the fly
-#: app/menus.c:218
+#: app/menus.c:220
 msgid "/Filters/tearoff1"
 msgstr "/フィルタ/tearoff1"
 
-#: app/menus.c:219 app/plug_in.c:1285
+#: app/menus.c:221 app/plug_in.c:1285
 msgid "/Filters/Repeat last"
 msgstr "/フィルタ/再適用"
 
-#: app/menus.c:220 app/plug_in.c:1286
+#: app/menus.c:222 app/plug_in.c:1286
 msgid "/Filters/Re-show last"
 msgstr "/フィルタ/再実行"
 
-#: app/menus.c:221
+#: app/menus.c:223
 msgid "/Filters/---"
 msgstr "/フィルタ/---"
 
-#: app/menus.c:223
+#: app/menus.c:225
 msgid "/Script-Fu/tearoff1"
 msgstr ""
 
-#: app/menus.c:224
+#: app/menus.c:226
 msgid "/Script-Fu/"
 msgstr ""
 
-#: app/menus.c:226
+#: app/menus.c:228
 msgid "/Dialogs/tearoff1"
 msgstr "/ダイアログ/tearoff1"
 
-#: app/menus.c:227
+#: app/menus.c:229
 msgid "/Dialogs/Brushes..."
 msgstr "/ダイアログ/ブラシ..."
 
-#: app/menus.c:228
+#: app/menus.c:230
 msgid "/Dialogs/Patterns..."
 msgstr "/ダイアログ/パターン..."
 
-#: app/menus.c:229
+#: app/menus.c:231
 msgid "/Dialogs/Palette..."
 msgstr "/ダイアログ/パレット..."
 
-#: app/menus.c:230
+#: app/menus.c:232
 msgid "/Dialogs/Gradient..."
 msgstr "/ダイアログ/グラデーション..."
 
-#: app/menus.c:231
+#: app/menus.c:233
 msgid "/Dialogs/Layers & Channels..."
 msgstr "/ダイアログ/レイヤー & チャンネル..."
 
-#: app/menus.c:232
+#: app/menus.c:234
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/ダイアログ/インデックスパレット..."
 
-#: app/menus.c:233
+#: app/menus.c:235
 msgid "/Dialogs/Tool Options..."
 msgstr "/ダイアログ/道具オプション..."
 
-#: app/menus.c:234
+#: app/menus.c:236
 msgid "/Dialogs/Input Devices..."
 msgstr "/ダイアログ/入力デバイス..."
 
-#: app/menus.c:235
+#: app/menus.c:237
 msgid "/Dialogs/Device Status..."
 msgstr "/ダイアログ/デバイスの状態..."
 
-#: app/menus.c:236
+#: app/menus.c:238
 msgid "/Dialogs/Display Filters..."
 msgstr "/ダイアログ/ディスプレイフィルタ..."
 
-#: app/menus.c:243
+#: app/menus.c:245
 msgid "/Automatic"
 msgstr "/自動"
 
-#: app/menus.c:251
+#: app/menus.c:253
 msgid "/By extension"
 msgstr "/拡張子で自動判別"
 
-#: app/menus.c:305 app/paths_dialog.c:203
+#: app/menus.c:307 app/paths_dialog.c:203
 msgid "/New Path"
 msgstr "/新規パス"
 
-#: app/menus.c:306 app/paths_dialog.c:207
+#: app/menus.c:308 app/paths_dialog.c:207
 msgid "/Duplicate Path"
 msgstr "/パス複製"
 
-#: app/menus.c:307 app/paths_dialog.c:211
+#: app/menus.c:309 app/paths_dialog.c:211
 msgid "/Path to Selection"
 msgstr "/パスを選択領域へ"
 
-#: app/menus.c:308 app/paths_dialog.c:215
+#: app/menus.c:310 app/paths_dialog.c:215
 msgid "/Stroke Path"
 msgstr "/パスをストローク描画"
 
-#: app/menus.c:309 app/paths_dialog.c:219
+#: app/menus.c:311 app/paths_dialog.c:219
 msgid "/Delete Path"
 msgstr "/パス削除"
 
-#: app/menus.c:311 app/paths_dialog.c:223
+#: app/menus.c:313 app/paths_dialog.c:223
 msgid "/Copy Path"
 msgstr "/パス複製"
 
-#: app/menus.c:312 app/paths_dialog.c:226
+#: app/menus.c:314 app/paths_dialog.c:226
 msgid "/Paste Path"
 msgstr "/パスペースト"
 
-#: app/menus.c:313
+#: app/menus.c:315
 msgid "/Import Path"
 msgstr "/インポートパス"
 
-#: app/menus.c:314
+#: app/menus.c:316
 msgid "/Export Path"
 msgstr "/エクスポートパス"
 
-#: app/menus.c:612
+#: app/menus.c:614
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "ファイルを開けません: %s\n"
 
-#: app/menus.c:634 app/menus.c:716
+#: app/menus.c:636 app/menus.c:718
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/ファイル/MRU%02d"
 
-#: app/menus.c:885
+#: app/menus.c:887
 msgid "tearoff menu not in top level window"
 msgstr "tearoff メニューがトップレベルウインドウ中にありません"
 
-#: app/menus.c:903
+#: app/menus.c:905
 msgid "can't unregister tearoff menu top level window"
 msgstr "tearoff メニューをトップレベルウインドウから登録解除できません"
 
@@ -6349,12 +6357,6 @@ msgstr "まだ正規表現が使用されていません"
 
 #~ msgid "Use Pressure"
 #~ msgstr "圧力検知"
-
-#~ msgid "/Image/Transforms"
-#~ msgstr "/画像/変形"
-
-#~ msgid "/Stack"
-#~ msgstr "/重なり"
 
 #~ msgid "<Layers>/Stack"
 #~ msgstr "<Layers>/重なり"
