@@ -10,7 +10,7 @@
     'autocrop' => { libdep => 'glib' },
     'autostretch_hsv' => { libdep => 'glib' },
     'blinds' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
-    'blur' => { libdep => 'gtk', ui => 1 },
+    'blur' => { libdep => 'glib' },
     'borderaverage' => { libdep => 'gtk', ui => 1 },
     'bumpmap' => { libdep => 'gtk', ui => 1 },
     'bz2' => { libdep => 'glib', optional => 1 },

@@ -1,3 +1,11 @@
+2004-06-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl: changed dependencies for blur.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* plug-ins/common/blur.c: no need to include libgimpui.h any longer.
+
 2004-06-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/blur.c: removed randomize and repeat options;

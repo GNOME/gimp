@@ -53,16 +53,14 @@
  *
  ****************************************************************************/
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /*********************************
  *
@@ -124,15 +122,20 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
   };
 
-  const gchar *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
-  const gchar *help = "This plug-in blurs the specified drawable, using a 3x3 blur.  Indexed images are not supported.";
+  const gchar *blurb =
+    "Apply a 3x3 blurring convolution kernel to the specified drawable.";
+  const gchar *help =
+    "This plug-in blurs the specified drawable, using a 3x3 blur. "
+    "Indexed images are not supported.";
   const gchar *author = "Miles O'Neal  <meo@rru.com>";
-  const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
+  const gchar *copyrights =
+    "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, "
+    "Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
 
   gimp_install_procedure ("plug_in_blur",
@@ -152,15 +155,6 @@ query (void)
 }
 
 
-/*********************************
- *
- *  run() - main routine
- *
- *  This handles the main interaction with the GIMP itself,
- *  and invokes the routine that actually does the work.
- *
- ********************************/
-
 static void
 run (const gchar      *name,
      gint              nparams,
@@ -170,21 +164,24 @@ run (const gchar      *name,
 {
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   static GimpParam   values[1];
 
   INIT_I18N ();
-
-  /*
-   *  Get the specified drawable, do standard initialization.
-   */
-  run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
+
+  if (strcmp (name, "plug_in_blur") != 0 || nparams < 3)
+    {
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+      return;
+    }
+
+  run_mode = param[0].data.d_int32;
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*
    *  Make sure the drawable type is appropriate.
@@ -192,77 +189,25 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      switch (run_mode)
+      gimp_progress_init (_("Blurring..."));
+      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+
+      blur (drawable);
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         {
-          /*
-           *  If we're running interactively, pop up the dialog box.
-           */
-        case GIMP_RUN_INTERACTIVE:
-	  /* don't need to do anything */
-          break;
-
-          /*
-           *  If we're not interactive (probably scripting), we
-           *  get the parameters from the param[] array, since
-           *  we don't use the dialog box.  Make sure all
-           *  parameters have legitimate values.
-           */
-        case GIMP_RUN_NONINTERACTIVE:
-          if (!((strcmp (name, "plug_in_blur") == 0) &&
-		(nparams == 3)))
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          break;
-
-          /*
-           *  If we're running with the last set of values, get those values.
-           */
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-
-          /*
-           *  Hopefully we never get here!
-           */
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          /*
-           *  JUST DO IT!
-           */
-          gimp_progress_init (_("Blurring..."));
-          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
-                                       + 1));
-
-          blur (drawable);
-          /*
-           *  If we ran interactively (even repeating) update the display.
-           */
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            {
-              gimp_displays_flush ();
-            }
+          gimp_displays_flush ();
         }
     }
   else
     {
-      /*
-       *  If we got the wrong drawable type, we need to complain.
-       */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
-  /*
-   *  DONE!
-   *  Set the status where the GIMP can see it, and let go
-   *  of the drawable.
-   */
+
   values[0].data.d_status = status;
   gimp_drawable_detach (drawable);
-
 }
+
 
 /*********************************
  *
@@ -280,7 +225,7 @@ blur_prepare_row (GimpPixelRgn *pixel_rgn,
                   gint          y,
                   gint          w)
 {
-  int b;
+  gint b;
 
   y = CLAMP (y, 1, pixel_rgn->h - 1);
   gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
@@ -362,7 +307,7 @@ blur (GimpDrawable *drawable)
     {
       /*  prepare the next row  */
       blur_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
-      
+
       d = dest;
       ind = 0;
       for (col = 0; col < (x2 - x1) * bytes; col++)
@@ -415,12 +360,12 @@ blur (GimpDrawable *drawable)
        *  so often, update the progress meter.
        */
       gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
-      
+
       tmp = pr;
       pr = cr;
       cr = nr;
       nr = tmp;
-      
+
       if (PROG_UPDATE_TIME)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }

@@ -334,12 +334,10 @@ blur_SOURCES = \
 	blur.c
 
 blur_LDADD = \
-	$(libgimpui)							\
-	$(libgimpwidgets)						\
 	$(libgimp)							\
 	$(libgimpcolor)							\
 	$(libgimpbase)							\
-	$(GTK_LIBS)							\
+	$(GLIB_LIBS)							\
 	$(RT_LIBS)							\
 	$(INTLLIBS)
 
