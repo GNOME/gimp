@@ -1,3 +1,40 @@
+2003-02-17  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.c: Undef DATADIR here, too.
+
+	* libgimp/gimpwire.c (wire_write_double): Use the format %0.15e
+	instead of %0.50e on Windows, where g_snprintf() in GLib 2.2.x
+	uses Trio, which is rather buggy when outputting floating point
+	in superfluous precision.
+
+2003-02-11  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in
+	* app/gimprc.c
+	* app/plug_in.c
+	* app/plug_in.h
+	* libgimp/gimp.c
+	* libgimp/gimpprotocol.h: Hackish fix for bug #66859. Worth it in
+	this branch only on Win32, where the Photoshop plug-in interface
+	plug-in needs the init_proc functionality. Code ifdeffed with
+	HACK_FOR_BUG_66859, which configure.in defines on Win32.
+
+	* libgimp/gimpenv.c: Undef DATADIR on Win32. It clashes with a
+	typedef in objidl.h, and isn't used as configure-time hardcoded
+	from the Makefile on Win32 anyway.
+
+	* plug-ins/script-fu/script-fu-intl.h: On Win32, call
+	bind_textdomain_codeset() to get messages from gettext in UTF-8,
+	which is what the GTK+ 1.3.0 used on Win32 wants.
+
+	* plug-ins/twain/tw_func.c
+	* plug-ins/twain/twain.c: Fix two TWAIN issues, from Hermann Josef
+	Hill: Handle cancelling the scan, and get image resolution from
+	TWAIN.
+
+	* plug-ins/webbrowser/webbrowser.c (start_browser): Return a
+	correct value on Win32.
+	
 2003-02-13  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/gflare/gflare.c: make it build again (oops from previous

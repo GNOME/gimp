@@ -73,6 +73,8 @@
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 #  define STRICT
+#  undef DATADIR		/* typedefed in objidl.h... the value
+				   from Makefile not used here anyway */
 #  include <windows.h>
 #  undef RGB
 #endif

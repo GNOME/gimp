@@ -436,7 +436,15 @@ wire_write_double (GIOChannel *channel,
   t = buf;
   for (i = 0; i < count; i++)
     {
+#ifdef G_OS_WIN32
+      /* g_snprintf in GLib 2.2 uses Trio, which has severe problems
+       * in floating-point output with "extra" precision. So use 15
+       * digits, which is the actual double precision anyway.
+       */
+      g_snprintf (buf, sizeof (buf), "%0.15e", data[i]);
+#else
       g_snprintf (buf, sizeof (buf), "%0.50e", data[i]);
+#endif
       if (!wire_write_string (channel, &t, 1))
 	return FALSE;
     }
