@@ -1,3 +1,7 @@
+2001-07-04  Dave Neary  <dneary@eircom.net
+
+	* po/POTFILESin: Changed to reflect some moved/removed files.
+
 2001-07-03  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: new directory app/xcf/
