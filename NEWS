@@ -20,6 +20,7 @@ Bugs fixed since the last release
 - 136535: enable i18n in SVG plug-in (Yuheng Xie, Sven)
 - 136081: allow to use the webbrowser to access help (Brix, Sven)
 - 128588: resurrected Save button in input devices dialog (Simon)
+- 136489: added boolean return values to gimp_edit_[cut|copy] (Mitch)
 - 136706: added missing i18n in IfsCompose plug-in (Sven)
 - 136713: added missing i18n in ImageMap plug-in (Sven)
 - 131965: cancel tools instead of resetting when image becomes dirty (Mitch)
@@ -27,7 +28,11 @@ Bugs fixed since the last release
           is becoming dirty (Mitch)
 - 136343: fixed wrong function prototypes (Mitch)
 - 136636: workaround a GDK problem on win32 (Mitch)
+- 136747: fixed problem in gimp-print configure check (Yosh)
 - 136850: fixed crash when toggling tool preview (Sven)
+- 136937: allow translation of tool-option menus (Sven)
+- 136645: fixed crash when dropping pattern on a text layer (Sven)
+- 136907: fixed off-by-one error in gimp_pixel_fetcher_get_pixel() (Simon)
 
 
 Bugs fixed in GIMP 2.0pre4
