@@ -30,10 +30,14 @@ libappdisplay_a_sources = \
 	gimpdisplayshell.h			\
 	gimpdisplayshell-appearance.c		\
 	gimpdisplayshell-appearance.h		\
+	gimpdisplayshell-autoscroll.c		\
+	gimpdisplayshell-autoscroll.h		\
 	gimpdisplayshell-callbacks.c		\
 	gimpdisplayshell-callbacks.h		\
 	gimpdisplayshell-close.c		\
 	gimpdisplayshell-close.h		\
+	gimpdisplayshell-coords.c		\
+	gimpdisplayshell-coords.h		\
 	gimpdisplayshell-cursor.c		\
 	gimpdisplayshell-cursor.h		\
 	gimpdisplayshell-dnd.c			\

@@ -1,3 +1,17 @@
+2005-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-autoscroll.[ch]
+	* app/display/gimpdisplayshell-coords.[ch]: new files factored out
+	of gimpdisplayshell-callbacks.c
+
+	* app/display/gimpdisplayshell.h (struct GimpDisplayShell): added
+	"gpointer scroll_info" needed by autoscroll.
+
+	* app/display/gimpdisplayshell-callbacks.c: removed the stuff
+	above. Also removed the static autoscroll struct because it's not
+	needed any longer.
+
 2005-01-02  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/mosaic.c: Added a preview.  This still needs some

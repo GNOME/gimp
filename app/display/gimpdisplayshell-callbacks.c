@@ -17,6 +17,7 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
@@ -58,7 +59,9 @@
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-autoscroll.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-coords.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-layer-select.h"
@@ -72,17 +75,6 @@
 
 #include "gimp-intl.h"
 
-typedef struct
-{
-  GimpDisplayShell *shell;
-  GdkEventMotion   *mevent;
-  GdkDevice        *device;
-  guint32           time;
-  GdkModifierType   state;
-  guint             timeout_id;
-} ScrollInfo;
-
-
 
 /* #define DEBUG_MOVE_PUSH 1 */
 
@@ -93,31 +85,6 @@ static void     gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustme
                                                       GimpDisplayShell *shell);
 static void     gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                                       GimpDisplayShell *shell);
-
-static gboolean gimp_display_shell_get_event_coords  (GimpDisplayShell *shell,
-                                                      GdkEvent         *event,
-                                                      GdkDevice        *device,
-                                                      GimpCoords       *coords);
-static void     gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
-                                                      GdkDevice        *device,
-                                                      GimpCoords       *coords);
-static void     gimp_display_shell_get_time_coords   (GimpDisplayShell *shell,
-                                                      GdkDevice        *device,
-                                                      GdkTimeCoord     *event,
-                                                      GimpCoords       *coords);
-static gboolean gimp_display_shell_get_event_state   (GimpDisplayShell *shell,
-                                                      GdkEvent         *event,
-                                                      GdkDevice        *device,
-                                                      GdkModifierType  *state);
-static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
-                                                      GdkDevice        *device,
-                                                      GdkModifierType  *state);
-static gboolean autoscroll_timeout                   (gpointer          data);
-static void     begin_autoscrolling                  (ScrollInfo       *info,
-                                                      GimpDisplayShell *shell,
-                                                      GdkModifierType   state,
-                                                      GdkEventMotion   *mevent);
-static void     end_autoscrolling                    (ScrollInfo       *info);
 
 static GdkModifierType
                 gimp_display_shell_key_to_state      (gint              key);
@@ -465,84 +432,6 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
   shell->draw_cursor = ! current_device->has_cursor;
 }
 
-
-#define AUTOSCROLL_DT  20
-#define AUTOSCROLL_DX  0.1
-
-static gboolean
-autoscroll_timeout (gpointer data)
-{
-  ScrollInfo  *info  = data;
-  GimpDisplay *gdisp = info->shell->gdisp;
-  GimpCoords   device_coords;
-  GimpCoords   image_coords;
-  gint         off_x = 0;
-  gint         off_y = 0;
-
-  info->time += AUTOSCROLL_DT;
-
-  gimp_display_shell_get_device_coords (info->shell,
-                                        info->device, &device_coords);
-
-  if (device_coords.x < 0)
-    off_x = device_coords.x;
-  else if (device_coords.x > info->shell->disp_width)
-    off_x = device_coords.x - info->shell->disp_width;
-
-  if (device_coords.y < 0)
-    off_y = device_coords.y;
-  else if (device_coords.y > info->shell->disp_height)
-    off_y = device_coords.y - info->shell->disp_height;
-
-  if (off_x == 0 && off_y == 0)
-    {
-      info->timeout_id = 0;
-      return FALSE;
-    }
-
-  gimp_display_shell_scroll (info->shell,
-                             AUTOSCROLL_DX * (gdouble) off_x,
-                             AUTOSCROLL_DX * (gdouble) off_y);
-
-  gimp_display_shell_untransform_coords (info->shell,
-                                         &device_coords, &image_coords);
-
-  tool_manager_motion_active (gdisp->gimage->gimp,
-                              &image_coords,
-                              info->time, info->state,
-                              gdisp);
-
-  return TRUE;
-}
-
-static void
-begin_autoscrolling (ScrollInfo       *info,
-                     GimpDisplayShell *shell,
-                     GdkModifierType   state,
-                     GdkEventMotion   *mevent)
-{
-  if (info->timeout_id)
-    return;
-
-  info->shell      = shell;
-  info->mevent     = mevent;
-  info->device     = mevent->device;
-  info->time       = gdk_event_get_time ((GdkEvent*) mevent);
-  info->state      = state;
-  info->timeout_id = g_timeout_add (AUTOSCROLL_DT, autoscroll_timeout, info);
-}
-
-static void
-end_autoscrolling (ScrollInfo *info)
-{
-  if (info->timeout_id)
-    {
-      g_source_remove (info->timeout_id);
-      info->timeout_id = 0;
-    }
-}
-
-
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
@@ -559,7 +448,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   guint32              time;
   gboolean             return_val        = FALSE;
   gboolean             update_cursor     = FALSE;
-  static ScrollInfo    scroll_info       = { NULL, NULL, NULL, 0, 0,0 };
+
   static GimpToolInfo *space_shaded_tool = NULL;
 
   if (! canvas->window)
@@ -869,7 +758,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-	end_autoscrolling (&scroll_info);
+	gimp_display_shell_autoscroll_stop (shell);
 
         if (gimp->busy)
           return TRUE;
@@ -1137,7 +1026,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      mevent->y > shell->disp_height) &&
                     ! gimp_tool_control_scroll_lock (active_tool->control))
                   {
-                    begin_autoscrolling (&scroll_info, shell, state, mevent);
+                    gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
                 if (gimp_tool_control_motion_mode (active_tool->control) ==
@@ -1623,156 +1512,6 @@ gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
   gimp_display_shell_scroll (shell, (adjustment->value - shell->offset_x), 0);
-}
-
-static gboolean
-gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
-                                     GdkEvent         *event,
-                                     GdkDevice        *device,
-                                     GimpCoords       *coords)
-{
-  if (gdk_event_get_axis (event, GDK_AXIS_X, &coords->x))
-    {
-      gdk_event_get_axis (event, GDK_AXIS_Y, &coords->y);
-
-      /*  CLAMP() the return value of each *_get_axis() call to be safe
-       *  against buggy XInput drivers. Provide default values if the
-       *  requested axis does not exist.
-       */
-
-      if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
-        coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                                  GIMP_COORDS_MAX_PRESSURE);
-      else
-        coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-
-      if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
-        coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
-                               GIMP_COORDS_MAX_TILT);
-      else
-        coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
-
-      if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
-        coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
-                               GIMP_COORDS_MAX_TILT);
-      else
-        coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
-
-      if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
-        coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
-                               GIMP_COORDS_MAX_WHEEL);
-      else
-        coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
-
-      return TRUE;
-    }
-
-  gimp_display_shell_get_device_coords (shell, device, coords);
-
-  return FALSE;
-}
-
-static void
-gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
-                                      GdkDevice        *device,
-                                      GimpCoords       *coords)
-{
-  gdouble axes[GDK_AXIS_LAST];
-
-  gdk_device_get_state (device, shell->canvas->window, axes, NULL);
-
-  gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
-  gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
-
-  /*  CLAMP() the return value of each *_get_axis() call to be safe
-   *  against buggy XInput drivers. Provide default values if the
-   *  requested axis does not exist.
-   */
-
-  if (gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure))
-    coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                              GIMP_COORDS_MAX_PRESSURE);
-  else
-    coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-
-  if (gdk_device_get_axis (device, axes, GDK_AXIS_XTILT, &coords->xtilt))
-    coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
-                           GIMP_COORDS_MAX_TILT);
-  else
-    coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
-
-  if (gdk_device_get_axis (device, axes, GDK_AXIS_YTILT, &coords->ytilt))
-    coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
-                           GIMP_COORDS_MAX_TILT);
-  else
-    coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
-
-  if (gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL, &coords->wheel))
-    coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
-                           GIMP_COORDS_MAX_WHEEL);
-  else
-    coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
-}
-
-static void
-gimp_display_shell_get_time_coords (GimpDisplayShell *shell,
-                                    GdkDevice        *device,
-                                    GdkTimeCoord     *event,
-                                    GimpCoords       *coords)
-{
-  gdk_device_get_axis (device, event->axes, GDK_AXIS_X, &coords->x);
-  gdk_device_get_axis (device, event->axes, GDK_AXIS_Y, &coords->y);
-
-  /*  CLAMP() the return value of each *_get_axis() call to be safe
-   *  against buggy XInput drivers. Provide default values if the
-   *  requested axis does not exist.
-   */
-
-  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_PRESSURE, &coords->pressure))
-    coords->pressure = CLAMP (coords->pressure, GIMP_COORDS_MIN_PRESSURE,
-                              GIMP_COORDS_MAX_PRESSURE);
-  else
-    coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
-
-  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_XTILT, &coords->xtilt))
-    coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
-                           GIMP_COORDS_MAX_TILT);
-  else
-    coords->xtilt = GIMP_COORDS_DEFAULT_TILT;
-
-  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_YTILT, &coords->ytilt))
-    coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
-                           GIMP_COORDS_MAX_TILT);
-  else
-    coords->ytilt = GIMP_COORDS_DEFAULT_TILT;
-
-  if (gdk_device_get_axis (device, event->axes, GDK_AXIS_WHEEL, &coords->wheel))
-    coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
-                           GIMP_COORDS_MAX_WHEEL);
-  else
-    coords->wheel = GIMP_COORDS_DEFAULT_WHEEL;
-}
-
-static gboolean
-gimp_display_shell_get_event_state (GimpDisplayShell *shell,
-                                    GdkEvent         *event,
-                                    GdkDevice        *device,
-                                    GdkModifierType  *state)
-{
-  if (gdk_event_get_state (event, state))
-    return TRUE;
-
-  gimp_display_shell_get_device_state (shell, device, state);
-
-  return FALSE;
-}
-
-static void
-gimp_display_shell_get_device_state (GimpDisplayShell *shell,
-                                     GdkDevice        *device,
-                                     GdkModifierType  *state)
-{
-  gdk_device_get_state (device, shell->canvas->window, NULL, state);
 }
 
 static GdkModifierType

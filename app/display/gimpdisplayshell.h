@@ -168,6 +168,8 @@ struct _GimpDisplayShell
   guint32           last_motion_time;
 
   GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
+
+  gpointer          scroll_info;
 };
 
 struct _GimpDisplayShellClass
