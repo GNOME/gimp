@@ -1,3 +1,14 @@
+2003-02-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmiscui.[ch]: factored out more preview stuff from several
+	plug-ins.
+
+	* plug-ins/common/waves.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c 
+	* plug-ins/common/noisify.c: more code clean-up
+
 2003-02-01  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.[ch]
@@ -179,6 +190,11 @@
 2003-01-30  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
 	* configure.in: Added Vietnamese (vi) to ALL_LINGUAS
+
+2003-01-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/ps.c (save_dialog): corrected small error with
+	mnemonic.
 
 2003-01-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

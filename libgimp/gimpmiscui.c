@@ -166,6 +166,37 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
     }
 }
 
+void
+gimp_fixme_preview_update (GimpFixMePreview *preview,
+			   GimpFixeMePreviewFunc func,
+			   gpointer data)
+{
+  gint    x, y;
+  guchar *buffer;
+  gint bpp;
+
+  bpp = preview->bpp;
+  buffer = (guchar*) g_malloc (preview->rowstride);
+
+  for (y = 0; y < preview->height; y++)
+    {
+      guchar *src = preview->cache + y * preview->rowstride;
+      guchar *dest = buffer;
+
+      for (x = 0; x < preview->width; x++)
+	{
+	  func (src, dest, bpp, data);
+
+	  src += bpp;
+	  dest += bpp;
+	}
+      gimp_fixme_preview_do_row(preview, y, preview->width, buffer);
+    }
+
+  gtk_widget_queue_draw(preview->widget);
+  g_free (buffer);
+}
+
 void 
 gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 				    gint32     drawable_ID)
@@ -281,12 +312,92 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   g_free (src);
 }
 
+void 
+gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview, 
+				GimpDrawable *drawable)
+{
+  gint    bpp;
+  gint    x1, y1, x2, y2;
+  gint    sel_width, sel_height;
+  gint    width, height;
+  gdouble px, py;
+  gdouble dx, dy;
+  gint    x, y;
+  guchar *dest;
+  GimpPixelFetcher *pft;
+
+  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  sel_width  = x2 - x1;
+  sel_height = y2 - y1;
+
+  /* Calculate preview size */
+  if (sel_width > sel_height)
+    {
+      width  = MIN(sel_width, PREVIEW_SIZE);
+      height = sel_height * width / sel_width;
+    }
+  else
+    {
+      height = MIN(sel_height, PREVIEW_SIZE);
+      width  = sel_width * height / sel_height;
+    }
+
+  if (width < 2) width = 2;
+  if (height < 2) height = 2;
+
+  bpp = gimp_drawable_bpp (drawable->drawable_id);
+
+  if (gimp_drawable_is_indexed (drawable->drawable_id))
+    {
+      gint32 image_ID = gimp_drawable_image (drawable->drawable_id);
+      preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
+    }
+  else
+    {
+      preview->cmap = NULL;
+    }
+
+  gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
+
+  preview->even = g_malloc (width * 3);
+  preview->odd  = g_malloc (width * 3);
+  preview->cache = g_malloc(width * bpp * height);
+  preview->rowstride = width * bpp;
+  preview->bpp = bpp;
+
+  dx = (gdouble) (x2 - x1 - 1) / (width - 1);
+  dy = (gdouble) (y2 - y1 - 1) / (height - 1);
+
+  py = y1;
+
+  pft = gimp_pixel_fetcher_new (drawable);
+
+  for (y = 0; y < height; y++)
+    {
+      dest = preview->cache + y * preview->rowstride;
+      px = x1;
+      for (x = 0; x < width; x++)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, (gint) px, (gint) py, dest);
+	  dest += bpp;
+	  px += dx;
+	}
+      gimp_fixme_preview_do_row (preview, y, width, dest);
+      py += dy;
+    }
+  gimp_pixel_fetcher_destroy (pft);
+
+  preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
+  preview->width = GTK_PREVIEW (preview->widget)->buffer_width;
+  preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
+}
+
 GList*
 gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name)
 {
   GList *path_list = NULL;
   GList *fail_list = NULL;
-  GList *list;
   gchar *path;
 
   path = gimp_gimprc_query (path_name);
@@ -322,19 +433,7 @@ gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name)
 
   if (fail_list)
     {
-      GString *err = g_string_new (path_name);
-      g_string_append (err, _(" misconfigured - "
-			      "the following folders were not found:"));
-
-      for (list = fail_list; list; list = g_list_next (list))
-        {
-          g_string_append_c (err, '\n');
-          g_string_append (err, (gchar *) list->data);
-        }
-
-      g_message (err->str);
-
-      g_string_free (err, TRUE);
+      /* We just ignore the fail_list */
       gimp_path_free (fail_list);
     }
 

@@ -829,7 +829,6 @@ static unsigned char header_data[] = { 71,99,218,218,99,11,71,218,71,71,
 19,19,19,19,19,19,19,19,19,8};
 /***** Magic numbers *****/
 
-#define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH    6
 
@@ -855,13 +854,8 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *preview;
-  guchar    *image;
-  guchar    *wimage;
   gint run;
 } alienmap2_interface_t;
-
-
 
 /* Declare local functions. */
 
@@ -874,9 +868,6 @@ static void      run    (char         *name,
 
 static void      alienmap2 	       (GimpDrawable  *drawable);
 static void    	 transform             (guchar*, guchar*, guchar*);
-
-
-static void      build_preview_source_image (void);
 
 static gint      alienmap2_dialog        (void);
 static void      dialog_update_preview   (void);
@@ -892,6 +883,7 @@ static void      alienmap2_logo_dialog   (void);
 /***** Variables *****/
 
 static GimpRunMode run_mode;
+static GimpFixMePreview *preview;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -903,9 +895,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static alienmap2_interface_t wint =
 {
-  NULL,  /* preview */
-  NULL,  /* image   */
-  NULL,  /* wimage  */
   FALSE  /* run     */
 };
 
@@ -924,10 +913,6 @@ static alienmap2_vals_t wvals =
 };
 
 static GimpDrawable *drawable;
-static gint         sel_x1, sel_y1, sel_x2, sel_y2;
-static gint         sel_width, sel_height;
-static gint         preview_width, preview_height;
-static gdouble      scale_x, scale_y;
 
 /***** Functions *****/
 
@@ -1020,8 +1005,6 @@ run (char       *name,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
-  double          xhsiz, yhsiz;
-  int   	  pwidth, pheight;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI ();
@@ -1036,46 +1019,6 @@ run (char       *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-
-  gimp_drawable_mask_bounds(drawable->drawable_id,
-			    &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
-  xhsiz = (double) (sel_width - 1) / 2.0;
-  yhsiz = (double) (sel_height - 1) / 2.0;
-
-  if (xhsiz < yhsiz)
-    {
-      scale_x = yhsiz / xhsiz;
-      scale_y = 1.0;
-    }
-  else if (xhsiz > yhsiz)
-    {
-      scale_x = 1.0;
-      scale_y = xhsiz / yhsiz;
-    }
-  else
-    {
-      scale_x = 1.0;
-      scale_y = 1.0;
-    }
-
-  /* Calculate preview size */
-  if (sel_width > sel_height)
-    {
-      pwidth  = MIN(sel_width, PREVIEW_SIZE);
-      pheight = sel_height * pwidth / sel_width;
-    }
-  else
-    {
-      pheight = MIN(sel_height, PREVIEW_SIZE);
-      pwidth  = sel_width * pheight / sel_height;
-    }
-
-  preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX(pheight, 2);
 
   /* See how we will run */
   switch (run_mode)
@@ -1177,52 +1120,6 @@ alienmap2 (GimpDrawable *drawable)
   gimp_rgn_iterate2 (drawable, run_mode, alienmap2_func, NULL);
 }
 
-static void
-build_preview_source_image (void)
-{
-  double  left, right, bottom, top;
-  double  px, py;
-  double  dx, dy;
-  int     x, y;
-  guchar *p;
-  guchar  pixel[4];
-  GimpPixelFetcher *pft;
-
-  wint.image  = g_new (guchar, preview_width * preview_height * 3);
-  wint.wimage = g_new (guchar, preview_width * preview_height * 3);
-
-  left   = sel_x1;
-  right  = sel_x2 - 1;
-  bottom = sel_y2 - 1;
-  top    = sel_y1;
-
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
-
-  py = top;
-
-  p = wint.image;
-
-  pft = gimp_pixel_fetcher_new (drawable);
-
-  for (y = 0; y < preview_height; y++)
-    {
-      px = left;
-      for (x = 0; x < preview_width; x++)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, (gint) px, (gint) py, pixel);
-
-	  *p++ = pixel[0];
-	  *p++ = pixel[1];
-	  *p++ = pixel[2];
-
-	  px += dx;
-	}
-      py += dy;
-    }
-  gimp_pixel_fetcher_destroy (pft);
-}
-
 static gint
 alienmap2_dialog (void)
 {
@@ -1236,8 +1133,6 @@ alienmap2_dialog (void)
   GtkObject *adj;
 
   gimp_ui_init ("alienmap2", TRUE);
-
-  build_preview_source_image ();
 
   dialog =
     gimp_dialog_new (_("AlienMap2"), "alienmap2",
@@ -1275,10 +1170,10 @@ alienmap2_dialog (void)
   gtk_table_attach (GTK_TABLE (top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  wint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (wint.preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), wint.preview);
-  gtk_widget_show (wint.preview);
+  preview = gimp_fixme_preview_new (NULL, FALSE);
+  gimp_fixme_preview_fill_scaled (preview, drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+  gtk_widget_show (preview->widget);
 
   /* Controls */
   table = gtk_table_new (6, 3, FALSE);
@@ -1413,66 +1308,13 @@ alienmap2_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  g_free (wint.image);
-  g_free (wint.wimage);
-
   return wint.run;
 }
 
 static void
 dialog_update_preview (void)
 {
-  double  left, right, bottom, top;
-  double  dx, dy;
-  int  px, py;
-  int     x, y;
-  guchar r,g,b;
-  double  scale_x, scale_y;
-  guchar *p_ul, *i, *p;
-
-  left   = sel_x1;
-  right  = sel_x2 - 1;
-  bottom = sel_y2 - 1;
-  top    = sel_y1;
-  dx = (right - left) / (preview_width - 1);
-  dy = (bottom - top) / (preview_height - 1);
-
-  scale_x = (double) (preview_width - 1) / (right - left);
-  scale_y = (double) (preview_height - 1) / (bottom - top);
-
-  py = 0;
-
-  p_ul = wint.wimage;
-
-  for (y = 0; y < preview_height; y++)
-    {
-      px = 0;
-
-      for (x = 0; x < preview_width; x++)
-	{
-	  i = wint.image + 3 * (preview_width * py + px);
-	  r = *i++;
-	  g = *i++;
-	  b = *i;
-	  transform (&r, &g, &b);
-	  p_ul[0] = r;
-	  p_ul[1] = g;
-	  p_ul[2] = b;
-	  p_ul += 3;
-	  px += 1; /* dx; */
-	}
-      py +=1; /* dy; */
-    }
-
-  p = wint.wimage;
-
-  for (y = 0; y < preview_height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (wint.preview), p, 0, y, preview_width);
-      p += preview_width * 3;
-    }
-  gtk_widget_queue_draw (wint.preview);
-  gdk_flush ();
+  gimp_fixme_preview_update (preview, alienmap2_func, NULL);
 }
 
 static void

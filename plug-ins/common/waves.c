@@ -31,11 +31,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -60,26 +55,11 @@ typedef struct
 } piArgs;
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-
-typedef struct 
-{
-  gint     width;
-  gint     height;
-  gint     bpp;
-  gdouble  scale;
-  guchar  *bits;
-} mwPreview;
-
-#define PREVIEW_SIZE 100
-
 static gint do_preview = TRUE;
+static GimpFixMePreview *preview;
 
-static GtkWidget *mw_preview_new (GtkWidget *parent,
-				  mwPreview *mwp);
-static mwPreview *mw_preview_build (GimpDrawable *drawable);
-
-static mwPreview *mwp;
-
+static GtkWidget *mw_preview_new (GtkWidget *parent, 
+				  GimpDrawable *drawable);
 
 static void query (void);
 static void run   (gchar      *name,
@@ -89,11 +69,11 @@ static void run   (gchar      *name,
 		   GimpParam **retvals);
 
 static gint pluginCore       (piArgs *argp,
-			      gint32  drawable);
+			      GimpDrawable *drawable);
 static gint pluginCoreIA     (piArgs *argp,
-			      gint32  drawable);
+			      GimpDrawable *drawable);
 
-static void waves_do_preview (GtkWidget     *preview);
+static void waves_do_preview (void);
 
 static void wave (guchar  *src,
 		  guchar  *dest,
@@ -155,6 +135,7 @@ run (gchar      *name,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
+  GimpDrawable *drawable;
 
   piArgs args;
 
@@ -168,9 +149,10 @@ run (gchar      *name,
   args.type = -1;
   gimp_get_data ("plug_in_waves", &args);
 
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   switch (param[0].data.d_int32)
     {
-      GimpDrawable *drawable;
 
     case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
@@ -184,10 +166,7 @@ run (gchar      *name,
 	  args.reflective = 0;
 	}
 
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
-      mwp = mw_preview_build (drawable);
-
-      if (pluginCoreIA(&args, param[2].data.d_drawable) == -1)
+      if (pluginCoreIA(&args, drawable) == -1)
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -212,7 +191,7 @@ run (gchar      *name,
       args.type       = param[6].data.d_int32;
       args.reflective = param[7].data.d_int32;
 
-      if (pluginCore (&args, param[2].data.d_drawable) == -1)
+      if (pluginCore (&args, drawable) == -1)
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
@@ -222,7 +201,7 @@ run (gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
-      if (pluginCore (&args, param[2].data.d_drawable) == -1)
+      if (pluginCore (&args, drawable) == -1)
 	{
 	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -232,36 +211,33 @@ run (gchar      *name,
 
 static gint
 pluginCore (piArgs *argp,
-	    gint32  drawable)
+	    GimpDrawable *drawable)
 {
   gint retval=0;
-  GimpDrawable *drw;
   GimpPixelRgn srcPr, dstPr;
   guchar *src, *dst;
-  guint width, height, Bpp;
+  guint width, height, bpp;
 
-  drw = gimp_drawable_get (drawable);
+  width = drawable->width;
+  height = drawable->height;
+  bpp = drawable->bpp;
 
-  width = drw->width;
-  height = drw->height;
-  Bpp = drw->bpp;
-
-  src = g_new (guchar, width * height * Bpp);
-  dst = g_new (guchar, width * height * Bpp);
-  gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
+  src = g_new (guchar, width * height * bpp);
+  dst = g_new (guchar, width * height * bpp);
+  gimp_pixel_rgn_init (&srcPr, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dstPr, drawable, 0, 0, width, height, TRUE, TRUE);
   gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
-  wave (src, dst, width, height, Bpp, argp->amplitude, argp->wavelength,
+  wave (src, dst, width, height, bpp, argp->amplitude, argp->wavelength,
         argp->phase, argp->type==0, argp->reflective, 1);
   gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
   g_free (src);
   g_free (dst);
 
-  gimp_drawable_flush (drw);
-  gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
-  gimp_drawable_update (drw->drawable_id, 0, 0, width, height);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
 
   gimp_displays_flush ();
 
@@ -284,9 +260,7 @@ waves_toggle_button_update (GtkWidget *widget,
 			    gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
-
-  if (do_preview)
-    waves_do_preview (NULL);
+  waves_do_preview ();
 }
 
 static void
@@ -295,8 +269,8 @@ waves_radio_button_update (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (do_preview && GTK_TOGGLE_BUTTON (widget)->active)
-    waves_do_preview (NULL);
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    waves_do_preview ();
 }
 
 static void
@@ -304,14 +278,12 @@ waves_double_adjustment_update (GtkAdjustment *adjustment,
 				gpointer   data)
 {
   gimp_double_adjustment_update (adjustment, data);
-
-  if (do_preview)
-    waves_do_preview (NULL);
+  waves_do_preview ();
 }
 
 static gint
 pluginCoreIA (piArgs *argp,
-	      gint32         drawable)
+	      GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -352,9 +324,9 @@ pluginCoreIA (piArgs *argp,
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = mw_preview_new (hbox, mwp);
+  preview = mw_preview_new (hbox, drawable);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
-  waves_do_preview (preview);
+  waves_do_preview ();
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
 				 G_CALLBACK (waves_radio_button_update),
@@ -431,33 +403,30 @@ pluginCoreIA (piArgs *argp,
 }
 
 static void
-waves_do_preview (GtkWidget *widget)
+waves_do_preview (void)
 {
-  static GtkWidget *theWidget = NULL;
   piArgs *argp;
   guchar *dst;
   gint y;
 
-  if (theWidget == NULL)
-    {
-      theWidget = widget;
-    }
+  if (!do_preview)
+    return;
 
-  argp = g_object_get_data (G_OBJECT (theWidget), "piArgs");
-  dst = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
+  argp = g_object_get_data (G_OBJECT (preview->widget), "piArgs");
+  dst = g_new (guchar, preview->width * preview->height * preview->bpp);
 
-  wave (mwp->bits, dst, mwp->width, mwp->height, mwp->bpp,
-	(argp->amplitude / mwp->scale), (argp->wavelength / mwp->scale),
+  wave (preview->cache, dst, preview->width, preview->height, preview->bpp,
+	argp->amplitude * preview->scale_x, 
+	argp->wavelength * preview->scale_x,
 	argp->phase, argp->type == 0, argp->reflective, 0);
 
-  for (y = 0; y < mwp->height; y++)
+  for (y = 0; y < preview->height; y++)
     {
-      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    dst + (y * mwp->width * mwp->bpp), 0, y,
-			    mwp->width);
+      gimp_fixme_preview_do_row (preview, y, preview->width, 
+				 dst + y * preview->rowstride);
     }
 
-  gtk_widget_queue_draw (theWidget);
+  gtk_widget_queue_draw (preview->widget);
 
   g_free (dst);
 }
@@ -468,75 +437,12 @@ mw_preview_toggle_callback (GtkWidget *widget,
 {
   gimp_toggle_button_update (widget, data);
 
-  if (do_preview)
-    waves_do_preview (NULL);
-}
-
-static mwPreview *
-mw_preview_build_virgin (GimpDrawable *drawable)
-{
-  mwPreview *mwp;
-
-  mwp = g_new (mwPreview, 1);
-
-  if (drawable->width > drawable->height)
-    {
-      mwp->scale  = (gdouble) drawable->width / (gdouble) PREVIEW_SIZE;
-      mwp->width  = PREVIEW_SIZE;
-      mwp->height = drawable->height / mwp->scale;
-    }
-  else
-    {
-      mwp->scale  = (gdouble) drawable->height / (gdouble) PREVIEW_SIZE;
-      mwp->height = PREVIEW_SIZE;
-      mwp->width  = drawable->width / mwp->scale;
-    }
-
-  mwp->bpp  = 3;
-  mwp->bits = NULL;
-
-  return mwp;
-}
-
-static mwPreview *
-mw_preview_build (GimpDrawable *drawable)
-{
-  mwPreview *mwp;
-  gint x, y, b;
-  guchar *bc;
-  guchar *drawableBits;
-  GimpPixelRgn pr;
-
-  mwp = mw_preview_build_virgin (drawable);
-
-  gimp_pixel_rgn_init (&pr, drawable,
-		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  drawableBits = g_new (guchar, drawable->width * drawable->bpp);
-
-  bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
-  for (y = 0; y < mwp->height; y++)
-    {
-      gimp_pixel_rgn_get_row (&pr, drawableBits,
-			      0, (gint) (y * mwp->scale), drawable->width);
-
-      for (x = 0; x < mwp->width; x++)
-        {
-          for (b = 0; b < mwp->bpp; b++)
-            *bc++ = *(drawableBits +
-                      ((gint) (x * mwp->scale) * drawable->bpp) +
-		      b % drawable->bpp);
-        }
-    }
-  g_free (drawableBits);
-
-  return mwp;
+  waves_do_preview ();
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget *parent,
-                mwPreview *mwp)
+mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
 {
-  GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *pframe;
   GtkWidget *vbox;
@@ -557,10 +463,9 @@ mw_preview_new (GtkWidget *parent,
   gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
   gtk_widget_show (pframe);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
-  gtk_widget_show (preview);
+  preview = gimp_fixme_preview_new (drawable, FALSE);
+  gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
+  gtk_widget_show (preview->widget);
 
   button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
@@ -571,9 +476,24 @@ mw_preview_new (GtkWidget *parent,
                     G_CALLBACK (mw_preview_toggle_callback),
                     &do_preview);
 
-  return preview;
+  return preview->widget;
 }
 
+/* Wave the image.  For each pixel in the destination image
+ * which is inside the selection, we compute the corresponding
+ * waved location in the source image.  We use bilinear
+ * interpolation to avoid ugly jaggies.
+ *
+ * Let's assume that we are operating on a circular area.
+ * Every point within <radius> distance of the wave center is
+ * waveed to its destination position.
+ *
+ * Basically, introduce a wave into the image. I made up the
+ * forumla initially, but it looks good. Quartic added the
+ * wavelength etc. to it while I was asleep :) Just goes to show
+ * we should work with people in different time zones more.
+ *
+ */
 
 static void
 wave (guchar  *src,
@@ -623,22 +543,6 @@ wave (guchar  *src,
   x1 = y1 = 0;
   x2 = width;
   y2 = height;
-
-  /* Wave the image.  For each pixel in the destination image
-   * which is inside the selection, we compute the corresponding
-   * waved location in the source image.  We use bilinear
-   * interpolation to avoid ugly jaggies.
-   *
-   * Let's assume that we are operating on a circular area.
-   * Every point within <radius> distance of the wave center is
-   * waveed to its destination position.
-   *
-   * Basically, introduce a wave into the image. I made up the
-   * forumla initially, but it looks good. Quartic added the
-   * wavelength etc. to it while I was asleep :) Just goes to show
-   * we should work with people in different time zones more.
-   *
-   */
 
   /* Center of selection */
   cen_x = (double) (x2 - 1 + x1) / 2.0;
@@ -721,27 +625,15 @@ wave (guchar  *src,
 
 	  /* Calculations complete; now copy the proper pixel */
 
-	  xi = needx;
-	  yi = needy;
-
 	  if (smear)
 	    {
-	      if (xi > width - 2)
-		{
-		  xi = width - 2;
-		}
-	      else if (xi < 0)
-		{
-		  xi = 0;
-		}
-	      if (yi > height - 2)
-		{
-		  yi = height - 2;
-		}
-	      else if (yi < 0)
-		{
-		  yi = 0;
-		}
+	      xi = CLAMP (needx, 0, width - 2);
+	      yi = CLAMP (needy, 0, height - 2);
+	    }
+	  else
+	    {
+	      xi = needx;
+	      yi = needy;
 	    }
 
 	  p = src + rowsiz * yi + xi * bypp;
@@ -768,13 +660,8 @@ wave (guchar  *src,
 	      else
 		values[2] = 0;
 
-	      if (x2_in)
-		{
-		  if (y2_in)
-		    values[3] = *(p + bypp + k + rowsiz);
-		  else
-		    values[3] = 0;
-		}
+	      if (x2_in && y2_in)
+		values[3] = *(p + bypp + k + rowsiz);
 	      else
 		values[3] = 0;
 

@@ -56,13 +56,23 @@ typedef struct {
   gdouble    scale_y;
 } GimpFixMePreview;
 
+typedef void (*GimpFixeMePreviewFunc)(guchar *src, guchar *dest, 
+				      gint bpp, gpointer data);
+
 GimpFixMePreview *gimp_fixme_preview_new (GimpDrawable *drawable,
 					  gboolean has_frame);
 void gimp_fixme_preview_free (GimpFixMePreview *preview);
+
+void gimp_fixme_preview_update (GimpFixMePreview *preview,
+				GimpFixeMePreviewFunc func,
+				gpointer data);
+
 void gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 					 gint32     drawable_ID);
 void gimp_fixme_preview_fill (GimpFixMePreview *preview, 
 			      GimpDrawable *drawable);
+void gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview, 
+				     GimpDrawable *drawable);
 void gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 				gint    row,
 				gint    width,

@@ -2889,7 +2889,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
 
-  toggle = gtk_check_button_new_with_label (_("_Keep Aspect Ratio"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Keep Aspect Ratio"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);

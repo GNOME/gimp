@@ -230,8 +230,9 @@ run (gchar      *name,
 }
 
 static void 
-noisify_func (guchar *src, guchar *dest, gint bpp, GRand *gr)
+noisify_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 {
+  GRand *gr = (GRand*) data;
   gint noise = 0, b;
 
   if (!nvals.independent)
@@ -265,44 +266,11 @@ noisify (GimpDrawable *drawable,
   gr = g_rand_new ();
 
   if (preview_mode) 
-    {
-      guchar *src, *dest, *dest_data;
-      gint width, height, row_stride;
-      gint row, col;
-      gint bpp;
-
-      width = preview->width;
-      height = preview->height;
-      bpp = preview->bpp;
-      row_stride = preview->rowstride;
-
-      dest_data = g_malloc (row_stride);
-
-      for (row = 0; row < height; row++)
-	{
-	  src  = preview->cache + row * row_stride;
-	  dest = dest_data;
-
-	  for (col = 0; col < width; col++)
-	    {
-	      noisify_func (src, dest, bpp, gr);
-	      src += bpp;
-	      dest += bpp;
-	    }
-
-	  gimp_fixme_preview_do_row(preview, row, width, dest_data);
-	}
-
-      g_free (dest_data);
-      gtk_widget_queue_draw (preview->widget);
-    } 
+    gimp_fixme_preview_update (preview, noisify_func, gr);
   else 
-    {
-      gimp_rgn_iterate2 (drawable, run_mode, (GimpRgnFunc2) noisify_func, gr);
-    }
+    gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
 
   g_rand_free (gr);
-
 }
 
 static void
