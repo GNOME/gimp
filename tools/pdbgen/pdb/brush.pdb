@@ -109,6 +109,72 @@ CODE
     );
 }
 
+sub brush_is_generated {
+    $blurb = "Tests if generated";
+    $help  = "Returns True if this brush is parametric, False for other types";
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'generated', type => 'boolean',
+	  desc => "True if the brush is generated",
+	  alias => 'GIMP_IS_BRUSH_GENERATED (brush)',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+        code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush)
+    success = TRUE;
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_is_editable {
+    $blurb = "Tests if brush can be edited";
+    $help  = "Returns True if you have permission to change the brush";
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'editable', type => 'boolean',
+	  desc => "True if the brush can be edited",
+	  alias => 'GIMP_DATA (brush)->writable',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+        code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush)
+    success = TRUE;
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub brush_rename {
     $blurb = "Rename a brush";
     $help  = "This procedure renames a brush";
@@ -322,6 +388,216 @@ CODE
     );
 }
 
+sub brush_get_shape {
+    $blurb = 'Get the shape of a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the shape value for a generated brush.  If
+called for any other type of brush, it does not succeed.  The
+current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
+Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
+(GIMP_BRUSH_GENERATED_DIAMOND).  Other shapes are likely to be
+added in the future. 
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'shape', type => 'int32', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->shape',
+          desc => "An enumerated value representing the brush shape" }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
+sub brush_get_radius {
+    $blurb = 'Get the radius of a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the radius value for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'radius', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->radius',
+          desc => "The radius of the brush in pixels" }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
+sub brush_get_spikes {
+    $blurb = 'Get the number of spikes for a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the number of spikes for a generated brush.  
+If called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'spikes', type => 'int32', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->spikes',
+          desc => "The number of spikes on the brush." }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
+sub brush_get_hardness {
+    $blurb = 'Get the hardness of a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the hardness of a generated brush. The
+hardness of a brush is the amount its intensity fades at the
+outside edge. If called for any other type of brush, the function
+ does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'hardness', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->hardness',
+          desc => "The hardness of the brush." }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
+sub brush_get_aspect_ratio {
+    $blurb = 'Get the aspect ratio of a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the aspect ratio of a generated brush. 
+If called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'aspect_ratio', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->aspect_ratio',
+          desc => "The aspect ratio of the brush." }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
+sub brush_get_angle {
+    $blurb = 'Get the rotation angle of a generated brush.';
+
+    $help = <<'HELP';
+This procedure gets the angle of rotation for a generated brush. 
+If called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'angle', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->angle',
+          desc => "The rotation angle of the brush." }
+    );
+
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+}
+CODE
+    );
+}
+
 sub brush_set_spacing {
     $blurb = 'Set the brush spacing.';
 
@@ -354,13 +630,259 @@ CODE
 }
 
 
+sub brush_set_shape {
+    $blurb = 'Set the shape of a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the shape value for a generated brush.  If
+called for any other type of brush, it does not succeed.  The
+current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
+Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
+(GIMP_BRUSH_GENERATED_DIAMOND).  Other shapes are likely to be
+added in the future. 
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'shape_in', type => 'int32',
+          desc => "An enumerated value representing the desired brush shape" }
+    );
+
+    @outargs = (
+	{ name => 'shape_out', type => 'int32', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->shape',
+          desc => "The brush shape actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush), shape_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub brush_set_radius {
+    $blurb = 'Set the radius of a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the radius for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'radius_in', type => 'float',
+          desc => "The desired brush radius" }
+    );
+
+    @outargs = (
+	{ name => 'radius_out', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->radius',
+          desc => "The brush radius actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush), radius_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub brush_set_spikes {
+    $blurb = 'Set the number of spikes for a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the number of spikes for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'spikes_in', type => 'int32',
+          desc => "The desired number of spikes" }
+    );
+
+    @outargs = (
+	{ name => 'spikes_out', type => 'int32', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->spikes',
+          desc => "The number of spikes actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush), spikes_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub brush_set_hardness {
+    $blurb = 'Set the hardness of a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the hardness for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'hardness_in', type => 'float',
+          desc => "The desired brush hardness" }
+    );
+
+    @outargs = (
+	{ name => 'hardness_out', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->hardness',
+          desc => "The brush hardness actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush), hardness_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub brush_set_aspect_ratio {
+    $blurb = 'Set the aspect ratio of a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the aspect ratio for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'aspect_ratio_in', type => 'float',
+          desc => "The desired brush aspect ratio" }
+    );
+
+    @outargs = (
+	{ name => 'aspect_ratio_out', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->aspect_ratio',
+          desc => "The brush aspect ratio actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush), aspect_ratio_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub brush_set_angle {
+    $blurb = 'Set the rotation angle of a generated brush.';
+
+    $help = <<'HELP';
+This procedure sets the rotation angle for a generated brush.  If
+called for any other type of brush, it does not succeed.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg,
+	{ name => 'angle_in', type => 'float',
+          desc => "The desired brush rotation angle" }
+    );
+
+    @outargs = (
+	{ name => 'angle_out', type => 'float', no_declare => '1',
+          alias => 'GIMP_BRUSH_GENERATED (brush)->angle',
+          desc => "The brush rotation angle actually assigned" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+    gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush), angle_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
 @headers = qw(<string.h> "base/temp-buf.h"
               "core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
-              "core/gimpcontext.h" "core/gimpdatafactory.h");
+              "core/gimpbrushgenerated.h" "core/gimpcontext.h" 
+              "core/gimpdatafactory.h");
 
-@procs = qw(brush_new brush_duplicate brush_rename brush_delete
+@procs = qw(brush_new brush_duplicate brush_is_generated 
+            brush_rename brush_delete brush_is_editable
             brush_get_info brush_get_pixels
-            brush_get_spacing brush_set_spacing);
+            brush_get_spacing brush_set_spacing
+            brush_get_shape brush_get_radius
+            brush_get_spikes brush_get_hardness
+            brush_get_aspect_ratio brush_get_angle
+            brush_set_shape brush_set_radius
+            brush_set_spikes brush_set_hardness
+            brush_set_aspect_ratio brush_set_angle);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';

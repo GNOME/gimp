@@ -76,6 +76,39 @@ CODE
     );
 }
 
+sub palette_is_editable {
+    $blurb = "Tests if palette can be edited";
+    $help  = "Returns True if you have permission to change the palette";
+
+    &mitch_misc;
+
+    @inargs = (
+        &palette_arg
+    );
+
+    @outargs = (
+	{ name => 'editable', type => 'boolean',
+	  desc => "True if the palette can be edited",
+	  alias => 'GIMP_DATA (palette)->writable',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPalette *palette = NULL' ],
+        code => <<'CODE'
+{
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+  if (palette)
+    success = TRUE;
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub palette_duplicate {
     $blurb = "Duplicates a palette";
     $help  = "This procedure creates an identical palette by a different name";
@@ -493,6 +526,7 @@ CODE
               "core/gimpdatafactory.h" "core/gimppalette.h");
 
 @procs = qw(palette_new palette_duplicate palette_rename palette_delete
+            palette_is_editable
             palette_get_info palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name);

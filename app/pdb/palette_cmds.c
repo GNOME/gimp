@@ -39,6 +39,7 @@ static ProcRecord palette_new_proc;
 static ProcRecord palette_duplicate_proc;
 static ProcRecord palette_rename_proc;
 static ProcRecord palette_delete_proc;
+static ProcRecord palette_is_editable_proc;
 static ProcRecord palette_get_info_proc;
 static ProcRecord palette_add_entry_proc;
 static ProcRecord palette_delete_entry_proc;
@@ -54,6 +55,7 @@ register_palette_procs (Gimp *gimp)
   procedural_db_register (gimp, &palette_duplicate_proc);
   procedural_db_register (gimp, &palette_rename_proc);
   procedural_db_register (gimp, &palette_delete_proc);
+  procedural_db_register (gimp, &palette_is_editable_proc);
   procedural_db_register (gimp, &palette_get_info_proc);
   procedural_db_register (gimp, &palette_add_entry_proc);
   procedural_db_register (gimp, &palette_delete_entry_proc);
@@ -348,6 +350,75 @@ static ProcRecord palette_delete_proc =
   0,
   NULL,
   { { palette_delete_invoker } }
+};
+
+static Argument *
+palette_is_editable_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpPalette *palette = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+      if (palette)
+        success = TRUE;
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&palette_is_editable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_DATA (palette)->writable;
+
+  return return_args;
+}
+
+static ProcArg palette_is_editable_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The palette name."
+  }
+};
+
+static ProcArg palette_is_editable_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "editable",
+    "True if the palette can be edited"
+  }
+};
+
+static ProcRecord palette_is_editable_proc =
+{
+  "gimp_palette_is_editable",
+  "Tests if palette can be edited",
+  "Returns True if you have permission to change the palette",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  palette_is_editable_inargs,
+  1,
+  palette_is_editable_outargs,
+  { { palette_is_editable_invoker } }
 };
 
 static Argument *

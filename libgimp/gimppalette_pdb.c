@@ -156,6 +156,38 @@ gimp_palette_delete (const gchar *name)
 }
 
 /**
+ * gimp_palette_is_editable:
+ * @name: The palette name.
+ *
+ * Tests if palette can be edited
+ *
+ * Returns True if you have permission to change the palette
+ *
+ * Returns: True if the palette can be edited.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_palette_is_editable (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean editable = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_palette_is_editable",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    editable = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return editable;
+}
+
+/**
  * gimp_palette_get_info:
  * @name: The palette name.
  * @num_colors: The number of colors in the palette.

@@ -30,30 +30,59 @@
 #include "base/temp-buf.h"
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 
 static ProcRecord brush_new_proc;
 static ProcRecord brush_duplicate_proc;
+static ProcRecord brush_is_generated_proc;
 static ProcRecord brush_rename_proc;
 static ProcRecord brush_delete_proc;
+static ProcRecord brush_is_editable_proc;
 static ProcRecord brush_get_info_proc;
 static ProcRecord brush_get_pixels_proc;
 static ProcRecord brush_get_spacing_proc;
 static ProcRecord brush_set_spacing_proc;
+static ProcRecord brush_get_shape_proc;
+static ProcRecord brush_get_radius_proc;
+static ProcRecord brush_get_spikes_proc;
+static ProcRecord brush_get_hardness_proc;
+static ProcRecord brush_get_aspect_ratio_proc;
+static ProcRecord brush_get_angle_proc;
+static ProcRecord brush_set_shape_proc;
+static ProcRecord brush_set_radius_proc;
+static ProcRecord brush_set_spikes_proc;
+static ProcRecord brush_set_hardness_proc;
+static ProcRecord brush_set_aspect_ratio_proc;
+static ProcRecord brush_set_angle_proc;
 
 void
 register_brush_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &brush_new_proc);
   procedural_db_register (gimp, &brush_duplicate_proc);
+  procedural_db_register (gimp, &brush_is_generated_proc);
   procedural_db_register (gimp, &brush_rename_proc);
   procedural_db_register (gimp, &brush_delete_proc);
+  procedural_db_register (gimp, &brush_is_editable_proc);
   procedural_db_register (gimp, &brush_get_info_proc);
   procedural_db_register (gimp, &brush_get_pixels_proc);
   procedural_db_register (gimp, &brush_get_spacing_proc);
   procedural_db_register (gimp, &brush_set_spacing_proc);
+  procedural_db_register (gimp, &brush_get_shape_proc);
+  procedural_db_register (gimp, &brush_get_radius_proc);
+  procedural_db_register (gimp, &brush_get_spikes_proc);
+  procedural_db_register (gimp, &brush_get_hardness_proc);
+  procedural_db_register (gimp, &brush_get_aspect_ratio_proc);
+  procedural_db_register (gimp, &brush_get_angle_proc);
+  procedural_db_register (gimp, &brush_set_shape_proc);
+  procedural_db_register (gimp, &brush_set_radius_proc);
+  procedural_db_register (gimp, &brush_set_spikes_proc);
+  procedural_db_register (gimp, &brush_set_hardness_proc);
+  procedural_db_register (gimp, &brush_set_aspect_ratio_proc);
+  procedural_db_register (gimp, &brush_set_angle_proc);
 }
 
 static Argument *
@@ -199,6 +228,75 @@ static ProcRecord brush_duplicate_proc =
 };
 
 static Argument *
+brush_is_generated_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush)
+        success = TRUE;
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_is_generated_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_IS_BRUSH_GENERATED (brush);
+
+  return return_args;
+}
+
+static ProcArg brush_is_generated_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_is_generated_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "generated",
+    "True if the brush is generated"
+  }
+};
+
+static ProcRecord brush_is_generated_proc =
+{
+  "gimp_brush_is_generated",
+  "Tests if generated",
+  "Returns True if this brush is parametric, False for other types",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_is_generated_inargs,
+  1,
+  brush_is_generated_outargs,
+  { { brush_is_generated_invoker } }
+};
+
+static Argument *
 brush_rename_invoker (Gimp         *gimp,
                       GimpContext  *context,
                       GimpProgress *progress,
@@ -341,6 +439,75 @@ static ProcRecord brush_delete_proc =
   0,
   NULL,
   { { brush_delete_invoker } }
+};
+
+static Argument *
+brush_is_editable_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush)
+        success = TRUE;
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_is_editable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_DATA (brush)->writable;
+
+  return return_args;
+}
+
+static ProcArg brush_is_editable_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_is_editable_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "editable",
+    "True if the brush can be edited"
+  }
+};
+
+static ProcRecord brush_is_editable_proc =
+{
+  "gimp_brush_is_editable",
+  "Tests if brush can be edited",
+  "Returns True if you have permission to change the brush",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_is_editable_inargs,
+  1,
+  brush_is_editable_outargs,
+  { { brush_is_editable_invoker } }
 };
 
 static Argument *
@@ -688,4 +855,862 @@ static ProcRecord brush_set_spacing_proc =
   0,
   NULL,
   { { brush_set_spacing_invoker } }
+};
+
+static Argument *
+brush_get_shape_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_shape_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->shape;
+
+  return return_args;
+}
+
+static ProcArg brush_get_shape_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_shape_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "shape",
+    "An enumerated value representing the brush shape"
+  }
+};
+
+static ProcRecord brush_get_shape_proc =
+{
+  "gimp_brush_get_shape",
+  "Get the shape of a generated brush.",
+  "This procedure gets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_shape_inargs,
+  1,
+  brush_get_shape_outargs,
+  { { brush_get_shape_invoker } }
+};
+
+static Argument *
+brush_get_radius_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_radius_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->radius;
+
+  return return_args;
+}
+
+static ProcArg brush_get_radius_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_radius_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "radius",
+    "The radius of the brush in pixels"
+  }
+};
+
+static ProcRecord brush_get_radius_proc =
+{
+  "gimp_brush_get_radius",
+  "Get the radius of a generated brush.",
+  "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_radius_inargs,
+  1,
+  brush_get_radius_outargs,
+  { { brush_get_radius_invoker } }
+};
+
+static Argument *
+brush_get_spikes_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_spikes_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->spikes;
+
+  return return_args;
+}
+
+static ProcArg brush_get_spikes_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_spikes_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "spikes",
+    "The number of spikes on the brush."
+  }
+};
+
+static ProcRecord brush_get_spikes_proc =
+{
+  "gimp_brush_get_spikes",
+  "Get the number of spikes for a generated brush.",
+  "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_spikes_inargs,
+  1,
+  brush_get_spikes_outargs,
+  { { brush_get_spikes_invoker } }
+};
+
+static Argument *
+brush_get_hardness_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_hardness_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->hardness;
+
+  return return_args;
+}
+
+static ProcArg brush_get_hardness_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_hardness_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "hardness",
+    "The hardness of the brush."
+  }
+};
+
+static ProcRecord brush_get_hardness_proc =
+{
+  "gimp_brush_get_hardness",
+  "Get the hardness of a generated brush.",
+  "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_hardness_inargs,
+  1,
+  brush_get_hardness_outargs,
+  { { brush_get_hardness_invoker } }
+};
+
+static Argument *
+brush_get_aspect_ratio_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_aspect_ratio_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+
+  return return_args;
+}
+
+static ProcArg brush_get_aspect_ratio_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_aspect_ratio_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "aspect_ratio",
+    "The aspect ratio of the brush."
+  }
+};
+
+static ProcRecord brush_get_aspect_ratio_proc =
+{
+  "gimp_brush_get_aspect_ratio",
+  "Get the aspect ratio of a generated brush.",
+  "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_aspect_ratio_inargs,
+  1,
+  brush_get_aspect_ratio_outargs,
+  { { brush_get_aspect_ratio_invoker } }
+};
+
+static Argument *
+brush_get_angle_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      success = (brush != NULL && GIMP_IS_BRUSH_GENERATED (brush));
+    }
+
+  return_args = procedural_db_return_args (&brush_get_angle_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->angle;
+
+  return return_args;
+}
+
+static ProcArg brush_get_angle_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_angle_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "angle",
+    "The rotation angle of the brush."
+  }
+};
+
+static ProcRecord brush_get_angle_proc =
+{
+  "gimp_brush_get_angle",
+  "Get the rotation angle of a generated brush.",
+  "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  brush_get_angle_inargs,
+  1,
+  brush_get_angle_outargs,
+  { { brush_get_angle_invoker } }
+};
+
+static Argument *
+brush_set_shape_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gint32 shape_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  shape_in = args[1].value.pdb_int;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush), shape_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_shape_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->shape;
+
+  return return_args;
+}
+
+static ProcArg brush_set_shape_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_INT32,
+    "shape_in",
+    "An enumerated value representing the desired brush shape"
+  }
+};
+
+static ProcArg brush_set_shape_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "shape_out",
+    "The brush shape actually assigned"
+  }
+};
+
+static ProcRecord brush_set_shape_proc =
+{
+  "gimp_brush_set_shape",
+  "Set the shape of a generated brush.",
+  "This procedure sets the shape value for a generated brush. If called for any other type of brush, it does not succeed. The current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added in the future.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_shape_inargs,
+  1,
+  brush_set_shape_outargs,
+  { { brush_set_shape_invoker } }
+};
+
+static Argument *
+brush_set_radius_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gdouble radius_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  radius_in = args[1].value.pdb_float;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush), radius_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_radius_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->radius;
+
+  return return_args;
+}
+
+static ProcArg brush_set_radius_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "radius_in",
+    "The desired brush radius"
+  }
+};
+
+static ProcArg brush_set_radius_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "radius_out",
+    "The brush radius actually assigned"
+  }
+};
+
+static ProcRecord brush_set_radius_proc =
+{
+  "gimp_brush_set_radius",
+  "Set the radius of a generated brush.",
+  "This procedure sets the radius for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_radius_inargs,
+  1,
+  brush_set_radius_outargs,
+  { { brush_set_radius_invoker } }
+};
+
+static Argument *
+brush_set_spikes_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gint32 spikes_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  spikes_in = args[1].value.pdb_int;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush), spikes_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_spikes_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_BRUSH_GENERATED (brush)->spikes;
+
+  return return_args;
+}
+
+static ProcArg brush_set_spikes_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_INT32,
+    "spikes_in",
+    "The desired number of spikes"
+  }
+};
+
+static ProcArg brush_set_spikes_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "spikes_out",
+    "The number of spikes actually assigned"
+  }
+};
+
+static ProcRecord brush_set_spikes_proc =
+{
+  "gimp_brush_set_spikes",
+  "Set the number of spikes for a generated brush.",
+  "This procedure sets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_spikes_inargs,
+  1,
+  brush_set_spikes_outargs,
+  { { brush_set_spikes_invoker } }
+};
+
+static Argument *
+brush_set_hardness_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gdouble hardness_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  hardness_in = args[1].value.pdb_float;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush), hardness_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_hardness_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->hardness;
+
+  return return_args;
+}
+
+static ProcArg brush_set_hardness_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "hardness_in",
+    "The desired brush hardness"
+  }
+};
+
+static ProcArg brush_set_hardness_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "hardness_out",
+    "The brush hardness actually assigned"
+  }
+};
+
+static ProcRecord brush_set_hardness_proc =
+{
+  "gimp_brush_set_hardness",
+  "Set the hardness of a generated brush.",
+  "This procedure sets the hardness for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_hardness_inargs,
+  1,
+  brush_set_hardness_outargs,
+  { { brush_set_hardness_invoker } }
+};
+
+static Argument *
+brush_set_aspect_ratio_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gdouble aspect_ratio_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  aspect_ratio_in = args[1].value.pdb_float;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush), aspect_ratio_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_aspect_ratio_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+
+  return return_args;
+}
+
+static ProcArg brush_set_aspect_ratio_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "aspect_ratio_in",
+    "The desired brush aspect ratio"
+  }
+};
+
+static ProcArg brush_set_aspect_ratio_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "aspect_ratio_out",
+    "The brush aspect ratio actually assigned"
+  }
+};
+
+static ProcRecord brush_set_aspect_ratio_proc =
+{
+  "gimp_brush_set_aspect_ratio",
+  "Set the aspect ratio of a generated brush.",
+  "This procedure sets the aspect ratio for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_aspect_ratio_inargs,
+  1,
+  brush_set_aspect_ratio_outargs,
+  { { brush_set_aspect_ratio_invoker } }
+};
+
+static Argument *
+brush_set_angle_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gdouble angle_in;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  angle_in = args[1].value.pdb_float;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush && GIMP_DATA (brush)->writable && GIMP_IS_BRUSH_GENERATED (brush))
+        gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush), angle_in);
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_set_angle_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = GIMP_BRUSH_GENERATED (brush)->angle;
+
+  return return_args;
+}
+
+static ProcArg brush_set_angle_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "angle_in",
+    "The desired brush rotation angle"
+  }
+};
+
+static ProcArg brush_set_angle_outargs[] =
+{
+  {
+    GIMP_PDB_FLOAT,
+    "angle_out",
+    "The brush rotation angle actually assigned"
+  }
+};
+
+static ProcRecord brush_set_angle_proc =
+{
+  "gimp_brush_set_angle",
+  "Set the rotation angle of a generated brush.",
+  "This procedure sets the rotation angle for a generated brush. If called for any other type of brush, it does not succeed.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  brush_set_angle_inargs,
+  1,
+  brush_set_angle_outargs,
+  { { brush_set_angle_invoker } }
 };
