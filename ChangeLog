@@ -1,3 +1,12 @@
+2002-05-08  Nathan Summers  <rock@gimp.org>
+
+	* Changelog: (2002-05-06) somehow the Changelog entry for my dbbrower
+	modification didn't get committed. Probably this was because I 
+	committed at the same time that some guy with a backhoe committed some
+	modifications to the network cable running under the parking lot behind
+	my apartment, leaving me without internet connectivity for several 
+	days. :)
+	
 2002-05-08  Manish Singh  <yosh@gimp.org>
 
         * configure.in: the correct switch is --disable-print, not 
@@ -341,6 +350,12 @@
 	* app/config/gimprc.c (gimp_rc_query): don't escape string values.
 
 	* app/config/test-config.c: changed accordingly.
+
+2002-05-06  Nathan Summers  <rock@gimp.org>
+
+        * plug-ins/dbbrowser/dbbrowser_utils.c: (gimp_db_browser) use a
+        GtkHPaned instead of a GtkHBox to separate the list from the details.
+        This little change makes the pdb browser much more usable.
 
 2002-05-06  Nathan Summers  <rock@gimp.org>
 
