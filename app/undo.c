@@ -34,6 +34,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
+#include "core/gimp-parasites.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -45,7 +46,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
-#include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
 
 #include "paint/gimppaintcore.h"

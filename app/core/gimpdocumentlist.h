@@ -16,31 +16,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DOCUMENTS_H__
-#define __GIMP_DOCUMENTS_H__
+#ifndef __GIMP_DOCUMENT_LIST_H__
+#define __GIMP_DOCUMENT_LIST_H__
 
 #include "core/gimplist.h"
 
 
-#define GIMP_TYPE_DOCUMENTS            (gimp_documents_get_type ())
-#define GIMP_DOCUMENTS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCUMENTS, GimpDocuments))
-#define GIMP_DOCUMENTS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCUMENTS, GimpDocumentsClass))
-#define GIMP_IS_DOCUMENTS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCUMENTS))
-#define GIMP_IS_DOCUMENTS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCUMENTS))
+#define GIMP_TYPE_DOCUMENT_LIST           (gimp_document_list_get_type ())
+#define GIMP_DOCUMENT_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCUMENT_LIST, GimpDocumentList))
+#define GIMP_DOCUMENT_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCUMENT_LIST, GimpDocumentListClass))
+#define GIMP_IS_DOCUMENT_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCUMENT_LIST))
+#define GIMP_IS_DOCUMENT_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCUMENT_LIST))
 
 
-typedef struct _GimpListClass GimpDocumentsClass;
+typedef struct _GimpListClass GimpDocumentListClass;
 
 
-GType           gimp_documents_get_type (void) G_GNUC_CONST; 
-GimpContainer * gimp_documents_new      (void);
+GType           gimp_document_list_get_type (void) G_GNUC_CONST; 
+GimpContainer * gimp_document_list_new      (void);
 
-void            gimp_documents_load     (GimpDocuments *documents,
-                                         gint           thumbnail_size);
-void            gimp_documents_save     (GimpDocuments *documents);
-
-GimpImagefile * gimp_documents_add      (GimpDocuments *documents,
-                                         const gchar   *uri);
+GimpImagefile * gimp_document_list_add_uri  (GimpDocumentList *document_list,
+                                             const gchar      *uri);
 
 
-#endif  /*  __GIMP_DOCUMENTS_H__  */
+#endif  /*  __GIMP_DOCUMENT_LIST_H__  */

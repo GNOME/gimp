@@ -43,7 +43,6 @@
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimpparasite.h"
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 

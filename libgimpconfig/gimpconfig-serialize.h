@@ -23,15 +23,15 @@
 #define __GIMP_CONFIG_SERIALIZE_H__
 
 
-void     gimp_config_serialize_properties         (GObject      *object,
-                                                   gint          fd);
-void     gimp_config_serialize_changed_properties (GObject      *new,
-                                                   GObject      *old,
-                                                   gint          fd);
-void     gimp_config_serialize_unknown_tokens     (GObject      *object,
-                                                   gint          fd);
-gboolean gimp_config_serialize_value              (const GValue *value,
-                                                   GString      *str,
-                                                   gboolean      escaped);
+gboolean  gimp_config_serialize_properties         (GObject      *object,
+                                                    gint          fd);
+gboolean  gimp_config_serialize_changed_properties (GObject      *new,
+                                                    GObject      *old,
+                                                    gint          fd);
+gboolean  gimp_config_serialize_unknown_tokens     (GObject      *object,
+                                                    gint          fd);
+gboolean  gimp_config_serialize_value              (const GValue *value,
+                                                    GString      *str,
+                                                    gboolean      escaped);
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

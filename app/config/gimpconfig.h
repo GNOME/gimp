@@ -22,6 +22,14 @@
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
 
+typedef enum
+{
+  GIMP_CONFIG_ERROR_ENOENT,  /*  file does not exist  */
+  GIMP_CONFIG_ERROR_OPEN,    /*  open failed          */
+  GIMP_CONFIG_ERROR_WRITE,   /*  write failed         */
+  GIMP_CONFIG_ERROR_PARSE    /*  parser error         */
+} GimpConfigError;
+
 
 #define GIMP_TYPE_CONFIG_INTERFACE     (gimp_config_interface_get_type ())
 #define GIMP_GET_CONFIG_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG_INTERFACE, GimpConfigInterface))
@@ -32,7 +40,7 @@ struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  void       (* serialize)    (GObject  *object,
+  gboolean   (* serialize)    (GObject  *object,
                                gint      fd);
   gboolean   (* deserialize)  (GObject  *object,
                                GScanner *scanner);
@@ -50,6 +58,8 @@ GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
 gboolean      gimp_config_serialize             (GObject      *object,
                                                  const gchar  *filename,
+                                                 const gchar  *header,
+                                                 const gchar  *footer,
                                                  GError      **error);
 gboolean      gimp_config_deserialize           (GObject      *object,
                                                  const gchar  *filename,
@@ -72,13 +82,6 @@ void          gimp_config_foreach_unknown_token (GObject      *object,
 #define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
 
 GQuark        gimp_config_error_quark (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CONFIG_ERROR_FILE_ENOENT,  /* config file does not exist      */
-  GIMP_CONFIG_ERROR_FILE,         /* config file could not be opened */
-  GIMP_CONFIG_ERROR_PARSE         /* config file could not be parsed */
-} GimpConfigError;
 
 
 #endif  /* __GIMP_CONFIG_H__ */

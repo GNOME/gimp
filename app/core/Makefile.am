@@ -24,6 +24,10 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	cpercep.h			\
 	gimp.c				\
 	gimp.h				\
+	gimp-documents.c		\
+	gimp-documents.h		\
+	gimp-parasites.c		\
+	gimp-parasites.h		\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\
@@ -49,8 +53,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpdatafiles.h			\
 	gimpdatalist.c			\
 	gimpdatalist.h			\
-	gimpdocuments.c			\
-	gimpdocuments.h			\
+	gimpdocumentlist.c		\
+	gimpdocumentlist.h		\
 	gimpdrawable.c			\
 	gimpdrawable.h			\
 	gimpdrawable-blend.c		\
@@ -140,8 +144,6 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
-	gimpparasite.c			\
-	gimpparasite.h			\
 	gimpparasitelist.c		\
 	gimpparasitelist.h		\
 	gimppreviewcache.c		\

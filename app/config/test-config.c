@@ -82,7 +82,8 @@ main (int   argc,
   g_print (" Serializing %s to '%s' ...", 
            g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
 
-  if (! gimp_config_serialize (G_OBJECT (gimprc), filename, &error))
+  if (! gimp_config_serialize (G_OBJECT (gimprc),
+                               filename, NULL, NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;

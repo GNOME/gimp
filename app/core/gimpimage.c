@@ -35,6 +35,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimp-parasites.h"
 #include "gimpcontext.h"
 #include "gimpcoreconfig.h"
 #include "gimpimage.h"
@@ -47,7 +48,6 @@
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimpparasite.h"
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 

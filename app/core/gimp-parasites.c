@@ -24,7 +24,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
-#include "gimpparasite.h"
+#include "gimp-parasites.h"
 #include "gimpparasitelist.h"
 
 #include "config/gimpconfig.h"
@@ -76,7 +76,19 @@ gimp_parasite_list (Gimp *gimp,
 }
 
 
-/*  parasiterc functions  **********/
+/*  FIXME: this doesn't belong here  */
+
+void
+gimp_parasite_shift_parent (GimpParasite *parasite)
+{
+  if (parasite == NULL)
+    return;
+
+  parasite->flags = (parasite->flags >> 8);
+}
+
+
+/*  parasiterc functions  */
 
 void
 gimp_parasiterc_load (Gimp *gimp)
@@ -100,14 +112,24 @@ gimp_parasiterc_load (Gimp *gimp)
 void
 gimp_parasiterc_save (Gimp *gimp)
 {
+  const gchar *header =
+    "# GIMP parasiterc\n"
+    "#\n"
+    "# This file will be entirely rewritten every time you "
+    "quit the gimp.\n\n";
+  const gchar *footer =
+    "# end of parasiterc";
+
   gchar  *filename;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_PARASITE_LIST (gimp->parasites));
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_serialize (G_OBJECT (gimp->parasites), filename, &error))
+  if (! gimp_config_serialize (G_OBJECT (gimp->parasites),
+                               filename, header, footer, &error))
     {
       g_message (error->message);
       g_error_free (error);

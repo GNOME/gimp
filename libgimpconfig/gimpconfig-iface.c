@@ -47,7 +47,7 @@
 
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
-static void      gimp_config_iface_serialize    (GObject  *object,
+static gboolean  gimp_config_iface_serialize    (GObject  *object,
                                                  gint      fd);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner);
@@ -94,11 +94,11 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
   gimp_config_iface->equal       = gimp_config_iface_equal;
 }
 
-static void
+static gboolean
 gimp_config_iface_serialize (GObject *object,
                              gint     fd)
 {
-  gimp_config_serialize_properties (object, fd);
+  return gimp_config_serialize_properties (object, fd);
 }
 
 static gboolean
@@ -163,6 +163,8 @@ gimp_config_iface_equal (GObject *a,
  * gimp_config_serialize:
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to write the configuration to.
+ * @header: optional file header (should be a comment)
+ * @footer: optional file footer (should be a comment)
  * @error:
  * 
  * Serializes the object properties of @object to the file specified
@@ -175,9 +177,12 @@ gimp_config_iface_equal (GObject *a,
 gboolean
 gimp_config_serialize (GObject      *object,
                        const gchar  *filename,
+                       const gchar  *header,
+                       const gchar  *footer,
                        GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
+  gboolean             success = TRUE;
   gchar               *tmpname;
   gint                 fd;
 
@@ -196,32 +201,48 @@ gimp_config_serialize (GObject      *object,
   if (fd == -1)
     {
       g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
-                   _("Failed to generate temporary file for '%s': %s"),
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_OPEN, 
+                   _("Failed to create temporary file for '%s': %s"),
                    filename, g_strerror (errno));
       g_free (tmpname);
       return FALSE;
     }
 
-  gimp_config_iface->serialize (object, fd);
+  if (header)
+    success = (write (fd, header, strlen (header)) != -1);
+
+  if (success)
+    success = gimp_config_iface->serialize (object, fd);
+
+  if (success && footer)
+    success = (write (fd, footer, strlen (footer)) != -1);
+
+  if (! success)
+    {
+      g_set_error (error,
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                   _("Error when writing to file '%s': %s"),
+                   tmpname, g_strerror (errno));
+
+      unlink (tmpname);
+    }
 
   close (fd);
 
-  if (rename (tmpname, filename) == -1)
+  if (success && rename (tmpname, filename) == -1)
     {
       g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
-                   _("Failed to rename temporary file '%s' to '%s': %s"),
-                   tmpname, filename, g_strerror (errno));
-      
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_OPEN, 
+                   _("Failed to create file '%s': %s"),
+                   filename, g_strerror (errno));
+
       unlink (tmpname);
-      g_free (tmpname);
-      return FALSE;
+      success = FALSE;
     }
 
   g_free (tmpname);
 
-  return TRUE;
+  return success;
 }
 
 /**
@@ -262,7 +283,7 @@ gimp_config_deserialize (GObject      *object,
       g_set_error (error,
                    GIMP_CONFIG_ERROR, 
                    (errno == ENOENT ?
-                    GIMP_CONFIG_ERROR_FILE_ENOENT : GIMP_CONFIG_ERROR_FILE),
+                    GIMP_CONFIG_ERROR_ENOENT : GIMP_CONFIG_ERROR_OPEN),
                    _("Failed to open file: '%s': %s"),
                    filename, g_strerror (errno));
       return FALSE;

@@ -49,12 +49,12 @@
 
 static void       gimp_rc_config_iface_init (gpointer  iface,
                                              gpointer  iface_data);
-static void       gimp_rc_serialize         (GObject  *object,
+static gboolean   gimp_rc_serialize         (GObject  *object,
                                              gint      fd);
 static gboolean   gimp_rc_deserialize       (GObject  *object,
                                              GScanner *scanner);
 static GObject  * gimp_rc_duplicate         (GObject  *object);
-static void       gimp_rc_write_header      (gint      fd);
+static gboolean   gimp_rc_write_header      (gint      fd);
 
 
 GType 
@@ -106,12 +106,12 @@ gimp_rc_config_iface_init (gpointer  iface,
   config_iface->duplicate   = gimp_rc_duplicate;
 }
 
-static void
+static gboolean
 gimp_rc_serialize (GObject *object,
                    gint     fd)
 {
-  gimp_config_serialize_properties (object, fd);
-  gimp_config_serialize_unknown_tokens (object, fd);
+  return (gimp_config_serialize_properties (object, fd) &&
+          gimp_config_serialize_unknown_tokens (object, fd));
 }
 
 static gboolean
@@ -244,43 +244,49 @@ gimp_rc_write_changes (GimpRc      *new_rc,
                        GimpRc      *old_rc,
                        const gchar *filename)
 {
-  gint fd;
-
+  gboolean success;
+  gint     fd;
+  
   g_return_val_if_fail (GIMP_IS_RC (new_rc), FALSE);
   g_return_val_if_fail (GIMP_IS_RC (old_rc), FALSE);
-
+  
   if (filename)
     fd = open (filename, O_WRONLY | O_CREAT, 
 #ifndef G_OS_WIN32
-               S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+               S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 #else
-               _S_IREAD | _S_IWRITE);
+               _S_IREAD | _S_IWRITE
 #endif
+               );
   else
     fd = 1; /* stdout */
-
+  
   if (fd == -1)
     {
       g_message (_("Failed to open file '%s': %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }
-
-  gimp_rc_write_header (fd);
-  gimp_config_serialize_changed_properties (G_OBJECT (new_rc), 
-                                            G_OBJECT (old_rc), fd);
-  gimp_config_serialize_unknown_tokens (G_OBJECT (new_rc), fd);
-
+  
+  success = (gimp_rc_write_header (fd) &&
+             gimp_config_serialize_changed_properties (G_OBJECT (new_rc), 
+                                                       G_OBJECT (old_rc),
+                                                       fd)  &&
+             gimp_config_serialize_unknown_tokens (G_OBJECT (new_rc), fd));
+  
   if (filename)
     close (fd);
+  
+  /* FIXME: should use GError */
 
-  return TRUE;
+  return success;
 }
 
-static void
+static gboolean
 gimp_rc_write_header (gint fd)
 {
-  gchar *filename;
+  gboolean  success;
+  gchar    *filename;
 
   const gchar *top = 
     "# This is your personal gimprc file.  Any variable defined in this file\n"
@@ -293,9 +299,11 @@ gimp_rc_write_header (gint fd)
 
   filename = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
 
-  write (fd, top, strlen (top));
-  write (fd, filename, strlen (filename));
-  write (fd, bottom, strlen (bottom));
-
+  success = ((write (fd, top, strlen (top)) != -1)            &&
+             (write (fd, filename, strlen (filename)) != -1)  &&
+             (write (fd, bottom, strlen (bottom)) != -1));
+             
   g_free (filename);
+
+  return success;
 }

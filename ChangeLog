@@ -1,5 +1,46 @@
 2002-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig.[ch]: added a return value to indicate
+	success of GimpConfigInterface::serialize. Added a GimpConfigError
+	value for write errors and check the return value of all write()
+	calls. Allow to specify file header and footer when calling
+	gimp_config_serialize().
+
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimprc.c: changed accordingly.
+
+	* app/core/gimp-documents.[ch]: new files with functions to handle
+	gimp->documents.
+
+	* app/core/gimpdocuments.[ch]: removed ...
+
+	* app/core/gimpdocumentlist.[ch]: ... and added under this name.
+	Implements a generic document list.
+	
+	* app/core/gimp-parasites.[ch]: new files with functions to handle
+	gimp->parasites.
+
+	* app/core/gimpparasite.[ch]: removed.
+
+	* app/core/gimpparasitelist.[ch]: nothing more than a generic
+	parasite list.
+
+	* app/undo.c
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimp.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/gui/file-open-dialog.c
+	* app/pdb/parasite_cmds.c
+	* tools/pdbgen/pdb/parasite.pdb: changed accordingly.
+
+2002-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdocuments.c: misc small changes.
 
 	* app/core/gimpparasite.[ch]: reduced to a small set of wrappers

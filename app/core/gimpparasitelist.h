@@ -66,7 +66,5 @@ void               gimp_parasite_list_foreach  (GimpParasiteList       *list,
 GimpParasite     * gimp_parasite_list_find     (GimpParasiteList       *list,
 						const gchar            *name);
 
-void               gimp_parasite_shift_parent  (GimpParasite           *parasite);
-
 
 #endif  /*  __GIMP_PARASITE_LIST_H__  */

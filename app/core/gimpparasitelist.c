@@ -52,14 +52,14 @@ static gsize    gimp_parasite_list_get_memsize       (GimpObject  *object);
 
 static void     gimp_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
-static void     gimp_parasite_list_serialize         (GObject     *object,
+static gboolean gimp_parasite_list_serialize         (GObject     *object,
                                                       gint         fd);
 static gboolean gimp_parasite_list_deserialize       (GObject     *object,
                                                       GScanner    *scanner);
 
 static void     parasite_serialize           (const gchar      *key,
                                               GimpParasite     *parasite,
-                                              gpointer          fd_ptr);
+                                              gint             *fd_ptr);
 static void     parasite_copy                (const gchar      *key,
                                               GimpParasite     *parasite,
                                               GimpParasiteList *list);
@@ -224,22 +224,15 @@ gimp_parasite_list_get_memsize (GimpObject *object)
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
-static void
+static gboolean
 gimp_parasite_list_serialize (GObject *list,
                               gint     fd)
 {
-  const gchar *header =
-    "# GIMP parasiterc\n"
-    "#\n"
-    "# This file will be entirely rewritten every time you "
-    "quit the gimp.\n\n";
-
-  write (fd, header, strlen (header));
-
   if (GIMP_PARASITE_LIST (list)->table)
     g_hash_table_foreach (GIMP_PARASITE_LIST (list)->table,
-                          (GHFunc) parasite_serialize,
-                          GINT_TO_POINTER (fd));
+                          (GHFunc) parasite_serialize, &fd);
+
+  return (fd != -1);
 }
 
 static gboolean
@@ -454,11 +447,15 @@ gimp_parasite_list_find (GimpParasiteList *list,
 static void
 parasite_serialize (const gchar  *key,
                     GimpParasite *parasite,
-                    gpointer      fd_ptr)
+                    gint         *fd_ptr)
 {
   GString     *str;
   const gchar *data;
   guint32      len;
+
+  /* return if write failed earlier */
+  if (*fd_ptr == -1)
+    return;
 
   if (! gimp_parasite_is_persistent (parasite))
     return;
@@ -497,7 +494,8 @@ parasite_serialize (const gchar  *key,
 
   g_string_append (str, "\")\n\n");
 
-  write (GPOINTER_TO_INT (fd_ptr), str->str, str->len);
+  if (write (*fd_ptr, str->str, str->len) == -1)
+    *fd_ptr = -1;
 
   g_string_free (str, TRUE);
 }
@@ -527,15 +525,4 @@ parasite_count_if_persistent (const gchar  *key,
 {
   if (gimp_parasite_is_persistent (parasite))
     *count = *count + 1;
-}
-
-
-/* FIXME: this doesn't belong here */
-void
-gimp_parasite_shift_parent (GimpParasite *parasite)
-{
-  if (parasite == NULL)
-    return;
-
-  parasite->flags = (parasite->flags >> 8);
 }

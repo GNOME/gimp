@@ -43,7 +43,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
-#include "core/gimpdocuments.h"
+#include "core/gimpdocumentlist.h"
 
 #include "pdb/procedural_db.h"
 
@@ -196,7 +196,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
   if (gimage)
     {
-      GimpImagefile *imagefile;
+      GimpDocumentList *documents;
+      GimpImagefile    *imagefile;
 
       /* enable & clear all undo steps */
       gimp_image_undo_enable (gimage);
@@ -208,7 +209,8 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
       g_object_unref (G_OBJECT (gimage));
 
-      imagefile = gimp_documents_add (GIMP_DOCUMENTS (gimp->documents), uri);
+      documents = GIMP_DOCUMENT_LIST (gimp->documents);
+      imagefile = gimp_document_list_add_uri (documents, uri);
 
       /* save a thumbnail of every opened image */
       gimp_imagefile_save_thumbnail (imagefile, gimage);

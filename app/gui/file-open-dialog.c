@@ -44,7 +44,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpimagefile.h"

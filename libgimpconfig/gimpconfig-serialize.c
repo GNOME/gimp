@@ -51,7 +51,7 @@ static void  serialize_unknown_token (const gchar  *key,
  * 
  * This function writes all object properties to the file descriptor @fd.
  **/
-void
+gboolean
 gimp_config_serialize_properties (GObject *object,
                                   gint     fd)
 {
@@ -61,14 +61,14 @@ gimp_config_serialize_properties (GObject *object,
   guint          i;
   GString       *str;
 
-  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   
   klass = G_OBJECT_GET_CLASS (object);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
-  if (!property_specs)
-    return;
+  if (! property_specs)
+    return TRUE;
 
   str = g_string_new (NULL);
 
@@ -92,7 +92,9 @@ gimp_config_serialize_properties (GObject *object,
       if (gimp_config_serialize_value (&value, str, TRUE))
         {
           g_string_append (str, ")\n");
-          write (fd, str->str, str->len);
+
+          if (write (fd, str->str, str->len) == -1)
+            return FALSE;
         }
       else if (prop_spec->value_type != G_TYPE_STRING)
         {
@@ -107,6 +109,8 @@ gimp_config_serialize_properties (GObject *object,
 
   g_free (property_specs);
   g_string_free (str, TRUE);
+
+  return TRUE;
 }
 
 
@@ -119,7 +123,7 @@ gimp_config_serialize_properties (GObject *object,
  * This function compares the objects @new and @old and writes all properties
  * of @new that have different values than @old to the file descriptor @fd.
  **/
-void
+gboolean
 gimp_config_serialize_changed_properties (GObject *new,
                                           GObject *old,
                                           gint    fd)
@@ -130,16 +134,17 @@ gimp_config_serialize_changed_properties (GObject *new,
   guint          i;
   GString       *str;
 
-  g_return_if_fail (G_IS_OBJECT (new));
-  g_return_if_fail (G_IS_OBJECT (old));
-  g_return_if_fail (G_TYPE_FROM_INSTANCE (new) == G_TYPE_FROM_INSTANCE (old));
+  g_return_val_if_fail (G_IS_OBJECT (new), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (old), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (new) == 
+                        G_TYPE_FROM_INSTANCE (old), FALSE);
 
   klass = G_OBJECT_GET_CLASS (new);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   if (!property_specs)
-    return;
+    return TRUE;
 
   str = g_string_new (NULL);
 
@@ -168,7 +173,9 @@ gimp_config_serialize_changed_properties (GObject *new,
           if (gimp_config_serialize_value (&new_value, str, TRUE))
             {
               g_string_append (str, ")\n");
-              write (fd, str->str, str->len);
+              
+              if (write (fd, str->str, str->len) == -1)
+                return FALSE;
             }
           else if (prop_spec->value_type != G_TYPE_STRING)
             {
@@ -185,6 +192,8 @@ gimp_config_serialize_changed_properties (GObject *new,
 
   g_free (property_specs);
   g_string_free (str, TRUE);
+
+  return TRUE;
 }
 
 /**
@@ -293,19 +302,19 @@ gimp_config_serialize_value (const GValue *value,
  * Writes all unknown tokens attached to #object to the file descriptor @fd.
  * See gimp_config_add_unknown_token().
  **/
-void
+gboolean
 gimp_config_serialize_unknown_tokens (GObject *object,
                                       gint     fd)
 {
   GString *str;
 
-  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
 
   str = g_string_new (NULL);
 
   gimp_config_foreach_unknown_token (object, serialize_unknown_token, str);
 
-  write (fd, str->str, str->len);
+  return (write (fd, str->str, str->len) != -1);
 }
 
 static void

@@ -34,6 +34,8 @@
 #include "xcf/xcf.h"
 
 #include "gimp.h"
+#include "gimp-documents.h"
+#include "gimp-parasites.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
@@ -41,7 +43,7 @@
 #include "gimpcontext.h"
 #include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
-#include "gimpdocuments.h"
+#include "gimpdocumentlist.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
@@ -50,7 +52,6 @@
 #include "gimpmodules.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
-#include "gimpparasite.h"
 #include "gimpparasitelist.h"
 #include "gimptoolinfo.h"
 #include "gimpunits.h"
@@ -186,7 +187,7 @@ gimp_init (Gimp *gimp)
 
   gimp->standard_tool_info  = NULL;
 
-  gimp->documents           = gimp_documents_new ();
+  gimp->documents           = gimp_document_list_new ();
 
   gimp->have_current_cut_buffer = FALSE;
 
@@ -550,8 +551,7 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.90);
-  gimp_documents_load (GIMP_DOCUMENTS (gimp->documents),
-                       gimp->config->thumbnail_size);
+  gimp_documents_load (gimp);
 
   (* status_callback) (NULL, NULL, 1.00);
 
@@ -568,7 +568,7 @@ gimp_shutdown (Gimp *gimp)
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
-  gimp_documents_save (GIMP_DOCUMENTS (gimp->documents));
+  gimp_documents_save (gimp);
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
 }

@@ -29,13 +29,13 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-parasites.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpitem.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
-#include "gimpparasite.h"
 #include "gimpparasitelist.h"
 
 #include "vectors/gimpvectors.h"

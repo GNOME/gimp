@@ -28,9 +28,9 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "core/gimp-parasites.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpparasite.h"
 #include "pdb_glue.h"
 
 #include "libgimpbase/gimpparasite.h"

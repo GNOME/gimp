@@ -21,7 +21,7 @@ app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
 app/core/gimpcontext.c
 app/core/gimpdatafactory.c
-app/core/gimpdocuments.c
+app/core/gimpdocumentlist.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-transform.c

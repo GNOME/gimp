@@ -42,7 +42,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpdocuments.h"
+#include "core/gimpdocumentlist.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
@@ -162,13 +162,14 @@ file_save (GimpImage     *gimage,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpImagefile *imagefile;
+      GimpDocumentList *documents;
+      GimpImagefile    *imagefile;
 
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
 
-      imagefile = gimp_documents_add (GIMP_DOCUMENTS (gimage->gimp->documents),
-                                      uri);
+      documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
+      imagefile = gimp_document_list_add_uri (documents, uri);
 
       if (set_uri)
 	{
