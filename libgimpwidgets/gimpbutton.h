@@ -1,8 +1,8 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppixmap.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * gimpbutton.h
+ * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PIXMAP_H__
-#define __GIMP_PIXMAP_H__
+#ifndef __GIMP_BUTTON_H__
+#define __GIMP_BUTTON_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,36 +30,37 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PIXMAP            (gimp_pixmap_get_type ())
-#define GIMP_PIXMAP(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PIXMAP, GimpPixmap))
-#define GIMP_PIXMAP_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PIXMAP, GimpPixmapClass))
-#define GIMP_IS_PIXMAP(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PIXMAP))
-#define GIMP_IS_PIXMAP_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIXMAP))
+#define GIMP_TYPE_BUTTON            (gimp_button_get_type ())
+#define GIMP_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
+#define GIMP_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
+#define GIMP_IS_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BUTTON))
+#define GIMP_IS_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
 
 
-typedef struct _GimpPixmapClass  GimpPixmapClass;
+typedef struct _GimpButtonClass  GimpButtonClass;
 
-struct _GimpPixmap
+struct _GimpButton
 {
-  GtkPixmap   pixmap;
+  GtkButton  parent_instance;
 
-  gchar **xpm_data;
+  /*< private >*/
+  guint      press_state;
 };
 
-struct _GimpPixmapClass
+struct _GimpButtonClass
 {
-  GtkPixmapClass parent_class;
+  GtkButtonClass  parent_class;
+
+  void (* extended_clicked) (GimpButton *preview,
+			     guint       modifier_state);
 };
 
-GtkType     gimp_pixmap_get_type (void);
-GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
-
-void        gimp_pixmap_set      (GimpPixmap  *pixmap,
-				  gchar      **xpm_data);
+GtkType     gimp_button_get_type (void);
+GtkWidget * gimp_button_new      (void);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMP_PIXMAP_H__ */
+#endif /* __GIMP_BUTTON_H__ */

@@ -42,7 +42,7 @@ extern "C" {
 #define GIMP_IS_CHAIN_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
 #define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
 
-typedef struct _GimpChainButton       GimpChainButton;
+
 typedef struct _GimpChainButtonClass  GimpChainButtonClass;
 
 typedef enum

@@ -1,5 +1,22 @@
 2001-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpbutton.[ch]: new widget derived from
+	GtkButton.  It adds an "extended_clicked" signal which is emitted
+	instead of "clicked" if a modifier was pressed.
+
+	* libgimpwidgets/gimpchainbutton.[ch]
+	* libgimpwidgets/gimppixmap.[ch]: removed the opaque typedefs.
+
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h: and added them here. Added
+	GimpButton.
+
+	* app/widgets/gimpdrawablelistview.c: use GimpButtons for "Raise"
+	and "Lower" and raise/lower to top/bottom on shift-click.
+
+2001-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpimage.[ch]: renamed "restructure" to "alpha_changed" and
 	only emit it in flatten(), not in merge_layers().
 

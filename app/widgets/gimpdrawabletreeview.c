@@ -91,7 +91,15 @@ static void   gimp_drawable_list_view_new_dropped       (GtkWidget            *w
 
 static void   gimp_drawable_list_view_raise_clicked     (GtkWidget            *widget,
 							 GimpDrawableListView *view);
+static void   gimp_drawable_list_view_raise_extended_clicked
+                                                        (GtkWidget            *widget,
+							 guint                 state,
+							 GimpDrawableListView *view);
 static void   gimp_drawable_list_view_lower_clicked     (GtkWidget            *widget,
+							 GimpDrawableListView *view);
+static void   gimp_drawable_list_view_lower_extended_clicked
+                                                        (GtkWidget            *widget,
+							 guint                 state,
 							 GimpDrawableListView *view);
 
 static void  gimp_drawable_list_view_duplicate_drawable (GimpDrawableListView *view,
@@ -221,15 +229,19 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   /* raise */
 
-  view->raise_button = gtk_button_new ();
+  view->raise_button = gimp_button_new ();
   gtk_box_pack_start (GTK_BOX (view->button_box), view->raise_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->raise_button);
 
-  gimp_help_set_help_data (view->raise_button, _("Raise"), NULL);
+  gimp_help_set_help_data (view->raise_button, _("Raise          \n"
+						 "<shift> To Top"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->raise_button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_raise_clicked),
+		      view);
+  gtk_signal_connect (GTK_OBJECT (view->raise_button), "extended_clicked",
+		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_raise_extended_clicked),
 		      view);
 
   pixmap = gimp_pixmap_new (raise_xpm);
@@ -238,15 +250,19 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   /* lower */
 
-  view->lower_button = gtk_button_new ();
+  view->lower_button = gimp_button_new ();
   gtk_box_pack_start (GTK_BOX (view->button_box), view->lower_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->lower_button);
 
-  gimp_help_set_help_data (view->lower_button, _("Lower"), NULL);
+  gimp_help_set_help_data (view->lower_button, _("Lower             \n"
+						 "<shift> To Bottom"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->lower_button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_lower_clicked),
+		      view);
+  gtk_signal_connect (GTK_OBJECT (view->lower_button), "extended_clicked",
+		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_lower_extended_clicked),
 		      view);
 
   pixmap = gimp_pixmap_new (lower_xpm);
@@ -708,6 +724,28 @@ gimp_drawable_list_view_raise_clicked (GtkWidget            *widget,
 }
 
 static void
+gimp_drawable_list_view_raise_extended_clicked (GtkWidget            *widget,
+						guint                 state,
+						GimpDrawableListView *view)
+{
+  GimpContainer *container;
+  GimpDrawable  *drawable;
+  gint           index;
+
+  container = GIMP_CONTAINER_VIEW (view)->container;
+  drawable  = view->get_drawable_func (view->gimage);
+
+  index = gimp_container_get_child_index (container, GIMP_OBJECT (drawable));
+
+  if ((state & GDK_SHIFT_MASK) && (index > 0))
+    {
+      view->reorder_drawable_func (view->gimage, drawable, 0, TRUE);
+
+      gdisplays_flush ();
+    }
+}
+
+static void
 gimp_drawable_list_view_lower_clicked (GtkWidget            *widget,
 				       GimpDrawableListView *view)
 {
@@ -723,6 +761,29 @@ gimp_drawable_list_view_lower_clicked (GtkWidget            *widget,
   if (index < container->num_children - 1)
     {
       view->reorder_drawable_func (view->gimage, drawable, index + 1, TRUE);
+
+      gdisplays_flush ();
+    }
+}
+
+static void
+gimp_drawable_list_view_lower_extended_clicked (GtkWidget            *widget,
+						guint                 state,
+						GimpDrawableListView *view)
+{
+  GimpContainer *container;
+  GimpDrawable  *drawable;
+  gint           index;
+
+  container = GIMP_CONTAINER_VIEW (view)->container;
+  drawable  = view->get_drawable_func (view->gimage);
+
+  index = gimp_container_get_child_index (container, GIMP_OBJECT (drawable));
+
+  if ((state & GDK_SHIFT_MASK) && (index < container->num_children - 1))
+    {
+      view->reorder_drawable_func (view->gimage, drawable,
+				   container->num_children - 1, TRUE);
 
       gdisplays_flush ();
     }

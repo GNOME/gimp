@@ -28,6 +28,8 @@ libgimpwidgets_1_3_la_SOURCES = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
+	gimpbutton.c		\
+	gimpbutton.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpcolorarea.c		\

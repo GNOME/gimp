@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpwidgetstypes.h"
+
 #include "gimpchainbutton.h"
 
 #include "pixmaps/chain.xpm"

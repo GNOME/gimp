@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpwidgetstypes.h"
+
 #include "gimppixmap.h"
 
 

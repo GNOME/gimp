@@ -1,0 +1,191 @@
+/* LIBGIMP - The GIMP Library 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+ *
+ * gimpbutton.c
+ * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "gimpwidgetstypes.h"
+
+#include "gimpbutton.h"
+
+
+enum
+{
+  EXTENDED_CLICKED,
+  LAST_SIGNAL
+};
+
+
+static void       gimp_button_class_init     (GimpButtonClass  *klass);
+static void       gimp_button_init           (GimpButton       *button);
+
+static gboolean   gimp_button_button_press   (GtkWidget        *widget,
+					      GdkEventButton   *event);
+static gboolean   gimp_button_button_release (GtkWidget        *widget,
+					      GdkEventButton   *event);
+
+
+static guint button_signals[LAST_SIGNAL] = { 0 };
+
+static GtkButtonClass *parent_class = NULL;
+
+
+GtkType
+gimp_button_get_type (void)
+{
+  static guint button_type = 0;
+
+  if (!button_type)
+    {
+      GtkTypeInfo button_info =
+      {
+	"GimpButton",
+	sizeof (GimpButton),
+	sizeof (GimpButtonClass),
+	(GtkClassInitFunc) gimp_button_class_init,
+	(GtkObjectInitFunc) gimp_button_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
+
+      button_type = gtk_type_unique (GTK_TYPE_BUTTON, &button_info);
+    }
+
+  return button_type;
+}
+
+static void
+gimp_button_class_init (GimpButtonClass *klass)
+{
+  GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
+
+  object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
+
+  parent_class = gtk_type_class (GTK_TYPE_BUTTON);
+
+  button_signals[EXTENDED_CLICKED] = 
+    gtk_signal_new ("extended_clicked",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpButtonClass,
+				       extended_clicked),
+                    gtk_marshal_NONE__UINT,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_UINT);
+
+  gtk_object_class_add_signals (object_class, button_signals, LAST_SIGNAL);
+
+  widget_class->button_press_event   = gimp_button_button_press;
+  widget_class->button_release_event = gimp_button_button_release;
+}
+
+static void
+gimp_button_init (GimpButton *button)
+{
+  button->press_state = 0;
+}
+
+/**
+ * gimp_button_new:
+ *
+ * Creates a new #GimpButton widget.
+ *
+ * Returns: A pointer to the new #GimpButton widget.
+ **/
+GtkWidget *
+gimp_button_new (void)
+{
+  GimpButton *button;
+
+  button = gtk_type_new (GIMP_TYPE_BUTTON);
+
+  return GTK_WIDGET (button);
+}
+
+static gboolean
+gimp_button_button_press (GtkWidget      *widget,
+			  GdkEventButton *bevent)
+{
+  g_return_val_if_fail (widget != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
+  g_return_val_if_fail (bevent != NULL, FALSE);
+
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+    {
+      GimpButton *button;
+
+      button = GIMP_BUTTON (widget);
+
+      button->press_state = bevent->state;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
+    GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
+
+  return TRUE;
+}
+
+static gint
+gimp_button_button_release (GtkWidget      *widget,
+			    GdkEventButton *bevent)
+{
+  gboolean in_button = FALSE;
+
+  g_return_val_if_fail (widget != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
+  g_return_val_if_fail (bevent != NULL, FALSE);
+
+  if (bevent->button == 1)
+    {
+      GtkButton *button;
+
+      button = GTK_BUTTON (widget);
+
+      in_button = button->in_button;
+
+      if (in_button &&
+	  (GIMP_BUTTON (button)->press_state &
+	   (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+	{
+	  gtk_signal_emit (GTK_OBJECT (widget),
+			   button_signals[EXTENDED_CLICKED],
+			   GIMP_BUTTON (button)->press_state);
+
+	  button->in_button = FALSE;
+	}
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
+    GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, bevent);
+
+  if (bevent->button == 1 && in_button)
+    {
+      gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
+      gtk_widget_draw (widget, NULL);
+   }
+
+  return TRUE;
+}
