@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-03-27 12:13+0100\n"
-"PO-Revision-Date: 2003-03-27 12:14+0100\n"
+"POT-Creation-Date: 2003-03-27 15:28+0100\n"
+"PO-Revision-Date: 2003-03-27 15:29+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -271,27 +271,27 @@ msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
 
 #. please don't translate 'yes' and 'no'
-#: app/config/gimpconfig-deserialize.c:433
+#: app/config/gimpconfig-deserialize.c:434
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "\"ja\" eller \"nej\" för booleskt element %s förväntades, fick \"%s\""
 
-#: app/config/gimpconfig-deserialize.c:492
+#: app/config/gimpconfig-deserialize.c:493
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ogiltigt värde \"%s\" för element %s"
 
-#: app/config/gimpconfig-deserialize.c:506
+#: app/config/gimpconfig-deserialize.c:507
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde \"%ld\" för element %s"
 
-#: app/config/gimpconfig-deserialize.c:572
+#: app/config/gimpconfig-deserialize.c:573
 #, c-format
 msgid "while parsing token %s: %s"
 msgstr "vid tolkning av elementet %s: %s"
 
-#: app/config/gimpconfig-deserialize.c:709
+#: app/config/gimpconfig-deserialize.c:710
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
@@ -981,8 +981,8 @@ msgstr "Markeringsmask"
 msgid "Item Properties"
 msgstr "Objektegenskaper"
 
-#: app/core/core-enums.c:440
-msgid "Drawable Visilibity"
+#: app/core/core-enums.c:440 app/core/core-enums.c:468
+msgid "Drawable Visibility"
 msgstr "Ritytesynlighet"
 
 #: app/core/core-enums.c:441 app/core/gimplayer.c:1018
@@ -1090,10 +1090,6 @@ msgstr "Ändra indexerad palett"
 #: app/core/core-enums.c:467
 msgid "Rename Item"
 msgstr "Byt namn på objekt"
-
-#: app/core/core-enums.c:468
-msgid "Drawable Visibility"
-msgstr "Ritytesynlighet"
 
 #: app/core/core-enums.c:469 app/gui/layers-commands.c:545
 #: app/gui/layers-commands.c:577 app/gui/layers-commands.c:609
@@ -1777,7 +1773,7 @@ msgid "Untitled"
 msgstr "Namnlös"
 
 #: app/core/gimpimage.c:958
-msgid "Change Image Reolution"
+msgid "Change Image Resolution"
 msgstr "Ändra bildupplösning"
 
 #: app/core/gimpimage.c:997
@@ -6637,6 +6633,16 @@ msgstr "Centrerad"
 msgid "Filled"
 msgstr "Fylld"
 
+#. This is a so-called pangram; it's supposed to
+#. contain all characters found in the alphabet.
+#: app/text/gimpfont.c:39
+msgid ""
+"Pack my box with\n"
+"five dozen liquor jugs."
+msgstr ""
+"Flygande bäckasiner söka\n"
+"strax hwila på mjuka tuvor."
+
 #: app/text/gimptext.c:170
 msgid "How many pixels the first line should be shorter"
 msgstr "Hur många bildpunkter kortare den första linjen skall vara"
@@ -8002,10 +8008,26 @@ msgstr "Redigera bakgrundsfärg"
 msgid "Color Index:"
 msgstr "Färgindex:"
 
-#: app/widgets/gimpcontainergridview.c:151
-#: app/widgets/gimpcontainergridview.c:479
+#: app/widgets/gimpcontainergridview.c:197
+#: app/widgets/gimpcontainergridview.c:577
 msgid "(None)"
 msgstr "(Ingen)"
+
+#: app/widgets/gimpcontainerpopup.c:471
+msgid "Smaller Previews"
+msgstr "Mindre förhandsvisningar"
+
+#: app/widgets/gimpcontainerpopup.c:476
+msgid "Larger Previews"
+msgstr "Större förhandsvisningar"
+
+#: app/widgets/gimpcontainerpopup.c:483
+msgid "View as List"
+msgstr "Visa som lista"
+
+#: app/widgets/gimpcontainerpopup.c:492
+msgid "View as Grid"
+msgstr "Visa som rutnät"
 
 #: app/widgets/gimpdataeditor.c:131
 msgid "Save"
@@ -8582,6 +8604,9 @@ msgstr "Antal rutnätslinjer"
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
 msgstr "Mellanrum mellan rutnätslinjer"
+
+#~ msgid "Drawable Visilibity"
+#~ msgstr "Ritytesynlighet"
 
 #~ msgid ""
 #~ "Unable to add a layer mask to a\n"
