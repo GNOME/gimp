@@ -1,3 +1,7 @@
+2004-12-05  Sven Neumann  <sven@gimp.org>
+
+	* de.po: fixed incorrect translation (bug #160471).
+
 2004-12-04  Sigurd Gartmann  <sigurd-translate@brogar.org>
 
 	* nb.po: Updated Norwegian Bokmål translation.
