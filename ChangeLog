@@ -1,3 +1,9 @@
+Tue Aug  3 22:16:57 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c: My last change to the dnd code did fix the bug
+	but disabled loading multiple files. Now applied a new patch from
+	Shuji Narazaki <narazaki@gimp.org>.
+
 Fri Jul  2 18:05:44 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* plug-ins/ifscompose/ifscompose_storage.c (parse_genuine_float):
@@ -10,8 +16,8 @@ Tue Aug  3 18:13:47 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 Tue Aug  3 02:13:57 1999  Jay Cox  (jaycox@earthlink.net)
 
-	* app/paint_core.c: Improvements to the transform_core_do and cubic
-	 routines by David Hodson <hodsond@acm.org>
+	* app/transform_core.c: Improvements to the transform_core_do and 
+	cubic routines by David Hodson <hodsond@acm.org>
 	"This fixes a number of annoying inaccuracies in transform_core.
 	The identity transform now leaves all pixels unchanged; previously
 	it shifted the image by 1/2 pixel left and up. All edges of an

@@ -1485,21 +1485,36 @@ gimp_dnd_data_received (GtkWidget          *widget,
 }
 
 static void
-gimp_dnd_open_files (gchar *name)
+gimp_dnd_open_files (gchar *buffer)
 {
+  gchar	 name_buffer[1024];
   const gchar *data_type = "file:";
   const gint sig_len = strlen (data_type);
 
-  if (name == NULL || *name == 0)
-    return;
+  while (*buffer)
+    {
+      gchar *name = name_buffer;
+      gint len = 0;
 
-  if (strlen (name) > sig_len && (strncmp (name, data_type, sig_len) == 0))
-    name += sig_len;
+      while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
+	{
+	  *name++ = *buffer++;
+	  len++;
+	}
+      if (len == 0)
+	break;
 
-  file_open (name, name);
+      if (*(name - 1) == 0xd)	/* gmc uses RETURN+NEWLINE as delimiter */
+	*(name - 1) = '\0';
+      else
+	*name = '\0';
+      name = name_buffer;
+      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
+	name += sig_len;
+      
+      file_open (name, name);
+      
+      if (*buffer)
+	buffer++;
+    }
 }
-
-
-
-
-
