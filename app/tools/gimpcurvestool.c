@@ -88,6 +88,7 @@ static void     gimp_curves_tool_button_release (GimpTool         *tool,
                                                  GimpDisplay      *gdisp);
 
 static void     gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
+                                                 GimpColorPickState pick_state,
                                                  GimpImageType     sample_type,
                                                  GimpRGB          *color,
                                                  gint              color_index);
@@ -358,10 +359,11 @@ gimp_curves_tool_button_release (GimpTool        *tool,
 }
 
 static void
-gimp_curves_tool_color_picked (GimpColorTool *color_tool,
-			       GimpImageType  sample_type,
-			       GimpRGB       *color,
-			       gint           color_index)
+gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
+                               GimpColorPickState  pick_state,
+			       GimpImageType       sample_type,
+			       GimpRGB            *color,
+			       gint                color_index)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (color_tool);
   GimpDrawable   *drawable;

@@ -50,18 +50,19 @@ struct _GimpColorToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  gboolean (* pick)   (GimpColorTool *tool,
-                       gint           x,
-                       gint           y,
-                       GimpImageType *sample_type,
-                       GimpRGB       *color,
-                       gint          *color_index);
+  gboolean (* pick)   (GimpColorTool      *tool,
+                       gint                x,
+                       gint                y,
+                       GimpImageType      *sample_type,
+                       GimpRGB            *color,
+                       gint               *color_index);
 
   /*  signals  */
-  void     (* picked) (GimpColorTool *tool,
-                       GimpImageType  sample_type,
-                       GimpRGB       *color,
-                       gint           color_index);
+  void     (* picked) (GimpColorTool      *tool,
+                       GimpColorPickState  pick_state,
+                       GimpImageType       sample_type,
+                       GimpRGB            *color,
+                       gint                color_index);
 };
 
 

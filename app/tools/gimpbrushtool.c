@@ -103,6 +103,7 @@ static void   gimp_paint_tool_cursor_update  (GimpTool            *tool,
 static void   gimp_paint_tool_draw           (GimpDrawTool        *draw_tool);
 
 static void   gimp_paint_tool_color_picked   (GimpColorTool       *color_tool,
+                                              GimpColorPickState   pick_state,
                                               GimpImageType        sample_type,
                                               GimpRGB             *color,
                                               gint                 color_index);
@@ -850,10 +851,11 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_paint_tool_color_picked (GimpColorTool *color_tool,
-                              GimpImageType  sample_type,
-                              GimpRGB       *color,
-                              gint           color_index)
+gimp_paint_tool_color_picked (GimpColorTool      *color_tool,
+                              GimpColorPickState  pick_state,
+                              GimpImageType       sample_type,
+                              GimpRGB            *color,
+                              gint                color_index)
 {
   GimpTool *tool = GIMP_TOOL (color_tool);
 

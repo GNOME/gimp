@@ -91,6 +91,7 @@ static gboolean gimp_levels_tool_initialize     (GimpTool         *tool,
                                                  GimpDisplay      *gdisp);
 
 static void     gimp_levels_tool_color_picked   (GimpColorTool    *color_tool,
+                                                 GimpColorPickState pick_state,
                                                  GimpImageType     sample_type,
                                                  GimpRGB          *color,
                                                  gint              color_index);
@@ -1376,10 +1377,11 @@ levels_input_adjust_by_color (Levels               *levels,
 }
 
 static void
-gimp_levels_tool_color_picked (GimpColorTool *color_tool,
-                               GimpImageType  sample_type,
-                               GimpRGB       *color,
-                               gint           color_index)
+gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
+                               GimpColorPickState  pick_state,
+                               GimpImageType       sample_type,
+                               GimpRGB            *color,
+                               gint                color_index)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (color_tool);
   guchar          col[5];

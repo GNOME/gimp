@@ -25,14 +25,6 @@
 #include "gui/gui-types.h" /* FIXME */
 
 
-typedef enum
-{
-  GIMP_UPDATE_COLOR_STATE_NEW,
-  GIMP_UPDATE_COLOR_STATE_UPDATE_NEW,
-  GIMP_UPDATE_COLOR_STATE_UPDATE
-} GimpUpdateColorState;
-
-
 #define GIMP_TYPE_PALETTE_EDITOR            (gimp_palette_editor_get_type ())
 #define GIMP_PALETTE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_EDITOR, GimpPaletteEditor))
 #define GIMP_PALETTE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_EDITOR, GimpPaletteEditorClass))
@@ -78,14 +70,14 @@ struct _GimpPaletteEditorClass
 };
 
 
-GType            gimp_palette_editor_get_type     (void) G_GNUC_CONST;
+GType            gimp_palette_editor_get_type   (void) G_GNUC_CONST;
 
-GimpDataEditor * gimp_palette_editor_new          (Gimp                 *gimp,
-                                                   GimpMenuFactory      *menu_factory);
+GimpDataEditor * gimp_palette_editor_new        (Gimp               *gimp,
+                                                 GimpMenuFactory    *menu_factory);
 
-void             gimp_palette_editor_update_color (GimpContext          *context,
-                                                   const GimpRGB        *color,
-                                                   GimpUpdateColorState  state);
+void             gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
+                                                 const GimpRGB      *color,
+                                                 GimpColorPickState  pick_state);
 
 
 #endif /* __GIMP_PALETTE_EDITOR_H__ */

@@ -1,3 +1,36 @@
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
+	Fixed a 1.2 -> 2.0 regression that was forgotten:
+
+	* app/widgets/widgets-enums.[ch]: added enum GimpColorPickState
+	which can be one of { NEW, UPDATE }.
+
+	* app/widgets/gimppaletteeditor.[ch]: changed #if 0'ed function
+	gimp_palette_editor_update_color() to
+	gimp_palette_editor_pick_color() and restored the functionality of
+	creating/updating colors via this API
+
+	Changed button_press handler to only edit the color on double
+	click if it's really a double click on the same color.
+	Fixes bug #141381.
+
+	* app/tools/gimpcolorpickeroptions.[ch]: added boolean property
+	"add-to-palette" and a GUI for it.
+
+	* app/core/gimpmarshal.list
+	* app/tools/gimpcolortool.[ch]: added a GimpColorPickState
+	parameter to the "color_picked" signal. Pass NEW on button_press
+	and UPDATE on motion.
+
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_color_picked)
+	* app/tools/gimplevelstool.c (gimp_levels_tool_color_picked)
+	* app/tools/gimppainttool.c (gimp_paint_tool_color_picked):
+	changed accordingly
+
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_picked):
+	If "add-to-palette" is TRUE, get the palette editor and call
+	gimp_palette_editor_pick_color().
+
 2004-06-30  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpselectiondata.[ch]: renamed the SVG related

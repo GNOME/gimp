@@ -38,7 +38,8 @@ enum
 {
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
-  PROP_PICK_MODE
+  PROP_PICK_MODE,
+  PROP_ADD_TO_PALETTE
 };
 
 
@@ -67,14 +68,14 @@ gimp_color_picker_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpColorPickerOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_color_picker_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpColorPickerOptions),
-	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_color_picker_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpColorPickerOptions),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       type = g_type_register_static (GIMP_TYPE_COLOR_OPTIONS,
@@ -107,6 +108,10 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                                  GIMP_TYPE_COLOR_PICK_MODE,
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ADD_TO_PALETTE,
+                                    "add-to-palette", NULL,
+                                    FALSE,
+                                    0);
 }
 
 static void
@@ -124,6 +129,9 @@ gimp_color_picker_options_set_property (GObject      *object,
       break;
     case PROP_PICK_MODE:
       options->pick_mode = g_value_get_enum (value);
+      break;
+    case PROP_ADD_TO_PALETTE:
+      options->add_to_palette = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -148,6 +156,9 @@ gimp_color_picker_options_get_property (GObject    *object,
     case PROP_PICK_MODE:
       g_value_set_enum (value, options->pick_mode);
       break;
+    case PROP_ADD_TO_PALETTE:
+      g_value_set_boolean (value, options->add_to_palette);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -157,7 +168,7 @@ gimp_color_picker_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config  = G_OBJECT (tool_options);
+  GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *button;
   GtkWidget *frame;
@@ -179,6 +190,15 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  /*  the add to palette toggle  */
+  str = g_strdup_printf (_("Add to palette  %s"),
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
+  button = gimp_prop_check_button_new (config, "add-to-palette", str);
+  g_free (str);
+
+  gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

@@ -60,6 +60,17 @@ typedef enum
 } GimpColorFrameMode;
 
 
+#define GIMP_TYPE_COLOR_PICK_STATE (gimp_color_pick_state_get_type ())
+
+GType gimp_color_pick_state_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COLOR_PICK_STATE_NEW,
+  GIMP_COLOR_PICK_STATE_UPDATE
+} GimpColorPickState;
+
+
 #define GIMP_TYPE_CURSOR_FORMAT (gimp_cursor_format_get_type ())
 
 GType gimp_cursor_format_get_type (void) G_GNUC_CONST;

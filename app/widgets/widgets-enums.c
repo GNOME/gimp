@@ -68,6 +68,25 @@ gimp_color_frame_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_color_pick_state_enum_values[] =
+{
+  { GIMP_COLOR_PICK_STATE_NEW, "GIMP_COLOR_PICK_STATE_NEW", "new" },
+  { GIMP_COLOR_PICK_STATE_UPDATE, "GIMP_COLOR_PICK_STATE_UPDATE", "update" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_color_pick_state_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpColorPickState", gimp_color_pick_state_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_cursor_format_enum_values[] =
 {
   { GIMP_CURSOR_FORMAT_BITMAP, N_("Black & White"), "bitmap" },
