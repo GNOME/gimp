@@ -59,6 +59,8 @@
 #define stepx   0.5
 #define stepy   0.5
 
+#define HELP_ID "plug-in-lic"
+
 #define TILE_CACHE_SIZE 16
 
 /*****************************/
@@ -528,9 +530,10 @@ rgb_to_hsl (GimpDrawable  *image,
         {
           gimp_pixel_rgn_get_pixel (&region, data, x, y);
 
-          color.r = data[0];
-          color.g = data[1];
-          color.b = data[2];
+          color.r = ((gdouble) data[0]) / 255.0;
+          color.g = ((gdouble) data[1]) / 255.0;
+          color.b = ((gdouble) data[2]) / 255.0;
+          color.a = 1.0;
 
           val = hsl_func (&color);
 
@@ -704,9 +707,7 @@ create_main_dialog (void)
 
   dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-lic",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
+			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
