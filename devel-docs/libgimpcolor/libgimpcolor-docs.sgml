@@ -21,4 +21,17 @@
     <xi:include href="xml/gimpbilinear.xml" />
   </part>
 
+  <index>
+    <title>Index</title>
+  </index>
+  <index role="GIMP 2.2">
+    <title>Index of new symbols in GIMP 2.2</title>
+  </index>
+  <index role="GIMP 2.4">
+    <title>Index of new symbols in GIMP 2.4</title>
+  </index>
+  <index role="deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+
 </book>

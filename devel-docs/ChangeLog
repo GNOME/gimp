@@ -1,5 +1,20 @@
 2005-03-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added several indices,
+	one for all symbols, and lists of new symbols for GIMP 2.2 and
+	2.4.  For this to work correctly, you need gtk-doc from CVS (see
+	bug #168384). But don't worry, you can still build the docs with
+	older versions.
+
+2005-03-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-sections.txt: added new function.
 
 	* libgimp/tmpl/gimp.sgml
