@@ -27,7 +27,6 @@
 #include "gimppattern.h"
 #include "gimprc.h"
 #include "patterns.h"
-#include "pattern_select.h"
 #include "temp_buf.h"
 
 
@@ -40,8 +39,6 @@ patterns_init (gboolean no_data)
 
   if (pattern_path != NULL && !no_data)
     {
-      pattern_select_freeze_all ();
-
       gimp_data_list_load (GIMP_DATA_LIST (global_pattern_list),
 			   pattern_path,
 
@@ -49,8 +46,6 @@ patterns_init (gboolean no_data)
 			   GIMP_PATTERN_FILE_EXTENSION,
 
 			   NULL);
-
-      pattern_select_thaw_all ();
     }
 }
 
@@ -60,13 +55,9 @@ patterns_free (void)
   if (gimp_container_num_children (global_pattern_list) == 0)
     return;
 
-  pattern_select_freeze_all ();
-
   gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_pattern_list),
 				 pattern_path,
 				 GIMP_PATTERN_FILE_EXTENSION);
-
-  pattern_select_thaw_all ();
 }
 
 GimpPattern *

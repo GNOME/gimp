@@ -28,17 +28,16 @@
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "brush_scale.h"
 #include "brush_edit.h"
 #include "brush_select.h"
 #include "brushes.h"
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
-#include "gimpbrushpipe.h"
+#include "gimpcontainer.h"
+#include "gimpcontainergridview.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdnd.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "session.h"
 #include "temp_buf.h"
@@ -51,156 +50,62 @@
 
 
 #define MIN_CELL_SIZE     25
-#define MAX_CELL_SIZE     25  /*  disable variable brush preview size  */ 
+#define STD_BRUSH_COLUMNS  5
+#define STD_BRUSH_ROWS     5
 
-#define STD_BRUSH_COLUMNS 5
-#define STD_BRUSH_ROWS    5
-
-/* how long to wait after mouse-down before showing brush popup */
-#define POPUP_DELAY_MS      150
-
-#define MAX_WIN_WIDTH(bsp)     (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_COLUMNS))
-#define MAX_WIN_HEIGHT(bsp)    (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_ROWS))
-#define MARGIN_WIDTH      1
-#define MARGIN_HEIGHT     1
-
-#define BRUSH_EVENT_MASK  GDK_EXPOSURE_MASK | \
-                          GDK_BUTTON_PRESS_MASK | \
-			  GDK_BUTTON_RELEASE_MASK | \
-                          GDK_BUTTON1_MOTION_MASK | \
-			  GDK_ENTER_NOTIFY_MASK
-
-/*  the pixmaps for the [scale|pipe]_indicators  */
-#define indicator_width  7
-#define indicator_height 7
-
-#define WHT {255, 255, 255}
-#define BLK {  0,   0,   0}
-#define RED {255, 127, 127}
 
 /*  local function prototypes  */
-static void     brush_change_callbacks             (BrushSelect      *bsp,
-						    gboolean          closing);
+static void     brush_select_change_callbacks       (BrushSelect      *bsp,
+						     gboolean          closing);
 
-static GimpBrush * brush_select_drag_brush         (GtkWidget        *widget,
-						    gpointer          data);
-static void     brush_select_drop_brush            (GtkWidget        *widget,
-						    GimpBrush        *brush,
-						    gpointer          data);
-static void     brush_select_brush_changed         (GimpContext      *context,
-						    GimpBrush        *brush,
-						    BrushSelect      *bsp);
-static void     brush_select_opacity_changed       (GimpContext      *context,
-						    gdouble           opacity,
-						    BrushSelect      *bsp);
-static void     brush_select_paint_mode_changed    (GimpContext      *context,
-						    LayerModeEffects  paint_mode,
-						    BrushSelect      *bsp);
-static void     brush_select_select                (BrushSelect      *bsp,
-						    GimpBrush        *brush);
+static void     brush_select_drop_brush             (GtkWidget        *widget,
+						     GimpViewable     *viewable,
+						     gpointer          data);
+static void     brush_select_brush_changed          (GimpContext      *context,
+						     GimpBrush        *brush,
+						     BrushSelect      *bsp);
+static void     brush_select_opacity_changed        (GimpContext      *context,
+						     gdouble           opacity,
+						     BrushSelect      *bsp);
+static void     brush_select_paint_mode_changed     (GimpContext      *context,
+						     LayerModeEffects  paint_mode,
+						     BrushSelect      *bsp);
+static void     brush_select_select                 (BrushSelect      *bsp,
+						     GimpBrush        *brush);
 
-static void     brush_select_brush_dirty_callback  (GimpBrush        *brush,
-						    BrushSelect      *bsp);
-static void     brush_added_callback               (GimpContainer    *container,
-						    GimpBrush        *brush,
-						    BrushSelect      *bsp);
-static void     brush_removed_callback             (GimpContainer    *container,
-						    GimpBrush        *brush,
-						    BrushSelect      *bsp);
+static void     brush_select_brush_renamed_callback (GimpBrush        *brush,
+						     BrushSelect      *bsp);
 
-static void     draw_brush_popup                   (GtkPreview       *preview,
-						    GimpBrush        *brush,
-						    gint              width,
-						    gint              height);
-static gint     brush_popup_anim_timeout           (gpointer          data);
-static gboolean brush_popup_timeout                (gpointer          data);
-static void     brush_popup_open                   (BrushSelect *,
-						    gint, gint, GimpBrush *);
-static void     brush_popup_close                  (BrushSelect *);
+static void     brush_select_update_active_brush_field (BrushSelect   *bsp);
 
-static void     display_setup                      (BrushSelect *);
-static void     clear_brush                        (BrushSelect *,
-						    GimpBrush *, gint, gint);
-static void     display_brush                      (BrushSelect *,
-						    GimpBrush *, gint, gint,
-						    gboolean);
-static void     do_display_brush                   (GimpBrush   *brush,
-						    BrushSelect *bsp);
-static void     display_brushes                    (BrushSelect *);
+static void     opacity_scale_update                (GtkAdjustment    *adj,
+						     gpointer          data);
+static void     paint_mode_menu_callback            (GtkWidget        *widget,
+						     gpointer          data);
+static void     spacing_scale_update                (GtkAdjustment    *adj,
+						     gpointer          data);
 
-static void     brush_select_show_selected         (BrushSelect *, gint, gint);
-static void     update_active_brush_field          (BrushSelect *);
-static void     preview_calc_scrollbar             (BrushSelect *);
+static void     brush_select_close_callback         (GtkWidget       *widget,
+						     gpointer         data);
+static void     brush_select_refresh_callback       (GtkWidget       *widget,
+						     gpointer         data);
+static void     brush_select_new_brush_callback     (GtkWidget       *widget,
+						     gpointer         data);
+static void     brush_select_edit_brush_callback    (GtkWidget       *widget,
+						     gpointer         data);
+static void     brush_select_delete_brush_callback  (GtkWidget       *widget,
+						     gpointer         data);
 
-static gint     brush_select_resize		   (GtkWidget *, GdkEvent *,
-						    BrushSelect *);
-static gint     brush_select_events                (GtkWidget *, GdkEvent *,
-						    BrushSelect *);
-
-/* static void  brush_select_map_callback          (GtkWidget *,
-                                                    BrushSelect *); */
-static void     brush_select_scroll_update         (GtkAdjustment *, gpointer);
-static void     opacity_scale_update               (GtkAdjustment *, gpointer);
-static void     paint_mode_menu_callback           (GtkWidget *, gpointer);
-static void     spacing_scale_update               (GtkAdjustment *, gpointer);
-
-static void     brush_select_close_callback        (GtkWidget *, gpointer);
-static void     brush_select_refresh_callback      (GtkWidget *, gpointer);
-static void     brush_select_new_brush_callback    (GtkWidget *, gpointer);
-static void     brush_select_edit_brush_callback   (GtkWidget *, gpointer);
-static void     brush_select_delete_brush_callback (GtkWidget *, gpointer);
-
-static unsigned char scale_indicator_bits[7][7][3] = 
-{
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, BLK, BLK, BLK, BLK, BLK, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
-};
-
-static unsigned char pipe_indicator_bits[7][7][3] = 
-{
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-  { WHT, WHT, WHT, WHT, WHT, WHT, RED },
-  { WHT, WHT, WHT, WHT, WHT, RED, RED },
-  { WHT, WHT, WHT, WHT, RED, RED, RED },
-  { WHT, WHT, WHT, RED, RED, RED, RED },
-  { WHT, WHT, RED, RED, RED, RED, RED },
-  { WHT, RED, RED, RED, RED, RED, RED }
-};
-
-static unsigned char scale_pipe_indicator_bits[7][7][3] = 
-{
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, RED },
-  { WHT, WHT, WHT, BLK, WHT, RED, RED },
-  { WHT, BLK, BLK, BLK, BLK, BLK, RED },
-  { WHT, WHT, WHT, BLK, RED, RED, RED },
-  { WHT, WHT, RED, BLK, RED, RED, RED },
-  { WHT, RED, RED, RED, RED, RED, RED }
-};
-
-/*  dnd stuff  */
-static GtkTargetEntry preview_target_table[] =
-{
-  GIMP_TARGET_BRUSH
-};
-static guint preview_n_targets = (sizeof (preview_target_table) /
-                                  sizeof (preview_target_table[0]));
 
 /*  The main brush selection dialog  */
 BrushSelect *brush_select_dialog = NULL;
-
-/*  local variables  */
 
 /*  List of active dialogs  */
 GSList *brush_active_dialogs = NULL;
 
 /*  Brush editor dialog  */
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
+
 
 void
 brush_dialog_create (void)
@@ -228,14 +133,15 @@ brush_dialog_free (void)
 
       /*  save the size of the preview  */
       brush_select_session_info.width =
-	brush_select_dialog->preview->allocation.width;
+	brush_select_dialog->view->allocation.width;
       brush_select_session_info.height =
-	brush_select_dialog->preview->allocation.height;
+	brush_select_dialog->view->allocation.height;
 
       brush_select_free (brush_select_dialog);
       brush_select_dialog = NULL;
     }
 }
+
 
 /*  If title == NULL then it is the main brush dialog  */
 BrushSelect *
@@ -249,33 +155,19 @@ brush_select_new (gchar   *title,
 		  gint     init_mode)
 {
   BrushSelect *bsp;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *sbar;
-  GtkWidget *sep;
-  GtkWidget *table;
-  GtkWidget *util_box;
-  GtkWidget *slider;
-  GtkWidget *button;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *sep;
+  GtkWidget   *table;
+  GtkWidget   *util_box;
+  GtkWidget   *slider;
+  GtkWidget   *button;
 
   GimpBrush *active = NULL;
 
   static gboolean first_call = TRUE;
 
-  bsp = g_new (BrushSelect, 1);
-  bsp->callback_name          = NULL;
-  bsp->dnd_brush              = NULL;
-  bsp->brush_popup            = NULL;
-  bsp->popup_timeout_tag      = 0;
-  bsp->popup_anim_timeout_tag = 0;
-  bsp->scroll_offset          = 0;
-  bsp->old_row                = 0;
-  bsp->old_col                = 0;
-  bsp->NUM_BRUSH_COLUMNS      = STD_BRUSH_COLUMNS;
-  bsp->NUM_BRUSH_ROWS         = STD_BRUSH_ROWS;
-  bsp->redraw                 = TRUE;
-  bsp->freeze                 = FALSE;
+  bsp = g_new0 (BrushSelect, 1);
 
   /*  The shell  */
   bsp->shell = gimp_dialog_new (title ? title : _("Brush Selection"),
@@ -351,59 +243,25 @@ brush_select_new (gchar   *title,
   bsp->brush_selection_box = gtk_hbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), frame,
+  /*  The Brush Grid  */
+  bsp->view = gimp_container_grid_view_new (global_brush_list,
+                                            bsp->context,
+                                            MIN_CELL_SIZE,
+                                            STD_BRUSH_COLUMNS,
+                                            STD_BRUSH_ROWS);
+  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), bsp->view,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (bsp->view);
 
-  bsp->sbar_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT (bsp),
-					1, 1, MAX_WIN_HEIGHT (bsp)));
-  sbar = gtk_vscrollbar_new (bsp->sbar_data);
-  gtk_signal_connect (GTK_OBJECT (bsp->sbar_data), "value_changed",
-		      GTK_SIGNAL_FUNC (brush_select_scroll_update),
-		      bsp);
-  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), sbar, FALSE, FALSE, 0);
+  gimp_gtk_drag_dest_set_by_type (bsp->view,
+                                  GTK_DEST_DEFAULT_ALL,
+                                  GIMP_TYPE_BRUSH,
+                                  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (bsp->view),
+                              GIMP_TYPE_BRUSH,
+                              brush_select_drop_brush,
+                              bsp);
 
-  /*  Create the brush preview window and the underlying image  */
-
-  /*  Get the maximum brush extents  */
-  bsp->cell_width  = MIN_CELL_SIZE;
-  bsp->cell_height = MIN_CELL_SIZE;
-
-  bsp->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (bsp->preview),
-		    MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
-  gtk_widget_set_usize (bsp->preview,
-			MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
-  gtk_preview_set_expand (GTK_PREVIEW (bsp->preview), TRUE);
-  gtk_widget_set_events (bsp->preview, BRUSH_EVENT_MASK);
-
-  gtk_signal_connect (GTK_OBJECT (bsp->preview), "event",
-		      GTK_SIGNAL_FUNC (brush_select_events),
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT(bsp->preview), "size_allocate",
-		      GTK_SIGNAL_FUNC (brush_select_resize),
-		      bsp);
-
-  /*  dnd stuff  */
-  gtk_drag_source_set (bsp->preview,
-		       GDK_BUTTON2_MASK,
-		       preview_target_table, preview_n_targets,
-		       GDK_ACTION_COPY);
-  gimp_dnd_brush_source_set (bsp->preview, brush_select_drag_brush, bsp);
-
-  gtk_drag_dest_set (bsp->preview,
-                     GTK_DEST_DEFAULT_ALL,
-                     preview_target_table, preview_n_targets,
-                     GDK_ACTION_COPY);
-  gimp_dnd_brush_dest_set (bsp->preview, brush_select_drop_brush, bsp);
-
-  gtk_container_add (GTK_CONTAINER (frame), bsp->preview);
-  gtk_widget_show (bsp->preview);
-
-  gtk_widget_show (sbar);
-  gtk_widget_show (frame);
   gtk_widget_show (bsp->brush_selection_box);
   gtk_widget_show (bsp->left_box);
 
@@ -531,38 +389,17 @@ brush_select_new (gchar   *title,
   bsp->name_changed_handler_id =
     gimp_container_add_handler
     (GIMP_CONTAINER (global_brush_list), "name_changed",
-     GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
+     GTK_SIGNAL_FUNC (brush_select_brush_renamed_callback),
      bsp);
-
-  bsp->dirty_handler_id =
-    gimp_container_add_handler
-    (GIMP_CONTAINER (global_brush_list), "invalidate_preview",
-     GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
-     bsp);
-
-  gtk_signal_connect (GTK_OBJECT (global_brush_list), "add",
-		      GTK_SIGNAL_FUNC (brush_added_callback),
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT (global_brush_list), "remove",
-		      GTK_SIGNAL_FUNC (brush_removed_callback),
-		      bsp);
 
   /*  Only for main dialog  */
   if (!title)
     {
-      /*  set the preview's size in the callback
-      gtk_signal_connect (GTK_OBJECT (bsp->shell), "map",
-			  GTK_SIGNAL_FUNC (brush_select_map_callback),
-			  bsp);
-      */
-
       /*  if we are in per-tool paint options mode, hide the paint options  */
       brush_select_show_paint_options (bsp, global_paint_options);
     }
 
   gtk_widget_show (bsp->shell);
-
-  preview_calc_scrollbar (bsp);
 
   gtk_signal_connect (GTK_OBJECT (bsp->context), "brush_changed",
 		      GTK_SIGNAL_FUNC (brush_select_brush_changed),
@@ -594,9 +431,6 @@ brush_select_free (BrushSelect *bsp)
 
   gtk_signal_disconnect_by_data (GTK_OBJECT (bsp->context), bsp);
 
-  if (bsp->brush_popup != NULL)
-    gtk_widget_destroy (bsp->brush_popup);
-
   if (bsp->callback_name)
     {
       g_free (bsp->callback_name);
@@ -605,42 +439,8 @@ brush_select_free (BrushSelect *bsp)
 
   gimp_container_remove_handler (GIMP_CONTAINER (global_brush_list),
 				 bsp->name_changed_handler_id);
-  gimp_container_remove_handler (GIMP_CONTAINER (global_brush_list),
-				 bsp->dirty_handler_id);
-
-  gtk_signal_disconnect_by_data (GTK_OBJECT (global_brush_list), bsp);
 
   g_free (bsp);
-}
-
-void
-brush_select_freeze_all (void)
-{
-  BrushSelect *bsp;
-  GSList      *list;
-
-  for (list = brush_active_dialogs; list; list = g_slist_next (list))
-    {
-      bsp = (BrushSelect *) list->data;
-
-      bsp->freeze = TRUE;
-    }
-}
-
-void
-brush_select_thaw_all (void)
-{
-  BrushSelect *bsp;
-  GSList      *list;
-
-  for (list = brush_active_dialogs; list; list = g_slist_next (list))
-    {
-      bsp = (BrushSelect *) list->data;
-
-      bsp->freeze = FALSE;
-
-      preview_calc_scrollbar (bsp);
-    }
 }
 
 void
@@ -685,8 +485,8 @@ brush_select_show_paint_options (BrushSelect *bsp,
 /*  call this dialog's PDB callback  */
 
 static void
-brush_change_callbacks (BrushSelect *bsp,
-			gboolean     closing)
+brush_select_change_callbacks (BrushSelect *bsp,
+			       gboolean     closing)
 {
   gchar      *name;
   ProcRecord *prec = NULL;
@@ -719,7 +519,8 @@ brush_change_callbacks (BrushSelect *bsp,
 				PDB_INT32,     (gint) gimp_context_get_paint_mode (bsp->context),
 				PDB_INT32,     brush->mask->width,
 				PDB_INT32,     brush->mask->height,
-				PDB_INT32,     brush->mask->width * brush->mask->height,
+				PDB_INT32,     (brush->mask->width *
+						brush->mask->height),
 				PDB_INT8ARRAY, temp_buf_data (brush->mask),
 				PDB_INT32,     (gint) closing,
 				PDB_END);
@@ -735,7 +536,7 @@ brush_change_callbacks (BrushSelect *bsp,
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-brushes_check_dialogs (void)
+brush_select_dialogs_check (void)
 {
   BrushSelect *bsp;
   GSList      *list;
@@ -768,27 +569,16 @@ brushes_check_dialogs (void)
  *  Local functions
  */
 
-static GimpBrush *
-brush_select_drag_brush (GtkWidget *widget,
-			 gpointer   data)
-{
-  BrushSelect *bsp;
-
-  bsp = (BrushSelect *) data;
-
-  return bsp->dnd_brush;
-}
-
 static void
-brush_select_drop_brush (GtkWidget *widget,
-			 GimpBrush *brush,
-			 gpointer   data)
+brush_select_drop_brush (GtkWidget    *widget,
+			 GimpViewable *viewable,
+			 gpointer      data)
 {
   BrushSelect *bsp;
 
   bsp = (BrushSelect *) data;
 
-  gimp_context_set_brush (bsp->context, brush);
+  gimp_context_set_brush (bsp->context, GIMP_BRUSH (viewable));
 }
 
 static void
@@ -801,7 +591,7 @@ brush_select_brush_changed (GimpContext *context,
       brush_select_select (bsp, brush);
 
       if (bsp->callback_name)
-	brush_change_callbacks (bsp, FALSE);
+	brush_select_change_callbacks (bsp, FALSE);
     }
 }
 
@@ -816,7 +606,7 @@ brush_select_opacity_changed (GimpContext *context,
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (bsp->opacity_data), bsp);
 
   if (bsp->callback_name)
-    brush_change_callbacks (bsp, FALSE);
+    brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void
@@ -828,22 +618,14 @@ brush_select_paint_mode_changed (GimpContext      *context,
 				(gpointer) paint_mode);
 
   if (bsp->callback_name)
-    brush_change_callbacks (bsp, FALSE);
+    brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void
 brush_select_select (BrushSelect *bsp,
 		     GimpBrush   *brush)
 {
-  gint index;
-  gint row, col;
-  gint scroll_offset = 0;
-
-  index = gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
-					  GIMP_OBJECT (brush)); 
-
-  if (index < 0)
-    return;
+  if (! gimp_container_have (global_brush_list, GIMP_OBJECT (brush)));
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
@@ -856,882 +638,36 @@ brush_select_select (BrushSelect *bsp,
       gtk_widget_set_sensitive (bsp->delete_button, FALSE);
     }
 
-  update_active_brush_field (bsp);
-
-  row = index / bsp->NUM_BRUSH_COLUMNS;
-  col = index - row * (bsp->NUM_BRUSH_COLUMNS);
-
-  /*  check if the new active brush is already in the preview  */
-  if (((row + 1) * bsp->cell_height) >
-      (bsp->preview->allocation.height + bsp->scroll_offset))
-    {
-      scroll_offset = (((row + 1) * bsp->cell_height) -
-		       (bsp->scroll_offset + bsp->preview->allocation.height));
-    }
-  else if ((row * bsp->cell_height) < bsp->scroll_offset)
-    {
-      scroll_offset = (row * bsp->cell_height) - bsp->scroll_offset;
-    }
-  else
-    {
-      brush_select_show_selected (bsp, row, col);
-    }
-
-  gtk_adjustment_set_value (bsp->sbar_data, bsp->scroll_offset + scroll_offset);
+  brush_select_update_active_brush_field (bsp);
 }
 
 static void
-brush_select_brush_dirty_callback (GimpBrush   *brush,
-				   BrushSelect *bsp)
+brush_select_brush_renamed_callback (GimpBrush   *brush,
+				     BrushSelect *bsp)
 {
-  gint     index;
-  gboolean redraw;
-
-  if (!bsp || bsp->freeze)
-    return;
-
-  index  = gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
-					   GIMP_OBJECT (brush));
-  redraw = (brush != gimp_context_get_brush (bsp->context));
-
-  clear_brush (bsp, brush,
-	       index % (bsp->NUM_BRUSH_COLUMNS),
-	       index / (bsp->NUM_BRUSH_COLUMNS));
-
-  display_brush (bsp, brush,
-		 index % (bsp->NUM_BRUSH_COLUMNS),
-		 index / (bsp->NUM_BRUSH_COLUMNS),
-		 redraw);
+  brush_select_update_active_brush_field (bsp);
 }
 
 static void
-brush_added_callback (GimpContainer *container,
-		      GimpBrush     *brush, 
-		      BrushSelect   *bsp)
-{
-  if (bsp->freeze)
-    return;
-
-  preview_calc_scrollbar (bsp);
-}
-
-static void
-brush_removed_callback (GimpContainer *container,
-			GimpBrush     *brush,
-			BrushSelect   *bsp)
-{
-  if (bsp->freeze)
-    return;
-
-  preview_calc_scrollbar (bsp);
-}
-
-static void
-draw_brush_popup (GtkPreview *preview,
-		  GimpBrush  *brush,
-		  gint        width,
-		  gint        height)
-{
-  gint x, y;
-  gint brush_width, brush_height;
-  gint offset_x, offset_y;
-  guchar *mask, *buf, *b;
-  guchar bg;
-  
-  brush_width = brush->mask->width;
-  brush_height = brush->mask->height;
-  offset_x = (width - brush_width) / 2;
-  offset_y = (height - brush_height) / 2;
-
-  mask = temp_buf_data (brush->mask);
-  buf = g_new (guchar, 3 * width);
-  memset (buf, 255, 3 * width);
-
-  if (gimp_brush_get_pixmap (brush)) 
-    {
-      guchar *pixmap = temp_buf_data (gimp_brush_get_pixmap (brush));
-
-      for (y = 0; y < offset_y; y++)
-	gtk_preview_draw_row (preview, buf, 0, y, width); 
-      for (y = offset_y; y < brush_height + offset_y; y++)
-	{
-	  b = buf + 3 * offset_x;
-	  for (x = 0; x < brush_width ; x++)
-	    {
-	      bg = (255 - *mask);
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      *b++ = bg + (*mask * *pixmap++) / 255; 
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      mask++;
-	    }
-	  gtk_preview_draw_row (preview, buf, 0, y, width); 
-	}
-      memset (buf, 255, 3 * width);
-      for (y = brush_height + offset_y; y < height; y++)
-	gtk_preview_draw_row (preview, buf, 0, y, width); 
-    }
-  else
-    {
-      for (y = 0; y < offset_y; y++)
-	gtk_preview_draw_row (preview, buf, 0, y, width); 
-      for (y = offset_y; y < brush_height + offset_y; y++)
-	{
-	  b = buf + 3 * offset_x;
-	  for (x = 0; x < brush_width ; x++)
-	    {
-	      bg = 255 - *mask++;
-	      memset (b, bg, 3);
-	      b += 3;
-	    }   
-	  gtk_preview_draw_row (preview, buf, 0, y, width); 
-	}
-      memset (buf, 255, 3 * width);
-      for (y = brush_height + offset_y; y < height; y++)
-	gtk_preview_draw_row (preview, buf, 0, y, width);    
-    }
-
-  g_free (buf);
-}
-
-typedef struct
-{
-  BrushSelect *bsp;
-  gint         x;
-  gint         y;
-  GimpBrush   *brush;
-} popup_timeout_args_t;
-
-static gint
-brush_popup_anim_timeout (gpointer data)
-{
-  popup_timeout_args_t *args = data;
-  BrushSelect *bsp = args->bsp;
-  GimpBrushPipe *pipe;
-  GimpBrush *brush;
-
-  if (bsp->brush_popup != NULL && !GTK_WIDGET_VISIBLE (bsp->brush_popup))
-    {
-      bsp->popup_anim_timeout_tag = 0;
-      return (FALSE);
-    }
-
-  pipe = GIMP_BRUSH_PIPE (args->brush);
-  if (++bsp->popup_pipe_index >= pipe->nbrushes)
-    bsp->popup_pipe_index = 0;
-  brush = GIMP_BRUSH (pipe->brushes[bsp->popup_pipe_index]);
-
-  draw_brush_popup (GTK_PREVIEW (bsp->brush_preview), brush, args->x, args->y);
-  gtk_widget_queue_draw (bsp->brush_preview);
-
-  return (TRUE);
-}
-
-static gboolean
-brush_popup_timeout (gpointer data)
-{
-  popup_timeout_args_t *args = data;
-  BrushSelect *bsp = args->bsp;
-  GimpBrush *brush = args->brush;
-  gint x, y;
-  gint x_org, y_org;
-  gint scr_w, scr_h;
-  gint width, height;
-
-  /* timeout has gone off so our tag is now invalid  */
-  bsp->popup_timeout_tag = 0;
-
-  /* make sure the popup exists and is not visible */
-  if (bsp->brush_popup == NULL)
-    {
-      GtkWidget *frame;
-
-      bsp->brush_popup = gtk_window_new (GTK_WINDOW_POPUP);
-      gtk_window_set_policy (GTK_WINDOW (bsp->brush_popup),
-			     FALSE, FALSE, TRUE);
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      gtk_container_add (GTK_CONTAINER (bsp->brush_popup), frame);
-      gtk_widget_show (frame);
-      bsp->brush_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_container_add (GTK_CONTAINER (frame), bsp->brush_preview);
-      gtk_widget_show (bsp->brush_preview);
-    }
-  else
-    {
-      gtk_widget_hide (bsp->brush_popup);
-    }
-
-  /* decide where to put the popup */
-  width = brush->mask->width;
-  height = brush->mask->height;
-  if (GIMP_IS_BRUSH_PIPE (brush))
-    {      
-      GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
-      GimpBrush     *tmp_brush;
-      gint i;
-      
-      for (i = 1; i < pipe->nbrushes; i++)
-	{
-	  tmp_brush = GIMP_BRUSH (pipe->brushes[i]);
-	  width = MAX (width, tmp_brush->mask->width);
-	  height = MAX (height, tmp_brush->mask->height);
-	}
-    }
-  gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
-  scr_w = gdk_screen_width ();
-  scr_h = gdk_screen_height ();
-  x = x_org + args->x - width * 0.5;
-  y = y_org + args->y - height * 0.5;
-  x = (x < 0) ? 0 : x;
-  y = (y < 0) ? 0 : y;
-  x = (x + width > scr_w) ? scr_w - width : x;
-  y = (y + height > scr_h) ? scr_h - height : y;
-  gtk_preview_size (GTK_PREVIEW (bsp->brush_preview), width, height);
-
-  gtk_widget_popup (bsp->brush_popup, x, y);
-
-  /*  Draw the brush preview  */
-  draw_brush_popup (GTK_PREVIEW (bsp->brush_preview), brush, width, height);
-  gtk_widget_queue_draw (bsp->brush_preview);
-
-  if (GIMP_IS_BRUSH_PIPE (brush) && bsp->popup_anim_timeout_tag == 0)
-    {
-      static popup_timeout_args_t timeout_args;
-      
-      timeout_args.bsp = bsp;
-      timeout_args.x = width;
-      timeout_args.y = height;
-      timeout_args.brush = brush;
-
-      bsp->popup_pipe_index = 0;
-      bsp->popup_anim_timeout_tag =
-	gtk_timeout_add (300, brush_popup_anim_timeout, &timeout_args);
-    }
-
-  return FALSE;  /* don't repeat */
-}
-
-static void
-brush_popup_open (BrushSelect *bsp,
-		  gint         x,
-		  gint         y,
-		  GimpBrush   *brush)
-{
-  static popup_timeout_args_t popup_timeout_args;
-
-  /* if we've already got a timeout scheduled, then we complain */
-  g_return_if_fail (bsp->popup_timeout_tag == 0);
-
-  popup_timeout_args.bsp = bsp;
-  popup_timeout_args.x = x;
-  popup_timeout_args.y = y;
-  popup_timeout_args.brush = brush;
-  bsp->popup_timeout_tag = gtk_timeout_add (POPUP_DELAY_MS,
-					    brush_popup_timeout,
-					    &popup_timeout_args);
-}
-
-static void
-brush_popup_close (BrushSelect *bsp)
-{
-  if (bsp->popup_timeout_tag != 0)
-    gtk_timeout_remove (bsp->popup_timeout_tag);
-  bsp->popup_timeout_tag = 0;
-
-  if (bsp->popup_anim_timeout_tag != 0)
-    gtk_timeout_remove (bsp->popup_anim_timeout_tag);
-  bsp->popup_anim_timeout_tag = 0;
-
-  if (bsp->brush_popup != NULL)
-    gtk_widget_hide (bsp->brush_popup);
-}
-
-static void
-display_setup (BrushSelect *bsp)
-{
-  guchar * buf;
-  gint i;
-
-  buf = g_new (guchar, 3 * bsp->preview->allocation.width);
-
-  /*  Set the buffer to white  */
-  memset (buf, 255, bsp->preview->allocation.width * 3);
-
-  /*  Set the image buffer to white  */
-  for (i = 0; i < bsp->preview->allocation.height; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf, 0, i,
-			  bsp->preview->allocation.width);
-
-  g_free (buf);
-}
-
-static void
-clear_brush (BrushSelect *bsp,
-	     GimpBrush   *brush,
-	     gint         col,
-	     gint         row)
-{
-  guchar *buf;
-  gint width, height;
-  gint offset_x, offset_y;
-  gint ystart, yend;
-  gint i;
-
-  width  = bsp->cell_width  - 2 * MARGIN_WIDTH;
-  height = bsp->cell_height - 2 * MARGIN_HEIGHT;
-
-  offset_x = col * bsp->cell_width  + MARGIN_WIDTH;
-  offset_y = row * bsp->cell_height - bsp->scroll_offset + MARGIN_HEIGHT;
-
-  ystart = CLAMP (offset_y, 0, bsp->preview->allocation.height);
-  yend   = CLAMP (offset_y + height, 0, bsp->preview->allocation.height);
-
-  buf = g_new (guchar, 3 * width);
-
-  memset (buf, 255, 3 * width * sizeof (guchar));
-
-  for (i = ystart; i < yend; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-			  offset_x, i, width);
-}
-
-static void
-display_brush (BrushSelect *bsp,
-	       GimpBrush   *brush,
-	       gint         col,
-	       gint         row,
-	       gboolean     redraw)
-{
-  TempBuf *mask_buf, *pixmap_buf = NULL;
-  guchar *mask, *buf, *b;
-  guchar bg;
-  gboolean scale = FALSE;
-  gint cell_width, cell_height;
-  gint width, height;
-  gint offset_x, offset_y;
-  gint yend;
-  gint ystart;
-  gint i, j;
-
-  cell_width  = bsp->cell_width  - 2 * MARGIN_WIDTH;
-  cell_height = bsp->cell_height - 2 * MARGIN_HEIGHT;
-
-  mask_buf = gimp_brush_get_mask (brush);
-  pixmap_buf = gimp_brush_get_pixmap (brush);
-
-  if (mask_buf->width > cell_width || mask_buf->height > cell_height)
-    {
-      gdouble ratio_x = (gdouble)mask_buf->width / cell_width;
-      gdouble ratio_y = (gdouble)mask_buf->height / cell_height;
-   
-      mask_buf = brush_scale_mask (mask_buf, 
-				   (gdouble)(mask_buf->width) / MAX (ratio_x, ratio_y) + 0.5, 
-				   (gdouble)(mask_buf->height) / MAX (ratio_x, ratio_y) + 0.5);
-      if (pixmap_buf)
-	{
-	  /*  TODO: the scale function should scale the pixmap 
-	            and the mask in one run                     */
- 	  pixmap_buf = brush_scale_pixmap (pixmap_buf,
-					   mask_buf->width, mask_buf->height);
-	}
-      scale = TRUE;
-    }
-
-  /*  calculate the offset into the image  */
-  width = (mask_buf->width > cell_width) ? cell_width : mask_buf->width;
-  height = (mask_buf->height > cell_height) ? cell_height : mask_buf->height;
-
-  offset_x = col * bsp->cell_width + ((cell_width - width) >> 1) + MARGIN_WIDTH;
-  offset_y = row * bsp->cell_height + ((cell_height - height) >> 1) - bsp->scroll_offset + MARGIN_HEIGHT;
-
-  ystart = CLAMP (offset_y, 0, bsp->preview->allocation.height);
-  yend   = CLAMP (offset_y + height, 0, bsp->preview->allocation.height);
-
-  mask = temp_buf_data (mask_buf) + (ystart - offset_y) * mask_buf->width;
-  buf = g_new (guchar, 3 * cell_width);
-
-  if (pixmap_buf) 
-    { 
-      guchar *pixmap = 
-	temp_buf_data (pixmap_buf) + (ystart - offset_y) * mask_buf->width * 3;
-
-      for (i = ystart; i < yend; i++)
-	{
-	  b = buf;
-	  for (j = 0; j < width ; j++)
-	    {
-	      bg = (255 - *mask);
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      *b++ = bg + (*mask * *pixmap++) / 255; 
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      mask++;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				offset_x, i, width);
-	}
-    }
-  else 
-    {
-      for (i = ystart; i < yend; i++)
-	{
-	  /*  Invert the mask for display.  We're doing this because
-	   *  a value of 255 in the  mask means it is full intensity.
-	   *  However, it makes more sense for full intensity to show
-	   *  up as black in this brush preview window...
-	   */
-	  b = buf;
-	  for (j = 0; j < width; j++) 
-	    {
-	      bg = 255 - *mask++;
-	      memset (b, bg, 3);
-	      b += 3;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				offset_x, i, width);
-	}
-    }
-  g_free (buf);
-
-  offset_x = (col + 1) * bsp->cell_width  - indicator_width - MARGIN_WIDTH;
-  offset_y = (row + 1) * bsp->cell_height - indicator_height - bsp->scroll_offset - MARGIN_HEIGHT;
-
-  if (scale)
-    {
-      temp_buf_free (mask_buf);
-      if (pixmap_buf)
-	temp_buf_free (pixmap_buf);
-
-      for (i = 0; i < indicator_height; i++, offset_y++)
-	{ 
-	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
-	    (GIMP_IS_BRUSH_PIPE (brush)) ?
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-				    scale_pipe_indicator_bits[i][0],
-				    offset_x, offset_y, indicator_width) :
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-				    scale_indicator_bits[i][0],
-				    offset_x, offset_y, indicator_width);
-	}
-    }
-  else if (GIMP_IS_BRUSH_PIPE (brush))
-    {
-      for (i = 0; i < indicator_height; i++, offset_y++)
-	{
-	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
-	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-				  pipe_indicator_bits[i][0],
-				  offset_x, offset_y, indicator_width);
-	}
-    }
-
-  if (redraw && bsp->redraw)
-    {
-      GdkRectangle area;
-
-      area.x = col * bsp->cell_width + MARGIN_WIDTH;
-      area.y = CLAMP (row * bsp->cell_height - bsp->scroll_offset +
-		      MARGIN_HEIGHT,
-		      0, bsp->preview->allocation.height);
-      area.width  = cell_width;
-      area.height = CLAMP (row * bsp->cell_height - bsp->scroll_offset +
-			   MARGIN_HEIGHT + cell_height,
-			   0, bsp->preview->allocation.height);
-
-      gtk_widget_draw (bsp->preview, &area);
-    }
-}
-
-static gint brush_counter = 0;
-
-static void
-do_display_brush (GimpBrush   *brush,
-		  BrushSelect *bsp)
-{
-  display_brush (bsp, brush,
-		 brush_counter % (bsp->NUM_BRUSH_COLUMNS),
-		 brush_counter / (bsp->NUM_BRUSH_COLUMNS),
-		 FALSE);
-  brush_counter++;
-}
-
-static void
-display_brushes (BrushSelect *bsp)
-{
-  if (global_brush_list == NULL ||
-      gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) == 0)
-    {
-      gtk_widget_set_sensitive (bsp->options_box, FALSE);
-      return;
-    }
-  else
-    {
-      gtk_widget_set_sensitive (bsp->options_box, TRUE);
-    }
-
-  /*  setup the display area  */
-  display_setup (bsp);
-
-  brush_counter = 0;
-  gimp_container_foreach (GIMP_CONTAINER (global_brush_list),
-			  (GFunc) do_display_brush,
-			  bsp);
-}
-
-static void
-brush_select_show_selected (BrushSelect *bsp,
-			    gint         row,
-			    gint         col)
-{
-  GdkRectangle area;
-  guchar *buf;
-  gint yend;
-  gint ystart;
-  gint offset_x, offset_y;
-  gint i;
-
-  buf = g_new (guchar, 3 * bsp->cell_width);
-
-  if (bsp->old_col != col || bsp->old_row != row)
-    {
-      /*  remove the old selection  */
-      offset_x = bsp->old_col * bsp->cell_width;
-      offset_y = bsp->old_row * bsp->cell_height - bsp->scroll_offset;
-
-      ystart = CLAMP (offset_y , 0, bsp->preview->allocation.height);
-      yend = CLAMP (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
-
-      /*  set the buf to white  */
-      memset (buf, 255, 3 * bsp->cell_width);
-
-      for (i = ystart; i < yend; i++)
-	{
-	  if (i == offset_y || i == (offset_y + bsp->cell_height - 1))
-	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				  offset_x, i, bsp->cell_width);
-	  else
-	    {
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				    offset_x, i, 1);
-	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				    offset_x + bsp->cell_width - 1, i, 1);
-	    }
-	}
-
-      if (bsp->redraw)
-	{
-	  area.x = offset_x;
-	  area.y = ystart;
-	  area.width = bsp->cell_width;
-	  area.height = (yend - ystart);
-	  gtk_widget_draw (bsp->preview, &area);
-	}
-    }
-
-  /*  make the new selection  */
-  offset_x = col * bsp->cell_width;
-  offset_y = row * bsp->cell_height - bsp->scroll_offset;
-
-  ystart = CLAMP (offset_y , 0, bsp->preview->allocation.height);
-  yend = CLAMP (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
-
-  /*  set the buf to black  */
-  memset (buf, 0, bsp->cell_width * 3);
-
-  for (i = ystart; i < yend; i++)
-    {
-      if (i == offset_y || i == (offset_y + bsp->cell_height - 1))
-	gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-			      buf, offset_x, i, bsp->cell_width);
-      else
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				offset_x, i, 1);
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
-				offset_x + bsp->cell_width - 1, i, 1);
-	}
-    }
-
-  if (bsp->redraw)
-    {
-      area.x = offset_x;
-      area.y = ystart;
-      area.width = bsp->cell_width;
-      area.height = (yend - ystart);
-      gtk_widget_draw (bsp->preview, &area);
-    }
-
-  bsp->old_row = row;
-  bsp->old_col = col;
-
-  g_free (buf);
-}
-
-static void
-update_active_brush_field (BrushSelect *bsp)
+brush_select_update_active_brush_field (BrushSelect *bsp)
 {
   GimpBrush *brush;
-  gchar buf[32];
+  gchar      buf[32];
 
   brush = gimp_context_get_brush (bsp->context);
 
   if (!brush)
     return;
 
-  /*  Set brush name  */
   gtk_label_set_text (GTK_LABEL (bsp->brush_name), GIMP_OBJECT (brush)->name);
 
-  /*  Set brush size  */
   g_snprintf (buf, sizeof (buf), "(%d x %d)",
-	      brush->mask->width, brush->mask->height);
+	      brush->mask->width,
+	      brush->mask->height);
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
-  /*  Set brush spacing  */
   gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
 			    gimp_brush_get_spacing (brush));
-}
-
-static void
-preview_calc_scrollbar (BrushSelect *bsp)
-{
-  gint num_rows;
-  gint page_size;
-  gint max;
-
-  bsp->scroll_offset = 0;
-  num_rows = ((gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) +
-	       (bsp->NUM_BRUSH_COLUMNS) - 1)
-	      / (bsp->NUM_BRUSH_COLUMNS));
-  max = num_rows * bsp->cell_width;
-  if (!num_rows)
-    num_rows = 1;
-  page_size = bsp->preview->allocation.height;
-
-  bsp->sbar_data->value          = bsp->scroll_offset;
-  bsp->sbar_data->upper          = max;
-  bsp->sbar_data->page_size      = ((page_size < max) ? page_size : max);
-  bsp->sbar_data->page_increment = (page_size >> 1);
-  bsp->sbar_data->step_increment = bsp->cell_width;
-
-  gtk_signal_emit_by_name (GTK_OBJECT (bsp->sbar_data), "changed");
-  gtk_signal_emit_by_name (GTK_OBJECT (bsp->sbar_data), "value_changed");
-}
-
-static gint 
-brush_select_resize (GtkWidget   *widget, 
-		     GdkEvent    *event, 
-		     BrushSelect *bsp)
-{
-  /*  calculate the best-fit approximation...  */  
-  gint wid;
-  gint now;
-  gint cell_size;
-
-  wid = widget->allocation.width;
-
-  for (now = cell_size = MIN_CELL_SIZE;
-       now < MAX_CELL_SIZE; ++now)
-    {
-      if ((wid % now) < (wid % cell_size)) cell_size = now;
-      if ((wid % cell_size) == 0)
-        break;
-    }
-
-   bsp->NUM_BRUSH_COLUMNS =
-     (gint) (wid / cell_size);
-   bsp->NUM_BRUSH_ROWS =
-     (gint) ((gimp_container_num_children (GIMP_CONTAINER (global_brush_list)) +
-	      bsp->NUM_BRUSH_COLUMNS - 1) /
-	     bsp->NUM_BRUSH_COLUMNS);
-
-   bsp->cell_width  = cell_size;
-   bsp->cell_height = cell_size;
-
-   /*  recalculate scrollbar extents  */
-   preview_calc_scrollbar (bsp);
- 
-   return FALSE;
-}
- 
-static gint
-brush_select_events (GtkWidget   *widget,
-		     GdkEvent    *event,
-		     BrushSelect *bsp)
-{
-  GdkEventButton *bevent;
-  GimpBrush *brush;
-  gint row, col, index;
-
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      break;
-
-    case GDK_2BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-      col = bevent->x / bsp->cell_width;
-      row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
-      index = row * bsp->NUM_BRUSH_COLUMNS + col;
-      
-      /*  Get the brush and check if it is editable  */
-      brush = (GimpBrush *)
-	gimp_container_get_child_by_index (GIMP_CONTAINER (global_brush_list),
-					   index);
-      if (GIMP_IS_BRUSH_GENERATED (brush))
-	brush_select_edit_brush_callback (NULL, bsp);
-      break;
-
-    case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-
-      col = bevent->x / bsp->cell_width;
-      row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
-      index = row * bsp->NUM_BRUSH_COLUMNS + col;
-
-      brush = (GimpBrush *)
-	gimp_container_get_child_by_index (GIMP_CONTAINER (global_brush_list),
-					   index);
-
-      if (brush)
-	bsp->dnd_brush = brush;
-      else
-	bsp->dnd_brush = gimp_context_get_brush (bsp->context);
-
-      if (bevent->button == 1)
-	{
-	  /*  Get the brush and display the popup brush preview  */
-	  if (brush)
-	    {
-	      gdk_pointer_grab (bsp->preview->window, FALSE,
-				(GDK_POINTER_MOTION_HINT_MASK |
-				 GDK_BUTTON1_MOTION_MASK |
-				 GDK_BUTTON_RELEASE_MASK),
-				NULL, NULL, bevent->time);
-
-	      /*  Make this brush the active brush  */
-	      gimp_context_set_brush (bsp->context, brush);
-
-	      /*  only if dialog is main one        */
-	      if (bsp == brush_select_dialog &&
-		  brush_edit_generated_dialog)
-		{
-		  brush_edit_generated_set_brush (brush_edit_generated_dialog,
-						  brush);
-		}
-	      
-	      /*  Show the brush popup window if the brush is too large  */
-	      if (brush->mask->width  > bsp->cell_width - 2 * MARGIN_WIDTH ||
-		  brush->mask->height > bsp->cell_height - 2 * MARGIN_HEIGHT ||
-		  GIMP_IS_BRUSH_PIPE (brush))
-		{
-		  brush_popup_open (bsp, bevent->x, bevent->y, brush);
-		}
-	    }
-	}
-
-      /*  wheelmouse support  */
-      else if (bevent->button == 4)
-	{
-	  GtkAdjustment *adj = bsp->sbar_data;
-	  gfloat new_value = adj->value - adj->page_increment / 2;
-	  new_value =
-	    CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	  gtk_adjustment_set_value (adj, new_value);
-	}
-      else if (bevent->button == 5)
-	{
-	  GtkAdjustment *adj = bsp->sbar_data;
-	  gfloat new_value = adj->value + adj->page_increment / 2;
-	  new_value =
-	    CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
-	  gtk_adjustment_set_value (adj, new_value);
-	}
-
-      break;
-
-    case GDK_BUTTON_RELEASE:
-      bevent = (GdkEventButton *) event;
-
-      if (bevent->button == 1)
-	{
-	  /*  Ungrab the pointer  */
-	  gdk_pointer_ungrab (bevent->time);
-
-	  /*  Close the brush popup window  */
-	  brush_popup_close (bsp);
-	}
-      break;
-
-    case GDK_DELETE:
-      /* g_warning ("test"); */
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
-}
-
-/*  Disabled until I've figured out how gtk window resizing *really* works.
- *  I don't think that the function below is the correct way to do it
- *    --  Michael
- *
-static void
-brush_select_map_callback (GtkWidget   *widget,
-			   BrushSelect *bsp)
-{
-  GtkAllocation allocation;
-  gint xdiff, ydiff;
-
-  xdiff =
-    bsp->shell->allocation.width - bsp->preview->allocation.width;
-  ydiff =
-    bsp->shell->allocation.height - bsp->preview->allocation.height;
-
-  allocation = bsp->shell->allocation;
-  allocation.width = brush_select_session_info.width + xdiff;
-  allocation.height = brush_select_session_info.height + ydiff;
-
-  gtk_widget_size_allocate (bsp->shell, &allocation);
-}
-*/
-
-static void
-brush_select_scroll_update (GtkAdjustment *adjustment,
-			    gpointer       data)
-{
-  BrushSelect *bsp;
-  GimpBrush *active;
-  gint row, col, index;
-
-  bsp = (BrushSelect *) data;
-
-  if (bsp)
-    {
-      bsp->scroll_offset = adjustment->value;
-
-      display_brushes (bsp);
-
-      active = gimp_context_get_brush (bsp->context);
-
-      if (active)
-	{
-	  index =
-	    gimp_container_get_child_index (GIMP_CONTAINER (global_brush_list),
-					    GIMP_OBJECT (active));
-
-	  if (index < 0)
-	    return;
-
-	  row = index / bsp->NUM_BRUSH_COLUMNS;
-	  col = index - row * bsp->NUM_BRUSH_COLUMNS;
-
-	  brush_select_show_selected (bsp, row, col);
-	}
-
-      if (bsp->redraw)
-	gtk_widget_draw (bsp->preview, NULL);
-    }
 }
 
 static void
@@ -1751,13 +687,14 @@ static void
 paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  LayerModeEffects  paint_mode;
   BrushSelect      *bsp;
+  LayerModeEffects  paint_mode;
 
-  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
   bsp = (BrushSelect *) data;
 
-  gimp_context_set_paint_mode (((BrushSelect *) data)->context, paint_mode);
+  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  gimp_context_set_paint_mode (bsp->context, paint_mode);
 }
 
 static void
@@ -1778,7 +715,7 @@ spacing_scale_update (GtkAdjustment *adjustment,
       if (bsp->spacing_value != adjustment->value)
 	{
 	  bsp->spacing_value = adjustment->value;
-	  brush_change_callbacks (bsp, FALSE);
+	  brush_select_change_callbacks (bsp, FALSE);
 	}
     }
 }
@@ -1798,7 +735,7 @@ brush_select_close_callback (GtkWidget *widget,
   if (bsp != brush_select_dialog)
     {
       /* Send data back */
-      brush_change_callbacks (bsp, TRUE);
+      brush_select_change_callbacks (bsp, TRUE);
       gtk_widget_destroy (bsp->shell); 
       brush_select_free (bsp); 
     }
@@ -1816,22 +753,20 @@ static void
 brush_select_new_brush_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  GimpBrush *brush;
   BrushSelect *bsp;
+  GimpBrush   *brush;
 
   bsp = (BrushSelect *) data;
 
   brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
-  if (brush)
-    {
-      gimp_container_add (GIMP_CONTAINER (global_brush_list),
-			  GIMP_OBJECT (brush));
 
-      gimp_context_set_brush (bsp->context, brush);
+  gimp_container_add (GIMP_CONTAINER (global_brush_list),
+		      GIMP_OBJECT (brush));
 
-      if (brush_edit_generated_dialog)
-	brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
-    }
+  gimp_context_set_brush (bsp->context, brush);
+
+  if (brush_edit_generated_dialog)
+    brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
 
   brush_select_edit_brush_callback (widget, data);
 }
@@ -1841,31 +776,32 @@ brush_select_edit_brush_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   BrushSelect *bsp;
-  GimpBrush *brush;
+  GimpBrush   *brush;
 
   bsp = (BrushSelect *) data;
   brush = gimp_context_get_brush (bsp->context);
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      if (!brush_edit_generated_dialog)
+      if (! brush_edit_generated_dialog)
 	{
-	  /*  Create the dialog...  */
 	  brush_edit_generated_dialog = brush_edit_generated_new ();
+
 	  brush_edit_generated_set_brush (brush_edit_generated_dialog, brush);
 	}
       else
 	{
-	  /*  Popup the dialog  */
-	  if (!GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
+	  if (! GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
 	    gtk_widget_show (brush_edit_generated_dialog->shell);
 	  else
 	    gdk_window_raise (brush_edit_generated_dialog->shell->window);
 	}
     }
   else
-    /* this should never happen */
-    g_message (_("Sorry, this brush can't be edited."));
+    {
+      /* this should never happen */
+      g_message (_("Sorry, this brush can't be edited."));
+    }
 }
 
 static void
@@ -1883,11 +819,7 @@ brush_select_delete_brush_callback (GtkWidget *widget,
       if (GIMP_DATA (brush)->filename)
 	gimp_data_delete_from_disk (GIMP_DATA (brush));
 
-      brush_select_freeze_all ();
-
       gimp_container_remove (global_brush_list, GIMP_OBJECT (brush));
-
-      brush_select_thaw_all ();
     }
   else
     {

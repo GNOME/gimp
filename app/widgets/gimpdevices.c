@@ -904,7 +904,7 @@ device_status_create (void)
 	  gimp_dnd_viewable_dest_set (deviceD->brushes[i],
 				      GIMP_TYPE_BRUSH,
 				      device_status_drop_brush,
-				      NULL);
+				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->brushes[i],
 			    4, 5, i, i+1,
 			    0, 0, 2, 2);
@@ -927,7 +927,7 @@ device_status_create (void)
 	  gimp_dnd_viewable_dest_set (deviceD->patterns[i],
 				      GIMP_TYPE_PATTERN,
 				      device_status_drop_pattern,
-				      NULL);
+				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
 			    5, 6, i, i+1,
 			    0, 0, 2, 2);
@@ -950,7 +950,7 @@ device_status_create (void)
 	  gimp_dnd_viewable_dest_set (deviceD->gradients[i],
 				      GIMP_TYPE_GRADIENT,
 				      device_status_drop_gradient,
-				      NULL);
+				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
 			    6, 7, i, i+1,
 			    0, 0, 2, 2);

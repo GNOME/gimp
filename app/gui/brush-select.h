@@ -32,9 +32,7 @@ struct _BrushSelect
   GtkWidget     *brush_selection_box;
   GtkWidget     *paint_options_box;
 
-  /*  The preview and it's vscale data  */
-  GtkWidget     *preview;
-  GtkAdjustment *sbar_data;
+  GtkWidget     *view;
 
   GtkWidget     *options_box;
   GtkWidget     *brush_name;
@@ -46,33 +44,12 @@ struct _BrushSelect
   GtkWidget     *delete_button;
   GtkWidget     *option_menu;
 
-  /*  Brush popup  */
-  GtkWidget     *brush_popup;
-  GtkWidget     *brush_preview;
-  guint          popup_timeout_tag;
-  guint          popup_anim_timeout_tag;
-  guint          popup_pipe_index;
-
   /*  Callback function name  */
   gchar         *callback_name;
 
   /*  Context to store the current brush & paint options  */
   GimpContext   *context;
   gint           spacing_value;
-
-  GimpBrush     *dnd_brush;
-
-  /*  Some variables to keep the GUI consistent  */
-  gint           cell_width;
-  gint           cell_height;
-  gint           scroll_offset;
-  gint           old_row;
-  gint           old_col;
-  gint           NUM_BRUSH_COLUMNS;
-  gint           NUM_BRUSH_ROWS;
-
-  gboolean       redraw;
-  gboolean       freeze; /*  so we don't waste so much time during refresh  */
 
   GQuark         name_changed_handler_id;
   GQuark         dirty_handler_id;
@@ -85,29 +62,27 @@ extern GSList *brush_active_dialogs;
 extern BrushSelect *brush_select_dialog;
 
 
-BrushSelect * brush_select_new        (gchar       *title,
-				       /*  These are the required initial vals
-					*  If init_name == NULL then use
-					*  current brush
-					*/
-				       gchar       *init_name,
-				       gdouble      init_opacity, 
-				       gint         init_spacing,
-				       gint         init_mode);
+BrushSelect * brush_select_new           (gchar       *title,
+					  /*  These are the required initial vals
+					   *  If init_name == NULL then use
+					   *  current brush
+					   */
+					  gchar       *init_name,
+					  gdouble      init_opacity, 
+					  gint         init_spacing,
+					  gint         init_mode);
+void          brush_select_free          (BrushSelect *bsp);
+void          brush_select_dialogs_check (void);
 
-void          brush_select_free       (BrushSelect *bsp);
-
-void          brush_select_freeze_all (void);
-void          brush_select_thaw_all   (void);
-
-void          brushes_check_dialogs   (void);
 
 /*  show/hide paint options (main brush dialog if bsp == NULL)  */
 void          brush_select_show_paint_options (BrushSelect *bsp,
 					       gboolean     show);
 
+
 /*  the main brush selection  */
 void          brush_dialog_free   (void);
 void          brush_dialog_create (void);
+
 
 #endif  /*  __BRUSH_SELECT_H__  */

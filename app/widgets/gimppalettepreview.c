@@ -137,12 +137,18 @@ gimp_palette_preview_create_popup (GimpPreview *preview)
 
   palette = GIMP_PALETTE (preview->viewable);
 
-  popup_width  = MIN (palette->n_colors, 16);
+  if (palette->n_columns)
+    popup_width = palette->n_columns;
+  else
+    popup_width = MIN (palette->n_colors, 16);
+
   popup_height = MAX (1, palette->n_colors / popup_width);
 
+  g_print ("columns: %d\n", palette->n_columns);
+
   return gimp_preview_new_full (preview->viewable,
-				popup_width  * 3,
-				popup_height * 3,
+				popup_width  * 4,
+				popup_height * 4,
 				0,
 				TRUE, FALSE, FALSE);
 }
@@ -156,11 +162,15 @@ gimp_palette_preview_needs_popup (GimpPreview *preview)
 
   palette = GIMP_PALETTE (preview->viewable);
 
-  popup_width  = MIN (palette->n_colors, 16);
+  if (palette->n_columns)
+    popup_width = palette->n_columns;
+  else
+    popup_width = MIN (palette->n_colors, 16);
+
   popup_height = MAX (1, palette->n_colors / popup_width);
 
-  if (popup_width  * 3 > preview->width ||
-      popup_height * 3 > preview->height)
+  if (popup_width  * 4 > preview->width ||
+      popup_height * 4 > preview->height)
     return TRUE;
 
   return FALSE;

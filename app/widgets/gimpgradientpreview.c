@@ -137,8 +137,8 @@ gimp_gradient_preview_create_popup (GimpPreview *preview)
 
   gradient = GIMP_GRADIENT (preview->viewable);
 
-  popup_width  = 48;
-  popup_height = 24;
+  popup_width  = 128;
+  popup_height =  32;
 
   return gimp_preview_new_full (preview->viewable,
 				popup_width,

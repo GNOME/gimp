@@ -112,6 +112,8 @@ gimp_palette_init (GimpPalette *palette)
   palette->colors    = NULL;
   palette->n_colors  = 0;
 
+  palette->n_columns = 0;
+
   palette->pixmap    = NULL;
 }
 
@@ -165,8 +167,10 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
                            0, 0,
                            white);
 
-  columns = width  / 3;
-  rows    = height / 3;
+#define CELL_SIZE 4
+
+  columns = width  / CELL_SIZE;
+  rows    = height / CELL_SIZE;
 
   buf = temp_buf_data (temp_buf);
   b   = g_new (guchar, width * 3);
@@ -184,23 +188,25 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 	  list = g_list_next (list);
 
 	  gimp_rgb_get_uchar (&entry->color,
-			      &b[x * 3 * 3 + 0],
-			      &b[x * 3 * 3 + 1],
-			      &b[x * 3 * 3 + 2]);
+			      &b[x * CELL_SIZE * 3 + 0],
+			      &b[x * CELL_SIZE * 3 + 1],
+			      &b[x * CELL_SIZE * 3 + 2]);
 
-	  for (i = 1; i < 3; i++)
+	  for (i = 1; i < CELL_SIZE; i++)
 	    {
-	      b[(x * 3 + i) * 3 + 0] = b[(x * 3) * 3 + 0];
-	      b[(x * 3 + i) * 3 + 1] = b[(x * 3) * 3 + 1];
-	      b[(x * 3 + i) * 3 + 2] = b[(x * 3) * 3 + 2];
+	      b[(x * CELL_SIZE + i) * 3 + 0] = b[(x * CELL_SIZE) * 3 + 0];
+	      b[(x * CELL_SIZE + i) * 3 + 1] = b[(x * CELL_SIZE) * 3 + 1];
+	      b[(x * CELL_SIZE + i) * 3 + 2] = b[(x * CELL_SIZE) * 3 + 2];
 	    }
 	}
 
-      for (i = 0; i < 3; i++)
+      for (i = 0; i < CELL_SIZE; i++)
 	{
-	  memcpy (buf + ((y * 3 + i) * width) * 3, b, width * 3);
+	  memcpy (buf + ((y * CELL_SIZE + i) * width) * 3, b, width * 3);
 	}
     }
+
+#undef CELL_SIZE
 
   g_free (b);
 
@@ -301,6 +307,36 @@ gimp_palette_load (const gchar *filename)
 	}
 
       linenum++;
+
+      if (! strncmp (str, "Columns: ", strlen ("Columns: ")))
+	{
+	  gint columns;
+
+	  columns = atoi (g_strstrip (&str[strlen ("Columns: ")]));
+
+	  if (columns < 0 || columns > 256)
+	    {
+	      g_message (_("Loading palette %s (line %d):\n"
+			   "Invalid number or columns"),
+			 filename, linenum);
+
+	      columns = 0;
+	    }
+
+	  palette->n_columns = columns;
+
+	  if (! fgets (str, 1024, fp))
+	    {
+	      g_message (_("Loading palette %s (line %d):\nRead error"),
+			 filename, linenum);
+
+	      fclose (fp);
+	      gtk_object_sink (GTK_OBJECT (palette));
+	      return NULL;
+	    }
+
+	  linenum++;
+	}
     }
   else /* old palette format */
     {
@@ -402,7 +438,8 @@ gimp_palette_save (GimpData *data)
     }
 
   fprintf (fp, "GIMP Palette\n");
-  fprintf (fp, "Name: %s\n#\n", GIMP_OBJECT (palette)->name);
+  fprintf (fp, "Name: %s\n", GIMP_OBJECT (palette)->name);
+  fprintf (fp, "Columns: %d\n#\n", CLAMP (palette->n_columns, 0, 256));
 
   for (list = palette->colors; list; list = g_list_next (list))
     {

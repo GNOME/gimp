@@ -26,19 +26,11 @@ struct _PatternSelect
 {
   GtkWidget     *shell;
 
-  /*  The preview and it's vscale data  */
-  GtkWidget     *preview;
-  GdkGC         *gc;
-  GtkAdjustment *sbar_data;
+  GtkWidget     *view;
 
   GtkWidget     *options_box;
   GtkWidget     *pattern_name;
   GtkWidget     *pattern_size;
-
-  /*  Pattern popup  */
-  GtkWidget     *pattern_popup;
-  GtkWidget     *pattern_preview;
-  guint          popup_timeout_tag;
 
   /*  Callback function name  */
   gchar         *callback_name;
@@ -46,23 +38,9 @@ struct _PatternSelect
   /*  Context to store the current pattern  */
   GimpContext   *context;
 
-  GimpPattern   *dnd_pattern;
-
-  /*  Some variables to keep the GUI consistent  */
-  gint           cell_width;
-  gint           cell_height;
-  gint           scroll_offset;
-  gint           old_row;
-  gint           old_col;
-  gint           NUM_PATTERN_COLUMNS;
-  gint           NUM_PATTERN_ROWS;
-
-  gboolean       redraw;
-  gboolean       freeze; /*  so we don't waste so much time during refresh  */
-
   GQuark         name_changed_handler_id;
-  GQuark         dirty_handler_id;
 };
+
 
 /*  list of active dialogs  */
 extern GSList *pattern_active_dialogs;
@@ -71,19 +49,15 @@ extern GSList *pattern_active_dialogs;
 extern PatternSelect *pattern_select_dialog;
 
 
-PatternSelect * pattern_select_new        (gchar         *title,
-					   gchar         *initial_pattern);
+PatternSelect * pattern_select_new           (gchar         *title,
+					      gchar         *initial_pattern);
+void            pattern_select_free          (PatternSelect *psp);
+void            pattern_select_dialogs_check (void);
 
-void            pattern_select_free       (PatternSelect *psp);
-
-void            pattern_select_freeze_all (void);
-void            pattern_select_thaw_all   (void);
-
-void            patterns_check_dialogs    (void);
 
 /*  the main pattern selection  */
-void            pattern_dialog_create     (void);
-void            pattern_dialog_free       (void);
+void            pattern_dialog_create        (void);
+void            pattern_dialog_free          (void);
 
 
 #endif  /*  __PATTERN_SELECT_H__  */

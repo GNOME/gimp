@@ -1218,8 +1218,8 @@ plug_in_close (PlugIn   *plug_in,
 	}
 
       /* Close any dialogs that this plugin might have opened */
-      brushes_check_dialogs ();
-      patterns_check_dialogs ();
+      brush_select_dialogs_check ();
+      pattern_select_dialogs_check ();
       gradients_check_dialogs ();
 
       open_plug_ins = g_slist_remove (open_plug_ins, plug_in);

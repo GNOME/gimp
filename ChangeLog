@@ -1,5 +1,50 @@
 2001-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/brush_select.[ch]
+	* app/pattern_select.[ch]: removed almost all code by using
+	the GimpContainerGridView.
+
+	* app/brushes.c
+	* app/patterns.c: brush|pattern_select_freeze|thaw_all() don't
+	exist any more.
+
+	* app/devices.c: made it work again.
+
+	* app/gimpgradientpreview.c: the gradient popup is 128 x 32 again.
+
+	* app/plug_in.c: follow the brush and pattern dialog function
+	renaming.
+
+	* app/gimppalette.[ch]
+	* app/gimppalettepreview.c: added a "Columns" attribute and show
+	the popups accordingly.
+
+	The palette file format has changed again. It now can have an
+	optional "Columns: <n>" line after the palette's name.
+
+	* data/palettes/Bgold.gpl
+	* data/palettes/Borders.gpl
+	* data/palettes/Cascade.gpl
+	* data/palettes/China.gpl
+	* data/palettes/Coldfire.gpl
+	* data/palettes/Dark_pastels.gpl
+	* data/palettes/Ega.gpl
+	* data/palettes/Gold.gpl
+	* data/palettes/Grayblue.gpl
+	* data/palettes/Hilite.gpl
+	* data/palettes/Kahki.gpl
+	* data/palettes/Named_Colors.gpl
+	* data/palettes/News3.gpl
+	* data/palettes/Op2.gpl
+	* data/palettes/Plasma.gpl
+	* data/palettes/Visibone.gpl
+	* data/palettes/Visibone_2.gpl
+	* data/palettes/Web.gpl: added the "Columns" parameter where it
+	makes sense and remove those ugly black colors which were hanging
+	around as first color of may palettes.
+
+2001-02-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am: took gimpcontextpreview.[ch] out of the build
 	but still left the sources there as reference.
 

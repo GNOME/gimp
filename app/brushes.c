@@ -23,7 +23,6 @@
 #include "apptypes.h"
 
 #include "context_manager.h"
-#include "brush_select.h"
 #include "brushes.h"
 #include "gimpbrush.h"
 #include "gimpbrushgenerated.h"
@@ -42,8 +41,6 @@ brushes_init (gboolean no_data)
   if (brush_path != NULL && !no_data)
     {
       gchar *common_brush_path;
-
-      brush_select_freeze_all ();
 
       common_brush_path = g_strconcat (brush_path,
 				       G_SEARCHPATH_SEPARATOR_S,
@@ -68,8 +65,6 @@ brushes_init (gboolean no_data)
 			   NULL);
 
       g_free (common_brush_path);
-
-      brush_select_thaw_all ();
     }
 }
 
@@ -79,13 +74,9 @@ brushes_free (void)
   if (gimp_container_num_children (global_brush_list) == 0)
     return;
 
-  brush_select_freeze_all ();
-
   gimp_data_list_save_and_clear (GIMP_DATA_LIST (global_brush_list),
 				 brush_vbr_path,
 				 GIMP_BRUSH_GENERATED_FILE_EXTENSION);
-
-  brush_select_thaw_all ();
 }
 
 GimpBrush *
