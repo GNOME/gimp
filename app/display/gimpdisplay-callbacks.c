@@ -1048,9 +1048,9 @@ gdisplay_drop_color (GtkWidget     *widget,
 }
 
 void
-gdisplay_drop_viewable (GtkWidget    *widget,
-			GimpViewable *viewable,
-			gpointer      data)
+gdisplay_drop_pattern (GtkWidget    *widget,
+		       GimpViewable *viewable,
+		       gpointer      data)
 {
   if (GIMP_IS_PATTERN (viewable))
     {

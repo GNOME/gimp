@@ -128,11 +128,11 @@ gimp_drawable_list_item_init (GimpDrawableListItem *list_item)
   gtk_widget_show (list_item->eye_button);
 
   gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "realize",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_realize),
+                      GTK_SIGNAL_FUNC (gimp_list_item_button_realize),
                       list_item);
 
   gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "state_changed",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_state_changed),
+                      GTK_SIGNAL_FUNC (gimp_list_item_button_state_changed),
                       list_item);
 
   pixmap = gimp_pixmap_new (eye_xpm);
@@ -344,40 +344,5 @@ gimp_drawable_list_item_visibility_changed (GimpDrawable *drawable,
       gtk_signal_handler_unblock_by_func (GTK_OBJECT (toggle),
                                           gimp_drawable_list_item_eye_toggled,
                                           list_item);
-    }
-}
-
-
-/*  protected finctions  */
-
-void
-gimp_drawable_list_item_button_realize (GtkWidget *widget,
-                                        gpointer   data)
-{
-  gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
-}
-
-void
-gimp_drawable_list_item_button_state_changed (GtkWidget    *widget,
-                                              GtkStateType  previous_state,
-                                              gpointer      data)
-{
-  GtkWidget *list_item;
-
-  list_item = GTK_WIDGET (data);
-
-  if (widget->state != list_item->state)
-    {
-      switch (widget->state)
-        {
-        case GTK_STATE_NORMAL:
-        case GTK_STATE_ACTIVE:
-          /*  beware: recursion  */
-          gtk_widget_set_state (widget, list_item->state);
-          break;
-
-        default:
-          break;
-        }
     }
 }

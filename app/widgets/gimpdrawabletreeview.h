@@ -90,6 +90,9 @@ struct _GimpDrawableListView
 struct _GimpDrawableListViewClass
 {
   GimpContainerListViewClass  parent_class;
+
+  void (* set_image) (GimpDrawableListView *view,
+		      GimpImage            *gimage);
 };
 
 

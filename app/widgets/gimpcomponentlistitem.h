@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawablelistitem.h
+ * gimpcomponentlistitem.h
  * Copyright (C) 2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_LIST_ITEM_H__
-#define __GIMP_DRAWABLE_LIST_ITEM_H__
+#ifndef __GIMP_COMPONENT_LIST_ITEM_H__
+#define __GIMP_COMPONENT_LIST_ITEM_H__
 
 
 #include "gimplistitem.h"
@@ -31,29 +31,35 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-#define GIMP_TYPE_DRAWABLE_LIST_ITEM            (gimp_drawable_list_item_get_type ())
-#define GIMP_DRAWABLE_LIST_ITEM(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE_LIST_ITEM, GimpDrawableListItem))
-#define GIMP_DRAWABLE_LIST_ITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE_LIST_ITEM, GimpDrawableListItemClass))
-#define GIMP_IS_DRAWABLE_LIST_ITEM(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE_LIST_ITEM))
-#define GIMP_IS_DRAWABLE_LIST_ITEM_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE_LIST_ITEM))
+#define GIMP_TYPE_COMPONENT_LIST_ITEM            (gimp_component_list_item_get_type ())
+#define GIMP_COMPONENT_LIST_ITEM(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItem))
+#define GIMP_COMPONENT_LIST_ITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItemClass))
+#define GIMP_IS_COMPONENT_LIST_ITEM(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM))
+#define GIMP_IS_COMPONENT_LIST_ITEM_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM))
 
 
-typedef struct _GimpDrawableListItemClass  GimpDrawableListItemClass;
+typedef struct _GimpComponentListItemClass  GimpComponentListItemClass;
 
-struct _GimpDrawableListItem
+struct _GimpComponentListItem
 {
   GimpListItem  parent_instance;
+
+  ChannelType   channel;
 
   GtkWidget    *eye_button;
 };
 
-struct _GimpDrawableListItemClass
+struct _GimpComponentListItemClass
 {
   GimpListItemClass  parent_class;
 };
 
 
-GtkType   gimp_drawable_list_item_get_type (void);
+GtkType     gimp_component_list_item_get_type (void);
+
+GtkWidget * gimp_component_list_item_new      (GimpImage   *gimage,
+					       gint         preview_size,
+					       ChannelType  channel);
 
 
 #ifdef __cplusplus
@@ -61,4 +67,4 @@ GtkType   gimp_drawable_list_item_get_type (void);
 #endif /* __cplusplus */
 
 
-#endif /* __GIMP_DRAWABLE_LIST_ITEM_H__ */
+#endif /* __GIMP_COMPONENT_LIST_ITEM_H__ */

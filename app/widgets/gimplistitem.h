@@ -71,6 +71,8 @@ GtkType     gimp_list_item_get_type        (void);
 GtkWidget * gimp_list_item_new             (GimpViewable   *viewable,
                                             gint            preview_size);
 
+void        gimp_list_item_set_viewable    (GimpListItem   *list_item,
+					    GimpViewable   *viewable);
 void        gimp_list_item_set_reorderable (GimpListItem   *list_item,
                                             gboolean        reorderable,
                                             GimpContainer  *container);
@@ -78,14 +80,20 @@ void        gimp_list_item_set_reorderable (GimpListItem   *list_item,
 
 /*  protected  */
 
-gboolean    gimp_list_item_check_drag      (GimpListItem   *list_item,
-                                            GdkDragContext *context,
-                                            gint            x,
-                                            gint            y,
-                                            GimpViewable  **src_viewable,
-                                            gint           *dest_index,
-                                            GdkDragAction  *drag_action,
-                                            GimpDropType   *drop_type);
+gboolean    gimp_list_item_check_drag           (GimpListItem   *list_item,
+						 GdkDragContext *context,
+						 gint            x,
+						 gint            y,
+						 GimpViewable  **src_viewable,
+						 gint           *dest_index,
+						 GdkDragAction  *drag_action,
+						 GimpDropType   *drop_type);
+
+void        gimp_list_item_button_realize       (GtkWidget      *widget,
+						 gpointer        data);
+void        gimp_list_item_button_state_changed (GtkWidget      *widget,
+						 GtkStateType    previous_state,
+						 gpointer        data);
 
 
 #ifdef __cplusplus

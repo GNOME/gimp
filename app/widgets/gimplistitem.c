@@ -47,9 +47,6 @@ enum
 static void           gimp_list_item_class_init    (GimpListItemClass *klass);
 static void           gimp_list_item_init          (GimpListItem      *list_item);
 
-static void           gimp_list_item_set_viewable  (GimpListItem      *list_item,
-                                                    GimpViewable      *viewable);
-
 static void           gimp_list_item_real_set_viewable (GimpListItem  *list_item,
                                                         GimpViewable  *viewable);
 
@@ -290,7 +287,7 @@ gimp_list_item_new (GimpViewable  *viewable,
   return GTK_WIDGET (list_item);
 }
 
-static void
+void
 gimp_list_item_set_viewable (GimpListItem *list_item,
                              GimpViewable *viewable)
 {
@@ -435,6 +432,38 @@ gimp_list_item_check_drag (GimpListItem   *list_item,
   *drop_type    = my_drop_type;
 
   return return_val;
+}
+
+void
+gimp_list_item_button_realize (GtkWidget *widget,
+			       gpointer   data)
+{
+  gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
+}
+
+void
+gimp_list_item_button_state_changed (GtkWidget    *widget,
+				     GtkStateType  previous_state,
+				     gpointer      data)
+{
+  GtkWidget *list_item;
+
+  list_item = GTK_WIDGET (data);
+
+  if (widget->state != list_item->state)
+    {
+      switch (widget->state)
+        {
+        case GTK_STATE_NORMAL:
+        case GTK_STATE_ACTIVE:
+          /*  beware: recursion  */
+          gtk_widget_set_state (widget, list_item->state);
+          break;
+
+        default:
+          break;
+        }
+    }
 }
 
 static void

@@ -29,17 +29,20 @@
 #include "apptypes.h"
 
 #include "gdisplay.h"
+#include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
-#include "gimpdrawablelistview.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
-#include "gimplayerlistview.h"
-#include "gimplistitem.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpviewable.h"
+
+#include "gimpchannellistview.h"
+#include "gimpdrawablelistview.h"
+#include "gimplayerlistview.h"
+#include "gimplistitem.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -51,9 +54,19 @@
 #include "pixmaps/edit.xpm"
 
 
+enum
+{
+  SET_IMAGE,
+  LAST_SIGNAL
+};
+
+
 static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass);
 static void   gimp_drawable_list_view_init       (GimpDrawableListView      *view);
 static void   gimp_drawable_list_view_destroy    (GtkObject                 *object);
+
+static void   gimp_drawable_list_view_real_set_image    (GimpDrawableListView *view,
+							 GimpImage            *gimage);
 
 static gpointer gimp_drawable_list_view_insert_item     (GimpContainerView    *view,
 							 GimpViewable         *viewable,
@@ -109,6 +122,8 @@ static void   gimp_drawable_list_view_drawable_changed  (GimpImage            *g
 							 GimpDrawableListView *view);
 
 
+static guint  view_signals[LAST_SIGNAL] = { 0 };
+
 static GimpContainerListViewClass *parent_class = NULL;
 
 
@@ -148,12 +163,26 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_LIST_VIEW);
 
-  object_class->destroy = gimp_drawable_list_view_destroy;
+  view_signals[SET_IMAGE] =
+    gtk_signal_new ("set_image",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDrawableListViewClass,
+                                       set_image),
+                    gtk_marshal_NONE__OBJECT,
+                    GTK_TYPE_NONE, 1,
+                    GIMP_TYPE_OBJECT);
+
+  gtk_object_class_add_signals (object_class, view_signals, LAST_SIGNAL);
+
+  object_class->destroy               = gimp_drawable_list_view_destroy;
 
   container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
   container_view_class->activate_item = gimp_drawable_list_view_activate_item;
   container_view_class->context_item  = gimp_drawable_list_view_context_item;
+
+  klass->set_image                    = gimp_drawable_list_view_real_set_image;
 }
 
 static void
@@ -332,6 +361,10 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
     {
       list_view = gtk_type_new (GIMP_TYPE_LAYER_LIST_VIEW);
     }
+  else if (drawable_type == GIMP_TYPE_CHANNEL)
+    {
+      list_view = gtk_type_new (GIMP_TYPE_CHANNEL_LIST_VIEW);
+    }
   else
     {
       list_view = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_VIEW);
@@ -403,6 +436,17 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
 void
 gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 				   GimpImage            *gimage)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (view));
+  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_IMAGE], gimage);
+}
+
+static void
+gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
+					GimpImage            *gimage)
 {
   g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (view));

@@ -116,6 +116,13 @@ void         gimp_preview_render           (GimpPreview   *preview);
 
 /*  protected  */
 
+void         gimp_preview_calc_size        (gint           aspect_width,
+					    gint           aspect_height,
+					    gint           width,
+					    gint           height,
+					    gint          *return_width,
+					    gint          *return_height,
+					    gboolean      *scaling_up);
 void         gimp_preview_render_and_flush (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
 					    gint           channel);

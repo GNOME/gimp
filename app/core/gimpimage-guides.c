@@ -157,6 +157,8 @@ enum
 {
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
+  COMPONENT_VISIBILITY_CHANGED,
+  COMPONENT_ACTIVE_CHANGED,
   CLEAN,
   DIRTY,
   REPAINT,
@@ -231,6 +233,26 @@ gimp_image_class_init (GimpImageClass *klass)
                     gtk_signal_default_marshaller,
                     GTK_TYPE_NONE, 0);
 
+  gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
+    gtk_signal_new ("component_visibility_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       component_visibility_changed),
+                    gtk_marshal_NONE__INT,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
+
+  gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
+    gtk_signal_new ("component_active_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       component_active_changed),
+                    gtk_marshal_NONE__INT,
+                    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_INT);
+
   gimp_image_signals[CLEAN] =
     gtk_signal_new ("clean",
                     GTK_RUN_FIRST,
@@ -302,23 +324,27 @@ gimp_image_class_init (GimpImageClass *klass)
 
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 
-  object_class->destroy = gimp_image_destroy;
+  object_class->destroy               = gimp_image_destroy;
 
-  gimp_object_class->name_changed = gimp_image_name_changed;
+  gimp_object_class->name_changed     = gimp_image_name_changed;
 
-  viewable_class->invalidate_preview = gimp_image_invalidate_preview;
-  viewable_class->get_preview        = gimp_image_get_preview;
-  viewable_class->get_new_preview    = gimp_image_get_new_preview;
+  viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
+  viewable_class->get_preview         = gimp_image_get_preview;
+  viewable_class->get_new_preview     = gimp_image_get_new_preview;
 
-  klass->clean            = NULL;
-  klass->dirty            = NULL;
-  klass->repaint          = NULL;
-  klass->resize           = NULL;
-  klass->restructure      = NULL;
-  klass->colormap_changed = NULL;
-  klass->undo_event       = NULL;
-  klass->undo             = gimp_image_undo;
-  klass->redo             = gimp_image_redo;
+  klass->active_layer_changed         = NULL;
+  klass->active_channel_changed       = NULL;
+  klass->component_visibility_changed = NULL;
+  klass->component_active_changed     = NULL;
+  klass->clean                        = NULL;
+  klass->dirty                        = NULL;
+  klass->repaint                      = NULL;
+  klass->resize                       = NULL;
+  klass->restructure                  = NULL;
+  klass->colormap_changed             = NULL;
+  klass->undo_event                   = NULL;
+  klass->undo                         = gimp_image_undo;
+  klass->redo                         = gimp_image_redo;
 }
 
 
@@ -2513,23 +2539,35 @@ gimp_image_set_component_active (GimpImage   *gimage,
 				 ChannelType  type, 
 				 gboolean     active)
 {
-  /*  No sanity checking here...  */
+  gint pixel = -1;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   switch (type)
     {
-    case RED_CHANNEL:       gimage->active[RED_PIX]     = active; break;
-    case GREEN_CHANNEL:     gimage->active[GREEN_PIX]   = active; break;
-    case BLUE_CHANNEL:      gimage->active[BLUE_PIX]    = active; break;
-    case GRAY_CHANNEL:      gimage->active[GRAY_PIX]    = active; break;
-    case INDEXED_CHANNEL:   gimage->active[INDEXED_PIX] = active; break;
-    case ALPHA_CHANNEL:     gimage->active[ALPHA_PIX]   = active; break;
-    case AUXILLARY_CHANNEL: break;
+    case RED_CHANNEL:     pixel = RED_PIX;     break;
+    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
+    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
+    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
+    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
+    case ALPHA_CHANNEL:   pixel = ALPHA_PIX;  break;
+    default: break;
     }
 
-  /*  If there is an active channel and we mess with the components,
-   *  the active channel gets unset...
-   */
-  if (type != AUXILLARY_CHANNEL)
-    gimp_image_unset_active_channel (gimage);
+  if (pixel != -1 && active != gimage->active[pixel])
+    {
+      gimage->active[pixel] = active ? TRUE : FALSE;
+
+      /*  If there is an active channel and we mess with the components,
+       *  the active channel gets unset...
+       */
+      gimp_image_unset_active_channel (gimage);
+
+      gtk_signal_emit (GTK_OBJECT (gimage),
+		       gimp_image_signals[COMPONENT_ACTIVE_CHANGED],
+		       type);
+    }
 }
 
 void
@@ -2537,16 +2575,29 @@ gimp_image_set_component_visible (GimpImage   *gimage,
 				  ChannelType  type, 
 				  gboolean     visible)
 {
-  /*  No sanity checking here...  */
+  gint pixel = -1;
+
+  g_return_if_fail (gimage != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   switch (type)
     {
-    case RED_CHANNEL:     gimage->visible[RED_PIX]     = visible; break;
-    case GREEN_CHANNEL:   gimage->visible[GREEN_PIX]   = visible; break;
-    case BLUE_CHANNEL:    gimage->visible[BLUE_PIX]    = visible; break;
-    case GRAY_CHANNEL:    gimage->visible[GRAY_PIX]    = visible; break;
-    case INDEXED_CHANNEL: gimage->visible[INDEXED_PIX] = visible; break;
-    case ALPHA_CHANNEL:   gimage->visible[ALPHA_PIX]   = visible; break;
+    case RED_CHANNEL:     pixel = RED_PIX;     break;
+    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
+    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
+    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
+    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
+    case ALPHA_CHANNEL:   pixel = ALPHA_PIX;  break;
     default: break;
+    }
+
+  if (pixel != -1 && visible != gimage->visible[pixel])
+    {
+      gimage->visible[pixel] = visible ? TRUE : FALSE;
+
+      gtk_signal_emit (GTK_OBJECT (gimage),
+		       gimp_image_signals[COMPONENT_VISIBILITY_CHANGED],
+		       type);
     }
 }
 
@@ -3519,9 +3570,17 @@ gimp_image_remove_channel (GimpImage   *gimage,
 
   if (channel == gimp_image_get_active_channel (gimage))
     {
-      gimp_image_set_active_channel
-	(gimage,
-	 GIMP_CHANNEL (gimp_container_get_child_by_index (gimage->channels, 0)));
+      if (gimp_container_num_children (gimage->channels) > 0)
+	{
+	  gimp_image_set_active_channel
+	    (gimage,
+	     GIMP_CHANNEL (gimp_container_get_child_by_index (gimage->channels,
+							      0)));
+	}
+      else
+	{
+	  gimp_image_unset_active_channel (gimage);
+	}
     }
 
   gtk_object_unref (GTK_OBJECT (channel));

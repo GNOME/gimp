@@ -42,13 +42,6 @@ static void        gimp_drawable_preview_get_size     (GimpPreview *preview,
 						       gint        *width,
 						       gint        *height);
 static GtkWidget * gimp_drawable_preview_create_popup (GimpPreview *preview);
-static void        gimp_drawable_preview_calc_size    (gint         drawable_width,
-						       gint         drawable_height,
-						       gint         width,
-						       gint         height,
-						       gint        *return_width,
-						       gint        *return_height,
-						       gboolean    *scaling_up);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -115,23 +108,23 @@ gimp_drawable_preview_get_size (GimpPreview *preview,
 
   if (gimage)
     {
-      gimp_drawable_preview_calc_size (gimage->width,
-				       gimage->height,
-				       size,
-				       size,
-				       width,
-				       height,
-				       &scaling_up);
+      gimp_preview_calc_size (gimage->width,
+			      gimage->height,
+			      size,
+			      size,
+			      width,
+			      height,
+			      &scaling_up);
     }
   else
     {
-      gimp_drawable_preview_calc_size (drawable->width,
-				       drawable->height,
-				       size,
-				       size,
-				       width,
-				       height,
-				       &scaling_up);
+      gimp_preview_calc_size (drawable->width,
+			      drawable->height,
+			      size,
+			      size,
+			      width,
+			      height,
+			      &scaling_up);
     }
 }
 
@@ -160,23 +153,23 @@ gimp_drawable_preview_render (GimpPreview *preview)
       height = MAX (1, ROUND ((((gdouble) height / (gdouble) gimage->height) *
 			      (gdouble) drawable->height)));
 
-      gimp_drawable_preview_calc_size (drawable->width,
-				       drawable->height,
-				       width,
-				       height,
-				       &preview_width,
-				       &preview_height,
-				       &scaling_up);
+      gimp_preview_calc_size (drawable->width,
+			      drawable->height,
+			      width,
+			      height,
+			      &preview_width,
+			      &preview_height,
+			      &scaling_up);
     }
   else
     {
-      gimp_drawable_preview_calc_size (drawable->width,
-				       drawable->height,
-				       width,
-				       height,
-				       &preview_width,
-				       &preview_height,
-				       &scaling_up);
+      gimp_preview_calc_size (drawable->width,
+			      drawable->height,
+			      width,
+			      height,
+			      &preview_width,
+			      &preview_height,
+			      &scaling_up);
     }
 
   if (scaling_up)
@@ -263,13 +256,13 @@ gimp_drawable_preview_create_popup (GimpPreview *preview)
 
   drawable = GIMP_DRAWABLE (preview->viewable);
 
-  gimp_drawable_preview_calc_size (drawable->width,
-				   drawable->height,
-				   MIN (preview->width  * 2, 256),
-				   MIN (preview->height * 2, 256),
-				   &popup_width,
-				   &popup_height,
-				   &scaling_up);
+  gimp_preview_calc_size (drawable->width,
+			  drawable->height,
+			  MIN (preview->width  * 2, 256),
+			  MIN (preview->height * 2, 256),
+			  &popup_width,
+			  &popup_height,
+			  &scaling_up);
 
   if (scaling_up)
     {
@@ -287,35 +280,4 @@ gimp_drawable_preview_create_popup (GimpPreview *preview)
 				    0,
 				    TRUE, FALSE, FALSE);
     }
-}
-
-static void
-gimp_drawable_preview_calc_size (gint          drawable_width,
-				 gint          drawable_height,
-				 gint          width,
-				 gint          height,
-				 gint         *return_width,
-				 gint         *return_height,
-				 gboolean     *scaling_up)
-{
-  gdouble ratio;
-
-  if (drawable_width > drawable_height)
-    {
-      ratio = (gdouble) width / (gdouble) drawable_width;
-    }
-  else
-    {
-      ratio = (gdouble) height / (gdouble) drawable_height;
-    }
-
-  width  = RINT (ratio * (gdouble) drawable_width);
-  height = RINT (ratio * (gdouble) drawable_height);
-
-  if (width  < 1) width  = 1;
-  if (height < 1) height = 1;
-
-  *return_width  = width;
-  *return_height = height;
-  *scaling_up    = (ratio > 1.0);
 }

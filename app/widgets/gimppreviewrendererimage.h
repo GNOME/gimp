@@ -43,6 +43,8 @@ typedef struct _GimpImagePreviewClass  GimpImagePreviewClass;
 struct _GimpImagePreview
 {
   GimpPreview  parent_instance;
+
+  gint         channel;
 };
 
 struct _GimpImagePreviewClass

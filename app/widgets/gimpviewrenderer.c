@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -278,6 +279,7 @@ gimp_preview_destroy (GtkObject *object)
   if (preview->idle_id)
     {
       g_source_remove (preview->idle_id);
+      preview->idle_id = 0;
     }
 
   gimp_preview_popup_hide (preview);
@@ -883,6 +885,37 @@ gimp_preview_idle_paint (GimpPreview *preview)
 }
 
 void
+gimp_preview_calc_size (gint      aspect_width,
+			gint      aspect_height,
+			gint      width,
+			gint      height,
+			gint     *return_width,
+			gint     *return_height,
+			gboolean *scaling_up)
+{
+  gdouble ratio;
+
+  if (aspect_width > aspect_height)
+    {
+      ratio = (gdouble) width / (gdouble) aspect_width;
+    }
+  else
+    {
+      ratio = (gdouble) height / (gdouble) aspect_height;
+    }
+
+  width  = RINT (ratio * (gdouble) aspect_width);
+  height = RINT (ratio * (gdouble) aspect_height);
+
+  if (width  < 1) width  = 1;
+  if (height < 1) height = 1;
+
+  *return_width  = width;
+  *return_height = height;
+  *scaling_up    = (ratio > 1.0);
+}
+
+void
 gimp_preview_render_and_flush (GimpPreview *preview,
 			       TempBuf     *temp_buf,
 			       gint         channel)
@@ -967,11 +1000,8 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 
   /*  Set the border color once before rendering  */
   for (j = 0; j < width + border * 2; j++)
-    {
-      render_temp_buf[j * 3 + 0] = border_color[0];
-      render_temp_buf[j * 3 + 1] = border_color[1];
-      render_temp_buf[j * 3 + 2] = border_color[2];
-    }
+    for (b = 0; b < image_bytes; b++)
+      render_temp_buf[j * image_bytes + b] = border_color[b];
 
   for (i = 0; i < border; i++)
     gtk_preview_draw_row (GTK_PREVIEW (preview),

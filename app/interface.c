@@ -193,7 +193,7 @@ create_display_shell (GDisplay *gdisp,
   gimp_dnd_color_dest_set (gdisp->shell, gdisplay_drop_color, gdisp);
   gimp_dnd_viewable_dest_set (gdisp->shell,
 			      GIMP_TYPE_PATTERN,
-			      gdisplay_drop_viewable, gdisp);
+			      gdisplay_drop_pattern, gdisp);
 
   /*  the popup menu  */
   gdisp->ifactory = menus_get_image_factory ();
@@ -550,22 +550,6 @@ create_display_shell (GDisplay *gdisp,
    */
   gtk_widget_realize (gdisp->cursor_label);
   gdisplay_resize_cursor_label (gdisp);
-
-  /*
-  {
-    GtkWidget *hbox;
-    GtkWidget *preview;
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    preview = gimp_preview_new (GIMP_VIEWABLE (gdisp->gimage->layers->data));
-    gtk_widget_set_usize (preview, 64, 64);
-    gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-    gtk_widget_show (preview);
-  }
-  */
 
   gtk_widget_show (main_vbox);
   gtk_widget_show (gdisp->shell);

@@ -58,7 +58,7 @@ gboolean   gdisplay_drag_drop           (GtkWidget      *widget,
 void       gdisplay_drop_color          (GtkWidget      *widget,
 					 const GimpRGB  *color,
 					 gpointer        data);
-void       gdisplay_drop_viewable       (GtkWidget      *widget,
+void       gdisplay_drop_pattern        (GtkWidget      *widget,
 					 GimpViewable   *viewable,
 					 gpointer        data);
 

@@ -158,11 +158,11 @@ gimp_layer_list_item_init (GimpLayerListItem *list_item)
   gtk_widget_show (list_item->linked_button);
 
   gtk_signal_connect (GTK_OBJECT (list_item->linked_button), "realize",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_realize),
+                      GTK_SIGNAL_FUNC (gimp_list_item_button_realize),
                       list_item);
 
   gtk_signal_connect (GTK_OBJECT (list_item->linked_button), "state_changed",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_button_state_changed),
+                      GTK_SIGNAL_FUNC (gimp_list_item_button_state_changed),
                       list_item);
 
   pixmap = gimp_pixmap_new (linked_xpm);
@@ -555,12 +555,21 @@ gimp_layer_list_item_mask_extended_clicked (GtkWidget     *widget,
 					    guint          state,
 					    GimpLayerMask *mask)
 {
+  gboolean flush = FALSE;
+
   if (state & GDK_MOD1_MASK)
     {
       gimp_layer_mask_set_show (mask, ! gimp_layer_mask_get_show (mask));
+
+      flush = TRUE;
     }
   else if (state & GDK_CONTROL_MASK)
     {
       gimp_layer_mask_set_apply (mask, ! gimp_layer_mask_get_apply (mask));
+
+      flush = TRUE;
     }
+
+  if (flush)
+    gdisplays_flush ();
 }

@@ -1,3 +1,42 @@
+2001-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: don't #include "gui/color-select.h"
+
+	* app/disp_callbacks.[ch]: renamed gdisplay_drop_viewable() to
+	gdisplay_drop_pattern().
+
+	* app/gimpimage.[ch]: added new signals
+	"component_visibility_changed" and "component_active_changed" and
+	emit them in the resp. accessors.
+
+	* app/interface.c: removed old GimpPreview test code.
+
+	* app/widgets/Makefile.am
+	* app/apptypes.h
+	* app/widgets/gimpchannellistview.[ch]
+	* app/widgets/gimpcomponentlistitem.[ch]: new (unfinished) widgets.
+
+	* app/widgets/gimpdockbook.c: switch to the right-clicked notebook
+	page before showing the menu.
+
+	* app/widgets/gimpdrawablelistitem.[ch]: removed the protected
+	functions which make the toggle buttons look nicer...
+
+	* app/widgets/gimplistitem.[ch]: ...and added them here.
+
+	* app/widgets/gimpdrawablelistview.[ch]: virtualized set_image()
+	so subclasses can properly (dis)connect on image change.
+
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimpimagepreview.[ch]: removed the calc_size()
+	functions which calculate the preview's aspect ratio...
+
+	* app/widgets/gimppreview.[ch]: ...and added then here as
+	protected functions.
+
+	* app/widgets/gimplayerlistitem.c: flush displays after changing
+	the layer mask's "apply" or "show" state.
+
 2001-05-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpimage.h: removed prototype of function which doesn't

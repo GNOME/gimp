@@ -148,24 +148,28 @@ struct _GimpImageClass
 {
   GimpViewableClass  parent_class;
 
-  void (* active_layer_changed)   (GimpImage *gimage);
-  void (* active_channel_changed) (GimpImage *gimage);
-  void (* clean)                  (GimpImage *gimage);
-  void (* dirty)                  (GimpImage *gimage);
-  void (* repaint)                (GimpImage *gimage,
-				   gint       x1,
-				   gint       y1,
-				   gint       x2,
-				   gint       y2);
-  void (* resize)                 (GimpImage *gimage);
-  void (* restructure)            (GimpImage *gimage);
-  void (* colormap_changed)       (GimpImage *gimage,
-				   gint       color_index);
-  void (* undo_event)             (GimpImage *gimage,
-				   gint       event);
+  void (* active_layer_changed)         (GimpImage   *gimage);
+  void (* active_channel_changed)       (GimpImage   *gimage);
+  void (* component_visibility_changed) (GimpImage   *gimage,
+					 ChannelType  channel);
+  void (* component_active_changed)     (GimpImage   *gimage,
+					 ChannelType  channel);
+  void (* clean)                        (GimpImage   *gimage);
+  void (* dirty)                        (GimpImage   *gimage);
+  void (* repaint)                      (GimpImage   *gimage,
+					 gint         x1,
+					 gint         y1,
+					 gint         x2,
+					 gint         y2);
+  void (* resize)                       (GimpImage   *gimage);
+  void (* restructure)                  (GimpImage   *gimage);
+  void (* colormap_changed)             (GimpImage   *gimage,
+					 gint         color_index);
+  void (* undo_event)                   (GimpImage   *gimage,
+					 gint         event);
 
-  void (* undo)                   (GimpImage *gimage);
-  void (* redo)                   (GimpImage *gimage);
+  void (* undo)                         (GimpImage   *gimage);
+  void (* redo)                         (GimpImage   *gimage);
 };
 
 

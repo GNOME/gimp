@@ -55,7 +55,6 @@
 #include "tools/levels.h"
 
 #include "gui/color-notebook.h"
-#include "gui/color-select.h"
 #include "gui/file-open-dialog.h"
 #include "gui/gui.h"
 #include "gui/splash.h"

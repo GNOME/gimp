@@ -118,10 +118,12 @@ typedef struct _GimpContainerGridView GimpContainerGridView;
 typedef struct _GimpDataFactoryView   GimpDataFactoryView;
 typedef struct _GimpDrawableListView  GimpDrawableListView;
 typedef struct _GimpLayerListView     GimpLayerListView;
+typedef struct _GimpChannelListView   GimpChannelListView;
 
 typedef struct _GimpListItem          GimpListItem;
 typedef struct _GimpDrawableListItem  GimpDrawableListItem;
 typedef struct _GimpLayerListItem     GimpLayerListItem;
+typedef struct _GimpComponentListItem GimpComponentListItem;
 
 typedef struct _GimpDock              GimpDock;
 typedef struct _GimpImageDock         GimpImageDock;
