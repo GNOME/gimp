@@ -1,5 +1,9 @@
 2001-06-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/dbbrowser/dbbrowser_utils.c: subtle dialog layout tweaks.
+
+2001-06-26  Sven Neumann  <sven@gimp.org>
+
 	* gimptool.1.in: fixed gimptool manpage which was still refering to 
 	directories we used to use with GIMP version 1.0.
 	

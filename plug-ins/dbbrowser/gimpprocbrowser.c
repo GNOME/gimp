@@ -380,7 +380,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   if (dbbrowser->selected_nparams) 
     {
       label = gtk_label_new (_("In:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+(dbbrowser->selected_nparams), 
 			GTK_FILL, GTK_FILL, 3, 0);
@@ -427,7 +427,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   if (dbbrowser->selected_nreturn_vals)
     {
       label = gtk_label_new (_("Out:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+(dbbrowser->selected_nreturn_vals), 
 			GTK_FILL, GTK_FILL, 3, 0);
@@ -477,7 +477,7 @@ dialog_select (dbbrowser_t *dbbrowser,
       (strlen (dbbrowser->selected_proc_help) > 1))
     {
       label = gtk_label_new (_("Help:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+1, 
 			GTK_FILL, GTK_FILL, 3, 0);
@@ -487,7 +487,8 @@ dialog_select (dbbrowser_t *dbbrowser,
       gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
       gtk_table_set_col_spacing (GTK_TABLE (help), 0, 2);
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), help,
-			1, 4, row, row+1, GTK_FILL, GTK_FILL, 3, 0);
+			1, 4, row, row+1, 
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 0);
       gtk_widget_show (help);
       row++;
       
@@ -784,6 +785,7 @@ GParamType2char (GimpPDBArgType t)
     case GIMP_PDB_PARASITE: return "PARASITE";
     case GIMP_PDB_STATUS: return "STATUS";
     case GIMP_PDB_END: return "END";
-    default: return "UNKNOWN?";
     }
+  
+  return "UNKNOWN";
 }
