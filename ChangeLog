@@ -1,5 +1,37 @@
 2003-07-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpconfig-params.[ch]: added "gboolean allow_percent"
+	to gimp_param_spec_unit() and to the GIMP_CONFIG_INSTALL_PROP_UNIT()
+	macro. Changed value validation accordingly.
+
+	* app/config/gimpconfig-types.c (string_to_unit): parse "percent"
+	correctly.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_unit_menu_new): show
+	the "Percent" menu entry if the param_spec allows percent.
+
+	* app/config/gimpcoreconfig.c
+	* app/core/gimpgrid.c
+	* app/core/gimptemplate.c
+	* app/text/gimptext.c: pass FALSE to disallow percent.
+
+	* app/paint/gimppaintoptions.c
+	* app/tools/gimpselectionoptions.c: pass TRUE. Brings back the
+	percent feature for fade_length, gradient_length and fixed_size
+	rect/ellipse select.
+
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptransformoptions.c: don't call the the reset()
+	functions from the GUI constructors (and reset the options just
+	deserialized from disk). Instead, added set_defaults() functions
+	which do everything the old reset() functions did (except
+	upchaining) and call set_defaults() from reset() and from the GUI
+	constructors.
+
+2003-07-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdevicestatus.c (gimp_device_status_init): 
 	disconnect the GimpDeviceInfo::changed() signal handlers when
 	the dialog goes away. Fixes bug #117609.

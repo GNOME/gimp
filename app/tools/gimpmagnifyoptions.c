@@ -61,6 +61,7 @@ static void   gimp_magnify_options_get_property (GObject         *object,
                                                  GParamSpec      *pspec);
 
 static void   gimp_magnify_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_magnify_options_set_defaults (GimpToolOptions *tool_options);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -94,7 +95,7 @@ gimp_magnify_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 {
   GObjectClass         *object_class;
@@ -187,18 +188,22 @@ gimp_magnify_options_get_property (GObject    *object,
 static void
 gimp_magnify_options_reset (GimpToolOptions *tool_options)
 {
+  gimp_magnify_options_set_defaults (tool_options);
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+}
+
+static void
+gimp_magnify_options_set_defaults (GimpToolOptions *tool_options)
+{
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "allow-resize");
 
   if (pspec)
-    {
-      G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
-        GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
-    }
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+    G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
+      GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom;
 }
 
 GtkWidget *
@@ -243,7 +248,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
                              1.0, 3.0, 1,
                              FALSE, 0.0, 0.0);
 
-  gimp_magnify_options_reset (tool_options);
+  gimp_magnify_options_set_defaults (tool_options);
 
   return vbox;
 }

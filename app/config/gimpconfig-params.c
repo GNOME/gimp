@@ -65,11 +65,11 @@ gimp_param_color_get_type (void)
 
   if (!spec_type)
     {
-      static const GTypeInfo type_info = 
+      static const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
-        NULL, NULL, 
-        (GClassInitFunc) gimp_param_color_class_init, 
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_color_class_init,
         NULL, NULL,
         sizeof (GimpParamSpecColor),
         0,
@@ -77,10 +77,10 @@ gimp_param_color_get_type (void)
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_BOXED,
-                                          "GimpParamColor", 
+                                          "GimpParamColor",
                                           &type_info, 0);
     }
-  
+
   return spec_type;
 }
 
@@ -221,11 +221,11 @@ gimp_param_matrix2_get_type (void)
 
   if (!spec_type)
     {
-      static const GTypeInfo type_info = 
+      static const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
-        NULL, NULL, 
-        (GClassInitFunc) gimp_param_matrix2_class_init, 
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_matrix2_class_init,
         NULL, NULL,
         sizeof (GimpParamSpecMatrix2),
         0,
@@ -233,10 +233,10 @@ gimp_param_matrix2_get_type (void)
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_BOXED,
-                                          "GimpParamMatrix2", 
+                                          "GimpParamMatrix2",
                                           &type_info, 0);
     }
-  
+
   return spec_type;
 }
 
@@ -325,21 +325,21 @@ gimp_param_memsize_get_type (void)
 
   if (!spec_type)
     {
-      static const GTypeInfo type_info = 
+      static const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
-        NULL, NULL, 
-        (GClassInitFunc) gimp_param_memsize_class_init, 
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_memsize_class_init,
         NULL, NULL,
         sizeof (GParamSpecULong),
         0, NULL, NULL
       };
 
-      spec_type = g_type_register_static (G_TYPE_PARAM_ULONG, 
-                                          "GimpParamMemsize", 
+      spec_type = g_type_register_static (G_TYPE_PARAM_ULONG,
+                                          "GimpParamMemsize",
                                           &type_info, 0);
     }
-  
+
   return spec_type;
 }
 
@@ -362,11 +362,11 @@ gimp_param_spec_memsize (const gchar *name,
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_MEMSIZE,
                                  name, nick, blurb, flags);
-  
+
   pspec->minimum       = minimum;
   pspec->maximum       = maximum;
   pspec->default_value = default_value;
-  
+
   return G_PARAM_SPEC (pspec);
 }
 
@@ -395,21 +395,21 @@ gimp_param_path_get_type (void)
 
   if (!spec_type)
     {
-      static const GTypeInfo type_info = 
+      static const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
-        NULL, NULL, 
-        (GClassInitFunc) gimp_param_path_class_init, 
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_path_class_init,
         NULL, NULL,
         sizeof (GimpParamSpecPath),
         0, NULL, NULL
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_STRING,
-                                          "GimpParamPath", 
+                                          "GimpParamPath",
                                           &type_info, 0);
     }
-  
+
   return spec_type;
 }
 
@@ -431,8 +431,8 @@ gimp_param_spec_path (const gchar        *name,
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATH,
                                  name, nick, blurb, flags);
-  
-  
+
+
   pspec->default_value = default_value;
 
   GIMP_PARAM_SPEC_PATH (pspec)->type = type;
@@ -453,6 +453,17 @@ gimp_param_spec_path_type (GParamSpec *pspec)
  * GIMP_TYPE_PARAM_UNIT
  */
 
+#define GIMP_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UNIT, GimpParamSpecUnit))
+
+typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
+
+struct _GimpParamSpecUnit
+{
+  GParamSpecInt parent_instance;
+
+  gboolean      allow_percent;
+};
+
 static void      gimp_param_unit_class_init     (GParamSpecClass *class);
 static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
                                                  GValue          *value);
@@ -464,21 +475,21 @@ gimp_param_unit_get_type (void)
 
   if (!spec_type)
     {
-      static const GTypeInfo type_info = 
+      static const GTypeInfo type_info =
       {
         sizeof (GParamSpecClass),
-        NULL, NULL, 
-        (GClassInitFunc) gimp_param_unit_class_init, 
         NULL, NULL,
-        sizeof (GParamSpecInt),
+        (GClassInitFunc) gimp_param_unit_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecUnit),
         0, NULL, NULL
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_INT,
-                                          "GimpParamUnit", 
+                                          "GimpParamUnit",
                                           &type_info, 0);
     }
-  
+
   return spec_type;
 }
 
@@ -493,13 +504,21 @@ static gboolean
 gimp_param_unit_value_validate (GParamSpec *pspec,
                                 GValue     *value)
 {
-  GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
-  gint oval = value->data[0].v_int;
-  
-  value->data[0].v_int = CLAMP (value->data[0].v_int, 
-                                ispec->minimum, 
-                                gimp_unit_get_number_of_units () - 1);
-  
+  GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
+  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  gint               oval  = value->data[0].v_int;
+
+  if (uspec->allow_percent && value->data[0].v_int == GIMP_UNIT_PERCENT)
+    {
+      value->data[0].v_int = value->data[0].v_int;
+    }
+  else
+    {
+      value->data[0].v_int = CLAMP (value->data[0].v_int,
+                                    ispec->minimum,
+                                    gimp_unit_get_number_of_units () - 1);
+    }
+
   return value->data[0].v_int != oval;
 }
 
@@ -508,17 +527,23 @@ gimp_param_spec_unit (const gchar *name,
                       const gchar *nick,
                       const gchar *blurb,
                       gboolean     allow_pixels,
+                      gboolean     allow_percent,
                       GimpUnit     default_value,
                       GParamFlags  flags)
 {
-  GParamSpecInt *pspec;
+  GimpParamSpecUnit *pspec;
+  GParamSpecInt     *ispec;
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_UNIT,
                                  name, nick, blurb, flags);
 
-  pspec->default_value = default_value;
-  pspec->minimum       = allow_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
-  pspec->maximum       = G_MAXINT;
+  ispec = G_PARAM_SPEC_INT (pspec);
+
+  ispec->default_value = default_value;
+  ispec->minimum       = allow_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
+  ispec->maximum       = GIMP_UNIT_PERCENT - 1;
+
+  pspec->allow_percent = allow_percent;
 
   return G_PARAM_SPEC (pspec);
 }

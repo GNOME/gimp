@@ -2275,6 +2275,7 @@ gimp_prop_unit_menu_new (GObject     *config,
   GimpUnit    unit;
   GValue      value = { 0, };
   gboolean    show_pixels;
+  gboolean    show_percent;
 
   param_spec = check_param_spec (config, property_name,
                                  GIMP_TYPE_PARAM_UNIT, G_STRLOC);
@@ -2282,9 +2283,12 @@ gimp_prop_unit_menu_new (GObject     *config,
     return NULL;
 
   g_value_init (&value, param_spec->value_type);
-  g_value_set_int (&value, GIMP_UNIT_PIXEL);
 
+  g_value_set_int (&value, GIMP_UNIT_PIXEL);
   show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
+
+  g_value_set_int (&value, GIMP_UNIT_PERCENT);
+  show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
 
   g_value_unset (&value);
 
@@ -2292,7 +2296,7 @@ gimp_prop_unit_menu_new (GObject     *config,
                 property_name, &unit,
                 NULL);
 
-  menu = gimp_unit_menu_new (unit_format, unit, show_pixels, FALSE, TRUE);
+  menu = gimp_unit_menu_new (unit_format, unit, show_pixels, show_percent, TRUE);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 

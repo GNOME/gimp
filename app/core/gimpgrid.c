@@ -84,10 +84,10 @@ gimp_grid_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
-      static const GInterfaceInfo grid_iface_info = 
+      static const GInterfaceInfo grid_iface_info =
       {
         NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */ 
+        NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
 
@@ -130,7 +130,7 @@ gimp_grid_class_init (GimpGridClass *klass)
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_SPACING_UNIT,
 				 "spacing-unit", NULL,
-				 FALSE, GIMP_UNIT_INCH,
+				 FALSE, FALSE, GIMP_UNIT_INCH,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XOFFSET,
 				   "xoffset", NULL,
@@ -144,7 +144,7 @@ gimp_grid_class_init (GimpGridClass *klass)
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_OFFSET_UNIT,
 				 "offset-unit", NULL,
-				 FALSE, GIMP_UNIT_INCH,
+				 FALSE, FALSE, GIMP_UNIT_INCH,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FGCOLOR,
 				  "fgcolor", NULL,

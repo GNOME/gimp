@@ -124,6 +124,7 @@ GParamSpec * gimp_param_spec_unit         (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            gboolean      allow_pixels,
+                                           gboolean      allow_percent,
                                            GimpUnit      default_value,
                                            GParamFlags   flags);
 
@@ -191,10 +192,10 @@ GParamSpec * gimp_param_spec_unit         (const gchar  *name,
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id,\
-                                      name, blurb, pixels, default, flags)\
+                                      name, blurb, pixels, percent, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, NULL, blurb,\
-                                   pixels, default,\
+                                   pixels, percent, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
 

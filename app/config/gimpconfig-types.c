@@ -88,7 +88,7 @@ gimp_memsize_get_type (void)
     {
       static const GTypeInfo type_info = { 0, };
 
-      memsize_type = g_type_register_static (G_TYPE_ULONG, "GimpMemsize", 
+      memsize_type = g_type_register_static (G_TYPE_ULONG, "GimpMemsize",
                                              &type_info, 0);
 
       g_value_register_transform_func (memsize_type, G_TYPE_STRING,
@@ -96,7 +96,7 @@ gimp_memsize_get_type (void)
       g_value_register_transform_func (G_TYPE_STRING, memsize_type,
                                        string_to_memsize);
     }
-  
+
   return memsize_type;
 }
 
@@ -118,7 +118,7 @@ gimp_memsize_set_from_string (GValue      *value,
   if (end && *end)
     {
       guint shift;
-      
+
       switch (g_ascii_tolower (*end))
         {
         case 'b':
@@ -141,16 +141,16 @@ gimp_memsize_set_from_string (GValue      *value,
       if (shift)
         {
           gulong limit = G_MAXULONG >> (shift);
-      
+
           if (size != (size & limit))
             return FALSE;
 
           size <<= shift;
         }
     }
-  
+
   g_value_set_ulong (value, size);
-  
+
   return TRUE;
 }
 
@@ -163,10 +163,10 @@ gimp_path_get_type (void)
     {
       static const GTypeInfo type_info = { 0, };
 
-      path_type = g_type_register_static (G_TYPE_STRING, "GimpPath", 
+      path_type = g_type_register_static (G_TYPE_STRING, "GimpPath",
                                           &type_info, 0);
     }
-  
+
   return path_type;
 }
 
@@ -179,7 +179,7 @@ gimp_unit_get_type (void)
     {
       static const GTypeInfo type_info = { 0, };
 
-      unit_type = g_type_register_static (G_TYPE_INT, "GimpUnit", 
+      unit_type = g_type_register_static (G_TYPE_INT, "GimpUnit",
                                           &type_info, 0);
 
       g_value_register_transform_func (unit_type, G_TYPE_STRING,
@@ -187,7 +187,7 @@ gimp_unit_get_type (void)
       g_value_register_transform_func (G_TYPE_STRING, unit_type,
                                        string_to_unit);
     }
-  
+
   return unit_type;
 }
 
@@ -279,8 +279,13 @@ string_to_unit (const GValue *src_value,
       break;
 
   if (i == num_units)
-    goto error;
-    
+    {
+      if (strcmp (str, gimp_unit_get_identifier (GIMP_UNIT_PERCENT)) == 0)
+        i = GIMP_UNIT_PERCENT;
+      else
+        goto error;
+    }
+
   g_value_set_int (dest_value, i);
   return;
 

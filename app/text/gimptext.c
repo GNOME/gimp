@@ -155,7 +155,7 @@ gimp_text_class_init (GimpTextClass *klass)
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FONT_SIZE_UNIT,
 				 "font-size-unit", NULL,
-				 TRUE, GIMP_UNIT_PIXEL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting",
@@ -222,7 +222,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
                                  "box-unit", NULL,
-                                 TRUE, GIMP_UNIT_PIXEL,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,

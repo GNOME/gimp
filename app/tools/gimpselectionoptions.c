@@ -75,7 +75,7 @@ static void   gimp_selection_options_get_property (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);static void   gimp_selection_options_set_defaults (GimpToolOptions *tool_options);
 
 static void   selection_options_fixed_mode_notify (GimpSelectionOptions *options,
                                                    GParamSpec           *pspec,
@@ -113,7 +113,7 @@ gimp_selection_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 {
   GObjectClass         *object_class;
@@ -191,7 +191,7 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FIXED_UNIT,
                                  "fixed-unit", NULL,
-                                 TRUE, GIMP_UNIT_PIXEL,
+                                 TRUE, TRUE, GIMP_UNIT_PIXEL,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
@@ -338,32 +338,29 @@ gimp_selection_options_get_property (GObject    *object,
 static void
 gimp_selection_options_reset (GimpToolOptions *tool_options)
 {
-  GimpSelectionOptions *options;
-  GParamSpec           *pspec;
+  gimp_selection_options_set_defaults (tool_options);
 
-  options = GIMP_SELECTION_OPTIONS (tool_options);
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+}
+
+static void
+gimp_selection_options_set_defaults (GimpToolOptions *tool_options)
+{
+  GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "antialias");
 
   if (pspec)
-    {
-      if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
-        G_PARAM_SPEC_BOOLEAN (pspec)->default_value = FALSE;
-      else
-        G_PARAM_SPEC_BOOLEAN (pspec)->default_value = TRUE;
-    }
+    G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
+      (tool_options->tool_info->tool_type != GIMP_TYPE_RECT_SELECT_TOOL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "threshold");
 
   if (pspec)
-    {
-      G_PARAM_SPEC_DOUBLE (pspec)->default_value =
-        GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
-    }
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+    G_PARAM_SPEC_DOUBLE (pspec)->default_value =
+      GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
 }
 
 GtkWidget *
@@ -432,7 +429,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
     gtk_widget_set_sensitive (table, options->feather);
     g_object_set_data (G_OBJECT (button), "set_sensitive", table);
- 
+
     /*  the feather radius scale  */
     gimp_prop_scale_entry_new (config, "feather-radius",
                                GTK_TABLE (table), 0, 0,
@@ -588,7 +585,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (table);
     }
 
-  gimp_selection_options_reset (tool_options);
+  gimp_selection_options_set_defaults (tool_options);
 
   return vbox;
 }

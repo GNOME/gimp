@@ -55,16 +55,17 @@ enum
 static void   gimp_bucket_fill_options_init       (GimpBucketFillOptions      *options);
 static void   gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *options_class);
 
-static void   gimp_bucket_fill_options_set_property (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
-static void   gimp_bucket_fill_options_get_property (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec);
+static void   gimp_bucket_fill_options_set_property (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
+static void   gimp_bucket_fill_options_get_property (GObject         *object,
+                                                     guint            property_id,
+                                                     GValue          *value,
+                                                     GParamSpec      *pspec);
 
-static void   gimp_bucket_fill_options_reset  (GimpToolOptions       *tool_options);
+static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -98,7 +99,7 @@ gimp_bucket_fill_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
   GObjectClass         *object_class;
@@ -206,6 +207,14 @@ gimp_bucket_fill_options_get_property (GObject    *object,
 static void
 gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
 {
+  gimp_bucket_fill_options_set_defaults (tool_options);
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+}
+
+static void
+gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options)
+{
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
@@ -214,8 +223,6 @@ gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
       GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 GtkWidget *
@@ -274,7 +281,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                              1.0, 16.0, 1,
                              FALSE, 0.0, 0.0);
 
-  gimp_bucket_fill_options_reset (tool_options);
+  gimp_bucket_fill_options_set_defaults (tool_options);
 
   return vbox;
 }

@@ -153,7 +153,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
                                  NULL,
-                                 FALSE, GIMP_UNIT_INCH,
+                                 FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XRESOLUTION,
@@ -171,7 +171,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
                                  NULL,
-                                 FALSE, GIMP_UNIT_INCH,
+                                 FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_IMAGE_TYPE,

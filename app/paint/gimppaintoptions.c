@@ -173,7 +173,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
                                  "fade-unit", NULL,
-                                 TRUE, DEFAULT_FADE_UNIT,
+                                 TRUE, TRUE, DEFAULT_FADE_UNIT,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_GRADIENT,
@@ -185,7 +185,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_GRADIENT_UNIT,
                                  "gradient-unit", NULL,
-                                 TRUE, DEFAULT_GRADIENT_UNIT,
+                                 TRUE, TRUE, DEFAULT_GRADIENT_UNIT,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
                                  "gradient-type", NULL,

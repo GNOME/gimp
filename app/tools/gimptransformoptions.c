@@ -68,7 +68,7 @@ static void   gimp_transform_options_get_property (GObject         *object,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
 
-static void   gimp_transform_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_transform_options_reset        (GimpToolOptions *tool_options);static void   gimp_transform_options_set_defaults (GimpToolOptions *tool_options);
 
 static void   gimp_transform_options_grid_notify  (GimpTransformOptions *options,
                                                    GParamSpec           *pspec,
@@ -106,7 +106,7 @@ gimp_transform_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
   GObjectClass         *object_class;
@@ -252,21 +252,22 @@ gimp_transform_options_get_property (GObject    *object,
 static void
 gimp_transform_options_reset (GimpToolOptions *tool_options)
 {
-  GimpTransformOptions *options;
-  GParamSpec           *pspec;
+  gimp_transform_options_set_defaults (tool_options);
 
-  options = GIMP_TRANSFORM_OPTIONS (tool_options);
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+}
+
+static void
+gimp_transform_options_set_defaults (GimpToolOptions *tool_options)
+{
+  GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
                                         "interpolation");
 
   if (pspec)
-    {
-      G_PARAM_SPEC_ENUM (pspec)->default_value =
-        tool_options->tool_info->gimp->config->interpolation_type;
-    }
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+    G_PARAM_SPEC_ENUM (pspec)->default_value =
+      tool_options->tool_info->gimp->config->interpolation_type;
 }
 
 GtkWidget *
@@ -405,7 +406,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         }
     }
 
-  gimp_transform_options_reset (tool_options);
+  gimp_transform_options_set_defaults (tool_options);
 
   return vbox;
 }
