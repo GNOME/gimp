@@ -166,7 +166,15 @@ gimp_clipboard_init (Gimp *gimp)
 void
 gimp_clipboard_exit (Gimp *gimp)
 {
+  GtkClipboard *clipboard;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard && gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
+    gtk_clipboard_store (clipboard);
 
   g_signal_handlers_disconnect_by_func (gimp,
                                         G_CALLBACK (gimp_clipboard_buffer_changed),
@@ -334,9 +342,12 @@ gimp_clipboard_set_buffer (Gimp       *gimp,
       gtk_clipboard_set_with_owner (clipboard,
                                     gimp_clip->target_entries,
                                     gimp_clip->n_target_entries,
-                                    (GtkClipboardGetFunc)   gimp_clipboard_send_buffer,
+                                    (GtkClipboardGetFunc) gimp_clipboard_send_buffer,
                                     (GtkClipboardClearFunc) NULL,
                                     G_OBJECT (gimp));
+
+      /*  mark the first entry (PNG) as suitable for storing  */
+      gtk_clipboard_set_can_store (clipboard, gimp_clip->target_entries, 1);
     }
   else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
@@ -373,9 +384,9 @@ gimp_clipboard_wait_for_targets (gint *n_targets)
               gint i;
 
               for (i = 0; i < *n_targets; i++)
-                g_print ("offered type: %s\n", gdk_atom_name (targets[i]));
+                g_printerr ("offered type: %s\n", gdk_atom_name (targets[i]));
 
-              g_print ("\n");
+              g_printerr ("\n");
 
               return targets;
             }
@@ -405,8 +416,8 @@ gimp_clipboard_wait_for_buffer (Gimp *gimp)
           gchar           **mime_types;
           gchar           **type;
 
-          g_print ("checking pixbuf format '%s'\n",
-                   gdk_pixbuf_format_get_name (format));
+          g_printerr ("checking pixbuf format '%s'\n",
+                      gdk_pixbuf_format_get_name (format));
 
           mime_types = gdk_pixbuf_format_get_mime_types (format);
 
@@ -416,7 +427,7 @@ gimp_clipboard_wait_for_buffer (Gimp *gimp)
               GdkAtom  atom      = gdk_atom_intern (mime_type, FALSE);
               gint     i;
 
-              g_print (" - checking mime type '%s'\n", mime_type);
+              g_printerr (" - checking mime type '%s'\n", mime_type);
 
               for (i = 0; i < n_targets; i++)
                 {
@@ -464,9 +475,9 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
       GdkAtom atom = gdk_atom_intern (gimp_clip->target_entries[info].target,
                                       FALSE);
 
-      g_print ("sending pixbuf data as '%s' (%s)\n",
-               gimp_clip->target_entries[info].target,
-               gimp_clip->savers[info]);
+      g_printerr ("sending pixbuf data as '%s' (%s)\n",
+                  gimp_clip->target_entries[info].target,
+                  gimp_clip->savers[info]);
 
       gimp_selection_data_set_pixbuf (selection_data, atom, pixbuf,
                                       gimp_clip->savers[info]);

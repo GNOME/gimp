@@ -1,3 +1,8 @@
+2005-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpclipboard.c: allow to store the clipboard content
+	in a clipboard manager when GIMP exits.
+
 2005-03-28  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/resize-dialog.c (resize_dialog_new): handle
