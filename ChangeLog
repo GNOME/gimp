@@ -1,4 +1,18 @@
 2001-11-19  Daniel Egger  <degger@fhm.edu>
+
+	* app/paint-funcs/paint-funcs.c
+	* app/paint-funcs/paint-funcs-generic.h 
+	* app/paint-funcs/paint-funcs.h: 
+	- Statified a few functions so they can be inlined.
+	- Simplified function calls.
+	- Unsignified variables and parameters where possible.
+	- Reduced lookuptable size for add_pixels from 256*256*4 bytes
+	  to 2*256-1 bytes and O(n*n) function in paint_funcs_setup
+	  to O(n). Should reduce memory consumption by almost 1/4 Mb.
+	
+	This needs much more cleanup....
+	
+2001-11-19  Daniel Egger  <degger@fhm.edu>
 	
 	* app/paint-funcs/paint-funcs-mmx.h: New file. Added glue code
 	for the assembly MMX functions.

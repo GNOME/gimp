@@ -236,92 +236,6 @@ void  combine_inten_a_and_channel_selection_pixels(const unsigned char *src,
 					         int                  length,
 					         int                  bytes);
 
-/*  paint "behind" the existing pixel row.
- *  This is similar in appearance to painting on a layer below
- *  the existing pixels.
- */
-void  behind_inten_pixels                    (const unsigned char *src1,
-					      const unsigned char *src2,
-					      unsigned char       *dest,
-					      const unsigned char *mask,
-					      int                  opacity,
-					      const int           *affect,
-					      int                  length,
-					      int                  bytes1,
-					      int                  bytes2,
-					      int                  has_alpha1,
-					      int                  has_alpha2);
-
-/*  paint "behind" the existing pixel row (for indexed images).
- *  This is similar in appearance to painting on a layer below
- *  the existing pixels.
- */
-void  behind_indexed_pixels                (const unsigned char *src1,
-					    const unsigned char *src2,
-					    unsigned char       *dest,
-					    const unsigned char *mask,
-					    int                  opacity,
-					    const int           *affect,
-					    int                  length,
-					    int                  bytes1,
-					    int                  bytes2,
-					    int                  has_alpha1,
-					    int                  has_alpha2);
-
-/*  replace the contents of one pixel row with the other
- *  The operation is still bounded by mask/opacity constraints
- */
-void  replace_inten_pixels                (const unsigned char *src1,
-					   const unsigned char *src2,
-					   unsigned char       *dest,
-					   const unsigned char *mask,
-					   int                  opacity,
-					   const int           *affect,
-					   int                  length,
-					   int                  bytes1,
-					   int                  bytes2,
-					   int                  has_alpha1,
-					   int                  has_alpha2);
-
-/*  replace the contents of one pixel row with the other
- *  The operation is still bounded by mask/opacity constraints
- */
-void  replace_indexed_pixels                (const unsigned char *src1,
-					     const unsigned char *src2,
-					     unsigned char       *dest,
-					     const unsigned char *mask,
-					     int                  opacity,
-					     const int           *affect,
-					     int                  length,
-					     int                  bytes1,
-					     int                  bytes2,
-					     int                  has_alpha1,
-					     int                  has_alpha2);
-
-/*  apply source 2 to source 1, but in a non-additive way,
- *  multiplying alpha channels  (works for intensity)
- */
-void  erase_inten_pixels                  (const unsigned char *src1,
-					   const unsigned char *src2,
-					   unsigned char       *dest,
-					   const unsigned char *mask,
-					   int                  opacity,
-					   const int           *affect,
-					   int                  length,
-					   int                  bytes);
-
-/*  apply source 2 to source 1, but in a non-additive way,
- *  multiplying alpha channels  (works for indexed)
- */
-void  erase_indexed_pixels                (const unsigned char *src1,
-					   const unsigned char *src2,
-					   unsigned char       *dest,
-					   const unsigned char *mask,
-					   int                  opacity,
-					   const int           *affect,
-					   int                  length,
-					   int                  bytes);
-
 /*  extract information from intensity pixels based on
  *  a mask.
  */
@@ -429,38 +343,44 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
  *  images, floating selections, selective display of intensity
  *  channels, and display of arbitrary mask channels
  */
-#define INITIAL_CHANNEL_MASK         0
-#define INITIAL_CHANNEL_SELECTION    1
-#define INITIAL_INDEXED              2
-#define INITIAL_INDEXED_ALPHA        3
-#define INITIAL_INTENSITY            4
-#define INITIAL_INTENSITY_ALPHA      5
+typedef enum
+{
+INITIAL_CHANNEL_MASK = 0,
+INITIAL_CHANNEL_SELECTION,
+INITIAL_INDEXED,
+INITIAL_INDEXED_ALPHA,
+INITIAL_INTENSITY,
+INITIAL_INTENSITY_ALPHA,
+} InitialMode;
 
 /*  Combine two source regions with the help of an optional mask
  *  region into a destination region.  This is used for constructing
  *  layer projections, and for applying image patches to an image
  */
-#define COMBINE_INDEXED_INDEXED           0
-#define COMBINE_INDEXED_INDEXED_A         1
-#define COMBINE_INDEXED_A_INDEXED_A       2
-#define COMBINE_INTEN_A_INDEXED_A         3
-#define COMBINE_INTEN_A_CHANNEL_MASK      4
-#define COMBINE_INTEN_A_CHANNEL_SELECTION 5
-#define COMBINE_INTEN_INTEN               6
-#define COMBINE_INTEN_INTEN_A             7
-#define COMBINE_INTEN_A_INTEN             8
-#define COMBINE_INTEN_A_INTEN_A           9
+typedef enum
+{
+  NO_COMBINATION = 0,
+  COMBINE_INDEXED_INDEXED,
+  COMBINE_INDEXED_INDEXED_A,
+  COMBINE_INDEXED_A_INDEXED_A,
+  COMBINE_INTEN_A_INDEXED_A,
+  COMBINE_INTEN_A_CHANNEL_MASK,
+  COMBINE_INTEN_A_CHANNEL_SELECTION,
+  COMBINE_INTEN_INTEN,
+  COMBINE_INTEN_INTEN_A,
+  COMBINE_INTEN_A_INTEN,
+  COMBINE_INTEN_A_INTEN_A,
 
-/*  Non-conventional combination modes  */
-#define BEHIND_INTEN                      20
-#define BEHIND_INDEXED                    21
-#define REPLACE_INTEN                     22
-#define REPLACE_INDEXED                   23
-#define ERASE_INTEN                       24
-#define ERASE_INDEXED                     25
-#define ANTI_ERASE_INTEN                  26
-#define ANTI_ERASE_INDEXED                27
-#define NO_COMBINATION                    28
+  /*  Non-conventional combination modes  */
+  BEHIND_INTEN,
+  BEHIND_INDEXED,
+  REPLACE_INTEN,
+  REPLACE_INDEXED,
+  ERASE_INTEN,
+  ERASE_INDEXED,
+  ANTI_ERASE_INTEN,
+  ANTI_ERASE_INDEXED,
+} CombinationMode;
 
 /* Opacities */
 #define TRANSPARENT_OPACITY        0
@@ -468,30 +388,18 @@ void  copy_gray_to_region                 (PixelRegion *, PixelRegion *);
 
 void  initial_region                      (PixelRegion *, PixelRegion *,
 					   PixelRegion *, unsigned char *,
-					   int, LayerModeEffects, int *, int);
+					   int, LayerModeEffects, int *, 
+					   CombinationMode);
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
-					   unsigned char *, int,
+					   unsigned char *, guint,
 					   LayerModeEffects,
-					   int *, int);
+					   int *, CombinationMode);
 
 void  combine_regions_replace             (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
 					   unsigned char *,
-					   int, int *, int);
-
-
-/*  Applying layer modes...  */
-/*
-int   apply_layer_mode         (unsigned char *, unsigned char *,
-				unsigned char **, int, int, int,
-				int,
-				LayerModeEffects,
-				int, int, int, int, int *);
-*/
-int   apply_indexed_layer_mode (unsigned char *, unsigned char *,
-				unsigned char **,
-				LayerModeEffects, int, int);
+					   guint, int *, CombinationMode);
 
 #endif  /*  __PAINT_FUNCS_H__  */

@@ -121,10 +121,6 @@ static LayerModeFunc layer_mode_funcs[] =
 
 static gint *   make_curve               (gdouble  sigma,
 					  gint    *length);
-static void     run_length_encode        (guchar   *src,
-					  gint     *dest,
-					  gint      w,
-					  gint      bytes);
 static gdouble  cubic                    (gdouble   dx,
 					  gint      jm1,
 					  gint      j,
@@ -371,15 +367,15 @@ make_curve (gdouble  sigma,
 }
 
 
-static void
-run_length_encode (guchar *src,
-		   gint   *dest,
-		   gint    w,
-		   gint    bytes)
+static inline void
+run_length_encode (const guchar *src,
+		   guint	*dest,
+		   guint	 w,
+		   guint	 bytes)
 {
-  gint   start;
-  gint   i;
-  gint   j;
+  guint  start;
+  guint  i;
+  guint  j;
   guchar last;
 
   last = *src;
@@ -429,9 +425,7 @@ cubic (gdouble dx,
 void
 paint_funcs_setup (void)
 {
-  gint i;
-  gint j, k;
-  gint tmp_sum;
+  guint i;
 
   /*  generate a table of random seeds  */
   srand (RANDOM_SEED);
@@ -439,18 +433,11 @@ paint_funcs_setup (void)
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     random_table[i] = rand ();
 
-  for (j = 0; j < 256; j++)
-    {    /* rows */
-      for (k = 0; k < 256; k++)
-	{   /* column */
-	  tmp_sum = j + k;
-
-	  if (tmp_sum > 255)
-	    tmp_sum = 255;
-
-	  add_lut[j][k] = tmp_sum; 
-	}
-    }
+  for (i = 0; i < 256; i++)
+    add_lut[i] = i; 
+   
+  for (i = 256; i <= 510; i++)
+    add_lut[i] = 255; 
 
 #ifdef HAVE_ASM_MMX
   if (use_mmx)
@@ -1389,7 +1376,12 @@ combine_inten_a_and_channel_selection_pixels (const guchar *src,
 }
 
 
-void
+/*  paint "behind" the existing pixel row.
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+
+static inline void
 behind_inten_pixels (const guchar   *src1,
 		     const guchar   *src2,
 		     guchar         *dest,
@@ -1397,12 +1389,12 @@ behind_inten_pixels (const guchar   *src1,
 		     gint            opacity,
 		     const gboolean *affect,
 		     gint            length,
-		     gint            bytes1,
-		     gint            bytes2,
-		     gint            has_alpha1,
-		     gint            has_alpha2)
+		     guint           bytes1,
+		     guint           bytes2)
 {
-  gint          alpha, b;
+  // FIXME: Is this supposed to be different than in the other functions?
+  const guint alpha = bytes1 - 1;
+  guint	b;
   guchar        src1_alpha;
   guchar        src2_alpha;
   guchar        new_alpha;
@@ -1414,9 +1406,6 @@ behind_inten_pixels (const guchar   *src1,
     m = mask;
   else
     m = &no_mask;
-
-  /*  the alpha channel  */
-  alpha = bytes1 - 1;
 
   while (length --)
     {
@@ -1447,20 +1436,24 @@ behind_inten_pixels (const guchar   *src1,
 }
 
 
-void
+/*  paint "behind" the existing pixel row (for indexed images).
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+
+static inline void
 behind_indexed_pixels (const guchar   *src1,
 		       const guchar   *src2,
 		       guchar         *dest,
 		       const guchar   *mask,
-		       gint            opacity,
+		       guint           opacity,
 		       const gboolean *affect,
-		       gint            length,
-		       gint            bytes1,
-		       gint            bytes2,
-		       gint            has_alpha1,
-		       gint            has_alpha2)
+		       guint           length,
+		       guint           bytes1,
+		       guint           bytes2)
 {
-  gint          alpha, b;
+  const guint alpha = bytes1 - 1;
+  guint b;
   guchar        src1_alpha;
   guchar        src2_alpha;
   guchar        new_alpha;
@@ -1473,7 +1466,6 @@ behind_indexed_pixels (const guchar   *src1,
     m = &no_mask;
 
   /*  the alpha channel  */
-  alpha = bytes1 - 1;
 
   while (length --)
     {
@@ -1495,22 +1487,26 @@ behind_indexed_pixels (const guchar   *src1,
 }
 
 
-void
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
+
+static inline void
 replace_inten_pixels (const guchar   *src1,
 		      const guchar   *src2,
 		      guchar         *dest,
 		      const guchar   *mask,
-		      gint            opacity,
+		      guint           opacity,
 		      const gboolean *affect,
-		      gint            length,
-		      gint            bytes1,
-		      gint            bytes2,
-		      gint            has_alpha1,
-		      gint            has_alpha2)
+		      guint           length,
+		      guint           bytes1,
+		      guint           bytes2)
 {
-  gint  b;
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+  const guint bytes = MIN (bytes1, bytes2);
+  guint b;
   gint  tmp;
-  const gint bytes = MIN (bytes1, bytes2);
 
   if (mask)
     {
@@ -1538,7 +1534,7 @@ replace_inten_pixels (const guchar   *src1,
     }
   else
     {
-      static const guchar mask_alpha = OPAQUE_OPACITY ;
+      const guchar mask_alpha = OPAQUE_OPACITY;
 
       while (length --)
         {
@@ -1557,23 +1553,27 @@ replace_inten_pixels (const guchar   *src1,
     }
 }
 
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
 
-void
+static inline void
 replace_indexed_pixels (const guchar   *src1,
 			const guchar   *src2,
 			guchar         *dest,
 			const guchar   *mask,
-			gint            opacity,
+			guint           opacity,
 			const gboolean *affect,
-			gint            length,
-			gint            bytes1,
-			gint            bytes2,
-			gint            has_alpha1,
-			gint            has_alpha2)
+			guint           length,
+			guint           bytes1,
+			guint           bytes2)
 {
-  gint          bytes, b;
-  guchar        mask_alpha;
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+  const guint bytes = MIN (bytes1, bytes2);
   const guchar *m;
+  guint b;
+  guchar        mask_alpha;
   gint          tmp;
 
   if (mask)
@@ -1581,7 +1581,6 @@ replace_indexed_pixels (const guchar   *src1,
   else
     m = &no_mask;
 
-  bytes = MIN (bytes1, bytes2);
   while (length --)
     {
       mask_alpha = INT_MULT(*m, opacity, tmp);
@@ -1601,21 +1600,24 @@ replace_indexed_pixels (const guchar   *src1,
     }
 }
 
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for intensity)
+ */
 
-void
+static inline void
 erase_inten_pixels (const guchar   *src1,
 		    const guchar   *src2,
 		    guchar         *dest,
 		    const guchar   *mask,
-		    gint            opacity,
+		    guint           opacity,
 		    const gboolean *affect,
-		    gint            length,
-		    gint            bytes)
+		    guint           length,
+		    guint           bytes)
 {
-  gint       b;
+  const guint alpha = bytes - 1;
+  guint b;
   guchar     src2_alpha;
   glong      tmp;
-  const gint alpha = bytes - 1;
 
   if (mask)
     {
@@ -1656,27 +1658,31 @@ erase_inten_pixels (const guchar   *src1,
 }
 
 
-void
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for indexed)
+ */
+
+static inline void
 erase_indexed_pixels (const guchar   *src1,
 		      const guchar   *src2,
 		      guchar         *dest,
 		      const guchar   *mask,
-		      gint            opacity,
+		      guint           opacity,
 		      const gboolean *affect,
-		      gint            length,
-		      gint            bytes)
+		      guint           length,
+		      guint           bytes)
 {
-  gint          alpha, b;
-  guchar        src2_alpha;
+  const guint alpha = bytes - 1;
   const guchar *m;
-  glong         tmp;
+  guchar src2_alpha;
+  guint b;
+  glong tmp;
 
   if (mask)
     m = mask;
   else
     m = &no_mask;
 
-  alpha = bytes - 1;
   while (length --)
     {
       for (b = 0; b < alpha; b++)
@@ -4019,10 +4025,10 @@ copy_gray_to_region (PixelRegion *src,
 
 struct initial_regions_struct
 {
-  gint              opacity;
+  guint             opacity;
   LayerModeEffects  mode;
   gboolean         *affect;
-  gint              type;
+  InitialMode	    type;
   guchar           *data;
 };
 
@@ -4036,10 +4042,10 @@ initial_sub_region (struct initial_regions_struct *st,
   guchar           *s, *d, *m;
   guchar            buf[512];
   guchar           *data;
-  gint              opacity;
+  guint             opacity;
   LayerModeEffects  mode;
   gboolean         *affect;
-  gint              type;
+  InitialMode       type;
 
   data    = st->data;
   opacity = st->opacity;
@@ -4112,7 +4118,7 @@ initial_region (PixelRegion	 *src,
 		gint		  opacity,
 		LayerModeEffects  mode,
 		gboolean	 *affect,
-		gint		  type)
+		InitialMode	  type)
 {
   struct initial_regions_struct st;
 
@@ -4131,13 +4137,50 @@ struct combine_regions_struct
   gint              opacity;
   LayerModeEffects  mode;
   gboolean         *affect;
-  gint              type;
+  CombinationMode   type;
   guchar           *data;
-  gboolean          has_alpha1, has_alpha2;
+  //gboolean          has_alpha1, has_alpha2;
   gboolean          opacity_quickskip_possible;
   gboolean          transparency_quickskip_possible;
 };
 
+static inline CombinationMode
+apply_indexed_layer_mode (guchar            *src1,
+			  guchar            *src2,
+			  guchar           **dest,
+			  LayerModeEffects   mode,
+			  CombinationMode    cmode)
+{
+  /*  assumes we're applying src2 TO src1  */
+  switch (mode)
+    {
+    case REPLACE_MODE:
+      *dest = src2;
+      cmode = REPLACE_INDEXED;
+      break;
+
+    case BEHIND_MODE:
+      *dest = src2;
+      if (cmode == COMBINE_INDEXED_A_INDEXED_A)
+	cmode = BEHIND_INDEXED;
+      else
+	cmode = NO_COMBINATION;
+      break;
+
+    case ERASE_MODE:
+      *dest = src2;
+      /*  If both sources have alpha channels, call erase function.
+       *  Otherwise, just combine in the normal manner
+       */
+      cmode = (cmode == COMBINE_INDEXED_A_INDEXED_A) ? ERASE_INDEXED : cmode;
+      break;
+
+    default:
+      break;
+    }
+
+  return cmode;
+}
 
 
 void
@@ -4148,13 +4191,12 @@ combine_sub_region (struct combine_regions_struct *st,
 		    PixelRegion                   *mask)
 {
   guchar           *data;
-  gint              opacity;
+  guint             opacity;
   LayerModeEffects  mode;
   gboolean         *affect;
-  gint              type;
-  gint              h;
-  gboolean          has_alpha1, has_alpha2;
-  guint             combine = 0;
+  guint             h;
+  CombinationMode   combine = NO_COMBINATION;
+  CombinationMode   type;
   guint             mode_affect = 0;
   guchar           *s, *s1, *s2;
   guchar           *d, *m;
@@ -4168,8 +4210,6 @@ combine_sub_region (struct combine_regions_struct *st,
   affect     = st->affect;
   type       = st->type;
   data       = st->data;
-  has_alpha1 = st->has_alpha1;
-  has_alpha2 = st->has_alpha2;
 
   opacity_quickskip_possible = (st->opacity_quickskip_possible &&
 				src2->tiles);
@@ -4233,8 +4273,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	case COMBINE_INDEXED_INDEXED_A:
 	case COMBINE_INDEXED_A_INDEXED_A:
 	  /*  Now, apply the paint mode--for indexed images  */
-	  combine = apply_indexed_layer_mode (s1, s2, &s, mode,
-					      has_alpha1, has_alpha2);
+	  combine = apply_indexed_layer_mode (s1, s2, &s, mode, type);
 	  break;
 
 	case COMBINE_INTEN_INTEN_A:
@@ -4250,6 +4289,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	    alms.x = src1->x;
 	    alms.y = src1->y + h;
 	    alms.opacity = opacity;
+	    alms.combine = combine;
 	    alms.length = src1->w;
 	    alms.bytes1 = src1->bytes;
 	    alms.bytes2 = src2->bytes;
@@ -4261,7 +4301,7 @@ combine_sub_region (struct combine_regions_struct *st,
 
 	    mode_affect = layer_modes[mode].affect_alpha;
 	    layer_mode_funcs[mode](&alms);
-	    combine = (alms.combine == 0) ? type : alms.combine;
+	    combine = (alms.combine == NO_COMBINATION) ? type : alms.combine;
 	    break;
 	  }
 
@@ -4351,25 +4391,25 @@ combine_sub_region (struct combine_regions_struct *st,
 	case BEHIND_INTEN:
 	  behind_inten_pixels (s1, s, d, m, opacity,
 			       affect, src1->w, src1->bytes,
-			       src2->bytes, has_alpha1, has_alpha2);
+			       src2->bytes);
 	  break;
 	    
 	case BEHIND_INDEXED:
 	  behind_indexed_pixels (s1, s, d, m, opacity,
 				 affect, src1->w, src1->bytes,
-				 src2->bytes, has_alpha1, has_alpha2);
+				 src2->bytes);
 	  break;
 	    
 	case REPLACE_INTEN:
 	  replace_inten_pixels (s1, s, d, m, opacity,
 				affect, src1->w, src1->bytes,
-				src2->bytes, has_alpha1, has_alpha2);
+				src2->bytes);
 	  break;
 	    
 	case REPLACE_INDEXED:
 	  replace_indexed_pixels (s1, s, d, m, opacity,
 				  affect, src1->w, src1->bytes,
-				  src2->bytes, has_alpha1, has_alpha2);
+				  src2->bytes);
 	  break;
 	    
 	case ERASE_INTEN:
@@ -4397,7 +4437,7 @@ combine_sub_region (struct combine_regions_struct *st,
 	  break;
 	    
 	default:
-	  g_warning("UNKNOWN COMBINATION");
+	  g_warning("UNKNOWN COMBINATION: %d", combine);
 	  break;
 	}
     
@@ -4417,13 +4457,13 @@ combine_regions (PixelRegion	  *src1,
 		 PixelRegion   	  *dest,
 		 PixelRegion  	  *mask,
 		 guchar	          *data,
-		 gint		   opacity,
+		 guint		   opacity,
 		 LayerModeEffects  mode,
 		 gboolean         *affect,
-		 gint		   type)
+		 CombinationMode   type)
 {
   gboolean has_alpha1, has_alpha2;
-  gint i;
+  guint i;
   struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */
@@ -4455,8 +4495,6 @@ combine_regions (PixelRegion	  *src1,
   st.affect     = affect;
   st.type       = type;
   st.data       = data;
-  st.has_alpha1 = has_alpha1;
-  st.has_alpha2 = has_alpha2;
 
   /* cheap and easy when the row of src2 is completely opaque/transparent
      and the wind is otherwise blowing in the right direction.
@@ -4502,16 +4540,16 @@ combine_regions (PixelRegion	  *src1,
 }
 
 void
-combine_regions_replace (PixelRegion *src1,
-			 PixelRegion *src2,
-			 PixelRegion *dest,
-			 PixelRegion *mask,
-			 guchar      *data,
-			 gint         opacity,
-			 gboolean    *affect,
-			 gint         type)
+combine_regions_replace (PixelRegion	 *src1,
+			 PixelRegion	 *src2,
+			 PixelRegion	 *dest,
+			 PixelRegion	 *mask,
+			 guchar		 *data,
+			 guint		  opacity,
+			 gboolean	 *affect,
+			 CombinationMode  type)
 {
-  gint     h;
+  guint    h;
   guchar  *s1;
   guchar  *s2;
   guchar  *d;
@@ -4541,58 +4579,6 @@ combine_regions_replace (PixelRegion *src1,
 	  m += mask->rowstride;
 	}
     }
-}
-
-
-
-gint
-apply_indexed_layer_mode (guchar            *src1,
-			  guchar            *src2,
-			  guchar           **dest,
-			  LayerModeEffects   mode,
-			  gboolean           has_alpha1, /* has alpha */
-			  gboolean           has_alpha2) /* has alpha */
-{
-  gint combine;
-
-  if (!has_alpha1 && !has_alpha2)
-    combine = COMBINE_INDEXED_INDEXED;
-  else if (!has_alpha1 && has_alpha2)
-    combine = COMBINE_INDEXED_INDEXED_A;
-  else if (has_alpha1 && has_alpha2)
-    combine = COMBINE_INDEXED_A_INDEXED_A;
-  else
-    combine = NO_COMBINATION;
-
-  /*  assumes we're applying src2 TO src1  */
-  switch (mode)
-    {
-    case REPLACE_MODE:
-      *dest = src2;
-      combine = REPLACE_INDEXED;
-      break;
-
-    case BEHIND_MODE:
-      *dest = src2;
-      if (has_alpha1)
-	combine = BEHIND_INDEXED;
-      else
-	combine = NO_COMBINATION;
-      break;
-
-    case ERASE_MODE:
-      *dest = src2;
-      /*  If both sources have alpha channels, call erase function.
-       *  Otherwise, just combine in the normal manner
-       */
-      combine = (has_alpha1 && has_alpha2) ? ERASE_INDEXED : combine;
-      break;
-
-    default:
-      break;
-    }
-
-  return combine;
 }
 
 static void

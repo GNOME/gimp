@@ -61,11 +61,11 @@ struct apply_layer_mode_struct
   gint               y;
   guint              opacity;
   guint              length;
-  guint 	     combine;
+  CombinationMode    combine;
 };
 
 static const guchar	no_mask = OPAQUE_OPACITY;
-static gint		add_lut[256][256];
+static guchar		add_lut[511];
 static gint		random_table[RANDOM_TABLE_SIZE];
 
 void
@@ -755,10 +755,7 @@ add_pixels (const guchar *src1,
   while (length --)
     {
       for (b = 0; b < alpha; b++)
-	{
-	  /* TODO: wouldn't it be better use a 1 dimensional lut ie. add_lut[src1+src2]; */
-	  dest[b] = add_lut[(src1[b])] [(src2[b])];
-	}
+	  dest[b] = add_lut[src1[b] + src2[b]];
 
       if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
