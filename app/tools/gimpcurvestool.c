@@ -511,7 +511,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   c_tool->channel_menu = menu;
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -519,8 +519,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                     c_tool);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Modify Curves for Channel:"), 1.0, 0.5,
-                             hbox, 1, FALSE);
+                             _("Channel:"), 1.0, 0.5, hbox, 1, FALSE);
 
   /*  The table for the yrange and the graph  */
   hbox = gtk_hbox_new (FALSE, 0);

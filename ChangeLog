@@ -1,3 +1,8 @@
+2004-02-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog): follow
+	some of the levels tool dialog changes for consistency.
+
 2004-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-qmask.c (gimp_image_get_qmask): new function
@@ -23,7 +28,7 @@
 	on any drawable insensitive when there were no layers (instead
 	of no drawable).
 
-	* app/gui/edit-commands.c: added new macro return_if_new_drawable()
+	* app/gui/edit-commands.c: added new macro return_if_no_drawable()
 	and use it instead of return_if_no_image() so we don't run
 	into assertions if there is no active drawable.
 
