@@ -1,5 +1,10 @@
 2004-11-27  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/jpeg.c (save_image): thumbnail buffer variable
+	declarations should be guarded under HAVE_EXIF.
+
+2004-11-27  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/colorxhtml.py: s/colorhtml/colorxhtml/,
 	so it doesn't clash with the perl version.
 

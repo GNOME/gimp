@@ -1426,8 +1426,10 @@ save_image (const gchar *filename,
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
+#ifdef HAVE_EXIF
   gchar    *thumbnail_buffer        = NULL;
   gint      thumbnail_buffer_length = 0;
+#endif
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
