@@ -1,3 +1,9 @@
+Mon Nov 16 19:04:54 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/gimage_cmds.[ch]
+	* app/internal_procs.c: new function to get the drawable a
+	floating selection is attached to (for the gap plug-in)
+
 Sun Nov 15 19:36:02 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/floating_sel_cmds.[ch]

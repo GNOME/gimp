@@ -3622,6 +3622,78 @@ ProcRecord gimage_floating_sel_proc =
   { { gimage_floating_sel_invoker } },
 };
 
+/*************************************/
+/*  GIMAGE_FLOATING_SEL_ATTACHED_TO  */
+
+static Argument *
+gimage_floating_sel_attached_to_invoker (Argument *args)
+{
+  GImage *gimage;
+  Layer *floating_sel;
+  Argument *return_args;
+
+  floating_sel = NULL;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)))
+	floating_sel = gimage_floating_sel (gimage);
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&gimage_floating_sel_attached_to_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = (floating_sel) 
+                                ? drawable_ID (GIMP_DRAWABLE( GIMP_LAYER(floating_sel)->fs.drawable )) 
+				: -1;
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_floating_sel_attached_to_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  }
+};
+
+ProcArg gimage_floating_sel_attached_to_out_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable the floating selection is attached to"
+  }
+};
+
+ProcRecord gimage_floating_sel_attached_to_proc =
+{
+  "gimp_image_floating_sel_attached_to",
+  "Return the drawable the floating selection is attached to",
+  "This procedure returns the drawable the image's floating selection is attached to, if it exists.  If it doesn't exist, -1 is returned as the drawable ID.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  gimage_floating_sel_attached_to_args,
+
+  /*  Output arguments  */
+  1,
+  gimage_floating_sel_attached_to_out_args,
+
+  /*  Exec method  */
+  { { gimage_floating_sel_attached_to_invoker } },
+};
+
+
 static GImage *
 duplicate (GImage *gimage)
 {

@@ -70,6 +70,7 @@ extern ProcRecord gimage_enable_undo_proc;
 extern ProcRecord gimage_disable_undo_proc;
 extern ProcRecord gimage_clean_all_proc;
 extern ProcRecord gimage_floating_sel_proc;
+extern ProcRecord gimage_floating_sel_attached_to_proc;
 extern ProcRecord channel_ops_duplicate_proc;
 
 extern ProcRecord gimp_image_add_hguide_proc;

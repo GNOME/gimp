@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 256;
+  gfloat total_pcount = 257;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -186,6 +186,7 @@ internal_procs_init ()
   procedural_db_register (&gimage_disable_undo_proc); pcount++;
   procedural_db_register (&gimage_clean_all_proc); pcount++;
   procedural_db_register (&gimage_floating_sel_proc); pcount++;
+  procedural_db_register (&gimage_floating_sel_attached_to_proc); pcount++;
   procedural_db_register (&gimp_image_add_hguide_proc); pcount++;
   procedural_db_register (&gimp_image_add_vguide_proc); pcount++;
   procedural_db_register (&gimp_image_delete_guide_proc); pcount++;
