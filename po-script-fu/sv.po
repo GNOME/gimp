@@ -1,189 +1,192 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Swedish messages for gimp script-fu.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-10-30 21:58-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp script-fu\n"
+"POT-Creation-Date: 2000-11-14 03:18+0100\n"
+"PO-Revision-Date: 2000-11-14 03:43+0100\n"
+"Last-Translator: Christian Rose <menthos@menthos.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Script-Fu-konsolläget tillåter endast interaktiv användning"
 
 #: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
-msgstr ""
+msgstr "Script-Fu-konsoll"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
-msgstr ""
+msgstr "Stäng"
 
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:207
 msgid "SIOD Output"
-msgstr ""
+msgstr "SIOD-utdata"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Current Command"
-msgstr ""
+msgstr "Aktuellt kommando"
 
 #: plug-ins/script-fu/script-fu-console.c:307
 msgid "Browse..."
-msgstr ""
+msgstr "Bläddra..."
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open SIOD output pipe"
-msgstr ""
+msgstr "Kan inte öppna SIOD-utdatarör"
 
 #: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
+msgstr "Kan inte öppna en ström på SIOD-utdataröret"
 
 #: plug-ins/script-fu/script-fu-console.c:628
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-scripts.c:1113
-#, c-format
-msgid ""
-"Script-Fu Error\n"
-"%s"
-msgstr ""
+msgstr "Script-Fu-evalueringsläget tillåter endast interaktiv användning"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1162
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1206
+#: plug-ins/script-fu/script-fu-scripts.c:1209
 msgid "/Script-Fu/"
-msgstr ""
+msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1211
 #, c-format
 msgid "Script-Fu: %s"
-msgstr ""
+msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1191
+#: plug-ins/script-fu/script-fu-scripts.c:1234
 msgid "Script Arguments"
-msgstr ""
+msgstr "Skriptargument"
 
-#. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1214
+#: plug-ins/script-fu/script-fu-scripts.c:1257
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1256
+#: plug-ins/script-fu/script-fu-scripts.c:1304
 msgid "Script-Fu Color Selection"
-msgstr ""
+msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu File Selection"
-msgstr ""
+msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1358
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-fu Pattern Selection"
-msgstr ""
+msgstr "Script-Fu-mönsterväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1413
 msgid "Script-Fu Gradient Selection"
-msgstr ""
+msgstr "Script-Fu-toningsväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1373
+#: plug-ins/script-fu/script-fu-scripts.c:1421
 msgid "Script-Fu Brush Selection"
-msgstr ""
+msgstr "Script-Fu-penselväljare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 msgid "Reset to Defaults"
-msgstr ""
+msgstr "Återställ till satndardvärden"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1442
+#: plug-ins/script-fu/script-fu-scripts.c:1493
 msgid "About"
 msgstr "Om"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1456
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1465
+#: plug-ins/script-fu/script-fu-scripts.c:1516
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1579
+#: plug-ins/script-fu/script-fu-scripts.c:1682
 msgid "NOT SET"
-msgstr ""
+msgstr "INTE SATT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1648
+#: plug-ins/script-fu/script-fu-scripts.c:1711
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
+"Åtminstone en av typsnitten du angett är ogiltigt.\n"
+"Var vänlig och kontrollera dina inställningar.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
-msgstr ""
+msgstr "Författare:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
-msgstr ""
+msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1945
+#: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1953
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Image Types:"
-msgstr "magenta"
+msgstr "Bildtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2106
+#: plug-ins/script-fu/script-fu-scripts.c:2189
 msgid "Script-Fu Font Selection"
+msgstr "Script-Fu-typsnittsväljare"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2256
+#, c-format
+msgid ""
+"Script-Fu Error while executing\n"
+" %s\n"
+"%s"
 msgstr ""
+"Script-Fu-fel under körning\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
-msgstr ""
+msgstr "Script-Fu-serveralternativ"
 
 #: plug-ins/script-fu/script-fu-server.c:566
 msgid "Server Port:"
-msgstr ""
+msgstr "Serverport:"
 
 #: plug-ins/script-fu/script-fu-server.c:572
 msgid "Server Logfile:"
-msgstr ""
+msgstr "Serverloggfil:"
 
-#: plug-ins/script-fu/script-fu.c:164
+#: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Konsoll..."
 
-#: plug-ins/script-fu/script-fu.c:177
+#: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
+#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Läs om alla tillgängliga skript..."
 
-#: plug-ins/script-fu/script-fu.c:1027
+#: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Uppdatera"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
-msgstr ""
+msgstr "<Image>/Redigera/Kopiera synligt"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
@@ -818,12 +821,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrundsfärg"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
-msgstr ""
+msgstr "Bakgrundsbild"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
@@ -835,7 +838,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Base Color"
-msgstr ""
+msgstr "Basfärg"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
@@ -843,7 +846,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "Beteende"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
@@ -934,7 +937,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr ""
+msgstr "Kant"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1003,11 +1006,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
-msgstr ""
+msgstr "Färg 1"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 2"
-msgstr ""
+msgstr "Färg 2"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 3"
@@ -1017,11 +1020,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Color"
-msgstr ""
+msgstr "Färg"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr ""
+msgstr "Kolumner"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
@@ -1071,7 +1074,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1089,7 +1092,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Down"
-msgstr ""
+msgstr "Ner"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
@@ -1223,7 +1226,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Filename"
-msgstr ""
+msgstr "Filnamn"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Fill Angle"
@@ -1244,11 +1247,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Flatten Image"
-msgstr ""
+msgstr "Platta till bilden"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
-msgstr ""
+msgstr "Typsnittsfärg"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1289,7 +1292,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Font Size (pixels)"
-msgstr ""
+msgstr "Typsnittsstorlek (pixlar)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1330,28 +1333,27 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Font"
-msgstr ""
+msgstr "Typsnitt"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "Fonts"
-msgstr ""
+msgstr "Typsnitt"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
-msgstr ""
+msgstr "Förgrundsfärg"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
-msgstr ""
+msgstr "Ramfärg"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
 msgid "Frame Size"
-msgstr "magenta"
+msgstr "Ramstorlek"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr ""
+msgstr "Ramar"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
@@ -1382,7 +1384,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Gradient"
-msgstr ""
+msgstr "Färgskala"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1412,7 +1414,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr ""
+msgstr "Höjd"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1497,7 +1499,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr ""
+msgstr "Invertera"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
@@ -1522,7 +1524,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr ""
+msgstr "Vänster"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
@@ -1588,7 +1590,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
+msgstr "Antal färger"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Number of Copies"
@@ -1619,7 +1621,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1659,7 +1661,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Orientation"
-msgstr ""
+msgstr "Orientering"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
@@ -1671,7 +1673,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr ""
+msgstr "Ramfärg"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -1705,7 +1707,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Padding"
-msgstr ""
+msgstr "Utfyllnad"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
@@ -1728,7 +1730,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr ""
+msgstr "Mönster"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -1765,7 +1767,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Radius"
-msgstr ""
+msgstr "Radie"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1804,7 +1806,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr ""
+msgstr "Höger"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -1821,7 +1823,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "Rader"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
@@ -1839,7 +1841,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr ""
+msgstr "Slumptalsfrö"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1892,7 +1894,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Shadow"
-msgstr ""
+msgstr "Skugga"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
@@ -1906,7 +1908,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Size"
-msgstr ""
+msgstr "Storlek"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
@@ -1919,7 +1921,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr ""
+msgstr "Mjuk"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
@@ -1928,7 +1930,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Spacing"
-msgstr ""
+msgstr "Mellanrum"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
@@ -2041,13 +2043,13 @@ msgstr ""
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Thickness"
-msgstr ""
+msgstr "Tjocklek"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Density"
@@ -2074,7 +2076,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Transparent Background"
-msgstr ""
+msgstr "Genomskinlig bakgrund"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
@@ -2083,7 +2085,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr ""
+msgstr "Upp"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
@@ -2154,7 +2156,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Width"
-msgstr ""
+msgstr "Bredd"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
