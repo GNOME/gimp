@@ -217,7 +217,7 @@ void load_gimp_brush(const gchar *fn, ppm_t *p)
   int x, y;
 
   f = fopen_from_search_path(fn, "rb");
-  if(p->col) ppm_kill(p);
+  ppm_kill(p);
 
   if(!f) {
     fprintf(stderr, "load_gimp_brush: Unable to open file \"%s\"!\n", fn);
@@ -258,7 +258,7 @@ void ppm_load(const char *fn, ppm_t *p)
 
   f = fopen_from_search_path(fn, "rb");
 
-  if(p->col) ppm_kill(p);
+  ppm_kill(p);
 
   if(!f) {
     fprintf(stderr, "ppm_load: Unable to open file \"%s\"!\n", fn);
@@ -323,8 +323,7 @@ void fill(ppm_t *p, guchar *c)
 
 void ppm_copy(ppm_t *s, ppm_t *p)
 {
-  if(p->col)
-    ppm_kill(p);
+  ppm_kill(p);
   p->width = s->width;
   p->height = s->height;
   p->col = g_memdup(s->col, p->width * 3 * p->height);

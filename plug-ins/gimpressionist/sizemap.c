@@ -59,7 +59,7 @@ static void updatesmpreviewprev(void)
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
 
-  if (!nsbuffer.col)
+  if (! PPM_IS_INITED (&nsbuffer))
     {
       ppm_new(&nsbuffer,OMWIDTH,OMHEIGHT);
     }
@@ -108,7 +108,7 @@ static void updatesmvectorprev(void)
   if(!ok || (val != last_val))
     {
 #if 0
-      if(!infile.col)
+      if (!PPM_IS_INITED (&infile))
          updatepreview (NULL, (void *)2); /* Force grabarea() */
       ppm_copy(&infile, &backup);
 #else

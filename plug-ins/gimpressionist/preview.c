@@ -77,7 +77,7 @@ updatepreview (GtkWidget *wg, gpointer d)
 #if 0
   guchar buf[PREVIEWSIZE*3];
 
-  if(!infile.col && d)
+  if (!PPM_IS_INITED (&infile) && d)
     grabarea();
 #endif
 
@@ -87,7 +87,7 @@ updatepreview (GtkWidget *wg, gpointer d)
    *            -- Shlomi Fish
    * */
 #if 0
-  if(!infile.col && !d) {
+  if (!PPM_IS_INITED (&infile) && !d) {
 
     memset(buf, 0, sizeof(buf));
     for(i = 0; i < PREVIEWSIZE; i++) 
@@ -98,7 +98,7 @@ updatepreview (GtkWidget *wg, gpointer d)
   else 
 #endif
   {
-    if(!backup_ppm.col)
+    if (!PPM_IS_INITED (&backup_ppm))
     {
       infile_copy_to_ppm (&backup_ppm);
       if((backup_ppm.width != PREVIEWSIZE) || (backup_ppm.height != PREVIEWSIZE))
@@ -110,7 +110,7 @@ updatepreview (GtkWidget *wg, gpointer d)
           resize_fast(&alpha_backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
       }
     }
-    if(!preview_ppm.col)
+    if (!PPM_IS_INITED (&preview_ppm))
     {
       ppm_copy(&backup_ppm, &preview_ppm);
       if(img_has_alpha)

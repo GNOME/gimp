@@ -859,7 +859,7 @@ void repaint(ppm_t *p, ppm_t *a)
   if(relief > 0.001) {
     scale = runningvals.paperscale / 100.0;
 
-    if(paper_ppm.col) {
+    if (PPM_IS_INITED (&paper_ppm)) {
       tmp = paper_ppm;
       paper_ppm.col = NULL;
     } else {

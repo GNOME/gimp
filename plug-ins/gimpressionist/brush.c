@@ -120,8 +120,7 @@ brushdmenuselect (GtkWidget *widget,
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
-  if(brushppm.col)
-    ppm_kill (&brushppm);
+  ppm_kill (&brushppm);
   ppm_new (&brushppm, x2-x1, y2-y1);
   p = &brushppm;
 
@@ -169,8 +168,7 @@ brushdmenuselect (GtkWidget *widget,
 #if 0
 void dummybrushdmenuselect(GtkWidget *w, gpointer data)
 {
-  if(brushppm.col)
-    ppm_kill (&brushppm);
+  ppm_kill (&brushppm);
   ppm_new (&brushppm, 10,10);
   brush_from_file = 0;
   update_brush_preview (NULL);
@@ -210,7 +208,7 @@ savebrush (GtkWidget *wg,
   GList            *thispath = parsepath ();
   gchar            *path;
 
-  if (! brushppm.col)
+  if (! PPM_IS_INITED (&brushppm))
     {
       g_message( _("Can only save drawables!"));
       return;
@@ -314,7 +312,7 @@ update_brush_preview (const gchar *fn)
 
     if (brush_from_file)
       brush_reload (fn, &p);
-    else if (brushppm.col)
+    else if (PPM_IS_INITED (&brushppm))
       ppm_copy (&brushppm, &p);
 
     set_colorbrushes (fn);

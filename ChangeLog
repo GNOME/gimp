@@ -1,5 +1,10 @@
 2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
 
+	* plug-ins/gimpressionist/: converted checks for initialization of 
+	ppm's done by checking the "col" buffer, to macro calls.
+
+2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
+
 	* plug-ins/gimpressionist/: fixed bug #148088: ("Gimpressioinst crashes if 
 	given malicious presets with out of range values, in the radio buttons 
 	group numeric values: "placetype", "orienttype", etc. ").

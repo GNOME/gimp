@@ -37,5 +37,7 @@ void blur(ppm_t *p, int xrad, int yrad);
 
 void mkgrayplasma(ppm_t *p, float turb);
 
+#define PPM_IS_INITED(ppm_ptr) ((ppm_ptr)->col != NULL)
+
 #endif /* #ifndef __PPM_TOOL_H */
 

@@ -40,7 +40,7 @@ static ppm_t inalpha = {0,0,NULL};
 
 void infile_copy_to_ppm(ppm_t * p)
 {
-  if(!infile.col)
+  if (!PPM_IS_INITED (&infile))
     grabarea();
 #if 0
     updatepreview (NULL, (void *)2); /* Force grabarea() */
@@ -311,7 +311,7 @@ static void gimpressionist_main(void)
 
   gimp_progress_init (_("Painting..."));
 
-  if(!infile.col) {
+  if (!PPM_IS_INITED (&infile)) {
     grabarea();
   }
 

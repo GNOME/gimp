@@ -132,9 +132,9 @@ static void update_orient_map_preview_prev (void)
   guchar gray[3] = {120,120,120};
   guchar white[3] = {255,255,255};
 
-  if (!nbuffer.col) {
+  if (!PPM_IS_INITED (&nbuffer))
     ppm_new (&nbuffer,OMWIDTH,OMHEIGHT);
-  }
+
   fill (&nbuffer, black);
 
   for (y = 6; y < OMHEIGHT-4; y += 10)
