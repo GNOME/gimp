@@ -34,6 +34,7 @@
 #include "core/gimpprogress.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "file/file-utils.h"
 
@@ -92,6 +93,8 @@ static void     gimp_file_dialog_proc_changed       (GimpFileProcView *view,
 
 static void     gimp_file_dialog_help_func          (const gchar      *help_id,
                                                      gpointer          help_data);
+static void     gimp_file_dialog_help_clicked       (GtkWidget        *widget,
+                                                     gpointer          dialog);
 
 
 
@@ -328,6 +331,25 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   gimp_help_connect (GTK_WIDGET (dialog),
                      gimp_file_dialog_help_func, help_id, dialog);
+
+  if (GIMP_GUI_CONFIG (gimp->config)->show_help_button && help_id)
+    {
+      GtkWidget *action_area = GTK_DIALOG (dialog)->action_area;
+      GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
+
+      gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
+      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
+                                          button, TRUE);
+      gtk_widget_show (button);
+
+      g_object_set_data_full (G_OBJECT (dialog), "gimp-dialog-help-id",
+                              g_strdup (help_id),
+                              (GDestroyNotify) g_free);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_file_dialog_help_clicked),
+                        dialog);
+    }
 
   gimp_file_dialog_add_preview (dialog, gimp);
 
@@ -651,4 +673,12 @@ gimp_file_dialog_help_func (const gchar *help_id,
     {
       gimp_standard_help_func (help_id, NULL);
     }
+}
+
+static void
+gimp_file_dialog_help_clicked (GtkWidget *widget,
+                               gpointer   dialog)
+{
+  gimp_standard_help_func (g_object_get_data (dialog, "gimp-dialog-help-id"),
+                           NULL);
 }

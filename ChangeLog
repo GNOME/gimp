@@ -1,3 +1,7 @@
+2004-10-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c: added a help button.
+
 2004-10-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
@@ -44,9 +48,9 @@
 
 2004-10-04  DindinX  <dindinx@gimp.org>
 
-	* libgimp/gimpaspectpreview.c: (gimp_aspect_preview_draw_buffer) only
-	apply the effect inside the current selection. This, together with my
-	previous commit fixes bug #132194.
+	* libgimp/gimpaspectpreview.c: (gimp_aspect_preview_draw_buffer):
+	only apply the effect inside the current selection. This, together
+	with my previous commit fixes bug #132194.
 
 2004-10-04  DindinX  <dindinx@gimp.org>
 
