@@ -668,8 +668,8 @@ replace_row_u16 (
   gint b;
   double a_val, a_recip, mask_val;
   double norm_opacity;
-  int s1_a, s2_a;
-  int new_val;
+  guint32 s1_a, s2_a;
+  guint32 new_val;
   Tag     src1_tag      = pixelrow_tag (src1_row); 
   Tag     src2_tag      = pixelrow_tag (src2_row); 
   guint16 *dest          = (guint16*)pixelrow_data (dest_row);
@@ -683,7 +683,7 @@ replace_row_u16 (
 
   if (num_channels1 != num_channels2)
     {
-      g_warning ("replace_row_u16 only works on commensurate pixel regions");
+      g_warning ("replace_row_u16 num_channels different");
       return;
     }
 
@@ -696,7 +696,7 @@ replace_row_u16 (
       /* calculate new alpha first. */
       s1_a = src1[alpha];
       s2_a = src2[alpha];
-      a_val = s1_a + mask_val * (s2_a - s1_a);
+      a_val = s1_a + mask_val * ((gdouble)s2_a - s1_a);
       if (a_val == 0)
 	a_recip = 0;
       else
@@ -704,8 +704,8 @@ replace_row_u16 (
       /* possible optimization: fold a_recip into s1_a and s2_a */
       for (b = 0; b < alpha; b++)
 	{
-	  new_val = 0.5 + a_recip * (src1[b] * s1_a + mask_val *
-				     (src2[b] * s2_a - src1[b] * s1_a));
+	  new_val = 0.5 + a_recip * ((gdouble)src1[b] * s1_a + mask_val *
+				     ((gdouble)src2[b] * s2_a - src1[b] * s1_a));
 	  dest[b] = affect[b] ? MIN (new_val, 65535) : src1[b];
 	}
       dest[alpha] = affect[alpha] ? a_val + 0.5: s1_a;

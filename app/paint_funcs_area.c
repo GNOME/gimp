@@ -3371,10 +3371,15 @@ combine_areas_replace  (
       PixelRow src2_row;
       PixelRow dest_row;
       PixelRow mask_row;
+	
  
       gint h = pixelarea_height (src1_area);
       while (h--)
         {
+	  pixelarea_getdata (src1_area, &src1_row, h);
+	  pixelarea_getdata (src2_area, &src2_row, h);
+	  pixelarea_getdata (dest_area, &dest_row, h);
+	  pixelarea_getdata (mask_area, &mask_row, h);
          /*apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h, opacity, src1->w, src1->bytes, src2->bytes, affect);*/
          apply_layer_mode_replace (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	}

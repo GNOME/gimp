@@ -183,8 +183,8 @@ void            gimage_replace_image          (GImage *, GimpDrawable *,
                                                PixelRegion *, int, int,
 					       PixelRegion *, int, int);
 void            gimage_replace_painthit       (GImage *, GimpDrawable *,
-                                               struct _PixelArea *, int undo,
-                                               gfloat, struct _PixelArea *,
+                                               struct _Canvas *, int undo,
+                                               gfloat, struct _Canvas *,
                                                int x, int y);
 
 void            gimage_get_foreground         (GImage *, GimpDrawable *, unsigned char *);

@@ -946,21 +946,11 @@ painthit_replace (
                   gfloat image_opacity
                   )
 {
-  PixelArea srcPR, maskPR;
   GImage * gimage = drawable_gimage (drawable);
   
-  /* apply the paint hit directly to the gimage */
-  pixelarea_init (&maskPR, brush_mask, NULL,
-                  0, 0,
-                  canvas_width (brush_mask), canvas_height (brush_mask),
-                  TRUE);
-  pixelarea_init (&srcPR, canvas_buf, NULL,
-                  0, 0,
-                  canvas_width (canvas_buf), canvas_height (canvas_buf),
-                  TRUE);
-  gimage_replace_painthit (gimage, drawable, &srcPR,
+  gimage_replace_painthit (gimage, drawable, canvas_buf,
                            FALSE, image_opacity,
-                           &maskPR,
+                           brush_mask,
                            paint_core->x, paint_core->y);
 }
 

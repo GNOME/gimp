@@ -170,7 +170,6 @@ gimage_allocate_projection (GImage *gimage)
 static void
 gimage_free_projection (GImage *gimage)
 {
-  trace_enter ("gimage_free_projection");
   if (gimage->projection)
     tile_manager_destroy (gimage->projection);
 
@@ -180,7 +179,6 @@ gimage_free_projection (GImage *gimage)
     canvas_delete (gimage->projection_canvas);
 
   gimage->projection_canvas = NULL;
-  trace_exit();
 }
 
 static void
@@ -846,7 +844,7 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
       tempPR.rowstride = mask2PR.rowstride;
       temp_data = g_malloc (tempPR.h * tempPR.rowstride);
       tempPR.data = temp_data;
-
+      /* copy selection mask to temp */
       copy_region (&mask2PR, &tempPR);
 
       /* apparently, region operations can mutate some PR data. */
@@ -855,7 +853,7 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
       tempPR.w = x2 - x1;
       tempPR.h = y2 - y1;
       tempPR.data = temp_data;
-
+      /* apply brush mask to temp */
       apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
       tempPR.x = 0;
@@ -875,43 +873,44 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
 }
 
 
-
 void 
 gimage_replace_painthit  (
                           GImage * gimage,
                           GimpDrawable * drawable,
-                          PixelArea * src2PR,
+                          Canvas * src2,       /*painthit_canvas*/
                           int undo,
                           gfloat opacity,
-                          PixelArea * maskPR,
+                          Canvas * mask_canvas,  /*brush_mask*/
                           int x,
                           int y
                           )
 {
-#if 0
   Channel * mask;
   int x1, y1, x2, y2;
   int offset_x, offset_y;
-  PixelRegion src1PR, destPR;
-  PixelRegion mask2PR, tempPR;
-  unsigned char *temp_data;
+  PixelArea src1_area, src2_area, dest_area, temp_area;
   int operation;
   int active [MAX_CHANNELS];
+  Precision prec = tag_precision (drawable_tag (drawable));
+  Paint *opacity_paint;
 
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable, active);
+  
   /*  get the selection mask if one exists  */
   mask = (gimage_mask_is_empty (gimage)) ?
     NULL : gimage_get_mask (gimage);
 
-  /*  configure the active channel array  */
-  gimage_get_active_channels (gimage, drawable, active);
-
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
    */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  operation = valid_combinations 
+	[drawable_type (drawable)]
+	[tag_num_channels (canvas_tag (src2))];
+  
   if (operation == -1)
     {
-      warning ("gimage_apply_image sent illegal parameters\n");
+      warning ("gimage_replace_painthit: not a valid combination\n");
       return;
     }
 
@@ -921,8 +920,8 @@ gimage_replace_painthit  (
   /*  make sure the image application coordinates are within gimage bounds  */
   x1 = CLAMP (x, 0, drawable_width (drawable));
   y1 = CLAMP (y, 0, drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, drawable_width (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
+  x2 = CLAMP (x + canvas_width (src2), 0, drawable_width (drawable));
+  y2 = CLAMP (y + canvas_height (src2), 0, drawable_height (drawable));
 
   if (mask)
     {
@@ -935,70 +934,91 @@ gimage_replace_painthit  (
       x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
       y2 = CLAMP (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
     }
-
+  
   /*  If the calling procedure specified an undo step...  */
   if (undo)
     drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
 
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
-   */
-  pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
-
-  if (mask)
+  if (mask) /* combine selection and brush masks */  
     {
+      Canvas *temp_canvas;
+      PixelArea mask_area;
+      Tag temp_tag;
       int mx, my;
-
-      /*  configure the mask pixel region
+      Paint *opaque_paint;
+      gfloat opaque_paint_data = 1.0;
+      
+      /* create a temp canvas to hold the combined selection and brush masks */
+      temp_tag = tag_new (prec, FORMAT_GRAY, ALPHA_NO);
+      temp_canvas = canvas_new ( temp_tag, x2 - x1, y2 - y1, STORAGE_FLAT);
+      
+      /*  first initialize mask_area with the selection mask 
        *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
+       *  coordinate system.  Need selection mask coordinate system
        */
+      
       mx = x1 + offset_x;
       my = y1 + offset_y;
+      pixelarea_init (&mask_area, drawable_data_canvas(GIMP_DRAWABLE (mask)), NULL,
+		    mx, my, 
+		    (x2 - x1), (y2 - y1),
+		    FALSE);
 
-      pixel_region_init (&mask2PR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
+      pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
+      canvas_portion_ref ( temp_canvas, 0, 0 );
+     
+      /* copy selection mask to temp canvas */ 
+      copy_area (&mask_area, &temp_area);
 
-      tempPR.bytes = 1;
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.rowstride = mask2PR.rowstride;
-      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-      tempPR.data = temp_data;
-
-      copy_region (&mask2PR, &tempPR);
-
-      /* apparently, region operations can mutate some PR data. */
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.data = temp_data;
-
-      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
-
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.data = temp_data;
-
-      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
-		       opacity, active, operation);
-
-      g_free (temp_data);
+      /* next initialize mask_area with the brush mask */
+      pixelarea_init (&mask_area, mask_canvas, NULL, 0, 0, 0, 0, FALSE);
+      pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
+      
+      /* prepare the opaque paint*/
+      opaque_paint = paint_new (tag_new (prec, FORMAT_GRAY, ALPHA_NO), NULL);
+      paint_load (opaque_paint, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+			&opaque_paint_data);
+      
+      /* apply brush mask to temp canvas */
+      apply_mask_to_area (&temp_area, &mask_area, opaque_paint);
+      paint_delete (opaque_paint); 
+       
+      /* ready the temp_area for combine_areas_replace below */ 
+      pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
     }
-  else
-    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-		     opacity, active, operation);
-#endif
+  else /* just use the brush mask */
+    pixelarea_init (&temp_area, mask_canvas, NULL, 0 , 0 , 0, 0, TRUE);
+   
+  /* the underlying image */
+  pixelarea_init (&src1_area, drawable_data_canvas (drawable), NULL,
+		  x1, y1,
+		  (x2 - x1), (y2 - y1),
+		  FALSE);
+  
+  /* the painthit */
+  pixelarea_init (&src2_area, src2, NULL,
+                      x1-x, y1-y,
+                      (x2 - (x1-x)), (y2 - (y1-y)),
+                      FALSE);
+ 
+  /* the destination image */ 
+  pixelarea_init (&dest_area, drawable_data_canvas (drawable), NULL,
+		  x1, y1,
+		  (x2 - x1), (y2 - y1),
+		  TRUE);
+   
+  /* prepare the opacity paint*/
+  opacity_paint = paint_new (tag_new (prec, FORMAT_GRAY, ALPHA_NO), NULL);
+  paint_load (opacity_paint, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                    &opacity);
+  
+  /* combine the painthit(src2_area) with the 
+     source(src1_area) using temp_area as a mask */ 
+  combine_areas_replace (&src1_area, &src2_area, &dest_area, &temp_area, NULL,
+		     opacity_paint, active, operation);
+  
+  paint_delete (opacity_paint);
 }
-
-
-
 
 
 void

@@ -584,6 +584,7 @@ copy_row_u16_rgb_to_u16 (
       break;
     case FORMAT_GRAY:
       copy_row_u16_rgb_to_u16_gray (src_row, dest_row);
+      break;
     case FORMAT_INDEXED:
     case FORMAT_NONE:
       g_warning ("doh in copy_row_u16_rgb_to_u16()");

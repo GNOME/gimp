@@ -19,12 +19,17 @@
 #include <stdio.h>
 #include "appenv.h"
 #include "brushes.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
 #include "convolve.h"
 #include "gdisplay.h"
+#include "paint.h"
 #include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "paint_core_16.h"
 #include "paint_core.h"
+#include "pixelarea.h"
 #include "selection.h"
 #include "tools.h"
 
@@ -37,11 +42,11 @@ typedef enum
 
 /*  forward function declarations  */
 static void         calculate_matrix     (ConvolveType, double);
-static void         integer_matrix       (float *, int *, int);
+static void         integer_matrix       (float *, int *, int, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
-
-static void         convolve_motion      (PaintCore *, GimpDrawable *);
+static void        *convolve_non_gui_paint_func (PaintCore16 *, GimpDrawable *, int);
+static void         convolve_motion      (PaintCore16 *, GimpDrawable *);
 static Argument *   convolve_invoker     (Argument *);
 
 #define FIELD_COLS    4
@@ -185,7 +190,7 @@ create_convolve_options (void)
 }
 
 void *
-convolve_paint_func (PaintCore *paint_core,
+convolve_paint_func (PaintCore16 *paint_core,
 		     GimpDrawable *drawable,
 		     int        state)
 {
@@ -211,18 +216,19 @@ Tool *
 tools_new_convolve ()
 {
   Tool * tool;
-  PaintCore * private;
+  PaintCore16 * private;
 
   if (! convolve_options)
     convolve_options = create_convolve_options ();
 
-  tool = paint_core_new (CONVOLVE);
+  tool = paint_core_16_new (CONVOLVE);
 
-  private = (PaintCore *) tool->private;
+  private = (PaintCore16 *) tool->private;
   private->paint_func = convolve_paint_func;
 
   return tool;
 }
+
 
 void
 tools_free_convolve (Tool *tool)
@@ -230,105 +236,73 @@ tools_free_convolve (Tool *tool)
   paint_core_free (tool);
 }
 
-void
-convolve_motion (PaintCore *paint_core,
-		 GimpDrawable *drawable)
+
+static void
+convolve_motion (
+		 PaintCore16 *paint_core,
+	         GimpDrawable *drawable
+		)
 {
   GImage *gimage;
-  TempBuf * area;
-  unsigned char *temp_data;
-  PixelRegion srcPR, destPR, tempPR;
+  Tag tag = drawable_tag (drawable);
+  Canvas *painthit_canvas; 
+  PixelArea src_area, painthit_area;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if ( !(gimage = drawable_gimage (drawable)) )
     return;
 
-  /*  If the image type is indexed, don't convolve  */
-  if (drawable_type (drawable) == INDEXED_GIMAGE)
+  if ( tag_format (tag) == FORMAT_INDEXED )
     return;
+  
+  /* Retrieve the painthit_canvas */
+  painthit_canvas = paint_core_16_area (paint_core, drawable);
+  pixelarea_init (&painthit_area, painthit_canvas, NULL, 0, 0, 0, 0, TRUE);
 
-  /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable)))
-    return;
+  /* Set up src_area with the drawable */ 
+  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+		   paint_core->x, paint_core->y, paint_core->w, paint_core->h, FALSE);
 
-  /*  configure the pixel regions correctly  */
-  pixel_region_init (&srcPR, drawable_data (drawable), area->x, area->y, area->width, area->height, FALSE);
+  if (paint_core->w >= matrix_size && paint_core->h >= matrix_size)
+  {
+    /* Copy the pixels from the drawable to a temp
+       canvas, convolve that and place the result in
+       the painthit_canvas. */
+    
+    Canvas *temp_canvas;
+    PixelArea temp_area;
+    Tag temp_tag;
+     
+    temp_tag = tag_set_alpha (tag, ALPHA_YES);
+    temp_canvas = canvas_new ( temp_tag, paint_core->w, paint_core->h, STORAGE_FLAT);
+    canvas_portion_ref ( temp_canvas, 0, 0 );
+    canvas_portion_ref ( painthit_canvas, 0, 0 );
+    pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
+    copy_area (&src_area, &temp_area);
 
-  destPR.bytes = area->bytes;
-  destPR.x = 0; destPR.y = 0;
-  destPR.w = area->width;
-  destPR.h = area->height;
-  destPR.rowstride = area->width * destPR.bytes;
-  destPR.data = temp_buf_data (area);
+    /* setup the temp_area and src_area again */
+    pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+		   paint_core->x, paint_core->y, paint_core->w, paint_core->h, FALSE);
+    pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
 
-  /*  convolve the source image with the convolve mask  */
-  if (srcPR.w >= matrix_size && srcPR.h >= matrix_size)
-    {
-      /*  if the source has no alpha, then add alpha pixels  */
-      if (!drawable_has_alpha (drawable))
-	{
-	  /* note: this architecture needlessly convolves the totally-
-	     opaque alpha channel. A faster approach would be to keep
-	     tempPR the same number of bytes as srcPR, and extend the
-	     paint_core_replace_canvas API to handle non-alpha images. */
-
-	  tempPR.bytes = srcPR.bytes + 1;
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
-	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data = temp_data;
-
-	  add_alpha_region (&srcPR, &tempPR);
-	}
-      else
-	{
-	  tempPR.bytes = srcPR.bytes;
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
-	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data = temp_data;
-
-	  copy_region (&srcPR, &tempPR);
-
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
-	  tempPR.data = temp_data;
-
-	  multiply_alpha_region (&tempPR);
-	}
-
-      tempPR.x = 0; tempPR.y = 0;
-      tempPR.w = area->width;
-      tempPR.h = area->height;
-      tempPR.data = temp_data;
-
-      /*  Convolve the region  */
-      convolve_region (&tempPR, &destPR, matrix, matrix_size,
+    /* convolve from temp_area to painthit_area */    
+    convolve_area (&temp_area, &painthit_area, matrix, matrix_size,
 		       matrix_divisor, NORMAL);
 
-      if (drawable_has_alpha (drawable))
-	  separate_alpha_region (&destPR);
-
-      /*  Free the allocated temp space  */
-      g_free (temp_data);
-    }
+    canvas_portion_unref ( painthit_canvas, 0, 0 );
+    canvas_portion_unref ( temp_canvas, 0, 0 );
+    canvas_delete ( temp_canvas );
+  }
   else
-    {
-      /*  if the source has no alpha, then add alpha pixels, otherwise copy  */
-      if (!drawable_has_alpha (drawable))
-	add_alpha_region (&srcPR, &destPR);
-      else
-	copy_region (&srcPR, &destPR);
-    }
-
-  /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (get_brush_opacity () * 255),
-			   SOFT, INCREMENTAL);
+  {
+    copy_area (&src_area, &painthit_area);
+  }
+  
+  /* Apply the painthit to the drawable */
+  paint_core_16_area_replace (paint_core, drawable, 
+				1.0,
+                                (gfloat) get_brush_opacity (),
+                                SOFT,
+                                INCREMENTAL); 
 }
 
 static void
@@ -346,21 +320,21 @@ calculate_matrix (ConvolveType type,
     case Blur:
       matrix_size = 5;
       blur_matrix [12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
-      copy_matrix (blur_matrix, custom_matrix, matrix_size);
+      integer_matrix (blur_matrix, matrix, matrix_size, 100);
       break;
 
     case Sharpen:
       matrix_size = 5;
       sharpen_matrix [12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
-      copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
+      integer_matrix (sharpen_matrix, matrix, matrix_size, 1);
       break;
 
     case Custom:
       matrix_size = 5;
+      integer_matrix (custom_matrix, matrix, matrix_size, 1);
       break;
     }
 
-  integer_matrix (custom_matrix, matrix, matrix_size);
   matrix_divisor = sum_matrix (matrix, matrix_size);
 
   if (!matrix_divisor)
@@ -370,14 +344,13 @@ calculate_matrix (ConvolveType type,
 static void
 integer_matrix (float *source,
 		int   *dest,
-		int    size)
+		int    size,
+		int    factor)
 {
   int i;
 
-#define PRECISION  10000
-
   for (i = 0; i < size*size; i++)
-    *dest++ = (int) (*source ++ * PRECISION);
+    *dest++ = (int) (*source ++ * factor);
 }
 
 static void
@@ -407,7 +380,7 @@ sum_matrix (int *matrix,
 
 
 static void *
-convolve_non_gui_paint_func (PaintCore *paint_core,
+convolve_non_gui_paint_func (PaintCore16 *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
@@ -541,7 +514,7 @@ convolve_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_init (&non_gui_paint_core, drawable,
+    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
@@ -550,30 +523,30 @@ convolve_invoker (Argument *args)
       calculate_matrix (type, pressure);
 
       /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
+      non_gui_paint_core_16.paint_func = (PaintFunc16)convolve_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
+      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	convolve_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+	convolve_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
+	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
 
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
+	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
+	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
 
       /*  cleanup  */
-      paint_core_cleanup ();
+      paint_core_16_cleanup ();
     }
 
   return procedural_db_return_args (&convolve_proc, success);

@@ -18,13 +18,13 @@
 #ifndef __CONVOLVE_H__
 #define __CONVOLVE_H__
 
-#include "paint_core.h"
-#include "procedural_db.h"
-#include "tools.h"
+struct _tool;
+struct _ProcRecord;
 
-void *        convolve_paint_func  (PaintCore *, GimpDrawable *, int);
-Tool *        tools_new_convolve   (void);
-void          tools_free_convolve  (Tool *);
+struct _tool *  tools_new_convolve   (void);
+void            tools_free_convolve  (struct _tool *);
+
+extern struct _ProcRecord convolve_proc;
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord convolve_proc;
