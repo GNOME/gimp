@@ -581,6 +581,7 @@ app_exit_finish (void)
   paint_funcs_free ();
   plug_in_kill ();
   procedural_db_free ();
+  device_status_free ();
   menus_quit ();
   tile_swap_exit ();
 
@@ -702,3 +703,14 @@ quit_invoker (Argument *args)
 
   return return_args;
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -55,8 +55,10 @@ void devices_rc_update (gchar *name, DeviceValues values,
 			gchar *brush_name, ToolType tool,
 			guchar foreground[]);
 
-/* Current device id */
+/* Free device status (only for session-managment) */
+void device_status_free (void);
 
+/* Current device id */
 extern int current_device;
 
 #endif /* __DEVICES_H__ */

@@ -378,11 +378,11 @@ rect_select_button_press (Tool           *tool,
 	}
       rect_sel->op = REPLACE;
     }
-  rect_sel->context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
+  rect_sel->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR(gdisp->statusbar),
 						      "selection");
   size = g_new (gchar, 24); /* strlen("Selection:  x ") + 2*5 */
   sprintf (size, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
-  gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
+  gtk_statusbar_push(GTK_STATUSBAR (gdisp->statusbar), 
 		     rect_sel->context_id, size);
   g_free (size);
   draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
@@ -403,8 +403,8 @@ rect_select_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
-  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), 
-		    rect_sel->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), 
+		     rect_sel->context_id);
   draw_core_stop (rect_sel->core, tool);
   tool->state = INACTIVE;
 
@@ -574,12 +574,12 @@ rect_select_motion (Tool           *tool,
 
       rect_sel->center = FALSE;
     }
-  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), 
-		    rect_sel->context_id);
+  gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), 
+		     rect_sel->context_id);
   size = g_new (gchar, 24); /* strlen("Selection:  x ") + 2*5 */
   sprintf (size, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
-  gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
-		     rect_sel->context_id, size);
+  gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), 
+		      rect_sel->context_id, size);
   g_free (size);
   draw_core_resume (rect_sel->core, tool);
 }

@@ -25,6 +25,7 @@
 #include "interface.h"
 #include "gimprc.h"
 #include "palette.h"
+#include "session.h"
 #include "tools.h"
 
 typedef struct _DeviceInfo DeviceInfo;
@@ -578,6 +579,7 @@ create_device_status (void)
 
       gtk_window_set_title (GTK_WINDOW(deviceD->shell), "Device Status");
       gtk_window_set_policy (GTK_WINDOW (deviceD->shell), FALSE, FALSE, TRUE);
+      session_set_window_geometry (deviceD->shell, &device_status_session_info, TRUE);
 
       deviceD->num_devices = 0;
       tmp_list = devices_info;
@@ -693,6 +695,16 @@ devices_close_callback (GtkWidget *w,
 			gpointer data)
 {
   gtk_widget_hide (GTK_WIDGET(data));
+}
+
+void
+device_status_free (void)
+{                                     
+  if (deviceD)
+    {
+      session_get_window_info (deviceD->shell, &device_status_session_info);
+      device_status_destroy_callback (); 
+    }
 }
 
 static void
