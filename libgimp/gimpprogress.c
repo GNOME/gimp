@@ -193,7 +193,7 @@ gimp_progress_uninstall (const gchar *progress_callback)
  *
  * Since: GIMP 2.4
  **/
-void
+gboolean
 gimp_progress_set_text (const gchar *format,
                         ...)
 {

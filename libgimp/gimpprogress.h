@@ -42,7 +42,7 @@ const gchar * gimp_progress_install   (GimpProgressStartCallback start_callback,
                                        gpointer                  user_data);
 gpointer      gimp_progress_uninstall (const gchar              *progress_callback);
 
-void          gimp_progress_set_text  (const gchar              *format,
+gboolean      gimp_progress_set_text  (const gchar              *format,
                                        ...) G_GNUC_PRINTF (1, 2);
 
 
