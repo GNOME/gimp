@@ -6311,7 +6311,7 @@ msgstr "Sélecteur de couleur GTK (module)"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style colour selector as a pluggable colour selector"
-msgstr "Sélecteur de couleur style « peintre » (module)\n"
+msgstr "Sélecteur de couleur style « peintre » (module)"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
 msgid "Triangle"

@@ -1,5 +1,4 @@
 #include "FractalExplorer.h"
-#include "Languages.h"
 
 /**********************************************************************
   Global variables  
@@ -40,45 +39,13 @@ double              xpos,
                     ypos,
                     oldxpos = -1,
                     oldypos = -1;
-gint                do_redsinus,
-                    do_redcosinus,
-                    do_rednone;
-gint                do_greensinus,
-                    do_greencosinus,
-                    do_greennone;
-gint                do_bluesinus,
-                    do_bluecosinus,
-                    do_bluenone;
-gint                do_redinvert,
-                    do_greeninvert,
-		    do_blueinvert;
-gint                do_colormode1 = FALSE,
-                    do_colormode2 = FALSE;
-gint                do_type0 = FALSE,
-                    do_type1 = FALSE,
-		    do_type2 = FALSE,
-                    do_type3 = FALSE,
-                    do_type4 = FALSE,
-                    do_type5 = FALSE,
-                    do_type6 = FALSE,
-                    do_type7 = FALSE,
-                    do_type8 = FALSE,
-                    do_english = TRUE,
-                    do_french = FALSE,
-                    do_german = FALSE;
 GtkWidget          *maindlg;
 GtkWidget          *logodlg;
-GtkWidget          *loaddlg;
 GtkWidget          *cmap_preview;
-GtkWidget          *cmap_preview_long;
-GtkWidget          *cmap_preview_long2;
 GtkWidget          *delete_frame_to_freeze;
 GtkWidget          *fractalexplorer_gtk_list;
 GtkWidget          *save_menu_item;
 GtkWidget          *fractalexplorer_op_menu;
-GtkTooltips        *tips;
-GdkColor            tips_fg,
-                    tips_bg;
 GdkCursor          *MyCursor;
 int                 ready_now = FALSE;
 explorer_vals_t     zooms[100];
@@ -95,16 +62,7 @@ GList		   *gradient_list = NULL;
 gchar 		   *tpath = NULL;
 fractalexplorerOBJ *fractalexplorer_obj_for_menu;
 GList              *rescan_list = NULL;
-int 		    lng=LNG_GERMAN;
 
-
-GPlugInInfo         PLUG_IN_INFO =
-{
-    NULL,			/* init_proc */
-    NULL,			/* quit_proc */
-    query,			/* query_proc */
-    run,			/* run_proc */
-};
 
 explorer_interface_t wint =
 {
@@ -115,12 +73,52 @@ explorer_interface_t wint =
 
 explorer_vals_t wvals =
 {
-    0, -2.0, 2.0, -1.5, 1.5, 50.0, -0.75, -0.2, 0, 128.0, 128.0, 128.0, 1, 1, 0, 0, 0, 0, 1, 0, 256, 0
+  0,
+  -2.0,
+  2.0,
+  -1.5,
+  1.5,
+  50.0,
+  -0.75,
+  -0.2,
+  0,
+  128.0,
+  128.0,
+  128.0,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  256,
+  0
 };				/* wvals */
 
 explorer_vals_t standardvals =
 {
-    0, -2.0, 2.0, -1.5, 1.5, 50.0, -0.75, -0.2, 0, 128.0, 128.0, 128.0, 1, 1, 0, 0, 0, 0, 1, 0, 256, 0
+  0,
+  -2.0,
+  2.0,
+  -1.5,
+  1.5,
+  50.0,
+  -0.75,
+  -0.2,
+  0,
+  128.0,
+  128.0,
+  128.0,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  256,
+  0
 };				/* standardvals */
 
 

@@ -525,7 +525,7 @@ load_image (gchar *filename)	/* I - File to load */
       else  /*  set aspect ratio as resolution  */
 	gimp_image_set_resolution(image,
 				  ((double) info->x_pixels_per_unit) * 72.0,
-				  ((double) info->y_pixels_per_unit)i * 72.0);
+				  ((double) info->y_pixels_per_unit) * 72.0);
     }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 

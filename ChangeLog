@@ -1,3 +1,15 @@
+2000-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/FractalExplorer/*:
+
+	- Removed the "Gradient" notebook page and added a gimp gradient
+	  selection widget to the "Color" page instead.
+	- UI cleanups (use the libgimp stuff).
+	- Removed the "Languages" and "Callbacks" files.
+	- Made it actually work (seemed quite important to me :-)
+
+	* plug-ins/common/png.c: Fix a typo to make it compile.
+
 Sat Jan 29 22:32:30 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: More conservative resolution behaviour

@@ -7,8 +7,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = FractalExplorer
 
 FractalExplorer_SOURCES = \
-	Callbacks.h		\
-	Callbacks.c		\
 	Dialogs.h		\
 	Dialogs.c		\
 	Events.h		\
@@ -16,8 +14,6 @@ FractalExplorer_SOURCES = \
 	FractalExplorer.c	\
 	FractalExplorer.h	\
 	Globals.c		\
-	Languages.c		\
-	Languages.h		\
 	logo.h			\
 	pix_data.h
 

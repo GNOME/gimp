@@ -21,50 +21,6 @@ static char * mini_cross_xpm[] = {
 "                "};
 
 /* XPM */
-static char * greendot_xpm[] = {
-"18 18 21 1",
-" 	c None",
-".	c #FFFFFBEEFFFF",
-"X	c #F7DEF7DEF7DE",
-"o	c #F7DEF3CEF7DE",
-"O	c #E79DE79DEFBE",
-"+	c #D75CDB6CDF7D",
-"@	c #CF3CD75CDF7D",
-"#	c #D75CDF7DE79D",
-"$	c #B6DAC30BC71B",
-"%	c #9E79AEBAB6DA",
-"&	c #8E38A289AEBA",
-"*	c #EFBEF3CEF7DE",
-"=	c #F7DEFBEEFFFF",
-"-	c #86179658A699",
-";	c #514479E78E38",
-":	c #492471C68617",
-">	c #DF7DE38DE79D",
-",	c #9658AAAAB6DA",
-"<	c #30C25D7571C6",
-"1	c #2081596569A6",
-"2	c #1861555569A6",
-"                  ",
-"                  ",
-"                  ",
-"                  ",
-"      .XXX.       ",
-"    .oO+@+Oo.     ",
-"   .o#$%&%$#*.    ",
-"   =O$-;:;-$>=    ",
-"   X+,;<1<;,+X    ",
-"   o@&:121:&@o    ",
-"   X+,;<1<;,+X    ",
-"   =O$-;:;-$>=    ",
-"   .*#$,&,$#*.    ",
-"    .oO+@+Oo.     ",
-"     .=XoX=.      ",
-"                  ",
-"                  ",
-"                  "};
-
-
-/* XPM */
 static char * bluedot_xpm[] = {
 "18 18 20 1",
 " 	c None",
