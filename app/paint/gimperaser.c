@@ -85,7 +85,7 @@ gimp_eraser_get_type (void)
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
-                                     "GimpEraser", 
+                                     "GimpEraser",
                                      &info, 0);
     }
 
@@ -136,15 +136,14 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpEraserOptions        *options;
-  GimpPressureOptions      *pressure_options;
-  GimpContext              *context;
-  GimpImage                *gimage;
-  gdouble                   opacity;
-  TempBuf                  *area;
-  guchar                    col[MAX_CHANNELS];
-  gdouble                   scale;
-  GimpBrushApplicationMode  brush_mode;
+  GimpEraserOptions   *options;
+  GimpPressureOptions *pressure_options;
+  GimpContext         *context;
+  GimpImage           *gimage;
+  gdouble              opacity;
+  TempBuf             *area;
+  guchar               col[MAX_CHANNELS];
+  gdouble              scale;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
@@ -177,22 +176,12 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
-  /* paste the newly painted canvas to the gimage which is being
-   * worked on
-   */
-  
-  if (options->hard)
-    brush_mode = GIMP_BRUSH_HARD;
-  else
-    brush_mode = (pressure_options->pressure ? 
-                  GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT);
-
-  gimp_paint_core_paste_canvas (paint_core, drawable, 
+  gimp_paint_core_paste_canvas (paint_core, drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
-				(options->anti_erase ? 
+				(options->anti_erase ?
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
-				brush_mode,
+				gimp_paint_options_get_brush_mode (paint_options),
 				scale,
 				paint_options->application_mode);
 }

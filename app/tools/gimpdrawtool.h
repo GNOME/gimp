@@ -180,8 +180,8 @@ void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool,
 void       gimp_draw_tool_draw_boundary            (GimpDrawTool   *draw_tool,
                                                     BoundSeg       *bound_segs,
                                                     gint            n_bound_segs,
-                                                    gint            offset_x,
-                                                    gint            offset_y);
+                                                    gdouble         offset_x,
+                                                    gdouble         offset_y);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

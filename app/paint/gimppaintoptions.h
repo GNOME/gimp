@@ -70,6 +70,8 @@ struct _GimpPaintOptions
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
 
+  gboolean                  hard;
+
   GimpPressureOptions      *pressure_options;
   GimpGradientOptions      *gradient_options;
 };
@@ -84,6 +86,9 @@ GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
 
 GimpPaintOptions * gimp_paint_options_new      (Gimp  *gimp,
                                                 GType  options_type);
+
+GimpBrushApplicationMode
+gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

@@ -258,7 +258,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
     orig = gimp_paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2);
 
     srcPR.bytes     = orig->bytes;
-    srcPR.x         = 0; 
+    srcPR.x         = 0;
     srcPR.y         = 0;
     srcPR.w         = x2 - x1;
     srcPR.h         = y2 - y1;
@@ -268,7 +268,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   /* tempPR will hold the dodgeburned region*/
   tempPR.bytes     = srcPR.bytes;
-  tempPR.x         = srcPR.x; 
+  tempPR.x         = srcPR.x;
   tempPR.y         = srcPR.y;
   tempPR.w         = srcPR.w;
   tempPR.h         = srcPR.h;
@@ -280,7 +280,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn->lut, &srcPR, &tempPR);
 
-  /* The dest is the paint area we got above (= canvas_buf) */ 
+  /* The dest is the paint area we got above (= canvas_buf) */
   destPR.bytes     = area->bytes;
   destPR.x         = 0;
   destPR.y         = 0;
@@ -289,8 +289,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   destPR.rowstride = area->width * destPR.bytes;
   destPR.data      = temp_buf_data (area);
 
-  /* Now add an alpha to the dodgeburned region 
-     and put this in area = canvas_buf */ 
+  /* Now add an alpha to the dodgeburned region
+     and put this in area = canvas_buf */
   if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
   else
@@ -301,15 +301,14 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
-  /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
-  gimp_paint_core_replace_canvas (paint_core, drawable, 
+  /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/
+  gimp_paint_core_replace_canvas (paint_core, drawable,
 			          MIN (opacity, GIMP_OPACITY_OPAQUE),
 		                  GIMP_OPACITY_OPAQUE,
-			          (pressure_options->pressure ? 
-                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+			          gimp_paint_options_get_brush_mode (paint_options),
 			          scale,
                                   GIMP_PAINT_CONSTANT);
- 
+
   g_free (temp_data);
 }
 
@@ -333,16 +332,16 @@ gimp_dodge_burn_make_luts (GimpDodgeBurn     *dodgeburn,
   switch (mode)
     {
     case GIMP_HIGHLIGHTS:
-      lut_func = gimp_dodge_burn_highlights_lut_func; 
+      lut_func = gimp_dodge_burn_highlights_lut_func;
       break;
     case GIMP_MIDTONES:
-      lut_func = gimp_dodge_burn_midtones_lut_func; 
+      lut_func = gimp_dodge_burn_midtones_lut_func;
       break;
     case GIMP_SHADOWS:
-      lut_func = gimp_dodge_burn_shadows_lut_func; 
+      lut_func = gimp_dodge_burn_shadows_lut_func;
       break;
     default:
-      lut_func = NULL; 
+      lut_func = NULL;
       break;
     }
 
@@ -352,9 +351,9 @@ gimp_dodge_burn_make_luts (GimpDodgeBurn     *dodgeburn,
 }
 
 static gfloat
-gimp_dodge_burn_highlights_lut_func (gpointer  user_data, 
-                                     gint      nchannels, 
-                                     gint      channel, 
+gimp_dodge_burn_highlights_lut_func (gpointer  user_data,
+                                     gint      nchannels,
+                                     gint      channel,
                                      gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
@@ -369,9 +368,9 @@ gimp_dodge_burn_highlights_lut_func (gpointer  user_data,
 }
 
 static gfloat
-gimp_dodge_burn_midtones_lut_func (gpointer  user_data, 
-                                   gint      nchannels, 
-                                   gint      channel, 
+gimp_dodge_burn_midtones_lut_func (gpointer  user_data,
+                                   gint      nchannels,
+                                   gint      channel,
                                    gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
@@ -387,13 +386,13 @@ gimp_dodge_burn_midtones_lut_func (gpointer  user_data,
   else
     factor = 1 / (1.0 + exposure);
 
-  return pow (value, factor); 
+  return pow (value, factor);
 }
 
 static gfloat
-gimp_dodge_burn_shadows_lut_func (gpointer  user_data, 
-                                  gint      nchannels, 
-                                  gint      channel, 
+gimp_dodge_burn_shadows_lut_func (gpointer  user_data,
+                                  gint      nchannels,
+                                  gint      channel,
                                   gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
@@ -408,9 +407,9 @@ gimp_dodge_burn_shadows_lut_func (gpointer  user_data,
   if (exposure >= 0)
     {
       factor = 0.333333 * exposure;
-      new_value =  factor + value - factor * value; 
+      new_value =  factor + value - factor * value;
     }
-  else /* exposure < 0 */ 
+  else /* exposure < 0 */
     {
       factor = -0.333333 * exposure;
       if (value < factor)
@@ -419,5 +418,5 @@ gimp_dodge_burn_shadows_lut_func (gpointer  user_data,
 	new_value = (value - factor)/(1 - factor);
     }
 
-  return new_value; 
+  return new_value;
 }

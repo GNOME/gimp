@@ -86,7 +86,7 @@ gimp_draw_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-					  "GimpDrawTool", 
+					  "GimpDrawTool",
                                           &tool_info, 0);
     }
 
@@ -806,14 +806,14 @@ void
 gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
                               BoundSeg     *bound_segs,
                               gint          n_bound_segs,
-                              gint          offset_x,
-                              gint          offset_y)
+                              gdouble       offset_x,
+                              gdouble       offset_y)
 {
   GimpDisplayShell *shell;
   GdkSegment       *gdk_segs;
   gint              n_gdk_segs;
-  gint              xclamp, yclamp;
-  gint              x, y;
+  gint              xmax, ymax;
+  gdouble           x, y;
   gint              i;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
@@ -824,28 +824,28 @@ gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
   gdk_segs   = g_new0 (GdkSegment, n_bound_segs);
   n_gdk_segs = 0;
 
-  xclamp = shell->disp_width  + 1;
-  yclamp = shell->disp_height + 1;
+  xmax = shell->disp_width  + 1;
+  ymax = shell->disp_height + 1;
 
   for (i = 0; i < n_bound_segs; i++)
     {
-      gimp_display_shell_transform_xy (shell,
-                                       bound_segs[i].x1 + offset_x,
-                                       bound_segs[i].y1 + offset_y,
-                                       &x, &y,
-                                       FALSE);
+      gimp_display_shell_transform_xy_f (shell,
+                                         bound_segs[i].x1 + offset_x,
+                                         bound_segs[i].y1 + offset_y,
+                                         &x, &y,
+                                         FALSE);
 
-      gdk_segs[n_gdk_segs].x1 = CLAMP (x, -1, xclamp);
-      gdk_segs[n_gdk_segs].y1 = CLAMP (y, -1, yclamp);
+      gdk_segs[n_gdk_segs].x1 = floor (CLAMP (x, -1, xmax));
+      gdk_segs[n_gdk_segs].y1 = floor (CLAMP (y, -1, ymax));
 
-      gimp_display_shell_transform_xy (shell,
-                                       bound_segs[i].x2 + offset_x,
-                                       bound_segs[i].y2 + offset_y,
-                                       &x, &y,
-                                       FALSE);
+      gimp_display_shell_transform_xy_f (shell,
+                                         bound_segs[i].x2 + offset_x,
+                                         bound_segs[i].y2 + offset_y,
+                                         &x, &y,
+                                         FALSE);
 
-      gdk_segs[n_gdk_segs].x2 = CLAMP (x, -1, xclamp);
-      gdk_segs[n_gdk_segs].y2 = CLAMP (y, -1, yclamp);
+      gdk_segs[n_gdk_segs].x2 = floor (CLAMP (x, -1, xmax));
+      gdk_segs[n_gdk_segs].y2 = floor (CLAMP (y, -1, ymax));
 
       if (gdk_segs[n_gdk_segs].x1 == gdk_segs[n_gdk_segs].x2 &&
           gdk_segs[n_gdk_segs].y1 == gdk_segs[n_gdk_segs].y2)

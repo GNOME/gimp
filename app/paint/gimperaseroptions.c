@@ -27,14 +27,12 @@
 #include "gimperaseroptions.h"
 
 
-#define ERASER_DEFAULT_HARD       FALSE
 #define ERASER_DEFAULT_ANTI_ERASE FALSE
 
 
 enum
 {
   PROP_0,
-  PROP_HARD,
   PROP_ANTI_ERASE
 };
 
@@ -83,7 +81,7 @@ gimp_eraser_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -95,10 +93,6 @@ gimp_eraser_options_class_init (GimpEraserOptionsClass *klass)
   object_class->set_property = gimp_eraser_options_set_property;
   object_class->get_property = gimp_eraser_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
-                                    "hard", NULL,
-                                    ERASER_DEFAULT_HARD,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTI_ERASE,
                                     "anti-erase", NULL,
                                     ERASER_DEFAULT_ANTI_ERASE,
@@ -122,9 +116,6 @@ gimp_eraser_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_HARD:
-      options->hard = g_value_get_boolean (value);
-      break;
     case PROP_ANTI_ERASE:
       options->anti_erase = g_value_get_boolean (value);
       break;
@@ -146,9 +137,6 @@ gimp_eraser_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_HARD:
-      g_value_set_boolean (value, options->hard);
-      break;
     case PROP_ANTI_ERASE:
       g_value_set_boolean (value, options->anti_erase);
       break;

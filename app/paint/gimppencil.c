@@ -87,16 +87,16 @@ gimp_pencil_get_type (void)
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
-                                     "GimpPencil", 
+                                     "GimpPencil",
                                      &info, 0);
     }
 
   return type;
 }
 
-static void 
+static void
 gimp_pencil_class_init (GimpPencilClass *klass)
-{  
+{
   GimpPaintCoreClass *paint_core_class;
 
   paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
@@ -115,7 +115,7 @@ gimp_pencil_init (GimpPencil *pencil)
 
   paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
-             
+
 static void
 gimp_pencil_paint (GimpPaintCore      *paint_core,
                    GimpDrawable       *drawable,
@@ -179,17 +179,19 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
 			   &col[BLUE_PIX],
 			   &col[ALPHA_PIX]);
 
-      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height,
                     area->bytes);
+
+      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
   else if (paint_core->brush && paint_core->brush->pixmap)
     {
-      /* if its a pixmap, do pixmap stuff */      
+      /* if it's a pixmap, do pixmap stuff */
       gimp_paint_core_color_area_with_pixmap (paint_core,
-                                              gimage, drawable, 
+                                              gimage, drawable,
                                               area, scale, GIMP_BRUSH_HARD);
+
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
   else
@@ -207,7 +209,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  gimp_paint_core_paste_canvas (paint_core, drawable, 
+  gimp_paint_core_paste_canvas (paint_core, drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),

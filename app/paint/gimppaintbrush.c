@@ -135,9 +135,9 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_paintbrush_motion (GimpPaintCore         *paint_core,
-                        GimpDrawable          *drawable,
-                        GimpPaintOptions      *paint_options)
+gimp_paintbrush_motion (GimpPaintCore    *paint_core,
+                        GimpDrawable     *drawable,
+                        GimpPaintOptions *paint_options)
 {
   GimpPressureOptions      *pressure_options;
   GimpGradientOptions      *gradient_options;
@@ -267,20 +267,22 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
 			      &col[BLUE_PIX]);
 	  col[ALPHA_PIX] = OPAQUE_OPACITY;
 
-	  /* always use incremental mode with gradients */
-	  /* make the gui cool later */
-	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);
+
+	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	}
       /* we check to see if this is a pixmap, if so composite the
        * pixmap image into the area instead of the color
        */
       else if (paint_core->brush && paint_core->brush->pixmap)
 	{
+          /* if it's a pixmap, do pixmap stuff */
 	  gimp_paint_core_color_area_with_pixmap (paint_core, gimage, drawable,
 						  area,
-						  scale, GIMP_BRUSH_SOFT);
+						  scale,
+                                                  gimp_paint_options_get_brush_mode (paint_options));
+
 	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	}
       else
@@ -300,8 +302,7 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
 				    MIN (opacity, GIMP_OPACITY_OPAQUE),
 				    gimp_context_get_opacity (context),
 				    gimp_context_get_paint_mode (context),
-				    (pressure_options->pressure ? 
-                                     GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+                                    gimp_paint_options_get_brush_mode (paint_options),
 				    scale,
                                     paint_appl_mode);
     }

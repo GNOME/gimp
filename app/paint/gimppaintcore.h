@@ -23,7 +23,8 @@
 #include "core/gimpobject.h"
 
 
-#define PAINT_CORE_SUBSAMPLE 4
+#define PAINT_CORE_SUBSAMPLE       4
+#define PAINT_CORE_SOLID_SUBSAMPLE 2
 
 
 /* the different states that the painting function can be called with  */
@@ -78,7 +79,7 @@ struct _GimpPaintCore
   GimpCoords          last_coords;   /*  last coords                      */
 
   GimpVector2         last_paint;    /*  last point that was painted      */
-  
+
   gdouble             distance;      /*  distance traveled by brush       */
   gdouble             pixel_dist;    /*  distance in pixels               */
   gdouble             spacing;       /*  spacing                          */
@@ -102,8 +103,9 @@ struct _GimpPaintCore
   /*  brush buffers  */
   MaskBuf            *pressure_brush;
 
-  MaskBuf            *solid_brush;
+  MaskBuf            *solid_brushes[PAINT_CORE_SOLID_SUBSAMPLE][PAINT_CORE_SOLID_SUBSAMPLE];;
   MaskBuf            *last_solid_brush;
+  gboolean            solid_cache_invalid;
 
   MaskBuf            *scale_brush;
   MaskBuf            *last_scale_brush;
@@ -161,7 +163,7 @@ void      gimp_paint_core_interpolate (GimpPaintCore       *core,
 
 /*  protected functions  */
 
-void    gimp_paint_core_get_color_from_gradient 
+void    gimp_paint_core_get_color_from_gradient
                                          (GimpPaintCore            *core,
                                           GimpGradient             *gradient,
                                           gdouble                   gradient_length,
@@ -192,12 +194,12 @@ void      gimp_paint_core_replace_canvas (GimpPaintCore            *core,
                                           GimpBrushApplicationMode  brush_hardness,
                                           gdouble                   brush_scale,
                                           GimpPaintApplicationMode  mode);
-void     gimp_paint_core_color_area_with_pixmap 
+void     gimp_paint_core_color_area_with_pixmap
                                          (GimpPaintCore            *core,
-                                          GimpImage                *dest, 
+                                          GimpImage                *dest,
                                           GimpDrawable             *drawable,
-                                          TempBuf                  *area, 
-                                          gdouble                   scale, 
+                                          TempBuf                  *area,
+                                          gdouble                   scale,
                                           GimpBrushApplicationMode  mode);
 
 

@@ -57,7 +57,7 @@ static void       gimp_smudge_motion     (GimpPaintCore       *paint_core,
 
 static void  gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
                                                      gint          *x,
-                                                     gint          *y, 
+                                                     gint          *y,
                                                      gint          *w,
                                                      gint          *h);
 
@@ -205,7 +205,7 @@ gimp_smudge_start (GimpPaintCore *paint_core,
 
   area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0);
 
-  if (!area) 
+  if (!area)
     return FALSE;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
@@ -233,27 +233,27 @@ gimp_smudge_start (GimpPaintCore *paint_core,
       srcPR.bytes     = smudge->accumPR.bytes;
       srcPR.rowstride = srcPR.bytes * w;
       srcPR.data      = smudge->accum_data;
-      
+
       color_region (&srcPR, fill);
       g_free (fill);
     }
 
-  smudge->accumPR.x         = area->x - x; 
+  smudge->accumPR.x         = area->x - x;
   smudge->accumPR.y         = area->y - y;
   smudge->accumPR.w         = area->width;
   smudge->accumPR.h         = area->height;
-  smudge->accumPR.rowstride = smudge->accumPR.bytes * w; 
+  smudge->accumPR.rowstride = smudge->accumPR.bytes * w;
   smudge->accumPR.data      = (smudge->accum_data +
                                smudge->accumPR.rowstride * smudge->accumPR.y +
                                smudge->accumPR.x * smudge->accumPR.bytes);
 
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable), 
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* copy the region under the original painthit. */
   copy_region (&srcPR, &smudge->accumPR);
 
-  smudge->accumPR.x         = area->x - x; 
+  smudge->accumPR.x         = area->x - x;
   smudge->accumPR.y         = area->y - y;
   smudge->accumPR.w         = area->width;
   smudge->accumPR.h         = area->height;
@@ -301,7 +301,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     return;
 
   /* srcPR will be the pixels under the current painthit from the drawable */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable), 
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable pressure sensitive rate */
@@ -311,8 +311,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     rate = options->rate / 100.0;
 
-  /* The tempPR will be the built up buffer (for smudge) */ 
-  tempPR.x         = area->x - x; 
+  /* The tempPR will be the built up buffer (for smudge) */
+  tempPR.x         = area->x - x;
   tempPR.y         = area->y - y;
   tempPR.w         = area->width;
   tempPR.h         = area->height;
@@ -322,21 +322,21 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                       tempPR.y * tempPR.rowstride +
                       tempPR.x * tempPR.bytes);
 
-  /* The dest will be the paint area we got above (= canvas_buf) */    
+  /* The dest will be the paint area we got above (= canvas_buf) */
 
   destPR.x         = 0;
-  destPR.y         = 0;                                     
-  destPR.w         = area->width;                                         
-  destPR.h         = area->height;                                        
+  destPR.y         = 0;
+  destPR.w         = area->width;
+  destPR.h         = area->height;
   destPR.bytes     = area->bytes;
-  destPR.rowstride = area->width * area->bytes;                  
-  destPR.data      = temp_buf_data (area); 
+  destPR.rowstride = area->width * area->bytes;
+  destPR.data      = temp_buf_data (area);
 
   /*  Smudge uses the buffer Accum.
    *  For each successive painthit Accum is built like this
    *    Accum =  rate*Accum  + (1-rate)*I.
-   *  where I is the pixels under the current painthit. 
-   *  Then the paint area (canvas_buf) is built as 
+   *  where I is the pixels under the current painthit.
+   *  Then the paint area (canvas_buf) is built as
    *    (Accum,1) (if no alpha),
    */
 
@@ -364,21 +364,20 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
-  /*Replace the newly made paint area to the gimage*/ 
-  gimp_paint_core_replace_canvas (paint_core, drawable, 
+  /*Replace the newly made paint area to the gimage*/
+  gimp_paint_core_replace_canvas (paint_core, drawable,
 				  MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  GIMP_OPACITY_OPAQUE,
-				  (pressure_options->pressure ? 
-                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+				  gimp_paint_options_get_brush_mode (paint_options),
 				  1.0,
                                   GIMP_PAINT_INCREMENTAL);
 }
 
-static void 
+static void
 gimp_smudge_nonclipped_painthit_coords (GimpPaintCore *paint_core,
-                                        gint          *x, 
-                                        gint          *y, 
-                                        gint          *w, 
+                                        gint          *x,
+                                        gint          *y,
+                                        gint          *w,
                                         gint          *h)
 {
   /* Note: these are the brush mask size plus a border of 1 pixel */

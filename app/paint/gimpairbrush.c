@@ -110,7 +110,7 @@ gimp_airbrush_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_airbrush_class_init (GimpAirbrushClass *klass)
 {
   GObjectClass       *object_class;
@@ -185,8 +185,8 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
 	  airbrush_timeout.drawable      = drawable;
           airbrush_timeout.paint_options = paint_options;
 
-	  timeout = (paint_options->pressure_options->rate ? 
-		     (10000 / (options->rate * 2.0 * paint_core->cur_coords.pressure)) : 
+	  timeout = (paint_options->pressure_options->rate ?
+		     (10000 / (options->rate * 2.0 * paint_core->cur_coords.pressure)) :
 		     (10000 / options->rate));
 
 	  timeout_id = g_timeout_add (timeout,
@@ -263,7 +263,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 
       gimp_paint_core_color_area_with_pixmap (paint_core, gimage,
-					      drawable, area, 
+					      drawable, area,
 					      scale, GIMP_BRUSH_SOFT);
     }
   else
@@ -310,7 +310,7 @@ gimp_airbrush_timeout (gpointer client_data)
 
 	  timeout_id = g_timeout_add ((10000 /
                                        (rate * 2.0 *
-                                        airbrush_timeout.paint_core->cur_coords.pressure)), 
+                                        airbrush_timeout.paint_core->cur_coords.pressure)),
                                       gimp_airbrush_timeout,
                                       NULL);
 	  return FALSE;

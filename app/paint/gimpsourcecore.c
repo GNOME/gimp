@@ -422,7 +422,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
 	    case GIMP_IMAGE_CLONE:
 	      gimp_clone_line_image (gimage, src_gimage,
                                      drawable, clone->src_drawable,
-                                     s, d, has_alpha, 
+                                     s, d, has_alpha,
                                      srcPR.bytes, destPR.bytes, destPR.w);
 	      s += srcPR.rowstride;
 	      break;
@@ -430,7 +430,7 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
 	    case GIMP_PATTERN_CLONE:
 	      gimp_clone_line_pattern (gimage, drawable,
                                        pattern, d,
-                                       area->x + offset_x, 
+                                       area->x + offset_x,
                                        area->y + y + offset_y,
                                        destPR.bytes, destPR.w);
 	      break;
@@ -446,12 +446,11 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  gimp_paint_core_paste_canvas (paint_core, drawable, 
+  gimp_paint_core_paste_canvas (paint_core, drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
-				(pressure_options->pressure ? 
-                                 GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT), 
+				gimp_paint_options_get_brush_mode (paint_options),
 				scale,
                                 GIMP_PAINT_CONSTANT);
 }
@@ -514,7 +513,7 @@ gimp_clone_line_pattern (GimpImage    *dest,
   pat = temp_buf_data (pattern->mask) +
     (y % pattern->mask->height) * pattern->mask->width * pattern->mask->bytes;
 
-  color_type = (pattern->mask->bytes == 3 || 
+  color_type = (pattern->mask->bytes == 3 ||
                 pattern->mask->bytes == 4) ? GIMP_RGB : GIMP_GRAY;
 
   alpha = bytes - 1;
@@ -553,7 +552,7 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
 
   if (clone->src_drawable)
     g_signal_handlers_disconnect_by_func (clone->src_drawable,
-                                          gimp_clone_src_drawable_disconnect_cb, 
+                                          gimp_clone_src_drawable_disconnect_cb,
                                           clone);
 
   clone->src_drawable = drawable;

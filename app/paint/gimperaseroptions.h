@@ -38,7 +38,6 @@ struct _GimpEraserOptions
 {
   GimpPaintOptions  paint_options;
 
-  gboolean          hard;
   gboolean          anti_erase;
 };
 

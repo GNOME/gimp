@@ -1,5 +1,44 @@
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimperaseroptions.[ch]: removed "gboolean hard"
+	member/property...
+
+	* app/paint/gimppaintoptions.[ch]: ...and added it here. Added
+	gimp_paint_options_get_brush_mode() utility function.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.h
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c: use the new utility funtion where
+	appropriate. Removed trailing whitespace.
+
+	* app/tools/gimpdrawtool.[ch] (gimp_paint_tool_draw_boundary):
+	changed offset parameters from gint to gdouble so we can show the
+	brush preview at sub-pixel positions.
+
+	* app/tools/gimppainttool.c: use sub-pixel coordinates for the
+	brush preview if paint_options->hard is FALSE (doesn't work for
+	the pencil yet).
+
+	The new brush preview unveiled that the positioning of even-sized
+	brushes if off by 0.5 for soft brush application mode and off by
+	1.0 for hard application mode:
+
+	* app/paint/gimppaintcore.[ch] (gimp_paint_core_subsample_mask):
+	offset painting by 0.5 pixels on the brushes' even sized axes by
+	shuffling the subsample matrices around.
+
+	Added "subsampling" for HARD brush application mode since a pixel
+	of an even sized brush can snap to up to four different image
+	pixels depending on the sub-pixel coordinates of the stroke.
+
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: removed double semicolons.
 
 2003-07-14  Michael Natterer  <mitch@gimp.org>

@@ -719,15 +719,24 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                     WithinBounds,
                                     0, 0,
                                     PR.w, PR.h,
-                                    1);
+                                    0);
             }
 
           if (paint_tool->brush_bound_segs)
             {
-              gint brush_x, brush_y;
+              GimpPaintOptions *paint_options;
+              gdouble           brush_x, brush_y;
 
-              brush_x = floor (paint_tool->brush_x) - (mask->width  >> 1);
-              brush_y = floor (paint_tool->brush_y) - (mask->height >> 1);
+              paint_options = GIMP_PAINT_OPTIONS (context);
+
+              brush_x = paint_tool->brush_x - ((gdouble) mask->width  / 2.0);
+              brush_y = paint_tool->brush_y - ((gdouble) mask->height / 2.0);
+
+              if (paint_options->hard)
+                {
+                  brush_x = RINT (brush_x);
+                  brush_y = RINT (brush_y);
+                }
 
               gimp_draw_tool_draw_boundary (draw_tool,
                                             paint_tool->brush_bound_segs,

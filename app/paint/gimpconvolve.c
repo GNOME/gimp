@@ -44,7 +44,7 @@
 #define MIN_SHARPEN   -512
 #define MAX_SHARPEN   -64
 
-/* Different clip relationships between a blur-blob and edges: 
+/* Different clip relationships between a blur-blob and edges:
  * see convolve_motion
  */
 typedef enum
@@ -194,7 +194,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpContext         *context;
   TempBuf             *area;
   guchar              *temp_data;
-  PixelRegion          srcPR; 
+  PixelRegion          srcPR;
   PixelRegion          destPR;
   gdouble              scale;
   ConvolveClipType     area_hclip = CONVOLVE_NOT_CLIPPED;
@@ -237,7 +237,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   destPR.bytes     = area->bytes;
   destPR.tiles     = NULL;
-  destPR.x         = 0; 
+  destPR.x         = 0;
   destPR.y         = 0;
   destPR.w         = area->width;
   destPR.h         = area->height;
@@ -247,7 +247,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (pressure_options->rate)
     options->rate = options->rate * 2.0 * paint_core->cur_coords.pressure;
 
-  gimp_convolve_calculate_matrix (options->type, options->rate); 
+  gimp_convolve_calculate_matrix (options->type, options->rate);
 
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
@@ -275,7 +275,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
       PixelRegion  tempPR;
 
-      tempPR.x     = 0; 
+      tempPR.x     = 0;
       tempPR.y     = 0;
       tempPR.w     = area->width;
       tempPR.h     = area->height;
@@ -366,9 +366,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       ovrsz1_data        = g_malloc (ovrsz1PR.h * ovrsz1PR.rowstride);
       ovrsz1PR.data      = ovrsz1_data;
 
-      color_region (&ovrsz1PR, (const guchar *)fillcolor); 
+      color_region (&ovrsz1PR, (const guchar *)fillcolor);
 
-      ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0; 
+      ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0;
       ovrsz1PR.y         = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
       ovrsz1PR.w         = area->width;
       ovrsz1PR.h         = area->height;
@@ -394,8 +394,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
       /* Crop and copy to destination */
 
-      ovrsz2PR.x    = (area_hclip == CONVOLVE_NCLIP)? marginx : 0; 
-      ovrsz2PR.y    = (area_vclip == CONVOLVE_NCLIP)? marginy : 0; 
+      ovrsz2PR.x    = (area_hclip == CONVOLVE_NCLIP)? marginx : 0;
+      ovrsz2PR.y    = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
       ovrsz2PR.w    = area->width;
       ovrsz2PR.h    = area->height;
       ovrsz2PR.data = (ovrsz2_data +
@@ -413,8 +413,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gimp_paint_core_replace_canvas (paint_core, drawable,
                                   GIMP_OPACITY_OPAQUE,
 				  gimp_context_get_opacity (context),
-				  (pressure_options->pressure ? 
-                                   GIMP_BRUSH_PRESSURE : GIMP_BRUSH_SOFT),
+				  gimp_paint_options_get_brush_mode (paint_options),
 				  scale,
                                   GIMP_PAINT_INCREMENTAL);
 }

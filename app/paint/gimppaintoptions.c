@@ -32,6 +32,7 @@
 
 
 #define DEFAULT_APPLICATION_MODE  GIMP_PAINT_CONSTANT
+#define DEFAULT_HARD              FALSE
 
 #define DEFAULT_PRESSURE_OPACITY  TRUE
 #define DEFAULT_PRESSURE_PRESSURE TRUE
@@ -52,6 +53,7 @@ enum
 {
   PROP_0,
   PROP_APPLICATION_MODE,
+  PROP_HARD,
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_PRESSURE,
   PROP_PRESSURE_RATE,
@@ -113,7 +115,7 @@ gimp_paint_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -131,6 +133,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                  DEFAULT_APPLICATION_MODE,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
+                                    "hard", NULL,
+                                    DEFAULT_HARD,
+                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
@@ -213,6 +219,9 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
+    case PROP_HARD:
+      options->hard = g_value_get_boolean (value);
+      break;
 
     case PROP_PRESSURE_OPACITY:
       pressure_options->opacity = g_value_get_boolean (value);
@@ -278,6 +287,9 @@ gimp_paint_options_get_property (GObject    *object,
     {
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
+      break;
+    case PROP_HARD:
+      g_value_set_boolean (value, options->hard);
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -367,4 +379,18 @@ gimp_paint_options_new (Gimp  *gimp,
                           NULL);
 
   return options;
+}
+
+GimpBrushApplicationMode
+gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
+{
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
+
+  if (paint_options->hard)
+    return GIMP_BRUSH_HARD;
+
+  if (paint_options->pressure_options->pressure)
+    return GIMP_BRUSH_PRESSURE;
+
+  return GIMP_BRUSH_SOFT;
 }
