@@ -1342,7 +1342,7 @@ save_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "LSB to MSB");
+  toggle = gtk_radio_button_new_with_label (group, "LSB to MSB (PC)");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1351,7 +1351,7 @@ save_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lsb2msb);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "MSB to LSB");
+  toggle = gtk_radio_button_new_with_label (group, "MSB to LSB (Mac)");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

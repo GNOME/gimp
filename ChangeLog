@@ -1,3 +1,9 @@
+1999-02-19  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* plug-ins/tiff/tiff.c (save_dialog): Changed the plugin dialog 
+	labels to remind the most common cases: PC vs Mac byte order.
+	This is more useful information to an artist :)
+
 Wed Feb 17 23:36:45 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/color_balance.c (struct _ColorBalanceDialog): lookup tables
