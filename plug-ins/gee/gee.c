@@ -1,12 +1,15 @@
 /*
- * Adam D. Moss : 1998 : adam@gimp.org : adam@foxbox.org
+ * Adam D. Moss : 1998/1999 : adam@gimp.org : adam@foxbox.org
  *
  * This is part of the GIMP package and is released under the GNU
  * Public License.
  */
 
 /*
- * Version 1.03 : 98.07.27
+ * Version 1.04 : 99.03.29
+ *
+ * 1.04:
+ * Wigglyness and button-click fun.
  *
  * 1.03:
  * Fix for pseudocolor displays w/gdkrgb.
@@ -79,6 +82,15 @@ static const guint  width = 256;
 static const guint height = 256;
 
 
+#define LUTSIZE 512
+#define LUTSIZEMASK ((LUTSIZE)-1)
+gint wigglelut[LUTSIZE];
+
+#define LOWAMP 2
+#define HIGHAMP 11
+gint wiggleamp = LOWAMP;
+
+
 /* Global widgets'n'stuff */
 static guchar*    seed_data;
 static guchar*    preview_data1;
@@ -99,6 +111,7 @@ static gint       ncolours;
 static gint       idle_tag;
 static GtkWidget* eventbox;
 static gboolean   feedbacktype = FALSE;
+static gboolean   wiggly = TRUE;
 static gboolean   rgb_mode;
 
 
@@ -289,7 +302,7 @@ build_dialog(GImageType basetype,
 	      gtk_widget_show(eventbox);
 	      gtk_widget_set_events (eventbox,
 				     gtk_widget_get_events (eventbox)
-				     | GDK_BUTTON_PRESS_MASK);
+				     | GDK_BUTTON_RELEASE_MASK);
 	    }
 	    gtk_widget_show(frame2);
 	  }
@@ -312,13 +325,25 @@ build_dialog(GImageType basetype,
 				    (GtkFunction) step_callback,
 				    NULL);
   
-  gtk_signal_connect (GTK_OBJECT (eventbox), "button_press_event",
+  gtk_signal_connect (GTK_OBJECT (eventbox), "button_release_event",
 		      GTK_SIGNAL_FUNC (toggle_feedbacktype), NULL);
 }
 
 
+static void init_lut(void)
+{
+  int i;
 
-static void do_playback()
+  for (i=0; i<LUTSIZE; i++)
+    {
+      wigglelut[i] = ((double)(wiggleamp<<11))*(sin((double)(i) /
+					    ((double)LUTSIZEMASK /
+					     31.4159265358979323)));
+    }
+}
+
+
+static void do_playback(void)
 {
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
@@ -335,6 +360,7 @@ static void do_playback()
   build_dialog(gimp_image_base_type(image_id),
                gimp_image_get_filename(image_id));
 
+  init_lut();
   
   render_frame();
   show_frame();
@@ -365,6 +391,10 @@ void domap1(unsigned char *src, unsigned char *dest,
   unsigned int basesx;
   unsigned int basesy;
 #endif
+
+  static unsigned int grrr=0;
+
+  grrr++;
 
   if ((cx+bx) == 0)
     cx++;
@@ -398,8 +428,14 @@ void domap1(unsigned char *src, unsigned char *dest,
       unsigned int dx;
 #endif
 
-      sx = (basesx-=bx2);
       sy = (basesy+=cx2);
+      sx = (basesx-=bx2);
+
+      if (wiggly)
+	{
+	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
+	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+	}
 
       dx = 256;
       do
@@ -428,23 +464,16 @@ void domap1(unsigned char *src, unsigned char *dest,
 void domap3(unsigned char *src, unsigned char *dest,
 	    int bx, int by, int cx, int cy)
 {
-#ifdef __AAARGH_GNUC__
-  unsigned int dy __attribute__ ((aligned));
-  signed int bycxmcybx __attribute__ ((aligned));
-  signed int bx2,by2 __attribute__ ((aligned));
-  signed int cx2,cy2 __attribute__ ((aligned));
-  unsigned int __attribute__ ((aligned)) basesx;
-  unsigned int __attribute__ ((aligned)) basesy;
-#else
   unsigned int dy;
   signed int bycxmcybx;
   signed int bx2,by2;
   signed int cx2,cy2;
   unsigned int basesx;
   unsigned int basesy;
-#endif
 
   static unsigned int grrr=0;
+
+  grrr++;
 
   if ((cx+bx) == 0)
     cx++;
@@ -466,30 +495,27 @@ void domap3(unsigned char *src, unsigned char *dest,
   by2 = ((by)<<19)/bycxmcybx;
   cy2 = ((cy)<<19)/bycxmcybx;
 
-  grrr++;
-
   for (dy=0;dy<256;dy++)
     {
-#ifdef __AAARGH_GNUC__
-      unsigned int __attribute__ ((aligned)) sx;
-      unsigned int __attribute__ ((aligned)) sy;
-      unsigned int __attribute__ ((aligned)) dx;
-#else
       unsigned int sx;
       unsigned int sy;
       unsigned int dx; 
-#endif
-
+      
       sy = (basesy+=cx2);
       sx = (basesx-=bx2);
-      sx += ((double)(6<<11))*(sin((double)((((
-					       (basesy)
-					       >>11)+grrr))/(2.0*31.4159265))));
+
+      if (wiggly)
+	{
+	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
+	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+	}
+      
       dx = 256;
+      
       do
 	{
 	  unsigned char* addr;
-
+	  
 	  addr = src + 3*
 	    (
 	     (
@@ -502,11 +528,11 @@ void domap3(unsigned char *src, unsigned char *dest,
 		       ))<<8)))
 	      )
 	     );
-
+	  
 	  *dest++ = *(addr);
 	  *dest++ = *(addr+1);
 	  *dest++ = *(addr+2);
-
+	  
 	  sx += by2;
 	  sy -= cy2;
 	}
@@ -882,9 +908,36 @@ window_close_callback (GtkWidget *widget,
 
 static void
 toggle_feedbacktype (GtkWidget *widget,
-		     gpointer   data)
+		     gpointer   event)
 {
-  feedbacktype = !feedbacktype;
+  GdkEventButton *bevent = (GdkEventButton *) event;
+
+  if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
+    {
+      wiggleamp = bevent->x/5;
+      
+      wiggly = TRUE;
+      init_lut();
+
+      return;
+    }
+
+  if (bevent->state & GDK_BUTTON1_MASK)
+    feedbacktype = !feedbacktype;
+
+  if (bevent->state & GDK_BUTTON2_MASK)
+    wiggly = !wiggly;
+
+  if (bevent->state & GDK_BUTTON3_MASK)
+    {
+      if (wiggleamp == LOWAMP)
+	wiggleamp = HIGHAMP;
+      else
+	wiggleamp = LOWAMP;
+
+      wiggly = TRUE;
+      init_lut();
+    }
 }
 
 

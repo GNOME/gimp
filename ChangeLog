@@ -1,3 +1,7 @@
+Mon Mar 29 23:39:49 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/gee/gee.c: Squeezed out a little more fun.
+
 Mon Mar 29 22:51:43 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/README: doh, forgot to commit that one yesterday
