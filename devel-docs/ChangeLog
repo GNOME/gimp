@@ -1,3 +1,8 @@
+2003-02-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/tmpl/gimputils.sgml
+	* libgimpmodule/libgimpmodule-sections.txt: minor updates.
+
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
 	* devel-docs/libgimpbase/libgimpbase-docs.sgml

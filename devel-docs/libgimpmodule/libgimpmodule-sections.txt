@@ -16,6 +16,7 @@ gimp_module_info_new
 gimp_module_info_copy
 gimp_module_info_free
 <SUBSECTION Standard>
+GimpModuleClass
 GIMP_MODULE
 GIMP_IS_MODULE
 GIMP_TYPE_MODULE
@@ -35,6 +36,7 @@ gimp_module_db_get_load_inhibit
 gimp_module_db_load
 gimp_module_db_refresh
 <SUBSECTION Standard>
+GimpModuleDBClass
 GIMP_MODULE_DB
 GIMP_IS_MODULE_DB
 GIMP_TYPE_MODULE_DB

@@ -2,19 +2,17 @@
 gimputils
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Utilities of general interest
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### FUNCTION gimp_utf8_strtrim ##### -->
 <para>
