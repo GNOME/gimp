@@ -727,12 +727,12 @@ read_pixel_data (TileManager *tm,
 	s = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
 	d = buffer + stride * (y - y1) + tm->bpp * (x - x1);
 	rows = tile_eheight (t) - y % TILE_HEIGHT;
-	if (rows > (y2 - y)) 
-	  rows = y2 - y;
+	if (rows > (y2 - y + 1)) 
+	  rows = y2 - y + 1;
 		
 	cols = tile_ewidth (t) - x % TILE_WIDTH;
-	if (cols > (x2 - x))
-	  cols = x2 - x;
+	if (cols > (x2 - x + 1))
+	  cols = x2 - x + 1;
 	
 	srcstride = tile_ewidth (t) * tile_bpp (t);
 	
@@ -769,12 +769,12 @@ write_pixel_data (TileManager *tm,
 	s = buffer + stride * (y - y1) + tm->bpp * (x - x1);
 	d = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
 	rows = tile_eheight (t) - y % TILE_HEIGHT;
-	if (rows > (y2 - y)) 
-	  rows = y2 - y;
+	if (rows > (y2 - y + 1)) 
+	  rows = y2 - y + 1;
 	
 	cols = tile_ewidth (t) - x % TILE_WIDTH;
-	if (cols > (x2 - x))
-	  cols = x2 - x;
+	if (cols > (x2 - x + 1))
+	  cols = x2 - x + 1;
 	
 	dststride = tile_ewidth (t) * tile_bpp (t);
 	

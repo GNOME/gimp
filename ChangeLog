@@ -1,5 +1,10 @@
 2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
 
+	* base/pixel-region.c base/tile-manager.c: a couple more
+	interesting off-by-one errors.  it appears to work now, though.
+
+2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
+
 	* base/pixel-region.c: corrected an off-by-one error, sorry :)
 
 2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>

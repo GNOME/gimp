@@ -128,7 +128,7 @@ pixel_region_get_row (PixelRegion *PR,
 
   if (subsample == 1)
     {
-      read_pixel_data (PR->tiles, x, y, end-1, y, data, w);
+      read_pixel_data (PR->tiles, x, y, end-1, y, data, tilebpp);
     }
   else 
     {
@@ -162,12 +162,14 @@ pixel_region_set_row (PixelRegion *PR,
 		      guchar      *data)
 {
   gint    end;
+  gint    bpp;
 
-  end = x + w ;
+  end = x + w;
+  bpp = tile_manager_bpp (PR->tiles);
 
   pixel_region_get_async (PR, x, y, end, y);
 
-  write_pixel_data (PR->tiles, x, y, end-1, y, data, w);
+  write_pixel_data (PR->tiles, x, y, end-1, y, data, bpp);
 }
 
 
