@@ -1888,7 +1888,6 @@ file_ok_callback (GtkWidget *widget,
   FILE *f; 
   char* filename;
   Path* bzpath;
-  GSList * pts_list = NULL;
   PathList* plp;
   gint row = paths_dialog->selected_row_num;
   gint this_path_count = 0;
@@ -1908,6 +1907,7 @@ file_ok_callback (GtkWidget *widget,
       
       while(!feof(f))
 	{
+	  GSList * pts_list = NULL;
 	  gchar *txt = g_new(gchar,512);
 	  gchar *txtstart = txt;
 	  gint readfields = 0;

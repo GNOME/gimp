@@ -1,3 +1,10 @@
+2000-10-05  Simon Budig  <simon@gimp.org>
+
+	* app/paths_dialog.c: Made the import path command work as
+	  intended. Now files can contain multiple paths (simply
+	  cat path files together). Note, that this is a bugfix:
+	  I just moved one line in the code - I like that...  :-)
+	  
 2000-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/*: a fresh snapshot of the CVS version from
