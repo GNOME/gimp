@@ -1,3 +1,7 @@
+2001-12-13  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added files in app/config.
+
 2001-12-07  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: app/devices.c -> app/gui/devie-status-dialog.

@@ -90,6 +90,7 @@ memsize_to_string (const GValue *src_value,
     dest_value->data[0].v_pointer = g_strdup_printf ("%u", size);
 };
 
+
 static void
 string_to_memsize (const GValue *src_value,
                    GValue       *dest_value)

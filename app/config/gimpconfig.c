@@ -21,14 +21,19 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
 
 #include <glib-object.h>
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /* 
@@ -38,7 +43,8 @@
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
 static void      gimp_config_iface_serialize    (GObject  *object,
-                                                 FILE     *file);
+                                                 gint      fd,
+                                                 gboolean  put_unknown);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner,
                                                  gboolean  store_unknown);
@@ -78,10 +84,14 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 }
 
 static void
-gimp_config_iface_serialize (GObject *object,
-                             FILE    *file)
+gimp_config_iface_serialize (GObject  *object,
+                             gint      fd,
+                             gboolean  put_unknown)
 {
-  gimp_config_serialize_properties (object, file);
+  if (put_unknown)
+    gimp_config_serialize_unknown_tokens (object, fd);
+
+  gimp_config_serialize_properties (object, fd);
 }
 
 static gboolean
@@ -95,11 +105,12 @@ gimp_config_iface_deserialize (GObject  *object,
 }
 
 gboolean
-gimp_config_serialize (GObject     *object,
-                       const gchar *filename)
+gimp_config_serialize (GObject      *object,
+                       const gchar  *filename,
+                       gboolean      put_unknown)
 {
   GimpConfigInterface *gimp_config_iface;
-  FILE                *file;
+  gint                 fd;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -108,22 +119,26 @@ gimp_config_serialize (GObject     *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  file = fopen (filename, "w");
+  fd = open (filename, O_WRONLY | O_CREAT);
 
-  if (!file)
-    return FALSE;
+  if (fd == -1)
+    {
+      g_message (_("Failed to open file '%s': %s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
 
-  gimp_config_iface->serialize (object, file);
+  gimp_config_iface->serialize (object, fd, put_unknown);
 
-  fclose (file);
+  close (fd);
 
   return TRUE;
 }
 
 gboolean
-gimp_config_deserialize (GObject     *object,
-                         const gchar *filename,
-                         gboolean     store_unknown)
+gimp_config_deserialize (GObject      *object,
+                         const gchar  *filename,
+                         gboolean      store_unknown)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
@@ -140,7 +155,11 @@ gimp_config_deserialize (GObject     *object,
   fd = open (filename, O_RDONLY);
 
   if (fd == -1)
-    return FALSE;
+    {
+      g_message (_("Failed to open file '%s': %s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
 
   scanner = g_scanner_new (NULL);
 

@@ -34,6 +34,8 @@
 #include "gimpconfig-substitute.h"
 #include "gimpconfig-types.h"
 
+#include "libgimp/gimpintl.h"
+
 
 /*  
  *  All functions return G_TOKEN_RIGHT_PAREN on success,
@@ -63,8 +65,8 @@ static GTokenType  gimp_config_deserialize_any         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 
-static inline gboolean scanner_string_utf8_valid (GScanner    *scanner, 
-                                                  const gchar *token_name);
+static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner, 
+                                                   const gchar *token_name);
 
 
 gboolean
@@ -102,6 +104,8 @@ gimp_config_deserialize_properties (GObject  *object,
                                       prop_spec->name, prop_spec);
         }
     }
+
+  g_free (property_specs);
 
   token = G_TOKEN_LEFT_PAREN;
   
@@ -146,11 +150,8 @@ gimp_config_deserialize_properties (GObject  *object,
     {
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             "fatal parse error", TRUE);
+                             _("fatal parse error"), TRUE);
     }
-
-  if (property_specs)
-    g_free (property_specs);
 
   g_scanner_set_scope (scanner, old_scope_id);
 
@@ -292,9 +293,10 @@ gimp_config_deserialize_fundamental (GValue     *value,
         g_value_set_boolean (value, FALSE);
       else
         {
+          /* don't translate 'yes' and 'no' */
           g_scanner_warn 
             (scanner, 
-             "expected 'yes' or 'no' for boolean token %s, got '%s'", 
+             _("expected 'yes' or 'no' for boolean token %s, got '%s'"), 
              prop_spec->name, scanner->value.v_identifier);
           return G_TOKEN_NONE;
         }
@@ -350,7 +352,7 @@ gimp_config_deserialize_enum (GValue     *value,
   if (!enum_value)
     {
       g_scanner_warn (scanner, 
-                      "invalid value '%s' for enum property %s", 
+                      _("invalid value '%s' for token %s"), 
                       scanner->value.v_identifier, prop_spec->name);
       return G_TOKEN_NONE;
     }
@@ -443,14 +445,11 @@ scanner_string_utf8_valid (GScanner    *scanner,
                            const gchar *token_name)
 {
   if (g_utf8_validate (scanner->value.v_string, -1, NULL))
-    {
-      return TRUE;
-    }
-  else
-    {
-      g_scanner_warn (scanner, 
-                      "value for token %s is not a valid UTF-8 string", 
-                      token_name);
-      return FALSE;
-    }
+    return TRUE;
+
+  g_scanner_warn (scanner, 
+                  _("value for token %s is not a valid UTF-8 string"), 
+                  token_name);
+
+  return FALSE;
 }

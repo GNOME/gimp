@@ -11,6 +11,9 @@ app/nav_window.c
 app/undo.c
 app/undo_history.c
 
+app/config/gimpconfig-deserialize.c
+app/config/gimpconfig.c
+
 app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c

@@ -59,10 +59,10 @@ struct _GimpCoreConfig
 
   GimpImageBaseType    default_image_type;
 
-  /* the remaining fields are not yet implemented as properties
+  gint                 default_image_width;
+  gint                 default_image_height;
 
-  gint                 default_width;
-  gint                 default_height;
+  /* the remaining fields are not yet implemented as properties
 
   GimpUnit             default_units;
   gdouble              default_xresolution;

@@ -35,7 +35,8 @@ struct _GimpConfigInterface
   GTypeInterface base_iface;
 
   void     (* serialize)   (GObject  *object,
-                            FILE     *fd);
+                            gint      fd,
+                            gboolean  put_unknown);
   gboolean (* deserialize) (GObject  *object,
                             GScanner *scanner,
                             gboolean  store_unknown);
@@ -49,7 +50,8 @@ typedef void  (*GimpConfigForeachFunc) (const gchar *key,
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
 gboolean      gimp_config_serialize             (GObject     *object,
-                                                 const gchar *filename);
+                                                 const gchar *filename,
+                                                 gboolean     put_unknown);
 gboolean      gimp_config_deserialize           (GObject     *object,
                                                  const gchar *filename,
                                                  gboolean     store_unknown);

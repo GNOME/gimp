@@ -1,3 +1,15 @@
+2001-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-params.h
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig-substitute.c
+	* app/config/gimpconfig-types.c
+	* app/config/gimpconfig.[ch]
+	* app/config/test-config.c: code cleanup, I18N
+
+	* app/config/gimpcoreconfig.[ch]: some more properties.
+
 2001-12-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: made gimp->global_buffer a GimpBuffer,

@@ -38,33 +38,45 @@ int
 main (int   argc,
       char *argv[])
 {
-  GimpBaseConfig *config;
-  const gchar    *filename = "foorc";
-  gboolean        header   = TRUE;
+  GObject     *config;
+  const gchar *filename = "foorc";
+  gchar       *header;
+  gint         i;
+
+  for (i = 1; i < argc; i++)
+    {
+      if (strcmp (argv[i], "--g-fatal-warnings") == 0)
+        {
+          GLogLevelFlags fatal_mask;
+        
+          fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+          fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+          g_log_set_always_fatal (fatal_mask);
+        }
+    }
 
   g_type_init ();
 
-  g_print ("Testing GimpConfig ...\n");
+  g_print ("Testing GimpConfig ...\n\n");
 
   config = g_object_new (GIMP_TYPE_CORE_CONFIG, NULL);
 
-
-  g_print (" Serializing default properties of %s to '%s' ...\n", 
+  g_print (" Serializing %s to '%s' ... ", 
            g_type_name (G_TYPE_FROM_INSTANCE (config)), filename);
+  gimp_config_serialize (config, filename, TRUE);
+  g_print ("done.\n\n");
 
-  gimp_config_serialize (G_OBJECT (config), filename);
-
-
-  g_print (" Deserializing from '%s' ...\n", filename);
-
-  g_signal_connect (G_OBJECT (config), "notify",
+  g_signal_connect (config, "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
-  gimp_config_deserialize (G_OBJECT (config), filename, TRUE);
-  
-  gimp_config_foreach_unknown_token (G_OBJECT (config), 
-                                     output_unknown_token, &header);
 
+  g_print (" Deserializing from '%s' ...\n", filename);
+  gimp_config_deserialize (config, filename, TRUE);
+
+  header = "\n  Unknown string tokens:\n";
+  gimp_config_foreach_unknown_token (config, output_unknown_token, &header);
+
+  g_print ("\n");
 
   g_object_unref (config);
   
@@ -94,8 +106,8 @@ notify_callback (GObject    *object,
 
       g_print ("  %s -> %s\n", pspec->name, g_value_get_string (&dest));
 
-      g_value_unset (&src);
       g_value_unset (&dest);
+      g_value_unset (&src);
     }
   else
     {
@@ -108,13 +120,13 @@ output_unknown_token (const gchar *key,
                       const gchar *value,
                       gpointer     data)
 {
-  gboolean *header  = (gboolean *) data;
-  gchar    *escaped = g_strescape (value, NULL);
+  gchar **header  = (gchar **) data;
+  gchar  *escaped = g_strescape (value, NULL);
 
   if (*header)
     {
-      g_print ("  Unknown string tokens:\n");
-      *header = FALSE;
+      g_print (*header);
+      *header = NULL;
     }
 
   g_print ("   %s \"%s\"\n", key, value);

@@ -64,10 +64,10 @@ enum
   PROP_DEFAULT_PALETTE,
   PROP_DEFAULT_GRADIENT,
   PROP_DEFAULT_COMMENT,
-  PROP_DEFAULT_IMAGE_TYPE
+  PROP_DEFAULT_IMAGE_TYPE,
+  PROP_DEFAULT_IMAGE_WIDTH,
+  PROP_DEFAULT_IMAGE_HEIGHT,  
 };
-
-static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -102,8 +102,6 @@ static void
 gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class = G_OBJECT_CLASS (klass);
 
@@ -146,6 +144,12 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
                                  "default-image-type",
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_WIDTH,
+                                "default-image-width",
+                                1, 0x8000, 256);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_HEIGHT,
+                                "default-image-height",
+                                1, 0x8000, 256);
 }
 
 static void
@@ -207,6 +211,12 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEFAULT_IMAGE_TYPE:
       core_config->default_image_type = g_value_get_enum (value);
       break;
+    case PROP_DEFAULT_IMAGE_WIDTH:
+      core_config->default_image_width = g_value_get_int (value);
+      break;
+    case PROP_DEFAULT_IMAGE_HEIGHT:
+      core_config->default_image_height = g_value_get_int (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -260,6 +270,12 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_IMAGE_TYPE:
       g_value_set_enum (value, core_config->default_image_type);
+      break;
+    case PROP_DEFAULT_IMAGE_WIDTH:
+      g_value_set_int (value, core_config->default_image_width);
+      break;
+    case PROP_DEFAULT_IMAGE_HEIGHT:
+      g_value_set_int (value, core_config->default_image_height);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

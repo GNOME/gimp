@@ -32,6 +32,8 @@
 #include "gimpconfig-substitute.h"
 
 
+#define SUBSTS_ALLOC 4
+
 static inline gchar * extract_token (const gchar **str);
 
 
@@ -40,14 +42,14 @@ gimp_config_substitute_path (GObject     *object,
                              const gchar *path,
                              gboolean     use_env)
 {
-  const gchar *s;
   const gchar *p;
+  const gchar *s;
   gchar       *n;
   gchar       *token;
-  gchar       *new_path  = NULL;
-  gchar      **substs    = NULL;
-  gint         n_substs  = 0;
-  glong        length    = 0;
+  gchar       *new_path = NULL;
+  gchar      **substs   = NULL;
+  guint        n_substs = 0;
+  gint         length   = 0;
   gint         i;
 
   g_return_val_if_fail (G_IS_OBJECT (object), NULL);
@@ -117,7 +119,9 @@ gimp_config_substitute_path (GObject     *object,
                   goto cleanup;
                 }
 
-              substs = g_renew (gchar *, substs, 2 * (n_substs + 1));
+              if (n_substs % SUBSTS_ALLOC == 0)
+                substs = g_renew (gchar *, substs, 2*(n_substs+SUBSTS_ALLOC));
+
               substs[2*n_substs]     = token;
               substs[2*n_substs + 1] = (gchar *) s;
               n_substs++;
@@ -132,7 +136,7 @@ gimp_config_substitute_path (GObject     *object,
 	}
     }
 
-  if (!substs)
+  if (!n_substs)
     return g_strdup (path);
 
   new_path = g_new (gchar, length + 1);

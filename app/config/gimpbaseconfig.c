@@ -54,8 +54,6 @@ enum
   PROP_INTERPOLATION_TYPE,
 };
 
-static GObjectClass *parent_class = NULL;
-
 
 GType 
 gimp_base_config_get_type (void)
@@ -94,8 +92,6 @@ static void
 gimp_base_config_class_init (GimpBaseConfigClass *klass)
 {
   GObjectClass *object_class;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class = G_OBJECT_CLASS (klass);
 
