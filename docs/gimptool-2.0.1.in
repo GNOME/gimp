@@ -184,15 +184,14 @@ and \-\-libs options. This option must be specified before any
 .SH ENVIRONMENT
 .PP
 .TP 8
-.B PKG_CONFIG
-to get the location of the pkg-config program used to determine details
-about your glib, pango and gtk+ installation.
-.TP 8
 .B CC
 to get the name of the desired C compiler.
 .TP 8
 .B CFLAGS
 to get the preferred flags to pass to the C compiler for plug-in building.
+.TP 8
+.B DESTDIR
+to add a prefix to the install/uninstall path.
 .TP 8
 .B LDFLAGS
 to get the prefered flags for passing to the linker.
@@ -200,6 +199,10 @@ to get the prefered flags for passing to the linker.
 .B LIBS
 for passing extra libs that may be needed in the build process. For example,
 LIBS=-lintl .
+.TP 8
+.B PKG_CONFIG
+to get the location of the pkg-config program used to determine details
+about your glib, pango and gtk+ installation.
 
 .SH SEE ALSO
 .BR gimp (1), 

@@ -43,9 +43,13 @@ INCLUDES = @STRIP_BEGIN@ 		\
 	-I$(includedir)			\
 @STRIP_END@
 
+
 #
 # test programs, not to be built by default and never installed
 #
+
+TESTS = test-config
+
 EXTRA_PROGRAMS = test-config
 
 test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\

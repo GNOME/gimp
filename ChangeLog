@@ -1,5 +1,26 @@
 2001-12-18  Sven Neumann  <sven@gimp.org>
 
+	* docs/gimptool-1.3.1.in
+	* gimptool-1.3.in: applied patch from Roger Leigh <rl117@york.ac.uk>
+	that makes gimptool respect the DESTDIR environment variable.
+
+	* app/config/Makefile.am: declare test-config as TESTS so it is build
+	and executed when running 'make check'.
+	
+	* app/config/gimpbaseconfig.c: don't register a GimpConfig interface.
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c: no need to include "gimpconfig.h".
+	
+	* app/config/gimpconfig.[ch]: removed store_unknown parameter from
+	deserialize method. The default implementation will bail out on 
+	unknown tokens.
+	
+	* app/config/gimprc.c: override deserialize method so it stores 
+	unknown tokens.
+
+2001-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am: don't build test-config by default.
 	
 	* app/config/gimprc.[ch]: new files for the GimpRc implementation.

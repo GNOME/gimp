@@ -77,7 +77,7 @@ main (int   argc,
                     NULL);
 
   g_print (" Deserializing from '%s' ...\n", filename);
-  gimp_config_deserialize (G_OBJECT (gimprc), filename, TRUE);
+  gimp_config_deserialize (G_OBJECT (gimprc), filename);
 
   header = "\n  Unknown string tokens:\n";
   gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
@@ -87,7 +87,7 @@ main (int   argc,
 
   g_object_unref (G_OBJECT (gimprc));
   
-  g_print ("Done.\n");
+  g_print ("Done.\n\n");
 
   return 0;
 }

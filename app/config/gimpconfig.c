@@ -46,8 +46,7 @@ static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 static void      gimp_config_iface_serialize    (GObject  *object,
                                                  gint      fd);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
-                                                 GScanner *scanner,
-                                                 gboolean  store_unknown);
+                                                 GScanner *scanner);
 
 
 GType
@@ -92,12 +91,9 @@ gimp_config_iface_serialize (GObject *object,
 
 static gboolean
 gimp_config_iface_deserialize (GObject  *object,
-                               GScanner *scanner,
-                               gboolean  store_unknown)
+                               GScanner *scanner)
 {
-  return gimp_config_deserialize_properties (object, 
-                                             scanner, 
-                                             store_unknown);
+  return gimp_config_deserialize_properties (object, scanner, FALSE);
 }
 
 gboolean
@@ -133,8 +129,7 @@ gimp_config_serialize (GObject      *object,
 
 gboolean
 gimp_config_deserialize (GObject      *object,
-                         const gchar  *filename,
-                         gboolean      store_unknown)
+                         const gchar  *filename)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
@@ -165,7 +160,7 @@ gimp_config_deserialize (GObject      *object,
   g_scanner_input_file (scanner, fd);
   scanner->input_name = filename;
 
-  success = gimp_config_iface->deserialize (object, scanner, store_unknown);
+  success = gimp_config_iface->deserialize (object, scanner);
 
   g_scanner_destroy (scanner);
   close (fd);

@@ -25,7 +25,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 
@@ -74,15 +73,10 @@ gimp_base_config_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
-      static const GInterfaceInfo config_iface_info = { NULL, NULL, NULL };
 
       config_type = g_type_register_static (G_TYPE_OBJECT, 
                                             "GimpBaseConfig", 
                                             &config_info, 0);
-
-      g_type_add_interface_static (config_type, 
-                                   GIMP_TYPE_CONFIG_INTERFACE,
-                                   &config_iface_info);
     }
 
   return config_type;

@@ -27,13 +27,16 @@
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
+#include "gimpconfig-deserialize.h"
 #include "gimprc.h"
 
 
-static void  gimp_rc_config_iface_init (gpointer     iface,
-                                        gpointer     iface_data);
-static void  gimp_rc_serialize         (GObject     *object,
-                                        gint         fd);
+static void     gimp_rc_config_iface_init (gpointer  iface,
+                                           gpointer  iface_data);
+static void     gimp_rc_serialize         (GObject  *object,
+                                           gint      fd);
+static gboolean gimp_rc_deserialize       (GObject  *object,
+                                           GScanner *scanner);
 
 
 GType 
@@ -80,7 +83,8 @@ gimp_rc_config_iface_init (gpointer  iface,
 {
   GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
 
-  config_iface->serialize = gimp_rc_serialize;
+  config_iface->serialize   = gimp_rc_serialize;
+  config_iface->deserialize = gimp_rc_deserialize;
 }
 
 static void
@@ -89,6 +93,13 @@ gimp_rc_serialize (GObject *object,
 {
   gimp_config_serialize_properties (object, fd);
   gimp_config_serialize_unknown_tokens (object, fd);
+}
+
+static gboolean
+gimp_rc_deserialize (GObject  *object,
+                     GScanner *scanner)
+{
+  return gimp_config_deserialize_properties (object, scanner, TRUE);
 }
 
 GimpRc *
