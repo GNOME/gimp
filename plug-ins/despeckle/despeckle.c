@@ -43,23 +43,21 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.12  1998/04/28 03:50:16  yosh
- *   * plug-ins/animationplay/animationplay.c
- *   * plug-ins/CEL/CEL.c
- *   * plug-ins/psd/psd.c
- *   * plug-ins/xd/xd.c: applied gimp-joke-980427-0, warning cleanups
- *
- *   * app/temp_buf.c: applied gimp-entity-980427-0, temp_buf swap speedups and
- *   more robust tempfile handling
+ *   Revision 1.12.2.1  1998/06/06 23:28:12  yosh
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
  *
- *   Revision 1.11  1998/04/27 22:00:59  neo
- *   Updated sharpen and despeckle. Wow, sharpen is balzingly fast now, while
- *   despeckle is still sort of lame...
+ *   Revision 1.13  1998/06/06 23:22:16  yosh
+ *   * adding Lighting plugin
  *
+ *   * updated despeckle, png, sgi, and sharpen
  *
- *   --Sven
+ *   -Yosh
+ *
+ *   Revision 1.21  1998/05/17 15:57:33  mike
+ *   Removed extra variables.
+ *   Removed signal handlers (used for debugging)
  *
  *   Revision 1.20  1998/04/27  15:59:17  mike
  *   Fixed RGB preview problem...
@@ -144,7 +142,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -155,7 +152,7 @@
  */
 
 #define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.3.1 - 27 April 1998"
+#define PLUG_IN_VERSION		"1.3.2 - 17 May 1998"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
@@ -706,9 +703,6 @@ despeckle_dialog(void)
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
   gdk_set_use_xshm(gimp_use_xshm());
-
-  /* signal(SIGBUS, SIG_DFL);
-  signal(SIGSEGV, SIG_DFL); */
 
   gtk_preview_set_gamma(gimp_gamma());
   gtk_preview_set_install_cmap(gimp_install_cmap());

@@ -1,3 +1,7 @@
+Sat Jun  6 16:12:20 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* updated despeckle, png, sgi, and sharpen
+
 Sat Jun  6 14:53:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gfli/gfli.c: fixed gccism

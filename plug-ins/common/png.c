@@ -37,55 +37,23 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/05/31 06:49:16  yosh
- *   * app/interface.c: plug mem leak in message_box
- *
- *   * plug-ins/mail/mail.c: use g_message
- *
- *   * plug-ins/script-fu/scripts/carve-it.scm: fix for gimp-layer-new params from
- *   Kevin Cozens <kcozens@interlog.com>
- *
- *   * plug-ins/CEL/CEL.c
- *   * plug-ins/pcx/pcx.c
- *   * plug-ins/tiff/tiff.c: updates from author
- *
- *   * plug-ins/png/png.c: correct copyright
- *
- *   * plug-ins/print/print.h: use correct version
+ *   Revision 1.7.2.1  1998/06/06 23:28:13  yosh
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
  *
- *   Revision 1.6  1998/04/13 05:43:08  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *   Revision 1.8  1998/06/06 23:22:17  yosh
+ *   * adding Lighting plugin
+ *
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
  *
- *   Revision 1.5  1998/03/30 19:05:47  adrian
- *   updated png.c so non-interactive mode works now
- *   -adrian
+ *   Revision 1.14  1998/05/17 15:54:15  mike
+ *   Added gtk_rc_parse(), removed unnecessary variables.
  *
- *   Revision 1.4  1998/03/26 02:08:23  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
- *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
- *
- *   -Yosh
- *
- *   Revision 1.3  1998/03/16 06:33:54  yosh
- *   configure saves CFLAGS properly
- *   all plugins should parse gtkrc now
- *
- *   -Yosh
- *
- *   Revision 1.2  1998/01/05 09:30:23  yosh
- *   Check for div-by-zero in by_color_select.c when threshold is 0
- *   The text tool handles the no fonts case better
- *   Minor bug in tile saving squashed
- *   updated png plugin
- *   added flarefx plugin
- *
- *   -Yosh
+ *   Revision 1.13  1998/04/02  16:00:13  mike
+ *   Fixed bug in run() - was looking for 6 arguments and not 7 as advertised.
  *
  *   Revision 1.12  1998/01/04  14:10:09  mike
  *   Fixed paletted image saving bug - wasn't correctly storing the number of
@@ -150,7 +118,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.5 - 4 January 1998"
+#define PLUG_IN_VERSION		"1.1.6 - 17 May 1998"
 #define SCALE_WIDTH		125
 
 

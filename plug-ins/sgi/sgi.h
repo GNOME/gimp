@@ -22,22 +22,20 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/04/24 02:18:45  yosh
- *   * Added sharpen to stable dist
- *
- *   * updated sgi and despeckle plugins
- *
- *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
- *   to this is not-supported.
- *
- *   * plug-in/gfig/gfig.c: spelling corrections :)
- *
- *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
- *   file dialog
- *
- *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
+ *   Revision 1.7.2.1  1998/06/06 23:28:16  yosh
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
+ *
+ *   Revision 1.8  1998/06/06 23:22:20  yosh
+ *   * adding Lighting plugin
+ *
+ *   * updated despeckle, png, sgi, and sharpen
+ *
+ *   -Yosh
+ *
+ *   Revision 1.5  1998/05/17 16:01:33  mike
+ *   Added <unistd.h> header file.
  *
  *   Revision 1.4  1998/04/23  17:40:49  mike
  *   Updated to support 16-bit <unsigned> image data.

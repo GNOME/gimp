@@ -34,22 +34,22 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.8  1998/04/24 02:18:44  yosh
- *   * Added sharpen to stable dist
- *
- *   * updated sgi and despeckle plugins
- *
- *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
- *   to this is not-supported.
- *
- *   * plug-in/gfig/gfig.c: spelling corrections :)
- *
- *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
- *   file dialog
- *
- *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
+ *   Revision 1.8.2.1  1998/06/06 23:28:14  yosh
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
+ *
+ *   Revision 1.9  1998/06/06 23:22:19  yosh
+ *   * adding Lighting plugin
+ *
+ *   * updated despeckle, png, sgi, and sharpen
+ *
+ *   -Yosh
+ *
+ *   Revision 1.5  1998/05/17 16:01:33  mike
+ *   Removed signal handler stuff used for debugging.
+ *   Added gtk_rc_parse().
+ *   Removed extra variables.
  *
  *   Revision 1.4  1998/04/23  17:40:49  mike
  *   Updated to support 16-bit <unsigned> image data.
@@ -80,7 +80,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1 - 23 April 1998"
+#define PLUG_IN_VERSION		"1.1.1 - 17 May 1998"
 
 
 /*
@@ -256,7 +256,7 @@ run(char   *name,		/* I - Name of filter program. */
 
             if (compression < 0 || compression > 2)
               values[0].data.d_status = STATUS_CALLING_ERROR;
-          }
+          };
           break;
 
       case RUN_WITH_LAST_VALS :
@@ -269,7 +269,7 @@ run(char   *name,		/* I - Name of filter program. */
 
       default :
           break;
-    }
+    };
 
     if (values[0].data.d_status == STATUS_SUCCESS)
     {
@@ -278,7 +278,7 @@ run(char   *name,		/* I - Name of filter program. */
         gimp_set_data("file_sgi_save", &compression, sizeof(compression));
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-    }
+    };
   }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -320,7 +320,7 @@ load_image(char *filename)	/* I - File to load */
   {
     g_print("can't open image file\n");
     gimp_quit();
-  }
+  };
 
   if (strrchr(filename, '/') != NULL)
     sprintf(progress, "Loading %s:", strrchr(filename, '/') + 1);
@@ -354,14 +354,14 @@ load_image(char *filename)	/* I - File to load */
         image_type = RGB;
         layer_type = RGBA_IMAGE;
         break;
-  }
+  };
 
   image = gimp_image_new(sgip->xsize, sgip->ysize, image_type);
   if (image == -1)
   {
     g_print("can't allocate new image\n");
     gimp_quit();
-  }
+  };
 
   gimp_image_set_filename(image, filename);
 
@@ -413,7 +413,7 @@ load_image(char *filename)	/* I - File to load */
       count = 0;
 
       gimp_progress_update((double)y / (double)sgip->ysize);
-    }
+    };
 
     for (i = 0; i < sgip->zsize; i ++)
       if (sgiGetRow(sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
@@ -439,8 +439,8 @@ load_image(char *filename)	/* I - File to load */
       for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
 	for (i = 0; i < sgip->zsize; i ++, pptr ++)
 	  *pptr = rows[i][x] >> 8;
-    }
-  }
+    };
+  };
 
  /*
   * Do the last n rows (count always > 0)
@@ -520,7 +520,7 @@ save_image(char   *filename,	/* I - File to save to */
     case RGBA_IMAGE :
         zsize = 4;
         break;
-  }
+  };
 
  /*
   * Open the file for writing...
@@ -532,7 +532,7 @@ save_image(char   *filename,	/* I - File to save to */
   {
     g_print("can't create image file\n");
     gimp_quit();
-  }
+  };
 
   if (strrchr(filename, '/') != NULL)
     sprintf(progress, "Saving %s:", strrchr(filename, '/') + 1);
@@ -587,10 +587,10 @@ save_image(char   *filename,	/* I - File to save to */
 
       for (j = 0; j < zsize; j ++)
         sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
-    }
+    };
 
     gimp_progress_update((double)y / (double)drawable->height);
-  }
+  };
 
  /*
   * Done with the file...
@@ -680,9 +680,6 @@ save_dialog(void)
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
 
-  signal(SIGBUS, SIG_DFL);
-  signal(SIGSEGV, SIG_DFL);
-
  /*
   * Open a dialog window...
   */
@@ -742,7 +739,7 @@ save_dialog(void)
 		       (gpointer)((long)i));
     gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
     gtk_widget_show(button);
-  }
+  };
 
  /*
   * Show everything and go...
