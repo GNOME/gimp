@@ -1,5 +1,12 @@
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: removed broken code that used
+	to update the preview when the user releases the button after
+	moving a slider. Instead set the range to UPDATE_DELAYED and
+	update the preview on "value_changed". Fixes bug #97350.
+
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/display.pdb
 	* tools/pdbgen/pdb/layer.pdb: applied a modified version of a
 	patch from Wolfgang Hofer <hof@gimp.org> that adds two new PDB

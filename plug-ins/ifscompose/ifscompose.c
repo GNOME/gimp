@@ -262,9 +262,6 @@ static void value_pair_entry_callback     (GtkWidget *w,
 					   ValuePair *value_pair);
 static void value_pair_destroy_callback   (GtkWidget *widget,
 					   ValuePair *value_pair);
-static void value_pair_button_release     (GtkWidget *widget,
-					   GdkEventButton *event,
-					   gpointer   data);
 static void value_pair_scale_callback     (GtkAdjustment *adjustment,
 					   ValuePair *value_pair);
 
@@ -2146,7 +2143,7 @@ value_pair_create (gpointer      data,
 
   if (create_scale)
     {
-      value_pair->scale = gtk_hscale_new(GTK_ADJUSTMENT (value_pair->adjustment));
+      value_pair->scale = gtk_hscale_new (GTK_ADJUSTMENT (value_pair->adjustment));
       gtk_widget_ref (value_pair->scale);
 
       if (type == VALUE_PAIR_INT)
@@ -2155,10 +2152,8 @@ value_pair_create (gpointer      data,
 	  gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 2);
 
       gtk_scale_set_draw_value (GTK_SCALE (value_pair->scale), FALSE);
-      gtk_signal_connect (GTK_OBJECT (value_pair->scale),
-			  "button_release_event",
-			  (GtkSignalFunc) value_pair_button_release,
-			  NULL);
+      gtk_range_set_update_policy (GTK_RANGE (value_pair->scale),
+				   GTK_UPDATE_DELAYED);
     }
   else
     value_pair->scale = NULL;
@@ -2205,14 +2200,6 @@ value_pair_update (ValuePair *value_pair)
 }
 
 static void
-value_pair_button_release (GtkWidget      *widget,
-			   GdkEventButton *event,
-			   gpointer        data)
-{
-  val_changed_update ();
-}
-
-static void
 value_pair_scale_callback (GtkAdjustment *adjustment,
 			   ValuePair     *value_pair)
 {
@@ -2244,6 +2231,8 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
       gtk_entry_set_text (GTK_ENTRY (value_pair->entry), buffer);
       gtk_signal_handler_unblock(GTK_OBJECT(value_pair->entry),
 				 value_pair->entry_handler_id);
+
+      val_changed_update ();
     }
 }
 
@@ -2275,10 +2264,8 @@ value_pair_entry_callback (GtkWidget *widget,
 	    *value_pair->data.i = new_value;
 	  else
 	    *value_pair->data.d = new_value;
-	  adjustment->value = new_value;
-	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
 
-	  val_changed_update();
+	  gtk_adjustment_set_value (adjustment, new_value);
 	}
     }
 }
