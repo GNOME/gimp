@@ -1341,7 +1341,7 @@ grid_render (GimpDrawable *drawable)
   GimpPixelRgn src_rgn;
   gint i, j, k;
   gint x1, y1, x2, y2;
-  guchar *data;
+  guchar *dest, *d;
   guchar col[4];
   gint bytes;
   gint size, frac_size;
@@ -1359,11 +1359,19 @@ grid_render (GimpDrawable *drawable)
   for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       size = src_rgn.w * src_rgn.h;
-      data = src_rgn.data;
+      dest = src_rgn.data;
 
-      while (size--)
-	for (i = 0; i < bytes; i++)
-	  *data++ = back[i];
+      for (i = 0; i < src_rgn.h ; i++)
+        {
+          d = dest;
+          for (j = 0; j < src_rgn.w ; j++)
+            {
+              for (k = 0; k < bytes; k++)
+                d[k] = back[k];
+              d += bytes;
+            }
+          dest += src_rgn.rowstride;
+        }
     }
 
   size = (grid_rows + grid_row_pad) * (grid_cols + grid_col_pad);

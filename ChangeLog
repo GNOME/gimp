@@ -1,3 +1,8 @@
+2004-01-23  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/mosaic.c: properly use src_rgn.rowstride when
+	initializing the target region. Fixes bug #132271.
+
 2004-01-23  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: made the pygtk minimum version an m4 define as well.
