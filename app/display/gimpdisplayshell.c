@@ -675,7 +675,9 @@ create_display_shell (int   gdisp_id,
 		      gdisp);
 
   gdisp->hsb = gtk_hscrollbar_new (gdisp->hsbdata);
+  GTK_WIDGET_UNSET_FLAGS (gdisp->hsb, GTK_CAN_FOCUS);
   gdisp->vsb = gtk_vscrollbar_new (gdisp->vsbdata);
+  GTK_WIDGET_UNSET_FLAGS (gdisp->vsb, GTK_CAN_FOCUS);
 
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);

@@ -1,3 +1,8 @@
+Tue Mar 10 21:31:21 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/interface.c: scrollbars in the drawing area shouldn't
+	autofocus
+
 Tue Mar 10 17:09:27 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c
