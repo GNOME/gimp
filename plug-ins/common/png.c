@@ -100,6 +100,7 @@ static gint	save_image                (gchar       *filename,
 
 static void	respin_cmap		  (png_structp   pp,
 					   png_infop     info,
+                                           guchar       *remap,
 					   gint32        image_ID,
                                            GimpDrawable *drawable);
 
@@ -164,7 +165,7 @@ static int find_unused_ia_colour (guchar *pixels,
       if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
     }
   
-  for (i = 0; i < 256; i++)
+  for (i = 255; i >= 0; i--)
     {
       if (ix_used[i] == (gboolean)FALSE)
 	{
@@ -790,6 +791,8 @@ save_image (gchar  *filename,	        /* I - File to save to */
   time_t	cutime;         /* Time since epoch */
   struct tm	*gmt;		/* GMT broken down */
 
+  guchar remap [256];    /* Re-mapping for the palette */
+
  /*
   * PNG 0.89 and newer have a sane, forwards compatible constructor.
   * Some SGI IRIX users will not have a new enough version though
@@ -849,6 +852,14 @@ save_image (gchar  *filename,	        /* I - File to save to */
   info->bit_depth      = 8;
   info->interlace_type = pngvals.interlaced;
 
+ /* 
+  * Initialise remap[]
+  */
+  for (i = 0; i < 256; i ++)
+    {
+      remap[i] = i;
+    }
+
  /*
   * Set color type and remember bytes per pixel count 
   */
@@ -881,7 +892,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
     case GIMP_INDEXEDA_IMAGE :
 	bpp		 = 2;
 	info->color_type = PNG_COLOR_TYPE_PALETTE;
-	respin_cmap (pp, info, image_ID, drawable); /* fix up transparency */
+	respin_cmap (pp, info, remap, image_ID, drawable); /* fix up transparency */
 	break;
     default:
         g_message ("%s\nImage type can't be saved as PNG", filename);
@@ -998,22 +1009,35 @@ save_image (gchar  *filename,	        /* I - File to save to */
 	num = end - begin;
 	
 	gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin, drawable->width, num);
-        if (info->valid & PNG_INFO_tRNS) {
-          for (i = 0; i < num; ++i) {
-	    fixed= pixels[i];
-            for (k = 0; k < drawable->width; ++k) {
-              fixed[k] = (fixed[k*2+1] > 127) ? fixed[k*2] + 1 : 0;
-            }
+        if (info->valid & PNG_INFO_tRNS) 
+          {
+            for (i = 0; i < num; ++i) 
+              {
+	        fixed = pixels[i];
+                for (k = 0; k < drawable->width; ++k) 
+                  {
+                    if (PNG_INFO_PLTE)
+                      fixed[k] = remap[fixed[2*k]];
+                    else
+                      fixed[k] = (fixed[k*2+1] > 127) ? 
+                                 fixed[k*2] + 1 : 
+                                 0;
+                     
+                  }
+              }
+            /* Forgot this case before, what if there are too many colors? */
+          } 
+        else if (info->valid & PNG_INFO_PLTE && bpp == 2) 
+          {
+            for (i = 0; i < num; ++i) 
+              {
+	        fixed = pixels[i];
+                for (k = 0; k < drawable->width; ++k) 
+                  {
+                    fixed[k] = fixed[k*2];
+                  }
+              }
           }
-       /* Forgot this case before, what if there are too many colors? */
-        } else if (info->valid & PNG_INFO_PLTE && bpp == 2) {
-          for (i = 0; i < num; ++i) {
-	    fixed= pixels[i];
-            for (k = 0; k < drawable->width; ++k) {
-              fixed[k] = fixed[k*2];
-            }
-          }
-        }
 	
 	png_write_rows (pp, pixels, num);
 	
@@ -1049,17 +1073,13 @@ save_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-/* respin_cmap actually reverse fills the colormap, so that empty entries
-   are left at the FRONT, this is only needed to reduce the size of the
-   tRNS chunk when saving GIF-like transparent images with colormaps */
-
 static void respin_cmap (png_structp pp, 
                          png_infop info, 
+                         guchar *remap,
                          gint32 image_ID,
                          GimpDrawable *drawable) 
 {
   static const guchar trans[] = { 0 };
-  static guchar after[3 * 256];
   gint    colors;
   guchar *before;
   gint transparent;
@@ -1090,49 +1110,53 @@ static void respin_cmap (png_structp pp,
                                       drawable->width * drawable->height,
                                       &colors);
 
-  g_free(pixels);
-  
 #if PNG_LIBPNG_VER > 99
   if (transparent != -1)  /* we have a winner for a transparent 
-                           * index */
+                           * index - do like gif2png and swap 
+                           * index 0 and index transparent */
     {
-      GimpRGB color;
+      png_color palette[256];
+      gint i;
+      
+      png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);
+      g_print ("PNG: Swapping index %d  and index 0 of \"before\" ", 
+          transparent );
+      g_print ("in \"after\".\n");
 
+      g_print ("Old palette:\n");
+      for(i=0; i < colors; i++)
+        g_print("Index %3d: (%3d, %3d, %3d)\n", i, 
+            before[3*i], before[3*i+1], before[3*i+2]);
+
+      /* Transform all pixels with a value = transparent to 
+       * 0 and vice versa to compensate for re-ordering in palette 
+       * due to png_set_tRNS() */
+
+      remap[0] = transparent;
+      remap[transparent] = 0;
+      
       /* Copy from index 0 to index transparent - 1 to index 1 to 
        * transparent of after, then from transparent+1 to colors-1 
        * unchanged, and finally from index transparent to index 0. */
 
-      g_print ("PNG: Copying from index 0 to index %d of \"before\" ", 
-          transparent - 1);
-      g_print ("to index 1 to index %d of \"after\".\n", transparent);
-      memcpy(after + 3, before, transparent * 3);
-
-      /* We need a check that transparent != colors - 1 */
-      
-      if ( transparent < colors - 1)
+      g_print ("PNG: Setting index %d to transparent.\n", 
+          transparent);
+      g_print ("PNG: Copying from index 0 of \"before\" ");
+      g_print ("to index %d of \"after\".\n", transparent);
+      for(i = 0; i < colors; i++)
         {
-          g_print ("PNG: Copying from index %d to index %d of \"before\" ", 
-                   transparent +1, colors - 1);
-          g_print ("to index %d to index %d of \"after\".\n", 
-                   transparent +1, colors - 1);
-          memcpy(after + 3 * (transparent + 1), 
-                 before + 3 * (transparent + 1), 
-                 (colors - transparent - 1) * 3);
+          palette[i].red = before[3 * remap[i]];
+          palette[i].green = before[3 * remap[i] + 1];
+          palette[i].blue = before[3 * remap[i] + 2];
         }
+      
+      g_print("Setting a palette of %d colours.\n", colors);
 
-      g_print ("PNG: Copying from index %d of \"before\" ", 
-          transparent );
-      g_print ("to index 0 of \"after\".\n");
-      memcpy(after, before + 3 * transparent, 3);
+      for(i=0; i < colors; i++)
+        g_print("Index %3d: (%3d, %3d, %3d)\n", i, 
+            palette[i].red, palette[i].green, palette[i].blue);
 
-      /* Apps with no natural background will use this instead, see
-         elsewhere for the bKGD chunk being written to use index 0 */
-      gimp_palette_get_background (&color);
-      gimp_rgb_get_uchar (&color, after+0, after+1, after+2);
-
-      /* One transparent palette entry, alpha == 0 */
-      png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);
-      png_set_PLTE(pp, info, (png_colorp) after, colors);
+      png_set_PLTE(pp, info, palette, colors);
     } 
   else 
     {
@@ -1146,6 +1170,8 @@ static void respin_cmap (png_structp pp,
   info->palette=     (png_colorp) before;
   info->num_palette= colors;
 #endif /* PNG_LIBPNG_VER > 99 */
+  
+  g_free (pixels);
 
 }
 
