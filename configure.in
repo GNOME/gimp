@@ -395,6 +395,14 @@ PKG_CHECK_MODULES(GMODULE, gmodule-2.0 gobject-2.0)
 AC_SUBST(GMODULE_CFLAGS)
 AC_SUBST(GMODULE_LIBS)
 
+AC_MSG_CHECKING([if GLib is version 2.5.0 or newer])
+if $PKG_CONFIG --atleast-version=2.5.0 glib-2.0; then
+  have_glib_2_5=yes
+else
+  have_glib_2_5=no
+fi
+AC_MSG_RESULT($have_glib_2_5)
+
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
 LIBS="$LIBS $GLIB_LIBS"
@@ -407,13 +415,13 @@ AC_PATH_XTRA
 AM_PATH_GTK_2_0(gtk_required_version, :,
     AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
-AC_MSG_CHECKING([if GTK+ is version 2.3.0 or newer])
-if $PKG_CONFIG --atleast-version=2.3.0 gtk+-2.0; then
-  have_gtk_2_3=yes
+AC_MSG_CHECKING([if GTK+ is version 2.5.0 or newer])
+if $PKG_CONFIG --atleast-version=2.5.0 gtk+-2.0; then
+  have_gtk_2_5=yes
 else
-  have_gtk_2_3=no
+  have_gtk_2_5=no
 fi
-AC_MSG_RESULT($have_gtk_2_3)
+AC_MSG_RESULT($have_gtk_2_5)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 AC_SUBST(GDK_PIXBUF_CFLAGS)
@@ -434,6 +442,14 @@ PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
 *** See the file 'INSTALL' for more help.]))
 AC_SUBST(PANGOFT2_CFLAGS)
 AC_SUBST(PANGOFT2_LIBS)
+
+AC_MSG_CHECKING([if Pango is version 1.5.0 or newer])
+if $PKG_CONFIG --atleast-version=1.5.0 pango; then
+  have_pango_1_5=yes
+else
+  have_pango_1_5=no
+fi
+AC_MSG_RESULT($have_pango_1_5)
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
@@ -1429,8 +1445,19 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
 # Default to disable deprecated GTK+ stuff for 2.2.x
 ####################################################
 
-if test "x$have_gtk_2_3" != "xyes"; then
-  CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+if test "x$have_glib_2_5" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
+fi
+
+if test "x$have_gtk_2_5" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED"
+
+# -DGTK_DISABLE_DEPRECATED"
+
+fi
+
+if test "x$have_pango_1_5" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 
 ############################

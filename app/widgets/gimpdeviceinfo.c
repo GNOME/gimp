@@ -382,7 +382,7 @@ gimp_device_info_get_property (GObject    *object,
 
         g_value_unset (&enum_value);
 
-        g_value_set_boxed_take_ownership (value, array);
+        g_value_take_boxed (value, array);
       }
       break;
 
@@ -429,13 +429,13 @@ gimp_device_info_get_property (GObject    *object,
               {
                 g_value_set_string (&string_value, "");
               }
- 
+
             g_value_array_append (array, &string_value);
           }
 
         g_value_unset (&string_value);
 
-        g_value_set_boxed_take_ownership (value, array);
+        g_value_take_boxed (value, array);
       }
       break;
 

@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#define PANGO_ENABLE_ENGINE
 #include <pango/pangoft2.h>
 
 #include <ft2build.h>
@@ -237,7 +238,7 @@ gimp_text_render_vectors (PangoFont     *font,
   FT_Face   face;
   FT_Glyph  glyph;
 
-  face = pango_ft2_font_get_face (font);
+  face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
 
   FT_Load_Glyph (face, (FT_UInt) pango_glyph, flags);
 
@@ -254,4 +255,6 @@ gimp_text_render_vectors (PangoFont     *font,
     }
 
   FT_Done_Glyph (glyph);
+
+  pango_fc_font_unlock_face (PANGO_FC_FONT (font));
 }

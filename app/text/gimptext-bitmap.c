@@ -22,6 +22,8 @@
 #include "config.h"
 
 #include <glib-object.h>
+
+#define PANGO_ENABLE_ENGINE
 #include <pango/pangoft2.h>
 
 #include "text/text-types.h"
@@ -51,7 +53,7 @@ gimp_text_render_bitmap (PangoFont  *font,
   const guchar *src;
   guchar       *dest;
 
-  face = pango_ft2_font_get_face (font);
+  face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
 
   FT_Set_Transform (face, trafo, NULL);
 
@@ -138,4 +140,6 @@ gimp_text_render_bitmap (PangoFont  *font,
     default:
       break;
     }
+
+  pango_fc_font_unlock_face (PANGO_FC_FONT (font));
 }

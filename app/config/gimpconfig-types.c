@@ -221,7 +221,7 @@ memsize_to_string (const GValue *src_value,
   else
     str = g_strdup_printf ("%" G_GUINT64_FORMAT, size);
 
-  g_value_set_string_take_ownership (dest_value, str);
+  g_value_take_string (dest_value, str);
 }
 
 static void

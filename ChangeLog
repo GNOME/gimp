@@ -1,5 +1,21 @@
 2004-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: define G*_DISABLE_DEPRECATED for all G* modules
+	except GTK+. Don't do so if compiling against GLib, GTK+ >= 2.5.0
+	and Pango >= 1.5.0
+
+	* libgimpwidgets/gimpoffsetarea.c: s/gdk_gc_unref/g_object_unref/
+
+	* app/config/gimpconfig-deserialize.c
+	* app/widgets/gimpdeviceinfo.c:
+	s/g_value_set_foo_take_ownership/g_value_take_foo/
+
+	* app/text/gimptext-vectors.c
+	* app/text/gimptext-bitmap.c:
+	s/pango_ft2_font_get_face/pango_fc_font_lock,unlock_face/
+
+2004-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/images-commands.c: added missing #includes.
 
 2004-05-11  Michael Natterer  <mitch@gimp.org>

@@ -716,7 +716,7 @@ gimp_config_deserialize_value_array (GValue     *value,
         return token;
     }
 
-  g_value_set_boxed_take_ownership (value, array);
+  g_value_take_boxed (value, array);
 
   return G_TOKEN_RIGHT_PAREN;
 }

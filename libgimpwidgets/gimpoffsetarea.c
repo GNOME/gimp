@@ -474,7 +474,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
           gdk_draw_rectangle (widget->window, gc, FALSE,
                               x + 1, y + 1, w - 3, h - 3);
 
-          gdk_gc_unref (gc);
+          g_object_unref (gc);
        }
       else
         {
