@@ -62,7 +62,7 @@ static MapInfo_t *_map_info;
 csim_file	: image start_map comment_lines area_list end_map
 		;
 
-image		: '<' IMG SRC '=' STRING image_tags '>'
+image		: '<' IMG SRC '=' STRING image_tags xhtml_close
 		{
 		   g_strreplace(&_map_info->image_name, $5);
 		}
@@ -132,11 +132,15 @@ area_list	: /* empty */
 		| area_list area
 		;
 
-area		: '<' AREA tag_list '>'
+area		: '<' AREA tag_list xhtml_close
 		{
 		   if (current_type != UNDEFINED)
 		      add_shape(current_object);
 		}
+		;
+
+xhtml_close	: '>'
+		| '/' '>' 
 		;
 
 tag_list	: /* Empty */
