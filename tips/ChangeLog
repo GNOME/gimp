@@ -1,7 +1,7 @@
 2002-02-27  Sven Neumann  <sven@gimp.org>
 
 	* de.po: merged all existant translations from gimp_tips.de.txt.
-	Sorry, you need the very latest intltool from CVS to be correctly
+	Sorry, you need the very latest intltool from CVS to correctly
 	extract and merge messages.
 
 	* gimp_tips.de.txt: removed.
