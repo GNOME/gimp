@@ -1,3 +1,14 @@
+2004-07-08  Sven Neumann  <sven@gimp.org>
+	
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: removed redundant casts.
+
+	* app/widgets/gimpsessioninfo.[ch]: added convenience functions to
+	get and set aux-info based on object properties.
+
+	* app/widgets/gimphistogrameditor.c: use the new functions to save
+	a histogram's channel and scale in the sessionrc.
+
 2004-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpclipboard.c: sort the list of pixbuf formats so

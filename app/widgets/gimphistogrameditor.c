@@ -33,6 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "gimpdocked.h"
 #include "gimpenumcombobox.h"
 #include "gimpenumstore.h"
 #include "gimphelp-ids.h"
@@ -40,14 +41,18 @@
 #include "gimphistogrameditor.h"
 #include "gimphistogramview.h"
 #include "gimppropwidgets.h"
+#include "gimpsessioninfo.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
 static void  gimp_histogram_editor_class_init     (GimpHistogramEditorClass *klass);
-static void  gimp_histogram_editor_init           (GimpHistogramEditor *editor);
-
+static void  gimp_histogram_editor_init           (GimpHistogramEditor      *editor);
+static void    gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void    gimp_histogram_editor_set_aux_info (GimpDocked          *docked,
+                                                   GList               *aux_info);
+static GList * gimp_histogram_editor_get_aux_info (GimpDocked          *docked);
 static void  gimp_histogram_editor_set_image      (GimpImageEditor     *editor,
                                                    GimpImage           *gimage);
 
@@ -70,7 +75,8 @@ static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 
 
-static GimpImageEditorClass *parent_class = NULL;
+static GimpImageEditorClass *parent_class        = NULL;
+static GimpDockedInterface  *parent_docked_iface = NULL;
 
 
 GType
@@ -92,10 +98,18 @@ gimp_histogram_editor_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_histogram_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_histogram_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
                                             "GimpHistogramEditor",
                                             &editor_info, 0);
+      g_type_add_interface_static (editor_type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
   return editor_type;
@@ -210,6 +224,52 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+}
+
+static void
+gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  docked_iface->set_aux_info = gimp_histogram_editor_set_aux_info;
+  docked_iface->get_aux_info = gimp_histogram_editor_get_aux_info;
+}
+
+static void
+gimp_histogram_editor_set_aux_info (GimpDocked *docked,
+                                    GList      *aux_info)
+{
+  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (docked);
+  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+
+  if (parent_docked_iface->set_aux_info)
+    parent_docked_iface->set_aux_info (docked, aux_info);
+
+  gimp_session_info_aux_set_props (G_OBJECT (view), aux_info,
+                                   "histogram-channel",
+                                   "histogram-scale",
+                                   NULL);
+}
+
+#define AUX_INFO_channel "channel"
+
+static GList *
+gimp_histogram_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (docked);
+  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  GList               *aux_info;
+
+  aux_info = gimp_session_info_aux_new_from_props (G_OBJECT (view),
+                                                   "histogram-channel",
+                                                   "histogram-scale",
+                                                   NULL);
+
+  if (parent_docked_iface->get_aux_info)
+    return g_list_concat (parent_docked_iface->get_aux_info (docked),
+                          aux_info);
+  else
+    return aux_info;
 }
 
 static void

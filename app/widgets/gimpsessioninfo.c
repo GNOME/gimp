@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpconfig-serialize.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
@@ -161,6 +162,139 @@ gimp_session_info_aux_free (GimpSessionInfoAux *aux)
     g_free (aux->value);
 
   g_free (aux);
+}
+
+GList *
+gimp_session_info_aux_new_from_props (GObject *object,
+                                      ...)
+{
+  GList       *list = NULL;
+  const gchar *prop_name;
+  va_list      args;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+
+  va_start (args, object);
+
+  for (prop_name = va_arg (args, const gchar *);
+       prop_name;
+       prop_name = va_arg (args, const gchar *))
+    {
+      GObjectClass *class = G_OBJECT_GET_CLASS (object);
+      GParamSpec   *pspec = g_object_class_find_property (class, prop_name);
+
+      if (pspec)
+        {
+          GString *str   = g_string_new (NULL);
+          GValue   value = { 0, };
+
+          g_value_init (&value, pspec->value_type);
+          g_object_get_property (object, pspec->name, &value);
+
+          if (gimp_config_serialize_value (&value, str, FALSE))
+            list = g_list_prepend (list,
+                                   gimp_session_info_aux_new (prop_name,
+                                                              str->str));
+          g_value_unset (&value);
+        }
+      else
+        {
+          g_warning ("%s: no property names '%s' for %s",
+                     G_STRFUNC,
+                     prop_name, G_OBJECT_CLASS_NAME (class));
+        }
+    }
+
+  va_end (args);
+
+  return g_list_reverse (list);
+}
+
+void
+gimp_session_info_aux_set_props (GObject *object,
+                                 GList   *auxs,
+                                 ...)
+{
+  const gchar *prop_name;
+  va_list      args;
+
+  g_return_if_fail (G_IS_OBJECT (object));
+
+  va_start (args, auxs);
+
+  for (prop_name = va_arg (args, const gchar *);
+       prop_name;
+       prop_name = va_arg (args, const gchar *))
+    {
+      GList *list;
+
+      for (list = auxs; list; list = g_list_next (list))
+        {
+          GimpSessionInfoAux *aux = list->data;
+
+          if (strcmp (aux->name, prop_name) == 0)
+            {
+              GObjectClass *class = G_OBJECT_GET_CLASS (object);
+              GParamSpec   *pspec = g_object_class_find_property (class,
+                                                                  prop_name);
+
+              if (pspec)
+                {
+                  GValue  value = { 0, };
+
+                  g_value_init (&value, pspec->value_type);
+
+                  if (G_VALUE_HOLDS_ENUM (&value))
+                    {
+                      GEnumClass *enum_class;
+                      GEnumValue *enum_value;
+
+                      enum_class = g_type_class_peek (pspec->value_type);
+                      enum_value = g_enum_get_value_by_nick (enum_class,
+                                                             aux->value);
+
+                      if (enum_value)
+                        {
+                          g_value_set_enum (&value, enum_value->value);
+                          g_object_set_property (object, pspec->name, &value);
+                        }
+                      else
+                        {
+                        g_warning ("%s: unknown enum value in '%s' for %s",
+                                   G_STRFUNC,
+                                   prop_name, G_OBJECT_CLASS_NAME (class));
+                        }
+                    }
+                  else
+                    {
+                      GValue  str_value = { 0, };
+
+                      g_value_init (&str_value, G_TYPE_STRING);
+                      g_value_set_static_string (&str_value, aux->value);
+
+                      if (g_value_transform (&str_value, &value))
+                        g_object_set_property (object, pspec->name, &value);
+                      else
+                        g_warning ("%s: cannot convert property '%s' for %s",
+                                   G_STRFUNC,
+                                   prop_name, G_OBJECT_CLASS_NAME (class));
+
+                      g_value_unset (&str_value);
+                    }
+
+                  g_value_unset (&value);
+                }
+              else
+                {
+                  g_warning ("%s: no property names '%s' for %s",
+                             G_STRFUNC,
+                             prop_name, G_OBJECT_CLASS_NAME (class));
+                }
+            }
+        }
+    }
+
+  va_end (args);
 }
 
 void
@@ -790,9 +924,7 @@ static GTokenType
 session_info_dock_deserialize (GScanner        *scanner,
                                GimpSessionInfo *info)
 {
-  GTokenType token;
-
-  token = G_TOKEN_LEFT_PAREN;
+  GTokenType token = G_TOKEN_LEFT_PAREN;
 
   while (g_scanner_peek_next_token (scanner) == token)
     {
@@ -1003,9 +1135,7 @@ session_info_aux_deserialize (GScanner  *scanner,
                               GList    **aux_list)
 {
   GimpSessionInfoAux *aux_info = NULL;
-  GTokenType          token;
-
-  token = G_TOKEN_LEFT_PAREN;
+  GTokenType          token    = G_TOKEN_LEFT_PAREN;
 
   while (g_scanner_peek_next_token (scanner) == token)
     {

@@ -82,6 +82,12 @@ GimpSessionInfoAux *
                                             const gchar             *value);
 void       gimp_session_info_aux_free      (GimpSessionInfoAux      *aux);
 
+GList *    gimp_session_info_aux_new_from_props (GObject            *object,
+                                                 ...);
+void       gimp_session_info_aux_set_props      (GObject            *object,
+                                                 GList              *aux,
+                                                 ...);
+
 void       gimp_session_info_save          (GimpSessionInfo         *info,
                                             const gchar             *factory_name,
                                             GimpConfigWriter        *writer);

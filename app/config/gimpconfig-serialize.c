@@ -356,12 +356,9 @@ gimp_config_serialize_value (const GValue *value,
 
   if (G_VALUE_HOLDS_ENUM (value))
     {
-      GEnumClass *enum_class;
-      GEnumValue *enum_value;
-
-      enum_class = g_type_class_peek (G_VALUE_TYPE (value));
-      enum_value = g_enum_get_value (G_ENUM_CLASS (enum_class),
-                                     g_value_get_enum (value));
+      GEnumClass *enum_class = g_type_class_peek (G_VALUE_TYPE (value));
+      GEnumValue *enum_value = g_enum_get_value (enum_class,
+                                                 g_value_get_enum (value));
 
       if (enum_value && enum_value->value_nick)
         {

@@ -516,10 +516,10 @@ gimp_config_deserialize_enum (GValue     *value,
     case G_TOKEN_IDENTIFIER:
       g_scanner_get_next_token (scanner);
 
-      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class),
+      enum_value = g_enum_get_value_by_nick (enum_class,
 					     scanner->value.v_identifier);
       if (!enum_value)
-	enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class),
+	enum_value = g_enum_get_value_by_name (enum_class,
 					       scanner->value.v_identifier);
 
       if (!enum_value)
