@@ -494,10 +494,8 @@ run (const gchar      *name,
 
           if (jsvals.preview)
             {
-              /* we start an undo_group and immediately freeze undo saving
-                 so that we can avoid sucking up tile cache with our unneeded
-                 preview steps. */
-              gimp_image_undo_group_start (image_ID);
+              /* we freeze undo saving so that we can avoid sucking up
+               * tile cache with our unneeded preview steps. */
               gimp_image_undo_freeze (image_ID);
 
               undo_touched = TRUE;
@@ -513,9 +511,10 @@ run (const gchar      *name,
 
           if (undo_touched)
             {
-              /* thaw undo saving and end the undo_group. */
+              /* thaw undo saving and flush the displays to have them
+               * reflect the current shortcuts */
               gimp_image_undo_thaw (image_ID);
-              gimp_image_undo_group_end (image_ID);
+              gimp_displays_flush ();
             }
 
           if (!err)
@@ -1587,10 +1586,8 @@ make_preview (void)
     {
       if (! undo_touched)
         {
-          /* we start an undo_group and immediately freeze undo saving
-             so that we can avoid sucking up tile cache with our unneeded
-             preview steps. */
-          gimp_image_undo_group_start (image_ID_global);
+          /* we freeze undo saving so that we can avoid sucking up
+           * tile cache with our unneeded preview steps. */
           gimp_image_undo_freeze (image_ID_global);
 
           undo_touched = TRUE;

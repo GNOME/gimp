@@ -1,5 +1,13 @@
 2004-03-14  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/common/jpeg.c: No need to use an undo_group *and*
+	freeze/thaw an image. Just using the latter keeps the undo
+	history ok in both directions. Also call gimp_displays_flush()
+	to make sure the undo keyboard shortcuts are enabled after the
+	plugin ends.
+
+2004-03-14  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpimage.[ch]
 	* app/core/gimpimage-undo.c: introduced a freeze counter, so
 	that undo_freeze(); undo_freeze(); undo_thaw(); no longer
