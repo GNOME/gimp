@@ -1,3 +1,8 @@
+2004-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c (gimp_help_get_locales): fixed brokeness
+	I introduced with my last cleanup.
+
 2004-09-29  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/gimpfu.py: applied slightly tweaked patch

@@ -353,8 +353,8 @@ gimp_help_get_locales (GimpGuiConfig *config)
   if (language && (locale == NULL || strcmp (locale, "C")))
     {
       g_free (locale);
-      locale = language;
+      locale = g_strdup (language);
     }
 
-  return g_strdup (locale);
+  return locale;
 }
