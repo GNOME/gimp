@@ -497,8 +497,8 @@ gif_SOURCES = \
 	gif.c
 
 gif_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -801,8 +801,8 @@ png_SOURCES = \
 	png.c
 
 png_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(LIBPNG)				\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -827,8 +827,8 @@ ps_SOURCES = \
 	ps.c
 
 ps_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
 	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
