@@ -44,6 +44,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.8  1999/03/15 22:38:36  raph
+ *   Improved the quality of the algorithm in the sharpen plugin.
+ *
  *   Revision 1.7  1998/06/06 23:22:22  yosh
  *   * adding Lighting plugin
  *
@@ -158,14 +161,17 @@ static void	preview_exit(void);
 static void	preview_update(void);
 static void	preview_scroll_callback(void);
 
-static void	gray_filter(int width, guchar *src, guchar *dst, guchar *neg0,
-		            guchar *neg1, guchar *neg2);
-static void	graya_filter(int width, guchar *src, guchar *dst, guchar *neg0,
-		             guchar *neg1, guchar *neg2);
-static void	rgb_filter(int width, guchar *src, guchar *dst, guchar *neg0,
-		           guchar *neg1, guchar *neg2);
-static void	rgba_filter(int width, guchar *src, guchar *dst, guchar *neg0,
-		            guchar *neg1, guchar *neg2);
+typedef gint32 intneg;
+typedef gint32 intpos;
+
+static void	gray_filter(int width, guchar *src, guchar *dst, intneg *neg0,
+		            intneg *neg1, intneg *neg2);
+static void	graya_filter(int width, guchar *src, guchar *dst, intneg *neg0,
+		             intneg *neg1, intneg *neg2);
+static void	rgb_filter(int width, guchar *src, guchar *dst, intneg *neg0,
+		           intneg *neg1, intneg *neg2);
+static void	rgba_filter(int width, guchar *src, guchar *dst, intneg *neg0,
+		            intneg *neg1, intneg *neg2);
 
 
 /*
@@ -187,9 +193,9 @@ int		preview_width,		/* Width of preview widget */
 		preview_y1,		/* Upper-left Y of preview */
 		preview_x2,		/* Lower-right X of preview */
 		preview_y2;		/* Lower-right Y of preview */
-guchar		*preview_src,		/* Source pixel image */
-		*preview_neg,		/* Negative coefficient pixels */
-		*preview_dst,		/* Destination pixel image */
+guchar		*preview_src;		/* Source pixel image */
+intneg		*preview_neg;		/* Negative coefficient pixels */
+guchar		*preview_dst,		/* Destination pixel image */
 		*preview_image;		/* Preview RGB image */
 GtkObject	*hscroll_data,		/* Horizontal scrollbar data */
 		*vscroll_data;		/* Vertical scrollbar data */
@@ -205,8 +211,8 @@ int		img_bpp;		/* Bytes-per-pixel in image */
 int		sharpen_percent = 10;	/* Percent of sharpening */
 gint		run_filter = FALSE;	/* True if we should run the filter */
 
-guchar		neg_lut[256];		/* Negative coefficient LUT */
-gint16		pos_lut[256];		/* Positive coefficient LUT */
+intneg		neg_lut[256];		/* Negative coefficient LUT */
+intpos		pos_lut[256];		/* Positive coefficient LUT */
 
 
 /*
@@ -406,8 +412,8 @@ compute_luts(void)
 
   for (i = 0; i < 256; i ++)
   {
-    pos_lut[i] = 100 * i / fact;
-    neg_lut[i] = sharpen_percent * i / 8 / fact;
+    pos_lut[i] = 800 * i / fact;
+    neg_lut[i] = (4 + pos_lut[i] - (i << 3)) >> 3;
   };
 }
 
@@ -423,15 +429,15 @@ sharpen(void)
 		dst_rgn;	/* Destination image region */
   guchar	*src_rows[4],	/* Source pixel rows */
 		*src_ptr,	/* Current source pixel */
-		*dst_row,	/* Destination pixel row */
-		*neg_rows[4],	/* Negative coefficient rows */
+		*dst_row;	/* Destination pixel row */
+  intneg	*neg_rows[4],	/* Negative coefficient rows */
 		*neg_ptr;	/* Current negative coefficient */
   int		i,		/* Looping vars */
 		y,		/* Current location in image */
 		row,		/* Current row in src_rows */
 		count,		/* Current number of filled src_rows */
 		width;		/* Byte width of the image */
-  void		(*filter)(int, guchar *, guchar *, guchar *, guchar *, guchar *);
+  void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
 
  /*
@@ -456,7 +462,7 @@ sharpen(void)
   for (row = 0; row < 4; row ++)
   {
     src_rows[row] = g_malloc(width * sizeof(guchar));
-    neg_rows[row] = g_malloc(width * sizeof(guchar));
+    neg_rows[row] = g_malloc(width * sizeof(intneg));
   };
 
   dst_row = g_malloc(width * sizeof(guchar));
@@ -766,7 +772,7 @@ preview_init(void)
   width = preview_width * img_bpp;
 
   preview_src   = g_malloc(width * preview_height * sizeof(guchar));
-  preview_neg   = g_malloc(width * preview_height * sizeof(guchar));
+  preview_neg   = g_malloc(width * preview_height * sizeof(intneg));
   preview_dst   = g_malloc(width * preview_height * sizeof(guchar));
   preview_image = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
 
@@ -803,13 +809,13 @@ preview_update(void)
   GPixelRgn	src_rgn;	/* Source image region */
   guchar	*src_ptr,	/* Current source pixel */
 		*dst_ptr,	/* Current destination pixel */
-		*image_ptr,	/* Current image pixel */
-		*neg_ptr;	/* Current negative pixel */
+  		*image_ptr;	/* Current image pixel */
+  intneg	*neg_ptr;	/* Current negative pixel */
   guchar	check;		/* Current check mark pixel */
   int		i,	  	/* Looping var */
 		x, y,		/* Current location in image */
 		width;		/* Byte width of the image */
-  void		(*filter)(int, guchar *, guchar *, guchar *, guchar *, guchar *);
+  void		(*filter)(int, guchar *, guchar *, intneg *, intneg *, intneg *);
 
 
  /*
@@ -1146,11 +1152,11 @@ static void
 gray_filter(int    width,	/* I - Width of line in pixels */
             guchar *src,	/* I - Source line */
             guchar *dst,	/* O - Destination line */
-            guchar *neg0,	/* I - Top negative coefficient line */
-            guchar *neg1,	/* I - Middle negative coefficient line */
-            guchar *neg2)	/* I - Bottom negative coefficient line */
+            intneg *neg0,	/* I - Top negative coefficient line */
+            intneg *neg1,	/* I - Middle negative coefficient line */
+            intneg *neg2)	/* I - Bottom negative coefficient line */
 {
-  gint16	pixel;		/* New pixel value */
+  intpos pixel;		/* New pixel value */
 
 
   *dst++ = *src++;
@@ -1186,11 +1192,11 @@ static void
 graya_filter(int    width,	/* I - Width of line in pixels */
              guchar *src,	/* I - Source line */
              guchar *dst,	/* O - Destination line */
-             guchar *neg0,	/* I - Top negative coefficient line */
-             guchar *neg1,	/* I - Middle negative coefficient line */
-             guchar *neg2)	/* I - Bottom negative coefficient line */
+             intneg *neg0,	/* I - Top negative coefficient line */
+             intneg *neg1,	/* I - Middle negative coefficient line */
+             intneg *neg2)	/* I - Bottom negative coefficient line */
 {
-  gint16	pixel;		/* New pixel value */
+  intpos pixel;		/* New pixel value */
 
 
   *dst++ = *src++;
@@ -1229,11 +1235,11 @@ static void
 rgb_filter(int    width,	/* I - Width of line in pixels */
            guchar *src,		/* I - Source line */
            guchar *dst,		/* O - Destination line */
-           guchar *neg0,	/* I - Top negative coefficient line */
-           guchar *neg1,	/* I - Middle negative coefficient line */
-           guchar *neg2)	/* I - Bottom negative coefficient line */
+           intneg *neg0,	/* I - Top negative coefficient line */
+           intneg *neg1,	/* I - Middle negative coefficient line */
+           intneg *neg2)	/* I - Bottom negative coefficient line */
 {
-  gint16	pixel;		/* New pixel value */
+  intpos pixel;		/* New pixel value */
 
 
   *dst++ = *src++;
@@ -1246,6 +1252,7 @@ rgb_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-3] - neg0[0] - neg0[3] -
 	    neg1[-3] - neg1[3] -
 	    neg2[-3] - neg2[0] - neg2[3];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1256,6 +1263,7 @@ rgb_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-2] - neg0[1] - neg0[4] -
 	    neg1[-2] - neg1[4] -
 	    neg2[-2] - neg2[1] - neg2[4];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1266,6 +1274,7 @@ rgb_filter(int    width,	/* I - Width of line in pixels */
     pixel = pos_lut[*src++] - neg0[-1] - neg0[2] - neg0[5] -
 	    neg1[-1] - neg1[5] -
 	    neg2[-1] - neg2[2] - neg2[5];
+    pixel = (pixel + 4) >> 3;
     if (pixel < 0)
       *dst++ = 0;
     else if (pixel < 255)
@@ -1293,11 +1302,11 @@ static void
 rgba_filter(int    width,	/* I - Width of line in pixels */
             guchar *src,	/* I - Source line */
             guchar *dst,	/* O - Destination line */
-            guchar *neg0,	/* I - Top negative coefficient line */
-            guchar *neg1,	/* I - Middle negative coefficient line */
-            guchar *neg2)	/* I - Bottom negative coefficient line */
+            intneg *neg0,	/* I - Top negative coefficient line */
+            intneg *neg1,	/* I - Middle negative coefficient line */
+            intneg *neg2)	/* I - Bottom negative coefficient line */
 {
-  gint16	pixel;		/* New pixel value */
+  intpos pixel;		/* New pixel value */
 
 
   *dst++ = *src++;
