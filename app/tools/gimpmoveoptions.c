@@ -177,7 +177,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       false_label = _("Pick a Layer or Guide to Move");
-      true_label  = _("Move the Active Layer");
+      true_label  = _("Move the Current Layer");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
@@ -187,7 +187,7 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 
     case GIMP_TRANSFORM_TYPE_PATH:
       false_label = _("Pick a Path to Move");
-      true_label  = _("Move the Active Path");
+      true_label  = _("Move the Current Path");
      break;
     }
 

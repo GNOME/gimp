@@ -246,7 +246,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SELECTION_STROKE },
     NULL,
     GIMP_HELP_SELECTION_STROKE, NULL },
-  { { N_("/Edit/St_roke Active Path..."), NULL,
+  { { N_("/Edit/St_roke Path..."), NULL,
       vectors_stroke_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PATH_STROKE },
     NULL,
@@ -1441,7 +1441,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Edit/Fill with BG Color",    lp);
   SET_SENSITIVE ("/Edit/Fill with Pattern",     lp);
   SET_SENSITIVE ("/Edit/Stroke Selection...",   lp && sel);
-  SET_SENSITIVE ("/Edit/Stroke Active Path...", lp && vectors);
+  SET_SENSITIVE ("/Edit/Stroke Path...",        lp && vectors);
 
   /*  Select  */
 

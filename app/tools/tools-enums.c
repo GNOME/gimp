@@ -69,9 +69,9 @@ gimp_rect_select_mode_get_type (void)
 
 static const GEnumValue gimp_transform_type_enum_values[] =
 {
-  { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform Active Layer"), "layer" },
+  { GIMP_TRANSFORM_TYPE_LAYER, N_("Transform Layer"), "layer" },
   { GIMP_TRANSFORM_TYPE_SELECTION, N_("Transform Selection"), "selection" },
-  { GIMP_TRANSFORM_TYPE_PATH, N_("Transform Active Path"), "path" },
+  { GIMP_TRANSFORM_TYPE_PATH, N_("Transform Path"), "path" },
   { 0, NULL, NULL }
 };
 

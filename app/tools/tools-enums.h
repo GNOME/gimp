@@ -63,9 +63,9 @@ GType gimp_transform_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform Active Layer" >*/
-  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform Selection"    >*/
-  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Transform Active Path"  >*/
+  GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform Layer"     >*/
+  GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform Selection" >*/
+  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Transform Path"      >*/
 } GimpTransformType;
 
 

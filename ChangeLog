@@ -1,5 +1,13 @@
 2003-10-19  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpmoveoptions.c: revert back to "Current".
+
+	* app/tools/tools-enums.[ch]: removed "Active" from the enum value
+	descriptions; it was misleading.
+
+2003-10-19  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c (gimp_prop_enum_radio_frame_new)
 	(gimp_prop_boolean_radio_frame_new): attach the first radio button
 	as object data to the returned frame.
