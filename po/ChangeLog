@@ -1,3 +1,9 @@
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
+	* de.po: updated german translation.
+
 2002-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: app/gimphelp.c -> app/widgets/gimphelp.c

@@ -188,7 +188,7 @@ plug-ins/gimpressionist/preview.c
 plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
-#plug-ins/helpbrowser/helpbrowser.c
+plug-ins/helpbrowser/helpbrowser.c
 plug-ins/ifscompose/ifscompose.c
 plug-ins/imagemap/imap_about.c
 plug-ins/imagemap/imap_circle.c

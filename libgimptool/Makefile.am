@@ -24,6 +24,7 @@ libgimptool_1_3_la_sources = @STRIP_BEGIN@ \
         gimptoolenums.c         \
 	gimptool.c		\
 	gimptool.h		\
+	gimptoolcontrol.h	\
 	gimptoolmodule.c	\
 	gimptoolmodule.h	\
 @STRIP_END@

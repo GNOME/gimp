@@ -4,7 +4,6 @@
 app/app_procs.c
 app/gimprc.c
 app/main.c
-app/nav_window.c
 app/undo.c
 app/undo_history.c
 
@@ -13,6 +12,7 @@ app/base/base-enums.c
 app/config/gimpconfig-deserialize.c
 app/config/gimpconfig.c
 app/config/gimprc.c
+app/config/gimpscanner.c
 
 app/core/core-enums.c
 app/core/gimp.c
@@ -21,6 +21,7 @@ app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
 app/core/gimpcontext.c
 app/core/gimpdatafactory.c
+app/core/gimpdocuments.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-transform.c
@@ -42,6 +43,7 @@ app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
 app/core/gimpunit.c
+app/core/gimpunits.c
 
 app/display/display-enums.c
 app/display/gimpdisplay.c
@@ -49,11 +51,13 @@ app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
+app/display/gimpnavigationview.c
 app/display/gimpprogress.c
 app/display/gimpstatusbar.c
 
 app/file/file-open.c
 app/file/file-save.c
+app/file/file-utils.c
 
 app/gui/about-dialog.c
 app/gui/brush-select.c
@@ -89,6 +93,7 @@ app/gui/palette-select.c
 app/gui/palettes-commands.c
 app/gui/paths-dialog.c
 app/gui/pattern-select.c
+app/gui/plug-in-menus.c
 app/gui/preferences-dialog.c
 app/gui/qmask-commands.c
 app/gui/resize-dialog.c
@@ -112,6 +117,7 @@ app/pdb/procedural_db_cmds.c
 
 app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
+app/plug-in/plug-ins.c
 
 app/tools/tools-enums.c
 app/tools/gimpairbrushtool.c
@@ -178,6 +184,7 @@ app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimphelp.c
 app/widgets/gimpimagedock.c
+app/widgets/gimpimageview.c
 app/widgets/gimpitemfactory.c
 app/widgets/gimpitemlistview.c
 app/widgets/gimplayerlistview.c

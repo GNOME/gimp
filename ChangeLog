@@ -1,3 +1,9 @@
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/Makefile.am (SOURCES): removed gimptool.h.
+
+	* libgimptool/Makefile.am (SOURCES): added gimptoolcontrol.h.
+
 2001-05-11  Hans Breuer  <hans@breuer.org>
 
 	* app/makefile.msc : add appconfig.lib. Statically
@@ -13,23 +19,21 @@
 	mkdir() and chmod()
 
 	* app/display/gimpdisplayshell.c
-	  app/plug-in/plug-in-progrss.c
-	  app/tool/gimpcolorpickertool.c  
-	  app/tool/gimpcroptool.c  
-	  app/tool/gimpmeasuretool.c  
-	  app/tool/gimpperspectivetool.c  
-	  app/tool/gimprotatetool.c  
-	  app/tool/gimpscaletool.c  
-	  app/tool/gimpsheartool.c  
-	  app/tool/gimptransformtool.c  
-	  app/widgets/gimpcolormapeditor.c  
-	  app/widgets/gimpcolorpanel.c  
-	  app/widgets/gimptoolbox-color-area.c  
-	add #ifdef __GNUC__ to avoid breaking on non standard
-	pragma #warning
+	* app/plug-in/plug-in-progrss.c
+	* app/tool/gimpcolorpickertool.c  
+	* app/tool/gimpcroptool.c  
+	* app/tool/gimpmeasuretool.c  
+	* app/tool/gimpperspectivetool.c  
+	* app/tool/gimprotatetool.c  
+	* app/tool/gimpscaletool.c  
+	* app/tool/gimpsheartool.c  
+	* app/tool/gimptransformtool.c  
+	* app/widgets/gimpcolormapeditor.c  
+	* app/widgets/gimpcolorpanel.c  
+	* app/widgets/gimptoolbox-color-area.c : add #ifdef __GNUC__ to
+	avoid breaking on non standard pragma #warning.
 
-	* app/tools/makefile.msc : add gimptoolcontrol remove
-	tools-enum
+	* app/tools/makefile.msc : add gimptoolcontrol remove tools-enum.
 
 	* app/tools/tool_manager.c : need to include
 	libgimptool/gimptoolcontrol.h after core includes
