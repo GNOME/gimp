@@ -1,3 +1,13 @@
+Wed Apr  7 23:53:22 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+
+	* app/curves.c
+	
+	Just noticed a bug that has been around for ages. The preview
+	update does not work in the curves dialog when free curve
+	mode is selected. Fixed it. 
+
 Wed Apr  7 22:44:02 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

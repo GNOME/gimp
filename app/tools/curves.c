@@ -1213,7 +1213,6 @@ curves_graph_events (GtkWidget    *widget,
 	  cd->points[cd->channel][cd->grab_point][0] = x;
 	  cd->points[cd->channel][cd->grab_point][1] = 255 - y;
 
-	  curves_calculate_curve (cd);
 	  break;
 
 	case GFREE:
@@ -1222,7 +1221,8 @@ curves_graph_events (GtkWidget    *widget,
 	  cd->last = y;
 	  break;
 	}
-
+      
+      curves_calculate_curve (cd);
       curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
       gtk_grab_add(widget);
 
