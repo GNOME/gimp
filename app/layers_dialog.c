@@ -2411,14 +2411,15 @@ static gint
 layer_widget_button_events (GtkWidget *widget,
 			    GdkEvent  *event)
 {
-  static int button_down = 0;
-  static GtkWidget *click_widget = NULL;
-  static int old_state;
-  static int exclusive;
   LayerWidget *layer_widget;
   GtkWidget *event_widget;
   GdkEventButton *bevent;
   gint return_val;
+
+  static gboolean button_down = FALSE;
+  static GtkWidget *click_widget = NULL;
+  static gint old_state;
+  static gint exclusive;
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
   return_val = FALSE;
@@ -2446,7 +2447,7 @@ layer_widget_button_events (GtkWidget *widget,
 	  return TRUE;
 	}
 
-      button_down = 1;
+      button_down = TRUE;
       click_widget = widget;
       gtk_grab_add (click_widget);
       
@@ -2479,7 +2480,7 @@ layer_widget_button_events (GtkWidget *widget,
     case GDK_BUTTON_RELEASE:
       return_val = TRUE;
 
-      button_down = 0;
+      button_down = FALSE;
       gtk_grab_remove (click_widget);
 
       if (widget == layer_widget->eye_widget)
@@ -2508,7 +2509,6 @@ layer_widget_button_events (GtkWidget *widget,
 	}
       break;
 
-    case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
       event_widget = gtk_get_event_widget (event);
 

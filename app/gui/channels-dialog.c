@@ -1896,7 +1896,6 @@ channel_widget_button_events (GtkWidget *widget,
 	}
       break;
 
-    case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
       event_widget = gtk_get_event_widget (event);
 
