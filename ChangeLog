@@ -1,3 +1,9 @@
+2000-06-25  Tuomas Kuosmanen  <tigert@tigert.gimp.org>
+
+	* cursors/gimp-tool-cursors.xcf: Updated the .xcf file that
+	contains the cursors. thanks Sven for pointing this out.
+	I also corrected a small glitch on the bezier cursors mask.
+
 2000-06-25  Sven Neumann  <sven@gimp.org>
 
 	* app/resize.c (offset_update): Adding 0.5 isn't always the 
