@@ -10,9 +10,9 @@
 
 2003-10-16  Michael Natterer  <mitch@gimp.org>
 
-	* libgimpbase/gimputils.[ch]: new function which takes any string
-	and returns UTF-8 (it returns "(invalid UTF-8 string)" if all
-	conversion attempts fail).
+	* libgimpbase/gimputils.[ch] (gimp_any_to_utf8): new function
+	which takes any string and returns UTF-8 (it returns "(invalid
+	UTF-8 string)" if all conversion attempts fail).
 
 	* app/core/gimpbrush.c
 	* app/core/gimpgradient.c
