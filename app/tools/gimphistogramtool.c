@@ -28,6 +28,9 @@
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -335,7 +338,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 
   htd = g_new0 (HistogramToolDialog, 1);
   htd->channel = GIMP_HISTOGRAM_VALUE;
-  htd->hist    = gimp_histogram_new ();
+  htd->hist = gimp_histogram_new (GIMP_BASE_CONFIG (tool_info->gimp->config));
 
   /*  The shell and main vbox  */
   htd->shell =

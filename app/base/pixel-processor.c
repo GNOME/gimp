@@ -22,10 +22,7 @@
 
 #ifdef ENABLE_MP
 #include <pthread.h>
-#define IF_THREAD(statement) statement
-#else /* !ENABLE_MP */
-#define IF_THREAD(statement)
-#endif /* ENABLE_MP */
+#endif
 
 #include <glib-object.h>
 
@@ -39,6 +36,11 @@
 #ifdef ENABLE_MP
 #include "tile.h"
 #endif
+
+#ifdef __GNUC__
+#warning FIXME: extern GimpBaseConfig *base_config;
+#endif
+extern GimpBaseConfig *base_config;
 
 
 typedef void (* p1_func) (gpointer     ,
@@ -62,8 +64,12 @@ struct _PixelProcessor
   gpointer             data;
   p_func               f;
   PixelRegionIterator *PRI;
-  IF_THREAD(pthread_mutex_t mutex;)
+
+#ifdef ENABLE_MP
+  pthread_mutex_t      mutex;
   gint                 nthreads;
+#endif
+
   gint                 n_regions;
   PixelRegion         *r[4];
 
@@ -72,7 +78,7 @@ struct _PixelProcessor
 };
 
 
-IF_THREAD(
+#ifdef ENABLE_MP
 static void *
 do_parallel_regions (PixelProcessor *p_s)
 {
@@ -110,34 +116,35 @@ do_parallel_regions (PixelProcessor *p_s)
       switch(p_s->n_regions)
 	{
 	case 1:
-	  ((p1_func)p_s->f)(p_s->data,
-			    p_s->r[0] ? &tr[0] : NULL);
+	  ((p1_func) p_s->f) (p_s->data,
+                              p_s->r[0] ? &tr[0] : NULL);
 	  break;
 
 	case 2:
-	  ((p2_func)p_s->f)(p_s->data,
-			    p_s->r[0] ? &tr[0] : NULL,
-			    p_s->r[1] ? &tr[1] : NULL);
+	  ((p2_func) p_s->f) (p_s->data,
+                              p_s->r[0] ? &tr[0] : NULL,
+                              p_s->r[1] ? &tr[1] : NULL);
 	  break;
 
 	case 3:
-	  ((p3_func)p_s->f)(p_s->data,
-			    p_s->r[0] ? &tr[0] : NULL,
-			    p_s->r[1] ? &tr[1] : NULL,
-			    p_s->r[2] ? &tr[2] : NULL);
+	  ((p3_func) p_s->f) (p_s->data,
+                              p_s->r[0] ? &tr[0] : NULL,
+                              p_s->r[1] ? &tr[1] : NULL,
+                              p_s->r[2] ? &tr[2] : NULL);
 	  break;
 
 	case 4:
-	  ((p4_func)p_s->f)(p_s->data,
-			    p_s->r[0] ? &tr[0] : NULL,
-			    p_s->r[1] ? &tr[1] : NULL,
-			    p_s->r[2] ? &tr[2] : NULL,
-			    p_s->r[3] ? &tr[3] : NULL);
+	  ((p4_func) p_s->f) (p_s->data,
+                              p_s->r[0] ? &tr[0] : NULL,
+                              p_s->r[1] ? &tr[1] : NULL,
+                              p_s->r[2] ? &tr[2] : NULL,
+                              p_s->r[3] ? &tr[3] : NULL);
 	  break;
 
 	default:
-	  g_message("do_parallel_regions: Bad number of regions %d\n",
-		    p_s->n_regions);
+	  g_warning ("do_parallel_regions: Bad number of regions %d\n",
+                     p_s->n_regions);
+          break;
     }
 
     pthread_mutex_lock (&p_s->mutex);
@@ -146,16 +153,17 @@ do_parallel_regions (PixelProcessor *p_s)
       if (p_s->r[i])
 	{
 	  if (tr[i].tiles)
-	    tile_release(tr[i].curtile, tr[i].dirty);
+	    tile_release (tr[i].curtile, tr[i].dirty);
 	}
 
     if (p_s->progress_report_func && 
-	!p_s->progress_report_func(p_s->progress_report_data,
-				   p_s->r[0]->x, p_s->r[0]->y, 
-				   p_s->r[0]->w, p_s->r[0]->h))
+	!p_s->progress_report_func (p_s->progress_report_data,
+                                    p_s->r[0]->x, p_s->r[0]->y, 
+                                    p_s->r[0]->w, p_s->r[0]->h))
       cont = 0;
 
     } 
+
   while (cont && p_s->PRI &&
 	 (p_s->PRI = pixel_regions_process (p_s->PRI)));
 
@@ -165,7 +173,7 @@ do_parallel_regions (PixelProcessor *p_s)
 
   return NULL;
 }
-)
+#endif
 
 /*  do_parallel_regions_single is just like do_parallel_regions 
  *   except that all the mutex and tile locks have been removed
@@ -181,46 +189,47 @@ do_parallel_regions_single (PixelProcessor *p_s)
   gint cont = 1;
 
   do
-  {
-    switch (p_s->n_regions)
     {
-     case 1:
-       ((p1_func)p_s->f)(p_s->data,
-			 p_s->r[0]);
-       break;
+      switch (p_s->n_regions)
+        {
+        case 1:
+          ((p1_func) p_s->f) (p_s->data,
+                              p_s->r[0]);
+          break;
+          
+        case 2:
+          ((p2_func) p_s->f) (p_s->data,
+                              p_s->r[0],
+                              p_s->r[1]);
+          break;
 
-     case 2:
-       ((p2_func)p_s->f)(p_s->data,
-			 p_s->r[0],
-			 p_s->r[1]);
-       break;
+        case 3:
+          ((p3_func) p_s->f) (p_s->data,
+                              p_s->r[0],
+                              p_s->r[1],
+                              p_s->r[2]);
+          break;
+          
+        case 4:
+          ((p4_func) p_s->f) (p_s->data,
+                              p_s->r[0],
+                              p_s->r[1],
+                              p_s->r[2],
+                              p_s->r[3]);
+          break;
 
-     case 3:
-       ((p3_func)p_s->f)(p_s->data,
-			 p_s->r[0],
-			 p_s->r[1],
-			 p_s->r[2]);
-       break;
+        default:
+          g_warning ("do_parallel_regions_single: Bad number of regions %d\n",
+                     p_s->n_regions);
+        }
 
-     case 4:
-       ((p4_func)p_s->f)(p_s->data,
-			 p_s->r[0],
-			 p_s->r[1],
-			 p_s->r[2],
-			 p_s->r[3]);
-       break;
-
-     default:
-       g_message("do_parallel_regions_single: Bad number of regions %d\n",
-		 p_s->n_regions);
+      if (p_s->progress_report_func && 
+          !p_s->progress_report_func (p_s->progress_report_data,
+                                      p_s->r[0]->x, p_s->r[0]->y, 
+                                      p_s->r[0]->w, p_s->r[0]->h))
+        cont = 0;
     }
 
-    if (p_s->progress_report_func)
-     if (!p_s->progress_report_func (p_s->progress_report_data,
-       p_s->r[0]->x, p_s->r[0]->y, 
-       p_s->r[0]->w, p_s->r[0]->h))
-	cont = 0;
-  } 
   while (cont && p_s->PRI &&
 	 (p_s->PRI = pixel_regions_process (p_s->PRI)));
 
@@ -232,9 +241,9 @@ do_parallel_regions_single (PixelProcessor *p_s)
 static void
 pixel_regions_do_parallel (PixelProcessor *p_s)
 {
-  IF_THREAD(
+#ifdef ENABLE_MP
   gint nthreads;
- 
+
   nthreads = MIN (base_config->num_processors, MAX_THREADS);
 
   /* make sure we have at least one tile per thread */
@@ -244,8 +253,8 @@ pixel_regions_do_parallel (PixelProcessor *p_s)
 
   if (nthreads > 1)
     {
-      gint i;
-      pthread_t threads[MAX_THREADS];
+      gint           i;
+      pthread_t      threads[MAX_THREADS];
       pthread_attr_t pthread_attr;
 
       pthread_attr_init (&pthread_attr);
@@ -260,17 +269,20 @@ pixel_regions_do_parallel (PixelProcessor *p_s)
 	{
 	  gint ret;
 
-	  if ((ret = pthread_join(threads[i], NULL)))
+	  if ((ret = pthread_join (threads[i], NULL)))
 	    {
-	      g_printerr ("pixel_regions_do_parallel:: pthread_join returned: %d\n", ret);
+	      g_printerr ("pixel_regions_do_parallel: "
+                          "pthread_join returned: %d\n", ret);
 	    }
 	}
+
       if (p_s->nthreads != 0)
 	g_printerr ("pixel_regions_do_prarallel: we lost a thread\n");
     }
   else
-  )
-  do_parallel_regions_single (p_s);
+#endif
+
+    do_parallel_regions_single (p_s);
 }
 
 static PixelProcessor *
@@ -318,8 +330,8 @@ pixel_regions_real_process_parallel (p_func             f,
       break;
 
     default:
-      g_message ("pixel_regions_real_process_parallel: Bad number of regions %d\n",
-                 p_s->n_regions);
+      g_warning ("pixel_regions_real_process_parallel:"
+                 "Bad number of regions %d\n", p_s->n_regions);
   }
 
   if (!p_s->PRI)
@@ -328,13 +340,14 @@ pixel_regions_real_process_parallel (p_func             f,
       return NULL;
     }
 
-  /* Why would we wan't to set dirty_tiles to 0 here? */
-  /*  IF_THREAD(p_s->PRI->dirty_tiles = 0;) */
   p_s->f = f;
   p_s->data = data;
   p_s->n_regions = num_regions;
-  IF_THREAD (pthread_mutex_init(&(p_s->mutex), NULL);)
+
+#ifdef ENABLE_MP
+  pthread_mutex_init (&p_s->mutex, NULL);
   p_s->nthreads = 0;
+#endif
 
   p_s->progress_report_data = report_data;
   p_s->progress_report_func = report_func;
@@ -343,6 +356,10 @@ pixel_regions_real_process_parallel (p_func             f,
 
   if (p_s->PRI)
     return p_s;
+
+#ifdef ENABLE_MP
+  pthread_mutex_destroy (&p_s->mutex);
+#endif
 
   pixel_processor_free (p_s);
 
@@ -397,6 +414,7 @@ pixel_processor_stop (PixelProcessor *pp)
       pixel_regions_process_stop (pp->PRI);
       pp->PRI = NULL;
     }
+
   pixel_processor_free (pp);
 }
 

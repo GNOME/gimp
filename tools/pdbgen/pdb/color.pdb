@@ -564,6 +564,7 @@ HELP
     }
 
     %invoke = (
+	headers => [ qw("config/gimpbaseconfig.h" "core/gimp.h") ],
 	vars => [ 'PixelRegion srcPR, maskPR', 'int x1, y1, x2, y2',
 		  'GimpHistogram *histogram', 'int off_x, off_y',
 		  'gboolean no_mask', 'GimpChannel *mask' ],
@@ -588,7 +589,8 @@ HELP
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
 
       /* Apply the image transformation to the pixels */
-      histogram = gimp_histogram_new ();
+      histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+
       if (no_mask)
 	gimp_histogram_calculate (histogram, &srcPR, NULL);
       else
@@ -603,7 +605,8 @@ HELP
       median     = gimp_histogram_get_median (histogram, channel,
 					      start_range, end_range);
       pixels     = gimp_histogram_get_count (histogram, 0, 255);
-      count      = gimp_histogram_get_count (histogram, start_range, end_range);
+      count      = gimp_histogram_get_count (histogram,
+                                             start_range, end_range);
       percentile = count / pixels;
 
       gimp_histogram_free (histogram);

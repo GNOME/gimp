@@ -39,6 +39,8 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/threshold.h"
+#include "config/gimpbaseconfig.h"
+#include "core/gimp.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
@@ -948,7 +950,8 @@ histogram_invoker (Gimp     *gimp,
 			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     
 	  /* Apply the image transformation to the pixels */
-	  histogram = gimp_histogram_new ();
+	  histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+    
 	  if (no_mask)
 	    gimp_histogram_calculate (histogram, &srcPR, NULL);
 	  else
@@ -963,7 +966,8 @@ histogram_invoker (Gimp     *gimp,
 	  median     = gimp_histogram_get_median (histogram, channel,
 						  start_range, end_range);
 	  pixels     = gimp_histogram_get_count (histogram, 0, 255);
-	  count      = gimp_histogram_get_count (histogram, start_range, end_range);
+	  count      = gimp_histogram_get_count (histogram,
+						 start_range, end_range);
 	  percentile = count / pixels;
     
 	  gimp_histogram_free (histogram);

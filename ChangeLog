@@ -1,3 +1,20 @@
+2003-01-15  Sven Neumann  <sven@gimp.org>
+
+	Fixed bug #103561:
+
+	* app/base/gimphistogram.[ch]: cleaned up multi-processor code,
+	added a GimpBaseConfig parameter to gimp_histogram_new().
+
+	* app/core/gimpdrawable-equalize.c
+	* app/pdb/color_cmds.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* app/base/pixel-processor.c: some cleanup to the multi-processor
+	code; use the global base_config variable :(
+
 2003-01-14  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpchannel.h

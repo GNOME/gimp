@@ -28,6 +28,9 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "gimp.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
 #include "gimpdrawable-histogram.h"
@@ -36,7 +39,7 @@
 
 void
 gimp_drawable_equalize (GimpDrawable *drawable,
-			gboolean      mask_only)
+                        gboolean      mask_only)
 {
   PixelRegion    srcPR, destPR;
   guchar        *mask;
@@ -45,8 +48,8 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   gint           x1, y1, x2, y2;
   GimpHistogram *hist;
   GimpLut       *lut;
+  GimpImage     *gimage;
 
-  g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   mask = NULL;
@@ -55,7 +58,9 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   has_alpha = gimp_drawable_has_alpha (drawable);
   alpha     = has_alpha ? (bytes - 1) : bytes;
 
-  hist = gimp_histogram_new ();
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimage->gimp->config));
   gimp_drawable_calculate_histogram (drawable, hist);
 
   /* Build equalization LUT */
@@ -77,7 +82,5 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 
   gimp_drawable_merge_shadow (drawable, TRUE);
 
-  gimp_drawable_update (drawable,
-			x1, y1,
-			(x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

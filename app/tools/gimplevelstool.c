@@ -39,10 +39,14 @@
 #include "base/gimplut.h"
 #include "base/levels.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogramview.h"
@@ -219,14 +223,17 @@ static void
 gimp_levels_tool_init (GimpLevelsTool *l_tool)
 {
   GimpImageMapTool *image_map_tool;
+  Gimp             *gimp;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
 
   image_map_tool->shell_desc = _("Adjust Color Levels");
 
+  gimp = GIMP_TOOL (l_tool)->tool_info->gimp;
+
   l_tool->lut           = gimp_lut_new ();
   l_tool->levels        = g_new0 (Levels, 1);
-  l_tool->hist          = gimp_histogram_new ();
+  l_tool->hist          = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
   l_tool->channel       = GIMP_HISTOGRAM_VALUE;
   l_tool->active_picker = NULL;
 

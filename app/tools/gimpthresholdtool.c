@@ -27,10 +27,14 @@
 #include "base/gimphistogram.h"
 #include "base/threshold.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
@@ -147,13 +151,16 @@ static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
   GimpImageMapTool *image_map_tool;
+  Gimp             *gimp;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
 
   image_map_tool->shell_desc  = _("Apply Threshold");
 
-  t_tool->threshold           = g_new0 (Threshold, 1);
-  t_tool->hist                = gimp_histogram_new ();
+  gimp = GIMP_TOOL (t_tool)->tool_info->gimp;
+
+  t_tool->threshold = g_new0 (Threshold, 1);
+  t_tool->hist      = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
 
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;
