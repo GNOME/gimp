@@ -1427,7 +1427,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpsmudgetool.h") ],
 	code => <<'CODE'
-success = smudge_non_gui (drawable, pressure, num_strokes, strokes);
+success = gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);
 CODE
     );
 }
@@ -1455,7 +1455,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpsmudgetool.h") ],
 	code => <<'CODE'
-success = smudge_non_gui_default (drawable, num_strokes, strokes);
+success = gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);
 CODE
     );
 }

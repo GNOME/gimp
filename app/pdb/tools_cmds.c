@@ -2794,7 +2794,7 @@ smudge_invoker (Argument *args)
   strokes = (gdouble *) args[3].value.pdb_pointer;
 
   if (success)
-    success = smudge_non_gui (drawable, pressure, num_strokes, strokes);
+    success = gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);
 
   return procedural_db_return_args (&smudge_proc, success);
 }
@@ -2860,7 +2860,7 @@ smudge_default_invoker (Argument *args)
   strokes = (gdouble *) args[2].value.pdb_pointer;
 
   if (success)
-    success = smudge_non_gui_default (drawable, num_strokes, strokes);
+    success = gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);
 
   return procedural_db_return_args (&smudge_default_proc, success);
 }

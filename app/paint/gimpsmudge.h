@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SMUDGE_H__
-#define __SMUDGE_H__
+#ifndef __GIMP_SMUDGE_TOOL_H__
+#define __GIMP_SMUDGE_TOOL_H__
+
+
+#include "gimppainttool.h"
 
 
 typedef enum
@@ -34,16 +37,41 @@ typedef enum
 } SmudgeMode;
 
 
-gboolean   smudge_non_gui          (GimpDrawable *drawable,
-				    gdouble       rate,
-				    gint          num_strokes,
-				    gdouble      *stroke_array);
-gboolean   smudge_non_gui_default  (GimpDrawable *drawable,
-				    gint          num_strokes,
-				    gdouble      *stroke_array);
-
-Tool     * tools_new_smudge        (void);
-void       tools_free_smudge       (Tool         *tool);
+#define GIMP_TYPE_SMUDGE_TOOL            (gimp_smudge_tool_get_type ())
+#define GIMP_SMUDGE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeTool))
+#define GIMP_IS_SMUDGE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_SMUDGE_TOOL))
+#define GIMP_SMUDGE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeToolClass))
+#define GIMP_IS_SMUDGE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SMUDGE_TOOL))
 
 
-#endif  /*  __SMUDGE_H__  */
+typedef struct _GimpSmudgeTool      GimpSmudgeTool;
+typedef struct _GimpSmudgeToolClass GimpSmudgeToolClass;
+
+struct _GimpSmudgeTool
+{
+  GimpPaintTool parent_instance;
+};
+
+struct _GimpSmudgeToolClass
+{
+  GimpPaintToolClass parent_class;
+};
+
+
+void       gimp_smudge_tool_register (void);
+
+GtkType    gimp_smudge_tool_get_type (void);
+
+
+
+/* FIXME: this antique code doesn't follow the coding style */
+gboolean   gimp_smudge_tool_non_gui          (GimpDrawable *drawable,
+					      gdouble       rate,
+					      gint          num_strokes,
+					      gdouble      *stroke_array);
+gboolean   gimp_smudge_tool_non_gui_default  (GimpDrawable *drawable,
+					      gint          num_strokes,
+					      gdouble      *stroke_array);
+
+
+#endif  /*  __GIMP_SMUDGE_TOOL_H__  */

@@ -46,6 +46,7 @@
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimppenciltool.h"
+#include "gimpsmudgetool.h"
 
 #include "libgimp/gimpintl.h"
 

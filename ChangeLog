@@ -1,5 +1,18 @@
 2001-04-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/gimpsmudgetool.[ch]
+	* app/tools/gimptool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c
+	* app/tools/tools.c
+	* app/pdb/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb: applied a (slightly modified) patch
+	from Dave Neary <dave.neary@palamon.ie> which reactivates the
+	smudge tool.
+
+2001-04-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/test_commands.c: fixed the dockable names.
 
 	* app/tools/gimpbezierselecttool.c: applied patch from Dave Neary

@@ -70,8 +70,8 @@ libapptools_la_SOURCES = \
 	gimpselectiontool.h	\
 ##	gimpsheartool.c		\
 ##	gimpsheartool.h		\
-##	gimpsmudgetool.c	\
-##	gimpsmudgetool.h	\
+	gimpsmudgetool.c	\
+	gimpsmudgetool.h	\
 	gimptexttool.c		\
 	gimptexttool.h		\
 	gimptool.c		\

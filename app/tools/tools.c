@@ -50,6 +50,7 @@
 #include "gimppenciltool.h"
 #include "gimpperspectivetool.h"
 #include "gimprectselecttool.h"
+#include "gimpbezierselecttool.h"
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimpsheartool.h"
@@ -64,7 +65,7 @@ register_tools (void)
 
   /*  paint tools  */
 
-  /* gimp_smudge_tool_register (); */
+  gimp_smudge_tool_register ();
   gimp_dodgeburn_tool_register (); 
   gimp_ink_tool_register ();
   /* gimp_convolve_tool_register (): */
@@ -98,6 +99,7 @@ register_tools (void)
 
   gimp_bezier_select_tool_register ();
   gimp_iscissors_tool_register ();
+  gimp_bezier_select_tool_register ();
   gimp_fuzzy_select_tool_register ();
   gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();
