@@ -808,7 +808,7 @@ mov_apv_callback (GtkWidget *widget,
   p_init_arr_arg(&argv[1], WGT_FLT_PAIR);
   argv[1].constraint = TRUE;
   argv[1].label_txt = _("Scale Preview");
-  argv[1].help_txt  = _("Scale down size of the generated animated preview in %");
+  argv[1].help_txt  = _("Scale down size of the generated animated preview (in %)");
   argv[1].flt_min   = 5.0;
   argv[1].flt_max   = 100.0;
   argv[1].flt_step  = 1.0;

@@ -1,6 +1,3 @@
-;
-;
-;
 ; Chris Gutteridge (cjg@ecs.soton.ac.uk)
 ; At ECS Dept, University of Southampton, England.
 
@@ -40,7 +37,7 @@
    (cjg-pasteat 3 1) (cjg-pasteat 3 2) (cjg-pasteat 3 3)
 
    (gimp-selection-none theImage)
-   (if (= inType FALSE)
+   (if (= inType 0)
        (plug-in-gauss-iir TRUE theImage theLayer inRadius inHoriz inVert)
        (plug-in-gauss-rle TRUE theImage theLayer inRadius inHoriz inVert)
    )
@@ -71,9 +68,9 @@
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-ADJUSTMENT _"Radius" '(5 0 128 1 1 0 0)
-    SF-TOGGLE _"Blur Vertically" TRUE
-    SF-TOGGLE _"Blur Horizontally" TRUE
-    SF-TOGGLE _"Blur Type: TRUE=RLE, FALSE=IIR" FALSE
+    SF-TOGGLE     _"Blur Vertically" TRUE
+    SF-TOGGLE     _"Blur Horizontally" TRUE
+    SF-OPTION     _"Blur Type" '(_"IIR" _"RLE")
 )
 
 

@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-07 23:28+0200\n"
-"PO-Revision-Date: 2000-05-07 23:33+02:00\n"
+"POT-Creation-Date: 2000-05-08 15:44+0200\n"
+"PO-Revision-Date: 2000-05-08 15:46+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1289,7 +1289,7 @@ msgstr "Hineinzoomen (Bild größer machen)"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filter/Abbilden/Auf Objekt abbilden..."
+msgstr "<Image>/Filter/Abbilden/Auf Objekt..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
@@ -1305,7 +1305,6 @@ msgstr "Zylinder"
 msgid "Map to:"
 msgstr "Abbilden auf:"
 
-# TODO
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
 msgstr "Ebene"
@@ -2291,7 +2290,7 @@ msgstr "Brechungsindex der Linse:"
 
 #: plug-ins/common/autocrop.c:73
 msgid "<Image>/Image/Transforms/Autocrop"
-msgstr "<Image>/Image/Transformationen/Automatisch Zuschneiden"
+msgstr "<Image>/Bild/Transformationen/Automatisch Zuschneiden"
 
 #: plug-ins/common/autocrop.c:117
 msgid "Cropping..."
@@ -3864,7 +3863,7 @@ msgstr "G-Qbist 1.10"
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr "<Image>/Filter/Farben/Abbilden/Farbverlauf..."
+msgstr "<Image>/Filter/Farben/Abbilden/Auf Farbverlauf..."
 
 #: plug-ins/common/gradmap.c:154
 msgid "Gradient Map..."
@@ -4440,7 +4439,7 @@ msgstr "<Image>/Filter/Abbilden/Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
-msgstr "<Image>/Datei/Verschicke Bild..."
+msgstr "<Image>/Datei/Verschicken..."
 
 #: plug-ins/common/mail.c:489
 msgid "Send to Mail"
@@ -8403,6 +8402,8 @@ msgid ""
 "Generate Animated Preview\n"
 "as multilayer image"
 msgstr ""
+"Erzeuge animierte Preview\n"
+"als Multi-Ebenen-Bild"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:509
@@ -8475,7 +8476,7 @@ msgstr "Erzwinge Sichtbarkeit"
 
 #: plug-ins/gap/gap_mov_dialog.c:614
 msgid "Force visibility for all copied Src-Layers"
-msgstr ""
+msgstr "Erzwinge Sichtbarkeit für alle kopierten Quellebenen"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:620
@@ -8499,15 +8500,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:770
 msgid "Object on empty frames"
-msgstr ""
+msgstr "Objekt auf leere Frames"
 
 #: plug-ins/gap/gap_mov_dialog.c:771
 msgid "Object on one frame"
-msgstr ""
+msgstr "Objekt auf einem Frame"
 
 #: plug-ins/gap/gap_mov_dialog.c:772
 msgid "Exact Object on frames"
-msgstr ""
+msgstr "Genaues Objekt auf Frames"
 
 #: plug-ins/gap/gap_mov_dialog.c:802
 msgid "Anim Preview Mode"
@@ -8518,9 +8519,8 @@ msgid "Scale Preview"
 msgstr "Vorschau skalieren"
 
 #: plug-ins/gap/gap_mov_dialog.c:811
-#, c-format
-msgid "Scale down size of the generated animated preview in %"
-msgstr ""
+msgid "Scale down size of the generated animated preview (in %)"
+msgstr "Größe der generierten animierten Vorschau skalieren (in %)"
 
 #: plug-ins/gap/gap_mov_dialog.c:819
 msgid "Framerate"
@@ -8528,11 +8528,11 @@ msgstr "Frame-Rate"
 
 #: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Framerate to use in the animated preview in frames/sec"
-msgstr ""
+msgstr "Frame-Rate der animierten Vorschau in Frames/s"
 
 #: plug-ins/gap/gap_mov_dialog.c:834
 msgid "Copy to Video Buffer"
-msgstr ""
+msgstr "In Video-Buffer kopieren"
 
 #: plug-ins/gap/gap_mov_dialog.c:835
 msgid ""
@@ -8546,7 +8546,7 @@ msgstr "Bewegungs-Pfad animierte Vorschau"
 
 #: plug-ins/gap/gap_mov_dialog.c:886
 msgid "Generate Animate Preview failed\n"
-msgstr ""
+msgstr "Erzeugung der animierten Vorschau fehlgeschlagen\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1098
@@ -8692,7 +8692,7 @@ msgstr "Rotiere Quellebene (in Grad)"
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1961
 msgid "Keyframe:"
-msgstr ""
+msgstr "Keyframe:"
 
 #. label text
 #. scalesize spinsize
@@ -8707,6 +8707,8 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
+"Kontrollpunkt auf Keyframe festlegen\n"
+"(0 == kein Keyframe)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2044
 msgid "Add Point"
@@ -8838,6 +8840,9 @@ msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
 msgstr ""
+"\n"
+"Fehler: Nummer des Keyframes %d an Punkt [%d] ist\n"
+"größer oder gleich als der des letzten Frames"
 
 #: plug-ins/gap/gap_mov_dialog.c:2676
 #, c-format
@@ -8877,7 +8882,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2738
 msgid "Reset Keyframes"
-msgstr ""
+msgstr "Keyframes zurücksetzen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2743
 msgid "Move Path Controlpointcheck"
@@ -9279,7 +9284,7 @@ msgstr "Einfügen und Ersetyen"
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2970
 msgid "Clear Video Buffer"
-msgstr ""
+msgstr "Videobuffer löschen"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2995
 msgid "Videoframes:"
@@ -13199,9 +13204,3 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
-
-#~ msgid "can't open %s\n"
-#~ msgstr "kann %s nicht öffnen\n"
-
-#~ msgid "%s: too many colors: %u\n"
-#~ msgstr "%s: zu viele Farben: %u\n"

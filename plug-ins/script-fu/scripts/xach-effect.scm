@@ -122,7 +122,7 @@
 		    SF-ADJUSTMENT _"Highlight X Offset" '(-1 -100 100 1 10 0 1)
 		    SF-ADJUSTMENT _"Highlight Y Offset" '(-1 -100 100 1 10 0 1)
 		    SF-COLOR      _"Highlight Color" '(255 255 255)
-		    SF-ADJUSTMENT _"Opacity" '(66 0 255 1 10 0 0)
+		    SF-ADJUSTMENT _"Highlight Opacity" '(66 0 255 1 10 0 0)
 		    SF-COLOR      _"Drop Shadow Color" '(0 0 0)
 		    SF-ADJUSTMENT _"Drop Shadow Opacity" '(100 0 100 1 10 0 0)
 		    SF-ADJUSTMENT _"Drop Shadow Blur Radius" '(12 0 255 1 10 0 1)

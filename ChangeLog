@@ -1,3 +1,11 @@
+2000-05-08  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* plug-ins/script-fu/scripts/tileblur.scm
+	* plug-ins/script-fu/scripts/ripple-anim.scm
+	* plug-ins/script-fu/scripts/xach-effect.scm
+	* plug-ins/gap/sel-to-anim-img.scm: made them use SF-OPTION and 
+	SF-ADJUSTMENT and adjusted a few other parameters
+	
 2000-05-08  Sven Neumann  <sven@gimp.org>
 
         * libgimp/gimpbrushmenu.c

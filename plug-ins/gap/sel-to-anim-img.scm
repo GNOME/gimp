@@ -113,10 +113,9 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-                    SF-VALUE  _"Number of Copies" "10"
-                    SF-TOGGLE _"Fill with BG Color" TRUE
-                    SF-TOGGLE _"Anim-Filter for all Copies" TRUE
-		    )
+                    SF-ADJUSTMENT _"Number of Copies"           '(10 1 1024 1 10 0 1)
+                    SF-TOGGLE     _"Fill with BG Color"         TRUE
+                    SF-TOGGLE     _"Anim-Filter for all Copies" TRUE)
 
 
 
