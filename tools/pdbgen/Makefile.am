@@ -16,6 +16,7 @@ pdb_sources = \
 	pdb/gimage.pdb		\
 	pdb/gimage_mask.pdb	\
 	pdb/gimprc.pdb		\
+	pdb/gimphelp.pdb	\
 	pdb/gradient.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/guides.pdb		\
