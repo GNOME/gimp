@@ -29,7 +29,7 @@
 
 /* maximum information buffer size */
 
-#define MAX_INFO_BUF    4
+#define MAX_INFO_BUF    8
 
 
 /*  local function prototypes  */
