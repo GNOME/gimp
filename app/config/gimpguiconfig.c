@@ -82,6 +82,7 @@ enum
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
+  PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
   PROP_WEB_BROWSER,
   PROP_TOOLBOX_WINDOW_HINT,
@@ -218,6 +219,10 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "use-help", USE_HELP_BLURB,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_HELP_LOCALES,
+                                   "help-locales", HELP_LOCALES_BLURB,
+                                   NULL,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser", HELP_BROWSER_BLURB,
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
@@ -249,6 +254,7 @@ gimp_gui_config_finalize (GObject *object)
 
   g_free (gui_config->theme_path);
   g_free (gui_config->theme);
+  g_free (gui_config->help_locales);
   g_free (gui_config->web_browser);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -325,6 +331,10 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
+      break;
+    case PROP_HELP_LOCALES:
+      g_free (gui_config->help_locales);
+      gui_config->help_locales = g_value_dup_string (value);
       break;
     case PROP_HELP_BROWSER:
       gui_config->help_browser = g_value_get_enum (value);
@@ -415,6 +425,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);
+      break;
+    case PROP_HELP_LOCALES:
+      g_value_set_string (value, gui_config->help_locales);
       break;
     case PROP_HELP_BROWSER:
       g_value_set_enum (value, gui_config->help_browser);

@@ -83,7 +83,6 @@ static void     gimp_text_set_property         (GObject       *object,
                                                 GParamSpec    *pspec);
 static gint64   gimp_text_get_memsize          (GimpObject    *object,
                                                 gint64        *gui_size);
-static gchar  * gimp_text_get_default_language (void);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -149,7 +148,7 @@ gimp_text_class_init (GimpTextClass *klass)
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_matrix2_identity (&identity);
 
-  language = gimp_text_get_default_language ();
+  language = gimp_get_default_language ();
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
 				   "text", NULL,
@@ -486,45 +485,4 @@ gimp_text_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
-}
-
-
-/*
- *  basically copied from gtk_get_default_language()
- */
-static gchar *
-gimp_text_get_default_language (void)
-{
-  gchar *lang;
-  gchar *p;
-
-#ifdef G_OS_WIN32
-  p = getenv ("LC_ALL");
-  if (p != NULL)
-    lang = g_strdup (p);
-  else
-    {
-      p = getenv ("LANG");
-      if (p != NULL)
-	lang = g_strdup (p);
-      else
-	{
-	  p = getenv ("LC_CTYPE");
-	  if (p != NULL)
-	    lang = g_strdup (p);
-	  else
-	    lang = g_win32_getlocale ();
-	}
-    }
-#else
-  lang = g_strdup (setlocale (LC_CTYPE, NULL));
-#endif
-  p = strchr (lang, '.');
-  if (p)
-    *p = '\0';
-  p = strchr (lang, '@');
-  if (p)
-    *p = '\0';
-
-  return lang;
 }

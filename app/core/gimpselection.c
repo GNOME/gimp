@@ -324,8 +324,7 @@ gimp_selection_stroke (GimpItem     *item,
 static void
 gimp_selection_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpChannel *selection = GIMP_CHANNEL (drawable);
-  GimpImage   *gimage    = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage   *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpLayer   *layer;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));

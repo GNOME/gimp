@@ -59,7 +59,7 @@ struct _GimpIdleHelp
 {
   Gimp  *gimp;
   gchar *help_domain;
-  gchar *help_locale;
+  gchar *help_locales;
   gchar *help_id;
 };
 
@@ -71,7 +71,7 @@ static gboolean  gimp_help_internal  (Gimp        *gimp);
 static void      gimp_help_call      (Gimp        *gimp,
                                       const gchar *procedure,
                                       const gchar *help_domain,
-                                      const gchar *help_locale,
+                                      const gchar *help_locales,
                                       const gchar *help_id);
 
 
@@ -82,9 +82,13 @@ gimp_help (Gimp        *gimp,
            const gchar *help_domain,
 	   const gchar *help_id)
 {
+  GimpGuiConfig *config;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (GIMP_GUI_CONFIG (gimp->config)->use_help)
+  config = GIMP_GUI_CONFIG (gimp->config);
+
+  if (config->use_help)
     {
       GimpIdleHelp *idle_help = g_new0 (GimpIdleHelp, 1);
 
@@ -93,7 +97,10 @@ gimp_help (Gimp        *gimp,
       if (help_domain && strlen (help_domain))
 	idle_help->help_domain = g_strdup (help_domain);
 
-      idle_help->help_locale = g_strdup ("C");
+      if (config->help_locales)
+        idle_help->help_locales = g_strdup (config->help_locales);
+      else
+        idle_help->help_locales = gimp_get_default_language ();
 
       if (help_id && strlen (help_id))
 	idle_help->help_id = g_strdup (help_id);
@@ -136,11 +143,11 @@ gimp_idle_help (gpointer data)
   gimp_help_call (idle_help->gimp,
                   procedure,
                   idle_help->help_domain,
-                  idle_help->help_locale,
+                  idle_help->help_locales,
                   idle_help->help_id);
 
   g_free (idle_help->help_domain);
-  g_free (idle_help->help_locale);
+  g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
   g_free (idle_help);
 
@@ -248,7 +255,7 @@ static void
 gimp_help_call (Gimp        *gimp,
                 const gchar *procedure,
                 const gchar *help_domain,
-                const gchar *help_locale,
+                const gchar *help_locales,
                 const gchar *help_id)
 {
   ProcRecord *proc_rec;
@@ -305,9 +312,9 @@ gimp_help_call (Gimp        *gimp,
 #ifdef DEBUG_HELP
       g_printerr ("Calling help via %s: %s %s %s\n",
                   procedure,
-                  help_domain ? help_domain : NULL,
-                  help_locale ? help_locale : NULL,
-                  help_id     ? help_id     : NULL);
+                  help_domain  ? help_domain  : NULL,
+                  help_locales ? help_locales : NULL,
+                  help_id      ? help_id      : NULL);
 #endif
 
       return_vals =
@@ -316,7 +323,7 @@ gimp_help_call (Gimp        *gimp,
                                 &n_return_vals,
                                 GIMP_PDB_STRING, procedure,
 				GIMP_PDB_STRING, help_domain,
-				GIMP_PDB_STRING, help_locale,
+				GIMP_PDB_STRING, help_locales,
                                 GIMP_PDB_STRING, help_id,
                                 GIMP_PDB_END);
 

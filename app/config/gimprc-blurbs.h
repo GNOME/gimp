@@ -142,6 +142,11 @@ N_("When enabled, the selected pattern will be used for all tools.")
 #define HELP_BROWSER_BLURB \
 N_("Sets the browser used by the help system.")
 
+#define HELP_LOCALES_BLURB \
+"Specifies the language preferences used by the help system. This is a" \
+"colon-separated list of language identifiers with decreasing priority. " \
+"If empty, the language is taken from the user's locale setting."
+
 #define IMAGE_STATUS_FORMAT_BLURB \
 N_("Sets the text to appear in image window status bars.")
 

@@ -93,3 +93,44 @@ gimp_g_list_get_memsize (GList  *list,
 {
   return g_list_length (list) * (data_size + sizeof (GList));
 }
+
+
+/*
+ *  basically copied from gtk_get_default_language()
+ */
+gchar *
+gimp_get_default_language (void)
+{
+  gchar *lang;
+  gchar *p;
+
+#ifdef G_OS_WIN32
+  p = getenv ("LC_ALL");
+  if (p != NULL)
+    lang = g_strdup (p);
+  else
+    {
+      p = getenv ("LANG");
+      if (p != NULL)
+	lang = g_strdup (p);
+      else
+	{
+	  p = getenv ("LC_CTYPE");
+	  if (p != NULL)
+	    lang = g_strdup (p);
+	  else
+	    lang = g_win32_getlocale ();
+	}
+    }
+#else
+  lang = g_strdup (setlocale (LC_CTYPE, NULL));
+#endif
+  p = strchr (lang, '.');
+  if (p)
+    *p = '\0';
+  p = strchr (lang, '@');
+  if (p)
+    *p = '\0';
+
+  return lang;
+}
