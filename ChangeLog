@@ -1,5 +1,13 @@
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* app/dialogs/layer-add-mask-dialog.[ch]: one more dialog split
+	out of actions/.
+
+	* app/actions/layers-commands.c: removed it here. Some cleanup.
+
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* autogen.sh: don't tell nonsense by printing "I am going to run
 	./configure with no arguments", because we always pass at least
 	--enable-maintainer-mode. Instead, simply always print all

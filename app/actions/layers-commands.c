@@ -50,11 +50,8 @@
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
-#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressdialog.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -62,6 +59,7 @@
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
 
+#include "dialogs/layer-add-mask-dialog.h"
 #include "dialogs/layer-options-dialog.h"
 #include "dialogs/resize-dialog.h"
 #include "dialogs/scale-dialog.h"
@@ -98,17 +96,6 @@ static const GimpLayerModeEffects layer_modes[] =
 };
 
 
-typedef struct _AddMaskOptions AddMaskOptions;
-
-struct _AddMaskOptions
-{
-  GtkWidget       *dialog;
-  GimpLayer       *layer;
-  GimpAddMaskType  add_mask_type;
-  gboolean         invert;
-};
-
-
 typedef struct _ResizeLayerOptions ResizeLayerOptions;
 
 struct _ResizeLayerOptions
@@ -123,13 +110,13 @@ struct _ResizeLayerOptions
 
 static void   layers_new_layer_response    (GtkWidget             *widget,
                                             gint                   response_id,
-                                            LayerOptionsDialog    *options);
+                                            LayerOptionsDialog    *dialog);
 static void   layers_edit_layer_response   (GtkWidget             *widget,
                                             gint                   response_id,
-                                            LayerOptionsDialog    *options);
+                                            LayerOptionsDialog    *dialog);
 static void   layers_add_mask_response     (GtkWidget             *widget,
                                             gint                   response_id,
-                                            AddMaskOptions        *options);
+                                            LayerAddMaskDialog    *dialog);
 static void   layers_scale_layer_callback  (GtkWidget             *dialog,
                                             GimpViewable          *viewable,
                                             gint                   width,
@@ -192,36 +179,36 @@ void
 layers_edit_attributes_cmd_callback (GtkAction *action,
 				     gpointer   data)
 {
-  LayerOptionsDialog *options;
+  LayerOptionsDialog *dialog;
   GimpImage          *gimage;
   GimpLayer          *layer;
   GtkWidget          *widget;
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  options = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
-                                      action_data_get_context (data),
-                                      layer, widget,
-                                      gimp_object_get_name (GIMP_OBJECT (layer)),
-                                      fill_type,
-                                      _("Layer Attributes"),
-                                      "gimp-layer-edit",
-                                      GIMP_STOCK_EDIT,
-                                      _("Edit Layer Attributes"),
-                                      GIMP_HELP_LAYER_EDIT);
+  dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
+                                     action_data_get_context (data),
+                                     layer, widget,
+                                     gimp_object_get_name (GIMP_OBJECT (layer)),
+                                     fill_type,
+                                     _("Layer Attributes"),
+                                     "gimp-layer-edit",
+                                     GIMP_STOCK_EDIT,
+                                     _("Edit Layer Attributes"),
+                                     GIMP_HELP_LAYER_EDIT);
 
-  g_signal_connect (options->dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (layers_edit_layer_response),
-                    options);
+                    dialog);
 
-  gtk_widget_show (options->dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
 layers_new_cmd_callback (GtkAction *action,
 			 gpointer   data)
 {
-  LayerOptionsDialog *options;
+  LayerOptionsDialog *dialog;
   GimpImage          *gimage;
   GtkWidget          *widget;
   GimpLayer          *floating_sel;
@@ -238,21 +225,21 @@ layers_new_cmd_callback (GtkAction *action,
       return;
     }
 
-  options = layer_options_dialog_new (gimage, action_data_get_context (data),
-                                      NULL, widget,
-                                      layer_name ? layer_name : _("New Layer"),
-                                      fill_type,
-                                      _("New Layer"),
-                                      "gimp-layer-new",
-                                      GIMP_STOCK_LAYER,
-                                      _("Create a New Layer"),
-                                      GIMP_HELP_LAYER_NEW);
+  dialog = layer_options_dialog_new (gimage, action_data_get_context (data),
+                                     NULL, widget,
+                                     layer_name ? layer_name : _("New Layer"),
+                                     fill_type,
+                                     _("New Layer"),
+                                     "gimp-layer-new",
+                                     GIMP_STOCK_LAYER,
+                                     _("Create a New Layer"),
+                                     GIMP_HELP_LAYER_NEW);
 
-  g_signal_connect (options->dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (layers_new_layer_response),
-                    options);
+                    dialog);
 
-  gtk_widget_show (options->dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -579,71 +566,21 @@ void
 layers_mask_add_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  AddMaskOptions *options;
-  GimpImage      *gimage;
-  GimpLayer      *layer;
-  GtkWidget      *widget;
-  GtkWidget      *vbox;
-  GtkWidget      *frame;
-  GtkWidget      *button;
+  LayerAddMaskDialog *dialog;
+  GimpImage          *gimage;
+  GimpLayer          *layer;
+  GtkWidget          *widget;
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  options = g_new0 (AddMaskOptions, 1);
+  dialog = layer_add_mask_dialog_new (layer, widget,
+                                      GIMP_ADD_WHITE_MASK, FALSE);
 
-  options->layer         = layer;
-  options->add_mask_type = GIMP_ADD_WHITE_MASK;
-  options->invert        = FALSE;
-
-  options->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
-                              _("Add Layer Mask"), "gimp-layer-add-mask",
-                              GIMP_STOCK_LAYER_MASK,
-                              _("Add a Mask to the Layer"),
-                              widget,
-                              gimp_standard_help_func,
-                              GIMP_HELP_LAYER_MASK_ADD,
-
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                              NULL);
-
-  g_signal_connect (options->dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (layers_add_mask_response),
-                    options);
+                    dialog);
 
-  g_object_weak_ref (G_OBJECT (options->dialog),
-		     (GWeakNotify) g_free, options);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->dialog)->vbox),
-		     vbox);
-  gtk_widget_show (vbox);
-
-  frame =
-    gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
-                               gtk_label_new (_("Initialize Layer Mask to:")),
-                               G_CALLBACK (gimp_radio_button_update),
-                               &options->add_mask_type,
-                               &button);
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                                   options->add_mask_type);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  button = gtk_check_button_new_with_mnemonic (_("In_vert Mask"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), options->invert);
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->invert);
-
-  gtk_widget_show (options->dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -882,7 +819,7 @@ layers_preserve_trans_cmd_callback (GtkAction *action,
 static void
 layers_new_layer_response (GtkWidget          *widget,
                            gint                response_id,
-                           LayerOptionsDialog *options)
+                           LayerOptionsDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -891,32 +828,32 @@ layers_new_layer_response (GtkWidget          *widget,
       if (layer_name)
         g_free (layer_name);
       layer_name =
-        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)));
 
-      options->xsize =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se),
+      fill_type = dialog->fill_type;
+
+      dialog->xsize =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
                                           0));
-      options->ysize =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se),
+      dialog->ysize =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
                                           1));
 
-      fill_type = options->fill_type;
-
-      layer = gimp_layer_new (options->gimage,
-                              options->xsize,
-                              options->ysize,
-                              gimp_image_base_type_with_alpha (options->gimage),
+      layer = gimp_layer_new (dialog->gimage,
+                              dialog->xsize,
+                              dialog->ysize,
+                              gimp_image_base_type_with_alpha (dialog->gimage),
                               layer_name,
                               GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
       if (layer)
         {
           gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                                      options->context,
+                                      dialog->context,
                                       fill_type);
-          gimp_image_add_layer (options->gimage, layer, -1);
+          gimp_image_add_layer (dialog->gimage, layer, -1);
 
-          gimp_image_flush (options->gimage);
+          gimp_image_flush (dialog->gimage);
         }
       else
         {
@@ -925,70 +862,67 @@ layers_new_layer_response (GtkWidget          *widget,
         }
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog->dialog);
 }
 
 static void
 layers_edit_layer_response (GtkWidget          *widget,
                             gint                response_id,
-                            LayerOptionsDialog *options)
+                            LayerOptionsDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpLayer   *layer = options->layer;
+      GimpLayer   *layer = dialog->layer;
       const gchar *new_name;
 
-      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+      new_name = gtk_entry_get_text (GTK_ENTRY (dialog->name_entry));
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
           gimp_item_rename (GIMP_ITEM (layer), new_name);
-          gimp_image_flush (options->gimage);
+          gimp_image_flush (dialog->gimage);
         }
 
-      if (options->rename_toggle &&
+      if (dialog->rename_toggle &&
           gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
         {
           g_object_set (layer,
                         "auto-rename",
-                        GTK_TOGGLE_BUTTON (options->rename_toggle)->active,
+                        GTK_TOGGLE_BUTTON (dialog->rename_toggle)->active,
                         NULL);
         }
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog->dialog);
 }
 
 static void
-layers_add_mask_response (GtkWidget      *widget,
-                          gint            response_id,
-                          AddMaskOptions *options)
+layers_add_mask_response (GtkWidget          *widget,
+                          gint                response_id,
+                          LayerAddMaskDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpImage     *gimage;
+      GimpLayer     *layer  = dialog->layer;
+      GimpImage     *gimage = gimp_item_get_image (GIMP_ITEM (layer));
       GimpLayerMask *mask;
-      GimpLayer     *layer;
 
-      if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
-        {
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_ADD_MASK,
-                                       _("Add Layer Mask"));
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_ADD_MASK,
+                                   _("Add Layer Mask"));
 
-          mask = gimp_layer_create_mask (layer, options->add_mask_type);
+      mask = gimp_layer_create_mask (layer, dialog->add_mask_type);
 
-          if (options->invert)
-            gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+      if (dialog->invert)
+        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-          gimp_layer_add_mask (layer, mask, TRUE);
+      gimp_layer_add_mask (layer, mask, TRUE);
 
-          gimp_image_undo_group_end (gimage);
+      gimp_image_undo_group_end (gimage);
 
-          gimp_image_flush (gimage);
-        }
+      gimp_image_flush (gimage);
     }
 
-  gtk_widget_destroy (options->dialog);
+  gtk_widget_destroy (dialog->dialog);
 }
 
 static void
