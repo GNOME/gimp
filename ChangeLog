@@ -1,5 +1,10 @@
 2000-12-14  Sven Neumann  <sven@gimp.org>
 
+	* app/nav_window.c: missed a place that needed the same fix for
+	bug #31098.
+
+2000-12-14  Sven Neumann  <sven@gimp.org>
+
 	* app/commands.c (image_resize_callback): 
 	call lc_dialog_update_image_list() when resizing the image so the
 	image preview is updated in the l&c dialog.

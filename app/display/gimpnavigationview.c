@@ -324,7 +324,7 @@ set_size_data (NavWinData *iwd)
       iwd->ratio = MIN (1.0, (gdouble) pheight / (gdouble) sel_height);
     }
 
-  pwidth  = sel_width * iwd->ratio + 0.5;
+  pwidth  = sel_width  * iwd->ratio + 0.5;
   pheight = sel_height * iwd->ratio + 0.5;
 
   iwd->pwidth  = pwidth;
@@ -344,7 +344,7 @@ create_preview_widget (NavWinData *iwd)
   hbox = gtk_hbox_new (FALSE,0);
   iwd->previewBox = hbox;
   gtk_widget_show (hbox);
-  gtk_container_add (GTK_CONTAINER (iwd->previewAlign),hbox);
+  gtk_container_add (GTK_CONTAINER (iwd->previewAlign), hbox);
 
   image = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_widget_set_events (GTK_WIDGET(image), PREVIEW_MASK);
@@ -403,7 +403,7 @@ update_real_view (NavWinData *iwd,
   xratio = SCALEFACTOR_X (gdisp);
   yratio = SCALEFACTOR_Y (gdisp);
 
-  if((tx + iwd->dispwidth) >= iwd->pwidth)
+  if ((tx + iwd->dispwidth) >= iwd->pwidth)
     {
       tx = iwd->pwidth; /* Actually should be less... 
 			 * but bound check will save us.
@@ -412,7 +412,7 @@ update_real_view (NavWinData *iwd,
 
   xpnt = (gint) (((gdouble) (tx) * xratio) / iwd->ratio + 0.5);
 
-  if((ty + iwd->dispheight) >= iwd->pheight)
+  if ((ty + iwd->dispheight) >= iwd->pheight)
     ty = iwd->pheight; /* Same comment as for xpnt above. */
 
   ypnt = (gint) (((gdouble) (ty) * yratio) / iwd->ratio + 0.5);
@@ -466,21 +466,14 @@ nav_window_update_preview (NavWinData *iwd)
       gdouble tratio;
       
       if (sel_width > sel_height) 
-	{
-	  pwidth  = iwd->nav_preview_width;
-	  tratio = (gdouble) pwidth / ((gdouble) sel_width);
-	  pheight = sel_height * tratio + 0.5;
-	  tratio = (gdouble) pheight / (gdouble) sel_height;
-	  pwidth  = sel_width * tratio + 0.5;
-	} 
-      else 
-	{
-	  pheight = iwd->nav_preview_height;
-	  tratio = (gdouble) pheight / ((gdouble) sel_height);
-	  pwidth = sel_width * tratio + 0.5;
-	  tratio = (gdouble) pwidth / (gdouble) sel_width;
-	  pheight = sel_height * tratio + 0.5;
-	}
+	tratio = 
+	  MIN (1.0, (gdouble) iwd->nav_preview_width / ((gdouble) sel_width));
+      else
+	tratio = 
+	  MIN (1.0, (gdouble) iwd->nav_preview_height / ((gdouble) sel_height));
+
+      pwidth  = sel_width  * tratio + 0.5;
+      pheight = sel_height * tratio + 0.5;
     }
 
   preview_buf = gimp_image_construct_composite_preview (gimage,
