@@ -1,3 +1,8 @@
+2004-03-13  Raphaël Quinet  <quinet@gamers.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): added
+	missing semicolon that was breaking the build.
+
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): bugfix.

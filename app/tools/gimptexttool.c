@@ -462,7 +462,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 
       text_tool->layer = layer;
 
-      image = gimp_item_get_image (GIMP_ITEM (layer))
+      image = gimp_item_get_image (GIMP_ITEM (layer));
       gimp_size_entry_set_resolution (GIMP_TEXT_OPTIONS (options)->size_entry,
                                       0, image->yresolution, FALSE);
 
