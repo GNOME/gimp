@@ -1,5 +1,17 @@
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpcanvas.c (gimp_canvas_gc_new): no need to set
+	colors on the GCs that use GDK_INVERT.
+
+	* app/display/gimpdisplayshell-render.c (gimp_display_shell_render):
+	micro cleanup.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/ifscompose/ifscompose.c: include <errno.h>.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpunitmenu.c: include the documentation of the
 	format string in the gtk-doc comment.
 

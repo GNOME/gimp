@@ -327,8 +327,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   if ((image_type < GIMP_RGB_IMAGE) || (image_type > GIMP_INDEXEDA_IMAGE))
     {
-      g_message ("unknown gimage projection type: %d",
-		 gimp_image_projection_type (shell->gdisp->gimage));
+      g_message ("unknown gimage projection type: %d", image_type);
       return;
     }
 

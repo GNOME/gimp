@@ -272,9 +272,9 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   switch (style)
     {
     default:
+      return gc;
+
     case GIMP_CANVAS_STYLE_WHITE:
-    case GIMP_CANVAS_STYLE_XOR:
-    case GIMP_CANVAS_STYLE_XOR_DASHED:
       fg.red   = 0xffff;
       fg.green = 0xffff;
       fg.blue  = 0xffff;
