@@ -186,7 +186,7 @@ gimp_pdb_dialog_constructor (GType                  type,
   g_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
 
   dialog->context = gimp_context_new (dialog->context->gimp,
-                                      "pdb selection", /* gtk_window_get_title (GTK_WINDOW (object)), */
+                                      g_type_name (type),
                                       NULL);
 
   gimp_context_set_by_type (dialog->context, dialog->select_type,
