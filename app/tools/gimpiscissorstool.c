@@ -754,10 +754,13 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  geometry[i][1] = pts[indices[i]].dy * SUPERSAMPLE;
 	  break;
 	case SCREEN_COORDS:
-	  /*gdisplay_transform_coords_f (gdisp, (int) pts[indices[i]].dx,
-				       (int) pts[indices[i]].dy, &x, &y, TRUE);*/
-	  geometry[i][0] = pts[indices[i]].dx/*x*/;
-	  geometry[i][1] = pts[indices[i]].dy/*y*/;
+	  /*gdisplay_transform_coords_f (gdisp, , &x, &y, TRUE);*/
+	  gdisplay_untransform_coords_f (gdisp, (int) pts[indices[i]].dx, (int) pts[indices[i]].dy,
+			   &x, &y, TRUE); 
+
+	  geometry[i][0] = x;
+	  geometry[i][1] = y;
+	  /*g_print("%f %f\n", x, y);*/
 	  break;
 	}
       geometry[i][2] = 0;
@@ -1981,8 +1984,10 @@ construct_edge_map (Tool    *tool,
   long dboffset;
    
   PixelRegion srcPR, destPR;
-  /* FILE *dump; */
-
+/*#define ISCISSORS_STILL_DOES_NOT_WORK */
+#ifdef ISCISSORS_STILL_DOES_NOT_WORK
+   FILE *dump; 
+#endif
   /*  init some variables  */
   srcPR.bytes = edge_buf->bytes;
   destPR.rowstride = edge_buf->bytes * edge_buf->width;
@@ -2067,14 +2072,16 @@ construct_edge_map (Tool    *tool,
       row ++;
       y = row * BLOCK_HEIGHT;
     }
+    
+#ifdef ISCISSORS_STILL_DOES_NOT_WORK
 
   /*  dump the edge buffer for debugging*/
 
-   /*dump=fopen("dump", "w"); 
+   dump=fopen("dump", "w"); 
    fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
-   fclose (dump);*/
-
+   fclose (dump);
+#endif
 }
 
 
