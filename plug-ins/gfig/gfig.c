@@ -4805,7 +4805,7 @@ gfig_grid_colours(GtkWidget *w,GdkColormap *cmap)
 
 
 static gint
-gfig_dialog ()
+gfig_dialog (void)
 {
   GtkWidget *button;
   GtkWidget *frame;
@@ -4816,7 +4816,6 @@ gfig_dialog ()
   GtkWidget *notebook;
   GtkWidget *page;
   GtkWidget *top_level_dlg;
-  GdkColor color;
 
   guchar     *color_cube;
   int argc;
@@ -5009,12 +5008,6 @@ gfig_dialog ()
   gfig_grid_colours(gfig_preview,xxx);
   /* Popup for list area */
   gfig_op_menu_create(top_level_dlg);
-
-  /* Tool tips and colors */
-  if(gdk_color_parse("bisque",&color) == FALSE || !gdk_color_alloc(xxx,&color))
-    gtk_tooltips_set_colors(gfig_tooltips,&top_level_dlg->style->white,&top_level_dlg->style->black);  
-  else
-    gtk_tooltips_set_colors(gfig_tooltips,&color,&top_level_dlg->style->black);
 
   /* signal(11,scatch); For debugging */
 

@@ -403,7 +403,6 @@ static gint
 mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
              gint first_nr, gint last_nr )
 {
-  GdkColor   tips_fg, tips_bg;
   GtkWidget *hbbox;
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -448,20 +447,6 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) mov_close_callback,
 		      NULL);
-
-  /* tooltips */
-  g_tooltips = gtk_tooltips_new();
-	/* use black as foreground: */
-	tips_fg.red   = 0;
-	tips_fg.green = 0;
-	tips_fg.blue  = 0;
-	/* postit yellow (khaki) as background: */
-	gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_fg);
-	tips_bg.red   = 61669;
-	tips_bg.green = 59113;
-	tips_bg.blue  = 35979;
-	gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_bg);
-  gtk_tooltips_set_colors(g_tooltips, &tips_bg, &tips_fg);
 
   /*  Action area  */
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);

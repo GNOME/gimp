@@ -906,7 +906,6 @@ gint p_array_std_dialog(char *title_txt,
                     t_but_arg  b_argv[],
                     gint       b_def_val)
 {
-  GdkColor   tips_fg, tips_bg;
   GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *frame;
@@ -951,20 +950,6 @@ gint p_array_std_dialog(char *title_txt,
   gtk_signal_connect (GTK_OBJECT (g_arrint.dlg), "destroy",
 		      (GtkSignalFunc) arr_close_callback,
 		      NULL);
-
-  /* tooltips */
-  g_tooltips = gtk_tooltips_new();
-	/* use black as foreground: */
-	tips_fg.red   = 0;
-	tips_fg.green = 0;
-	tips_fg.blue  = 0;
-	/* postit yellow (khaki) as background: */
-	gdk_color_alloc (gtk_widget_get_colormap (g_arrint.dlg), &tips_fg);
-	tips_bg.red   = 61669;
-	tips_bg.green = 59113;
-	tips_bg.blue  = 35979;
-	gdk_color_alloc (gtk_widget_get_colormap (g_arrint.dlg), &tips_bg);
-  gtk_tooltips_set_colors(g_tooltips, &tips_bg, &tips_fg);
 
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (g_arrint.dlg)->action_area), 2);
   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->action_area), FALSE);

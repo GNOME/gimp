@@ -101,8 +101,6 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
    data->toolbar = toolbar = gtk_toolbar_new(GTK_ORIENTATION_HORIZONTAL, 
 					     GTK_TOOLBAR_ICONS);
 
-   gtk_tooltips_set_colors(GTK_TOOLBAR(toolbar)->tooltips, 
-			   get_yellow(), &window->style->fg[GTK_STATE_NORMAL]);
    gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
    gtk_toolbar_set_space_size(GTK_TOOLBAR(toolbar), 8);
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);

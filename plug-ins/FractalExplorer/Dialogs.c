@@ -122,21 +122,6 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), top_table, FALSE, FALSE, 0);
     gtk_widget_show(top_table);
 
-  /* Tool-Tips */
-
-  /* use black as foreground: */
-    tips = gtk_tooltips_new();
-    tips_fg.red = 0;
-    tips_fg.green = 0;
-    tips_fg.blue = 0;
-  /* postit yellow (khaki) as background: */
-    gdk_color_alloc(gtk_widget_get_colormap(top_table), &tips_fg);
-    tips_bg.red = 61669;
-    tips_bg.green = 59113;
-    tips_bg.blue = 35979;
-    gdk_color_alloc(gtk_widget_get_colormap(top_table), &tips_bg);
-    gtk_tooltips_set_colors(tips, &tips_bg, &tips_fg);
-
   /* Preview */
 
     frame = gtk_frame_new(NULL);

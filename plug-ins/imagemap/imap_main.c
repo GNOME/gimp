@@ -252,24 +252,6 @@ init_preferences(void)
    command_list_set_undo_level(_preferences.undo_levels);
 }
 
-/* Get yellow for tooltips */
-GdkColor*
-get_yellow(void)
-{
-   static GdkColor *yellow;
-
-   if (!yellow) {
-      static GdkColor color;
-      GdkColormap *colormap = gdk_window_get_colormap(_dlg->window);
-
-      color.red = 61669;
-      color.green = 59113;
-      color.blue = 35979;
-      gdk_color_alloc(colormap, &color);
-      yellow = &color;
-   }
-   return yellow;
-}
 
 gint
 get_image_width(void)

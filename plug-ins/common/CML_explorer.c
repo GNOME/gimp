@@ -130,8 +130,7 @@ gint	gtkW_homogeneous_layout	= FALSE;
 gint	gtkW_frame_shadow_type = GTK_SHADOW_ETCHED_IN;
 gint	gtkW_align_x = GTK_FILL|GTK_EXPAND;
 gint	gtkW_align_y = GTK_FILL;
-gint	gtkW_tooltips_color_allocated = FALSE;
-GdkColor	tooltips_foreground, tooltips_background;
+
 /* gtkW callback */
 static void	gtkW_close_callback (GtkWidget *widget, gpointer data);
 static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
@@ -205,7 +204,6 @@ static GtkWidget	*gtkW_vbox_add_button (GtkWidget	*vbox,
 					       GtkSignalFunc	update,
 					       gpointer		data);
 static GtkWidget	*gtkW_vbox_new (GtkWidget *parent);
-static GtkTooltips	*gtkW_tooltips_new (GtkWidget *frame);
 /* end of GtkW */
 
 #define	RANDOM	((gdouble) ((double) rand ()/((double) RAND_MAX)))
@@ -1370,7 +1368,7 @@ DIALOG ()
 	random_sensitives[4].widget = button;
 	random_sensitives[4].logic = TRUE;
 
-	tooltips = gtkW_tooltips_new (frame);
+	tooltips = gtk_tooltips_new ();
 	gtk_tooltips_set_tip  (tooltips, button, _("\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."), NULL);
 	gtk_tooltips_enable (tooltips);
       }
@@ -2866,32 +2864,3 @@ gtkW_vbox_new (GtkWidget *parent)
   return vbox;
 }
 
-static GtkTooltips *
-gtkW_tooltips_new (GtkWidget *frame)
-{
-  GtkTooltips	*tooltips;
-
-  tooltips = gtk_tooltips_new ();
-
-  if (gtkW_tooltips_color_allocated == FALSE)
-    {
-      tooltips_foreground.red   = 0;
-      tooltips_foreground.green = 0;
-      tooltips_foreground.blue  = 0;
-      /* postit yellow (khaki) as background: */
-      gdk_color_alloc (gtk_widget_get_colormap (frame), &tooltips_foreground);
-      tooltips_background.red   = 61669;
-      tooltips_background.green = 59113;
-      tooltips_background.blue  = 35979;
-      gdk_color_alloc (gtk_widget_get_colormap (frame), &tooltips_background);
-      gtkW_tooltips_color_allocated = TRUE;
-    }
-  
-    gtk_tooltips_set_colors (tooltips,
-			     &tooltips_background,
-			     &tooltips_foreground);
-
-    return tooltips;
-}
-/* end of gtkW functions */
-/* CML_explorer.c ends here */

@@ -1410,9 +1410,6 @@ void create_main_dialog(void)
   gtk_widget_show(appwin->widget);
 
   gck_cursor_set(previewarea->window,GDK_HAND2);
-  gtk_tooltips_set_colors(tooltips,
-    gck_rgb_to_gdkcolor(appwin->visinfo,255,255,220),
-    gck_rgb_to_gdkcolor(appwin->visinfo,0,0,0));
 
   if (mapvals.tooltips_enabled==FALSE)
     gtk_tooltips_disable(tooltips);

@@ -1,3 +1,19 @@
+Fri Jan 14 16:10:38 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_main.h
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/imagemap/imap_toolbar.c
+	* plug-ins/imagemap/imap_tools.c: gtk_tooltips_set_colors () does 
+	absolutely nothing, so it can be safely deleted from the source
+
 2000-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
