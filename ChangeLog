@@ -1,3 +1,8 @@
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: set color buttons to
+	continuous update. Minor code cleanup.
+
 2003-11-11  Dave Neary  <bolsh@gimp.org>
 
 	* app/widgets/gimpdataeditor.c: Save data before disposing of 
