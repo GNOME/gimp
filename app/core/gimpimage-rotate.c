@@ -34,7 +34,9 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "gimp-intl.h"
+
+static void gimp_image_rotate_guides (GimpImage        *gimage,
+                                      GimpRotationType  rotate_type);
 
 
 void
@@ -48,10 +50,12 @@ gimp_image_rotate (GimpImage        *gimage,
   GList     *list;
   gdouble    center_x;
   gdouble    center_y;
+  gint       tmp;
   gint       num_channels;
   gint       num_layers;
   gint       num_vectors;
   gint       progress_current = 1;
+  gboolean   size_changed     = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -72,6 +76,24 @@ gimp_image_rotate (GimpImage        *gimage,
   /*  Relax the floating selection  */
   if (floating_layer)
     floating_sel_relax (floating_layer, TRUE);
+
+  /*  Resize the image (if needed)  */
+  switch (rotate_type)
+    {
+    case GIMP_ROTATE_90:
+    case GIMP_ROTATE_270:
+      gimp_image_undo_push_image_size (gimage, NULL);
+
+      tmp = gimage->width;
+      gimage->width  = gimage->height;
+      gimage->height = tmp;
+
+      size_changed = TRUE;
+      break;
+
+    case GIMP_ROTATE_180:
+      break;
+    }
 
   /*  Rotate all channels  */
   for (list = GIMP_LIST (gimage->channels)->list; 
@@ -124,30 +146,7 @@ gimp_image_rotate (GimpImage        *gimage,
     }
 
   /*  Rotate all Guides  */
-#if 0  /* FIXME: implement! */
-  for (list = gimage->guides; list; list = g_list_next (list))
-    {
-      GimpGuide *guide = list->data;
-
-      switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
-          if (rotate_type == GIMP_ORIENTATION_VERTICAL)
-            gimp_image_move_guide (gimage, guide,
-                                   gimage->height - guide->position, TRUE);
-	  break;
-
-	case GIMP_ORIENTATION_VERTICAL:
-          if (rotate_type == GIMP_ORIENTATION_HORIZONTAL)
-            gimp_image_move_guide (gimage, guide,
-                                   gimage->width - guide->position, TRUE);
-	  break;
-
-	default:
-          break;
-	}
-    }
-#endif
+  gimp_image_rotate_guides (gimage, rotate_type);
 
   /*  Make sure the projection matches the gimage size  */
   gimp_image_projection_allocate (gimage);
@@ -158,7 +157,82 @@ gimp_image_rotate (GimpImage        *gimage,
 
   gimp_image_undo_group_end (gimage);
 
+  if (size_changed)
+    gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+
   gimp_image_mask_changed (gimage);
 
   gimp_unset_busy (gimage->gimp);
+}
+
+static void
+gimp_image_rotate_guides (GimpImage        *gimage,
+                          GimpRotationType  rotate_type)
+{
+  GList *list;
+
+  /*  Rotate all Guides  */
+  for (list = gimage->guides; list; list = g_list_next (list))
+    {
+      GimpGuide *guide = list->data;
+
+      switch (rotate_type)
+        {
+        case GIMP_ROTATE_90:
+          switch (guide->orientation)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              gimp_image_undo_push_image_guide (gimage, NULL, guide);
+              guide->orientation = GIMP_ORIENTATION_VERTICAL;
+              guide->position    = gimage->width - guide->position;
+              break;
+              
+            case GIMP_ORIENTATION_VERTICAL:
+              gimp_image_undo_push_image_guide (gimage, NULL, guide);
+              guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
+              break;
+              
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_ROTATE_180:
+          switch (guide->orientation)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              gimp_image_move_guide (gimage, guide,
+                                     gimage->height - guide->position, TRUE);
+              break;
+              
+            case GIMP_ORIENTATION_VERTICAL:
+              gimp_image_move_guide (gimage, guide,
+                                     gimage->width - guide->position, TRUE);
+              break;
+
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_ROTATE_270:
+          switch (guide->orientation)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              gimp_image_undo_push_image_guide (gimage, NULL, guide);
+              guide->orientation = GIMP_ORIENTATION_VERTICAL;
+              break;
+              
+            case GIMP_ORIENTATION_VERTICAL:
+              gimp_image_undo_push_image_guide (gimage, NULL, guide);
+              guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
+              guide->position    = gimage->height - guide->position;
+              break;
+              
+            default:
+              break;
+            }
+          break;
+	}
+    }
 }

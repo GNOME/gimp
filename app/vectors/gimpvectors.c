@@ -25,6 +25,7 @@
 
 #include "vectors-types.h"
 
+#include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
@@ -445,6 +446,24 @@ gimp_vectors_rotate (GimpItem         *item,
 {
   GimpVectors *vectors;
   GList       *list;
+  GimpMatrix3  matrix;
+  gdouble      angle = 0.0;
+
+  switch (rotate_type)
+    {
+    case GIMP_ROTATE_90:
+      angle = - G_PI_2;
+      break;
+    case GIMP_ROTATE_180:
+      angle = G_PI;
+      break;
+    case GIMP_ROTATE_270:
+      angle = G_PI_2;
+      break;
+    }
+
+  gimp_drawable_transform_matrix_rotate_center (center_x, center_y, angle,
+                                                matrix);
 
   vectors = GIMP_VECTORS (item);
 
@@ -454,7 +473,6 @@ gimp_vectors_rotate (GimpItem         *item,
                                     _("Rotate Path"),
                                     vectors);
 
-#if 0  /*  FIXME: implement!  */
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
@@ -464,22 +482,13 @@ gimp_vectors_rotate (GimpItem         *item,
         {
           GimpAnchor *anchor = list2->data;
 
-          switch (flip_type)
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              anchor->position.x = -(anchor->position.x - axis) + axis;
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              anchor->position.y = -(anchor->position.y - axis) + axis;
-              break;
-
-            default:
-              break;
-            }
+          gimp_matrix3_transform_point (matrix,
+                                        anchor->position.x,
+                                        anchor->position.y,
+                                        &anchor->position.x,
+                                        &anchor->position.y);
         }
     }
-#endif
 
   gimp_vectors_thaw (vectors);
 }

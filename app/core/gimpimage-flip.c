@@ -34,8 +34,6 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "gimp-intl.h"
-
 
 void
 gimp_image_flip (GimpImage           *gimage, 

@@ -1,3 +1,12 @@
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-flip.c: no need to include gimp-intl.h.
+	
+	* app/core/gimpimage-rotate.c: change the image size if needed;
+	implemented rotation of guides.
+
+	* app/vectors/gimpvectors.c: implemented rotation of vectors.
+
 2003-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c: remember the guide's orientation
