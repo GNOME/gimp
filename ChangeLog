@@ -1,5 +1,11 @@
 2004-08-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/siod/sliba.c (array_prin1): when printing a
+	character array, don't flush the buffer for each byte but wait
+	until it is filled.
+
+2004-08-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/siod-wrapper.[ch] (siod_output_string): use
 	g_strdup_vprintf() instead of guessing the string length. Also
 	declare the function using G_GNUC_PRINTF().

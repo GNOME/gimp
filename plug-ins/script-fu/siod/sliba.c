@@ -122,7 +122,7 @@ array_gc_free (LISP ptr)
 void
 array_prin1 (LISP ptr, struct gen_printio *f)
 {
-  int j;
+  int i, j;
   switch (ptr->type)
     {
     case tc_string:
@@ -188,11 +188,19 @@ array_prin1 (LISP ptr, struct gen_printio *f)
     case tc_byte_array:
       sprintf (tkbuffer, "#%ld\"", ptr->storage_as.string.dim);
       gput_st (f, tkbuffer);
-      for (j = 0; j < ptr->storage_as.string.dim; ++j)
+      for (j = 0, i = 0; j < ptr->storage_as.string.dim; j++)
 	{
-	  sprintf (tkbuffer, "%02x", ptr->storage_as.string.data[j] & 0xFF);
-	  gput_st (f, tkbuffer);
-	}
+	  sprintf (tkbuffer + i, "%02x",
+                   ptr->storage_as.string.data[j] & 0xFF);
+          i += 2;
+          if (i % TKBUFFERN == 0)
+            {
+              gput_st (f, tkbuffer);
+              i = 0;
+            }
+        }
+      if (i % TKBUFFERN)
+        gput_st (f, tkbuffer);
       gput_st (f, "\"");
       break;
     case tc_lisp_array:
