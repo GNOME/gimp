@@ -53,8 +53,9 @@ static void       file_save_dialog_response      (GtkWidget      *save_dialog,
                                                   Gimp           *gimp);
 static gboolean   file_save_dialog_check_uri     (GtkWidget      *save_dialog,
                                                   Gimp           *gimp,
-                                                  gchar         **uri,
-                                                  PlugInProcDef **save_proc);
+                                                  gchar         **ret_uri,
+                                                  gchar         **ret_basename,
+                                                  PlugInProcDef **ret_save_proc);
 static gboolean   file_save_dialog_use_extension (GtkWidget      *save_dialog,
                                                   const gchar    *uri);
 static gboolean   file_save_dialog_overwrite     (GtkWidget      *save_dialog,
@@ -124,6 +125,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
   gchar          *uri;
+  gchar          *basename;
   PlugInProcDef  *save_proc;
 
   if (response_id != GTK_RESPONSE_OK)
@@ -136,7 +138,8 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
 
-  if (file_save_dialog_check_uri (save_dialog, gimp, &uri, &save_proc))
+  if (file_save_dialog_check_uri (save_dialog, gimp,
+                                  &uri, &basename, &save_proc))
     {
       if (file_save_dialog_save_image (save_dialog,
                                        dialog->gimage,
@@ -148,6 +151,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
         }
 
       g_free (uri);
+      g_free (basename);
     }
 
   gimp_file_dialog_set_sensitive (dialog, TRUE);
@@ -157,6 +161,7 @@ static gboolean
 file_save_dialog_check_uri (GtkWidget      *save_dialog,
                             Gimp           *gimp,
                             gchar         **ret_uri,
+                            gchar         **ret_basename,
                             PlugInProcDef **ret_save_proc)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
@@ -173,11 +178,21 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
 
   basename = g_path_get_basename (uri);
 
-  g_print ("\n\n%s: URI = %s\n", G_STRFUNC, uri);
-
   save_proc     = dialog->file_proc;
   uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
   basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+
+  g_print ("\n\n%s: URI = %s\n",
+           G_STRFUNC, uri);
+  g_print ("%s: basename = %s\n",
+           G_STRFUNC, basename);
+  g_print ("%s: selected save_proc: %s\n",
+           G_STRFUNC, save_proc ? save_proc->menu_label : "NULL");
+  g_print ("%s: URI save_proc: %s\n",
+           G_STRFUNC, uri_proc ? uri_proc->menu_label : "NULL");
+  g_print ("%s: basename save_proc: %s\n\n",
+           G_STRFUNC, basename_proc ? basename_proc->menu_label : "NULL");
+
 
   /*  first check if the user entered an extension at all  */
   if (! basename_proc)
@@ -205,8 +220,9 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
             {
               gchar *ext_uri      = g_strconcat (uri,      ".", ext, NULL);
               gchar *ext_basename = g_strconcat (basename, ".", ext, NULL);
+              gchar *utf8;
 
-              g_print ("%s: appending .%s to basename without any extension\n",
+              g_print ("%s: appending .%s to basename\n",
                        G_STRFUNC, ext);
 
               g_free (uri);
@@ -217,6 +233,11 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
 
               uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
               basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+
+              utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
+              gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (save_dialog),
+                                                 utf8);
+              g_free (utf8);
             }
           else
             {
@@ -362,9 +383,8 @@ file_save_dialog_check_uri (GtkWidget      *save_dialog,
         }
     }
 
-  g_free (basename);
-
   *ret_uri       = uri;
+  *ret_basename  = basename;
   *ret_save_proc = save_proc;
 
   return TRUE;
