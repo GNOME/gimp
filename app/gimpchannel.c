@@ -727,6 +727,31 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 		  break;
 
 		case PRECISION_FLOAT:
+		  {
+		    gfloat *d = (gfloat*)data;
+		    found = FALSE;
+		    for (x = pixelarea_x (&maskPR); x < ex; x++ )
+		      {
+			if (*d++)
+			  {
+			    if (x < *x1)
+			      *x1 = x;
+			    if (x > *x2)
+			      *x2 = x;
+			    found = TRUE;
+			  }
+		      }
+		      
+		      if (found)
+		      {
+			if (y < *y1)
+			  *y1 = y;
+			if (y > *y2)
+			  *y2 = y;
+		      }
+		  }
+		  break;
+
 		default:
 		  g_warning ("channel_bounds: bad precision");
 		  break;

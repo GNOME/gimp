@@ -22,6 +22,15 @@ struct _PixelRow;
 
 
 void
+absdiff_row_float (
+                   struct _PixelRow *,
+                   struct _PixelRow *,
+                   struct _PixelRow *,
+                   gfloat,
+                   int
+                   );
+
+void
 copy_row_float (
                 struct _PixelRow * src,
                 struct _PixelRow * dest

@@ -522,6 +522,7 @@ absdiff_area_funcs (
     case PRECISION_U16:
       return absdiff_row_u16;
     case PRECISION_FLOAT:
+      return absdiff_row_float;
     case PRECISION_NONE:
     default:
       g_warning ("qq bad precision");

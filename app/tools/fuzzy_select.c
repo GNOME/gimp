@@ -441,7 +441,72 @@ seed_fill_u8 (
                SeedFillData * d
                )
 {
-  return FALSE;
+  guint changed = FALSE;
+  guint x, y;
+  
+  /* get pixels in this chunk which need attention */
+  while (pixeliter_get_work (p, &x, &y))
+    {
+      guint8 * dd, * md;
+      int xmin_c, xmax_c;
+
+      /* see if this pixel should be done */
+      dd = (guint8*) canvas_portion_data (d->x_diff, 0, y - p->chunk.y);
+      if (dd[x - p->chunk.x] == 0)
+        continue;
+
+      /* see if this pixel is already done */
+      md = (guint8*) canvas_portion_data (d->x_mask, 0, y - p->chunk.y);
+      if (md[x - p->chunk.x] != 0)
+        continue;
+      
+      /* find contig segment endpoints */
+      for (xmin_c = x - p->chunk.x;
+           (xmin_c >= 0) && (dd[xmin_c] != 0);
+           xmin_c--);
+
+      for (xmax_c = x - p->chunk.x;
+           (xmax_c < p->chunk.w) && (dd[xmax_c] != 0);
+           xmax_c++);
+             
+      /* add work to adjacent chunks if segment reached the edges */
+      if (xmin_c < 0)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x - 1, y,
+                              1, 1);
+        }
+
+      if (xmax_c == p->chunk.w)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x + p->chunk.w, y,
+                              1, 1);
+        }
+      
+      xmin_c++;
+      xmax_c--;
+      
+      /* del work for those pixels */
+      pixeliter_del_work (p,
+                          p->chunk.x + xmin_c, y,
+                          xmax_c - xmin_c + 1, 1);
+
+      /* add work to next and prev rows */
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y - 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y + 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      /* save those pixels on x_mask */
+      memcpy (&md[xmin_c], &dd[xmin_c], (xmax_c - xmin_c + 1) * sizeof (guint8));
+      changed = TRUE;
+    }
+
+  return changed;
 }
 
 static guint
@@ -524,7 +589,72 @@ seed_fill_float (
                  SeedFillData * d
                  )
 {
-  return FALSE;
+  guint changed = FALSE;
+  guint x, y;
+  
+  /* get pixels in this chunk which need attention */
+  while (pixeliter_get_work (p, &x, &y))
+    {
+      gfloat * dd, * md;
+      int xmin_c, xmax_c;
+
+      /* see if this pixel should be done */
+      dd = (gfloat*) canvas_portion_data (d->x_diff, 0, y - p->chunk.y);
+      if (dd[x - p->chunk.x] == 0)
+        continue;
+
+      /* see if this pixel is already done */
+      md = (gfloat*) canvas_portion_data (d->x_mask, 0, y - p->chunk.y);
+      if (md[x - p->chunk.x] != 0)
+        continue;
+      
+      /* find contig segment endpoints */
+      for (xmin_c = x - p->chunk.x;
+           (xmin_c >= 0) && (dd[xmin_c] != 0);
+           xmin_c--);
+
+      for (xmax_c = x - p->chunk.x;
+           (xmax_c < p->chunk.w) && (dd[xmax_c] != 0);
+           xmax_c++);
+             
+      /* add work to adjacent chunks if segment reached the edges */
+      if (xmin_c < 0)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x - 1, y,
+                              1, 1);
+        }
+
+      if (xmax_c == p->chunk.w)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x + p->chunk.w, y,
+                              1, 1);
+        }
+      
+      xmin_c++;
+      xmax_c--;
+      
+      /* del work for those pixels */
+      pixeliter_del_work (p,
+                          p->chunk.x + xmin_c, y,
+                          xmax_c - xmin_c + 1, 1);
+
+      /* add work to next and prev rows */
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y - 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y + 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      /* save those pixels on x_mask */
+      memcpy (&md[xmin_c], &dd[xmin_c], (xmax_c - xmin_c + 1) * sizeof (gfloat));
+      changed = TRUE;
+    }
+
+  return changed;
 }
 
 
