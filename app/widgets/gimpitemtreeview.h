@@ -114,6 +114,7 @@ struct _GimpItemTreeViewClass
 GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_item_tree_view_new      (gint                  preview_size,
+                                          gint                  preview_border_width,
                                           GimpImage            *gimage,
                                           GType                 item_type,
                                           const gchar          *signal_name,

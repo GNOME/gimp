@@ -99,16 +99,16 @@ void      gimp_container_view_construct        (GimpContainerView   *view,
                                                 GimpContainer       *container,
                                                 GimpContext         *context,
                                                 gint                 preview_size,
-                                                gboolean             reorderable,
-                                                gint                 min_items_x,
-                                                gint                 min_items_y);
+                                                gint                 preview_border_width,
+                                                gboolean             reorderable);
 
 void      gimp_container_view_set_container    (GimpContainerView   *view,
 						GimpContainer       *container);
 void      gimp_container_view_set_context      (GimpContainerView   *view,
 						GimpContext         *context);
 void      gimp_container_view_set_preview_size (GimpContainerView   *view,
-						gint                 preview_size);
+						gint                 preview_size,
+                                                gint                 preview_border_width);
 void      gimp_container_view_set_name_func    (GimpContainerView   *view,
 						GimpItemGetNameFunc  get_name_func);
 

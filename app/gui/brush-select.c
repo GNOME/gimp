@@ -36,6 +36,7 @@
 
 #include "pdb/procedural_db.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpwidgets-constructors.h"
 
@@ -159,9 +160,12 @@ brush_select_new (Gimp                 *gimp,
                                            dialogs_edit_brush_func,
                                            bsp->context,
                                            FALSE,
-                                           GIMP_PREVIEW_SIZE_MEDIUM,
-                                           5, 5,
+                                           GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                            global_menu_factory);
+
+  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (bsp->view)->view),
+                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
+                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);

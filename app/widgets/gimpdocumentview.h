@@ -63,8 +63,7 @@ GtkWidget * gimp_document_view_new      (GimpViewType            view_type,
                                          GimpContainer          *container,
                                          GimpContext            *context,
                                          gint                    preview_size,
-                                         gint                    min_items_x,
-                                         gint                    min_items_y,
+                                         gint                    preview_border_width,
                                          GimpFileOpenDialogFunc  file_open_dialog_func,
                                          GimpMenuFactory        *menu_factory);
 

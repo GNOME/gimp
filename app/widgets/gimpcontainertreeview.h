@@ -85,9 +85,8 @@ GType       gimp_container_tree_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
 					       GimpContext   *context,
 					       gint           preview_size,
-                                               gboolean       reorderable,
-					       gint           min_items_x,
-					       gint           min_items_y);
+                                               gint           preview_border_width,
+                                               gboolean       reorderable);
 
 
 #endif  /*  __GIMP_CONTAINER_TREE_VIEW_H__  */

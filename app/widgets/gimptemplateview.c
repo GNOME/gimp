@@ -121,8 +121,7 @@ gimp_template_view_new (GimpViewType     view_type,
                         GimpContainer   *container,
                         GimpContext     *context,
                         gint             preview_size,
-                        gint             min_items_x,
-                        gint             min_items_y,
+                        gint             preview_border_width,
                         GimpMenuFactory *menu_factory)
 {
   GimpTemplateView    *template_view;
@@ -132,12 +131,9 @@ gimp_template_view_new (GimpViewType     view_type,
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (template_view),
                                          view_type,
-                                         container,
-                                         context,
-                                         preview_size,
+                                         container, context,
+                                         preview_size, preview_border_width,
                                          TRUE, /* reorderable */
-                                         min_items_x,
-                                         min_items_y,
                                          menu_factory, "<Templates>"))
     {
       g_object_unref (template_view);

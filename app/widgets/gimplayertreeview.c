@@ -231,8 +231,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   view->model_column_mask_visible = tree_view->n_model_columns;
   tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
 
-  GIMP_CONTAINER_VIEW (view)->preview_border_width = 2;
-
   view->options_box = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (view->options_box), 2);
   gtk_box_pack_start (GTK_BOX (view), view->options_box, FALSE, FALSE, 0);

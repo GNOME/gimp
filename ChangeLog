@@ -1,5 +1,38 @@
 2003-04-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimpimageview.[ch]
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimptemplateview.[ch]: removed "min_item_x" and
+	"min_item_y" parameters all over the place. Added
+	"preview_border_width" instead.
+
+	* app/widgets/gimpmenuitem.c: ensure that all menu items have the
+	same height.
+
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpundoeditor.c
+	* app/gui/brush-select.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/font-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: changed accordingly.
+
+	* app/gui/dialogs-constructors.c: removed the borders from the tool
+	and template lists.
+
+2003-04-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpguiconfig.[ch]
 	* app/config/gimprc-blurbs.h: added "gboolean save_accels" and
 	"gboolean restore_accels".

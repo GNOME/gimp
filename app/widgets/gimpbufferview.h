@@ -58,8 +58,7 @@ GtkWidget * gimp_buffer_view_new      (GimpViewType     view_type,
 				       GimpContainer   *container,
 				       GimpContext     *context,
 				       gint             preview_size,
-				       gint             min_items_x,
-				       gint             min_items_y,
+                                       gint             preview_border_width,
 				       GimpMenuFactory *menu_factory);
 
 

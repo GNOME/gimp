@@ -35,6 +35,7 @@
 
 #include "pdb/procedural_db.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 
 #include "dialogs-constructors.h"
@@ -131,9 +132,12 @@ palette_select_new (Gimp        *gimp,
                                           gimp->palette_factory,
                                           dialogs_edit_palette_func,
                                           psp->context,
-                                          GIMP_PREVIEW_SIZE_MEDIUM,
-                                          5, 8,
+                                          GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Palettes>");
+
+  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (psp->view)->view),
+                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
+                                        8 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);

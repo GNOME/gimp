@@ -36,6 +36,7 @@
 
 #include "gimpcontainerview.h"
 #include "gimpbrushfactoryview.h"
+#include "gimppreviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -150,8 +151,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 			     GimpContext      *context,
 			     gboolean          change_brush_spacing,
 			     gint              preview_size,
-			     gint              min_items_x,
-			     gint              min_items_y,
+                             gint              preview_border_width,
 			     GimpMenuFactory  *menu_factory)
 {
   GimpBrushFactoryView *factory_view;
@@ -160,8 +160,9 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
-  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW, NULL);
 
@@ -172,9 +173,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 					  factory,
 					  edit_func,
 					  context,
-					  preview_size,
-					  min_items_x,
-					  min_items_y,
+					  preview_size, preview_border_width,
 					  menu_factory, "<Brushes>"))
     {
       g_object_unref (factory_view);

@@ -253,7 +253,8 @@ dialogs_preview_size_cmd_callback (GtkWidget *widget,
           view = gimp_container_view_get_by_dockable (dockable);
 
           if (view)
-            gimp_container_view_set_preview_size (view, preview_size);
+            gimp_container_view_set_preview_size (view, preview_size,
+                                                  view->preview_border_width);
         }
     }
 }

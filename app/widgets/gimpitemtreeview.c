@@ -340,6 +340,7 @@ gimp_item_tree_view_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_item_tree_view_new (gint                  preview_size,
+                         gint                  preview_border_width,
                          GimpImage            *gimage,
                          GType                 item_type,
                          const gchar          *signal_name,
@@ -355,6 +356,9 @@ gimp_item_tree_view_new (gint                  preview_size,
 
   g_return_val_if_fail (preview_size >  0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
   g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
   g_return_val_if_fail (new_item_func != NULL, NULL);
@@ -387,8 +391,7 @@ gimp_item_tree_view_new (gint                  preview_size,
 
   gimp_container_view_construct (GIMP_CONTAINER_VIEW (item_view),
                                  NULL, NULL,
-                                 preview_size, TRUE,
-                                 -1, -1);
+                                 preview_size, preview_border_width, TRUE);
 
   view->dnd_widget   = NULL;
 
@@ -919,12 +922,13 @@ static void
 gimp_item_tree_view_size_changed (GimpImage        *gimage,
                                   GimpItemTreeView *view)
 {
-  gint preview_size;
+  GimpContainerView *container_view;
 
-  preview_size = GIMP_CONTAINER_VIEW (view)->preview_size;
+  container_view = GIMP_CONTAINER_VIEW (view);
 
   gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (view),
-					preview_size);
+					container_view->preview_size,
+                                        container_view->preview_border_width);
 }
 
 static void

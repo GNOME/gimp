@@ -35,6 +35,7 @@
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
 #include "gimpdnd.h"
+#include "gimppreviewrenderer.h"
 
 
 enum
@@ -344,25 +345,21 @@ gimp_container_view_construct (GimpContainerView *view,
                                GimpContainer     *container,
                                GimpContext       *context,
                                gint               preview_size,
-                               gboolean           reorderable,
-                               gint               min_items_x,
-                               gint               min_items_y)
+                               gint               preview_border_width,
+                               gboolean           reorderable)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
   g_return_if_fail (preview_size >  0 &&
                     preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
-  g_return_if_fail (min_items_x <= 64);
-  g_return_if_fail (min_items_y <= 64);
+  g_return_if_fail (preview_border_width >= 0 &&
+                    preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 
   view->reorderable = reorderable ? TRUE : FALSE;
 
-  gimp_container_view_set_preview_size (view, preview_size);
-
-  gimp_container_view_set_size_request (view,
-                                        (preview_size + 2) * min_items_x,
-                                        (preview_size + 2) * min_items_y);
+  gimp_container_view_set_preview_size (view, preview_size,
+                                        preview_border_width);
 
   if (container)
     gimp_container_view_set_container (view, container);
@@ -435,15 +432,20 @@ gimp_container_view_set_context (GimpContainerView *view,
 
 void
 gimp_container_view_set_preview_size (GimpContainerView *view,
-				      gint               preview_size)
+				      gint               preview_size,
+                                      gint               preview_border_width)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (preview_size >  0 &&
                     preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (preview_border_width >= 0 &&
+                    preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 
-  if (view->preview_size != preview_size)
+  if (view->preview_size         != preview_size ||
+      view->preview_border_width != preview_border_width)
     {
-      view->preview_size = preview_size;
+      view->preview_size         = preview_size;
+      view->preview_border_width = preview_border_width;
 
       GIMP_CONTAINER_VIEW_GET_CLASS (view)->set_preview_size (view);
     }

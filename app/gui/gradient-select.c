@@ -35,6 +35,7 @@
 
 #include "pdb/procedural_db.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 
 #include "dialogs-constructors.h"
@@ -129,9 +130,12 @@ gradient_select_new (Gimp        *gimp,
                                           gimp->gradient_factory,
                                           dialogs_edit_gradient_func,
                                           gsp->context,
-                                          GIMP_PREVIEW_SIZE_MEDIUM,
-                                          6, 6,
+                                          GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Gradients>");
+
+  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (gsp->view)->view),
+                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
+                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), gsp->view);

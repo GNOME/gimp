@@ -454,9 +454,13 @@ gimp_container_popup_create_view (GimpContainerPopup *popup,
                                    view_type,
                                    popup->container,
                                    popup->context,
-                                   GIMP_PREVIEW_SIZE_SMALL,
+                                   GIMP_PREVIEW_SIZE_SMALL, 1,
                                    FALSE, /* reorderable */
-                                   6, 8, NULL, NULL);
+                                   NULL, NULL);
+
+  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (popup->editor)->view),
+                                        6 * (GIMP_PREVIEW_SIZE_SMALL + 2),
+                                        8 * (GIMP_PREVIEW_SIZE_SMALL + 2));
 
   if (GIMP_IS_CONTAINER_GRID_VIEW (popup->editor->view))
     gtk_widget_hide (GIMP_CONTAINER_GRID_VIEW (popup->editor->view)->name_label);
@@ -503,7 +507,7 @@ gimp_container_popup_smaller_clicked (GtkWidget          *button,
                       popup->editor->view->preview_size * 0.8);
 
   gimp_container_view_set_preview_size (popup->editor->view,
-                                        preview_size);
+                                        preview_size, 1);
 }
 
 static void
@@ -516,7 +520,7 @@ gimp_container_popup_larger_clicked (GtkWidget          *button,
                       popup->editor->view->preview_size * 1.2);
 
   gimp_container_view_set_preview_size (popup->editor->view,
-                                        preview_size);
+                                        preview_size, 1);
 }
 
 static void

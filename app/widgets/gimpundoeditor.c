@@ -106,10 +106,9 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
 {
   undo_editor->container = NULL;
 
-  undo_editor->view = gimp_container_tree_view_new (NULL,
-                                                    NULL,
-                                                    GIMP_UNDO_PREVIEW_SIZE,
-                                                    FALSE, 3, 3);
+  undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
+                                                    GIMP_UNDO_PREVIEW_SIZE, 1,
+                                                    FALSE);
   gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
   gtk_widget_show (undo_editor->view);
 

@@ -225,9 +225,8 @@ GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
 			      GimpContext   *context,
 			      gint           preview_size,
-                              gboolean       reorderable,
-			      gint           min_items_x,
-			      gint           min_items_y)
+                              gint           preview_border_width,
+                              gboolean       reorderable)
 {
   GimpContainerGridView *grid_view;
 
@@ -236,15 +235,16 @@ gimp_container_grid_view_new (GimpContainer *container,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size  > 0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
-  g_return_val_if_fail (min_items_x <= 64, NULL);
-  g_return_val_if_fail (min_items_y <= 64, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
 
   gimp_container_view_construct (GIMP_CONTAINER_VIEW (grid_view),
                                  container, context,
-                                 preview_size, reorderable,
-                                 min_items_x, min_items_y);
+                                 preview_size, preview_border_width,
+                                 reorderable);
 
   return GTK_WIDGET (grid_view);
 }

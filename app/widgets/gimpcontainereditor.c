@@ -36,6 +36,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
+#include "gimppreviewrenderer.h"
 
 
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
@@ -110,9 +111,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 				 GimpContainer       *container,
 				 GimpContext         *context,
 				 gint                 preview_size,
+                                 gint                 preview_border_width,
                                  gboolean             reorderable,
-				 gint                 min_items_x,
-				 gint                 min_items_y,
 				 GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier)
 {
@@ -121,8 +121,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (preview_size > 0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (min_items_x <= 64, FALSE);
-  g_return_val_if_fail (min_items_y <= 64, FALSE);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
 
@@ -133,9 +134,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
 							   context,
 							   preview_size,
-                                                           reorderable,
-							   min_items_x,
-							   min_items_y));
+                                                           preview_border_width,
+                                                           reorderable));
       break;
 
     case GIMP_VIEW_TYPE_LIST:
@@ -143,9 +143,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
 							   context,
 							   preview_size,
-                                                           reorderable,
-							   min_items_x,
-							   min_items_y));
+                                                           preview_border_width,
+                                                           reorderable));
       break;
 
     default:

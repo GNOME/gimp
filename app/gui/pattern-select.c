@@ -36,6 +36,7 @@
 
 #include "pdb/procedural_db.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 
 #include "menus.h"
@@ -127,9 +128,12 @@ pattern_select_new (Gimp        *gimp,
                                           gimp->pattern_factory,
                                           NULL,
                                           psp->context,
-                                          GIMP_PREVIEW_SIZE_MEDIUM,
-                                          6, 6,
+                                          GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Patterns>");
+
+  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (psp->view)->view),
+                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
+                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);

@@ -132,8 +132,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 			    GimpDataEditFunc  edit_func,
 			    GimpContext      *context,
 			    gint              preview_size,
-			    gint              min_items_x,
-			    gint              min_items_y,
+                            gint              preview_border_width,
 			    GimpMenuFactory  *menu_factory,
                             const gchar      *menu_identifier)
 {
@@ -147,8 +146,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 					  edit_func,
 					  context,
 					  preview_size,
-					  min_items_x,
-					  min_items_y,
+                                          preview_border_width,
 					  menu_factory,
                                           menu_identifier))
     {
@@ -166,8 +164,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 				  GimpDataEditFunc     edit_func,
 				  GimpContext         *context,
 				  gint                 preview_size,
-				  gint                 min_items_x,
-				  gint                 min_items_y,
+                                  gint                 preview_border_width,
 				  GimpMenuFactory     *menu_factory,
                                   const gchar         *menu_identifier)
 {
@@ -177,22 +174,19 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (preview_size >  0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
-  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        FALSE);
 
   factory_view->factory        = factory;
   factory_view->data_edit_func = edit_func;
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
 					 view_type,
-					 factory->container,
-					 context,
-					 preview_size,
+					 factory->container, context,
+					 preview_size, preview_border_width,
                                          FALSE, /* reorderable */
-					 min_items_x,
-					 min_items_y,
-					 menu_factory,
-                                         menu_identifier))
+					 menu_factory, menu_identifier))
     {
       return FALSE;
     }

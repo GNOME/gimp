@@ -307,8 +307,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
   view = gimp_image_view_new (GIMP_VIEW_TYPE_LIST,
                               context->gimp->images,
                               context,
-                              preview_size,
-                              5, 3,
+                              preview_size, 1,
                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -329,8 +328,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
-				      preview_size,
-				      5, 3,
+				      preview_size, 1,
                                       factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -350,8 +348,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     context->gimp->pattern_factory,
 				     NULL,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
 				     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
@@ -371,8 +368,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     context->gimp->gradient_factory,
 				     dialogs_edit_gradient_func,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
                                      factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
@@ -392,8 +388,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     context->gimp->palette_factory,
 				     dialogs_edit_palette_func,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
                                      factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
@@ -411,9 +406,8 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 
   view = gimp_container_tree_view_new (context->gimp->fonts,
 				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+				       preview_size, 1,
+                                       FALSE);
 
   return dialogs_dockable_new (view,
 			       _("Font List"), _("Fonts"), NULL,
@@ -430,9 +424,8 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 
   view = gimp_container_tree_view_new (context->gimp->tool_info_list,
 				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+				       preview_size, 0,
+                                       FALSE);
 
   return dialogs_dockable_new (view,
 			       _("Tool List"), _("Tools"), NULL,
@@ -450,8 +443,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
   view = gimp_buffer_view_new (GIMP_VIEW_TYPE_LIST,
 			       context->gimp->named_buffers,
 			       context,
-			       preview_size,
-			       5, 3,
+			       preview_size, 1,
                                factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -474,8 +466,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
   view = gimp_image_view_new (GIMP_VIEW_TYPE_GRID,
                               context->gimp->images,
                               context,
-                              preview_size,
-                              5, 3,
+                              preview_size, 1,
                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -496,8 +487,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				      dialogs_edit_brush_func,
 				      context,
 				      TRUE,
-				      preview_size,
-				      5, 3,
+				      preview_size, 1,
                                       factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -517,8 +507,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     context->gimp->pattern_factory,
 				     NULL,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
 				     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
@@ -538,8 +527,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     context->gimp->gradient_factory,
 				     dialogs_edit_gradient_func,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
                                      factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
@@ -559,8 +547,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     context->gimp->palette_factory,
 				     dialogs_edit_palette_func,
 				     context,
-				     preview_size,
-				     5, 3,
+				     preview_size, 1,
                                      factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
@@ -578,9 +565,8 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 
   view = gimp_container_grid_view_new (context->gimp->fonts,
 				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+				       preview_size, 1,
+                                       FALSE);
 
   return dialogs_dockable_new (view,
 			       _("Font Grid"), _("Fonts"), NULL,
@@ -597,9 +583,8 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 
   view = gimp_container_grid_view_new (context->gimp->tool_info_list,
 				       context,
-				       preview_size,
-                                       FALSE,
-				       5, 3);
+				       preview_size, 1,
+                                       FALSE);
 
   return dialogs_dockable_new (view,
 			       _("Tool Grid"), _("Tools"), NULL,
@@ -617,8 +602,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
   view = gimp_buffer_view_new (GIMP_VIEW_TYPE_GRID,
 			       context->gimp->named_buffers,
 			       context,
-			       preview_size,
-			       5, 3,
+			       preview_size, 1,
                                factory->menu_factory);
 
   return dialogs_dockable_new (view,
@@ -646,7 +630,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   view =
-    gimp_item_tree_view_new (preview_size,
+    gimp_item_tree_view_new (preview_size, 2,
                              gimage,
                              GIMP_TYPE_LAYER,
                              "active_layer_changed",
@@ -680,7 +664,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   view =
-    gimp_item_tree_view_new (preview_size,
+    gimp_item_tree_view_new (preview_size, 1,
                              gimage,
                              GIMP_TYPE_CHANNEL,
                              "active_channel_changed",
@@ -715,7 +699,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   view =
-    gimp_item_tree_view_new (preview_size,
+    gimp_item_tree_view_new (preview_size, 1,
                              gimage,
                              GIMP_TYPE_VECTORS,
                              "active_vectors_changed",
@@ -868,8 +852,7 @@ dialogs_document_list_new (GimpDialogFactory *factory,
   view = gimp_document_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->documents,
                                  context,
-                                 preview_size,
-                                 5, 3,
+                                 preview_size, 1,
                                  file_file_open_dialog,
                                  factory->menu_factory);
 
@@ -890,8 +873,7 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
   view = gimp_document_view_new (GIMP_VIEW_TYPE_GRID,
                                  context->gimp->documents,
                                  context,
-                                 preview_size,
-                                 5, 3,
+                                 preview_size, 1,
                                  file_file_open_dialog,
                                  factory->menu_factory);
 
@@ -912,8 +894,7 @@ dialogs_template_list_new (GimpDialogFactory *factory,
   view = gimp_template_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->templates,
                                  context,
-                                 preview_size,
-                                 5, 3,
+                                 preview_size, 0,
                                  factory->menu_factory);
 
   return dialogs_dockable_new (view,
