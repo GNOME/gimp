@@ -35,7 +35,7 @@
     (set! cmap (cons-array (* num-colours 3) 'byte))
 
     (while (< i num-colours)
-      (set! colour (caddr (gimp-palette-entry-get-color palette i)))
+      (set! colour (car (gimp-palette-entry-get-color palette i)))
       (aset cmap (* i 3) (car colour))
       (aset cmap (+ (* i 3) 1) (cadr colour))
       (aset cmap (+ (* i 3) 2) (caddr colour))
