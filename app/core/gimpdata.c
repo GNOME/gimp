@@ -133,6 +133,8 @@ gimp_data_class_init (GimpDataClass *klass)
                     gimp_marshal_POINTER__NONE,
                     GTK_TYPE_POINTER, 0);
 
+  gtk_object_class_add_signals (object_class, data_signals, LAST_SIGNAL);
+
   object_class->destroy = gimp_data_destroy;
 
   gimp_object_class->name_changed = gimp_data_name_changed;

@@ -56,8 +56,9 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
     {
       GtkWidget *dockable;
 
-      dockable = gimp_dialog_factory_dialog_new (dockbook->dock->factory,
-						 GUINT_TO_POINTER (action));
+      dockable = gimp_dialog_factory_dockable_new (dockbook->dock->factory,
+						   dockbook->dock,
+						   GUINT_TO_POINTER (action));
 
       if (dockable)
 	gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);

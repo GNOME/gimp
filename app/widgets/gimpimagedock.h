@@ -37,10 +37,14 @@ typedef struct _GimpImageDockClass   GimpImageDockClass;
 
 struct _GimpImageDock
 {
-  GimpDock   parent_instance;
+  GimpDock       parent_instance;
 
-  GtkWidget *option_menu;
-  GtkWidget *menu;
+  GimpContainer *image_container;
+
+  gboolean       auto_follow_active;
+
+  GtkWidget     *option_menu;
+  GtkWidget     *menu;
 };
 
 struct _GimpImageDockClass

@@ -28,7 +28,8 @@
 #include "gimpobject.h"
 
 
-typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory);
+typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
+					   GimpContext       *context);
 
 
 typedef struct _GimpDialogFactoryEntry GimpDialogFactoryEntry;
@@ -115,6 +116,9 @@ void        gimp_dialog_factory_register         (GimpDialogFactory *factory,
 						  gboolean           session_managed);
 
 GtkWidget * gimp_dialog_factory_dialog_new       (GimpDialogFactory *factory,
+						  const gchar       *identifier);
+GtkWidget * gimp_dialog_factory_dockable_new     (GimpDialogFactory *factory,
+						  GimpDock          *dock,
 						  const gchar       *identifier);
 GtkWidget * gimp_dialog_factory_dock_new         (GimpDialogFactory *factory);
 

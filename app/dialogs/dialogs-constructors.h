@@ -20,43 +20,76 @@
 #define __DIALOGS_CONSTRUCTORS_H__
 
 
-GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory);
-GtkWidget * dialogs_lc_get                 (GimpDialogFactory *factory);
-GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory);
-GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory);
-GtkWidget * dialogs_brush_select_get       (GimpDialogFactory *factory);
-GtkWidget * dialogs_pattern_select_get     (GimpDialogFactory *factory);
-GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory);
-GtkWidget * dialogs_palette_get            (GimpDialogFactory *factory);
-GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory);
-GtkWidget * dialogs_document_index_get     (GimpDialogFactory *factory);
-GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory);
-GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory);
-GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory);
-GtkWidget * dialogs_indexed_palette_get    (GimpDialogFactory *factory);
-GtkWidget * dialogs_undo_history_get       (GimpDialogFactory *factory);
-GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory);
-GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory);
-GtkWidget * dialogs_about_get              (GimpDialogFactory *factory);
+GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_lc_get                 (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_brush_select_get       (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_pattern_select_get     (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_palette_get            (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_document_index_get     (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_indexed_palette_get    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_undo_history_get       (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
-GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory);
+GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
-GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory);
-GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory);
-GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory);
-GtkWidget * dialogs_gradient_list_view_new (GimpDialogFactory *factory);
-GtkWidget * dialogs_palette_list_view_new  (GimpDialogFactory *factory);
-GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory);
+GtkWidget * dialogs_image_list_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_brush_list_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_pattern_list_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_gradient_list_view_new (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_palette_list_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
-GtkWidget * dialogs_image_grid_view_new    (GimpDialogFactory *factory);
-GtkWidget * dialogs_brush_grid_view_new    (GimpDialogFactory *factory);
-GtkWidget * dialogs_pattern_grid_view_new  (GimpDialogFactory *factory);
-GtkWidget * dialogs_gradient_grid_view_new (GimpDialogFactory *factory);
-GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory);
-GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory);
+GtkWidget * dialogs_image_grid_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_brush_grid_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_pattern_grid_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
-GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory);
-GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory);
+GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
 void        dialogs_edit_brush_func        (GimpData          *data);
 void        dialogs_edit_gradient_func     (GimpData          *data);

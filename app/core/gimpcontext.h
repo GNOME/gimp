@@ -1,7 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontext.h: Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * gimpcontext.h
+ * Copyright (C) 1999-2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

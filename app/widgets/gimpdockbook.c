@@ -197,6 +197,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   g_return_if_fail (dockbook != NULL);
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
 
+  g_return_if_fail (dockbook->dock != NULL);
+
   g_return_if_fail (dockable != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
@@ -314,6 +316,8 @@ gimp_dockbook_add (GimpDockbook *dockbook,
                       dockbook);
 
   dockable->dockbook = dockbook;
+
+  gimp_dockable_set_context (dockable, dockbook->dock->context);
 }
 
 void

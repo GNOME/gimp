@@ -1,3 +1,40 @@
+2001-04-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontext.[ch]: some minor fixes / cleanup.
+
+	* app/gimpdata.c: forgot to gtk_object_class_add_signals() in
+	class_init().
+
+	* app/gui/dialogs-constructors.[ch]: added a tool_tab_func() so
+	the notebook tab shows a tool preview, pass a GimpContext to all
+	dialog constructors and added set_context() functions for all
+	dockable based dialogs so they can be configured to use the
+	context of the destination dock when dragging them around.
+
+	* app/widgets/gimpcontainermenuimpl.c: removed debugging output.
+
+	* app/widgets/gimpdialogfactory.[ch]: add a method to create
+	dockables (which gets passed the dock the dockable will be added
+	to) so the dockables can be created in the right context.
+
+	* app/widgets/gimpdock.[ch]: added a GimpContext attribute, remove
+	the dockbooks explicitely in destroy().
+
+	* app/widgets/gimpdockable.[ch]: dockables now know about their
+	set_context_func() and can thus be dragged between different
+	contexts.
+
+	* app/widgets/gimpdockbook.c: gimp_dockbook_add(): refuse to add
+	dockables to dockbooks which are not part of a dock, set the
+	dockable's context after adding it.
+
+	* app/widgets/gimpimagedock.[ch]: image docks now keep a pointer
+	to the global image list which is passed to them on construction
+	so they don't need to know about the global "image_context"
+	variable, added an "Auto" button like in L&C.
+
+	* app/gui/dialogs-commands.c: changed accordingly.
+
 2001-04-23  Sven Neumann  <sven@gimp.org>
 
 	Merged Yosh's changes from stable branch:

@@ -121,6 +121,8 @@ gimp_dock_init (GimpDock *dock)
 {
   GtkWidget *separator;
 
+  dock->context = NULL;
+
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
   gtk_widget_set_usize (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  
@@ -144,7 +146,10 @@ gimp_dock_destroy (GtkObject *object)
 
   dock = GIMP_DOCK (object);
 
-  g_list_free (dock->dockbooks);
+  while (dock->dockbooks)
+    gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->dockbooks->data));
+
+  gtk_object_unref (GTK_OBJECT (dock->context));
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

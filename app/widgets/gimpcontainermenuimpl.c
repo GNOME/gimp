@@ -207,8 +207,6 @@ gimp_container_menu_impl_remove_item (GimpContainerMenu *menu,
   else
     menu_item = NULL;
 
-  g_print ("remove %p %p\n", viewable, menu_item);
-
   if (menu_item)
     {
       if (g_list_length (GTK_MENU_SHELL (menu)->children) == 2)

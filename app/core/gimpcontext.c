@@ -1,7 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontext.c: Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * gimpcontext.c
+ * Copyright (C) 1999-2001 Michael Natterer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -323,8 +324,8 @@ gimp_context_class_init (GimpContextClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
-  gimp_context_arg_types[GIMP_CONTEXT_ARG_TOOL]     = GIMP_TYPE_TOOL_INFO;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_IMAGE]    = GIMP_TYPE_IMAGE;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_TOOL]     = GIMP_TYPE_TOOL_INFO;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_BRUSH]    = GIMP_TYPE_BRUSH;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN]  = GIMP_TYPE_PATTERN;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_GRADIENT] = GIMP_TYPE_GRADIENT;
@@ -337,7 +338,7 @@ gimp_context_class_init (GimpContextClass *klass)
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
 			   ARG_DISPLAY);
   gtk_object_add_arg_type (gimp_context_arg_names[TOOL_CHANGED],
-			   GTK_TYPE_INT, GTK_ARG_READWRITE,
+			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
 			   ARG_TOOL);
   gtk_object_add_arg_type (gimp_context_arg_names[FOREGROUND_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
@@ -538,8 +539,16 @@ gimp_context_destroy (GtkObject *object)
   if (context->parent)
     gimp_context_unset_parent (context);
 
+  context_list = g_slist_remove (context_list, context);
+
+  context->image   = NULL;
+  context->display = NULL;
+
   if (context->tool_info)
-    gtk_object_unref (GTK_OBJECT (context->tool_info));
+    {
+      gtk_object_unref (GTK_OBJECT (context->tool_info));
+      context->tool_info = NULL;
+    }
 
   if (context->tool_name)
     {
@@ -548,7 +557,10 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->brush)
-    gtk_object_unref (GTK_OBJECT (context->brush));
+    {
+      gtk_object_unref (GTK_OBJECT (context->brush));
+      context->brush = NULL;
+    }
 
   if (context->brush_name)
     {
@@ -557,7 +569,10 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->pattern)
-    gtk_object_unref (GTK_OBJECT (context->pattern));
+    {
+      gtk_object_unref (GTK_OBJECT (context->pattern));
+      context->pattern = NULL;
+    }
 
   if (context->pattern_name)
     {
@@ -566,7 +581,10 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->gradient)
-    gtk_object_unref (GTK_OBJECT (context->gradient));
+    {
+      gtk_object_unref (GTK_OBJECT (context->gradient));
+      context->gradient = NULL;
+    }
 
   if (context->gradient_name)
     {
@@ -575,7 +593,10 @@ gimp_context_destroy (GtkObject *object)
     }
 
   if (context->palette)
-    gtk_object_unref (GTK_OBJECT (context->palette));
+    {
+      gtk_object_unref (GTK_OBJECT (context->palette));
+      context->palette = NULL;
+    }
 
   if (context->palette_name)
     {
@@ -585,8 +606,6 @@ gimp_context_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-
-  context_list = g_slist_remove (context_list, context);
 }
 
 static void
@@ -736,7 +755,7 @@ gimp_context_new (const gchar *name,
 				  GTK_SIGNAL_FUNC (gimp_context_image_removed),
 				  context,
 				  GTK_OBJECT (context));
-  
+
   gtk_signal_connect_while_alive (GTK_OBJECT (global_tool_info_list),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_tool_removed),
@@ -898,7 +917,7 @@ gimp_context_set_parent (GimpContext *context,
   context_return_if_fail (context);
   g_return_if_fail (!parent || GIMP_IS_CONTEXT (parent));
 
-  if (context == parent)
+  if (context == parent || context->parent == parent)
     return;
 
   for (arg = 0; arg < GIMP_CONTEXT_NUM_ARGS; arg++)
@@ -1010,7 +1029,7 @@ gimp_context_copy_arg (GimpContext        *src,
   context_return_if_fail (dest);
   g_return_if_fail ((arg >= 0) && (arg < GIMP_CONTEXT_NUM_ARGS));
 
-  (* gimp_context_copy_arg_funcs[arg]) (src, dest);
+  gimp_context_copy_arg_funcs[arg] (src, dest);
 }
 
 void
@@ -1058,7 +1077,7 @@ gimp_context_type_to_signal_name (GtkType type)
 
   for (i = 0; i < GIMP_CONTEXT_NUM_ARGS; i++)
     {
-      if (gimp_context_arg_types[i] == type)
+      if (gtk_type_is_a (type, gimp_context_arg_types[i]))
 	return gimp_context_signal_names[i];
     }
 
@@ -1393,8 +1412,6 @@ gimp_context_real_set_tool (GimpContext  *context,
       gtk_signal_connect (GTK_OBJECT (tool_info), "name_changed",
 			  GTK_SIGNAL_FUNC (gimp_context_tool_dirty),
 			  context);
-
-      /* FIXME if (tool_info != standard_tool_info) */
 
       if (tool_info != standard_tool_info)
 	context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);

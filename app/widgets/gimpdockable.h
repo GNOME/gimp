@@ -26,9 +26,11 @@
 #include <gtk/gtkvbox.h>
 
 
-typedef GtkWidget * (* GimpDockableGetTabFunc) (GimpDockable *dockable,
-						GimpDockbook *dockbook,
-						gint          size);
+typedef GtkWidget * (* GimpDockableGetTabFunc)     (GimpDockable *dockable,
+						    GimpDockbook *dockbook,
+						    gint          size);
+typedef void        (* GimpDockableSetContextFunc) (GimpDockable *dockable,
+						    GimpContext  *context);
 
 
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
@@ -50,7 +52,8 @@ struct _GimpDockable
 
   GimpDockbook *dockbook;
 
-  GimpDockableGetTabFunc  get_tab_func;
+  GimpDockableGetTabFunc      get_tab_func;
+  GimpDockableSetContextFunc  set_context_func;
 };
 
 struct _GimpDockableClass
@@ -59,14 +62,17 @@ struct _GimpDockableClass
 };
 
 
-GtkType     gimp_dockable_get_type       (void);
-GtkWidget * gimp_dockable_new            (const gchar            *name,
-					  const gchar            *short_name,
-					  GimpDockableGetTabFunc  get_tab_func);
+GtkType     gimp_dockable_get_type (void);
+GtkWidget * gimp_dockable_new      (const gchar                *name,
+				    const gchar                *short_name,
+				    GimpDockableGetTabFunc      get_tab_func,
+				    GimpDockableSetContextFunc  set_context_func);
 
 GtkWidget * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
 					  GimpDockbook           *dockbook,
 					  gint                    size);
+void        gimp_dockable_set_context    (GimpDockable           *dockable,
+					  GimpContext            *context);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */

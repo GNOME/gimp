@@ -28,6 +28,8 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 
+#include "gimpcontext.h"
+
 
 static void   gimp_dockable_class_init (GimpDockableClass *klass);
 static void   gimp_dockable_init       (GimpDockable      *dockable);
@@ -78,10 +80,11 @@ gimp_dockable_class_init (GimpDockableClass *klass)
 static void
 gimp_dockable_init (GimpDockable *dockable)
 {
-  dockable->name         = NULL;
-  dockable->short_name   = NULL;
-  dockable->dockbook     = NULL;
-  dockable->get_tab_func = NULL;
+  dockable->name             = NULL;
+  dockable->short_name       = NULL;
+  dockable->dockbook         = NULL;
+  dockable->get_tab_func     = NULL;
+  dockable->set_context_func = NULL;
 }
 
 static void
@@ -91,6 +94,8 @@ gimp_dockable_destroy (GtkObject *object)
 
   dockable = GIMP_DOCKABLE (object);
 
+  gimp_dockable_set_context (dockable, NULL);
+
   g_free (dockable->name);
   g_free (dockable->short_name);
 
@@ -99,9 +104,10 @@ gimp_dockable_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_dockable_new (const gchar            *name,
-		   const gchar            *short_name,
-		   GimpDockableGetTabFunc  get_tab_func)
+gimp_dockable_new (const gchar                *name,
+		   const gchar                *short_name,
+		   GimpDockableGetTabFunc      get_tab_func,
+		   GimpDockableSetContextFunc  set_context_func)
 {
   GimpDockable *dockable;
 
@@ -113,7 +119,8 @@ gimp_dockable_new (const gchar            *name,
   dockable->name        = g_strdup (name);
   dockable->short_name  = g_strdup (short_name);
 
-  dockable->get_tab_func = get_tab_func;
+  dockable->get_tab_func     = get_tab_func;
+  dockable->set_context_func = set_context_func;
 
   return GTK_WIDGET (dockable);
 }
@@ -137,4 +144,19 @@ gimp_dockable_get_tab_widget (GimpDockable *dockable,
     }
 
   return gtk_label_new (dockable->short_name);
+}
+
+void
+gimp_dockable_set_context (GimpDockable *dockable,
+			   GimpContext  *context)
+{
+  g_return_if_fail (dockable != NULL);
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
+  if (dockable->set_context_func)
+    {
+      dockable->set_context_func (dockable, context);
+    }
 }

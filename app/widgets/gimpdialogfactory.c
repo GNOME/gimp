@@ -260,9 +260,10 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
   return NULL;
 }
 
-GtkWidget *
-gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
-				const gchar       *identifier)
+static GtkWidget *
+gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
+					 GimpContext       *context,
+					 const gchar       *identifier)
 {
   GimpDialogFactoryEntry *entry;
   GtkWidget              *dialog = NULL;
@@ -299,7 +300,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
   if (! dialog)
     {
-      dialog = entry->new_func (factory);
+      dialog = entry->new_func (factory, context);
 
       if (dialog)
 	{
@@ -329,6 +330,35 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
+				const gchar       *identifier)
+{
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
+
+  return gimp_dialog_factory_dialog_new_internal (factory,
+						  factory->context,
+						  identifier);
+}
+
+GtkWidget *
+gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
+				  GimpDock          *dock,
+				  const gchar       *identifier)
+{
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (dock != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
+
+  return gimp_dialog_factory_dialog_new_internal (factory,
+						  dock->context,
+						  identifier);
+}
+
+GtkWidget *
 gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
 {
   GtkWidget *dock;
@@ -337,7 +367,7 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
 
-  dock = factory->new_dock_func (factory);
+  dock = factory->new_dock_func (factory, factory->context);
 
   if (dock)
     gimp_dialog_factory_add_toplevel (factory, dock);
@@ -642,8 +672,9 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
 
 		  identifier = (gchar *) pages->data;
 
-		  dockable = gimp_dialog_factory_dialog_new (factory,
-							     identifier);
+		  dockable = gimp_dialog_factory_dockable_new (factory,
+							       dock,
+							       identifier);
 
 		  if (dockable)
 		    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);

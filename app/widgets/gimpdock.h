@@ -41,6 +41,7 @@ struct _GimpDock
   GtkWindow          parent_instance;
 
   GimpDialogFactory *factory;
+  GimpContext       *context;
 
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
