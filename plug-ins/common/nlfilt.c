@@ -463,7 +463,7 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #endif
 
 /* round and scale floating point to scaled integer */
-#define ROUND(x) ((gint)(((x) * (gdouble)SCALE) + 0.5))
+#define SROUND(x) ((gint)(((x) * (gdouble)SCALE) + 0.5))
 /* round and un-scale scaled integer value */
 #define RUNSCALE(x) (((x) + (1 << (SCALEB-1))) >> SCALEB)       /* rounded un-scale */
 #define UNSCALE(x) ((x) >> SCALEB)
@@ -636,21 +636,21 @@ nlfiltInit(gdouble alpha, gdouble radius, FilterType filter) {
       for (i=0; i <= MXIVAL; i++) {
          gdouble fi;
          fi = (gdouble)i;
-         V0[i] = ROUND(fi * v0);
-         V1[i] = ROUND(fi * v1);
-         V2[i] = ROUND(fi * v2);
-         V3[i] = ROUND(fi * v3);
-         M0[i] = ROUND(fi * m0);
-         M1[i] = ROUND(fi * m1);
-         M2[i] = ROUND(fi * m2);
-         H0[i] = ROUND(fi * h0);
-         H1[i] = ROUND(fi * h1);
-         H2[i] = ROUND(fi * h2);
-         H3[i] = ROUND(fi * h3);
+         V0[i] = SROUND(fi * v0);
+         V1[i] = SROUND(fi * v1);
+         V2[i] = SROUND(fi * v2);
+         V3[i] = SROUND(fi * v3);
+         M0[i] = SROUND(fi * m0);
+         M1[i] = SROUND(fi * m1);
+         M2[i] = SROUND(fi * m2);
+         H0[i] = SROUND(fi * h0);
+         H1[i] = SROUND(fi * h1);
+         H2[i] = SROUND(fi * h2);
+         H3[i] = SROUND(fi * h3);
       }
           /* set up alpha fraction lookup table used on big/small */
       for (i=0; i < (NOIVAL * 8); i++) {
-         ALFRAC[i] = ROUND((gdouble)i * alphafraction);
+         ALFRAC[i] = SROUND((gdouble)i * alphafraction);
       }
    }
    return alpharange;

@@ -1,3 +1,7 @@
+Fri Nov 12 01:52:49 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/nlfilt.c: rename ROUND => SROUND to avoid clash.
+
 Thu Nov 11 21:19:39 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: Fixed the oldest inherited
