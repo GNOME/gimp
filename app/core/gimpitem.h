@@ -117,6 +117,12 @@ struct _GimpItemClass
 
   const gchar *default_name;
   const gchar *rename_desc;
+  const gchar *translate_desc;
+  const gchar *scale_desc;
+  const gchar *resize_desc;
+  const gchar *flip_desc;
+  const gchar *rotate_desc;
+  const gchar *transform_desc;
 };
 
 

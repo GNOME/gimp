@@ -424,12 +424,12 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_DRAWABLE,           /*< desc="Drawable"                    >*/
   GIMP_UNDO_GROUP_DRAWABLE_MOD,       /*< desc="Drawable Mod"                >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection Mask"              >*/
-  GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"             >*/
-  GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move Item"                   >*/
   GIMP_UNDO_GROUP_ITEM_VISIBILITY,    /*< desc="Item Visibility"             >*/
   GIMP_UNDO_GROUP_ITEM_LINKED,        /*< desc="Linked Item"                 >*/
-  GIMP_UNDO_GROUP_LAYER_SCALE,        /*< desc="Scale Layer"                 >*/
-  GIMP_UNDO_GROUP_LAYER_RESIZE,       /*< desc="Resize Layer"                >*/
+  GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"             >*/
+  GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move Item"                   >*/
+  GIMP_UNDO_GROUP_ITEM_SCALE,         /*< desc="Scale Item"                  >*/
+  GIMP_UNDO_GROUP_ITEM_RESIZE,        /*< desc="Resize Item"                 >*/
   GIMP_UNDO_GROUP_LAYER_ADD_MASK,     /*< desc="Add Layer Mask"              >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,   /*< desc="Apply Layer Mask"            >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating Selection to Layer" >*/

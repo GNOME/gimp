@@ -177,6 +177,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->flip                    = gimp_selection_flip;
   item_class->rotate                  = gimp_selection_rotate;
   item_class->stroke                  = gimp_selection_stroke;
+  item_class->translate_desc          = _("Move Selection");
 
   drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
 
@@ -193,7 +194,6 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->grow                 = gimp_selection_grow;
   channel_class->shrink               = gimp_selection_shrink;
 
-  channel_class->translate_desc       = _("Move Selection");
   channel_class->feather_desc         = _("Feather Selection");
   channel_class->sharpen_desc         = _("Sharpen Selection");
   channel_class->clear_desc           = _("Select None");

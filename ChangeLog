@@ -1,3 +1,28 @@
+2004-04-13  Michael Natterer  <mitch@gimp.org>
+
+	GimpItem undo group cleanup in preparation of fixing bug #138356:
+
+	* app/core/core-enums.[c]: renamed LAYER_SCALE and LAYER_RESIZE
+	undo groups to ITEM_SCALE and ITEM_RESIZE.
+
+	* app/core/gimpitem.[ch]: always push undo groups around
+	GimpItem::translate(), scale(), resize(), flip(), rotate() and
+	transform(). Added the resp. undo_desc strings to GimpItemClass.
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimplayer.c: removed all undo groups from
+	implementations of the above methods. Removed the undo_desc
+	strings which were moved to GimpItemClass.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpselection.c
+	* app/gui/layers-commands.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
 2004-04-12  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: cleaned up the check for Xmu. Include <gdk/gdkx.h>

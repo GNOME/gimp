@@ -194,6 +194,15 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->rotate                    = NULL;
   klass->transform                 = NULL;
   klass->stroke                    = NULL;
+
+  klass->default_name              = NULL;
+  klass->rename_desc               = NULL;
+  klass->translate_desc            = NULL;
+  klass->scale_desc                = NULL;
+  klass->resize_desc               = NULL;
+  klass->flip_desc                 = NULL;
+  klass->rotate_desc               = NULL;
+  klass->transform_desc            = NULL;
 }
 
 static void
@@ -557,12 +566,21 @@ gimp_item_translate (GimpItem *item,
                      gboolean  push_undo)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  if (push_undo)
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                 item_class->translate_desc);
 
   item_class->translate (item, off_x, off_y, push_undo);
+
+  if (push_undo)
+    gimp_image_undo_group_end (gimage);
 }
 
 /**
@@ -610,6 +628,7 @@ gimp_item_scale (GimpItem              *item,
                  gpointer               progress_data)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -617,9 +636,15 @@ gimp_item_scale (GimpItem              *item,
     return;
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
+                               item_class->scale_desc);
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
                      interpolation, progress_callback, progress_data);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 /**
@@ -767,6 +792,7 @@ gimp_item_resize (GimpItem *item,
                   gint      offset_y)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
@@ -774,8 +800,14 @@ gimp_item_resize (GimpItem *item,
     return;
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                               item_class->resize_desc);
 
   item_class->resize (item, new_width, new_height, offset_x, offset_y);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 void
@@ -785,12 +817,19 @@ gimp_item_flip (GimpItem            *item,
                 gboolean             clip_result)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               item_class->flip_desc);
 
   item_class->flip (item, flip_type, axis, clip_result);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 void
@@ -801,12 +840,19 @@ gimp_item_rotate (GimpItem         *item,
                   gboolean          clip_result)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               item_class->rotate_desc);
 
   item_class->rotate (item, rotate_type, center_x, center_y, clip_result);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 void
@@ -821,15 +867,22 @@ gimp_item_transform (GimpItem               *item,
                      gpointer                progress_data)
 {
   GimpItemClass *item_class;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
+  gimage     = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               item_class->transform_desc);
 
   item_class->transform (item, matrix, direction, interpolation,
                          supersample, recursion_level,
                          clip_result,
                          progress_callback, progress_data);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 gboolean

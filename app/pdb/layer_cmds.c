@@ -449,7 +449,7 @@ layer_scale_invoker (Gimp     *gimp,
         {
           floating_layer = gimp_image_floating_sel (gimage);
 
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
                                        _("Scale Layer"));
 
           if (floating_layer)
@@ -544,7 +544,7 @@ layer_resize_invoker (Gimp     *gimp,
         {
           floating_layer = gimp_image_floating_sel (gimage);
 
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                        _("Resize Layer"));
 
           if (floating_layer)

@@ -246,12 +246,16 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->transform               = gimp_layer_transform;
   item_class->default_name            = _("Layer");
   item_class->rename_desc             = _("Rename Layer");
+  item_class->translate_desc          = _("Move Layer");
+  item_class->scale_desc              = _("Scale Layer");
+  item_class->resize_desc             = _("Resize Layer");
+  item_class->flip_desc               = _("Flip Layer");
+  item_class->rotate_desc             = _("Rotate Layer");
+  item_class->transform_desc          = _("Transform Layer");
 
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
-  drawable_class->scale_desc            = _("Scale Layer");
-  drawable_class->resize_desc           = _("Resize Layer");
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -603,9 +607,7 @@ gimp_layer_translate (GimpItem *item,
   GimpLayer *layer = GIMP_LAYER (item);
 
   if (push_undo)
-    gimp_image_undo_push_item_displace (gimp_item_get_image (item),
-                                        _("Move Layer"),
-                                        item);
+    gimp_image_undo_push_item_displace (gimp_item_get_image (item), NULL, item);
 
   /*  update the old region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
@@ -638,12 +640,7 @@ gimp_layer_scale (GimpItem              *item,
                   GimpProgressFunc       progress_callback,
                   gpointer               progress_data)
 {
-  GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  if (layer->mask)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
-                                 _("Scale Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
@@ -651,14 +648,10 @@ gimp_layer_scale (GimpItem              *item,
                                          progress_callback, progress_data);
 
   if (layer->mask)
-    {
-      gimp_item_scale (GIMP_ITEM (layer->mask),
-                       new_width, new_height,
-                       new_offset_x, new_offset_y,
-                       interpolation_type, NULL, NULL);
-
-      gimp_image_undo_group_end (gimage);
-    }
+    gimp_item_scale (GIMP_ITEM (layer->mask),
+                     new_width, new_height,
+                     new_offset_x, new_offset_y,
+                     interpolation_type, NULL, NULL);
 }
 
 static void
@@ -669,22 +662,13 @@ gimp_layer_resize (GimpItem *item,
 		   gint      offset_y)
 {
   GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  if (layer->mask)
-    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
-                                 _("Resize Layer"));
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);
 
   if (layer->mask)
-    {
-      gimp_item_resize (GIMP_ITEM (layer->mask),
-                        new_width, new_height, offset_x, offset_y);
-
-      gimp_image_undo_group_end (gimage);
-    }
+    gimp_item_resize (GIMP_ITEM (layer->mask),
+                      new_width, new_height, offset_x, offset_y);
 }
 
 static void
@@ -693,19 +677,13 @@ gimp_layer_flip (GimpItem            *item,
                  gdouble              axis,
                  gboolean             clip_result)
 {
-  GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Flip Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask),
                     flip_type, axis, clip_result);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static void
@@ -715,11 +693,7 @@ gimp_layer_rotate (GimpItem         *item,
                    gdouble           center_y,
                    gboolean          clip_result)
 {
-  GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Rotate Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->rotate (item,
                                           rotate_type, center_x, center_y,
@@ -728,8 +702,6 @@ gimp_layer_rotate (GimpItem         *item,
   if (layer->mask)
     gimp_item_rotate (GIMP_ITEM (layer->mask),
                       rotate_type, center_x, center_y, clip_result);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static void
@@ -743,11 +715,7 @@ gimp_layer_transform (GimpItem               *item,
                       GimpProgressFunc        progress_callback,
                       gpointer                progress_data)
 {
-  GimpLayer *layer  = GIMP_LAYER (item);
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Transform Layer"));
+  GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
                                              interpolation_type,
@@ -762,8 +730,6 @@ gimp_layer_transform (GimpItem               *item,
                          supersample, recursion_level,
                          clip_result,
                          progress_callback, progress_data);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static void
@@ -1386,7 +1352,7 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Layer to Image Size"));
 
   if (gimp_layer_is_floating_sel (layer))

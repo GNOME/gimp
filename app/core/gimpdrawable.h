@@ -104,9 +104,6 @@ struct _GimpDrawableClass
                                   gint                  y,
                                   gint                  width,
                                   gint                  height);
-
-  const gchar *scale_desc;
-  const gchar *resize_desc;
 };
 
 

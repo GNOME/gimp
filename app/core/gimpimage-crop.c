@@ -113,7 +113,7 @@ gimp_image_crop (GimpImage *gimage,
 
       if (gimp_layer_is_floating_sel (layer))
         {
-          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                        _("Resize Layer"));
 
           floating_sel_relax (layer, TRUE);

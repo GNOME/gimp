@@ -379,7 +379,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
   off_x -= x1;
   off_y -= y1;
 
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer"));
 
   if (gimp_layer_is_floating_sel (active_layer))
@@ -1183,7 +1183,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
 	  if (gimp_layer_is_floating_sel (layer))
             {
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_SCALE,
                                            _("Scale Layer"));
 
               floating_sel_relax (layer, TRUE);
@@ -1282,7 +1282,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 	{
 	  if (gimp_layer_is_floating_sel (layer))
             {
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                            _("Resize Layer"));
 
               floating_sel_relax (layer, TRUE);

@@ -240,17 +240,23 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   viewable_class->default_stock_id = "gimp-channel";
 
-  item_class->is_attached  = gimp_channel_is_attached;
-  item_class->duplicate    = gimp_channel_duplicate;
-  item_class->translate    = gimp_channel_translate;
-  item_class->scale        = gimp_channel_scale;
-  item_class->resize       = gimp_channel_resize;
-  item_class->flip         = gimp_channel_flip;
-  item_class->rotate       = gimp_channel_rotate;
-  item_class->transform    = gimp_channel_transform;
-  item_class->stroke       = gimp_channel_stroke;
-  item_class->default_name = _("Channel");
-  item_class->rename_desc  = _("Rename Channel");
+  item_class->is_attached    = gimp_channel_is_attached;
+  item_class->duplicate      = gimp_channel_duplicate;
+  item_class->translate      = gimp_channel_translate;
+  item_class->scale          = gimp_channel_scale;
+  item_class->resize         = gimp_channel_resize;
+  item_class->flip           = gimp_channel_flip;
+  item_class->rotate         = gimp_channel_rotate;
+  item_class->transform      = gimp_channel_transform;
+  item_class->stroke         = gimp_channel_stroke;
+  item_class->default_name   = _("Channel");
+  item_class->rename_desc    = _("Rename Channel");
+  item_class->translate_desc = _("Move Channel");
+  item_class->scale_desc     = _("Scale Channel");
+  item_class->resize_desc    = _("Resize Channel");
+  item_class->flip_desc      = _("Flip Channel");
+  item_class->rotate_desc    = _("Rotate Channel");
+  item_class->transform_desc = _("Transform Channel");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
@@ -258,8 +264,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
-  drawable_class->scale_desc            = _("Scale Channel");
-  drawable_class->resize_desc           = _("Resize Channel");
 
   klass->boundary       = gimp_channel_real_boundary;
   klass->bounds         = gimp_channel_real_bounds;
@@ -274,7 +278,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   klass->grow           = gimp_channel_real_grow;
   klass->shrink         = gimp_channel_real_shrink;
 
-  klass->translate_desc = _("Move Channel");
   klass->feather_desc   = _("Feather Channel");
   klass->sharpen_desc   = _("Sharpen Channel");
   klass->clear_desc     = _("Clear Channel");
@@ -401,8 +404,7 @@ gimp_channel_translate (GimpItem *item,
   gimp_drawable_update (GIMP_DRAWABLE (item), x1, y1, x2 - x1, y2 - y1);
 
   if (push_undo)
-    gimp_channel_push_undo (channel,
-                            GIMP_CHANNEL_GET_CLASS (channel)->translate_desc);
+    gimp_channel_push_undo (channel, NULL);
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
@@ -519,17 +521,10 @@ gimp_channel_flip (GimpItem            *item,
                    gdouble              axis,
                    gboolean             clip_result)
 {
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Flip Channel"));
-
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     clip_result = TRUE;
 
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static void
@@ -539,18 +534,11 @@ gimp_channel_rotate (GimpItem         *item,
                      gdouble           center_y,
                      gboolean          clip_result)
 {
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Rotate Channel"));
-
   /*  don't default to clip_result == TRUE here  */
 
   GIMP_ITEM_CLASS (parent_class)->rotate (item,
                                           rotate_type, center_x, center_y,
                                           clip_result);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static void
@@ -564,11 +552,6 @@ gimp_channel_transform (GimpItem               *item,
                         GimpProgressFunc        progress_callback,
                         gpointer                progress_data)
 {
-  GimpImage *gimage = gimp_item_get_image (item);
-
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Transform Channel"));
-
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     clip_result = TRUE;
 
@@ -577,8 +560,6 @@ gimp_channel_transform (GimpItem               *item,
                                              supersample, recursion_level,
                                              clip_result,
                                              progress_callback, progress_data);
-
-  gimp_image_undo_group_end (gimage);
 }
 
 static gboolean

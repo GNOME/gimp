@@ -230,6 +230,12 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->stroke               = gimp_vectors_stroke;
   item_class->default_name         = _("Path");
   item_class->rename_desc          = _("Rename Path");
+  item_class->translate_desc       = _("Move Path");
+  item_class->scale_desc           = _("Scale Path");
+  item_class->resize_desc          = _("Resize Path");
+  item_class->flip_desc            = _("Flip Path");
+  item_class->rotate_desc          = _("Rotate Path");
+  item_class->transform_desc       = _("Transform Path");
 
   klass->freeze                    = NULL;
   klass->thaw                      = gimp_vectors_real_thaw;
@@ -392,7 +398,7 @@ gimp_vectors_scale (GimpItem              *item,
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (image, _("Scale Path"), vectors);
+  gimp_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
@@ -424,7 +430,7 @@ gimp_vectors_resize (GimpItem *item,
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (image, _("Resize Path"), vectors);
+  gimp_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {

@@ -106,7 +106,6 @@ struct _GimpChannelClass
                          gboolean         edge_lock,
                          gboolean         push_undo);
 
-  const gchar *translate_desc;
   const gchar *feather_desc;
   const gchar *sharpen_desc;
   const gchar *clear_desc;

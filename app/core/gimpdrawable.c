@@ -228,9 +228,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
-
-  klass->scale_desc                  = NULL;
-  klass->resize_desc                 = NULL;
 }
 
 static void
@@ -385,8 +382,7 @@ gimp_drawable_scale (GimpItem              *item,
                 GIMP_INTERPOLATION_NONE : interpolation_type,
                 progress_callback, progress_data);
 
-  gimp_drawable_set_tiles_full (drawable,  TRUE,
-                                GIMP_DRAWABLE_GET_CLASS (drawable)->scale_desc,
+  gimp_drawable_set_tiles_full (drawable,  TRUE, NULL,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
@@ -452,8 +448,7 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
-  gimp_drawable_set_tiles_full (drawable, TRUE,
-                                GIMP_DRAWABLE_GET_CLASS (drawable)->resize_desc,
+  gimp_drawable_set_tiles_full (drawable, TRUE, NULL,
                                 new_tiles, gimp_drawable_type (drawable),
                                 new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
@@ -465,12 +460,10 @@ gimp_drawable_flip (GimpItem            *item,
                     gdouble              axis,
                     gboolean             clip_result)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
-
-  drawable = GIMP_DRAWABLE (item);
 
   gimp_item_offsets (item, &off_x, &off_y);
 
@@ -498,12 +491,10 @@ gimp_drawable_rotate (GimpItem         *item,
                       gdouble           center_y,
                       gboolean          clip_result)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
-
-  drawable = GIMP_DRAWABLE (item);
 
   gimp_item_offsets (item, &off_x, &off_y);
 
@@ -535,12 +526,10 @@ gimp_drawable_transform (GimpItem               *item,
                          GimpProgressFunc        progress_callback,
                          gpointer                progress_data)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
   gint          old_off_x, old_off_y;
-
-  drawable = GIMP_DRAWABLE (item);
 
   gimp_item_offsets (item, &off_x, &off_y);
 
