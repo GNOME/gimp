@@ -295,7 +295,7 @@ render_image_indexed (RenderInfo *info)
 	  dest = info->dest;
 
 	  g_return_if_fail (src != NULL);
-	  
+
 	  for (x = info->x; x < xe; x++)
 	    {
 	      val = src[INDEXED_PIX] * 3;
@@ -312,15 +312,7 @@ render_image_indexed (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
-	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
-	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
-	}
 
-      error += step;
     }
 }
 
@@ -410,14 +402,11 @@ render_image_indexed_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (((y + 1) % info->scaledest) == 0)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
 	}
-
       error += step;
     }
 }
@@ -463,7 +452,7 @@ render_image_gray (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
-	  
+
 	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
@@ -481,16 +470,11 @@ render_image_gray (RenderInfo *info)
       info->dest += info->dest_bpl;
 
       initial = FALSE;
-
-      if (error >= 1.0)
+      if (((y + 1) % info->scaledest) == 0)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -567,12 +551,10 @@ render_image_gray_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (((y + 1) % info->scaledest) == 0)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
 	}
 
       error += step;
@@ -621,7 +603,7 @@ render_image_rgb (RenderInfo *info)
 	  dest = info->dest;
 
 	  g_return_if_fail (src != NULL);
-	  
+
 	  /* replace this with memcpy, or better yet, avoid it altogether? */
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -638,15 +620,11 @@ render_image_rgb (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (((y + 1) % info->scaledest) == 0)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -762,12 +740,10 @@ render_image_rgb_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (((y + 1) % info->scaledest) == 0)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
-	  initial = TRUE;
 	}
 
       error += step;
@@ -884,7 +860,7 @@ render_image_tile_fault (RenderInfo *info)
 	   (info->src_x % TILE_WIDTH)) * tile->bpp);
 
   scale = info->scale;
-  step = info->scalesrc;
+  step = info->scalesrc * info->src_bpp;
   dest = tile_buf;
 
   x = info->src_x;
@@ -920,4 +896,3 @@ render_image_tile_fault (RenderInfo *info)
   tile_unref (tile, FALSE);
   return tile_buf;
 }
-
