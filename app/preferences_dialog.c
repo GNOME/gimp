@@ -108,6 +108,7 @@ static   float        old_monitor_xres;
 static   float        old_monitor_yres;
 static   int          old_using_xserver_resolution;
 static   int          old_num_processors;
+static   char *       old_image_title_format;
 
 static   char *       edit_temp_path = NULL;
 static   char *       edit_swap_path = NULL;
@@ -248,7 +249,12 @@ file_prefs_ok_callback (GtkWidget *widget,
       monitor_yres = old_monitor_yres;
       return;
     }
-      
+  if (image_title_format == NULL)
+    {
+      g_message (_("Error: image_title_format should never be NULL."));
+      image_title_format = old_image_title_format;
+      return;
+    }
       
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
@@ -456,6 +462,8 @@ file_prefs_save_callback (GtkWidget *widget,
       monitor_xres = 0.0;
       monitor_yres = 0.0;
     }
+  if (file_prefs_strcmp (image_title_format, old_image_title_format))
+    update = g_list_append (update, "image-title-format");
 
   save_gimprc (&update, &remove);
 
@@ -555,6 +563,8 @@ file_prefs_cancel_callback (GtkWidget *widget,
   file_prefs_strset (&edit_palette_path, old_palette_path);
   file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
   file_prefs_strset (&edit_gradient_path, old_gradient_path);
+
+  file_prefs_strset (&image_title_format, old_image_title_format);
 }
 
 static void
@@ -728,6 +738,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *radio_box;
   GtkWidget *entry;
   GtkWidget *spinbutton;
+  GtkWidget *combo;
+  GtkWidget *comboitem;
   GtkWidget *menu;
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
@@ -852,6 +864,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_monitor_yres = monitor_yres;
       old_using_xserver_resolution = using_xserver_resolution;
       old_num_processors = num_processors;
+      old_image_title_format = file_prefs_strdup (image_title_format);	
 
       file_prefs_strset (&old_temp_path, edit_temp_path);
       file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -1175,6 +1188,54 @@ file_pref_cmd_callback (GtkWidget *widget,
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &show_statusbar);
       gtk_widget_show (button);
+
+      /* The title format string */
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+      
+      label = gtk_label_new (_("Image title format:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      combo = gtk_combo_new();
+      gtk_combo_set_use_arrows(GTK_COMBO(combo), FALSE);
+      gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
+      /* Set the currently used string as "Custom" */
+      comboitem = gtk_list_item_new_with_label(_("Custom"));
+      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
+				image_title_format);
+      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
+      gtk_widget_show(comboitem);      
+      /* set some commonly used format strings */
+      comboitem = gtk_list_item_new_with_label(_("Standard"));
+      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
+				"%f-%p.%i (%t)");
+      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
+      gtk_widget_show(comboitem);
+      comboitem = gtk_list_item_new_with_label(_("Show zoom percentage"));
+      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
+				"%f-%p.%i (%t) %z%%");
+      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
+      gtk_widget_show(comboitem);
+      comboitem = gtk_list_item_new_with_label(_("Show zoom ratio"));
+      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
+				"%f-%p.%i (%t) %d:%s");
+      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
+      gtk_widget_show(comboitem);
+      comboitem = gtk_list_item_new_with_label(_("Show reversed zoom ratio"));
+      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
+				"%f-%p.%i (%t) %s:%d");
+      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
+      gtk_widget_show(comboitem);
+
+      gtk_box_pack_start(GTK_BOX(hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show(combo);
+
+      gtk_signal_connect(GTK_OBJECT(GTK_COMBO(combo)->entry), "changed",
+			 GTK_SIGNAL_FUNC(file_prefs_string_callback), 
+			 &image_title_format);
+      /* End of the title format string */
 
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

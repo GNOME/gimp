@@ -59,6 +59,8 @@ resize_display (GDisplay *gdisp,
     {
       gdisplay_expose_full (gdisp);
       gdisplays_flush ();
+      /* title may have changed if it includes the zoom ratio */
+      gdisplay_update_title (gdisp);
     }
 
   /* re-enable the active tool */
@@ -155,9 +157,6 @@ change_scale (GDisplay *gdisp,
       resize_display (gdisp, allow_resize_windows, TRUE);
 
     }
-
-  /* title may have changed if it includes the zoom ratio */
-  gdisplay_update_title (gdisp);
 }
 
 

@@ -1,4 +1,11 @@
+Wed Feb 10 23:44:00 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/preferences_dialog.c: provide a simple way to change the 
+	image_title_format string
+	* app/scale.c: also update the title when using the zoom tool
+
 Mon Feb  8 18:47:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+
     * plug-ins/perl/examples/feedback.pl 
     * plug-ins/perl/examples/xachblocks.pl 
     * plug-ins/perl/examples/xachshadows.pl: Updated version
