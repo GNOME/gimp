@@ -1,4 +1,4 @@
-2005-02-14  Sven Neumann  <neumann@jpk.com>
+2005-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.c: fixed gtk-doc comment.
 
