@@ -1,3 +1,10 @@
+2003-11-11 Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.c: New vectors now are invisible by
+	default. A quick poll on #gimp revealed that this is more
+	useful. Also loading images with compatibility paths works
+	more as expected.
+
 2003-11-10  Dave Neary  <bolsh@gimp.org>
 
 	* app/widgets/gimpdataeditor.c: Fix warnings and one error in 

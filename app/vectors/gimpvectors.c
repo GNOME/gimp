@@ -243,6 +243,9 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 static void
 gimp_vectors_init (GimpVectors *vectors)
 {
+  GimpItem *item = GIMP_ITEM (vectors);
+
+  item->visible         = FALSE;
   vectors->strokes      = NULL;
   vectors->freeze_count = 0;
 }
