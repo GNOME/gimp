@@ -215,6 +215,8 @@ oilify (GDrawable *drawable)
   gint Hist[4][HISTSIZE];
   gpointer pr1, pr2;
   gint progress, max_progress;
+  gint *tmp1, *tmp2;
+  guchar *guc_tmp1;
 
   /*  get the selection bounds  */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -239,13 +241,9 @@ oilify (GDrawable *drawable)
 
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
-	      for (b = 0; b < bytes; b++)
-		{
-		  Cnt[b] = 0;
-		  Val[b] = 0;
-		  for (i = 0; i < HISTSIZE; i++)
-		    Hist[b][i] = 0;
-		}
+	      memset(Cnt, 0, sizeof(Cnt));
+	      memset(Val, 0, sizeof(Val));
+	      memset(Hist, 0, sizeof(Hist));
 
 	      x3 = CLAMP ((x - n), x1, x2);
 	      y3 = CLAMP ((y - n), y1, y2);
@@ -264,12 +262,17 @@ oilify (GDrawable *drawable)
 
 		      for (xx = 0; xx < src_rgn.w; xx++)
 			{
-			  for (b = 0; b < bytes; b++)
+			  for (b = 0,
+				 tmp1 = Val,
+				 tmp2 = Cnt,
+				 guc_tmp1 = src;
+			       b < bytes;
+			       b++, tmp1++, tmp2++, guc_tmp1++)
 			    {
-			      if ((c = ++Hist[b][px = src[b]]) > Cnt[b])
+			      if ((c = ++Hist[b][*guc_tmp1]) > *tmp2)
 				{
-				  Val[b] = px;
-				  Cnt[b] = c;
+				  *tmp1 = *guc_tmp1;
+				  *tmp2 = c;
 				}
 			    }
 
@@ -280,15 +283,16 @@ oilify (GDrawable *drawable)
 		    }
 		}
 
-	      for (b = 0; b < bytes; b++)
-		*dest++ = Val[b];
+	      for (b = 0, tmp1 = Val; b < bytes; b++)
+		*dest++ = *tmp1++;
 	    }
 
 	  dest_row += dest_rgn.rowstride;
 	}
 
       progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      if((progress % 5) == 0)
+	gimp_progress_update ((double) progress / (double) max_progress);
     }
 
   /*  update the oil-painted region  */
