@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:18+0100\n"
-"PO-Revision-Date: 2004-03-19 13:49+0100\n"
+"POT-Creation-Date: 2004-03-22 03:45+0100\n"
+"PO-Revision-Date: 2004-03-22 10:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1311,7 +1311,7 @@ msgid "Cut"
 msgstr "Vyjmout"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:127 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:133 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1949,7 +1949,7 @@ msgstr "Povolit Rychlou masku"
 msgid "Disable QuickMask"
 msgstr "Zakázat Rychlou masku"
 
-#: app/core/gimpimage-undo-push.c:2974
+#: app/core/gimpimage-undo-push.c:2847
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
@@ -3942,9 +3942,8 @@ msgid "/Select/_Invert"
 msgstr "/Výběr/_Invertovat"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Výběr/Do _cesty"
+msgstr "/Výběr/Z c_esty"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -7351,7 +7350,7 @@ msgstr ""
 "Příliš žluťoučký kůň\n"
 "úpěl ďábelské kódy."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:634
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:676
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
@@ -8032,7 +8031,7 @@ msgstr "Upravit vybranou barvu"
 msgid "R_eset Color"
 msgstr "Obnovit bar_vu"
 
-#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:187
+#: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 msgid "_Preview"
 msgstr "_Náhled"
 
@@ -8557,23 +8556,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Vytvořit cestu z textu"
 
-#: app/tools/gimptexttool.c:128
+#: app/tools/gimptexttool.c:134
 msgid "Add text to the image"
 msgstr "Přidání textu do obrázku"
 
-#: app/tools/gimptexttool.c:129
+#: app/tools/gimptexttool.c:135
 msgid "/Tools/Te_xt"
 msgstr "/Nástroje/_Text"
 
-#: app/tools/gimptexttool.c:667
+#: app/tools/gimptexttool.c:709
 msgid "GIMP Text Editor"
 msgstr "Textový editor pro GIMP"
 
-#: app/tools/gimptexttool.c:757 app/tools/gimptexttool.c:760
+#: app/tools/gimptexttool.c:799 app/tools/gimptexttool.c:802
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "Potvrdit úpravu textu"
 
-#: app/tools/gimptexttool.c:781
+#: app/tools/gimptexttool.c:823
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8581,6 +8580,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"Vrstva, kterou jste vybrali, je vrstva textu, ale byla upravena jinými nástroji. Úprava vrstvy s nástrojem text tyto změny zahodí.\n"
+"\n"
+"Můžete vrstvu upravovat nebo vytvořit novou vrstvu textu z atributů jejího textu."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -9141,7 +9143,7 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neplatné UTF-8"
 
-#: app/widgets/gimpdock.c:383
+#: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
 msgstr "Sem můžete upustit ukotvitelné dialogy."
 
@@ -9611,7 +9613,7 @@ msgstr "Otevřít textový soubor (UTF-8)"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neplatná data v kódování UTF-8 v souboru '%s'."
 
-#: app/widgets/gimpthumbbox.c:170
+#: app/widgets/gimpthumbbox.c:189
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -9620,11 +9622,11 @@ msgstr ""
 "Aktualizujte náhled kliknutím\n"
 "Klávesou %s vynutíte aktualizaci, i když je náhled aktuální"
 
-#: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
 msgid "No Selection"
 msgstr "Žádný výběr"
 
-#: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
+#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d z %d"
