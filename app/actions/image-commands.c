@@ -432,7 +432,7 @@ image_scale_implement (ImageResize *image_scale)
   if (image_scale->resize->resolution_x != gimage->xresolution ||
       image_scale->resize->resolution_y != gimage->yresolution)
     {
-      undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+      undo_push_group_start (gimage, IMAGE_SCALE_UNDO_GROUP);
 	  
       gimp_image_set_resolution (gimage,
 				 image_scale->resize->resolution_x,
@@ -444,7 +444,7 @@ image_scale_implement (ImageResize *image_scale)
   if (image_scale->resize->unit != gimage->unit)
     {
       if (! display_flush)
-	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	undo_push_group_start (gimage, IMAGE_SCALE_UNDO_GROUP);
 
       gimp_image_set_unit (gimage, image_scale->resize->unit);
 
@@ -460,7 +460,7 @@ image_scale_implement (ImageResize *image_scale)
           GimpProgress *progress;
 
 	  if (! display_flush)
-	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO_GROUP);
 
           progress = gimp_progress_start (image_scale->gdisp,
                                           _("Scaling..."),

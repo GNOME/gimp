@@ -69,14 +69,14 @@ gimp_image_scale (GimpImage             *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+  undo_push_group_start (gimage, IMAGE_SCALE_UNDO_GROUP);
 
   /*  Relax the floating selection  */
   if (floating_layer)
     floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image size to the stack  */
-  undo_push_gimage_mod (gimage);
+  undo_push_image_size (gimage);
 
   /*  Set the new width and height  */
 
@@ -158,11 +158,11 @@ gimp_image_scale (GimpImage             *gimage,
       switch (guide->orientation)
 	{
 	case ORIENTATION_HORIZONTAL:
-	  undo_push_guide (gimage, guide);
+	  undo_push_image_guide (gimage, guide);
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
 	case ORIENTATION_VERTICAL:
-	  undo_push_guide (gimage, guide);
+	  undo_push_image_guide (gimage, guide);
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
 	default:

@@ -61,7 +61,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   drawable = GIMP_DRAWABLE (viewable);
 
-  undo_push_group_start (gdisp->gimage, EDIT_PASTE_UNDO);
+  undo_push_group_start (gdisp->gimage, EDIT_PASTE_UNDO_GROUP);
 
   new_layer = gimp_layer_new_from_drawable (gdisp->gimage, drawable);
 

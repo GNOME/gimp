@@ -737,14 +737,14 @@ gimp_image_convert (GimpImage          *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
-  undo_push_group_start (gimage, GIMAGE_MOD_UNDO);
+  undo_push_group_start (gimage, IMAGE_CONVERT_UNDO_GROUP);
 
   /*  Relax the floating selection  */
   if (floating_layer)
     floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image size to the stack  */
-  undo_push_gimage_mod (gimage);
+  undo_push_image_size (gimage);
 
   /*  Set the new base type  */
   old_type = gimage->base_type;

@@ -359,7 +359,7 @@ channels_new_channel_query (GimpImage   *gimage,
       height = gimp_drawable_height (GIMP_DRAWABLE (template));
       gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
 
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
       new_channel = gimp_channel_new (gimage,
                                       width, height,

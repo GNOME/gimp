@@ -54,15 +54,6 @@ struct _GimpLayerMaskClass
 };
 
 
-/*  Special undo type  */
-
-struct _LayerMaskUndo
-{
-  GimpLayer     *layer;    /*  the layer             */
-  GimpLayerMask *mask;     /*  the layer mask        */
-};
-
-
 /*  function declarations  */
 
 GType           gimp_layer_mask_get_type    (void) G_GNUC_CONST;

@@ -49,7 +49,7 @@ sub layer_change_invoke {
     {
       floating_layer = gimp_image_floating_sel (gimage);
 
-      undo_push_group_start (gimage, ${undo}_UNDO);
+      undo_push_group_start (gimage, ${undo}_UNDO_GROUP);
 
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
@@ -387,7 +387,7 @@ HELP
 			desc => "Offset in $_ direction" }
     }
 
-    &layer_change_invoke('LINKED_LAYER', <<'CODE');
+    &layer_change_invoke('LAYER_LINKED', <<'CODE');
 {
   for (layer_list = GIMP_LIST (gimage->layers)->list;
        layer_list;

@@ -51,6 +51,8 @@
 #include "gimpparasitelist.h"
 #include "gimpundostack.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "path.h"
 #include "undo.h"
 
@@ -71,6 +73,7 @@ enum
   FLOATING_SELECTION_CHANGED,
   ACTIVE_LAYER_CHANGED,
   ACTIVE_CHANNEL_CHANGED,
+  ACTIVE_VECTORS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
@@ -223,6 +226,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_image_signals[ACTIVE_VECTORS_CHANGED] =
+    g_signal_new ("active_vectors_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
     g_signal_new ("component_visibility_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -366,6 +378,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->floating_selection_changed   = NULL;
   klass->active_layer_changed         = NULL;
   klass->active_channel_changed       = NULL;
+  klass->active_vectors_changed       = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
   klass->mask_changed                 = NULL;
@@ -419,6 +432,8 @@ gimp_image_init (GimpImage *gimage)
 						 GIMP_CONTAINER_POLICY_STRONG);
   gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, 
 						 GIMP_CONTAINER_POLICY_STRONG);
+  gimage->vectors               = gimp_list_new (GIMP_TYPE_VECTORS,
+                                                 GIMP_CONTAINER_POLICY_STRONG);
   gimage->layer_stack           = NULL;
 
   gimage->active_layer          = NULL;
@@ -442,7 +457,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->undo_bytes            = 0;
   gimage->undo_levels           = 0;
   gimage->group_count           = 0;
-  gimage->pushing_undo_group    = UNDO_NULL;
+  gimage->pushing_undo_group    = NO_UNDO_GROUP;
 
   gimage->new_undo_stack        = gimp_undo_stack_new (gimage);
   gimage->new_redo_stack        = gimp_undo_stack_new (gimage);
@@ -498,6 +513,11 @@ gimp_image_finalize (GObject *object)
     {
       g_object_unref (G_OBJECT (gimage->channels));
       gimage->channels = NULL;
+    }
+  if (gimage->vectors)
+    {
+      g_object_unref (G_OBJECT (gimage->vectors));
+      gimage->vectors = NULL;
     }
   if (gimage->layer_stack)
     {
@@ -585,6 +605,7 @@ gimp_image_get_memsize (GimpObject *object)
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->layers));
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->channels));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->vectors));
 
   memsize += g_slist_length (gimage->layer_stack) * sizeof (GSList);
 
@@ -1034,7 +1055,7 @@ gimp_image_set_resolution (GimpImage *gimage,
   if ((ABS (gimage->xresolution - xresolution) >= 1e-5) ||
       (ABS (gimage->yresolution - yresolution) >= 1e-5))
     {
-      undo_push_resolution (gimage);
+      undo_push_image_resolution (gimage);
 
       gimage->xresolution = xresolution;
       gimage->yresolution = yresolution;
@@ -1072,7 +1093,7 @@ gimp_image_set_unit (GimpImage *gimage,
 
   if (gimage->unit != unit)
     {
-      undo_push_resolution (gimage);
+      undo_push_image_resolution (gimage);
 
       gimage->unit = unit;
 
@@ -2175,6 +2196,14 @@ gimp_image_get_channels (const GimpImage *gimage)
   return gimage->channels;
 }
 
+GimpContainer *
+gimp_image_get_vectors (const GimpImage *gimage)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimage->vectors;
+}
+
 void
 gimp_image_set_paths (GimpImage *gimage,
 		      PathList  *paths)
@@ -2235,6 +2264,14 @@ gimp_image_get_active_channel (const GimpImage *gimage)
   return gimage->active_channel;
 }
 
+GimpVectors *
+gimp_image_get_active_vectors (const GimpImage *gimage)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimage->active_vectors;
+}
+
 GimpLayer *
 gimp_image_set_active_layer (GimpImage *gimage, 
 			     GimpLayer *layer)
@@ -2283,6 +2320,7 @@ gimp_image_set_active_channel (GimpImage   *gimage,
 			       GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
 
   /*  Not if there is a floating selection  */
   if (gimp_image_floating_sel (gimage))
@@ -2343,6 +2381,31 @@ gimp_image_unset_active_channel (GimpImage *gimage)
   return channel;
 }
 
+GimpVectors *
+gimp_image_set_active_vectors (GimpImage   *gimage, 
+			       GimpVectors *vectors)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+
+  /*  First, find the vectors
+   *  If it doesn't exist, find the first vectors that does
+   */
+  if (! gimp_container_have (gimage->vectors, GIMP_OBJECT (vectors)))
+    vectors = (GimpVectors *)
+      gimp_container_get_child_by_index (gimage->vectors, 0);
+
+  if (vectors != gimage->active_vectors)
+    {
+      gimage->active_vectors = vectors;
+
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+    }
+
+  return vectors;
+}
+
 gint            
 gimp_image_get_layer_index (const GimpImage   *gimage,
 			    const GimpLayer   *layer)
@@ -2365,8 +2428,19 @@ gimp_image_get_channel_index (const GimpImage   *gimage,
 					 GIMP_OBJECT (channel));
 }
 
+gint            
+gimp_image_get_vectors_index (const GimpImage   *gimage,
+			      const GimpVectors *vectors)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), -1);
+
+  return gimp_container_get_child_index (gimage->vectors,
+					 GIMP_OBJECT (vectors));
+}
+
 GimpLayer *
-gimp_image_get_layer_by_tattoo (const GimpImage *gimage, 
+gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
 				GimpTattoo       tattoo)
 {
   GimpLayer *layer;
@@ -2409,6 +2483,52 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
   return NULL;
 }
 
+GimpVectors *
+gimp_image_get_vectors_by_tattoo (const GimpImage *gimage, 
+				  GimpTattoo       tattoo)
+{
+  GimpVectors *vectors;
+  GList       *list;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      vectors = (GimpVectors *) list->data;
+
+#if 0
+      if (gimp_vectors_get_tattoo (GIMP_VECTORS (vectors)) == tattoo)
+	return vectors;
+#endif
+    }
+
+  return NULL;
+}
+
+GimpLayer *
+gimp_image_get_layer_by_name (const GimpImage *gimage,
+                              const gchar     *name)
+{
+  GimpLayer *layer;
+  GList     *list;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
+       list = g_list_next (list))
+    {
+      layer = (GimpLayer *) list->data;
+
+      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (layer)), name))
+        return layer;
+    }
+
+  return NULL;
+}
+
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *gimage,
 				const gchar     *name)
@@ -2418,13 +2538,36 @@ gimp_image_get_channel_by_name (const GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       channel = (GimpChannel *) list->data;
+
       if (! strcmp (gimp_object_get_name (GIMP_OBJECT (channel)), name))
-      return channel;
+        return channel;
+    }
+
+  return NULL;
+}
+
+GimpVectors *
+gimp_image_get_vectors_by_name (const GimpImage *gimage,
+				const gchar     *name)
+{
+  GimpVectors *vectors;
+  GList       *list;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
+    {
+      vectors = (GimpVectors *) list->data;
+
+      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (vectors)), name))
+        return vectors;
     }
 
   return NULL;
@@ -2435,8 +2578,6 @@ gimp_image_add_layer (GimpImage *gimage,
 		      GimpLayer *layer, 
 		      gint       position)
 {
-  LayerUndo *lu;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2455,12 +2596,10 @@ gimp_image_add_layer (GimpImage *gimage,
       return FALSE;
     }
 
-  /*  Prepare a layer undo and push it  */
-  lu = g_new (LayerUndo, 1);
-  lu->layer         = layer;
-  lu->prev_position = 0;
-  lu->prev_layer    = gimp_image_get_active_layer (gimage);
-  undo_push_layer (gimage, LAYER_ADD_UNDO, lu);
+  undo_push_layer_add (gimage,
+                       layer,
+                       0,
+                       gimp_image_get_active_layer (gimage));
 
   /*  If the layer is a floating selection, set the ID  */
   if (gimp_layer_is_floating_sel (layer))
@@ -2522,8 +2661,7 @@ void
 gimp_image_remove_layer (GimpImage *gimage, 
 			 GimpLayer *layer)
 {
-  LayerUndo *lu;
-  gint       x, y, w, h;
+  gint x, y, w, h;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -2531,14 +2669,11 @@ gimp_image_remove_layer (GimpImage *gimage,
   g_return_if_fail (gimp_container_have (gimage->layers, 
 					 GIMP_OBJECT (layer)));
 
-  /*  Push a layer undo  */
-  lu = g_new (LayerUndo, 1);
-  lu->layer         = layer;
-  lu->prev_position = gimp_container_get_child_index (gimage->layers, 
-						      GIMP_OBJECT (layer));
-  lu->prev_layer    = layer;
-  
-  undo_push_layer (gimage, LAYER_REMOVE_UNDO, lu);
+  undo_push_layer_remove (gimage,
+                          layer,
+                          gimp_container_get_child_index (gimage->layers, 
+                                                          GIMP_OBJECT (layer)),
+                          layer);
 
   g_object_ref (G_OBJECT (layer));
 
@@ -2747,8 +2882,6 @@ gimp_image_add_channel (GimpImage   *gimage,
 			GimpChannel *channel, 
 			gint         position)
 {
-  ChannelUndo *cu;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
@@ -2767,12 +2900,10 @@ gimp_image_add_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  /*  Push a channel undo  */
-  cu = g_new (ChannelUndo, 1);
-  cu->channel       = channel;
-  cu->prev_position = 0;
-  cu->prev_channel  = gimp_image_get_active_channel (gimage);
-  undo_push_channel (gimage, CHANNEL_ADD_UNDO, cu);
+  undo_push_channel_add (gimage,
+                         channel,
+                         0,
+                         gimp_image_get_active_channel (gimage));
 
   /*  add the channel to the list  */
   gimp_container_add (gimage->channels, GIMP_OBJECT (channel));
@@ -2795,21 +2926,17 @@ void
 gimp_image_remove_channel (GimpImage   *gimage, 
 			   GimpChannel *channel)
 {
-  ChannelUndo *cu;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   g_return_if_fail (gimp_container_have (gimage->channels, 
 					 GIMP_OBJECT (channel)));
 
-  /*  Prepare a channel undo--push it below  */
-  cu = g_new (ChannelUndo, 1);
-  cu->channel       = channel;
-  cu->prev_position = gimp_container_get_child_index (gimage->channels, 
-						      GIMP_OBJECT (channel));
-  cu->prev_channel  = gimp_image_get_active_channel (gimage);
-  undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);
+  undo_push_channel_remove (gimage,
+                            channel,
+                            gimp_container_get_child_index (gimage->channels,
+                                                            GIMP_OBJECT (channel)),
+                            gimp_image_get_active_channel (gimage));
 
   g_object_ref (G_OBJECT (channel));
 
@@ -2884,7 +3011,7 @@ gboolean
 gimp_image_position_channel (GimpImage   *gimage, 
 			     GimpChannel *channel,
 			     gint         new_index,
-                             gboolean     push_undo /* FIXME unused */)
+                             gboolean     push_undo)
 {
   gint index;
   gint num_channels;
@@ -2904,6 +3031,9 @@ gimp_image_position_channel (GimpImage   *gimage,
   if (new_index == index)
     return TRUE;
 
+  if (push_undo)
+    undo_push_channel_reposition (gimage, channel);
+
   gimp_container_reorder (gimage->channels, 
 			  GIMP_OBJECT (channel), new_index);
 
@@ -2911,6 +3041,171 @@ gimp_image_position_channel (GimpImage   *gimage,
 			0, 0,
 			gimp_drawable_width  (GIMP_DRAWABLE (channel)),
 			gimp_drawable_height (GIMP_DRAWABLE (channel)));
+
+  return TRUE;
+}
+
+gboolean
+gimp_image_add_vectors (GimpImage   *gimage, 
+			GimpVectors *vectors,
+			gint         position)
+{
+#if 0
+  VectorsUndo *vu;
+#endif
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+
+#if 0
+  if (GIMP_VECTORS (vectors)->gimage != NULL &&
+      GIMP_VECTORS (vectors)->gimage != gimage)
+    {
+      g_warning ("%s: attempting to add vectors to wrong image.",
+		 G_GNUC_PRETTY_FUNCTION);
+      return FALSE;
+    }
+#endif
+
+  if (gimp_container_have (gimage->vectors, GIMP_OBJECT (vectors)))
+    {
+      g_warning ("%s: trying to add vectors to image twice.",
+		 G_GNUC_PRETTY_FUNCTION);
+      return FALSE;
+    }
+
+#if 0
+  /*  Push a vectors undo  */
+  vu = g_new (VectorsUndo, 1);
+  vu->vectors       = vectors;
+  vu->prev_position = 0;
+  vu->prev_vectors  = gimp_image_get_active_vectors (gimage);
+  undo_push_vectors (gimage, VECTORS_ADD_UNDO, vu);
+#endif
+
+  /*  add the vectors to the list  */
+  gimp_container_add (gimage->vectors, GIMP_OBJECT (vectors));
+  g_object_unref (G_OBJECT (vectors));
+
+  /*  notify this gimage of the currently active vectors  */
+  gimp_image_set_active_vectors (gimage, vectors);
+
+  return TRUE;
+}
+
+void
+gimp_image_remove_vectors (GimpImage   *gimage, 
+			   GimpVectors *vectors)
+{
+#if 0
+  VectorsUndo *vu;
+#endif
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+
+  g_return_if_fail (gimp_container_have (gimage->vectors,
+					 GIMP_OBJECT (vectors)));
+
+#if 0
+  /*  Prepare a channel undo--push it below  */
+  vu = g_new (VectorsUndo, 1);
+  vu->vectors       = vectors;
+  vu->prev_position = gimp_container_get_child_index (gimage->vectors,
+						      GIMP_OBJECT (vectors));
+  vu->prev_vectors  = gimp_image_get_active_vectors (gimage);
+  undo_push_vectors (gimage, VECTORS_REMOVE_UNDO, vu);
+#endif
+
+  g_object_ref (G_OBJECT (vectors));
+
+  gimp_container_remove (gimage->vectors, GIMP_OBJECT (vectors));
+
+#if 0
+  /* Send out REMOVED signal from vectors */
+  gimp_vectors_removed (GIMP_VECTORS (vectors));
+#endif
+
+  if (vectors == gimp_image_get_active_vectors (gimage))
+    {
+      if (gimp_container_num_children (gimage->vectors) > 0)
+	{
+	  gimp_image_set_active_vectors
+	    (gimage,
+	     GIMP_VECTORS (gimp_container_get_child_by_index (gimage->vectors,
+							      0)));
+	}
+    }
+
+  g_object_unref (G_OBJECT (vectors));
+}
+
+gboolean
+gimp_image_raise_vectors (GimpImage   *gimage, 
+			  GimpVectors *vectors)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);  
+
+  index = gimp_container_get_child_index (gimage->vectors,
+					  GIMP_OBJECT (vectors));
+  if (index == 0)
+    {
+      g_message (_("Vectors cannot be raised higher."));
+      return FALSE;
+    }
+
+  return gimp_image_position_vectors (gimage, vectors, index - 1, TRUE);
+}
+
+gboolean
+gimp_image_lower_vectors (GimpImage   *gimage, 
+			  GimpVectors *vectors)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);  
+
+  index = gimp_container_get_child_index (gimage->vectors,
+					  GIMP_OBJECT (vectors));
+  if (index == gimp_container_num_children (gimage->vectors) - 1)
+    {
+      g_message (_("Vectors cannot be lowered more."));
+      return FALSE;
+    }
+
+  return gimp_image_position_vectors (gimage, vectors, index + 1, TRUE);
+}
+
+gboolean
+gimp_image_position_vectors (GimpImage   *gimage, 
+			     GimpVectors *vectors,
+			     gint         new_index,
+                             gboolean     push_undo /* FIXME unused */)
+{
+  gint index;
+  gint num_vectors;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);  
+
+  index = gimp_container_get_child_index (gimage->vectors,
+					  GIMP_OBJECT (vectors));
+  if (index < 0)
+    return FALSE;
+
+  num_vectors = gimp_container_num_children (gimage->vectors);
+
+  new_index = CLAMP (new_index, 0, num_vectors - 1);
+
+  if (new_index == index)
+    return TRUE;
+
+  gimp_container_reorder (gimage->vectors,
+			  GIMP_OBJECT (vectors), new_index);
 
   return TRUE;
 }

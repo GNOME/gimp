@@ -241,7 +241,7 @@ init_edit_selection (GimpTool    *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
+  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO_GROUP);
 
   gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
                          &off_x, &off_y);
@@ -894,7 +894,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
     return;
 
-  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
+  undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO_GROUP);
 
   if (mask_inc_x != 0 || mask_inc_y != 0)
     gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);

@@ -38,7 +38,7 @@ HELP
 
     &inargs;
 
-    %invoke = ( code => 'undo_push_group_start (gimage, MISC_UNDO);' );
+    %invoke = ( code => 'undo_push_group_start (gimage, MISC_UNDO_GROUP);' );
 }
 
 sub undo_push_group_end {

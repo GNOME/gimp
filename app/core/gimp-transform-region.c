@@ -612,7 +612,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+  undo_push_group_start (gimage, TRANSFORM_UNDO_GROUP);
 
   /* Cut/Copy from the specified drawable */
   float_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
@@ -659,7 +659,7 @@ gimp_drawable_transform_flip (GimpDrawable            *drawable,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
+  undo_push_group_start (gimage, TRANSFORM_UNDO_GROUP);
 
   /* Cut/Copy from the specified drawable */
   float_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
@@ -761,7 +761,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 				&(GIMP_DRAWABLE (layer)->offset_y));
 
       /*  Start a group undo  */
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
       floating_sel_attach (layer, drawable);
 

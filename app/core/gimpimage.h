@@ -130,10 +130,13 @@ struct _GimpImage
   /*  Layer/Channel attributes  */
   GimpContainer     *layers;                /*  the list of layers           */
   GimpContainer     *channels;              /*  the list of masks            */
+  GimpContainer     *vectors;               /*  the list of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GimpLayer         *active_layer;          /*  the active layer             */
   GimpChannel       *active_channel;        /*  the active channel           */
+  GimpVectors       *active_vectors;        /*  the active vectors           */
+
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
@@ -174,6 +177,7 @@ struct _GimpImageClass
   void (* floating_selection_changed)   (GimpImage            *gimage);
   void (* active_layer_changed)         (GimpImage            *gimage);
   void (* active_channel_changed)       (GimpImage            *gimage);
+  void (* active_vectors_changed)       (GimpImage            *gimage);
   void (* component_visibility_changed) (GimpImage            *gimage,
 					 GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *gimage,
@@ -369,10 +373,11 @@ gboolean        gimp_image_set_tattoo_state      (GimpImage          *gimage,
 GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *gimage);
 
 
-/*  layers / channels / paths  */
+/*  layers / channels / vectors / old paths  */
 
 GimpContainer * gimp_image_get_layers            (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *gimage);
+GimpContainer * gimp_image_get_vectors           (const GimpImage    *gimage);
 
 void            gimp_image_set_paths             (GimpImage          *gimage,
                                                   PathList           *paths);
@@ -381,22 +386,35 @@ PathList      * gimp_image_get_paths             (const GimpImage    *gimage);
 GimpDrawable  * gimp_image_active_drawable       (const GimpImage    *gimage);
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *gimage);
 GimpChannel   * gimp_image_get_active_channel    (const GimpImage    *gimage);
+GimpVectors   * gimp_image_get_active_vectors    (const GimpImage    *gimage);
 
 GimpLayer     * gimp_image_set_active_layer      (GimpImage          *gimage,
 						  GimpLayer          *layer);
 GimpChannel   * gimp_image_set_active_channel    (GimpImage          *gimage,
 						  GimpChannel        *channel);
 GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *gimage);
+GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *gimage,
+                                                  GimpVectors        *vectors);
 
 gint            gimp_image_get_layer_index       (const GimpImage    *gimage,
 						  const GimpLayer    *layer);
 gint            gimp_image_get_channel_index     (const GimpImage    *gimage,
 						  const GimpChannel  *channel);
+gint            gimp_image_get_vectors_index     (const GimpImage    *gimage,
+                                                  const GimpVectors  *vectors);
+
 GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage    *gimage,
 						  GimpTattoo          tatoo);
 GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage    *gimage,
 						  GimpTattoo          tatoo);
+GimpVectors   * gimp_image_get_vectors_by_tattoo (const GimpImage    *gimage,
+                                                  GimpTattoo          tatoo);
+
+GimpLayer     * gimp_image_get_layer_by_name     (const GimpImage    *gimage,
+						  const gchar        *name);
 GimpChannel   * gimp_image_get_channel_by_name   (const GimpImage    *gimage,
+						  const gchar        *name);
+GimpVectors   * gimp_image_get_vectors_by_name   (const GimpImage    *gimage,
 						  const gchar        *name);
 
 gboolean        gimp_image_add_layer             (GimpImage          *gimage,
@@ -430,6 +448,21 @@ gboolean        gimp_image_lower_channel         (GimpImage          *gimage,
 						  GimpChannel        *channel);
 gboolean        gimp_image_position_channel      (GimpImage          *gimage,
 						  GimpChannel        *channel,
+						  gint                new_index,
+                                                  gboolean            push_undo);
+
+gboolean        gimp_image_add_vectors           (GimpImage          *gimage,
+						  GimpVectors        *vectors,
+						  gint                position);
+void            gimp_image_remove_vectors        (GimpImage          *gimage,
+						  GimpVectors        *vectors);
+
+gboolean        gimp_image_raise_vectors         (GimpImage          *gimage,
+						  GimpVectors        *vectors);
+gboolean        gimp_image_lower_vectors         (GimpImage          *gimage,
+						  GimpVectors        *vectors);
+gboolean        gimp_image_position_vectors      (GimpImage          *gimage,
+						  GimpVectors        *vectors,
 						  gint                new_index,
                                                   gboolean            push_undo);
 

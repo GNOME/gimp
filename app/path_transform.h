@@ -20,10 +20,10 @@
 #define  __PATH_TRANSFORM_H__
 
 
-PathUndo * path_transform_start_undo    (GimpImage   *gimage);
-void       path_transform_free_undo     (PathUndo    *pundo);
+GSList   * path_transform_start_undo    (GimpImage   *gimage);
+void       path_transform_free_undo     (GSList      *pundo);
 void       path_transform_do_undo       (GimpImage   *gimage, 
-					 PathUndo    *pundo);
+					 GSList      *pundo);
 
 void       path_transform_current_path  (GimpImage   *gimage,  
 					 GimpMatrix3  transform,

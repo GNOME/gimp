@@ -59,7 +59,7 @@ gimp_edit_cut (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_CUT_UNDO);
+  undo_push_group_start (gimage, EDIT_CUT_UNDO_GROUP);
 
   /*  See if the gimage mask is empty  */
   empty = gimp_image_mask_is_empty (gimage);
@@ -187,7 +187,7 @@ gimp_edit_paste (GimpImage    *gimage,
     return NULL;
 
   /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+  undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
   /*  Set the offsets to the center of the image  */
   if (drawable)

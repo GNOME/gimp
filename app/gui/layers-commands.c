@@ -512,9 +512,6 @@ new_layer_query_ok_callback (GtkWidget *widget,
 
   if ((gimage = options->gimage))
     {
-      /*  Start a group undo  */
-      undo_push_group_start (gimage, LAYER_ADD_UNDO);
-
       layer = gimp_layer_new (gimage, options->xsize, options->ysize,
 			      gimp_image_base_type_with_alpha (gimage),
 			      layer_name, OPAQUE_OPACITY, GIMP_NORMAL_MODE);
@@ -524,9 +521,6 @@ new_layer_query_ok_callback (GtkWidget *widget,
 				      gimp_get_user_context (gimage->gimp),
 				      fill_type);
 	  gimp_image_add_layer (gimage, layer, -1);
-	  
-	  /*  End the group undo  */
-	  undo_push_group_end (gimage);
 	  
 	  gdisplays_flush ();
 	} 
@@ -577,7 +571,7 @@ layers_new_layer_query (GimpImage *gimage,
       height = gimp_drawable_height (GIMP_DRAWABLE (template));
       gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
 
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+      undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
       new_layer = gimp_layer_new (gimage, width, height,
                                   gimp_image_base_type_with_alpha (gimage),
@@ -1008,7 +1002,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
-	  undo_push_group_start (gimage, LAYER_SCALE_UNDO);
+	  undo_push_group_start (gimage, LAYER_SCALE_UNDO_GROUP);
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
@@ -1097,7 +1091,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
       if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);

@@ -138,17 +138,6 @@ struct _GimpPaintCoreClass
 };
 
 
-typedef struct _GimpPaintCoreUndo GimpPaintCoreUndo;
-
-struct _GimpPaintCoreUndo
-{
-  gint        core_ID;
-  GType       core_type;
-
-  GimpCoords  last_coords;
-};
-
-
 GType     gimp_paint_core_get_type    (void) G_GNUC_CONST;
 
 void      gimp_paint_core_paint       (GimpPaintCore       *core,

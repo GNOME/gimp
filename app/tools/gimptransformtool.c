@@ -708,12 +708,10 @@ static void
 gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 		          GimpDisplay        *gdisp)
 {
-  GimpTool      *tool;
-  TileManager   *new_tiles;
-  TransformUndo *tu;
-  PathUndo      *pundo;
-  gboolean       new_layer;
-  gint           i;
+  GimpTool    *tool;
+  TileManager *new_tiles;
+  GSList      *path_undo;
+  gboolean     new_layer;
 
   gimp_set_busy (gdisp->gimage->gimp);
 
@@ -728,7 +726,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   tool->preserve = TRUE;
 
   /*  Start a transform undo group  */
-  undo_push_group_start (gdisp->gimage, TRANSFORM_CORE_UNDO);
+  undo_push_group_start (gdisp->gimage, TRANSFORM_UNDO_GROUP);
 
   /* With the old UI, if original is NULL, then this is the
    * first transformation. In the new UI, it is always so, right?
@@ -744,7 +742,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
                                                    &new_layer);
 
-  pundo = path_transform_start_undo (gdisp->gimage);
+  path_undo = path_transform_start_undo (gdisp->gimage);
 
   /*  Send the request for the transformation to the tool...
    */
@@ -764,23 +762,17 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
                                      new_tiles,
                                      new_layer);
 
-      /*  create and initialize the transform_undo structure  */
-      tu = g_new0 (TransformUndo, 1);
-      tu->tool_ID   = tool->ID;
-      tu->tool_type = G_TYPE_FROM_INSTANCE (tool);
-
-      for (i = 0; i < TRAN_INFO_SIZE; i++)
-	tu->trans_info[i] = tr_tool->old_trans_info[i];
-
-      tu->original  = NULL;
-      tu->path_undo = pundo;
-
       /*  Make a note of the new current drawable (since we may have
        *  a floating selection, etc now.
        */
       tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      undo_push_transform (gdisp->gimage, tu);
+      undo_push_transform (gdisp->gimage,
+                           tool->ID,
+                           G_TYPE_FROM_INSTANCE (tool),
+                           tr_tool->old_trans_info,
+                           NULL,
+                           path_undo);
     }
 
   /*  push the undo group end  */

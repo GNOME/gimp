@@ -22,9 +22,7 @@
 
 #include "gimpdrawtool.h"
 
-
-/* FIXME */
-#include "gui/gui-types.h"
+#include "gui/gui-types.h" /* FIXME */
 
 
 /* buffer sizes for scaling information strings (for the info dialog) */
@@ -104,18 +102,6 @@ struct _GimpTransformToolClass
 		               GimpDisplay          *gdisp,
 		               TransformState        state);
 
-};
-
-typedef struct _TransformUndo TransformUndo;
-
-struct _TransformUndo
-{
-  gint         tool_ID;
-  GType        tool_type;
-
-  TransInfo    trans_info;
-  TileManager *original;
-  gpointer     path_undo;
 };
 
 

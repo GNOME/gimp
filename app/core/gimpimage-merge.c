@@ -298,7 +298,7 @@ gimp_image_merge_layers (GimpImage *gimage,
     return NULL;
 
   /*  Start a merge undo group  */
-  undo_push_group_start (gimage, LAYER_MERGE_UNDO);
+  undo_push_group_start (gimage, IMAGE_LAYERS_MERGE_UNDO_GROUP);
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 

@@ -398,7 +398,7 @@ layer_scale_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_SCALE_UNDO);
+	  undo_push_group_start (gimage, LAYER_SCALE_UNDO_GROUP);
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -492,7 +492,7 @@ layer_resize_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -631,7 +631,7 @@ layer_translate_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LINKED_LAYER_UNDO);
+	  undo_push_group_start (gimage, LAYER_LINKED_UNDO_GROUP);
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
@@ -762,7 +762,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
     
-	  undo_push_group_start (gimage, LINKED_LAYER_UNDO);
+	  undo_push_group_start (gimage, LAYER_LINKED_UNDO_GROUP);
     
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);

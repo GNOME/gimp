@@ -1199,12 +1199,10 @@ void
 gimp_channel_push_undo (GimpChannel *mask)
 {
   gint         x1, y1, x2, y2;
-  MaskUndo    *mask_undo;
   TileManager *undo_tiles;
   PixelRegion  srcPR, destPR;
   GimpImage   *gimage;
 
-  mask_undo = g_new (MaskUndo, 1);
   if (gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     {
       undo_tiles = tile_manager_new ((x2 - x1), (y2 - y1), 1);
@@ -1216,13 +1214,10 @@ gimp_channel_push_undo (GimpChannel *mask)
   else
     undo_tiles = NULL;
 
-  mask_undo->tiles = undo_tiles;
-  mask_undo->x     = x1;
-  mask_undo->y     = y1;
-
-  /* push the undo buffer onto the undo stack */
   gimage = GIMP_DRAWABLE (mask)->gimage;
-  undo_push_mask (gimage, mask_undo);
+
+  undo_push_image_mask (gimage, undo_tiles, x1, y1);
+
   gimp_image_mask_invalidate (gimage);
 
   /*  invalidate the preview  */

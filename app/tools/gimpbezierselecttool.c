@@ -3416,7 +3416,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
   rpnts = g_new0 (BezierRenderPnts, 1);
 
   /*  Start an undo group  */
-  undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
+  undo_push_group_start (gdisp->gimage, PAINT_UNDO_GROUP);
 
   bezier_gen_points (bezier_sel,open_path,rpnts);
 

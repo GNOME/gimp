@@ -20,71 +20,41 @@
 #define __UNDO_TYPES_H__
 
 
-typedef struct _LayerUndo     LayerUndo;
-typedef struct _LayerMaskUndo LayerMaskUndo;
-typedef struct _FStoLayerUndo FStoLayerUndo;
-typedef         GSList        PathUndo;
-
-
-/*  Undo types  */
-
-/* NOTE: If you change this list, please update the textual mapping at
- *  the bottom of undo.c as well.
+/*  Undo types which actually do something, unlike the ones in
+ *  core/core-types.h, which are only for pushing groups
  */
+
 typedef enum
 {
-  /* Type UNDO_NULL (0) is special - in the gimpimage structure it
-   * means there is no undo group currently being added to.
-   */
-
-  UNDO_NULL = 0, /* Picky compilers demand this in the enumeration - gosgood@idt.net */
-  IMAGE_UNDO,
+  IMAGE_UNDO = LAST_UNDO_GROUP + 1,
   IMAGE_MOD_UNDO,
-  MASK_UNDO,
-  LAYER_DISPLACE_UNDO,
-  TRANSFORM_UNDO,
-  PAINT_UNDO,
+  IMAGE_SIZE_UNDO,
+  IMAGE_RESOLUTION_UNDO,
+  IMAGE_MASK_UNDO,
+  IMAGE_QMASK_UNDO,	
+  IMAGE_GUIDE_UNDO,
   LAYER_ADD_UNDO,
   LAYER_REMOVE_UNDO,
-  LAYER_MOD,
+  LAYER_MOD_UNDO,
   LAYER_MASK_ADD_UNDO,
   LAYER_MASK_REMOVE_UNDO,
   LAYER_RENAME_UNDO,
   LAYER_REPOSITION_UNDO,
+  LAYER_DISPLACE_UNDO,
   CHANNEL_ADD_UNDO,
   CHANNEL_REMOVE_UNDO,
-  CHANNEL_MOD,
+  CHANNEL_MOD_UNDO,
+  CHANNEL_REPOSITION_UNDO,
   FS_TO_LAYER_UNDO,
-  GIMAGE_MOD,
-  FS_RIGOR,
-  FS_RELAX,
-  GUIDE_UNDO,
-  TEXT_UNDO,
-
-  FLOAT_MASK_UNDO,
-  EDIT_PASTE_UNDO,
-  EDIT_CUT_UNDO,
-  TRANSFORM_CORE_UNDO,
-
-  PAINT_CORE_UNDO,
-  FLOATING_LAYER_UNDO,
-  LINKED_LAYER_UNDO,
-  LAYER_APPLY_MASK_UNDO,
-  LAYER_MERGE_UNDO,
-  FS_ANCHOR_UNDO,
-  GIMAGE_MOD_UNDO,
-  CROP_UNDO,
-  LAYER_SCALE_UNDO,
-  LAYER_RESIZE_UNDO,
-  QMASK_UNDO,	
+  FS_RIGOR_UNDO,
+  FS_RELAX_UNDO,
+  TRANSFORM_UNDO,
+  PAINT_UNDO,
   PARASITE_ATTACH_UNDO,
   PARASITE_REMOVE_UNDO,
-  RESOLUTION_UNDO,
-  IMAGE_SCALE_UNDO,
-  IMAGE_RESIZE_UNDO,
 
-  MISC_UNDO = 100
-} UndoType;
+  CANT_UNDO
+} UndoImplType;
 
 
 #endif /* __UNDO_TYPES_H__ */

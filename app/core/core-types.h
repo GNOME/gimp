@@ -28,8 +28,6 @@
 #include "plug-in/plug-in-types.h"
 #include "vectors/vectors-types.h"
 
-#include "undo_types.h"  /* EEK */
-
 #include "core/core-enums.h"
 
 
@@ -123,6 +121,43 @@ typedef enum
   BG_BUCKET_FILL,
   PATTERN_BUCKET_FILL
 } BucketFillMode;
+
+typedef enum /*< pdb-skip >*/ /*< skip >*/
+{
+  /* NOTE: If you change this list, please update the textual mapping at
+   *  the bottom of undo.c as well.
+   */
+
+  /* Type NO_UNDO_GROUP (0) is special - in the gimpimage structure it
+   * means there is no undo group currently being added to.
+   */
+  NO_UNDO_GROUP = 0,
+
+  FIRST_UNDO_GROUP = NO_UNDO_GROUP,
+
+  IMAGE_SCALE_UNDO_GROUP,
+  IMAGE_RESIZE_UNDO_GROUP,
+  IMAGE_CONVERT_UNDO_GROUP,
+  IMAGE_CROP_UNDO_GROUP,
+  IMAGE_LAYERS_MERGE_UNDO_GROUP,
+  IMAGE_QMASK_UNDO_GROUP,
+  IMAGE_GUIDE_UNDO_GROUP,
+  LAYER_SCALE_UNDO_GROUP,
+  LAYER_RESIZE_UNDO_GROUP,
+  LAYER_DISPLACE_UNDO_GROUP,
+  LAYER_LINKED_UNDO_GROUP,
+  LAYER_APPLY_MASK_UNDO_GROUP,
+  FS_FLOAT_UNDO_GROUP,
+  FS_ANCHOR_UNDO_GROUP,
+  EDIT_PASTE_UNDO_GROUP,
+  EDIT_CUT_UNDO_GROUP,
+  TEXT_UNDO_GROUP,
+  TRANSFORM_UNDO_GROUP,
+  PAINT_UNDO_GROUP,
+  MISC_UNDO_GROUP,
+
+  LAST_UNDO_GROUP = MISC_UNDO_GROUP
+} UndoType;
 
 
 /*  base objects  */

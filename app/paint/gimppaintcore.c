@@ -409,8 +409,7 @@ void
 gimp_paint_core_finish (GimpPaintCore *core,
 			GimpDrawable  *drawable)
 {
-  GimpImage         *gimage;
-  GimpPaintCoreUndo *pu;
+  GimpImage *gimage;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -426,15 +425,12 @@ gimp_paint_core_finish (GimpPaintCore *core,
       (core->y2 == core->y1))
     return;
 
-  undo_push_group_start (gimage, PAINT_CORE_UNDO);
+  undo_push_group_start (gimage, PAINT_UNDO_GROUP);
 
-  pu = g_new0 (GimpPaintCoreUndo, 1);
-  pu->core_ID      = core->ID;
-  pu->core_type    = G_TYPE_FROM_INSTANCE (core);
-  pu->last_coords  = core->start_coords;
-
-  /*  Push a paint undo  */
-  undo_push_paint (gimage, pu);
+  undo_push_paint (gimage,
+                   core->ID,
+                   G_TYPE_FROM_INSTANCE (core),
+                   &core->start_coords);
 
   /*  push an undo  */
   gimp_drawable_apply_image (drawable,

@@ -63,25 +63,6 @@ struct _GimpChannelClass
 };
 
 
-/*  Special undo types  */
-
-typedef struct _ChannelUndo ChannelUndo;
-typedef struct _MaskUndo    MaskUndo;
-
-struct _ChannelUndo
-{
-  GimpChannel *channel;         /*  the actual channel          */
-  gint         prev_position;   /*  former position in list     */
-  GimpChannel *prev_channel;    /*  previous active channel     */
-};
-
-struct _MaskUndo
-{
-  TileManager *tiles;    /*  the actual mask  */
-  gint         x, y;     /*  offsets          */
-};
-
-
 /*  function declarations  */
 
 GType           gimp_channel_get_type          (void) G_GNUC_CONST;
@@ -114,7 +95,7 @@ void            gimp_channel_resize            (GimpChannel       *channel,
 						gint               offy);
 
 
-/* selection mask functions  */
+/*  selection mask functions  */
 
 GimpChannel   * gimp_channel_new_mask          (GimpImage         *gimage,
 						gint               width,

@@ -1,3 +1,73 @@
+2002-02-23  Michael Natterer  <mitch@gimp.org>
+
+	General undo cleanup:
+
+	* app/undo.[ch]: made all undo structs private. Changed all
+	undo_push_foo() functions to take useful parameters instead of
+	"gpointer foo_ptr" and create the undo structs internally.
+	Renamed lots of functions so they are more self-explanatory
+	(like undo_push_gimage_mod -> undo_push_image_size). Added some
+	undo functions (channel reordering is undoable now).  Never pass
+	in a UndoType, as they are reseved for groups now (see below).
+	Lots of cleanup and stuff...
+
+	* app/undo_types.h: is a private header now which defines "enum
+	UndoImplType" which is reserved for actual undo operations.
+	All enum values are named "FOO_UNDO".
+
+	* app/core/core-types.h: added the "UndoType" enum here and don't
+	include "undo_types.h" any more. The UndoType values are all
+	named "FOO_UNDO_GROUP" and are reserved for undo groups.
+
+	The ID space of actual undo operations and undo groups
+	is now strictly disjunct.
+
+	* app/core/gimpchannel.h
+	* app/core/gimpimage.h
+	* app/core/gimplayer.h
+	* app/core/gimplayermask.h
+	* app/paint/gimppaintcore.h
+	* app/tools/gimptransformtool.h: removed undo stuct definitions.
+
+	* app/undo_history.c
+	* app/path_transform.h
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/channels-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/paths-dialog.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/undo.pdb: changed accordingly.
+
+	* app/pdb/guides_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/undo_cmds.c: regenerated.
+
+	* app/core/gimpimage.[ch]: added infrastructure for holding a
+	GimpList of GimpVectors objects. The API is the same as for layers
+	and channels. Not used yet.
+
 2002-02-22  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

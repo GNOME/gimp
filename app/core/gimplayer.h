@@ -70,22 +70,6 @@ struct _GimpLayerClass
 };
 
 
-/*  Special undo types  */
-
-struct _LayerUndo
-{
-  GimpLayer *layer;           /*  the actual layer         */
-  gint       prev_position;   /*  former position in list  */
-  GimpLayer *prev_layer;      /*  previous active layer    */
-};
-
-struct _FStoLayerUndo
-{
-  GimpLayer    *layer;      /*  the layer                 */
-  GimpDrawable *drawable;   /*  drawable of floating sel  */
-};
-
-
 /*  function declarations  */
 
 GType           gimp_layer_get_type            (void) G_GNUC_CONST;

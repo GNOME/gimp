@@ -385,7 +385,7 @@ gimp_image_mask_float (GimpImage    *gimage,
     }
 
   /*  Start an undo group  */
-  undo_push_group_start (gimage, FLOAT_MASK_UNDO);
+  undo_push_group_start (gimage, FS_FLOAT_UNDO_GROUP);
 
   /*  Cut the selected region  */
   tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
@@ -616,7 +616,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
   gimp_image_mask_stroking = TRUE;
 
   /*  Start an undo group  */
-  undo_push_group_start (gimage, PAINT_CORE_UNDO);
+  undo_push_group_start (gimage, PAINT_UNDO_GROUP);
 
   seg = 0;
   cpnt = 0;

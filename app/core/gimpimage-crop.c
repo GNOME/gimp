@@ -115,7 +115,7 @@ gimp_image_crop (GimpImage *gimage,
 
       if (active_layer_only)
 	{
-	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
 
 	  layer = gimp_image_get_active_layer (gimage);
 
@@ -138,14 +138,14 @@ gimp_image_crop (GimpImage *gimage,
 	{
 	  floating_layer = gimp_image_floating_sel (gimage);
 
-	  undo_push_group_start (gimage, CROP_UNDO);
+	  undo_push_group_start (gimage, IMAGE_CROP_UNDO_GROUP);
 
 	  /*  relax the floating layer  */
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
 
 	  /*  Push the image size to the stack  */
-	  undo_push_gimage_mod (gimage);
+	  undo_push_image_size (gimage);
 
 	  /*  Set the new width and height  */
 	  gimage->width  = width;
@@ -214,7 +214,7 @@ gimp_image_crop (GimpImage *gimage,
 	  guide_list_ptr = gimage->guides;
 	  while ( guide_list_ptr != NULL)
 	    {
-	      undo_push_guide (gimage, (GimpGuide *) guide_list_ptr->data);
+	      undo_push_image_guide (gimage, (GimpGuide *) guide_list_ptr->data);
 	      guide_list_ptr = guide_list_ptr->next;
 	    }
 	  undo_push_group_end (gimage);

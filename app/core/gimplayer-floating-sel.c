@@ -127,7 +127,7 @@ floating_sel_anchor (GimpLayer *layer)
     }
 
   /*  Start a floating selection anchoring undo  */
-  undo_push_group_start (gimage, FS_ANCHOR_UNDO);
+  undo_push_group_start (gimage, FS_ANCHOR_UNDO_GROUP);
 
   /* Invalidate the previews of the layer that will be composited
    * with the floating section.
@@ -183,11 +183,11 @@ floating_sel_reset (GimpLayer *layer)
 void
 floating_sel_to_layer (GimpLayer *layer)
 {
-  FStoLayerUndo *fsu;
-  gint           off_x, off_y;
-  gint           width, height;
-
   GimpImage *gimage;
+  gint       off_x, off_y;
+  gint       width, height;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
@@ -213,18 +213,15 @@ floating_sel_to_layer (GimpLayer *layer)
   width  = gimp_drawable_width (layer->fs.drawable);
   height = gimp_drawable_height (layer->fs.drawable);
 
-  /*  allocate the undo structure  */
-  fsu = g_new (FStoLayerUndo, 1);
-  fsu->layer    = layer;
-  fsu->drawable = layer->fs.drawable;
-
-  undo_push_fs_to_layer (gimage, fsu);
+  undo_push_fs_to_layer (gimage,
+                         layer,
+                         layer->fs.drawable);
 
   /*  clear the selection  */
   gimp_layer_invalidate_boundary (layer);
 
   /*  Set pointers  */
-  layer->fs.drawable = NULL;
+  layer->fs.drawable   = NULL;
   gimage->floating_sel = NULL;
   gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE);
 

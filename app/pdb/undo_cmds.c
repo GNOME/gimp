@@ -53,7 +53,7 @@ undo_push_group_start_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    undo_push_group_start (gimage, MISC_UNDO);
+    undo_push_group_start (gimage, MISC_UNDO_GROUP);
 
   return procedural_db_return_args (&undo_push_group_start_proc, success);
 }

@@ -2113,7 +2113,7 @@ paths_dialog_export_path_callback (GtkWidget *widget,
  * undo buffer. So deleted paths will not suddenly reappear. (I did say
  * generally paths are not part of the undo structures).
  */
-PathUndo *
+GSList *
 path_transform_start_undo (GimpImage *gimage)
 {
   /* Save only the locked paths away */
@@ -2142,11 +2142,11 @@ path_transform_start_undo (GimpImage *gimage)
 	}
     }
 
-  return (PathUndo *) undo_list;
+  return undo_list;
 }
 
 void
-path_transform_free_undo (PathUndo *pundo)
+path_transform_free_undo (GSList *pundo)
 {
   GSList *pundolist = (GSList*)pundo;
   Path   *p;
@@ -2164,7 +2164,7 @@ path_transform_free_undo (PathUndo *pundo)
 
 void
 path_transform_do_undo (GimpImage *gimage,
-			PathUndo  *pundo)
+			GSList    *pundo)
 {
   GSList *pundolist;
   /* Restore the paths as they were before this transform took place. */

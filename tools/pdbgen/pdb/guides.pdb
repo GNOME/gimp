@@ -55,7 +55,7 @@ HELP
   if (offset < gimage->$max)
     {
       guide = gimp_image_add_${func}guide (gimage);
-      undo_push_guide (gimage, guide);
+      undo_push_image_guide (gimage, guide);
       guide->position = offset;
       guide_ID = guide->guide_ID;
     }
@@ -112,7 +112,7 @@ HELP
 
 	  tmp_next = guides->next;
 
-	  undo_push_guide (gimage, ((GimpGuide *) guides->data));
+	  undo_push_image_guide (gimage, ((GimpGuide *) guides->data));
           gimp_image_delete_guide (gimage, (GimpGuide *) guides->data);
 	  guides = tmp_next;
 	}

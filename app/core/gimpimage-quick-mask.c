@@ -67,7 +67,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
 
           if (! mask)
             {
-              undo_push_group_start (gimage, QMASK_UNDO);
+              undo_push_group_start (gimage, IMAGE_QMASK_UNDO_GROUP);
 
               if (gimp_image_mask_is_empty (gimage))
                 {
@@ -106,7 +106,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
               if (gimage->qmask_inverted)
                 gimp_channel_invert (mask);
 
-              undo_push_qmask (gimage);
+              undo_push_image_qmask (gimage);
 
               undo_push_group_end (gimage);
 
@@ -122,13 +122,13 @@ gimp_image_set_qmask_state (GimpImage *gimage,
 
           if (mask)
             { 
-              undo_push_group_start (gimage, QMASK_UNDO);
+              undo_push_group_start (gimage, IMAGE_QMASK_UNDO_GROUP);
 
               /*  push the undo here since removing the mask will
                *  call the qmask_removed_callback() which will set
                *  the qmask_state to FALSE
                */
-              undo_push_qmask (gimage);
+              undo_push_image_qmask (gimage);
 
               if (gimage->qmask_inverted)
                 gimp_channel_invert (mask);

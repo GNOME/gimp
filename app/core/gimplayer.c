@@ -533,8 +533,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
 		     GimpLayerMask *mask,
                      gboolean       push_undo)
 {
-  GimpImage     *gimage;
-  LayerMaskUndo *lmu;
+  GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
@@ -589,13 +588,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
 			GIMP_DRAWABLE (layer)->height);
 
   if (push_undo)
-    {
-      /*  Prepare a layer undo and push it  */
-      lmu        = g_new0 (LayerMaskUndo, 1);
-      lmu->layer = layer;
-      lmu->mask  = mask;
-      undo_push_layer_mask (gimage, LAYER_MASK_ADD_UNDO, lmu);
-    }
+    undo_push_layer_mask_add (gimage, layer, mask);
 
   g_signal_emit (G_OBJECT (layer), layer_signals[MASK_CHANGED], 0);
 
@@ -744,14 +737,12 @@ gimp_layer_apply_mask (GimpLayer     *layer,
 		       MaskApplyMode  mode,
                        gboolean       push_undo)
 {
-  GimpImage     *gimage;
-  LayerMaskUndo *lmu = NULL;
-  gint           off_x;
-  gint           off_y;
-  PixelRegion    srcPR, maskPR;
-  gboolean       view_changed = FALSE;
+  GimpImage   *gimage;
+  gint         off_x;
+  gint         off_y;
+  PixelRegion  srcPR, maskPR;
+  gboolean     view_changed = FALSE;
 
-  g_return_if_fail (layer != NULL);
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (! layer->mask)
@@ -768,18 +759,14 @@ gimp_layer_apply_mask (GimpLayer     *layer,
 
   if (push_undo)
     {
-      /*  Start an undo group  */
-      undo_push_group_start (gimage, LAYER_APPLY_MASK_UNDO);
+      undo_push_group_start (gimage, LAYER_APPLY_MASK_UNDO_GROUP);
 
-      /*  Prepare a layer mask undo--push it below  */
-      lmu = g_new (LayerMaskUndo, 1);
-      lmu->layer      = layer;
-      lmu->mask       = layer->mask;
+      undo_push_layer_mask_remove (gimage, layer, layer->mask);
     }
 
   /*  check if applying the mask changes the projection  */
-  if ((mode == APPLY   && (!layer->mask->apply_mask || layer->mask->show_mask)) ||
-      (mode == DISCARD && ( layer->mask->apply_mask || layer->mask->show_mask)))
+  if ((mode == APPLY   && (! layer->mask->apply_mask || layer->mask->show_mask)) ||
+      (mode == DISCARD && (  layer->mask->apply_mask || layer->mask->show_mask)))
     {
       view_changed = TRUE;
     }
@@ -812,17 +799,11 @@ gimp_layer_apply_mask (GimpLayer     *layer,
       GIMP_DRAWABLE (layer)->preview_valid = FALSE;
     }
 
+  g_object_unref (G_OBJECT (layer->mask));
   layer->mask = NULL;
 
   if (push_undo)
     {
-      /*  Push the undo--Important to do it here, AFTER applying
-       *   the mask, in case the undo push fails and the
-       *   mask is deleted
-       */
-      undo_push_layer_mask (gimage, LAYER_MASK_REMOVE_UNDO, lmu);
-
-      /*  end the undo group  */
       undo_push_group_end (gimage);
     }
 
@@ -1296,7 +1277,7 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   if (!(gimage = GIMP_DRAWABLE (layer)->gimage))
     return;
 
-  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+  undo_push_group_start (gimage, LAYER_RESIZE_UNDO_GROUP);
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_relax (layer, TRUE);
