@@ -1,3 +1,14 @@
+Wed Apr  8 17:55:38 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	*plugins/script-fu/scripts/grid-system.scm
+	*plugins/script-fu/scripts/hsv-graph.scm
+	*plugins/script-fu/scripts/image-structure.scm
+	*plugins/script-fu/scripts/line-nova.scm
+	*plugins/script-fu/scripts/text-circle.scm
+	*plugins/script-fu/scripts/unsharp-mask.scm:
+	*data/palettes/Named_colors:
+	        script and palette updates from Shuji Narazaki
+
 Wed Apr  8 00:14:29 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.24 release
