@@ -202,8 +202,11 @@ colorsel_triangle_new (const GimpHSV             *hsv,
   *selector_data = coldata;
 
   vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (frame), preview);

@@ -246,7 +246,7 @@ color_notebook_new (GimpRGB               *color,
     gimp_dialog_new (_("Color Selection"), "color_selection",
 		     color_notebook_help_func, (const gchar *) cnp,
 		     GTK_WIN_POS_NONE,
-		     FALSE, FALSE, FALSE,
+		     FALSE, TRUE, TRUE,
 
 		     wants_updates ? _("Close") : _("OK"),
 		     color_notebook_ok_callback,
@@ -387,42 +387,45 @@ color_notebook_new (GimpRGB               *color,
 			     cnp);
 
   /*  The color space sliders, toggle buttons and entries  */
-  table = gtk_table_new (show_alpha ? 7 : 6, 3, FALSE);
+  table = gtk_table_new (show_alpha ? 7 : 6, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   group = NULL;
   for (i = 0; i < (show_alpha ? 7 : 6); i++)
     {
+      label = gtk_label_new (toggle_titles[i]);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label,
+			1, 2, i, i + 1,
+			GTK_SHRINK, GTK_EXPAND, 0, 0);
+      gtk_widget_show (label);
+
       if (i == 6)
 	{
 	  cnp->toggles[i] = NULL;
-
-	  label = gtk_label_new (toggle_titles[i]);
-	  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	  gtk_table_attach (GTK_TABLE (table), label,
-			    0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
-	  gtk_widget_show (label);
 	}
       else
 	{
 	  cnp->toggles[i] =
-	    gtk_radio_button_new_with_label (group, gettext (toggle_titles[i]));
+	    gtk_radio_button_new (group);
 
 	  gimp_help_set_help_data (cnp->toggles[i],
 				   gettext (slider_tips[i]), NULL);
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (cnp->toggles[i]));
 	  gtk_table_attach (GTK_TABLE (table), cnp->toggles[i],
-			    0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
+			    0, 1, i, i + 1,
+			    GTK_SHRINK, GTK_EXPAND, 0, 0);
 	  gtk_signal_connect (GTK_OBJECT (cnp->toggles[i]), "toggled",
 			      GTK_SIGNAL_FUNC (color_notebook_toggle_update),
 			      cnp);
 	  gtk_widget_show (cnp->toggles[i]);
 	}
 
-      cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 0, i,
+      cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 2, i,
                                                   NULL, 
                                                   80, 55,
                                                   slider_initial_vals[i],

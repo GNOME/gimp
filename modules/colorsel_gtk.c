@@ -162,6 +162,8 @@ colorsel_gtk_new (const GimpHSV             *hsv,
 		      p);
 
   vbox = gtk_vbox_new (TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+
   gtk_box_pack_start (GTK_BOX (vbox), p->selector, FALSE, FALSE, 0);
   gtk_widget_show (p->selector);
   gtk_widget_show (vbox);
