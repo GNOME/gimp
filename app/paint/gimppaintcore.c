@@ -52,6 +52,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpstatusbar.h"
 
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
@@ -264,7 +265,6 @@ gimp_paint_tool_init (GimpPaintTool *tool)
 {
   tool->pick_colors = FALSE;
   tool->flags       = 0;
-  tool->context_id  = 0;
 }
 
 static void
@@ -341,13 +341,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     paint_tool->cur_coords.x = save_x;
     paint_tool->cur_coords.y = save_y;
   }
-
-  if (gdisp != tool->gdisp || paint_tool->context_id < 1)
-    {
-      /* initialize the statusbar display */
-      paint_tool->context_id =
-	gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "paint");
-    }
 
   /*  if this is a new image, reinit the core vals  */
   if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))
@@ -592,15 +585,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   /*  undraw the current tool  */
   gimp_draw_tool_pause (draw_tool);
 
-  if (gdisp != tool->gdisp || paint_tool->context_id < 1)
-    {
-      /* initialize the statusbar display */
-      paint_tool->context_id =
-	gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "paint");
-    }
-
-  if (paint_tool->context_id)
-    gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), paint_tool->context_id);
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "paint_tool");
 
 #ifdef __GNUC__
 #warning this doesnt belong here
@@ -688,12 +673,13 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	      g_free (format_str);
 	    }
 
-	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-			      paint_tool->context_id, status_str);
+	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                               "paint_tool",
+                               status_str);
 
 	  if (draw_tool->gc == NULL)
 	    {
-	      gimp_draw_tool_start (draw_tool, shell->canvas->window);
+	      gimp_draw_tool_start (draw_tool, gdisp);
 	    }
 	  else
 	    {

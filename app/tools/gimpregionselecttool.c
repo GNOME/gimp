@@ -239,7 +239,7 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   /*  calculate the region boundary  */
   segs = fuzzy_select_calculate (fuzzy_sel, gdisp, &num_segs);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void

@@ -61,6 +61,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpstatusbar.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -199,12 +200,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->hrule                 = NULL;
   shell->vrule                 = NULL;
   shell->origin                = NULL;
-  shell->statusarea            = NULL;
-  shell->progressbar           = NULL;
-  shell->progressid            = FALSE;
-  shell->cursor_label          = NULL;
-  shell->cursor_format_str[0]  = '\0';
-  shell->cancelbutton          = NULL;
+
+  shell->statusbar             = NULL;
 
   shell->render_buf            = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
@@ -385,16 +382,13 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   GtkWidget        *right_vbox;
   GtkWidget        *lower_hbox;
   GtkWidget        *inner_table;
-  GtkWidget        *status_hbox;
   GtkWidget        *arrow;
   GtkWidget        *image;
-  GtkWidget        *label_frame;
   GtkWidget        *nav_ebox;
   gint              image_width, image_height;
   gint              n_width, n_height;
   gint              s_width, s_height;
   gint              scalesrc, scaledest;
-  gint              contextid;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
@@ -475,12 +469,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
    *     |             +-- hscrollbar
    *     |             +-- navbutton
    *     |
-   *     +-- statusarea
-   *            |
-   *            +-- cursorlabel
-   *            +-- statusbar
-   *            +-- progressbar
-   *            +-- cancelbutton
+   *     +-- statusbar
    */
 
   /*  first, set up the container hierarchy  *********************************/
@@ -517,20 +506,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (disp_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 
-  /*  eventbox and hbox for status area  */
-  shell->statusarea = gtk_event_box_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), shell->statusarea, FALSE, FALSE, 0);
-
-  gimp_help_set_help_data (shell->statusarea, NULL, "#status_area");
-
-  status_hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (shell->statusarea), status_hbox);
-  gtk_widget_show (status_hbox);
-
-  gtk_container_set_resize_mode (GTK_CONTAINER (status_hbox),
-				 GTK_RESIZE_QUEUE);
-
-  /*  create the scrollbars  *************************************************/
+ /*  create the scrollbars  *************************************************/
 
   /*  the horizontal scrollbar  */
   shell->hsbdata =
@@ -694,34 +670,10 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 
   /*  create the contents of the status area *********************************/
 
-  /*  the cursor label  */
-  label_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (label_frame), GTK_SHADOW_IN);
-
-  shell->cursor_label = gtk_label_new (" ");
-  gtk_container_add (GTK_CONTAINER (label_frame), shell->cursor_label);
-  gtk_widget_show (shell->cursor_label);
-
   /*  the statusbar  */
-  shell->statusbar = gtk_statusbar_new ();
+  shell->statusbar = gimp_statusbar_new (gdisp);
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
-  gtk_widget_set_size_request (shell->statusbar, 1, -1);
-  gtk_container_set_resize_mode (GTK_CONTAINER (shell->statusbar),
-				 GTK_RESIZE_QUEUE);
-
-  contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
-					    "title");
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-		      contextid,
-		      "FooBar");
-
-  /*  the progress bar  */
-  shell->progressbar = gtk_progress_bar_new ();
-  gtk_widget_set_size_request (shell->progressbar, 80, -1);
-
-  /*  the cancel button  */
-  shell->cancelbutton = gtk_button_new_with_label (_("Cancel"));
-  gtk_widget_set_sensitive (shell->cancelbutton, FALSE);
+  gimp_help_set_help_data (shell->statusbar, NULL, "#status_area");
 
   /*  pack all the widgets  **************************************************/
 
@@ -746,11 +698,7 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (lower_hbox), nav_ebox, FALSE, FALSE, 0);
 
-  /*  fill the status area  */
-  gtk_box_pack_start (GTK_BOX (status_hbox), label_frame, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (status_hbox), shell->statusbar, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (status_hbox), shell->progressbar, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (status_hbox), shell->cancelbutton, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), shell->statusbar, FALSE, FALSE, 0);
 
   /*  show everything  *******************************************************/
 
@@ -770,13 +718,9 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_widget_show (shell->qmask);
   gtk_widget_show (nav_ebox);
 
-  gtk_widget_show (label_frame);
-  gtk_widget_show (shell->statusbar);
-  gtk_widget_show (shell->progressbar);
-  gtk_widget_show (shell->cancelbutton);
   if (gimprc.show_statusbar)
     {
-      gtk_widget_show (shell->statusarea);
+      gtk_widget_show (shell->statusbar);
     }
 
   gtk_widget_show (main_vbox);
@@ -832,7 +776,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_display_shell_connect (shell);
 
-  gimp_display_shell_resize_cursor_label (shell);
+  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
   gimp_display_shell_shrink_wrap (shell);
 }
 
@@ -1004,7 +948,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
       SET_ACTIVE ("View/Toggle Guides", gdisp->draw_guides);
       SET_ACTIVE ("View/Snap to Guides", gdisp->snap_to_guides);
       SET_ACTIVE ("View/Toggle Statusbar",
-                  GTK_WIDGET_VISIBLE (shell->statusarea) ? 1 : 0);
+                  GTK_WIDGET_VISIBLE (shell->statusbar) ? 1 : 0);
       SET_ACTIVE ("View/Dot for Dot", gdisp->dot_for_dot);
     }
 
@@ -1505,7 +1449,6 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   GimpImage *gimage;
   gboolean   new_cursor;
   gboolean   flush = FALSE;
-  gchar      buffer[CURSOR_STR_LENGTH];
   gint       t_x = -1;
   gint       t_y = -1;
 
@@ -1549,111 +1492,25 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
       gdisplay_untransform_coords (shell->gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
     }
 
+  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar), t_x, t_y);
+
   if (t_x < 0              ||
       t_y < 0              ||
       t_x >= gimage->width ||
       t_y >= gimage->height)
     {
-      gtk_label_set_text (GTK_LABEL (shell->cursor_label), "");
       info_window_update_extended (shell->gdisp, -1, -1);
     } 
   else 
     {
-      if (shell->gdisp->dot_for_dot)
-	{
-	  g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
-                      "", t_x, ", ", t_y);
-	}
-      else /* show real world units */
-	{
-	  gdouble unit_factor = gimp_unit_get_factor (gimage->unit);
-	  
-	  g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
-                      "",
-                      (gdouble) t_x * unit_factor / gimage->xresolution,
-                      ", ",
-                      (gdouble) t_y * unit_factor / gimage->yresolution);
-	}
-
-      gtk_label_set_text (GTK_LABEL (shell->cursor_label), buffer);
       info_window_update_extended (shell->gdisp, t_x, t_y);
     }
-}
-
-void
-gimp_display_shell_resize_cursor_label (GimpDisplayShell *shell)
-{
-  static PangoLayout *layout = NULL;
-
-  GimpImage *gimage;
-  gchar      buffer[CURSOR_STR_LENGTH];
-  gint       cursor_label_width;
-  gint       label_frame_size_difference;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimage = shell->gdisp->gimage;
-
-  if (shell->gdisp->dot_for_dot)
-    {
-      g_snprintf (shell->cursor_format_str, sizeof (shell->cursor_format_str),
-		  "%%s%%d%%s%%d");
-      g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
-		  "", gimage->width, ", ", gimage->height);
-    }
-  else /* show real world units */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gimage->unit);
-
-      g_snprintf (shell->cursor_format_str, sizeof (shell->cursor_format_str),
-		  "%%s%%.%df%%s%%.%df %s",
-		  gimp_unit_get_digits (gimage->unit),
-		  gimp_unit_get_digits (gimage->unit),
-		  gimp_unit_get_symbol (gimage->unit));
-
-      g_snprintf (buffer, sizeof (buffer), shell->cursor_format_str,
-		  "",
-		  (gdouble) gimage->width * unit_factor /
-		  gimage->xresolution,
-		  ", ",
-		  (gdouble) gimage->height * unit_factor /
-		  gimage->yresolution);
-    }
-
-  /* one static layout for all displays should be fine */
-  if (! layout)
-    layout = gtk_widget_create_pango_layout (shell->cursor_label, buffer);
-  else
-    pango_layout_set_text (layout, buffer, -1);
-
-  pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
-  
-  /*  find out how many pixels the label's parent frame is bigger than
-   *  the label itself
-   */
-  label_frame_size_difference =
-    shell->cursor_label->parent->allocation.width -
-    shell->cursor_label->allocation.width;
-
-  gtk_widget_set_size_request (shell->cursor_label, cursor_label_width, -1);
-      
-  /* don't resize if this is a new display */
-  if (label_frame_size_difference)
-    gtk_widget_set_size_request (shell->cursor_label->parent,
-                                 cursor_label_width +
-                                 label_frame_size_difference,
-                                 -1);
-
-  gimp_display_shell_update_cursor (shell,
-                                    shell->cursor_x,
-                                    shell->cursor_y);
 }
 
 void
 gimp_display_shell_update_title (GimpDisplayShell *shell)
 {
   gchar title[MAX_TITLE_BUF];
-  guint context_id;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1661,11 +1518,8 @@ gimp_display_shell_update_title (GimpDisplayShell *shell)
   gimp_display_shell_format_title (shell, title, MAX_TITLE_BUF);
   gdk_window_set_title (GTK_WIDGET (shell)->window, title);
 
-  /* update the statusbar */
-  context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "title");
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), context_id);
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), context_id, title);
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "title");
+  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title", title);
 }
 
 void
@@ -1886,9 +1740,9 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 
   if (resize)
     {
-      if (width < shell->statusarea->requisition.width) 
+      if (width < shell->statusbar->requisition.width) 
         { 
-          width = shell->statusarea->requisition.width; 
+          width = shell->statusbar->requisition.width; 
         }
 
 #undef RESIZE_DEBUG

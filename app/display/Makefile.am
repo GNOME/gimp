@@ -45,6 +45,8 @@ libappdisplay_a_sources = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
 	gimpdisplayshell-selection.h		\
+	gimpstatusbar.c				\
+	gimpstatusbar.h				\
 @STRIP_END@
 
 libappdisplay_a_built_sources = display-enums.c

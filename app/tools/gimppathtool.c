@@ -297,7 +297,7 @@ gimp_path_tool_button_press (GimpTool        *tool,
   tool->state = ACTIVE;
 
   if (! path_tool->cur_path->curves)
-    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
   /* determine point, where clicked,
    * switch accordingly.

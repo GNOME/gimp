@@ -57,7 +57,6 @@
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
-#define STATUSBAR_SIZE          128
 
 
 #define GIMP_TYPE_EDIT_SELECTION_TOOL            (gimp_edit_selection_tool_get_type ())
@@ -88,8 +87,6 @@ struct _GimpEditSelectionTool
   EditType            edit_type;         /*  translate the mask or layer?    */
 
   gboolean            first_move;        /*  we undo_freeze after the first  */
-
-  guint               context_id;        /*  for the statusbar               */
 };
 
 struct _GimpEditSelectionToolClass
@@ -299,18 +296,12 @@ init_edit_selection (GimpTool    *tool,
 			  GIMP_TOOL (edit_select));
 
   /*  pause the current selection  */
-  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                           GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
-  edit_select->context_id 
-    = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), 
-				    "edit_select");
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), 
-		      edit_select->context_id, 
-		      _("Move: 0, 0"));
+  gimp_tool_push_status (tool, _("Move: 0, 0"));
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), gdisp);
 }
 
 
@@ -335,7 +326,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   gdk_pointer_ungrab (time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), edit_select->context_id);
+  gimp_tool_pop_status (tool);
 
   /*  Stop and free the selection core  */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (edit_select));
@@ -416,7 +407,6 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
-  gchar                  offset[STATUSBAR_SIZE];
   gdouble                lastmotion_x, lastmotion_y;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
@@ -570,32 +560,14 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   }
   /********************************************************************/
   /********************************************************************/
-  
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), edit_select->context_id);
 
-  if (gdisp->dot_for_dot)
-    {
-      g_snprintf (offset, sizeof (offset), shell->cursor_format_str,
-		  _("Move: "),
-		  edit_select->cumlx,
-		  ", ",
-		  edit_select->cumly);
-    }
-  else /* show real world units */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+  gimp_tool_pop_status (tool);
 
-      g_snprintf (offset, sizeof (offset), shell->cursor_format_str,
-		  _("Move: "), 
-		  (edit_select->cumlx) * unit_factor / 
-		  gdisp->gimage->xresolution,
-		  ", ",
-		  (edit_select->cumly) * unit_factor /
-		  gdisp->gimage->yresolution);
-    }
-
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), edit_select->context_id,
-		      offset);
+  gimp_tool_push_status_coords (tool,
+                                _("Move: "),
+                                edit_select->cumlx,
+                                ", ",
+                                edit_select->cumly);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

@@ -56,6 +56,7 @@
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpstatusbar.h"
 
 #include "gimprc.h"
 
@@ -160,7 +161,8 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   gdk_window_set_back_pixmap (shell->canvas->window, NULL, FALSE);
 
-  gimp_display_shell_resize_cursor_label (shell);
+  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
+
   gimp_display_shell_update_title (shell);
 
   /*  create the selection object  */

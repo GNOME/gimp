@@ -91,15 +91,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/* FIXME: do something about this uglyness:
- */
-
-typedef struct
-{
-  GtkWidget *shell;
-} EEKWrapper;
-
-
 /*  local function prototypes  */
 
 static void dialogs_indexed_palette_selected     (GimpColormapDialog *dialog,
@@ -147,13 +138,6 @@ static void dialogs_path_view_image_changed     (GimpContext          *context,
 static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 						   GimpImage          *gimage,
 						   GimpColormapDialog *ipal);
-
-
-/*  private variables  */
-
-static BrushEditor    *brush_editor_dialog    = NULL;
-static GradientEditor *gradient_editor_dialog = NULL;
-static PaletteEditor  *palette_editor_dialog  = NULL;
 
 
 /*  public functions  */
@@ -251,13 +235,13 @@ dialogs_undo_history_get (GimpDialogFactory *factory,
   if (! gimage)
     return NULL;
 
-  undo_history = g_object_get_data (G_OBJECT (gimage), "undo-history");
+  undo_history = g_object_get_data (G_OBJECT (gimage), "gimp-undo-history");
 
   if (! undo_history)
     {
       undo_history = undo_history_new (gimage);
 
-      g_object_set_data (G_OBJECT (gimage), "undo-history", undo_history);
+      g_object_set_data (G_OBJECT (gimage), "gimp-undo-history", undo_history);
     }
 
   return undo_history;
@@ -301,6 +285,23 @@ dialogs_about_get (GimpDialogFactory *factory,
   return about_dialog_create ();
 }
 
+
+/*  editors  */
+
+#ifdef __GNUC__
+#warning: FIXME: remove EEKWrapper (make editors dockable)
+#endif
+
+typedef struct
+{
+  GtkWidget *shell;
+} EEKWrapper;
+
+
+/*  the brush editor  */
+
+static BrushEditor *brush_editor_dialog = NULL;
+
 GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
 			  GimpContext       *context,
@@ -313,6 +314,32 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 
   return ((EEKWrapper *) brush_editor_dialog)->shell;
 }
+
+void
+dialogs_edit_brush_func (GimpData *data)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (data);
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+					"gimp:brush-editor",
+                                        -1);
+
+      brush_editor_set_brush (brush_editor_dialog, brush);
+    }
+  else
+    {
+      g_message (_("This brush cannot be edited."));
+    }
+}
+
+
+/*  the gradient editor  */
+
+static GradientEditor *gradient_editor_dialog = NULL;
 
 GtkWidget *
 dialogs_gradient_editor_get (GimpDialogFactory *factory,
@@ -327,6 +354,25 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
   return ((EEKWrapper *) gradient_editor_dialog)->shell;
 }
 
+void
+dialogs_edit_gradient_func (GimpData *data)
+{
+  GimpGradient *gradient;
+
+  gradient = GIMP_GRADIENT (data);
+
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+				    "gimp:gradient-editor",
+                                    -1);
+
+  gradient_editor_set_gradient (gradient_editor_dialog, gradient);
+}
+
+
+/*  the palette editor  */
+
+static PaletteEditor *palette_editor_dialog = NULL;
+
 GtkWidget *
 dialogs_palette_editor_get (GimpDialogFactory *factory,
 			    GimpContext       *context,
@@ -338,6 +384,20 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
     }
 
   return ((EEKWrapper *) palette_editor_dialog)->shell;
+}
+
+void
+dialogs_edit_palette_func (GimpData *data)
+{
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (data);
+
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+				    "gimp:palette-editor",
+                                    -1);
+
+  palette_editor_set_palette (palette_editor_dialog, palette);
 }
 
 
@@ -820,58 +880,6 @@ dialogs_error_console_get (GimpDialogFactory *factory,
 				   NULL);
 
   return dockable;
-}
-
-
-/*  editor dialogs  */
-
-void
-dialogs_edit_brush_func (GimpData *data)
-{
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (data);
-
-  if (GIMP_IS_BRUSH_GENERATED (brush))
-    {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
-					"gimp:brush-editor",
-                                        -1);
-
-      brush_editor_set_brush (brush_editor_dialog, brush);
-    }
-  else
-    {
-      g_message (_("This brush cannot be edited."));
-    }
-}
-
-void
-dialogs_edit_gradient_func (GimpData *data)
-{
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (data);
-
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
-				    "gimp:gradient-editor",
-                                    -1);
-
-  gradient_editor_set_gradient (gradient_editor_dialog, gradient);
-}
-
-void
-dialogs_edit_palette_func (GimpData *data)
-{
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (data);
-
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
-				    "gimp:palette-editor",
-                                    -1);
-
-  palette_editor_set_palette (palette_editor_dialog, palette);
 }
 
 

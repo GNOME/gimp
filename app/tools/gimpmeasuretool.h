@@ -59,7 +59,6 @@ struct _GimpMeasureTool
   gint             y[3];        /*  three y coordinates        */
   gdouble          angle1;      /*  first angle                */
   gdouble          angle2;      /*  second angle               */
-  guint            context_id;  /*  for the statusbar          */
 };
 
 struct _GimpMeasureToolClass

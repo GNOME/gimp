@@ -66,12 +66,17 @@ GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
 GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+void        dialogs_edit_brush_func        (GimpData          *data);
+
 GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+void        dialogs_edit_gradient_func     (GimpData          *data);
+
 GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+void        dialogs_edit_palette_func      (GimpData          *data);
 
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
 					    GimpContext       *context,
@@ -141,10 +146,6 @@ GtkWidget * dialogs_document_history_new   (GimpDialogFactory *factory,
 GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-
-void        dialogs_edit_brush_func        (GimpData          *data);
-void        dialogs_edit_gradient_func     (GimpData          *data);
-void        dialogs_edit_palette_func      (GimpData          *data);
 
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

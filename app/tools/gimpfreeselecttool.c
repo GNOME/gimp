@@ -223,7 +223,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
 
   gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void

@@ -31,6 +31,7 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpstatusbar.h"
 
 #include "gimprc.h"
 
@@ -155,7 +156,8 @@ static void
 gimp_display_shell_size_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
-  gimp_display_shell_resize_cursor_label (shell);
+  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
+
   gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_resize, TRUE);
 }
 
@@ -164,7 +166,8 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                GimpDisplayShell *shell)
 {
   gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_resize_cursor_label (shell);
+
+  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
 
 static void
@@ -172,7 +175,8 @@ gimp_display_shell_unit_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_resize_cursor_label (shell);
+
+  gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
 
 static void

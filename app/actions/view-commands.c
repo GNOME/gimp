@@ -236,13 +236,13 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (GTK_WIDGET_VISIBLE (shell->statusarea))
-	gtk_widget_hide (shell->statusarea);
+      if (GTK_WIDGET_VISIBLE (shell->statusbar))
+	gtk_widget_hide (shell->statusbar);
     }
   else
     {
-      if (! GTK_WIDGET_VISIBLE (shell->statusarea))
-	gtk_widget_show (shell->statusarea);
+      if (! GTK_WIDGET_VISIBLE (shell->statusbar))
+	gtk_widget_show (shell->statusbar);
     }
 }
 

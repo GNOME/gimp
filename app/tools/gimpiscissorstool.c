@@ -462,7 +462,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
       iscissors->iy = iscissors->y;
 
       /*  Initialize the selection core only on starting the tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
       break;
 
     default:

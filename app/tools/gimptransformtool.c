@@ -349,8 +349,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
               gimp_transform_tool_recalc (tr_tool, gdisp);
 
               /*  start drawing the bounding box and handles...  */
-              gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                                    shell->canvas->window);
+              gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
               /*  find which handle we're dragging  */
               gimp_transform_tool_oper_update (tool, coords, state, gdisp);

@@ -26,6 +26,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpstatusbar.h"
 
 #include "gimpprogress.h"
 
@@ -81,7 +82,6 @@ progress_start (GimpDisplay *gdisp,
 {
   GimpDisplayShell *shell = NULL;
   GimpProgress     *progress;
-  guint             cid;
   GtkWidget        *vbox;
 
   if (gdisp)
@@ -95,26 +95,26 @@ progress_start (GimpDisplay *gdisp,
   progress->cancel_data     = NULL;
 
   /* do we have a useful gdisplay and statusarea? */
-  if (gdisp && GTK_WIDGET_VISIBLE (shell->statusarea))
+  if (gdisp && GTK_WIDGET_VISIBLE (shell->statusbar))
     {
       if (message)
 	{
-	  cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
-					      "progress");
-
-	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), cid, message);
+	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                               "progress",
+                               message);
 	}
 
       /*  really need image locking to stop multiple people going at
        *  the image
        */
-      if (shell->progressid)
+      if (GIMP_STATUSBAR (shell->statusbar)->progressid)
         {
-          g_warning("%d progress bars already active for display %p\n",
-                    shell->progressid, gdisp);
+          g_warning ("%d progress bars already active for display %p",
+                     GIMP_STATUSBAR (shell->statusbar)->progressid,
+                     gdisp);
         }
 
-      shell->progressid++;
+      GIMP_STATUSBAR (shell->statusbar)->progressid++;
     }
   else
     {
@@ -126,7 +126,7 @@ progress_start (GimpDisplay *gdisp,
 	}
 
       progress->gdisp  = NULL;
-      progress->dialog = gimp_dialog_new (_("Progress"), "plug_in_progress",
+      progress->dialog = gimp_dialog_new (_("Progress"), "progress",
                                           NULL, NULL,
                                           GTK_WIN_POS_NONE,
                                           FALSE, TRUE, FALSE,
@@ -174,7 +174,6 @@ progress_restart (GimpProgress *progress,
 		  gpointer      cancel_data)
 {
   GtkWidget *bar;
-  gint       cid;
 
   g_return_val_if_fail (progress != NULL, progress);
 
@@ -185,14 +184,14 @@ progress_restart (GimpProgress *progress,
 
       shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
 
-      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
-					  "progress");
-      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), cid);
+      gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "progress");
 
       if (message)
-	gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), cid, message);
+	gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                             "progress",
+                             message);
 
-      bar = shell->progressbar;
+      bar = GIMP_STATUSBAR (shell->statusbar)->progressbar;
     }
   else
     {
@@ -226,7 +225,11 @@ progress_update (GimpProgress *progress,
   /* do we have a dialog box, or are we using the statusbar? */
   if (progress->gdisp)
     {
-      bar = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->progressbar;
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+
+      bar = GIMP_STATUSBAR (shell->statusbar)->progressbar;
     }
   else
     {
@@ -234,6 +237,71 @@ progress_update (GimpProgress *progress,
     }
 
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+}
+
+
+/* Step the progress bar by one percent, wrapping at 100% */
+void
+progress_step (GimpProgress *progress)
+{
+  GtkWidget *bar;
+  gdouble    val;
+
+  g_return_if_fail (progress != NULL);
+
+  if (progress->gdisp)
+    {
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+      bar = GIMP_STATUSBAR (shell->statusbar)->progressbar;
+    }
+  else
+    {
+      bar = progress->progressbar;
+    }
+
+  val = gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)) + 0.01;
+  if (val > 1.0)
+    val = 0.0;
+
+  progress_update (progress, val);
+}
+
+
+/* Finish using the progress bar "p" */
+void
+progress_end (GimpProgress *progress)
+{
+  g_return_if_fail (progress != NULL);
+
+  /* remove all callbacks so they don't get called while we're
+   * destroying widgets
+   */
+  progress_signal_setup (progress, NULL, NULL);
+
+  if (progress->gdisp)
+    {
+      GimpDisplayShell *shell;
+      GtkProgressBar   *bar;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+
+      gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "progress");
+
+      bar = GTK_PROGRESS_BAR (GIMP_STATUSBAR (shell->statusbar)->progressbar);
+
+      gtk_progress_bar_set_fraction (bar, 0.0);
+
+      if (GIMP_STATUSBAR (shell->statusbar)->progressid > 0)
+        GIMP_STATUSBAR (shell->statusbar)->progressid--;
+    }
+  else
+    {
+      gtk_widget_destroy (progress->dialog);
+    }
+
+  g_free (progress);
 }
 
 
@@ -253,69 +321,6 @@ progress_update_and_flush (gint      ymin,
 }
 
 
-/* Step the progress bar by one percent, wrapping at 100% */
-void
-progress_step (GimpProgress *progress)
-{
-  GtkWidget *bar;
-  gdouble    val;
-
-  g_return_if_fail (progress != NULL);
-
-  if (progress->gdisp)
-    {
-      bar = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->progressbar;
-    }
-  else
-    {
-      bar = progress->progressbar;
-    }
-
-  val = gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)) + 0.01;
-  if (val > 1.0)
-    val = 0.0;
-
-  progress_update (progress, val);
-}
-
-
-/* Finish using the progress bar "p" */
-void
-progress_end (GimpProgress *progress)
-{
-  gint cid;
-
-  g_return_if_fail (progress != NULL);
-
-  /* remove all callbacks so they don't get called while we're
-   * destroying widgets
-   */
-  progress_signal_setup (progress, NULL, NULL);
-
-  if (progress->gdisp)
-    {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
-
-      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
-					  "progress");
-      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), cid);
-
-      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (shell->progressbar), 0.0);
-
-      if (shell->progressid > 0)
-        shell->progressid--;
-    }
-  else
-    {
-      gtk_widget_destroy (progress->dialog);
-    }
-
-  g_free (progress);
-}
-
-
 /* Helper function to add or remove signals */
 static void
 progress_signal_setup (GimpProgress *progress,
@@ -332,8 +337,12 @@ progress_signal_setup (GimpProgress *progress,
   /* are we using the statusbar or a freestanding dialog? */
   if (progress->gdisp)
     {
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+
       dialog = NULL;
-      button = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->cancelbutton;
+      button = GIMP_STATUSBAR (shell->statusbar)->cancelbutton;
     }
   else
     {

@@ -49,9 +49,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define STATUSBAR_SIZE 128
-
-
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
 static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
 
@@ -176,7 +173,6 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   GimpSelectionTool  *sel_tool;
   GimpDisplayShell   *shell;
   SelectionOptions   *sel_options;
-  gchar               select_mode[STATUSBAR_SIZE];
   GimpUnit            unit = GIMP_UNIT_PIXEL;
   gdouble             unit_factor;
 
@@ -189,6 +185,8 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   rect_sel->x = RINT (coords->x);
   rect_sel->y = RINT (coords->y);
+  rect_sel->w = 0;
+  rect_sel->h = 0;
 
   rect_sel->fixed_size   = sel_options->fixed_size;
   rect_sel->fixed_width  = sel_options->fixed_width;
@@ -217,9 +215,6 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   rect_sel->fixed_width  = MAX (1, rect_sel->fixed_width);
   rect_sel->fixed_height = MAX (1, rect_sel->fixed_height);
 
-  rect_sel->w = 0;
-  rect_sel->h = 0;
-
   rect_sel->center = FALSE;
 
   tool->state = ACTIVE;
@@ -243,32 +238,25 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       break;
     }
 
-  /* initialize the statusbar display */
-  rect_sel->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "selection");
-
   switch (sel_tool->op)
     {
     case SELECTION_ADD:
-      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: ADD"));
+      gimp_tool_push_status (tool, _("Selection: ADD"));
       break;
     case SELECTION_SUB:
-      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: SUBTRACT"));
+      gimp_tool_push_status (tool, _("Selection: SUBTRACT"));
       break;
     case SELECTION_INTERSECT:
-      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: INTERSECT"));
+      gimp_tool_push_status (tool, _("Selection: INTERSECT"));
       break;
     case SELECTION_REPLACE:
-      g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: REPLACE"));
+      gimp_tool_push_status (tool, _("Selection: REPLACE"));
       break;
     default:
       break;
     }
 
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-		      rect_sel->context_id, select_mode);
-
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void
@@ -280,7 +268,6 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
-  GimpDisplayShell   *shell;
   gint                x1, y1;
   gint                x2, y2;
   gint                w, h;
@@ -288,12 +275,10 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   gdk_pointer_ungrab (time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id);
+  gimp_tool_pop_status (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -343,8 +328,6 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
-  GimpDisplayShell   *shell;
-  gchar               size[STATUSBAR_SIZE];
   gint                ox, oy;
   gint                w, h, s;
   gint                tw, th;
@@ -352,8 +335,6 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state != ACTIVE)
     return;
@@ -486,28 +467,13 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
       rect_sel->center = FALSE;
     }
 
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id);
+  gimp_tool_pop_status (tool);
 
-  if (gdisp->dot_for_dot)
-    {
-      g_snprintf (size, sizeof (size), shell->cursor_format_str,
-		  _("Selection: "), abs (rect_sel->w), " x ", abs (rect_sel->h));
-    }
-  else /* show real world units */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-
-      g_snprintf (size, sizeof (size), shell->cursor_format_str,
-		  _("Selection: "),
-		  (gdouble) abs (rect_sel->w) * unit_factor /
-		  gdisp->gimage->xresolution,
-		  " x ",
-		  (gdouble) abs (rect_sel->h) * unit_factor /
-		  gdisp->gimage->yresolution);
-    }
-
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id,
-		      size);
+  gimp_tool_push_status_coords (tool,
+                                _("Selection: "),
+                                abs (rect_sel->w),
+                                " x ",
+                                abs (rect_sel->h));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

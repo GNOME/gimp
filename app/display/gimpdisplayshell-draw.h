@@ -27,15 +27,6 @@
 #include "gui/gui-types.h"
 
 
-/* maximal width of the string holding the cursor-coordinates for
- * the status line
- */
-#define CURSOR_STR_LENGTH 256
-
-/* maximal length of the format string for the cursor-coordinates */
-#define CURSOR_FORMAT_LENGTH 32
-
-
 #define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
 #define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))
 #define GIMP_DISPLAY_SHELL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShellClass))
@@ -80,13 +71,7 @@ struct _GimpDisplayShell
   GtkWidget        *vrule;
   GtkWidget        *origin;            /*  origin button       */
 
-  GtkWidget        *statusarea;        /*  status area hbox    */
   GtkWidget        *statusbar;         /*  statusbar           */
-  GtkWidget        *progressbar;       /*  progressbar         */
-  guint             progressid;        /*  progress id         */
-  GtkWidget        *cursor_label;      /*  cursor position     */
-  gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
-  GtkWidget        *cancelbutton;      /*  cancel button       */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */
   GdkGC            *render_gc;         /*  GC for rendering the image         */
@@ -198,7 +183,6 @@ void      gimp_display_shell_remove_override_cursor (GimpDisplayShell *shell);
 void	    gimp_display_shell_update_cursor	    (GimpDisplayShell *shell,
                                                      gint              x,
                                                      gint              y);
-void        gimp_display_shell_resize_cursor_label  (GimpDisplayShell *shell);
 void        gimp_display_shell_update_title         (GimpDisplayShell *shell);
 
 void        gimp_display_shell_draw_guide           (GimpDisplayShell *shell,

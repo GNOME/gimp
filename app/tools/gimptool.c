@@ -29,6 +29,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpstatusbar.h"
 
 #include "gimptool.h"
 #include "tool_manager.h"
@@ -256,6 +257,61 @@ gimp_tool_cursor_update (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   GIMP_TOOL_GET_CLASS (tool)->cursor_update (tool, coords, state, gdisp);
+}
+
+void
+gimp_tool_push_status (GimpTool    *tool,
+                       const gchar *message)
+{
+  GimpStatusbar *statusbar;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
+  g_return_if_fail (message != NULL);
+
+  statusbar =
+    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+
+  gimp_statusbar_push (statusbar,
+                       GIMP_OBJECT (tool->tool_info)->name,
+                       message);
+}
+
+void
+gimp_tool_push_status_coords (GimpTool    *tool,
+                              const gchar *title,
+                              gdouble      x,
+                              const gchar *separator,
+                              gdouble      y)
+{
+  GimpStatusbar *statusbar;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
+  g_return_if_fail (title != NULL);
+  g_return_if_fail (separator != NULL);
+
+  statusbar =
+    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+
+  gimp_statusbar_push_coords (statusbar,
+                              GIMP_OBJECT (tool->tool_info)->name,
+                              title, x, separator, y);
+}
+
+void
+gimp_tool_pop_status (GimpTool *tool)
+{
+  GimpStatusbar *statusbar;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
+
+  statusbar =
+    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+
+  gimp_statusbar_pop (statusbar,
+                      GIMP_OBJECT (tool->tool_info)->name);
 }
 
 

@@ -1,3 +1,56 @@
+2002-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/display-types.h
+	* app/display/gimpstatusbar.[ch]: new widget derived from
+	GtkStatusbar.  Contains the coordinates display, a progress bar
+	which is also used for status message display and a cancel button.
+	Added a simplified API for pushing/popping messages which takes a
+	string as context_id and does the conversion to guint internally
+	on each call.
+
+	* app/display/gimpdisplayshell.[ch]: removed the status bar code.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/gui/view-commands.c
+	* app/gimpprogress.c: changed accordingly.
+
+	Removed knowledge about GimpDisplayShell from tools:
+
+	* app/tools/gimptool.[ch]: added gimp_tool_push_status() and
+	gimp_tool_pop_status() so tools don't need to fiddle with
+	display details.
+
+	* app/tools/gimpdrawtool.[ch]: pass a GimpDisplay instead of
+	a GdkWindow to gimp_draw_tool_start() (the window passed was
+	always gdisp->shell->canvas->window).
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.[ch]
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.[ch]
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimppathtool.c
+	* app/tools/gimprectselecttool.[ch]
+	* app/tools/gimptransformtool.c: changed accordingly:
+
+	- pass GimpDisplay to gimp_draw_tool_start().
+	- use GimpTool's new status push/pop functions.
+	- removed the statusbar context_id from all tool structs.
+
+	* app/gui/dialogs-constructors.[ch]: a bit cleanup in preparation
+	of dockable editor dialogs.
+
 2002-02-02  Manish Singh  <yosh@gimp.org>
 
 	* configure.in

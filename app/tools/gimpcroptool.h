@@ -60,8 +60,6 @@ struct _GimpCropTool
   gint          dx2, dy2;   /*                              */
 
   gint          dcw, dch;   /*  width and height of corners */
-
-  guint         context_id; /*  for the statusbar           */
 };
 
 struct _GimpCropToolClass

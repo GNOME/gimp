@@ -424,8 +424,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
       bezier_add_point (bezier_sel, BEZIER_ANCHOR,  coords->x, coords->y);
       bezier_add_point (bezier_sel, BEZIER_CONTROL, coords->x, coords->y);
 
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                            shell->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
       break;
 
     case BEZIER_ADD:
@@ -932,9 +931,6 @@ bezier_select_load (GimpDisplay           *gdisp,
 {
   GimpTool             *tool;
   GimpBezierSelectTool *bezier_sel;
-  GimpDisplayShell     *shell;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  select the bezier tool  */
   gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp), 
@@ -955,7 +951,7 @@ bezier_select_load (GimpDisplay           *gdisp,
 
   bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, FALSE);
 
-  gimp_draw_tool_start ((GimpDrawTool *) bezier_sel, shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (bezier_sel), gdisp);
 
   return 1;
 }
@@ -2926,7 +2922,7 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   bezier_select_reset (curSel);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
   tool->state = ACTIVE;
 

@@ -167,22 +167,25 @@ gimp_draw_tool_control (GimpTool    *tool,
 
 void
 gimp_draw_tool_start (GimpDrawTool *draw_tool,
-		      GdkWindow    *win)
+		      GimpDisplay  *gdisp)
 {
-  GdkColor fg, bg;
+  GimpDisplayShell *shell;
+  GdkColor          fg, bg;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (GDK_IS_WINDOW (win));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (draw_tool->draw_state != GIMP_DRAW_TOOL_STATE_INVISIBLE)
     gimp_draw_tool_stop (draw_tool);  /* this seems backwards ;) */
 
-  draw_tool->win          = win;
+  draw_tool->win          = shell->canvas->window;
   draw_tool->paused_count = 0;  /*  reset pause counter to 0  */
 
   /*  create a new graphics context  */
   if (! draw_tool->gc)
-    draw_tool->gc = gdk_gc_new (win);
+    draw_tool->gc = gdk_gc_new (draw_tool->win);
 
   gdk_gc_set_function (draw_tool->gc, GDK_INVERT);
   fg.pixel = 0xFFFFFFFF;

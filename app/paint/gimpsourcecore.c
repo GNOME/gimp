@@ -379,12 +379,7 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 
   if (state == INIT_PAINT)
     {
-      GimpDisplayShell *src_shell;
-
-      src_shell = GIMP_DISPLAY_SHELL (src_gdisp->shell);
-
-      /*  Initialize the tool drawing core  */
-      gimp_draw_tool_start (draw_tool, src_shell->canvas->window);
+      gimp_draw_tool_start (draw_tool, src_gdisp);
     }
   else if (state == POSTTRACE_PAINT)
     {

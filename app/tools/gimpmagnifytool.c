@@ -222,7 +222,7 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
 		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, time);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void

@@ -49,10 +49,7 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  target size  */
-#define  TARGET_SIZE      15
-
-#define  STATUSBAR_SIZE  128
+#define TARGET_SIZE 15
 
 
 typedef struct _BlendOptions BlendOptions;
@@ -265,15 +262,10 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 		    NULL, NULL, time);
 
   /* initialize the statusbar display */
-  blend_tool->context_id =
-    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar), "blend");
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-		      blend_tool->context_id,
-                      _("Blend: 0, 0"));
+  gimp_tool_push_status (tool, _("Blend: 0, 0"));
 
   /*  Start drawing the blend tool  */
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                        shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void
@@ -285,7 +277,6 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 {
   GimpBlendTool    *blend_tool;
   BlendOptions     *options;
-  GimpDisplayShell *shell;
   GimpImage        *gimage;
 #ifdef BLEND_UI_CALLS_VIA_PDB
   Argument         *return_vals;
@@ -298,14 +289,12 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   options = (BlendOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   gimage = gdisp->gimage;
 
   gdk_pointer_ungrab (time);
   gdk_flush ();
 
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id);
+  gimp_tool_pop_status (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -382,13 +371,9 @@ gimp_blend_tool_motion (GimpTool        *tool,
                         GimpDisplay     *gdisp)
 {
   GimpBlendTool    *blend_tool;
-  GimpDisplayShell *shell;
-  gchar             vector[STATUSBAR_SIZE];
   gint              off_x, off_y;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -425,31 +410,13 @@ gimp_blend_tool_motion (GimpTool        *tool,
       blend_tool->endy = blend_tool->starty + dy;
     }
 
-  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id);
+  gimp_tool_pop_status (tool);
 
-  if (gdisp->dot_for_dot)
-    {
-      g_snprintf (vector, sizeof (vector), shell->cursor_format_str,
-		  _("Blend: "),
-		  blend_tool->endx - blend_tool->startx,
-		  ", ",
-		  blend_tool->endy - blend_tool->starty);
-    }
-  else /* show real world units */
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-
-      g_snprintf (vector, sizeof (vector), shell->cursor_format_str,
-		  _("Blend: "),
-		  blend_tool->endx - blend_tool->startx * unit_factor /
-		  gdisp->gimage->xresolution,
-		  ", ",
-		  blend_tool->endy - blend_tool->starty * unit_factor /
-		  gdisp->gimage->yresolution);
-    }
-
-  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id,
-		      vector);
+  gimp_tool_push_status_coords (tool,
+                                _("Blend: "),
+                                blend_tool->endx - blend_tool->startx,
+                                ", ",
+                                blend_tool->endy - blend_tool->starty);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

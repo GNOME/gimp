@@ -430,7 +430,7 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
     }
 
   /*  Start drawing the colorpicker tool  */
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 static void

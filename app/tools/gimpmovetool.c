@@ -272,8 +272,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  tool->scroll_lock = TRUE;
 	  tool->state       = ACTIVE;
 
-          gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                                shell->canvas->window);
+          gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 	}
       else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
                                                          coords->x,
@@ -627,8 +626,7 @@ gimp_move_tool_start_hguide (GimpTool    *tool,
 
   undo_push_guide (gdisp->gimage, move->guide);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                        GIMP_DISPLAY_SHELL (gdisp->shell)->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 void
@@ -656,8 +654,7 @@ gimp_move_tool_start_vguide (GimpTool    *tool,
 
   undo_push_guide (gdisp->gimage, move->guide);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
-                        GIMP_DISPLAY_SHELL (gdisp->shell)->canvas->window);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
 
 

@@ -40,10 +40,8 @@ struct _GimpBlendTool
 
   gint          startx;      /*  starting x coord     */
   gint          starty;      /*  starting y coord     */
-
   gint          endx;        /*  ending x coord       */
   gint          endy;        /*  ending y coord       */
-  guint         context_id;  /*  for the statusbar    */
 };
 
 struct _GimpBlendToolClass

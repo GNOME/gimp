@@ -46,7 +46,6 @@ struct _GimpRectSelectTool
   gint               fixed_size;
   gdouble            fixed_width;
   gdouble            fixed_height;
-  guint              context_id;   /*  for the statusbar  */
   
 };
 

@@ -28,6 +28,8 @@
 typedef struct _GimpDisplay       GimpDisplay;
 typedef struct _GimpDisplayShell  GimpDisplayShell;
 
+typedef struct _GimpStatusbar     GimpStatusbar;
+
 typedef struct _Selection         Selection;
 
 

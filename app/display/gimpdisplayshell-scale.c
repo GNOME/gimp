@@ -37,6 +37,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpstatusbar.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -177,7 +178,8 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
     {
       shell->gdisp->dot_for_dot = dot_for_dot;
 
-      gimp_display_shell_resize_cursor_label (shell);
+      gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
+
       gimp_display_shell_scale_resize (shell,
                                        gimprc.resize_windows_on_zoom, TRUE);
     }

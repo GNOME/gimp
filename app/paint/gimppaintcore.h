@@ -83,8 +83,6 @@ struct _GimpPaintTool
   gboolean        pick_colors;   /*  pick color if ctrl or alt is pressed  */
   gboolean        pick_state;    /*  was ctrl or alt pressed when clicked? */
   ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
-
-  guint           context_id;    /*  for the statusbar          */
 };
 
 struct _GimpPaintToolClass

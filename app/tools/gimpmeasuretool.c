@@ -206,12 +206,9 @@ gimp_measure_tool_control (GimpTool    *tool,
                            ToolAction   action,
                            GimpDisplay *gdisp)
 {
-  GimpMeasureTool  *measure_tool;
-  GimpDisplayShell *shell;
+  GimpMeasureTool *measure_tool;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (action)
     {
@@ -222,8 +219,7 @@ gimp_measure_tool_control (GimpTool    *tool,
       break;
 
     case HALT:
-      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
-			 measure_tool->context_id);
+      gimp_tool_pop_status (tool);
       tool->state = INACTIVE;
       break;
 
@@ -255,13 +251,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
-      GimpDisplay *old_gdisp = tool->gdisp;
-
-      gtk_statusbar_pop (GTK_STATUSBAR (GIMP_DISPLAY_SHELL (old_gdisp->shell)->statusbar),
-			 measure_tool->context_id);
-
-      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-			  measure_tool->context_id, (""));
+      gimp_tool_pop_status (tool);
     }
   
   measure_tool->function = CREATING;
@@ -366,22 +356,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure_tool));
 
-	  gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
-			     measure_tool->context_id);
-	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-			      measure_tool->context_id, "");
-
 	  distance_buf[0] = '\0';
 	  angle_buf[0] = '\0';
 	  if (measure_tool_info)
 	    measure_tool_info_update ();
-	}
-      else
-	{
-	  /* initialize the statusbar display */
-	  measure_tool->context_id =
-	    gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
-					  "measure");
 	}
 
       /*  set the first point and go into ADDING mode  */
@@ -394,13 +372,19 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
+      if (tool->state == ACTIVE)
+	{
+	  gimp_tool_pop_status (tool);
+	  gimp_tool_push_status (tool, "");
+        }
+
       /*  start drawing the measure tool  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
     }
 
   /*  create the info window if necessary  */
   if (! measure_tool_info && (options->use_info_window ||
-                              ! GTK_WIDGET_VISIBLE (shell->statusarea)))
+                              ! GTK_WIDGET_VISIBLE (shell->statusbar)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
 					   tool_manager_help_func, NULL);
@@ -457,25 +441,22 @@ gimp_measure_tool_motion (GimpTool        *tool,
                           GdkModifierType  state,
                           GimpDisplay     *gdisp)
 {
-  GimpMeasureTool  *measure_tool;
-  MeasureOptions   *options;
-  GimpDisplayShell *shell;
-  gint              ax, ay;
-  gint              bx, by;
-  gint              dx, dy;
-  gint              i;
-  gint              tmp;
-  gdouble           angle;
-  gdouble           distance;
-  gchar             status_str[STATUSBAR_SIZE];
+  GimpMeasureTool *measure_tool;
+  MeasureOptions  *options;
+  gint             ax, ay;
+  gint             bx, by;
+  gint             dx, dy;
+  gint             i;
+  gint             tmp;
+  gdouble          angle;
+  gdouble          distance;
+  gchar            status_str[STATUSBAR_SIZE];
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
   options = (MeasureOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL(measure_tool));
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (measure_tool));
 
   /*
    *  A few comments here, because this routine looks quite weird at first ...
@@ -652,11 +633,8 @@ gimp_measure_tool_motion (GimpTool        *tool,
 	}
 
       /*  show info in statusbar  */
-      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar),
-			 measure_tool->context_id);
-      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
-			  measure_tool->context_id,
-			  status_str);
+      gimp_tool_pop_status (tool);
+      gimp_tool_push_status (tool, status_str);
 
       /*  and in the info window  */
       if (measure_tool_info)
