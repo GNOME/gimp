@@ -25,6 +25,7 @@ scriptdata_DATA = \
 	carve-it.scm				\
 	carved-logo.scm				\
 	chalk.scm				\
+	chip-away.scm				\
 	chrome-it.scm				\
 	chrome-logo.scm				\
 	circle-logo.scm				\
