@@ -1,3 +1,9 @@
+2005-01-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimp/gimpdrawablepreview.c: set preview bounds correctly
+	when previewed drawable extends beyond image edges, 
+	fixes bug #165372.
+	
 2005-01-27  Manish Singh  <yosh@gimp.org>
 
 	* README: update ancient IRC info.
