@@ -1,3 +1,8 @@
+2002-06-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: made the DBBrowser dialog
+	at least a little bit useable.
+
 2002-06-13  Maurits Rijk  <maurits@linux.local>
 
 	* plug-ins/common/wind.c (dialog_box): enable mnemonics, minor code
