@@ -33,6 +33,7 @@
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
 static ProcRecord progress_pulse_proc;
+static ProcRecord progress_set_text_proc;
 static ProcRecord progress_install_proc;
 static ProcRecord progress_uninstall_proc;
 static ProcRecord progress_cancel_proc;
@@ -43,6 +44,7 @@ register_progress_procs (Gimp *gimp)
   procedural_db_register (gimp, &progress_init_proc);
   procedural_db_register (gimp, &progress_update_proc);
   procedural_db_register (gimp, &progress_pulse_proc);
+  procedural_db_register (gimp, &progress_set_text_proc);
   procedural_db_register (gimp, &progress_install_proc);
   procedural_db_register (gimp, &progress_uninstall_proc);
   procedural_db_register (gimp, &progress_cancel_proc);
@@ -189,6 +191,59 @@ static ProcRecord progress_pulse_proc =
   0,
   NULL,
   { { progress_pulse_invoker } }
+};
+
+static Argument *
+progress_set_text_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *message;
+
+  message = (gchar *) args[0].value.pdb_pointer;
+  if (message && !g_utf8_validate (message, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->open)
+        {
+          if (! gimp->no_interface)
+            plug_in_progress_set_text (gimp->current_plug_in, message);
+        }
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&progress_set_text_proc, success);
+}
+
+static ProcArg progress_set_text_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "message",
+    "Message to use in the progress dialog"
+  }
+};
+
+static ProcRecord progress_set_text_proc =
+{
+  "gimp_progress_set_text",
+  "Changes the text in the progress bar for the current plug-in.",
+  "This function allows to change the text in the progress bar for the current plug-in. Unlike gimp_progress_init() it does not change the displayed value.",
+  "Sven Neumann <sven@gimp.org>",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  progress_set_text_inargs,
+  0,
+  NULL,
+  { { progress_set_text_invoker } }
 };
 
 static Argument *

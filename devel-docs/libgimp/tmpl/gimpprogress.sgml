@@ -76,6 +76,15 @@ Functions for embedding the progress bar into a plug-in's GUI.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_progress_set_text ##### -->
+<para>
+
+</para>
+
+@message: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_progress_install ##### -->
 <para>
 

@@ -132,6 +132,20 @@ plug_in_progress_pulse (PlugIn  *plug_in)
 }
 
 void
+plug_in_progress_set_text (PlugIn      *plug_in,
+                           const gchar *message)
+{
+  PlugInProcFrame *proc_frame;
+
+  g_return_if_fail (plug_in != NULL);
+
+  proc_frame = plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame->progress)
+    gimp_progress_set_text (proc_frame->progress, message);
+}
+
+void
 plug_in_progress_end (PlugIn *plug_in)
 {
   PlugInProcFrame *proc_frame;

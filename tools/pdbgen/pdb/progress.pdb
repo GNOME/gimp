@@ -24,6 +24,13 @@ sub pdb_misc {
     $since = '2.2';
 }
 
+sub neo_pdb_misc {
+    $author = 'Sven Neumann  <sven@gimp.org>';
+    $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+}
+
 sub progress_init {
     $blurb = 'Initializes the progress bar for the current plug-in.';
 
@@ -99,10 +106,7 @@ made. This usually causes the the progress bar to enter "activity
 mode", where a block bounces back and forth.
 HELP
 
-    $author = 'Sven Neumann  <sven@gimp.org>';
-    $copyright = 'Sven Neumann';
-    $date = '2005';
-    $since = '2.4';
+    &neo_pdb_misc;
 
     %invoke = (
 	code => <<'CODE'
@@ -111,6 +115,36 @@ HELP
     {
       if (! gimp->no_interface)
 	plug_in_progress_pulse (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_set_text {
+    $blurb = 'Changes the text in the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+This function allows to change the text in the progress bar for the
+current plug-in. Unlike gimp_progress_init() it does not change the
+displayed value.
+HELP
+
+    &neo_pdb_misc;
+
+    @inargs = (
+	{ name => 'message', type => 'string', null_ok => 1,
+	  desc => 'Message to use in the progress dialog' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      if (! gimp->no_interface)
+	plug_in_progress_set_text (gimp->current_plug_in, message);
     }
   else
     success = FALSE;
@@ -207,7 +241,7 @@ CODE
 
 @headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h");
 
-@procs = qw(progress_init progress_update progress_pulse
+@procs = qw(progress_init progress_update progress_pulse progress_set_text
             progress_install progress_uninstall progress_cancel);
 %exports = (app => [@procs], lib => [@procs]);
 

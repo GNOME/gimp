@@ -481,6 +481,7 @@ EXPORTS
 	gimp_progress_init
 	gimp_progress_install
 	gimp_progress_pulse
+	gimp_progress_set_text
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit

@@ -121,6 +121,39 @@ gimp_progress_pulse (void)
 }
 
 /**
+ * gimp_progress_set_text:
+ * @message: Message to use in the progress dialog.
+ *
+ * Changes the text in the progress bar for the current plug-in.
+ *
+ * This function allows to change the text in the progress bar for the
+ * current plug-in. Unlike gimp_progress_init() it does not change the
+ * displayed value.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_progress_set_text (const gchar *message)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_progress_set_text",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, message,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * _gimp_progress_install:
  * @progress_callback: The callback PDB proc to call.
  *
