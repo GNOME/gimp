@@ -283,7 +283,7 @@ gimp_image_dock_book_removed (GimpDock     *dock,
 
   gimp_image_dock_update_title (GIMP_IMAGE_DOCK (dock));
 
-  GIMP_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
+  GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
 }
 
 GtkWidget *

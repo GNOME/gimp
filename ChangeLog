@@ -1,3 +1,9 @@
+2003-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_book_removed):
+	chain up to parent_class->book_removed(), not book_added().  Fixes
+	dock destruction on last book removal.
+
 2003-05-12  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/csource.c
