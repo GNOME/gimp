@@ -27,7 +27,8 @@ use lib $srcdir;
 use Text::Wrap qw(wrap $columns);
 $columns = 77;
 
-BEGIN { require 'util.pl' }
+#BEGIN { require 'util.pl' }
+require 'util.pl';
 
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
