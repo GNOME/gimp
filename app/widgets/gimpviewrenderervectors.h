@@ -23,7 +23,7 @@
 #ifndef __GIMP_VIEW_RENDERER_VECTORS_H__
 #define __GIMP_VIEW_RENDERER_VECTORS_H__
 
-#include "gimpviewrendererdrawable.h"
+#include "gimpviewrenderer.h"
 
 #define GIMP_TYPE_VIEW_RENDERER_VECTORS            (gimp_view_renderer_vectors_get_type ())
 #define GIMP_VIEW_RENDERER_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_VECTORS, GimpViewRendererVectors))
@@ -37,12 +37,12 @@ typedef struct _GimpViewRendererVectorsClass  GimpViewRendererVectorsClass;
 
 struct _GimpViewRendererVectors
 {
-  GimpViewRendererDrawable  parent_instance;
+  GimpViewRenderer  parent_instance;
 };
 
 struct _GimpViewRendererVectorsClass
 {
-  GimpViewRendererDrawableClass  parent_class;
+  GimpViewRendererClass  parent_class;
 };
 
 

@@ -1,5 +1,11 @@
 2004-08-26  DindinX  <david@dindinx.org>
 
+	* app/widgets/gimpviewrenderervectors.h: GimpViewRendererVector is
+	really derived from GimpViewRenderer and not from
+	GimpViewRendererDrawable.
+
+2004-08-26  DindinX  <david@dindinx.org>
+
 	* app/widgets/gimppreviewrenderer-utils.c
 	* app/widgets/gimppreviewrenderer-utils.h
 	* app/widgets/gimppreviewrendererbrush.c
