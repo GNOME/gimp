@@ -104,13 +104,64 @@ static void crop_orig_x_changed     (GtkWidget *, gpointer);
 static void crop_orig_y_changed     (GtkWidget *, gpointer);
 static void crop_width_changed      (GtkWidget *, gpointer);
 static void crop_height_changed     (GtkWidget *, gpointer);
+
+/*  Options callbacks */
+static void crop_checkbutton_update (GtkWidget *, gpointer);
 			
-static void *crop_options = NULL;
+static GtkWidget *options_widget = NULL;
+static CropToolOptions options;
 
 static Argument *crop_invoker (Argument *);
 
 
 /*  Functions  */
+
+static void
+init_crop_options()
+{
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *checkbutton;
+
+  /*  the main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+
+  /*  the main label  */
+  label = gtk_label_new (_("Crop Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  /* layer toggle */
+  checkbutton = gtk_check_button_new_with_label(_("Current layer only"));
+  gtk_box_pack_start(GTK_BOX(vbox), checkbutton,
+		     FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(checkbutton), "toggled",
+		     (GtkSignalFunc) crop_checkbutton_update,
+		     &options.layer_only);
+  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(checkbutton),
+			      options.layer_only);
+  gtk_widget_show(checkbutton);
+
+  /* Register this selection options widget with the main tools
+   * options dialog */
+
+  tools_register_options (CROP, vbox);
+}
+
+static void
+crop_checkbutton_update (GtkWidget *w,
+			 gpointer   data)
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (w)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
+
 
 static void
 crop_button_press (Tool           *tool,
@@ -522,8 +573,8 @@ tools_new_crop ()
   Tool * tool;
   Crop * private;
 
-  if (! crop_options)
-    crop_options = tools_register_no_options (CROP, _("Crop Tool Options"));
+  if (! options_widget)
+    init_crop_options ();
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Crop *) g_malloc (sizeof (Crop));
@@ -580,11 +631,13 @@ crop_image (GImage *gimage,
   Layer *layer;
   Layer *floating_layer;
   Channel *channel;
+  GimpDrawable *drawable;
   GList *guide_list_ptr;
   GSList *list;
   int width, height;
   int lx1, ly1, lx2, ly2;
   int off_x, off_y;
+  int doff_x, doff_y;
 
   width = x2 - x1;
   height = y2 - y1;
@@ -592,37 +645,60 @@ crop_image (GImage *gimage,
   /*  Make sure new width and height are non-zero  */
   if (width && height)
   {
-    floating_layer = gimage_floating_sel (gimage);
+    if (options.layer_only)
+    {
+      undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
-    undo_push_group_start (gimage, CROP_UNDO);
+      layer = gimage->active_layer;
 
-    /*  relax the floating layer  */
-    if (floating_layer)
-      floating_sel_relax (floating_layer, TRUE);
+      if (layer_is_floating_sel (layer))
+        floating_sel_relax (layer, TRUE);
 
-    /*  Push the image size to the stack  */
-    undo_push_gimage_mod (gimage);
+      drawable_offsets (GIMP_DRAWABLE(layer), &doff_x, &doff_y);
 
-    /*  Set the new width and height  */
-    gimage->width = width;
-    gimage->height = height;
+      off_x = (doff_x - x1);
+      off_y = (doff_y - y1);
 
-    /*  Resize all channels  */
-    list = gimage->channels;
-    while (list)
+      layer_resize (layer, width, height, off_x, off_y);
+
+      if (layer_is_floating_sel (layer))
+        floating_sel_rigor (layer, TRUE);
+
+      undo_push_group_end (gimage);
+    }
+    else
+    {
+      floating_layer = gimage_floating_sel (gimage);
+
+      undo_push_group_start (gimage, CROP_UNDO);
+
+      /*  relax the floating layer  */
+      if (floating_layer)
+        floating_sel_relax (floating_layer, TRUE);
+
+      /*  Push the image size to the stack  */
+      undo_push_gimage_mod (gimage);
+
+      /*  Set the new width and height  */
+      gimage->width = width;
+      gimage->height = height;
+
+      /*  Resize all channels  */
+      list = gimage->channels;
+      while (list)
       {
 	channel = (Channel *) list->data;
 	channel_resize (channel, width, height, -x1, -y1);
 	list = g_slist_next (list);
       }
 
-    /*  Don't forget the selection mask!  */
-    channel_resize (gimage->selection_mask, width, height, -x1, -y1);
-    gimage_mask_invalidate (gimage);
+      /*  Don't forget the selection mask!  */
+      channel_resize (gimage->selection_mask, width, height, -x1, -y1);
+      gimage_mask_invalidate (gimage);
 
-    /*  crop all layers  */
-    list = gimage->layers;
-    while (list)
+      /*  crop all layers  */
+      list = gimage->layers;
+      while (list)
       {
 	layer = (Layer *) list->data;
 
@@ -647,30 +723,32 @@ crop_image (GImage *gimage,
 	  gimage_remove_layer (gimage, layer);
       }
 
-    /*  Make sure the projection matches the gimage size  */
-    gimage_projection_realloc (gimage);
+      /*  Make sure the projection matches the gimage size  */
+      gimage_projection_realloc (gimage);
 
-    /*  rigor the floating layer  */
-    if (floating_layer)
-      floating_sel_rigor (floating_layer, TRUE);
+      /*  rigor the floating layer  */
+      if (floating_layer)
+	floating_sel_rigor (floating_layer, TRUE);
 
-	guide_list_ptr = gimage->guides;
-	while ( guide_list_ptr != NULL)
-		{
-		undo_push_guide (gimage, (Guide *)guide_list_ptr->data);
-		guide_list_ptr = guide_list_ptr->next;
-		}
-    undo_push_group_end (gimage);
+      guide_list_ptr = gimage->guides;
+      while ( guide_list_ptr != NULL)
+      {
+        undo_push_guide (gimage, (Guide *)guide_list_ptr->data);
+        guide_list_ptr = guide_list_ptr->next;
+      }
+      undo_push_group_end (gimage);
   
-  /* Adjust any guides we might have laying about */
-  crop_adjust_guides (gimage, x1, y1, x2, y2); 
+      /* Adjust any guides we might have laying about */
+      crop_adjust_guides (gimage, x1, y1, x2, y2); 
 
-    /*  shrink wrap and update all views  */
-    channel_invalidate_previews (gimage);
-    layer_invalidate_previews (gimage);
-    gimage_invalidate_preview (gimage);
-    gdisplays_update_full (gimage);
-    gdisplays_shrink_wrap (gimage);
+      /*  shrink wrap and update all views  */
+      channel_invalidate_previews (gimage);
+      layer_invalidate_previews (gimage);
+      gimage_invalidate_preview (gimage);
+      gdisplays_update_full (gimage);
+      gdisplays_shrink_wrap (gimage);
+    }
+    gdisplays_flush ();
   }
 }
 

@@ -1,3 +1,7 @@
+Fri Dec  4 01:43:59 EST 1998 Nick Fetchak <nuke@bayside.net>
+
+	* app/crop.[ch]: Added option to crop the active layer only
+
 Thu Dec  3 16:51:42 CST 1998 Shawn T. Amundson <amundson@gtk.org>
 
 	* app/channel_ops.c

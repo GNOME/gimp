@@ -26,6 +26,12 @@ void          crop_draw         (Tool *);
 Tool *        tools_new_crop    (void);
 void          tools_free_crop   (Tool *);
 
+/*   tool options  */
+typedef struct {
+  int layer_only;
+} CropToolOptions;
+
+
 /*  Procedure definition and marshalling function  */
 extern ProcRecord crop_proc;
 
