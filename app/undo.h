@@ -67,6 +67,7 @@ const char *undo_get_redo_name (GImage *);
 typedef int (*undo_map_fn) (const char *undoitemname, void *data);
 void undo_map_over_undo_stack (GImage *, undo_map_fn, void *data);
 void undo_map_over_redo_stack (GImage *, undo_map_fn, void *data);
+UndoType undo_get_undo_top_type (GImage *);
 
 
 /* Not really appropriate here, since undo_history_new is not defined

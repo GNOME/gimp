@@ -492,6 +492,25 @@ undo_get_topitem_name (GSList *stack)
     return undo_type_to_name (object->type);
 }
 
+/* Return the type of the top undo action */
+static UndoType
+undo_get_topitem_type (GSList *stack)
+{
+    Undo *object;
+
+    if (!stack)
+	return 0;
+
+    object = stack->data;
+
+    /* For group boundaries, the type of the boundary marker is the
+     * type of the whole group (but each individual action in the
+     * group retains its own type so layer/channel unrefs work
+     * correctly). */
+
+    return object->type;
+}
+
 
 const char *
 undo_get_undo_name (GImage *gimage)
@@ -503,6 +522,18 @@ undo_get_undo_name (GImage *gimage)
 	return NULL;
 
     return undo_get_topitem_name (gimage->undo_stack);
+}
+
+UndoType
+undo_get_undo_top_type (GImage *gimage)
+{
+    g_return_val_if_fail (gimage != NULL, 0);
+
+    /* don't want to encourage undo while a group is open */
+    if (gimage->pushing_undo_group != 0)
+	return 0;
+
+    return undo_get_topitem_type (gimage->undo_stack);
 }
 
 

@@ -428,10 +428,12 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   if (dwidth > dheight)
     {
       height = (width * dheight) / dwidth;
+      width = (dwidth * height) / dheight;
     }
   else
     {
       width = (height * dwidth) / dheight;
+      height = (dheight * width) / dwidth;
     }
 
   buf = gimp_image_construct_composite_preview (gimage, width, height);

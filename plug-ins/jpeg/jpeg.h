@@ -469,14 +469,12 @@ run (char    *name,
 	    }
 #endif /* GIMP_HAVE_PARASITES */
 	  
-	  if (!export)
-	    {
-	      /* we start an undo_group and immediately freeze undo saving
-		 so that we can avoid sucking up tile cache with our unneeded
-		 preview steps. */
-	      gimp_undo_push_group_start (image_ID);
-	      gimp_image_undo_freeze (image_ID);
-	    }
+	  /* we start an undo_group and immediately freeze undo saving
+	     so that we can avoid sucking up tile cache with our unneeded
+	     preview steps. */
+      	  gimp_undo_push_group_start (image_ID);
+      	  gimp_image_undo_freeze (image_ID);
+
 	  /* prepare for the preview */
 	  image_ID_global = image_ID;
 	  orig_image_ID_global = orig_image_ID;
@@ -485,12 +483,9 @@ run (char    *name,
 	  /*  First acquire information with a dialog  */
 	  err = save_dialog ();
  
-	  if (export != EXPORT_EXPORT)
-	    {
-	      /* thaw undo saving and end the undo_group. */
-	      gimp_image_undo_thaw (image_ID);
-	      gimp_undo_push_group_end (image_ID); 
-	    }
+	  /* thaw undo saving and end the undo_group. */
+	  gimp_image_undo_thaw (image_ID);
+	  gimp_undo_push_group_end (image_ID); 
 
           if (!err)
 	    return;

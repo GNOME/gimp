@@ -46,6 +46,7 @@
 #include "gimpui.h"
 #include "temp_buf.h"
 #include "undo.h"
+#include "gimage_mask.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
@@ -53,6 +54,7 @@
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
 #include "pixmaps/yes.xpm"
+#include "pixmaps/question.xpm"
 
 typedef struct
 {
@@ -135,8 +137,104 @@ static GdkBitmap *redo_mask   = NULL;
 static GdkPixmap *clean_pixmap = NULL;
 static GdkBitmap *clean_mask   = NULL;
 
+static GdkPixmap *clear_pixmap = NULL;
+static GdkBitmap *clear_mask   = NULL;
+
 /**************************************************************/
 /* Local functions */
+
+
+static MaskBuf *
+mask_render_preview (GImage        *gimage,
+		     gint          *pwidth,
+		     gint          *pheight)
+{
+  Channel * mask;
+  MaskBuf * scaled_buf = NULL;
+  PixelRegion srcPR, destPR;
+  int subsample;
+  int width, height;
+  int scale;
+
+  mask = gimage_get_mask (gimage);
+  if ((drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||
+      (drawable_height (GIMP_DRAWABLE(mask)) > *pheight))
+    {
+      if (((float) drawable_width (GIMP_DRAWABLE (mask)) / (float) *pwidth) >
+	  ((float) drawable_height (GIMP_DRAWABLE (mask)) / (float) *pheight))
+	{
+	  width = *pwidth;
+	  height = (drawable_height (GIMP_DRAWABLE (mask)) * (*pwidth)) / drawable_width (GIMP_DRAWABLE (mask));
+	}
+      else
+	{
+	  width = (drawable_width (GIMP_DRAWABLE (mask)) * (*pheight)) / drawable_height (GIMP_DRAWABLE (mask));
+	  height = *pheight;
+	}
+
+      scale = TRUE;
+    }
+  else
+    {
+      width = drawable_width (GIMP_DRAWABLE (mask));
+      height = drawable_height (GIMP_DRAWABLE (mask));
+
+      scale = FALSE;
+    }
+
+  /*  if the mask is empty, no need to scale and update again  */
+  if (gimage_mask_is_empty (gimage))
+    return NULL;
+
+  if (scale)
+    {
+      /*  calculate 'acceptable' subsample  */
+      subsample = 1;
+      while ((width * (subsample + 1) * 2 < drawable_width (GIMP_DRAWABLE (mask))) &&
+	     (height * (subsample + 1) * 2 < drawable_height (GIMP_DRAWABLE (mask))))
+	subsample = subsample + 1;
+
+      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+			 0, 0, 
+			 drawable_width (GIMP_DRAWABLE (mask)), 
+			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+
+      scaled_buf = mask_buf_new (width, height);
+      destPR.bytes = 1;
+      destPR.x = 0;
+      destPR.y = 0;
+      destPR.w = width;
+      destPR.h = height;
+      destPR.rowstride = srcPR.bytes * width;
+      destPR.data = mask_buf_data (scaled_buf);
+      destPR.tiles = NULL;
+
+      subsample_region (&srcPR, &destPR, subsample);
+    }
+  else
+    {
+      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+			 0, 0, 
+			 drawable_width (GIMP_DRAWABLE (mask)), 
+			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+
+      scaled_buf = mask_buf_new (width, height);
+      destPR.bytes = 1;
+      destPR.x = 0;
+      destPR.y = 0;
+      destPR.w = width;
+      destPR.h = height;
+      destPR.rowstride = srcPR.bytes * width;
+      destPR.data = mask_buf_data (scaled_buf);
+      destPR.tiles = NULL;
+
+      copy_region (&srcPR, &destPR);
+    }
+
+  *pheight = height;
+  *pwidth = width;
+   return scaled_buf;
+}
 
 
 static gint
@@ -144,8 +242,10 @@ undo_history_set_pixmap_idle (gpointer data)
 {
   idle_preview_args *idle = data;
   static GdkGC *gc = NULL;
-  TempBuf   *buf;
+  TempBuf   *buf = NULL;
   GdkPixmap *pixmap;
+  UndoType   utype;
+  MaskBuf   *mbuf = NULL;
   guchar    *src;
   gdouble    r, g, b, a;
   gdouble    c0, c1;
@@ -163,16 +263,28 @@ undo_history_set_pixmap_idle (gpointer data)
   if (width > height)
     { 
       height = (idle->size * height) / width;
-      width  = idle->size;
+      width  = (width * height )/ idle->gimage->height;
     }
   else
     {
       width  = (idle->size * width) / height;
-      height = idle->size;
+      height = (height * width ) / idle->gimage->width;
     }
 
-  buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
-  bpp = buf->bytes;
+  utype = undo_get_undo_top_type(idle->gimage);
+
+  if((utype != MASK_UNDO && utype != QMASK_UNDO) || 
+     (mbuf = mask_render_preview(idle->gimage,&width,&height)) == NULL)
+    {
+      buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
+      bpp = buf->bytes;
+      src = temp_buf_data (buf);
+    }
+  else
+    {
+      src = mask_buf_data (mbuf); 
+      bpp = 1; /* Always the case for masks */
+    } 
 
   pixmap = gdk_pixmap_new (GTK_WIDGET (idle->clist)->window, width+2, height+2, -1);
   
@@ -182,11 +294,9 @@ undo_history_set_pixmap_idle (gpointer data)
 		      0, 0,
 		      width + 2, height + 2);
 
-  src = temp_buf_data (buf);
-
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
-  
+
   for (y = 0; y < height; y++)
     {
       p0 = even;
@@ -260,8 +370,13 @@ undo_history_set_pixmap_idle (gpointer data)
 
   g_free (even);
   g_free (odd);
-  temp_buf_free (buf);
 
+  if(buf)
+    temp_buf_free (buf);
+  if(mbuf)
+    mask_buf_free (mbuf);
+
+  gtk_clist_set_row_data (idle->clist, idle->row, (gpointer)2);
   gtk_clist_set_pixmap (idle->clist, idle->row, 0, pixmap, NULL);
   gdk_pixmap_unref (pixmap);
   
@@ -276,10 +391,8 @@ undo_history_set_pixmap (GtkCList *clist,
 			 GImage   *gimage)
 {
   static idle_preview_args idle;
-  GdkPixmap *pixmap;
-  GdkPixmap *mask;
   
-  if (!size || gtk_clist_get_pixmap (clist, row, 0, &pixmap, &mask))
+  if (!size || ((gint)gtk_clist_get_row_data (clist, row)) == 2)
     return;
     
   idle.clist  = clist;
@@ -574,6 +687,8 @@ undo_history_init_undo (const char *undoitemname,
   namelist[1] = NULL;
   namelist[2] = (char *) undoitemname;
   row = gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
+  gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
+			clear_pixmap, clear_mask);
 
   return 0;
 }
@@ -590,6 +705,8 @@ undo_history_init_redo (const char *undoitemname,
   namelist[0] = NULL;  namelist[1] = NULL;
   namelist[2] = (char *) undoitemname;
   row = gtk_clist_append (GTK_CLIST (st->clist), namelist);
+  gtk_clist_set_pixmap (GTK_CLIST (st->clist), row, 0,
+			clear_pixmap, clear_mask);
 
   return 0;
 }
@@ -692,6 +809,12 @@ undo_history_new (GImage *gimage)
 				      &clean_mask,
 				      &style->bg[GTK_STATE_NORMAL],
 				      yes_xpm);
+
+      clear_pixmap =
+	gdk_pixmap_create_from_xpm_d (st->shell->window,
+				      &clear_mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      question_xpm);
    }
 
   /* work out the initial contents */

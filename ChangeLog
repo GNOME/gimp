@@ -1,3 +1,24 @@
+Tue Nov  2 22:50:31 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/undo.h
+	* app/undo.c
+	* app/undo_history.c
+	* pixmaps/question.xpm
+
+	Fixed undo history so it shows a dummy image if the preview
+	image has not already been generated. The actual image
+	could probably do with an artists hand ;-)
+	Also mask operations are shown as such in the previews.
+
+	* app/lc_dialog.c
+
+	Fixed rounding error in preview when width << height.
+
+	* plug-ins/common/jpeg.c
+
+	Always freeze the undo stack for any of the image export types.
+	Anyone know why this was not the case to start with? 
+
 Tue Nov  2 22:40:31 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: Fonts aren't free'd after
