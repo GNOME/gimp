@@ -1,5 +1,14 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainercombobox.[ch]
+	* app/widgets/gimpcontainertreeview.c: when removing the last item
+	from the view, manually clear all GimpCellRendererViewables'
+	"renderer" properties; otherwise we have stale GimpPreviewRenderers
+	with still-refed viewables hanging around in the cells.
+	Works around GTK+ bug #149906.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.c
 	* app/core/gimpimagefile.c: converted tabs to spaces, cosmetic
 	changes.

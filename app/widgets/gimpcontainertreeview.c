@@ -533,7 +533,23 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
 
   if (iter)
-    gtk_list_store_remove (GTK_LIST_STORE (tree_view->model), iter);
+    {
+      gtk_list_store_remove (GTK_LIST_STORE (tree_view->model), iter);
+
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as bug #149906 is fixed
+#endif
+      /*  if the store is empty after this remove, clear out renderers
+       *  from all cells so they don't keep refing the viewables
+       */
+      if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
+        {
+          GList *list;
+
+          for (list = tree_view->renderer_cells; list; list = g_list_next (list))
+            g_object_set (list->data, "renderer", NULL, NULL);
+        }
+    }
 }
 
 static void
