@@ -21,6 +21,7 @@
 #include "actionarea.h"
 #include "color_select.h"
 #include "colormaps.h"
+#include "displaylut.h"
 #include "errors.h"
 #include "float16.h"
 #include "gimprc.h"
@@ -820,7 +821,7 @@ color_select_update_colors (ColorSelectP csp,
 
       gdk_window_get_size (window, &width, &height);
 
-      store_color (&color.pixel, &col);
+      store_display_color (&color.pixel, &col);
 
       if (csp->gc)
 	{
@@ -1441,9 +1442,14 @@ color_select_update_red (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+      *p++ = display_u8_from_float(r);
+      *p++ = 0;
+      *p++ = 0;
+#if 0
       *p++ = r * 255;
       *p++ = 0;
       *p++ = 0;
+#endif
     }
 }
 
@@ -1466,8 +1472,13 @@ color_select_update_green (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+#if 0
       *p++ = 0;
       *p++ = g * 255;
+      *p++ = 0;
+#endif
+      *p++ = 0;
+      *p++ = display_u8_from_float (g);
       *p++ = 0;
     }
 }
@@ -1491,9 +1502,14 @@ color_select_update_blue (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+#if 0
       *p++ = 0;
       *p++ = 0;
       *p++ = b * 255;
+#endif
+      *p++ = 0;
+      *p++ = 0;
+      *p++ = display_u8_from_float (b);
     }
 }
 
@@ -1558,9 +1574,14 @@ color_select_update_hue (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+#if 0
       *p++ = r * 255;
       *p++ = g * 255;
       *p++ = b * 255;
+#endif
+      *p++ = display_u8_from_float (r);
+      *p++ = display_u8_from_float (g);
+      *p++ = display_u8_from_float (b);
     }
 }
 
@@ -1585,9 +1606,14 @@ color_select_update_saturation (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+#if 0
       *p++ = s * 255;
       *p++ = s * 255;
       *p++ = s * 255;
+#endif
+      *p++ = display_u8_from_float (s);
+      *p++ = display_u8_from_float (s);
+      *p++ = display_u8_from_float (s);
     }
 }
 
@@ -1612,9 +1638,14 @@ color_select_update_value (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+#if 0
       *p++ = v * 255;
       *p++ = v * 255;
       *p++ = v * 255;
+#endif
+      *p++ = display_u8_from_float (v);
+      *p++ = display_u8_from_float (v);
+      *p++ = display_u8_from_float (v);
     }
 }
 
@@ -1646,10 +1677,15 @@ color_select_update_red_green (ColorSelectFill *csf)
   
   for (i = 0; i < csf->width; i++)
     {
+
+      *p++ = display_u8_from_float (r/255.0);
+      *p++ = display_u8_from_float (g/255.0);
+      *p++ = display_u8_from_float (b/255.0);
+#if 0
       *p++ = r;
       *p++ = g;
       *p++ = b;
-
+#endif
       g += dg;
     }
 }
@@ -1682,10 +1718,14 @@ color_select_update_red_blue (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+      *p++ = display_u8_from_float (r/255.0);
+      *p++ = display_u8_from_float (g/255.0);
+      *p++ = display_u8_from_float (b/255.0);
+#if 0
       *p++ = r;
       *p++ = g;
       *p++ = b;
-
+#endif
       b += db;
     }
 }
@@ -1718,10 +1758,14 @@ color_select_update_green_blue (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+      *p++ = display_u8_from_float (r/255.0);
+      *p++ = display_u8_from_float (g/255.0);
+      *p++ = display_u8_from_float (b/255.0);
+#if 0
       *p++ = r;
       *p++ = g;
       *p++ = b;
-
+#endif
       b += db;
     }
 }
@@ -1750,16 +1794,22 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
   s = 0;
   ds = 1.0 / csf->width;
 
-  v = csf->values[VALUE] / 100.0 * 255;
+/*  v = csf->values[VALUE] / 100.0 * 255; */
+  v = csf->values[VALUE] / 100.0;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
 	  *p++ = v * (1 - s);
+#endif
+          *p++ = display_u8_from_float ( v );
+          *p++ = display_u8_from_float ( v * (1 - (s * (1 - f))) );
+          *p++ = display_u8_from_float ( v * (1 - s) );
 
 	  s += ds;
 	}
@@ -1767,9 +1817,14 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
 	  *p++ = v * (1 - s);
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
 
 	  s += ds;
 	}
@@ -1777,9 +1832,14 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
 
 	  s += ds;
 	}
@@ -1787,9 +1847,14 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
 
 	  s += ds;
 	}
@@ -1797,9 +1862,14 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - (s * (1 - f)));
 	  *p++ = v * ((1 - s));
 	  *p++ = v;
+#endif
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
+	  *p++ = display_u8_from_float (v * ((1 - s)));
+	  *p++ = display_u8_from_float (v);
 
 	  s += ds;
 	}
@@ -1807,9 +1877,14 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
+#endif
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
 
 	  s += ds;
 	}
@@ -1839,18 +1914,24 @@ color_select_update_hue_value (ColorSelectFill *csf)
   f = (h - (int) h);
 
   v = 0;
-  dv = 1.0 / csf->width;
+  dv = (1.0 / csf->width);
 
-  s = csf->values[SATURATION] / 100.0 * 255;
+  /*s = csf->values[SATURATION] / 100.0 * 255*/;
+  s = csf->values[SATURATION] / 100.0;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
 	  *p++ = v * (1 - s);
+#endif
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
+	  *p++ = display_u8_from_float (v * (1 - s));
 
 	  v += dv;
 	}
@@ -1858,9 +1939,14 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
 	  *p++ = v * (1 - s);
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
 
 	  v += dv;
 	}
@@ -1868,39 +1954,56 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
-
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
 	  v += dv;
 	}
       break;
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
-
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
 	  v += dv;
 	}
       break;
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - (s * (1 - f)));
-	  *p++ = v * ((1 - s));
+	  *p++ = v * (1 - s);
 	  *p++ = v;
-
+#endif
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v);
 	  v += dv;
 	}
       break;
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
+#endif
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
 
 	  v += dv;
 	}
@@ -1935,26 +2038,35 @@ color_select_update_saturation_value (ColorSelectFill *csf)
   f = (h - (int) h);
 
   v = 0;
-  dv = 1.0 / csf->width * 255;
+  dv = 1.0 / csf->width;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
 	  *p++ = v * (1 - s);
-
+#endif
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
+	  *p++ = display_u8_from_float (v * (1 - s));
 	  v += dv;
 	}
       break;
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
 	  *p++ = v * (1 - s);
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
 
 	  v += dv;
 	}
@@ -1962,9 +2074,14 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v;
 	  *p++ = v * (1 - (s * (1 - f)));
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
 
 	  v += dv;
 	}
@@ -1972,9 +2089,14 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
 	  *p++ = v;
+#endif
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
+	  *p++ = display_u8_from_float (v);
 
 	  v += dv;
 	}
@@ -1982,9 +2104,14 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v * (1 - (s * (1 - f)));
 	  *p++ = v * ((1 - s));
 	  *p++ = v;
+#endif
+	  *p++ = display_u8_from_float (v * (1 - (s * (1 - f))));
+	  *p++ = display_u8_from_float (v * ((1 - s)));
+	  *p++ = display_u8_from_float (v);
 
 	  v += dv;
 	}
@@ -1992,12 +2119,18 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
+#if 0
 	  *p++ = v;
 	  *p++ = v * (1 - s);
 	  *p++ = v * (1 - s * f);
+#endif
+	  *p++ = display_u8_from_float (v);
+	  *p++ = display_u8_from_float (v * (1 - s));
+	  *p++ = display_u8_from_float (v * (1 - s * f));
 
 	  v += dv;
 	}
       break;
     }
 }
+

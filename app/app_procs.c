@@ -515,6 +515,7 @@ app_init (void)
       /* this has to be done after the colormaps are setup */
       palette_set_default_colors ();
       create_toolbox ();
+      display_u8_init();
       gximage_init ();
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();

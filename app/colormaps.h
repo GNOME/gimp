@@ -66,6 +66,7 @@ extern gulong *gray_pixel_vals;
 
 gulong get_color (struct _PixelRow *);
 void   store_color (gulong *pixel, struct _PixelRow *);
+void   store_display_color (gulong *pixel, struct _PixelRow *);
 void   get_standard_colormaps (void);
 
 

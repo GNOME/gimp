@@ -21,6 +21,7 @@
 #include "app_procs.h"
 #include "brushes.h"
 #include "colormaps.h"
+#include "displaylut.h"
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
@@ -223,6 +224,33 @@ store_color (gulong *pixel_ptr,
   make_color (pixel_ptr, d[0], d[1], d[2], TRUE);
 }
 
+
+void
+store_display_color (gulong *pixel_ptr,
+	     PixelRow * col)
+{
+  PixelRow r;
+  guint8 d[3];
+  switch (tag_precision ( pixelrow_tag (col)))
+  {
+    case PRECISION_FLOAT:
+      {
+	gfloat * float_data = (gfloat *) pixelrow_data (col);
+	d[0] = display_u8_from_float(float_data[0]); 
+	d[1] = display_u8_from_float(float_data[1]); 
+	d[2] = display_u8_from_float(float_data[2]); 
+      }
+      break;
+    case PRECISION_U8:
+    case PRECISION_U16:
+    case PRECISION_FLOAT16:
+    case PRECISION_NONE:
+    default:
+      g_warning ("store_display_color: bad precision\n");
+      break;
+  }
+  make_color (pixel_ptr, d[0], d[1], d[2], TRUE);
+}
 
 void
 get_standard_colormaps ()

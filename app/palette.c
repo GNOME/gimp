@@ -413,7 +413,7 @@ palette_set_foreground (
 
   if (no_interface == FALSE)
     {
-      store_color (&foreground_pixel, &foreground);
+      store_display_color (&foreground_pixel, &foreground);
       color_area_update ();
     }
 }
@@ -425,7 +425,7 @@ palette_set_background (PixelRow * col)
 
   if (no_interface == FALSE)
     {
-      store_color (&background_pixel, &background);
+      store_display_color (&background_pixel, &background);
       color_area_update ();
     }
 }

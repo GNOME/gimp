@@ -27,7 +27,7 @@
 #include "image_render.h"
 #include "scale.h"
 #include "tag.h"
-
+#include "displaylut.h"
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -5290,25 +5290,23 @@ render_image_gray_float16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
-		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src8bit = display_u8_from_float16(src[GRAY_PIX]) ;
 		src += 1;
 
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[0] = src8bit;
+		dest[1] = src8bit;
+		dest[2] = src8bit;
 		dest += 3;
 	      }
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
-		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src8bit = display_u8_from_float16(src[GRAY_PIX]) ;
 		src += 1;
 
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
+		dest[0] = src8bit;
+		dest[1] = src8bit;
+		dest[2] = src8bit;
 		dest += 3;
 	      }
 	}
@@ -5364,25 +5362,23 @@ render_image_gray_float16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
-		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src8bit = display_u8_from_float16(src[GRAY_PIX]);
 		src += 1;
 
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[0] = src8bit;
+		dest[1] = src8bit;
+		dest[2] = src8bit;
 		dest += 4;
 	      }
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		src8bit = FLOAT_TO_8BIT( FLT (src[GRAY_PIX]) );
-		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src8bit = display_u8_from_float16(src[GRAY_PIX]);
 		src += 1;
 
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
+		dest[1] = src8bit;
+		dest[2] = src8bit;
+		dest[3] = src8bit;
 		dest += 4;
 	      }
 	}
@@ -5416,6 +5412,7 @@ render_image_gray_a_float16_3 (RenderInfo *info)
   gulong *lookup_red;
   gulong *lookup_green;
   gulong *lookup_blue;
+  guint8 src8bit;
   guint16 *src;
   guchar *dest;
   guint *alpha;
@@ -5454,17 +5451,17 @@ render_image_gray_a_float16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[ FLOAT_TO_8BIT (FLT (src[ALPHA_G_PIX])) ];
+		src8bit = display_u8_from_float16 (src[GRAY_PIX]); 
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_G_PIX]) ];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[GRAY_PIX])))];
+		  val = blend_dark_check[(a | src8bit)];
 		else
-		  val = blend_light_check[(a | FLOAT_TO_8BIT ( FLT (src[GRAY_PIX])))];
-		val = COLOR_COMPOSE (val, val, val);
+		  val = blend_light_check[(a | src8bit)];
 		src += 2;
 
 		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[1] = val;
+		dest[2] = val;
 		dest += 3;
 
 		if (((x + 1) & check_mod) == 0)
@@ -5473,16 +5470,16 @@ render_image_gray_a_float16_3 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[ FLOAT_TO_8BIT ( FLT (src[ALPHA_G_PIX])) ];
+		src8bit = display_u8_from_float16 (src[GRAY_PIX]); 
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_G_PIX]) ];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | FLOAT_TO_8BIT( FLT (src[GRAY_PIX])))];
+		  val = blend_dark_check[(a | src8bit)];
 		else
-		  val = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[GRAY_PIX])))];
-		val = COLOR_COMPOSE (val, val, val);
+		  val = blend_light_check[(a | src8bit)];
 		src += 2;
 
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
+		dest[0] = val;
+		dest[1] = val;
 		dest[2] = val;
 		dest += 3;
 
@@ -5509,6 +5506,7 @@ render_image_gray_a_float16_4 (RenderInfo *info)
   gulong *lookup_red;
   gulong *lookup_green;
   gulong *lookup_blue;
+  guint8 src8bit;
   guint16 *src;
   guchar *dest;
   guint *alpha;
@@ -5547,17 +5545,17 @@ render_image_gray_a_float16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[ FLOAT_TO_8BIT( FLT (src[ALPHA_G_PIX])) ];
+		src8bit = display_u8_from_float16 (src[GRAY_PIX]); 
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		  val = blend_dark_check[(a | src8bit)];
 		else
-		  val = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
-		val = COLOR_COMPOSE (val, val, val);
+		  val = blend_light_check[(a | src8bit)];
 		src += 2;
 
 		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[1] = val;
+		dest[2] = val;
 		dest += 4;
 
 		if (((x + 1) & check_mod) == 0)
@@ -5566,16 +5564,16 @@ render_image_gray_a_float16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[ FLOAT_TO_8BIT(FLT (src[ALPHA_G_PIX])) ];
+		src8bit = display_u8_from_float16 (src[GRAY_PIX]); 
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
+		  val = blend_dark_check[(a | src8bit)];
 		else
-		  val = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GRAY_PIX])))];
-		val = COLOR_COMPOSE (val, val, val);
+		  val = blend_light_check[(a | src8bit)];
 		src += 2;
 
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
+		dest[1] = val;
+		dest[2] = val;
 		dest[3] = val;
 		dest += 4;
 
@@ -5713,27 +5711,19 @@ render_image_rgb_float16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (FLOAT_TO_8BIT (FLT (src[RED_PIX])),
-				      FLOAT_TO_8BIT (FLT (src[GREEN_PIX])),
-				      FLOAT_TO_8BIT (FLT (src[BLUE_PIX])));
+		dest[0] = display_u8_from_float16 (src[RED_PIX]);
+		dest[1] = display_u8_from_float16 (src[GREEN_PIX]);
+		dest[2] = display_u8_from_float16 (src[BLUE_PIX]);
 		src += 3;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
 		dest += 3;
 	      }
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (FLOAT_TO_8BIT( FLT (src[RED_PIX])),
-				     FLOAT_TO_8BIT( FLT (src[GREEN_PIX])),
-				     FLOAT_TO_8BIT( FLT (src[BLUE_PIX])));
+		dest[0] = display_u8_from_float16 (src[BLUE_PIX]);
+		dest[1] = display_u8_from_float16 (src[GREEN_PIX]);
+		dest[2] = display_u8_from_float16 (src[RED_PIX]);
 		src += 3;
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
 		dest += 3;
 	      }
 	}
@@ -5788,27 +5778,19 @@ render_image_rgb_float16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (FLOAT_TO_8BIT(FLT (src[RED_PIX])),
-				     FLOAT_TO_8BIT(FLT (src[GREEN_PIX])),
-				     FLOAT_TO_8BIT(FLT (src[BLUE_PIX])));
+		dest[0] = display_u8_from_float16 (src[RED_PIX]);
+		dest[1] = display_u8_from_float16 (src[GREEN_PIX]);
+		dest[2] = display_u8_from_float16 (src[BLUE_PIX]);
 		src += 3;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
 		dest += 4;
 	      }
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (FLOAT_TO_8BIT(FLT (src[RED_PIX])),
-				     FLOAT_TO_8BIT(FLT (src[GREEN_PIX])),
-				     FLOAT_TO_8BIT(FLT (src[BLUE_PIX])));
+		dest[1] = display_u8_from_float16 (src[BLUE_PIX]);
+		dest[2] = display_u8_from_float16 (src[GREEN_PIX]);
+		dest[3] = display_u8_from_float16 (src[RED_PIX]);
 		src += 3;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
 		dest += 4;
 	      }
 	}
@@ -5987,27 +5969,28 @@ render_image_rgb_a_float16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_PIX]) ];
+		r = display_u8_from_float16 (src[RED_PIX]);
+    		g = display_u8_from_float16 (src[GREEN_PIX]);
+		b = display_u8_from_float16 (src[BLUE_PIX]);
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
-		    g = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
-		    b = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		    r = blend_dark_check[a | r];
+		    g = blend_dark_check[a | g];
+		    b = blend_dark_check[a | b];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
-		    g = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[GREEN_PIX])))];
-		    b = blend_light_check[(a | FLOAT_TO_8BIT (FLT (src[BLUE_PIX])))];
+		    r = blend_light_check[a | r];
+		    g = blend_light_check[a | g];
+		    b = blend_light_check[a | b];
 		  }
-	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
 
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[0] = r;
+		dest[1] = g;
+		dest[2] = b; 
 		dest += 3;
 
 		if (((x + 1) & check_mod) == 0)
@@ -6016,26 +5999,28 @@ render_image_rgb_a_float16_3 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT (FLT (src[ALPHA_PIX]))];
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_PIX]) ];
+		r = display_u8_from_float16 (src[RED_PIX]);
+    		g = display_u8_from_float16 (src[GREEN_PIX]);
+		b = display_u8_from_float16 (src[BLUE_PIX]);
+
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[RED_PIX])))];
-		    g = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[GREEN_PIX])))];
-		    b = blend_dark_check[(a | FLOAT_TO_8BIT ( FLT (src[BLUE_PIX])))];
+		    r = blend_dark_check[a | r];
+		    g = blend_dark_check[a | g];
+		    b = blend_dark_check[a | b];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[RED_PIX])))];
-		    g = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[GREEN_PIX])))];
-		    b = blend_light_check[(a | FLOAT_TO_8BIT( FLT (src[BLUE_PIX])))];
+		    r = blend_light_check[a | r];
+		    g = blend_light_check[a | g];
+		    b = blend_light_check[a | b];
 		  }
-
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
+		dest[0] = b;
+		dest[1] = g;
+		dest[2] = r;
 		dest += 3;
 
 		if (((x + 1) & check_mod) == 0)
@@ -6101,59 +6086,63 @@ render_image_rgb_a_float16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_PIX]) ];
+		r = display_u8_from_float16 (src[RED_PIX]);
+    		g = display_u8_from_float16 (src[GREEN_PIX]);
+		b = display_u8_from_float16 (src[BLUE_PIX]);
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
-		    g = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
-		    b = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		    r = blend_dark_check[a | r];
+		    g = blend_dark_check[a | g];
+		    b = blend_dark_check[a | b];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
-		    g = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
-		    b = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		    r = blend_light_check[a | r];
+		    g = blend_light_check[a | g];
+		    b = blend_light_check[a | b];
 		  }
-		
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[0] = r;
+		dest[1] = g;
+		dest[2] = b;
 		dest += 4;
 
 		if (((x + 1) & check_mod) == 0)
 		  dark_light += 1;
 	      }
 	  else
+	    {
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
+	        a = alpha[ display_u8_from_float16 (src[ALPHA_PIX]) ];
+		r = display_u8_from_float16 (src[RED_PIX]);
+    		g = display_u8_from_float16 (src[GREEN_PIX]);
+		b = display_u8_from_float16 (src[BLUE_PIX]);
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
-		    g = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
-		    b = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		    r = blend_dark_check[a | r];
+		    g = blend_dark_check[a | g];
+		    b = blend_dark_check[a | b];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
-		    g = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
-		    b = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
+		    r = blend_light_check[a | r];
+		    g = blend_light_check[a | g];
+		    b = blend_light_check[a | b];
 		  }
-
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
+		dest[1] = b;
+		dest[2] = g;
+		dest[3] = r;
 		dest += 4;
 
 		if (((x + 1) & check_mod) == 0)
 		  dark_light += 1;
 	      }
+	   }
 	}
 
       info->dest += info->dest_bpl;
