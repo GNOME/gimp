@@ -90,7 +90,7 @@ gdisplay_check_device_cursor (GDisplay *gdisp)
 }
 
 static int
-key_to_state(int key)
+key_to_state (int key)
 {
   switch (key)
   {
@@ -103,6 +103,25 @@ key_to_state(int key)
    default:
      return 0;
   }
+}
+
+gint
+gdisplay_shell_events (GtkWidget *w,
+		       GdkEvent  *event,
+		       GDisplay  *gdisp)
+{
+  /* Set the active Image to the image where the user clicked/typed */
+
+  switch (event->type)
+    {
+    case GDK_BUTTON_PRESS:
+    case GDK_KEY_PRESS:
+      gimp_set_set_active(image_context, gdisp->gimage);
+      break;
+    default:
+      break;
+  }
+  return FALSE;
 }
 
 gint
@@ -196,9 +215,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
       state = bevent->state;
-
-      /* Set the active Image to the image where the user clicked */
-      gimp_set_set_active(image_context, gdisp->gimage);
 
       switch (bevent->button)
 	{
@@ -388,9 +404,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
       kevent = (GdkEventKey *) event;
       state = kevent->state;
 
-      /* Set the active Image to the image where the user typed */
-      gimp_set_set_active(image_context, gdisp->gimage);
-
       switch (kevent->keyval)
 	{
 	case GDK_Left: case GDK_Right:
@@ -531,12 +544,13 @@ gdisplay_origin_button_press (GtkWidget      *widget,
       gdisp = data;
       popup_shell = gdisp->shell;
       gdisplay_set_menu_sensitivity (gdisp);
-      gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 1, event->time);
-
-      /* Stop the signal emission so the button doesn't grab the
-       * pointer away from us */
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
+      gtk_menu_popup (GTK_MENU (gdisp->popup),
+		      NULL, NULL, NULL, NULL, 1, event->time);
     }
+
+  /* Stop the signal emission so the button doesn't grab the
+   * pointer away from us */
+  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
 
   return FALSE;
 }

@@ -1935,6 +1935,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  /* Expand the "Interface" branch */
+  gtk_ctree_expand (GTK_CTREE (ctree), top_insert);
+
   /* Environment */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Environment Settings"),

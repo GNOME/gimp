@@ -173,9 +173,10 @@ static void layers_dialog_flatten_image_callback (GtkWidget *, gpointer);
 static void layers_dialog_alpha_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_mask_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_add_alpha_channel_callback (GtkWidget *, gpointer);
-static gint lc_dialog_auto_callback (GtkWidget *, gpointer);
-static gint lc_dialog_close_callback (GtkWidget *, gpointer);
 
+/*  the dialog's toplevel callbacks  */
+static void lc_dialog_auto_callback (GtkWidget *, gpointer);
+static gint lc_dialog_close_callback (GtkWidget *, gpointer);
 static void lc_dialog_update_cb (GimpSet *, GimpImage *, gpointer);
 static void lc_dialog_change_image (GimpSet *, GimpImage *, gpointer);
 
@@ -264,7 +265,7 @@ static MenuItem layers_ops[] =
     layers_dialog_raise_layer_to_top_callback, NULL, NULL, NULL },
   { N_("Layer to Bottom"), 'U', GDK_CONTROL_MASK,
     layers_dialog_lower_layer_to_bottom_callback, NULL, NULL, NULL },
- { NULL, 0, 0, NULL, NULL, NULL, NULL },
+  { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
 /*  the option menu items -- the paint modes  */
@@ -2008,13 +2009,20 @@ layers_dialog_add_alpha_channel_callback (GtkWidget *w,
 }
 
 
-static gint
-lc_dialog_auto_callback (GtkWidget *toggle_button, gpointer client_data)
+static void
+lc_dialog_auto_callback (GtkWidget *toggle_button,
+			 gpointer   client_data)
 {
-  if (layersD) 
-    layersD->auto_follow_active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle_button));
+  if (layersD)
+    {
+      layersD->auto_follow_active =
+	gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle_button));
 
-  return TRUE;
+      if (layersD->auto_follow_active)
+	lc_dialog_change_image (image_context,
+				(GimpImage *) gimp_set_get_active (image_context),
+				NULL);
+    }
 }
 
 

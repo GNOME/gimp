@@ -1546,6 +1546,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   GimpDrawable *drawable;
   gint base_type;
   gint type;
+  gint lind;
+  gint lnum;
 
   fs = (gimage_floating_sel (gdisp->gimage) != NULL);
   aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
@@ -1558,18 +1560,22 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   alpha = layer && layer_has_alpha (layer);
 
   type = -1;
+  lind = -1;
+  lnum = -1;
   if (lp)
     {
       drawable = gimage_active_drawable (gdisp->gimage);
       type = drawable_type (drawable);
+      lind = gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
+      lnum = g_slist_length (gdisp->gimage->layers);
     }
 
-  menus_set_sensitive (_("<Image>/Layers/Stack/Previous Layer"), !fs && !aux && lp);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Next Layer"), !fs && !aux && lp);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Raise to Top"), !fs && !aux && lp && alpha);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Lower to Bottom"), !fs && !aux && lp && alpha);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Previous Layer"), !fs && !aux && lp && lind > 0);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Next Layer"), !fs && !aux && lp && lind < (lnum - 1));
+  menus_set_sensitive (_("<Image>/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha && lind > 0);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha && lind < (lnum - 1));
+  menus_set_sensitive (_("<Image>/Layers/Stack/Layer to Top"), !fs && !aux && lp && alpha && lind > 0);
+  menus_set_sensitive (_("<Image>/Layers/Stack/Layer to Bottom"), !fs && !aux && lp && alpha && lind < (lnum - 1));
   menus_set_sensitive (_("<Image>/Layers/Anchor Layer"), fs && !aux && lp);
   menus_set_sensitive (_("<Image>/Layers/Merge Visible Layers"), !fs && !aux && lp);
   menus_set_sensitive (_("<Image>/Layers/Flatten Image"), !fs && !aux && lp);

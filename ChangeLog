@@ -1,3 +1,33 @@
+1999-06-03  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/disp_callbacks.[ch]
+	* app/gimpset.c
+	* app/interface.c: patch from <Simon.Budig@unix-ag.org>. Cleans up
+	the active image implementation. Now the button and key events of
+	the whole gdisplay shell are connected to a separate active image
+	callback.
+
+	Don't let the arrow button of the gdisplay grab the focus and
+	block it's events after any button_press_event, so the canvas
+	always owns the keyboard focus and the button never grabs the
+	pointer.
+
+	* app/gdisplay.c: correct sensitive setting for the Layers/Stack
+	submenu.
+
+	* app/interface.c: make the query boxes insensitive after pressing
+	"OK" (may be useful if they're once used for operations which take
+	longer than just shrink/grow/...).
+
+	* app/layers_dialog.c: switch to the active image when the "Auto"
+	button is activated.
+
+	* app/menus.c: bound the <Image>/Layers/Stack menu to some
+	<modifier>+PageUp/Down combinations.
+
+	* app/preferences_dialog.c: pop up with the "Interface" branch
+	expanded.
+
 Thu Jun  3 16:51:18 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Improved the line draw preview a bit. It's still 

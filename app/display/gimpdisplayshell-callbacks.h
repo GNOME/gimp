@@ -25,6 +25,7 @@
 			   GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | \
 			   GDK_PROXIMITY_OUT_MASK
 
+gint gdisplay_shell_events (GtkWidget *, GdkEvent *, GDisplay *);
 gint gdisplay_canvas_events (GtkWidget *, GdkEvent *);
 gint gdisplay_hruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_vruler_button_press (GtkWidget *, GdkEventButton *, gpointer);

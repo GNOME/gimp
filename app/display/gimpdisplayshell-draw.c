@@ -639,13 +639,21 @@ create_display_shell (GDisplay* gdisp,
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
-  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_RELEASE_MASK);
+  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (gdisplay_delete),
 		      gdisp);
 
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "destroy",
 		      (GtkSignalFunc) gdisplay_destroy,
+		      gdisp);
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "button_press_event",
+		      (GtkSignalFunc) gdisplay_shell_events,
+		      gdisp);
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "key_press_event",
+		      (GtkSignalFunc) gdisplay_shell_events,
 		      gdisp);
 
   /*  the vbox, table containing all widgets  */
@@ -672,6 +680,7 @@ create_display_shell (GDisplay* gdisp,
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (gdisp->origin, GTK_CAN_FOCUS);
   gtk_widget_set_events (GTK_WIDGET (gdisp->origin),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
@@ -1095,6 +1104,8 @@ string_query_box_ok_callback (GtkWidget *w,
 
   query_box = (QueryBox *) client_data;
 
+  gtk_widget_set_sensitive (query_box->qbox, FALSE);
+
   /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
@@ -1119,6 +1130,8 @@ int_query_box_ok_callback (GtkWidget *w,
   gint     *integer_value;
 
   query_box = (QueryBox *) client_data;
+
+  gtk_widget_set_sensitive (query_box->qbox, FALSE);
 
   /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
@@ -1147,6 +1160,8 @@ double_query_box_ok_callback (GtkWidget *w,
 
   query_box = (QueryBox *) client_data;
 
+  gtk_widget_set_sensitive (query_box->qbox, FALSE);
+
   /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
@@ -1173,6 +1188,8 @@ size_query_box_ok_callback (GtkWidget *w,
   gdouble  *double_value;
 
   query_box = (QueryBox *) client_data;
+
+  gtk_widget_set_sensitive (query_box->qbox, FALSE);
 
   /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
