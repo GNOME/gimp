@@ -55,6 +55,8 @@ struct _GimpColorScales
   GtkWidget         *toggles[7];
   GtkObject         *slider_data[7];
   GtkWidget         *hex_entry;
+
+  GtkWidget         *color_scale;
 };
 
 struct _GimpColorScalesClass
@@ -142,30 +144,28 @@ static void
 gimp_color_scales_init (GimpColorScales *scales)
 {
   GimpColorSelector *selector;
-  GtkObject *adj;
   GtkWidget *table;
   GtkWidget *hbox;
   GtkWidget *label;
-  GtkWidget *color_scale;
   GSList    *group;
   gint       i;
 
   static gchar *toggle_titles[] = 
   { 
     /* Hue */
-    N_("H"),
+    N_("_H"),
     /* Saturation */
-    N_("S"),
+    N_("_S"),
     /* Value */
-    N_("V"),
+    N_("_V"),
     /* Red */
-    N_("R"),
+    N_("_R"),
     /* Green */
-    N_("G"),
+    N_("_G"),
     /* Blue */
-    N_("B"),
+    N_("_B"),
     /* Alpha */
-    N_("A")
+    N_("_A")
   };
   static gchar *slider_tips[7] = 
   {
@@ -228,15 +228,15 @@ gimp_color_scales_init (GimpColorScales *scales)
     }
 
   selector = GIMP_COLOR_SELECTOR (scales);
-  color_scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
-                                      GIMP_COLOR_SELECTOR_HUE,
-                                      &selector->rgb, &selector->hsv);
-  gtk_table_attach (GTK_TABLE (table), color_scale,
+  scales->color_scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                                              GIMP_COLOR_SELECTOR_HUE,
+                                              &selector->rgb, &selector->hsv);
+  gtk_table_attach (GTK_TABLE (table), scales->color_scale,
                     2, 3, 7, 8, GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_widget_show (color_scale);
+  gtk_widget_show (scales->color_scale);
 
-  adj = gtk_adjustment_new (0.5, 0.0, 1.0, 0.1, 0.1, 0.0);
-  gtk_range_set_adjustment (GTK_RANGE (color_scale), GTK_ADJUSTMENT (adj));
+  gtk_range_set_adjustment (GTK_RANGE (scales->color_scale),
+                            GTK_ADJUSTMENT (scales->slider_data[selector->channel]));
 
   /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -336,6 +336,11 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
       g_signal_handlers_unblock_by_func (G_OBJECT (scales->toggles[channel]),
                                          gimp_color_scales_toggle_update,
                                          scales);
+
+      gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->color_scale),
+                                    channel);
+      gtk_range_set_adjustment (GTK_RANGE (scales->color_scale),
+                                GTK_ADJUSTMENT (scales->slider_data[channel]));
     }
 }
 
@@ -399,6 +404,9 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
               values[GIMP_COLOR_SELECTOR_BLUE]);
 
   gtk_entry_set_text (GTK_ENTRY (scales->hex_entry), buffer);
+
+  gimp_color_scale_set_color (GIMP_COLOR_SCALE (scales->color_scale),
+                              &selector->rgb, &selector->hsv);
 }
 
 static void
@@ -415,9 +423,17 @@ gimp_color_scales_toggle_update (GtkWidget       *widget,
 
       for (i = 0; i < 6; i++)
         if (widget == scales->toggles[i])
-          selector->channel = (GimpColorSelectorChannel) i;
+          {
+            selector->channel = (GimpColorSelectorChannel) i;
+            break;
+          }
 
       gimp_color_selector_channel_changed (selector);
+
+      gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->color_scale),
+                                    selector->channel);
+      gtk_range_set_adjustment (GTK_RANGE (scales->color_scale),
+                                GTK_ADJUSTMENT (scales->slider_data[i]));
     }
 }
 

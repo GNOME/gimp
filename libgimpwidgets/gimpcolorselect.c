@@ -91,16 +91,16 @@ typedef struct _GimpColorSelectClass GimpColorSelectClass;
 
 struct _GimpColorSelect
 {
-  GimpColorSelector  parent_instance;
+  GimpColorSelector    parent_instance;
 
-  GtkWidget         *xy_color;
-  GtkWidget         *z_color;
+  GtkWidget           *xy_color;
+  GtkWidget           *z_color;
 
-  gint               pos[3];
+  gint                 pos[3];
 
-  gint               z_color_fill;
-  gint               xy_color_fill;
-  GdkGC             *gc;
+  ColorSelectFillType  z_color_fill;
+  ColorSelectFillType  xy_color_fill;
+  GdkGC               *gc;
 };
 
 struct _GimpColorSelectClass
@@ -162,7 +162,7 @@ static gboolean   gimp_color_select_z_events   (GtkWidget          *widet,
                                                 GimpColorSelect    *select);
 
 static void   gimp_color_select_image_fill     (GtkWidget          *widget,
-                                                ColorSelectFillType,
+                                                ColorSelectFillType fill_type,
                                                 const GimpHSV      *hsv,
                                                 const GimpRGB      *rgb);
 
@@ -248,7 +248,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   object_class->finalize      = gimp_color_select_finalize;
 
-  selector_class->name        = "GIMP";
+  selector_class->name        = "_GIMP";
   selector_class->help_page   = "built_in.html";
   selector_class->set_color   = gimp_color_select_set_color;
   selector_class->set_channel = gimp_color_select_set_channel;
@@ -261,7 +261,7 @@ gimp_color_select_init (GimpColorSelect *select)
   GtkWidget *hbox;
   GtkWidget *xy_frame;
   GtkWidget *z_frame;
-			
+
   select->z_color_fill  = COLOR_SELECT_HUE;
   select->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   select->gc            = NULL;
@@ -472,6 +472,9 @@ gimp_color_select_update_values (GimpColorSelect *select)
       selector->hsv.h = select->pos[1] / 255.0;
       selector->hsv.v = select->pos[2] / 255.0;
       break;
+
+    default:
+      break;
     }
 
   switch (select->z_color_fill)
@@ -486,6 +489,9 @@ gimp_color_select_update_values (GimpColorSelect *select)
     case COLOR_SELECT_SATURATION:
     case COLOR_SELECT_VALUE:
       gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
+      break;
+
+    default:
       break;
     }
 }
@@ -529,6 +535,9 @@ gimp_color_select_update_pos (GimpColorSelect *select)
       select->pos[0] = (gint) (selector->hsv.s * 255.999);
       select->pos[1] = (gint) (selector->hsv.h * 255.999);
       select->pos[2] = (gint) (selector->hsv.v * 255.999);
+      break;
+
+    default:
       break;
     }
 }
@@ -747,7 +756,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
 
 static void
 gimp_color_select_image_fill (GtkWidget           *preview,
-                              ColorSelectFillType  type,
+                              ColorSelectFillType  fill_type,
                               const GimpHSV       *hsv,
                               const GimpRGB       *rgb)
 {
@@ -756,7 +765,7 @@ gimp_color_select_image_fill (GtkWidget           *preview,
 
   csf.buffer = g_malloc (preview->requisition.width * 3);
 
-  csf.update = update_procs[type];
+  csf.update = update_procs[fill_type];
 
   csf.y      = -1;
   csf.width  = preview->requisition.width;

@@ -162,7 +162,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
       gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (page), FALSE);
 
-      label = gtk_label_new (GIMP_COLOR_SELECTOR_GET_CLASS (page)->name);
+      label = gtk_label_new_with_mnemonic (GIMP_COLOR_SELECTOR_GET_CLASS (page)->name);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook->notebook), page, label);
 

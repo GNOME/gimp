@@ -1,3 +1,18 @@
+2002-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.c: create the notebook labels
+	with mnemonics.
+
+	* libgimpwidgets/gimpcolorselect.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: added mnemonics to the tab strings.
+
+	* libgimpwidgets/gimpcolorscale.c: looks finished now.
+
+	* libgimpwidgets/gimpcolorscales.c: tie the test color scale to
+	the right channel adjustment and update its color and channel
+	accordingly. Added mnemonics for the channels.
+
 2002-10-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorscale.[ch]: derive it from GtkScale, 
