@@ -1,189 +1,187 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# gimp-plug-ins ko.po
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Sung-Hyun Nam <namsh@kldp.org>, 1999
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp-plug-ins 1.1.9\n"
 "POT-Creation-Date: 1999-07-24 12:04-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 1999-09-08 09:11:52+0900\n"
+"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
+"Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=euc-kr\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Keep image's values"
-msgstr "Keep image's values"
+msgstr "이미지 값 보존"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Keep the first value"
-msgstr ""
+msgstr "첫번째 값 보존"
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Fill with parameter k"
-msgstr ""
+msgstr "파라미터 k로 채움"
 
 #: plug-ins/common/CML_explorer.c:232
 msgid "k{x(1-x)}^p"
-msgstr ""
+msgstr "k{x(1-x)}^p"
 
 #: plug-ins/common/CML_explorer.c:234
 msgid "k{x(1-x)}^p stepped"
-msgstr ""
+msgstr "k{x(1-x)}^p stepped"
 
 #: plug-ins/common/CML_explorer.c:236
 msgid "kx^p"
-msgstr ""
+msgstr "kx^p"
 
 #: plug-ins/common/CML_explorer.c:238
 msgid "kx^p stepped"
-msgstr ""
+msgstr "kx^p stepped"
 
 #: plug-ins/common/CML_explorer.c:240
 msgid "k(1 - x^p)"
-msgstr ""
+msgstr "k(1 - x^p)"
 
 #: plug-ins/common/CML_explorer.c:242
 msgid "k(1 - x^p) stepped"
-msgstr ""
+msgstr "k(1 - x^p) stepped"
 
 #: plug-ins/common/CML_explorer.c:244
 msgid "Delta function"
-msgstr ""
+msgstr "델타 함수"
 
 #: plug-ins/common/CML_explorer.c:246
 msgid "Delta function stepped"
-msgstr ""
+msgstr "델타 함수 stepped"
 
 #: plug-ins/common/CML_explorer.c:248
 msgid "sin^p-based function"
-msgstr ""
+msgstr "sin^p-based 함수"
 
 #: plug-ins/common/CML_explorer.c:250
 msgid "sin^p, stepped"
-msgstr ""
+msgstr "sin^p, stepped"
 
 #: plug-ins/common/CML_explorer.c:256
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: plug-ins/common/CML_explorer.c:258
 msgid "Max (x, -)"
-msgstr ""
+msgstr "Max (x, -)"
 
 #: plug-ins/common/CML_explorer.c:260
 msgid "Max (x+d, -)"
-msgstr ""
+msgstr "Max (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:262
 msgid "Max (x-d, -)"
-msgstr ""
+msgstr "Max (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:264
 msgid "Min (x, -)"
-msgstr ""
+msgstr "Min (x, -)"
 
 #: plug-ins/common/CML_explorer.c:266
 msgid "Min (x+d, -)"
-msgstr ""
+msgstr "Min (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:268
 msgid "Min (x-d, -)"
-msgstr ""
+msgstr "Min (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:270
 msgid "Max (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:272
 msgid "Max (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:274
 msgid "Max (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:276
 msgid "Max (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:278
 msgid "Min (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Min (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:280
 msgid "Min (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:282
 msgid "Min (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Min (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:284
 msgid "Min (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:290
 msgid "Standard"
-msgstr ""
+msgstr "표준"
 
 #: plug-ins/common/CML_explorer.c:292
 msgid "Use average value"
-msgstr ""
+msgstr "평균값 사용"
 
 #: plug-ins/common/CML_explorer.c:294
 msgid "Use reverse value"
-msgstr ""
+msgstr "반대값 사용"
 
 #: plug-ins/common/CML_explorer.c:296
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "With random power (0,10)"
 
 #: plug-ins/common/CML_explorer.c:298
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "With random power (0,1)"
 
 #: plug-ins/common/CML_explorer.c:300
 msgid "With gradient power (0,1)"
-msgstr ""
+msgstr "With gradient power (0,1)"
 
 #: plug-ins/common/CML_explorer.c:302
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "Multiply rand. value (0,1)"
 
 #: plug-ins/common/CML_explorer.c:304
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "Multiply rand. value (0,2)"
 
 #: plug-ins/common/CML_explorer.c:306
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "Multiply gradient (0,1)"
 
 #: plug-ins/common/CML_explorer.c:308
 msgid "With p and random (0,1)"
-msgstr ""
+msgstr "With p and random (0,1)"
 
 #: plug-ins/common/CML_explorer.c:313
 msgid "All black"
-msgstr ""
+msgstr "모두 검정색"
 
 #. 0
 #: plug-ins/common/CML_explorer.c:314
 msgid "All gray"
-msgstr ""
+msgstr "모두 회색"
 
 #. 1
 #: plug-ins/common/CML_explorer.c:315
 msgid "All white"
-msgstr ""
+msgstr "모두 흰색"
 
 #. 2
 #: plug-ins/common/CML_explorer.c:316
 msgid "The first row of the image"
-msgstr ""
+msgstr "이미지의 첫번째 열"
 
 #. 3
 #: plug-ins/common/CML_explorer.c:317
@@ -227,7 +225,7 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:1439 plug-ins/common/CML_explorer.c:1755
 #: plug-ins/common/decompose.c:137
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #: plug-ins/common/CML_explorer.c:387
 msgid "NULL"
@@ -251,7 +249,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1344 plug-ins/common/ps.c:2448
 msgid "Preview"
-msgstr ""
+msgstr "미리보기"
 
 #: plug-ins/common/CML_explorer.c:1385
 msgid "New seed"
@@ -267,11 +265,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1409
 msgid "Load"
-msgstr ""
+msgstr "읽기"
 
 #: plug-ins/common/CML_explorer.c:1412
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Hue settings"
@@ -287,31 +285,31 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1441
 msgid "Advanced settings"
-msgstr ""
+msgstr "진보된 기능 설정"
 
 #: plug-ins/common/CML_explorer.c:1443
 msgid "Advanced"
-msgstr ""
+msgstr "진보된 기능"
 
 #: plug-ins/common/CML_explorer.c:1455
 msgid "Other parameter settings"
-msgstr ""
+msgstr "다른 파라미터 설정"
 
 #: plug-ins/common/CML_explorer.c:1459
 msgid "Channel independed parameters"
-msgstr ""
+msgstr "채널과 독립된 파라미터"
 
 #: plug-ins/common/CML_explorer.c:1463
 msgid "Initial value"
-msgstr ""
+msgstr "초기값"
 
 #: plug-ins/common/CML_explorer.c:1469
 msgid "Zoom scale"
-msgstr ""
+msgstr "확대 비율"
 
 #: plug-ins/common/CML_explorer.c:1474
 msgid "Start offset"
-msgstr ""
+msgstr "시작 옵셋"
 
 #: plug-ins/common/CML_explorer.c:1494
 msgid "Seed of random (only for \"from seed\" modes)"
@@ -339,11 +337,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1539
 msgid "Misc operations"
-msgstr ""
+msgstr "기타 동작"
 
 #: plug-ins/common/CML_explorer.c:1544
 msgid "Copy settings"
-msgstr ""
+msgstr "복사 설정"
 
 #: plug-ins/common/CML_explorer.c:1548
 msgid "Source ch."
@@ -2729,25 +2727,25 @@ msgstr ""
 #: plug-ins/common/xbm.c:799
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
-msgstr ""
+msgstr "XBM: \"%s\"을 생성할 수 없습니다\n"
 
 #: plug-ins/common/xbm.c:949
 msgid "Save as XBM"
-msgstr ""
+msgstr "XBM으로 저장"
 
 #. parameter settings
 #: plug-ins/common/xbm.c:980
 msgid "XBM Options"
-msgstr ""
+msgstr "XBM 옵션"
 
 #: plug-ins/common/xbm.c:995
 msgid "Description: "
-msgstr ""
+msgstr "설명: "
 
 #. X10 format
 #: plug-ins/common/xbm.c:1011
 msgid "X10 format bitmap"
-msgstr ""
+msgstr "X10 형식 비트맵"
 
 #: plug-ins/common/xbm.c:1024
 msgid "Identifier prefix: "
@@ -2755,15 +2753,15 @@ msgstr ""
 
 #: plug-ins/common/xpm.c:170
 msgid "loads files of the xpm file format"
-msgstr ""
+msgstr "xpm 형식의 파일 읽기"
 
 #: plug-ins/common/xpm.c:182
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
-msgstr ""
+msgstr "xpm 형식으로 파일 저장 (만일 16비트 디스플레이를 사용할 경우...)"
 
 #: plug-ins/common/xpm.c:756
 msgid "Save as Xpm"
-msgstr ""
+msgstr "Xpm으로 저장"
 
 #: plug-ins/common/xpm.c:790
 msgid "Alpha Threshold"
@@ -2771,11 +2769,11 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:226 plug-ins/common/xwd.c:227
 msgid "load file of the XWD file format"
-msgstr ""
+msgstr "XWD 형식의 파일 읽기"
 
 #: plug-ins/common/xwd.c:238
 msgid "saves files in the XWD file format"
-msgstr ""
+msgstr "파일을 XWD 형식으로 저장"
 
 #: plug-ins/common/xwd.c:239
 msgid "XWD saving handles all image types except those with alpha channels."
@@ -2799,7 +2797,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:448
 msgid "this image depth/format is not supported"
-msgstr ""
+msgstr "이런 그림 깊이/형식은 지원되지 않습니다"
 
 #: plug-ins/common/xwd.c:452
 #, c-format
@@ -2811,11 +2809,11 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:480
 msgid "XWD save cannot handle images with alpha channels"
-msgstr ""
+msgstr "XWD 저장은 알파 채널을 가진 그림을 조작할 수 없습니다"
 
 #: plug-ins/common/xwd.c:491
 msgid "cannot operate on unknown image types"
-msgstr ""
+msgstr "모르는 그림형식에서는 동작할 수 없습니다"
 
 #: plug-ins/common/xwd.c:500
 msgid "can't open file for writing"
@@ -2828,16 +2826,16 @@ msgstr ""
 #: plug-ins/common/xwd.c:1250 plug-ins/common/xwd.c:1412
 #: plug-ins/common/xwd.c:1609 plug-ins/common/xwd.c:1858
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "읽기동작시 EOF 만남"
 
 #: plug-ins/common/xwd.c:1298
 msgid "No memory for mapping colors"
-msgstr ""
+msgstr "색을 맵핑하기 위한 메모리가 없습니다"
 
 #: plug-ins/common/xwd.c:1982
 msgid "Error during writing indexed/grey image"
-msgstr ""
+msgstr "색인/회색 이미지 쓰기동작시 에러"
 
 #: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "rgb 이미지 쓰기동작시 에러"
