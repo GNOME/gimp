@@ -119,7 +119,7 @@ betrachtet werden.
 Alt-Tab erlaubt es, durch die Ebenen eines Bildes zu schalten
 (wenn der Fenstermanager diese Tastenkombination nicht abfängt).
 
-Wird beim Anwenden des Farbeimers die Shift-Taste gedrückt, so 
+Wird beim Anwenden des Farbeimers die Ctrl-Taste gedrückt, so 
 wird statt der Vordergrund- die Hintergrundfarbe verwendet.
 
 Wird mit dem Transformationswerkzeug im Rotationsmodus die 

@@ -154,7 +154,7 @@ toggles viewing the mask directly.
 You can use Alt-Tab to cycle through all layers in an image 
 (if your window manager doesn't trap those keys...).
 
-Shift-click with the Bucket Fill tool to have it use 
+Ctrl-click with the Bucket Fill tool to have it use 
 the background color instead of the foreground color.
 
 Control-drag with the Transform tool in rotation mode 

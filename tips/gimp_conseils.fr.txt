@@ -113,7 +113,7 @@ Alt+Tab pour voir à tour de rôle tous les calques d'une image
 (si votre gestionnaire de fenêtrage ne récupère pas déjà
 cette combinaison de touches).
 
-Shift+Clic avec l'outil Remplissage lui fait utiliser la
+Control+Clic avec l'outil Remplissage lui fait utiliser la
 couleur d'arrière-plan au lieu de celle de premier plan.
 
 Control-tirer avec l'outil Transformation en mode Rotation

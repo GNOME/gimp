@@ -1,3 +1,11 @@
+2001-06-02  Sven Neumann  <sven@gimp.org>
+
+	* tips/gimp_conseils.fr.txt
+	* tips/gimp_tips.de.txt
+	* tips/gimp_tips.txt: fixed an error pointed out by Branko Collin:
+	Bucket Fill tool uses BG color when pressing Ctrl, not Shift. Someone
+	needs to fix the other languages.
+
 2001-05-22  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: allow for automake 1.4-p1 and similar version numbers.
