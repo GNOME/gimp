@@ -1,3 +1,11 @@
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimputils.[ch]: renamed gimp_flags_get_value() to
+	gimp_flags_get_first_value(). Reordered functions so enum and
+	flags functions are grouped together. Added missing docs.
+
+	* libgimpbase/gimpbase.def: changed accordingly.
+
 2004-11-09  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c: Skip resources with unknown signatures
