@@ -1,7 +1,6 @@
 2004-04-19  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/script-fu/scripts/gimp-headers.scm
-
 	* plug-ins/script-fu/scripts/gimp-labels.scm: applied a patch from
 	William Skaggs which changes the sub menu title for the gimp web
 	theme to classic.gimp.org. Fixes bug #137036.
