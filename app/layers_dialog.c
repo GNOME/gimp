@@ -518,7 +518,6 @@ void
 layers_dialog_free (void)
 {
   LayerWidget *lw;
-  GSList *list;
 
   if (!layersD)
     return;
@@ -528,13 +527,13 @@ layers_dialog_free (void)
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
   suspend_gimage_notify--;
 
-  list = layersD->layer_widgets;
-  while (list)
+  while (layersD->layer_widgets)
     {
-      lw = (LayerWidget *) list->data;
-      list = g_slist_next (list);
+      lw = (LayerWidget *) layersD->layer_widgets->data;
+
       layer_widget_delete (lw);
     }
+
   layersD->layer_widgets  = NULL;
   layersD->active_layer   = NULL;
   layersD->active_channel = NULL;
@@ -567,7 +566,6 @@ layers_dialog_update (GimpImage* gimage)
 {
   GimpLayer   *layer;
   LayerWidget *lw;
-  GSList      *slist;
   GList       *list;
   GList       *item_list;
 
@@ -581,12 +579,10 @@ layers_dialog_update (GimpImage* gimage)
 
   /*  Free all elements in the layers listbox  */
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
-  
-  for (slist = layersD->layer_widgets;
-       slist;
-       slist = g_slist_next (slist))
+
+  while (layersD->layer_widgets)
     {
-      lw = (LayerWidget *) slist->data;
+      lw = (LayerWidget *) layersD->layer_widgets->data;
       
       layer_widget_delete (lw);
     }

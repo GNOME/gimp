@@ -411,7 +411,6 @@ void
 channels_dialog_free (void)
 {
   ChannelWidget *cw;
-  GSList        *list;
 
   if (!channelsD)
     return;
@@ -421,11 +420,10 @@ channels_dialog_free (void)
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
   suspend_gimage_notify--;
 
-  list = channelsD->channel_widgets;
-  while (list)
+  while (channelsD->channel_widgets)
     {
-      cw = (ChannelWidget *) list->data;
-      list = g_slist_next (list);
+      cw = (ChannelWidget *) channelsD->channel_widgets->data;
+
       channel_widget_delete (cw);
     }
   channelsD->channel_widgets = NULL;
@@ -444,7 +442,6 @@ channels_dialog_update (GimpImage* gimage)
 {
   GimpChannel   *channel;
   ChannelWidget *cw;
-  GSList        *slist;
   GList         *list; 
   GList         *item_list;
 
@@ -458,10 +455,9 @@ channels_dialog_update (GimpImage* gimage)
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
   suspend_gimage_notify--;
 
-  for (slist = channelsD->channel_widgets; slist;)
+  while (channelsD->channel_widgets)
     {
-      cw = (ChannelWidget *) slist->data;
-      slist = g_slist_next (slist);
+      cw = (ChannelWidget *) channelsD->channel_widgets->data;
 
       channel_widget_delete (cw);
     }

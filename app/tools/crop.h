@@ -66,7 +66,11 @@ struct _GimpCropToolClass
   GimpDrawToolClass parent_class;
 };
 
-void   gimp_crop_tool_register (void);
+
+void      gimp_crop_tool_register (void);
+
+GtkType   gimp_crop_tool_get_type   (void);
+
 
 /* Keep around for the PDB, temporarily */
 void   crop_image      (GimpImage *gimage,

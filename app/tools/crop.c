@@ -114,10 +114,10 @@ static void   crop_tool_cursor_update  (GimpTool       *tool,
 static void   crop_tool_control        (GimpTool       *tool,
 					ToolAction      action,
 					GDisplay       *gdisp);
-static void   crop_arrow_keys_func     (GimpTool       *tool,
+static void   crop_tool_arrow_key      (GimpTool       *tool,
 					GdkEventKey    *kevent,
 					GDisplay       *gdisp);
-static void   crop_modifier_key_func   (GimpTool       *tool,
+static void   crop_tool_modifier_key   (GimpTool       *tool,
 					GdkEventKey    *kevent,
 					GDisplay       *gdisp);
 
@@ -148,7 +148,8 @@ static void    gimp_crop_tool_class_init (GimpCropToolClass *klass);
 static void    gimp_crop_tool_init       (GimpCropTool *crop_tool);
 static void    gimp_crop_tool_destroy    (GtkObject *object);
 
-static GimpToolClass *parent_class = NULL;
+
+static GimpDrawToolClass *parent_class = NULL;
 
 
 /* Crop area-select functions */ 
@@ -634,9 +635,9 @@ crop_tool_cursor_update (GimpTool       *tool,
 }
 
 static void
-crop_arrow_keys_func (GimpTool    *tool,
-		      GdkEventKey *kevent,
-		      GDisplay    *gdisp)
+crop_tool_arrow_key (GimpTool    *tool,
+                     GdkEventKey *kevent,
+                     GDisplay    *gdisp)
 {
   GimpLayer     *layer;
   GimpDrawTool  *draw;
@@ -646,10 +647,11 @@ crop_arrow_keys_func (GimpTool    *tool,
   gint          min_x, min_y;
   gint          max_x, max_y;
 
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
+
   if (tool->state == ACTIVE)
     {
-      crop = GIMP_CROP_TOOL(tool);
-      draw = GIMP_DRAW_TOOL(tool);
       inc_x = inc_y = 0;
 
       switch (kevent->keyval)
@@ -667,7 +669,7 @@ crop_arrow_keys_func (GimpTool    *tool,
 	  inc_x *= ARROW_VELOCITY;
 	}
 
-      gimp_draw_tool_pause(draw);
+      gimp_draw_tool_pause (draw);
 
       if (crop_options->layer_only)
 	{
@@ -711,12 +713,13 @@ crop_arrow_keys_func (GimpTool    *tool,
 	}
 
       crop_recalc (tool, crop);
-      gimp_draw_tool_resume(draw);
+
+      gimp_draw_tool_resume (draw);
     }
 }
 
 static void
-crop_modifier_key_func (GimpTool    *tool,
+crop_tool_modifier_key (GimpTool    *tool,
 			GdkEventKey *kevent,
 			GDisplay    *gdisp)
 {
@@ -741,25 +744,23 @@ crop_modifier_key_func (GimpTool    *tool,
 }
 
 static void
-crop_tool_control (GimpTool    *tool,
-	      ToolAction  action,
-	      GDisplay   *gdisp)
+crop_tool_control (GimpTool   *tool,
+                   ToolAction  action,
+                   GDisplay   *gdisp)
 {
   GimpCropTool *crop;
   GimpDrawTool *draw;
 
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
   
   switch (action)
     {
     case PAUSE:
-      gimp_draw_tool_pause(draw);
       break;
 
     case RESUME:
       crop_recalc (tool, crop);
-      gimp_draw_tool_resume(draw);
       break;
 
     case HALT:
@@ -769,16 +770,19 @@ crop_tool_control (GimpTool    *tool,
     default:
       break;
     }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void
-crop_draw (GimpTool *tool)
+crop_tool_draw (GimpDrawTool *draw)
 {
   GimpCropTool *crop;
-  GimpDrawTool *draw;
+  GimpTool     *tool;
 
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  crop = GIMP_CROP_TOOL (draw);
+  tool = GIMP_TOOL (draw);
   
 #define SRW 10
 #define SRH 10
@@ -1596,21 +1600,27 @@ gimp_crop_tool_get_type (void)
 static void
 gimp_crop_tool_class_init (GimpCropToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
 
-  object_class->destroy = gimp_crop_tool_destroy;
+  object_class->destroy      = gimp_crop_tool_destroy;
 
   tool_class->control        = crop_tool_control;
   tool_class->button_press   = crop_tool_button_press;
   tool_class->button_release = crop_tool_button_release;
   tool_class->motion         = crop_tool_motion;
   tool_class->cursor_update  = crop_tool_cursor_update;
+  tool_class->arrow_key      = crop_tool_arrow_key;
+  tool_class->modifier_key   = crop_tool_modifier_key;
+
+  draw_tool_class->draw      = crop_tool_draw;
 }
 
 static void

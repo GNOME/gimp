@@ -1,3 +1,12 @@
+2001-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/crop.[ch]: we need to override GimpDrawTool's "draw"
+	method to actually see something.
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c: fixed the crash introduced by the migration
+	of gimage->layers and gimage->channels to GimpContainer.
+
 2001-02-20  Nathan Summers  <rock@gimp.org>
 
 	* app/tools/gimptransformtool.c
