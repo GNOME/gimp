@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.3
+ * PSD Plugin version 2.0.4
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -34,6 +34,9 @@
 
 /*
  * Revision history:
+ *
+ *  1999.08.13 / v2.0.4 / Adam D. Moss
+ *       Allowed NULL layer names again, whee.
  *
  *  1999.08.20 / v2.0.3 / Adam D. Moss
  *       Ensure that NULL name does not get passed to gimp_layer_new(),
@@ -1716,9 +1719,7 @@ load_image(char *name)
 		  }
 		  
 		layer_ID = gimp_layer_new (image_ID,
-					   psd_image.layer[lnum].name ?
-					   psd_image.layer[lnum].name :
-					   "Unnamed layer",
+					   psd_image.layer[lnum].name,
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
 					   (numc==1) ? GRAY_IMAGE : GRAYA_IMAGE,
@@ -1784,9 +1785,7 @@ load_image(char *name)
 		  fprintf(stderr, "YAH1\n");
 
 		layer_ID = gimp_layer_new (image_ID,
-					   psd_image.layer[lnum].name ?
-					   psd_image.layer[lnum].name :
-					   "Unnamed layer",
+					   psd_image.layer[lnum].name,
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
 					   (numc==3) ? RGB_IMAGE : RGBA_IMAGE,
