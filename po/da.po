@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-22 11:49-0700\n"
-"PO-Revision-Date: 2000-04-21 14:31+02:00\n"
+"PO-Revision-Date: 2000-04-24 03:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -463,18 +463,16 @@ msgid "Fuzziness Threshold"
 msgstr "Udviskningstærskel"
 
 #: app/by_color_select.c:792
-#, fuzzy
 msgid "Selection"
-msgstr "Markering: "
+msgstr "Markering"
 
 #: app/by_color_select.c:803
-#, fuzzy
 msgid "Invert"
-msgstr "Konvertér"
+msgstr "Invertér"
 
 #: app/by_color_select.c:810
 msgid "All"
-msgstr ""
+msgstr "Alt"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -4460,14 +4458,12 @@ msgid "Use Global Paint Options"
 msgstr "Brug globale maleindstillinger"
 
 #: app/preferences_dialog.c:2051
-#, fuzzy
 msgid "Finding Contiguous Regions"
-msgstr "Vælg sammenhængende områder"
+msgstr "Finder sammenhængende områder"
 
 #: app/preferences_dialog.c:2070
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Tærskel:"
+msgstr "Standard tærskel:"
 
 #: app/preferences_dialog.c:2079 app/preferences_dialog.c:2081
 msgid "Environment"
