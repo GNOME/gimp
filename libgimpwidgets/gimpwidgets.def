@@ -103,8 +103,10 @@ EXPORTS
 	gimp_option_menu_set_sensitive
 	gimp_path_editor_get_path
 	gimp_path_editor_get_type
+	gimp_path_editor_get_writable_path
 	gimp_path_editor_new
 	gimp_path_editor_set_path
+	gimp_path_editor_set_writable_path
 	gimp_pick_button_get_type
 	gimp_pick_button_new
 	gimp_pixmap_button_new
