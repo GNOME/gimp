@@ -1,3 +1,9 @@
+2003-05-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c (export_merge): check that the merged layer
+	has image width and height and resize it if necessary. Fixes bug
+	#113639.
+
 2003-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile-manager-private.h: added "gint ref_count" to the
