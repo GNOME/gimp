@@ -121,12 +121,21 @@ gimp_unit_menu_new (gchar    *format,
 			  (GtkSignalFunc) gimp_unit_menu_callback, gum);
       gtk_widget_show(menuitem);
       gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_unit_menu", (gpointer)u);
+
+      /* add a separator after pixels */
+      if (u == UNIT_PIXEL)
+	{
+	  menuitem = gtk_menu_item_new ();
+	  gtk_widget_show (menuitem);
+	  gtk_menu_append (GTK_MENU (menu), menuitem);
+	}
     } 
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (gum), menu);
 
   gum->unit = unit;
-  gtk_option_menu_set_history (GTK_OPTION_MENU (gum), unit - gum->start);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
+			       unit - gum->start + (with_pixels ? 1 : 0));
   
   return GTK_WIDGET (gum);
 }
@@ -136,16 +145,25 @@ void
 gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 			 GUnit         unit)
 {
-  if ( (unit < gum->start) || (unit >= UNIT_END) )
-    unit = gum->start;
+  g_return_if_fail (gum != NULL);
+  g_return_if_fail (GIMP_IS_UNIT_MENU (gum));
+
+  /* replace UNIT_END when unit database is there */
+
+  g_return_if_fail ((unit >= gum->start) && (unit < UNIT_END));
 
   gum->unit = unit;
-  gtk_option_menu_set_history (GTK_OPTION_MENU (gum), unit - gum->start);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (gum),
+			       unit - gum->start +
+			       ((gum->start == UNIT_PIXEL) ? 1 : 0));
 }
 
 GUnit
 gimp_unit_menu_get_unit (GimpUnitMenu *gum)
 {
+  g_return_val_if_fail (gum != NULL, UNIT_INCH);
+  g_return_val_if_fail (GIMP_IS_UNIT_MENU (gum), UNIT_INCH);
+
   return gum->unit;
 }
 
@@ -260,4 +278,3 @@ gimp_unit_menu_callback (GtkWidget *widget,
   gtk_signal_emit (GTK_OBJECT (gum),
 		   gimp_unit_menu_signals[GUM_UNIT_CHANGED_SIGNAL]);
 }
-

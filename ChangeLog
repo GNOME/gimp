@@ -1,3 +1,32 @@
+1999-03-12  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+        This is mostly unit stuff and code cleanup
+	
+	* libgimp/gimpi.def: add some functions
+
+	* libgimp/gimpsizeentry.[ch]: new function
+	gimp_size_entry_set_refval_digits() which allows for float pixel
+	input. SIGFPE bugfix from Yasuhiro Shirasaki
+	<yasuhiro@awa.tohoku.ac.jp>, minor bugfixes.
+
+	* libgimp/gimpunitmenu.[ch]: add a separator after "pixels",
+	bugfixes.
+
+	* app/interface.[ch]: split up the old query_string_box() into
+	query_[string|int|float|size]_box(). All functions take an
+	optional GtkObject* parameter and connect to that object's
+	"destroy" signal, this fixes some segfaults. And a global
+	s/container_border_width/container_set_border_width/
+
+	* app/commands.s: grow, shrink, border, feather now use the
+	query_size_box. Used MIN(xres,yres) for now for the pixel<->unit
+	calculations. Fixed some memory leaks.
+
+	* app/global_edit.c
+	* app/gradient.c
+	* app/palette.c
+	* app/paths_dialog.c: changed the query_string_box() calls
+
 Thu Mar 11 19:42:12 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * configure.in, config.h.in: added test for _exit (mirrors the

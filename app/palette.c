@@ -1348,8 +1348,8 @@ static void
 palette_new_entries_callback (GtkWidget *w,
 				 gpointer   client_data)
 {
-  query_string_box (_("New Palette"), _("Enter a name for new palette"), NULL,
-		    palette_add_entries_callback, client_data);
+  query_string_box (_("New Palette"), _("Enter a name for new palette"),
+		    NULL, NULL, palette_add_entries_callback, client_data);
 }
 
 static void
@@ -2711,8 +2711,8 @@ static void
 palette_merge_dialog_callback (GtkWidget *w,
 				gpointer client_data)
 {
-  query_string_box (_("Merge Palette"), _("Enter a name for merged palette"), NULL,
-		    palette_merge_entries_callback, client_data);
+  query_string_box (_("Merge Palette"), _("Enter a name for merged palette"),
+		    NULL, NULL, palette_merge_entries_callback, client_data);
 }
 
 static void

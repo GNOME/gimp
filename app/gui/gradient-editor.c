@@ -1259,7 +1259,7 @@ ed_new_gradient_callback(GtkWidget *widget, gpointer client_data)
 	query_string_box(N_("New gradient"),
 			 N_("Enter a name for the new gradient"),
 			 N_("untitled"),
-			 ed_do_new_gradient_callback, NULL);
+			 NULL, ed_do_new_gradient_callback, NULL);
 } /* ed_new_gradient_callback */
 
 
@@ -1368,7 +1368,7 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 	query_string_box(N_("Copy gradient"),
 			 N_("Enter a name for the copied gradient"),
 			 name,
-			 ed_do_copy_gradient_callback, NULL);
+			 NULL, ed_do_copy_gradient_callback, NULL);
 
 	g_free(name);
 } /* ed_copy_gradient_callback */
@@ -1597,7 +1597,7 @@ ed_rename_grads_callback(GtkWidget *widget, gpointer client_data)
 	query_string_box(N_("Rename gradient"),
 			 N_("Enter a new name for the gradient"),
 			 curr_gradient->name,
-			 ed_do_rename_gradient_callback, curr_gradient);
+			 NULL, ed_do_rename_gradient_callback, curr_gradient);
 }
 
 /*****/

@@ -698,7 +698,7 @@ named_edit_cut (void *gdisp_ptr)
 
   query_string_box (N_("Cut Named"),
                     N_("Enter a name for this buffer"),
-                    NULL,
+                    NULL, GTK_OBJECT (gdisp->gimage),
 		    cut_named_buffer_callback, gdisp);
   return TRUE;
 }
@@ -729,7 +729,7 @@ named_edit_copy (void *gdisp_ptr)
   
   query_string_box (N_("Copy Named"),
                     N_("Enter a name for this buffer"),
-                    NULL,
+                    NULL, GTK_OBJECT (gdisp->gimage),
 		    copy_named_buffer_callback, gdisp);
   return TRUE;
 }

@@ -32,8 +32,10 @@ EXPORTS
 	gimp_size_entry_set_resolution
 	gimp_size_entry_set_refval
 	gimp_size_entry_set_refval_boundaries
+	gimp_size_entry_set_refval_digits
 	gimp_size_entry_set_unit
 	gimp_size_entry_set_value
+	gimp_size_entry_set_value_boundaries
 	gimp_unit_get_abbreviation
 	gimp_unit_get_deletion_flag
 	gimp_unit_get_digits
@@ -44,6 +46,10 @@ EXPORTS
 	gimp_unit_get_plural
 	gimp_unit_get_singular
 	gimp_unit_get_symbol
+	gimp_unit_menu_get_type
+	gimp_unit_menu_get_unit
+	gimp_unit_menu_new
+	gimp_unit_menu_set_unit
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gp_config_write

@@ -365,15 +365,16 @@ select_border_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   GDisplay * gdisp;
-  char initial[16];
 
   gdisp = gdisplay_active ();
 
-  sprintf (initial, "%d", gimage_mask_border_radius);
-  query_string_box (N_("Border Selection"),
-                    N_("Border selection by:"),
-                    initial,
-		    gimage_mask_border_callback, gdisp->gimage);
+  query_size_box (N_("Border Selection"),
+		  N_("Border selection by:"),
+		  gimage_mask_border_radius, 1, 32767, 0,
+		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
+		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
+		  GTK_OBJECT (gdisp->gimage), gimage_mask_border_callback,
+		  gdisp->gimage);
 }
 
 void
@@ -381,15 +382,16 @@ select_feather_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
   GDisplay * gdisp;
-  char initial[16];
 
   gdisp = gdisplay_active ();
 
-  sprintf (initial, "%f", gimage_mask_feather_radius);
-  query_string_box (N_("Feather Selection"),
-                    N_("Feather selection by:"),
-                    initial,
-		    gimage_mask_feather_callback, gdisp->gimage);
+  query_size_box (N_("Feather Selection"),
+		  N_("Feather selection by:"),
+		  gimage_mask_feather_radius, 0, 32767, 3,
+		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
+		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
+		  GTK_OBJECT (gdisp->gimage), gimage_mask_feather_callback,
+		  gdisp->gimage);
 }
 
 void
@@ -397,13 +399,16 @@ select_grow_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
   GDisplay * gdisp;
-  char initial[16];
 
   gdisp = gdisplay_active ();
 
-  sprintf (initial, "%d", gimage_mask_grow_pixels);
-  query_string_box (_("Grow Selection"), _("Grow selection by:"), initial,
-		    gimage_mask_grow_callback, gdisp->gimage);
+  query_size_box (_("Grow Selection"),
+		  _("Grow selection by:"),
+		  gimage_mask_grow_pixels, 1, 32767, 0,
+		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
+		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
+		  GTK_OBJECT (gdisp->gimage), gimage_mask_grow_callback,
+		  gdisp->gimage);
 }
 
 void
@@ -411,13 +416,16 @@ select_shrink_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   GDisplay * gdisp;
-  char initial[16];
 
   gdisp = gdisplay_active ();
 
-  sprintf (initial, "%d", gimage_mask_shrink_pixels);
-  query_string_box (_("Shrink Selection"), _("Shrink selection by:"), initial,
-		    gimage_mask_shrink_callback, gdisp->gimage);
+  query_size_box (_("Shrink Selection"),
+		  _("Shrink selection by:"),
+		  gimage_mask_shrink_pixels, 1, 32767, 0,
+		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
+		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
+		  GTK_OBJECT (gdisp->gimage), gimage_mask_shrink_callback,
+		  gdisp->gimage);
 }
 
 void
@@ -840,7 +848,6 @@ layers_lower_cmd_callback (GtkWidget *widget,
   gimage_lower_layer (gdisp->gimage, gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
-  int value;
 
 void
 layers_anchor_cmd_callback (GtkWidget *widget,
@@ -1083,11 +1090,6 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
 }
 
 
-/****************************************************/
-/**           LOCAL FUNCTIONS                      **/
-/****************************************************/
-
-
 /*********************/
 /*  Local functions  */
 /*********************/
@@ -1183,12 +1185,10 @@ gimage_mask_feather_callback (GtkWidget *w,
 			      gpointer   client_data,
 			      gpointer   call_data)
 {
-  GImage *gimage=GIMP_IMAGE(client_data);
-  double feather_radius;
+  GImage *gimage = GIMP_IMAGE (client_data);
 
-  feather_radius = atof (call_data);
-
-  gimage_mask_feather (gimage, feather_radius);
+  gimage_mask_feather (gimage, *(float*)call_data);
+  g_free (call_data);
   gdisplays_flush ();
 }
 
@@ -1198,14 +1198,10 @@ gimage_mask_border_callback (GtkWidget *w,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage *gimage;
-  int border_radius;
-
-  gimage=GIMP_IMAGE(client_data);
+  GImage *gimage = GIMP_IMAGE (client_data);
   
-  border_radius = atoi (call_data);
-
-  gimage_mask_border (gimage, border_radius);
+  gimage_mask_border (gimage, (int)*(float*)call_data);
+  g_free (call_data);
   gdisplays_flush ();
 }
 
@@ -1215,12 +1211,10 @@ gimage_mask_grow_callback (GtkWidget *w,
 			   gpointer   client_data,
 			   gpointer   call_data)
 {
-  GImage *gimage=GIMP_IMAGE(client_data);
-  int grow_pixels;
+  GImage *gimage = GIMP_IMAGE (client_data);
 
-  grow_pixels = atoi (call_data);
-
-  gimage_mask_grow (gimage, grow_pixels);
+  gimage_mask_grow (gimage, (int)*(float*)call_data);
+  g_free (call_data);
   gdisplays_flush ();
 }
 
@@ -1230,17 +1224,9 @@ gimage_mask_shrink_callback (GtkWidget *w,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage *gimage=GIMP_IMAGE(client_data);
-  int shrink_pixels;
+  GImage *gimage = GIMP_IMAGE (client_data);
 
-  shrink_pixels = atoi (call_data);
-
-  gimage_mask_shrink (gimage, shrink_pixels);
+  gimage_mask_shrink (gimage, (int)*(float*)call_data);
+  g_free (call_data);
   gdisplays_flush ();
 }
-
-
-
-
-
-

@@ -20,6 +20,7 @@
 
 #include "toolsF.h"
 #include "gdisplayF.h"
+#include "libgimp/gimpunit.h"
 
 /* typedefs */
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
@@ -30,18 +31,77 @@ extern GtkWidget *popup_shell;
 extern GtkTooltips *tool_tips;
 
 /* function declarations */
-GtkWidget *  create_pixmap_widget (GdkWindow *, char **, int, int);
-GdkPixmap *  create_tool_pixmap (GtkWidget *, ToolType);
-void         create_toolbox (void);
-void	     toolbox_free (void);
-void         toolbox_raise_callback (GtkWidget *, gpointer);
-void         create_display_shell (GDisplay* , int, int, char *, int);
-void         position_dialog (GtkWidget *, gpointer, gpointer);
-void         center_dialog (GtkWidget *, gpointer, gpointer);
-GtkWidget *  query_string_box (char *, char *, char *, QueryFunc, gpointer);
-GtkWidget *  message_box (char *, GtkCallback, gpointer);
+GtkWidget *  create_pixmap_widget   (GdkWindow   *parent,
+				     char       **data,
+				     int          width,
+				     int          height);
 
-void tools_push_label (char *label);
-void tools_pop_label (void);
+GdkPixmap *  create_tool_pixmap     (GtkWidget   *parent,
+				     ToolType     type);
+
+void         create_toolbox         (void);
+void	     toolbox_free           (void);
+
+void         toolbox_raise_callback (GtkWidget   *widget,
+				     gpointer     client_data);
+
+void         create_display_shell   (GDisplay    *gdisp,
+				     int          width,
+				     int          height,
+				     char        *title,
+				     int          type);
+
+/* commented out because these functions are not in interface.c
+ * is this a bug or did I miss something?? -- michael
+ * void         position_dialog        (GtkWidget *, gpointer, gpointer);
+ * void         center_dialog          (GtkWidget *, gpointer, gpointer);
+ */
+
+/* some simple query dialogs
+ * if object != NULL then the query boxes will connect to the "destroy"
+ * signal of this object
+ */
+GtkWidget *  query_string_box       (char        *title,
+				     char        *message,
+				     char        *initial,
+				     GtkObject   *object,
+				     QueryFunc    callback,
+				     gpointer     data);
+GtkWidget *  query_int_box          (char        *title,
+				     char        *message,
+				     int          initial,
+				     int          lower,
+				     int          upper,
+				     GtkObject   *object,
+				     QueryFunc    callback,
+				     gpointer     data);
+GtkWidget *  query_float_box        (char        *title,
+				     char        *message,
+				     float        initial,
+				     float        lower,
+				     float        upper,
+				     int          digits,
+				     GtkObject   *object,
+				     QueryFunc    callback,
+				     gpointer     data);
+GtkWidget *  query_size_box         (char        *title,
+				     char        *message,
+				     float        initial,
+				     float        lower,
+				     float        upper,
+				     int          digits,
+				     GUnit        unit,
+				     float        resolution,
+				     GtkObject   *object,
+				     QueryFunc    callback,
+				     gpointer     data);
+
+/* a simple message box */
+GtkWidget *  message_box            (char        *message,
+				     GtkCallback  callback,
+				     gpointer     data);
+
+void tools_push_label               (char *label);
+void tools_pop_label                (void);
 
 #endif /* INTERFACE_H */

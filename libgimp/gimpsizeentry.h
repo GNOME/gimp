@@ -27,11 +27,11 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define GIMP_TYPE_SIZE_ENTRY          (gimp_size_entry_get_type ())
-#define GIMP_SIZE_ENTRY(obj)          (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
-#define GIMP_SIZE_ENTRY_CLASS(klass)  (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
-#define GIMP_IS_SIZE_ENTRY(obj)       (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
-#define GIMP_IS_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_ENTRY))
+#define GIMP_TYPE_SIZE_ENTRY            (gimp_size_entry_get_type ())
+#define GIMP_SIZE_ENTRY(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
+#define GIMP_SIZE_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
+#define GIMP_IS_SIZE_ENTRY(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
+#define GIMP_IS_SIZE_ENTRY_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
 
 typedef struct _GimpSizeEntry       GimpSizeEntry;
 typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
@@ -62,12 +62,12 @@ struct _GimpSizeEntry
 
 struct _GimpSizeEntryClass
 {
-  GtkHBoxClass parent_class;
+  GtkTableClass parent_class;
 
   void (* gimp_size_entry) (GimpSizeEntry *gse);
 };
 
-guint       gimp_size_entry_get_type        (void);
+guint gimp_size_entry_get_type (void);
 
 /* creates a new GimpSizeEntry widget
  * number_of_fields  -- how many spinbuttons to show
@@ -146,13 +146,16 @@ void        gimp_size_entry_set_value             (GimpSizeEntry *gse,
  * for GIMP_SIZE_ENTRY_UPDATE_SIZE       it's the value in pixels
  * for GIMP_SIZE_ENTRY_UPDATE_RESOLUTION it's the resolution in dpi
  * for GIMP_SIZE_ENTRY_UPDATE_NONE       it's up to the caller as he has to
- *                                       care for a correct value<->refval
+ *                                       provide a correct value<->refval
  *                                       mapping
  */
 void        gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
 						   gint           field,
 						   gfloat         lower,
 						   gfloat         upper);
+void        gimp_size_entry_set_refval_digits     (GimpSizeEntry *gse,
+					           gint           field,
+					           gint           digits);
 gfloat      gimp_size_entry_get_refval            (GimpSizeEntry *gse,
 					           gint           field);
 void        gimp_size_entry_set_refval            (GimpSizeEntry *gse,
@@ -172,6 +175,3 @@ void        gimp_size_entry_set_unit              (GimpSizeEntry *gse,
 #endif /* __cplusplus */
 
 #endif /* __GIMP_SIZE_ENTRY_H__ */
-
-
-
