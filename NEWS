@@ -7,6 +7,37 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
+
+Bugs fixed in GIMP 2.0pre3
+==========================
+- 127451: Anchor floating selection when creating a text layer (Mitch)
+- 50649:  Allow to call script-fu scripts from plug-ins (Mitch)
+- 132617: Improved gimp-remote behaviour (Sven)
+- 132036: Fixed issues with libart scan conversion (Simon)
+- 132041: Made info window not grab the focus (Mitch)
+- 132077: Redraw layer boundary when using transform tools (Mitch)
+- 132089: Flip tool misbehaviours (Mitch)
+- 132032: User interface issues with Plugin Details (David Odin)
+- 132145: Use default values when stroking from the PDB (Mitch)
+- 132162: Anchoring a floating selection on a channel (Mitch)
+- 132271: Mosaic filter on selections (Simon)
+- 132322: gimp-levels on grayscale images (Mitch)
+- 132329: Info window doesn't show inital values (Shlomi Fish)
+- 118084: Info window not updated in automatic mode (Shlomi Fish)
+- 132495: Positioning of glyphs that extend the logical rectangle (Sven)
+- 108659: Use g_spawn in postscript plug-in (Peter Kirchgessner)
+- 132508: Problems with path tool in Edit mode (Simon)
+- 132504: Fixed unsharp mask script (Mitch)
+- 132595: Don't draw the selection if it's hidden (Sven)
+- 132027: Crash in gimpressionist (Sven)
+- 132596: Use default values for color DND (Mitch)
+- 132493: Tuned Comic Logo script (Pedro Gimeno)
+- 132649: Allow to fill the whole selection using bucket-fill (Mitch)
+
+Other contributions:
+  Manish Singh, Tor Lillqvist
+
+
 Bugs fixed in GIMP 2.0pre2
 ==========================
 - 130828: Compile error with gcc 2.95 (Adrian Bunk)
