@@ -115,7 +115,6 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   tool       = GIMP_TOOL (airbrush);
   paint_tool = GIMP_PAINT_TOOL (airbrush);
 
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_AIRBRUSH_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;

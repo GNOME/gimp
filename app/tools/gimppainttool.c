@@ -156,6 +156,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   tool = GIMP_TOOL (paint_tool);
 
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
+
   paint_tool->pick_colors = FALSE;
   paint_tool->pick_state  = FALSE;
 }

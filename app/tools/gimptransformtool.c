@@ -191,6 +191,9 @@ gimp_transform_tool_init (GimpTransformTool *transform_tool)
 
   tool = GIMP_TOOL (transform_tool);
 
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
+
   transform_tool->function = TRANSFORM_CREATING;
   transform_tool->original = NULL;
 
@@ -550,42 +553,46 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 {
   GimpTransformTool  *tr_tool;
   GimpDrawable       *drawable;
-  GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
-  GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
+  if (tr_tool->use_grid)
     {
-      gint off_x, off_y;
+      GdkCursorType      ctype     = GDK_TOP_LEFT_ARROW;
+      GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
+     if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
+        {
+          gint off_x, off_y;
 
-      if (GIMP_IS_LAYER (drawable) &&
-          gimp_layer_get_mask (GIMP_LAYER (drawable)))
-	{
-	  ctype = GIMP_BAD_CURSOR;
-	}
-      else if (coords->x >= off_x &&
-	       coords->y >= off_y &&
-	       coords->x < (off_x + drawable->width) &&
-	       coords->y < (off_y + drawable->height))
-	{
-	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
-	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
-	    {
-	      ctype = GIMP_MOUSE_CURSOR;
-	    }
-	}
+          gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+          if (GIMP_IS_LAYER (drawable) &&
+              gimp_layer_get_mask (GIMP_LAYER (drawable)))
+            {
+              ctype = GIMP_BAD_CURSOR;
+            }
+          else if (coords->x >= off_x &&
+                   coords->y >= off_y &&
+                   coords->x < (off_x + drawable->width) &&
+                   coords->y < (off_y + drawable->height))
+            {
+              if (gimp_image_mask_is_empty (gdisp->gimage) ||
+                  gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+                {
+                  ctype = GIMP_MOUSE_CURSOR;
+                }
+            }
+        }
+
+      if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
+        {
+          cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+        }
+
+      gimp_tool_control_set_cursor          (tool->control, ctype);
+      gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
     }
-
-  if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
-    {
-      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
-    }
-
-  gimp_tool_control_set_cursor (tool->control, ctype);
-  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -82,7 +82,7 @@ struct _HistogramToolDialog
 /*  local function prototypes  */
 
 static void   gimp_histogram_tool_class_init (GimpHistogramToolClass *klass);
-static void   gimp_histogram_tool_init       (GimpHistogramTool      *bc_tool);
+static void   gimp_histogram_tool_init       (GimpHistogramTool      *hist_tool);
 
 static void   gimp_histogram_tool_initialize (GimpTool             *tool,
 					      GimpDisplay          *gdisp);
@@ -155,7 +155,7 @@ gimp_histogram_tool_get_type (void)
 	(GInstanceInitFunc) gimp_histogram_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
 					  "GimpHistogramTool", 
                                           &tool_info, 0);
     }
@@ -177,14 +177,8 @@ gimp_histogram_tool_class_init (GimpHistogramToolClass *klass)
 }
 
 static void
-gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
+gimp_histogram_tool_init (GimpHistogramTool *hist_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);  /* why? */
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
 }
 
 static void

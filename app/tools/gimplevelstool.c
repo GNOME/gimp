@@ -129,7 +129,7 @@ struct _LevelsDialog
 /*  local function prototypes  */
 
 static void   gimp_levels_tool_class_init (GimpLevelsToolClass *klass);
-static void   gimp_levels_tool_init       (GimpTool            *tool);
+static void   gimp_levels_tool_init       (GimpLevelsTool      *tool);
 
 static void   gimp_levels_tool_initialize (GimpTool       *tool,
 					   GimpDisplay    *gdisp);
@@ -258,10 +258,8 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 }
 
 static void
-gimp_levels_tool_init (GimpTool *tool)
+gimp_levels_tool_init (GimpLevelsTool *tool)
 {
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
 }
 
 static void

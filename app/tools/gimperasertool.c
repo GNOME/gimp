@@ -120,10 +120,12 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
   tool       = GIMP_TOOL (eraser);
   paint_tool = GIMP_PAINT_TOOL (eraser);
 
-  gimp_tool_control_set_motion_mode            (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor            (tool->control, GIMP_ERASER_TOOL_CURSOR);
-  gimp_tool_control_set_toggle_tool_cursor     (tool->control, GIMP_ERASER_TOOL_CURSOR);
-  gimp_tool_control_set_toggle_cursor_modifier (tool->control, GIMP_CURSOR_MODIFIER_MINUS);
+  gimp_tool_control_set_tool_cursor            (tool->control,
+                                                GIMP_ERASER_TOOL_CURSOR);
+  gimp_tool_control_set_toggle_tool_cursor     (tool->control,
+                                                GIMP_ERASER_TOOL_CURSOR);
+  gimp_tool_control_set_toggle_cursor_modifier (tool->control,
+                                                GIMP_CURSOR_MODIFIER_MINUS);
 
   paint_tool->core = g_object_new (GIMP_TYPE_ERASER, NULL);
 }

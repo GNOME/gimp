@@ -156,13 +156,15 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   tool           = GIMP_TOOL (flip_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
-  gimp_tool_control_set_scroll_lock        (tool->control, TRUE);
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
-  gimp_tool_control_set_preserve           (tool->control, FALSE);
-  gimp_tool_control_set_cursor             (tool->control, GDK_SB_H_DOUBLE_ARROW);
-  gimp_tool_control_set_tool_cursor        (tool->control, GIMP_FLIP_HORIZONTAL_TOOL_CURSOR);
-  gimp_tool_control_set_tool_cursor        (tool->control, GDK_SB_V_DOUBLE_ARROW);
-  gimp_tool_control_set_toggle_tool_cursor (tool->control, GIMP_FLIP_VERTICAL_TOOL_CURSOR);
+  gimp_tool_control_set_cursor             (tool->control,
+                                            GDK_SB_H_DOUBLE_ARROW);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_FLIP_HORIZONTAL_TOOL_CURSOR);
+  gimp_tool_control_set_toggle_cursor      (tool->control,
+                                            GDK_SB_V_DOUBLE_ARROW);
+  gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                            GIMP_FLIP_VERTICAL_TOOL_CURSOR);
 
   transform_tool->use_grid = FALSE;
 }
@@ -239,7 +241,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
       gimp_tool_control_set_toggle_cursor (tool->control, GDK_SB_V_DOUBLE_ARROW);
     }
 
-  gimp_tool_control_set_toggle (tool->control, (options->type == ORIENTATION_VERTICAL));
+  gimp_tool_control_set_toggle (tool->control,
+                                (options->type == ORIENTATION_VERTICAL));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

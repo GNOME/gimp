@@ -158,7 +158,6 @@ gimp_clone_tool_init (GimpCloneTool *clone)
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
 
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
 
   clone_core = g_object_new (GIMP_TYPE_CLONE, NULL);

@@ -154,8 +154,6 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   tool = GIMP_TOOL (rotate_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_ROTATE_TOOL_CURSOR);
 }
 

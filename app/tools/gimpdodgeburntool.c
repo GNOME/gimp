@@ -122,9 +122,10 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
   tool       = GIMP_TOOL (dodgeburn);
   paint_tool = GIMP_PAINT_TOOL (dodgeburn);
 
-  gimp_tool_control_set_motion_mode        (tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor        (tool->control, GIMP_DODGE_TOOL_CURSOR);
-  gimp_tool_control_set_toggle_tool_cursor (tool->control, GIMP_BURN_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_DODGE_TOOL_CURSOR);
+  gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                            GIMP_BURN_TOOL_CURSOR);
 
   paint_tool->core = g_object_new (GIMP_TYPE_DODGEBURN, NULL);
 }

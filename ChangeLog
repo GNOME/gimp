@@ -1,5 +1,50 @@
 2002-06-16  Michael Natterer  <mitch@gimp.org>
 
+	Fix for #85201:
+
+	* app/tools/gimpfliptool.c: set the toggle_cursor correctly.
+
+	* app/tools/gimptransformtool.c: if "use_grid" is FALSE, skip the
+	cursor update stuff and chain up directly.
+
+	Misc tool->control options fixes:
+
+	* app/tools/gimppainttool.c: set "motion_mode" to
+	GIMP_MOTION_MODE_EXACT.
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimpsmudgetool.c: don't touch "motion_mode" here.
+
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimptransformtool.c: set "scroll_lock" to TRUE and
+	"preserve" to FALSE.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c: don't touch them here.
+
+	* app/tools/gimphistogramtool.[ch]: derive it from GimpImageMapTool
+	so it inherits it's control settings.
+
+	* app/tools/gimpellipseselecttool.c: don't set "preserve" to TRUE.
+
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmovetool.c: code formating paranoia.
+
+	* app/tools/gimptoolcontrol.c: fixed indentation.
+
+2002-06-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpblendtool.c: set the witdh of the gradient preview
 	to 96 instead of 128 pixels so it is not the widest tool options
 	item with the "small" theme.

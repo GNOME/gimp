@@ -153,8 +153,6 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   tool = GIMP_TOOL (scale_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_RESIZE_TOOL_CURSOR);
 }
 

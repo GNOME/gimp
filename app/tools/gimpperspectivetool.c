@@ -132,10 +132,8 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 
   tool = GIMP_TOOL (perspective_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_PERSPECTIVE_TOOL_CURSOR);
-
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_PERSPECTIVE_TOOL_CURSOR);
 }
 
 static TileManager *

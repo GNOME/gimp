@@ -20,7 +20,7 @@
 #define __GIMP_HISTOGRAM_TOOL_H__
 
 
-#include "libgimptool/gimptool.h"
+#include "gimpimagemaptool.h"
 
 
 #define HISTOGRAM_WIDTH  256
@@ -40,12 +40,12 @@ typedef struct _GimpHistogramToolClass GimpHistogramToolClass;
 
 struct _GimpHistogramTool
 {
-  GimpTool  parent_instance;
+  GimpImageMapTool  parent_instance;
 };
 
 struct _GimpHistogramToolClass
 {
-  GimpToolClass  parent_class;
+  GimpImageMapToolClass  parent_class;
 };
 
 

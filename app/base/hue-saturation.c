@@ -65,7 +65,7 @@
 /*  local function prototypes  */
 
 static void   gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
-static void   gimp_hue_saturation_tool_init       (GimpTool                   *tool);
+static void   gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *tool);
 
 static void   gimp_hue_saturation_tool_initialize (GimpTool       *tool,
                                                    GimpDisplay    *gdisp);
@@ -179,10 +179,8 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 }
 
 static void
-gimp_hue_saturation_tool_init (GimpTool *tool)
+gimp_hue_saturation_tool_init (GimpHueSaturationTool *tool)
 {
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
 }
 
 static void

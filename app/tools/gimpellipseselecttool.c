@@ -123,14 +123,12 @@ gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 static void
 gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *select_tool;
+  GimpTool *tool;
 
-  tool        = GIMP_TOOL (ellipse_select);
-  select_tool = GIMP_SELECTION_TOOL (ellipse_select);
+  tool = GIMP_TOOL (ellipse_select);
 
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_ELLIPSE_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_ELLIPSE_SELECT_TOOL_CURSOR);
 }
 
 static void

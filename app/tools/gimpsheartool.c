@@ -151,9 +151,8 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   tool           = GIMP_TOOL (shear_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (shear_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_SHEAR_TOOL_CURSOR);
+
   transform_tool->use_center = FALSE;
 }
 

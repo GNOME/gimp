@@ -77,5 +77,6 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   tool = GIMP_TOOL (image_map_tool);
 
-  /* child must create control. */
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
 }

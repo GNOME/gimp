@@ -109,7 +109,6 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
   tool       = GIMP_TOOL (smudge);
   paint_tool = GIMP_PAINT_TOOL (smudge);
 
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_SMUDGE_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
