@@ -1,3 +1,8 @@
+2005-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/image-scale-dialog.c (image_scale_dialog_new): use
+	the passed parent widget instead of display->shell.
+
 2005-02-03  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: ported to GOption command-line parser.
