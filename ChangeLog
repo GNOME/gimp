@@ -1,3 +1,15 @@
+2004-03-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): redid my
+	last layer_mask vs. layer move fix by reordering the whole
+	function: now we first check if we can pick a path, guide or layer
+	and bail out early if we can't; do the actual init_edit_selection()
+	calls in a trivial unconditional switch() after that picking
+	check. Removes code duplication and makes the whole function less
+	nested and weird.
+
+	Cleaned up the whole file a bit.
+
 2004-03-09  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_internal): call

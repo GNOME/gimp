@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -37,14 +35,12 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-draw.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpmoveoptions.h"
@@ -93,8 +89,8 @@ static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
 
 static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
 
-static void   gimp_move_tool_start_guide    (GimpTool            *tool,
-                                             GimpDisplay         *gdisp,
+static void   gimp_move_tool_start_guide    (GimpMoveTool      *move,
+                                             GimpDisplay       *gdisp,
                                              GimpOrientationType  orientation);
 
 
@@ -128,18 +124,18 @@ gimp_move_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpMoveToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_move_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpMoveTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_move_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_move_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpMoveTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_move_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpMoveTool",
+                                          "GimpMoveTool",
                                           &tool_info, 0);
     }
 
@@ -149,11 +145,8 @@ gimp_move_tool_get_type (void)
 static void
 gimp_move_tool_class_init (GimpMoveToolClass *klass)
 {
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -194,11 +187,8 @@ gimp_move_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpMoveTool     *move_tool;
-
-  shell     = GIMP_DISPLAY_SHELL (gdisp->shell);
-  move_tool = GIMP_MOVE_TOOL (tool);
+  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (action)
     {
@@ -206,17 +196,17 @@ gimp_move_tool_control (GimpTool       *tool,
       break;
 
     case RESUME:
-      if (move_tool->guide &&
+      if (move->guide &&
           gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
 	gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
-                                       move_tool->guide, TRUE);
+                                       move->guide, TRUE);
       break;
 
     case HALT:
-      if (move_tool->guide &&
+      if (move->guide &&
           gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
         gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
-                                       move_tool->guide, FALSE);
+                                       move->guide, FALSE);
       break;
 
     default:
@@ -233,15 +223,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpMoveTool     *move;
-  GimpMoveOptions  *options;
-  GimpLayer        *layer;
-  GimpGuide        *guide;
-
-  shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
-  move    = GIMP_MOVE_TOOL (tool);
-  options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
   tool->gdisp = gdisp;
 
@@ -249,16 +233,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->guide        = NULL;
   move->moving_guide = FALSE;
 
-  if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
+  if (! options->move_current)
     {
-      if (options->move_current)
-        {
-          if (gimp_image_get_active_vectors (gdisp->gimage))
-            {
-              init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
-            }
-        }
-      else
+      if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
         {
           GimpVectors *vectors;
 
@@ -267,83 +244,97 @@ gimp_move_tool_button_press (GimpTool        *tool,
                                          NULL, NULL, NULL, NULL, NULL, &vectors))
             {
               gimp_image_set_active_vectors (gdisp->gimage, vectors);
-              init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
+            }
+          else
+            {
+              /*  no path picked  */
+
+              return;
+            }
+        }
+      else if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER)
+        {
+          GimpGuide *guide;
+          GimpLayer *layer;
+          gint       snap_distance;
+
+          snap_distance =
+            GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+
+          if (gimp_display_shell_get_show_guides (shell) &&
+              (guide = gimp_image_find_guide (gdisp->gimage,
+                                              coords->x, coords->y,
+                                              FUNSCALEX (shell, snap_distance),
+                                              FUNSCALEY (shell, snap_distance))))
+            {
+              move->guide             = guide;
+              move->moving_guide      = TRUE;
+              move->guide_position    = guide->position;
+              move->guide_orientation = guide->orientation;
+
+              gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+              gimp_tool_control_activate (tool->control);
+
+              gimp_display_shell_selection_visibility (shell,
+                                                       GIMP_SELECTION_PAUSE);
+
+              gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+
+              return;
+            }
+          else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                                             coords->x,
+                                                             coords->y)))
+            {
+              if (gimp_image_floating_sel (gdisp->gimage) &&
+                  ! gimp_layer_is_floating_sel (layer))
+                {
+                  /*  If there is a floating selection, and this aint it,
+                   *  use the move tool to anchor it.
+                   */
+                  move->layer = gimp_image_floating_sel (gdisp->gimage);
+                  gimp_tool_control_activate (tool->control);
+
+                  return;
+                }
+              else
+                {
+                  gimp_image_set_active_layer (gdisp->gimage, layer);
+                }
+            }
+          else
+            {
+              /*  no guide and no layer picked  */
+
+              return;
             }
         }
     }
-  else if (options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+
+  switch (options->move_type)
     {
+    case GIMP_TRANSFORM_TYPE_PATH:
+      if (gimp_image_get_active_vectors (gdisp->gimage))
+        init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
       if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
-        {
-          init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-        }
-    }
-  else if (options->move_current)
-    {
-      GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+        init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
+      break;
 
-      if (drawable)
-        {
-          if (GIMP_IS_LAYER_MASK (drawable))
-            init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
-          else if (GIMP_IS_CHANNEL (drawable))
-            init_edit_selection (tool, gdisp, coords, EDIT_CHANNEL_TRANSLATE);
-          else
-            init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-        }
-    }
-  else
-    {
-      gint snap_distance;
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      {
+        GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
-
-      if (gimp_display_shell_get_show_guides (shell) &&
-	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
-                                          FUNSCALEX (shell, snap_distance),
-                                          FUNSCALEY (shell, snap_distance))))
-	{
-	  move->guide             = guide;
-          move->moving_guide      = TRUE;
-          move->guide_position    = guide->position;
-          move->guide_orientation = guide->orientation;
-
-	  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-	  gimp_tool_control_activate (tool->control);
-
-          gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
-
-          gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
-	}
-      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
-                                                         coords->x,
-                                                         coords->y)))
-	{
-	  if (gimp_image_floating_sel (gdisp->gimage) &&
-	      ! gimp_layer_is_floating_sel (layer))
-	    {
-              /*  If there is a floating selection, and this aint it,
-               *  use the move tool to anchor it.
-               */
-	      move->layer = gimp_image_floating_sel (gdisp->gimage);
-              gimp_tool_control_activate (tool->control);
-	    }
-	  else
-	    {
-              /*  Otherwise, init the edit selection  */
-
-              GimpLayerMask *layer_mask;
-
-	      gimp_image_set_active_layer (gdisp->gimage, layer);
-
-              layer_mask = gimp_layer_get_mask (layer);
-
-              if (layer_mask && gimp_layer_mask_get_edit (layer_mask))
-                init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
-              else
-                init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-	    }
-	}
+        if (GIMP_IS_LAYER_MASK (drawable))
+          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
+        else if (GIMP_IS_CHANNEL (drawable))
+          init_edit_selection (tool, gdisp, coords, EDIT_CHANNEL_TRANSLATE);
+        else if (GIMP_IS_LAYER (drawable))
+          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
+      }
+      break;
     }
 }
 
@@ -354,11 +345,8 @@ gimp_move_tool_button_release (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpMoveTool     *move;
-  GimpDisplayShell *shell;
-
-  move  = GIMP_MOVE_TOOL (tool);
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_tool_control_halt (tool->control);
 
@@ -470,11 +458,8 @@ gimp_move_tool_motion (GimpTool        *tool,
                        GimpDisplay     *gdisp)
 
 {
-  GimpMoveTool     *move;
-  GimpDisplayShell *shell;
-
-  move  = GIMP_MOVE_TOOL (tool);
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (move->moving_guide)
     {
@@ -511,11 +496,8 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpMoveTool    *move_tool;
-  GimpMoveOptions *options;
-
-  move_tool = GIMP_MOVE_TOOL (tool);
-  options   = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpMoveTool    *move    = GIMP_MOVE_TOOL (tool);
+  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_SHIFT_MASK)
     {
@@ -533,7 +515,7 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
             {
               /*  first modifier pressed  */
 
-              move_tool->saved_type = options->move_type;
+              move->saved_type = options->move_type;
             }
         }
       else
@@ -542,7 +524,7 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
             {
               /*  last modifier released  */
 
-              button_type = move_tool->saved_type;
+              button_type = move->saved_type;
             }
         }
 
@@ -568,14 +550,10 @@ gimp_move_tool_oper_update (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpMoveTool     *move;
-  GimpMoveOptions  *options;
-  GimpGuide        *guide = NULL;
-
-  shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
-  move    = GIMP_MOVE_TOOL (tool);
-  options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpMoveTool     *move    = GIMP_MOVE_TOOL (tool);
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
+  GimpGuide        *guide   = NULL;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER &&
       ! options->move_current                         &&
@@ -591,16 +569,12 @@ gimp_move_tool_oper_update (GimpTool        *tool,
     }
 
   if (move->guide && move->guide != guide)
-    {
-      gimp_display_shell_draw_guide (shell, move->guide, FALSE);
-      move->guide = NULL;
-    }
+    gimp_display_shell_draw_guide (shell, move->guide, FALSE);
 
-  if (guide)
-    {
-      gimp_display_shell_draw_guide (shell, guide, TRUE);
-      move->guide = guide;
-    }
+  move->guide = guide;
+
+  if (move->guide)
+    gimp_display_shell_draw_guide (shell, move->guide, TRUE);
 }
 
 static void
@@ -609,17 +583,12 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpMoveTool     *move;
-  GimpMoveOptions  *options;
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
   GdkCursorType      cursor      = GIMP_BAD_CURSOR;
   GimpToolCursorType tool_cursor = GIMP_MOVE_TOOL_CURSOR;
   GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
-
-  shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
-  move    = GIMP_MOVE_TOOL (tool);
-  options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {
@@ -659,9 +628,10 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
     {
       GimpGuide *guide;
       GimpLayer *layer;
-      gint snap_distance;
+      gint       snap_distance;
 
-      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+      snap_distance =
+        GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
@@ -706,11 +676,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_move_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpMoveTool *move;
-  GimpTool     *tool;
-
-  move = GIMP_MOVE_TOOL (draw_tool);
-  tool = GIMP_TOOL (draw_tool);
+  GimpMoveTool *move = GIMP_MOVE_TOOL (draw_tool);
 
   if (move->moving_guide && move->guide_position != -1)
     {
@@ -742,27 +708,30 @@ void
 gimp_move_tool_start_hguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  gimp_move_tool_start_guide (tool, gdisp, GIMP_ORIENTATION_HORIZONTAL);
+  g_return_if_fail (GIMP_IS_MOVE_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  gimp_move_tool_start_guide (GIMP_MOVE_TOOL (tool), gdisp,
+                              GIMP_ORIENTATION_HORIZONTAL);
 }
 
 void
 gimp_move_tool_start_vguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  gimp_move_tool_start_guide (tool, gdisp, GIMP_ORIENTATION_VERTICAL);
-}
-
-static void
-gimp_move_tool_start_guide (GimpTool            *tool,
-                            GimpDisplay         *gdisp,
-                            GimpOrientationType  orientation)
-{
-  GimpMoveTool *move;
-
   g_return_if_fail (GIMP_IS_MOVE_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  move = GIMP_MOVE_TOOL (tool);
+  gimp_move_tool_start_guide (GIMP_MOVE_TOOL (tool), gdisp,
+                              GIMP_ORIENTATION_VERTICAL);
+}
+
+static void
+gimp_move_tool_start_guide (GimpMoveTool        *move,
+                            GimpDisplay         *gdisp,
+                            GimpOrientationType  orientation)
+{
+  GimpTool *tool = GIMP_TOOL (move);
 
   gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (gdisp->shell),
                                            GIMP_SELECTION_PAUSE);
@@ -785,5 +754,5 @@ gimp_move_tool_start_guide (GimpTool            *tool,
                         GIMP_HAND_TOOL_CURSOR,
                         GIMP_CURSOR_MODIFIER_MOVE);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (move), gdisp);
 }
