@@ -30,6 +30,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 
+#include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcomponenteditor.h"
 #include "gimpitemfactory.h"
@@ -158,7 +159,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   editor->eye_column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (editor->view, editor->eye_column);
 
-  cell = gtk_cell_renderer_toggle_new ();
+  cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
   gtk_tree_view_column_pack_start (editor->eye_column, cell, FALSE);
   gtk_tree_view_column_set_attributes (editor->eye_column, cell,
                                        "active", COLUMN_VISIBLE,

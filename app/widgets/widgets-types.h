@@ -34,6 +34,7 @@ typedef struct _GimpDialogFactory            GimpDialogFactory;
 typedef struct _GimpItemFactory              GimpItemFactory;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 
+typedef struct _GimpCellRendererToggle       GimpCellRendererToggle;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
 typedef struct _GimpPreviewRenderer          GimpPreviewRenderer;

@@ -25,6 +25,8 @@ libappwidgets_a_sources = \
 	gimpbrushfactoryview.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
+	gimpcellrenderertoggle.c	\
+	gimpcellrenderertoggle.h	\
 	gimpcellrendererviewable.c	\
 	gimpcellrendererviewable.h	\
 	gimpchannellistitem.c		\
