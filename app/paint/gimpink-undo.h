@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_PAINT_CORE_UNDO_H__
-#define __GIMP_PAINT_CORE_UNDO_H__
+#ifndef __GIMP_INK_UNDO_H__
+#define __GIMP_INK_UNDO_H__
 
 
-gboolean   gimp_paint_core_real_push_undo (GimpPaintCore *core,
-                                           GimpImage     *gimage,
-                                           const gchar   *undo_desc);
+gboolean   gimp_ink_push_undo (GimpPaintCore *core,
+                               GimpImage     *gimage,
+                               const gchar   *undo_desc);
 
 
-#endif  /* __GIMP_PAINT_CORE_UNDO_H__ */
+#endif  /* __GIMP_INK_UNDO_H__ */

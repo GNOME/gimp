@@ -96,6 +96,10 @@ struct _GimpPaintCoreClass
   TempBuf * (* get_paint_area) (GimpPaintCore    *core,
                                 GimpDrawable     *drawable,
                                 GimpPaintOptions *paint_options);
+
+  gboolean  (* push_undo)      (GimpPaintCore    *core,
+                                GimpImage        *gimage,
+                                const gchar      *undo_desc);
 };
 
 

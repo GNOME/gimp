@@ -1,5 +1,27 @@
 2005-01-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch] (enum GimpUndoType): added GIMP_UNDO_INK.
+
+	* app/paint/gimppaintcore.[ch]: added virtual function
+	GimpPaintCore::push_undo() and call it.
+
+	* app/paint/gimppaintcore-undo.[ch]: made it the default
+	implementation.
+
+	* app/paint/gimpink-blob.[ch]: added blob_duplicate().
+
+	* app/paint/gimpink.[ch]: added a "start_blob" (just like
+	GimpPaintCore::start_coords) which gets set whenever we start a
+	new stroke or line. Removed ink->lastx and ink->lasty because
+	they are the same as paint_core->last_coords.
+
+	* app/paint/Makefile.am
+	* app/paint/gimpink-undo.[ch]: new files implementing an
+	undo step for ink which restores the last blob used along
+	with the whole ink state. Fixes bug #163670.
+
+2005-01-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/buffers-commands.[ch]
 	* app/actions/data-commands.[ch]
 	* app/actions/documents-commands.[ch]
