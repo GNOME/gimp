@@ -132,7 +132,7 @@ ps_parameters(const printer_t *printer,	/* I - Printer model */
     if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0)
+    if (g_strcasecmp(lname, name) == 0)
     {
       valptrs[(*count)] = malloc(strlen(loption) + 1);
       strcpy(valptrs[(*count)], loption);
@@ -705,7 +705,7 @@ ppd_find(const char *ppd_file,	/* I - Name of PPD file */
     if (line[0] != '*')
       continue;
 
-    if (strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
+    if (g_strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
     {
       sscanf(line, "%*s%d", order);
       continue;
@@ -713,8 +713,8 @@ ppd_find(const char *ppd_file,	/* I - Name of PPD file */
     else if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0 &&
-        strcasecmp(loption, option) == 0)
+    if (g_strcasecmp(lname, name) == 0 &&
+        g_strcasecmp(loption, option) == 0)
     {
       opt = strchr(line, ':') + 1;
       while (*opt == ' ' || *opt == '\t')

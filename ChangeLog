@@ -1,3 +1,8 @@
+2000-09-15  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/print/print-ps.c (ps_parameters): use g_strncasecmp()
+	instead of strncasecmp().  More portable.
+
 2000-09-15  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	* app/gdisplay_color_ui.c (color_display_cancel_callback): 
