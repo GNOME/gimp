@@ -687,34 +687,34 @@ static void dlg_make_page_selector      (GFlareDialog *dlg,
 					 GtkWidget    *notebook);
 
 static void dlg_selector_setup_listbox      (void);
-static void dlg_selector_insert             (GFlare    *gflare,
-					     gint       pos,
-					     gint       select);
-static void dlg_selector_list_item_callback (GtkWidget *widget,
-					     gpointer   data);
+static void dlg_selector_insert             (GFlare      *gflare,
+					     gint         pos,
+					     gint         select);
+static void dlg_selector_list_item_callback (GtkWidget   *widget,
+					     gpointer     data);
 
-static void dlg_selector_new_callback       (GtkWidget *widget,
-					     gpointer   data);
-static void dlg_selector_new_ok_callback    (GtkWidget *widget,
-					     gchar     *new_name,
-					     gpointer   data);
+static void dlg_selector_new_callback       (GtkWidget   *widget,
+					     gpointer     data);
+static void dlg_selector_new_ok_callback    (GtkWidget   *widget,
+					     const gchar *new_name,
+					     gpointer     data);
 
-static void dlg_selector_edit_callback      (GtkWidget *widget,
-					     gpointer   data);
-static void dlg_selector_edit_done_callback (gint       updated,
-					     gpointer   data);
+static void dlg_selector_edit_callback      (GtkWidget   *widget,
+					     gpointer     data);
+static void dlg_selector_edit_done_callback (gint         updated,
+					     gpointer     data);
 
-static void dlg_selector_copy_callback      (GtkWidget *widget,
-					     gpointer   data);
-static void dlg_selector_copy_ok_callback   (GtkWidget *widget,
-					     gchar     *copy_name,
-					     gpointer   data);
+static void dlg_selector_copy_callback      (GtkWidget   *widget,
+					     gpointer    data);
+static void dlg_selector_copy_ok_callback   (GtkWidget   *widget,
+					     const gchar *copy_name,
+					     gpointer     data);
 
-static void dlg_selector_delete_callback    (GtkWidget *widget,
-					     gpointer   data);
-static void dlg_selector_do_delete_callback (GtkWidget *widget,
-					     gboolean   delete,
-					     gpointer   data);
+static void dlg_selector_delete_callback    (GtkWidget   *widget,
+					     gpointer     data);
+static void dlg_selector_do_delete_callback (GtkWidget   *widget,
+					     gboolean     delete,
+					     gpointer     data);
 
 static void ed_run                (GtkWindow            *parent,
                                    GFlare               *target_gflare,
@@ -1229,7 +1229,7 @@ gflare_copy (GFlare       *dest,
 static void
 gflare_free (GFlare *gflare)
 {
-  g_assert (gflare != NULL);
+  g_return_if_fail (gflare != NULL);
 
   g_free (gflare->name);
   g_free (gflare->filename);
@@ -1245,7 +1245,7 @@ gflare_load (const gchar *filename,
   GFlare	*gflare;
   gchar		header[256];
 
-  g_assert (filename != NULL);
+  g_return_val_if_fail (filename != NULL, NULL);
 
   fp = fopen (filename, "r");
   if (!fp)
@@ -2984,14 +2984,14 @@ dlg_selector_new_callback (GtkWidget *widget,
 }
 
 static void
-dlg_selector_new_ok_callback (GtkWidget *widget,
-			      gchar     *new_name,
-			      gpointer   data)
+dlg_selector_new_ok_callback (GtkWidget   *widget,
+			      const gchar *new_name,
+			      gpointer     data)
 {
   GFlare *gflare;
   gint    pos;
 
-  g_assert (new_name != NULL);
+  g_return_if_fail (new_name != NULL);
 
   if (gflares_list_lookup (new_name))
     {
@@ -3058,14 +3058,14 @@ dlg_selector_copy_callback (GtkWidget *widget,
 }
 
 static void
-dlg_selector_copy_ok_callback (GtkWidget *widget,
-			       gchar     *copy_name,
-			       gpointer   data)
+dlg_selector_copy_ok_callback (GtkWidget   *widget,
+			       const gchar *copy_name,
+			       gpointer     data)
 {
   GFlare *gflare;
   gint    pos;
 
-  g_assert (copy_name != NULL);
+  g_return_if_fail (copy_name != NULL);
 
   if (gflares_list_lookup (copy_name))
     {

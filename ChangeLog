@@ -17,7 +17,8 @@
 
 	* app/gui/edit-commands.c
 	* app/gui/file-commands.c
-	* app/gui/palettes-commands.c: changed accordingly.
+	* app/gui/palettes-commands.c
+	* plug-ins/gflare/gflare.c: changed accordingly.
 
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
