@@ -41,7 +41,7 @@ SUBDIRS = 			\
 	maze			\
 	mosaic			\
 	pagecurl		\
-	print			\
+	$(PRINT)		\
 	rcm			\
 	sgi			\
 	sel2path		\
