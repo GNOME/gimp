@@ -146,7 +146,8 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 
   gimp_menu_item_name_changed (viewable, menu_item);
 
-  g_signal_connect_object (G_OBJECT (viewable), "name_changed",
+  g_signal_connect_object (G_OBJECT (viewable),
+                           GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                            G_CALLBACK (gimp_menu_item_name_changed),
                            menu_item, 0);
 
@@ -185,21 +186,16 @@ gimp_menu_item_name_changed (GimpViewable *viewable,
 {
   if (menu_item->get_name_func)
     {
-      gchar *name;
-      gchar *tooltip;
+      gchar *name    = NULL;
+      gchar *tooltip = NULL;
 
       name = menu_item->get_name_func (GTK_WIDGET (menu_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (menu_item->name_label), name);
+      gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);
 
       g_free (name);
-
-      if (tooltip)
-	{
-	  gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);
-
-	  g_free (tooltip);
-	}
+      g_free (tooltip);
     }
   else
     {

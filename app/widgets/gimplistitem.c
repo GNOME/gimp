@@ -324,7 +324,8 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
 
   gimp_list_item_name_changed (viewable, list_item);
 
-  g_signal_connect_object (G_OBJECT (viewable), "name_changed",
+  g_signal_connect_object (G_OBJECT (viewable),
+                           GIMP_VIEWABLE_GET_CLASS (viewable)->name_changed_signal,
                            G_CALLBACK (gimp_list_item_name_changed),
                            list_item, 0);
 
@@ -592,21 +593,16 @@ gimp_list_item_name_changed (GimpViewable *viewable,
 {
   if (list_item->get_name_func)
     {
-      gchar *name;
-      gchar *tooltip;
+      gchar *name    = NULL;
+      gchar *tooltip = NULL;
 
       name = list_item->get_name_func (GTK_WIDGET (list_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (list_item->name_label), name);
+      gimp_help_set_help_data (GTK_WIDGET (list_item), tooltip, NULL);
 
       g_free (name);
-
-      if (tooltip)
-	{
-	  gimp_help_set_help_data (GTK_WIDGET (list_item), tooltip, NULL);
-
-	  g_free (tooltip);
-	}
+      g_free (tooltip);
     }
   else
     {

@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -89,7 +90,6 @@ static void          gimp_imagefile_set_info        (GimpImagefile  *imagefile,
                                                      gboolean        emit_always,
                                                      gint            width,
                                                      gint            height,
-                                                     gint            size,
                                                      GimpImageType   type,
                                                      gint            n_layers);
 static TempBuf     * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
@@ -189,9 +189,12 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize          = gimp_imagefile_finalize;
-  gimp_object_class->name_changed = gimp_imagefile_name_changed;
-  viewable_class->get_new_preview = gimp_imagefile_get_new_preview;
+  object_class->finalize              = gimp_imagefile_finalize;
+
+  gimp_object_class->name_changed     = gimp_imagefile_name_changed;
+
+  viewable_class->name_changed_signal = "info_changed";
+  viewable_class->get_new_preview     = gimp_imagefile_get_new_preview;
 
   g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
 
@@ -205,16 +208,17 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 static void
 gimp_imagefile_init (GimpImagefile *imagefile)
 {
+  imagefile->state       = GIMP_IMAGEFILE_STATE_UNKNOWN;
+  imagefile->image_mtime = 0;
+  imagefile->image_size  = -1;
+  imagefile->thumb_mtime = 0;
+
   imagefile->width       = -1;
   imagefile->height      = -1;
-  imagefile->size        = -1;
   imagefile->type        = -1;
   imagefile->n_layers    = -1;
+
   imagefile->description = NULL;
-  imagefile->image_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
-  imagefile->image_mtime = 0;
-  imagefile->thumb_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
-  imagefile->thumb_mtime = 0;
 }
 
 static void
@@ -252,32 +256,41 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 
   if (uri)
     {
-      gchar *filename   = NULL;
-      gchar *thumbname  = NULL;
-      gint   thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
+      GimpImagefileState  old_state;
+      gchar              *filename   = NULL;
+      gchar              *thumbname  = NULL;
+      gint                thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
+      off_t               image_size;
+
+      old_state = imagefile->state;
 
       filename = g_filename_from_uri (uri, NULL, NULL);
 
       imagefile->image_mtime = 0;
+      imagefile->image_size  = -1;
 
       if (! filename)
         {
           /*  no thumbnails of remote images :-(  */
 
-          imagefile->image_state = GIMP_IMAGEFILE_STATE_REMOTE;
+          imagefile->state = GIMP_IMAGEFILE_STATE_REMOTE;
           goto cleanup;
         }
 
-      if (! gimp_imagefile_test (filename, &imagefile->image_mtime, NULL))
+      if (! gimp_imagefile_test (filename,
+                                 &imagefile->image_mtime,
+                                 &image_size))
         {
-          imagefile->image_state = GIMP_IMAGEFILE_STATE_NOT_FOUND;
+          imagefile->state = GIMP_IMAGEFILE_STATE_NOT_FOUND;
           goto cleanup;
         }
 
-      imagefile->image_state = GIMP_IMAGEFILE_STATE_EXISTS;
+      imagefile->state      = GIMP_IMAGEFILE_STATE_EXISTS;
+      imagefile->image_size = image_size;
 
       /*  found the image, now look for the thumbnail  */
 
+      imagefile->state       = GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND;
       imagefile->thumb_mtime = 0;
 
       thumbname =
@@ -288,16 +301,19 @@ gimp_imagefile_update (GimpImagefile *imagefile)
                                        &thumb_size);
 
       if (! thumbname)
-        {
-          imagefile->thumb_state = GIMP_IMAGEFILE_STATE_NOT_FOUND;
-          goto cleanup;
-        }
+        goto cleanup;
 
-      imagefile->thumb_state = GIMP_IMAGEFILE_STATE_EXISTS;
+      if (imagefile->image_mtime >= imagefile->thumb_mtime)
+        imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OK;
+      else
+        imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD;
 
     cleanup:
       g_free (filename);
       g_free (thumbname);
+
+      if (imagefile->state != old_state)
+        gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1);
     }
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
@@ -328,12 +344,12 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
 
   if (uri)
     {
-      GimpImage         *gimage = NULL;
-      GimpPDBStatusType  dummy;
-      gchar             *filename;
-      gchar             *thumb_name;
+      gchar             *filename   = NULL;
+      gchar             *thumb_name = NULL;
       time_t             image_mtime;
       off_t              image_size;
+      GimpImage         *gimage;
+      GimpPDBStatusType  dummy;
 
       filename = g_filename_from_uri (uri, NULL, NULL);
 
@@ -346,20 +362,18 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
 
       /*  the thumbnail directory doesn't exist and couldn't be created */
       if (! thumb_name)
-        return;
+        goto cleanup;
 
-      if (gimp_imagefile_test (filename, &image_mtime, &image_size))
-        {
-          gimage = file_open_image (the_gimp,
-                                    uri,
-                                    uri,
-                                    NULL,
-                                    GIMP_RUN_NONINTERACTIVE,
-                                    &dummy,
-                                    NULL);
-        }
+      if (! gimp_imagefile_test (filename, &image_mtime, &image_size))
+        goto cleanup;
 
-      g_free (filename);
+      gimage = file_open_image (the_gimp,
+                                uri,
+                                uri,
+                                NULL,
+                                GIMP_RUN_NONINTERACTIVE,
+                                &dummy,
+                                NULL);
 
       if (gimage)
         {
@@ -371,7 +385,15 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
 
           g_object_unref (G_OBJECT (gimage));
         }
+      else
+        {
+          imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED;
 
+          gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1);
+        }
+
+    cleanup:
+      g_free (filename);
       g_free (thumb_name);
     }
 }
@@ -433,13 +455,12 @@ gimp_imagefile_name_changed (GimpObject *object)
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  imagefile->image_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
+  imagefile->state       = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->image_mtime = 0;
-
-  imagefile->thumb_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
+  imagefile->image_size  = -1;
   imagefile->thumb_mtime = 0;
 
-  gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1, -1);
+  gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1);
 }
 
 static void
@@ -447,7 +468,6 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
                          gboolean       emit_always,
                          gint           width,
                          gint           height,
-                         gint           size,
                          GimpImageType  type,
                          gint           n_layers)
 {
@@ -455,13 +475,11 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
 
   changed = (imagefile->width    != width  ||
              imagefile->height   != height ||
-             imagefile->size     != size   ||
              imagefile->type     != type   ||
              imagefile->n_layers != n_layers);
 
   imagefile->width    = width;
   imagefile->height   = height;
-  imagefile->size     = size;
   imagefile->type     = type;
   imagefile->n_layers = n_layers;
 
@@ -479,12 +497,12 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
 
 static void
 gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
+                                     gboolean       emit_always,
                                      GdkPixbuf     *pixbuf)
 {
   const gchar  *option;
   gint          img_width  = -1;
   gint          img_height = -1;
-  gint          img_size   = -1;
   GimpImageType img_type   = -1;
   gint          img_layers = -1;
 
@@ -495,10 +513,6 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_IMAGE_HEIGHT);
   if (!option || sscanf (option, "%d", &img_height) != 1)
     img_height = -1;
-  
-  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_SIZE);
-  if (!option || sscanf (option, "%d", &img_size) != 1)
-    img_size = -1;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_TYPE);
   if (option)
@@ -515,10 +529,10 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_LAYERS);
   if (!option || sscanf (option, "%d", &img_layers) != 1)
-    img_size = -1;
+    img_layers = -1;
 
-  gimp_imagefile_set_info (imagefile, FALSE,
-                           img_width, img_height, img_size,
+  gimp_imagefile_set_info (imagefile, emit_always,
+                           img_width, img_height,
                            img_type, img_layers);
 }
 
@@ -551,88 +565,112 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
   if (imagefile->description)
     return (const gchar *) imagefile->description;
 
-  switch (imagefile->thumb_state)
+  switch (imagefile->state)
     {
     case GIMP_IMAGEFILE_STATE_UNKNOWN:
-    case GIMP_IMAGEFILE_STATE_REMOTE:
-    case GIMP_IMAGEFILE_STATE_NOT_FOUND:
-      imagefile->description = _("No preview available");
+      imagefile->description = NULL;
       imagefile->static_desc = TRUE;
       break;
 
-    case GIMP_IMAGEFILE_STATE_EXISTS:
-      if (imagefile->image_mtime > imagefile->thumb_mtime)
-        {
-          imagefile->description = _("Thumbnail is out of date");
-          imagefile->static_desc = TRUE;
-        }
-      else
-        {
-          GString    *str;
-          GEnumClass *enum_class;
-          GEnumValue *enum_value;
+    case GIMP_IMAGEFILE_STATE_REMOTE:
+      imagefile->description = _("Remote image");
+      imagefile->static_desc = TRUE;
+      break;
 
-          str = g_string_new (NULL);
-
-          if (imagefile->width > -1 && imagefile->height > -1)
-            {
-              /* image size */
-              g_string_append_printf (str, _("%d x %d"), 
-                                      imagefile->width, imagefile->height);
-            }
-
-          enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
-          enum_value = g_enum_get_value (enum_class, imagefile->type);
-
-          if (enum_value)
-            {
-              if (str->len)
-                g_string_append_len (str, ", ", 2);
-
-              g_string_append (str, gettext (enum_value->value_name));
-            }
-
-          if (imagefile->size > -1)
-            {
-              gchar *size;
-
-              size = gimp_image_new_get_memsize_string (imagefile->size);
-
-              if (str->len)
-                g_string_append_len (str, "\n", 1);
-
-              g_string_append (str, size);
-              g_free (size);
-            }
-
-          if (imagefile->n_layers > -1)
-            {
-              gchar *n_layers;
-
-              if (imagefile->n_layers == 1)
-                n_layers = g_strdup_printf (_("%d Layer"), imagefile->n_layers);
-              else
-                n_layers = g_strdup_printf (_("%d Layers"), imagefile->n_layers);
-
-              if (str->len)
-                {
-                  if (imagefile->size > -1)
-                    g_string_append_len (str, ", ", 2);
-                  else
-                    g_string_append_len (str, "\n", 1);
-               }
-
-              g_string_append (str, n_layers);
-              g_free (n_layers);
-            }
-
-          imagefile->static_desc = FALSE;
-          imagefile->description = g_string_free (str, FALSE);
-        }
+    case GIMP_IMAGEFILE_STATE_NOT_FOUND:
+      imagefile->description = _("Could not open image");
+      imagefile->static_desc = TRUE;
       break;
 
     default:
-      break;
+      {
+        GString *str;
+
+        str = g_string_new (NULL);
+
+        if (imagefile->image_size > -1)
+          {
+            gchar *size;
+
+            size = gimp_image_new_get_memsize_string (imagefile->image_size);
+
+            g_string_append (str, size);
+            g_free (size);
+          }
+
+        switch (imagefile->state)
+          {
+          case GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND:
+            g_string_append_printf (str, "\n%s", _("No preview available"));
+            break;
+
+          case GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD:
+            g_string_append_printf (str, "\n%s", _("Preview is out of date"));
+            break;
+
+          case GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED:
+            g_string_append_printf (str, "\n%s", _("Failed to create preview"));
+            break;
+
+          case GIMP_IMAGEFILE_STATE_THUMBNAIL_OK:
+            g_string_append_len (str, "\n", 1);
+
+            if (imagefile->image_mtime > imagefile->thumb_mtime)
+              {
+                g_string_append (str, _("Thumbnail is out of date"));
+              }
+            else
+              {
+                GEnumClass *enum_class;
+                GEnumValue *enum_value;
+
+                if (imagefile->width > -1 && imagefile->height > -1)
+                  {
+                    /* image size */
+                    g_string_append_printf (str, _("%d x %d Pixel"),
+                                            imagefile->width, imagefile->height);
+                  }
+
+                enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
+                enum_value = g_enum_get_value (enum_class, imagefile->type);
+
+                if (enum_value)
+                  {
+                    if (str->len)
+                      g_string_append (str, "\n");
+
+                    g_string_append (str, gettext (enum_value->value_name));
+                  }
+
+                if (imagefile->n_layers > -1)
+                  {
+                    gchar *n_layers;
+
+                    if (imagefile->n_layers == 1)
+                      n_layers = g_strdup_printf (_("%d Layer"),
+                                                  imagefile->n_layers);
+                    else
+                      n_layers = g_strdup_printf (_("%d Layers"),
+                                                  imagefile->n_layers);
+
+                    if (enum_value)
+                      g_string_append (str, ", ");
+                    else
+                      g_string_append (str, "\n");
+
+                    g_string_append (str, n_layers);
+                    g_free (n_layers);
+                  }
+              }
+            break;
+
+          default:
+            break;
+          }
+
+        imagefile->static_desc = FALSE;
+        imagefile->description = g_string_free (str, FALSE);
+      }
     }
 
   return (const gchar *) imagefile->description;
@@ -667,24 +705,29 @@ static TempBuf *
 gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
                                gint           size)
 {
-  TempBuf     *temp_buf   = NULL;
-  GdkPixbuf   *pixbuf     = NULL;
-  gchar       *thumbname  = NULL;
-  gint         thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
-  const gchar *option;
-  gint         width;
-  gint         height;
-  gint         bytes;
-  time_t       y;
-  guchar      *src;
-  guchar      *dest;
-  GError      *error = NULL;
+  GimpImagefileState  old_state;
+  TempBuf            *temp_buf   = NULL;
+  GdkPixbuf          *pixbuf     = NULL;
+  gchar              *thumbname  = NULL;
+  gint                thumb_size = GIMP_IMAGEFILE_THUMB_SIZE_FAIL;
+  const gchar        *option;
+  gint                width;
+  gint                height;
+  gint                bytes;
+  time_t              thumb_image_mtime;
+  off_t               thumb_image_size;
+  guchar             *src;
+  guchar             *dest;
+  gint                y;
+  GError             *error = NULL;
 
-  if (imagefile->image_state != GIMP_IMAGEFILE_STATE_EXISTS)
+  if (imagefile->state < GIMP_IMAGEFILE_STATE_EXISTS)
     return NULL;
 
+  old_state = imagefile->state;
+
   /* try to locate a thumbnail for this image */
-  imagefile->thumb_state = GIMP_IMAGEFILE_STATE_NOT_FOUND;
+  imagefile->state       = GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND;
   imagefile->thumb_mtime = 0;
 
   thumbname = gimp_imagefile_find_png_thumb (GIMP_OBJECT (imagefile)->name,
@@ -695,17 +738,22 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   if (!thumbname)
     goto cleanup;
 
-  imagefile->thumb_state = GIMP_IMAGEFILE_STATE_EXISTS;
+  if (imagefile->image_mtime >= imagefile->thumb_mtime)
+    imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OK;
+  else
+    imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD;
 
-  pixbuf = gdk_pixbuf_new_from_file (thumbname, &error);  
+  pixbuf = gdk_pixbuf_new_from_file (thumbname, &error);
 
   if (!pixbuf)
     {
       g_message (_("Could not open thumbnail\nfile '%s':\n%s"),
                  thumbname, error->message);
+
+      imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND;
       goto cleanup;
     }
-  
+
   g_free (thumbname);
   thumbname = NULL;
 
@@ -716,8 +764,18 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     goto cleanup;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
-  if (!option || sscanf (option, "%ld", &y) != 1 || y != imagefile->image_mtime)
+  if (!option || sscanf (option, "%ld", &thumb_image_mtime) != 1)
     goto cleanup;
+
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_SIZE);
+  if (!option || sscanf (option, "%ld", &thumb_image_size) != 1)
+    goto cleanup;
+
+  if (thumb_image_mtime != imagefile->image_mtime ||
+      thumb_image_size  != imagefile->image_size)
+    imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD;
+  else
+    imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OK;
 
   /* now convert the pixbuf to a tempbuf */
 
@@ -738,12 +796,14 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     }
 
   /* extract into about the original file from the pixbuf */
-  gimp_imagefile_set_info_from_pixbuf (imagefile, pixbuf);
+  gimp_imagefile_set_info_from_pixbuf (imagefile,
+                                       imagefile->state != old_state,
+                                       pixbuf);
 
  cleanup:
   g_free (thumbname);
   if (pixbuf)
-    g_object_unref (pixbuf);  
+    g_object_unref (pixbuf);
   if (error)
     g_error_free (error);
 
@@ -833,6 +893,11 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
                    uri, thumb_name, error->message);
         g_error_free (error);
       }
+    else if (chmod (thumb_name, 0600))
+      {
+        g_message (_("Couldn't set permissions of thumbnail '%s'.\n%s"),
+                   thumb_name, g_strerror (errno));
+      }
 
     g_free (desc);
     g_free (t_str);
@@ -840,6 +905,7 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     g_free (h_str);
     g_free (s_str);
     g_free (l_str);
+
   }
 
   g_object_unref (G_OBJECT (pixbuf));
@@ -882,6 +948,12 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
   const gchar *name;
   gchar       *thumb_name = NULL;
   gint         i, n;
+
+  if (strstr (uri, "/.thumbnails/"))
+    {
+      g_message (_("Cannot create thumbnail of thumbnail\n%s"), uri);
+      return NULL;
+    }
 
   name = gimp_imagefile_png_thumb_name (uri);
 
@@ -935,8 +1007,7 @@ gimp_imagefile_find_png_thumb (const gchar *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL) &&
-          image_mtime <= *thumb_mtime) 
+      if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL))
         {
           *thumb_size = thumb_sizes[i].size;
           return thumb_name;
@@ -949,8 +1020,7 @@ gimp_imagefile_find_png_thumb (const gchar *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL) &&
-          image_mtime <= *thumb_mtime)
+      if (gimp_imagefile_test (thumb_name, thumb_mtime, NULL))
         {
           *thumb_size = thumb_sizes[i].size;
           return thumb_name;
@@ -1016,6 +1086,8 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
   if (!raw_thumb)
     return NULL;
 
+  imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD;
+
   if (image_info)
     {
       gint img_width;
@@ -1027,7 +1099,7 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
           img_height = 0;
         }
       gimp_imagefile_set_info (imagefile, FALSE,
-                               img_width, img_height, -1, -1, -1);
+                               img_width, img_height, -1, -1);
 
       g_free (image_info);
     }

@@ -100,8 +100,8 @@ documents_delete_document_cmd_callback (GtkWidget *widget,
 
 
 void
-documents_refresh_documents_cmd_callback (GtkWidget *widget,
-                                          gpointer   data)
+documents_recreate_preview_cmd_callback (GtkWidget *widget,
+                                         gpointer   data)
 {
   GimpDocumentView *view;
 
@@ -111,6 +111,36 @@ documents_refresh_documents_cmd_callback (GtkWidget *widget,
     return;
 
   gtk_button_clicked (GTK_BUTTON (view->refresh_button));
+}
+
+void
+documents_reload_previews_cmd_callback (GtkWidget *widget,
+                                        gpointer   data)
+{
+  GimpDocumentView *view;
+
+  view = (GimpDocumentView *) gimp_widget_get_callback_context (widget);
+
+  if (! view)
+    return;
+
+  gimp_button_extended_clicked (GIMP_BUTTON (view->refresh_button),
+                                GDK_SHIFT_MASK);
+}
+
+void
+documents_delete_dangling_documents_cmd_callback (GtkWidget *widget,
+                                                  gpointer   data)
+{
+  GimpDocumentView *view;
+
+  view = (GimpDocumentView *) gimp_widget_get_callback_context (widget);
+
+  if (! view)
+    return;
+
+  gimp_button_extended_clicked (GIMP_BUTTON (view->refresh_button),
+                                GDK_CONTROL_MASK);
 }
 
 void
@@ -127,11 +157,13 @@ documents_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Open Image",          imagefile);
-  SET_SENSITIVE ("/Raise or Open Image", imagefile);
-  SET_SENSITIVE ("/File Open Dialog...", TRUE);
-  SET_SENSITIVE ("/Remove Entry",        imagefile);
-  SET_SENSITIVE ("/Refresh History",     TRUE);
+  SET_SENSITIVE ("/Open Image",              imagefile);
+  SET_SENSITIVE ("/Raise or Open Image",     imagefile);
+  SET_SENSITIVE ("/File Open Dialog...",     TRUE);
+  SET_SENSITIVE ("/Remove Entry",            imagefile);
+  SET_SENSITIVE ("/Recreate Preview",        imagefile);
+  SET_SENSITIVE ("/Reload all Previews",     imagefile);
+  SET_SENSITIVE ("/Remove Dangling Entries", imagefile);
 
 #undef SET_SENSITIVE
 }

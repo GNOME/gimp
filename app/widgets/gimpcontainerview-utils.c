@@ -382,11 +382,21 @@ gimp_container_view_imagefile_name_func (GtkWidget  *widget,
 
           if (tooltip)
             {
-              gchar *filename;
+              gchar       *filename;
+              const gchar *desc;
 
               filename = file_utils_uri_to_utf8_filename (uri);
+              desc     = gimp_imagefile_get_description (imagefile);
 
-              *tooltip = filename;
+              if (desc)
+                {
+                  *tooltip = g_strdup_printf ("%s\n%s", filename, desc);
+                  g_free (filename);
+                }
+              else
+                {
+                  *tooltip = filename;
+                }
             }
 
 	  if (imagefile->width > 0 && imagefile->height > 0)

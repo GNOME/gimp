@@ -296,10 +296,19 @@ file_open_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (vbox2), open_options_title, FALSE, FALSE, 0);
     gtk_widget_show (open_options_title);
 
-    label = gtk_label_new (" \n ");
+    label = gtk_label_new (" \n \n ");
+    gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.0);
     gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
+
+    /* eek */
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_size_request (label, &requisition);
+      gtk_widget_set_size_request (label, -1, requisition.height);
+    }
 
     g_signal_connect (G_OBJECT (open_options_imagefile), "info_changed",
                       G_CALLBACK (file_open_imagefile_info_changed),

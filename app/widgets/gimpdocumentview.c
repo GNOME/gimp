@@ -176,7 +176,8 @@ gimp_document_view_new (GimpViewType     view_type,
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GTK_STOCK_REFRESH,
                             _("Recreate preview\n"
-                              "<Shift> Reload all previews"),
+                              "<Shift> Reload all previews\n"
+                              "<Ctrl> Remove Dangling Entries"),
                             NULL,
                             G_CALLBACK (gimp_document_view_refresh_clicked),
                             G_CALLBACK (gimp_document_view_refresh_extended_clicked),
@@ -334,6 +335,18 @@ gimp_document_view_refresh_clicked (GtkWidget        *widget,
 }
 
 static void
+gimp_document_view_delete_dangling_foreach (GimpImagefile *imagefile,
+                                            GimpContainer *container)
+{
+  gimp_imagefile_update (imagefile);
+
+  if (imagefile->state == GIMP_IMAGEFILE_STATE_NOT_FOUND)
+    {
+      gimp_container_remove (container, GIMP_OBJECT (imagefile));
+    }
+}
+
+static void
 gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
                                              guint             state,
                                              GimpDocumentView *view)
@@ -342,7 +355,13 @@ gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
 
   editor = GIMP_CONTAINER_EDITOR (view);
 
-  if (state & GDK_SHIFT_MASK)
+  if (state & GDK_CONTROL_MASK)
+    {
+      gimp_container_foreach (editor->view->container,
+                              (GFunc) gimp_document_view_delete_dangling_foreach,
+                              editor->view->container);
+    }
+  else if (state & GDK_SHIFT_MASK)
     {
       gimp_container_foreach (editor->view->container,
                               (GFunc) gimp_imagefile_update,

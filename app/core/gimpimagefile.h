@@ -36,7 +36,11 @@ typedef enum
   GIMP_IMAGEFILE_STATE_UNKNOWN,
   GIMP_IMAGEFILE_STATE_REMOTE,
   GIMP_IMAGEFILE_STATE_NOT_FOUND,
-  GIMP_IMAGEFILE_STATE_EXISTS
+  GIMP_IMAGEFILE_STATE_EXISTS,
+  GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND,
+  GIMP_IMAGEFILE_STATE_THUMBNAIL_OLD,
+  GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED,
+  GIMP_IMAGEFILE_STATE_THUMBNAIL_OK
 } GimpImagefileState;
 
 
@@ -54,17 +58,16 @@ struct _GimpImagefile
 {
   GimpViewable        parent_instance;
 
+  GimpImagefileState  state;
+
+  time_t              image_mtime;
+  gssize              image_size;
+  time_t              thumb_mtime;
+
   gint                width;
   gint                height;
-  gssize              size;
   GimpImageType       type;
   gint                n_layers;
-
-  GimpImagefileState  image_state;
-  time_t              image_mtime;
-
-  GimpImagefileState  thumb_state;
-  time_t              thumb_mtime;
 
   gchar              *description;
   gboolean            static_desc;

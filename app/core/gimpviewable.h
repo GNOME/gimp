@@ -47,6 +47,8 @@ struct _GimpViewableClass
 {
   GimpObjectClass  parent_class;
 
+  const gchar     *name_changed_signal;
+
   /*  signals  */
   void      (* invalidate_preview) (GimpViewable *viewable);
   void      (* size_changed)       (GimpViewable *viewable);

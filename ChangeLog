@@ -1,3 +1,35 @@
+2002-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.[ch]: added "gchar *name_changed_signal"
+	to GimpViewableClass which defaults to "name_changed".
+
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c: connect to
+	viewable_class->name_changed_signal instead of just
+	"name_changed". Fixed possible UI inconsistency where the previous
+	viewable's tooltip would have been displayed.
+
+	* app/core/gimpimagefile.[ch]: set name_changed_signal to
+	"info_changed" so views can update their tooltips correctly.
+	Merged the separate image_state and thumb_state states into one
+	state variable and extended the state enum. Added description
+	strings for all states. Show the file size for all files, not only
+	for those with a thumbnail. Enabled display of outdated
+	thumbnails.
+
+	* app/gui/file-open-dialog.c: some changes because
+	gimp_imagefile_get_description() returns 3 instead of 2 lines of
+	text now.
+
+	* app/widgets/gimpcontainerview-utils.c: show the imagefile's
+	description in the tooltip.
+
+	* app/gui/menus.c
+	* app/gui/documents-commands.[ch]
+	* app/widgets/gimpdocumentview.c: added functions to remove
+	"dangling" document history entries. Updated the context menu so
+	all functions can be accessed through it.
+
 2002-04-28  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpairbrushtool.c
