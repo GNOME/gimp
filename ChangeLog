@@ -22,6 +22,10 @@
 
 	* app/libgimpapp.la: Remove, unneeded.
 
+	* libgimp/Makefile.am (install-libtool-import-lib): Install also
+	the .def files, so that people with other compilers can build
+	import libraries if needed.
+
 2002-02-08  Manish Singh  <yosh@gimp.org>
 
         * app/paint-funcs/paint-funcs.c: 64-bit cleaniless cleanups.
