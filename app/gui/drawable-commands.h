@@ -26,6 +26,9 @@ void   drawable_invert_cmd_callback     (GtkWidget *widget,
                                          gpointer   data);
 void   drawable_equalize_cmd_callback   (GtkWidget *widget,
                                          gpointer   data);
+void   drawable_flip_cmd_callback       (GtkWidget *widget,
+                                         gpointer   data,
+                                         guint      action);
 void   drawable_offset_cmd_callback     (GtkWidget *widget,
                                          gpointer   data);
 

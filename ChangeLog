@@ -1,5 +1,9 @@
 2003-05-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/drawable-commands.h: eek, forgot to commit this file.
+
+2003-05-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c: moved the image flip entries to the
 	Image->Transform submenu and added flip entries to
 	Layer->Transform. Cleaned up the transform submenus.
