@@ -21,20 +21,7 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <sys/types.h>
-#include <sys/stat.h>
-
 #include <glib-object.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "libgimpbase/gimpbase.h"
 
@@ -50,11 +37,12 @@
 static void       gimp_rc_config_iface_init (gpointer  iface,
                                              gpointer  iface_data);
 static gboolean   gimp_rc_serialize         (GObject  *object,
-                                             gint      fd);
+                                             gint      fd,
+                                             gpointer  data);
 static gboolean   gimp_rc_deserialize       (GObject  *object,
-                                             GScanner *scanner);
+                                             GScanner *scanner,
+                                             gpointer  data);
 static GObject  * gimp_rc_duplicate         (GObject  *object);
-static gboolean   gimp_rc_write_header      (gint      fd);
 
 
 GType 
@@ -108,15 +96,28 @@ gimp_rc_config_iface_init (gpointer  iface,
 
 static gboolean
 gimp_rc_serialize (GObject *object,
-                   gint     fd)
+                   gint     fd,
+                   gpointer data)
 {
-  return (gimp_config_serialize_properties (object, fd) &&
-          gimp_config_serialize_unknown_tokens (object, fd));
+  gboolean success;
+
+  if (data && GIMP_IS_RC (data))
+    success = gimp_config_serialize_changed_properties (object,
+                                                        G_OBJECT (data),
+                                                        fd);
+  else
+    success = gimp_config_serialize_properties (object, fd);
+
+  if (success)
+    success = gimp_config_serialize_unknown_tokens (object, fd);
+
+  return success;
 }
 
 static gboolean
 gimp_rc_deserialize (GObject  *object,
-                     GScanner *scanner)
+                     GScanner *scanner,
+                     gpointer  data)
 {
   return gimp_config_deserialize_properties (object, scanner, TRUE);
 }
@@ -227,68 +228,20 @@ gimp_rc_query (GimpRc      *rc,
 }
 
 /**
- * gimp_rc_write_changes:
- * @new_rc: a #GimpRc object.
- * @old_rc: another #GimpRc object.
- * @filename: the name of the rc file to generate. If it is %NULL, stdout 
- * will be used.
- * 
- * Writes all configuration values of @new_rc that differ from the values
- * set in @old_rc to the file specified by @filename. If the file already
- * exists, it is overwritten.
- * 
- * Return value: TRUE on success, FALSE otherwise.
+ * gimp_rc_save:
+ * @user_rc: the current #GimpRc.
+ * @global_rc: the global #GimpRC.
+ *
+ * Saves the users gimprc file. If you pass a global GimpRC, only the
+ * differences between the global and the users configuration is saved.
  **/
-gboolean
-gimp_rc_write_changes (GimpRc      *new_rc,
-                       GimpRc      *old_rc,
-                       const gchar *filename)
+void
+gimp_rc_save (GimpRc *user_rc,
+              GimpRc *global_rc)
 {
-  gboolean success;
-  gint     fd;
-  
-  g_return_val_if_fail (GIMP_IS_RC (new_rc), FALSE);
-  g_return_val_if_fail (GIMP_IS_RC (old_rc), FALSE);
-  
-  if (filename)
-    fd = open (filename, O_WRONLY | O_CREAT, 
-#ifndef G_OS_WIN32
-               S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-#else
-               _S_IREAD | _S_IWRITE
-#endif
-               );
-  else
-    fd = 1; /* stdout */
-  
-  if (fd == -1)
-    {
-      g_message (_("Failed to open file '%s': %s"),
-                 filename, g_strerror (errno));
-      return FALSE;
-    }
-  
-  success = (gimp_rc_write_header (fd) &&
-             gimp_config_serialize_changed_properties (G_OBJECT (new_rc), 
-                                                       G_OBJECT (old_rc),
-                                                       fd)  &&
-             gimp_config_serialize_unknown_tokens (G_OBJECT (new_rc), fd));
-  
-  if (filename)
-    close (fd);
-  
-  /* FIXME: should use GError */
-
-  return success;
-}
-
-static gboolean
-gimp_rc_write_header (gint fd)
-{
-  gboolean  success;
-  gchar    *filename;
-
   const gchar *top = 
+    "# GIMP gimprc\n"
+    "#\n"
     "# This is your personal gimprc file.  Any variable defined in this file\n"
     "# takes precedence over the value defined in the system-wide gimprc:\n"
     "#   ";
@@ -296,14 +249,32 @@ gimp_rc_write_header (gint fd)
     "\n"
     "# Most values can be set within The GIMP by changing some options in\n"
     "# the Preferences dialog.\n\n";
+  const gchar *footer =
+    "\n"
+    "# end of gimprc\n";
 
-  filename = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
+  gchar  *header;
+  gchar  *filename;
+  gchar  *system_filename;
+  GError *error = NULL;
+  
+  g_return_if_fail (GIMP_IS_RC (user_rc));
+  g_return_if_fail (global_rc == NULL || GIMP_IS_RC (global_rc));
+  
+  system_filename = g_build_filename (gimp_sysconf_directory (),
+                                      "gimprc", NULL);
+  header = g_strconcat (top, system_filename, bottom, NULL);
+  g_free (system_filename);
 
-  success = ((write (fd, top, strlen (top)) != -1)            &&
-             (write (fd, filename, strlen (filename)) != -1)  &&
-             (write (fd, bottom, strlen (bottom)) != -1));
-             
+  filename = gimp_personal_rc_file ("gimprc");
+
+  if (! gimp_config_serialize (G_OBJECT (user_rc),
+                               filename, header, footer, global_rc, &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
+
   g_free (filename);
-
-  return success;
+  g_free (header);
 }

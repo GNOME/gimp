@@ -1,5 +1,20 @@
 2002-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig.[ch]: added user_data pointer to serialize
+	and deserialize methods.
+
+	* app/config/gimprc.[ch]: implement gimp_rc_save() using
+	gimp_config_serialize() so it can take advantage of the file
+	handling magic implemented there.
+
+	* app/config/test-config.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c: changed accordingly.
+
+2002-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig.[ch]: added a return value to indicate
 	success of GimpConfigInterface::serialize. Added a GimpConfigError
 	value for write errors and check the return value of all write()

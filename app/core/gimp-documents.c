@@ -43,14 +43,15 @@ gimp_documents_load (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_DOCUMENT_LIST (gimp->documents));
 
-  g_object_set_data (G_OBJECT (gimp->documents), "thumbnail_size",
-                     GINT_TO_POINTER (gimp->config->thumbnail_size));
-
   filename = gimp_personal_rc_file ("documents");
 
-  if (! gimp_config_deserialize (G_OBJECT (gimp->documents), filename, &error))
+  if (!gimp_config_deserialize (G_OBJECT (gimp->documents),
+                                filename,
+                                GINT_TO_POINTER (gimp->config->thumbnail_size),
+                                &error))
     {
-      g_message (error->message);
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        g_message (error->message);
       g_error_free (error);
     }
 
@@ -66,6 +67,7 @@ gimp_documents_save (Gimp *gimp)
     "# This file will be entirely rewritten every time you\n"
     "# quit the gimp.\n\n";
   const gchar *footer =
+    "\n"
     "# end of documents\n";
 
   gchar  *filename;
@@ -77,7 +79,7 @@ gimp_documents_save (Gimp *gimp)
   filename = gimp_personal_rc_file ("documents");
 
   if (! gimp_config_serialize (G_OBJECT (gimp->documents),
-                               filename, header, footer, &error))
+                               filename, header, footer, NULL, &error))
     {
       g_message (error->message);
       g_error_free (error);

@@ -38,10 +38,12 @@
 
 static void     gimp_document_list_config_iface_init (gpointer  iface,
                                                       gpointer  iface_data);
-static gboolean gimp_document_list_serialize         (GObject  *object,
-                                                      gint      fd);
-static gboolean gimp_document_list_deserialize       (GObject  *object,
-                                                      GScanner *scanner);
+static gboolean gimp_document_list_serialize         (GObject  *list,
+                                                      gint      fd,
+                                                      gpointer  data);
+static gboolean gimp_document_list_deserialize       (GObject  *list,
+                                                      GScanner *scanner,
+                                                      gpointer  data);
 
 
 GType 
@@ -94,7 +96,8 @@ gimp_document_list_config_iface_init (gpointer  iface,
 
 static gboolean
 gimp_document_list_serialize (GObject *document_list,
-                              gint     fd)
+                              gint     fd,
+                              gpointer data)
 {
   GList   *list;
   GString *str;
@@ -119,14 +122,14 @@ gimp_document_list_serialize (GObject *document_list,
 }
 
 static gboolean
-gimp_document_list_deserialize (GObject  *list,
-                                GScanner *scanner)
+gimp_document_list_deserialize (GObject  *document_list,
+                                GScanner *scanner,
+                                gpointer  data)
 {
   GTokenType  token;
   gint        size;
 
-  /* FIXME, add user_data to deserialize */
-  size = GPOINTER_TO_INT (g_object_get_data (list, "thumbnail_size"));
+  size = GPOINTER_TO_INT (data);
 
   g_scanner_scope_add_symbol (scanner, 0, "document", GINT_TO_POINTER (1));
 
@@ -165,7 +168,7 @@ gimp_document_list_deserialize (GObject  *list,
 
               g_free (uri);
 
-              gimp_container_add (GIMP_CONTAINER (list),
+              gimp_container_add (GIMP_CONTAINER (document_list),
                                   GIMP_OBJECT (imagefile));
             }
           break;
@@ -180,7 +183,8 @@ gimp_document_list_deserialize (GObject  *list,
     }
   while (token != G_TOKEN_EOF);
 
-  GIMP_LIST (list)->list = g_list_reverse (GIMP_LIST (list)->list);
+  GIMP_LIST (document_list)->list = 
+    g_list_reverse (GIMP_LIST (document_list)->list);
 
   if (token != G_TOKEN_LEFT_PAREN)
     {

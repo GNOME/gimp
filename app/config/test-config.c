@@ -83,7 +83,7 @@ main (int   argc,
            g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
 
   if (! gimp_config_serialize (G_OBJECT (gimprc),
-                               filename, NULL, NULL, &error))
+                               filename, NULL, NULL, NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
@@ -95,7 +95,7 @@ main (int   argc,
                     NULL);
 
   g_print (" Deserializing from '%s' ...\n\n", filename);
-  if (! gimp_config_deserialize (G_OBJECT (gimprc), filename, &error))
+  if (! gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
@@ -119,30 +119,9 @@ main (int   argc,
   g_print ("\n Changing a property in the duplicate ...");
   g_object_set (G_OBJECT (gimprc2), "show-tips", FALSE, NULL);
 
-  g_print ("\n Testing gimp_rc_write_changes() ... \n\n");
-  
-  if (! gimp_rc_write_changes (gimprc2, gimprc, NULL))
-    return EXIT_FAILURE;
-
-  g_print ("\n done.\n");
-
-  g_object_unref (G_OBJECT (gimprc2));
-
-  g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
-  if (! gimp_config_deserialize (G_OBJECT (gimprc), "gimpconfig.c", &error))
-    {
-      g_print (" OK, failed. The error was:\n %s\n", error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      g_print ("This test should have failed :-(\n");
-      return EXIT_FAILURE;
-    }
-
   g_print ("\n Querying for \"default-comment\" ... ");
   
-  result = gimp_rc_query (gimprc, "default-comment");
+  result = gimp_rc_query (gimprc2, "default-comment");
   if (result)
     {
       g_print ("OK, found \"%s\".\n", result);
@@ -156,7 +135,7 @@ main (int   argc,
 
   g_print (" Querying for \"foobar\" ... ");
   
-  result = gimp_rc_query (gimprc, "foobar");
+  result = gimp_rc_query (gimprc2, "foobar");
   if (result && strcmp (result, "hadjaha") == 0)
     {
       g_print ("OK, found \"%s\".\n", result);
@@ -168,6 +147,21 @@ main (int   argc,
     }
 
   g_free (result);
+
+  g_object_unref (G_OBJECT (gimprc2));
+
+  g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
+  if (! gimp_config_deserialize (G_OBJECT (gimprc),
+                                 "gimpconfig.c", NULL, &error))
+    {
+      g_print (" OK, failed. The error was:\n %s\n", error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      g_print ("This test should have failed :-(\n");
+      return EXIT_FAILURE;
+    }
 
   g_object_unref (G_OBJECT (gimprc));
   

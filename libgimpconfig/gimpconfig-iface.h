@@ -24,10 +24,10 @@
 
 typedef enum
 {
-  GIMP_CONFIG_ERROR_ENOENT,  /*  file does not exist  */
-  GIMP_CONFIG_ERROR_OPEN,    /*  open failed          */
-  GIMP_CONFIG_ERROR_WRITE,   /*  write failed         */
-  GIMP_CONFIG_ERROR_PARSE    /*  parser error         */
+  GIMP_CONFIG_ERROR_OPEN,         /*  open failed          */
+  GIMP_CONFIG_ERROR_OPEN_ENOENT,  /*  file does not exist  */
+  GIMP_CONFIG_ERROR_WRITE,        /*  write failed         */
+  GIMP_CONFIG_ERROR_PARSE         /*  parser error         */
 } GimpConfigError;
 
 
@@ -41,9 +41,11 @@ struct _GimpConfigInterface
   GTypeInterface base_iface;
 
   gboolean   (* serialize)    (GObject  *object,
-                               gint      fd);
+                               gint      fd,
+                               gpointer  data);
   gboolean   (* deserialize)  (GObject  *object,
-                               GScanner *scanner);
+                               GScanner *scanner,
+                               gpointer  data);
   GObject  * (* duplicate)    (GObject  *object);
   gboolean   (* equal)        (GObject  *a,
                                GObject  *b);
@@ -60,9 +62,11 @@ gboolean      gimp_config_serialize             (GObject      *object,
                                                  const gchar  *filename,
                                                  const gchar  *header,
                                                  const gchar  *footer,
+                                                 gpointer      data,
                                                  GError      **error);
 gboolean      gimp_config_deserialize           (GObject      *object,
                                                  const gchar  *filename,
+                                                 gpointer      data,
                                                  GError      **error);
 
 GObject     * gimp_config_duplicate             (GObject      *object);

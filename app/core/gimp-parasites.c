@@ -100,9 +100,11 @@ gimp_parasiterc_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_deserialize (G_OBJECT (gimp->parasites), filename, &error))
+  if (! gimp_config_deserialize (G_OBJECT (gimp->parasites),
+                                 filename, NULL, &error))
     {
-      g_message (error->message);
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        g_message (error->message);
       g_error_free (error);
     }
 
@@ -118,6 +120,7 @@ gimp_parasiterc_save (Gimp *gimp)
     "# This file will be entirely rewritten every time you "
     "quit the gimp.\n\n";
   const gchar *footer =
+    "\n"
     "# end of parasiterc";
 
   gchar  *filename;
@@ -129,7 +132,7 @@ gimp_parasiterc_save (Gimp *gimp)
   filename = gimp_personal_rc_file ("parasiterc");
 
   if (! gimp_config_serialize (G_OBJECT (gimp->parasites),
-                               filename, header, footer, &error))
+                               filename, header, footer, NULL, &error))
     {
       g_message (error->message);
       g_error_free (error);

@@ -48,9 +48,11 @@
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
 static gboolean  gimp_config_iface_serialize    (GObject  *object,
-                                                 gint      fd);
+                                                 gint      fd,
+                                                 gpointer  data);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
-                                                 GScanner *scanner);
+                                                 GScanner *scanner,
+                                                 gpointer  data);
 static GObject  *gimp_config_iface_duplicate    (GObject  *object);
 static gboolean  gimp_config_iface_equal        (GObject  *a,
                                                  GObject  *b);
@@ -95,15 +97,17 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 }
 
 static gboolean
-gimp_config_iface_serialize (GObject *object,
-                             gint     fd)
+gimp_config_iface_serialize (GObject  *object,
+                             gint      fd,
+                             gpointer  data)
 {
   return gimp_config_serialize_properties (object, fd);
 }
 
 static gboolean
 gimp_config_iface_deserialize (GObject  *object,
-                               GScanner *scanner)
+                               GScanner *scanner,
+                               gpointer  data)
 {
   return gimp_config_deserialize_properties (object, scanner, FALSE);
 }
@@ -165,6 +169,7 @@ gimp_config_iface_equal (GObject *a,
  * @filename: the name of the file to write the configuration to.
  * @header: optional file header (should be a comment)
  * @footer: optional file footer (should be a comment)
+ * @data: user data passed to the serialize implementation.
  * @error:
  * 
  * Serializes the object properties of @object to the file specified
@@ -179,6 +184,7 @@ gimp_config_serialize (GObject      *object,
                        const gchar  *filename,
                        const gchar  *header,
                        const gchar  *footer,
+                       gpointer      data,
                        GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
@@ -212,7 +218,7 @@ gimp_config_serialize (GObject      *object,
     success = (write (fd, header, strlen (header)) != -1);
 
   if (success)
-    success = gimp_config_iface->serialize (object, fd);
+    success = gimp_config_iface->serialize (object, fd, data);
 
   if (success && footer)
     success = (write (fd, footer, strlen (footer)) != -1);
@@ -249,6 +255,7 @@ gimp_config_serialize (GObject      *object,
  * gimp_config_deserialize:
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to read configuration from.
+ * @data: user data passed to the serialize implementation.
  * @error: 
  * 
  * Opens the file specified by @filename, reads configuration data
@@ -261,6 +268,7 @@ gimp_config_serialize (GObject      *object,
 gboolean
 gimp_config_deserialize (GObject      *object,
                          const gchar  *filename,
+                         gpointer      data,
                          GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
@@ -283,7 +291,7 @@ gimp_config_deserialize (GObject      *object,
       g_set_error (error,
                    GIMP_CONFIG_ERROR, 
                    (errno == ENOENT ?
-                    GIMP_CONFIG_ERROR_ENOENT : GIMP_CONFIG_ERROR_OPEN),
+                    GIMP_CONFIG_ERROR_OPEN_ENOENT : GIMP_CONFIG_ERROR_OPEN),
                    _("Failed to open file: '%s': %s"),
                    filename, g_strerror (errno));
       return FALSE;
@@ -300,7 +308,7 @@ gimp_config_deserialize (GObject      *object,
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
 
-  success = gimp_config_iface->deserialize (object, scanner);
+  success = gimp_config_iface->deserialize (object, scanner, data);
 
   g_scanner_destroy (scanner);
   close (fd);

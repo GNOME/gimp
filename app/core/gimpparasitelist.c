@@ -52,10 +52,12 @@ static gsize    gimp_parasite_list_get_memsize       (GimpObject  *object);
 
 static void     gimp_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
-static gboolean gimp_parasite_list_serialize         (GObject     *object,
-                                                      gint         fd);
-static gboolean gimp_parasite_list_deserialize       (GObject     *object,
-                                                      GScanner    *scanner);
+static gboolean gimp_parasite_list_serialize         (GObject     *list,
+                                                      gint         fd,
+                                                      gpointer     data);
+static gboolean gimp_parasite_list_deserialize       (GObject     *list,
+                                                      GScanner    *scanner,
+                                                      gpointer     data);
 
 static void     parasite_serialize           (const gchar      *key,
                                               GimpParasite     *parasite,
@@ -225,8 +227,9 @@ gimp_parasite_list_get_memsize (GimpObject *object)
 }
 
 static gboolean
-gimp_parasite_list_serialize (GObject *list,
-                              gint     fd)
+gimp_parasite_list_serialize (GObject  *list,
+                              gint      fd,
+                              gpointer  data)
 {
   if (GIMP_PARASITE_LIST (list)->table)
     g_hash_table_foreach (GIMP_PARASITE_LIST (list)->table,
@@ -237,7 +240,8 @@ gimp_parasite_list_serialize (GObject *list,
 
 static gboolean
 gimp_parasite_list_deserialize (GObject  *list,
-                                GScanner *scanner)
+                                GScanner *scanner,
+                                gpointer  data)
 {
   GTokenType token;
 
