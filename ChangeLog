@@ -1,3 +1,8 @@
+Sat Jul 11 08:58:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/paint_core.c (paint_core_get_orig_image): Fixed a really
+	dumb bug.  (This may solve some of the undo-related crashes.)
+
 1998-07-11  Seth Burgess <sjburges@gimp.org>
 
 	* app/main.c:

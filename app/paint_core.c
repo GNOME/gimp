@@ -655,12 +655,12 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
 	{
 	  refd = 1;
 	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, TRUE, FALSE);
-	  tile_lock (undo_tile->valid);
 	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
 	}
       else
 	{
+	  refd = 0;
 	  s = srcPR.data;
 	}
 
