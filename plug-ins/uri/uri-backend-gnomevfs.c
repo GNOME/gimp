@@ -180,6 +180,7 @@ copy_uri (const gchar  *src_uri,
   GnomeVFSResult    result;
   gchar            *memsize;
   gchar            *message;
+  GTimeVal          last_time = { 0, 0 };
 
   gimp_progress_init (_("Connecting to server..."));
 
@@ -231,8 +232,9 @@ copy_uri (const gchar  *src_uri,
 
   while (TRUE)
     {
-      GnomeVFSFileSize chunk_read;
-      GnomeVFSFileSize chunk_written;
+      GnomeVFSFileSize  chunk_read;
+      GnomeVFSFileSize  chunk_written;
+      GTimeVal          now;
 
       result = gnome_vfs_read (read_handle, buffer, sizeof (buffer),
                                &chunk_read);
@@ -261,18 +263,30 @@ copy_uri (const gchar  *src_uri,
 
       bytes_read += chunk_read;
 
-      if (file_size > 0)
-        {
-          gimp_progress_update ((gdouble) bytes_read / (gdouble) file_size);
-        }
-      else
-        {
-          memsize = gimp_memsize_to_string (bytes_read);
-          message = g_strdup_printf (copied_format_str, memsize);
-          g_free (memsize);
+      /*  update the progress only up to 10 times a second  */
 
-          gimp_progress_init (message);
-          g_free (message);
+      g_get_current_time (&now);
+
+      if (((now.tv_sec - last_time.tv_sec) * 1000 +
+           (now.tv_usec - last_time.tv_usec) / 1000) > 100)
+        {
+          if (file_size > 0)
+            {
+              gimp_progress_update ((gdouble) bytes_read / (gdouble) file_size);
+            }
+          else
+            {
+              memsize = gimp_memsize_to_string (bytes_read);
+              message = g_strdup_printf (copied_format_str, memsize);
+              g_free (memsize);
+
+              gimp_progress_init (message);
+              g_free (message);
+
+              gimp_progress_pulse ();
+            }
+
+          last_time = now;
         }
 
       result = gnome_vfs_write (write_handle, buffer, chunk_read,
