@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.21\n"
-"POT-Creation-Date: 2000-05-15 22:38-0700\n"
-"PO-Revision-Date: 2000-05-10 09:23+02:00\n"
+"POT-Creation-Date: 2000-05-18 19:57+0200\n"
+"PO-Revision-Date: 2000-05-18 19:58+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -121,8 +121,8 @@ msgstr "Avslutt"
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1027
-#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3756
-#: app/layers_dialog.c:4008 app/levels.c:340 app/palette.c:1826
+#: app/layers_dialog.c:3478 app/layers_dialog.c:3660 app/layers_dialog.c:3752
+#: app/layers_dialog.c:4012 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
 #: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:331
@@ -279,8 +279,8 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3480 app/layers_dialog.c:3662 app/layers_dialog.c:3754
-#: app/layers_dialog.c:4006 app/levels.c:336 app/module_db.c:281
+#: app/layers_dialog.c:3476 app/layers_dialog.c:3658 app/layers_dialog.c:3750
+#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:285
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:329
@@ -352,7 +352,7 @@ msgstr "Vinkel:"
 msgid "Brush Selection"
 msgstr "Valg av pensel"
 
-#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:321
+#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:325
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Oppdater"
@@ -361,11 +361,11 @@ msgstr "Oppdater"
 msgid "No Brushes available"
 msgstr "Ingen pensler tilgjengelig"
 
-#: app/brush_select.c:448 app/layers_dialog.c:413 app/tool_options.c:526
+#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Ugjennomsiktighet:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:366 app/tool_options.c:550
+#: app/brush_select.c:456 app/layers_dialog.c:365 app/tool_options.c:550
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -450,7 +450,7 @@ msgstr "Erstatt"
 msgid "Add"
 msgstr "Legg til"
 
-#: app/by_color_select.c:761 app/layers_dialog.c:381 app/tool_options.c:926
+#: app/by_color_select.c:761 app/layers_dialog.c:380 app/tool_options.c:926
 msgid "Subtract"
 msgstr "Trekk fra"
 
@@ -509,11 +509,11 @@ msgid "Wrap Around"
 msgstr "Bryt rundt"
 
 #: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
-#: app/layers_dialog.c:3582
+#: app/layers_dialog.c:3578
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3584
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3580
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -784,7 +784,7 @@ msgstr "Kantvalg"
 msgid "Border Selection by:"
 msgstr "Kantvalg etter:"
 
-#: app/commands.c:1322
+#: app/commands.c:1324
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Feil under endring av størrelse: Både bredde og høyde må være større enn "
@@ -933,7 +933,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3523 app/resize.c:254 app/resize.c:279 app/resize.c:524
+#: app/layers_dialog.c:3519 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Høyde:"
@@ -959,7 +959,7 @@ msgstr "Kurver for indekserte tegnede objekter kan ikke justeres."
 msgid "Modify Curves for Channel:"
 msgstr "Endre kurver for kanal:"
 
-#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:387
+#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:386
 #: app/levels.c:368 app/paint_funcs.c:97 app/tool_options.c:932
 msgid "Value"
 msgstr "Verdi"
@@ -981,7 +981,7 @@ msgstr "Jevn"
 msgid "Free"
 msgstr "Fritt"
 
-#: app/curves.c:699 app/levels.c:597 app/module_db.c:830
+#: app/curves.c:699 app/levels.c:597 app/module_db.c:834
 msgid "Load"
 msgstr "Last"
 
@@ -2262,11 +2262,11 @@ msgstr "Metning:"
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: app/image_new.c:68 app/layers_dialog.c:3581
+#: app/image_new.c:68 app/layers_dialog.c:3577
 msgid "Foreground"
 msgstr "Forgrunn"
 
-#: app/image_new.c:78 app/layers_dialog.c:3583
+#: app/image_new.c:78 app/layers_dialog.c:3579
 msgid "White"
 msgstr "Hvit"
 
@@ -2474,7 +2474,7 @@ msgstr "Kanal"
 msgid "Channel Ops"
 msgstr "Kanaloperasjoner"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:386 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:385 app/paint_funcs.c:96
 #: app/tool_options.c:816 app/tool_options.c:931
 msgid "Color"
 msgstr "Farge"
@@ -2603,11 +2603,11 @@ msgstr "%s maske"
 msgid "Layer Select"
 msgstr "Velg lag"
 
-#: app/layers_dialog.c:265 app/layers_dialog.c:3513
+#: app/layers_dialog.c:264 app/layers_dialog.c:3509
 msgid "New Layer"
 msgstr "Nytt lag"
 
-#: app/layers_dialog.c:269
+#: app/layers_dialog.c:268
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2615,7 +2615,7 @@ msgstr ""
 "Hev lag    \n"
 "<Shift> til øverst"
 
-#: app/layers_dialog.c:274
+#: app/layers_dialog.c:273
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -2623,126 +2623,126 @@ msgstr ""
 "Senk lag       \n"
 "<Shift> til nederst"
 
-#: app/layers_dialog.c:279
+#: app/layers_dialog.c:278
 msgid "Duplicate Layer"
 msgstr "Dupliser lag"
 
-#: app/layers_dialog.c:283
+#: app/layers_dialog.c:282
 msgid "Anchor Layer"
 msgstr "Forankre lag"
 
-#: app/layers_dialog.c:287
+#: app/layers_dialog.c:286
 msgid "Delete Layer"
 msgstr "Slett lag"
 
-#: app/layers_dialog.c:373 app/paint_funcs.c:83 app/tool_options.c:917
+#: app/layers_dialog.c:372 app/paint_funcs.c:83 app/tool_options.c:917
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:374 app/paint_funcs.c:84 app/tool_options.c:918
+#: app/layers_dialog.c:373 app/paint_funcs.c:84 app/tool_options.c:918
 msgid "Dissolve"
 msgstr "Oppløs"
 
-#: app/layers_dialog.c:375 app/paint_funcs.c:86 app/tool_options.c:920
+#: app/layers_dialog.c:374 app/paint_funcs.c:86 app/tool_options.c:920
 msgid "Multiply (Burn)"
 msgstr "Multipliser (Burn)"
 
-#: app/layers_dialog.c:376 app/paint_funcs.c:98 app/tool_options.c:921
+#: app/layers_dialog.c:375 app/paint_funcs.c:98 app/tool_options.c:921
 msgid "Divide (Dodge)"
 msgstr "Divider (Dodge)"
 
-#: app/layers_dialog.c:377 app/paint_funcs.c:87 app/tool_options.c:922
+#: app/layers_dialog.c:376 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
 msgstr "Skjerm"
 
-#: app/layers_dialog.c:378 app/paint_funcs.c:88 app/tool_options.c:923
+#: app/layers_dialog.c:377 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
 msgstr "Legg over"
 
-#: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:924
+#: app/layers_dialog.c:378 app/paint_funcs.c:89 app/tool_options.c:924
 msgid "Difference"
 msgstr "Differens"
 
-#: app/layers_dialog.c:380 app/paint_funcs.c:90 app/tool_options.c:925
+#: app/layers_dialog.c:379 app/paint_funcs.c:90 app/tool_options.c:925
 msgid "Addition"
 msgstr "Tillegg"
 
-#: app/layers_dialog.c:382 app/paint_funcs.c:92 app/tool_options.c:927
+#: app/layers_dialog.c:381 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Darken Only"
 msgstr "Gjør kun mørkere"
 
-#: app/layers_dialog.c:383 app/paint_funcs.c:93 app/tool_options.c:928
+#: app/layers_dialog.c:382 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Gjør kun lysere"
 
-#: app/layers_dialog.c:384 app/paint_funcs.c:94 app/tool_options.c:929
+#: app/layers_dialog.c:383 app/paint_funcs.c:94 app/tool_options.c:929
 msgid "Hue"
 msgstr "Glød"
 
-#: app/layers_dialog.c:385 app/paint_funcs.c:95 app/tool_options.c:930
+#: app/layers_dialog.c:384 app/paint_funcs.c:95 app/tool_options.c:930
 msgid "Saturation"
 msgstr "Metning"
 
-#: app/layers_dialog.c:397
+#: app/layers_dialog.c:396
 msgid "Keep Trans."
 msgstr "Behold trans."
 
-#: app/layers_dialog.c:1910
+#: app/layers_dialog.c:1901
 msgid "Empty Layer Copy"
 msgstr "Kopiering av lag uten innhold"
 
-#: app/layers_dialog.c:2172 app/layers_dialog.c:3324 app/layers_dialog.c:3691
+#: app/layers_dialog.c:2163 app/layers_dialog.c:3320 app/layers_dialog.c:3687
 msgid "Floating Selection"
 msgstr "Flytende utvalg"
 
-#: app/layers_dialog.c:3474
+#: app/layers_dialog.c:3470
 msgid "New Layer Options"
 msgstr "Alternativer for nytt lag"
 
 #. The name label and entry
-#: app/layers_dialog.c:3503
+#: app/layers_dialog.c:3499
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/layers_dialog.c:3517
+#: app/layers_dialog.c:3513
 msgid "Layer Width:"
 msgstr "Bredde på lag:"
 
-#: app/layers_dialog.c:3577
+#: app/layers_dialog.c:3573
 msgid "Layer Fill Type"
 msgstr "Fylltype for lag"
 
-#: app/layers_dialog.c:3656
+#: app/layers_dialog.c:3652
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagets attributter"
 
-#: app/layers_dialog.c:3683
+#: app/layers_dialog.c:3679
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/layers_dialog.c:3748
+#: app/layers_dialog.c:3744
 msgid "Add Mask Options"
 msgstr "Legg til alternativer for maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3766
+#: app/layers_dialog.c:3762
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser lagets maske til:"
 
-#: app/layers_dialog.c:3771
+#: app/layers_dialog.c:3767
 msgid "White (Full Opacity)"
 msgstr "Hvitt (Helt ugjennomsiktig)"
 
-#: app/layers_dialog.c:3773
+#: app/layers_dialog.c:3769
 msgid "Black (Full Transparency)"
 msgstr "Sort (Helt gjennomsiktig)"
 
-#: app/layers_dialog.c:3775
+#: app/layers_dialog.c:3771
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/layers_dialog.c:3833 app/layers_dialog.c:3915
+#: app/layers_dialog.c:3832 app/layers_dialog.c:3918
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2750,27 +2750,27 @@ msgstr ""
 "Ugyldig bredde eller høyde.\n"
 "Begge må være positive."
 
-#: app/layers_dialog.c:4000
+#: app/layers_dialog.c:4004
 msgid "Layer Merge Options"
 msgstr "Alternativer for fletting av lag"
 
-#: app/layers_dialog.c:4025
+#: app/layers_dialog.c:4029
 msgid "Final, Merged Layer should be:"
 msgstr "Endelig, flettet lag skal være:"
 
-#: app/layers_dialog.c:4026
+#: app/layers_dialog.c:4030
 msgid "Final, Anchored Layer should be:"
 msgstr "Endelig, forankret lag skal være:"
 
-#: app/layers_dialog.c:4031
+#: app/layers_dialog.c:4035
 msgid "Expanded as necessary"
 msgstr "Utvides etter behov"
 
-#: app/layers_dialog.c:4033
+#: app/layers_dialog.c:4037
 msgid "Clipped to image"
 msgstr "Klippes til bildet"
 
-#: app/layers_dialog.c:4035
+#: app/layers_dialog.c:4039
 msgid "Clipped to bottom layer"
 msgstr "Klippes til bunnlag"
 
@@ -2950,749 +2950,749 @@ msgstr "grader"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:87
+#: app/menus.c:90
 msgid "/_File"
 msgstr "/_Fil"
 
 #. <Image>/File
-#: app/menus.c:89 app/menus.c:195
+#: app/menus.c:92 app/menus.c:198
 msgid "/File/New..."
 msgstr "/Fil/Ny..."
 
-#: app/menus.c:91 app/menus.c:197
+#: app/menus.c:94 app/menus.c:200
 msgid "/File/Open..."
 msgstr "/Fil/Åpne..."
 
-#: app/menus.c:98
+#: app/menus.c:101
 msgid "/File/Acquire"
 msgstr "/Fil/Hent"
 
-#: app/menus.c:103
+#: app/menus.c:106
 msgid "/File/Preferences..."
 msgstr "/Fil/Preferanser..."
 
-#: app/menus.c:110
+#: app/menus.c:113
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fil/Dialoger/Lag, kanaler og stier..."
 
-#: app/menus.c:112
+#: app/menus.c:115
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Fil/Dialoger/Alternativer for verktøy..."
 
-#: app/menus.c:117
+#: app/menus.c:120
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Fil/Dialoger/Pensler..."
 
-#: app/menus.c:119
+#: app/menus.c:122
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Fil/Dialoger/Mønstre..."
 
-#: app/menus.c:121
+#: app/menus.c:124
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Fil/Dialoger/Gradienter..."
 
-#: app/menus.c:123
+#: app/menus.c:126
 msgid "/File/Dialogs/Palette..."
 msgstr "/Fil/Dialoger/Palett..."
 
-#: app/menus.c:125
+#: app/menus.c:128
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Fil/Dialoger/Indeksert palett..."
 
-#: app/menus.c:130
+#: app/menus.c:133
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Fil/Dialoger/Innenheter..."
 
-#: app/menus.c:132
+#: app/menus.c:135
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Fil/Dialoger/Enhetsstatus..."
 
-#: app/menus.c:137
+#: app/menus.c:140
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Fil/Dialoger/Dokumentindeks..."
 
-#: app/menus.c:139
+#: app/menus.c:142
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Fil/Dialoger/Feil-konsoll..."
 
-#: app/menus.c:141
+#: app/menus.c:144
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Fil/Dialoger/Vis filtre..."
 
-#: app/menus.c:151 app/menus.c:210
+#: app/menus.c:154 app/menus.c:213
 msgid "/File/Quit"
 msgstr "/Fil/Avslutt"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:157
+#: app/menus.c:160
 msgid "/_Xtns"
 msgstr "/_Utvd"
 
-#: app/menus.c:159
+#: app/menus.c:162
 msgid "/Xtns/Module Browser..."
 msgstr "/Utvd/Modulviser..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:168
+#: app/menus.c:171
 msgid "/_Help"
 msgstr "/_Hjelp"
 
-#: app/menus.c:170
+#: app/menus.c:173
 msgid "/Help/Help..."
 msgstr "/Hjelp/Hjelp..."
 
-#: app/menus.c:172
+#: app/menus.c:175
 msgid "/Help/Context Help..."
 msgstr "/Hjelp/Kontekst hjelp..."
 
-#: app/menus.c:174
+#: app/menus.c:177
 msgid "/Help/Tip of the Day..."
 msgstr "/Hjelp/Dagens tips..."
 
-#: app/menus.c:176
+#: app/menus.c:179
 msgid "/Help/About..."
 msgstr "/Hjelp/Om..."
 
-#: app/menus.c:178
+#: app/menus.c:181
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Hjelp/Dump oppføringer (Debug)"
 
-#: app/menus.c:199
+#: app/menus.c:202
 msgid "/File/Save"
 msgstr "/Fil/Lagre"
 
-#: app/menus.c:201
+#: app/menus.c:204
 msgid "/File/Save As..."
 msgstr "/Fil/Lagre som..."
 
-#: app/menus.c:203
+#: app/menus.c:206
 msgid "/File/Revert"
 msgstr "/Fil/Forkast"
 
-#: app/menus.c:208
+#: app/menus.c:211
 msgid "/File/Close"
 msgstr "/Fil/Lukk"
 
 #. <Image>/Edit
-#: app/menus.c:218
+#: app/menus.c:221
 msgid "/Edit/Undo"
 msgstr "/Rediger/Angre"
 
-#: app/menus.c:220
+#: app/menus.c:223
 msgid "/Edit/Redo"
 msgstr "/Rediger/Gjenopprett"
 
-#: app/menus.c:225
+#: app/menus.c:228
 msgid "/Edit/Cut"
 msgstr "/Rediger/Klipp ut"
 
-#: app/menus.c:227
+#: app/menus.c:230
 msgid "/Edit/Copy"
 msgstr "/Rediger/Kopier"
 
-#: app/menus.c:229
+#: app/menus.c:232
 msgid "/Edit/Paste"
 msgstr "/Rediger/Lim inn"
 
-#: app/menus.c:231
+#: app/menus.c:234
 msgid "/Edit/Paste Into"
 msgstr "/Rediger/Lim inn i"
 
-#: app/menus.c:233
+#: app/menus.c:236
 msgid "/Edit/Paste as New"
 msgstr "/Rediger/Lim inn som nytt"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:238
+#: app/menus.c:241
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Rediger/Buffer/Klipp ut navngitt..."
 
-#: app/menus.c:240
+#: app/menus.c:243
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Rediger/Buffer/Kopier navngitt..."
 
-#: app/menus.c:242
+#: app/menus.c:245
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Rediger/Buffer/Lim inn navngitt..."
 
-#: app/menus.c:247
+#: app/menus.c:250
 msgid "/Edit/Clear"
 msgstr "/Rediger/Nullstill"
 
-#: app/menus.c:249
+#: app/menus.c:252
 msgid "/Edit/Fill with FG Color"
 msgstr "/Rediger/Fyll med forgrunnsfarge"
 
-#: app/menus.c:251
+#: app/menus.c:254
 msgid "/Edit/Fill with BG Color"
 msgstr "/Rediger/Fyll med bakgrunnsfarge"
 
-#: app/menus.c:253
+#: app/menus.c:256
 msgid "/Edit/Stroke"
 msgstr "/Rediger/Strøk"
 
 #. <Image>/Select
-#: app/menus.c:261
+#: app/menus.c:264
 msgid "/Select/Invert"
 msgstr "/Velg/Inverter"
 
-#: app/menus.c:263
+#: app/menus.c:266
 msgid "/Select/All"
 msgstr "/Velg/Alt"
 
-#: app/menus.c:265
+#: app/menus.c:268
 msgid "/Select/None"
 msgstr "/Velg/Ingen"
 
-#: app/menus.c:267
+#: app/menus.c:270
 msgid "/Select/Float"
 msgstr "/Velg/Flytende"
 
-#: app/menus.c:272
+#: app/menus.c:275
 msgid "/Select/Feather..."
 msgstr "/Velg/Fjær..."
 
-#: app/menus.c:274
+#: app/menus.c:277
 msgid "/Select/Sharpen"
 msgstr "/Velg/Skarpere"
 
-#: app/menus.c:276
+#: app/menus.c:279
 msgid "/Select/Shrink..."
 msgstr "/Velg/Krymp..."
 
-#: app/menus.c:278
+#: app/menus.c:281
 msgid "/Select/Grow..."
 msgstr "/Velg/Voks..."
 
-#: app/menus.c:280
+#: app/menus.c:283
 msgid "/Select/Border..."
 msgstr "/Velg/Kant..."
 
-#: app/menus.c:285
+#: app/menus.c:288
 msgid "/Select/Save to Channel"
 msgstr "/Velg/Lagre til kanal"
 
 #. <Image>/View
-#: app/menus.c:290
+#: app/menus.c:293
 msgid "/View/Zoom In"
 msgstr "/Vis/Zoom inn"
 
-#: app/menus.c:292
+#: app/menus.c:295
 msgid "/View/Zoom Out"
 msgstr "/Vis/Zoom ut"
 
 #. <Image>/View/Zoom
-#: app/menus.c:297
+#: app/menus.c:300
 msgid "/View/Zoom/16:1"
 msgstr "/Vis/Zoom/16:1"
 
-#: app/menus.c:299
+#: app/menus.c:302
 msgid "/View/Zoom/8:1"
 msgstr "/Vis/Zoom/8:1"
 
-#: app/menus.c:301
+#: app/menus.c:304
 msgid "/View/Zoom/4:1"
 msgstr "/Vis/Zoom/4:1"
 
-#: app/menus.c:303
+#: app/menus.c:306
 msgid "/View/Zoom/2:1"
 msgstr "/Vis/Zoom/2:1"
 
-#: app/menus.c:305
+#: app/menus.c:308
 msgid "/View/Zoom/1:1"
 msgstr "/Vis/Zoom/1:1"
 
-#: app/menus.c:307
+#: app/menus.c:310
 msgid "/View/Zoom/1:2"
 msgstr "/Vis/Zoom/1:2"
 
-#: app/menus.c:309
+#: app/menus.c:312
 msgid "/View/Zoom/1:4"
 msgstr "/Vis/Zoom/1:4"
 
-#: app/menus.c:311
+#: app/menus.c:314
 msgid "/View/Zoom/1:8"
 msgstr "/Vis/Zoom/1:8"
 
-#: app/menus.c:313
+#: app/menus.c:316
 msgid "/View/Zoom/1:16"
 msgstr "/Vis/Zoom/1:16"
 
-#: app/menus.c:316
+#: app/menus.c:319
 msgid "/View/Dot for Dot"
 msgstr "/Vis/Punkt for punkt"
 
-#: app/menus.c:321
+#: app/menus.c:324
 msgid "/View/Info Window..."
 msgstr "/Vis/Informasjonsvindu..."
 
-#: app/menus.c:323
+#: app/menus.c:326
 msgid "/View/Nav. Window..."
 msgstr "/Vis/Navigasjonsvindu..."
 
-#: app/menus.c:328
+#: app/menus.c:331
 msgid "/View/Toggle Selection"
 msgstr "/Vis/Slå av/på utvalg"
 
-#: app/menus.c:330
+#: app/menus.c:333
 msgid "/View/Toggle Rulers"
 msgstr "/Vis/Slå av/på linjaler"
 
-#: app/menus.c:332
+#: app/menus.c:335
 msgid "/View/Toggle Statusbar"
 msgstr "/Vis/Slå av/på statuslinje"
 
-#: app/menus.c:334
+#: app/menus.c:337
 msgid "/View/Toggle Guides"
 msgstr "/Vis/Slå av på guider"
 
-#: app/menus.c:336
+#: app/menus.c:339
 msgid "/View/Snap to Guides"
 msgstr "/Vis/Fest til guider"
 
-#: app/menus.c:341
+#: app/menus.c:344
 msgid "/View/New View"
 msgstr "/Vis/Ny visning"
 
-#: app/menus.c:343
+#: app/menus.c:346
 msgid "/View/Shrink Wrap"
 msgstr "/Vis/Pakk sammen"
 
 #. <Image>/Image/Mode
-#: app/menus.c:348
+#: app/menus.c:351
 msgid "/Image/Mode/RGB"
 msgstr "/Bilde/Modus/RGB"
 
-#: app/menus.c:350
+#: app/menus.c:353
 msgid "/Image/Mode/Grayscale"
 msgstr "/Bilde/Modus/Gråtone"
 
-#: app/menus.c:352
+#: app/menus.c:355
 msgid "/Image/Mode/Indexed..."
 msgstr "/Bilde/Modus/Indeksert..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:360
+#: app/menus.c:363
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bilde/Farger/Mindre mettet"
 
-#: app/menus.c:362
+#: app/menus.c:365
 msgid "/Image/Colors/Invert"
 msgstr "/Bilde/Farger/Inverter"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:370
+#: app/menus.c:373
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Bilde/Farger/Auto/Jevn ut"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:378
+#: app/menus.c:381
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bilde/Alfa/Legg til alfakanal"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:383
+#: app/menus.c:386
 msgid "/Image/Transforms/Offset..."
 msgstr "/Bilde/Transformering/Avstand..."
 
-#: app/menus.c:385
+#: app/menus.c:388
 msgid "/Image/Transforms/Rotate"
 msgstr "/Bilde/Transformeringer/Rotér"
 
-#: app/menus.c:392
+#: app/menus.c:395
 msgid "/Image/Canvas Size..."
 msgstr "/Bilde/Størrelse på kanvas..."
 
-#: app/menus.c:394
+#: app/menus.c:397
 msgid "/Image/Scale Image..."
 msgstr "/Bilde/Skalér bilde..."
 
-#: app/menus.c:396
+#: app/menus.c:399
 msgid "/Image/Duplicate"
 msgstr "/Bilde/Dupliser"
 
 #. <Image>/Layers
-#: app/menus.c:404
+#: app/menus.c:407
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Lag/Lag, kanaler og stier..."
 
-#: app/menus.c:408
+#: app/menus.c:411
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Lag/Lag til bildestørrelse"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:413
+#: app/menus.c:416
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Lag/Stabel/Forrige lag"
 
-#: app/menus.c:415
+#: app/menus.c:418
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Lag/Stabel/Neste lag"
 
-#: app/menus.c:417
+#: app/menus.c:420
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Lag/Stabel/Hev lag"
 
-#: app/menus.c:419
+#: app/menus.c:422
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Lag/Stabel/Senk lag"
 
-#: app/menus.c:421
+#: app/menus.c:424
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Lag/Stabel/Lag til topp"
 
-#: app/menus.c:423
+#: app/menus.c:426
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Lag/Stabel/Lag til bunn"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:430
+#: app/menus.c:433
 msgid "/Layers/Rotate"
 msgstr "/Lag/Rotér"
 
-#: app/menus.c:435
+#: app/menus.c:438
 msgid "/Layers/Anchor Layer"
 msgstr "/Lag/Forankre lag"
 
-#: app/menus.c:437
+#: app/menus.c:440
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Lag/Flett sammen synlige lag..."
 
-#: app/menus.c:439
+#: app/menus.c:442
 msgid "/Layers/Flatten Image"
 msgstr "/Lag/Flat ut bilde"
 
-#: app/menus.c:444
+#: app/menus.c:447
 msgid "/Layers/Mask to Selection"
 msgstr "/Lag/Maske til utvalg"
 
-#: app/menus.c:449
+#: app/menus.c:452
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Lag/Legg til alfakanal"
 
-#: app/menus.c:451
+#: app/menus.c:454
 msgid "/Layers/Alpha to Selection"
 msgstr "/Lag/Alpha til utvalg"
 
 #. <Image>/Tools
-#: app/menus.c:459
+#: app/menus.c:462
 msgid "/Tools/Toolbox"
 msgstr "/Verktøy/Verktøyskrin"
 
-#: app/menus.c:461
+#: app/menus.c:464
 msgid "/Tools/Default Colors"
 msgstr "/Verktøy/Standard farger"
 
-#: app/menus.c:463
+#: app/menus.c:466
 msgid "/Tools/Swap Colors"
 msgstr "/Verktøy/Bytt farger"
 
 #. <Image>/Dialogs
-#: app/menus.c:470
+#: app/menus.c:473
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialoger/Lag, kanaler og stier..."
 
-#: app/menus.c:472
+#: app/menus.c:475
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialoger/Alternativer for verktøy..."
 
-#: app/menus.c:477
+#: app/menus.c:480
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialoger/Pensler..."
 
-#: app/menus.c:479
+#: app/menus.c:482
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialoger/Mønstre..."
 
-#: app/menus.c:481
+#: app/menus.c:484
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialoger/Gradienter..."
 
-#: app/menus.c:483
+#: app/menus.c:486
 msgid "/Dialogs/Palette..."
 msgstr "/Dialoger/Palett..."
 
-#: app/menus.c:485
+#: app/menus.c:488
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialoger/Indeksert palett..."
 
-#: app/menus.c:490
+#: app/menus.c:493
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialoger/Innenheter..."
 
-#: app/menus.c:492
+#: app/menus.c:495
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialoger/Enhetsstatus..."
 
-#: app/menus.c:497
+#: app/menus.c:500
 msgid "/Dialogs/Document Index..."
 msgstr "/Dialoger/Dokumentindeks..."
 
-#: app/menus.c:499
+#: app/menus.c:502
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialoger/Feil-konsoll..."
 
-#: app/menus.c:501
+#: app/menus.c:504
 msgid "/Dialogs/Display Filters..."
 msgstr "/Dialoger/Vis filtre..."
 
-#: app/menus.c:503
+#: app/menus.c:506
 msgid "/Dialogs/Undo History..."
 msgstr "/Dialoger/Angrelogg..."
 
 #. <Image>/Filters
-#: app/menus.c:512
+#: app/menus.c:515
 msgid "/Filters/Repeat Last"
 msgstr "/Filtre/Gjenta siste"
 
-#: app/menus.c:514
+#: app/menus.c:517
 msgid "/Filters/Re-Show Last"
 msgstr "/Filtre/Vis siste på nytt"
 
-#: app/menus.c:519
+#: app/menus.c:522
 msgid "/Filters/Blur"
 msgstr "/Filtre/Gjør uskarp"
 
-#: app/menus.c:521
+#: app/menus.c:524
 msgid "/Filters/Colors"
 msgstr "/Filtre/Farger"
 
-#: app/menus.c:523
+#: app/menus.c:526
 msgid "/Filters/Noise"
 msgstr "/Filtre/Støy"
 
-#: app/menus.c:525
+#: app/menus.c:528
 msgid "/Filters/Edge-Detect"
 msgstr "/Filtre/Finn kant"
 
-#: app/menus.c:527
+#: app/menus.c:530
 msgid "/Filters/Enhance"
 msgstr "/Filtre/Utbedre"
 
-#: app/menus.c:529
+#: app/menus.c:532
 msgid "/Filters/Generic"
 msgstr "/Filtre/Vanlig"
 
-#: app/menus.c:534
+#: app/menus.c:537
 msgid "/Filters/Glass Effects"
 msgstr "/Filtre/Glass effekter"
 
-#: app/menus.c:536
+#: app/menus.c:539
 msgid "/Filters/Light Effects"
 msgstr "/Filtre/Lyseffekter"
 
-#: app/menus.c:538
+#: app/menus.c:541
 msgid "/Filters/Distorts"
 msgstr "/Filtre/Forvrengninger"
 
-#: app/menus.c:540
+#: app/menus.c:543
 msgid "/Filters/Artistic"
 msgstr "/Filtre/Artistiske"
 
-#: app/menus.c:542
+#: app/menus.c:545
 msgid "/Filters/Map"
 msgstr "/Filtre/Kart"
 
-#: app/menus.c:544
+#: app/menus.c:547
 msgid "/Filters/Render"
 msgstr "/Filtre/Render"
 
-#: app/menus.c:546
+#: app/menus.c:549
 msgid "/Filters/Web"
 msgstr "/Filtre/Web"
 
-#: app/menus.c:551
+#: app/menus.c:554
 msgid "/Filters/Animation"
 msgstr "/Filtre/Animasjon"
 
-#: app/menus.c:553
+#: app/menus.c:556
 msgid "/Filters/Combine"
 msgstr "/Filtre/Kombinér"
 
-#: app/menus.c:558
+#: app/menus.c:561
 msgid "/Filters/Toys"
 msgstr "/Filtre/Leketøy"
 
-#: app/menus.c:569
+#: app/menus.c:572
 msgid "/Automatic"
 msgstr "/Automatisk"
 
-#: app/menus.c:583
+#: app/menus.c:586
 msgid "/By Extension"
 msgstr "/Etter type"
 
-#: app/menus.c:597
+#: app/menus.c:600
 msgid "/New Layer..."
 msgstr "/Nytt lag..."
 
 #. <Layers>/Stack
-#: app/menus.c:602
+#: app/menus.c:605
 msgid "/Stack/Raise Layer"
 msgstr "/Stabel/Hev lag"
 
-#: app/menus.c:604
+#: app/menus.c:607
 msgid "/Stack/Lower Layer"
 msgstr "/Stabel/Senk lag"
 
-#: app/menus.c:606
+#: app/menus.c:609
 msgid "/Stack/Layer to Top"
 msgstr "/Stabel/Lag til topp"
 
-#: app/menus.c:608
+#: app/menus.c:611
 msgid "/Stack/Layer to Bottom"
 msgstr "/Stabel/Lag til bunn"
 
-#: app/menus.c:611
+#: app/menus.c:614
 msgid "/Duplicate Layer"
 msgstr "/Dupliser lag"
 
-#: app/menus.c:613
+#: app/menus.c:616
 msgid "/Anchor Layer"
 msgstr "/Forankre lag"
 
-#: app/menus.c:615
+#: app/menus.c:618
 msgid "/Delete Layer"
 msgstr "/Slett lag"
 
-#: app/menus.c:620
+#: app/menus.c:623
 msgid "/Layer Boundary Size..."
 msgstr "/Lag/Grensestørrelse..."
 
-#: app/menus.c:622
+#: app/menus.c:625
 msgid "/Layer to Imagesize"
 msgstr "/Lag/Lag til bildestørrelse"
 
-#: app/menus.c:624
+#: app/menus.c:627
 msgid "/Scale Layer..."
 msgstr "/Skalér lag..."
 
-#: app/menus.c:629
+#: app/menus.c:632
 msgid "/Merge Visible Layers..."
 msgstr "/Flett sammen synlige lag..."
 
-#: app/menus.c:631
+#: app/menus.c:634
 msgid "/Merge Down"
 msgstr "/Flett sammen nedover"
 
-#: app/menus.c:633
+#: app/menus.c:636
 msgid "/Flatten Image"
 msgstr "/Flate ut bilde"
 
-#: app/menus.c:638
+#: app/menus.c:641
 msgid "/Add Layer Mask..."
 msgstr "/Legg til maske for lag..."
 
-#: app/menus.c:640
+#: app/menus.c:643
 msgid "/Apply Layer Mask"
 msgstr "/Bruk lagmaske"
 
-#: app/menus.c:642
+#: app/menus.c:645
 msgid "/Delete Layer Mask"
 msgstr "/Slett lagmaske"
 
-#: app/menus.c:644
+#: app/menus.c:647
 msgid "/Mask to Selection"
 msgstr "/Maske til utvalg"
 
-#: app/menus.c:649
+#: app/menus.c:652
 msgid "/Add Alpha Channel"
 msgstr "/Legg til alfakanal"
 
-#: app/menus.c:651
+#: app/menus.c:654
 msgid "/Alpha to Selection"
 msgstr "/Alfa til utvalg"
 
-#: app/menus.c:656
+#: app/menus.c:659
 msgid "/Edit Layer Attributes..."
 msgstr "/Rediger lagattributter..."
 
-#: app/menus.c:667
+#: app/menus.c:670
 msgid "/New Channel..."
 msgstr "/Ny kanal..."
 
-#: app/menus.c:669
+#: app/menus.c:672
 msgid "/Raise Channel"
 msgstr "/Hev kanal"
 
-#: app/menus.c:671
+#: app/menus.c:674
 msgid "/Lower Channel"
 msgstr "/Senk kanal"
 
-#: app/menus.c:673
+#: app/menus.c:676
 msgid "/Duplicate Channel"
 msgstr "/Dupliser kanal"
 
-#: app/menus.c:678
+#: app/menus.c:681
 msgid "/Channel to Selection"
 msgstr "/Kanal til utvalg"
 
-#: app/menus.c:680
+#: app/menus.c:683
 msgid "/Add to Selection"
 msgstr "/Legg til i utvalg"
 
-#: app/menus.c:682
+#: app/menus.c:685
 msgid "/Subtract from Selection"
 msgstr "/Trekk fra utvalg"
 
-#: app/menus.c:684
+#: app/menus.c:687
 msgid "/Intersect with Selection"
 msgstr "/Kryss med utvalg"
 
-#: app/menus.c:689
+#: app/menus.c:692
 msgid "/Delete Channel"
 msgstr "/Slett kanal"
 
-#: app/menus.c:694
+#: app/menus.c:697
 msgid "/Edit Channel Attributes..."
 msgstr "/Rediger attributter for kanal..."
 
-#: app/menus.c:705
+#: app/menus.c:708
 msgid "/New Path"
 msgstr "/Ny sti"
 
-#: app/menus.c:707
+#: app/menus.c:710
 msgid "/Duplicate Path"
 msgstr "/Duplisert sti"
 
-#: app/menus.c:709
+#: app/menus.c:712
 msgid "/Path to Selection"
 msgstr "/Sti til utvalg"
 
-#: app/menus.c:711
+#: app/menus.c:714
 msgid "/Selection to Path"
 msgstr "/Utvalg til sti"
 
-#: app/menus.c:713
+#: app/menus.c:716
 msgid "/Stroke Path"
 msgstr "/Strøk sti"
 
-#: app/menus.c:715
+#: app/menus.c:718
 msgid "/Delete Path"
 msgstr "/Slett sti"
 
-#: app/menus.c:720
+#: app/menus.c:723
 msgid "/Copy Path"
 msgstr "/Kopier sti"
 
-#: app/menus.c:722
+#: app/menus.c:725
 msgid "/Paste Path"
 msgstr "/Lim inn sti"
 
-#: app/menus.c:724
+#: app/menus.c:727
 msgid "/Import Path..."
 msgstr "/Importsti..."
 
-#: app/menus.c:726
+#: app/menus.c:729
 msgid "/Export Path..."
 msgstr "/Eksportsti..."
 
-#: app/menus.c:731
+#: app/menus.c:734
 msgid "/Edit Path Attributes..."
 msgstr "/Rediger attributter for sti..."
 
-#: app/menus.c:1284
+#: app/menus.c:1287
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Feil under åpning av fil: %s\n"
@@ -3717,74 +3717,74 @@ msgstr "Utlasting forespurt"
 msgid "Unloaded OK"
 msgstr "Lastet ut OK"
 
-#: app/module_db.c:275
+#: app/module_db.c:279
 msgid "Module DB"
 msgstr "Modul DB"
 
-#: app/module_db.c:565
+#: app/module_db.c:569
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "last modul: \"%s\"\n"
 
-#: app/module_db.c:572
+#: app/module_db.c:576
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "hopper over modul: \"%s\"\n"
 
-#: app/module_db.c:597
+#: app/module_db.c:601
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "feil under lasting av modul: %s: %s"
 
-#: app/module_db.c:778
+#: app/module_db.c:782
 msgid "<No modules>"
 msgstr "<Ingen moduler>"
 
-#: app/module_db.c:791 app/module_db.c:800
+#: app/module_db.c:795 app/module_db.c:804
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:791
+#: app/module_db.c:795
 msgid "only in memory"
 msgstr "kun i minne"
 
-#: app/module_db.c:800
+#: app/module_db.c:804
 msgid "nowhere (click 'refresh')"
 msgstr "ingensteder (klikk 'gjenles')"
 
-#: app/module_db.c:839
+#: app/module_db.c:843
 msgid "Unload"
 msgstr "Frigi"
 
-#: app/module_db.c:853
+#: app/module_db.c:857
 msgid "Purpose:"
 msgstr "Mening:"
 
-#: app/module_db.c:854
+#: app/module_db.c:858
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: app/module_db.c:855
+#: app/module_db.c:859
 msgid "Version:"
 msgstr "Versjon:"
 
-#: app/module_db.c:856
+#: app/module_db.c:860
 msgid "Copyright:"
 msgstr "Kopibeskyttelse:"
 
-#: app/module_db.c:857
+#: app/module_db.c:861
 msgid "Date:"
 msgstr "Dato:"
 
-#: app/module_db.c:858
+#: app/module_db.c:862
 msgid "Location:"
 msgstr "Plassering:"
 
-#: app/module_db.c:859
+#: app/module_db.c:863
 msgid "State:"
 msgstr "Tilstand:"
 
-#: app/module_db.c:878
+#: app/module_db.c:882
 msgid "Autoload during startup"
 msgstr "Autolasting under oppstart"
 
@@ -4164,17 +4164,27 @@ msgstr "Starter utvidelser: "
 msgid "Extensions"
 msgstr "Utvidelser"
 
-#: app/plug_in.c:781
+#: app/plug_in.c:783
 #, c-format
-msgid "Unable to locate plug-in: \"%s\""
+msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kunne ikke finne tillegg: \"%s\""
 
-#: app/plug_in.c:1439
+#: app/plug_in.c:1450
 #, c-format
 msgid ""
-"Plug-In crashed: %s\n"
-"(%s)"
+"Plug-In crashed: \"%s\"\n"
+"(%s)\n"
+"\n"
+"The dying Plug-In may have messed up GIMP's internal state.\n"
+"You may want to save your images and restart GIMP\n"
+"to be on the safe side."
 msgstr ""
+"Tillegget krasjet: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Det døde tillegget kan ha ødelagt GIMP's interne tilstand.\n"
+"Du bør lagre dine bilder og starte GIMP på nytt\n"
+"for å være på den sikre siden."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -6327,10 +6337,3 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
-
-#~ msgid ""
-#~ "Open failed\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Åpne feilet\n"
-#~ "%s"
