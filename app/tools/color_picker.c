@@ -124,7 +124,7 @@ color_picker_options_new (void)
   /*  the new color picker tool options structure  */
   options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Color Picker Options"),
+		     N_("Color Picker Options"),
 		     color_picker_options_reset);
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;

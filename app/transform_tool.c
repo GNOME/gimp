@@ -201,7 +201,7 @@ transform_options_new (void)
   /*  the new transform tool options structure  */
   options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Transform Tool Options"),
+		     N_("Transform Tool Options"),
 		     transform_options_reset);
   options->type      = options->type_d      = ROTATE;
   options->smoothing = options->smoothing_d = TRUE;

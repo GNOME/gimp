@@ -248,7 +248,7 @@ gimp_unit_get_singular (GUnit unit)
   if (unit == UNIT_PERCENT)
     return gettext (gimp_unit_percent.singular);
 
-  return gimp_unit_get_user_unit (unit)->singular;
+  return gettext (gimp_unit_get_user_unit (unit)->singular);
 }
 
 
@@ -266,7 +266,7 @@ gimp_unit_get_plural (GUnit unit)
   if (unit == UNIT_PERCENT)
     return gettext (gimp_unit_percent.plural);
 
-  return gimp_unit_get_user_unit (unit)->plural;
+  return gettext (gimp_unit_get_user_unit (unit)->plural);
 }
 
 

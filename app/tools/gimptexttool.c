@@ -155,7 +155,7 @@ text_options_new (void)
   /*  the new text tool options structure  */
   options = (TextOptions *) g_malloc (sizeof (TextOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Text Tool Options"),
+		     N_("Text Tool Options"),
 		     text_options_reset);
   options->antialias   = options->antialias_d   = TRUE;
   options->border      = options->border_d      = 0;

@@ -1,3 +1,11 @@
+1999-06-07  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/bucket_fill.c app/color_picker.c app/commands.c app/convolve.c
+	* app/crop.c app/flip_tool.c app/gimpunit.c app/global_edit.c
+	* app/gradient.c app/histogram_tool.c app/magnify.c app/module_db.c
+	* app/palette.c app/paths_dialog.c app/text_tool.c app/transform_tool.c
+	  Misc i18n fixes, partly ported from Egger-gimp
+
 1999-06-06  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/menus.[ch]: locale-wrapper for menus_set_sensitive (..._locale)

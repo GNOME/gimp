@@ -361,7 +361,8 @@ select_border_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (_("Border Selection"), _("Border selection by:"),
+  query_size_box (N_("Border Selection"),
+		  N_("Border selection by:"),
 		  selection_border_radius, 1, 32767, 0,
 		  gdisp->gimage->unit,
 		  MIN (gdisp->gimage->xresolution,
@@ -379,7 +380,8 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (_("Feather Selection"), _("Feather selection by:"),
+  query_size_box (N_("Feather Selection"),
+		  N_("Feather selection by:"),
 		  selection_feather_radius, 0, 32767, 3,
 		  gdisp->gimage->unit,
 		  MIN (gdisp->gimage->xresolution,
@@ -397,7 +399,8 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (_("Grow Selection"), _("Grow selection by:"),
+  query_size_box (N_("Grow Selection"),
+		  N_("Grow selection by:"),
 		  selection_grow_pixels, 1, 32767, 0,
 		  gdisp->gimage->unit,
 		  MIN (gdisp->gimage->xresolution,
@@ -415,7 +418,8 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (_("Shrink Selection"), _("Shrink selection by:"),
+  query_size_box (N_("Shrink Selection"),
+		  N_("Shrink selection by:"),
 		  selection_shrink_pixels, 1, 32767, 0,
 		  gdisp->gimage->unit,
 		  MIN (gdisp->gimage->xresolution,

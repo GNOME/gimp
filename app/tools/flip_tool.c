@@ -73,7 +73,7 @@ flip_options_new (void)
   /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Flip Tool Options"),
+		     N_("Flip Tool Options"),
 		     flip_options_reset);
   options->type = options->type_d = FLIP_HORZ;
 
@@ -81,7 +81,7 @@ flip_options_new (void)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
+  frame = tool_options_radio_buttons_new (N_("Tool Toggle"), 
 					  &options->type,
 					   options->type_w,
 					   type_label,

@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -248,7 +249,7 @@ histogram_tool_initialize (GDisplay *gdisp)
   PixelRegion PR;
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Histogram does not operate on indexed drawables.");
+      g_message (_("Histogram does not operate on indexed drawables."));
       return;
     }
 
@@ -300,7 +301,7 @@ histogram_tool_new_dialog ()
 
   static ActionAreaItem action_items[] =
   {
-    { "Close", histogram_tool_close_callback, NULL, NULL }
+    { N_("Close"), histogram_tool_close_callback, NULL, NULL }
   };
   static char * histogram_info_names[7] =
   {
@@ -314,10 +315,10 @@ histogram_tool_new_dialog ()
   };
   static MenuItem color_option_items[] =
   {
-    { "Value", 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },
-    { "Red", 0, 0, histogram_tool_red_callback, NULL, NULL, NULL },
-    { "Green", 0, 0, histogram_tool_green_callback, NULL, NULL, NULL },
-    { "Blue", 0, 0, histogram_tool_blue_callback, NULL, NULL, NULL },
+    { N_("Value"), 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },
+    { N_("Red"), 0, 0, histogram_tool_red_callback, NULL, NULL, NULL },
+    { N_("Green"), 0, 0, histogram_tool_green_callback, NULL, NULL, NULL },
+    { N_("Blue"), 0, 0, histogram_tool_blue_callback, NULL, NULL, NULL },
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
 
@@ -332,7 +333,7 @@ histogram_tool_new_dialog ()
   /*  The shell and main vbox  */
   htd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (htd->shell), "histogram", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (htd->shell), "Histogram");
+  gtk_window_set_title (GTK_WINDOW (htd->shell), _("Histogram"));
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (htd->shell), "delete_event",
@@ -351,7 +352,7 @@ histogram_tool_new_dialog ()
   htd->channel_menu = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), htd->channel_menu, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Information on Channel:");
+  label = gtk_label_new (_("Information on Channel:"));
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
 
   menu = build_menu (color_option_items, NULL);

@@ -1167,8 +1167,8 @@ paths_dialog_edit_path_query(GtkWidget *widget)
 			      NULL,
 			      &mask);
 
-  query_string_box(_("Rename path"),
-		   _("Enter a new name for the path"),
+  query_string_box(N_("Rename path"),
+		   N_("Enter a new name for the path"),
 		   text,
 		   NULL, NULL,
 		   do_rename_paths_callback, widget);

@@ -162,7 +162,7 @@ bucket_options_new (void)
   gtk_widget_show (options->sample_merged_w);
 
   /*  fill type  */
-  frame = tool_options_radio_buttons_new (_("Fill Type"), 
+  frame = tool_options_radio_buttons_new (N_("Fill Type"), 
 					  &options->fill_mode,
 					   options->fill_mode_w,
 					   fill_mode_label,

@@ -38,10 +38,10 @@
 #include "datafiles.h"
 #include "actionarea.h"
 #include "gimpset.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpmodule.h"
+#include "libgimp/gimpintl.h"
 
 /* export this to gimprc.c */
 char *module_db_load_inhibit = NULL;

@@ -172,7 +172,7 @@ crop_options_new (void)
   /*  the new crop tool options structure  */
   options = (CropOptions *) g_malloc (sizeof (CropOptions));
   tool_options_init ((ToolOptions *) options,
-		     _("Crop & Resize Options"),
+		     N_("Crop & Resize Options"),
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = TRUE;
@@ -205,7 +205,7 @@ crop_options_new (void)
   gtk_widget_show (options->allow_enlarge_w);
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
+  frame = tool_options_radio_buttons_new (N_("Tool Toggle"), 
 					  &options->type,
 					   options->type_w,
 					   type_label,
