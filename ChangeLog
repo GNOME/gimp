@@ -1,5 +1,11 @@
 2004-12-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lic.c: applied patch from Joao S. O. Bueno that
+	sets a lower limit for the filter length (bug #160121). The patch
+	also makes the plug-in work on drawables with alpha channel.
+
+2004-12-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wmf.c: applied patch from Karine Proot that
 	limits the size of the preview in the WMF loader (bug #133521).
 

@@ -92,6 +92,8 @@ static gdouble minv   = -2.5;
 static gdouble maxv   =  2.5;
 static gdouble isteps = 20.0;
 
+static gboolean source_drw_has_alpha = FALSE;
+
 static gint    effect_width, effect_height;
 static gint    border_x1, border_y1, border_x2, border_y2;
 
@@ -238,12 +240,10 @@ noise (gdouble x,
   /* ======================== */
 
   for (i = sti; i <= sti + 1; i++)
-    {
-      for (j = stj; j <= stj + 1; j++)
-        sum += omega ((x - (gdouble) i * dx) / dx,
-                      (y - (gdouble) j * dy) / dy,
-                      i, j);
-    }
+    for (j = stj; j <= stj + 1; j++)
+      sum += omega ((x - (gdouble) i * dx) / dx,
+                    (y - (gdouble) j * dy) / dy,
+                    i, j);
 
   return sum;
 }
@@ -362,7 +362,10 @@ getpixel (GimpPixelRgn *src_rgn,
   peek (src_rgn, x1, y2, &pp[2]);
   peek (src_rgn, x2, y2, &pp[3]);
 
-  *p = gimp_bilinear_rgb (u, v, pp);
+  if (source_drw_has_alpha)
+    *p = gimp_bilinear_rgba (u, v, pp);
+  else
+    *p = gimp_bilinear_rgb (u, v, pp);
 }
 
 static void
@@ -389,22 +392,38 @@ lic_image (GimpPixelRgn *src_rgn,
   /* ============================== */
 
   getpixel (src_rgn, &col1, xx + l * c, yy + l * s);
-  gimp_rgb_multiply (&col1, filter (-l));
+  if (source_drw_has_alpha)
+    gimp_rgba_multiply (&col1, filter (-l));
+  else
+    gimp_rgb_multiply (&col1, filter (-l));
 
   for (u = -l + step; u <= l; u += step)
     {
       getpixel (src_rgn, &col2, xx - u * c, yy - u * s);
-      gimp_rgb_multiply (&col2, filter (u));
+      if (source_drw_has_alpha)
+        {
+          gimp_rgba_multiply (&col2, filter (u));
 
-      col3 = col1;
-      gimp_rgb_add (&col3, &col2);
-      gimp_rgb_multiply (&col3, 0.5 * step);
-      gimp_rgb_add (&col, &col3);
+          col3 = col1;
+          gimp_rgba_add (&col3, &col2);
+          gimp_rgba_multiply (&col3, 0.5 * step);
+          gimp_rgba_add (&col, &col3);
+        }
+      else
+        {
+          gimp_rgb_multiply (&col2, filter (u));
 
+          col3 = col1;
+          gimp_rgb_add (&col3, &col2);
+          gimp_rgb_multiply (&col3, 0.5 * step);
+          gimp_rgb_add (&col, &col3);
+        }
       col1 = col2;
     }
-
-  gimp_rgb_multiply (&col, 1.0 / l);
+  if (source_drw_has_alpha)
+    gimp_rgba_multiply (&col, 1.0 / l);
+  else
+    gimp_rgb_multiply (&col, 1.0 / l);
   gimp_rgb_clamp (&col);
 
   *color = col;
@@ -521,11 +540,15 @@ compute_lic (GimpDrawable *drawable,
             {
               peek (&src_rgn, xcount, ycount, &color);
               tmp = lic_noise (xcount, ycount, vx, vy);
-              gimp_rgb_multiply (&color, tmp);
+              if (source_drw_has_alpha)
+                gimp_rgba_multiply (&color, tmp);
+              else
+                gimp_rgb_multiply (&color, tmp);
             }
           else
-            lic_image (&src_rgn, xcount, ycount, vx, vy, &color);
-
+            {
+              lic_image (&src_rgn, xcount, ycount, vx, vy, &color);
+            }
           poke (&dest_rgn, xcount, ycount, &color);
         }
 
@@ -550,11 +573,16 @@ compute_image (GimpDrawable *drawable)
   if (licvals.effect_convolve == 0)
     generatevectors ();
 
-  l = (gdouble) licvals.filtlen;
-  dx = dy = (gdouble) licvals.noisemag;
-  minv = ((gdouble) licvals.minv) / 10.0;
-  maxv = ((gdouble) licvals.maxv) / 10.0;
-  isteps = (gdouble) licvals.intsteps;
+  if (licvals.filtlen < 0.1)
+    licvals.filtlen = 0.1;
+
+  l = licvals.filtlen;
+  dx = dy = licvals.noisemag;
+  minv = licvals.minv / 10.0;
+  maxv = licvals.maxv / 10.0;
+  isteps = licvals.intsteps;
+
+  source_drw_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   effect = gimp_drawable_get (licvals.effect_image_id);
 
@@ -695,7 +723,7 @@ create_main_dialog (void)
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                                      _("_Filter length:"), 0, 6,
-                                     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
+                                     licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
@@ -782,7 +810,7 @@ query (void)
                           "Tom Bech & Federico Mena Quintero",
                           "Version 0.14, September 24 1997",
                           N_("_Van Gogh (LIC)..."),
-                          "RGB",
+                          "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
