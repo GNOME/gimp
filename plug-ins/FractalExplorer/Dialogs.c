@@ -1569,8 +1569,9 @@ save_options (FILE * fp)
 void
 save_callback (void)
 {
-  FILE               *fp;
-  gchar              *savename;
+  FILE  *fp;
+  gchar *savename;
+  gchar *message;
 
   savename = filename;
 
@@ -1578,7 +1579,12 @@ save_callback (void)
 
   if (!fp) 
     {
-      g_message (_("Error opening '%.100s' could not save"), savename);
+      message = g_strconcat (_("Error opening: %s"), 
+			     "\n",
+			     _("Could not save."), 
+			     savename);
+      g_message (message);
+      g_free (message);
       return;
     }
   /* Write header out */

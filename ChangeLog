@@ -1,3 +1,8 @@
+2000-04-18  Sven Neumann  <sven@gimp.org>
+	
+	* plug-ins/FractalExplorer/Dialogs.c: i18n fix
+	* plug-ins/gdyntext/gdyntext_ui.c: ditto, plus indentation
+
 2000-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c (open_browser_dialog):
