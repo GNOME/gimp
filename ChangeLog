@@ -1,5 +1,10 @@
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/film.c (film): push a context around code that
+	changes the foreground color.
+
+2004-12-12  Sven Neumann  <sven@gimp.org>
+
 	* app/batch.c (batch_run): changed handling of the 'gimp -b -'
 	command-line. It used to spawn three instances of Script-Fu, two
 	should be more than enough.

@@ -359,7 +359,6 @@ film (void)
   gint number_height, num_images, num_pictures;
   gint i, j, k, picture_count;
   gdouble f;
-  GimpRGB foreground;
   gint num_layers;
   gint32 *image_ID_src, image_ID_dst, layer_ID_src, layer_ID_dst;
   gint32 *layers;
@@ -376,9 +375,10 @@ film (void)
   if (num_images <= 0)
     return (-1);
 
+  gimp_context_push ();
+  gimp_context_set_foreground (&filmvals.number_color);
+
   tile_height = gimp_tile_height ();
-  /* Save foreground colour */
-  gimp_context_get_foreground (&foreground);
 
   if (filmvals.keep_height) /* Search maximum picture height */
     {
@@ -396,6 +396,7 @@ film (void)
       film_height = filmvals.film_height;
       picture_height = (int)(film_height * filmvals.picture_height + 0.5);
     }
+
   picture_space = (int)(film_height * filmvals.picture_space + 0.5);
   picture_y0 = (film_height - picture_height)/2;
 
@@ -426,6 +427,7 @@ film (void)
 
       g_free (layers);
     }
+
 #ifdef FILM_DEBUG
   g_printerr ("film_height = %d, film_width = %d\n", film_height, film_width);
   g_printerr ("picture_height = %d, picture_space = %d, picture_y0 = %d\n",
@@ -510,7 +512,7 @@ film (void)
                              layer_ID_dst, picture_x0, picture_y0,
                              picture_width, picture_height))
 	    {
-	      g_printerr ("film: error during scale_layer\n");
+	      g_warning ("film: error during scale_layer\n");
 	      return -1;
 	    }
 
@@ -518,8 +520,6 @@ film (void)
 	  if ((number_height > 0) &&
 	      (filmvals.number_pos[0] || filmvals.number_pos[1]))
 	    {
-	      gimp_context_set_foreground (&filmvals.number_color);
-
 	      if (filmvals.number_pos[0])
 		draw_number (layer_ID_dst, filmvals.number_start + picture_count,
 			     picture_x0 + picture_width/2,
@@ -529,8 +529,6 @@ film (void)
 			     picture_x0 + picture_width/2,
 			     film_height - (hole_offset + number_height)/2,
 			     number_height);
-
-	      gimp_context_set_foreground (&foreground);
 	    }
 
 	  picture_x0 += picture_width + (picture_space/2);
@@ -547,8 +545,7 @@ film (void)
   /* Drawing text/numbers leaves us with a floating selection. Stop it */
   gimp_floating_sel_anchor (gimp_image_get_floating_sel (image_ID_dst));
 
-  /* Restore foreground */
-  gimp_context_set_foreground (&foreground);
+  gimp_context_pop ();
 
   return image_ID_dst;
 }
