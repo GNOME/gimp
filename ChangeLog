@@ -1,3 +1,9 @@
+Mon Feb  7 05:04:28 2000  Tim Janik  <timj@gtk.org>
+
+	* app/gtkhwrapbox.c:
+	* app/gtkvwrapbox.c: pulled new sources from gle (containing
+	a fix for kelly's justify==FILL bug).
+
 2000-02-05  Garry R. Osgood <gosgood@idt.net>
 
         * gimp/plug-ins/sample_colorize.c

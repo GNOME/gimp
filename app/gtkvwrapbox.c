@@ -345,8 +345,7 @@ layout_col (GtkWrapBox    *wbox,
 	    GtkAllocation *area,
 	    GSList        *children,
 	    guint          children_per_line,
-	    gboolean       hexpand,
-	    gint          *shortfall)
+	    gboolean       hexpand)
 {
   GSList *slist;
   guint n_children = 0, n_expand_children = 0, have_expand_children = 0, total_height = 0;
@@ -359,7 +358,7 @@ layout_col (GtkWrapBox    *wbox,
       GtkRequisition child_requisition;
       
       n_children++;
-      if (child->vexpand || wbox->justify == GTK_JUSTIFY_FILL)
+      if (child->vexpand)
 	n_expand_children++;
       
       get_child_requisition (wbox, child->widget, &child_requisition);
@@ -367,15 +366,10 @@ layout_col (GtkWrapBox    *wbox,
     }
   
   height = MAX (1, area->height - (n_children - 1) * wbox->vspacing);
-  extra = height - total_height;
-
-  if (extra < 0) 
-    {
-      g_warning("gtkvwrapbox: not enough space!\n");
-      if (shortfall && *shortfall < -extra)
-	*shortfall = -extra;
-      extra = 0;
-    }
+  if (height > total_height)
+    extra = height - total_height;
+  else
+    extra = 0;
   have_expand_children = n_expand_children && extra;
   
   y = area->y;
@@ -385,7 +379,7 @@ layout_col (GtkWrapBox    *wbox,
       height /= ((gdouble) children_per_line);
       extra = 0;
     }
-  else if (have_expand_children)
+  else if (have_expand_children && wbox->justify != GTK_JUSTIFY_FILL)
     {
       height = extra;
       extra /= ((gdouble) n_expand_children);
@@ -415,15 +409,9 @@ layout_col (GtkWrapBox    *wbox,
 	  y += extra;
 	  height = 0;
 	  extra = 0;
-	} 
-      else 
-	{
-	  g_warning ("gtkvwrapbox: unhandled wbox justification");
-	  height = 0;
-	  extra = 0;
 	}
     }
-
+  
   n_children = 0;
   for (slist = children; slist; slist = slist->next)
     {
@@ -459,7 +447,6 @@ layout_col (GtkWrapBox    *wbox,
 	  if (have_expand_children)
 	    {
 	      child_allocation.height = child_requisition.height;
-
 	      if (child->vexpand || wbox->justify == GTK_JUSTIFY_FILL)
 		{
 		  guint space;
@@ -516,7 +503,6 @@ layout_cols (GtkWrapBox    *wbox,
   guint total_width = 0, n_expand_lines = 0, n_lines = 0;
   gfloat shrink_width;
   guint children_per_line;
-  gint shortfall = 0;
   
   next_child = wbox->children;
   slist = GTK_WRAP_BOX_GET_CLASS (wbox)->rlist_line_children (wbox,
@@ -633,17 +619,12 @@ layout_cols (GtkWrapBox    *wbox,
 		      &col_allocation,
 		      line->children,
 		      children_per_line,
-		      line->expand,
-		      &shortfall);
+		      line->expand);
 	  
 	  g_slist_free (line->children);
 	  g_free (line);
 	  line = next_line;
 	}
-    }
-  if (shortfall > 0) 
-    {
-      g_warning("vwrapbox too small, shortfall is %d\n", shortfall);
     }
 }
 
