@@ -17,13 +17,14 @@
 	(gimp-floating-sel-anchor floating-sel)))
 
 (define (script-fu-ripply-anim img drawable displacement num-frames edge-type)
-  (let* ((old-bg (car (gimp-context-get-background)))
-	 (width (car (gimp-drawable-width drawable)))
+  (let* ((width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
 	 (ripple-image (car (gimp-image-new width height GRAY)))
 	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY-IMAGE "Ripple Texture" 100 NORMAL-MODE))))
 
  ; this script generates its own displacement map
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable ripple-image)
     (gimp-context-set-background '(127 127 127) )
@@ -88,9 +89,10 @@
       
       (gimp-image-undo-enable rippletiled-image)
       (gimp-image-delete rippletiled-image)
-      (gimp-context-set-background old-bg)
       (gimp-image-undo-enable out-imagestack)
-      (gimp-display-new out-imagestack))))
+      (gimp-display-new out-imagestack))
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-ripply-anim"
 		    _"<Image>/Script-Fu/Animators/_Rippling..."

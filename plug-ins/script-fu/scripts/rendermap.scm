@@ -21,13 +21,11 @@
 			      inGrad
 			      inWiden)
 
-  (set! old-gradient (car (gimp-gradients-get-gradient)))
-  (set! old-fg (car (gimp-context-get-foreground)))
-  (set! old-bg (car (gimp-context-get-background)))
-
   (set! theWidth inSize)
   (set! theHeight inSize)
   (set! theImage (car(gimp-image-new theWidth theHeight RGB)))
+
+  (gimp-context-push)
 
   (gimp-selection-all theImage)
 
@@ -66,10 +64,10 @@
   (gimp-selection-none theImage)
   (gimp-gradients-set-gradient inGrad)
   (plug-in-gradmap TRUE theImage theLayer)
-  (gimp-gradients-set-gradient old-gradient)
-  (gimp-context-set-background old-bg)
-  (gimp-context-set-foreground old-fg)
-  (gimp-display-new theImage))
+
+  (gimp-display-new theImage)
+
+  (gimp-context-pop))
 
 (script-fu-register "script-fu-render-map"
 		    _"<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."

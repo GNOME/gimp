@@ -249,12 +249,10 @@
 	 (hsv '(254 255 255))
 	 (x-base border-size)
 	 (y-base (+ gimg-height border-size))
-	 (index 0)
-	 (old-foreground (car (gimp-context-get-foreground)))
-	 (old-background (car (gimp-context-get-background)))
-	 (old-paint-mode (car (gimp-brushes-get-paint-mode)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-opacity (car (gimp-brushes-get-opacity))))
+	 (index 0))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable gimg)
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
@@ -311,20 +309,15 @@
     (let ((text-layer (car (gimp-text-fontname gimg -1 0 0
 				      "Red: Hue, Green: Sat, Blue: Val"
 				      1 1 12 PIXELS
-				      "-*-helvetica-*-r-*-*-12-*-*-*-p-*-*-*")))
+				      "Sans")))
 	  (offset-y (- y-base (car (gimp-drawable-height clayer)))))
       (gimp-layer-set-mode text-layer DIFFERENCE-MODE)
       (gimp-layer-translate clayer 0 offset-y)
       (gimp-layer-translate text-layer border-size (+ offset-y 15)))
     (gimp-image-set-active-layer gimg bglayer)
     (gimp-image-clean-all gimg)
-    ;; return back the state
-    (gimp-context-set-foreground old-foreground)
-    (gimp-context-set-foreground old-background)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-paint-mode old-paint-mode)
-    (gimp-brushes-set-opacity old-opacity)
     (gimp-image-undo-enable gimg)
+
     (set! script-fu-hsv-graph-scale scale)
     (set! script-fu-hsv-graph-opacity opacity)
     (set! script-fu-hsv-graph-bounds? bounds?)
@@ -333,7 +326,9 @@
     (set! script-fu-hsv-graph-beg-y beg-y)
     (set! script-fu-hsv-graph-end-x end-x)
     (set! script-fu-hsv-graph-end-y end-y)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register
  "script-fu-hsv-graph"

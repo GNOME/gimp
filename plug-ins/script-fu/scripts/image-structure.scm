@@ -59,11 +59,12 @@
 	 (new-width (+ (* 2 border) (+ old-width (* 2 shear-length))))
 	 (new-height (+ (* 2 border) (+ old-height (* space (- num-of-layers 1)))))
 	 (new-bg #f)
-	 (old-foreground (car (gimp-context-get-foreground)))
-	 (old-background (car (gimp-context-get-background)))
 	 (layer-names '())
 	 (layer #f)
 	 (index 0))
+
+    (gimp-context-push)
+
     (gimp-image-resize img new-width new-height 0 0)
     (set! layers (cadr layers))
     (gimp-selection-none img)
@@ -113,13 +114,13 @@
 	    (set! text-layer (car (gimp-text-fontname img -1 (/ border 2)
 					     (+ (* space index) old-height)
 					     (car layer-names)
-					     0 TRUE 14 PIXELS "-*-helvetica-*-r-*-*-14-*-*-*-p-*-*-*")))
+					     0 TRUE 14 PIXELS "Sans")))
 	    (gimp-layer-set-mode text-layer NORMAL-MODE)
 	    (set! index (+ index 1))
 	    (set! layer-names (cdr layer-names)))))
+
     (gimp-image-set-active-layer img new-bg)
-    (gimp-context-set-background old-background)
-    (gimp-context-set-foreground old-foreground)
+
     (set! script-fu-show-image-structure-new-image? new-image?)
     (set! script-fu-show-image-structure-space space)
     (set! script-fu-show-image-structure-shear-length shear-length)
@@ -131,7 +132,10 @@
     (set! script-fu-show-image-structure-padding-opacity padding-opacity)
     (set! script-fu-show-image-structure-with-background? with-background?)
     (set! script-fu-show-image-structure-background-color background-color)
-    (gimp-displays-flush)))
+
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register
  "script-fu-show-image-structure"

@@ -42,13 +42,14 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
-	 (old-bg (car (gimp-context-get-background)))
 	 (from-selection 0)
 	 (active-selection 0)
 	 (shadow-layer 0))
     
   (if (= rel-distance 0) (set! rel-distance 999999))
 
+  (gimp-context-push)
+  
   (gimp-image-undo-group-start image)
   
   (gimp-layer-add-alpha drawable)
@@ -166,9 +167,10 @@
       (gimp-image-raise-layer image drawable))
 
   (gimp-image-set-active-layer image drawable)
-  (gimp-context-set-background old-bg)
   (gimp-image-undo-group-end image)
-  (gimp-displays-flush)))
+  (gimp-displays-flush)
+
+  (gimp-context-pop)))
 
 (script-fu-register "script-fu-perspective-shadow"
 		    _"<Image>/Script-Fu/Shadow/_Perspective..."

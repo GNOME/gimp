@@ -89,10 +89,7 @@
 		       ratio
 		       pressed)
 
-  (let* ((old-fg-color (car (gimp-context-get-foreground)))
-	 (old-bg-color (car (gimp-context-get-background)))
-	 
-	 (text-extents (gimp-text-get-extents-fontname text
+  (let* ((text-extents (gimp-text-get-extents-fontname text
 						       size
 						       PIXELS
 						       font))
@@ -114,6 +111,8 @@
 				       RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
 	 (gradient (car (gimp-layer-new img width height
 					RGBA-IMAGE "Button" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
 
@@ -175,10 +174,10 @@
     (gimp-image-merge-visible-layers img EXPAND-AS-NECESSARY)
 
     (gimp-selection-none img)
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-round-button"
 		    _"<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
