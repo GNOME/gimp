@@ -1,5 +1,11 @@
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-dialog.c: removed the thumbnail box.
+
+	* app/widgets/gimpfiledialog.c: and added it here.
+
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-dialog-utils.[ch]: renamed parameters and removed
 	useless #includes.
 

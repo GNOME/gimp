@@ -32,10 +32,15 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "file/file-utils.h"
+
 #include "plug-in/plug-in-proc.h"
 
 #include "gimpfiledialog.h"
 #include "gimpmenufactory.h"
+#include "gimpthumbbox.h"
 
 #include "gimp-intl.h"
 
@@ -47,6 +52,9 @@ static void       gimp_file_dialog_destroy      (GtkObject           *object);
 
 static gboolean   gimp_file_dialog_delete_event (GtkWidget           *widget,
                                                  GdkEventAny         *event);
+
+static void  gimp_file_dialog_selection_changed (GtkTreeSelection    *sel,
+                                                 GimpFileDialog      *dialog);
 
 
 static GtkFileSelectionClass *parent_class = NULL;
@@ -182,6 +190,28 @@ gimp_file_dialog_new (Gimp            *gimp,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
 
+  if (gimp->config->thumbnail_size > 0)
+    {
+      GtkFileSelection *fs = GTK_FILE_SELECTION (dialog);
+      GtkTreeSelection *tree_sel;
+
+      tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (fs->file_list));
+
+      /* Catch file-list clicks so we can update the preview thumbnail */
+      g_signal_connect (tree_sel, "changed",
+                        G_CALLBACK (gimp_file_dialog_selection_changed),
+                        dialog);
+
+      /* EEK */
+      for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
+
+      dialog->thumb_box = gimp_thumb_box_new (gimp);
+      gtk_box_pack_end (GTK_BOX (hbox), dialog->thumb_box, FALSE, FALSE, 0);
+      gtk_widget_show (dialog->thumb_box);
+
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
+    }
+
   return GTK_WIDGET (dialog);
 }
 
@@ -221,4 +251,65 @@ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
 
       g_string_free (s, TRUE);
     }
+}
+
+
+/*  private functions  */
+
+static void
+selchanged_foreach (GtkTreeModel *model,
+		    GtkTreePath  *path,
+		    GtkTreeIter  *iter,
+		    gpointer      data)
+{
+  gboolean *selected = data;
+
+  *selected = TRUE;
+}
+
+static void
+gimp_file_dialog_selection_changed (GtkTreeSelection *sel,
+                                    GimpFileDialog   *dialog)
+{
+  GtkFileSelection *fs       = GTK_FILE_SELECTION (dialog);
+  const gchar      *fullfname;
+  gboolean          selected = FALSE;
+
+  gtk_tree_selection_selected_foreach (sel,
+				       selchanged_foreach,
+				       &selected);
+
+  if (selected)
+    {
+      gchar *uri;
+
+      fullfname = gtk_file_selection_get_filename (fs);
+
+      uri = file_utils_filename_to_uri (dialog->gimp->load_procs,
+                                        fullfname, NULL);
+      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
+      g_free (uri);
+    }
+  else
+    {
+      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), NULL);
+    }
+
+  {
+    gchar **selections;
+    GSList *uris = NULL;
+    gint    i;
+
+    selections = gtk_file_selection_get_selections (fs);
+
+    for (i = 0; selections[i] != NULL; i++)
+      uris = g_slist_prepend (uris, g_filename_to_uri (selections[i],
+                                                       NULL, NULL));
+
+    g_strfreev (selections);
+
+    uris = g_slist_reverse (uris);
+
+    gimp_thumb_box_set_uris (GIMP_THUMB_BOX (dialog->thumb_box), uris);
+  }
 }

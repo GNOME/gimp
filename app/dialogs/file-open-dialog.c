@@ -42,7 +42,6 @@
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimpthumbbox.h"
 
 #include "dialogs.h"
 #include "file-dialog-utils.h"
@@ -53,22 +52,19 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_open_dialog_create       (Gimp             *gimp,
-                                                  GimpMenuFactory  *menu_factory);
-static void        file_open_selchanged_callback (GtkTreeSelection *sel,
-                                                  GtkWidget        *open_dialog);
-static void        file_open_response_callback   (GtkWidget        *open_dialog,
-                                                  gint              response_id,
-                                                  Gimp             *gimp);
-static void        file_open_dialog_open_image   (GtkWidget        *open_dialog,
-                                                  Gimp             *gimp,
-                                                  const gchar      *uri,
-                                                  const gchar      *entered_filename,
-                                                  PlugInProcDef    *load_proc);
+static GtkWidget * file_open_dialog_create     (Gimp            *gimp,
+                                                GimpMenuFactory *menu_factory);
+static void        file_open_dialog_response   (GtkWidget       *open_dialog,
+                                                gint             response_id,
+                                                Gimp            *gimp);
+static void        file_open_dialog_open_image (GtkWidget       *open_dialog,
+                                                Gimp            *gimp,
+                                                const gchar     *uri,
+                                                const gchar     *entered_filename,
+                                                PlugInProcDef   *load_proc);
 
 
 static GtkWidget *fileload  = NULL;
-static GtkWidget *thumb_box = NULL;
 
 
 /*  public functions  */
@@ -136,116 +132,31 @@ static GtkWidget *
 file_open_dialog_create (Gimp            *gimp,
                          GimpMenuFactory *menu_factory)
 {
-  GtkWidget        *open_dialog;
-  GtkFileSelection *fs;
+  GtkWidget *dialog;
 
-  open_dialog = gimp_file_dialog_new (gimp,
-                                      menu_factory, "<Load>",
-                                      _("Open Image"), "gimp-file-open",
-                                      GTK_STOCK_OPEN,
-                                      GIMP_HELP_FILE_OPEN);
+  dialog = gimp_file_dialog_new (gimp,
+                                 menu_factory, "<Load>",
+                                 _("Open Image"), "gimp-file-open",
+                                 GTK_STOCK_OPEN,
+                                 GIMP_HELP_FILE_OPEN);
+
+  gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (dialog), TRUE);
 
   gimp_dialog_factory_add_foreign (global_dialog_factory,
                                    "gimp-file-open-dialog",
-                                   open_dialog);
+                                   dialog);
 
-  g_signal_connect (open_dialog, "response",
-                    G_CALLBACK (file_open_response_callback),
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (file_open_dialog_response),
                     gimp);
 
-  fs = GTK_FILE_SELECTION (open_dialog);
-
-  gtk_file_selection_set_select_multiple (fs, TRUE);
-
-  /*  The preview frame  */
-  if (gimp->config->thumbnail_size > 0)
-    {
-      GtkTreeSelection *tree_sel;
-      GtkWidget        *hbox;
-
-      tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (fs->file_list));
-
-      /* Catch file-list clicks so we can update the preview thumbnail */
-      g_signal_connect (tree_sel, "changed",
-                        G_CALLBACK (file_open_selchanged_callback),
-                        open_dialog);
-
-      /* pack the containing open_options hbox into the open-dialog */
-      for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
-
-      thumb_box = gimp_thumb_box_new (gimp);
-      gtk_box_pack_end (GTK_BOX (hbox), thumb_box, FALSE, FALSE, 0);
-      gtk_widget_show (thumb_box);
-
-      gtk_widget_set_sensitive (GTK_WIDGET (thumb_box), FALSE);
-    }
-
-  return open_dialog;
+  return dialog;
 }
 
 static void
-selchanged_foreach (GtkTreeModel *model,
-		    GtkTreePath  *path,
-		    GtkTreeIter  *iter,
-		    gpointer      data)
-{
-  gboolean *selected = data;
-
-  *selected = TRUE;
-}
-
-static void
-file_open_selchanged_callback (GtkTreeSelection *sel,
-			       GtkWidget        *open_dialog)
-{
-  GimpFileDialog   *dialog   = GIMP_FILE_DIALOG (open_dialog);
-  GtkFileSelection *fs       = GTK_FILE_SELECTION (open_dialog);
-  const gchar      *fullfname;
-  gboolean          selected = FALSE;
-
-  gtk_tree_selection_selected_foreach (sel,
-				       selchanged_foreach,
-				       &selected);
-
-  if (selected)
-    {
-      gchar *uri;
-
-      fullfname = gtk_file_selection_get_filename (fs);
-
-      uri = file_utils_filename_to_uri (dialog->gimp->load_procs,
-                                        fullfname, NULL);
-      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (thumb_box), uri);
-      g_free (uri);
-    }
-  else
-    {
-      gimp_thumb_box_set_uri (GIMP_THUMB_BOX (thumb_box), NULL);
-    }
-
-  {
-    gchar **selections;
-    GSList *uris = NULL;
-    gint    i;
-
-    selections = gtk_file_selection_get_selections (fs);
-
-    for (i = 0; selections[i] != NULL; i++)
-      uris = g_slist_prepend (uris, g_filename_to_uri (selections[i],
-                                                       NULL, NULL));
-
-    g_strfreev (selections);
-
-    uris = g_slist_reverse (uris);
-
-    gimp_thumb_box_set_uris (GIMP_THUMB_BOX (thumb_box), uris);
-  }
-}
-
-static void
-file_open_response_callback (GtkWidget *open_dialog,
-                             gint       response_id,
-                             Gimp      *gimp)
+file_open_dialog_response (GtkWidget *open_dialog,
+                           gint       response_id,
+                           Gimp      *gimp)
 {
   GtkFileSelection  *fs;
   gchar            **selections;
