@@ -58,11 +58,11 @@ EXPORTS
 	gimp_drawable_get_image
 	gimp_drawable_get_linked
 	gimp_drawable_get_name
+	gimp_drawable_get_pixel
 	gimp_drawable_get_tattoo
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile
 	gimp_drawable_get_tile2
-	gimp_drawable_get_visible
 	gimp_drawable_get_visible
 	gimp_drawable_has_alpha
 	gimp_drawable_height
@@ -80,8 +80,10 @@ EXPORTS
 	gimp_drawable_parasite_detach
 	gimp_drawable_parasite_find
 	gimp_drawable_parasite_list
+	gimp_drawable_set_image
 	gimp_drawable_set_linked
 	gimp_drawable_set_name
+	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
 	gimp_drawable_set_visible
 	gimp_drawable_type
@@ -205,6 +207,7 @@ EXPORTS
 	gimp_image_remove_channel
 	gimp_image_remove_layer
 	gimp_image_resize
+	gimp_image_rotate
 	gimp_image_scale
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
@@ -261,6 +264,7 @@ EXPORTS
 	gimp_message_get_handler
 	gimp_message_set_handler
 	gimp_min_colors
+	gimp_monitor_number
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_get_background
@@ -328,6 +332,7 @@ EXPORTS
 	gimp_pixel_rgns_register2
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
+	gimp_plugin_menu_register
 	gimp_posterize
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
@@ -351,6 +356,7 @@ EXPORTS
 	gimp_rgn_iterator_dest
 	gimp_rgn_iterator_free
 	gimp_rgn_iterator_new
+	gimp_rgn_iterator_src
 	gimp_rgn_iterator_src_dest
 	gimp_rotate
 	gimp_run_procedure

@@ -1,11 +1,11 @@
 EXPORTS
-	_gp_params_destroy
 	gimp_any_to_utf8
 	gimp_base_init
 	gimp_data_directory
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
 	gimp_directory
+	gimp_escape_uline
 	gimp_filename_to_utf8
 	gimp_gtkrc
 	gimp_locale_directory
