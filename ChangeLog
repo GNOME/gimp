@@ -1,5 +1,14 @@
 2005-04-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage.c
+	(gimp_image_remove_layer, gimp_image_remove_channel): handle a
+	floating selection attached to the layer or channel that is being
+	removed.  Fixes bug #168582 but doesn't handle floating selections
+	attached to layer masks.
+
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: renamed localedir to gimplocaledir.
 
 	* libgimpbase/Makefile.am (AM_CPPFLAGS)
