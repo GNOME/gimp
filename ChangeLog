@@ -1,3 +1,9 @@
+2003-01-14  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/image-menu.c
+	* plug-ins/common/threshold_alpha.c: applied a patch from Henrik
+	Brix Andersen that changes the Alpha menu to Transparency (#89275).
+
 2003-01-13  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Partially address #102058 with a --with-shm configure

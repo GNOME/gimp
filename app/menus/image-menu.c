@@ -616,19 +616,19 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "layers/mask_to_selection.html", NULL },
 
-  /*  <Image>/Layer/Alpha  */
+  /*  <Image>/Layer/Transparency  */
 
-  { { N_("/Layer/Alpha/Add Alpha Channel"), NULL,
+  { { N_("/Layer/Transparency/Add Alpha Channel"), NULL,
       layers_add_alpha_channel_cmd_callback, 0 },
     NULL,
     "layers/add_alpha_channel.html", NULL },
-  { { N_("/Layer/Alpha/Alpha to Selection"), NULL,
+  { { N_("/Layer/Transparency/Alpha to Selection"), NULL,
       layers_alpha_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
     NULL,
     "layers/alpha_to_selection.html", NULL },
 
-  MENU_SEPARATOR ("/Layer/Alpha/---"),
+  MENU_SEPARATOR ("/Layer/Transparency/---"),
 
   MENU_SEPARATOR ("/Layer/---"),
 
@@ -1319,8 +1319,8 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Mask/Delete Layer Mask", lp && !aux && lm);
   SET_SENSITIVE ("/Layer/Mask/Mask to Selection", lp && !aux && lm);
 
-  SET_SENSITIVE ("/Layer/Alpha/Alpha to Selection", lp && !aux && alpha);
-  SET_SENSITIVE ("/Layer/Alpha/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);
+  SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection", lp && !aux && alpha);
+  SET_SENSITIVE ("/Layer/Transparency/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);
 
 #undef SET_ACTIVE
 #undef SET_LABEL
