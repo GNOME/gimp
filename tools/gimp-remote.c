@@ -341,18 +341,19 @@ main (gint    argc,
       g_free (file_uri);
     }
 
+  /*  if called without any filenames, always start a new GIMP  */
+  if (file_list->len == 0)
+    {
+      start_new_gimp (argv[0], file_list);
+    }
+
   /*  locate Gimp window */
-
   display = gdk_display_get_default ();
-
   gimp_window = gimp_remote_find_window (display, gdk_screen_get_default ());
 
   if (! gimp_window)
     {
       start_new_gimp (argv[0], file_list);
-
-      g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
-      return EXIT_FAILURE;
     }
 
   if (file_list->len > 0)
