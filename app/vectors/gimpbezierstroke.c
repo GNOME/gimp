@@ -1583,20 +1583,20 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
                           gboolean          sweep,
                           const GimpCoords *end)
 {
-  GimpCoords start;
-  GimpCoords middle;   /* between start and end */
-  GimpCoords trans_delta;
-  GimpCoords trans_center;
-  GimpCoords tmp_center;
-  GimpCoords center;
-  GimpCoords ellips[4]; /* control points of untransformed ellipse segment */
-  GimpCoords ctrl[4]; /* control points of next bezier segment */
+  GimpCoords  start;
+  GimpCoords  middle;   /* between start and end */
+  GimpCoords  trans_delta;
+  GimpCoords  trans_center;
+  GimpCoords  tmp_center;
+  GimpCoords  center;
+  GimpCoords  ellips[4]; /* control points of untransformed ellipse segment */
+  GimpCoords  ctrl[4];   /* control points of next bezier segment           */
 
   GimpMatrix3 anglerot;
 
-  gdouble lambda;
-  gdouble phi0, phi1, phi2;
-  gdouble tmpx, tmpy;
+  gdouble     lambda;
+  gdouble     phi1, phi2;
+  gdouble     tmpx, tmpy;
 
   g_return_if_fail (GIMP_IS_BEZIER_STROKE (bez_stroke));
   g_return_if_fail (bez_stroke->closed == FALSE);
@@ -1615,13 +1615,14 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   gimp_matrix3_rotate (&anglerot, -angle_rad);
 
   gimp_coords_mix (0.5, &start, -0.5, end, &trans_delta);
-  gimp_matrix3_transform_point (&anglerot, trans_delta.x, trans_delta.y,
+  gimp_matrix3_transform_point (&anglerot,
+                                trans_delta.x, trans_delta.y,
                                 &tmpx, &tmpy);
   trans_delta.x = tmpx;
   trans_delta.y = tmpy;
 
-  lambda = (trans_delta.x*trans_delta.x / radius_x / radius_x +
-            trans_delta.y*trans_delta.y / radius_y / radius_y);
+  lambda = (SQR (trans_delta.x) / SQR (radius_x) +
+            SQR (trans_delta.y) / SQR (radius_y));
 
   if (lambda < 0.00001)
     {
@@ -1634,7 +1635,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   if (lambda > 1.0)
     {
       /* The radii are too small for a matching ellipse. We expand them
-       * so that they fit exacty (center of the ellipse between the
+       * so that they fit exactly (center of the ellipse between the
        * start- and endpoint
        */
       radius_x *= sqrt (lambda);
@@ -1645,6 +1646,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   else
     {
       gdouble factor = sqrt ((1.0 - lambda) / lambda);
+
       trans_center.x =   trans_delta.y * radius_x / radius_y * factor;
       trans_center.y = - trans_delta.x * radius_y / radius_x * factor;
     }
@@ -1659,7 +1661,8 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   gimp_matrix3_rotate (&anglerot, angle_rad);
 
   tmp_center = trans_center;
-  gimp_matrix3_transform_point (&anglerot, tmp_center.x, tmp_center.y,
+  gimp_matrix3_transform_point (&anglerot,
+                                tmp_center.x, tmp_center.y,
                                 &tmpx, &tmpy);
   tmp_center.x = tmpx;
   tmp_center.y = tmpy;
@@ -1673,14 +1676,17 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   phi2 = atan2 ((- trans_delta.y - trans_center.y) / radius_y,
                 (- trans_delta.x - trans_center.x) / radius_x);
 
-  if (phi1 < 0) phi1 += 2 * G_PI;
-  if (phi2 < 0) phi2 += 2 * G_PI;
+  if (phi1 < 0)
+    phi1 += 2 * G_PI;
+  if (phi2 < 0)
+    phi2 += 2 * G_PI;
+
+  while (phi1 < phi2)
+    phi1 += 2 * G_PI;
 
   if (sweep)
     {
-      while (phi2 < phi1) phi2 += 2 * G_PI;
-
-      phi0 = floor (phi1 / G_PI_2) * G_PI_2;
+      gdouble phi0 = floor (phi1 / G_PI_2) * G_PI_2;
 
       while (phi0 < phi2)
         {
@@ -1712,9 +1718,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
     }
   else
     {
-      while (phi1 < phi2) phi1 += 2 * G_PI;
-
-      phi0 = ceil (phi1 / G_PI_2) * G_PI_2;
+      gdouble phi0 = ceil (phi1 / G_PI_2) * G_PI_2;
 
       while (phi0 > phi2)
         {
@@ -1746,6 +1750,34 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
     }
 }
 
+GimpStroke *
+gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
+                                gdouble           radius_x,
+                                gdouble           radius_y)
+{
+  GimpStroke *stroke;
+  GimpCoords  a = *center;
+  GimpCoords  b = *center;
+
+  if (radius_x > radius_y)
+    {
+      a.x -= radius_x;
+      b.x += radius_x;
+    }
+  else
+    {
+      a.y -= radius_y;
+      b.y += radius_y;
+    }
+
+  stroke = gimp_bezier_stroke_new_moveto (&a);
+
+  gimp_bezier_stroke_arcto (stroke, radius_x, radius_y, 0, TRUE, FALSE, &b);
+  gimp_bezier_stroke_arcto (stroke, radius_x, radius_y, 0, TRUE, FALSE, &a);
+
+  return stroke;
+}
+
 
 /* helper function to get the associated anchor of a listitem */
 
@@ -1765,6 +1797,7 @@ gimp_bezier_stroke_get_anchor_listitem (GList *list)
     return list->next;
 
   g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);
+
   return NULL;
 }
 

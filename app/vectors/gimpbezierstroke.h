@@ -66,12 +66,16 @@ void         gimp_bezier_stroke_cubicto         (GimpStroke       *bez_stroke,
                                                  const GimpCoords *control2,
                                                  const GimpCoords *end);
 void         gimp_bezier_stroke_arcto           (GimpStroke       *bez_stroke,
-                                                 const gdouble     radius_x,
-                                                 const gdouble     radius_y,
-                                                 const gdouble     angle_rad,
-                                                 const gboolean    large_arc,
-                                                 const gboolean    sweep,
+                                                 gdouble           radius_x,
+                                                 gdouble           radius_y,
+                                                 gdouble           angle_rad,
+                                                 gboolean          large_arc,
+                                                 gboolean          sweep,
                                                  const GimpCoords *end);
+GimpStroke * gimp_bezier_stroke_new_ellipse     (const GimpCoords *center,
+                                                 gdouble           radius_x,
+                                                 gdouble           radius_y);
+
 
 GimpAnchor * gimp_bezier_stroke_extend     (GimpStroke           *stroke,
                                             const GimpCoords     *coords,

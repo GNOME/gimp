@@ -1,3 +1,12 @@
+2004-08-21  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpbezierstroke.[ch]: added new function
+	gimp_bezier_stroke_new_ellipse() that provides a simple API to
+	create a bezier stroke that represents an ellipse.
+
+	* app/vectors/gimpvectors-import.c: added support for the basic
+	SVG shapes "circle" and "ellipse".
+
 2004-08-21  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/gih.c: Fix some GUI issues. Make the relation

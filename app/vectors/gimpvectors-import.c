@@ -117,37 +117,43 @@ static const GMarkupParser markup_parser =
 };
 
 
-static void  svg_handler_svg_start   (SvgHandler   *handler,
-                                      const gchar **names,
-                                      const gchar **values,
-                                      SvgParser    *parser);
-static void  svg_handler_svg_end     (SvgHandler   *handler,
-                                      SvgParser    *parser);
-static void  svg_handler_group_start (SvgHandler   *handler,
-                                      const gchar **names,
-                                      const gchar **values,
-                                      SvgParser    *parser);
-static void  svg_handler_path_start  (SvgHandler   *handler,
-                                      const gchar **names,
-                                      const gchar **values,
-                                      SvgParser    *parser);
-static void  svg_handler_line_start  (SvgHandler   *handler,
-                                      const gchar **names,
-                                      const gchar **values,
-                                      SvgParser    *parser);
-static void  svg_handler_poly_start  (SvgHandler   *handler,
-                                      const gchar **names,
-                                      const gchar **values,
-                                      SvgParser    *parser);
+static void  svg_handler_svg_start     (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
+static void  svg_handler_svg_end       (SvgHandler   *handler,
+                                        SvgParser    *parser);
+static void  svg_handler_group_start   (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
+static void  svg_handler_path_start    (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
+static void  svg_handler_ellipse_start (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
+static void  svg_handler_line_start    (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
+static void  svg_handler_poly_start    (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
 
 static const SvgHandler svg_handlers[] =
 {
-  { "svg",      svg_handler_svg_start,   svg_handler_svg_end },
-  { "g",        svg_handler_group_start, NULL                },
-  { "path",     svg_handler_path_start,  NULL                },
-  { "line",     svg_handler_line_start,  NULL                },
-  { "polyline", svg_handler_poly_start,  NULL                },
-  { "polygon",  svg_handler_poly_start,  NULL                }
+  { "svg",      svg_handler_svg_start,     svg_handler_svg_end },
+  { "g",        svg_handler_group_start,   NULL                },
+  { "path",     svg_handler_path_start,    NULL                },
+  { "circle",   svg_handler_ellipse_start, NULL                },
+  { "ellipse",  svg_handler_ellipse_start, NULL                },
+  { "line",     svg_handler_line_start,    NULL                },
+  { "polyline", svg_handler_poly_start,    NULL                },
+  { "polygon",  svg_handler_poly_start,    NULL                }
 };
 
 
@@ -587,6 +593,63 @@ svg_handler_path_start (SvgHandler   *handler,
 }
 
 static void
+svg_handler_ellipse_start (SvgHandler   *handler,
+                           const gchar **names,
+                           const gchar **values,
+                           SvgParser    *parser)
+{
+  SvgPath    *path   = g_new0 (SvgPath, 1);
+  GimpCoords  center = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  gdouble     rx     = 0.0;
+  gdouble     ry     = 0.0;
+
+  while (*names)
+    {
+      if (strcmp (*names, "id") == 0 && !path->id)
+        {
+          path->id = g_strdup (*values);
+        }
+      else if (strcmp (*names, "cx") == 0)
+        {
+          center.x = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "cy") == 0)
+        {
+          center.y = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "r") == 0)
+        {
+          rx = ry = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "rx") == 0)
+        {
+          rx = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "ry") == 0)
+        {
+          ry = g_ascii_strtod (*values, NULL);
+        }
+      else if (strcmp (*names, "transform") == 0 && !handler->transform)
+        {
+          GimpMatrix3  matrix;
+
+          if (parse_svg_transform (*values, &matrix))
+            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        }
+
+      names++;
+      values++;
+    }
+
+  if (rx >= 0.0 && ry >= 0.0)
+    path->strokes = g_list_prepend (path->strokes,
+                                    gimp_bezier_stroke_new_ellipse (&center,
+                                                                    rx, ry));
+
+  handler->paths = g_list_prepend (handler->paths, path);
+}
+
+static void
 svg_handler_line_start (SvgHandler   *handler,
                         const gchar **names,
                         const gchar **values,
@@ -684,7 +747,7 @@ svg_handler_poly_start (SvgHandler   *handler,
 
           if ((n > 3) && (n % 2 == 0))
             {
-              points = g_string_sized_new (p - *values + 6);
+              points = g_string_sized_new (p - *values + 8);
 
               g_string_append_len (points, "M ", 2);
               g_string_append_len (points, m, l - m);
@@ -868,7 +931,7 @@ parse_svg_viewbox (const gchar *value,
   return success;
 }
 
-gboolean
+static gboolean
 parse_svg_transform (const gchar *value,
                      GimpMatrix3 *matrix)
 {
@@ -880,7 +943,7 @@ parse_svg_transform (const gchar *value,
 
   gimp_matrix3_identity (matrix);
 
-  for (i= 0; value[i]; i++)
+  for (i = 0; value[i]; i++)
     {
       /* skip initial whitespace */
       while (g_ascii_isspace (value[i]))
@@ -918,10 +981,11 @@ parse_svg_transform (const gchar *value,
           /* skip whitespace */
           while (g_ascii_isspace (value[i]))
             i++;
+
           c = value[i];
           if (g_ascii_isdigit (c) || c == '+' || c == '-' || c == '.')
             {
-              if (n_args == G_N_ELEMENTS(args))
+              if (n_args == G_N_ELEMENTS (args))
                 return FALSE; /* too many args */
 
               args[n_args] = g_ascii_strtod (value + i, &end_ptr);
