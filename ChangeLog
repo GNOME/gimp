@@ -1,3 +1,7 @@
+Sat Jan 29 22:54:11 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* app/convert.c: Typo fix.
+
 2000-01-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/script-fu/script-fu.c: more _() tagging.

@@ -975,7 +975,7 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
 
   if (dialog->palette_select == NULL)
     {
-      dialog->palette_select = palette_select_new (_("Select Custum Palette"), 
+      dialog->palette_select = palette_select_new (_("Select Custom Palette"), 
 						   theCustomPalette->name);
 
       gtk_signal_connect (GTK_OBJECT (dialog->palette_select->shell), "destroy", 
