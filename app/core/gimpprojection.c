@@ -1038,12 +1038,14 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Select", lp);
   menus_set_sensitive ("<Image>/Edit/Cut", lp);
   menus_set_sensitive ("<Image>/Edit/Copy", lp);
+  menus_set_sensitive ("<Image>/Edit/Paste", lp);
   menus_set_sensitive ("<Image>/Edit/Paste Into", lp);
   menus_set_sensitive ("<Image>/Edit/Clear", lp);
   menus_set_sensitive ("<Image>/Edit/Fill", lp);
   menus_set_sensitive ("<Image>/Edit/Stroke", lp);
   menus_set_sensitive ("<Image>/Edit/Cut Named", lp);
   menus_set_sensitive ("<Image>/Edit/Copy Named", lp);
+  menus_set_sensitive ("<Image>/Edit/Paste Named", lp);
   menus_set_sensitive ("<Image>/Image/Colors", lp);
   menus_set_sensitive ("<Image>/Image/Channel Ops/Offset", lp);
   menus_set_sensitive ("<Image>/Image/Histogram", lp);

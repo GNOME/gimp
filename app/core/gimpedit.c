@@ -499,6 +499,9 @@ named_buffer_paste_callback (GtkWidget *w,
   gtk_widget_destroy (pn_dlg->shell);
 
   g_free (pn_dlg);
+      
+  /*  flush the display  */
+  gdisplays_flush ();
 }
 
 static void
