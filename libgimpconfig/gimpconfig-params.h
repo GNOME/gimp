@@ -174,10 +174,10 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id,\
-                                      name, blurb, default, flags)\
+                                      name, blurb, pixels, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, NULL, blurb,\
-                                   FALSE, default,\
+                                   pixels, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
 

@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -33,11 +36,12 @@ struct _GimpText
 {
   GObject       parent_instance;
 
-  gchar        *str;
+  gchar        *text;
   gchar        *font;
   gdouble       size;
   gdouble       border;
   GimpUnit      unit;
+  GimpRGB       color;
   gdouble       letter_spacing;
   gdouble       line_spacing;
 };

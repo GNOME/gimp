@@ -11,7 +11,6 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
 	$(LIBART_CFLAGS)	\
-	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappcore.a
@@ -114,8 +113,6 @@ libappcore_a_sources = \
 	gimpimage-resize.h		\
 	gimpimage-scale.c		\
 	gimpimage-scale.h		\
-	gimpimage-text.c		\
-	gimpimage-text.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimpimagefile.c			\

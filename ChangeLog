@@ -1,3 +1,29 @@
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-params.h
+
+	* app/config/gimpcoreconfig.c: added a pixels parameter to the
+	GIMP_CONFIG_INSTALL_PROP_UNIT() macro.
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-text.[ch]: removed these two files.
+
+	* app/text/Makefile.am
+	* app/text/gimptext-compat.[ch]: new files with compatibility
+	routines that provide the old text API (solely for PDB calls).
+
+	* app/text/gimptext-render.[ch]: new files with text rendering
+	routines (not much yet).
+
+	* app/text/text-types.h
+	* app/text/gimptextlayer.[ch]: new object derived from GimpLayer.
+
+	* app/text/gimptext.[ch]: prepared for future improvements.
+
+	* app/pdb/text_tool_cmds.c
+	* app/tools/gimptexttool.c
+	* tools/pdbgen/pdb/text_tool.pdb: changed accordingly.
+
 2003-01-30  Manish Singh  <yosh@gimp.org>
 
 	* app/undo_history.c
@@ -34,7 +60,7 @@
 2003-01-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpcompat.h: removed GIMP_ENABLE_COMPAT_CRUFT guards.
-	The file needs to included explicitely anyway.
+	The file needs to be included explicitely anyway.
 
 2003-01-30  Michael Natterer  <mitch@gimp.org>
 

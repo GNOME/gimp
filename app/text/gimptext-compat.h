@@ -1,5 +1,8 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * GimpText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_IMAGE_TEXT_H__
-#define __GIMP_IMAGE_TEXT_H__
-
-GimpLayer * gimp_image_text_render (GimpImage *image,
-                                    GimpText  *text);
+#ifndef __GIMP_TEXT_COMPAT_H__
+#define __GIMP_TEXT_COMPAT_H__
 
 
-/* convenience functions using the old API */
+/* convenience functions that provide the 1.2 API, only used by the PDB */
 
 GimpLayer * text_render      (GimpImage    *gimage,
 			      GimpDrawable *drawable,
@@ -40,4 +40,5 @@ gboolean    text_get_extents (const gchar  *fontname,
                               gint         *ascent,
                               gint         *descent);
 
-#endif /* __GIMP_IMAGE_TEXT_H__ */
+
+#endif /* __GIMP_TEXT_COMPAT_H__ */

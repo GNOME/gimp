@@ -9,13 +9,20 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
+	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapptext.a
 
 libapptext_a_SOURCES = \
-	text-types.h	\
-	gimptext.c	\
-	gimptext.h
+	text-types.h		\
+	gimptext.c		\
+	gimptext.h		\
+	gimptext-compat.c	\
+	gimptext-compat.h	\
+	gimptext-render.c	\
+	gimptext-render.h	\
+	gimptextlayer.c		\
+	gimptextlayer.h
 
 

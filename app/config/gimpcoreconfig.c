@@ -216,7 +216,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_UNIT,
                                  "default-unit", DEFAULT_UNIT_BLURB,
-                                 GIMP_UNIT_INCH,
+                                 FALSE, GIMP_UNIT_INCH,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_XRESOLUTION,
                                    "default-xresolution",
@@ -233,7 +233,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_RESOLUTION_UNIT,
                                  "default-resolution-unit",
                                  DEFAULT_RESOLUTION_UNIT_BLURB,
-                                 GIMP_UNIT_INCH,
+                                 FALSE, GIMP_UNIT_INCH,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
                                 "undo-levels", UNDO_LEVELS_BLURB,

@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "text/text-types.h"
 
 #include "config/gimpconfig-params.h"
@@ -34,16 +39,21 @@ enum
   PROP_SIZE,
   PROP_BORDER,
   PROP_UNIT,
+  PROP_COLOR,
   PROP_LETTER_SPACING,
   PROP_LINE_SPACING
 };
 
 static void  gimp_text_class_init   (GimpTextClass *klass);
 static void  gimp_text_finalize     (GObject       *object);
-static void  gimp_text_set_property (GObject        *object,
-                                     guint           property_id,
-                                     const GValue   *value,
-                                     GParamSpec     *pspec);
+static void  gimp_text_get_property (GObject       *object,
+                                     guint          property_id,
+                                     GValue        *value,
+                                     GParamSpec    *pspec);
+static void  gimp_text_set_property (GObject       *object,
+                                     guint          property_id,
+                                     const GValue  *value,
+                                     GParamSpec    *pspec);
 
 static GObjectClass *parent_class = NULL;
 
@@ -80,50 +90,52 @@ gimp_text_class_init (GimpTextClass *klass)
 {
   GObjectClass *object_class;
   GParamSpec   *param_spec;
+  GimpRGB       black;
 
   object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_text_finalize;
+  object_class->get_property = gimp_text_get_property;
   object_class->set_property = gimp_text_set_property;
 
-  param_spec = g_param_spec_string ("text", NULL, NULL,
-                                    NULL,
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class, PROP_TEXT, param_spec);
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-  param_spec = g_param_spec_string ("font", NULL, NULL,
-                                    "Sans",
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class, PROP_FONT, param_spec);
-
-  param_spec = g_param_spec_double ("size", NULL, NULL,
-                                    0.0, G_MAXFLOAT, 18.0,
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class, PROP_SIZE, param_spec);
-
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_TEXT,
+				   "text", NULL,
+				   NULL,
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
+				   "font", NULL,
+				   "Sans",
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
+				   "size", NULL,
+				   0.0, G_MAXFLOAT, 18.0,
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
+				 "unit", NULL,
+				 TRUE, GIMP_UNIT_PIXEL,
+				 0);
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
+				  "color", NULL,
+				  &black,
+				  0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
+				   "letter-spacing", NULL,
+                                    0.0, 64.0, 1.0,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
+				   "line-spacing", NULL,
+                                    0.0, 64.0, 1.0,
+                                    0);
+  /* border is supposed to die */
   param_spec = g_param_spec_double ("border", NULL, NULL,
                                     0.0, G_MAXFLOAT, 0.0,
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
+                                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_BORDER, param_spec);
 
-  param_spec = gimp_param_spec_unit ("unit", NULL, NULL,
-                                     TRUE, GIMP_UNIT_PIXEL,
-                                     G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class, PROP_UNIT, param_spec);
-
-  param_spec = g_param_spec_double ("letter-spacing", NULL, NULL,
-                                    0.0, 64.0, 1.0,
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class,
-                                   PROP_LETTER_SPACING, param_spec);
-
-  param_spec = g_param_spec_double ("line-spacing", NULL, NULL,
-                                    0.0, 64.0, 1.0,
-                                    G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
-  g_object_class_install_property (object_class,
-                                   PROP_LINE_SPACING, param_spec);
 }
 
 static void
@@ -131,10 +143,10 @@ gimp_text_finalize (GObject *object)
 {
   GimpText *text = GIMP_TEXT (object);
 
-  if (text->str)
+  if (text->text)
     {
-      g_free (text->str);
-      text->str = NULL;
+      g_free (text->text);
+      text->text = NULL;
     }
   if (text->font)
     {
@@ -146,9 +158,9 @@ gimp_text_finalize (GObject *object)
 }
 
 static void
-gimp_text_set_property (GObject      *object,
+gimp_text_get_property (GObject      *object,
                         guint         property_id,
-                        const GValue *value,
+                        GValue       *value,
                         GParamSpec   *pspec)
 {
   GimpText *text = GIMP_TEXT (object);
@@ -156,8 +168,49 @@ gimp_text_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TEXT:
-      g_free (text->str);
-      text->str = g_value_dup_string (value);
+      g_value_set_string (value, text->text);
+      break;
+    case PROP_FONT:
+      g_value_set_string (value, text->font);
+      break;
+    case PROP_SIZE:
+      g_value_set_double (value, text->size);
+      break;
+    case PROP_BORDER:
+      g_value_set_double (value, text->border);
+      break;
+    case PROP_UNIT:
+      g_value_set_int (value, text->unit);
+      break;
+    case PROP_COLOR:
+      g_value_set_boxed (value, &text->color);
+      break;
+    case PROP_LETTER_SPACING:
+      g_value_set_double (value, text->letter_spacing);
+      break;
+    case PROP_LINE_SPACING:
+      g_value_set_double (value, text->line_spacing);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_text_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GimpText *text = GIMP_TEXT (object);
+  GimpRGB  *color;
+
+  switch (property_id)
+    {
+    case PROP_TEXT:
+      g_free (text->text);
+      text->text = g_value_dup_string (value);
       break;
     case PROP_FONT:
       g_free (text->font);
@@ -171,6 +224,10 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_UNIT:
       text->unit = g_value_get_int (value);
+      break;
+    case PROP_COLOR:
+      color = g_value_get_boxed (value);
+      text->color = *color;
       break;
     case PROP_LETTER_SPACING:
       text->letter_spacing = g_value_get_double (value);

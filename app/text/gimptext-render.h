@@ -19,14 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TEXT_TYPES_H__
-#define __TEXT_TYPES_H__
-
-#include "core/core-types.h"
+#ifndef __GIMP_TEXT_RENDER_H__
+#define __GIMP_TEXT_RENDER_H__
 
 
-typedef struct _GimpText       GimpText;
-typedef struct _GimpTextLayer  GimpTextLayer;
+TileManager * gimp_text_render_layout (PangoLayout *layout,
+				       gint         x,
+				       gint         y,
+				       gint         width,
+				       gint         height);
+GimpLayer   * gimp_image_text_render  (GimpImage   *gimage,
+				       GimpText    *text);
 
 
-#endif /* __TEXT_TYPES_H__ */
+#endif /* __GIMP_TEXT_RENDER_H__ */

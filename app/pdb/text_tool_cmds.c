@@ -32,9 +32,9 @@
 
 #include "core/core-types.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage-text.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "text/gimptext-compat.h"
 
 #include "libgimpbase/gimpbase.h"
 

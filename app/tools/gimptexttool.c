@@ -33,14 +33,15 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimpimage-text.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
+#include "text/gimptextlayer.h"
 
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -327,6 +328,7 @@ text_tool_render (GimpTextTool *text_tool)
   GimpImage   *gimage;
   GimpText    *text;
   GimpLayer   *layer;
+  GimpRGB      color;
   const gchar *font;
   gchar       *str;
   GtkTextIter  start_iter;
@@ -350,18 +352,21 @@ text_tool_render (GimpTextTool *text_tool)
   if (!str)
     return;
 
+  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
+
   text = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
                                   "text",           str,
                                   "font",           font,
                                   "size",           options->size,
                                   "border",         options->border,
                                   "unit",           options->unit,
+				  "color",          &color,
                                   "letter-spacing", options->letter_spacing,
                                   "line-spacing",   options->line_spacing,
                                   NULL));
   g_free (str);
 
-  layer = gimp_image_text_render (gimage, text);
+  layer = gimp_text_layer_new (gimage, text);
 
   g_object_unref (text);
 
