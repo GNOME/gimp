@@ -1,3 +1,8 @@
+2002-11-23  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/folders-environ.png:
+	replace the generic folder
+
 2002-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: keep a pointer to the
