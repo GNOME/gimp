@@ -1,6 +1,10 @@
+2002-03-11  Christian Rose  <menthos@menthos.com>
+
+	* sv.po: Updated Swedish translation.
+
 2002-03-11  Sven Neumann  <sven@gimp.org>
 
-	* POTIFLES.in: fixed stupid error, need to refer to gimp-tips.xml.in,
+	* POTFILES.in: fixed stupid error, need to refer to gimp-tips.xml.in,
 	not the generated header.
 
 	* Makefile.am: removed unneeded POTFILES rule.
