@@ -30,6 +30,95 @@
 #define TRANSPARENT_FLOAT  0.0
 static gfloat no_mask = OPAQUE_FLOAT;
 
+void 
+x_add_row_float  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  gfloat *src          = (gfloat*) pixelrow_data (src_row);
+  gfloat *dest         = (gfloat*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MIN (1.0, src[b] + dest[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+
+void 
+x_sub_row_float  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  gfloat *src          = (gfloat*) pixelrow_data (src_row);
+  gfloat *dest         = (gfloat*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MAX (0, dest[b] - src[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+void 
+x_min_row_float  (
+               PixelRow * src_row,
+               PixelRow * dest_row
+               )
+{
+  gint    b;
+  gfloat *src          = (gfloat*) pixelrow_data (src_row);
+  gfloat *dest         = (gfloat*) pixelrow_data (dest_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = MIN (src[b], dest[b]);
+
+      src += num_channels;
+      dest += num_channels;
+    }
+}
+
+
+void 
+invert_row_float  (
+                PixelRow * dest_row,
+                PixelRow * mask_row
+                )
+{
+  gint    b;
+  gfloat *dest         = (gfloat*) pixelrow_data (dest_row);
+  gfloat *mask         = (gfloat*) pixelrow_data (mask_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = 1.0 - dest[b];
+
+      dest += num_channels;
+    }
+}
+
 void
 extract_channel_row_float ( 
 			PixelRow *src_row,

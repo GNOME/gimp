@@ -607,6 +607,11 @@ channel_value (Channel *mask, int x, int y)
       break;
 
     case PRECISION_FLOAT:
+      {
+        gfloat * data = (gfloat*) canvas_portion_data (canvas, x, y);
+        val = *data;
+      }
+      break;
     case PRECISION_NONE:
       g_warning ("bad precision");
       break;
@@ -826,7 +831,16 @@ channel_is_empty (Channel *mask)
 	}
 	break;
       case PRECISION_FLOAT:
-	g_warning ("channel_is_empty: bad precision");
+	{
+	  gfloat* d = (gfloat*) data;
+	  for (y = 0; y < pixelarea_height (&maskPR); y++)
+	    for (x = 0; x < pixelarea_width (&maskPR); x++)
+	      if (*d++)
+	        {
+		  pixelarea_process_stop (pr);
+		  return FALSE;
+	        }
+	}
 	break;
       default:
 	g_warning ("channel_is_empty: bad precision");
@@ -927,6 +941,26 @@ channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
       break;
 
     case PRECISION_FLOAT:
+      {
+        gfloat * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (gfloat*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data + value;
+                if (val > 1.0)
+                  val = 1.0;
+                *data++ = val;
+              }
+          }
+      }
+      break;
     default:
       g_warning ("channel_add_segment: bad precision");
       break;
@@ -1005,6 +1039,26 @@ channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
       break;
 
     case PRECISION_FLOAT:
+      {
+        gfloat * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (gfloat*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data - value;
+                if (val < 0)
+                  val = 0;
+                *data++ = val;
+              }
+          }
+      }
+      break;
     case PRECISION_NONE:
       g_warning ("channel_sub_segment: bad precision");
       break;
@@ -1079,6 +1133,25 @@ channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
       break;
 
     case PRECISION_FLOAT:
+      {
+        gfloat * data;
+        gfloat val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (gfloat*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = MINIMUM(*data, value);
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
     case PRECISION_NONE:
       g_warning ("channel_inter_segment: bad precision");
       break;
@@ -1525,6 +1598,18 @@ channel_sharpen (Channel *mask)
 	  break;
 
 	case PRECISION_FLOAT:
+	  {
+	    gfloat *d = (gfloat*)data;
+	    while (size--)
+	      {
+		if (*d > .5 )
+		  *d++ = 1;
+		else
+		  *d++ = 0;
+	      }
+	  }
+	  break;
+
 	case PRECISION_NONE:
 	  g_warning ("bad precision");
 	  break;

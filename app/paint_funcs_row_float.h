@@ -28,6 +28,27 @@ extract_channel_row_float (
 	);
 
 void
+x_add_row_float (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+x_sub_row_float (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+x_min_row_float(
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+void
+invert_row_float (
+		struct _PixelRow *, 
+		struct _PixelRow *
+		);
+
+void
 absdiff_row_float (
                    struct _PixelRow *,
                    struct _PixelRow *,

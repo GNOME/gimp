@@ -333,6 +333,105 @@ scan_convert_helper_u16 (
     }
 }
 
+static void
+scan_convert_helper_float (
+                         Channel * mask,
+                         GSList ** scanlines,
+                         int width,
+                         int height,
+                         int antialias
+                         )
+{
+  PixelArea maskPR;
+  PixelRow bufRow;
+  GSList * list;
+  gfloat * buf = NULL;
+  gfloat * b = NULL;
+  gfloat * vals = NULL;
+  int val;
+  int start, end;
+  int x, x2, w;
+  int i, j;
+
+  
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
+                  0, 0, 
+                  0, 0,
+                  TRUE);
+
+  if (antialias)
+    {
+      buf = (gfloat *) g_malloc (width / SUPERSAMPLE * sizeof (gfloat));
+      vals = (gfloat *) g_malloc (sizeof (gfloat) * width);
+      pixelrow_init (&bufRow, drawable_tag (GIMP_DRAWABLE (mask)),
+                     (guchar*) buf, width/SUPERSAMPLE);
+    }
+
+  for (i = 0; i < height; i++)
+    {
+      list = scanlines[i];
+
+      /*  zero the vals array  */
+      if (antialias && !(i % SUPERSAMPLE))
+      {
+	gint count = width;
+	while (count--)
+	  vals[count] = 0.0;
+      }
+
+      while (list)
+	{
+	  x = (long) list->data;
+	  list = g_slist_next(list);
+	  if (!list)
+	      g_message ("Cannot properly scanline convert polygon!\n");
+	  else
+	    {
+	      /*  bounds checking  */
+	      x = BOUNDS (x, 0, width);
+	      x2 = BOUNDS ((long) list->data, 0, width);
+
+	      w = x2 - x;
+
+	      if (w > 0)
+		{
+		  if (! antialias)
+		    channel_add_segment (mask, x, i, w, 1.0);
+		  else
+		    for (j = 0; j < w; j++)
+		      vals[j + x] += 1.0;
+		}
+
+	      list = g_slist_next (list);
+	    }
+	}
+
+      if (antialias && !((i+1) % SUPERSAMPLE))
+	{
+	  b = buf;
+	  start = 0;
+	  end = width;
+	  for (j = start; j < end; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
+
+	      *b++ = (gfloat) (val / SUPERSAMPLE2);
+	    }
+
+	  pixelarea_write_row (&maskPR, &bufRow, 0, (i / SUPERSAMPLE), (width / SUPERSAMPLE));
+	}
+
+      g_slist_free (scanlines[i]);
+    }
+
+  if (antialias)
+    {
+      g_free (vals);
+      g_free (buf);
+    }
+}
 
 static void
 scan_convert_helper (
@@ -352,6 +451,7 @@ scan_convert_helper (
       scan_convert_helper_u16 (mask, scanlines, width, height, antialias);
       break;
     case PRECISION_FLOAT:
+      scan_convert_helper_float (mask, scanlines, width, height, antialias);
     case PRECISION_NONE:
       g_warning ("scan_convert_helper bad precision");
       break;
