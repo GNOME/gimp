@@ -890,7 +890,7 @@ gimp_coordinates_new (GimpUnit         unit,
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
-			    update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION ?
+			    (update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION) || (menu_show_pixels == FALSE) ?
 			    GIMP_UNIT_INCH : GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);

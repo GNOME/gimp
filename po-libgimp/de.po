@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 2000-02-13 12:25+0100\n"
+"Project-Id-Version: GIMP 1.1.18\n"
+"POT-Creation-Date: 2000-03-15 14:48+0100\n"
+"PO-Revision-Date: 2000-03-15 16:50+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -223,8 +223,14 @@ msgstr ""
 "Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
 "vernünftige Wahrscheinlichkeit"
 
-#~ msgid "Select"
-#~ msgstr "Auswahl"
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr "Byte"
 
-#~ msgid "Close"
-#~ msgstr "Schliessen"
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr "KiloByte"
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr "MegaByte"

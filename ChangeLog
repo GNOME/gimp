@@ -1,6 +1,15 @@
 2000-03-15  Sven Neumann <sven@gimp.org>
 	    Michael Natterer <mitch@gimp.org>
 
+	* libgimp/gimpchainbutton.c: return TRUE from event_callback
+	* libgimp/gimpwidgets.c: blah
+
+	* app/install.c: now works with themes and offers an interactive
+	monitor calibration dialog. Delete your ~/.gimp-1.1 and enjoy!
+
+2000-03-15  Sven Neumann <sven@gimp.org>
+	    Michael Natterer <mitch@gimp.org>
+
 	* gimprc.in
 	* app/gimprc.c: increased default tile_cache size to 32MB
  	

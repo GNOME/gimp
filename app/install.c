@@ -62,6 +62,9 @@
 #define EEK_PAGE     (NUM_PAGES - 1)
 #define WILBER_WIDTH 62
 
+#define PAGE_STYLE(widget) gtk_widget_set_style (widget, page_style)
+#define TITLE_STYLE(widget) gtk_widget_set_style (widget, title_style)
+
 static void     install_dialog_create     (InstallCallback);
 static void     install_continue_callback (GtkWidget *widget, gpointer data);
 static void     install_cancel_callback   (GtkWidget *widget, gpointer data);
@@ -111,7 +114,11 @@ install_verify (InstallCallback install_callback)
 static GtkWidget *install_dialog = NULL;
 
 static GtkWidget *notebook       = NULL;
-static gint       notebook_index = 0;
+
+static GtkWidget *title_pixmap = NULL;
+
+static GtkWidget *title_label  = NULL;
+static GtkWidget *footer_label = NULL;
 
 static GtkWidget *log_page        = NULL;
 static GtkWidget *tuning_page     = NULL;
@@ -302,11 +309,38 @@ tree_items[] =
 };
 static gint num_tree_items = sizeof (tree_items) / sizeof (tree_items[0]);
 
+static void
+install_notebook_set_page (GtkNotebook *notebook,
+			   gint         index)
+{
+  gchar *title;
+  gchar *footer;
+  GtkWidget *page;
+  
+  page = gtk_notebook_get_nth_page (notebook, index);
+  
+  title  = gtk_object_get_data (GTK_OBJECT (page), "title");
+  footer = gtk_object_get_data (GTK_OBJECT (page), "footer");
+
+  gtk_label_set_text (GTK_LABEL (title_label), title);
+  gtk_label_set_text (GTK_LABEL (footer_label), footer);
+
+  if (index == EEK_PAGE)
+    {
+      gtk_widget_set_usize (title_pixmap, 
+			    title_pixmap->allocation.width,
+			    title_pixmap->allocation.height);
+      gimp_pixmap_set (GIMP_PIXMAP (title_pixmap), eek_xpm);
+    }
+  
+  gtk_notebook_set_page (notebook, index);
+}
 
 static void
 install_continue_callback (GtkWidget *widget,
 			   gpointer   data)
 {
+  static gint notebook_index = 0;
   InstallCallback callback;
 
   callback = (InstallCallback) data;
@@ -338,8 +372,11 @@ install_continue_callback (GtkWidget *widget,
 
     case 4:
       install_resolution_done ();
+
       gtk_widget_destroy (install_dialog);
       gdk_gc_unref (white_gc);
+      gtk_style_unref (title_style);
+      gtk_style_unref (page_style);
 
       (* callback) ();
       return;
@@ -351,7 +388,7 @@ install_continue_callback (GtkWidget *widget,
     }
 
   if (notebook_index < NUM_PAGES - 1)
-    gtk_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
+    install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
 }
 
 
@@ -365,7 +402,7 @@ install_cancel_callback (GtkWidget *widget,
     gtk_exit (0);
 
   gtk_widget_destroy (continue_button);
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
+  install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
   timeout = gtk_timeout_add (1024, (GtkFunction)gtk_exit, (gpointer)0);
 }
 
@@ -374,126 +411,87 @@ install_corner_expose (GtkWidget      *widget,
 		       GdkEventExpose *eevent,
 		       gpointer        data)
 {
-  gdk_draw_arc (widget->window,
-		white_gc,
-		TRUE,
-		0, 0,
-		widget->allocation.width * 2, widget->allocation.height * 2,
-		90 * 64,
-		180 * 64);
+  switch ((GtkCornerType) data)
+    {
+    case GTK_CORNER_TOP_LEFT:
+      gdk_draw_arc (widget->window,
+		    white_gc,
+		    TRUE,
+		    0, 0,
+		    widget->allocation.width * 2,
+		    widget->allocation.height * 2,
+		    90 * 64,
+		    180 * 64);
+      break;
+      
+    case GTK_CORNER_BOTTOM_LEFT:
+      gdk_draw_arc (widget->window,
+		    white_gc,
+		    TRUE,
+		    0, -widget->allocation.height,
+		    widget->allocation.width * 2,
+		    widget->allocation.height * 2,
+		    180 * 64,
+		    270 * 64);
+      break;
+      
+    case GTK_CORNER_TOP_RIGHT:
+      gdk_draw_arc (widget->window,
+		    white_gc,
+		    TRUE,
+		    -widget->allocation.width, 0,
+		    widget->allocation.width * 2,
+		    widget->allocation.height * 2,
+		    0 * 64,
+		    90 * 64);
+      break;
+      
+    case GTK_CORNER_BOTTOM_RIGHT:
+      gdk_draw_arc (widget->window,
+		    white_gc,
+		    TRUE,
+		    -widget->allocation.width, -widget->allocation.height,
+		    widget->allocation.width * 2,
+		    widget->allocation.height * 2,
+		    270 * 64,
+		    360 * 64);
+      break;
+      
+    default:
+      return FALSE;
+    }
 
   return TRUE;
 }
 
 static GtkWidget *
 install_notebook_append_page (GtkNotebook *notebook,
-			      gchar       *title)
+			      gchar       *title,
+			      gchar       *footer)
 {
   GtkWidget *page;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *ebox;
-  GtkWidget *wilber;
-  GtkWidget *label;
-  GtkWidget *table;
-  GtkWidget *darea;
   
-  page = gtk_vbox_new (FALSE, 0);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
-
-  gtk_widget_push_style (title_style);
-
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_events (ebox, GDK_EXPOSURE_MASK);
-  gtk_widget_set_usize (ebox, WILBER_WIDTH + 16, -1);
-  gtk_box_pack_start (GTK_BOX (page), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-  
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
-  gtk_container_add (GTK_CONTAINER (ebox), hbox);
-  gtk_widget_show (hbox);
-
-  if (gtk_notebook_page_num (GTK_NOTEBOOK (notebook), page) == EEK_PAGE)
-    wilber = gimp_pixmap_new (eek_xpm);
-  else
-    wilber = gimp_pixmap_new (wilber_xpm);
- 
-  gtk_box_pack_start (GTK_BOX (hbox), wilber, FALSE, FALSE, 8);
-  gtk_widget_show (wilber);
-
-  label = gtk_label_new (title);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_pop_style ();
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (page), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  gtk_widget_push_style (title_style);
-
-  ebox = gtk_event_box_new ();
-  gtk_widget_set_usize (ebox, 16, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-
-  gtk_widget_pop_style ();
-
-  ebox = gtk_event_box_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, TRUE, TRUE, 0);
-  gtk_widget_show (ebox);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 8);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 8);
-  gtk_container_add (GTK_CONTAINER (ebox), table);
-  gtk_widget_show (table);
-
-  gtk_widget_push_style (title_style);
-
-  darea = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
-  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (install_corner_expose),
-			    NULL);
-  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  gtk_widget_pop_style ();
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
-  gtk_widget_show (vbox);
-
+  page = gtk_vbox_new (FALSE, 6);
+  gtk_object_set_data (GTK_OBJECT (page), "title", title);
+  gtk_object_set_data (GTK_OBJECT (page), "footer", footer);
+  gtk_notebook_append_page (notebook, page, NULL);
   gtk_widget_show (page);
 
-  return vbox;
+  return page;
 }
 
 static void
 add_label (GtkBox   *box,
-	   gboolean  last_line,
 	   gchar    *text)
 {
   GtkWidget *label;
 
   label = gtk_label_new (text);
+  PAGE_STYLE (label);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 
-  if (last_line)
-    {
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_box_pack_end (box, label, FALSE, FALSE, 0);      
-    }
-  else
-    {
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_box_pack_start (box, label, FALSE, FALSE, 0);
-    }
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (box, label, FALSE, FALSE, 0);
   
   gtk_widget_show (label);
 }
@@ -516,10 +514,13 @@ void
 install_dialog_create (InstallCallback callback)
 {
   GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *ebox;
+  GtkWidget *table;
+  GtkWidget *darea;
   GtkWidget *page;
   GtkWidget *sep;
-
-  notebook_index = 0;
 
   dialog = install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
@@ -536,10 +537,15 @@ install_dialog_create (InstallCallback callback)
 
   gimp_dialog_set_icon (GTK_WINDOW (dialog));
 
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
+
+  /*  hide the separator between the dialog's vbox and the action area  */
+  gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 0)));
+
   gtk_widget_realize (dialog);
 
   /*  B/W Style for the page contents  */
-  page_style = gtk_style_copy (dialog->style);
+  page_style = gtk_style_copy (gtk_widget_get_default_style ());
   colormap = gtk_widget_get_colormap (dialog);
 
   gdk_color_black (colormap, &black_color);
@@ -548,6 +554,9 @@ install_dialog_create (InstallCallback callback)
   page_style->fg[GTK_STATE_NORMAL]   = black_color;
   page_style->text[GTK_STATE_NORMAL] = black_color;
   page_style->bg[GTK_STATE_NORMAL]   = white_color;
+
+  page_style->font = dialog->style->font;
+  /*gdk_font_ref (page_style->font);*/
 
   /*  B/Colored Style for the page title  */
   title_style = gtk_style_copy (page_style);
@@ -567,20 +576,95 @@ install_dialog_create (InstallCallback callback)
   white_gc = gdk_gc_new (dialog->window);
   gdk_gc_set_foreground (white_gc, &white_color);
 
-  gtk_widget_push_style (page_style);
+  TITLE_STYLE (dialog);
+
+  footer_label = gtk_label_new (NULL);
+  PAGE_STYLE (footer_label);
+  gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_RIGHT);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), footer_label,
+		    FALSE, FALSE, 8);
+  gtk_widget_show (footer_label);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+
+  ebox = gtk_event_box_new ();
+  TITLE_STYLE (ebox);
+  gtk_widget_set_events (ebox, GDK_EXPOSURE_MASK);
+  gtk_widget_set_usize (ebox, WILBER_WIDTH + 16, -1);
+  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
+  gtk_widget_show (ebox);
+  
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
+  gtk_container_add (GTK_CONTAINER (ebox), hbox);
+  gtk_widget_show (hbox);
+
+  title_pixmap = gimp_pixmap_new (wilber_xpm);
+  gtk_box_pack_start (GTK_BOX (hbox), title_pixmap, FALSE, FALSE, 8);
+  gtk_widget_show (title_pixmap);
+
+  title_label = gtk_label_new (NULL);
+  TITLE_STYLE (title_label);  
+  gtk_label_set_justify (GTK_LABEL (title_label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (hbox), title_label, FALSE, FALSE, 0);
+  gtk_widget_show (title_label);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  ebox = gtk_event_box_new ();
+  TITLE_STYLE (ebox);  
+  gtk_widget_set_usize (ebox, 16, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), ebox, FALSE, FALSE, 0);
+  gtk_widget_show (ebox);
+
+  ebox = gtk_event_box_new ();
+  PAGE_STYLE (ebox);  
+  gtk_box_pack_start (GTK_BOX (hbox), ebox, TRUE, TRUE, 0);
+  gtk_widget_show (ebox);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 8);
+  gtk_container_add (GTK_CONTAINER (ebox), table);
+  gtk_widget_show (table);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_TOP_LEFT);
+  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_BOTTOM_LEFT);
+  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
 
   notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), notebook);
+  gtk_table_attach_defaults (GTK_TABLE (table), notebook, 1, 2, 1, 2);
   gtk_widget_show (notebook);
+
+  gtk_widget_show (vbox);
 
   /*  Page 1  */
   page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				       _("Welcome to\n"
-					 "The GIMP User Installation"));
+					 "The GIMP User Installation"),
+				       _("Click \"Continue\" to enter the GIMP user installation."));
 
-  add_label (GTK_BOX (page), FALSE,
+  add_label (GTK_BOX (page),
 	     _("The GIMP - GNU Image Manipulation Program\n"
 	       "Copyright (C) 1995-2000\n"
 	       "Spencer Kimball, Peter Mattis and the GIMP Development Team."));
@@ -589,28 +673,21 @@ install_dialog_create (InstallCallback callback)
   gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label (GTK_BOX (page), FALSE,
+  add_label (GTK_BOX (page),
 	     _("This program is free software; you can redistribute it and/or modify\n"
 	       "it under the terms of the GNU General Public License as published by\n"
 	       "the Free Software Foundation; either version 2 of the License, or\n"
 	       "(at your option) any later version."));
-  add_label (GTK_BOX (page), FALSE,
+  add_label (GTK_BOX (page),
 	     _("This program is distributed in the hope that it will be useful,\n"
 	       "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 	       "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 	       "See the GNU General Public License for more details."));
-  add_label (GTK_BOX (page), FALSE,
+  add_label (GTK_BOX (page),
 	     _("You should have received a copy of the GNU General Public License\n"
 	       "along with this program; if not, write to the Free Software\n"
 	       "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 	       "MA 02111-1307, USA."));
-
-  add_label (GTK_BOX (page), TRUE,
-	     _("Click \"Continue\" to enter the GIMP user installation."));
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_end (GTK_BOX (page), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
 
   /*  Page 2  */
   {
@@ -633,13 +710,15 @@ install_dialog_create (InstallCallback callback)
     gchar *node[1];
     
     page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
-					 _("Personal GIMP Directory"));
+					 _("Personal GIMP Directory"),
+					 _("Click \"Continue\" to create your personal GIMP directory."));
 
     hbox = gtk_hbox_new (FALSE, 8);
     gtk_box_pack_start (GTK_BOX (page), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
     ctree = gtk_ctree_new (1, 0);
+    PAGE_STYLE (ctree);
     gtk_ctree_set_indent (GTK_CTREE (ctree), 12);
     gtk_clist_set_shadow_type (GTK_CLIST (ctree), GTK_SHADOW_NONE);
     gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
@@ -651,15 +730,13 @@ install_dialog_create (InstallCallback callback)
 
     str = g_strdup_printf (_("For a proper GIMP installation, a subdirectory named\n"
 			     "%s needs to be created."), gimp_directory ());
-    add_label (GTK_BOX (vbox), FALSE, str);
+    add_label (GTK_BOX (vbox), str);
     g_free (str);
 
-    add_label (GTK_BOX (vbox), FALSE,
+    add_label (GTK_BOX (vbox),
 	       _("This subdirectory will contain a number of important files.\n"
 		 "Click on one of the files or subdirectories in the tree\n"
 		 "to get more information about the selected item."));
-    add_label (GTK_BOX (vbox), TRUE,
-	       _("Click \"Continue\" to create your personal GIMP directory."));
 
     notebook2 = gtk_notebook_new ();
     gtk_container_set_border_width (GTK_CONTAINER (notebook2), 8);
@@ -716,6 +793,8 @@ install_dialog_create (InstallCallback callback)
 
 	page2 = gtk_vbox_new (FALSE, 0);
 	label = gtk_label_new (gettext (tree_items[i].description));
+	PAGE_STYLE (label);
+	PAGE_STYLE (label);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_box_pack_start (GTK_BOX (page2), label, TRUE, TRUE, 0);
@@ -739,33 +818,29 @@ install_dialog_create (InstallCallback callback)
   /*  Page 3  */
   page = log_page =
     install_notebook_append_page (GTK_NOTEBOOK (notebook),
-				  _("User Installation Log"));
+				  _("User Installation Log"),
+				  NULL);
 
   /*  Page 4  */
   page = tuning_page = 
     install_notebook_append_page (GTK_NOTEBOOK (notebook),
-				  _("GIMP Performance Tuning"));
+				  _("GIMP Performance Tuning"),
+				  _("Click \"Continue\" to accept the settings above."));
   
-  add_label (GTK_BOX (page), FALSE,
+  add_label (GTK_BOX (page),
 	     _("For optimal GIMP performance, some settings may have to be adjusted."));
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label (GTK_BOX (page), TRUE,
-	     _("Click \"Continue\" to accept the settings above."));
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_end (GTK_BOX (page), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
-
   /*  Page 5  */
   page = resolution_page = 
     install_notebook_append_page (GTK_NOTEBOOK (notebook),
-				  _("Monitor Resolution"));
+				  _("Monitor Resolution"),
+				  _("Click \"Continue\" to start The GIMP."));
   
-  add_label (GTK_BOX (resolution_page), FALSE,
+  add_label (GTK_BOX (resolution_page),
 	     _("To display images in their natural size, "
 	       "GIMP needs to know your monitor resolution."));
 
@@ -773,23 +848,14 @@ install_dialog_create (InstallCallback callback)
   gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label (GTK_BOX (page), TRUE,
-	     _("Click \"Continue\" to start The GIMP."));
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_end (GTK_BOX (page), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
-
   /*  EEK page  */
   page = install_notebook_append_page (GTK_NOTEBOOK (notebook),
-				       _("Aborting Installation..."));
+				       _("Aborting Installation..."),
+				       NULL);
 
-  gtk_widget_pop_style ();
+  install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
   gtk_widget_show (dialog);
-
-  gtk_style_unref (title_style);
-  gtk_style_unref (page_style);
 }
 
 
@@ -846,8 +912,6 @@ install_run (void)
   gint err;
   gboolean executable = TRUE;
 
-  gtk_widget_push_style (page_style);
-
   /*  Generate output  */
   g_snprintf (buffer, sizeof (buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
 	      gimp_data_directory ());
@@ -857,7 +921,7 @@ install_run (void)
       
       str = g_strdup_printf ("%s\n%s", buffer,
 			     _("does not exist.  Cannot install."));
-      add_label (GTK_BOX (log_page), FALSE, str);
+      add_label (GTK_BOX (log_page), str);
       g_free (str);
 
       executable = FALSE;
@@ -869,7 +933,7 @@ install_run (void)
       
       str = g_strdup_printf ("%s\n%s", buffer,
 			     _("has invalid permissions.  Cannot install."));
-      add_label (GTK_BOX (log_page), FALSE, str);
+      add_label (GTK_BOX (log_page), str);
       g_free (str);
 
       executable = FALSE;
@@ -905,7 +969,7 @@ install_run (void)
       g_free (quoted_user_dir);
 
       if (executable)
-	add_label (GTK_BOX (log_page), FALSE,
+	add_label (GTK_BOX (log_page),
 		   _("Did you notice any error messages in the console window?\n"
 		     "If not, installation was successful!\n"
 		     "Otherwise, quit and investigate the possible reason..."));
@@ -942,13 +1006,9 @@ install_run (void)
 	  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
 	  gtk_box_pack_start (GTK_BOX (log_page), table, TRUE, TRUE, 0);
 
-	  gtk_widget_pop_style ();
-	  
 	  vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 	  vsb  = gtk_vscrollbar_new (vadj);
 	  log_text = gtk_text_new (NULL, vadj);
-
-	  gtk_widget_push_style (page_style);
 
 	  gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
 			    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -965,7 +1025,7 @@ install_run (void)
 	    gtk_text_insert (GTK_TEXT (log_text), NULL, NULL, NULL, buffer, -1);
 	  pclose (pfp);
 
-	  add_label (GTK_BOX (log_page), FALSE,
+	  add_label (GTK_BOX (log_page),
 		     _("Did you notice any error messages in the lines above?\n"
 		       "If not, installation was successful!\n"
 		       "Otherwise, quit and investigate the possible reason..."));
@@ -977,23 +1037,15 @@ install_run (void)
 
   if (executable)
     {
-      GtkWidget *sep;
-
-      add_label (GTK_BOX (log_page), TRUE,
-		 _("Click \"Continue\" to complete GIMP installation."));
-      
-      sep = gtk_hseparator_new ();
-      gtk_box_pack_end (GTK_BOX (log_page), sep, FALSE, FALSE, 0);
-      gtk_widget_show (sep);
+      gtk_object_set_data (GTK_OBJECT (log_page), "footer",
+           _("Click \"Continue\" to complete GIMP installation."));
     }
   else
     {
-      add_label (GTK_BOX (log_page), FALSE,
+      add_label (GTK_BOX (log_page),
 		 _("Installation failed.  Contact system administrator."));
     }
 
-  gtk_widget_pop_style ();
-  
   return executable;
 }
 
@@ -1010,10 +1062,8 @@ install_tuning (void)
   GtkWidget *label;
   GtkWidget *memsize;
 
-  gtk_widget_push_style (page_style);
-
   /*  tile cache size  */
-  add_label (GTK_BOX (tuning_page), FALSE,
+  add_label (GTK_BOX (tuning_page),
 	     _("GIMP uses a limited amount of memory to store image data, the so-called\n"
 	       "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 	       "the amount of memory used by other running processes."));
@@ -1024,13 +1074,12 @@ install_tuning (void)
   
   tile_cache_adj = gtk_adjustment_new (tile_cache_size, 
 				       0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
-  gtk_widget_pop_style ();
   memsize = gimp_mem_size_entry_new (GTK_ADJUSTMENT (tile_cache_adj));
-  gtk_widget_push_style (page_style);
   gtk_box_pack_end (GTK_BOX (hbox), memsize, FALSE, FALSE, 0);
   gtk_widget_show (memsize);
 
   label = gtk_label_new (_("Tile Cache Size:"));
+  PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   
@@ -1039,7 +1088,7 @@ install_tuning (void)
   gtk_widget_show (sep);
 
   /*  swap file location  */
-  add_label (GTK_BOX (tuning_page), FALSE,
+  add_label (GTK_BOX (tuning_page),
 	     _("All image and undo data which doesn't fit into the Tile Cache will be\n"
 	       "written to a swap file. This file should be located on a local filesystem\n"
 	       "with enough free space (several hundred MB). On a UNIX system, you\n"
@@ -1049,18 +1098,15 @@ install_tuning (void)
   gtk_box_pack_start (GTK_BOX (tuning_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   
-  gtk_widget_pop_style ();
   swap_path_filesel = gimp_file_selection_new (_("Select Swap Dir"), swap_path,
 					       TRUE, TRUE);
-  gtk_widget_push_style (page_style);
   gtk_box_pack_end (GTK_BOX (hbox), swap_path_filesel, FALSE, FALSE, 0);
   gtk_widget_show (swap_path_filesel);
 
   label = gtk_label_new (_("Swap Directory:"));
+  PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_widget_pop_style ();
 }
 
 static void
@@ -1068,20 +1114,217 @@ install_tuning_done (void)
 {
 }
 
+static GtkWidget *calibrate_entry = NULL;
+static gdouble    calibrate_xres  = 1.0;
+static gdouble    calibrate_yres  = 1.0;
+static gint       ruler_width     = 1;
+static gint       ruler_height    = 1;
+
+static void
+install_resolution_calibrate_ok (GtkWidget *button,
+				 gpointer   data)
+{
+  gdouble x, y;
+
+  x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
+  y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
+
+  calibrate_xres = (gdouble)ruler_width * calibrate_xres / x;
+  calibrate_yres = (gdouble)ruler_height * calibrate_yres / y;
+  
+  if (ABS (x -y) > GIMP_MIN_RESOLUTION)
+    gimp_chain_button_set_active (GIMP_COORDINATES_CHAINBUTTON (resolution_entry), FALSE);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry), 0, calibrate_xres);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry), 1, calibrate_yres);
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
+install_resolution_calibrate (GtkWidget *button,
+			      gpointer   data)
+{
+  GtkWidget *dialog;
+  GtkWidget *table;
+  GtkWidget *ebox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *darea;
+  GtkWidget *ruler;
+  GList     *list;
+
+  gtk_widget_hide (install_dialog);
+
+  dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
+			    "calibrate_resolution",
+			    NULL, NULL,
+			    GTK_WIN_POS_CENTER,
+			    FALSE, FALSE, FALSE,
+
+			    _("OK"), install_resolution_calibrate_ok,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+  
+  TITLE_STYLE (dialog);
+  
+  gimp_dialog_set_icon (GTK_WINDOW (dialog));
+
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
+
+  /*  hide the separator between the dialog's vbox and the action area  */
+  /*  gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 0)));*/
+
+  ruler_width  = gdk_screen_width ();
+  ruler_height = gdk_screen_height ();
+
+  ruler_width  = ruler_width - 300 - (ruler_width % 100);
+  ruler_height = ruler_height - 300 - (ruler_height % 100);
+
+  table = gtk_table_new (4, 4, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 16);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), table);
+  gtk_widget_show (table);
+  
+  ruler = gtk_hruler_new ();
+  PAGE_STYLE (ruler);
+  gtk_widget_set_usize (ruler, ruler_width, 32);
+  gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_width, 0, ruler_width);
+  gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (ruler);
+
+  ruler = gtk_vruler_new ();
+  PAGE_STYLE (ruler);
+  gtk_widget_set_usize (ruler, 32, ruler_height);
+  gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_height, 0, ruler_height);
+  gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (ruler);
+
+  ebox = gtk_event_box_new ();
+  PAGE_STYLE (ebox);  
+  gtk_table_attach (GTK_TABLE (table), ebox, 1, 2, 1, 2,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (ebox);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_add (GTK_CONTAINER (ebox), table);
+  gtk_widget_show (table);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_TOP_LEFT);
+  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_BOTTOM_LEFT);
+  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_TOP_RIGHT);
+  gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 0, 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
+
+  darea = gtk_drawing_area_new ();
+  TITLE_STYLE (darea);  
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
+  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
+			    GTK_SIGNAL_FUNC (install_corner_expose),
+			    (gpointer) GTK_CORNER_BOTTOM_RIGHT);
+  gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 2, 3,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (darea);
+
+  vbox = gtk_vbox_new (FALSE, 16);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
+  gtk_widget_show (vbox);
+  
+  add_label (GTK_BOX (vbox),
+	     _("Measure the rulers and enter their lengths below."));
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  calibrate_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
+  calibrate_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
+
+  calibrate_entry =
+    gimp_coordinates_new  (GIMP_UNIT_INCH, "%p",
+			   FALSE, FALSE, 75,
+			   GIMP_SIZE_ENTRY_UPDATE_SIZE,
+			   FALSE,
+			   FALSE,
+			   _("Horizontal:"),
+			   ruler_width,
+			   calibrate_xres,
+			   1, GIMP_MAX_IMAGE_SIZE,
+			   0, 0,
+			   _("Vertical:"),
+			   ruler_height,
+			   calibrate_yres,
+			   1, GIMP_MAX_IMAGE_SIZE,
+			   0, 0);
+  gtk_widget_hide (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)));
+  
+  for (list = GTK_TABLE (calibrate_entry)->children;
+       list;
+       list = g_list_next (list))
+    {
+      GtkTableChild *child = (GtkTableChild *) list->data;
+
+      if (child && GTK_IS_LABEL (child->widget))
+	PAGE_STYLE (GTK_WIDGET (child->widget));
+    }
+
+  gtk_box_pack_end (GTK_BOX (hbox), calibrate_entry, FALSE, FALSE, 0);
+  gtk_widget_show (calibrate_entry);
+  
+  gtk_widget_show (dialog);
+
+  gtk_main ();
+  gtk_widget_show (install_dialog);
+}
+
 static void
 install_resolution (void)
 {
   GtkWidget *hbox;
   GtkWidget *sep;
+  GimpChainButton *chain;
+  GtkWidget *button;
+  GList     *list; 
   gchar     *pixels_per_unit;
   gdouble    xres, yres;
   gchar     *str;
 
   gdisplay_xserver_resolution (&xres, &yres);
 
-  gtk_widget_push_style (page_style);
-
-  add_label (GTK_BOX (resolution_page), FALSE,
+  add_label (GTK_BOX (resolution_page),
 	     _("GIMP can obtain this information from your X-server.\n"
 	       "However, most X-servers do not return useful values."));
   
@@ -1091,13 +1334,10 @@ install_resolution (void)
 
   str = g_strdup_printf (_("Get Resolution from X-server (Currently %d x %d dpi)"),
 			 ROUND (xres), ROUND (yres));
-
-  gtk_widget_pop_style ();
   xserver_toggle = gtk_check_button_new_with_label (str);
-  gtk_widget_push_style (page_style);
-
   g_free (str);
 
+  PAGE_STYLE (GTK_BIN (xserver_toggle)->child);
   gtk_box_pack_end (GTK_BOX (hbox), xserver_toggle, FALSE, FALSE, 0);
   gtk_widget_show (xserver_toggle);
 
@@ -1105,7 +1345,7 @@ install_resolution (void)
   gtk_box_pack_start (GTK_BOX (resolution_page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label (GTK_BOX (resolution_page), FALSE,
+  add_label (GTK_BOX (resolution_page),
 	     _("Alternatively, you can set the monitor resolution manually."));
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -1113,8 +1353,6 @@ install_resolution (void)
   gtk_widget_show (hbox);
   
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
-
-  gtk_widget_pop_style ();
   resolution_entry =
     gimp_coordinates_new (GIMP_UNIT_INCH, pixels_per_unit,
 			  FALSE, FALSE, 75,
@@ -1133,22 +1371,54 @@ install_resolution (void)
 			  GIMP_MIN_RESOLUTION,
 			  GIMP_MAX_RESOLUTION,
 			  0, 0);
-  gtk_widget_push_style (page_style);
-
   g_free (pixels_per_unit);
+
+  chain = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
+  PAGE_STYLE (GTK_WIDGET (chain->line1));
+  PAGE_STYLE (GTK_WIDGET (chain->line2));
+
+  for (list = GTK_TABLE (resolution_entry)->children;
+       list;
+       list = g_list_next (list))
+    {
+      GtkTableChild *child = (GtkTableChild *) list->data;
+
+      if (child && GTK_IS_LABEL (child->widget))
+	PAGE_STYLE (GTK_WIDGET (child->widget));
+    }
 
   gtk_box_pack_end (GTK_BOX (hbox), resolution_entry, FALSE, FALSE, 0);
   gtk_widget_show (resolution_entry);
 
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (resolution_page), sep, FALSE, FALSE, 2);
+  gtk_widget_show (sep);
+
+  add_label (GTK_BOX (resolution_page),
+	     _("You can also press the \"Calibrate\" button to open a window\n"
+	       "which lets you determine your monitor resolution interactively."));
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (resolution_page), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Calibrate"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (install_resolution_calibrate),
+		      NULL);
+  gtk_widget_show (button);
+  
   gtk_object_set_data (GTK_OBJECT (xserver_toggle), "inverse_sensitive",
 		       resolution_entry);
+  gtk_object_set_data (GTK_OBJECT (resolution_entry), "inverse_sensitive",
+		       button);
   gtk_signal_connect (GTK_OBJECT (xserver_toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_sensitive_update),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (xserver_toggle),
 				using_xserver_resolution);
-
-  gtk_widget_pop_style ();
 }
 
 static void

@@ -52,7 +52,7 @@ static void gimp_chain_button_realize          (GtkWidget       *widget);
 
 static void gimp_chain_button_clicked_callback (GtkWidget       *widget,
 						GimpChainButton *gcb);
-static void gimp_chain_button_draw_lines       (GtkWidget       *widget,
+static gint gimp_chain_button_draw_lines       (GtkWidget       *widget,
 						GdkEvent        *event,
 						GimpChainButton *gcb);
 
@@ -220,7 +220,6 @@ void
 gimp_chain_button_set_active (GimpChainButton  *gcb,
 			      gboolean          is_active)
 {
-  g_return_if_fail (gcb != NULL);
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
   if (gcb->active != is_active)
@@ -248,7 +247,6 @@ gimp_chain_button_set_active (GimpChainButton  *gcb,
 gboolean   
 gimp_chain_button_get_active (GimpChainButton *gcb)
 {
-  g_return_val_if_fail (gcb != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (gcb), FALSE);
 
   return gcb->active;
@@ -286,7 +284,6 @@ static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
 				    GimpChainButton *gcb)
 {
-  g_return_if_fail (gcb != NULL);
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
   gcb->active = !(gcb->active);
@@ -300,7 +297,7 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
     gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
 }
 
-static void
+static gint
 gimp_chain_button_draw_lines (GtkWidget       *widget,
 			      GdkEvent        *event,
 			      GimpChainButton *gcb)
@@ -314,13 +311,14 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
   /* don't set this too high, there's no check against drawing outside 
      the widgets bounds yet (and probably never will be) */
 
-  g_return_if_fail (gcb != NULL);
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
+  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (gcb), FALSE);
 
+  /*
   gdk_window_clear_area (widget->window,
 			 0, 0,
 			 widget->allocation.width,
 			 widget->allocation.height);
+  */
 
   points[0].x = widget->allocation.width / 2;
   points[0].y = widget->allocation.height / 2;
@@ -362,7 +360,7 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
       shadow = GTK_SHADOW_ETCHED_IN;
       break;
     default:
-      return;
+      return FALSE;
     }
 
   if ( ((shadow == GTK_SHADOW_ETCHED_OUT) && (which_line == -1)) ||
@@ -380,4 +378,6 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
 		    points,
 		    3,
 		    FALSE);
+
+  return TRUE;
 }
