@@ -6,6 +6,38 @@ are being added. Very soon now, the next stable GIMP release, GIMP 2.2,
 will emerge out of this.
 
 
+Overview of Changes in GIMP 2.1.7
+=================================
+
+- Added even more plug-in previews (Value Propagate) and ported
+  existing previews to the new widgets (AlienMap2, FlareFX, Jigsaw,
+  Waves).
+
+- More PDB API cleanups.
+
+- Allow to specify the batch interpreter on the command-line.
+
+- Improved selection-round script and moved it to the Select menu.
+
+- Don't switch the active layer when using the Move tool.
+
+- Updated libgimpthumb to support local thumbnails as introduced by
+  version 0.7 of the thumbnail spec.
+
+- Automatically create thumbnails for the Open dialog.
+
+- Added entries next to most viewable buttons.
+
+- Lots of bug fixes.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Alan Horkan
+
+
+
 Overview of Changes in GIMP 2.1.6
 =================================
 
