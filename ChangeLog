@@ -1,8 +1,8 @@
 2003-03-14  Sven Neumann  <sven@gimp.org>
 
-	* app/base/base-enums.[ch]
-	* app/base/curves.[ch]: changed CurvesType enum GimpCurveType and
-	register it with the type system.
+	* app/base/base-enums.[ch]	
+	* app/base/curves.[ch]: changed CurvesType enum to GimpCurveType
+	and register it with the type system.
 
 	* app/tools/gimpcurvestool.c: use an enum menu here.
 
