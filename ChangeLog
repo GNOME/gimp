@@ -1,5 +1,9 @@
 2002-09-08  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/curve_bend.c: forgot a mnemonic.
+
+2002-09-08  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/iwarp.c: moved toggles into frame titles.
 
 2002-09-08  Michael Natterer  <mitch@gimp.org>
