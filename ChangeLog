@@ -1,3 +1,13 @@
+2002-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprotatetool.c (roatate_angle_changed): compare the
+	old and new angle using an epsilon of 0.0001 degrees so we don't
+	get double "angle changed" because of rounding foobar.
+
+	* app/tools/gimptransformtool.c: made GimpTransformTool subclasses
+	which don't use the grid (namely the flip tool) work correctly
+	again by looking at transform_tool->use_grid more often.
+
 2002-11-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontainer.c (gimp_container_get_child_by_name):

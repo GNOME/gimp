@@ -384,7 +384,9 @@ rotate_angle_changed (GtkWidget *widget,
 
   value = gimp_deg_to_rad (GTK_ADJUSTMENT (widget)->value);
 
-  if (value != transform_tool->trans_info[ANGLE])
+#define ANGLE_EPSILON 0.0001
+
+  if (ABS (value - transform_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -394,6 +396,8 @@ rotate_angle_changed (GtkWidget *widget,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
+
+#undef ANGLE_EPSILON
 }
 
 static void

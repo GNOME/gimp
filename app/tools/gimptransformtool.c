@@ -406,7 +406,7 @@ gimp_transform_tool_button_release (GimpTool        *tool,
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   /*  if we are creating, there is nothing to be done...exit  */
-  if (tr_tool->function == TRANSFORM_CREATING)
+  if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
     return;
 
   /*  if the 3rd button isn't pressed, transform the selected mask  */
@@ -456,7 +456,7 @@ gimp_transform_tool_motion (GimpTool        *tool,
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   /*  if we are creating, there is nothing to be done so exit.  */
-  if (tr_tool->function == TRANSFORM_CREATING)
+  if (tr_tool->function == TRANSFORM_CREATING || ! tr_tool->use_grid)
     return;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -516,6 +516,9 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
 
   tr_tool   = GIMP_TRANSFORM_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (! tr_tool->use_grid)
+    return;
 
   if (gdisp == tool->gdisp)
     {
@@ -934,9 +937,8 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
   /*  find the boundaries  */
   if (tiles)
     {
-      tile_manager_get_offsets (tiles,
-				&tr_tool->x1, &tr_tool->y1);
-				
+      tile_manager_get_offsets (tiles, &tr_tool->x1, &tr_tool->y1);
+
       tr_tool->x2 = tr_tool->x1 + tile_manager_width (tiles);
       tr_tool->y2 = tr_tool->y1 + tile_manager_height (tiles);
     }
