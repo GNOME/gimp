@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.14\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:20+0200\n"
-"PO-Revision-Date: 2003-07-24 02:49+0100\n"
+"POT-Creation-Date: 2003-07-25 15:39+0200\n"
+"PO-Revision-Date: 2003-07-25 13:24+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2184,7 +2184,7 @@ msgid "Unknown pattern format version %d in '%s'."
 msgstr "Onbekende versie van patroonformaat %d in '%s'."
 
 #: app/core/gimppattern.c:380
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unsupported pattern depth %d\n"
 "in file '%s'.\n"
@@ -2192,7 +2192,7 @@ msgid ""
 msgstr ""
 "Niet ondersteunde patroondiepte %d\n"
 "in bestand '%s'.\n"
-"GIMP-patronen moeten GRAY of RGB zijn.\n"
+"GIMP-patronen moeten GRAY of RGB zijn."
 
 #: app/core/gimppattern.c:395
 #, c-format
@@ -2736,9 +2736,8 @@ msgstr "Tool Opties"
 
 # app/gui/preferences-dialog.c:1312
 #: app/gui/dialogs-constructors.c:274
-#, fuzzy
 msgid "Devices"
-msgstr "Invoerapparaten"
+msgstr "Apparaten"
 
 #: app/gui/dialogs-constructors.c:274
 msgid "Device Status"
@@ -2865,7 +2864,6 @@ msgid "Paths"
 msgstr "Paden"
 
 #: app/gui/dialogs-constructors.c:806
-#, fuzzy
 msgid "Path List"
 msgstr "Padenlijst"
 
@@ -2904,12 +2902,11 @@ msgstr "Weergavenavigatie"
 
 #: app/gui/dialogs-constructors.c:937
 msgid "FG/BG"
-msgstr ""
+msgstr "VG/AG"
 
 #: app/gui/dialogs-constructors.c:937
-#, fuzzy
 msgid "FG/BG Color"
-msgstr "RGB Kleur"
+msgstr "VG/AG"
 
 #: app/gui/dialogs-constructors.c:958
 msgid "Brush Editor"
@@ -2932,9 +2929,8 @@ msgid "/Add Tab/Tool Options..."
 msgstr "/Tab toevoegen/Gereedschapsopties..."
 
 #: app/gui/dialogs-menu.c:62
-#, fuzzy
 msgid "/Add Tab/Device Status..."
-msgstr "/Dialogen/Apparaatstatus..."
+msgstr "/Tab toevoegen/Apparaatstatus..."
 
 #: app/gui/dialogs-menu.c:67
 msgid "/Add Tab/Layers..."
@@ -3054,16 +3050,15 @@ msgstr "/Grootte van vooruitblik/Gigantisch (9)"
 
 #: app/gui/dialogs-menu.c:139
 msgid "/Tab Style/Icon"
-msgstr ""
+msgstr "/Tabstijl/Pictogram"
 
 #: app/gui/dialogs-menu.c:144
-#, fuzzy
 msgid "/Tab Style/Text"
-msgstr "/Gereedschap/Tekst"
+msgstr "/Tabstijl/Tekst"
 
 #: app/gui/dialogs-menu.c:145
 msgid "/Tab Style/Icon & Text"
-msgstr ""
+msgstr "/Tabstijl/Pictogram en tekst"
 
 #: app/gui/dialogs-menu.c:147
 msgid "/View as List"
@@ -3653,18 +3648,16 @@ msgid "Line _Style:"
 msgstr "Lijnstijl:"
 
 #: app/gui/grid-dialog.c:171
-#, fuzzy
 msgid "Change Grid Foreground Color"
-msgstr "Voorgrondkleur veranderen"
+msgstr "Voorgrondkleur raster veranderen"
 
 #: app/gui/grid-dialog.c:175
 msgid "_Foreground Color:"
 msgstr "Voorgrondkleur:"
 
 #: app/gui/grid-dialog.c:179
-#, fuzzy
 msgid "Change Grid Background Color"
-msgstr "Achtergrondkleur veranderen"
+msgstr "Achtergrondkleur raster veranderen"
 
 #: app/gui/grid-dialog.c:183
 msgid "_Background Color:"
@@ -3790,18 +3783,15 @@ msgid "/_File"
 msgstr "/_Bestand"
 
 #: app/gui/image-menu.c:86 app/gui/toolbox-menu.c:50
-#, fuzzy
 msgid "/File/_New..."
 msgstr "/Bestand/Nieuw..."
 
 #: app/gui/image-menu.c:91 app/gui/toolbox-menu.c:55
-#, fuzzy
 msgid "/File/_Open..."
 msgstr "/Bestand/Openen..."
 
 #. <Image>/File/Open Recent
 #: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:63
-#, fuzzy
 msgid "/File/Open _Recent"
 msgstr "/Bestand/Recent openen"
 
@@ -3810,42 +3800,34 @@ msgid "/File/Open Recent/(None)"
 msgstr "/Bestand/Open recent/(Geen)"
 
 #: app/gui/image-menu.c:106 app/gui/toolbox-menu.c:70
-#, fuzzy
 msgid "/File/Open Recent/Document _History..."
 msgstr "/Bestand/Recent openen/Documentgeschiedenis..."
 
 #: app/gui/image-menu.c:114
-#, fuzzy
 msgid "/File/_Save"
 msgstr "/Bestand/Opslaan"
 
 #: app/gui/image-menu.c:119
-#, fuzzy
 msgid "/File/Save _as..."
 msgstr "/Bestand/Opslaan als..."
 
 #: app/gui/image-menu.c:124
-#, fuzzy
 msgid "/File/Save a Cop_y..."
 msgstr "/Bestand/Kopie opslaan..."
 
 #: app/gui/image-menu.c:128
-#, fuzzy
 msgid "/File/Save as _Template..."
 msgstr "/Bestand/Opslaan als sjabloon..."
 
 #: app/gui/image-menu.c:132
-#, fuzzy
 msgid "/File/Re_vert..."
 msgstr "/Bestand/Terughalen..."
 
 #: app/gui/image-menu.c:140
-#, fuzzy
 msgid "/File/_Close"
 msgstr "/Bestand/Sluiten"
 
 #: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:228
-#, fuzzy
 msgid "/File/_Quit"
 msgstr "/Bestand/Afsluiten"
 
@@ -3855,37 +3837,30 @@ msgid "/_Edit"
 msgstr "/_Bewerken"
 
 #: app/gui/image-menu.c:157
-#, fuzzy
 msgid "/Edit/_Undo"
 msgstr "/Bewerken/Ongedaan maken"
 
 #: app/gui/image-menu.c:162
-#, fuzzy
 msgid "/Edit/_Redo"
 msgstr "/Bewerken/Opnieuw uitvoeren"
 
 #: app/gui/image-menu.c:170
-#, fuzzy
 msgid "/Edit/Cu_t"
 msgstr "/Bewerken/Knippen"
 
 #: app/gui/image-menu.c:175
-#, fuzzy
 msgid "/Edit/_Copy"
 msgstr "/Bewerken/Kopiëren"
 
 #: app/gui/image-menu.c:180
-#, fuzzy
 msgid "/Edit/_Paste"
 msgstr "/Bewerken/Plakken"
 
 #: app/gui/image-menu.c:185
-#, fuzzy
 msgid "/Edit/Paste _Into"
 msgstr "/Bewerken/Plakken in"
 
 #: app/gui/image-menu.c:190
-#, fuzzy
 msgid "/Edit/Paste as _New"
 msgstr "/Bewerken/Plakken als nieuw"
 
@@ -3895,49 +3870,40 @@ msgid "/Edit/_Buffer"
 msgstr "/Bewerken/Buffer"
 
 #: app/gui/image-menu.c:200
-#, fuzzy
 msgid "/Edit/Buffer/Cu_t Named..."
 msgstr "/Bewerken/Buffer/Knippen op naam..."
 
 #: app/gui/image-menu.c:205
-#, fuzzy
 msgid "/Edit/Buffer/_Copy Named..."
 msgstr "/Bewerken/Buffer/Kopiëren op naam"
 
 #: app/gui/image-menu.c:210
-#, fuzzy
 msgid "/Edit/Buffer/_Paste Named..."
 msgstr "/Bewerken/Buffer/Plakken op naam..."
 
 #: app/gui/image-menu.c:218
-#, fuzzy
 msgid "/Edit/Cl_ear"
 msgstr "/Bewerken/Wissen"
 
 #: app/gui/image-menu.c:223
-#, fuzzy
 msgid "/Edit/Fill with _FG Color"
 msgstr "/Bewerken/Vullen met VG"
 
 #: app/gui/image-menu.c:228
-#, fuzzy
 msgid "/Edit/Fill with B_G Color"
 msgstr "/Bewerken/Vullen met AG"
 
 #: app/gui/image-menu.c:233
-#, fuzzy
 msgid "/Edit/Fill with P_attern"
-msgstr "/Bewerken/Vullen met VG"
+msgstr "/Bewerken/Vullen met patroon"
 
 #: app/gui/image-menu.c:238
-#, fuzzy
 msgid "/Edit/_Stroke Selection"
-msgstr "Teken lijn op selectie"
+msgstr "/Bewerken/Selectie overtrekken"
 
 #: app/gui/image-menu.c:243
-#, fuzzy
 msgid "/Edit/St_roke Active Path"
-msgstr "/Pad Aaien"
+msgstr "/Bewerken/Actief pad overtrekken"
 
 #. <Image>/Select
 #: app/gui/image-menu.c:253
@@ -3945,62 +3911,50 @@ msgid "/_Select"
 msgstr "/_Selecteren"
 
 #: app/gui/image-menu.c:255
-#, fuzzy
 msgid "/Select/_All"
 msgstr "/Selecteren/Alles"
 
 #: app/gui/image-menu.c:260
-#, fuzzy
 msgid "/Select/_None"
 msgstr "/Selecteren/Niets"
 
 #: app/gui/image-menu.c:265
-#, fuzzy
 msgid "/Select/_Invert"
 msgstr "/Selecteren/Inverse"
 
 #: app/gui/image-menu.c:270
-#, fuzzy
 msgid "/Select/_Float"
 msgstr "/Selecteren/Drijvend"
 
 #: app/gui/image-menu.c:274
-#, fuzzy
 msgid "/Select/_By Color"
 msgstr "/Selecteren/Op kleur"
 
 #: app/gui/image-menu.c:282
-#, fuzzy
 msgid "/Select/Fea_ther..."
 msgstr "/Selecteren/Verzachten..."
 
 #: app/gui/image-menu.c:286
-#, fuzzy
 msgid "/Select/_Sharpen"
 msgstr "/Selecteren/Verscherpen"
 
 #: app/gui/image-menu.c:290
-#, fuzzy
 msgid "/Select/S_hrink..."
 msgstr "/Selecteren/Krimpen..."
 
 #: app/gui/image-menu.c:295
-#, fuzzy
 msgid "/Select/_Grow..."
 msgstr "/Selecteren/Uitdijen..."
 
 #: app/gui/image-menu.c:300
-#, fuzzy
 msgid "/Select/Bo_rder..."
 msgstr "/Selecteren/Rand..."
 
 #: app/gui/image-menu.c:307
-#, fuzzy
 msgid "/Select/Toggle _QuickMask"
 msgstr "/Selecteren/Snelmasker schakelen"
 
 #: app/gui/image-menu.c:312
-#, fuzzy
 msgid "/Select/Save to _Channel"
 msgstr "/Selecteren/Opslaan in kanaal"
 
@@ -4010,12 +3964,10 @@ msgid "/_View"
 msgstr "/_Beeld"
 
 #: app/gui/image-menu.c:322
-#, fuzzy
 msgid "/View/_New View"
 msgstr "/Beeld/Nieuw beeld"
 
 #: app/gui/image-menu.c:327
-#, fuzzy
 msgid "/View/_Dot for Dot"
 msgstr "/Beeld/Punt voor punt"
 
@@ -4025,17 +3977,14 @@ msgid "/View/_Zoom"
 msgstr "/Beeld/Zoomen"
 
 #: app/gui/image-menu.c:336
-#, fuzzy
 msgid "/View/Zoom/Zoom _Out"
 msgstr "/Beeld/Zoomen/Uitzoomen"
 
 #: app/gui/image-menu.c:341
-#, fuzzy
 msgid "/View/Zoom/Zoom _In"
 msgstr "/Beeld/Zoomen/Inzoomen"
 
 #: app/gui/image-menu.c:346
-#, fuzzy
 msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Beeld/Zoomen/In venster passend"
 
@@ -4076,82 +4025,66 @@ msgid "/View/Zoom/1:16"
 msgstr "/Beeld/Zoomen/1:16"
 
 #: app/gui/image-menu.c:400
-#, fuzzy
 msgid "/View/_Info Window..."
 msgstr "/Beeld/Informatievenster..."
 
 #: app/gui/image-menu.c:405
-#, fuzzy
 msgid "/View/Na_vigation Window..."
 msgstr "/Beeld/Navigatievenster..."
 
 #: app/gui/image-menu.c:410
-#, fuzzy
 msgid "/View/Display _Filters..."
 msgstr "/Beeld/Weergavefilters..."
 
 #: app/gui/image-menu.c:417
-#, fuzzy
 msgid "/View/Show _Selection"
 msgstr "/Beeld/Selectie tonen"
 
 #: app/gui/image-menu.c:421
-#, fuzzy
 msgid "/View/Show _Layer Boundary"
 msgstr "/Beeld/Laaggrens tonen"
 
 #: app/gui/image-menu.c:425
-#, fuzzy
 msgid "/View/Show _Guides"
 msgstr "/Beeld/Hulplijnen tonen"
 
 #: app/gui/image-menu.c:429
-#, fuzzy
 msgid "/View/Sn_ap to Guides"
 msgstr "/Beeld/Hulplijnen magnetisch"
 
 #: app/gui/image-menu.c:436
-#, fuzzy
 msgid "/View/Configure G_rid..."
 msgstr "/Beeld/Raster instellen..."
 
 #: app/gui/image-menu.c:440
-#, fuzzy
 msgid "/View/S_how Grid"
 msgstr "/Beeld/Raster tonen"
 
 #: app/gui/image-menu.c:444
-#, fuzzy
 msgid "/View/Sna_p to Grid"
 msgstr "/Beeld/Raster magnetisch"
 
 #: app/gui/image-menu.c:451
-#, fuzzy
 msgid "/View/Show _Menubar"
 msgstr "/Beeld/Menubalk tonen"
 
 #: app/gui/image-menu.c:455
-#, fuzzy
 msgid "/View/Show R_ulers"
 msgstr "/Beeld/Linealen tonen"
 
 #: app/gui/image-menu.c:459
-#, fuzzy
 msgid "/View/Show Scroll_bars"
 msgstr "/Beeld/Scrollbalken tonen"
 
 #: app/gui/image-menu.c:463
-#, fuzzy
 msgid "/View/Show S_tatusbar"
 msgstr "/Beeld/Statusbalk tonen"
 
 #: app/gui/image-menu.c:470
-#, fuzzy
 msgid "/View/Shrink _Wrap"
 msgstr "/Beeld/Naar afbeeldingsgrootte"
 
 #: app/gui/image-menu.c:475
-#, fuzzy
 msgid "/View/Fullscr_een"
 msgstr "/Beeld/Volledig scherm"
 
@@ -4166,17 +4099,14 @@ msgid "/Image/_Mode"
 msgstr "/Afbeelding/Modus"
 
 #: app/gui/image-menu.c:488
-#, fuzzy
 msgid "/Image/Mode/_RGB"
 msgstr "/Afbeelding/Modus/RGB"
 
 #: app/gui/image-menu.c:493
-#, fuzzy
 msgid "/Image/Mode/_Grayscale"
 msgstr "/Afbeelding/Modus/Grijswaarden"
 
 #: app/gui/image-menu.c:498
-#, fuzzy
 msgid "/Image/Mode/_Indexed..."
 msgstr "/Afbeelding/Modus/Geïndexeerd..."
 
@@ -4186,58 +4116,47 @@ msgid "/Image/_Transform"
 msgstr "/Afbeelding/Transformaties"
 
 #: app/gui/image-menu.c:508
-#, fuzzy
 msgid "/Image/Transform/Flip _Horizontally"
 msgstr "/Afbeelding/Transformaties/Horizontaal spiegelen"
 
 #: app/gui/image-menu.c:513
-#, fuzzy
 msgid "/Image/Transform/Flip _Vertically"
 msgstr "/Afbeelding/Transformaties/Verticaal spiegelen"
 
 #. please use the degree symbol in the translation
 #: app/gui/image-menu.c:522
-#, fuzzy
 msgid "/Image/Transform/Rotate 90 degrees _CW"
 msgstr "/Afbeelding/Transformaties/90 graden draaien MKM"
 
 #: app/gui/image-menu.c:527
-#, fuzzy
 msgid "/Image/Transform/Rotate 90 degrees CC_W"
 msgstr "/Afbeelding/Transformaties/90 graden draaien TKI"
 
 #: app/gui/image-menu.c:532
-#, fuzzy
 msgid "/Image/Transform/Rotate _180 degrees"
 msgstr "/Afbeelding/Transformaties/180 graden draaien"
 
 #: app/gui/image-menu.c:542
-#, fuzzy
 msgid "/Image/Can_vas Size..."
 msgstr "/Afbeelding/Canvasgrootte..."
 
 #: app/gui/image-menu.c:547
-#, fuzzy
 msgid "/Image/_Scale Image..."
 msgstr "/Afbeelding/Schalen..."
 
 #: app/gui/image-menu.c:552
-#, fuzzy
 msgid "/Image/_Crop Image"
 msgstr "/Afbeelding/Snijden"
 
 #: app/gui/image-menu.c:557
-#, fuzzy
 msgid "/Image/_Duplicate"
 msgstr "/Afbeelding/Dupliceren"
 
 #: app/gui/image-menu.c:565
-#, fuzzy
 msgid "/Image/Merge Visible _Layers..."
 msgstr "/Afbeelding/Zichtbare lagen samenvoegen..."
 
 #: app/gui/image-menu.c:569
-#, fuzzy
 msgid "/Image/_Flatten Image"
 msgstr "/Afbeelding/Pletten"
 
@@ -4247,73 +4166,59 @@ msgid "/_Layer"
 msgstr "/_Laag"
 
 #: app/gui/image-menu.c:578
-#, fuzzy
 msgid "/Layer/_New Layer..."
 msgstr "/Laag/Nieuw..."
 
 #: app/gui/image-menu.c:583
-#, fuzzy
 msgid "/Layer/Du_plicate Layer"
 msgstr "/Laag/Dupliceren"
 
 #: app/gui/image-menu.c:588
-#, fuzzy
 msgid "/Layer/Anchor _Layer"
 msgstr "/Laag/Verankeren"
 
 #: app/gui/image-menu.c:593
-#, fuzzy
 msgid "/Layer/Me_rge Down"
 msgstr "/Laag/Neerwaarts samenvoegen"
 
 #: app/gui/image-menu.c:598
-#, fuzzy
 msgid "/Layer/_Delete Layer"
 msgstr "/Laag/Verwijderen"
 
 #. <Image>/Layer/Stack
 #: app/gui/image-menu.c:608
-#, fuzzy
 msgid "/Layer/Stac_k"
 msgstr "/Laag/Stapel"
 
 #: app/gui/image-menu.c:610
-#, fuzzy
 msgid "/Layer/Stack/Select _Previous Layer"
 msgstr "/Laag/Stapel/Vorige laag selecteren"
 
 #: app/gui/image-menu.c:614
-#, fuzzy
 msgid "/Layer/Stack/Select _Next Layer"
 msgstr "/Laag/Stapel/Volgende laag selecteren"
 
 #: app/gui/image-menu.c:618
-#, fuzzy
 msgid "/Layer/Stack/Select _Top Layer"
 msgstr "/Laag/Stapel/Bovenste laag selecteren"
 
 #: app/gui/image-menu.c:622
-#, fuzzy
 msgid "/Layer/Stack/Select _Bottom Layer"
 msgstr "/Laag/Stapel/Onderste laag selecteren"
 
 #: app/gui/image-menu.c:629
-#, fuzzy
 msgid "/Layer/Stack/_Raise Layer"
 msgstr "/Laag/Stapel/Haal laag omhoog"
 
 #: app/gui/image-menu.c:634
-#, fuzzy
 msgid "/Layer/Stack/_Lower Layer"
 msgstr "/Laag/Stapel/Haal laag omlaag"
 
 #: app/gui/image-menu.c:639
-#, fuzzy
 msgid "/Layer/Stack/Layer to T_op"
 msgstr "/Laag/Stapel/Laag naar top"
 
 #: app/gui/image-menu.c:644
-#, fuzzy
 msgid "/Layer/Stack/Layer to Botto_m"
 msgstr "/Laag/Stapel/Laag naar bodem"
 
@@ -4323,54 +4228,44 @@ msgid "/Layer/_Colors"
 msgstr "/Laag/Kleuren"
 
 #: app/gui/image-menu.c:654
-#, fuzzy
 msgid "/Layer/Colors/Color _Balance..."
 msgstr "/Laag/Kleuren/Kleurbalans..."
 
 #: app/gui/image-menu.c:659
-#, fuzzy
 msgid "/Layer/Colors/Hue-_Saturation..."
 msgstr "/Laag/Kleuren/Toon-Verzadiging..."
 
 #: app/gui/image-menu.c:664
-#, fuzzy
 msgid "/Layer/Colors/Colori_ze..."
 msgstr "/Laag/Kleuren/Verkleuren..."
 
 #: app/gui/image-menu.c:669
-#, fuzzy
 msgid "/Layer/Colors/B_rightness-Contrast..."
 msgstr "/Laag/Kleuren/Helderheid-Contrast..."
 
 #: app/gui/image-menu.c:674
-#, fuzzy
 msgid "/Layer/Colors/_Threshold..."
 msgstr "/Laag/Kleuren/Drempel..."
 
 #: app/gui/image-menu.c:679
-#, fuzzy
 msgid "/Layer/Colors/_Levels..."
 msgstr "/Laag/Kleuren/Niveaus..."
 
 #: app/gui/image-menu.c:684
-#, fuzzy
 msgid "/Layer/Colors/_Curves..."
 msgstr "/Laag/Kleuren/Curves..."
 
 #: app/gui/image-menu.c:689
-#, fuzzy
 msgid "/Layer/Colors/_Posterize..."
 msgstr "/Laag/Kleuren/Posterizeren..."
 
 #: app/gui/image-menu.c:697
-#, fuzzy
 msgid "/Layer/Colors/_Desaturate"
 msgstr "/Laag/Kleuren/Desatureren"
 
 #: app/gui/image-menu.c:702
-#, fuzzy
 msgid "/Layer/Colors/In_vert"
-msgstr "/Laag/Kleuren/Inverteren"
+msgstr "/Laag/Kleuren/Inverse"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/image-menu.c:710
@@ -4378,12 +4273,10 @@ msgid "/Layer/Colors/_Auto"
 msgstr "/Laag/Kleuren/Auto"
 
 #: app/gui/image-menu.c:712
-#, fuzzy
 msgid "/Layer/Colors/Auto/_Equalize"
 msgstr "/Laag/Kleuren/Auto/Gelijkmaken"
 
 #: app/gui/image-menu.c:719
-#, fuzzy
 msgid "/Layer/Colors/_Histogram..."
 msgstr "/Laag/Kleuren/Histogram..."
 
@@ -4393,22 +4286,18 @@ msgid "/Layer/_Mask"
 msgstr "/Laag/Masker"
 
 #: app/gui/image-menu.c:729
-#, fuzzy
 msgid "/Layer/Mask/_Add Layer Mask..."
 msgstr "/Laag/Masker/Toevoegen..."
 
 #: app/gui/image-menu.c:733
-#, fuzzy
 msgid "/Layer/Mask/A_pply Layer Mask"
 msgstr "/Laag/Masker/Toepassen"
 
 #: app/gui/image-menu.c:737
-#, fuzzy
 msgid "/Layer/Mask/_Delete Layer Mask"
 msgstr "/Laag/Masker/Verwijderen"
 
 #: app/gui/image-menu.c:742
-#, fuzzy
 msgid "/Layer/Mask/_Mask to Selection"
 msgstr "/Laag/Masker/Naar Selectie"
 
@@ -4418,12 +4307,10 @@ msgid "/Layer/Tr_ansparency"
 msgstr "/Laag/Transparantie"
 
 #: app/gui/image-menu.c:752
-#, fuzzy
 msgid "/Layer/Transparency/_Add Alpha Channel"
 msgstr "/Laag/Transparantie/Alfakanaal toevoegen"
 
 #: app/gui/image-menu.c:756
-#, fuzzy
 msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "/Laag/Transparantie/Alfa naar selectie"
 
@@ -4433,57 +4320,46 @@ msgid "/Layer/_Transform"
 msgstr "/Afbeelding/Transformaties"
 
 #: app/gui/image-menu.c:768
-#, fuzzy
 msgid "/Layer/Transform/Flip _Horizontally"
 msgstr "/Laag/Transformaties/Horizontaal spiegelen"
 
 #: app/gui/image-menu.c:773
-#, fuzzy
 msgid "/Layer/Transform/Flip _Vertically"
 msgstr "/Laag/Tranformaties/Verticaal spiegelen"
 
 #: app/gui/image-menu.c:781
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
 msgstr "/Laag/Transformaties/90 graden draaien MKM"
 
 #: app/gui/image-menu.c:786
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
 msgstr "/Laag/Transformaties/90 graden draaien TKI"
 
 #: app/gui/image-menu.c:791
-#, fuzzy
 msgid "/Layer/Transform/Rotate _180 degrees"
 msgstr "/Laag/Transformaties/180 graden draaien"
 
 #: app/gui/image-menu.c:796
-#, fuzzy
 msgid "/Layer/Transform/_Arbitrary Rotation..."
 msgstr "/Laag/Tranformaties/Willekeurige draaiing..."
 
 #: app/gui/image-menu.c:804
-#, fuzzy
 msgid "/Layer/Transform/_Offset..."
 msgstr "/Laag/Tranformaties/Verspringing..."
 
 #: app/gui/image-menu.c:811
-#, fuzzy
 msgid "/Layer/Layer _Boundary Size..."
 msgstr "/Laag/Grensgrootte..."
 
 #: app/gui/image-menu.c:816
-#, fuzzy
 msgid "/Layer/Layer to _Imagesize"
 msgstr "/Laag/Naar afbeeldingsgrootte"
 
 #: app/gui/image-menu.c:821
-#, fuzzy
 msgid "/Layer/_Scale Layer..."
 msgstr "/Laag/Schalen..."
 
 #: app/gui/image-menu.c:826
-#, fuzzy
 msgid "/Layer/Cr_op Layer"
 msgstr "/Laag/Snijden"
 
@@ -4493,17 +4369,14 @@ msgid "/_Tools"
 msgstr "/_Gereedschappen"
 
 #: app/gui/image-menu.c:838
-#, fuzzy
 msgid "/Tools/Tool_box"
 msgstr "/Gereedschap/Gereedschapskist"
 
 #: app/gui/image-menu.c:842
-#, fuzzy
 msgid "/Tools/_Default Colors"
 msgstr "/Gereedschap/Standaardkleuren"
 
 #: app/gui/image-menu.c:847
-#, fuzzy
 msgid "/Tools/S_wap Colors"
 msgstr "/Gereedschap/Kleuren omdraaien"
 
@@ -4529,122 +4402,98 @@ msgid "/_Dialogs"
 msgstr "/_Dialogen"
 
 #: app/gui/image-menu.c:864
-#, fuzzy
 msgid "/Dialogs/Create New Doc_k"
 msgstr "/Dialogen/Nieuw dok maken"
 
 #: app/gui/image-menu.c:866
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths..."
 msgstr "/Dialogen/Nieuw dok maken/Lagen, Kanalen & Paden..."
 
 #: app/gui/image-menu.c:870
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."
 msgstr "/Dialogen/Nieuw dok maken/Penselen, Patronen & Verlopen..."
 
 #: app/gui/image-menu.c:874
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Misc. Stuff..."
 msgstr "/Dialogen/Nieuw dok maken/Overige..."
 
 #: app/gui/image-menu.c:879
-#, fuzzy
 msgid "/Dialogs/Tool _Options..."
-msgstr "/Dialogen/Gereedschapspties..."
+msgstr "/Dialogen/Gereedschapsopties..."
 
 #: app/gui/image-menu.c:884
-#, fuzzy
 msgid "/Dialogs/_Device Status..."
 msgstr "/Dialogen/Apparaatstatus..."
 
 #: app/gui/image-menu.c:892
-#, fuzzy
 msgid "/Dialogs/_Layers..."
 msgstr "/Dialogen/Lagen..."
 
 #: app/gui/image-menu.c:897
-#, fuzzy
 msgid "/Dialogs/_Channels..."
 msgstr "/Dialogen/Kanalen..."
 
 #: app/gui/image-menu.c:902
-#, fuzzy
 msgid "/Dialogs/_Paths..."
 msgstr "/Dialogen/Paden..."
 
 #: app/gui/image-menu.c:907
-#, fuzzy
 msgid "/Dialogs/_Indexed Palette..."
 msgstr "/Dialogen/Geïndexeerd Palet..."
 
 #: app/gui/image-menu.c:912
-#, fuzzy
 msgid "/Dialogs/_Selection Editor..."
 msgstr "/Dialogen/Selectie-editor..."
 
 #: app/gui/image-menu.c:917
-#, fuzzy
 msgid "/Dialogs/Na_vigation..."
 msgstr "/Dialogen/Navigatie..."
 
 #: app/gui/image-menu.c:922
-#, fuzzy
 msgid "/Dialogs/_Undo History..."
 msgstr "/Dialogen/Overzicht 'Ongedaan maken'..."
 
 #: app/gui/image-menu.c:930
-#, fuzzy
 msgid "/Dialogs/Colo_rs..."
 msgstr "/Dialogen/Kleuren..."
 
 #: app/gui/image-menu.c:935
-#, fuzzy
 msgid "/Dialogs/Brus_hes..."
 msgstr "/Dialogen/Penselen..."
 
 #: app/gui/image-menu.c:940
-#, fuzzy
 msgid "/Dialogs/P_atterns..."
 msgstr "/Dialogen/Patronen..."
 
 #: app/gui/image-menu.c:945
-#, fuzzy
 msgid "/Dialogs/_Gradients..."
 msgstr "/Dialogen/Verlopen..."
 
 #: app/gui/image-menu.c:950
-#, fuzzy
 msgid "/Dialogs/Pal_ettes..."
 msgstr "/Dialogen/Paletten..."
 
 #: app/gui/image-menu.c:955
-#, fuzzy
 msgid "/Dialogs/_Fonts..."
 msgstr "/Dialogen/Fonts..."
 
 #: app/gui/image-menu.c:960
-#, fuzzy
 msgid "/Dialogs/_Buffers..."
 msgstr "/Dialogen/Buffers..."
 
 #: app/gui/image-menu.c:968
-#, fuzzy
 msgid "/Dialogs/I_mages..."
 msgstr "/Dialogen/Afbeeldingen..."
 
 #: app/gui/image-menu.c:973
-#, fuzzy
 msgid "/Dialogs/Document Histor_y..."
 msgstr "/Dialogen/Documentgeschiedenis..."
 
 #: app/gui/image-menu.c:978
-#, fuzzy
 msgid "/Dialogs/_Templates..."
 msgstr "/Dialogen/Sjablonen..."
 
 #: app/gui/image-menu.c:983
-#, fuzzy
 msgid "/Dialogs/Error Co_nsole..."
 msgstr "/Dialogen/Foutmeldingen..."
 
@@ -4673,7 +4522,6 @@ msgid "/Filters/_Noise"
 msgstr "/Filters/Ruis"
 
 #: app/gui/image-menu.c:1011
-#, fuzzy
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filters/Randen"
 
@@ -4722,29 +4570,26 @@ msgid "/Filters/C_ombine"
 msgstr "/Filters/Combineren"
 
 #: app/gui/image-menu.c:1032
-#, fuzzy
 msgid "/Filters/To_ys"
 msgstr "/Filters/Speeltjes"
 
 #: app/gui/image-menu.c:1357
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
 msgstr "%s ongedaan maken"
 
 #: app/gui/image-menu.c:1362
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
 msgstr "%s opnieuw uitvoeren"
 
 #: app/gui/image-menu.c:1366
-#, fuzzy
 msgid "_Undo"
 msgstr "Ongedaan maken"
 
 #: app/gui/image-menu.c:1367
-#, fuzzy
 msgid "_Redo"
-msgstr "Opnieuw"
+msgstr "Opnieuw uitvoeren"
 
 #: app/gui/image-menu.c:1612
 #, c-format
@@ -4850,17 +4695,17 @@ msgstr "V:"
 #. Cyan
 #: app/gui/info-window.c:303
 msgid "C:"
-msgstr ""
+msgstr "C:"
 
 #. Magenta
 #: app/gui/info-window.c:310
 msgid "M:"
-msgstr ""
+msgstr "M:"
 
 #. Black
 #: app/gui/info-window.c:324
 msgid "K:"
-msgstr ""
+msgstr "K:"
 
 #: app/gui/info-window.c:346
 msgid "A:"
@@ -5063,14 +4908,12 @@ msgid "/Edit Layer Attributes..."
 msgstr "/Bewerk laagattributen..."
 
 #: app/gui/module-browser.c:121
-#, fuzzy
 msgid "Module Manager"
-msgstr "Modulebrowser"
+msgstr "Modulebeheer"
 
 #: app/gui/module-browser.c:123
-#, fuzzy
 msgid "Manage Loadable Modules"
-msgstr "Laadbare modules doorbladeren & beheren"
+msgstr "Laadbare modules beheren"
 
 #: app/gui/module-browser.c:165
 msgid "Autoload"
@@ -5334,12 +5177,12 @@ msgid "/Refresh Patterns"
 msgstr "/Patronen vernieuwen"
 
 #: app/gui/plug-in-menus.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "Re_peat \"%s\""
 msgstr "Herhaal \"%s\""
 
 #: app/gui/plug-in-menus.c:364
-#, fuzzy, c-format
+#, c-format
 msgid "R_e-show \"%s\""
 msgstr "Toon \"%s\" opnieuw"
 
@@ -5595,14 +5438,13 @@ msgid "Cursor M_ode:"
 msgstr "Cursorm_odus:"
 
 #: app/gui/preferences-dialog.c:1448
-#, fuzzy
 msgid "Image Window Appearance"
-msgstr "Afbeeldingsvensters"
+msgstr "Verschijning afbeeldingsvenster"
 
 #. Normal Mode
 #: app/gui/preferences-dialog.c:1458
 msgid "Default Appearance in Normal Mode"
-msgstr ""
+msgstr "Standaardverschijning in normale stand"
 
 #: app/gui/preferences-dialog.c:1462 app/gui/preferences-dialog.c:1491
 msgid "Show Menubar"
@@ -5621,14 +5463,12 @@ msgid "Show S_tatusbar"
 msgstr "Toon _statusbalk"
 
 #: app/gui/preferences-dialog.c:1477 app/gui/preferences-dialog.c:1506
-#, fuzzy
 msgid "Canvas Padding Mode:"
-msgstr "Canvasopvulkleur"
+msgstr "Canvasopvulstand:"
 
 #: app/gui/preferences-dialog.c:1480 app/gui/preferences-dialog.c:1509
-#, fuzzy
 msgid "Custom Padding Color:"
-msgstr "Canvasopvulkleur"
+msgstr "Eigen opvulkleur:"
 
 #: app/gui/preferences-dialog.c:1481 app/gui/preferences-dialog.c:1510
 msgid "Select Custom Canvas Padding Color"
@@ -5637,7 +5477,7 @@ msgstr "Selecteer eigen opvulkleur voor canvas"
 #. Fullscreen Mode
 #: app/gui/preferences-dialog.c:1487
 msgid "Default Appearance in Fullscreen Mode"
-msgstr ""
+msgstr "Standaardverschijning bij Volledig Scherm"
 
 #: app/gui/preferences-dialog.c:1521
 msgid "Image Title & Statusbar Format"
@@ -5855,17 +5695,15 @@ msgstr "Plug-inmappen selecteren"
 
 #: app/gui/preferences-dialog.c:1939
 msgid "Scripts"
-msgstr ""
+msgstr "Scripts"
 
 #: app/gui/preferences-dialog.c:1939
-#, fuzzy
 msgid "Script-Fu Folders"
-msgstr "Verloopmappen"
+msgstr "Script-Fu-mappen"
 
 #: app/gui/preferences-dialog.c:1941
-#, fuzzy
 msgid "Select Script-Fu Folders"
-msgstr "Penseelmappen selecteren"
+msgstr "Script-Fu-mappen selecteren"
 
 #: app/gui/preferences-dialog.c:1943
 msgid "Modules"
@@ -6139,7 +5977,6 @@ msgid "/File/_Acquire"
 msgstr "/Bestand/Importeren"
 
 #: app/gui/toolbox-menu.c:82
-#, fuzzy
 msgid "/File/_Preferences..."
 msgstr "/Bestand/Voorkeuren..."
 
@@ -6149,122 +5986,98 @@ msgid "/File/_Dialogs"
 msgstr "/Bestand/Dialogen"
 
 #: app/gui/toolbox-menu.c:92
-#, fuzzy
 msgid "/File/Dialogs/Create New Doc_k"
 msgstr "/Bestand/Dialogen/Nieuw dok maken"
 
 #: app/gui/toolbox-menu.c:94
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths..."
 msgstr "/Bestand/Dialogen/Nieuw dok maken/Lagen, Kanalen & Paden..."
 
 #: app/gui/toolbox-menu.c:98
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."
 msgstr "/Bestand/Dialogen/Nieuw dok maken/Penselen, Patronen & Verlopen ..."
 
 #: app/gui/toolbox-menu.c:102
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff..."
 msgstr "/Bestand/Dialogen/Nieuw dok maken/Overige ..."
 
 #: app/gui/toolbox-menu.c:107
-#, fuzzy
 msgid "/File/Dialogs/Tool _Options..."
 msgstr "/Bestand/Dialogen/Gereedschapsopties..."
 
 #: app/gui/toolbox-menu.c:112
-#, fuzzy
 msgid "/File/Dialogs/_Device Status..."
 msgstr "/Bestand/Dialogen/Apparaatstatus..."
 
 #: app/gui/toolbox-menu.c:120
-#, fuzzy
 msgid "/File/Dialogs/_Layers..."
 msgstr "/Bestand/Dialogen/Lagen..."
 
 #: app/gui/toolbox-menu.c:125
-#, fuzzy
 msgid "/File/Dialogs/_Channels..."
 msgstr "/Bestand/Dialogen/Kanalen..."
 
 #: app/gui/toolbox-menu.c:130
-#, fuzzy
 msgid "/File/Dialogs/_Paths..."
 msgstr "/Bestand/Dialogen/Paden..."
 
 #: app/gui/toolbox-menu.c:135
-#, fuzzy
 msgid "/File/Dialogs/_Indexed Palette..."
 msgstr "/Bestand/Dialogen/Geïndexeerd Palet..."
 
 #: app/gui/toolbox-menu.c:140
-#, fuzzy
 msgid "/File/Dialogs/_Selection Editor..."
 msgstr "/Bestand/Dialogen/Selectie-editor..."
 
 #: app/gui/toolbox-menu.c:145
-#, fuzzy
 msgid "/File/Dialogs/Na_vigation..."
 msgstr "/Bestand/Dialogen/Navigatie..."
 
 #: app/gui/toolbox-menu.c:150
-#, fuzzy
 msgid "/File/Dialogs/_Undo History..."
 msgstr "/Bestand/Dialogen/Overzicht 'Ongedaan maken'..."
 
 #: app/gui/toolbox-menu.c:158
-#, fuzzy
 msgid "/File/Dialogs/Colo_rs..."
 msgstr "/Bestand/Dialogen/Kleuren..."
 
 #: app/gui/toolbox-menu.c:163
-#, fuzzy
 msgid "/File/Dialogs/Brus_hes..."
 msgstr "/Bestand/Dialogen/Penselen..."
 
 #: app/gui/toolbox-menu.c:168
-#, fuzzy
 msgid "/File/Dialogs/P_atterns..."
 msgstr "/Bestand/Dialogen/Patronen..."
 
 #: app/gui/toolbox-menu.c:173
-#, fuzzy
 msgid "/File/Dialogs/_Gradients..."
 msgstr "/Bestand/Dialogen/Verlopen..."
 
 #: app/gui/toolbox-menu.c:178
-#, fuzzy
 msgid "/File/Dialogs/Pal_ettes..."
 msgstr "/Bestand/Dialogen/Paletten..."
 
 #: app/gui/toolbox-menu.c:183
-#, fuzzy
 msgid "/File/Dialogs/_Fonts..."
 msgstr "/Bestand/Dialogen/Fonts..."
 
 #: app/gui/toolbox-menu.c:188
-#, fuzzy
 msgid "/File/Dialogs/_Buffers..."
 msgstr "/Bestand/Dialogen/Buffers..."
 
 #: app/gui/toolbox-menu.c:196
-#, fuzzy
 msgid "/File/Dialogs/I_mages..."
 msgstr "/Bestand/Dialogen/Afbeeldingen..."
 
 #: app/gui/toolbox-menu.c:201
-#, fuzzy
 msgid "/File/Dialogs/Document Histor_y..."
 msgstr "/Bestand/Dialogen/Documentgeschiedenis..."
 
 #: app/gui/toolbox-menu.c:206
-#, fuzzy
 msgid "/File/Dialogs/_Templates..."
 msgstr "/Bestand/Dialogen/Sjablonen..."
 
 #: app/gui/toolbox-menu.c:211
-#, fuzzy
 msgid "/File/Dialogs/Error Co_nsole..."
 msgstr "/Bestand/Dialogen/Foutmeldingen..."
 
@@ -6274,7 +6087,6 @@ msgid "/_Xtns"
 msgstr "/_Xtns"
 
 #: app/gui/toolbox-menu.c:238
-#, fuzzy
 msgid "/Xtns/_Module Manager..."
 msgstr "/Xtra/Modulebrowser..."
 
@@ -6284,22 +6096,18 @@ msgid "/_Help"
 msgstr "/_Help"
 
 #: app/gui/toolbox-menu.c:249
-#, fuzzy
 msgid "/Help/_Help..."
 msgstr "/Help/Help..."
 
 #: app/gui/toolbox-menu.c:254
-#, fuzzy
 msgid "/Help/_Context Help..."
 msgstr "/Help/Contexthulp..."
 
 #: app/gui/toolbox-menu.c:259
-#, fuzzy
 msgid "/Help/_Tip of the Day..."
 msgstr "/Help/Tip van de dag..."
 
 #: app/gui/toolbox-menu.c:264
-#, fuzzy
 msgid "/Help/_About..."
 msgstr "/Help/Info..."
 
@@ -6572,7 +6380,6 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten."
 
 #: app/gui/user-install-dialog.c:750
-#, fuzzy
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2003\n"
@@ -6627,7 +6434,7 @@ msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Klik \"Doorgaan\" om uw persoonlijke GIMP-map aan te maken."
 
 #: app/gui/user-install-dialog.c:835
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
 "'<b>%s</b>' needs to be created."
@@ -6666,7 +6473,6 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Klik \"Doorgaan\" om bovenstaande instellingen te aanvaarden."
 
 #: app/gui/user-install-dialog.c:941
-#, fuzzy
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
@@ -6681,7 +6487,6 @@ msgid "Click \"Continue\" to start The GIMP."
 msgstr "Klik \"Doorgaan\" om De GIMP te starten."
 
 #: app/gui/user-install-dialog.c:951
-#, fuzzy
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6714,9 +6519,9 @@ msgid "Error while reading '%s': %s"
 msgstr "Fout tijdens lezen '%s': %s"
 
 #: app/gui/user-install-dialog.c:1104 app/gui/user-install-dialog.c:1136
-#, fuzzy, c-format
+#, c-format
 msgid "Creating folder '%s'..."
-msgstr "Map '%s' wordt aangemaakt...\n"
+msgstr "Map '%s' wordt aangemaakt..."
 
 #: app/gui/user-install-dialog.c:1118
 #, c-format
@@ -6729,9 +6534,9 @@ msgid "Cannot create folder: %s"
 msgstr "Kan map niet aanmaken: %s"
 
 #: app/gui/user-install-dialog.c:1171
-#, fuzzy, c-format
+#, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Bestand '%s' wordt gekopieerd uit '%s'...\n"
+msgstr "Bestand '%s' wordt gekopieerd uit '%s'..."
 
 #: app/gui/user-install-dialog.c:1218
 msgid ""
@@ -6776,11 +6581,12 @@ msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Vraag resoltie aan het venstersysteem (Momenteel %d x %d dpi)"
 
 #: app/gui/user-install-dialog.c:1336
-#, fuzzy
 msgid ""
 "Alternatively, you can set\n"
 "the monitor resolution manually."
-msgstr "U kunt de monitorresolutie ook handmatig instellen."
+msgstr ""
+"U kunt de monitorresolutie\n"
+" ook handmatig instellen."
 
 #: app/gui/user-install-dialog.c:1381
 msgid ""
@@ -7332,7 +7138,6 @@ msgid "Airbrush with variable pressure"
 msgstr "Luchtspuit met variabele druk"
 
 #: app/tools/gimpairbrushtool.c:63
-#, fuzzy
 msgid "/Tools/Paint Tools/_Airbrush"
 msgstr "/Gereedschap/Schildergereedschappen/Verfspuit"
 
@@ -7358,9 +7163,8 @@ msgid "Repeat:"
 msgstr "Herhaal:"
 
 #: app/tools/gimpblendoptions.c:268
-#, fuzzy
 msgid "Dithering"
-msgstr "Kleurbenaderingsopties"
+msgstr "Kleurbenadering"
 
 #: app/tools/gimpblendoptions.c:288
 msgid "Adaptive Supersampling"
@@ -7380,7 +7184,6 @@ msgid "Fill with a color gradient"
 msgstr "Vullen met een kleurverloop"
 
 #: app/tools/gimpblendtool.c:98
-#, fuzzy
 msgid "/Tools/Paint Tools/Blen_d"
 msgstr "/Gereedschap/Schildergereedschappen/Verloop"
 
@@ -7406,7 +7209,6 @@ msgid "Adjust brightness and contrast"
 msgstr "Helderheid-Contrast aanpassen"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
-#, fuzzy
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "/Gereedschap/Kleurgereedschappen/Helderheid-Contrast..."
 
@@ -7463,7 +7265,6 @@ msgid "Fill with a color or pattern"
 msgstr "Vul met een kleur of patroon"
 
 #: app/tools/gimpbucketfilltool.c:90
-#, fuzzy
 msgid "/Tools/Paint Tools/_Bucket Fill"
 msgstr "/Gereedschap/Schildergereedschappen/Vullen"
 
@@ -7476,7 +7277,6 @@ msgid "Select regions by color"
 msgstr "Selecteer bereiken per kleur"
 
 #: app/tools/gimpbycolorselecttool.c:82
-#, fuzzy
 msgid "/Tools/Selection Tools/_By Color Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Op kleur"
 
@@ -7485,7 +7285,6 @@ msgid "Paint using Patterns or Image Regions"
 msgstr "Met patronen of stukken uit een afbeelding schilderen"
 
 #: app/tools/gimpclonetool.c:100
-#, fuzzy
 msgid "/Tools/Paint Tools/_Clone"
 msgstr "/Gereedschap/Schildergereedschappen/Klonen"
 
@@ -7502,7 +7301,6 @@ msgid "Adjust color balance"
 msgstr "Kleurbalans aanpassen"
 
 #: app/tools/gimpcolorbalancetool.c:96
-#, fuzzy
 msgid "/Tools/Color Tools/Color _Balance..."
 msgstr "/Gereedschap/Kleurgereedschappen/Kleurbalans..."
 
@@ -7552,7 +7350,6 @@ msgid "Colorize the image"
 msgstr "Afbeelding inkleuren"
 
 #: app/tools/gimpcolorizetool.c:95
-#, fuzzy
 msgid "/Tools/Color Tools/Colori_ze..."
 msgstr "/Gereedschap/Kleurgereedschappen/Verkleuren..."
 
@@ -7602,7 +7399,6 @@ msgid "Pick colors from the image"
 msgstr "Kies een kleur uit de afbeelding"
 
 #: app/tools/gimpcolorpickertool.c:104
-#, fuzzy
 msgid "/Tools/C_olor Picker"
 msgstr "/Gereedschap/Kleurkiezer"
 
@@ -7643,7 +7439,6 @@ msgid "Blur or Sharpen"
 msgstr "Vervagen of verscherpen"
 
 #: app/tools/gimpconvolvetool.c:92
-#, fuzzy
 msgid "/Tools/Paint Tools/Con_volve"
 msgstr "/Gereedschap/Schildergereedschappen/Convolver"
 
@@ -7679,7 +7474,6 @@ msgid "Crop or Resize an image"
 msgstr "Afbeelding snijden of schalen"
 
 #: app/tools/gimpcroptool.c:161
-#, fuzzy
 msgid "/Tools/Transform Tools/_Crop & Resize"
 msgstr "/Gereedschap/Transformatiegereedschappen/Snijden en Schalen"
 
@@ -7720,7 +7514,6 @@ msgid "Adjust color curves"
 msgstr "Kleurcurves Aanpassen"
 
 #: app/tools/gimpcurvestool.c:161
-#, fuzzy
 msgid "/Tools/Color Tools/_Curves..."
 msgstr "/Gereedschap/Kleurgereedschappen/Curves..."
 
@@ -7771,7 +7564,6 @@ msgid "Dodge or Burn strokes"
 msgstr "Lijnen tegenhouden of doordrukken"
 
 #: app/tools/gimpdodgeburntool.c:72
-#, fuzzy
 msgid "/Tools/Paint Tools/Dod_geBurn"
 msgstr "/Gereedschap/Schildergereedschappen/Tegenhouden en Doordrukken"
 
@@ -7807,7 +7599,6 @@ msgid "Select elliptical regions"
 msgstr "Selecteer ovaal bereik"
 
 #: app/tools/gimpellipseselecttool.c:72
-#, fuzzy
 msgid "/Tools/Selection Tools/_Ellipse Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Ellips"
 
@@ -7816,7 +7607,6 @@ msgid "Erase to background or transparency"
 msgstr "Naar achtergrond of transparantie verwijderen"
 
 #: app/tools/gimperasertool.c:72
-#, fuzzy
 msgid "/Tools/Paint Tools/_Eraser"
 msgstr "/Gereedschap/Schildergereedschappen/Gom"
 
@@ -7841,7 +7631,6 @@ msgid "Flip the layer or selection"
 msgstr "Draai de huidige laag of selectie om"
 
 #: app/tools/gimpfliptool.c:86
-#, fuzzy
 msgid "/Tools/Transform Tools/_Flip"
 msgstr "/Gereedschap/Transformatiegereedschappen/Spiegelen"
 
@@ -7850,7 +7639,6 @@ msgid "Select hand-drawn regions"
 msgstr "Selecteer bereiken met de hand"
 
 #: app/tools/gimpfreeselecttool.c:98
-#, fuzzy
 msgid "/Tools/Selection Tools/_Free Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Vrij"
 
@@ -7859,7 +7647,6 @@ msgid "Select contiguous regions"
 msgstr "Selecteer aan elkaar grenzende bereiken"
 
 #: app/tools/gimpfuzzyselecttool.c:100
-#, fuzzy
 msgid "/Tools/Selection Tools/Fu_zzy Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Vaag"
 
@@ -7872,7 +7659,6 @@ msgid "View image histogram"
 msgstr "Afbeeldingshistogram weergeven"
 
 #: app/tools/gimphistogramtool.c:123
-#, fuzzy
 msgid "/Tools/Color Tools/_Histogram..."
 msgstr "/Gereedschap/Kleurgereedschappen/Histogram..."
 
@@ -7925,7 +7711,6 @@ msgid "Adjust hue and saturation"
 msgstr "Tint en verzadiging aanpassen"
 
 #: app/tools/gimphuesaturationtool.c:109
-#, fuzzy
 msgid "/Tools/Color Tools/Hue-_Saturation..."
 msgstr "/Gereedschap/Kleurgereedschappen/Toon-Verzadiging..."
 
@@ -8026,7 +7811,6 @@ msgid "Draw in ink"
 msgstr "In inkt tekenen"
 
 #: app/tools/gimpinktool.c:169
-#, fuzzy
 msgid "/Tools/Paint Tools/In_k"
 msgstr "/Gereedschap/Schildergereedschappen/Inkt"
 
@@ -8039,7 +7823,6 @@ msgid "Select shapes from image"
 msgstr "Selecteer vormen uit een afbeelding"
 
 #: app/tools/gimpiscissorstool.c:279
-#, fuzzy
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Gereedschap/Selectiegereedschappen/Intelligente scharen"
 
@@ -8048,7 +7831,6 @@ msgid "Adjust color levels"
 msgstr "Kleurniveaus aanpassen"
 
 #: app/tools/gimplevelstool.c:164
-#, fuzzy
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Gereedschap/Kleurgereedschappen/Niveaus..."
 
@@ -8127,7 +7909,6 @@ msgid "Zoom in & out"
 msgstr "In- & uitzoomen"
 
 #: app/tools/gimpmagnifytool.c:97
-#, fuzzy
 msgid "/Tools/M_agnify"
 msgstr "/Gereedschap/Vergroten"
 
@@ -8144,7 +7925,6 @@ msgid "Measure angles and lengths"
 msgstr "Afstanden en hoeken meten"
 
 #: app/tools/gimpmeasuretool.c:130
-#, fuzzy
 msgid "/Tools/_Measure"
 msgstr "/Gereedschap/Meten"
 
@@ -8196,7 +7976,6 @@ msgid "Move layers & selections"
 msgstr "Verplaats lagen & selecties"
 
 #: app/tools/gimpmovetool.c:106
-#, fuzzy
 msgid "/Tools/Transform Tools/_Move"
 msgstr "/Gereedschap/Transformatiegereedschappen/Verplaatsen"
 
@@ -8205,7 +7984,6 @@ msgid "Paint fuzzy brush strokes"
 msgstr "Vage kwaststreken schilderen"
 
 #: app/tools/gimppaintbrushtool.c:58
-#, fuzzy
 msgid "/Tools/Paint Tools/_Paintbrush"
 msgstr "/Gereedschap/Schildergereedschappen/Penseel"
 
@@ -8230,7 +8008,6 @@ msgid "Open the gradient selection dialog"
 msgstr "Open het verloopkeuzedialoogvenster"
 
 #: app/tools/gimppaintoptions-gui.c:196
-#, fuzzy
 msgid "Reverse"
 msgstr "Terugdraaien"
 
@@ -8275,7 +8052,6 @@ msgid "Paint hard edged pixels"
 msgstr "Schilder pixels met harde randen"
 
 #: app/tools/gimppenciltool.c:57
-#, fuzzy
 msgid "/Tools/Paint Tools/Pe_ncil"
 msgstr "/Gereedschap/Schildergereedschappen/Potlood"
 
@@ -8288,7 +8064,6 @@ msgid "Change perspective of the layer or selection"
 msgstr "Verander het perspectief van de huidige laag of selectie"
 
 #: app/tools/gimpperspectivetool.c:84
-#, fuzzy
 msgid "/Tools/Transform Tools/_Perspective"
 msgstr "/Gereedschap/Transformatiegereedschappen/Perspectief"
 
@@ -8309,7 +8084,6 @@ msgid "Reduce image to a fixed number of colors"
 msgstr "Afbeelding tot vast aantal kleuren reduceren"
 
 #: app/tools/gimpposterizetool.c:77
-#, fuzzy
 msgid "/Tools/Color Tools/_Posterize..."
 msgstr "/Gereedschap/Kleurgereedschappen/Posterizeren..."
 
@@ -8330,7 +8104,6 @@ msgid "Select rectangular regions"
 msgstr "Selecteer rechthoekig bereik"
 
 #: app/tools/gimprectselecttool.c:97
-#, fuzzy
 msgid "/Tools/Selection Tools/_Rect Select"
 msgstr "/Gereedschap/Selectiegereedschappen/Rechthoek"
 
@@ -8359,7 +8132,6 @@ msgid "Rotate the layer or selection"
 msgstr "Draai de laag of selectie"
 
 #: app/tools/gimprotatetool.c:106
-#, fuzzy
 msgid "/Tools/Transform Tools/_Rotate"
 msgstr "/Gereedschap/Transformatiegereedschappen/Draaien"
 
@@ -8380,7 +8152,6 @@ msgid "Scale the layer or selection"
 msgstr "Schaal de laag of selectie"
 
 #: app/tools/gimpscaletool.c:99
-#, fuzzy
 msgid "/Tools/Transform Tools/_Scale"
 msgstr "/Gereedschap/Transformatiegereedschappen/Schalen"
 
@@ -8442,7 +8213,6 @@ msgid "Shear the layer or selection"
 msgstr "De laag of selectie hellen"
 
 #: app/tools/gimpsheartool.c:101
-#, fuzzy
 msgid "/Tools/Transform Tools/S_hear"
 msgstr "/Gereedschap/Transformatiegereedschappen/Hellen"
 
@@ -8463,7 +8233,6 @@ msgid "Smudge image"
 msgstr "Afbeelding smeren"
 
 #: app/tools/gimpsmudgetool.c:63
-#, fuzzy
 msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/Gereedschap/Schildergereedschappen/Smeren"
 
@@ -8516,16 +8285,14 @@ msgstr ""
 "hoogte:"
 
 #: app/tools/gimptextoptions.c:337
-#, fuzzy
 msgid "Create Path from Text"
-msgstr "/Afbeelding volgens sjabloon aanmaken..."
+msgstr "Pad van tekst maken"
 
 #: app/tools/gimptexttool.c:115
 msgid "Add text to the image"
 msgstr "Tekst aan de afbeelding toevoegen"
 
 #: app/tools/gimptexttool.c:116
-#, fuzzy
 msgid "/Tools/Te_xt"
 msgstr "/Gereedschap/Tekst"
 
@@ -8538,7 +8305,6 @@ msgid "Reduce image to two colors using a threshold"
 msgstr "Afbeelding tot twee kleuren reduceren met een grenswaarde"
 
 #: app/tools/gimpthresholdtool.c:90
-#, fuzzy
 msgid "/Tools/Color Tools/_Threshold..."
 msgstr "/Gereedschap/Kleurgereedschappen/Drempel..."
 
@@ -8618,7 +8384,6 @@ msgid "the most promising path tool prototype... :-)"
 msgstr "het meestbelovende prototype voor een padgereedschap... :-)"
 
 #: app/tools/gimpvectortool.c:116
-#, fuzzy
 msgid "/Tools/_Vectors"
 msgstr "/Gereedschap/Vectors"
 
@@ -8679,17 +8444,16 @@ msgid "Logarithmic"
 msgstr "Logaritmisch"
 
 #: app/widgets/widgets-enums.c:71
-#, fuzzy
 msgid "Icon"
-msgstr "_Pictogram:"
+msgstr "Pictogram"
 
 #: app/widgets/widgets-enums.c:73
 msgid "Icon & Text"
-msgstr ""
+msgstr "Pictogram & tekst"
 
 #: app/widgets/widgets-enums.c:74
 msgid "Icon & Desc"
-msgstr ""
+msgstr "Pictogram & omschrijving"
 
 #: app/widgets/widgets-enums.c:92
 msgid "View as List"
@@ -8713,7 +8477,7 @@ msgstr "Spatiering:"
 
 #: app/widgets/gimpbrushfactoryview.c:118
 msgid "Percentage of width of brush"
-msgstr ""
+msgstr "Percentage van breedte van penseel"
 
 #: app/widgets/gimpbufferview.c:151
 msgid "Paste Into"
@@ -8826,12 +8590,10 @@ msgid "Delete Data Object"
 msgstr "Verwijder gegevensobject"
 
 #: app/widgets/gimpdevicestatus.c:288
-#, fuzzy
 msgid "Save device status"
-msgstr "Apperaat Status"
+msgstr "Apperaatstatus opslaan"
 
 #: app/widgets/gimpdevicestatus.c:295
-#, fuzzy
 msgid "Configure input devices"
 msgstr "Invoerapparaten configureren"
 
@@ -9305,7 +9067,7 @@ msgstr ""
 "Kanaal naar Selectien\n"
 "%s  Tel op\n"
 "%s  Trek af\n"
-"%s  Snij"
+"%s%s%s  Snij"
 
 #: app/widgets/gimpvectorstreeview.c:176
 msgid "Stroke Path"
@@ -9482,149 +9244,3 @@ msgstr "Maak en bewerk afbeeldingen en foto's"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "De GIMP (onstabiele versie)"
-
-#, fuzzy
-#~ msgid "/Edit/_Stroke"
-#~ msgstr "/Bewerken/Lijn tekenen"
-
-# What does this mean?
-#~ msgid "Color Editor"
-#~ msgstr "Kleureneditor"
-
-#~ msgid "Appearence"
-#~ msgstr "Uiterlijk"
-
-#~ msgid "Grid Foreground Color"
-#~ msgstr "Voorgrondkleur raster"
-
-#~ msgid "Grid Background Color"
-#~ msgstr "Achtergrondkleur raster"
-
-#~ msgid "Padding Mode:"
-#~ msgstr "Opvulstand:"
-
-#~ msgid "Custom Color:"
-#~ msgstr "Eigen kleur:"
-
-#~ msgid "  Success\n"
-#~ msgstr "  Succes\n"
-
-#~ msgid "  Failure: %s\n"
-#~ msgstr "Mislukt: %s\n"
-
-#~ msgid "Once Forward"
-#~ msgstr "Een Keer Vooruit"
-
-#~ msgid "Once Backward"
-#~ msgstr "Een Keer Achteruit"
-
-#~ msgid "Loop Sawtooth"
-#~ msgstr "Zaagtandlus"
-
-#~ msgid "Loop Triangle"
-#~ msgstr "Doorgaan Heen en weer"
-
-#~ msgid "Hex Triplet"
-#~ msgstr "Hex-drieling:"
-
-#~ msgid "Type:"
-#~ msgstr "Type:"
-
-#~ msgid "Clear Console"
-#~ msgstr "Console leegmaken"
-
-#~ msgid "Tool Plug-Ins"
-#~ msgstr "Gereedschapplug-Ins"
-
-#~ msgid "Tool Plug-In Folders"
-#~ msgstr "Mappen voor gereedschapplug-ins"
-
-#~ msgid "Select Tool Plug-In Folders"
-#~ msgstr "Mappen voor gereedschapplug-ins selecteren"
-
-#~ msgid "PDB calling error %s"
-#~ msgstr "PDB-aanroepfout %s"
-
-#~ msgid ""
-#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
-#~ "Argument %d to '%s' should be a %s, but got passed a %s"
-#~ msgstr ""
-#~ "Onjuiste argumenten aan procedurele _db_run_proc\n"
-#~ "doorgegeven: Argument %d aan '%s' hoort een %s te zijn,maar werd als een %"
-#~ "s doorgegeven"
-
-#~ msgid "Selection from Path"
-#~ msgstr "Selectie uit pad"
-
-#~ msgid "/Add Tab/Old Paths..."
-#~ msgstr "/Tab toevoegen/Oude paden..."
-
-#~ msgid "/New Path"
-#~ msgstr "/Nieuw pad"
-
-#~ msgid "Path to Selection"
-#~ msgstr "Pad naar selectie"
-
-#~ msgid "New Point"
-#~ msgstr "Nieuw punt"
-
-#~ msgid "Add Point"
-#~ msgstr "Punt toevoegen"
-
-#~ msgid "Delete Point"
-#~ msgstr "Punt verwijderen"
-
-#~ msgid "Edit Point"
-#~ msgstr "Punt bewerken"
-
-#~ msgid "Path %d"
-#~ msgstr "Pad %d"
-
-#~ msgid "Enter a new name for the path"
-#~ msgstr "Voer een nieuwe naam voor het pad in"
-
-#~ msgid "Failed to read from '%s'."
-#~ msgstr "Kon niet uit '%s' lezen."
-
-#~ msgid "Failed to read path from '%s'."
-#~ msgstr "Kon pad niet uit '%s' lezen."
-
-#~ msgid "No points specified in path file '%s'."
-#~ msgstr "Geen punten opgegeven in padbestand '%s'."
-
-#~ msgid "Failed to read path points from '%s'."
-#~ msgstr "Kon padpunten niet uit '%s' lezen."
-
-#~ msgid "Load and Save Bezier Curves"
-#~ msgstr "Laad/bewaar Bezier-krommen"
-
-#~ msgid "Load Path"
-#~ msgstr "Pad laden"
-
-#~ msgid "Bezier Select"
-#~ msgstr "Bezier-selectie"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "Selecteer gebieden met behulp van Bezier-krommen"
-
-#~ msgid "/Tools/Selection Tools/Bezier Select"
-#~ msgstr "/Gereedschap/Selectiegereedschappen/Bezier-selectie"
-
-#~ msgid "Bezier path already closed."
-#~ msgstr "Bezier pad is al gesloten"
-
-#~ msgid "Corrupt curve"
-#~ msgstr "Slechte curve"
-
-#~ msgid "Curve not closed!"
-#~ msgstr "Curve niet gesloten!"
-
-#~ msgid "Paintbrush operation failed."
-#~ msgstr "Penseeloperatie mislukt."
-
-#~ msgid "Show Path"
-#~ msgstr "Toon pad"
-
-# What is a Dutch translation for 'Dock'?
-#~ msgid "Gimp Dock #%d"
-#~ msgstr "GIMP-dock #%d"
