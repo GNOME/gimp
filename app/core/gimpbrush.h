@@ -21,6 +21,7 @@
 
 #include "gimpobjectP.h"
 #include "temp_buf.h"
+#include "vector2d.h"
 
 typedef struct _GimpBrush  GimpBrush, * GimpBrushP;
 
@@ -30,6 +31,8 @@ struct _GimpBrush
   char *     filename;    /*  actual filename--brush's location on disk  */
   char *     name;        /*  brush's name--for brush selection dialog   */
   int        spacing;     /*  brush's spacing                            */
+  vector2d   x_axis;      /*  for calculating brush spacing              */
+  vector2d   y_axis;      /*  for calculating brush spacing              */
   TempBuf *  mask;        /*  the actual mask...                         */
 };
 

@@ -1,3 +1,17 @@
+Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@earthlink.net>
+
+	* app/vector2d.[ch] Makefile.am: new files for vector math.
+        Very minimal.
+
+	* gimpbrush.[ch]: added support for brush axis.
+
+	* paint_core.[ch]: replaced the mask field with a brush field.
+	modified paint_core_interpolate to use brush axis.
+
+	* gimpbrushlist.c: modified gimp_list_destroy.
+
+	* gimpbrushlist.c: fixed some broken brush removal stuff.
+
 Thu Jul 23 21:57:25 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/interface.c: usize statusbar to 1 width

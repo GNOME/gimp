@@ -353,7 +353,8 @@ brush_select_select (BrushSelectP bsp,
 		     int          index)
 {
   int row, col;
-
+  if (index < 0)
+    return;
   update_active_brush_field (bsp);
   row = index / NUM_BRUSH_COLUMNS;
   col = index - row * NUM_BRUSH_COLUMNS;
@@ -950,6 +951,8 @@ preview_scroll_update (GtkAdjustment *adjustment,
       if (active)
 	{
 	  index = gimp_brush_list_get_brush_index(brush_list, active);
+	  if (index < 0)
+	    return;
 	  row = index / NUM_BRUSH_COLUMNS;
 	  col = index - row * NUM_BRUSH_COLUMNS;
 	  brush_select_show_selected (bsp, row, col);

@@ -429,12 +429,13 @@ paint_core_init (paint_core, drawable, x, y)
 		     GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
 		     NULL);
 
-  paint_core->spacing =
+  paint_core->spacing = (double) gimp_brush_get_spacing () / 100.0;
+/*  paint_core->spacing =
     (double) MAXIMUM (brush->mask->width, brush->mask->height) *
     ((double) gimp_brush_get_spacing () / 100.0);
   if (paint_core->spacing < 1.0)
-    paint_core->spacing = 1.0;
-  paint_core->brush_mask = brush->mask;
+    paint_core->spacing = 1.0; */
+  paint_core->brush = brush;
 
   /*  free the block structures  */
   if (undo_tiles)
@@ -465,23 +466,32 @@ paint_core_interpolate (paint_core, drawable)
      GimpDrawable *drawable;
 {
   int n;
-  double dx, dy, dpressure, dxtilt, dytilt;
+  vector2d delta;
+  double dpressure, dxtilt, dytilt;
   double left;
   double t;
   double initial;
   double dist;
   double total;
-
-  dx = paint_core->curx - paint_core->lastx;
-  dy = paint_core->cury - paint_core->lasty;
+  double xd, yd;
+  double mag;
+  delta.x = paint_core->curx - paint_core->lastx;
+  delta.y = paint_core->cury - paint_core->lasty;
   dpressure = paint_core->curpressure - paint_core->lastpressure;
   dxtilt = paint_core->curxtilt - paint_core->lastxtilt;
   dytilt = paint_core->curytilt - paint_core->lastytilt;
 
-  if (!dx && !dy && !dpressure && !dxtilt && !dytilt)
+  if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
     return;
+  mag = vector2d_magnitude (&(paint_core->brush->x_axis));
+  xd = vector2d_dot_product(&delta, &(paint_core->brush->x_axis)) / (mag*mag);
 
-  dist = sqrt (SQR (dx) + SQR (dy));
+  mag = vector2d_magnitude (&(paint_core->brush->y_axis));
+  yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) /
+    SQR(vector2d_magnitude(&(paint_core->brush->y_axis)));
+
+  dist = .5 * sqrt (xd*xd + yd*yd);
+
   total = dist + paint_core->distance;
   initial = paint_core->distance;
 
@@ -495,8 +505,8 @@ paint_core_interpolate (paint_core, drawable)
 	{
 	  t = (paint_core->distance - initial) / dist;
 
-	  paint_core->curx = paint_core->lastx + dx * t;
-	  paint_core->cury = paint_core->lasty + dy * t;
+	  paint_core->curx = paint_core->lastx + delta.x * t;
+	  paint_core->cury = paint_core->lasty + delta.y * t;
 	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
 	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
 	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
@@ -505,8 +515,8 @@ paint_core_interpolate (paint_core, drawable)
     }
 
   paint_core->distance = total;
-  paint_core->curx = paint_core->lastx + dx;
-  paint_core->cury = paint_core->lasty + dy;
+  paint_core->curx = paint_core->lastx + delta.x;
+  paint_core->cury = paint_core->lasty + delta.y;
   paint_core->curpressure = paint_core->lastpressure + dpressure;
   paint_core->curxtilt = paint_core->lastxtilt + dxtilt;
   paint_core->curytilt = paint_core->lastytilt + dytilt;
@@ -598,14 +608,14 @@ paint_core_get_paint_area (paint_core, drawable)
     drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (int) paint_core->curx - (paint_core->brush_mask->width >> 1);
-  y = (int) paint_core->cury - (paint_core->brush_mask->height >> 1);
+  x = (int) paint_core->curx - (paint_core->brush->mask->width >> 1);
+  y = (int) paint_core->cury - (paint_core->brush->mask->height >> 1);
 
   x1 = BOUNDS (x - 1, 0, drawable_width (drawable));
   y1 = BOUNDS (y - 1, 0, drawable_height (drawable));
-  x2 = BOUNDS (x + paint_core->brush_mask->width + 1,
+  x2 = BOUNDS (x + paint_core->brush->mask->width + 1,
 	       0, drawable_width (drawable));
-  y2 = BOUNDS (y + paint_core->brush_mask->height + 1,
+  y2 = BOUNDS (y + paint_core->brush->mask->height + 1,
 	       0, drawable_height (drawable));
 
   /*  configure the canvas buffer  */
@@ -959,13 +969,13 @@ paint_core_get_brush_mask (paint_core, brush_hardness)
   switch (brush_hardness)
     {
     case SOFT:
-      bm = paint_core_subsample_mask (paint_core->brush_mask, paint_core->curx, paint_core->cury);
+      bm = paint_core_subsample_mask (paint_core->brush->mask, paint_core->curx, paint_core->cury);
       break;
     case HARD:
-      bm = paint_core_solidify_mask (paint_core->brush_mask);
+      bm = paint_core_solidify_mask (paint_core->brush->mask);
       break;
     case PRESSURE:
-      bm = paint_core_pressurize_mask (paint_core->brush_mask, paint_core->curx, paint_core->cury, paint_core->curpressure);
+      bm = paint_core_pressurize_mask (paint_core->brush->mask, paint_core->curx, paint_core->cury, paint_core->curpressure);
       break;
     default:
       bm = NULL;

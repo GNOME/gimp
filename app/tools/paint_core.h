@@ -20,6 +20,7 @@
 
 #include "draw_core.h"
 #include "temp_buf.h"
+#include "gimpbrush.h"
 
 /* the different states that the painting function can be called with  */
 #define INIT_PAINT      0
@@ -69,7 +70,7 @@ struct _paint_core
   int             x1, y1;       /*  image space coordinate      */
   int             x2, y2;       /*  image space coords          */
 
-  MaskBuf *       brush_mask;   /*  mask for current brush      */
+  GimpBrush *     brush;        /*  current brush	        */
 
   PaintFunc       paint_func;   /*  painting function           */
 };

@@ -293,6 +293,8 @@ gimp_SOURCES = \
 	undo_cmds.c		\
 	undo_cmds.h		\
 	wilber.h		\
+	vector2d.c		\
+	vector2d.h		\
 	xcf.c			\
 	xcf.h
 

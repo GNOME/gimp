@@ -199,6 +199,19 @@ gimp_brush_generated_thaw(GimpBrushGenerated *brush)
   if (brush->freeze == 0)
     gimp_brush_generated_generate(brush);
 }
+static
+double gauss(double f)
+{ /* this aint' a real gauss function */
+    if (f < -.5)
+    {
+      f = -1.0-f;
+      return (2.0*f*f);
+    }
+    if (f < .5)
+      return (1.0-2.0*f*f);
+    f = 1.0 -f;
+    return (2.0*f*f);
+}
 
 void
 gimp_brush_generated_generate(GimpBrushGenerated *brush)
@@ -243,7 +256,13 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
     height = ceil(ty);
   else
     height = ceil(brush->radius);
+  /* compute the axis for spacing */
+  GIMP_BRUSH(brush)->x_axis.x =      c*brush->radius;
+  GIMP_BRUSH(brush)->x_axis.y = -1.0*s*brush->radius;
 
+  GIMP_BRUSH(brush)->y_axis.x = (s*brush->radius / brush->aspect_ratio);
+  GIMP_BRUSH(brush)->y_axis.y = (c*brush->radius / brush->aspect_ratio);
+  
   gbrush->mask = temp_buf_new(width*2 + 1,
 			     height*2 + 1,
 			     1, width, height, 0);
@@ -262,7 +281,8 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
     if (d > brush->radius)
       buffer[x] = 0.0;
     else
-      buffer[x] =  (1.0 - pow(d/brush->radius, exponent));
+/*      buffer[x] =  (1.0 - pow(d/brush->radius, exponent));*/
+      buffer[x] =  gauss(pow(d/brush->radius, exponent));
     sum += buffer[x];
   }
   for (x = 0; d < brush->radius || sum > .00001; d += 1.0/OVERSAMPLING)
@@ -271,7 +291,8 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
     if (d > brush->radius)
       buffer[x%OVERSAMPLING] = 0.0;
     else
-      buffer[x%OVERSAMPLING] =  (1.0 - pow(d/brush->radius, exponent));
+/*      buffer[x%OVERSAMPLING] =  (1.0 - pow(d/brush->radius, exponent));*/
+      buffer[x%OVERSAMPLING] =  gauss(pow(d/brush->radius, exponent));
     sum += buffer[x%OVERSAMPLING];
     lookup[x++] =  rint(sum*(255.0/OVERSAMPLING));
   }

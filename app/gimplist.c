@@ -38,13 +38,9 @@ static void
 gimp_list_destroy (GtkObject* ob)
 {
 	GimpList* list=GIMP_LIST(ob);
-	GSList* node;
-	for(node=list->list;node;node=node->next){
-		if(!list->weak)
-			gtk_object_unref(GTK_OBJECT(node->data));
-		gtk_signal_emit (GTK_OBJECT(list),
-				 gimp_list_signals[REMOVE],
-				 node->data);
+	while(list->list) /* ought to put a sanity check in here... */
+	{
+	  gimp_list_remove(list, list->list->data);
 	}
 	g_slist_free(list->list);
 	GTK_OBJECT_CLASS(parent_class)->destroy (ob);
@@ -68,12 +64,10 @@ gimp_list_class_init (GimpListClass* klass)
 	object_class->destroy = gimp_list_destroy;
 	
 	gimp_list_signals[ADD]=
-	  gimp_signal_new ("add", GTK_RUN_FIRST, type,
-			   GTK_SIGNAL_OFFSET (GimpListClass, add),
+	  gimp_signal_new ("add", GTK_RUN_FIRST, type, 0,
 			   gimp_sigtype_pointer);
 	gimp_list_signals[REMOVE]=
-	  gimp_signal_new ("remove", GTK_RUN_FIRST, type,
-			   GTK_SIGNAL_OFFSET (GimpListClass, remove),
+	  gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0,
 			   gimp_sigtype_pointer);
 	gtk_object_class_add_signals (object_class,
 				      gimp_list_signals,
@@ -137,6 +131,8 @@ gimp_list_add (GimpList* list, gpointer val)
   else
     gtk_object_ref(GTK_OBJECT(val));
 	
+  GIMP_LIST_CLASS(GTK_OBJECT(list)->klass)->add(list, val);
+
   gtk_signal_emit (GTK_OBJECT(list), gimp_list_signals[ADD], val);
   return TRUE;
 }
@@ -147,8 +143,11 @@ gimp_list_remove (GimpList* list, gpointer val)
 	g_return_val_if_fail(list, FALSE);
 
 	if(!g_slist_find(list->list, val))
-		return FALSE;
-
+	{
+	  printf("can't find val\n");
+	  return FALSE;
+	}
+	GIMP_LIST_CLASS(GTK_OBJECT(list)->klass)->remove(list, val);
 
 	gtk_signal_emit (GTK_OBJECT(list), gimp_list_signals[REMOVE], val);
 

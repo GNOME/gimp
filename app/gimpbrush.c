@@ -78,6 +78,10 @@ gimp_brush_init(GimpBrush *brush)
   brush->name      = NULL;
   brush->spacing   = 20;
   brush->mask      = NULL;
+  brush->x_axis.x    = 15.0;
+  brush->x_axis.y    =  0.0;
+  brush->y_axis.x    =  0.0;
+  brush->y_axis.y    = 15.0;
 }
 
 GtkType gimp_brush_get_type(void)
@@ -208,7 +212,11 @@ gimp_brush_load(GimpBrush *brush, char *filename)
      brush->mask = temp_buf_new (header.width, header.height, header.bytes,
 				 0, 0, NULL);
      brush->spacing = header.spacing;
-
+     /* set up spacing axis */
+     brush->x_axis.x = header.width  / 2.0;
+     brush->x_axis.y = 0.0;
+     brush->y_axis.x = 0.0;
+     brush->y_axis.y = header.height / 2.0;
   /*  Read the brush mask data  */
      if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height,
 		 fp)) <	 header.width * header.height)

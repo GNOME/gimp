@@ -76,7 +76,7 @@ gimp_brush_list_add_func(GimpList* list, gpointer val)
 }
 
 static void
-gimp_list_remove_func(GimpList* list, gpointer val)
+gimp_brush_list_remove_func(GimpList* list, gpointer val)
 {
   list->list=g_slist_remove(list->list, val);
   GIMP_BRUSH_LIST(list)->num_brushes--;
@@ -89,7 +89,7 @@ gimp_brush_list_class_init (GimpBrushListClass *klass)
   
   gimp_list_class = GIMP_LIST_CLASS(klass);
   gimp_list_class->add = gimp_brush_list_add_func;
-  gimp_list_class->remove = gimp_brush_list_add_func;
+  gimp_list_class->remove = gimp_brush_list_remove_func;
   parent_class = gtk_type_class (gimp_list_get_type ());
 }
 
@@ -135,10 +135,8 @@ brushes_init (int no_data)
 
   if (brush_list)
     brushes_free();
-
-  brush_list = NULL;
-
-  brush_list = gimp_brush_list_new();
+  else
+    brush_list = gimp_brush_list_new();
 
   if (brush_path == NULL || (no_data))
     create_default_brush ();
@@ -171,13 +169,14 @@ brush_compare_func (gconstpointer first, gconstpointer second)
 void
 brushes_free ()
 {
-  if (brush_list) {
-    gimp_object_unref (GIMP_OBJECT(brush_list));
+  
+  if (brush_list)
+  {
+    while (GIMP_LIST(brush_list)->list)
+      gimp_brush_list_remove(brush_list, GIMP_LIST(brush_list)->list->data);
   }
 
   have_default_brush = 0;
-  active_brush = NULL;
-  brush_list = NULL;
 }
 
 
@@ -203,7 +202,7 @@ get_active_brush ()
     }
   else if (! active_brush && brush_list)
     /* need a gimp_list_get_first() type function */
-    active_brush = (GimpBrush *) GIMP_LIST(brush_list)->list->data;
+    select_brush((GimpBrush *) GIMP_LIST(brush_list)->list->data);
 
   return active_brush;
 }
@@ -227,7 +226,7 @@ create_default_brush ()
     temp_buf_swap (GIMP_BRUSH(brush)->mask);
 
   /*  Make this the default, active brush  */
-  active_brush = GIMP_BRUSH(brush);
+  select_brush(GIMP_BRUSH(brush));
   have_default_brush = 1;
 }
 
@@ -237,18 +236,8 @@ int
 gimp_brush_list_get_brush_index (GimpBrushList *brush_list,
 				 GimpBrush *brush)
 {
-  int index = 0;
-  GSList *list;
   /* fix me: make a gimp_list function that does this? */
-  list = GIMP_LIST(brush_list)->list;
-  while (list)
-  {
-    if (list->data == brush)
-      return index;
-    index++;
-    list = list->next;
-  }
-  return -1;
+  return g_slist_index (GIMP_LIST(brush_list)->list, brush);
 }
 
 GimpBrush *
@@ -390,8 +379,13 @@ select_brush (GimpBrush * brush)
   if (stingy_memory_use)
     temp_buf_swap (active_brush->mask);
 
+  if (active_brush)
+    gtk_object_unref(GTK_OBJECT(active_brush));
+
   /*  Set the active brush  */
   active_brush = brush;
+  
+  gtk_object_ref(GTK_OBJECT(active_brush));
 
   /*  Make sure the active brush is unswapped... */
   if (stingy_memory_use)
