@@ -238,7 +238,7 @@ run (gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  GimpParasite      *parasite;
+  GimpParasite      *parasite = NULL; 
   gchar             *mask_filename = NULL;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
@@ -367,8 +367,9 @@ run (gchar      *name,
 	  break;
 	}
 
-      if (runmode == GIMP_RUN_INTERACTIVE)
-          /* Get the parasites */
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+	{
+	  /* Get the parasites */
           parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
 
           if (parasite)

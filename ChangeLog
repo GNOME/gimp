@@ -1,4 +1,9 @@
 2000-10-19  Seth Burgess  <sjburges@gimp.org>
+  
+    	* plug-ins/common/xbm.c : oops, should have compiled it before
+	committing. 
+
+2000-10-19  Seth Burgess  <sjburges@gimp.org>
 
 	* plug-ins/common/xbm.c : fixed parasite handling so passed in 
 	strings and hotspots aren't overwritten with parasite.
