@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.2.0pre1\n"
+"Project-Id-Version: gimp 2.2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2004-11-13 17:19+0100\n"
+"PO-Revision-Date: 2005-02-19 02:51+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -6984,7 +6984,7 @@ msgstr ""
 
 #: app/dialogs/quit-dialog.c:164
 msgid "There is one image with unsaved changes:"
-msgstr "Il n'y a pas d'images avec des modifications non enregistrées :"
+msgstr "Il y a une image avec des modifications non enregistrées :"
 
 #: app/dialogs/quit-dialog.c:167
 #, c-format

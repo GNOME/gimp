@@ -1,3 +1,7 @@
+2005-02-19  Sven Neumann  <sven@gimp.org>
+
+	* fr.po: fixed a wrong translation (Debian bug report #292047).
+
 2005-02-18  Alexander Shopov  <ash@contact.bg>
 
 	* bg.po: Updated Bulgarian translation by
