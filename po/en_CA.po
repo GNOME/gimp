@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-03 21:01-0500\n"
-"PO-Revision-Date: 2005-01-03 14:29-0400\n"
+"POT-Creation-Date: 2005-01-09 23:50-0500\n"
+"PO-Revision-Date: 2005-01-09 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -2419,11 +2419,11 @@ msgstr "Re_peat \"%s\""
 msgid "R_e-show \"%s\""
 msgstr "R_e-show \"%s\""
 
-#: app/actions/plug-in-commands.c:196
+#: app/actions/plug-in-commands.c:191
 msgid "Reset all Filters"
 msgstr "Reset all Filters"
 
-#: app/actions/plug-in-commands.c:210
+#: app/actions/plug-in-commands.c:205
 msgid "Do you really want to reset all filters to default values?"
 msgstr "Do you really want to reset all filters to default values?"
 
@@ -6969,7 +6969,7 @@ msgstr "_Discard Changes"
 msgid "Canvas Size"
 msgstr "Canvas Size"
 
-#: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:107
+#: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:108
 msgid "Layer Size"
 msgstr "Layer Size"
 
@@ -6990,19 +6990,19 @@ msgid "_Vertical:"
 msgstr "_Vertical:"
 
 #. Image size frame
-#: app/dialogs/scale-dialog.c:96 app/widgets/gimptemplateeditor.c:214
+#: app/dialogs/scale-dialog.c:97 app/widgets/gimptemplateeditor.c:214
 msgid "Image Size"
 msgstr "Image Size"
 
-#: app/dialogs/scale-dialog.c:166
+#: app/dialogs/scale-dialog.c:167
 msgid "Quality"
 msgstr "Quality"
 
-#: app/dialogs/scale-dialog.c:178
+#: app/dialogs/scale-dialog.c:179
 msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
-#: app/dialogs/scale-dialog.c:192
+#: app/dialogs/scale-dialog.c:196
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
@@ -9636,45 +9636,45 @@ msgstr "Failed to import paths from '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
+#: app/widgets/gimpactionview.c:354 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Action"
 
-#: app/widgets/gimpactionview.c:317
+#: app/widgets/gimpactionview.c:383
 msgid "Shortcut"
 msgstr "Shortcut"
 
-#: app/widgets/gimpactionview.c:339
+#: app/widgets/gimpactionview.c:405
 msgid "Name"
 msgstr "Name"
 
-#: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
+#: app/widgets/gimpactionview.c:545 app/widgets/gimpactionview.c:738
 msgid "Changing shortcut failed."
 msgstr "Changing shortcut failed."
 
-#: app/widgets/gimpactionview.c:519
+#: app/widgets/gimpactionview.c:585
 msgid "Conflicting Shortcuts"
 msgstr "Conflicting Shortcuts"
 
-#: app/widgets/gimpactionview.c:525
+#: app/widgets/gimpactionview.c:591
 msgid "_Reassign shortcut"
 msgstr "_Reassign shortcut"
 
-#: app/widgets/gimpactionview.c:536
+#: app/widgets/gimpactionview.c:602
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 
-#: app/widgets/gimpactionview.c:540
+#: app/widgets/gimpactionview.c:606
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Reassigning the shortcut will cause it to be removed from \"%s\"."
 
-#: app/widgets/gimpactionview.c:607
+#: app/widgets/gimpactionview.c:673
 msgid "Removing shortcut failed."
 msgstr "Removing shortcut failed."
 
-#: app/widgets/gimpactionview.c:612
+#: app/widgets/gimpactionview.c:678
 msgid "Invalid shortcut."
 msgstr "Invalid shortcut."
 
@@ -9856,132 +9856,132 @@ msgid "Select Controller Event Action"
 msgstr "Select Controller Event Action"
 
 #: app/widgets/gimpcontrollerkeyboard.c:69
-msgid "Key Up (Shift + Control + Alt)"
-msgstr "Key Up (Shift + Control + Alt)"
+msgid "Cursor Up (Shift + Control + Alt)"
+msgstr "Cursor Up (Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:72
-msgid "Key Up (Control + Alt)"
-msgstr "Key Up (Control + Alt)"
+msgid "Cursor Up (Control + Alt)"
+msgstr "Cursor Up (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:75
-msgid "Key Up (Shift + Alt)"
-msgstr "Key Up (Shift + Alt)"
+msgid "Cursor Up (Shift + Alt)"
+msgstr "Cursor Up (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:78
-msgid "Key Up (Shift + Control)"
-msgstr "Key Up (Shift + Control)"
+msgid "Cursor Up (Shift + Control)"
+msgstr "Cursor Up (Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:81
-msgid "Key Up (Alt)"
-msgstr "Key Up (Alt)"
+msgid "Cursor Up (Alt)"
+msgstr "Cursor Up (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:84
-msgid "Key Up (Control)"
-msgstr "Key Up (Control)"
+msgid "Cursor Up (Control)"
+msgstr "Cursor Up (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:87
-msgid "Key Up (Shift)"
-msgstr "Key Up (Shift)"
+msgid "Cursor Up (Shift)"
+msgstr "Cursor Up (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:90
-msgid "Key Up"
-msgstr "Key Up"
+msgid "Cursor Up"
+msgstr "Cursor Up"
 
 #: app/widgets/gimpcontrollerkeyboard.c:94
-msgid "Key Down (Shift + Control + Alt)"
-msgstr "Key Down (Shift + Control + Alt)"
+msgid "Cursor Down (Shift + Control + Alt)"
+msgstr "Cursor Down (Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:97
-msgid "Key Down (Control + Alt)"
-msgstr "Key Down (Control + Alt)"
+msgid "Cursor Down (Control + Alt)"
+msgstr "Cursor Down (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:100
-msgid "Key Down (Shift + Alt)"
-msgstr "Key Down (Shift + Alt)"
+msgid "Cursor Down (Shift + Alt)"
+msgstr "Cursor Down (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:103
-msgid "Key Down (Shift + Control)"
-msgstr "Key Down (Shift + Control)"
+msgid "Cursor Down (Shift + Control)"
+msgstr "Cursor Down (Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:106
-msgid "Key Down (Alt)"
-msgstr "Key Down (Alt)"
+msgid "Cursor Down (Alt)"
+msgstr "Cursor Down (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:109
-msgid "Key Down (Control)"
-msgstr "Key Down (Control)"
+msgid "Cursor Down (Control)"
+msgstr "Cursor Down (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:112
-msgid "Key Down (Shift)"
-msgstr "Key Down (Shift)"
+msgid "Cursor Down (Shift)"
+msgstr "Cursor Down (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:115
-msgid "Key Down"
-msgstr "Key Down"
+msgid "Cursor Down"
+msgstr "Cursor Down"
 
 #: app/widgets/gimpcontrollerkeyboard.c:119
-msgid "Key Left (Shift + Control + Alt)"
-msgstr "Key Left (Shift + Control + Alt)"
+msgid "Cursor Left (Shift + Control + Alt)"
+msgstr "Cursor Left (Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:122
-msgid "Key Left (Control + Alt)"
-msgstr "Key Left (Control + Alt)"
+msgid "Cursor Left (Control + Alt)"
+msgstr "Cursor Left (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:125
-msgid "Key Left (Shift + Alt)"
-msgstr "Key Left (Shift + Alt)"
+msgid "Cursor Left (Shift + Alt)"
+msgstr "Cursor Left (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:128
-msgid "Key Left (Shift + Control)"
-msgstr "Key Left (Shift + Control)"
+msgid "Cursor Left (Shift + Control)"
+msgstr "Cursor Left (Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:131
-msgid "Key Left (Alt)"
-msgstr "Key Left (Alt)"
+msgid "Cursor Left (Alt)"
+msgstr "Cursor Left (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:134
-msgid "Key Left (Control)"
-msgstr "Key Left (Control)"
+msgid "Cursor Left (Control)"
+msgstr "Cursor Left (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:137
-msgid "Key Left (Shift)"
-msgstr "Key Left (Shift)"
+msgid "Cursor Left (Shift)"
+msgstr "Cursor Left (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:140
-msgid "Key Left"
-msgstr "Key Left"
+msgid "Cursor Left"
+msgstr "Cursor Left"
 
 #: app/widgets/gimpcontrollerkeyboard.c:144
-msgid "Key Right (Shift + Control + Alt)"
-msgstr "Key Right (Shift + Control + Alt)"
+msgid "Cursor Right (Shift + Control + Alt)"
+msgstr "Cursor Right (Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:147
-msgid "Key Right (Control + Alt)"
-msgstr "Key Right (Control + Alt)"
+msgid "Cursor Right (Control + Alt)"
+msgstr "Cursor Right (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:150
-msgid "Key Right (Shift + Alt)"
-msgstr "Key Right (Shift + Alt)"
+msgid "Cursor Right (Shift + Alt)"
+msgstr "Cursor Right (Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:153
-msgid "Key Right (Shift + Control)"
-msgstr "Key Right (Shift + Control)"
+msgid "Cursor Right (Shift + Control)"
+msgstr "Cursor Right (Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:156
-msgid "Key Right (Alt)"
-msgstr "Key Right (Alt)"
+msgid "Cursor Right (Alt)"
+msgstr "Cursor Right (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:159
-msgid "Key Right (Control)"
-msgstr "Key Right (Control)"
+msgid "Cursor Right (Control)"
+msgstr "Cursor Right (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:162
-msgid "Key Right (Shift)"
-msgstr "Key Right (Shift)"
+msgid "Cursor Right (Shift)"
+msgstr "Cursor Right (Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:165
-msgid "Key Right"
-msgstr "Key Right"
+msgid "Cursor Right"
+msgstr "Cursor Right"
 
 #: app/widgets/gimpcontrollerkeyboard.c:207
 msgid "Keyboard"
@@ -10804,8 +10804,8 @@ msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF error: unsupported XCF file version %d encountered"
 
 #: data/misc/gimp.desktop.in.in.h:1
-msgid "Create and edit images or photographs"
-msgstr "Create and edit images or photographs"
+msgid "Create images and edit photographs"
+msgstr "Create images and edit photographs"
 
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
