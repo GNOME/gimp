@@ -352,28 +352,29 @@ static inline guchar
 lut_lookup (gfloat        value,
             const gfloat *lut)
 {
-  guchar offset = 128;
+  guchar offset = 127;
   gint   step   = 64;
 
   while (step)
     {
-      if (lut[offset] < value)
+      if (lut[offset] > value)
         {
-          if (offset == 255 || lut[offset + 1] >= value)
-            break;
-
-          offset += step;
+          offset -= step;
         }
       else
         {
-          if (offset == 0 || lut[offset - 1] < value)
-            break;
+          if (lut[offset + 1] > value)
+            return offset;
 
-          offset -= step;
+          offset += step;
         }
 
       step /= 2;
     }
+
+  /*  the algorithm above can't reach 255  */
+  if (offset == 254 && lut[255] < value)
+    return 255;
 
   return offset;
 }
