@@ -35,7 +35,7 @@ phong_shade (GimpVector3 *position,
 {
   GimpRGB       ambient_color, diffuse_color, specular_color;
   gdouble      nl, rv, dist;
-  GimpVector3  l, nn, v, n;
+  GimpVector3  l, v, n, lnormal, h;
 
   /* Compute ambient intensity */
   /* ========================= */
@@ -59,6 +59,12 @@ phong_shade (GimpVector3 *position,
 
   nl = 2.0 * gimp_vector3_inner_product (&n, &l);
 
+  lnormal.x = l.x;
+  lnormal.y = l.y;
+  lnormal.z = l.z;
+
+  gimp_vector3_normalize (&lnormal);
+
   if (nl >= 0.0)
     {
       /* Compute (R*V)^alpha term of Phong's equation */
@@ -67,10 +73,12 @@ phong_shade (GimpVector3 *position,
       gimp_vector3_sub (&v, viewpoint, position);
       gimp_vector3_normalize (&v);
 
-      gimp_vector3_mul (&n, nl);
-      gimp_vector3_sub (&nn, &n, &l);
-      rv = gimp_vector3_inner_product (&nn, &v);
+      gimp_vector3_add (&h, &lnormal, &v);
+      gimp_vector3_normalize (&h);
+
+      rv = MAX (0., gimp_vector3_inner_product (&n, &h));
       rv = pow (rv, mapvals.material.highlight);
+      rv *= nl;
 
       /* Compute diffuse and specular intensity contribution */
       /* =================================================== */
@@ -279,8 +287,6 @@ precompute_normals (gint x1,
       bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
     }
   
-  bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
-
   gimp_pixel_rgn_get_row (&bump_region, bumprow, x1, y, x2 - x1);
 
   if (mapvals.bumpmaptype > 0)

@@ -105,7 +105,7 @@ check_drawables (void)
 
   if (mapvals.bump_mapped)
     {
-      if (!gimp_drawable_is_gray (mapvals.bumpmap_id) ||
+      if (gimp_drawable_is_indexed (mapvals.bumpmap_id) ||
 	  (gimp_drawable_width (mapvals.drawable_id) !=
 	   gimp_drawable_width (mapvals.bumpmap_id)) ||
 	  (gimp_drawable_height (mapvals.drawable_id) !=
