@@ -89,3 +89,19 @@ gimpmath
 @a: 
 
 
+<!-- ##### MACRO gimp_deg_to_rad ##### -->
+<para>
+
+</para>
+
+@angle: 
+
+
+<!-- ##### MACRO gimp_rad_to_deg ##### -->
+<para>
+
+</para>
+
+@angle: 
+
+
