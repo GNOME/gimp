@@ -1,3 +1,7 @@
+Sun May 16 22:54:23 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/xd/xd.c: Add OS/2 patches. include <sys/types.h>,,,
+
 Thu May 13 19:17:58 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimp.[ch]: implement gimp_default_display.

@@ -27,6 +27,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -611,10 +612,21 @@ gdk_pixmap_create_from_xpm_b (GdkWindow  *window,
 			      gint len)
 {
   gchar* foo = "/tmp/foo.xpm";
+#ifdef __EMX__
+  GParam* params;
+  gint retvals;
+#endif
   FILE* f;
 
   g_print ("gdk_pixmap_create_from_xpm: this proceedure is slow because Peter is a wuss.  it should be rewritten.");
 
+#ifdef __EMX__
+  params = gimp_run_procedure ("gimp_temp_name",
+                               &retvals,
+                               PARAM_STRING, "xpm",
+                               PARAM_END);
+  foo = params[1].data.d_string;
+#endif
   f = fopen (foo, "w");
 
   fwrite (segment, len, 1, f);
