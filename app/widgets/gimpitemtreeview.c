@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
@@ -176,10 +177,10 @@ static void   gimp_item_tree_view_chain_clicked     (GtkCellRendererToggle *togg
 
 /*  utility function to avoid code duplication  */
 static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *toggle,
-                                                     gchar                 *path_str,
-                                                     GdkModifierType        state,
-                                                     GimpItemTreeView      *view,
-                                                     GimpUndoType           type);
+                                                     gchar             *path_str,
+                                                     GdkModifierType    state,
+                                                     GimpItemTreeView  *view,
+                                                     GimpUndoType       undo_type);
 
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
@@ -1322,7 +1323,7 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
                                  GimpItemTreeView      *view)
 {
   gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
-                                      GIMP_UNDO_GROUP_ITEM_VISIBILITY);
+                                      GIMP_UNDO_ITEM_VISIBILITY);
 }
 
 /*  "Linked" callbacks  */
@@ -1354,7 +1355,7 @@ gimp_item_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
                                    GimpItemTreeView      *view)
 {
   gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
-                                      GIMP_UNDO_GROUP_ITEM_LINKED);
+                                      GIMP_UNDO_ITEM_LINKED);
 }
 
 
@@ -1367,30 +1368,38 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
                                     gchar                 *path_str,
                                     GdkModifierType        state,
                                     GimpItemTreeView      *view,
-                                    GimpUndoType           type)
+                                    GimpUndoType           undo_type)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreePath           *path;
   GtkTreeIter            iter;
+  GimpUndoType           group_type;
   const gchar           *undo_desc;
 
   gboolean (* getter)  (const GimpItem *item);
   void     (* setter)  (GimpItem       *item,
                         gboolean        value,
                         gboolean        push_undo);
+  gboolean (* pusher)  (GimpImage      *gimage,
+                        const gchar    *undo_desc,
+                        GimpItem       *item);
 
-  switch (type)
+  switch (undo_type)
     {
-    case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
-      getter  = gimp_item_get_visible;
-      setter  = gimp_item_set_visible;
-      undo_desc = _("Set Item Exclusive Visible");
+    case GIMP_UNDO_ITEM_VISIBILITY:
+      getter     = gimp_item_get_visible;
+      setter     = gimp_item_set_visible;
+      pusher     = gimp_image_undo_push_item_visibility;
+      group_type = GIMP_UNDO_GROUP_ITEM_VISIBILITY;
+      undo_desc  = _("Set Item Exclusive Visible");
       break;
 
-    case GIMP_UNDO_GROUP_ITEM_LINKED:
-      getter  = gimp_item_get_linked;
-      setter  = gimp_item_set_linked;
-      undo_desc = _("Set Item Exclusive Linked");
+    case GIMP_UNDO_ITEM_LINKED:
+      getter     = gimp_item_get_linked;
+      setter     = gimp_item_set_linked;
+      pusher     = gimp_image_undo_push_item_linked;
+      group_type = GIMP_UNDO_GROUP_ITEM_LINKED;
+      undo_desc  = _("Set Item Exclusive Linked");
       break;
 
     default:
@@ -1424,8 +1433,6 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
           GList    *off = NULL;
           GList    *list;
           gboolean  iter_valid;
-          GimpUndo *undo;
-          gboolean  push_undo = TRUE;
 
           for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
                                                            &iter);
@@ -1448,31 +1455,58 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
               g_object_unref (renderer);
             }
 
-          undo = gimp_undo_stack_peek (gimage->undo_stack);
+          if (on || off || ! getter (item))
+            {
+              GimpUndo *undo      = gimp_undo_stack_peek (gimage->undo_stack);
+              gboolean  push_undo = TRUE;
 
-          /*  compress exclusive visibility/linked undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
-              type == undo->undo_type)
-            push_undo = FALSE;
+              /*  compress exclusive visibility/linked undos  */
+              if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+                  GIMP_IS_UNDO_STACK (undo)                   &&
+                  undo->undo_type == group_type               &&
+                  g_object_get_data (G_OBJECT (undo), "item-type")
+                  == (gpointer) view->item_type)
+                push_undo = FALSE;
 
-          if (push_undo && (on || off))
-            gimp_image_undo_group_start (gimage, type, undo_desc);
+              if (push_undo)
+                {
+                  if (gimp_image_undo_group_start (gimage, group_type,
+                                                   undo_desc))
+                    {
+                      undo = gimp_undo_stack_peek (gimage->undo_stack);
 
-          setter (item, TRUE, push_undo);
+                      if (GIMP_IS_UNDO_STACK (undo) &&
+                          undo->undo_type == group_type)
+                        {
+                          g_object_set_data (G_OBJECT (undo), "item-type",
+                                             (gpointer) view->item_type);
+                        }
+                    }
+
+                  pusher (gimage, NULL, item);
+
+                  for (list = on; list; list = g_list_next (list))
+                    pusher (gimage, NULL, list->data);
+
+                  for (list = off; list; list = g_list_next (list))
+                    pusher (gimage, NULL, list->data);
+
+                  gimp_image_undo_group_end (gimage);
+                }
+            }
+
+          setter (item, TRUE, FALSE);
 
           if (on)
             {
               for (list = on; list; list = g_list_next (list))
-                setter (GIMP_ITEM (list->data), FALSE, push_undo);
+                setter (GIMP_ITEM (list->data), FALSE, FALSE);
             }
           else if (off)
             {
               for (list = off; list; list = g_list_next (list))
-                setter (GIMP_ITEM (list->data), TRUE, push_undo);
+                setter (GIMP_ITEM (list->data), TRUE, FALSE);
             }
-
-          if (push_undo && (on || off))
-            gimp_image_undo_group_end (gimage);
 
           g_list_free (on);
           g_list_free (off);
@@ -1484,14 +1518,11 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
 
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
-          /*  compress visibility/linked undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack)     &&
-              GIMP_IS_ITEM_UNDO (undo)                        &&
-              GIMP_ITEM_UNDO (undo)->item == item             &&
-              ((type == GIMP_UNDO_GROUP_ITEM_VISIBILITY       &&
-                undo->undo_type == GIMP_UNDO_ITEM_VISIBILITY) ||
-               (type == GIMP_UNDO_GROUP_ITEM_LINKED           &&
-                undo->undo_type == GIMP_UNDO_ITEM_LINKED)))
+          /*  compress undos  */
+          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+              GIMP_IS_ITEM_UNDO (undo)                    &&
+              GIMP_ITEM_UNDO (undo)->item == item         &&
+              undo->undo_type == undo_type)
             push_undo = FALSE;
 
           setter (item, ! active, push_undo);

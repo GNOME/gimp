@@ -1,3 +1,15 @@
+2004-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c: simplified visibility and linked
+	undo compression by passing an UNDO type, not an UNDO_GROUP type.
+
+	Fixed (made weird) compression of "exclusive visible/linked" undos
+	to only compress undos of the same item type (only compress layer
+	visibility if we pushed a *layer* visibility before, not a channel
+	or vectors visibility). Even worse, we need to push the
+	visibility/linked state of *all* items when pushing an exclusive
+	group, otherwise compression won't work.
+
 2004-03-18  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimptypes.h: removed obsolete GimpParamColor typedef.
