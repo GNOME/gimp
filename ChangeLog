@@ -1,3 +1,7 @@
+2000-02-16  David Monniaux  <monniaux@miaou.ens.fr>
+
+	* plug-ins/gap/gap_mov_dialog.c: fixed typos in dialog strings.
+
 Wed Feb 16 14:46:14 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/pathsP.h: removed

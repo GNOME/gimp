@@ -36,7 +36,7 @@
  *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
  * gimp   1.1.8a;   1999/08/31  hof: accept anim framenames without underscore '_'
  * gimp   1.1.5a;   1999/05/08  hof: call fileselect in gtk+1.2 style 
- * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (did'nt work with gimp1.1.2)
+ * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (didn't work with gimp1.1.2)
  * version 0.98.00; 1998.11.28  hof: Port to GIMP 1.1: replaced buildmenu.h, apply layermask (before rotate)
  *                                   mov_imglayer_constrain must check for drawable_id -1
  * version 0.97.00; 1998.10.19  hof: Set window title to "Move Path"
@@ -482,7 +482,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		      path_ptr);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Show PreviewFame with Selected       \nSrcLayer at current Controlpoint")
+                       _("Show PreviewFrame with Selected       \nSrcLayer at current Controlpoint")
                        , NULL);
   gtk_widget_show (button);
 
