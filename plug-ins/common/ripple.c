@@ -22,7 +22,6 @@
  */
 #include "config.h"
 
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -79,19 +78,6 @@ static void    ripple             (GimpDrawable *drawable);
 static gint    ripple_dialog      (void);
 static void    ripple_ok_callback (GtkWidget *widget,
 				   gpointer   data);
-
-static GimpTile * ripple_pixel (GimpDrawable *drawable,
-                                GimpTile     *tile,
-                                gint        x1,
-                                gint        y1,
-                                gint        x2,
-                                gint        y2,
-                                gint        x,
-                                gint        y,
-                                gint       *row,
-                                gint       *col,
-                                guchar     *pixel);
-
 
 static gdouble displace_amount (gint     location);
 static guchar  averagetwo      (gdouble  location,
@@ -263,11 +249,8 @@ static void
 ripple (GimpDrawable *drawable)
 {
   GimpPixelRgn dest_rgn;
-  GimpTile   * tile = NULL;
-  gint      row = -1;
-  gint      col = -1;
   gpointer  pr;
-
+  GimpPixelFetcher *pft;
   gint    width, height;
   gint    bytes;
   guchar *destline;
@@ -280,13 +263,11 @@ ripple (GimpDrawable *drawable)
   gdouble needx, needy;
 
   guchar  values[4];
-  guchar  val;
 
   gint xi, yi;
-
   gint k;
 
-  /* Get selection area */
+  pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -326,7 +307,7 @@ ripple (GimpDrawable *drawable)
 	    {
               dest = destline;
 
-              for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+              for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
 		{
                   otherdest = dest;
 
@@ -342,65 +323,43 @@ ripple (GimpDrawable *drawable)
 		  /* Smear out the edges of the image by repeating pixels. */
                   else if (rvals.edges == SMEAR)
 		    {
-                      if (yi < 0)
-			yi = 0;
-                      else if (yi > height - 1)
-			yi = height - 1;
+		      yi = CLAMP(yi, 0, height - 1);
 		    }
 
-                  if ( rvals.antialias)
+                  if (rvals.antialias)
 		    {
                       if (yi == height - 1)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi, &row, &col, pixel[0]);
-			  
-                          for (k = 0; k < bytes; k++)
-			    *otherdest++ = pixel[0][k];
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi, otherdest);
+			  otherdest += bytes;
 			}
                       else if (needy < 0 && needy > -1)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, 0, &row, &col, pixel[0]);
-
-                          for (k = 0; k < bytes; k++)
-			    *otherdest++ = pixel[0][k];
+			  gimp_pixel_fetcher_get_pixel (pft, x, 0, otherdest);
+			  otherdest += bytes;
 			}
-
                       else if (yi == height - 2 || yi == 0)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi, &row, &col, pixel[0]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi + 1, &row, &col, pixel[1]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, 
+							pixel[1]);
 
                           for (k = 0; k < bytes; k++)
 			    {
                               values[0] = pixel[0][k];
                               values[1] = pixel[1][k];
-                              val = averagetwo(needy, values);
-
-                              *otherdest++ = val;
+                              *otherdest++ = averagetwo(needy, values);
 			    }
 			}
                       else
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi, &row, &col, pixel[0]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi + 1, &row, &col, pixel[1]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi - 1, &row, &col, pixel[2]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       x, yi + 2, &row, &col, pixel[3]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, 
+							pixel[1]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, 
+							pixel[2]);
+			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, 
+							pixel[3]);
 
                           for (k = 0; k < bytes; k++)
 			    {
@@ -408,27 +367,18 @@ ripple (GimpDrawable *drawable)
                               values[1] = pixel[1][k];
                               values[2] = pixel[2][k];
                               values[3] = pixel[3][k];
-
-                              val = averagefour (needy, values);
-
-                              *otherdest++ = val;
+                              *otherdest++ = averagefour (needy, values);
 			    }
                       }
 		    } /* antialias */
                   else
 		    {
-                      tile = ripple_pixel (drawable, tile,
-					   x1, y1, x2, y2,
-					   x, yi, &row, &col, pixel[0]);
-
-                      for (k = 0; k < bytes; k++)
-			*otherdest++ = pixel[0][k];
+		      gimp_pixel_fetcher_get_pixel (pft, x, yi, otherdest);
 		    }
                   dest += dest_rgn.rowstride;
 		} /* for */
 
-              for (k = 0; k < bytes; k++)
-		destline++;
+	      destline += bytes;
 	    } /* for */
 
           progress += dest_rgn.w * dest_rgn.h;
@@ -456,65 +406,44 @@ ripple (GimpDrawable *drawable)
 		  /* Smear out the edges of the image by repeating pixels. */
                   else if (rvals.edges == SMEAR)
 		    {
-                      if (xi < 0)
-			xi = 0;
-                      else if (xi > width - 1)
-			xi = width - 1;
+		      xi = CLAMP(xi, 0, width - 1);
 		    }
 
                   if ( rvals.antialias)
 		    {
                       if (xi == width - 1)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi, y, &row, &col, pixel[0]);
-
-                          for (k = 0; k < bytes; k++)
-			    *dest++ = pixel[0][k];
+			  gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+			  dest += bytes;
 			}
                       else if (floor(needx) ==  -1)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       0, y, &row, &col, pixel[0]);
-
-                          for (k = 0; k < bytes; k++)
-			    *dest++ = pixel[0][k];
+			  gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
+			  dest += bytes;
 			}
 
                       else if (xi == width - 2 || xi == 0)
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi, y, &row, &col, pixel[0]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi + 1, y, &row, &col, pixel[1]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, 
+							pixel[1]);
 
                           for (k = 0; k < bytes; k++)
 			    {
                               values[0] = pixel[0][k];
                               values[1] = pixel[1][k];
-                              val = averagetwo (needx, values);
-
-                              *dest++ = val;
+                              *dest++ = averagetwo (needx, values);
 			    }
 			}
                       else
 			{
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi, y, &row, &col, pixel[0]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi + 1, y, &row, &col, pixel[1]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi - 1 , y, &row, &col, pixel[2]);
-                          tile = ripple_pixel (drawable, tile,
-					       x1, y1, x2, y2,
-					       xi + 2, y, &row, &col, pixel[3]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, 
+							pixel[1]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, 
+							pixel[2]);
+			  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, 
+							pixel[3]);
 
                           for (k = 0; k < bytes; k++)
 			    {
@@ -522,22 +451,15 @@ ripple (GimpDrawable *drawable)
                               values[1] = pixel[1][k];
                               values[2] = pixel[2][k];
                               values[3] = pixel[3][k];
-
-                              val = averagefour (needx, values);
-
-                              *dest++ = val;
+                              *dest++ = averagefour (needx, values);
 			    }
 			}
 		    } /* antialias */
 
                   else
 		    {
-                      tile = ripple_pixel (drawable, tile,
-					   x1, y1, x2, y2,
-					   xi, y, &row, &col, pixel[0]);
-
-                      for (k = 0; k < bytes; k++)
-			*dest++ = pixel[0][k];
+		      gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+		      dest += bytes;
 		    }
 		} /* for */
 
@@ -549,14 +471,13 @@ ripple (GimpDrawable *drawable)
 	}
     }  /* for  */
 
-  if (tile)
-    gimp_tile_unref (tile, FALSE);
+  gimp_pixel_fetcher_destroy (pft);
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-} /* ripple */
+}
 
 static gint
 ripple_dialog (void)
@@ -719,48 +640,6 @@ ripple_dialog (void)
 
   return rpint.run;
 }
-
-static GimpTile *
-ripple_pixel (GimpDrawable *drawable,
-	      GimpTile     *tile,
-	      gint          x1,
-	      gint          y1,
-	      gint          x2,
-	      gint          y2,
-	      gint          x,
-	      gint          y,
-	      gint         *row,
-	      gint         *col,
-	      guchar       *pixel)
-{
-  static guchar empty_pixel[4] = {0, 0, 0, 0};
-
-  guchar *data;
-  gint    b;
-
-  if (x >= x1 && y >= y1 && x < x2 && y < y2)
-    {
-      if ((x >> 6 != *col) || (y >> 6 != *row))
-	{
-	  *col = x / 64;
-	  *row = y / 64;
-	  if (tile)
-	    gimp_tile_unref (tile, FALSE);
-	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
-	  gimp_tile_ref (tile);
-	}
-
-      data = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
-    }
-  else
-    data = empty_pixel;
-
-  for (b = 0; b < drawable->bpp; b++)
-    pixel[b] = data[b];
-
-  return tile;
-}
-
 
 /*  Ripple interface functions  */
 

@@ -58,10 +58,6 @@
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 48
 
-#define WRAP   0
-#define SMEAR  1
-#define BLACK  2
-
 typedef struct
 {
   gdouble amount_x;
@@ -91,19 +87,6 @@ static void      run    (gchar      *name,
 
 static void      displace        (GimpDrawable *drawable);
 static gint      displace_dialog (GimpDrawable *drawable);
-static GimpTile *displace_pixel  (GimpDrawable *drawable,
-				  GimpTile     *tile,
-				  gint          width,
-				  gint          height,
-				  gint          x1,
-				  gint          y1,
-				  gint          x2,
-				  gint          y2,
-				  gint          x,
-				  gint          y,
-				  gint         *row,
-				  gint         *col,
-				  guchar       *pixel);
 
 static gint      displace_map_constrain    (gint32     image_id,
 					    gint32     drawable_id,
@@ -136,7 +119,7 @@ static DisplaceVals dvals =
   TRUE,    /* do_y */
   -1,      /* displace_map_x */
   -1,      /* displace_map_y */
-  WRAP     /* displace_type */
+  PIXEL_WRAP     /* displace_type */
 };
 
 static DisplaceInterface dint =
@@ -409,13 +392,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (WRAP));
+                     GINT_TO_POINTER (PIXEL_WRAP));
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == WRAP);
+				dvals.displace_type == PIXEL_WRAP);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -423,13 +406,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (SMEAR));
+                     GINT_TO_POINTER (PIXEL_SMEAR));
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == SMEAR);
+				dvals.displace_type == PIXEL_SMEAR);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -437,13 +420,13 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (BLACK));
+                     GINT_TO_POINTER (PIXEL_BLACK));
 
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_radio_button_update),
                     &dvals.displace_type);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.displace_type == BLACK);
+				dvals.displace_type == PIXEL_BLACK);
 
   gtk_widget_show (toggle_hbox);
   gtk_widget_show (table);
@@ -466,10 +449,8 @@ displace (GimpDrawable *drawable)
   GimpPixelRgn dest_rgn;
   GimpPixelRgn map_x_rgn;
   GimpPixelRgn map_y_rgn;
-  GimpTile   * tile = NULL;
-  gint      row = -1;
-  gint      col = -1;
   gpointer  pr;
+  GimpPixelFetcher *pft;
 
   gint    width;
   gint    height;
@@ -502,7 +483,8 @@ displace (GimpDrawable *drawable)
   mxrow = NULL;
   myrow = NULL;
   
-  /* Get selection area */
+  pft = gimp_pixel_fetcher_new (drawable);
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = drawable->width;
@@ -600,19 +582,23 @@ displace (GimpDrawable *drawable)
 	      /* Calculations complete; now copy the proper pixel */
 	      
 	      if (needx >= 0.0)
-		      xi = (int) needx;
+		xi = (int) needx;
 	      else
-		      xi = -((int) -needx + 1);
+		xi = -((int) -needx + 1);
 
 	      if (needy >= 0.0)
-		      yi = (int) needy;
+		yi = (int) needy;
 	      else
-		      yi = -((int) -needy + 1);
+		yi = -((int) -needy + 1);
 	      
-	      tile = displace_pixel (drawable, tile, width, height, x1, y1, x2, y2, xi, yi, &row, &col, pixel[0]);
-	      tile = displace_pixel (drawable, tile, width, height, x1, y1, x2, y2, xi + 1, yi, &row, &col, pixel[1]);
-	      tile = displace_pixel (drawable, tile, width, height, x1, y1, x2, y2, xi, yi + 1, &row, &col, pixel[2]);
-	      tile = displace_pixel (drawable, tile, width, height, x1, y1, x2, y2, xi + 1, yi + 1, &row, &col, pixel[3]);
+	      gimp_pixel_fetcher_get_pixel2 (pft, xi, yi,
+					     dvals.displace_type, pixel[0]);
+	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi,
+					     dvals.displace_type, pixel[1]);
+	      gimp_pixel_fetcher_get_pixel2 (pft, xi, yi + 1,
+					     dvals.displace_type, pixel[2]);
+	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi + 1,
+					     dvals.displace_type, pixel[3]);
 	      
 	      for (k = 0; k < bytes; k++)
 		{
@@ -638,8 +624,7 @@ displace (GimpDrawable *drawable)
       gimp_progress_update ((double) progress / (double) max_progress);
     } /* for */
 
-  if (tile)
-    gimp_tile_unref (tile, FALSE);
+  gimp_pixel_fetcher_destroy (pft);
 
   /*  detach from the map drawables  */
   if (dvals.do_x)
@@ -651,8 +636,7 @@ displace (GimpDrawable *drawable)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-} /* displace */
-
+}
 
 static gdouble
 displace_map_give_value (guchar *pt,
@@ -670,79 +654,9 @@ displace_map_give_value (guchar *pt,
     {
       val_alpha = pt[bytes - 1];
       ret = ((ret - 127.5) * val_alpha / 255.0) + 127.5;
-    };
+    }
   
-  return (ret);
-}
-
-
-static GimpTile *
-displace_pixel (GimpDrawable *drawable,
-		GimpTile     *tile,
-		gint       width,
-		gint       height,
-		gint       x1,
-		gint       y1,
-		gint       x2,
-		gint       y2,
-		gint       x,
-		gint       y,
-		gint      *row,
-		gint      *col,
-		guchar    *pixel)
-{
-  static guchar empty_pixel[4] = {0, 0, 0, 0};
-  guchar *data;
-  gint b;
-
-  /* Tile the image. */
-  if (dvals.displace_type == WRAP)
-    {
-      if (x < 0)
-	x = width - (-x % width);
-      else
-	x %= width;
-
-      if (y < 0)
-	y = height - (-y % height);
-      else
-	y %= height;
-    }
-  /* Smear out the edges of the image by repeating pixels. */
-  else if (dvals.displace_type == SMEAR)
-    {
-      if (x < 0)
-	x = 0;
-      else if (x > width - 1)
-	x = width - 1;
-
-      if (y < 0)
-	y = 0;
-      else if (y > height - 1)
-	y = height - 1;
-    }
-
-  if (x >= x1 && y >= y1 && x < x2 && y < y2)
-    {
-      if ((x >> 6 != *col) || (y >> 6 != *row))
-	{
-	  *col = x / 64;
-	  *row = y / 64;
-	  if (tile)
-	    gimp_tile_unref (tile, FALSE);
-	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
-	  gimp_tile_ref (tile);
-	}
-
-      data = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
-    }
-  else
-    data = empty_pixel;
-
-  for (b = 0; b < drawable->bpp; b++)
-    pixel[b] = data[b];
-
-  return tile;
+  return ret;
 }
 
 /*  Displace interface functions  */

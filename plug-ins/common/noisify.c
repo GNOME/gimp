@@ -37,12 +37,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -54,7 +48,6 @@
 
 #define SCALE_WIDTH      125
 #define TILE_CACHE_SIZE  16
-#define PREVIEW_SIZE     128 
 
 typedef struct
 {
@@ -81,10 +74,6 @@ static void       run    (gchar      *name,
 static void       noisify (GimpDrawable *drawable,
                            gboolean      preview_mode);
 static gdouble    gauss   (GRand *gr);
-
-static void       fill_preview   (GtkWidget    *preview_widget, 
-				  GimpDrawable *drawable);
-static GtkWidget *preview_widget (GimpDrawable *drawable);
 
 static gint       noisify_dialog                   (GimpDrawable *drawable, 
 						    gint           channels);
@@ -114,11 +103,8 @@ static NoisifyInterface noise_int =
   FALSE     /* run */
 };
 
-static GtkWidget *preview;
-static guchar    *preview_cache;
-static gint       preview_cache_rowstride;
-static gint       preview_cache_bpp;
-
+static GimpRunMode       run_mode;
+static GimpFixMePreview *preview;
 
 MAIN ()
 
@@ -159,7 +145,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -231,7 +216,6 @@ run (gchar      *name,
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE) {
 	gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
-	g_free(preview_cache);
       }
     }
   else
@@ -245,75 +229,26 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void
-preview_do_row(gint    row,
-	       gint    width,
-	       guchar *even,
-	       guchar *odd,
-	       guchar *src)
+static void 
+noisify_func (guchar *src, guchar *dest, gint bpp, GRand *gr)
 {
-  gint    x;
+  gint noise = 0, b;
+
+  if (!nvals.independent)
+    noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
   
-  guchar *p0 = even;
-  guchar *p1 = odd;
-  
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  
-  for (x = 0; x < width; x++) 
+  for (b = 0; b < bpp; b++)
     {
-      if (preview_cache_bpp == 4)
+      if (nvals.noise[b] > 0.0)
 	{
-	  r = ((gdouble)src[x*4+0]) / 255.0;
-	  g = ((gdouble)src[x*4+1]) / 255.0;
-	  b = ((gdouble)src[x*4+2]) / 255.0;
-	  a = ((gdouble)src[x*4+3]) / 255.0;
-	}
-      else if (preview_cache_bpp == 3)
-	{
-	  r = ((gdouble)src[x*3+0]) / 255.0;
-	  g = ((gdouble)src[x*3+1]) / 255.0;
-	  b = ((gdouble)src[x*3+2]) / 255.0;
-	  a = 1.0;
+	  if (nvals.independent)
+	    noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
+
+	  gint p = src[b] + noise;
+	  dest[b] = CLAMP0255(p);
 	}
       else
-	{
-	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
-	  g = b = r;
-	  if (preview_cache_bpp == 2)
-		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
-	  else
-	    a = 1.0;
-	}
-      
-      if ((x / GIMP_CHECK_SIZE) & 1) 
-	{
-	  c0 = GIMP_CHECK_LIGHT;
-	  c1 = GIMP_CHECK_DARK;
-	} 
-      else 
-	{
-	  c0 = GIMP_CHECK_DARK;
-	  c1 = GIMP_CHECK_LIGHT;
-	}
-      
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
-      
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
-      
-    } /* for */
-  
-  if ((row / GIMP_CHECK_SIZE) & 1)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
-    }
-  else
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
+	dest[b] = src[b];
     }
 }
 
@@ -321,153 +256,70 @@ static void
 noisify (GimpDrawable *drawable, 
 	 gboolean   preview_mode)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src_row, *dest_row;
-  guchar *src, *dest, *dest_data;
-  gint row, col, b;
-  gint x1, y1, x2, y2, p, bpp = 3;
-  gint noise;
-  gint progress = 0, max_progress = 0;
-  gpointer pr;
-  gint row_stride = 0;
-  guchar *odd = NULL;
-  guchar *even = NULL;
   GRand *gr;
-  /* initialize */
-
-  noise = 0;
 
   gr = g_rand_new ();
 
   if (preview_mode) 
     {
-      x1 = y1 = 0;
-      x2 = GTK_PREVIEW (preview)->buffer_width;
-      y2 = GTK_PREVIEW (preview)->buffer_height;
-      bpp = preview_cache_bpp;
-      row_stride = preview_cache_rowstride;
-      even = g_malloc (x2 * 3);
-      odd  = g_malloc (x2 * 3);
-    } 
-  else 
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      gimp_pixel_rgn_init (&src_rgn, drawable,
-			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-      gimp_pixel_rgn_init (&dest_rgn, drawable,
-			   x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-      /* Initialize progress */
-      progress = 0;
-      max_progress = (x2 - x1) * (y2 - y1);
-    }
+      guchar *src, *dest, *dest_data;
+      gint width, height, row_stride;
+      gint row, col;
+      gint bpp;
 
-  if (preview_mode) 
-    {
-      dest_data = g_malloc (row_stride * y2);
+      width = preview->width;
+      height = preview->height;
+      bpp = preview->bpp;
+      row_stride = preview->rowstride;
 
-      for (row = 0; row < y2; row++)
+      dest_data = g_malloc (row_stride);
+
+      for (row = 0; row < height; row++)
 	{
-	  src  = preview_cache + row * row_stride;
-	  dest = dest_data + row * row_stride;
-	  
-	  for (col = 0; col < x2; col++)
+	  src  = preview->cache + row * row_stride;
+	  dest = dest_data;
+
+	  for (col = 0; col < width; col++)
 	    {
-	      if (nvals.independent == FALSE)
-		noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
-
-	      for (b = 0; b < bpp; b++)
-		{
-		  if (nvals.independent == TRUE)
-		    noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
-
-		  if (nvals.noise[b] > 0.0)
-		    {
-		      p = src[b] + noise;
-		      if (p < 0)
-		        p = 0;
-		      else if (p > 255)
-		        p = 255;
-		      dest[b] = p;
-		    }
-		  else
-		    dest[b] = src[b];
-
-		}
+	      noisify_func (src, dest, bpp, gr);
 	      src += bpp;
 	      dest += bpp;
 	    }
+
+	  gimp_fixme_preview_do_row(preview, row, width, dest_data);
 	}
 
-      for (row = 0; row < y2; row++)
-	{
-	  preview_do_row(row,x2,even,odd,dest_data + row * row_stride);
-	}
-
-      gtk_widget_queue_draw (preview);
-
-      g_free(even);
-      g_free(odd);
-
+      g_free (dest_data);
+      gtk_widget_queue_draw (preview->widget);
     } 
   else 
     {
-      for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-	   pr != NULL;
-	   pr = gimp_pixel_rgns_process (pr))
-	{
-	  src_row = src_rgn.data;
-	  dest_row = dest_rgn.data;
-
-	  for (row = 0; row < src_rgn.h; row++)
-	    {
-	      src = src_row;
-	      dest = dest_row;
-	      
-	      for (col = 0; col < src_rgn.w; col++)
-		{
-		  if (nvals.independent == FALSE)
-		    noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
-		  
-		  for (b = 0; b < src_rgn.bpp; b++)
-		    {
-		      if (nvals.independent == TRUE)
-			noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
-		      
-		      if (nvals.noise[b] > 0.0)
-			{
-			  p = src[b] + noise;
-			  if (p < 0)
-			    p = 0;
-			  else if (p > 255)
-			    p = 255;
-			  dest[b] = p;
-			}
-		      else
-			dest[b] = src[b];
-		      
-		    }
-		  src += src_rgn.bpp;
-		  dest += dest_rgn.bpp;
-		}
-	      
-	      src_row += src_rgn.rowstride;
-	      dest_row += dest_rgn.rowstride;
-	    }
-	  
-	  /* Update progress */
-	  progress += src_rgn.w * src_rgn.h;
-	  gimp_progress_update ((double) progress / (double) max_progress);
-	}
- 
-      /*  update the blurred region  */
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-
-    } /* endif normal mode */
+      gimp_rgn_iterate2 (drawable, run_mode, (GimpRgnFunc2) noisify_func, gr);
+    }
 
   g_rand_free (gr);
 
+}
+
+static void
+noisify_add_channel (GtkWidget *table, gint channel, gchar *name, 
+		     GimpDrawable *drawable)
+{
+  GtkObject *adj;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, channel + 1,
+			      name, SCALE_WIDTH, 0,
+			      nvals.noise[channel], 0.0, 1.0, 0.01, 0.1, 2,
+			      TRUE, 0, 0,
+			      NULL, NULL);
+
+  g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+		    G_CALLBACK (noisify_double_adjustment_update),
+		    &nvals.noise[channel]);
+
+  noise_int.channel_adj[channel] = adj;
 }
 
 static gint
@@ -480,9 +332,6 @@ noisify_dialog (GimpDrawable *drawable,
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkObject *adj;
-  gchar *buffer;
-  gint   i;
 
   gimp_ui_init ("noisify", FALSE);
 
@@ -520,10 +369,11 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (drawable);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_fixme_preview_new (NULL);
+  gimp_fixme_preview_fill (preview, drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
   noisify (drawable, TRUE); /* preview noisify */
-  gtk_widget_show (preview);
+  gtk_widget_show (preview->widget);
   
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -551,173 +401,37 @@ noisify_dialog (GimpDrawable *drawable,
 
   if (channels == 1) 
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("_Gray:"), SCALE_WIDTH, 0,
-				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[0]);
-
-      noise_int.channel_adj[0] = adj;
+      noisify_add_channel (table, 0, _("_Gray:"), drawable);
     }
   else if (channels == 2)
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("_Gray:"), SCALE_WIDTH, 0,
-				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[0]);
-
-      noise_int.channel_adj[0] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("_Alpha:"), SCALE_WIDTH, 0,
-				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[1]);
-
-      noise_int.channel_adj[1] = adj;
-    }
-  
+      noisify_add_channel (table, 0, _("_Gray:"), drawable);
+      noisify_add_channel (table, 1, _("_Alpha:"), drawable);
+    }  
   else if (channels == 3)
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("_Red:"), SCALE_WIDTH, 0,
-				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[0]);
-
-      noise_int.channel_adj[0] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("_Green:"), SCALE_WIDTH, 0,
-				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[1]);
-
-      noise_int.channel_adj[1] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				  _("_Blue:"), SCALE_WIDTH, 0,
-				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[2]);
-
-      noise_int.channel_adj[2] = adj;
+      noisify_add_channel (table, 0, _("_Red:"), drawable);
+      noisify_add_channel (table, 1, _("_Green:"), drawable);
+      noisify_add_channel (table, 2, _("_Blue:"), drawable);
     }
 
   else if (channels == 4)
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("_Red:"), SCALE_WIDTH, 0,
-				  nvals.noise[0], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[0]);
-
-      noise_int.channel_adj[0] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("_Green:"), SCALE_WIDTH, 0,
-				  nvals.noise[1], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[1]);
-
-      noise_int.channel_adj[1] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				  _("_Blue:"), SCALE_WIDTH, 0,
-				  nvals.noise[2], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[2]);
-
-      noise_int.channel_adj[2] = adj;
-
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				  _("_Alpha:"), SCALE_WIDTH, 0,
-				  nvals.noise[3], 0.0, 1.0, 0.01, 0.1, 2,
-				  TRUE, 0, 0,
-				  NULL, NULL);
-
-      g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-      g_signal_connect (G_OBJECT (adj), "value_changed",
-                        G_CALLBACK (noisify_double_adjustment_update),
-                        &nvals.noise[3]);
-
-      noise_int.channel_adj[3] = adj;
+      noisify_add_channel (table, 0, _("_Red:"), drawable);
+      noisify_add_channel (table, 1, _("_Green:"), drawable);
+      noisify_add_channel (table, 2, _("_Blue:"), drawable);
+      noisify_add_channel (table, 3, _("_Alpha:"), drawable);
     }
   else
     {
+      gchar *buffer;
+      gint   i;
+
       for (i = 0; i < channels; i++)
 	{
 	  buffer = g_strdup_printf (_("Channel #%d:"), i);
 
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, i + 1,
-				      buffer, SCALE_WIDTH, 0,
-				      nvals.noise[i], 0.0, 1.0, 0.01, 0.1, 2,
-				      TRUE, 0, 0,
-				      NULL, NULL);
-
-          g_object_set_data (G_OBJECT (adj), "drawable", drawable);
-
-	  g_signal_connect (G_OBJECT (adj), "value_changed",
-                            G_CALLBACK (noisify_double_adjustment_update),
-                            &nvals.noise[i]);
-
-	  noise_int.channel_adj[i] = adj;
+	  noisify_add_channel (table, i, buffer, drawable);
 
 	  g_free (buffer);
 	}
@@ -787,71 +501,4 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
 	  gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
 				    adjustment->value);
     }
-}
-
-static GtkWidget *
-preview_widget (GimpDrawable *drawable)
-{
-  gint       size;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview (preview, drawable);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  return preview;
-}
-
-static void
-fill_preview (GtkWidget *widget, 
-	      GimpDrawable *drawable)
-{
-  GimpPixelRgn  srcPR;
-  gint       width;
-  gint       height;
-  gint       x1, x2, y1, y2;
-  gint       bpp;
-  gint       y;
-  guchar    *src;
-  guchar    *even, *odd;
-  
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  if (x2 - x1 > PREVIEW_SIZE)
-    x2 = x1 + PREVIEW_SIZE;
-  
-  if (y2 - y1 > PREVIEW_SIZE)
-    y2 = y1 + PREVIEW_SIZE;
-  
-  width  = x2 - x1;
-  height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->drawable_id);
-  
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
-
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, x2, y2, FALSE, FALSE);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src  = g_malloc (width * bpp);
-  preview_cache = g_malloc(width * bpp * height);
-  preview_cache_rowstride = width * bpp;
-  preview_cache_bpp = bpp;
-
-
-  for (y = 0; y < height; y++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
-      memcpy(preview_cache + (y*width*bpp),src,width*bpp);
-    }
-
-  for (y = 0; y < height; y++)
-    {
-      preview_do_row(y,width,even,odd,preview_cache + (y*width*bpp));
-    }
-
-  g_free (even);
-  g_free (odd);
-  g_free (src);
 }

@@ -1,3 +1,13 @@
+2002-12-15  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/displace.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/noisify.c: code clean-up, fixed memory leak,
+	better use of libgimp routines.
+
 2002-12-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c: set text and base colors as well

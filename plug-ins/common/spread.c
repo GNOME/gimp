@@ -68,19 +68,6 @@ static gint      spread_dialog          (gint32        image_ID,
 static void      spread_ok_callback     (GtkWidget    *widget,
 				         gpointer      data);
 
-static GimpTile *   spread_pixel (GimpDrawable *drawable,
-				  GimpTile     *tile,
-				  gint          x1,
-				  gint          y1,
-				  gint          x2,
-				  gint          y2,
-				  gint          x,
-				  gint          y,
-				  gint         *row,
-				  gint         *col,
-				  guchar       *pixel);
-
-
 /***** Local vars *****/
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -238,31 +225,26 @@ static void
 spread (GimpDrawable *drawable)
 {
   GimpPixelRgn  dest_rgn;
-  GimpTile     *tile = NULL;
-  gint          row = -1;
-  gint          col = -1;
   gpointer      pr;
+  GimpPixelFetcher *pft;
 
   gint    width, height;
   gint    bytes;
   guchar *destrow;
   guchar *dest;
-  guchar  pixel[4][4];
   gint    x1, y1, x2, y2;
   gint    x, y;
   gint    progress, max_progress;
-
   gdouble x_amount, y_amount;
   gdouble angle;
-
   gint xdist, ydist;
   gint xi, yi;
 
-  gint k;
   GRand *gr;
 
   gr = g_rand_new ();
-  /* Get selection area */
+
+  pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -308,46 +290,40 @@ spread (GimpDrawable *drawable)
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
               /* get random angle, x distance, and y distance */
-              xdist = g_rand_int_range (gr, -(x_amount + 1)/2, (x_amount + 1)/2);
-              ydist = g_rand_int_range (gr, -(y_amount + 1)/2, (y_amount + 1)/2);
+              xdist = g_rand_int_range (gr, -(x_amount + 1) / 2, 
+					(x_amount + 1) / 2);
+              ydist = g_rand_int_range (gr, -(y_amount + 1)/2, 
+					(y_amount + 1) / 2);
               angle = g_rand_double_range (gr, -G_PI, G_PI);
 
-              xi = x + floor(sin(angle)*xdist);
-              yi = y + floor(cos(angle)*ydist);
+              xi = x + floor(sin(angle) * xdist);
+              yi = y + floor(cos(angle) * ydist);
 
-              /* Only displace the pixel if it's within the bounds of the image. */
+              /* Only displace the pixel if it's within the bounds of the 
+		 image. */
               if ((xi >= 0) && (xi < width) && (yi >= 0) && (yi < height))
-                  tile = spread_pixel (drawable, tile,
-				       x1, y1, x2, y2, xi, yi,
-				       &row, &col, pixel[0]);
-	      else
-              {
-              /* Else just copy it */
-                  tile = spread_pixel (drawable, tile,
-				       x1, y1, x2, y2, x, y,
-				       &row, &col, pixel[0]);
-              }
-
-              for (k = 0; k < bytes; k++)
-                  *dest++ = pixel[0][k];
-            } /* for */
-
+		{
+		  gimp_pixel_fetcher_get_pixel (pft, xi, yi, dest);
+		}
+	      else /* Else just copy it */
+		{
+		  gimp_pixel_fetcher_get_pixel (pft, x, y, dest);
+		}
+	      dest += bytes;
+            }
 	  destrow += dest_rgn.rowstride;;
-	} /* for */
-
+	}
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
-    }  /* for  */
+    }
 
-  if (tile)
-    gimp_tile_unref (tile, FALSE);
+  gimp_pixel_fetcher_destroy (pft);
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-} /* spread */
-
+}
 
 static gint
 spread_dialog (gint32        image_ID,
@@ -430,44 +406,4 @@ spread_ok_callback (GtkWidget *widget,
   pint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static GimpTile *
-spread_pixel (GimpDrawable *drawable,
-	      GimpTile     *tile,
-	      gint          x1,
-	      gint          y1,
-	      gint          x2,
-	      gint          y2,
-	      gint          x,
-	      gint          y,
-	      gint         *row,
-	      gint         *col,
-	      guchar       *pixel)
-{
-  static guchar empty_pixel[4] = {0, 0, 0, 0};
-  guchar *data;
-  gint    b;
-
-  if (x >= x1 && y >= y1 && x < x2 && y < y2)
-    {
-      if ((x >> 6 != *col) || (y >> 6 != *row))
-	{
-	  *col = x >> 6;
-	  *row = y >> 6;
-	  if (tile)
-	    gimp_tile_unref (tile, FALSE);
-	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
-	  gimp_tile_ref (tile);
-	}
-
-      data = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
-    }
-  else
-    data = empty_pixel;
-
-  for (b = 0; b < drawable->bpp; b++)
-    pixel[b] = data[b];
-
-  return tile;
 }

@@ -96,9 +96,7 @@ static TileItInterface tint =
 };
 
 static GimpDrawable *tileitdrawable;
-static gint          tile_width, tile_height;
-static GimpTile     *the_tile = NULL;
-static gint          img_width, img_height,img_bpp;
+static gint          img_bpp;
 
 static void      query  (void);
 static void      run    (gchar       *name,
@@ -203,7 +201,7 @@ Reset_Call res_call =
 #define HORIZONTAL 0x1
 #define VERTICAL   0x2
 
-gint tileactions[MAX_SEGS][MAX_SEGS];
+static gint tileactions[MAX_SEGS][MAX_SEGS];
 
 /* What actions buttons toggled */
 static gint   do_horz = FALSE;
@@ -266,13 +264,7 @@ run (gchar       *name,
 
   tileitdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width  = gimp_drawable_width (tileitdrawable->drawable_id);
-  img_height = gimp_drawable_height (tileitdrawable->drawable_id);
-
   has_alpha = gimp_drawable_has_alpha (tileitdrawable->drawable_id);
-
-  tile_width  = gimp_tile_width ();
-  tile_height = gimp_tile_height ();
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
 			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
@@ -585,7 +577,7 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_radio_update),
                     &exp_call.type);
 
-  button = gtk_button_new_with_mnemonic (_("_Apply"));
+  button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
   gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 4, 0, 0, 0, 0);
   gtk_widget_show (button);
 
@@ -773,7 +765,7 @@ exp_need_update (gint nx,
     }
 }
 
-static gint
+static gboolean
 tileit_preview_events (GtkWidget *widget,
 		       GdkEvent  *event)
 {
@@ -1008,51 +1000,6 @@ cache_preview (void)
 }
 
 static void
-tileit_get_pixel (gint    x,
-		  gint    y,
-		  guchar *pixel)
-{
-  static gint row  = -1;
-  static gint col  = -1;
-  
-  gint    newcol, newrow;
-  gint    newcoloff, newrowoff;
-  guchar *p;
-  int     i;
-  
-  if ((x < 0) || (x >= img_width) || (y < 0) || (y >= img_height)) {
-    pixel[0] = 0;
-    pixel[1] = 0;
-    pixel[2] = 0;
-    pixel[3] = 0;
-    
-    return;
-  }
-  
-  newcol    = x / tile_width;
-  newcoloff = x % tile_width;
-  newrow    = y / tile_height;
-  newrowoff = y % tile_height;
-  
-  if ((col != newcol) || (row != newrow) || (the_tile == NULL)) {
-    if (the_tile != NULL)
-      gimp_tile_unref(the_tile, FALSE);
-    
-    the_tile = gimp_drawable_get_tile(tileitdrawable, FALSE, newrow, newcol);
-    gimp_tile_ref(the_tile);
-    
-    col = newcol;
-    row = newrow;
-  } 
-  
-  p = the_tile->data + the_tile->bpp * (the_tile->ewidth * newrowoff + newcoloff);
-  
-  for (i = img_bpp; i; i--)
-    *pixel++ = *p++;
-}
-
-
-static void
 do_tiles(void)
 {
   GimpPixelRgn dest_rgn;
@@ -1065,8 +1012,11 @@ do_tiles(void)
   guchar    pixel[4];
   int 	    nc,nr;
   int       i;
-  
+  GimpPixelFetcher *pft;
+
   /* Initialize pixel region */
+
+  pft = gimp_pixel_fetcher_new (tileitdrawable);
   
   gimp_pixel_rgn_init(&dest_rgn, tileitdrawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
@@ -1093,7 +1043,10 @@ do_tiles(void)
 		     sel_height,
 		     col-sel_x1,row-sel_y1,
 		     &nc,&nr);
-	  tileit_get_pixel(nc+sel_x1,nr+sel_y1,pixel);
+
+	  gimp_pixel_fetcher_get_pixel (pft, nc + sel_x1, nr + sel_y1,
+					pixel);
+
 	  for (i = 0; i < bpp; i++)
 	    *dest++ = pixel[i];
 	  
@@ -1108,12 +1061,9 @@ do_tiles(void)
     progress += dest_rgn.w * dest_rgn.h;
     gimp_progress_update((double) progress / max_progress);
   }
-  
-  if (the_tile != NULL) {
-    gimp_tile_unref(the_tile, FALSE);
-    the_tile = NULL;
-  }
-  
+
+  gimp_pixel_fetcher_destroy (pft);
+
   gimp_drawable_flush(tileitdrawable);
   gimp_drawable_merge_shadow(tileitdrawable->drawable_id, TRUE);
   gimp_drawable_update(tileitdrawable->drawable_id,

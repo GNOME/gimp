@@ -24,7 +24,6 @@
 
 #include "config.h"
 
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -70,19 +69,6 @@ static gint    shift_dialog      (gint32 image_ID);
 static void    shift_ok_callback (GtkWidget *widget,
 				  gpointer   data);
 static void    shift_amount_update_callback(GtkWidget * widget, gpointer data);
-
-static GimpTile * shift_pixel (GimpDrawable *drawable,
-                               GimpTile     *tile,
-                               gint          x1,
-                               gint          y1,
-                               gint          x2,
-                               gint          y2,
-                               gint          x,
-                               gint          y,
-                               gint         *row,
-                               gint         *col,
-                               guchar       *pixel);
-
 
 /***** Local vars *****/
 
@@ -235,32 +221,24 @@ static void
 shift (GimpDrawable *drawable)
 {
   GimpPixelRgn dest_rgn;
-  GimpTile   * tile = NULL;
-  gint      row = -1;
-  gint      col = -1;
   gpointer  pr;
-
+  GimpPixelFetcher *pft;
   gint    width, height;
   gint    bytes;
   guchar *destline;
   guchar *dest;
-  guchar *otherdest;
-  guchar  pixel[4][4];
   gint    x1, y1, x2, y2;
   gint    x, y;
   gint    progress, max_progress;
+  gint 	  amount;
+  gint 	  xdist, ydist;
 
-  gint amount;
-
-  gint xdist, ydist;
-  gint xi, yi;
-
-  gint k;
   GRand *gr; /* The random number generator we're using */
 
   gr = g_rand_new ();
 
-  /* Get selection area */
+  pft = gimp_pixel_fetcher_new (drawable);
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = drawable->width;
@@ -286,61 +264,45 @@ shift (GimpDrawable *drawable)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
+      destline = dest_rgn.data;
+
       if (shvals.orientation == VERTICAL)
         {
-	  destline = dest_rgn.data;
-
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
 	      dest = destline;
-	      ydist = g_rand_int_range (gr, -(amount + 1)/2.0, (amount + 1)/2.0 );
-	      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	      ydist = g_rand_int_range (gr, -(amount + 1) / 2.0, 
+					(amount + 1) / 2.0 );
+	      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
                 {
-		  otherdest = dest;
-
-		  yi = (y + ydist + height)%height; /*  add width before % because % isn't a true modulo */
-
-		  tile = shift_pixel (drawable, tile, x1, y1, x2, y2, x, yi, &row, &col, pixel[0]);
-
-		  for (k = 0; k < bytes; k++)
-		    *otherdest++ = pixel[0][k];
+		  gimp_pixel_fetcher_get_pixel2 (pft, x, y + ydist, 
+						 PIXEL_WRAP, dest);
 		  dest += dest_rgn.rowstride;
                 }
-
 	      destline += bytes;
             }
-
-	  progress += dest_rgn.w * dest_rgn.h;
-	  gimp_progress_update ((double) progress / (double) max_progress);
         }
       else
         {
-	  destline = dest_rgn.data;
-
-	  for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	  for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
             {
 	      dest = destline;
-	      xdist = g_rand_int_range (gr, -(amount + 1)/2.0, (amount + 1)/2.0);
-	      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	      xdist = g_rand_int_range (gr, -(amount + 1) / 2.0, 
+					(amount + 1) / 2.0);
+	      for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
                 {
-		  xi = (x + xdist + width)%width; /*  add width before % because % isn't a true modulo */
-
-		  tile = shift_pixel (drawable, tile, x1, y1, x2, y2, xi, y, &row, &col, pixel[0]);
-
-		  for (k = 0; k < bytes; k++)
-		    *dest++ = pixel[0][k];
+		  gimp_pixel_fetcher_get_pixel2 (pft, x + xdist, y, 
+						 PIXEL_WRAP, dest);
+		  dest += bytes;
                 }
-
 	      destline += dest_rgn.rowstride;
             }
-
-	  progress += dest_rgn.w * dest_rgn.h;
-	  gimp_progress_update ((double) progress / (double) max_progress);
         }
+      progress += dest_rgn.w * dest_rgn.h;
+      gimp_progress_update ((double) progress / (double) max_progress);
     }
 
-  if (tile)
-    gimp_tile_unref (tile, FALSE);
+  gimp_pixel_fetcher_destroy (pft);
 
   /*  update the region  */
   gimp_drawable_flush (drawable);
@@ -452,44 +414,4 @@ shift_ok_callback (GtkWidget *widget,
   shint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static GimpTile *
-shift_pixel (GimpDrawable *drawable,
-	     GimpTile     *tile,
-	     gint       x1,
-	     gint       y1,
-	     gint       x2,
-	     gint       y2,
-	     gint       x,
-	     gint       y,
-	     gint      *row,
-	     gint      *col,
-	     guchar    *pixel)
-{
-  static guchar empty_pixel[4] = {0, 0, 0, 0};
-  guchar *data;
-  gint    b;
-
-  if (x >= x1 && y >= y1 && x < x2 && y < y2)
-    {
-      if ((x >> 6 != *col) || (y >> 6 != *row))
-	{
-	  *col = x / 64;
-	  *row = y / 64;
-	  if (tile)
-	    gimp_tile_unref (tile, FALSE);
-	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);
-	  gimp_tile_ref (tile);
-	}
-
-      data = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
-    }
-  else
-    data = empty_pixel;
-
-  for (b = 0; b < drawable->bpp; b++)
-    pixel[b] = data[b];
-
-  return tile;
 }
