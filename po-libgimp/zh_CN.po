@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
-"PO-Revision-Date: 2004-03-12 19:09+0800\n"
+"POT-Creation-Date: 2004-11-17 09:47+0800\n"
+"PO-Revision-Date: 2004-11-17 11:00+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
-msgstr "画笔选择"
+msgstr "笔刷选择"
 
 #: libgimp/gimpbrushmenu.c:158 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
@@ -190,14 +190,13 @@ msgstr "字体选择"
 msgid "Gradient Selection"
 msgstr "渐变选择"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
-msgstr ""
+msgstr "(空)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "图案选择"
+msgstr "色板选择"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -209,73 +208,71 @@ msgstr "百分点"
 
 #: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "小"
 
 #: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "中"
 
 #: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "大"
 
 #: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "浅色方格"
 
 #: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "中等色调方格"
 
 #: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "深色方格"
 
 #: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "仅白色"
 
 #: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "仅灰色"
 
 #: libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "黑色"
+msgstr "仅黑色"
 
 #: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB 颜色"
 
 #: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "转换到灰度"
+msgstr "灰度"
 
 #: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "索引颜色"
 
 #: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alpha"
 
 #: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "灰度-alpha"
 
 #: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "索引"
 
 #: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "索引-alpha"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -370,25 +367,25 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
 
 #: libgimpthumb/gimpthumbnail.c:917
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "无法创建缩略图文件夹“%s”。"
+msgstr "无法为“%s”创建缩略图：%s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/前景色(_F)"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "前景色(_F)"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/背景色(_B)"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "背景色(_B)"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/黑(_K)"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "黑(_K)"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/白(_W)"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "白(_W)"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -452,13 +449,12 @@ msgid "Alpha"
 msgstr "Alpha"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "HTML 中所使用的十六进制颜色表示"
+msgstr "HTML 和 CSS 中所使用的十六进制颜色格式"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML 格式(_N)："
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -477,17 +473,14 @@ msgid "Select File"
 msgstr "选择文件"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "千字节"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
 msgstr "兆字节"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "G 字节"
 
@@ -507,82 +500,86 @@ msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "方格大小"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "方格风格"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "预览(_P)"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "固定"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "复制(_D)"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "编辑(_E)"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "已链接"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "粘贴为新图像"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "粘贴进入"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr ""
+msgstr "勾画(_S)"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "字母间距(_E)"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "改变大小(_R)"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "缩放(_S)"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "剪裁"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "旋转(_R)"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "切变(_S)"
 
@@ -745,13 +742,12 @@ msgid "Black"
 msgstr "黑色"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "黑色量(%)："
+msgstr "黑色量(_P)："
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "彩色墨水中黑色所占的百分比。"
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
