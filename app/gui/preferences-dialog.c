@@ -61,8 +61,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define SB_WIDTH 10
-
 /*  gimprc will be parsed with a buffer size of 1024, 
  *  so don't set this too large
  */
@@ -107,23 +105,30 @@ prefs_config_notify (GObject    *config,
                      GParamSpec *param_spec,
                      GObject    *config_copy)
 {
-  GValue value = { 0, };
+  GValue global_value = { 0, };
+  GValue copy_value = { 0, };
 
-  g_value_init (&value, param_spec->value_type);
+  g_value_init (&global_value, param_spec->value_type);
+  g_value_init (&copy_value,   param_spec->value_type);
 
-  g_object_get_property (config, param_spec->name, &value);
+  g_object_get_property (config,      param_spec->name, &global_value);
+  g_object_get_property (config_copy, param_spec->name, &copy_value);
 
-  g_signal_handlers_block_by_func (config_copy,
-                                   prefs_config_copy_notify,
-                                   config);
+  if (g_param_values_cmp (param_spec, &global_value, &copy_value))
+    {
+      g_signal_handlers_block_by_func (config_copy,
+                                       prefs_config_copy_notify,
+                                       config);
 
-  g_object_set_property (config_copy, param_spec->name, &value);
+      g_object_set_property (config_copy, param_spec->name, &global_value);
 
-  g_signal_handlers_unblock_by_func (config_copy,
-                                     prefs_config_copy_notify,
-                                     config);
+      g_signal_handlers_unblock_by_func (config_copy,
+                                         prefs_config_copy_notify,
+                                         config);
+    }
 
-  g_value_unset (&value);
+  g_value_unset (&global_value);
+  g_value_unset (&copy_value);
 }
 
 static void
@@ -131,42 +136,48 @@ prefs_config_copy_notify (GObject    *config_copy,
                           GParamSpec *param_spec,
                           GObject    *config)
 {
-  GValue value = { 0, };
+  GValue copy_value   = { 0, };
+  GValue global_value = { 0, };
 
-  g_value_init (&value, param_spec->value_type);
+  g_value_init (&copy_value,   param_spec->value_type);
+  g_value_init (&global_value, param_spec->value_type);
 
-  g_object_get_property (config_copy, param_spec->name, &value);
+  g_object_get_property (config_copy, param_spec->name, &copy_value);
+  g_object_get_property (config,      param_spec->name, &global_value);
 
-  if (param_spec->flags & GIMP_PARAM_RESTART)
+  if (g_param_values_cmp (param_spec, &copy_value, &global_value))
     {
-      g_print ("NOT Applying prefs change of '%s' to global config "
-               "because it needs restart\n",
-               param_spec->name);
+      if (param_spec->flags & GIMP_PARAM_RESTART)
+        {
+          g_print ("NOT Applying prefs change of '%s' to global config "
+                   "because it needs restart\n",
+                   param_spec->name);
+        }
+      else if (param_spec->flags & GIMP_PARAM_CONFIRM)
+        {
+          g_print ("NOT Applying prefs change of '%s' to global config "
+                   "because it needs confirmation\n",
+                   param_spec->name);
+        }
+      else
+        {
+          g_print ("Applying prefs change of '%s' to global config\n",
+                   param_spec->name);
+
+          g_signal_handlers_block_by_func (config,
+                                           prefs_config_notify,
+                                           config_copy);
+
+          g_object_set_property (config, param_spec->name, &copy_value);
+
+          g_signal_handlers_unblock_by_func (config,
+                                             prefs_config_notify,
+                                             config_copy);
+        }
     }
-  else if (param_spec->flags & GIMP_PARAM_CONFIRM)
-    {
-      g_print ("NOT Applying prefs change of '%s' to global config "
-               "because it needs confirmation\n",
-               param_spec->name);
-    }
-  else
-    {
-      g_print ("Applying prefs change of '%s' to global config\n",
-               param_spec->name);
 
-      g_signal_handlers_block_by_func (config,
-                                       prefs_config_notify,
-                                       config_copy);
-
-      g_object_set_property (config, param_spec->name, &value);
-
-      g_signal_handlers_unblock_by_func (config,
-                                         prefs_config_notify,
-                                         config_copy);
-
-    }
-
-  g_value_unset (&value);
+  g_value_unset (&copy_value);
+  g_value_unset (&global_value);
 }
 
 GtkWidget *
@@ -292,6 +303,8 @@ prefs_cancel_callback (GtkWidget *widget,
         g_object_class_list_properties (G_OBJECT_GET_CLASS (config_orig),
                                         &n_param_specs);
 
+      g_object_freeze_notify (G_OBJECT (gimp->config));
+
       for (i = 0; i < n_param_specs; i++)
         {
           GValue global_value = { 0, };
@@ -317,6 +330,8 @@ prefs_cancel_callback (GtkWidget *widget,
           g_value_unset (&global_value);
           g_value_unset (&orig_value);
         }
+
+      g_object_thaw_notify (G_OBJECT (gimp->config));
 
       g_free (param_specs);
     }
@@ -484,7 +499,7 @@ prefs_res_source_callback (GtkWidget *widget,
   g_object_set (config,
                 "monitor-xresolution",                      xres,
                 "monitor-yresolution",                      yres,
-                "monitor-resolution-from-windowing-system", TRUE,
+                "monitor-resolution-from-windowing-system", from_gdk,
                 NULL);
 }
 
@@ -1046,6 +1061,9 @@ prefs_dialog_new (Gimp    *gimp,
                                          core_config->default_yresolution,
                                          FALSE);
 
+  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Width"), 0, 1, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
@@ -1076,6 +1094,9 @@ prefs_dialog_new (Gimp    *gimp,
                                           0.0, 0.0,
                                           TRUE);
 
+  gtk_table_set_col_spacings (GTK_TABLE (sizeentry2), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (sizeentry2), 2);
+
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
 				_("Horizontal"), 0, 1, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
@@ -1097,7 +1118,7 @@ prefs_dialog_new (Gimp    *gimp,
 
   prefs_enum_option_menu_add (config, "default-image-type",
                               GIMP_RGB, GIMP_GRAY,
-                              _("Default Image Type:"),
+                              _("Default Image _Type:"),
                               GTK_TABLE (table), 0);
   prefs_memsize_entry_add (config, "max-new-image-size",
                            _("Maximum Image Size:"),
@@ -1160,41 +1181,41 @@ prefs_dialog_new (Gimp    *gimp,
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "preview-size", 0, 0,
-                              _("Preview Size:"),
+                              _("_Preview Size:"),
                               GTK_TABLE (table), 0);
   prefs_enum_option_menu_add_with_values (config, "navigation-preview-size",
-                                          _("Nav Preview Size:"),
+                                          _("_Nav Preview Size:"),
                                           GTK_TABLE (table), 1,
                                           3,
                                           GIMP_PREVIEW_SIZE_MEDIUM,
                                           GIMP_PREVIEW_SIZE_EXTRA_LARGE,
                                           GIMP_PREVIEW_SIZE_HUGE);
   prefs_spin_button_add (config, "last-opened-size", 1.0, 5.0, 0,
-                         _("Recent Documents List Size:"),
+                         _("_Recent Documents List Size:"),
                          GTK_TABLE (table), 3);
 
   /* Dialog Bahaviour */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "info-window-per-display",
-                          _("Info Window Per Display"),
+                          _("_Info Window Per Display"),
                           GTK_BOX (vbox2));
 
   /* Menus */
   vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "tearoff-menus",
-                          _("Disable Tearoff Menus"),
+                          _("Disable _Tearoff Menus"),
                           GTK_BOX (vbox2));
 
   /* Window Positions */
   vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "save-session-info",
-                          _("Save Window Positions on Exit"),
+                          _("_Save Window Positions on Exit"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "restore-session",
-                          _("Restore Saved Window Positions on Start-up"),
+                          _("R_estore Saved Window Positions on Start-up"),
                           GTK_BOX (vbox2));
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -1229,10 +1250,10 @@ prefs_dialog_new (Gimp    *gimp,
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "show-tool-tips",
-                          _("Show Tool Tips"),
+                          _("Show Tool _Tips"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "use-help",
-                          _("Context Sensitive Help with \"F1\""),
+                          _("Context Sensitive _Help with \"F1\""),
                           GTK_BOX (vbox2));
 
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox));
@@ -1240,7 +1261,7 @@ prefs_dialog_new (Gimp    *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "help-browser", 0, 0,
-                              _("Help Browser to Use:"),
+                              _("Help _Browser to Use:"),
                               GTK_TABLE (table), 0);
 
 
@@ -1264,7 +1285,7 @@ prefs_dialog_new (Gimp    *gimp,
 
   /*  Default threshold  */
   prefs_spin_button_add (config, "default-threshold", 1.0, 5.0, 0,
-                         _("Default Threshold:"),
+                         _("Default _Threshold:"),
                          GTK_TABLE (table), 0);
 
   frame = gtk_frame_new (_("Scaling")); 
@@ -1274,7 +1295,7 @@ prefs_dialog_new (Gimp    *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
 
   prefs_enum_option_menu_add (config, "interpolation-type", 0, 0,
-                              _("Default Interpolation:"),
+                              _("Default _Interpolation:"),
                               GTK_TABLE (table), 0);
 
 
@@ -1363,25 +1384,25 @@ prefs_dialog_new (Gimp    *gimp,
   vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "default-dot-for-dot",
-                          _("Use \"Dot for Dot\" by default"),
+                          _("Use \"_Dot for Dot\" by default"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "resize-windows-on-zoom",
-                          _("Resize Window on Zoom"),
+                          _("Resize Window on _Zoom"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "resize-windows-on-resize",
-                          _("Resize Window on Image Size Change"),
+                          _("Resize Window on Image _Size Change"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "show-rulers",
-                          _("Show Rulers"),
+                          _("Show _Rulers"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "show-statusbar",
-                          _("Show Statusbar"),
+                          _("Show S_tatusbar"),
                           GTK_BOX (vbox2));
 
   table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
-                         _("Marching Ants Speed:"),
+                         _("Marching _Ants Speed:"),
                          GTK_TABLE (table), 0);
 
 #if 0
@@ -1463,16 +1484,16 @@ prefs_dialog_new (Gimp    *gimp,
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_CONTAINER (vbox));
 
   prefs_check_button_add (config, "perfect-mouse",
-                          _("Perfect-but-Slow Pointer Tracking"),
+                          _("Perfect-but-Slow _Pointer Tracking"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (config, "cursor-updating",
-                          _("Enable Cursor Updating"),
+                          _("Enable Cursor _Updating"),
                           GTK_BOX (vbox2));
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "cursor-mode", 0, 0,
-                              _("Cursor Mode:"),
+                              _("Cursor M_ode:"),
                               GTK_TABLE (table), 0);
 
 
@@ -1497,10 +1518,10 @@ prefs_dialog_new (Gimp    *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
 
   prefs_enum_option_menu_add (config, "transparency-type", 0, 0,
-                              _("Transparency Type:"),
+                              _("Transparency _Type:"),
                               GTK_TABLE (table), 0);
   prefs_enum_option_menu_add (config, "transparency-size", 0, 0,
-                              _("Check Size:"),
+                              _("Check _Size:"),
                               GTK_TABLE (table), 1);
 
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox));
@@ -1563,6 +1584,9 @@ prefs_dialog_new (Gimp    *gimp,
   g_free (pixels_per_unit);
   pixels_per_unit = NULL;
 
+  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("Horizontal"), 0, 1, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
@@ -1573,11 +1597,11 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_container_add (GTK_CONTAINER (abox), sizeentry);
   gtk_widget_show (sizeentry);
   gtk_widget_set_sensitive (sizeentry, ! display_config->monitor_res_from_gdk);
-  
+
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   
-  calibrate_button = gtk_button_new_with_label (_("Calibrate"));
+  calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_button);
@@ -1590,7 +1614,8 @@ prefs_dialog_new (Gimp    *gimp,
 
   group = NULL;
 
-  button = gtk_radio_button_new_with_label (group, _("From Windowing System"));
+  button = gtk_radio_button_new_with_mnemonic (group,
+                                               _("From _Windowing System"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1615,7 +1640,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
 
-  button = gtk_radio_button_new_with_label (group, _("Manually"));
+  button = gtk_radio_button_new_with_mnemonic (group, _("_Manually"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

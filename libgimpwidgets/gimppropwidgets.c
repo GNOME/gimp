@@ -77,7 +77,7 @@ gimp_prop_check_button_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  button = gtk_check_button_new_with_label (label);
+  button = gtk_check_button_new_with_mnemonic (label);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 
   g_object_set_data (G_OBJECT (button), "gimp-config-param-spec", param_spec);
@@ -1235,9 +1235,13 @@ gimp_prop_coordinates_new (GObject                   *config,
   g_signal_connect (G_OBJECT (sizeentry), "refval_changed",
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
-  g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
-		    G_CALLBACK (gimp_prop_coordinates_callback),
-		    config);
+
+  if (unit_property_name)
+    {
+      g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
+                        G_CALLBACK (gimp_prop_coordinates_callback),
+                        config);
+    }
 
   notify_name = g_strconcat ("notify::", x_property_name, NULL);
 
@@ -1279,7 +1283,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   gdouble     x_value;
   gdouble     y_value;
   GimpUnit    unit_value;
-  GtkWidget  *chainbutton;
+  gdouble    *old_x_value;
+  gdouble    *old_y_value;
 
   x_param_spec = g_object_get_data (G_OBJECT (sizeentry),
                                     "gimp-config-param-spec-x");
@@ -1295,59 +1300,60 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   y_value    = gimp_size_entry_get_refval (sizeentry, 1);
   unit_value = gimp_size_entry_get_unit (sizeentry);
 
-  chainbutton = g_object_get_data (G_OBJECT (sizeentry), "chainbutton");
+  old_x_value = g_object_get_data (G_OBJECT (sizeentry), "old-x-value");
 
-  if (chainbutton)
+  if (! old_x_value)
     {
-      gdouble *old_x_value;
-      gdouble *old_y_value;
+      old_x_value = g_new0 (gdouble, 1);
+      *old_x_value = 0.0;
+      g_object_set_data_full (G_OBJECT (sizeentry), "old-x-value",
+                              old_x_value,
+                              (GDestroyNotify) g_free);
+    }
 
-      old_x_value = g_object_get_data (G_OBJECT (sizeentry), "old-x-value");
+  old_y_value = g_object_get_data (G_OBJECT (sizeentry), "old-y-value");
 
-      if (! old_x_value)
-        {
-          old_x_value = g_new0 (gdouble, 1);
-          *old_x_value = 0.0;
-          g_object_set_data_full (G_OBJECT (sizeentry), "old-x-value",
-                                  old_x_value,
-                                  (GDestroyNotify) g_free);
-        }
+  if (! old_y_value)
+    {
+      old_y_value = g_new0 (gdouble, 1);
+      *old_y_value = 0.0;
+      g_object_set_data_full (G_OBJECT (sizeentry), "old-y-value",
+                              old_y_value,
+                              (GDestroyNotify) g_free);
+    }
 
-      old_y_value = g_object_get_data (G_OBJECT (sizeentry), "old-y-value");
+  if (x_value != y_value)
+    {
+      GtkWidget *chainbutton;
 
-      if (! old_y_value)
-        {
-          old_y_value = g_new0 (gdouble, 1);
-          *old_y_value = 0.0;
-          g_object_set_data_full (G_OBJECT (sizeentry), "old-y-value",
-                                  old_y_value,
-                                  (GDestroyNotify) g_free);
-        }
+      chainbutton = g_object_get_data (G_OBJECT (sizeentry), "chainbutton");
 
-      if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)))
+      if (chainbutton &&
+          gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)))
         {
           if (x_value != *old_x_value)
             {
-              *old_y_value = y_value = *old_x_value = x_value;
+              *old_x_value = x_value;
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-                                          y_value);
+                                          x_value);
               return;
             }
 
           if (y_value != *old_y_value)
             {
-              *old_x_value = x_value = *old_y_value = y_value;
+              *old_y_value = y_value;
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-                                          x_value);
+                                          y_value);
               return;
             }
         }
-      else
-        {
-          *old_x_value = x_value;
-          *old_y_value = y_value;
-        }
     }
+
+  if (*old_x_value == x_value && *old_y_value == y_value)
+    return;
+
+  *old_x_value = x_value;
+  *old_y_value = y_value;
 
   if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
       G_IS_PARAM_SPEC_INT (y_param_spec))
@@ -1356,7 +1362,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
                     x_param_spec->name,    (gint) x_value,
                     y_param_spec->name,    (gint) y_value,
 
-                    unit_param_spec ? unit_param_spec->name : NULL, unit_value,
+                    unit_param_spec ?
+                    unit_param_spec->name : NULL, unit_value,
 
                     NULL);
     }
@@ -1367,7 +1374,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
                     x_param_spec->name,    x_value,
                     y_param_spec->name,    y_value,
 
-                    unit_param_spec ? unit_param_spec->name : NULL, unit_value,
+                    unit_param_spec ?
+                    unit_param_spec->name : NULL, unit_value,
 
                     NULL);
     }

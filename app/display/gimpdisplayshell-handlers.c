@@ -63,6 +63,10 @@ static void   gimp_display_shell_update_guide_handler       (GimpImage        *g
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 
+static void   gimp_display_shell_check_notify_handler       (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
+
 static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
 
@@ -113,6 +117,15 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 		    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
 		    shell);
 
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::transparency-size",
+                    G_CALLBACK (gimp_display_shell_check_notify_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage->gimp->config),
+                    "notify::transparency-type",
+                    G_CALLBACK (gimp_display_shell_check_notify_handler),
+                    shell);
+
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
   gimp_display_shell_qmask_changed_handler (gimage, shell);
 }
@@ -133,6 +146,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       g_source_remove (shell->icon_idle_id);
       shell->icon_idle_id = 0;
     }
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage->gimp->config),
+                                        gimp_display_shell_check_notify_handler,
+                                        shell);
 
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_invalidate_preview_handler,
@@ -272,6 +289,15 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
                                          gimp_display_shell_idle_update_icon,
                                          shell,
                                          NULL);
+}
+
+static void
+gimp_display_shell_check_notify_handler (GObject          *config,
+                                         GParamSpec       *param_spec,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_full (shell);
+  gimp_display_shell_flush (shell);
 }
 
 static gboolean

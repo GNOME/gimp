@@ -26,8 +26,6 @@
 
 #include "base-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "tile.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
@@ -42,7 +40,6 @@
 #define IDLE_SWAPPER_TIMEOUT  250
 
 
-static void     tile_cache_init           (void);
 static gint     tile_cache_zorch_next     (void);
 static void     tile_cache_flush_internal (Tile     *tile);
 
@@ -83,13 +80,38 @@ static guint idle_swapper = 0;
 
 
 void
+tile_cache_init (gulong tile_cache_size)
+{
+  if (initialize)
+    {
+      initialize = FALSE;
+
+      clean_list.first = clean_list.last = NULL;
+      dirty_list.first = dirty_list.last = NULL;
+
+      max_cache_size = tile_cache_size;
+
+#ifdef USE_PTHREADS
+      pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
+#else
+      idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
+				    tile_idle_preswap, 
+				    NULL);
+#endif
+    }
+}
+
+void
+tile_cache_exit (void)
+{
+  tile_cache_set_size (0);
+}
+
+void
 tile_cache_insert (Tile *tile)
 {
   TileList *list;
   TileList *newlist;
-
-  if (initialize)
-    tile_cache_init ();
 
   CACHE_LOCK;
   if (tile->data == NULL) goto out;	
@@ -192,9 +214,6 @@ out:
 void
 tile_cache_flush (Tile *tile)
 {
-  if (initialize)
-    tile_cache_init ();
-
   CACHE_LOCK;
   tile_cache_flush_internal (tile);
   CACHE_UNLOCK;
@@ -239,9 +258,6 @@ tile_cache_flush_internal (Tile *tile)
 void
 tile_cache_set_size (gulong cache_size)
 {
-  if (initialize)
-    tile_cache_init ();
-
   max_cache_size = cache_size;
   CACHE_LOCK;
   while (cur_cache_size > max_cache_size)
@@ -252,28 +268,6 @@ tile_cache_set_size (gulong cache_size)
   CACHE_UNLOCK;
 }
 
-
-static void
-tile_cache_init (void)
-{
-  if (initialize)
-    {
-      initialize = FALSE;
-
-      clean_list.first = clean_list.last = NULL;
-      dirty_list.first = dirty_list.last = NULL;
-
-      max_cache_size = base_config->tile_cache_size;
-
-#ifdef USE_PTHREADS
-      pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
-#else
-      idle_swapper = g_timeout_add (IDLE_SWAPPER_TIMEOUT,
-				    tile_idle_preswap, 
-				    NULL);
-#endif
-    }
-}
 
 static gint
 tile_cache_zorch_next (void)

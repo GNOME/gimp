@@ -30,6 +30,7 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
 
@@ -64,6 +65,11 @@ struct _RenderInfo
 };
 
 
+static void   render_setup_notify (GObject    *config,
+                                   GParamSpec *param_spec,
+                                   Gimp       *gimp);
+
+
 /*  accelerate transparency of image scaling  */
 guchar *render_check_buf         = NULL;
 guchar *render_empty_buf         = NULL;
@@ -88,15 +94,80 @@ static guchar  check_combos[6][2] =
 
 
 void
-render_setup (GimpCheckType check_type,
-	      GimpCheckSize check_size)
+render_init (Gimp *gimp)
 {
-  gint i, j;
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (check_type < GIMP_LIGHT_CHECKS || check_type > GIMP_BLACK_ONLY)
-    g_error ("invalid check_type argument to render_setup: %d", check_type);
-  if (check_size < GIMP_SMALL_CHECKS || check_size > GIMP_LARGE_CHECKS)
-    g_error ("invalid check_size argument to render_setup: %d", check_size);
+  g_signal_connect (G_OBJECT (gimp->config), "notify::transparency-size",
+                    G_CALLBACK (render_setup_notify),
+                    gimp);
+  g_signal_connect (G_OBJECT (gimp->config), "notify::transparency-type",
+                    G_CALLBACK (render_setup_notify),
+                    gimp);
+
+  render_setup_notify (G_OBJECT (gimp->config), NULL, gimp);
+}
+
+void
+render_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
+                                        render_setup_notify,
+                                        gimp);
+
+  if (tile_buf)
+    {
+      g_free (tile_buf);
+      tile_buf = NULL;
+    }
+
+  if (render_blend_dark_check)
+    {
+      g_free (render_blend_dark_check);
+      render_blend_dark_check = NULL;
+    }
+
+  if (render_blend_light_check)
+    {
+      g_free (render_blend_light_check);
+      render_blend_light_check = NULL;
+    }
+
+  if (render_check_buf)
+    {
+      g_free (render_check_buf);
+      render_check_buf = NULL;
+    }
+
+  if (render_empty_buf)
+    {
+      g_free (render_empty_buf);
+      render_empty_buf = NULL;
+    }
+
+  if (render_temp_buf)
+    {
+      g_free (render_temp_buf);
+      render_temp_buf = NULL;
+    }
+}
+
+
+static void
+render_setup_notify (GObject    *config,
+                     GParamSpec *param_spec,
+                     Gimp       *gimp)
+{
+  GimpCheckType check_type;
+  GimpCheckSize check_size;
+  gint          i, j;
+
+  g_object_get (config,
+                "transparency-type", &check_type,
+                "transparency-size", &check_size,
+                NULL);
 
   /*  based on the tile size, determine the tile shift amount
    *  (assume here that tile_height and tile_width are equal)
@@ -178,13 +249,6 @@ render_setup (GimpCheckType check_type,
       render_empty_buf = NULL;
       render_temp_buf  = NULL;
     }
-}
-
-void
-render_free (void)
-{
-  g_free (tile_buf);
-  g_free (render_check_buf);
 }
 
 

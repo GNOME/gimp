@@ -79,6 +79,9 @@ static void         gui_really_quit_callback        (GtkWidget   *button,
                                                      gboolean     quit,
                                                      gpointer     data);
 
+static void         gui_show_tooltips_notify        (GObject     *config,
+                                                     GParamSpec  *param_spec,
+                                                     Gimp        *gimp);
 static void         gui_display_changed             (GimpContext *context,
                                                      GimpDisplay *display,
                                                      Gimp        *gimp);
@@ -179,6 +182,10 @@ gui_themes_init (Gimp *gimp)
   if (! config->show_tool_tips)
     gimp_help_disable_tooltips ();
 
+  g_signal_connect (G_OBJECT (gimp->config), "notify::show-tool-tips",
+                    G_CALLBACK (gui_show_tooltips_notify),
+                    gimp);
+
   gdk_rgb_set_min_colors (CLAMP (gimp->config->min_colors, 27, 256));
   gdk_rgb_set_install (gimp->config->install_cmap);
 
@@ -240,8 +247,7 @@ gui_init (Gimp *gimp)
     }
 
   menus_init (gimp);
-
-  render_setup (gui_config->transparency_type, gui_config->transparency_size);
+  render_init (gimp);
 
   dialogs_init (gimp);
 
@@ -303,12 +309,16 @@ gui_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   menus_exit (gimp);
-  render_free ();
+  render_exit (gimp);
 
   dialogs_exit (gimp);
   gimp_devices_exit (gimp);
 
   gimp_help_free ();
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
+                                        gui_show_tooltips_notify,
+                                        gimp);
 
   gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
 
@@ -569,7 +579,27 @@ gui_really_quit_callback (GtkWidget *button,
 }
 
 
-/*  FIXME: this junk should mostly go to the display subsystem  */
+static void
+gui_show_tooltips_notify (GObject    *config,
+                          GParamSpec *param_spec,
+                          Gimp       *gimp)
+{
+  gboolean show_tool_tips;
+
+  g_object_get (config,
+                "show-tool-tips", &show_tool_tips,
+                NULL);
+
+  if (show_tool_tips)
+    gimp_help_enable_tooltips ();
+  else
+    gimp_help_disable_tooltips ();
+}
+
+
+#ifdef __GNUC__
+#warning FIXME: this junk should mostly go to the display subsystem
+#endif
 
 static void
 gui_display_changed (GimpContext *context,

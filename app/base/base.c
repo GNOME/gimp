@@ -42,6 +42,7 @@
 #include "base.h"
 #include "detect-mmx.h"
 #include "temp-buf.h"
+#include "tile-cache.h"
 #include "tile-swap.h"
 
 #include "appenv.h"
@@ -50,7 +51,10 @@
 GimpBaseConfig *base_config = NULL;
 
 
-static void   toast_old_temp_files (void);
+static void   base_toast_old_temp_files   (void);
+static void   base_tile_cache_size_notify (GObject *config,
+                                           GParamSpec *param_spec,
+                                           gpointer    data);
 
 
 /*  public functions  */
@@ -73,7 +77,13 @@ base_init (GimpBaseConfig *config)
 #endif
 #endif
 
-  toast_old_temp_files ();
+  tile_cache_init (config->tile_cache_size);
+
+  g_signal_connect (G_OBJECT (config), "notify::tile-cache-size",
+                    G_CALLBACK (base_tile_cache_size_notify),
+                    NULL);
+
+  base_toast_old_temp_files ();
 
   /* Add the swap file */
   if (!base_config->swap_path)
@@ -98,6 +108,11 @@ base_exit (void)
   swapping_free ();
   paint_funcs_free ();
   tile_swap_exit ();
+  tile_cache_exit ();
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (base_config),
+                                        base_tile_cache_size_notify,
+                                        NULL);
 
   base_config = NULL;
 }
@@ -106,7 +121,7 @@ base_exit (void)
 /*  private functions  */
 
 static void
-toast_old_temp_files (void)
+base_toast_old_temp_files (void)
 {
   GDir *dir = NULL;
   const char *entry;
@@ -149,4 +164,12 @@ toast_old_temp_files (void)
       }
 
   g_dir_close (dir);
+}
+
+static void
+base_tile_cache_size_notify (GObject    *config,
+                             GParamSpec *param_spec,
+                             gpointer    data)
+{
+  tile_cache_set_size (GIMP_BASE_CONFIG (config)->tile_cache_size);
 }

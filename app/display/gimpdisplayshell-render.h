@@ -24,10 +24,8 @@
 #define GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT 256
 
 
-/*  Functions  */
-void   render_setup (GimpCheckType  check_type,
-		     GimpCheckSize  check_size);
-void   render_free  (void);
+void   render_init (Gimp *gimp);
+void   render_exit (Gimp *gimp);
 
 void   gimp_display_shell_render (GimpDisplayShell *shell,
                                   gint              x,

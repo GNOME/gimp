@@ -33,22 +33,6 @@
 #include "app_procs.h"
 
 
-void
-gdisplays_expose_full (void)
-{
-  GimpDisplay *gdisp;
-  GList       *list;
-
-  for (list = GIMP_LIST (the_gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
-    }
-}
-
 gboolean
 gimp_displays_dirty (Gimp *gimp)
 {

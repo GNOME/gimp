@@ -1,7 +1,45 @@
+2002-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-cache.[ch]: added tile_cache_init() and
+	tile_cache_exit() as public functions.
+
+	* app/base/base.c: call them. Connect to GimpBaseConfig's
+	notify::tile-cache-size.
+
+	* app/core/gimpimage.c: connect to notify::transparency-type and
+	notify::transparency-size and call
+	gimp_image_invalidate_layer_previews() in the callback.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gdisplays_expose_full().
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	notify::transparency-type and notify::transparency-size and expose
+	the shell in the callback.
+
+	* app/display/gimpdisplayshell-render.[ch]: added render_init()
+	and render_exit() functions and connect to
+	notify::transparency-type and notify::transparency-size for
+	setting up the render buffers.
+
+	* app/gui/gui.c: call the new functions instead of render_setup().
+	Connect to notify::show-tool-tips.
+
+	* app/gui/preferences-dialog.c: copy values between the global
+	config object and it's local copy only when they have changed.
+	Wrap setting of lots of values in g_object_[freeze|thaw]_notify().
+	Added lots of mnemonics.
+
+	* app/gui/resolution-calibrate-dialog.c: added mnemonics.
+
+	* app/widgets/gimppropwidgets.c: g_object_set() the values edited
+	by the gimp_prop_coordinates() much less often by remembering the
+	old values and setting them only when they have changed.
+
 2002-11-21  Sven Neumann  <neo@wintermute>
 
 	* app/gui/preferences-dialog.c (prefs_dialog_new): don't set the
-	default resolution from the monitor resolution entry.
+	default resolution unit from the monitor resolution entry.
 
 	* app/gui/user-install-dialog.c: use the new GimpPropWidgets. The
 	monitor resolution setup may need some more tweaking ...

@@ -963,6 +963,13 @@ gimp_image_new (Gimp              *gimp,
 						  gimage->width,
 						  gimage->height);
 
+  g_signal_connect_object (G_OBJECT (gimp->config), "notify::transparency-type",
+                           G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+  g_signal_connect_object (G_OBJECT (gimp->config), "notify::transparency-size",
+                           G_CALLBACK (gimp_image_invalidate_layer_previews),
+                           gimage, G_CONNECT_SWAPPED);
+
   return gimage;
 }
 
