@@ -38,6 +38,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.17a; 2000/02/20  hof: use gimp_help_set_help_data for tooltips
  * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
  *                                   changed border_width spacing and Buttons in action area
  *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
@@ -99,7 +100,6 @@ static t_arr_interface g_arrint =
 
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
-static GtkTooltips          *g_tooltips          = NULL;
 
 /* Declare local functions.
  */
@@ -192,7 +192,7 @@ entry_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr,
     gtk_table_attach(GTK_TABLE(table), entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL | GTK_EXPAND, 4, 0);
     if(arr_ptr->help_txt != NULL)
     { 
-       gtk_tooltips_set_tip(g_tooltips, entry, arr_ptr->help_txt,NULL);
+       gimp_help_set_help_data(entry, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(entry);
     
@@ -411,7 +411,7 @@ toggle_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
                                arr_ptr->int_ret);
   if(arr_ptr->help_txt != NULL)
   { 
-     gtk_tooltips_set_tip(g_tooltips, check_button, arr_ptr->help_txt,NULL);
+     gimp_help_set_help_data(check_button, arr_ptr->help_txt,NULL);
   }
   gtk_widget_show (check_button);
 }
@@ -497,7 +497,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 				   l_radio_pressed);
      if(l_radio_help_txt != NULL)
      { 
-       gtk_tooltips_set_tip(g_tooltips, radio_button, l_radio_help_txt, NULL);
+       gimp_help_set_help_data(radio_button, l_radio_help_txt, NULL);
      }
      gtk_widget_show (radio_button);
   }
@@ -543,7 +543,7 @@ optionmenu_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_pt
 
   if(arr_ptr->help_txt != NULL)
   { 
-       gtk_tooltips_set_tip(g_tooltips, option_menu, arr_ptr->help_txt, NULL);
+       gimp_help_set_help_data(option_menu, arr_ptr->help_txt, NULL);
   }
 
   /* menu (filled with items in loop) */
@@ -707,7 +707,7 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
     if(arr_ptr->help_txt != NULL)
     { 
-       gtk_tooltips_set_tip(g_tooltips, pair->scale, arr_ptr->help_txt,NULL);
+       gimp_help_set_help_data(pair->scale, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->scale);
 
@@ -723,7 +723,7 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
     if(arr_ptr->help_txt != NULL)
     { 
-       gtk_tooltips_set_tip(g_tooltips, pair->entry, arr_ptr->help_txt,NULL);
+       gimp_help_set_help_data(pair->entry, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->entry);
 
@@ -860,7 +860,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     gtk_range_set_update_policy(GTK_RANGE(pair->scale), GTK_UPDATE_CONTINUOUS);
     if(arr_ptr->help_txt != NULL)
     { 
-       gtk_tooltips_set_tip(g_tooltips, pair->scale, arr_ptr->help_txt,NULL);
+       gimp_help_set_help_data(pair->scale, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->scale);
 
@@ -876,7 +876,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
     /* gtk_table_attach(GTK_TABLE(table), pair->entry, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, 4, 0); */
     if(arr_ptr->help_txt != NULL)
     { 
-       gtk_tooltips_set_tip(g_tooltips, pair->entry, arr_ptr->help_txt,NULL);
+       gimp_help_set_help_data(pair->entry, arr_ptr->help_txt,NULL);
     }
     gtk_widget_show(pair->entry);
 
@@ -941,6 +941,9 @@ gint p_array_std_dialog(char *title_txt,
      l_argsv[0] = g_strdup ("gap_std_dialog");
      gtk_init (&l_argsc, &l_argsv);
      g_first_call = FALSE;
+
+     /* Initialize Tooltips */
+     gimp_help_init ();
   }
 
   /* dialog */

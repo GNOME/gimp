@@ -292,7 +292,7 @@ int gap_split_image(GRunModeType run_mode,
       if(ainfo_ptr->frame_cnt != 0)
       {
          p_msg_win(run_mode,
-           _("OPERATION CANCELLED\nThis image is already an AnimFrame\nTry again on a Duplicate\n(image/channel ops/duplicate)"));
+           _("OPERATION CANCELLED\nThis image is already an AnimFrame\nTry again on a Duplicate\n(image/duplicate)"));
          return -1;
       }
       else

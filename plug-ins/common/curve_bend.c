@@ -19,6 +19,7 @@
  */
 
 /* Revision history
+ *  (2000/02/16)  v1.1.17b hof: added spinbuttons for rotate entry
  *  (2000/02/16)  v1.1.17 hof: undo bugfix (#6012)
  *                             don't call gimp_undo_push_group_end 
  *                             after gimp_displays_flush
@@ -134,7 +135,7 @@ struct _BenderDialog
   GtkWidget *outline_menu;
   GtkWidget *pv_widget;
   GtkWidget *graph;
-  GtkWidget *rotate_entry;
+  GtkAdjustment *rotate_data;
   GdkPixmap *pixmap;
   GtkWidget *filesel;
 
@@ -269,7 +270,7 @@ static void            bender_plot_curve              (BenderDialog *,
 						       gint32, gint32, gint);
 static void            bender_calculate_curve         (BenderDialog *, gint32,
 						       gint32, gint);
-static void            bender_rotate_entry_callback   (GtkWidget *, gpointer);
+static void            bender_rotate_adj_callback     (GtkAdjustment *, gpointer);
 static void            bender_upper_callback          (GtkWidget *, gpointer);
 static void            bender_lower_callback          (GtkWidget *, gpointer);
 static void            bender_smooth_callback         (GtkWidget *, gpointer);
@@ -310,7 +311,6 @@ static void            p_put_mix_pixel                (t_GDRW *gdrw,
 						       gint32 x, gint32 y, guchar *color, 
 						       gint32 nb_curvy, gint32 nb2_curvy, 
 						       gint32 curvy);
-static void            p_set_rotate_entry_text        (BenderDialog *cd);
 static void            p_stretch_curves               (BenderDialog *cd, gint32 xmax, gint32 ymax);
 static void            p_cd_to_bval                   (BenderDialog *cd, BenderValues *bval);
 static void            p_cd_from_bval                 (BenderDialog *cd, BenderValues *bval);
@@ -1321,6 +1321,8 @@ bender_new_dialog (GDrawable *drawable)
   GtkWidget *menu;
   GtkWidget *table;
   GtkWidget *button;
+  GtkWidget *spinbutton;
+  GtkObject *data;
   int i, j;
 
   cd = g_malloc (sizeof (BenderDialog));
@@ -1416,18 +1418,24 @@ bender_new_dialog (GDrawable *drawable)
 		      cd);
   gtk_widget_show (button);
 
+  /*  Rotate label & spinbutton  */
   label = gtk_label_new (_("Rotate: "));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
 
-  cd->rotate_entry = gtk_entry_new ();
-  gtk_signal_connect (GTK_OBJECT (cd->rotate_entry), "changed",
-		      GTK_SIGNAL_FUNC (bender_rotate_entry_callback),
-		      cd);
-  gtk_widget_set_usize (GTK_WIDGET (cd->rotate_entry), ENTRY_WIDTH,0 );
-  gtk_box_pack_start (GTK_BOX (outline_hbox), cd->rotate_entry, FALSE, FALSE, 2);
-  gtk_widget_show (label);
-  gtk_widget_show (cd->rotate_entry);
-  p_set_rotate_entry_text (cd);
+  data = gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 90);
+  cd->rotate_data = GTK_ADJUSTMENT (data);
+
+  spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);
+  gtk_widget_set_usize (spinbutton, ENTRY_WIDTH, -1);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (outline_hbox), spinbutton, FALSE, FALSE, 2);
+
+  gtk_signal_connect (GTK_OBJECT (cd->rotate_data), "value_changed",
+                      GTK_SIGNAL_FUNC (bender_rotate_adj_callback),
+                      cd);
+
+  gtk_widget_show (spinbutton);
+
 
   label = gtk_label_new (_("Curve for Border: "));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
@@ -1834,34 +1842,17 @@ bender_calculate_curve (BenderDialog *cd,
 }
 
 static void
-p_set_rotate_entry_text (BenderDialog *cd)
-{
-  gchar l_buffer[30];
-
-  sprintf (l_buffer, "%.1f", (float)cd->rotation );
-  gtk_entry_set_text (GTK_ENTRY(cd->rotate_entry), l_buffer);
- 
-}
-
-static void
-bender_rotate_entry_callback (GtkWidget *w,
+bender_rotate_adj_callback (GtkAdjustment *adjustment,
 			      gpointer   client_data)
 {
   BenderDialog *cd;
-  gdouble new_val;
  
   cd = (BenderDialog *) client_data;
-  new_val = atof ( gtk_entry_get_text( GTK_ENTRY(w) ) );
 
-  if (new_val != cd->rotation)
+  if (adjustment->value != cd->rotation)
   {
-    cd->rotation = new_val;
-    
-    /* it would be nice to update the preview image
-     * on each digit you type in, but you would need a real
-     * fast machine to do so.
-     */ 
-    /* if(cd->preview) bender_update (cd, UP_PREVIEW | UP_DRAW); */ 
+    cd->rotation = adjustment->value;
+    if(cd->preview) bender_update (cd, UP_PREVIEW | UP_DRAW);
   }
 }
 

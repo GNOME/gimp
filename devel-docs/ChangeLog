@@ -1,3 +1,8 @@
+Mon Feb 21 11:55:18 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/tmpl/gimpwidgets.sgml; updated
+
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt

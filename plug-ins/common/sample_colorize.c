@@ -21,6 +21,7 @@
  */
 
 /* Revision history
+ *  (2000/02/19)  v1.1.17  hof: added spinbuttons for level entries and Reset Button
  *  (1999/07/12)  v1.0.2 hof: bugfix: progress is now updated properly
  *                            make use NLS Macros if available
  *  (1999/03/08)  v1.0.1 hof: dont show indexed layers in option menues
@@ -123,16 +124,16 @@ typedef struct {
   GtkWidget *sample_drawarea;
   GtkWidget *in_lvl_gray_preview;
   GtkWidget *in_lvl_drawarea;
-  GtkWidget *text_lvl_in_min;
-  GtkWidget *text_lvl_in_max;
-  GtkWidget *text_lvl_in_gamma;
-  GtkWidget *text_lvl_out_min;
-  GtkWidget *text_lvl_out_max;
+  GtkAdjustment *adj_lvl_in_min;
+  GtkAdjustment *adj_lvl_in_max;
+  GtkAdjustment *adj_lvl_in_gamma;
+  GtkAdjustment *adj_lvl_out_min;
+  GtkAdjustment *adj_lvl_out_max;
   GtkWidget *apply_button;
   GtkWidget *get_smp_colors_button;
   GtkWidget *orig_inten_button;
-  int            active_slider;
-  int            slider_pos[5];  /*  positions for the five sliders  */
+  gint           active_slider;
+  gint           slider_pos[5];  /*  positions for the five sliders  */
  
   gint32     enable_preview_update;
   gint32     sample_show_selection;
@@ -206,19 +207,19 @@ static void	 run		(gchar	 *name,
 				 gint	 *nreturn_vals,
 				 GParam	 **return_vals);
 
-static int       p_main_colorize(gint);
+static gint      p_main_colorize(gint);
 static void	 p_get_filevalues (void);
-static int       p_smp_dialog (void);
+static gint      p_smp_dialog (void);
 static void      p_refresh_dst_preview(GtkWidget *preview, guchar *src_buffer);
 static void      p_update_preview(gint32 *id_ptr);
 static void      p_clear_tables(void);
 static void      p_free_colors(void);
-static void      p_levels_update (int update);
+static void      p_levels_update (gint update);
 static gint      p_level_in_events (GtkWidget *widget, GdkEvent *event, gpointer data);
 static gint      p_level_out_events (GtkWidget *widget, GdkEvent *event, gpointer data);
 static void      p_calculate_level_transfers (void);
 static void      p_get_pixel(t_GDRW *gdrw, gint32 x, gint32 y, guchar *pixel);
-static void      p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow);
+static void      p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, gint dirty, gint shadow);
 static void      p_end_gdrw(t_GDRW *gdrw);
 static gint32    p_is_layer_alive(gint32 drawable_id);
 static void      p_remap_pixel(guchar *pixel, guchar *original, gint bpp2);
@@ -226,7 +227,7 @@ static void      p_guess_missing_colors(void);
 static void      p_fill_missing_colors(void);
 static void      p_smp_get_colors_callback (GdkWindow *window, gpointer data);
 static void      p_gradient_callback(GtkWidget *w, gint32 id);
-static void      p_get_gradient (int mode);
+static void      p_get_gradient (gint mode);
 static void      p_clear_preview(GtkWidget *preview);
 
 GPlugInInfo PLUG_IN_INFO =
@@ -301,7 +302,7 @@ query (void)
 			  help_string,
 			  "Wolfgang Hofer",
 			  "hof@hotbot.com",
-			  "07/1999",
+			  "02/2000",
 			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
@@ -320,7 +321,7 @@ run (gchar   *name,
   GDrawable *dst_drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
-  char       *l_env;
+  gchar       *l_env;
 
   l_env = g_getenv("SAMPLE_COLORIZE_DEBUG");
   if(l_env != NULL)
@@ -434,6 +435,19 @@ p_smp_apply_callback (GtkWidget *widget,
 }
 
 static void
+p_smp_reset_callback (GtkWidget *widget,
+                    gpointer   data)
+{
+  g_values.lvl_in_min    = 0;
+  g_values.lvl_in_max    = 255;
+  g_values.lvl_in_gamma  = 1.0;
+  g_values.lvl_out_min   = 0;
+  g_values.lvl_out_max   = 255;
+
+  p_levels_update (ALL);
+}
+
+static void
 p_smp_close_callback (GtkWidget *widget,
                        gpointer   data)
 {
@@ -533,48 +547,56 @@ p_smp_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
 
 
 static void
-p_smp_text_lvl_in_max_upd_callback(GtkWidget *w,
+p_smp_adj_lvl_in_max_upd_callback(GtkAdjustment *adjustment,
 			      gpointer   data)
 {
-  char *str;
   gint32 value;
+  gint   upd_flags;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = CLAMP ((atol (str)), 1, 255);
+  value = CLAMP ((adjustment->value), 1, 255);
 
   if (value != g_values.lvl_in_max)
   {
     g_values.lvl_in_max = value;
-    p_levels_update (INPUT_SLIDERS | INPUT_LEVELS | DRAW | REFRESH_DST);
+    upd_flags = INPUT_SLIDERS | INPUT_LEVELS | DRAW | REFRESH_DST;
+    if(g_values.lvl_in_max < g_values.lvl_in_min)
+    {
+      g_values.lvl_in_min = g_values.lvl_in_max;
+      upd_flags |= LOW_INPUT;
+    }
+    p_levels_update (upd_flags);
   }
 }
 
 static void
-p_smp_text_lvl_in_min_upd_callback(GtkWidget *w,
+p_smp_adj_lvl_in_min_upd_callback(GtkAdjustment *adjustment,
 			      gpointer   data)
 {
-  char *str;
   double value;
+  gint   upd_flags;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = CLAMP ((atol (str)), 0, 254);
+  value = CLAMP ((adjustment->value), 0, 254);
 
   if (value != g_values.lvl_in_min)
   {
     g_values.lvl_in_min = value;
-    p_levels_update (INPUT_SLIDERS | INPUT_LEVELS | DRAW | REFRESH_DST);
+    upd_flags = INPUT_SLIDERS | INPUT_LEVELS | DRAW | REFRESH_DST;
+    if(g_values.lvl_in_min > g_values.lvl_in_max)
+    {
+      g_values.lvl_in_max = g_values.lvl_in_min;
+      upd_flags |= HIGH_INPUT;
+    }
+    p_levels_update (upd_flags);
   }
 }
 
 static void
-p_smp_text_gamma_upd_callback(GtkWidget *w,
+p_smp_text_gamma_upd_callback(GtkAdjustment *adjustment,
 			      gpointer   data)
 {
-  char *str;
   double value;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = CLAMP ((atof (str)), 0.1, 10.0);
+  value = CLAMP ((adjustment->value), 0.1, 10.0);
 
   if (value != g_values.lvl_in_gamma)
   {
@@ -584,36 +606,46 @@ p_smp_text_gamma_upd_callback(GtkWidget *w,
 }
 
 static void
-p_smp_text_lvl_out_max_upd_callback(GtkWidget *w,
+p_smp_adj_lvl_out_max_upd_callback(GtkAdjustment *adjustment,
 			      gpointer   data)
 {
-  char *str;
   gint32 value;
+  gint   upd_flags;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = CLAMP ((atol (str)), 1, 255);
+  value = CLAMP ((adjustment->value), 1, 255);
 
   if (value != g_values.lvl_out_max)
-  {
+  {    
     g_values.lvl_out_max = value;
-    p_levels_update (OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW | REFRESH_DST);
+    upd_flags = OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW | REFRESH_DST;
+    if(g_values.lvl_out_max < g_values.lvl_out_min)
+    {
+      g_values.lvl_out_min = g_values.lvl_out_max;
+      upd_flags |= LOW_OUTPUT;
+    }
+    p_levels_update (upd_flags);
   }
 }
 
 static void
-p_smp_text_lvl_out_min_upd_callback(GtkWidget *w,
+p_smp_adj_lvl_out_min_upd_callback(GtkAdjustment *adjustment,
 			      gpointer   data)
 {
-  char *str;
   double value;
+  gint   upd_flags;
 
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = CLAMP ((atol (str)), 0, 254);
+  value = CLAMP ((adjustment->value), 0, 254);
 
   if (value != g_values.lvl_out_min)
   {
     g_values.lvl_out_min = value;
-    p_levels_update (OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW  | REFRESH_DST);
+    upd_flags = OUTPUT_SLIDERS | OUTPUT_LEVELS | DRAW  | REFRESH_DST;
+    if(g_values.lvl_out_min > g_values.lvl_out_max)
+    {
+      g_values.lvl_out_max = g_values.lvl_out_min;
+      upd_flags |= HIGH_OUTPUT;
+    }
+    p_levels_update (upd_flags);
   }
 }
 
@@ -878,9 +910,9 @@ static void
 p_levels_draw_slider (GdkWindow *window,
 		    GdkGC     *border_gc,
 		    GdkGC     *fill_gc,
-		    int        xpos)
+		    gint       xpos)
 {
-  int y;
+  gint y;
 
   for (y = 0; y < CONTROL_HEIGHT; y++)
     gdk_draw_line(window, fill_gc, xpos - y / 2, y,
@@ -898,7 +930,7 @@ p_levels_draw_slider (GdkWindow *window,
 
 static void
 p_levels_erase_slider (GdkWindow *window,
-		     int        xpos)
+		     gint        xpos)
 {
   gdk_window_clear_area (window, xpos - (CONTROL_HEIGHT - 1) / 2, 0,
 			 CONTROL_HEIGHT - 1, CONTROL_HEIGHT);
@@ -908,7 +940,7 @@ static void
 p_smp_get_colors_callback (GdkWindow *window,
 		     gpointer data)
 {
-  int i;
+  gint i;
 
   p_update_preview(&g_values.sample_id);
 
@@ -932,10 +964,9 @@ p_smp_get_colors_callback (GdkWindow *window,
 
 
 static void
-p_levels_update (int update)
+p_levels_update (gint update)
 {
-  char text[20];
-  int i;
+  gint i;
 
   if(g_Sdebug)  printf("p_levels_update: update reques %x\n", update);
   
@@ -946,31 +977,31 @@ p_levels_update (int update)
      p_refresh_dst_preview(g_di.dst_preview,  &g_dst_preview_buffer[0]);
   }
 
-  /* update the text entry widgets */
+  /* update the spinbutton entry widgets */
   if (update & LOW_INPUT)
   {
-      sprintf (text, "%d", (int)g_values.lvl_in_min);
-      gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_min), text);
+      gtk_adjustment_set_value (g_di.adj_lvl_in_min,
+				g_values.lvl_in_min);
   }
   if (update & GAMMA)
   {
-      sprintf (text, "%2.2f", g_values.lvl_in_gamma);
-      gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_gamma), text);
+      gtk_adjustment_set_value (g_di.adj_lvl_in_gamma,
+				g_values.lvl_in_gamma);
   }
   if (update & HIGH_INPUT)
   {
-      sprintf (text, "%d", (int)g_values.lvl_in_max);
-      gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_max), text);
+      gtk_adjustment_set_value (g_di.adj_lvl_in_max,
+				g_values.lvl_in_max);
   }
   if (update & LOW_OUTPUT)
   {
-      sprintf (text, "%d", (int)g_values.lvl_out_min);
-      gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_min), text);
+      gtk_adjustment_set_value (g_di.adj_lvl_out_min,
+				g_values.lvl_out_min);
   }
   if (update & HIGH_OUTPUT)
   {
-      sprintf (text, "%d", (int)g_values.lvl_out_max);
-      gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_max), text);
+      gtk_adjustment_set_value (g_di.adj_lvl_out_max,
+				g_values.lvl_out_max);
   }
   if (update & INPUT_LEVELS)
   {
@@ -1043,11 +1074,11 @@ p_level_in_events (GtkWidget    *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  char text[20];
+  gchar text[20];
   double width, mid, tmp;
-  int x, distance;
-  int i;
-  int update = FALSE;
+  gint x, distance;
+  gint i;
+  gint update = FALSE;
 
 
   switch (event->type)
@@ -1153,9 +1184,9 @@ p_level_out_events (GtkWidget    *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  int x, distance;
-  int i;
-  int update = FALSE;
+  gint x, distance;
+  gint i;
+  gint update = FALSE;
 
 
   switch (event->type)
@@ -1256,8 +1287,9 @@ p_smp_dialog (void)
   GtkWidget  *option_menu;
   GtkWidget  *menu;
   GtkWidget  *menu_item;
+  GtkWidget *spinbutton;
+  GtkObject *data;
   guchar *color_cube;
-  gchar   txt_buf[20];
   gint    l_ty;
 
   gint    argc = 1;
@@ -1300,6 +1332,8 @@ p_smp_dialog (void)
 		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Get Sample Colors"), p_smp_get_colors_callback,
 		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Reset"), p_smp_reset_callback,
+		     NULL, NULL, NULL, FALSE, FALSE,
 		     _("Close"), gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
@@ -1531,39 +1565,48 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  min input text  */
-  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_in_min);
-  g_di.text_lvl_in_min = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_min), &txt_buf[0]);
-  gtk_widget_set_usize (g_di.text_lvl_in_min, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), g_di.text_lvl_in_min, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (g_di.text_lvl_in_min), "changed",
-		      (GtkSignalFunc) p_smp_text_lvl_in_min_upd_callback,
-		      &g_di);
-  gtk_widget_show (g_di.text_lvl_in_min);
+  /* min input spinbutton */
+  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_min, 0.0, 254.0, 1, 10, 10);
+  g_di.adj_lvl_in_min = GTK_ADJUSTMENT (data);
 
-  /* input gamma text  */
-  g_snprintf (txt_buf, sizeof (txt_buf), "%2.2f", g_values.lvl_in_gamma);
-  g_di.text_lvl_in_gamma = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_gamma), &txt_buf[0]);
-  gtk_widget_set_usize (g_di.text_lvl_in_gamma, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), g_di.text_lvl_in_gamma, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (g_di.text_lvl_in_gamma), "changed",
-		      (GtkSignalFunc) p_smp_text_gamma_upd_callback,
-		      &g_di);
-  gtk_widget_show (g_di.text_lvl_in_gamma);
-  gtk_widget_show (hbox);
+  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_min, 0.5, 0);
+  gtk_widget_set_usize (spinbutton, TEXT_WIDTH, 25);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
-  /* high input text  */
-  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_in_max);
-  g_di.text_lvl_in_max = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_in_max), &txt_buf[0]);
-  gtk_widget_set_usize (g_di.text_lvl_in_max, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), g_di.text_lvl_in_max, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (g_di.text_lvl_in_max), "changed",
-		      (GtkSignalFunc) p_smp_text_lvl_in_max_upd_callback,
-		      &g_di);
-  gtk_widget_show (g_di.text_lvl_in_max);
+  gtk_signal_connect (GTK_OBJECT (g_di.adj_lvl_in_min), "value_changed",
+                      GTK_SIGNAL_FUNC (p_smp_adj_lvl_in_min_upd_callback),
+                      &g_di);
+  gtk_widget_show (spinbutton);
+
+
+  /* input gamma spinbutton */
+  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_gamma, 0.1, 10.0, 0.02, 0.2, 0.2);
+  g_di.adj_lvl_in_gamma = GTK_ADJUSTMENT (data);
+  
+  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
+  gtk_widget_set_usize (spinbutton, TEXT_WIDTH, 25);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (g_di.adj_lvl_in_gamma), "value_changed",
+                      GTK_SIGNAL_FUNC (p_smp_text_gamma_upd_callback),
+                      &g_di);
+  gtk_widget_show (spinbutton);
+
+  /* high input spinbutton */
+  data = gtk_adjustment_new ((gfloat)g_values.lvl_in_max, 1.0, 255.0, 1, 10, 10);
+  g_di.adj_lvl_in_max = GTK_ADJUSTMENT (data);
+
+  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_max, 0.5, 0);
+  gtk_widget_set_usize (spinbutton, TEXT_WIDTH, 25);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (g_di.adj_lvl_in_max), "value_changed",
+                      GTK_SIGNAL_FUNC (p_smp_adj_lvl_in_max_upd_callback),
+                      &g_di);
+  gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
 
   /*  Horizontal box for OUTPUT levels text widget  */
@@ -1575,27 +1618,33 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  min output text  */
-  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_out_min);
-  g_di.text_lvl_out_min = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_min), &txt_buf[0]);
-  gtk_widget_set_usize (g_di.text_lvl_out_min, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), g_di.text_lvl_out_min, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (g_di.text_lvl_out_min), "changed",
-		      (GtkSignalFunc) p_smp_text_lvl_out_min_upd_callback,
-		      &g_di);
-  gtk_widget_show (g_di.text_lvl_out_min);
+  /*  min output spinbutton */
+  data = gtk_adjustment_new ((gfloat)g_values.lvl_out_min, 0.0, 254.0, 1, 10, 10);
+  g_di.adj_lvl_out_min = GTK_ADJUSTMENT (data);
 
-  /* high output text  */
-  g_snprintf (txt_buf, sizeof (txt_buf), "%d", (int)g_values.lvl_out_max);
-  g_di.text_lvl_out_max = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (g_di.text_lvl_out_max), &txt_buf[0]);
-  gtk_widget_set_usize (g_di.text_lvl_out_max, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), g_di.text_lvl_out_max, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (g_di.text_lvl_out_max), "changed",
-		      (GtkSignalFunc) p_smp_text_lvl_out_max_upd_callback,
-		      &g_di);
-  gtk_widget_show (g_di.text_lvl_out_max);
+  spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_min, 0.5, 0);
+  gtk_widget_set_usize (spinbutton, TEXT_WIDTH, 25);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (g_di.adj_lvl_out_min), "value_changed",
+                      GTK_SIGNAL_FUNC (p_smp_adj_lvl_out_min_upd_callback),
+                      &g_di);
+  gtk_widget_show (spinbutton);
+
+  /* high output spinbutton */
+  data = gtk_adjustment_new ((gfloat)g_values.lvl_out_max, 0.0, 255.0, 1, 10, 10);
+  g_di.adj_lvl_out_max = GTK_ADJUSTMENT (data);
+
+  spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_max, 0.5, 0);
+  gtk_widget_set_usize (spinbutton, TEXT_WIDTH, 25);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (g_di.adj_lvl_out_max), "value_changed",
+                      GTK_SIGNAL_FUNC (p_smp_adj_lvl_out_max_upd_callback),
+                      &g_di);
+  gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
 
   l_ty++;
@@ -1679,9 +1728,9 @@ p_smp_dialog (void)
 gint
 p_gimp_convert_rgb (gint32 image_id)
 {
-   static char     *l_gimp_convert_rgb_proc = "gimp_convert_rgb";
+   static gchar    *l_gimp_convert_rgb_proc = "gimp_convert_rgb";
    GParam          *return_vals;
-   int              nreturn_vals;
+   gint              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_gimp_convert_rgb_proc,
                                  &nreturn_vals,
@@ -1704,12 +1753,12 @@ p_gimp_convert_rgb (gint32 image_id)
  */
 
 static void
-p_print_ppm(char *ppm_name)
+p_print_ppm(gchar *ppm_name)
 {
   FILE *fp;
-  int l_idx;
-  int l_cnt;
-  int l_r, l_g, l_b;
+  gint l_idx;
+  gint l_cnt;
+  gint l_r, l_g, l_b;
   t_samp_color_elem *col_ptr;
 
   if(ppm_name == NULL) return;
@@ -1766,7 +1815,7 @@ p_print_color_list(FILE *fp, t_samp_color_elem *col_ptr)
 static void
 p_print_table(FILE *fp)
 {
-  int l_idx;
+  gint l_idx;
 
   if(fp == NULL) return;  
  
@@ -1784,7 +1833,7 @@ p_print_table(FILE *fp)
 static void
 p_print_transtable(FILE *fp)
 {
-  int l_idx;
+  gint l_idx;
  
   if(fp == NULL) return;
   
@@ -1828,7 +1877,7 @@ void
 p_get_filevalues()
 {
   FILE *l_fp;
-  char  l_buf[1000];
+  gchar  l_buf[1000];
 
 /*
   g_values.lvl_out_min = 0;
@@ -1981,7 +2030,7 @@ p_clear_tables()
 void
 p_free_colors()
 {
-  int l_lum;
+  gint l_lum;
   t_samp_color_elem *l_col_ptr; 
   t_samp_color_elem *l_next_ptr; 
 
@@ -2007,9 +2056,9 @@ static void
 p_calculate_level_transfers ()
 {
   double inten;
-  int i;
-  int l_in_min, l_in_max;
-  int l_out_min, l_out_max;
+  gint i;
+  gint l_in_min, l_in_max;
+  gint l_out_min, l_out_max;
 
   if(g_values.lvl_in_max >= g_values.lvl_in_min)
   {
@@ -2043,13 +2092,13 @@ p_calculate_level_transfers ()
     }
     inten = (double) (inten * (l_in_max - l_in_min) + l_in_min);
     inten = CLAMP (inten, 0.0, 255.0);
-    g_lvl_trans_tab[i] = (unsigned char) (inten + 0.5);
+    g_lvl_trans_tab[i] = (guchar) (inten + 0.5);
 
     /*  determine the output intensity  */
     inten = (double) i / 255.0;
     inten = (double) (inten * (l_out_max - l_out_min) + l_out_min);
     inten = CLAMP (inten, 0.0, 255.0);
-    g_out_trans_tab[i] = (unsigned char) (inten + 0.5);
+    g_out_trans_tab[i] = (guchar) (inten + 0.5);
 
   }
 
@@ -2174,7 +2223,7 @@ p_sort_color(gint32  lum)
 }	/* end p_sort_color */
 
 void
-p_cnt_same_sample_colortones(t_samp_color_elem *ref_ptr, guchar *prev_color, guchar *color_tone, int *csum)
+p_cnt_same_sample_colortones(t_samp_color_elem *ref_ptr, guchar *prev_color, guchar *color_tone, gint *csum)
 {
   gint32             l_col_error, l_ref_error;
   t_samp_color_elem *l_col_ptr; 
@@ -2234,7 +2283,7 @@ p_ideal_samples()
   
   guchar             l_color_tone[4];
   guchar             l_color_ideal[4];
-  int                l_csum, l_maxsum;
+  gint                l_csum, l_maxsum;
   
   l_color = NULL;
   for(l_lum = 0; l_lum < 256; l_lum++)
@@ -2426,7 +2475,7 @@ p_fill_missing_colors()
 
 /* get 256 samples of active gradient (optional in invers order) */
 static void
-p_get_gradient (int mode)
+p_get_gradient (gint mode)
 {
   gdouble	*f_samples, *f_samp;	/* float samples */
   gint		l_lum;
@@ -2541,7 +2590,7 @@ p_end_gdrw(t_GDRW *gdrw)
 
 
 void
-p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, int dirty, int shadow)
+p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, gint dirty, gint shadow)
 {
   gint32 l_image_id;
   gint32 l_sel_channel_id;
@@ -2772,9 +2821,9 @@ void
 p_rnd_remap(gint32 lum, guchar *mapped_color)
 {
   t_samp_color_elem *l_col_ptr;
-  int                l_rnd;
-  int                l_ct;
-  int                l_idx;
+  gint               l_rnd;
+  gint               l_ct;
+  gint               l_idx;
 
   if(g_lum_tab[lum].all_samples > 1)
   {
@@ -2807,7 +2856,7 @@ void
 p_remap_pixel(guchar *pixel, guchar *original, gint bpp2)
 {
   guchar      mapped_color[4];
-  int         l_lum;
+  gint        l_lum;
   double      l_orig_lum, l_mapped_lum;
   double      l_grn, l_red, l_blu;
   double      l_mg,  l_mr,  l_mb;
@@ -3089,7 +3138,7 @@ p_main_colorize(gint mc_flags)
    t_GDRW  l_sample_gdrw;
    gint32  l_max;
    gint32  l_id;
-   int     l_rc;
+   gint    l_rc;
   
    if(g_Sdebug)  p_get_filevalues();  /* for debugging: read values from file */
    sample_drawable = NULL;

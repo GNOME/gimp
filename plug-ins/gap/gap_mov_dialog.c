@@ -30,13 +30,15 @@
  */
 
 /* revision history:
+ * gimp    1.1.17a; 2000/02/20  hof: use gimp_help_set_help_data for tooltips
+ *                                   added spinbuttons, and more layout cosmetics.
  * gimp    1.1.15a; 2000/01/26  hof: removed gimp 1.0.x support
  * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
  *                                   changed border_width spacing and Buttons in action area
  *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
  * gimp   1.1.8a;   1999/08/31  hof: accept anim framenames without underscore '_'
  * gimp   1.1.5a;   1999/05/08  hof: call fileselect in gtk+1.2 style 
- * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (didn't work with gimp1.1.2)
+ * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (did'nt work with gimp1.1.2)
  * version 0.98.00; 1998.11.28  hof: Port to GIMP 1.1: replaced buildmenu.h, apply layermask (before rotate)
  *                                   mov_imglayer_constrain must check for drawable_id -1
  * version 0.97.00; 1998.10.19  hof: Set window title to "Move Path"
@@ -77,7 +79,7 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 
 #define POINT_FILE_MAXLEN 512
 
-#define ENTRY_WIDTH 40
+#define ENTRY_WIDTH 60
 #define SCALE_WIDTH 125
 #define PREVIEW_SIZE 256
 
@@ -90,7 +92,7 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 		       GDK_BUTTON1_MOTION_MASK
 
 
-#define LABEL_LENGTH 32
+#define LABEL_LENGTH 256
 
 typedef struct {
   gint run;
@@ -107,7 +109,6 @@ typedef struct
   GDrawable	*drawable;
   gint		dwidth, dheight;
   gint		bpp;
-  GtkWidget	*xentry, *yentry;
   GtkWidget	*preview;
 
   gint		pwidth, pheight;
@@ -116,26 +117,14 @@ typedef struct
   gint		oldx, oldy;
 
   GtkWidget     *filesel;
-  GtkEntry      *wres_ent;
+  GtkAdjustment *x_adj;
+  GtkAdjustment *y_adj;
   GtkAdjustment *wres_adj;
-  GtkEntry      *hres_ent;
   GtkAdjustment *hres_adj;
-  GtkEntry      *opacity_ent;
   GtkAdjustment *opacity_adj;
-  GtkEntry      *rotation_ent;
   GtkAdjustment *rotation_adj;
-  char           X_Label[LABEL_LENGTH];
-  char           Y_Label[LABEL_LENGTH];
-  char           Opacity_Label[LABEL_LENGTH];
-  char           Wresize_Label[LABEL_LENGTH];
-  char           Hresize_Label[LABEL_LENGTH];
-  char           Rotation_Label[LABEL_LENGTH];
-  GtkWidget     *X_LabelPtr;
-  GtkWidget     *Y_LabelPtr;
-  GtkWidget     *Opacity_LabelPtr;
-  GtkWidget     *Wresize_LabelPtr;
-  GtkWidget     *Hresize_LabelPtr;
-  GtkWidget     *Rotation_LabelPtr;
+  gchar          PointIndex_Label[LABEL_LENGTH];
+  GtkWidget     *PointIndex_LabelPtr;
   gint           p_x, p_y;
   gint           opacity;
   gint           w_resize;
@@ -173,8 +162,6 @@ struct _MenuItem
   GtkWidget *widget;
 };
 
-static GtkTooltips          *g_tooltips          = NULL;
-
 /* Declare a local function.
  */
 GtkWidget       *  p_buildmenu (MenuItem *);
@@ -185,6 +172,7 @@ static void        p_points_from_tab        (t_mov_path_preview *path_ptr);
 static void        p_points_to_tab          (t_mov_path_preview *path_ptr);
 static void        p_point_refresh          (t_mov_path_preview *path_ptr);
 static void        p_reset_points           ();
+static void        p_clear_point            ();
 static void        p_load_points            (char *filename);
 static void        p_save_points            (char *filename);
 
@@ -200,22 +188,21 @@ static GtkWidget * mov_src_sel_create ();
 static void	   mov_path_prevw_destroy  ( GtkWidget *widget, gpointer data );
 static void	   mov_path_prevw_preview_init ( t_mov_path_preview *path_ptr );
 static void	   mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update );
-static void	   mov_path_prevw_entry_update ( GtkWidget *widget, gpointer data );
+static void	   mov_path_x_adjustment_update ( GtkWidget *widget, gpointer data );
+static void	   mov_path_y_adjustment_update ( GtkWidget *widget, gpointer data );
 static void	   mov_path_prevw_cursor_update ( t_mov_path_preview *path_ptr );
 static gint	   mov_path_prevw_preview_expose ( GtkWidget *widget, GdkEvent *event );
 static gint	   mov_path_prevw_preview_events ( GtkWidget *widget, GdkEvent *event );
 
-static GtkWidget*  mov_int_entryscale_new ( GtkTable *table, gint x, gint y,
-					 gchar *caption, gint *intvar,
-					 gint min, gint max, gint constraint,
-					 GtkEntry      **entry,
-					 GtkAdjustment **adjustment,
-					 char          *tooltip);
-
 static void	mov_padd_callback        (GtkWidget *widget,gpointer data);
+static void	mov_pins_callback        (GtkWidget *widget,gpointer data);
+static void	mov_pdel_callback        (GtkWidget *widget,gpointer data);
 static void     mov_pnext_callback       (GtkWidget *widget,gpointer data);
 static void     mov_pprev_callback       (GtkWidget *widget,gpointer data);
+static void     mov_pfirst_callback      (GtkWidget *widget,gpointer data);
+static void     mov_plast_callback       (GtkWidget *widget,gpointer data);
 static void	mov_pres_callback        (GtkWidget *widget,gpointer data);
+static void	mov_pclr_callback        (GtkWidget *widget,gpointer data);
 static void     mov_pload_callback       (GtkWidget *widget,gpointer data);
 static void     mov_psave_callback       (GtkWidget *widget,gpointer data);
 static void     p_points_load_from_file  (GtkWidget *widget,gpointer data);
@@ -224,16 +211,7 @@ static void     p_points_save_to_file    (GtkWidget *widget,gpointer data);
 static void	mov_close_callback	 (GtkWidget *widget,gpointer data);
 static void	mov_ok_callback	         (GtkWidget *widget,gpointer data);
 static void     mov_upvw_callback        (GtkWidget *widget,gpointer data);
-static void	mov_paired_entry_destroy_callback (GtkWidget *widget, gpointer data);
 static void	p_filesel_close_cb       (GtkWidget *widget, t_mov_path_preview *path_ptr);
-
-static void	mov_paired_int_scale_update (GtkAdjustment *adjustment,
-					      gpointer	 data);
-static void	mov_paired_int_entry_update (GtkWidget *widget,
-					     gpointer data );
-static void     p_paired_update             (GtkEntry      *entry,
-                                             GtkAdjustment *adjustment,
-                                             gpointer       data);
 
 static gint mov_imglayer_constrain      (gint32 image_id, gint32 drawable_id, gpointer data);
 static void mov_imglayer_menu_callback  (gint32 id, gpointer data);
@@ -357,12 +335,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   path_ptr->ainfo_ptr            = mov_ptr->dst_ainfo_ptr;
   path_ptr->preview_frame_nr     = mov_ptr->dst_ainfo_ptr->curr_frame_nr;
   path_ptr->old_preview_frame_nr = path_ptr->preview_frame_nr;
-  path_ptr->X_LabelPtr = NULL;
-  path_ptr->Y_LabelPtr = NULL;
-  path_ptr->Opacity_LabelPtr  = NULL;
-  path_ptr->Wresize_LabelPtr  = NULL;
-  path_ptr->Hresize_LabelPtr  = NULL;
-  path_ptr->Rotation_LabelPtr = NULL;
+  path_ptr->PointIndex_LabelPtr = NULL;
   path_ptr->pointfile_name    = l_pointfile_name;
   
   p_points_from_tab(path_ptr);
@@ -404,15 +377,17 @@ static gint
 mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
              gint first_nr, gint last_nr )
 {
+  GtkWidget *vbox;
+  GtkWidget *hbox_table;
   GtkWidget *hbbox;
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *button_table;
   GtkWidget *button;
   GtkWidget *path_prevw_frame;
   GtkWidget *src_sel_frame;
   GtkWidget *check_button;
+  GtkObject *adj;
   guchar *color_cube;
   t_ok_data  ok_data;
 
@@ -449,6 +424,9 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		      (GtkSignalFunc) mov_close_callback,
 		      NULL);
 
+  /* Initialize Tooltips */
+  gimp_help_init ();
+
   /*  Action area  */
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
@@ -467,6 +445,17 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
+  button = gtk_button_new_with_label ( _("UpdPreview"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_upvw_callback,
+		      path_ptr);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
+  gimp_help_set_help_data(button,
+                       _("Show PreviewFrame with Selected       \nSrcLayer at current Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
   button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
@@ -475,147 +464,108 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("UpdPreview"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_upvw_callback,
-		      path_ptr);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Show PreviewFrame with Selected       \nSrcLayer at current Controlpoint")
-                       , NULL);
-  gtk_widget_show (button);
-
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Copy moving source-layer(s) into frames"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (8, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  /* the vbox */
+  vbox = gtk_vbox_new (FALSE, 3);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
+  /* the source select frame */  
   src_sel_frame = mov_src_sel_create ();
-  gtk_table_attach( GTK_TABLE(table), src_sel_frame, 0, 2, 0, 1,
-		    0, 0, 0, 0 );
+  gtk_box_pack_start (GTK_BOX (vbox), src_sel_frame, TRUE, TRUE, 0);
 
+  /* the path preview frame (with all the controlpoint widgets) */  
   path_prevw_frame = mov_path_prevw_create ( drawable, path_ptr);
-  gtk_table_attach( GTK_TABLE(table), path_prevw_frame, 0, 2, 1, 2,
-		    0, 0, 0, 0 );
+  gtk_box_pack_start (GTK_BOX (vbox), path_prevw_frame, TRUE, TRUE, 0);
 
+  /* the hbox_table (1 row) */
+  hbox_table = gtk_table_new (5, 3, FALSE);
+  gtk_widget_show (hbox_table);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox_table, TRUE, TRUE, 0);
   
-  button_table = gtk_table_new (1, 6, FALSE);
+  /* table with 5 rows */
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_table_attach(GTK_TABLE(hbox_table), table, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND, GTK_FILL, 4, 0);
 
-  /* Point Buttons */  
-  button = gtk_button_new_with_label ( _("Load Points"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_pload_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Load Controlpoints from file")
-                       , NULL);
-  gtk_widget_show (button);
+  /* the start frame scale_entry */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 0,        /* table col, row */
+			  _("Start Frame:"),                  /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)pvals->dst_range_start,     /* value */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  TRUE,                               /* constrain */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
+			  _("first handled frame"), NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pvals->dst_range_start);
 
-  button = gtk_button_new_with_label ( _("Save Points"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_psave_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Save Controlpoints to file")
-                       , NULL);
-  gtk_widget_show (button);
+  /* the end frame scale_entry */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 1,        /* table col, row */
+			  _("End Frame:"),                    /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)pvals->dst_range_end,       /* value */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  TRUE,                               /* constrain */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
+			  _("last handled frame"), NULL);     /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pvals->dst_range_end);
 
-  button = gtk_button_new_with_label ( _("Reset Points"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_pres_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 2, 3, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Reset Controlpoints  \nto one Defaultpoint")
-                       , NULL);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Add Point"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_padd_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 3, 4, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Add Controlpoint at end        \n(the last Point is duplicated)")
-                       , NULL);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Prev Point"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_pprev_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 4, 5, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Show Previous Controlpoint")
-                       , NULL);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Next Point"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_pnext_callback,
-		      path_ptr);
-  gtk_table_attach( GTK_TABLE(button_table), button, 5, 6, 0, 1,
-		    0, 0, 0, 0 );
-  gtk_tooltips_set_tip(g_tooltips, button,
-                       _("Show Next Controlpoint")
-                       , NULL);
-  gtk_widget_show (button);
-
-
-  gtk_widget_show (button_table);
-  gtk_table_attach( GTK_TABLE(table), button_table, 0, 2, 2, 3,
-		    0, 0, 0, 0 );
-
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 3,
-			  _("Start Frame:"), &pvals->dst_range_start,
-			  first_nr, last_nr, TRUE, NULL, NULL,
-			  _("first handled frame") );
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 4,
-			  _("End Frame:"), &pvals->dst_range_end,
-			  first_nr, last_nr, TRUE, NULL, NULL,
-			  _("last handled frame") );
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 5,
-			  _("Preview Frame:"), &path_ptr->preview_frame_nr,
-			  first_nr, last_nr, TRUE, NULL, NULL,
-			  _("frame to show when UpdPreview\nbutton is pressed")  );
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 6,
-			  _("Layerstack:"), &pvals->dst_layerstack,
-			  0, 99, FALSE, NULL, NULL,
-			  _("How to insert SrcLayer into the\nDst.Frame's Layerstack\n0 means on top i.e in front")  );
+  /* the Preview Frame scale_entry */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 2,        /* table col, row */
+			  _("Preview Frame:"),                /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->preview_frame_nr, /* value */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  TRUE,                               /* constrain */
+			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
+			  _("frame to show when UpdPreview\nbutton is pressed"),
+			  NULL);                              /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->preview_frame_nr);
+			  
+  /* the Layerstack scale_entry */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 3,        /* table col, row */
+			  _("Layerstack:"),                   /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)pvals->dst_layerstack,      /* value */
+			  0.0, 99.0,                          /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  FALSE,                              /* constrain */
+			  0.0, 999999.0,                      /* lower, upper (unconstrained) */
+			  _("How to insert SrcLayer into the\nDst.Frame's Layerstack\n0 means on top i.e in front"),
+			  NULL);                              /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pvals->dst_layerstack);
 
   /* toggle clip_to_image */
   check_button = gtk_check_button_new_with_label ( _("Clip To Frame"));
-  gtk_table_attach ( GTK_TABLE (table), check_button, 0, 2, 7, 7+1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) mov_clip_to_img_callback,
                        path_ptr);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->clip_to_img);
-  gtk_tooltips_set_tip(g_tooltips, check_button,
+  gimp_help_set_help_data(check_button,
                        _("Clip all copied Src-Layers\nat Frame Boundaries")
                        , NULL);
   gtk_widget_show (check_button);
-  
+  gtk_table_attach(GTK_TABLE(hbox_table), check_button, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -727,6 +677,18 @@ mov_upvw_callback (GtkWidget *widget,
 }
 
 static void
+p_copy_point(gint from_idx, gint to_idx)
+{
+    pvals->point[from_idx].p_x = pvals->point[to_idx].p_x;
+    pvals->point[from_idx].p_y = pvals->point[to_idx].p_y;
+    pvals->point[from_idx].opacity = pvals->point[to_idx].opacity;
+    pvals->point[from_idx].w_resize = pvals->point[to_idx].w_resize;
+    pvals->point[from_idx].h_resize = pvals->point[to_idx].h_resize;
+    pvals->point[from_idx].rotation = pvals->point[to_idx].rotation;
+}
+
+
+static void
 mov_padd_callback (GtkWidget *widget,
 		      gpointer	 data)
 {
@@ -743,15 +705,63 @@ mov_padd_callback (GtkWidget *widget,
     pvals->point_idx = pvals->point_idx_max;
     
     /* copy values from previous point to current (new) point */
-    pvals->point[pvals->point_idx_max].p_x = pvals->point[l_idx].p_x;
-    pvals->point[pvals->point_idx_max].p_y = pvals->point[l_idx].p_y;
-    pvals->point[pvals->point_idx_max].opacity = pvals->point[l_idx].opacity;
-    pvals->point[pvals->point_idx_max].w_resize = pvals->point[l_idx].w_resize;
-    pvals->point[pvals->point_idx_max].h_resize = pvals->point[l_idx].h_resize;
-    pvals->point[pvals->point_idx_max].rotation = pvals->point[l_idx].rotation;
-
+    p_copy_point(pvals->point_idx_max, l_idx);
     p_point_refresh(path_ptr);
   }
+}
+
+static void
+mov_pins_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  t_mov_path_preview *path_ptr = data;
+  gint l_idx;
+  
+  if(gap_debug) printf("mov_pins_callback\n");
+  l_idx = pvals->point_idx_max;
+  if (l_idx < GAP_MOV_MAX_POINT -2)
+  {
+    /* advance to next point */
+    p_points_to_tab(path_ptr);
+    pvals->point_idx_max++;
+
+    for(l_idx = pvals->point_idx_max; l_idx >  pvals->point_idx; l_idx--)
+    {
+      /* copy values from next point */
+      p_copy_point(l_idx, l_idx-1);
+    }
+     
+    pvals->point_idx++;
+    p_point_refresh(path_ptr);
+  }
+}
+
+static void
+mov_pdel_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  t_mov_path_preview *path_ptr = data;
+  gint l_idx;
+  
+  if(gap_debug) printf("mov_pdel_callback\n");
+  
+  l_idx = pvals->point_idx_max;
+  if(pvals->point_idx_max == 0)
+  {
+    /* This is the las t point to delete */
+    p_reset_points();
+  }
+  else
+  {
+    for(l_idx = pvals->point_idx; l_idx <  pvals->point_idx_max; l_idx++)
+    {
+      /* copy values from next point */
+      p_copy_point(l_idx, l_idx+1);
+    }
+    pvals->point_idx_max--;
+    pvals->point_idx = MIN(pvals->point_idx, pvals->point_idx_max);
+  }
+  p_point_refresh(path_ptr);
 }
 
 static void
@@ -785,10 +795,48 @@ mov_pprev_callback (GtkWidget *widget,
     pvals->point_idx--;
     p_point_refresh(path_ptr);
   }
-
-
 }
 
+static void
+mov_pfirst_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  t_mov_path_preview *path_ptr = data;
+  
+  if(gap_debug) printf("mov_pfirst_callback\n");
+
+  /* advance to first point */
+  p_points_to_tab(path_ptr);
+  pvals->point_idx = 0;
+  p_point_refresh(path_ptr);
+}
+
+
+static void
+mov_plast_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  t_mov_path_preview *path_ptr = data;
+  
+  if(gap_debug) printf("mov_plast_callback\n");
+
+  /* advance to first point */
+  p_points_to_tab(path_ptr);
+  pvals->point_idx = pvals->point_idx_max;
+  p_point_refresh(path_ptr);
+}
+
+
+static void
+mov_pclr_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  t_mov_path_preview *path_ptr = data;
+  
+  if(gap_debug) printf("mov_pclr_callback\n");
+  p_clear_point();
+  p_point_refresh(path_ptr);
+}
 
 static void
 mov_pres_callback (GtkWidget *widget,
@@ -932,8 +980,6 @@ p_points_save_to_file (GtkWidget *widget,
 
 static void p_point_refresh(t_mov_path_preview *path_ptr)
 {
-  gchar buf[256];
-
   p_points_from_tab(path_ptr);
   p_update_point_labels(path_ptr);
 
@@ -944,21 +990,19 @@ static void p_point_refresh(t_mov_path_preview *path_ptr)
       mov_path_prevw_draw ( path_ptr, CURSOR );
 
       path_ptr->in_call = TRUE;
-      sprintf(buf, "%d", path_ptr->p_x );
-      gtk_entry_set_text( GTK_ENTRY(path_ptr->xentry), buf );
-      sprintf(buf, "%d", path_ptr->p_y );
-      gtk_entry_set_text( GTK_ENTRY(path_ptr->yentry), buf );
-      
-      p_paired_update(path_ptr->wres_ent, path_ptr->wres_adj,
-                      (gpointer)&path_ptr->w_resize);
-      p_paired_update(path_ptr->hres_ent, path_ptr->hres_adj,
-                      (gpointer)&path_ptr->h_resize);
-      
-      p_paired_update(path_ptr->opacity_ent, path_ptr->opacity_adj,
-                      (gpointer)&path_ptr->opacity);
 
-      p_paired_update(path_ptr->rotation_ent, path_ptr->rotation_adj,
-                      (gpointer)&path_ptr->rotation);
+      gtk_adjustment_set_value (path_ptr->x_adj,
+				(gfloat)path_ptr->p_x);
+      gtk_adjustment_set_value (path_ptr->y_adj,
+				(gfloat)path_ptr->p_y);    
+      gtk_adjustment_set_value (path_ptr->wres_adj,
+				(gfloat)path_ptr->w_resize);
+      gtk_adjustment_set_value (path_ptr->hres_adj,
+				(gfloat)path_ptr->h_resize);
+      gtk_adjustment_set_value (path_ptr->opacity_adj,
+				(gfloat)path_ptr->opacity);
+      gtk_adjustment_set_value (path_ptr->rotation_adj,
+				(gfloat)path_ptr->rotation);
       
       path_ptr->in_call = FALSE;
   }
@@ -1067,42 +1111,12 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
 
 void p_update_point_labels(t_mov_path_preview *path_ptr)
 { 
-  g_snprintf (&path_ptr->X_Label[0], LABEL_LENGTH, _("X [%d]: "), 
-	      pvals->point_idx + 1);
-  g_snprintf (&path_ptr->Y_Label[0], LABEL_LENGTH, _("Y [%d]: "), 
-	      pvals->point_idx + 1);
-  g_snprintf (&path_ptr->Opacity_Label[0], LABEL_LENGTH, _("Opacity [%d]: "), 
-	      pvals->point_idx + 1);
-  g_snprintf (&path_ptr->Wresize_Label[0], LABEL_LENGTH, _("Width [%d]: "), 
-	      pvals->point_idx + 1);
-  g_snprintf (&path_ptr->Hresize_Label[0], LABEL_LENGTH, _("Height [%d]: "), 
-	      pvals->point_idx + 1);
-  g_snprintf (&path_ptr->Rotation_Label[0], LABEL_LENGTH, _("Rotate deg[%d]: "), 
-	      pvals->point_idx + 1);
+  g_snprintf (&path_ptr->PointIndex_Label[0], LABEL_LENGTH, _("Current Point: [ %d ] of [ %d ]"), 
+	      pvals->point_idx + 1, pvals->point_idx_max +1);
 
-  if(NULL != path_ptr->X_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->X_LabelPtr),
-                   &path_ptr->X_Label[0]);
-  }
-  if(NULL != path_ptr->Y_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->Y_LabelPtr),
-                   &path_ptr->Y_Label[0]);
-  }
-  if(NULL != path_ptr->Opacity_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->Opacity_LabelPtr),
-                   &path_ptr->Opacity_Label[0]);
-  }
-  if(NULL != path_ptr->Wresize_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->Wresize_LabelPtr),
-                   &path_ptr->Wresize_Label[0]);
-  }
-  if(NULL != path_ptr->Hresize_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->Hresize_LabelPtr),
-                   &path_ptr->Hresize_Label[0]);
-  }
-  if(NULL != path_ptr->Rotation_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->Rotation_LabelPtr),
-                   &path_ptr->Rotation_Label[0]);
+  if(NULL != path_ptr->PointIndex_LabelPtr)
+  {  gtk_label_set(GTK_LABEL(path_ptr->PointIndex_LabelPtr),
+                   &path_ptr->PointIndex_Label[0]);
   }
 }
 
@@ -1112,15 +1126,12 @@ void p_update_point_labels(t_mov_path_preview *path_ptr)
  *   Init point table with identical 2 Points
  * ============================================================================
  */
-
-void p_reset_points()
+void p_clear_point()
 {
   int l_idx;
   
-  pvals->point_idx = 0;        /* 0 == current point */
-  pvals->point_idx_max = 0;    /* 0 == there is only one valid point */
-
-  for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
+  l_idx = pvals->point_idx; 
+  if((l_idx >= 0) && (l_idx <= pvals->point_idx_max))
   {
     pvals->point[l_idx].p_x = 0;
     pvals->point[l_idx].p_y = 0;
@@ -1129,6 +1140,13 @@ void p_reset_points()
     pvals->point[l_idx].h_resize = 100; /* 100%  no resizize (1:1) */
     pvals->point[l_idx].rotation = 0;   /* no rotation (0 degree) */
   }
+}	/* end p_clear_point */
+
+void p_reset_points()
+{
+  pvals->point_idx = 0;        /* 0 == current point */
+  pvals->point_idx_max = 0;    /* 0 == there is only one valid point */
+  p_clear_point();
 }	/* end p_reset_points */
 
 /* ============================================================================
@@ -1282,7 +1300,7 @@ mov_src_sel_create()
   gtk_table_attach(GTK_TABLE(table), option_menu, 1, 2, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  gtk_tooltips_set_tip(g_tooltips, option_menu,
+  gimp_help_set_help_data(option_menu,
                        _("Source Object to insert into Framerange")
                        , NULL);
 
@@ -1306,7 +1324,7 @@ mov_src_sel_create()
   option_menu = gtk_option_menu_new();
   gtk_table_attach(GTK_TABLE(table), option_menu, 3, 4, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_tooltips_set_tip(g_tooltips, option_menu,
+  gimp_help_set_help_data(option_menu,
                        _("Paintmode")
                        , NULL);
   gtk_widget_show(option_menu);
@@ -1339,7 +1357,7 @@ mov_src_sel_create()
 
   menu = p_buildmenu (option_step_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
-  gtk_tooltips_set_tip(g_tooltips, option_menu,
+  gimp_help_set_help_data(option_menu,
                        _("How to fetch the next SrcLayer   \nat the next handled frame")
                        , NULL);
   gtk_widget_show(option_menu);
@@ -1363,7 +1381,7 @@ mov_src_sel_create()
 
   menu = p_buildmenu (option_handle_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
-  gtk_tooltips_set_tip(g_tooltips, option_menu,
+  gimp_help_set_help_data(option_menu,
                        _("How to place the SrcLayer at   \nControlpoint Koordinates")
                        , NULL);
   gtk_widget_show(option_menu);
@@ -1390,12 +1408,17 @@ static GtkWidget *
 mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
 {
   GtkWidget	 *frame;
+  GtkWidget	 *vbox;
+  GtkWidget	 *hbox;
   GtkWidget	 *table;
   GtkWidget	 *label;
-  GtkWidget	 *entry;
   GtkWidget	 *pframe;
   GtkWidget	 *preview;
-  gchar		 buf[256];
+  GtkWidget      *button_table;
+  GtkWidget      *pv_table;
+  GtkWidget      *button;
+  GtkObject      *adj;
+  gint           row;
 
   path_ptr->drawable = drawable;
   path_ptr->dwidth   = gimp_drawable_width(drawable->id );
@@ -1410,6 +1433,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   path_ptr->oldy = 0;
   path_ptr->in_call = TRUE;  /* to avoid side effects while initialization */
 
+  /* the frame */
   frame = gtk_frame_new ( _("Move Path Preview") );
   gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
 		      (GtkSignalFunc) mov_path_prevw_destroy,
@@ -1417,79 +1441,142 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
   gtk_container_border_width( GTK_CONTAINER( frame ), 2 );
 
-  /* table = gtk_table_new ( 2, 4, FALSE ); */
-  table = gtk_table_new ( 4, 4, FALSE );
+  /* the vbox */
+  vbox = gtk_vbox_new (FALSE, 3);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  /* the table (3 rows) */
+  table = gtk_table_new ( 3, 6, FALSE );
   gtk_container_border_width (GTK_CONTAINER (table), 2 );
-  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
-
-  label = gtk_label_new ( &path_ptr->X_Label[0] );  /* "X[0]: " */
-  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(table), label, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(label);
-  path_ptr->X_LabelPtr = label;  /* store label ptr for later update */ 
-
-  path_ptr->xentry = entry = gtk_entry_new ();
-  gtk_object_set_user_data( GTK_OBJECT(entry), path_ptr );
-  gtk_signal_connect( GTK_OBJECT(entry), "changed",
-		      (GtkSignalFunc) mov_path_prevw_entry_update,
-		      &path_ptr->p_x );
-  gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH,0 );
-  gtk_table_attach( GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(entry);
-
-  label = gtk_label_new ( &path_ptr->Y_Label[0] );  /* "Y[0]: " */
-  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(table), label, 2, 3, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(label);
-  path_ptr->Y_LabelPtr = label;  /* store label ptr for later update */ 
-
-  path_ptr->yentry = entry = gtk_entry_new ();
-  gtk_object_set_user_data( GTK_OBJECT(entry), path_ptr );
-  gtk_signal_connect( GTK_OBJECT(entry), "changed",
-		      (GtkSignalFunc) mov_path_prevw_entry_update,
-		      &path_ptr->p_y );
-  gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH, 0 );
-  gtk_table_attach( GTK_TABLE(table), entry, 3, 4, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(entry);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
 
+  /* X */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 0,          /* table col, row */
+			  _("X:"),                              /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,             /* scalesize spinsize */
+			  (gfloat)path_ptr->p_x,                /* value */
+			  (gfloat)0, (gfloat)path_ptr->dwidth,  /* lower, upper */
+			  1, 10,                                /* step, page */
+			  0,                                    /* digits */
+			  FALSE,                                /* constrain */
+			  (gfloat)(-GIMP_MAX_IMAGE_SIZE),
+			  (gfloat)GIMP_MAX_IMAGE_SIZE,          /* lower, upper (unconstrained) */
+			  _("X Coordinate"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (mov_path_x_adjustment_update),
+		      path_ptr);
+  path_ptr->x_adj = GTK_ADJUSTMENT(adj);
 
-  path_ptr->Wresize_LabelPtr =
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 1,
-			  &path_ptr->Wresize_Label[0], &path_ptr->w_resize,
-			  5, 200, FALSE, &path_ptr->wres_ent, &path_ptr->wres_adj,
-			  _("Scale SrcLayer's Width\nin percent"));
+  /* Y */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 3, 0,          /* table col, row */
+			  _("Y:"),                              /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,             /* scalesize spinsize */
+			  (gfloat)path_ptr->p_y,                /* value */
+			  (gfloat)0, (gfloat)path_ptr->dheight, /* lower, upper */
+			  1, 10,                                /* step, page */
+			  0,                                    /* digits */
+			  FALSE,                                /* constrain */
+			  (gfloat)(-GIMP_MAX_IMAGE_SIZE),
+			  (gfloat)GIMP_MAX_IMAGE_SIZE,          /* lower, upper (unconstrained) */
+			  _("Y Coordinate"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (mov_path_y_adjustment_update),
+		      path_ptr);
+  path_ptr->y_adj = GTK_ADJUSTMENT(adj);
 
-  path_ptr->Hresize_LabelPtr =
-  mov_int_entryscale_new( GTK_TABLE (table), 2, 1,
-			  &path_ptr->Hresize_Label[0], &path_ptr->h_resize,
-			  5, 200, FALSE, &path_ptr->hres_ent, &path_ptr->hres_adj,
-			  _("Scale SrcLayer's Height\nin percent") );
+  /* Widht Scale */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 1,        /* table col, row */
+			  _("Width:"),                        /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->w_resize,         /* value */
+			  (gfloat)1, (gfloat)200,             /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  FALSE,                              /* constrain */
+			  (gfloat)1, (gfloat)1000,            /* lower, upper (unconstrained) */
+			  _("Scale SrcLayer's Width\nin percent"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->w_resize);
+  path_ptr->wres_adj = GTK_ADJUSTMENT(adj);
 
-  path_ptr->Opacity_LabelPtr =
-  mov_int_entryscale_new( GTK_TABLE (table), 0, 2,
-			  &path_ptr->Opacity_Label[0], &path_ptr->opacity,
-			  0, 100, TRUE, &path_ptr->opacity_ent, &path_ptr->opacity_adj,
-			  _("SrcLayer's Opacity\nin percent"));
+  /* Height Scale */		      
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 3, 1,        /* table col, row */
+			  _("Height:"),                       /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->h_resize,         /* value */
+			  (gfloat)1, (gfloat)200,             /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  FALSE,                              /* constrain */
+			  (gfloat)1, (gfloat)1000,            /* lower, upper (unconstrained) */
+			  _("Scale SrcLayer's Height\nin percent"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->h_resize);
+  path_ptr->hres_adj = GTK_ADJUSTMENT(adj);
+		      
+  /* Opacity */
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 0, 2,        /* table col, row */
+			  _("Opacity:"),                      /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->opacity,          /* value */
+			  (gfloat)0, (gfloat)100,             /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  TRUE,                               /* constrain */
+			  (gfloat)0, (gfloat)100,             /* lower, upper (unconstrained) */
+			  _("SrcLayer's Opacity\nin percent"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->opacity);
+  path_ptr->opacity_adj = GTK_ADJUSTMENT(adj);
+		      
+  /* Rotation */ 
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 3, 2,        /* table col, row */
+			  _("Rotate:"),                       /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->rotation,         /* value */
+			  (gfloat)-360, (gfloat)360,          /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  FALSE,                              /* constrain */
+			  (gfloat)-3600, (gfloat)3600,        /* lower, upper (unconstrained) */
+			  _("Rotate SrcLayer (in degree)"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->rotation);
+  path_ptr->rotation_adj = GTK_ADJUSTMENT(adj);
+  gtk_widget_show( table );
 
+  /* the hbox (for preview table and button_table) */
+  hbox = gtk_hbox_new (FALSE, 3);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
- /* Rotation */
-  
- path_ptr->Rotation_LabelPtr =
- mov_int_entryscale_new( GTK_TABLE (table), 2, 2,
-                      &path_ptr->Rotation_Label[0], &path_ptr->rotation,
-                      -360, 360, FALSE, &path_ptr->rotation_ent, &path_ptr->rotation_adj,
-                      _("Rotate SrcLayer (in degree)"));
- 
-
+  /* the preview table (1 rows) */
+  pv_table = gtk_table_new ( 1, 1, FALSE );
+  gtk_container_border_width (GTK_CONTAINER (pv_table), 2 );
+  gtk_table_set_row_spacings (GTK_TABLE (pv_table), 3);
+  gtk_table_set_col_spacings (GTK_TABLE (pv_table), 5);
+  gtk_box_pack_start (GTK_BOX (hbox), pv_table, TRUE, TRUE, 0);
 
   /* frame (shadow_in) that contains preview */
   pframe = gtk_frame_new ( NULL );
   gtk_frame_set_shadow_type( GTK_FRAME( pframe ), GTK_SHADOW_IN );
-  /* gtk_table_attach( GTK_TABLE(table), pframe, 0, 4, 1, 2, 0, 0, 0, 0 ); */
-  gtk_table_attach( GTK_TABLE(table), pframe, 0, 4, 3, 4, 0, 0, 0, 0 );
+  gtk_table_attach( GTK_TABLE(pv_table), pframe, 0, 1, 0, 1,
+		    0, 0, 0, 0 );
 
   /* PREVIEW */
   path_ptr->preview = preview = gtk_preview_new( path_ptr->bpp==3 ? GTK_PREVIEW_COLOR : GTK_PREVIEW_GRAYSCALE );
@@ -1521,14 +1608,173 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   mov_path_prevw_preview_init( path_ptr );
   gtk_widget_show(preview);
 
-  gtk_widget_show( pframe );
-  gtk_widget_show( table );
-  gtk_widget_show( frame );
+  /* button_table 7 rows */
+  button_table = gtk_table_new (7, 2, TRUE);
+  gtk_table_set_row_spacings (GTK_TABLE (button_table), 0);
+  gtk_table_set_col_spacings (GTK_TABLE (button_table), 0);
 
-  sprintf( buf, "%d", path_ptr->p_x );
-  gtk_entry_set_text( GTK_ENTRY(path_ptr->xentry), buf );
-  sprintf( buf, "%d", path_ptr->p_y );
-  gtk_entry_set_text( GTK_ENTRY(path_ptr->yentry), buf );
+  row = 0;
+
+  /* the PointIndex label */
+  label = gtk_label_new ( &path_ptr->PointIndex_Label[0] );  /* "Current Point: 1" */
+  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
+  gtk_table_attach( GTK_TABLE(button_table), label, 0, 1, row, row+1,
+		    0, 0, 0, 0 );
+  gtk_widget_show(label);
+  path_ptr->PointIndex_LabelPtr = label;  /* store label ptr for later update */
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("Add Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_padd_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Add Controlpoint at end        \n(the last Point is duplicated)")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("Insert Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pins_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Insert Controlpoint          \n(the current Point is duplicated)")
+                       , NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ( _("Delete Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pdel_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Delete current Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("Prev Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pprev_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Show Previous Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ( _("Next Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pnext_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Show Next Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("First Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pfirst_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Show First Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ( _("Last Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_plast_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Show Last Controlpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("Clear Point"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pclr_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Reset the current Controlpoint\nto default Values")
+                       , NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ( _("Reset Points"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pres_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Reset Controlpoints  \nto one Defaultpoint")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  button = gtk_button_new_with_label ( _("Load Points"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pload_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Load Controlpoints from file")
+                       , NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ( _("Save Points"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_psave_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Save Controlpoints to file")
+                       , NULL);
+  gtk_widget_show (button);
+
+  row++;
+
+  gtk_box_pack_start (GTK_BOX (hbox), button_table, TRUE, TRUE, 0);
+
+  gtk_widget_show (button_table);
+  gtk_widget_show( pframe );
+  gtk_widget_show( pv_table );
+  gtk_widget_show( frame );
 
   mov_path_prevw_cursor_update( path_ptr );
 
@@ -1719,32 +1965,53 @@ mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update )
 
 
 /*
- *  CenterFrame entry callback
+ *  mov_path_xy_adjustment_update
  */
 
 static void
-mov_path_prevw_entry_update ( GtkWidget *widget,
-			     gpointer data )
+mov_path_x_adjustment_update( GtkWidget *widget,
+			      gpointer data )
 {
   t_mov_path_preview *path_ptr;
-  gint *val, new_val;
+  gint old_val;
 
-  if(gap_debug) printf("entry\n");
-  val = data;
-  new_val = atoi ( gtk_entry_get_text( GTK_ENTRY(widget) ) );
-
-  if( *val != new_val )
-    {
-      *val = new_val;
-      path_ptr = gtk_object_get_user_data( GTK_OBJECT(widget) );
-      if(gap_debug) printf("entry:newval in_call=%d\n", path_ptr->in_call );
+  path_ptr = (t_mov_path_preview *)data;
+  if(path_ptr == NULL) return;
+  
+  old_val = path_ptr->p_x;
+  gimp_int_adjustment_update(GTK_ADJUSTMENT(widget), &path_ptr->p_x);
+  if( old_val != path_ptr->p_x )
+  {
       if( !path_ptr->in_call )
-	{
+      {
 	  mov_path_prevw_cursor_update( path_ptr );
 	  mov_path_prevw_draw ( path_ptr, CURSOR );
-	}
-    }
+      }
+  }
 }
+static void
+mov_path_y_adjustment_update( GtkWidget *widget,
+			      gpointer data )
+{
+  t_mov_path_preview *path_ptr;
+  gint old_val;
+
+  path_ptr = (t_mov_path_preview *)data;
+  if(path_ptr == NULL) return;
+  
+  old_val = path_ptr->p_y;
+  gimp_int_adjustment_update(GTK_ADJUSTMENT(widget), &path_ptr->p_y);
+  if( old_val != path_ptr->p_y )
+  {
+      if( !path_ptr->in_call )
+      {
+	  mov_path_prevw_cursor_update( path_ptr );
+	  mov_path_prevw_draw ( path_ptr, CURSOR );
+      }
+  }
+}
+
+
 
 
 /*
@@ -1791,7 +2058,6 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
   t_mov_path_preview *path_ptr;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gchar buf[256];
 
   path_ptr = gtk_object_get_user_data ( GTK_OBJECT(widget) );
 
@@ -1814,10 +2080,14 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
     mouse:
       mov_path_prevw_draw( path_ptr, CURSOR );
       path_ptr->in_call = TRUE;
-      sprintf(buf, "%d", path_ptr->curx * path_ptr->dwidth / path_ptr->pwidth );
-      gtk_entry_set_text( GTK_ENTRY(path_ptr->xentry), buf );
-      sprintf(buf, "%d", path_ptr->cury * path_ptr->dheight / path_ptr->pheight );
-      gtk_entry_set_text( GTK_ENTRY(path_ptr->yentry), buf );
+ 
+      path_ptr->p_x = path_ptr->curx * path_ptr->dwidth / path_ptr->pwidth;     
+      path_ptr->p_y = path_ptr->cury * path_ptr->dheight / path_ptr->pheight;
+      gtk_adjustment_set_value (path_ptr->x_adj,
+				(gfloat)path_ptr->p_x);
+      gtk_adjustment_set_value (path_ptr->y_adj,
+				(gfloat)path_ptr->p_y);    
+      
       path_ptr->in_call = FALSE;
       break;
 
@@ -1827,210 +2097,6 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
 
   return FALSE;
 }
-
-/* ============================================================================
- *	 Entry - Scale Pair
- * ============================================================================
- */
-
-
-/***********************************************************************/
-/*								       */
-/*    Create new entry-scale pair with label. (int)		       */
-/*    1 row and 2 cols of table are needed.			       */
-/*								       */
-/*    `x' and `y' means starting row and col in `table'.	       */
-/*								       */
-/*    `caption' is label string.				       */
-/*								       */
-/*    `min', `max' are boundary of scale.			       */
-/*								       */
-/*    `constraint' means whether value of *intvar should be constraint */
-/*    by scale adjustment, e.g. between `min' and `max'.	       */
-/*								       */
-/***********************************************************************/
-
-static GtkWidget*
-mov_int_entryscale_new ( GtkTable *table, gint x, gint y,
-			 gchar *caption, gint *intvar,
-			 gint min, gint max, gint constraint,
-			 GtkEntry      **entry_pptr,
-			 GtkAdjustment **adjustment_pptr,
-			 char *tooltip)
-{
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *scale;
-  GtkObject *adjustment;
-  t_mov_EntryScaleData *userdata;
-  gchar	   buffer[256];
-
-
-  label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  adjustment = gtk_adjustment_new ( *intvar, min, max, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new ( GTK_ADJUSTMENT(adjustment) );
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  if(adjustment_pptr != NULL) *adjustment_pptr = GTK_ADJUSTMENT(adjustment);
-
-  entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf( buffer, "%d", *intvar );
-  gtk_entry_set_text( GTK_ENTRY (entry), buffer );
-  if(entry_pptr != NULL) *entry_pptr = GTK_ENTRY(entry);
-
-
-  userdata = g_new ( t_mov_EntryScaleData, 1 );
-  userdata->entry = entry;
-  userdata->adjustment = adjustment;
-  userdata->constraint = constraint;
-  gtk_object_set_user_data (GTK_OBJECT(entry), userdata);
-  gtk_object_set_user_data (GTK_OBJECT(adjustment), userdata);
-
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) mov_paired_int_entry_update,
-		      intvar);
-  gtk_signal_connect ( adjustment, "value_changed",
-		      (GtkSignalFunc) mov_paired_int_scale_update,
-		      intvar);
-  gtk_signal_connect ( GTK_OBJECT( entry ), "destroy",
-		      (GtkSignalFunc) mov_paired_entry_destroy_callback,
-		      userdata );
-
-
-  hbox = gtk_hbox_new ( FALSE, 5 );
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-  if(tooltip)
-  {
-     gtk_tooltips_set_tip(g_tooltips, entry, tooltip , NULL);
-     gtk_tooltips_set_tip(g_tooltips, scale, tooltip , NULL);
-  }
-
-  gtk_widget_show (label);
-  gtk_widget_show (entry);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-  
-  return label;
-}
-
-
-/*
-   when destroyed, userdata is destroyed too
-*/
-static void
-mov_paired_entry_destroy_callback (GtkWidget *widget,
-				    gpointer data)
-{
-  t_mov_EntryScaleData *userdata;
-  userdata = data;
-  g_free ( userdata );
-}
-
-/* scale callback (int) */
-/* ==================== */
-
-static void
-mov_paired_int_scale_update (GtkAdjustment *adjustment,
-			      gpointer	    data)
-{
-  t_mov_EntryScaleData *userdata;
-  GtkEntry *entry;
-  gchar buffer[256];
-  gint *val, new_val;
-
-  val = data;
-  new_val = (gint) adjustment->value;
-
-  *val = new_val;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-  entry = GTK_ENTRY( userdata->entry );
-  sprintf (buffer, "%d", (int) new_val );
-
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(entry), data );
-  gtk_entry_set_text ( entry, buffer);
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(entry), data );
-}
-
-/* entry callback (int) */
-/* ==================== */
-
-
-static void
-mov_paired_int_entry_update (GtkWidget *widget,
-			      gpointer	 data)
-{
-  t_mov_EntryScaleData *userdata;
-  GtkAdjustment *adjustment;
-  int new_val, constraint_val;
-  int *val;
-
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  *val = new_val;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT( userdata->adjustment );
-
-  constraint_val = new_val;
-  if ( constraint_val < adjustment->lower )
-    constraint_val = adjustment->lower;
-  if ( constraint_val > adjustment->upper )
-    constraint_val = adjustment->upper;
-
-  if ( userdata->constraint )
-    *val = constraint_val;
-  else
-    *val = new_val;
-
-  adjustment->value = constraint_val;
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
-
-}
-
-
-/* ============================================================================
- * p_paired_update
- *  update for both entry and adjustment (without constrint checks)
- *  (used when index of point table is changed)
- * ============================================================================
- */
-void
-p_paired_update(GtkEntry      *entry,
-                GtkAdjustment *adjustment,
-                gpointer       data)
-{
-  gchar l_buffer[30];
-  int   *val_ptr;
-
-  val_ptr = (int *)data;
-  sprintf (l_buffer, "%d", *val_ptr );
-
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(entry), data );
-  gtk_entry_set_text ( entry, l_buffer);
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(entry), data );
-
-
-  adjustment->value = *val_ptr;
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
-}	/* end p_paired_update */
 
 /* ============================================================================
  * p_get_flattened_drawable
