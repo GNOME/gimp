@@ -96,6 +96,7 @@ struct _Gimp
   GimpDataFactory       *palette_factory;
 
   GHashTable            *procedural_ht;
+  GList                 *procedural_db_data_list;
 
   GSList                *load_procs;
   GSList                *save_procs;

@@ -42,8 +42,8 @@ sub drawable_arg () {{
 }}
 
 sub convert_proc {
-    my ($type, $arg, $var) = @_;
-    my $desc = ($type =~ /^[aeiou]/ ? 'an ' : 'a ') . $type;
+    my ($pdb_type, $arg, $var, $core_type) = @_;
+    my $desc = ($pdb_type =~ /^[aeiou]/ ? 'an ' : 'a ') . $pdb_type;
 
     foreach ($blurb, $help, $inargs[0]->{desc}) { s/the gimp/$desc/e }
 
@@ -55,7 +55,7 @@ sub convert_proc {
 
     $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/;
 
-    $invoke{code} =~ s/gimp_/"gimp_$type\_"/e;
+    $invoke{code} =~ s/gimp_/"gimp_$core_type\_"/e;
     $invoke{code} =~ s/gimp, /"$var, "/e;
 
     $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/;
@@ -137,13 +137,13 @@ sub parasite_list {
     %invoke = ( code => 'parasites = gimp_parasite_list (gimp, &num_parasites);' );
 }
 
-@headers = qw("core/gimp-parasites.h" "core/gimpdrawable.h" "pdb_glue.h");
+@headers = qw("core/gimp-parasites.h");
 
 @procs = qw(parasite_find parasite_attach parasite_detach parasite_list);
 
 @types = (
-    ['drawable', '&drawable_arg' , 'drawable'],
-    ['image'   , '&std_image_arg', 'gimage' ]
+    ['drawable', '&drawable_arg' , 'GIMP_ITEM (drawable)', 'item'  ],
+    ['image'   , '&std_image_arg', 'gimage',               'image' ]
 );
 
 foreach $type (@types) {

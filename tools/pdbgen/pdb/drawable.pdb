@@ -69,7 +69,7 @@ HELP
 }
 
 sub drawable_is_proc {
-    my $desc = shift;
+    my ($desc, $check) = @_;
 
     my $type = $desc;
     $type =~ s/ /_/g;
@@ -82,7 +82,7 @@ HELP
 			$type, 'boolean', $type,
 			"Non-zero if the drawable is a $desc");
 
-    $outargs[0]->{alias} .= ' ? TRUE : FALSE';
+    $outargs[0]->{alias} = $check . ' (drawable) ? TRUE : FALSE';
 }
 
 sub drawable_merge_shadow {
@@ -306,15 +306,15 @@ HELP
 }
 
 sub drawable_is_layer {
-    &drawable_is_proc('layer');
+    &drawable_is_proc('layer', 'GIMP_IS_LAYER');
 }
 
 sub drawable_is_layer_mask {
-    &drawable_is_proc('layer mask');
+    &drawable_is_proc('layer mask', 'GIMP_IS_LAYER_MASK');
 }
 
 sub drawable_is_channel {
-    &drawable_is_proc('channel');
+    &drawable_is_proc('channel', 'GIMP_IS_CHANNEL');
 }
 
 sub drawable_get_pixel {
@@ -538,8 +538,7 @@ CODE
 
 @headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
               "core/gimpdrawable.h" "core/gimpdrawable-offset.h"
-	      "pdb_glue.h" "base/tile.h" "base/tile-manager.h"
-              "base/temp-buf.h");
+	      "base/tile.h" "base/tile-manager.h" "base/temp-buf.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

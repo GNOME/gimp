@@ -30,7 +30,7 @@ sub operation_arg () {{
 }}
 
 sub channel_get_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
+    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
     $blurb = "Get the $desc of the specified channel.";
 
@@ -45,7 +45,7 @@ sub channel_get_prop_proc {
 	  desc => "The channel $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "gimp_channel_get_$prop (channel)" : "channel->$prop";
+    my $alias = $func ? "gimp_${core_type}_get_$prop ($core_var)" : "$core_var->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -64,7 +64,7 @@ CODE
 }
 
 sub channel_set_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
+    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
     $blurb = "Set the $desc of the specified channel.";
 
@@ -82,8 +82,8 @@ sub channel_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "gimp_channel_set_$prop (channel, $prop);"
-			  : "channel->$prop = $prop;";
+    $invoke{code} = $func ? "gimp_${core_type}_set_$prop ($core_var, $prop);"
+			  : "$core_var->$prop = $prop;";
 
     if ($type eq 'color') {
 	%invoke = (
@@ -106,7 +106,7 @@ CODE
 }
 
 sub channel_accessors {
-    my ($prop, $type, $desc, $func, $extra) = @_;
+    my ($prop, $type, $desc, $func, $core_type, $core_var, $extra) = @_;
     my (@extra, %extra); my $once = 0;
 
     ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
@@ -119,7 +119,8 @@ sub channel_accessors {
 
 	eval <<SUB;
 sub @{[ scalar caller ]}::$proc {
-    \&channel_${_}_prop_proc('$prop', '$type', '$desc', $func);
+    \&channel_${_}_prop_proc('$prop', '$type', '$desc', $func,
+                             '$core_type', '$core_var');
     $extra{$_}
 }
 SUB
@@ -253,11 +254,14 @@ HELP
 CODE
 }
 
-&channel_accessors('name', 'string', 'name', 1);
+&channel_accessors('name', 'string', 'name', 1,
+                   'object', 'GIMP_OBJECT (channel)');
 
-&channel_accessors('visible', 'boolean', 'visibility', 1);
+&channel_accessors('visible', 'boolean', 'visibility', 1,
+                   'drawable', 'GIMP_DRAWABLE (channel)');
 
 &channel_accessors('show_masked', 'boolean', 'composite method', 1,
+                   'channel', 'channel',
 		   <<'CODE');
     $help .= <<'HELP'
 If it is non-zero, then the channel is composited with the image so that masked
@@ -266,15 +270,18 @@ HELP
 CODE
 
 &channel_accessors('opacity', '0 <= float <= 100', 'opacity', 0,
+	           'channel', 'channel',
 		   [ '$outargs[0]->{alias} =
 			  "channel->color.a * 100.0"',
 		     '$invoke{code} =~
 			  s%(color.a);$%(($1 / 100.0);%' ]);
 
-&channel_accessors('color', 'color', 'compositing color', 0, 
+&channel_accessors('color', 'color', 'compositing color', 0,
+                   'channel', 'channel',
                    [ '$outargs[0]->{void_ret} = 1', '' ]);
 
 &channel_accessors('tattoo', 'tattoo', 'tattoo', 1,
+                   'item', 'GIMP_ITEM (channel)',
 		   <<'CODE');
     $help .= <<'HELP';
 A tattoo is a unique and permanent identifier attached to a channel that can be
@@ -284,8 +291,6 @@ HELP
     $author = $copyright = 'Jay Cox';
     $date = '1998';
 CODE
-
-@headers = qw("pdb_glue.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete
 		   channel_combine_masks);

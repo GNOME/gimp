@@ -31,7 +31,6 @@
 #include "core/gimp-parasites.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "pdb_glue.h"
 
 #include "libgimpbase/gimpparasite.h"
 
@@ -278,7 +277,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
 
   if (success)
     {
-      parasite = gimp_parasite_copy (gimp_drawable_parasite_find (drawable, name));
+      parasite = gimp_parasite_copy (gimp_item_parasite_find (GIMP_ITEM (drawable), name));
       success = parasite != NULL;
     }
 
@@ -346,7 +345,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_drawable_parasite_attach (drawable, parasite);
+    gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
 
   return procedural_db_return_args (&drawable_parasite_attach_proc, success);
 }
@@ -398,7 +397,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_drawable_parasite_detach (drawable, name);
+    gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
 
   return procedural_db_return_args (&drawable_parasite_detach_proc, success);
 }
@@ -448,7 +447,7 @@ drawable_parasite_list_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    parasites = gimp_drawable_parasite_list (drawable, &num_parasites);
+    parasites = gimp_item_parasite_list (GIMP_ITEM (drawable), &num_parasites);
 
   return_args = procedural_db_return_args (&drawable_parasite_list_proc, success);
 

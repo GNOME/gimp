@@ -948,7 +948,7 @@ layer_get_name_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&layer_get_name_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_layer_get_name (layer));
+    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
   return return_args;
 }
@@ -1004,7 +1004,7 @@ layer_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_name (layer, name);
+    gimp_object_set_name (GIMP_OBJECT (layer), name);
 
   return procedural_db_return_args (&layer_set_name_proc, success);
 }
@@ -1054,7 +1054,7 @@ layer_get_visible_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&layer_get_visible_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_visible (layer);
+    return_args[1].value.pdb_int = gimp_drawable_get_visible (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -1108,7 +1108,7 @@ layer_set_visible_invoker (Gimp     *gimp,
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_visible (layer, visible);
+    gimp_drawable_set_visible (GIMP_DRAWABLE (layer), visible);
 
   return procedural_db_return_args (&layer_set_visible_proc, success);
 }
@@ -1890,7 +1890,7 @@ layer_get_tattoo_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&layer_get_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_tattoo (layer);
+    return_args[1].value.pdb_int = gimp_item_get_tattoo (GIMP_ITEM (layer));
 
   return return_args;
 }
@@ -1946,7 +1946,7 @@ layer_set_tattoo_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_set_tattoo (layer, tattoo);
+    gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
 
   return procedural_db_return_args (&layer_set_tattoo_proc, success);
 }

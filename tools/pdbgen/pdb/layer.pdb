@@ -107,7 +107,7 @@ HELP
 }
 
 sub layer_get_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
+    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
     $blurb = "Get the $desc of the specified layer.";
 
@@ -122,7 +122,7 @@ sub layer_get_prop_proc {
 	  desc => "The layer $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "gimp_layer_get_$prop (layer)" : "layer->$prop";
+    my $alias = $func ? "gimp_${core_type}_get_$prop ($core_var)" : "$core_var->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -141,7 +141,7 @@ sub layer_get_prop_proc {
 }
 
 sub layer_set_prop_proc {
-    my ($prop, $type, $desc, $func) = @_;
+    my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
     $blurb = "Set the $desc of the specified layer.";
 
@@ -159,8 +159,8 @@ sub layer_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "gimp_layer_set_$prop (layer, $prop);"
-			  : "layer->$prop = $prop;";
+    $invoke{code} = $func ? "gimp_${core_type}_set_$prop ($core_var, $prop);"
+			  : "$core_var->$prop = $prop;";
 
     if ($type eq 'color') {
 	%invoke = (
@@ -174,7 +174,7 @@ CODE
 }
 
 sub layer_accessors {
-    my ($prop, $type, $desc, $func, $setting, $extra) = @_;
+    my ($prop, $type, $desc, $func, $setting, $core_type, $core_var, $extra) = @_;
     my (@extra, %extra); my $once = 0;
 
      my $change = "s/ ($desc)/'s \$1 setting/";
@@ -195,7 +195,8 @@ sub layer_accessors {
 
 	eval <<SUB;
 sub @{[ scalar caller ]}::$proc {
-    \&layer_${_}_prop_proc('$prop', '$type', '$desc', $func);
+    \&layer_${_}_prop_proc('$prop', '$type', '$desc', $func,
+                           '$core_type', '$core_var');
     $extra{$_}
     @{[ $setting ? $modify{$_} : "" ]}
 }
@@ -479,13 +480,17 @@ HELP
     );
 }
 
-&layer_accessors('name', 'string', 'name', 1, 0);
+&layer_accessors('name', 'string', 'name', 1, 0,
+                 'object', 'GIMP_OBJECT (layer)');
 
-&layer_accessors('visible', 'boolean', 'visibility', 1, 0);
+&layer_accessors('visible', 'boolean', 'visibility', 1, 0,
+                 'drawable', 'GIMP_DRAWABLE (layer)');
 
-&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
+&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1,
+                 'layer', 'layer');
 
 &layer_accessors('apply_mask', 'boolean', 'apply mask', 1, 0,
+                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
 If the value is non-zero, then the layer mask for this layer is currently being
@@ -499,6 +504,7 @@ HELP
 CODE2
 
 &layer_accessors('show_mask', 'boolean', 'show mask', 1, 0,
+                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
 If the value is non-zero, then the layer mask for this layer is currently being
@@ -513,6 +519,7 @@ HELP
 CODE2
 
 &layer_accessors('edit_mask', 'boolean', 'show mask', 1, 0,
+                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
  If the value is non-zero, then the layer mask for this layer is currently
@@ -527,14 +534,17 @@ HELP
 CODE2
 
 &layer_accessors('opacity', '0 <= float <= 100', 'opacity', 1, 0,
+                 'layer', 'layer',
 		 [ '$outargs[0]->{alias} =
 		        "gimp_layer_get_opacity (layer) * 100.0"',
 		   '$invoke{code} =~
 			s%opacity\);%opacity / 100.0\);%' ]);
 
-&layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 1, 0);
+&layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 1, 0,
+                 'layer', 'layer');
 
 &layer_accessors('linked', 'boolean', 'linked state', 1, 0,
+                 'layer', 'layer',
 		 <<'CODE');
     $author = $copyright = 'Wolfgang Hofer';
     $date = '1998';
@@ -545,6 +555,7 @@ CODE2
 CODE
 
 &layer_accessors('tattoo', 'tattoo', 'tattoo', 1, 0,
+                 'item', 'GIMP_ITEM (layer)',
 		 <<'CODE');
     $help .= <<'HELP';
 A tattoo is a unique and permanent identifier attached to a 

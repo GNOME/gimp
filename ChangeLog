@@ -1,3 +1,36 @@
+2002-09-10  Michael Natterer  <mitch@gimp.org>
+
+	Some PDB cleanup:
+
+	* tools/pdbgen/pdb/procedural_db.pdb: removed the get_data() and
+	set_data() implementations and the global "data_list" variable.
+	Cleaned up the dump() stuff (pass the FILE pointer around instead
+	of having a global variable for it). Fixed output_string() so it
+	does not crash on NULL strings.
+
+	* app/core/gimp.[ch]: added gimp->procedural_db_data_list.
+
+	* app/pdb/procedural_db.[ch]: added procedural_db_[set|get]_data().
+	Don't leak data identifiers when overwriting an already existing
+	entry. Added g_return_if_fail() stuff to all public functions.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/parasite.pdb: tweaked some helper functions to
+	take parameters which make them aware of the real type of the
+	objects they handle (e.g. the PDB function gimp_layer_set_name()
+	matches the core function gimp_object_get_name()).
+
+	* app/pdb/pdb_glue.h: removed ugly CPP-level workarounds for the
+	issue mentioned above.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2002-09-10  Dave Neary  <bolsh@gimp.org>
 
         * plug-ins/common/png.c: Handle INDEXA images if the

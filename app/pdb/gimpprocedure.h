@@ -119,29 +119,43 @@ struct _ProcRecord
 
 
 /*  Functions  */
-void          procedural_db_init         (Gimp        *gimp);
-void          procedural_db_free         (Gimp        *gimp);
-void          procedural_db_register     (Gimp        *gimp,
-					  ProcRecord  *procedure);
-void          procedural_db_unregister   (Gimp        *gimp,
-					  const gchar *name);
-ProcRecord  * procedural_db_lookup       (Gimp        *gimp,
-					  const gchar *name);
-Argument    * procedural_db_execute      (Gimp        *gimp,
-					  const gchar *name,
-					  Argument    *args);
-Argument    * procedural_db_run_proc     (Gimp        *gimp,
-					  const gchar *name,
-					  gint        *nreturn_vals,
-					  ...);
-Argument    * procedural_db_return_args  (ProcRecord  *procedure,
-					  gboolean     success);
-void          procedural_db_destroy_args (Argument    *args,
-					  gint         nargs);
+
+void           procedural_db_init          (Gimp        *gimp);
+void           procedural_db_free          (Gimp        *gimp);
+
+void           procedural_db_register      (Gimp        *gimp,
+                                            ProcRecord  *procedure);
+void           procedural_db_unregister    (Gimp        *gimp,
+                                            const gchar *name);
+ProcRecord   * procedural_db_lookup        (Gimp        *gimp,
+                                            const gchar *name);
+
+Argument     * procedural_db_execute       (Gimp        *gimp,
+                                            const gchar *name,
+                                            Argument    *args);
+Argument     * procedural_db_run_proc      (Gimp        *gimp,
+                                            const gchar *name,
+                                            gint        *nreturn_vals,
+                                            ...);
+
+Argument     * procedural_db_return_args   (ProcRecord  *procedure,
+                                            gboolean     success);
+void           procedural_db_destroy_args  (Argument    *args,
+                                            gint         nargs);
+
+void           procedural_db_set_data      (Gimp        *gimp,
+                                            const gchar *identifier,
+                                            gint32       bytes,
+                                            const guint8 *data);
+const guint8 * procedural_db_get_data      (Gimp         *gimp,
+                                            const gchar  *identifier,
+                                            gint32       *bytes);
+
 
 /* "type" should really be a GimpPDBArgType, but we can cope with
  *  out-of-range values.
  */
-const gchar * pdb_type_name (gint type); /* really exists in _cmds.c file */
+const gchar  * pdb_type_name (gint type); /* really exists in _cmds.c file */
+
 
 #endif  /*  __PROCEDURAL_DB_H__  */

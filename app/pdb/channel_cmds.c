@@ -31,7 +31,6 @@
 #include "core/core-enums.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "pdb_glue.h"
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -387,7 +386,7 @@ channel_get_name_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&channel_get_name_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_channel_get_name (channel));
+    return_args[1].value.pdb_pointer = g_strdup (gimp_object_get_name (GIMP_OBJECT (channel)));
 
   return return_args;
 }
@@ -443,7 +442,7 @@ channel_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_set_name (channel, name);
+    gimp_object_set_name (GIMP_OBJECT (channel), name);
 
   return procedural_db_return_args (&channel_set_name_proc, success);
 }
@@ -493,7 +492,7 @@ channel_get_visible_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&channel_get_visible_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_channel_get_visible (channel);
+    return_args[1].value.pdb_int = gimp_drawable_get_visible (GIMP_DRAWABLE (channel));
 
   return return_args;
 }
@@ -547,7 +546,7 @@ channel_set_visible_invoker (Gimp     *gimp,
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_channel_set_visible (channel, visible);
+    gimp_drawable_set_visible (GIMP_DRAWABLE (channel), visible);
 
   return procedural_db_return_args (&channel_set_visible_proc, success);
 }
@@ -922,7 +921,7 @@ channel_get_tattoo_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&channel_get_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_channel_get_tattoo (channel);
+    return_args[1].value.pdb_int = gimp_item_get_tattoo (GIMP_ITEM (channel));
 
   return return_args;
 }
@@ -978,7 +977,7 @@ channel_set_tattoo_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_channel_set_tattoo (channel, tattoo);
+    gimp_item_set_tattoo (GIMP_ITEM (channel), tattoo);
 
   return procedural_db_return_args (&channel_set_tattoo_proc, success);
 }

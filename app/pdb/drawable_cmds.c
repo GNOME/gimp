@@ -40,7 +40,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "pdb_glue.h"
 
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;
@@ -984,7 +983,7 @@ drawable_is_layer_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&drawable_is_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_layer (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = GIMP_IS_LAYER (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -1038,7 +1037,7 @@ drawable_is_layer_mask_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_layer_mask (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = GIMP_IS_LAYER_MASK (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -1092,7 +1091,7 @@ drawable_is_channel_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&drawable_is_channel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_channel (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = GIMP_IS_CHANNEL (drawable) ? TRUE : FALSE;
 
   return return_args;
 }

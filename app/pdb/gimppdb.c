@@ -37,13 +37,23 @@
 #include "libgimp/gimpintl.h"
 
 
+typedef struct _PDBData PDBData;
+
+struct _PDBData
+{
+  gchar  *identifier;
+  gint32  bytes;
+  guint8 *data;
+};
+
+
 void
 procedural_db_init (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->procedural_ht = g_hash_table_new (g_str_hash, g_str_equal);
+  gimp->procedural_ht           = g_hash_table_new (g_str_hash, g_str_equal);
+  gimp->procedural_db_data_list = NULL;
 }
 
 static void
@@ -58,6 +68,8 @@ procedural_db_free_entry (gpointer key,
 void
 procedural_db_free (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (gimp->procedural_ht)
     {
       g_hash_table_foreach (gimp->procedural_ht, 
@@ -66,6 +78,24 @@ procedural_db_free (Gimp *gimp)
   
       gimp->procedural_ht = NULL;
     }
+
+  if (gimp->procedural_db_data_list)
+    {
+      PDBData *data;
+      GList   *list;
+
+      for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
+        {
+          data = (PDBData *) list->data;
+
+          g_free (data->identifier);
+          g_free (data->data);
+          g_free (data);
+        }
+
+      g_list_free (gimp->procedural_db_data_list);
+      gimp->procedural_db_data_list = NULL;
+    }
 }
 
 void
@@ -73,6 +103,9 @@ procedural_db_register (Gimp       *gimp,
 			ProcRecord *procedure)
 {
   GList *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (procedure != NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) procedure->name);
   list = g_list_prepend (list, (gpointer) procedure);
@@ -87,6 +120,9 @@ procedural_db_unregister (Gimp        *gimp,
 			  const gchar *name)
 {
   GList *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (name != NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
 
@@ -110,6 +146,9 @@ procedural_db_lookup (Gimp        *gimp,
 {
   GList *list;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
   list = g_hash_table_lookup (gimp->procedural_ht, (gpointer) name);
 
   if (list)
@@ -127,6 +166,9 @@ procedural_db_execute (Gimp        *gimp,
   Argument   *return_args;
   GList      *list;
   gint        i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   return_args = NULL;
 
@@ -224,6 +266,9 @@ procedural_db_run_proc (Gimp        *gimp,
   Argument   *return_vals;
   va_list     args;
   gint        i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   if ((proc = procedural_db_lookup (gimp, name)) == NULL)
     {
@@ -323,6 +368,8 @@ procedural_db_return_args (ProcRecord *procedure,
   Argument *return_args;
   gint      i;
 
+  g_return_val_if_fail (procedure != NULL, NULL);
+
   return_args = g_new (Argument, procedure->num_values + 1);
 
   if (success)
@@ -409,4 +456,72 @@ procedural_db_destroy_args (Argument *args,
     }
 
   g_free (args);
+}
+
+void
+procedural_db_set_data (Gimp        *gimp,
+                        const gchar  *identifier,
+                        gint32        bytes,
+                        const guint8 *data)
+{
+  GList   *list;
+  PDBData *pdb_data;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (identifier != NULL);
+  g_return_if_fail (bytes > 0);
+  g_return_if_fail (data != NULL);
+
+  for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
+    {
+      pdb_data = (PDBData *) list->data;
+
+      if (! strcmp (pdb_data->identifier, identifier))
+        break;
+    }
+
+  /* If there isn't already data with the specified identifier, create one */
+  if (list == NULL)
+    {
+      pdb_data = g_new0 (PDBData, 1);
+      pdb_data->identifier = g_strdup (identifier);
+
+      gimp->procedural_db_data_list =
+        g_list_prepend (gimp->procedural_db_data_list, pdb_data);
+    }
+  else
+    {
+      g_free (pdb_data->data);
+    }
+
+  pdb_data->bytes = bytes;
+  pdb_data->data  = g_memdup (data, bytes);
+}
+
+const guint8 *
+procedural_db_get_data (Gimp        *gimp,
+                        const gchar *identifier,
+                        gint32      *bytes)
+{
+  GList   *list;
+  PDBData *pdb_data;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
+  g_return_val_if_fail (bytes != NULL, NULL);
+
+  *bytes = 0;
+
+  for (list = gimp->procedural_db_data_list; list; list = g_list_next (list))
+    {
+      pdb_data = (PDBData *) list->data;
+
+      if (! strcmp (pdb_data->identifier, identifier))
+        {
+          *bytes = pdb_data->bytes;
+          return pdb_data->data;
+        }
+    }
+
+  return NULL;
 }

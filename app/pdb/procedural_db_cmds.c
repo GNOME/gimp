@@ -60,18 +60,6 @@ struct _PDBQuery
   int     num_procs;
 };
 
-typedef struct _PDBData PDBData;
-
-struct _PDBData
-{
-  gchar *identifier;
-  gint   bytes;
-  gchar *data;
-};
-
-static FILE  *procedural_db_out = NULL;
-static GList *data_list         = NULL;
-
 static gchar *proc_type_str[] = 
 {
   N_("Internal GIMP procedure"),
@@ -144,10 +132,10 @@ procedural_db_query_entry (gpointer key,
                            gpointer value,
                            gpointer user_data)
 {
-  GList *list;
+  GList      *list;
   ProcRecord *proc;
-  PDBQuery *pdb_query;
-  int new_length;
+  PDBQuery   *pdb_query;
+  gint        new_length;
 
   list = (GList *) value;
   proc = (ProcRecord *) list->data;
@@ -175,24 +163,28 @@ procedural_db_query_entry (gpointer key,
 }
 
 static void
-output_string (const char *string)
+output_string (FILE       *file,
+               const char *string)
 {
-  fprintf (procedural_db_out, "\"");
-  while (*string)
-    {
-      switch (*string)
-	{
-	case '\\' : fprintf (procedural_db_out, "\\\\"); break;
-	case '\"' : fprintf (procedural_db_out, "\\\""); break;
-	case '{'  : fprintf (procedural_db_out, "@{"); break;
-	case '@'  : fprintf (procedural_db_out, "@@"); break;
-	case '}'  : fprintf (procedural_db_out, "@}"); break;
-	default:
-	  fprintf (procedural_db_out, "%c", *string);
-	}
-      string++;
-    }
-  fprintf (procedural_db_out, "\"\n");
+  fprintf (file, "\"");
+
+  if (string)
+    while (*string)
+      {
+        switch (*string)
+          {
+          case '\\' : fprintf (file, "\\\\"); break;
+          case '\"' : fprintf (file, "\\\""); break;
+          case '{'  : fprintf (file, "@{"); break;
+          case '@'  : fprintf (file, "@@"); break;
+          case '}'  : fprintf (file, "@}"); break;
+          default:
+            fprintf (file, "%c", *string);
+          }
+        string++;
+      }
+
+  fprintf (file, "\"\n");
 }
 
 static void
@@ -200,11 +192,17 @@ procedural_db_print_entry (gpointer key,
                            gpointer value,
                            gpointer user_data)
 {
-  int i;
   ProcRecord *procedure;
-  GList *list = (GList *) value;
-  int num = 0;
-  GString *buf = g_string_new ("");
+  GString    *buf;
+  GList      *list;
+  FILE       *file;
+  gint        i;
+  gint        num = 0;
+
+  list = (GList *) value;
+  file = (FILE *) user_data;
+
+  buf = g_string_new ("");
 
   while (list)
     {
@@ -212,48 +210,48 @@ procedural_db_print_entry (gpointer key,
       procedure = (ProcRecord*) list->data;
       list = list->next;
 
-      fprintf (procedural_db_out, "\n(register-procedure ");
+      fprintf (file, "\n(register-procedure ");
 
       if (list || num != 1)
         {
           g_string_printf (buf, "%s <%d>", procedure->name, num);
-          output_string (buf->str);
+          output_string (file, buf->str);
         }
       else
-        output_string (procedure->name);
+        output_string (file, procedure->name);
 
-      output_string (procedure->blurb);
-      output_string (procedure->help);
-      output_string (procedure->author);
-      output_string (procedure->copyright);
-      output_string (procedure->date);
-      output_string (proc_type_str[(int) procedure->proc_type]);
+      output_string (file, procedure->blurb);
+      output_string (file, procedure->help);
+      output_string (file, procedure->author);
+      output_string (file, procedure->copyright);
+      output_string (file, procedure->date);
+      output_string (file, proc_type_str[(int) procedure->proc_type]);
 
-      fprintf (procedural_db_out, "( ");
+      fprintf (file, "( ");
       for (i = 0; i < procedure->num_args; i++)
         {
-          fprintf (procedural_db_out, "( ");
+          fprintf (file, "( ");
 
-          output_string (procedure->args[i].name );
-          output_string (type_str[procedure->args[i].arg_type]);
-          output_string (procedure->args[i].description);
+          output_string (file, procedure->args[i].name );
+          output_string (file, type_str[procedure->args[i].arg_type]);
+          output_string (file, procedure->args[i].description);
 
-          fprintf (procedural_db_out, " ) ");
+          fprintf (file, " ) ");
         }
-      fprintf (procedural_db_out, " ) ");
+      fprintf (file, " ) ");
 
-      fprintf (procedural_db_out, "( ");
+      fprintf (file, "( ");
       for (i = 0; i < procedure->num_values; i++)
         {
-          fprintf (procedural_db_out, "( ");
-          output_string (procedure->values[i].name );
-          output_string (type_str[procedure->values[i].arg_type]);
-          output_string (procedure->values[i].description);
+          fprintf (file, "( ");
+          output_string (file, procedure->values[i].name );
+          output_string (file, type_str[procedure->values[i].arg_type]);
+          output_string (file, procedure->values[i].description);
 
-          fprintf (procedural_db_out, " ) ");
+          fprintf (file, " ) ");
         }
-      fprintf (procedural_db_out, " ) ");
-      fprintf (procedural_db_out, " ) ");
+      fprintf (file, " ) ");
+      fprintf (file, " ) ");
     }
 
   g_string_free (buf, TRUE);
@@ -280,6 +278,7 @@ procedural_db_dump_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *filename;
+  FILE *file;
 
   filename = (gchar *) args[0].value.pdb_pointer;
   if (filename == NULL)
@@ -287,11 +286,11 @@ procedural_db_dump_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((procedural_db_out = fopen (filename, "w")))
+      if ((file = fopen (filename, "w")))
 	{
 	  g_hash_table_foreach (gimp->procedural_ht,
-				procedural_db_print_entry, NULL);
-	  fclose (procedural_db_out);
+				procedural_db_print_entry, file);
+	  fclose (file);
 	}
       else
 	success = FALSE;
@@ -756,9 +755,9 @@ procedural_db_get_data_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *identifier;
+  gint32 bytes;
   guint8 *data_copy = NULL;
-  PDBData *data = NULL;
-  GList *list;
+  const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL)
@@ -766,30 +765,18 @@ procedural_db_get_data_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = FALSE;
+      data = procedural_db_get_data (gimp, identifier, &bytes);
+      success = (data != NULL);
     
-      list = data_list;
-      while (list)
-	{
-	  data = (PDBData *) list->data;
-	  list = list->next;
-    
-	  if (!strcmp (data->identifier, identifier))
-	    {
-	      data_copy = g_new (guint8, data->bytes);
-	      memcpy (data_copy, data->data, data->bytes);
-    
-	      success = TRUE;
-	      break;
-	    }
-	}
+      if (success)
+	data_copy = g_memdup (data, bytes);
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = data->bytes;
+      return_args[1].value.pdb_int = bytes;
       return_args[2].value.pdb_pointer = data_copy;
     }
 
@@ -842,8 +829,8 @@ procedural_db_get_data_size_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *identifier;
-  PDBData *data = NULL;
-  GList *list;
+  gint32 bytes;
+  const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL)
@@ -851,26 +838,14 @@ procedural_db_get_data_size_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = FALSE;
-    
-      list = data_list;
-      while (list)
-	{
-	  data = (PDBData *) list->data;
-	  list = list->next;
-    
-	  if (!strcmp (data->identifier, identifier))
-	    {
-	      success = TRUE;
-	      break;
-	    }
-	}
+      data = procedural_db_get_data (gimp, identifier, &bytes);
+      success = (data != NULL);
     }
 
   return_args = procedural_db_return_args (&procedural_db_get_data_size_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = data->bytes;
+    return_args[1].value.pdb_int = bytes;
 
   return return_args;
 }
@@ -916,9 +891,7 @@ procedural_db_set_data_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *identifier;
   gint32 bytes;
-  guint8 *data_src;
-  PDBData *data = NULL;
-  GList *list;
+  guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
   if (identifier == NULL)
@@ -928,33 +901,10 @@ procedural_db_set_data_invoker (Gimp     *gimp,
   if (bytes <= 0)
     success = FALSE;
 
-  data_src = (guint8 *) args[2].value.pdb_pointer;
+  data = (guint8 *) args[2].value.pdb_pointer;
 
   if (success)
-    {
-      list = data_list;
-      while (list)
-	{
-	  if (!strcmp (((PDBData *) list->data)->identifier, identifier))
-	    data = (PDBData *) list->data;
-    
-	  list = list->next;
-	}
-    
-      /* If there isn't already data with the specified identifier, create one */
-      if (data == NULL)
-	{
-	  data = (PDBData *) g_new (PDBData, 1);
-	  data_list = g_list_append (data_list, data);
-	}
-      else
-	g_free (data->data);
-    
-      data->identifier = g_strdup (identifier);
-      data->bytes = bytes;
-      data->data = g_new (char, data->bytes);
-      memcpy (data->data, (char *) data_src, data->bytes);
-    }
+    procedural_db_set_data (gimp, identifier, bytes, data);
 
   return procedural_db_return_args (&procedural_db_set_data_proc, success);
 }

@@ -377,6 +377,9 @@ gimp_get_memsize (GimpObject *object)
   memsize += (g_hash_table_size (gimp->procedural_ht) *
               3 * sizeof (gpointer)); /* FIXME */
 
+  memsize += (g_list_length (gimp->procedural_db_data_list) *
+              sizeof (GList)); /* FIXME */
+
   memsize += g_slist_length (gimp->load_procs) * sizeof (GSList); /* FIXME */
   memsize += g_slist_length (gimp->save_procs) * sizeof (GSList); /* FIXME */
 
