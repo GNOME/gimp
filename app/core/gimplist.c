@@ -305,3 +305,20 @@ gimp_list_reverse (GimpList *list)
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
 }
+
+void
+gimp_list_sort (GimpList     *list,
+                GCompareFunc  compare_func)
+{
+  g_return_if_fail (GIMP_IS_LIST (list));
+  g_return_if_fail (compare_func != NULL);
+
+  if (GIMP_CONTAINER (list)->num_children > 1)
+    {
+      gimp_container_freeze (GIMP_CONTAINER (list));
+
+      list->list = g_list_sort (list->list, compare_func);
+
+      gimp_container_thaw (GIMP_CONTAINER (list));
+    }
+}

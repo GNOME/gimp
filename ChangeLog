@@ -1,3 +1,11 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplist.[ch]: added new function gimp_list_sort().
+	
+	* app/text/gimpfontlist.c (gimp_font_list_restore): sort the list
+	after all fonts have been added instead of keeping the list in
+	order while inserting 
+
 2003-03-27  Michael Natterer  <mitch@gimp.org>
 
 	Someone produces icons faster than I can commit...

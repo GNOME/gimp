@@ -54,6 +54,8 @@ GType           gimp_list_get_type (void) G_GNUC_CONST;
 GimpContainer * gimp_list_new      (GType                children_type,
 				    GimpContainerPolicy  policy);
 void            gimp_list_reverse  (GimpList            *list);
+void            gimp_list_sort     (GimpList            *list,
+                                    GCompareFunc         compare_func);
 
 
 #endif  /* __GIMP_LIST_H__ */

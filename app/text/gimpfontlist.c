@@ -38,8 +38,6 @@
 static void   gimp_font_list_class_init        (GimpFontListClass *klass);
 static void   gimp_font_list_init              (GimpFontList      *list);
 
-static void   gimp_font_list_add               (GimpContainer     *container,
-                                                GimpObject        *object);
 static gint   gimp_font_list_font_compare_func (gconstpointer      first,
                                                 gconstpointer      second);
 
@@ -78,30 +76,12 @@ gimp_font_list_get_type (void)
 static void
 gimp_font_list_class_init (GimpFontListClass *klass)
 {
-  GimpContainerClass *container_class;
-  
-  container_class = GIMP_CONTAINER_CLASS (klass);
-
   parent_class = g_type_class_peek_parent (klass);
-
-  container_class->add = gimp_font_list_add;
 }
 
 static void
 gimp_font_list_init (GimpFontList *list)
 {
-}
-
-static void
-gimp_font_list_add (GimpContainer *container,
-		    GimpObject    *object)
-{
-  GimpList *list;
-
-  list = GIMP_LIST (container);
-
-  list->list = g_list_insert_sorted (list->list, object,
-				     gimp_font_list_font_compare_func);
 }
 
 GimpContainer *
@@ -142,6 +122,8 @@ gimp_font_list_restore (GimpFontList *list)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
+  gimp_container_freeze (GIMP_CONTAINER (list));
+
   pango_context = g_object_get_data (G_OBJECT (list), "pango-context");
 
   pango_context_list_families (pango_context, &families, &n_families);
@@ -172,6 +154,10 @@ gimp_font_list_restore (GimpFontList *list)
     }
 
   g_free (families);
+
+  gimp_list_sort (GIMP_LIST (list), gimp_font_list_font_compare_func);
+
+  gimp_container_thaw (GIMP_CONTAINER (list));
 }
 
 static gint
