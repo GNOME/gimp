@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-11-09 14:59+0100\n"
-"PO-Revision-Date: 2002-11-09 18:59+0100\n"
+"POT-Creation-Date: 2002-11-10 12:03+0100\n"
+"PO-Revision-Date: 2002-11-10 12:02+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2793,7 +2793,8 @@ msgstr "<Image>/Filter/Störningar/CurveBend..."
 
 #: plug-ins/common/curve_bend.c:816
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr "CurveBend arbetar endast med lager (men aktiverades på en kanal eller mask)"
+msgstr ""
+"CurveBend arbetar endast med lager (men aktiverades på en kanal eller mask)"
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1360
@@ -3694,8 +3695,8 @@ msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"En mindre förlegad skapelse från Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+"En mindre förlegad skapelse från Adam D. Moss / adam@gimp.org / adam@foxbox."
+"org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:138
 msgid "<Image>/Filters/Toys/Gee-Zoom"
@@ -5327,7 +5328,7 @@ msgstr "Polarisera"
 
 #: plug-ins/common/polar.c:979
 msgid "Circle _Depth in Percent:"
-msgstr ""
+msgstr "Circek_djup i procent:"
 
 #: plug-ins/common/polar.c:988
 msgid "Offset _Angle:"
@@ -5335,7 +5336,7 @@ msgstr "_Vinkeloffset:"
 
 #: plug-ins/common/polar.c:1000
 msgid "_Map Backwards"
-msgstr ""
+msgstr "_Mappa baklänges"
 
 #: plug-ins/common/polar.c:1006
 msgid ""
@@ -5345,13 +5346,15 @@ msgstr ""
 
 #: plug-ins/common/polar.c:1014
 msgid "Map from _Top"
-msgstr ""
+msgstr "Mappa från _Överkant"
 
 #: plug-ins/common/polar.c:1020
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
+"Om inte vald, läggs den understa raden i mitten och den översta raden ute i "
+"kanten. Om vald blir det tvärom."
 
 #: plug-ins/common/polar.c:1029
 msgid "To _Polar"
@@ -5362,6 +5365,8 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
+"Om inte vald mappas bilden till en rektangel. Om vald mappas bilden till en "
+"cirkel."
 
 #: plug-ins/common/ps.c:868
 msgid "PS: can't open file for reading"
@@ -5569,7 +5574,7 @@ msgstr "Krusning"
 
 #: plug-ins/common/ripple.c:621
 msgid "_Retain Tilability"
-msgstr ""
+msgstr "_Bevara plattläggningsbarhet"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:652
@@ -5756,7 +5761,7 @@ msgstr "N_yans:"
 
 #: plug-ins/common/scatter_hsv.c:465
 msgid "_Saturation:"
-msgstr "_Mättnad"
+msgstr "_Mättnad:"
 
 #: plug-ins/common/scatter_hsv.c:474
 msgid "_Value:"
@@ -5764,7 +5769,7 @@ msgstr "_Värde:"
 
 #: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1074
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr ""
+msgstr "<Toolbox>/Arkiv/InhÃ¤mta/Skärmdump..."
 
 #. main dialog
 #: plug-ins/common/screenshot.c:365
@@ -5891,11 +5896,11 @@ msgstr "Ritinställningar"
 
 #: plug-ins/common/sinus.c:1769
 msgid "_X Scale:"
-msgstr "_X skala:"
+msgstr "_X-skala:"
 
 #: plug-ins/common/sinus.c:1778
 msgid "_Y Scale:"
-msgstr "_Y skala:"
+msgstr "_Y-skala:"
 
 # src/header_stuff.c:462
 #: plug-ins/common/sinus.c:1787
@@ -5908,7 +5913,7 @@ msgstr "Parameterinställningar"
 
 #: plug-ins/common/sinus.c:1824
 msgid "_Force Tiling?"
-msgstr ""
+msgstr "_Tvinga plattläggning?"
 
 #: plug-ins/common/sinus.c:1838
 msgid "_Ideal"
@@ -5921,15 +5926,15 @@ msgstr "_Förvrängd"
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/common/sinus.c:1872
 msgid "The colors are white and black."
-msgstr "Färgerna är bitt och svart."
+msgstr "Färgerna är vitt och svart."
 
 #: plug-ins/common/sinus.c:1883
 msgid "Bl_ack & White"
-msgstr "Sv_art & Vit"
+msgstr "Sv_art och vit"
 
 #: plug-ins/common/sinus.c:1885
 msgid "_Foreground & Background"
-msgstr "_Förgrund & bakgrund"
+msgstr "_Förgrund och bakgrund"
 
 #: plug-ins/common/sinus.c:1887
 msgid "C_hoose here:"
@@ -6057,11 +6062,11 @@ msgstr "Sobel kantdetektion"
 
 #: plug-ins/common/sobel.c:272
 msgid "Sobel _Horizontally"
-msgstr "Sobel _Horisontellt"
+msgstr "Sobel _horisontellt"
 
 #: plug-ins/common/sobel.c:281
 msgid "Sobel _Vertically"
-msgstr "Sobel _Vertikalt"
+msgstr "Sobel _vertikalt"
 
 #: plug-ins/common/sobel.c:290
 msgid "_Keep Sign of Result (one Direction only)"
@@ -6120,7 +6125,7 @@ msgstr "Justera antal taggar"
 
 #: plug-ins/common/sparkle.c:424
 msgid "Spi_ke Angle (-1: Random):"
-msgstr "Taggvinkel (-1: slumpmässig):"
+msgstr "Ta_ggvinkel (-1: slumpmässig):"
 
 #: plug-ins/common/sparkle.c:427
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
@@ -6128,7 +6133,7 @@ msgstr "Justera taggvinkeln (-1 betyder att slumpmässig vinkel blir vald)"
 
 #: plug-ins/common/sparkle.c:435
 msgid "Spik_e Density:"
-msgstr "Taggdensitet:"
+msgstr "Tagg_densitet:"
 
 #: plug-ins/common/sparkle.c:438
 msgid "Adjust the Spike Density"
@@ -6152,7 +6157,7 @@ msgstr "Justera hur mycket nyansen skall variera slumpmässigt"
 
 #: plug-ins/common/sparkle.c:466
 msgid "Rando_m Saturation:"
-msgstr "Slump_mässig mättnad"
+msgstr "Slump_mässig mättnad:"
 
 #: plug-ins/common/sparkle.c:469
 msgid "Adjust the Value how much the Saturation should be changed randomly"
@@ -6160,11 +6165,11 @@ msgstr "Justera hur mycket mättnaden skall variera slumpmässigt"
 
 #: plug-ins/common/sparkle.c:487
 msgid "_Preserve Luminosity"
-msgstr "_Behåll luminans"
+msgstr "_Bevara luminans"
 
 #: plug-ins/common/sparkle.c:493
 msgid "Should the Luminosity be preserved?"
-msgstr "Ska luminansen behållas?"
+msgstr "Ska luminansen bevaras?"
 
 #: plug-ins/common/sparkle.c:500
 msgid "In_verse"
@@ -6356,7 +6361,7 @@ msgstr "<Image>/Lager/Justera synliga lager..."
 
 #: plug-ins/common/threshold_alpha.c:148
 msgid "The layer preserves transparency."
-msgstr "Lagret behåller transparens."
+msgstr "Lagret bevarar transparens."
 
 #: plug-ins/common/threshold_alpha.c:154
 msgid "RGBA/GRAYA drawable is not selected."
@@ -7995,7 +8000,7 @@ msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
-"Approximera cirklar & ellipser med linjer. Man kan då använda "
+"Approximera cirklar och ellipser med linjer. Man kan då använda "
 "penselborttoning med dessa objekttyper."
 
 #: plug-ins/gfig/gfig.c:2934
@@ -8755,7 +8760,7 @@ msgstr "Behåll orginalet"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "Preserve the original image as a background"
-msgstr "Behåll den ursprungliga bilden som bakgrund"
+msgstr "Bevara den ursprungliga bilden som bakgrund"
 
 #: plug-ins/gimpressionist/general.c:202
 msgid "From paper"
@@ -10337,7 +10342,7 @@ msgstr "He_xagoner"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Oc_tagons & Squares"
-msgstr "O_ktagoner & kvadrater"
+msgstr "O_ktagoner och kvadrater"
 
 #: plug-ins/mosaic/mosaic.c:693
 #, fuzzy
@@ -10375,7 +10380,6 @@ msgid "Pagecurl Effect"
 msgstr "Sidkrusningseffekt"
 
 #: plug-ins/pagecurl/pagecurl.c:527
-#, fuzzy
 msgid "Curl Location"
 msgstr "Krusningens placering"
 
