@@ -1,5 +1,9 @@
 2003-07-09  Manish Singh  <yosh@gimp.org>
 
+	* devel-docs/Makefile.am: add gbr.txt and pat.txt
+
+2003-07-09  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/gtkcons.py: don't do anything if run
 	standalone and given a -gimp command line option. (Sanity against
 	#117074)

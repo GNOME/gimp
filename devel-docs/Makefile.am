@@ -13,10 +13,12 @@ EXTRA_DIST = \
 	README			\
 	README.gtkdoc		\
 	debug-plug-ins.txt	\
+	gbr.txt			\
 	gih.txt  		\
 	gpb.txt  		\
 	includes.txt		\
 	parasites.txt		\
+	pat.txt			\
 	structure.xml		\
 	undo.txt		\
 	xcf.txt
