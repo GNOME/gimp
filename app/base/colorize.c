@@ -74,15 +74,15 @@ colorize_calculate (Colorize *colorize)
 }
 
 void
-colorize (PixelRegion *srcPR,
-          PixelRegion *destPR,
-          Colorize    *colorize)
+colorize (Colorize    *colorize,
+          PixelRegion *srcPR,
+          PixelRegion *destPR)
 {
-  guchar   *src, *s;
-  guchar   *dest, *d;
-  gboolean  alpha;
-  gint      w, h;
-  gint      lum;
+  const guchar *src, *s;
+  guchar       *dest, *d;
+  gboolean      alpha;
+  gint          w, h;
+  gint          lum;
 
   /*  Set the transfer arrays  (for speed)  */
   h     = srcPR->h;

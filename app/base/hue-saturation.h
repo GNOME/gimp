@@ -36,9 +36,9 @@ void   hue_saturation_init                (HueSaturation *hs);
 void   hue_saturation_partition_reset     (HueSaturation *hs,
                                            GimpHueRange   partition);
 void   hue_saturation_calculate_transfers (HueSaturation *hs);
-void   hue_saturation                     (PixelRegion   *srcPR,
-					   PixelRegion   *destPR,
-					   HueSaturation *hs);
+void   hue_saturation                     (HueSaturation *hs,
+                                           PixelRegion   *srcPR,
+					   PixelRegion   *destPR);
 
 
 #endif  /*  __HUE_SATURATION_H__  */

@@ -73,7 +73,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+          pixel_regions_process_parallel ((PixelProcessorFunc)
+                                          gimp_lut_process,
                                           lut, 2, &srcPR, &destPR);
 
           gimp_lut_free (lut);
@@ -247,7 +248,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+          pixel_regions_process_parallel ((PixelProcessorFunc)
+                                          gimp_lut_process,
                                           lut, 2, &srcPR, &destPR);
 
           gimp_lut_free (lut);
@@ -432,7 +434,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+          pixel_regions_process_parallel ((PixelProcessorFunc)
+                                          gimp_lut_process,
                                           lut, 2, &srcPR, &destPR);
 
           gimp_lut_free (lut);
@@ -516,7 +519,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+          pixel_regions_process_parallel ((PixelProcessorFunc)
+                                          gimp_lut_process,
                                           lut, 2, &srcPR, &destPR);
 
           gimp_lut_free (lut);
@@ -576,9 +580,8 @@ HELP
       /* The application should occur only within selection bounds */
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          ColorBalance         cb;
-          PixelRegionIterator *pr;
-          PixelRegion          srcPR, destPR;
+          ColorBalance  cb;
+          PixelRegion   srcPR, destPR;
 
           color_balance_init (&cb);
 
@@ -595,12 +598,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-               pr = pixel_regions_process (pr))
-            {
-              color_balance (&srcPR, &destPR, &cb);
-            }
+          pixel_regions_process_parallel ((PixelProcessorFunc) color_balance,
+                                          &cb, 2, &srcPR, &destPR);
 
           gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
           gimp_drawable_update (drawable, x, y, width, height);
@@ -649,9 +648,8 @@ HELP
       /* The application should occur only within selection bounds */
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          Colorize             colors;
-          PixelRegionIterator *pr;
-          PixelRegion          srcPR, destPR;
+          Colorize     colors;
+          PixelRegion  srcPR, destPR;
 
           colorize_init (&colors);
 
@@ -666,12 +664,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-               pr = pixel_regions_process (pr))
-            {
-              colorize (&srcPR, &destPR, &colors);
-            }
+          pixel_regions_process_parallel ((PixelProcessorFunc) colorize,
+                                          &colors, 2, &srcPR, &destPR);
 
           gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
           gimp_drawable_update (drawable, x, y, width, height);
@@ -810,9 +804,8 @@ HELP
       /* The application should occur only within selection bounds */
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          HueSaturation        hs;
-          PixelRegionIterator *pr;
-          PixelRegion          srcPR, destPR;
+          HueSaturation  hs;
+          PixelRegion    srcPR, destPR;
 
           hue_saturation_init (&hs);
 
@@ -828,12 +821,8 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          for (pr = pixel_regions_register (2, &srcPR, &destPR);
-               pr;
-	       pr = pixel_regions_process (pr))
-            {
-              hue_saturation (&srcPR, &destPR, &hs);
-            }
+	  pixel_regions_process_parallel ((PixelProcessorFunc) hue_saturation,
+                                          &hs, 2, &srcPR, &destPR);
 
           gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
           gimp_drawable_update (drawable, x, y, width, height);
@@ -890,7 +879,7 @@ HELP
           pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                              x, y, width, height, TRUE);
 
-          pixel_regions_process_parallel ((PixelProcessorFunc) threshold_2,
+          pixel_regions_process_parallel ((PixelProcessorFunc) threshold,
                                           &tr, 2, &srcPR, &destPR);
 
           gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
@@ -908,9 +897,9 @@ CODE
               "core/gimpdrawable.h" "core/gimpimage.h"
               "gimp-intl.h");
 
-@procs = qw(brightness_contrast levels levels_auto levels_stretch posterize desaturate
-	    equalize invert curves_spline curves_explicit color_balance
-	    colorize histogram hue_saturation threshold);
+@procs = qw(brightness_contrast levels levels_auto levels_stretch posterize
+            desaturate equalize invert curves_spline curves_explicit
+            color_balance colorize histogram hue_saturation threshold);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';

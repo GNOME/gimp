@@ -543,9 +543,8 @@ gimp_image_map_do (GimpImageMap *image_map)
     {
       gint x, y, w, h;
 
-      image_map->apply_func (&image_map->srcPR,
-                             &image_map->destPR,
-                             image_map->user_data);
+      image_map->apply_func (image_map->user_data,
+                             &image_map->srcPR, &image_map->destPR);
 
       x = image_map->destPR.x;
       y = image_map->destPR.y;

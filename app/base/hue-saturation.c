@@ -98,16 +98,16 @@ hue_saturation_calculate_transfers (HueSaturation *hs)
 }
 
 void
-hue_saturation (PixelRegion   *srcPR,
-		PixelRegion   *destPR,
-		HueSaturation *hs)
+hue_saturation (HueSaturation *hs,
+                PixelRegion   *srcPR,
+		PixelRegion   *destPR)
 {
-  guchar *src, *s;
-  guchar *dest, *d;
-  gint    alpha;
-  gint    w, h;
-  gint    r, g, b;
-  gint    hue;
+  const guchar *src, *s;
+  guchar       *dest, *d;
+  gboolean      alpha;
+  gint          w, h;
+  gint          r, g, b;
+  gint          hue;
 
   /*  Set the transfer arrays  (for speed)  */
   h     = srcPR->h;

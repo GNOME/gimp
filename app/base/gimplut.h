@@ -68,15 +68,5 @@ void      gimp_lut_process        (GimpLut     *lut,
 void      gimp_lut_process_inline (GimpLut     *lut,
 				   PixelRegion *src_destPR);
 
-/* gimp_lut_process_2 is the same as gimp_lut_process but the lut
- * parameter is last instead of first.  this is necesary because
- * pixel_region_process_paralell sends the user_data as the 1st
- * parameter, and the image_map functions send user_data as the last
- * parameter
- */
-void      gimp_lut_process_2      (PixelRegion *srcPR,
-				   PixelRegion *destPR,
-				   GimpLut     *lut);
-
 
 #endif /* __GIMP_LUT_H__ */

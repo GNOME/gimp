@@ -131,7 +131,8 @@ brightness_contrast_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+              pixel_regions_process_parallel ((PixelProcessorFunc)
+                                              gimp_lut_process,
                                               lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
@@ -448,7 +449,8 @@ posterize_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+              pixel_regions_process_parallel ((PixelProcessorFunc)
+                                              gimp_lut_process,
                                               lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
@@ -736,7 +738,8 @@ curves_spline_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+              pixel_regions_process_parallel ((PixelProcessorFunc)
+                                              gimp_lut_process,
                                               lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
@@ -861,7 +864,8 @@ curves_explicit_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+              pixel_regions_process_parallel ((PixelProcessorFunc)
+                                              gimp_lut_process,
                                               lut, 2, &srcPR, &destPR);
 
               gimp_lut_free (lut);
@@ -965,9 +969,8 @@ color_balance_invoker (Gimp         *gimp,
           /* The application should occur only within selection bounds */
           if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              ColorBalance         cb;
-              PixelRegionIterator *pr;
-              PixelRegion          srcPR, destPR;
+              ColorBalance  cb;
+              PixelRegion   srcPR, destPR;
 
               color_balance_init (&cb);
 
@@ -984,12 +987,8 @@ color_balance_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              for (pr = pixel_regions_register (2, &srcPR, &destPR);
-                   pr;
-                   pr = pixel_regions_process (pr))
-                {
-                  color_balance (&srcPR, &destPR, &cb);
-                }
+              pixel_regions_process_parallel ((PixelProcessorFunc) color_balance,
+                                              &cb, 2, &srcPR, &destPR);
 
               gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
               gimp_drawable_update (drawable, x, y, width, height);
@@ -1092,9 +1091,8 @@ colorize_invoker (Gimp         *gimp,
           /* The application should occur only within selection bounds */
           if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              Colorize             colors;
-              PixelRegionIterator *pr;
-              PixelRegion          srcPR, destPR;
+              Colorize     colors;
+              PixelRegion  srcPR, destPR;
 
               colorize_init (&colors);
 
@@ -1109,12 +1107,8 @@ colorize_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              for (pr = pixel_regions_register (2, &srcPR, &destPR);
-                   pr;
-                   pr = pixel_regions_process (pr))
-                {
-                  colorize (&srcPR, &destPR, &colors);
-                }
+              pixel_regions_process_parallel ((PixelProcessorFunc) colorize,
+                                              &colors, 2, &srcPR, &destPR);
 
               gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
               gimp_drawable_update (drawable, x, y, width, height);
@@ -1368,9 +1362,8 @@ hue_saturation_invoker (Gimp         *gimp,
           /* The application should occur only within selection bounds */
           if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
-              HueSaturation        hs;
-              PixelRegionIterator *pr;
-              PixelRegion          srcPR, destPR;
+              HueSaturation  hs;
+              PixelRegion    srcPR, destPR;
 
               hue_saturation_init (&hs);
 
@@ -1386,12 +1379,8 @@ hue_saturation_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              for (pr = pixel_regions_register (2, &srcPR, &destPR);
-                   pr;
-                   pr = pixel_regions_process (pr))
-                {
-                  hue_saturation (&srcPR, &destPR, &hs);
-                }
+              pixel_regions_process_parallel ((PixelProcessorFunc) hue_saturation,
+                                              &hs, 2, &srcPR, &destPR);
 
               gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
               gimp_drawable_update (drawable, x, y, width, height);
@@ -1497,7 +1486,7 @@ threshold_invoker (Gimp         *gimp,
               pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
                                  x, y, width, height, TRUE);
 
-              pixel_regions_process_parallel ((PixelProcessorFunc) threshold_2,
+              pixel_regions_process_parallel ((PixelProcessorFunc) threshold,
                                               &tr, 2, &srcPR, &destPR);
 
               gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));

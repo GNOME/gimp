@@ -102,9 +102,10 @@ gimp_lut_process (GimpLut     *lut,
 		  PixelRegion *srcPR,
 		  PixelRegion *destPR)
 {
-  guint   h, width, src_r_i, dest_r_i;
-  guchar *src, *dest;
-  guchar *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
+  const guchar *src;
+  guchar       *dest;
+  guchar       *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
+  guint         h, width, src_r_i, dest_r_i;
 
   if (lut->nchannels > 0)
     lut0 = lut->luts[0];
@@ -119,7 +120,7 @@ gimp_lut_process (GimpLut     *lut,
   src      = srcPR->data;
   dest     = destPR->data;
   width    = srcPR->w;
-  src_r_i  =  srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
+  src_r_i  = srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
   dest_r_i = destPR->rowstride - (destPR->bytes * srcPR->w);
 
   if (src_r_i == 0 && dest_r_i == 0)
@@ -252,12 +253,4 @@ gimp_lut_process_inline (GimpLut     *lut,
       width = srcPR->w;
       src  += src_r_i;
     }
-}
-
-void
-gimp_lut_process_2 (PixelRegion *srcPR,
-		    PixelRegion *destPR,
-		    GimpLut     *lut)
-{
-  gimp_lut_process (lut, srcPR, destPR);
 }

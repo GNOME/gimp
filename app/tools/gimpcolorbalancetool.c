@@ -211,7 +211,7 @@ gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
 
   color_balance_create_lookup_tables (cb_tool->color_balance);
   gimp_image_map_apply (image_map_tool->image_map,
-                        color_balance,
+                        (GimpImageMapApplyFunc) color_balance,
                         cb_tool->color_balance);
 }
 

@@ -38,9 +38,9 @@ struct _Colorize
 
 void   colorize_init      (Colorize      *colorize);
 void   colorize_calculate (Colorize      *colorize);
-void   colorize           (PixelRegion   *srcPR,
-                           PixelRegion   *destPR,
-                           Colorize      *colorize);
+void   colorize           (Colorize      *colorize,
+                           PixelRegion   *srcPR,
+                           PixelRegion   *destPR);
 
 
 #endif  /*  __COLORIZE_H__  */

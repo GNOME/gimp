@@ -27,26 +27,16 @@
 
 
 void
-threshold_2 (gpointer     data,
-	     PixelRegion *srcPR,
-	     PixelRegion *destPR)
+threshold (Threshold   *tr,
+           PixelRegion *srcPR,
+	   PixelRegion *destPR)
 {
-  threshold (srcPR, destPR, data);
-}
-
-void
-threshold (PixelRegion *srcPR,
-	   PixelRegion *destPR,
-	   gpointer     data)
-{
-  Threshold *tr;
-  guchar    *src, *s;
-  guchar    *dest, *d;
-  gint       has_alpha, alpha;
-  gint       w, h, b;
-  gint       value;
-
-  tr = (Threshold *) data;
+  const guchar *src, *s;
+  guchar       *dest, *d;
+  gboolean      has_alpha;
+  gint          alpha;
+  gint          w, h, b;
+  gint          value;
 
   h         = srcPR->h;
   src       = srcPR->data;
@@ -67,10 +57,14 @@ threshold (PixelRegion *srcPR,
 	      value = MAX (s[RED_PIX], s[GREEN_PIX]);
 	      value = MAX (value, s[BLUE_PIX]);
 
-	      value = (value >= tr->low_threshold && value <= tr->high_threshold ) ? 255 : 0;
+	      value = (value >= tr->low_threshold &&
+                       value <= tr->high_threshold ) ? 255 : 0;
 	    }
 	  else
-	    value = (s[GRAY_PIX] >= tr->low_threshold && s[GRAY_PIX] <= tr->high_threshold) ? 255 : 0;
+            {
+              value = (s[GRAY_PIX] >= tr->low_threshold &&
+                       s[GRAY_PIX] <= tr->high_threshold) ? 255 : 0;
+            }
 
 	  for (b = 0; b < alpha; b++)
 	    d[b] = value;

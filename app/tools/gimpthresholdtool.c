@@ -231,7 +231,7 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
-                        threshold,
+                        (GimpImageMapApplyFunc) threshold,
                         t_tool->threshold);
 }
 

@@ -23,9 +23,9 @@
 #include "gimpobject.h"
 
 
-typedef void (* GimpImageMapApplyFunc) (PixelRegion *srcPR,
-                                        PixelRegion *destPR,
-                                        gpointer     data);
+typedef void (* GimpImageMapApplyFunc) (gpointer     data,
+                                        PixelRegion *srcPR,
+                                        PixelRegion *destPR);
 
 
 #define GIMP_TYPE_IMAGE_MAP            (gimp_image_map_get_type ())

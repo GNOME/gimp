@@ -1,5 +1,30 @@
 2005-02-15  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagemap.[ch]: changed GimpImageMapApplyFunc to
+	be compatible with PixelProcessorFunc.
+
+	* app/base/color-balance.[ch]
+	* app/base/colorize.[ch]
+	* app/base/gimplut.[ch]
+	* app/base/hue-saturation.[ch]
+	* app/base/threshold.[ch]: removed wrappers that used to
+	shift parameters around to match GimpImageMapApplyFunc and
+	PixelProcessorFunc signatures.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
+	* tools/pdbgen/pdb/color.pdb: use pixel_region_process_parallel()
+	for all color operations.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2005-02-15  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c (gimp_init_malloc): added a comment about the use of
 	mallopt() and what could be done instead. Use the TILE_WIDTH and
 	TILE_HEIGHT defines to determine the M_MMAP_THRESHOLD value.

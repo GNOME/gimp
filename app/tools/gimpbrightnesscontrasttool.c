@@ -204,7 +204,7 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *image_map_tool)
 				 bc_tool->contrast / 127.0,
 				 gimp_drawable_bytes (image_map_tool->drawable));
   gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process_2,
+                        (GimpImageMapApplyFunc) gimp_lut_process,
                         bc_tool->lut);
 }
 

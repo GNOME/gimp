@@ -147,19 +147,16 @@ color_balance_create_lookup_tables (ColorBalance *cb)
 }
 
 void
-color_balance (PixelRegion *srcPR,
-	       PixelRegion *destPR,
-	       gpointer     data)
+color_balance (ColorBalance *cb,
+               PixelRegion  *srcPR,
+	       PixelRegion  *destPR)
 {
-  ColorBalance *cb;
-  guchar       *src, *s;
+  const guchar *src, *s;
   guchar       *dest, *d;
   gboolean      alpha;
   gint          r, g, b;
   gint          r_n, g_n, b_n;
   gint          w, h;
-
-  cb = (ColorBalance *) data;
 
   h     = srcPR->h;
   src   = srcPR->data;

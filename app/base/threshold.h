@@ -28,16 +28,9 @@ struct _Threshold
 };
 
 
-/*  this function just re-orders the arguments so we can use 
- *  pixel_regions_process_paralell
- */
-void   threshold_2 (gpointer     data,
+void   threshold   (Threshold   *tr,
                     PixelRegion *srcPR,
                     PixelRegion *destPR);
-
-void   threshold   (PixelRegion *srcPR,
-                    PixelRegion *destPR,
-                    gpointer     data);
 
 
 #endif  /*  __THRESHOLD_H__  */
