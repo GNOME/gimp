@@ -60,8 +60,8 @@ static void gimp_layer_mask_destroy    (GtkObject          *object);
 static guint layer_signals[LAST_SIGNAL] = { 0 };
 
 /*
-static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
-*/
+  static guint layer_mask_signals[LAST_SIGNAL] = { 0 };
+ */
 
 static GimpDrawableClass *layer_parent_class = NULL;
 static GimpChannelClass  *layer_mask_parent_class = NULL;

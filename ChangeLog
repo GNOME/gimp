@@ -1,3 +1,13 @@
+Thu Jan 20 18:07:21 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/channel.c
+	* app/channel.h
+	* app/gimpimage.c
+	* app/layer.c
+	* app/qmask.c: implemented the "removed" signal for channels and
+	connected qmask to it to keep the buttons in sync when a qmask
+	channels gets deleted manually. Fixes bug #2516.
+
 Thu Jan 20 16:56:00 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gdyntext/gdyntext.c: backported the bugfix from 

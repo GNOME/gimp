@@ -88,6 +88,7 @@ void 		channel_set_color   (Channel *, guchar *);
 
 Channel *       channel_get_ID      (gint);
 void            channel_delete      (Channel *);
+void            channel_removed     (Channel *, gpointer);
 void            channel_scale       (Channel *, gint, gint);
 void            channel_resize      (Channel *, gint, gint, gint, gint);
 void            channel_update      (Channel *);

@@ -53,20 +53,39 @@ typedef struct _EditQmaskOptions EditQmaskOptions;
 /*  Global variables  */
 /*  Static variables  */
 /*  Prototypes */
-static void edit_qmask_channel_query         (GDisplay   *gdisp);
+static void edit_qmask_channel_query         (GDisplay      *gdisp);
 static void edit_qmask_query_ok_callback     (GtkWidget     *widget, 
                                               gpointer       client_data);
 static void edit_qmask_query_cancel_callback (GtkWidget     *widget, 
                                               gpointer       client_data);
 static void qmask_query_scale_update         (GtkAdjustment *adjustment,
                                               gdouble       *scale_val);
+static void qmask_removed_callback           (GtkObject     *qmask, 
+					      gpointer       data);
 
 /* Actual code */
+
 static void 
-qmask_query_scale_update (GtkAdjustment *adjustment, gdouble *scale_val)
+qmask_query_scale_update (GtkAdjustment *adjustment, 
+			  gdouble       *scale_val)
 {
   *scale_val = adjustment->value;
 }
+
+static void
+qmask_removed_callback (GtkObject *qmask,
+			gpointer   data)
+{
+  GDisplay *gdisp = (GDisplay*) data;
+  
+  if (!gdisp->gimage)
+    return;
+  
+  gdisp->gimage->qmask_state = 0;
+
+  qmask_buttons_update (gdisp);
+}
+
 
 void
 qmask_buttons_update (GDisplay *gdisp)
@@ -114,9 +133,9 @@ qmask_click_handler (GtkWidget       *widget,
 
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
-  {
-   edit_qmask_channel_query(gdisp); 
-  }
+    {
+      edit_qmask_channel_query(gdisp); 
+    }
 }
 
 void
@@ -129,11 +148,11 @@ qmask_deactivate (GtkWidget *w,
   if (gdisp)
     {
       gimg = gdisp->gimage;
-      if (!gimg) return;
+      if (!gimg) 
+	return;
       
-      if (!gdisp->gimage->qmask_state) {
+      if (!gdisp->gimage->qmask_state)
 	return; /* if already set do nothing */
-      }
 
       undo_push_group_start (gimg, QMASK_UNDO);
   
@@ -168,20 +187,21 @@ qmask_activate (GtkWidget *w,
   if (gdisp)
     {
       gimg = gdisp->gimage;
-      if (!gimg) return;
+      if (!gimg) 
+	return;
 
-      if (gdisp->gimage->qmask_state) {
+      if (gdisp->gimage->qmask_state)
 	return; /* If already set, do nothing */
-      }
   
       /* Set the defaults */
       opacity = (double) gimg->qmask_opacity;
       color = gimg->qmask_color;
  
-      if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) ) {
-	gimg->qmask_state = 1; /* if the user was clever and created his own */
-	return; 
-      }
+      if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) ) 
+	{
+	  gimg->qmask_state = 1; /* if the user was clever and created his own */
+	  return; 
+	}
 
       undo_push_group_start (gimg, QMASK_UNDO);
       if (gimage_mask_is_empty(gimg))
@@ -216,6 +236,10 @@ qmask_activate (GtkWidget *w,
 	}
       undo_push_group_end(gimg);
       gdisplays_flush();
+      
+      /* connect to the removed signal, so the buttons get updated */
+      gtk_signal_connect (GTK_OBJECT (gmask), "removed", 
+			  GTK_SIGNAL_FUNC (qmask_removed_callback), gdisp);
     }
 }
 
@@ -301,8 +325,9 @@ edit_qmask_channel_query (GDisplay * gdisp)
   gtk_widget_show (options->query_box);
 }
 
-static void edit_qmask_query_ok_callback (GtkWidget *widget, 
-                                          gpointer   client_data) 
+static void 
+edit_qmask_query_ok_callback (GtkWidget *widget, 
+			      gpointer   client_data) 
 {
   EditQmaskOptions *options;
   Channel *channel;
@@ -325,27 +350,27 @@ static void edit_qmask_query_ok_callback (GtkWidget *widget,
       tmpcolp = channel_get_color(channel);
       for (i = 0; i < 3; i++)
 	{  /* don't update if color hasn't changed */
- 	tmpcol[i] = tmpcolp[i]; /* initialize to same values */
-        if (options->color_panel->color[i] != tmpcolp[i])
-          {
-            tmpcol[i] = options->color_panel->color[i];
-            update = TRUE;
-          }
+	  tmpcol[i] = tmpcolp[i]; /* initialize to same values */
+	  if (options->color_panel->color[i] != tmpcolp[i])
+	    {
+	      tmpcol[i] = options->color_panel->color[i];
+	      update = TRUE;
+	    }
         }
-
+      
       if (update)
-      { 
-        channel_set_opacity(channel, 100*opacity/255);
-        channel_set_color(channel,tmpcol);
-	channel_update (channel);
-      }
+	{ 
+	  channel_set_opacity(channel, 100*opacity/255);
+	  channel_set_color(channel,tmpcol);
+	  channel_update (channel);
+	}
     }
   /* update the qmask color no matter what */
   for (i = 0; i < 3; i++)
-  { /* TODO: should really have accessor functions for gimage private stuff */
-    options->gimage->qmask_color[i] = options->color_panel->color[i];
-    options->gimage->qmask_opacity = (gint) 100*opacity/255;
-  }
+    { /* TODO: should really have accessor functions for gimage private stuff */
+      options->gimage->qmask_color[i] = options->color_panel->color[i];
+      options->gimage->qmask_opacity = (gint) 100*opacity/255;
+    }
 
   color_panel_free (options->color_panel);
   gtk_widget_destroy (options->query_box);
@@ -364,3 +389,8 @@ edit_qmask_query_cancel_callback (GtkWidget *widget,
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
+
+
+
+
+

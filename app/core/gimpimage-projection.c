@@ -3110,6 +3110,9 @@ gimp_image_remove_channel (GimpImage *gimage,
       if (drawable_visible (GIMP_DRAWABLE(channel)))
 	drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
 
+      /* Send out REMOVED signal from channel */
+      channel_removed (channel, gimage);
+
       /*  Important to push the undo here in case the push fails  */
       undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);
 
