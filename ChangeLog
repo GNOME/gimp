@@ -1,3 +1,8 @@
+2004-10-08  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* tools/authorsgen/contributors: Added my name to the
+	list of contributors.
+
 2004-10-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpthumbbox.c: tweaked the text shown while
