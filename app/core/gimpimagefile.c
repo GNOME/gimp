@@ -721,7 +721,6 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   GdkPixbuf     *pixbuf;
   GimpEnumDesc  *enum_desc;
   GimpImageType  type;
-  const gchar   *type_str;
   gint           num_layers;
   gint           width, height;
   gboolean       success = FALSE;
