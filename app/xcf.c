@@ -703,9 +703,11 @@ static Parasite *read_a_parasite(XcfInfo *info)
 
 static void write_bz_point(gpointer pptr, gpointer iptr)
 {
-  BZPOINTP bpt = (BZPOINTP)pptr;
+  PATHPOINTP bpt = (PATHPOINTP)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
-  
+  gfloat   xfloat = (gfloat)bpt->x;
+  gfloat   yfloat = (gfloat)bpt->y;
+
   /* (all gint)
    * type
    * x
@@ -713,13 +715,13 @@ static void write_bz_point(gpointer pptr, gpointer iptr)
    */
 
   info->cp += xcf_write_int32(info->fp, &bpt->type,1);
-  info->cp += xcf_write_int32(info->fp, (guint32*)&bpt->x,1);
-  info->cp += xcf_write_int32(info->fp, (guint32*)&bpt->y,1);
+  info->cp += xcf_write_float(info->fp, &xfloat,1);
+  info->cp += xcf_write_float(info->fp, &yfloat,1);
 }
 
-static BZPOINTP read_bz_point(XcfInfo *info)
+static PATHPOINTP v1read_bz_point(XcfInfo *info)
 {
-  BZPOINTP ptr;
+  PATHPOINTP ptr;
   guint32 type;
   gint32 x;
   gint32 y;
@@ -728,19 +730,35 @@ static BZPOINTP read_bz_point(XcfInfo *info)
   info->cp += xcf_read_int32(info->fp, (guint32*)&x,1);
   info->cp += xcf_read_int32(info->fp, (guint32*)&y,1);
 
-  ptr = bzpoint_new(type,x,y);
+  ptr = pathpoint_new(type,(gdouble)x,(gdouble)y);
+
+  return (ptr);
+}
+
+static PATHPOINTP read_bz_point(XcfInfo *info)
+{
+  PATHPOINTP ptr;
+  guint32 type;
+  gfloat x;
+  gfloat y;
+ 
+  info->cp += xcf_read_int32(info->fp, &type,1);
+  info->cp += xcf_read_float(info->fp, &x,1);
+  info->cp += xcf_read_float(info->fp, &y,1);
+ 
+  ptr = pathpoint_new(type,(gdouble)x,(gdouble)y);
 
   return (ptr);
 }
 
 static void write_one_path(gpointer pptr, gpointer iptr)
 {
-  BZPATHP bzp = (BZPATHP)pptr;
+  PATHP bzp = (PATHP)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
   guint8 state = (gchar)bzp->state;
   guint32 num_points;
-  guint32 num_paths;
   guint32 closed;
+  guint32 version;
 
   /*
    * name (string)
@@ -757,40 +775,62 @@ static void write_one_path(gpointer pptr, gpointer iptr)
   info->cp += xcf_write_int8(info->fp, &state,1);
   closed = bzp->closed;
   info->cp += xcf_write_int32(info->fp, &closed,1);
-  num_points = g_slist_length(bzp->bezier_details);
+  num_points = g_slist_length(bzp->path_details);
   info->cp += xcf_write_int32(info->fp, &num_points,1);
-  num_paths = 1;
-  info->cp += xcf_write_int32(info->fp, &num_paths,1);
-  g_slist_foreach(bzp->bezier_details,write_bz_point,info);
+  version = 2;
+  info->cp += xcf_write_int32(info->fp, &version,1);
+  info->cp += xcf_write_int32(info->fp, &bzp->pathtype,1);
+  g_slist_foreach(bzp->path_details,write_bz_point,info);
 }
 
-static BZPATHP read_one_path(XcfInfo *info)
+static PATHP read_one_path(XcfInfo *info)
 {
-  BZPATHP bzp;
+  PATHP bzp;
   gchar *name;
   guint32 locked;
   guint8  state;
   guint32 closed;
   guint32 num_points;
-  guint32 num_paths;
+  guint32 version; /* changed from num_paths */
   GSList *pts_list = NULL;
+  PathType ptype;
 
   info->cp += xcf_read_string(info->fp, &name, 1);
   info->cp += xcf_read_int32(info->fp, &locked,1);
   info->cp += xcf_read_int8(info->fp, &state,1);
   info->cp += xcf_read_int32(info->fp, &closed,1);
   info->cp += xcf_read_int32(info->fp, &num_points,1);
-  info->cp += xcf_read_int32(info->fp, &num_paths,1);
+  info->cp += xcf_read_int32(info->fp, &version,1);
 
-  while(num_points-- > 0)
+  if(version == 1)
     {
-      BZPOINTP bpt;
-      /* Read in a path */
-      bpt = read_bz_point(info);
-      pts_list = g_slist_append(pts_list,bpt);
+      ptype = BEZIER;
+      while(num_points-- > 0)
+      {
+        PATHPOINTP bpt;
+        /* Read in a path */
+        bpt = v1read_bz_point(info);
+        pts_list = g_slist_append(pts_list,bpt);
+      }
+    }
+  else if(version == 2)
+    {
+      /* Had extra type field and points are stored as doubles */
+      info->cp += xcf_read_int32(info->fp, (guint32 *)&ptype,1);
+      while(num_points-- > 0)
+      {
+        PATHPOINTP bpt;
+        /* Read in a path */
+        bpt = read_bz_point(info);
+        pts_list = g_slist_append(pts_list,bpt);
+      }
+    }
+  else
+    {
+      g_warning("Unknown path type..Possibly corrupt XCF file");
     }
 
-  bzp = bzpath_new(pts_list,closed,(gint)state,locked,name);
+  bzp = path_new(ptype,pts_list,closed,(gint)state,locked,name);
 
   return(bzp);
 }
@@ -824,7 +864,7 @@ static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
 
   while(num_paths-- > 0)
     {
-      BZPATHP bzp;
+      PATHP bzp;
       /* Read in a path */
       bzp = read_one_path(info);
       bzp_list = g_slist_append(bzp_list,bzp);

@@ -24,17 +24,18 @@
 
 typedef struct {
   guint32 type;
-  gint32 x;
-  gint32 y;
-} BZPOINT, *BZPOINTP;
+  gdouble x;
+  gdouble y;
+} PATHPOINT, *PATHPOINTP;
 
 typedef struct {
-  GSList       * bezier_details;
-  gboolean      closed;
-  guint32       state;
-  guint32       locked;  /* Only bottom bit used */
+  GSList       * path_details;
+  guint32        pathtype; /* Only beziers to start with */
+  gboolean       closed;
+  guint32        state;
+  guint32        locked;  /* Only bottom bit used */
   GString      * name;
-} BZPATH, *BZPATHP;
+}  PATH, *PATHP;
 
 typedef struct {
   GimpImage * gimage;
@@ -52,8 +53,16 @@ typedef struct {
   gint32      last_selected_row;
 } PATHIMAGELIST, *PATHIMAGELISTP, PathsList;
 
-BZPOINTP    bzpoint_new(gint,gint,gint);
-BZPATHP     bzpath_new(GSList *,gint,gint,gint,gchar *);
-PathsList * pathsList_new(GimpImage *,gint,GSList *);
+typedef enum {
+  BEZIER = 1,
+} PathType;
+
+PATHPOINTP    pathpoint_new(gint,gdouble,gdouble);
+PATHP         path_new(PathType,GSList *,gint,gint,gint,gchar *);
+PathsList   * pathsList_new(GimpImage *,gint,GSList *);
+gboolean      paths_set_path(GimpImage *,gchar *);
+gboolean      paths_set_path_points(GimpImage *,gchar *,gint,gint,gint,gdouble *);
+void          paths_stroke(GimpImage *,PathsList *,PATHP);
+
 
 #endif  /*  __PATHSP_H__  */

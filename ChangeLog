@@ -1,3 +1,26 @@
+Mon Mar 22 00:38:20 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+	* Makefile.am
+	* internal_procs.c
+	* pathsP.h
+	* paths_dialog.c
+	* paths_dialog.h
+	* xcf.c
+
+	New:-
+	* paths_cmds.c
+	* paths_cmds.h
+
+	PDB functions for paths. (More to follow).
+	Functions are:-
+		gimp_path_list
+		gimp_path_get_points
+		gimp_path_get_current
+		gimp_path_set_current
+		gimp_path_set_points
+		gimp_path_stroke_current	
+	
 Sun Mar 21 15:29:38 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/disp_callbacks.c app/edit_selection.c app/move.c:

@@ -25,7 +25,7 @@ void        paths_dialog_update (GimpImage*);
 void        paths_newpoint_current(BezierSelect *, GDisplay *);
 void        paths_first_button_press(BezierSelect *,GDisplay *);
 void        paths_new_bezier_select_tool(void);
-BZPATHP     paths_get_bzpaths(void);
-void        paths_set_bzpaths(GImage*,BZPATHP);
+PATHP       paths_get_bzpaths(void);
+void        paths_set_bzpaths(GImage*,PATHP);
 
 #endif  /*  __PATHS_DIALOG_H__  */

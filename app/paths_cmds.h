@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1999 Andy Thomas alt@picnic.demon.co.uk
+ * Copyright (C) 1999 Andy Thomas alt@gimp.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Some of this code is based on the layers_dialog box code.
  */
 
+#ifndef __PATHS_CMDS_H__
+#define __PATHS_CMDS_H__
 
-#ifndef  __PATHS_DIALOG_H__
-#define  __PATHS_DIALOG_H__
+#include "procedural_db.h"
 
-GtkWidget * paths_dialog_create(void);
-void        paths_dialog_update (GimpImage*);
-void        paths_newpoint_current(BezierSelect *, GDisplay *);
-void        paths_first_button_press(BezierSelect *,GDisplay *);
-void        paths_new_bezier_select_tool(void);
-PATHP       paths_get_bzpaths(void);
-void        paths_set_bzpaths(GImage*,PATHP);
+extern ProcRecord path_list_proc;
+extern ProcRecord path_get_points_proc;
+extern ProcRecord path_get_current_proc;
+extern ProcRecord path_set_current_proc;
+extern ProcRecord path_set_points_proc;
+extern ProcRecord path_stroke_current_proc;
 
-#endif  /*  __PATHS_DIALOG_H__  */
+#endif __PATHS_CMDS_H__
+
+
+

@@ -60,6 +60,7 @@
 #include "internal_procs.h"
 #include "paintbrush.h"
 #include "palette.h"
+#include "paths_cmds.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "pencil.h"
@@ -82,7 +83,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 258;
+  gfloat total_pcount = 264;
 
   app_init_update_status(_("Internal Procedures"), _("Tool procedures"),
 			 pcount/total_pcount);
@@ -420,6 +421,15 @@ internal_procs_init ()
   procedural_db_register (&gimp_find_parasite_proc); pcount++;
   procedural_db_register (&gimp_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_detach_parasite_proc); pcount++;
+
+  /* paths procedures */
+  procedural_db_register (&path_list_proc); pcount++;  
+  procedural_db_register (&path_get_points_proc); pcount++;  
+  procedural_db_register (&path_get_current_proc); pcount++;  
+  procedural_db_register (&path_set_current_proc); pcount++; 
+  procedural_db_register (&path_set_points_proc); pcount++;   
+  procedural_db_register (&path_stroke_current_proc); pcount++;   
+
 
   app_init_update_status(NULL, _("Procedural database"),
 			 pcount/total_pcount);
