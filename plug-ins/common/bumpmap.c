@@ -29,6 +29,11 @@
  * bump-map to another image, producing a nice embossing effect.
  */
 
+/* Version 3.0-pre1-ac2:
+ *
+ * - waterlevel/ambient restricted to 0-255
+ */   
+
 /* Version 3.0-pre1-ac1:
  *
  * - Now able not to tile the bumpmap - this is the default.
@@ -113,7 +118,7 @@
 
 /***** Magic numbers *****/
 
-#define PLUG_IN_VERSION "April 2000, 3.0-pre1-ac1"
+#define PLUG_IN_VERSION "April 2000, 3.0-pre1-ac2"
 
 #define PREVIEW_SIZE    128
 #define SCALE_WIDTH       0
@@ -1090,7 +1095,7 @@ bumpmap_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Waterlevel:"), SCALE_WIDTH, 0,
-			      bmvals.waterlevel, 0.0, 256.0, 1.0, 8.0, 0,
+			      bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -1099,7 +1104,7 @@ bumpmap_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Ambient:"), SCALE_WIDTH, 0,
-			      bmvals.ambient, 0.0, 256.0, 1.0, 8.0, 0,
+			      bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
