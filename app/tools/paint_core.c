@@ -655,7 +655,7 @@ paint_core_init (PaintCore    *paint_core,
       paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
 #ifdef GTK_HAVE_SIX_VALUATORS
       paint_core->startwheel = paint_core->lastwheel = paint_core->curwheel = 0.5;
-#endif /* GTK_HAVE_SIX_VALUATORS
+#endif /* GTK_HAVE_SIX_VALUATORS */
     }
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
