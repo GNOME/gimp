@@ -14,44 +14,6 @@ gimpimage
 
 </para>
 
-<!-- ##### FUNCTION gimp_image_get_cmap ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@num_colors: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@ncolors: 
-
-
-<!-- ##### FUNCTION gimp_image_set_cmap ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@cmap: 
-@num_colors: 
-<!-- # Unused Parameters # -->
-@ncolors: 
-
-
-<!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@width: 
-@height: 
-@bpp: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@bytes: 
-
-
 <!-- ##### FUNCTION gimp_image_list ##### -->
 <para>
 
@@ -590,5 +552,86 @@ gimpimage
 @image_ID: 
 @tattoo: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_get_cmap ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@num_colors: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@ncolors: 
+
+
+<!-- ##### FUNCTION gimp_image_set_cmap ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@cmap: 
+@num_colors: 
+<!-- # Unused Parameters # -->
+@ncolors: 
+
+
+<!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@width: 
+@height: 
+@bpp: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@bytes: 
+
+
+<!-- ##### MACRO gimp_image_convert_rgb ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+
+
+<!-- ##### MACRO gimp_image_convert_grayscale ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+
+
+<!-- ##### MACRO gimp_image_convert_indexed ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+@dither_type: 
+@palette_type: 
+@num_colors: 
+@alpha_dither: 
+@remove_unused: 
+@palette: 
+
+
+<!-- ##### MACRO gimp_image_duplicate ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@image_ID: 
 
 

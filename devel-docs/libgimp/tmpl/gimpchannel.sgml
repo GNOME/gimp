@@ -157,3 +157,13 @@ gimpchannel
 @tattoo: 
 
 
+<!-- ##### MACRO gimp_channel_get_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@channel_ID: 
+
+

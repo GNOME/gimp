@@ -1,3 +1,13 @@
+2000-06-09  Sven Neumann  <sven@gimp.org>
+
+	* gimp.h
+	* gimpchannel.h
+	* gimpcompat.h
+	* gimpdrawable.h
+	* gimpimage.h
+	* gimplayer.h: moved convenience defines from gimp.h into
+	relevant header files so you have a chance to find them. 
+	
 2000-06-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am:

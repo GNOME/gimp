@@ -314,3 +314,53 @@ gimplayer
 @tattoo: 
 
 
+<!-- ##### MACRO gimp_layer_get_mask_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_is_floating_selection ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_set_preserve_transparency ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@layer_ID: 
+@preserve_transparency: 
+
+

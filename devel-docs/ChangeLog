@@ -1,4 +1,15 @@
-2000-06-08  Sven Neumann  <neo@wintermute.ochsenblut.de>
+2000-06-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-sections.txt
+	* tmpl/gimp.sgml
+	* tmpl/gimpchannel.sgml
+	* tmpl/gimpdrawable.sgml
+	* tmpl/gimpimage.sgml
+	* tmpl/gimplayer.sgml: relocated defines as happened to
+	reflect changes in libgimp
+
+2000-06-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt 
 	* libgimp/libgimp-docs.sgml

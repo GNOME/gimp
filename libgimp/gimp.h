@@ -66,29 +66,11 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-/* more convenient names for some pdb functions */  
+#define gimp_get_data         gimp_procedural_db_get_data
+#define gimp_get_data_size    gimp_procedural_db_get_data_size
+#define gimp_set_data         gimp_procedural_db_set_data
+#define gimp_query_procedure  gimp_procedural_db_proc_info
 
-#define gimp_get_data                 gimp_procedural_db_get_data
-#define gimp_get_data_size            gimp_procedural_db_get_data_size
-#define gimp_set_data                 gimp_procedural_db_set_data
-#define gimp_query_procedure          gimp_procedural_db_proc_info
-
-#define gimp_image_convert_rgb        gimp_convert_rgb
-#define gimp_image_convert_grayscale  gimp_convert_grayscale
-#define gimp_image_convert_indexed    gimp_convert_indexed
-#define gimp_image_duplicate          gimp_channel_ops_duplicate
-
-#define gimp_drawable_offset          gimp_channel_ops_offset
-#define gimp_drawable_image_id        gimp_drawable_image
-#define gimp_drawable_bpp             gimp_drawable_bytes
-
-#define gimp_channel_get_image_id     gimp_drawable_image
-
-#define gimp_layer_get_mask_id               gimp_layer_mask
-#define gimp_layer_get_image_id              gimp_drawable_image
-#define gimp_layer_is_floating_selection     gimp_layer_is_floating_sel
-#define gimp_layer_get_preserve_transparency gimp_layer_get_preserve_trans
-#define gimp_layer_set_preserve_transparency gimp_layer_set_preserve_trans
 
 GIMPVAR guint gimp_major_version;
 GIMPVAR guint gimp_minor_version;

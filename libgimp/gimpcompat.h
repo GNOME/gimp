@@ -52,7 +52,7 @@ extern "C" {
 
 #define gimp_channel_width              gimp_drawable_width
 #define gimp_channel_height             gimp_drawable_height
-#define gimp_channel_get_image_ID       gimp_drawable_get_image_ID
+#define gimp_channel_get_image_ID       gimp_drawable_image
 #define gimp_channel_get_layer_ID       -1
 
 #define gimp_layer_width                gimp_drawable_width

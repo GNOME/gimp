@@ -12,71 +12,19 @@
 </MACRO>
 <MACRO>
 <NAME>gimp_get_data</NAME>
-#define gimp_get_data                 gimp_procedural_db_get_data
+#define gimp_get_data         gimp_procedural_db_get_data
 </MACRO>
 <MACRO>
 <NAME>gimp_get_data_size</NAME>
-#define gimp_get_data_size            gimp_procedural_db_get_data_size
+#define gimp_get_data_size    gimp_procedural_db_get_data_size
 </MACRO>
 <MACRO>
 <NAME>gimp_set_data</NAME>
-#define gimp_set_data                 gimp_procedural_db_set_data
+#define gimp_set_data         gimp_procedural_db_set_data
 </MACRO>
 <MACRO>
 <NAME>gimp_query_procedure</NAME>
-#define gimp_query_procedure          gimp_procedural_db_proc_info
-</MACRO>
-<MACRO>
-<NAME>gimp_image_convert_rgb</NAME>
-#define gimp_image_convert_rgb        gimp_convert_rgb
-</MACRO>
-<MACRO>
-<NAME>gimp_image_convert_grayscale</NAME>
-#define gimp_image_convert_grayscale  gimp_convert_grayscale
-</MACRO>
-<MACRO>
-<NAME>gimp_image_convert_indexed</NAME>
-#define gimp_image_convert_indexed    gimp_convert_indexed
-</MACRO>
-<MACRO>
-<NAME>gimp_image_duplicate</NAME>
-#define gimp_image_duplicate          gimp_channel_ops_duplicate
-</MACRO>
-<MACRO>
-<NAME>gimp_drawable_offset</NAME>
-#define gimp_drawable_offset          gimp_channel_ops_offset
-</MACRO>
-<MACRO>
-<NAME>gimp_drawable_image_id</NAME>
-#define gimp_drawable_image_id        gimp_drawable_image
-</MACRO>
-<MACRO>
-<NAME>gimp_drawable_bpp</NAME>
-#define gimp_drawable_bpp             gimp_drawable_bytes
-</MACRO>
-<MACRO>
-<NAME>gimp_channel_get_image_id</NAME>
-#define gimp_channel_get_image_id     gimp_drawable_image
-</MACRO>
-<MACRO>
-<NAME>gimp_layer_get_mask_id</NAME>
-#define gimp_layer_get_mask_id               gimp_layer_mask
-</MACRO>
-<MACRO>
-<NAME>gimp_layer_get_image_id</NAME>
-#define gimp_layer_get_image_id              gimp_drawable_image
-</MACRO>
-<MACRO>
-<NAME>gimp_layer_is_floating_selection</NAME>
-#define gimp_layer_is_floating_selection     gimp_layer_is_floating_sel
-</MACRO>
-<MACRO>
-<NAME>gimp_layer_get_preserve_transparency</NAME>
-#define gimp_layer_get_preserve_transparency gimp_layer_get_preserve_trans
-</MACRO>
-<MACRO>
-<NAME>gimp_layer_set_preserve_transparency</NAME>
-#define gimp_layer_set_preserve_transparency gimp_layer_set_preserve_trans
+#define gimp_query_procedure  gimp_procedural_db_proc_info
 </MACRO>
 <USER_FUNCTION>
 <NAME>GimpInitProc</NAME>
@@ -2560,7 +2508,7 @@ GimpColorSelectorID  id,GimpColorSelectorFinishedCB  finished_cb,gpointer       
 </MACRO>
 <MACRO>
 <NAME>gimp_channel_get_image_ID</NAME>
-#define gimp_channel_get_image_ID       gimp_drawable_get_image_ID
+#define gimp_channel_get_image_ID       gimp_drawable_image
 </MACRO>
 <MACRO>
 <NAME>gimp_channel_get_layer_ID</NAME>
@@ -3161,6 +3109,10 @@ gchar                    *title,GimpHelpFunc              help_func,gchar       
 <RETURNS>GtkWidget  *</RETURNS>
 gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gboolean                  eek,gchar                    *message,gchar                    *true_button,gchar                    *false_button,GtkObject                *object,gchar                    *signal,GimpQueryBooleanCallback  callback,gpointer                  data
 </FUNCTION>
+<MACRO>
+<NAME>gimp_channel_get_image_id</NAME>
+#define gimp_channel_get_image_id  gimp_drawable_image
+</MACRO>
 <FUNCTION>
 <NAME>gimp_channel_new</NAME>
 <RETURNS>gint32  </RETURNS>
@@ -3792,6 +3744,18 @@ gint32 display_ID
 <RETURNS>void  </RETURNS>
 void
 </FUNCTION>
+<MACRO>
+<NAME>gimp_drawable_offset</NAME>
+#define gimp_drawable_offset    gimp_channel_ops_offset
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_image_id</NAME>
+#define gimp_drawable_image_id  gimp_drawable_image
+</MACRO>
+<MACRO>
+<NAME>gimp_drawable_bpp</NAME>
+#define gimp_drawable_bpp       gimp_drawable_bytes
+</MACRO>
 <STRUCT>
 <NAME>GimpDrawable</NAME>
 struct GimpDrawable
@@ -4116,6 +4080,22 @@ gint32 image_ID,gint32 guide_ID
 <RETURNS>void  </RETURNS>
 gchar *prog_name,gchar *help_page
 </FUNCTION>
+<MACRO>
+<NAME>gimp_image_convert_rgb</NAME>
+#define gimp_image_convert_rgb        gimp_convert_rgb
+</MACRO>
+<MACRO>
+<NAME>gimp_image_convert_grayscale</NAME>
+#define gimp_image_convert_grayscale  gimp_convert_grayscale
+</MACRO>
+<MACRO>
+<NAME>gimp_image_convert_indexed</NAME>
+#define gimp_image_convert_indexed    gimp_convert_indexed
+</MACRO>
+<MACRO>
+<NAME>gimp_image_duplicate</NAME>
+#define gimp_image_duplicate          gimp_channel_ops_duplicate
+</MACRO>
 <FUNCTION>
 <NAME>gimp_image_get_cmap</NAME>
 <RETURNS>guchar  *</RETURNS>
@@ -4411,6 +4391,26 @@ gint32              image_ID,gint                tattoo
 <RETURNS>gint32  </RETURNS>
 gint32              image_ID,gint                tattoo
 </FUNCTION>
+<MACRO>
+<NAME>gimp_layer_get_mask_id</NAME>
+#define gimp_layer_get_mask_id               gimp_layer_mask
+</MACRO>
+<MACRO>
+<NAME>gimp_layer_get_image_id</NAME>
+#define gimp_layer_get_image_id              gimp_drawable_image
+</MACRO>
+<MACRO>
+<NAME>gimp_layer_is_floating_selection</NAME>
+#define gimp_layer_is_floating_selection     gimp_layer_is_floating_sel
+</MACRO>
+<MACRO>
+<NAME>gimp_layer_get_preserve_transparency</NAME>
+#define gimp_layer_get_preserve_transparency gimp_layer_get_preserve_trans
+</MACRO>
+<MACRO>
+<NAME>gimp_layer_set_preserve_transparency</NAME>
+#define gimp_layer_set_preserve_transparency gimp_layer_set_preserve_trans
+</MACRO>
 <FUNCTION>
 <NAME>gimp_layer_new</NAME>
 <RETURNS>gint32  </RETURNS>

@@ -290,3 +290,30 @@ gimpdrawable
 @Returns: 
 
 
+<!-- ##### MACRO gimp_drawable_offset ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_drawable_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
+
+
+<!-- ##### MACRO gimp_drawable_bpp ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
+
+

@@ -28,6 +28,8 @@ extern "C" {
 
 /* For information look into the C source or the html documentation */
 
+#define gimp_channel_get_image_id  gimp_drawable_image
+
 
 gint32  gimp_channel_new (gint32    image_ID,
 			  gchar    *name,
