@@ -742,14 +742,6 @@ size).
 
 
 
-<!-- ##### MACRO GIMP_STOCK_TOOL_BEZIER_SELECT ##### -->
-<para>
-<inlinegraphic fileref="stock-tool-bezier-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-bezier-select-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
 <!-- ##### MACRO GIMP_STOCK_TOOL_BLEND ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-blend-22.png" format="png"></inlinegraphic>
@@ -952,6 +944,7 @@ size).
 <!-- ##### MACRO GIMP_STOCK_TOOL_PATH ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-path-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-path-16.png" format="png"></inlinegraphic>
 </para>
 
 

@@ -223,7 +223,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_WILBER_EEK,               NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_BEZIER_SELECT,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BLEND,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BLUR,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -339,7 +338,6 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
-  { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_22       },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_22               },
   { GIMP_STOCK_TOOL_BLUR,                stock_tool_blur_22                },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, stock_tool_brightness_contrast_22 },
@@ -365,6 +363,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_MEASURE,             stock_tool_measure_22             },
   { GIMP_STOCK_TOOL_MOVE,                stock_tool_move_22                },
   { GIMP_STOCK_TOOL_PAINTBRUSH,          stock_tool_paintbrush_22          },
+  { GIMP_STOCK_TOOL_PATH,                stock_tool_path_22                },
   { GIMP_STOCK_TOOL_PENCIL,              stock_tool_pencil_22              },
   { GIMP_STOCK_TOOL_PERSPECTIVE,         stock_tool_perspective_22         },
   { GIMP_STOCK_TOOL_POSTERIZE,           stock_tool_posterize_22           },
@@ -376,8 +375,6 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_TEXT,                stock_tool_text_22                },
   { GIMP_STOCK_TOOL_THRESHOLD,           stock_tool_threshold_22           },
   { GIMP_STOCK_TOOL_ZOOM,                stock_tool_zoom_22                },
-
-  { GIMP_STOCK_TOOL_PATH,                stock_tool_path_22                },
 
   { GIMP_STOCK_INFO,                     stock_info_24                     },
   { GIMP_STOCK_WARNING,                  stock_warning_24                  },
@@ -464,7 +461,6 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE, stock_gradient_spiral_anticlockwise_16 },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_16            },
-  { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_16       },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_16               },
   { GIMP_STOCK_TOOL_BLUR,                stock_tool_blur_16                },
   { GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST, stock_tool_brightness_contrast_16 },
@@ -490,6 +486,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOL_MEASURE,             stock_tool_measure_16             },
   { GIMP_STOCK_TOOL_MOVE,                stock_tool_move_16                },
   { GIMP_STOCK_TOOL_PAINTBRUSH,          stock_tool_paintbrush_16          },
+  { GIMP_STOCK_TOOL_PATH,                stock_tool_path_16                },
   { GIMP_STOCK_TOOL_PENCIL,              stock_tool_pencil_16              },
   { GIMP_STOCK_TOOL_PERSPECTIVE,         stock_tool_perspective_16         },
   { GIMP_STOCK_TOOL_POSTERIZE,           stock_tool_posterize_16           },

@@ -93,7 +93,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TEXT_DIR_RTL         "gimp-text-dir-rtl"
 
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
-#define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
 #define GIMP_STOCK_TOOL_BLEND               "gimp-tool-blend"
 #define GIMP_STOCK_TOOL_BLUR                "gimp-tool-blur"
 #define GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST "gimp-tool-brightness-contrast"

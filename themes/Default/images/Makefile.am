@@ -186,8 +186,6 @@ STOCK_DIALOG_IMAGES = \
 STOCK_TOOL_IMAGES = \
 	tools/stock-tool-airbrush-16.png		\
 	tools/stock-tool-airbrush-22.png		\
-	tools/stock-tool-bezier-select-16.png		\
-	tools/stock-tool-bezier-select-22.png		\
 	tools/stock-tool-blend-16.png			\
 	tools/stock-tool-blend-22.png			\
 	tools/stock-tool-blur-16.png			\
@@ -238,6 +236,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-move-22.png			\
 	tools/stock-tool-paintbrush-16.png		\
 	tools/stock-tool-paintbrush-22.png		\
+	tools/stock-tool-path-16.png			\
+	tools/stock-tool-path-22.png			\
 	tools/stock-tool-pencil-16.png			\
 	tools/stock-tool-pencil-22.png			\
 	tools/stock-tool-perspective-16.png		\
@@ -259,9 +259,7 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-threshold-16.png		\
 	tools/stock-tool-threshold-22.png		\
 	tools/stock-tool-zoom-16.png			\
-	tools/stock-tool-zoom-22.png			\
-	\
-	tools/stock-tool-path-22.png
+	tools/stock-tool-zoom-22.png
 
 STOCK_IMAGES = \
 	$(STOCK_MENU_IMAGES) 	\
