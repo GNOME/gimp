@@ -1,3 +1,7 @@
+Sun Aug  2 06:02:01 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile_manager.c (tile_manager_map): I am an idiot.
+
 Sat Aug  1 20:50:47 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_manager.c: Added an assertion check in tile_manager_map
