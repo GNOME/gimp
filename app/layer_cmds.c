@@ -1712,7 +1712,7 @@ ProcArg layer_get_mode_out_args[] =
 {
   { PDB_INT32,
     "mode",
-    "the layer combination mode: { NORMAL (0), DISSOLVE (1), MULTIPLY (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14) }"
+    "the layer combination mode: { NORMAL (0), DISSOLVE (1), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   }
 };
 

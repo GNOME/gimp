@@ -60,6 +60,9 @@ void  color_only_pixels     (unsigned char *, unsigned char *,
 void  multiply_pixels       (unsigned char *, unsigned char *,
 			     unsigned char *, int, int, int, int, int);
 
+void  divide_pixels         (unsigned char *, unsigned char *,
+			     unsigned char *, int, int, int, int, int);
+
 void  screen_pixels         (unsigned char *, unsigned char *,
 			     unsigned char *, int, int, int, int, int);
 
@@ -438,8 +441,9 @@ void  hls_to_rgb            (int *, int *, int *);
 #define SATURATION_MODE    12
 #define COLOR_MODE         13
 #define VALUE_MODE         14
-#define ERASE_MODE         15
-#define REPLACE_MODE       16
+#define DIVIDE_MODE        15
+#define ERASE_MODE         16
+#define REPLACE_MODE       17
 
 /*  Applying layer modes...  */
 

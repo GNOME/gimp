@@ -1,3 +1,14 @@
+Mon Jun  8 20:58:09 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/blend.c
+	* app/brushes.c
+	* app/brush_select.c
+	* app/bucket_fill.c
+	* app/layer_cmds.c
+	* app/layers_dialog.c
+	* app/paint_funcs.[ch]: applied a variation on
+	gimp-scier-980315-0 (implements divide (dodge) layer mode)
+
 Mon Jun  8 22:09:07 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/airbrush.c: Simple pressure sensitivity.

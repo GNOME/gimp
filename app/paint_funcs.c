@@ -53,7 +53,7 @@ LayerMode layer_modes[] =
   { 1, "Normal" },
   { 1, "Dissolve" },
   { 1, "Behind" },
-  { 0, "Multiply" },
+  { 0, "Multiply (Burn)" },
   { 0, "Screen" },
   { 0, "Overlay" },
   { 0, "Difference" },
@@ -65,6 +65,7 @@ LayerMode layer_modes[] =
   { 0, "Saturation" },
   { 0, "Color" },
   { 0, "Value" },
+  { 0, "Divide (Dodge)" },
   { 1, "Erase" },
   { 1, "Replace" }
 };
@@ -638,6 +639,39 @@ multiply_pixels (unsigned char *src1,
     {
       for (b = 0; b < alpha; b++)
 	dest[b] = (src1[b] * src2[b]) / 255;
+
+      if (ha1 && ha2)
+	dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (ha2)
+	dest[alpha] = src2[alpha];
+
+      src1 += b1;
+      src2 += b2;
+      dest += b2;
+    }
+}
+
+
+void
+divide_pixels (unsigned char *src1,
+		 unsigned char *src2,
+		 unsigned char *dest,
+		 int            length,
+		 int            b1,
+		 int            b2,
+		 int            ha1,
+		 int            ha2)
+{
+  int alpha, b, result;
+
+  alpha = (ha1 || ha2) ? MAXIMUM (b1, b2) - 1 : b1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++) {
+	result = ((src1[b] * 256) / (1+src2[b]));
+        dest[b] = (result > 255) ? 255 : result;
+      }
 
       if (ha1 && ha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
@@ -4290,6 +4324,10 @@ apply_layer_mode (unsigned char  *src1,
 
     case MULTIPLY_MODE:
       multiply_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
+      break;
+
+    case DIVIDE_MODE:
+      divide_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);
       break;
 
     case SCREEN_MODE:
