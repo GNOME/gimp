@@ -1,5 +1,15 @@
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* cursors/selection.xbm
+	* cursors/selection_subtract.xbm: made the selection rectangles
+	look the same (avoids flickering on Ctrl/Shift).
+
+	* cursors/selection_intersect.xbm
+	* cursors/selection_intersect_mask.xbm: the symbol for
+	intersection is "n", not "u".
+
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* cursors/*: a proper naming scheme for all cursor files. Added
 	zoom_in and zoom_out cursors.
