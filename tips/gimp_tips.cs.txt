@@ -1,0 +1,157 @@
+# Tips translated by Stanislav Brabec <utx@penguin.cz>
+#
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+                            Vítejte v GIMPu!
+      
+Témìø ve¹keré operace s obrázky jsou vyvolávány pomocí pravého
+tlaèítka my¹i. A nebojte se, vìt¹inu chyb mù¾ete napravit...
+
+# Tips for beginners start here
+#
+
+GIMP organizuje obrázek do vrstev. Lze si je pøedstavit jako
+stoh fólií nebo filtrù, skrz které se díváme, chceme-li
+slo¾it jejich obsah.
+
+Mnoho operací s vrstvami lze provést pravým tlaèíckem my¹i
+na textovém návì¹tí vrstvy v dialogu vrstev (Dialogy->Vrstvy a kanály).
+
+Pøed zápisem souborù jako GIF, XPM nebo jiných indexovaných
+barevných formátù je tøeba pøevést obrázek do indexovaného
+pou¾itím menu Obrázek.
+
+Panel Volby nástrojù je mo¾né zobrazit dvojitým poklepem
+na tlaèítko libovolného nástroje v panelu nástrojù.
+
+Jméno vrstvy je mo¾né zmìnit dvojitým poklepem na jméno
+v oknì dialogu Vrstvy.
+
+Vrstvy "Pozadí" je zvlá¹tní. Lze jí pøidat prùhlednost nebo
+masku vrstvy. Pøed pøidáním prùhlednosti je nutné nejdøíve
+vrstvì "pøidat alfa" poklepem na pravé tlaèítko
+v dialogu vrstev a volbou "Pøidat alfa kanál".
+
+Pøi pou¾ití kreslícího nástroje (©tìtec, Americká retu¹ nebo Tu¾ka),
+klepnutí s Pøeøaïovaèem kreslí rovnou èáru mezi posledním
+kresleným místem a nynìj¹í polohou kurzoru.
+
+Vìt¹ina zásuvných modulù pracuje s aktuální vrstvou aktuálního obrázku.
+Pokud má modul pracovat s celým obrázkem, je v nìkterých pøípadech nutné
+slouèit v¹echny vrstvy (Vrstvy->Slouèit obraz).
+
+Vìt¹ina formátù souborù nemù¾e pracovat s vrstvami a proto je
+zapsána jen aktuální vrstva. Pøi pou¾ití XCF, nativního formátu
+programu GIMP, se pøi zápisu uchovají vrstvy, kanály i vodítka.
+
+Ne ka¾dý efekt lze pou¾ít na v¹echny typy obrázkù. Lze
+to rozpoznat podle za¹edìné polo¾ky v menu. Mù¾e být potøebné
+zmìnit typ obrázku na RGB, pøidat alfa kanál nebo slouèit obraz.
+
+# Tips for intermediate users start here
+#
+
+Dialog volby souboru má dokonèování jména souboru pomocí Tabulátoru,
+podobnì jako shell. Staèí napsat èást jména, stisknout tabulátor
+a je to! Dokonèené.
+
+Je mo¾né zmìnit klávesové zkratky pro kterékoliv menu
+souèasným výbìrem polo¾ky menu a stisknutím nové klávesové kombinace.
+Zmìna je dynamická a je zapsána pøi opu¹tìní GIMPu.
+
+V¹echny staré operace s kanály byly vymìnìny za nové výkonnìj¹í
+a flexibilní operace s vrstvami a re¾imem vrstev.
+Mohou se zdát slo¾itìj¹í, ale nabízejí lep¹í zpùsob práce.
+
+Pøesouvání po obrázku, který je vìt¹í ne¾ okno,
+je mo¾né pomocí prostøedního tlaèítka my¹i.
+
+Klepnutím a potáhnutím z mìøítka lze umístit na obrázku
+vodítko. V¹echny ta¾ené výbìry se na vodítka budou chytat.
+Vodítka lze odstranit nástrojem Pøesun vyta¾ením mimo obrázek.
+
+GIMP podporuje prùbì¾nou gzip kompresi. Staèí pøidat
+koncovku '.gz' (nebo '.bz2', je-li instalován bzip2) ke jménu
+souboru a obrázek bude ulo¾en komprimovaný. Stejnì funguje
+i ètení obrázkù.
+
+Stisknutí a dr¾ení Pøeøaïovaèe pøed provedením výbìru umo¾òuje
+pøidávat do výbìru namísto zmìny výbìru. Naproti tomu pomocí
+Control lze pøed provedením výbìru z nìj lze ubírat.
+
+Stisknutím nebo pu¹tìním kláves Pøeøaïovaè a Control bìhem
+nabírání výbìru lze nabrat dokonalý ètverec nebo kruh,
+nebo nabírat od støedu.
+
+# Tips for advanced users start here
+#
+
+Pøi pou¾ití magické hùlky lze dolaïovat výbìr pomocí
+klepnutí a pota¾ení levým a pravým tlaèítkem.
+
+Klepnutí na ikonu oka v dialogu Vrstvy s Pøeøaïovaèem lze skrýt
+v¹echny vrstvy namísto jedné. Dal¹í klepnutí v¹echny vrstvy zobrazí.
+
+Klepnutí s Controlem na náhled masky vrstvy v dialogu Vrstvy
+pøepíná efekt masky vrstvy.
+
+Klepnutí s Altem na náhled masky vrstvy v dialogu Vrstvy
+pøepíná pøímé zobrazení masky.
+
+Stiskem Alt-Tab lze cyklovat pøes v¹echny vrstvy v obrázku
+(pokud tuto kombinaci neodchytává správce oken...).
+
+Klepnutí s Pøeøaïovaèem pøi vyplòování z Plechovky
+zpùsobí vyplòování barvou pozadí namísto popøedí.
+
+Pota¾ení s Controlem v nástroji Transformace v re¾imu rotace
+zpùsobí rotaci v 15stupòových skocích.
+
+Výbìr lze doladit a pøemístit pomocí pota¾ení s Altem.
+
+Pokud se písma zobrazují jako bloky, je to proto, ¾e nejsou
+vektorová. Vìt¹ina X serverù podporuje Postscriptová vektorová
+písma Type1. Nahrajte a nainstalujte je.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+Pøi instalaci nové verze nezapomeòte nejdøív smazat svùj
+adresáø ~/.gimp.
+
+Pou¾ití menu Úpravy->Tahy umo¾òuje kreslit jednoduché ètverce
+a kruhy vykreslením èáry podél hranic aktuálního výbìru.
+Slo¾itìj¹í tvary lze kreslit pomocí Filtry->Výpoèty->Gfig.
+
+Dokonalý kruh lze získat podr¾ením Pøeøaïovaèe bìhem nabírání eliptického
+výbìru. K pøesnému umístìní kruhu lze vytáhnout vodítka teèná
+ke kruhu, který bude vybrán, a kurzor umístit do prùseèíku vodítek;
+výsledný výbìr se bude vodítek pøesnì dotýkat.
+
+# (end of tips)
+
