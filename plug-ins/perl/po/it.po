@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: Sun Jan 20 10:39:21 2002\n"
-"PO-Revision-Date: 1999-09-16 21:28-0200\n"
+"PO-Revision-Date: 2003-01-14 12:16+0100\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: http://gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -466,7 +466,7 @@ msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri..."
 
 #: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Render/Effetto oro..."
+msgstr "<Toolbox>/Xtns/Render/Regola aurea..."
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
