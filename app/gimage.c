@@ -34,8 +34,9 @@
 #include "gdisplay.h"
 #include "paint_funcs.h"
 #include "palette_import.h"
-#include "tools.h"
 #include "undo.h"
+
+#include "tools/tools.h"
 
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way

@@ -26,8 +26,6 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "color_balance.h"
-#include "curves.h"
 #include "desaturate.h"
 #include "drawable.h"
 #include "equalize.h"
@@ -35,14 +33,16 @@
 #include "gimphistogram.h"
 #include "gimpimage.h"
 #include "gimplut.h"
-#include "histogram_tool.h"
 #include "histogramwidget.h"
-#include "hue_saturation.h"
 #include "invert.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
-#include "threshold.h"
+#include "tools/color_balance.h"
+#include "tools/curves.h"
+#include "tools/histogram_tool.h"
+#include "tools/hue_saturation.h"
+#include "tools/threshold.h"
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;

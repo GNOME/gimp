@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = pdb
+SUBDIRS = pdb tools
 
 scriptdata =
 
@@ -15,8 +15,6 @@ bin_PROGRAMS = gimp
 gimp_SOURCES = \
 	about_dialog.c		\
 	about_dialog.h		\
-	airbrush.c		\
-	airbrush.h		\
 	app_procs.c		\
 	app_procs.h		\
 	appenums.h		\
@@ -27,17 +25,8 @@ gimp_SOURCES = \
 	authors.h		\
 	batch.c			\
 	batch.h			\
-	bezier_select.c		\
-	bezier_select.h		\
-	bezier_selectP.h	\
-	blend.c			\
-	blend.h			\
-	blob.c                  \
-	blob.h                  \
 	boundary.c		\
 	boundary.h		\
-	brightness_contrast.c	\
-	brightness_contrast.h	\
 	brush_edit.c		\
 	brush_edit.h		\
 	brush_header.h		\
@@ -45,28 +34,18 @@ gimp_SOURCES = \
 	brush_scale.h		\
 	brush_select.c		\
 	brush_select.h		\
-	bucket_fill.c		\
-	bucket_fill.h		\
-	by_color_select.c	\
-	by_color_select.h	\
 	channel.c		\
 	channel.h		\
 	channels_dialog.c	\
 	channels_dialog.h	\
 	channel_ops.c		\
 	channel_ops.h		\
-	clone.c			\
-	clone.h			\
 	color_area.c		\
 	color_area.h		\
-	color_balance.c		\
-	color_balance.h		\
 	color_notebook.c	\
 	color_notebook.h	\
 	color_panel.c		\
 	color_panel.h		\
-	color_picker.c		\
-	color_picker.h		\
 	color_select.c		\
 	color_select.h		\
 	color_transfer.c	\
@@ -81,14 +60,8 @@ gimp_SOURCES = \
 	context_manager.h	\
 	convert.c		\
 	convert.h		\
-	convolve.c		\
-	convolve.h		\
-	crop.c			\
-	crop.h			\
 	cursorutil.c		\
 	cursorutil.h		\
-	curves.c		\
-	curves.h		\
 	datafiles.c		\
 	datafiles.h		\
 	desaturate.c		\
@@ -102,8 +75,6 @@ gimp_SOURCES = \
 	disp_callbacks.h	\
 	docindex.c		\
 	docindex.h		\
-	dodgeburn.c		\
-	dodgeburn.h		\
 	draw_core.c		\
 	draw_core.h		\
 	drawable.c		\
@@ -111,10 +82,6 @@ gimp_SOURCES = \
 	drawable_pvt.h		\
 	edit_selection.c	\
 	edit_selection.h	\
-	ellipse_select.c	\
-	ellipse_select.h	\
-	eraser.c		\
-	eraser.h		\
 	errorconsole.c		\
 	errorconsole.h		\
 	errors.c		\
@@ -124,17 +91,11 @@ gimp_SOURCES = \
 	fileops.c		\
 	fileops.h		\
 	fileopsP.h		\
-	flip_tool.c		\
-	flip_tool.h		\
 	floating_sel.c		\
 	floating_sel.h		\
 	file_new_dialog.c	\
 	file_new_dialog.h	\
-	free_select.c		\
-	free_select.h		\
 	fsdither.h		\
-	fuzzy_select.c		\
-	fuzzy_select.h		\
 	gdisplay.c		\
 	gdisplay.h		\
 	gdisplay_ops.c		\
@@ -208,10 +169,6 @@ gimp_SOURCES = \
 	gximage.h		\
 	histogramwidget.c	\
 	histogramwidget.h	\
-	histogram_tool.c	\
-	histogram_tool.h	\
-	hue_saturation.c	\
-	hue_saturation.h	\
 	image_map.c		\
 	image_map.h		\
 	image_new.c		\
@@ -224,14 +181,10 @@ gimp_SOURCES = \
 	info_dialog.h		\
 	info_window.c		\
 	info_window.h		\
-	ink.c                   \
-	ink.h		        \
 	interface.c		\
 	interface.h		\
 	invert.c		\
 	invert.h		\
-	iscissors.c		\
-	iscissors.h		\
 	layer.c			\
 	layer.h			\
 	layer_select.c		\
@@ -242,22 +195,14 @@ gimp_SOURCES = \
 	lc_dialog.c		\
 	lc_dialog.h		\
 	lc_dialogP.h		\
-	levels.c		\
-	levels.h		\
 	lut_funcs.c		\
 	lut_funcs.h		\
-	magnify.c		\
-	magnify.h		\
 	main.c			\
 	marching_ants.h		\
-	measure.c		\
-	measure.h		\
 	menus.c			\
 	menus.h			\
 	module_db.c		\
 	module_db.h		\
-	move.c			\
-	move.h			\
 	nav_window.c		\
 	nav_window.h		\
 	ops_buttons.c		\
@@ -269,14 +214,8 @@ gimp_SOURCES = \
 	palette_select.c	\
 	palette_select.h	\
 	paletteP.h		\
-	paint_core.c		\
-	paint_core.h		\
-	paint_core_kernels.h	\
 	paint_funcs.c		\
 	paint_funcs.h		\
-	paint_options.h		\
-	paintbrush.c		\
-	paintbrush.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	path.c			\
@@ -291,10 +230,6 @@ gimp_SOURCES = \
 	pattern_select.h	\
 	patterns.c		\
 	patterns.h		\
-	pencil.c		\
-	pencil.h		\
-	perspective_tool.c	\
-	perspective_tool.h	\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\
@@ -303,25 +238,16 @@ gimp_SOURCES = \
 	pixmaps2.h		\
 	plug_in.c		\
 	plug_in.h		\
-	posterize.c		\
-	posterize.h		\
 	preferences_dialog.c	\
 	preferences_dialog.h	\
 	qmask.c			\
 	qmask.h			\
-	rect_select.c		\
-	rect_select.h		\
-	rect_selectP.h		\
 	resolution_calibrate.c	\
 	resolution_calibrate.h	\
 	resize.c		\
 	resize.h		\
-	rotate_tool.c		\
-	rotate_tool.h		\
 	scale.c			\
 	scale.h			\
-	scale_tool.c		\
-	scale_tool.h		\
 	scan_convert.c		\
 	scan_convert.h		\
 	scroll.c		\
@@ -331,16 +257,8 @@ gimp_SOURCES = \
 	selection_options.h	\
 	session.h		\
 	session.c		\
-	shear_tool.c		\
-	shear_tool.h		\
-	smudge.c		\
-	smudge.h		\
 	temp_buf.c		\
 	temp_buf.h		\
-	text_tool.c		\
-	text_tool.h		\
-	threshold.c		\
-	threshold.h		\
 	tile.c			\
 	tile.h			\
 	tile_pvt.h		\
@@ -353,14 +271,6 @@ gimp_SOURCES = \
 	tile_swap.h		\
 	tips_dialog.c		\
 	tips_dialog.h		\
-	tool_options.c		\
-	tool_options.h		\
-	tools.c			\
-	tools.h			\
-	transform_core.c	\
-	transform_core.h	\
-	transform_tool.c	\
-	transform_tool.h	\
 	undo.c			\
 	undo.h			\
 	undo_history.c		\
@@ -400,6 +310,7 @@ INCLUDES = \
 
 gimp_LDADD = \
 	pdb/libapppdb.la			\
+	tools/libapptools.la			\
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\

@@ -31,7 +31,6 @@
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
-#include "tools.h"
 #include "edit_selection.h"
 #include "floating_sel.h"
 #include "gimpimage.h"
@@ -42,6 +41,8 @@
 #include "path_transform.h"
 #include "selection.h"
 #include "undo.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimpmath.h"
 

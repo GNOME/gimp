@@ -31,13 +31,15 @@
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "layer.h"
-#include "paint_core.h"
 #include "paint_funcs.h"
-#include "paint_options.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "tile_manager_pvt.h"
 #include "undo.h"
+
+#include "tools/paint_core.h"
+#include "tools/paint_options.h"
+#include "tools/tools.h"
 
 #include "pdb/procedural_db.h"
 

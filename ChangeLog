@@ -1,3 +1,47 @@
+2001-01-22  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/tools/Makefile.am: moved all tool sources to app/tools
+
+	* app/app_procs.c
+	* app/brush_select.c
+	* app/commands.c
+	* app/context_manager.c
+	* app/convert.c
+	* app/cursorutil.c
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/edit_selection.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpbrush.c
+	* app/gimpbrushgenerated.c
+	* app/gimpbrushpipe.c
+	* app/gimpdnd.c
+	* app/gimprc.c
+	* app/global_edit.c
+	* app/info_window.c
+	* app/interface.c
+	* app/menus.c
+	* app/path.c
+	* app/paths_dialog.c
+	* app/paths_dialogP.h
+	* app/scale.c
+	* app/scroll.c
+	* app/undo.c
+	* app/pdb/color_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/tools_cmds.c
+	* po/POTFILES.in
+	* tools/kernelgen.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly	
+
 2001-01-22  Daniel Egger  <egger@suse.de>
 
 	* libgimp/gimpcolor.c: #include "gimppalette_pdb.h"

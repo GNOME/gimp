@@ -38,7 +38,8 @@
 #include "layer.h"
 #include "patterns.h"
 #include "temp_buf.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpcolorarea.h"

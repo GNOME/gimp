@@ -30,7 +30,8 @@
 #include "scale.h"
 #include "scroll.h"
 #include "nav_window.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 
 /*  This is the delay before dithering begins

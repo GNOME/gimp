@@ -50,8 +50,10 @@
 #include "gimprc.h"
 #include "patterns.h"
 #include "pattern_header.h"
-#include "paint_core.h"
 #include "temp_buf.h"
+
+/*  this needs to go away  */
+#include "tools/paint_core.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -37,9 +37,10 @@
 #include "gimplist.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "paint_options.h"
 #include "session.h"
 #include "temp_buf.h"
+
+#include "tools/paint_options.h"
 
 #include "pdb/procedural_db.h"
 

@@ -31,6 +31,7 @@
 #include "commands.h"
 #include "dialog_handler.h"
 #include "fileops.h"
+#include "gdisplay.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -41,8 +42,8 @@
 #include "paint_funcs.h"
 #include "preferences_dialog.h"
 #include "scale.h"
-#include "tools.h"
-#include "gdisplay.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimpenv.h"
 

@@ -336,7 +336,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("curves.h") ],
+	headers => [ qw("tools/curves.h") ],
 	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
@@ -418,7 +418,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("curves.h") ],
+	headers => [ qw("tools/curves.h") ],
 	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
@@ -494,7 +494,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("color_balance.h") ],
+	headers => [ qw("tools/color_balance.h") ],
 	vars => [ 'ColorBalanceDialog cbd', 'int i', 'void *pr',
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
@@ -588,7 +588,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("histogram_tool.h" "gimpimage.h") ],
+	headers => [ qw("tools/histogram_tool.h" "gimpimage.h") ],
 	vars => [ 'PixelRegion srcPR, maskPR', 'int x1, y1, x2, y2',
 		  'HistogramToolDialog htd', 'int off_x, off_y',
 		  'gboolean no_mask', 'Channel *mask' ],
@@ -667,7 +667,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("hue_saturation.h") ],
+	headers => [ qw("tools/hue_saturation.h") ],
 	vars => [ 'HueSaturationDialog hsd', 'int i', 'void *pr',
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
@@ -729,7 +729,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("threshold.h") ],
+	headers => [ qw("tools/threshold.h") ],
 	vars => [ 'ThresholdDialog td', 'int x1, y1, x2, y2',
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'

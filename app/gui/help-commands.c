@@ -68,12 +68,13 @@
 #include "scale.h"
 #include "selection.h"
 #include "tips_dialog.h"
-#include "tools.h"
 #include "undo.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
 #endif /* DISPLAY_FILTERS */
+
+#include "tools/tools.h"
 
 #include "libgimp/gimphelpui.h"
 #include "libgimp/gimpmath.h"

@@ -93,7 +93,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("airbrush.h") ],
+	headers => [ qw("tools/airbrush.h") ],
 	code => <<'CODE'
 success = airbrush_non_gui (drawable, pressure, num_strokes, strokes);
 CODE
@@ -121,7 +121,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("airbrush.h") ],
+	headers => [ qw("tools/airbrush.h") ],
 	code => <<'CODE'
 success = airbrush_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -178,7 +178,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("blend.h") ],
+        headers => [ qw("tools/blend.h") ],
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
@@ -237,7 +237,7 @@ HELP
     }
 
     %invoke = (
-        headers => [ qw ("bucket_fill.h") ],
+        headers => [ qw ("tools/bucket_fill.h") ],
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
@@ -283,7 +283,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("by_color_select.h") ],
+        headers => [ qw("tools/by_color_select.h") ],
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
@@ -329,7 +329,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("clone.h") ],
+	headers => [ qw("tools/clone.h") ],
 	code => <<'CODE'
 success = clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
 			 num_strokes, strokes);
@@ -359,7 +359,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("clone.h") ],
+	headers => [ qw("tools/clone.h") ],
 	code => <<'CODE'
 success = clone_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -411,7 +411,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("color_picker.h") ],
+	headers => [ qw("tools/color_picker.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -454,7 +454,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("convolve.h") ],
+	headers => [ qw("tools/convolve.h") ],
 	code => <<'CODE'
 success = convolve_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -484,7 +484,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("convolve.h") ],
+	headers => [ qw("tools/convolve.h") ],
 	code => <<'CODE'
 success = convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);
 CODE
@@ -517,7 +517,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("crop.h") ],
+	headers => [ qw("tools/crop.h") ],
 	code => <<'CODE'
 {
   if (new_width > gimage->width || new_height > gimage->height ||
@@ -564,7 +564,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("ellipse_select.h") ],
+	headers => [ qw("tools/ellipse_select.h") ],
 	code => <<'CODE'
 ellipse_select (gimage, (int) x, (int) y, (int) width, (int) height,
 		operation, antialias, feather, feather_radius);
@@ -591,7 +591,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("eraser.h") ],
+	headers => [ qw("tools/eraser.h") ],
 	code => <<'CODE'
 success = eraser_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -621,7 +621,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("eraser.h") ],
+	headers => [ qw("tools/eraser.h") ],
 	code => <<'CODE'
 success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
 CODE
@@ -651,7 +651,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("eraser.h") ],
+	headers => [ qw("tools/eraser.h") ],
 	code => <<'CODE'
 success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
 CODE
@@ -686,7 +686,8 @@ HELP
     @outargs = ( &drawable_out_arg('flipped') );
 
     %invoke = (
-	headers => [ qw("flip_tool.h" "transform_core.h" "undo.h") ],
+	headers => [ qw("tools/flip_tool.h" "tools/transform_core.h" 
+                        "undo.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		   'gboolean new_layer' ],
 	code => <<'CODE'
@@ -761,7 +762,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("free_select.h") ],
+	headers => [ qw("tools/free_select.h") ],
 	code => <<'CODE'
 free_select (gimage, num_segs, (ScanConvertPoint *) segs, operation,
 	     antialias, feather, feather_radius);
@@ -811,7 +812,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("fuzzy_select.h") ],
+	headers => [ qw("tools/fuzzy_select.h") ],
 	vars => [ 'GimpImage *gimage', 'Channel *new, *old_fuzzy_mask' ],
 	code => <<'CODE'
 {
@@ -862,7 +863,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paintbrush.h") ],
+	headers => [ qw("tools/paintbrush.h") ],
 	code => <<'CODE'
 success = paintbrush_non_gui (drawable, num_strokes, strokes, fade_out,
 			      method, gradient_length);
@@ -899,7 +900,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("paintbrush.h") ],
+	headers => [ qw("tools/paintbrush.h") ],
 	code => <<'CODE'
 success = paintbrush_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -925,7 +926,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("pencil.h") ],
+	headers => [ qw("tools/pencil.h") ],
 	code => 'success = pencil_non_gui (drawable, num_strokes, strokes);'
     );
 }
@@ -976,7 +977,7 @@ HELP
     @outargs = ( &drawable_out_arg('newly mapped') );
 
     %invoke = (
-	headers => [ qw("perspective_tool.h" "transform_core.h"
+	headers => [ qw("tools/perspective_tool.h" "tools/transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		  'gboolean new_layer', 'double cx, cy',
@@ -1060,7 +1061,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("rect_select.h") ],
+	headers => [ qw("tools/rect_select.h") ],
 	code => <<'CODE'
 rect_select (gimage, (int) x, (int) y, (int) width, (int) height,
 	     operation, feather, feather_radius);
@@ -1097,7 +1098,7 @@ HELP
     @outargs = ( &drawable_out_arg('rotated') );
 
     %invoke = (
-	headers => [ qw("rotate_tool.h" "transform_core.h") ],
+	headers => [ qw("tools/rotate_tool.h" "tools/transform_core.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		  'gboolean new_layer', 'double cx, cy',
 		  'GimpMatrix3 matrix' ],
@@ -1176,7 +1177,7 @@ HELP
     @outargs = ( &drawable_out_arg('scaled') );
 
     %invoke = (
-	headers => [ qw("scale_tool.h" "transform_core.h"
+	headers => [ qw("tools/scale_tool.h" "tools/transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		  'gboolean new_layer', 'double scalex, scaley',
@@ -1264,7 +1265,7 @@ HELP
     @outargs = ( &drawable_out_arg('sheared') );
 
     %invoke = (
-	headers => [ qw("shear_tool.h" "transform_core.h"
+	headers => [ qw("tools/shear_tool.h" "tools/transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		  'gboolean new_layer', 'double cx, cy',
@@ -1358,7 +1359,7 @@ HELP
     @outargs = ( &drawable_out_arg('transformed') );
 
     %invoke = (
-	headers => [ qw("transform_core.h"
+	headers => [ qw("tools/transform_core.h"
 			"tile_manager_pvt.h") ],
 	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
 		  'gboolean new_layer', 'GimpMatrix3 matrix' ],
@@ -1419,7 +1420,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("smudge.h") ],
+	headers => [ qw("tools/smudge.h") ],
 	code => <<'CODE'
 success = smudge_non_gui (drawable, pressure, num_strokes, strokes);
 CODE
@@ -1447,7 +1448,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("smudge.h") ],
+	headers => [ qw("tools/smudge.h") ],
 	code => <<'CODE'
 success = smudge_non_gui_default (drawable, num_strokes, strokes);
 CODE
@@ -1479,7 +1480,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("dodgeburn.h") ],
+	headers => [ qw("tools/dodgeburn.h") ],
 	code => <<'CODE'
 success = dodgeburn_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
 CODE
@@ -1506,7 +1507,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("dodgeburn.h") ],
+	headers => [ qw("tools/dodgeburn.h") ],
 	code => <<'CODE'
 success = dodgeburn_non_gui_default (drawable, num_strokes, strokes);
 CODE

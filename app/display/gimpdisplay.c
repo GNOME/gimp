@@ -51,7 +51,6 @@
 #include "scale.h"
 #include "scroll.h"
 #include "selection.h"
-#include "tools.h"
 #include "undo.h"
 
 
@@ -59,7 +58,8 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "bezier_selectP.h"
+#include "tools/bezier_selectP.h"
+#include "tools/tools.h"
 
 #include "libgimp/gimpmath.h"
 

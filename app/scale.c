@@ -31,7 +31,8 @@
 #include "gimprc.h"
 #include "nav_window.h"
 #include "scale.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 
 void

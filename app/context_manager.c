@@ -28,8 +28,9 @@
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "paint_options.h"
-#include "tools.h"
+
+#include "tools/paint_options.h"
+#include "tools/tools.h"
 
 
 static GimpContext * global_tool_context;

@@ -50,7 +50,8 @@
 #include "plug_in.h"
 #include "gimage.h"
 #include "session.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"

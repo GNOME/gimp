@@ -242,76 +242,12 @@ package Gimp::CodeGen::enums;
 		       CONSOLE => '1',
 		       ERROR_CONSOLE => '2' }
 	},
-    GradientType =>
-	{ contig => 1,
-	  header => 'blend.h',
-	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
-			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
-			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
-			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
-	  mapping => { LINEAR => '0',
-		       BILINEAR => '1',
-		       RADIAL => '2',
-		       SQUARE => '3',
-		       CONICAL_SYMMETRIC => '4',
-		       CONICAL_ASYMMETRIC => '5',
-		       SHAPEBURST_ANGULAR => '6',
-		       SHAPEBURST_SPHERICAL => '7',
-		       SHAPEBURST_DIMPLED => '8',
-		       SPIRAL_CLOCKWISE => '9',
-		       SPIRAL_ANTICLOCKWISE => '10' }
-	},
-    BlendMode =>
-	{ contig => 1,
-	  header => 'blend.h',
-	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
-			  CUSTOM_MODE) ],
-	  mapping => { FG_BG_RGB_MODE => '0',
-		       FG_BG_HSV_MODE => '1',
-		       FG_TRANS_MODE => '2',
-		       CUSTOM_MODE => '3' },
-	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
-		       FG_BG_HSV_MODE => 'FG_BG_HSV',
-		       FG_TRANS_MODE => 'FG_TRANS',
-		       CUSTOM_MODE => 'CUSTOM' }
-	},
-    RepeatMode =>
-	{ contig => 1,
-	  header => 'blend.h',
-	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
-	  mapping => { REPEAT_NONE => '0',
-		       REPEAT_SAWTOOTH => '1',
-		       REPEAT_TRIANGULAR => '2' }
-	},
-    BucketFillMode =>
-	{ contig => 1,
-	  header => 'bucket_fill.h',
-	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
-	  mapping => { FG_BUCKET_FILL => '0',
-		       BG_BUCKET_FILL => '1',
-		       PATTERN_BUCKET_FILL => '2' }
-	},
     ChannelOffsetType =>
 	{ contig => 1,
 	  header => 'channel_ops.h',
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
-	},
-    CloneType =>
-	{ contig => 1,
-	  header => 'clone.h',
-	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
-	  mapping => { IMAGE_CLONE => '0',
-		       PATTERN_CLONE => '1' }
-	},
-    TransferMode =>
-	{ contig => 1,
-	  header => 'color_balance.h',
-	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
-	  mapping => { SHADOWS => '0',
-		       MIDTONES => '1',
-		       HIGHLIGHTS => '2' }
 	},
     ConvertPaletteType =>
 	{ contig => 1,
@@ -334,30 +270,6 @@ package Gimp::CodeGen::enums;
 		       FSLOWBLEED_DITHER => '2',
 		       FIXED_DITHER => '3',
 		       NODESTRUCT_DITHER => '4' }
-	},
-    ConvolveType =>
-	{ contig => 1,
-	  header => 'convolve.h',
-	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
-	  mapping => { BLUR_CONVOLVE => '0',
-		       SHARPEN_CONVOLVE => '1',
-		       CUSTOM_CONVOLVE => '2' }
-	},
-    DodgeBurnType =>
-	{ contig => 1,
-	  header => 'dodgeburn.h',
-	  symbols => [ qw(DODGE BURN) ],
-	  mapping => { DODGE => '0',
-		       BURN => '1' }
-	},
-    DodgeBurnMode =>
-	{ contig => 1,
-	  header => 'dodgeburn.h',
-	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES
-			  DODGEBURN_SHADOWS) ],
-	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
-		       DODGEBURN_MIDTONES => '1',
-		       DODGEBURN_SHADOWS => '2' }
 	},
     StackTraceMode =>
 	{ contig => 1,
@@ -390,19 +302,6 @@ package Gimp::CodeGen::enums;
 		       CLIP_TO_BOTTOM_LAYER => '2',
 		       FLATTEN_IMAGE => '3' }
 	},
-    HueRange =>
-	{ contig => 1,
-	  header => 'hue_saturation.h',
-	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
-			  BLUE_HUES MAGENTA_HUES) ],
-	  mapping => { ALL_HUES => '0',
-		       RED_HUES => '1',
-		       YELLOW_HUES => '2',
-		       GREEN_HUES => '3',
-		       CYAN_HUES => '4',
-		       BLUE_HUES => '5',
-		       MAGENTA_HUES => '6' }
-	},
     ChannelLutType =>
 	{ contig => 1,
 	  header => 'lut_funcs.h',
@@ -422,9 +321,110 @@ package Gimp::CodeGen::enums;
 		       RUN_NONINTERACTIVE => '1',
 		       RUN_WITH_LAST_VALS => '2' }
 	},
+    GradientType =>
+	{ contig => 1,
+	  header => 'tools/blend.h',
+	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
+			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
+			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
+			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
+	  mapping => { LINEAR => '0',
+		       BILINEAR => '1',
+		       RADIAL => '2',
+		       SQUARE => '3',
+		       CONICAL_SYMMETRIC => '4',
+		       CONICAL_ASYMMETRIC => '5',
+		       SHAPEBURST_ANGULAR => '6',
+		       SHAPEBURST_SPHERICAL => '7',
+		       SHAPEBURST_DIMPLED => '8',
+		       SPIRAL_CLOCKWISE => '9',
+		       SPIRAL_ANTICLOCKWISE => '10' }
+	},
+    BlendMode =>
+	{ contig => 1,
+	  header => 'tools/blend.h',
+	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
+			  CUSTOM_MODE) ],
+	  mapping => { FG_BG_RGB_MODE => '0',
+		       FG_BG_HSV_MODE => '1',
+		       FG_TRANS_MODE => '2',
+		       CUSTOM_MODE => '3' },
+	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
+		       FG_BG_HSV_MODE => 'FG_BG_HSV',
+		       FG_TRANS_MODE => 'FG_TRANS',
+		       CUSTOM_MODE => 'CUSTOM' }
+	},
+    RepeatMode =>
+	{ contig => 1,
+	  header => 'tools/blend.h',
+	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
+	  mapping => { REPEAT_NONE => '0',
+		       REPEAT_SAWTOOTH => '1',
+		       REPEAT_TRIANGULAR => '2' }
+	},
+    BucketFillMode =>
+	{ contig => 1,
+	  header => 'tools/bucket_fill.h',
+	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
+	  mapping => { FG_BUCKET_FILL => '0',
+		       BG_BUCKET_FILL => '1',
+		       PATTERN_BUCKET_FILL => '2' }
+	},
+    CloneType =>
+	{ contig => 1,
+	  header => 'tools/clone.h',
+	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
+	  mapping => { IMAGE_CLONE => '0',
+		       PATTERN_CLONE => '1' }
+	},
+    TransferMode =>
+	{ contig => 1,
+	  header => 'tools/color_balance.h',
+	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
+	  mapping => { SHADOWS => '0',
+		       MIDTONES => '1',
+		       HIGHLIGHTS => '2' }
+	},
+    ConvolveType =>
+	{ contig => 1,
+	  header => 'tools/convolve.h',
+	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
+	  mapping => { BLUR_CONVOLVE => '0',
+		       SHARPEN_CONVOLVE => '1',
+		       CUSTOM_CONVOLVE => '2' }
+	},
+    DodgeBurnType =>
+	{ contig => 1,
+	  header => 'tools/dodgeburn.h',
+	  symbols => [ qw(DODGE BURN) ],
+	  mapping => { DODGE => '0',
+		       BURN => '1' }
+	},
+    DodgeBurnMode =>
+	{ contig => 1,
+	  header => 'tools/dodgeburn.h',
+	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES
+			  DODGEBURN_SHADOWS) ],
+	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
+		       DODGEBURN_MIDTONES => '1',
+		       DODGEBURN_SHADOWS => '2' }
+	},
+    HueRange =>
+	{ contig => 1,
+	  header => 'tools/hue_saturation.h',
+	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
+			  BLUE_HUES MAGENTA_HUES) ],
+	  mapping => { ALL_HUES => '0',
+		       RED_HUES => '1',
+		       YELLOW_HUES => '2',
+		       GREEN_HUES => '3',
+		       CYAN_HUES => '4',
+		       BLUE_HUES => '5',
+		       MAGENTA_HUES => '6' }
+	},
     SizeType =>
 	{ contig => 1,
-	  header => 'text_tool.h',
+	  header => 'tools/text_tool.h',
 	  symbols => [ qw(PIXELS POINTS) ],
 	  mapping => { PIXELS => '0',
 		       POINTS => '1' }

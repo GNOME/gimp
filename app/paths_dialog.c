@@ -45,8 +45,6 @@
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
-#include "bezier_select.h"
-#include "bezier_selectP.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"
@@ -54,6 +52,9 @@
 #include "paths_dialogP.h"
 #include "plug_in.h"
 #include "undo.h"
+
+#include "tools/bezier_select.h"
+#include "tools/bezier_selectP.h"
 
 #include "libgimp/gimpmath.h"
 

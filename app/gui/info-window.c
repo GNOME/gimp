@@ -34,7 +34,8 @@
 #include "info_dialog.h"
 #include "info_window.h"
 #include "scroll.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "pdb/procedural_db.h"
 

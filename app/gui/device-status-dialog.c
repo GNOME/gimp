@@ -39,7 +39,8 @@
 #include "gradient_header.h"
 #include "patterns.h"
 #include "session.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpcolorarea.h"

@@ -253,7 +253,7 @@ HELP
     );
 }
 
-@headers = qw("appenv.h" "text_tool.h" "libgimp/gimplimits.h"
+@headers = qw("appenv.h" "tools/text_tool.h" "libgimp/gimplimits.h"
 	      <stdio.h> <string.h>);
 
 $extra{app}->{code} = <<'CODE';

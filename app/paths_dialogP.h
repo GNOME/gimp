@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __PATHS_DIALOG_P_H__
 #define  __PATHS_DIALOG_P_H__
 
-#include "bezier_selectP.h"
 
 void        paths_newpoint_current       (BezierSelect *, GDisplay *);
 void        paths_first_button_press     (BezierSelect *, GDisplay *);
@@ -26,5 +26,6 @@ void        paths_new_bezier_select_tool (void);
 Path *      paths_get_bzpaths            (void); 
 void        paths_set_bzpaths            (GImage *, Path *);
 void        paths_dialog_set_default_op  (void);
+
 
 #endif  /*  __PATHS_DIALOG_P_H__  */

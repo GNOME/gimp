@@ -49,26 +49,26 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../app/appenums.h		\
-	../../app/appenv.h		\
-	../../app/apptypes.h		\
-	../../app/blend.h		\
-	../../app/bucket_fill.h		\
-	../../app/channel_ops.h		\
-	../../app/clone.h		\
-	../../app/color_balance.h	\
-	../../app/convert.h		\
-	../../app/convolve.h		\
-	../../app/dodgeburn.h		\
-	../../app/errors.h		\
-	../../app/gimpimage.h		\
-	../../app/hue_saturation.h	\
-	../../app/layer.h		\
-	../../app/lut_funcs.h		\
-	../../app/paint_core.h		\
-	../../app/paint_funcs.h		\
-	../../app/plug_in.h		\
-	../../app/text_tool.h
+	../../app/appenums.h			\
+	../../app/appenv.h			\
+	../../app/apptypes.h			\
+	../../app/channel_ops.h			\
+	../../app/convert.h			\
+	../../app/errors.h			\
+	../../app/gimpimage.h			\
+	../../app/layer.h			\
+	../../app/lut_funcs.h			\
+	../../app/paint_funcs.h			\
+	../../app/plug_in.h			\
+	../../app/tools/blend.h			\
+	../../app/tools/bucket_fill.h		\
+	../../app/tools/clone.h			\
+	../../app/tools/color_balance.h		\
+	../../app/tools/convolve.h		\
+	../../app/tools/dodgeburn.h		\
+	../../app/tools/hue_saturation.h	\
+	../../app/tools/paint_core.h		\
+	../../app/tools/text_tool.h
 
 pdb_scripts = \
 	pdbgen.pl	\

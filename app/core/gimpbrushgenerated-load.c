@@ -33,10 +33,12 @@
 
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
-#include "paint_core.h"
 #include "gimprc.h"
 #include "gimpbrush.h"
 #include "temp_buf.h"
+
+/*  this needs to go away  */
+#include "tools/paint_core.h"
 
 #include "libgimp/gimpmath.h"
 

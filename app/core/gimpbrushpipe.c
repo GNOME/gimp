@@ -48,8 +48,10 @@
 #include "patterns.h"
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
-#include "paint_core.h"
 #include "gimprc.h"
+
+/*  this needs to go away  */
+#include "tools/paint_core.h"
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpparasiteio.h"

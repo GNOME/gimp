@@ -26,7 +26,6 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "bucket_fill.h"
 #include "cursorutil.h"
 #include "devices.h"
 #include "dialog_handler.h"
@@ -39,7 +38,6 @@
 #include "info_window.h"
 #include "layer.h"
 #include "layer_select.h"
-#include "move.h"
 #include "paint_funcs.h"
 #include "patterns.h"
 #include "pixel_region.h"
@@ -48,8 +46,11 @@
 #include "selection.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#include "tools.h"
 #include "undo.h"
+
+#include "tools/bucket_fill.h"
+#include "tools/move.h"
+#include "tools/tools.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -26,7 +26,6 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "by_color_select.h"
 #include "channel.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -38,7 +37,6 @@
 #include "gimpparasite.h"
 #include "gimprc.h"
 #include "layer.h"
-#include "paint_core.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path_transform.h"
@@ -46,9 +44,12 @@
 #include "tile_manager.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"
-#include "tools.h"
-#include "transform_core.h"
 #include "undo.h"
+
+#include "tools/by_color_select.h"
+#include "tools/paint_core.h"
+#include "tools/tools.h"
+#include "tools/transform_core.h"
 
 #include "libgimp/gimpparasite.h"
 

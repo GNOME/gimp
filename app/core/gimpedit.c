@@ -38,8 +38,9 @@
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tools.h"
 #include "undo.h"
+
+#include "tools/tools.h"
 
 #include "libgimp/gimpintl.h"
 

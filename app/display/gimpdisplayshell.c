@@ -54,7 +54,8 @@
 #include "session.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "pixmaps.h"
 #include "pixmaps/qmasksel.xpm"

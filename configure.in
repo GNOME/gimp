@@ -735,6 +735,7 @@ libgimp/makefile.mingw
 app/Makefile
 app/makefile.mingw
 app/pdb/Makefile
+app/tools/Makefile
 plug-ins/Makefile
 plug-ins/makefile.mingw
 plug-ins/perl/config.pl

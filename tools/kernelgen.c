@@ -5,7 +5,7 @@
  *    Simple hack to create subsampling kernels for the brushes
  *    as used in app/paint_core.c.
  *    If you want to play with it, change some of the #defines at the
- *    top and copy the output to apps/paint_core_kernels.h.
+ *    top and copy the output to apps/tools/paint_core_kernels.h.
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -26,7 +26,8 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
-#include "tools.h"
+
+#include "tools/tools.h"
 
 #include "cursors/mouse.xbm"
 #include "cursors/mouse_mask.xbm"
