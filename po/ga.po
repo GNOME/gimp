@@ -2989,7 +2989,7 @@ msgstr "GIMP leagan"
 #: app/main.c:275
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Úsáid: %s [rogha...] [comhadanna...]"
+msgstr "Úsáid: %s [rogha...] [comhadanna...]\n"
 
 #: app/main.c:276
 msgid "Valid options are:\n"
