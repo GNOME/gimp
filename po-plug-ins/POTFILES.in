@@ -145,6 +145,7 @@ plug-ins/gap/gap_mod_layer.c
 plug-ins/gap/gap_mov_dialog.c
 plug-ins/gap/gap_mov_exec.c
 plug-ins/gap/gap_mpege.c
+plug-ins/gap/gap_navigator_dialog.c
 plug-ins/gap/gap_range_ops.c
 plug-ins/gap/gap_resi_dialog.c
 plug-ins/gap/gap_split.c

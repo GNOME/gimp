@@ -1,3 +1,8 @@
+Tue Jan 11 13:32:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_navigator_dialog.c: some changes to make it use
+	new functionality from libgimp instead of implementing it itself
+
 Tue Jan 11 01:50:41 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/parasite.c

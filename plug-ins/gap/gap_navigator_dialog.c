@@ -64,7 +64,7 @@
  *    (Problem: gimage struct is not available for plugins,
  *                         need a Drag&Drop type that operates on image_id)
  * - preferences should have additional video_preview_size
- *   (tiny,small,normal,large,huge)  ?? are these values translated or not
+ *   (tiny,small,normal,large,huge)
  *
  */
 
@@ -90,7 +90,7 @@ static char *gap_navigator_version = "1.1.14a; 2000/01/08";
 #include "config.h"
 #include <libgimp/stdplugins-intl.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpmenu.h>
+#include <libgimp/gimpui.h>
 
 #include <pixmaps/update.xpm>
 #include <pixmaps/play.xpm>
@@ -102,13 +102,6 @@ static char *gap_navigator_version = "1.1.14a; 2000/01/08";
 #include <pixmaps/first.xpm>
 #include <pixmaps/last.xpm>
 
-/*
- *  gimp_help_set_help_data is not available for plugins in libgimp 1.1.14
- *  workaround:  use a copy of gimp-1.1.14/app/gimphelp.c:gimp_help_set_help_data
- */
-static void  gimp_help_set_help_data      (GtkWidget    *widget,
-				    gchar        *tooltip,
-				    gchar        *help_data);
 /*
  *   OpsButton  is not available for plugins in libgimp 1.1.14
  *   workaround: include gimp-1.1.14/app/ops_buttons.h /.c
@@ -210,7 +203,6 @@ struct _OpenFrameImages{
 
 struct _NaviDialog
 {
-  GtkTooltips  *tool_tips;
   gint          tooltip_on;
   GtkWidget     *shell;
   GtkWidget     *vbox;
@@ -577,12 +569,6 @@ navi_get_preview_size(void)
   {
     if(gap_debug) printf("navi_get_preview_size value_str:%s:\n", value_string);
 
-    /* hof: I don't know if the value_string in the preferences 
-     *      is translated to other languages or not
-     *      and how to handle the value from a plugin
-     * This version assumes translated values
-     */
-
      if (strcmp (value_string, "none") == 0)
 	preview_size = 0;
       else if (strcmp (value_string, "tiny") == 0)
@@ -595,36 +581,8 @@ navi_get_preview_size(void)
 	preview_size = 64;
       else if (strcmp (value_string, "huge") == 0)
 	preview_size = 128;
-    /* hof: I don't know if the value_string in the preferences 
-     *      is translated to other languages or not.
-     * so i did check for the translated values too,
-     * that may work for most Languages.
-     */
-      else if (strcmp (value_string, _("none")) == 0)
-	preview_size = 0;
-      else if (strcmp (value_string, _("tiny")) == 0)
-	preview_size = 24;
-      else if (strcmp (value_string, _("small")) == 0)
-	preview_size = 32;
-      else if (strcmp (value_string, _("medium")) == 0)
-	preview_size = 48;
-      else if (strcmp (value_string, _("large")) == 0)
-	preview_size = 64;
-      else if (strcmp (value_string, _("huge")) == 0)
-	preview_size = 128;
       else
-        {
-	  preview_size = atol(value_string);
-	  if(preview_size == 0)
-	  {
-            printf("Warning: preview-size or video-preview-size could not be detected\n");
-	    printf("  because the configured value %s\n", value_string);
-	    printf("  does not match with the current translations of\n");
-	    printf("  %s %s %s %s %s %s\n"
-	           , _("none"), _("tiny"), _("small")
-		   , _("medium"), _("large"), _("huge"));
-	  }
-	}
+	preview_size = atol(value_string);
 	
     g_free(value_string);
   }
@@ -809,24 +767,6 @@ navi_images_menu_callback  (gint32 image_id, gpointer data)
   }
 }
 
-static void
-navi_cancel_callback(GtkWidget *widget,
-			gpointer   client_data)
-{
-  gtk_main_quit ();
-}
-
-static int
-navi_delete_callback(GtkWidget *widget,
-                      GdkEvent *e,
-		      gpointer  data)
-{
-  navi_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
-
 
 static void
 navid_update_exposed_previews(void)
@@ -919,7 +859,6 @@ navi_dialog_tooltips(void)
   gint tooltip_on;
    
   if(naviD == NULL) return;
-  if(naviD->tool_tips == NULL) return;
 
   tooltip_on = TRUE;
   value_string = p_gimp_gimprc_query("show-tool-tips");
@@ -938,34 +877,14 @@ navi_dialog_tooltips(void)
      
      if(tooltip_on)
      {
-       gtk_tooltips_enable (naviD->tool_tips);
+       gimp_help_enable_tooltips ();
      }
      else
      {
-       gtk_tooltips_disable (naviD->tool_tips);
+       gimp_help_disable_tooltips ();
      }
   }
 }
-
-static void  gimp_help_set_help_data      (GtkWidget    *widget,
-				    gchar        *tooltip,
-				    gchar        *help_data)
-{
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (naviD != NULL);
-  g_return_if_fail (naviD->tool_tips != NULL);
-
-  if (tooltip)
-  {
-    gtk_tooltips_set_tip (naviD->tool_tips, widget, tooltip, help_data);
-  }
-  else if (help_data)
-  {
-    gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
-  }
-}
-
 
 
 static gint
@@ -2322,7 +2241,7 @@ navi_dialog_poll(GtkWidget *w, gpointer   data)
 	 }
 
 	 /* check and enable/disable tooltips */      
-	 navi_dialog_tooltips();
+	 navi_dialog_tooltips ();
 
 	 frame_nr = p_get_frame_nr(naviD->active_imageid);
 	 if(frame_nr < 0 )
@@ -2740,15 +2659,13 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
       naviD->frame_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       navi_preview_extents ();
   }
-  naviD->tooltip_on = -44; 
-  naviD->tool_tips = gtk_tooltips_new ();
-  navi_dialog_tooltips();
+
+  /* creates tooltips */
+  gimp_help_init ();
   
   /*  The main vbox  */
   naviD->vbox = gtk_event_box_new ();
 
-  gimp_help_set_help_data (naviD->vbox, NULL, "dialogs/layers/layers.html");
- 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (naviD->vbox), vbox);
@@ -2901,10 +2818,20 @@ int  gap_navigator(gint32 image_id)
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
   /*  The main shell */
-  shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "gap_navigator", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (shell), _("Video Navigator"));
+  shell = gimp_dialog_new (_("Video Navigator"), "gap_navigator",
+			   gimp_plugin_help_func, "filters/gap_navigator_dialog.html",
+			   GTK_WIN_POS_NONE,
+			   FALSE, TRUE, FALSE,
+			   NULL);
   
+  gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
+		      GTK_SIGNAL_FUNC (gtk_widget_destroy), 
+		      NULL);
+  
+  gtk_signal_connect (GTK_OBJECT (shell), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit), 
+		      NULL);
+
   /*  The subshell (toplevel vbox)  */
   subshell = gtk_vbox_new (FALSE, 1);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), subshell);
@@ -2917,19 +2844,15 @@ int  gap_navigator(gint32 image_id)
  
   gtk_box_pack_start (GTK_BOX (subshell), naviD->vbox, TRUE, TRUE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
-		      GTK_SIGNAL_FUNC (navi_delete_callback),
-		      naviD);
-  
   /*  The action area  */
   gtk_container_set_border_width
     (GTK_CONTAINER (GTK_DIALOG (shell)->action_area), 1);
 
   /*  The close button */
   button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (navi_delete_callback),
-                      naviD);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (shell));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->action_area),
                       button, TRUE, TRUE, 0);
   gtk_widget_show (button);
