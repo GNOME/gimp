@@ -1,5 +1,10 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpstatusbar.c: make the cursor coordinates label
+	insensitive when displaying out-of-image coordinates.
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimprc-blurbs.h (INSTALL_COLORMAP_BLURB):
 	s/pseudocolor visuals/8-bit (256 colors) displays/.
 	Fixes bug #137078.

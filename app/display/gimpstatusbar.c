@@ -465,12 +465,25 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
     }
 
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
+
+  if (x <  0 ||
+      y <  0 ||
+      x >= statusbar->shell->gdisp->gimage->width ||
+      y >= statusbar->shell->gdisp->gimage->height)
+    {
+      gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
+    }
 }
 
 void
 gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 {
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
+  gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
 }
 
 static void
