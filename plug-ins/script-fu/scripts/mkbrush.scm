@@ -26,7 +26,7 @@
     (begin
         (let* (
             (img (car (gimp-image-new width height GRAY)))
-             (drawable (car (gimp-layer-new img width height GRAY_IMAGE "MakeBrush" 100 NORMAL)))
+             (drawable (car (gimp-layer-new img width height GRAY-IMAGE "MakeBrush" 100 NORMAL-MODE)))
 
      ; Save old foregound and background colors
 
@@ -56,11 +56,11 @@
 
 ; Actual code starts...
     (gimp-palette-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-drawable-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
     (gimp-rect-select img 0 0 width height REPLACE FALSE 0)
     
-    (gimp-edit-fill    drawable BG-IMAGE-FILL)
+    (gimp-edit-fill    drawable BACKGROUND-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
@@ -99,7 +99,7 @@
             (widthplus (+ width feathering))
             (heightplus (+ height feathering))
             (img (car (gimp-image-new widthplus heightplus GRAY)))
-             (drawable (car (gimp-layer-new img widthplus heightplus GRAY_IMAGE "MakeBrush" 100 NORMAL)))
+             (drawable (car (gimp-layer-new img widthplus heightplus GRAY-IMAGE "MakeBrush" 100 NORMAL-MODE)))
 
      ; Save old foregound and background colors
 
@@ -131,14 +131,14 @@
 
 ; Actual code starts...
     (gimp-palette-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-drawable-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
     (cond ((< 0 feathering)
            (gimp-rect-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE feathering))
           ((>= 0 feathering)
            (gimp-rect-select img 0 0 width height REPLACE FALSE 0))
           )
-    (gimp-edit-fill    drawable BG-IMAGE-FILL)
+    (gimp-edit-fill    drawable BACKGROUND-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
@@ -175,7 +175,7 @@
     (begin
         (let* (
             (img (car (gimp-image-new width height GRAY)))
-             (drawable (car (gimp-layer-new img width height GRAY_IMAGE "MakeBrush" 100 NORMAL)))
+             (drawable (car (gimp-layer-new img width height GRAY-IMAGE "MakeBrush" 100 NORMAL-MODE)))
 
      ; Save old foregound and background colors
 
@@ -205,11 +205,11 @@
 
 ; Actual code starts...
     (gimp-palette-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-drawable-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
     (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0)
     
-    (gimp-edit-fill    drawable BG-IMAGE-FILL)
+    (gimp-edit-fill    drawable BACKGROUND-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)
@@ -248,7 +248,7 @@
 	    (widthplus (+ feathering width)) ; add 3 for blurring
             (heightplus (+ feathering height))
             (img (car (gimp-image-new widthplus heightplus GRAY)))
-             (drawable (car (gimp-layer-new img widthplus heightplus GRAY_IMAGE "MakeBrush" 100 NORMAL)))
+             (drawable (car (gimp-layer-new img widthplus heightplus GRAY-IMAGE "MakeBrush" 100 NORMAL-MODE)))
 
      ; Save old foregound and background colors
 
@@ -282,14 +282,14 @@
 
 ; Actual code starts...
     (gimp-palette-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-drawable-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
     (cond ((> feathering 0)   ; keep from taking out gimp with stupid entry. 
         (gimp-ellipse-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE TRUE feathering))
           ((<= feathering 0)
         (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0))
 	)
-    (gimp-edit-fill    drawable BG-IMAGE-FILL)
+    (gimp-edit-fill    drawable BACKGROUND-FILL)
     (file-gbr-save 1 img drawable filename "" spacing desc)
     
     (gimp-brushes-refresh)

@@ -151,7 +151,7 @@
   (define (fill-color-band img drawable x scale x-base y-base color)
     (gimp-palette-set-foreground color)
     (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base REPLACE FALSE 0)
-    (gimp-bucket-fill drawable FG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill drawable FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img))
 
   (define (plot-hsv img drawable x scale x-base y-base hsv)
@@ -234,17 +234,17 @@
 	 (bglayer (car (gimp-layer-new gimg
 				       (+ (* 2 border-size) gimg-width)
 				       (+ (* 2 border-size) gimg-height)
-				       1 "Background" 100 NORMAL)))
+				       1 "Background" 100 NORMAL-MODE)))
 	 (hsv-layer (car (gimp-layer-new gimg
 				       (+ (* 2 border-size) gimg-width)
 				       (+ (* 2 border-size) gimg-height)
-				      RGBA_IMAGE "HSV Graph" 100 NORMAL)))
+				      RGBA-IMAGE "HSV Graph" 100 NORMAL-MODE)))
 	 (rgb-layer (car (gimp-layer-new gimg
 				       (+ (* 2 border-size) gimg-width)
 				       (+ (* 2 border-size) gimg-height)
-				      RGBA_IMAGE "RGB Graph" 100 NORMAL)))
-	 (clayer (car (gimp-layer-new gimg gimg-width 40 RGBA_IMAGE
-				       "Color Sampled" opacity NORMAL)))
+				      RGBA-IMAGE "RGB Graph" 100 NORMAL-MODE)))
+	 (clayer (car (gimp-layer-new gimg gimg-width 40 RGBA-IMAGE
+				       "Color Sampled" opacity NORMAL-MODE)))
 	 (rgb '(255 255 255))
 	 (hsv '(254 255 255))
 	 (x-base border-size)
@@ -259,7 +259,7 @@
     (gimp-image-add-layer gimg bglayer -1)
     (gimp-selection-all gimg)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bglayer BG-IMAGE-FILL)
+    (gimp-edit-fill bglayer BACKGROUND-FILL)
     (gimp-image-add-layer gimg hsv-layer -1)
     (gimp-edit-clear hsv-layer)
     (gimp-image-add-layer gimg rgb-layer -1)
@@ -276,7 +276,7 @@
     (set! saturation-segment (make-segment 64 x-base y-base))
     (set! value-segment (make-segment 64 x-base y-base))
     (gimp-brushes-set-brush "Circle (01)")
-    (gimp-brushes-set-paint-mode NORMAL)
+    (gimp-brushes-set-paint-mode NORMAL-MODE)
     (gimp-brushes-set-opacity 70)
     (gimp-display-new gimg)
     (while (< index limit)

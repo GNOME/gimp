@@ -63,7 +63,7 @@
 
                  ;--- add an alpha mask for blending and select it
 		 (gimp-selection-layer-alpha bl-layer)
-		 (set! bl-mask (car (gimp-layer-create-mask bl-layer BLACK-MASK)))
+		 (set! bl-mask (car (gimp-layer-create-mask bl-layer ADD-BLACK-MASK)))
 		 (gimp-image-add-layer-mask img bl-layer bl-mask)
 
                  ;--- handle layer geometry
@@ -93,7 +93,7 @@
 		 (if (= fadeout TRUE)
 		     (begin
                        ; blend with 20% offset to get less transparency in the front
-		       (gimp-blend bl-mask FG-BG-RGB NORMAL-MODE
+		       (gimp-blend bl-mask FG-BG-RGB-MODE NORMAL-MODE
 				   GRADIENT-LINEAR 100 20 REPEAT-NONE FALSE
 				   FALSE 0 0 TRUE
 				   (+ bl-x-off bl-width) 0 bl-x-off 0)))
@@ -104,7 +104,7 @@
 		       (gimp-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
 					 100 255 0 0 0)))
 
-		 (gimp-image-remove-layer-mask img bl-layer APPLY)
+		 (gimp-image-remove-layer-mask img bl-layer MASK-APPLY)
 
                  ;--- add bright glow in front
 		 (if (= show-glow TRUE)
@@ -115,7 +115,7 @@
 
                      ;--- blend glow color inside the letters
 		     (gimp-palette-set-foreground glow-color)
-		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
+		     (gimp-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
 				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				 FALSE 0 0 TRUE
 				 (+ bl-x-off bl-width) 0
@@ -128,7 +128,7 @@
 		     (gimp-layer-set-preserve-trans bl-layer FALSE)
 		     (gimp-selection-feather img corona-width)
 		     (gimp-palette-set-foreground glow-color)
-		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
+		     (gimp-blend bl-layer FG-TRANSPARENT-MODE NORMAL-MODE
 				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				 FALSE 0 0 TRUE
 				 (- (+ bl-x-off bl-width) corona-width) 0

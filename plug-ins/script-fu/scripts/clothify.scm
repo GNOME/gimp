@@ -9,19 +9,19 @@
 		(width (car (gimp-drawable-width tdrawable)))
 		(height (car (gimp-drawable-height tdrawable)))
 		(img (car (gimp-image-new width height RGB)))
-;		(layer-two (car (gimp-layer-new img width height RGB "Y Dots" 100 MULTIPLY)))
-		(layer-one (car (gimp-layer-new img width height RGB "X Dots" 100 NORMAL)))
+;		(layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 MULTIPLY-MODE)))
+		(layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 NORMAL-MODE)))
 		(old-bg (car (gimp-palette-get-background))))
 
 	(gimp-image-undo-disable img)
 	(gimp-palette-set-background '(255 255 255))
-	(gimp-edit-fill layer-one BG-IMAGE-FILL)
+	(gimp-edit-fill layer-one BACKGROUND-FILL)
 	(gimp-image-add-layer img layer-one 0)
 
 	(plug-in-noisify 1 img layer-one FALSE 0.7 0.7 0.7 0.7)
 
 	(set! layer-two (car (gimp-layer-copy layer-one 0)))
-	(gimp-layer-set-mode layer-two MULTIPLY)
+	(gimp-layer-set-mode layer-two MULTIPLY-MODE)
 	(gimp-image-add-layer img layer-two 0)
 
 	(plug-in-gauss-rle 1 img layer-one bx TRUE FALSE)

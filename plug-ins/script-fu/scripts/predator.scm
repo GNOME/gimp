@@ -63,7 +63,7 @@
 						type
 						"glow layer"
 						100
-						NORMAL)))
+						NORMAL-MODE)))
     
 	  (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
 	  (gimp-image-add-layer image effect-layer -1)

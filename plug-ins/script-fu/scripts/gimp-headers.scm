@@ -43,7 +43,7 @@
 				     font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     
@@ -52,10 +52,10 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill text-layer BG-IMAGE-FILL)
+    (gimp-edit-fill text-layer BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (let* ((highlight-layer (car (gimp-layer-copy text-layer TRUE)))
 	   (side-layer (car (gimp-layer-copy text-layer TRUE)))
@@ -71,15 +71,15 @@
       (gimp-layer-set-preserve-trans shadow-layer TRUE)
       
       (gimp-palette-set-background high-color)
-      (gimp-edit-fill highlight-layer BG-IMAGE-FILL)
+      (gimp-edit-fill highlight-layer BACKGROUND-FILL)
       (gimp-layer-translate highlight-layer -1 -1)
       
       (gimp-palette-set-background side-color)
-      (gimp-edit-fill side-layer BG-IMAGE-FILL)
+      (gimp-edit-fill side-layer BACKGROUND-FILL)
       (gimp-layer-translate side-layer 1 1)
 
       (gimp-palette-set-background shadow-color)
-      (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+      (gimp-edit-fill shadow-layer BACKGROUND-FILL)
       (gimp-layer-translate shadow-layer 5 5)
       
       (gimp-layer-set-preserve-trans shadow-layer FALSE)

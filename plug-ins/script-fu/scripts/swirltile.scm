@@ -10,13 +10,14 @@
 
 (define (script-fu-swirl-tile depth azimuth elevation blurRadius height width whirl-amount noise-level bg-color)
   (let* ((img (car (gimp-image-new width height RGB)))
-	 (layer-one (car (gimp-layer-new img width height RGB "TEST" 100 NORMAL)))
+	 (layer-one (car (gimp-layer-new img width height
+					 RGB-IMAGE "TEST" 100 NORMAL-MODE)))
 	 (cx (/ width 2))
 	 (cy (/ height 2))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-undo-disable img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill layer-one BG-IMAGE-FILL)
+    (gimp-edit-fill layer-one BACKGROUND-FILL)
     (gimp-image-add-layer img layer-one 0)
     (plug-in-noisify 1 img layer-one FALSE noise-level noise-level noise-level 1.0)
 

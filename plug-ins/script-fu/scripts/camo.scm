@@ -26,18 +26,18 @@
 	(set! theHeight inSize)
         (set! theImage (car(gimp-image-new theWidth theHeight RGB)))
 
-        (set! baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA_IMAGE "Background" 100 NORMAL)))
+        (set! baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Background" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage baseLayer 0)
 
-        (set! thickLayer (car (gimp-layer-new theImage theWidth theHeight RGBA_IMAGE "Camo Thick Layer" 100 NORMAL)))
+        (set! thickLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thick Layer" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage thickLayer 0)
 
-        (set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA_IMAGE "Camo Thin Layer" 100 NORMAL)))
+        (set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thin Layer" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage thinLayer 0)
 
         (gimp-selection-all theImage)
         (gimp-palette-set-background inColor1)
-        (gimp-drawable-fill baseLayer BG-IMAGE-FILL)
+        (gimp-drawable-fill baseLayer BACKGROUND-FILL)
 
         (plug-in-solid-noise TRUE theImage thickLayer 1 0 (rand 65536) 1 inGrain inGrain)
         (plug-in-solid-noise TRUE theImage thinLayer 1 0 (rand 65536) 1 inGrain inGrain)
@@ -50,7 +50,7 @@
         (gimp-by-color-select thickLayer '(0 0 0) 127 REPLACE  TRUE FALSE 0 FALSE)
         (gimp-edit-clear thickLayer)
         (gimp-selection-invert theImage)
-        (gimp-edit-fill thickLayer BG-IMAGE-FILL)
+        (gimp-edit-fill thickLayer BACKGROUND-FILL)
         (gimp-selection-none theImage)
         (if (= inSmooth TRUE)
 	    (script-fu-tile-blur theImage thickLayer theBlur TRUE TRUE FALSE)
@@ -62,7 +62,7 @@
         (gimp-by-color-select thinLayer '(0 0 0) 127 REPLACE  TRUE FALSE 0 FALSE)
         (gimp-edit-clear thinLayer)
         (gimp-selection-invert theImage)
-        (gimp-edit-fill thinLayer BG-IMAGE-FILL)
+        (gimp-edit-fill thinLayer BACKGROUND-FILL)
         (gimp-selection-none theImage)
         (if (= inSmooth TRUE)
 	    (script-fu-tile-blur theImage thinLayer (/ theBlur 2) TRUE TRUE FALSE)

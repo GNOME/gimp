@@ -9,7 +9,8 @@
 	 (new-image (car (gimp-image-new drawable-width drawable-height RGB)))
 	 (original-layer (car (gimp-layer-new new-image
 					      drawable-width drawable-height
-					      RGB "Original" 100 NORMAL)))
+					      RGB-IMAGE "Original"
+					      100 NORMAL-MODE)))
 	 (original-layer-for-darker #f)
 	 (original-layer-for-lighter #f)
 	 (blured-layer-for-darker #f)

@@ -41,7 +41,7 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
+  (gimp-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
 	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 	      FALSE 0 0 TRUE
 	      x1 y1 x2 y2))
@@ -73,9 +73,15 @@
 	 (img-width (+ img-width glow-radius))
 	 (img-height (+ img-height glow-radius))
 	 (img (car (gimp-image-new  img-width   img-height  RGB)))
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Background" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Glow" 100 NORMAL)))
-	 (button-layer (car (gimp-layer-new img layer-width layer-height RGBA_IMAGE "Button" 100 NORMAL))))
+	 (bg-layer (car (gimp-layer-new img
+					img-width img-height RGBA-IMAGE
+					"Background" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img
+					  img-width img-height RGBA-IMAGE
+					  "Glow" 100 NORMAL-MODE)))
+	 (button-layer (car (gimp-layer-new img
+					    layer-width layer-height RGBA-IMAGE
+					    "Button" 100 NORMAL-MODE))))
 
     (gimp-image-undo-disable img)
 
@@ -84,7 +90,7 @@
     (gimp-image-add-layer img bg-layer -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-image-add-layer img glow-layer -1)
 
     ; Create text layer
@@ -96,7 +102,7 @@
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend button-layer FG-BG-RGB NORMAL
+    (gimp-blend button-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 img-height img-width)
@@ -111,7 +117,7 @@
 		      REPLACE FALSE 0 )
 
     (gimp-palette-set-foreground glow-color)
-    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
     (gimp-palette-set-foreground text-color)

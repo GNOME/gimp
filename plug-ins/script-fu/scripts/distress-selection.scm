@@ -39,16 +39,16 @@
   (set! theLayer (car (gimp-layer-new theImage
 				      theWidth
 				      theHeight
-				      RGBA_IMAGE
+				      RGBA-IMAGE
 				      "Distress Scratch Layer"
 				      100
-				      NORMAL)))
+				      NORMAL-MODE)))
 
   (gimp-image-add-layer theImage theLayer 0)
 
   (if (= TRUE (car (gimp-selection-is-empty theImage)))
       ()
-      (gimp-edit-fill theLayer BG-IMAGE-FILL))
+      (gimp-edit-fill theLayer BACKGROUND-FILL))
 
   (gimp-selection-invert theImage)
 

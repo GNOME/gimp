@@ -29,8 +29,8 @@
 	 (height (car (gimp-drawable-height logo-layer)))
          (indentX (+ b-size 12))
 	 (indentY (+ b-size (/ height 8)))
-	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
-	 (blur-layer (car (gimp-layer-new img width height RGBA_IMAGE "Blur" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+	 (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -40,18 +40,18 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans blur-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
     (gimp-selection-all img)
-    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
+    (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (gimp-edit-clear blur-layer)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans blur-layer FALSE)
     (gimp-selection-layer-alpha logo-layer)
-    (gimp-edit-fill blur-layer BG-IMAGE-FILL)
+    (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (plug-in-gauss-rle 1 img blur-layer bevel-width 1 1)
     (gimp-selection-none img)
     (gimp-palette-set-background '(127 127 127))
@@ -59,7 +59,7 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
 
-    (gimp-blend logo-layer FG-BG-RGB NORMAL
+    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-RADIAL 95 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		indentX indentY indentX (- height indentY))

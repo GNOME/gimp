@@ -33,7 +33,8 @@
 (define (script-fu-land width height seed detail landheight seadepth xscale yscale gradient)
   (let* (
 	 (img (car (gimp-image-new width height RGB)))
-	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
+	 (layer-one (car (gimp-layer-new img width height
+					 RGB-IMAGE "Bottom" 100 NORMAL-MODE)))
 	)
   (gimp-gradients-set-gradient gradient)
   (gimp-image-undo-disable img)

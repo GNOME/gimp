@@ -10,7 +10,7 @@
 			       (gimp-rect-select img i 0 1 height REPLACE FALSE 0))
 			   (if (= type 0)
 			       (gimp-edit-clear drawable)
-			       (gimp-edit-fill drawable BG-IMAGE-FILL))
+			       (gimp-edit-fill drawable BACKGROUND-FILL))
 			   (loop (+ i 2) max))))))
       (loop (if (= which 0)
 		0

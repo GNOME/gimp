@@ -40,8 +40,8 @@
   (let* ((fade-size (- (* (+ band-size gap-size) num-bands) 1))
 	 (width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
-	 (bands-layer (car (gimp-layer-new img width height RGBA_IMAGE "Bands" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+	 (bands-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bands" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -49,13 +49,13 @@
     (gimp-image-add-layer img bands-layer 1)
     (gimp-selection-none img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bands-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bands-layer BACKGROUND-FILL)
     ; The text layer is never shown: it is only used to create a selection
     (gimp-selection-layer-alpha logo-layer)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-edit-fill bands-layer FG-IMAGE-FILL)
+    (gimp-edit-fill bands-layer FOREGROUND-FILL)
 
     ; Create multiple outlines by growing and inverting the selection
     ; The bands are black and white because they will be used as a mask.
@@ -70,16 +70,16 @@
     ; The gradient is created by filling a bordered selection (white->black).
     (if (= do-fade TRUE)
 	(let ((bands-layer-mask (car (gimp-layer-create-mask bands-layer
-							     BLACK-MASK))))
+							     ADD-BLACK-MASK))))
 	  (gimp-image-add-layer-mask img bands-layer bands-layer-mask)
 	  (gimp-selection-layer-alpha logo-layer)
 	  (gimp-selection-border img fade-size)
-	  (gimp-edit-fill bands-layer-mask FG-IMAGE-FILL)
-	  (gimp-image-remove-layer-mask img bands-layer APPLY)))
+	  (gimp-edit-fill bands-layer-mask FOREGROUND-FILL)
+	  (gimp-image-remove-layer-mask img bands-layer MASK-APPLY)))
 
     ; Transfer the resulting grayscale bands into the layer mask.
     (let ((bands-layer-mask (car (gimp-layer-create-mask bands-layer
-							 BLACK-MASK))))
+							 ADD-BLACK-MASK))))
       (gimp-image-add-layer-mask img bands-layer bands-layer-mask)
       (gimp-selection-none img)
       (gimp-edit-copy bands-layer)
@@ -89,8 +89,8 @@
     ; Fill the layer with the foreground color.  The areas that are not
     ; masked become visible.
     (gimp-palette-set-foreground fg-color)
-    (gimp-edit-fill bands-layer FG-IMAGE-FILL)
-    ;; (gimp-image-remove-layer-mask img bands-layer APPLY)
+    (gimp-edit-fill bands-layer FOREGROUND-FILL)
+    ;; (gimp-image-remove-layer-mask img bands-layer MASK-APPLY)
 
     ; Clean up and exit.
     (gimp-palette-set-foreground old-fg)

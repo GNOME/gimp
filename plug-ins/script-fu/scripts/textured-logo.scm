@@ -21,18 +21,18 @@
 	 (ts-size (- b-size-2 3))
 	 (width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (blend-layer (car (gimp-layer-new img width height RGBA_IMAGE
-					   "Blend" 100 NORMAL)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
-					    "Shadow" 100 NORMAL)))
-	 (text-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
-						 "Text Shadow" 100 MULTIPLY)))
+	 (blend-layer (car (gimp-layer-new img width height RGBA-IMAGE
+					   "Blend" 100 NORMAL-MODE)))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
+					    "Shadow" 100 NORMAL-MODE)))
+	 (text-shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
+						 "Text Shadow" 100 MULTIPLY-MODE)))
 	 (tsl-layer-mask (car (gimp-layer-create-mask text-shadow-layer
-						      BLACK-MASK)))
-	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
-						 "Drop Shadow" 100 MULTIPLY)))
+						      ADD-BLACK-MASK)))
+	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE
+						 "Drop Shadow" 100 MULTIPLY-MODE)))
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
-						      BLACK-MASK)))
+						      ADD-BLACK-MASK)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))
@@ -45,28 +45,28 @@
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)
     (gimp-edit-clear drop-shadow-layer)
     (gimp-palette-set-background bg-color)
-    (gimp-drawable-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-drawable-fill shadow-layer BACKGROUND-FILL)
     (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size)
 		      REPLACE TRUE b-size-2)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-image-add-layer-mask img text-shadow-layer tsl-layer-mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill tsl-layer-mask BG-IMAGE-FILL)
+    (gimp-edit-fill tsl-layer-mask BACKGROUND-FILL)
     (gimp-selection-feather img f-size)
     (gimp-palette-set-background '(63 63 63))
-    (gimp-edit-fill drop-shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill drop-shadow-layer BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill text-shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill text-shadow-layer BACKGROUND-FILL)
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend text-shadow-layer FG-BG-RGB NORMAL
+    (gimp-blend text-shadow-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 1 1)
@@ -75,7 +75,7 @@
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
 
-    (gimp-blend blend-layer FG-BG-RGB NORMAL
+    (gimp-blend blend-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 width 0)
@@ -90,8 +90,8 @@
     (gimp-selection-layer-alpha blend-layer)
     (gimp-image-add-layer-mask img drop-shadow-layer dsl-layer-mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill dsl-layer-mask BG-IMAGE-FILL)
-    (gimp-image-remove-layer-mask img drop-shadow-layer APPLY)
+    (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
+    (gimp-image-remove-layer-mask img drop-shadow-layer MASK-APPLY)
     (gimp-selection-none img)
     (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-foreground old-fg)

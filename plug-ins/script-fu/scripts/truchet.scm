@@ -46,17 +46,17 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill drawable1 BG-IMAGE-FILL)
+    (gimp-edit-fill drawable1 BACKGROUND-FILL)
 
     (let* (
 	   (tempSize (* size 3))
 	   (temp-img (car (gimp-image-new tempSize tempSize RGB)))
-	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL)))
+	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB-IMAGE "Jabar" 100 NORMAL-MODE)))
 	  )
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-palette-set-background backcolor)
-      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
+      (gimp-edit-fill temp-draw BACKGROUND-FILL)
       
       
       (center-ellipse temp-img size size outer-radius outer-radius REPLACE TRUE FALSE 0)
@@ -65,7 +65,7 @@
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
       (gimp-palette-set-background forecolor)
-      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
+      (gimp-edit-fill temp-draw BACKGROUND-FILL)
       
       (gimp-selection-none temp-img)
 
@@ -98,9 +98,12 @@
 	 (height (* size ytiles))
 	 (img (car (gimp-image-new width height RGB)))
 	 (tile (car (gimp-image-new size size RGB)))
-	 (layer-one (car (gimp-layer-new img width height RGB "Rambis" 100 NORMAL)))
-	 (tiledraw1 (car (gimp-layer-new tile size size RGB "Johnson" 100 NORMAL)))
-	 (tiledraw2 (car (gimp-layer-new tile size size RGB "Cooper" 100 NORMAL)))
+	 (layer-one (car (gimp-layer-new img width height
+					 RGB-IMAGE "Rambis" 100 NORMAL-MODE)))
+	 (tiledraw1 (car (gimp-layer-new tile size size
+					 RGB-IMAGE "Johnson" 100 NORMAL-MODE)))
+	 (tiledraw2 (car (gimp-layer-new tile size size
+					 RGB-IMAGE "Cooper" 100 NORMAL-MODE)))
 	 (Xindex 0)
 	 (Yindex 0)
 	 (old-bg (car (gimp-palette-get-background)))
@@ -117,7 +120,7 @@
     ;just to look a little better
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill layer-one BG-IMAGE-FILL)
+    (gimp-edit-fill layer-one BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (create-tiles tile tiledraw1 tiledraw2 size thickness backcolor forecolor)

@@ -55,8 +55,8 @@
 		    (+ ascent descent)))
 	 
 	 (img (car (gimp-image-new width height RGB)))
-	 (background (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
-	 (bumpmap (car (gimp-layer-new img width height RGBA_IMAGE "Bumpmap" 100 NORMAL)))
+	 (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+	 (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
 	 (textl (car
 		 (gimp-text-fontname
 		  img -1 0 0 text 0 TRUE text-size PIXELS font))))
@@ -68,21 +68,21 @@
     ; Create pattern layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill background BG-IMAGE-FILL)
+    (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
-    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-rect-select img 1 1 (- width 2) (- height 2) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-rect-select img 2 2 (- width 4) (- height 4) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
 
@@ -94,7 +94,7 @@
 
     (gimp-palette-set-background text-color)
     (gimp-layer-set-preserve-trans textl TRUE)
-    (gimp-edit-fill textl BG-IMAGE-FILL)
+    (gimp-edit-fill textl BACKGROUND-FILL)
 
     (gimp-layer-set-offsets textl
 			    xpadding

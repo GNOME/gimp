@@ -73,10 +73,10 @@
 	 (shadow-offy (/ size 10))
 	 (width (car (gimp-drawable-width tube-layer)))
 	 (height (car (gimp-drawable-height tube-layer)))
-	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Neon Glow" 100 NORMAL)))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
+	 (glow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Neon Glow" 100 NORMAL-MODE)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (shadow-layer (if (= shadow TRUE)
-			   (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 NORMAL))
+			   (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 NORMAL-MODE))
 			   0))
 	 (selection 0)
 	 (old-fg (car (gimp-palette-get-foreground)))
@@ -98,14 +98,14 @@
     (gimp-edit-clear tube-layer)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-selection-load selection)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
+    (gimp-edit-fill tube-layer BACKGROUND-FILL)
     (gimp-selection-shrink img shrink)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill selection BG-IMAGE-FILL)
+    (gimp-edit-fill selection BACKGROUND-FILL)
     (gimp-edit-clear tube-layer)
 
     (gimp-selection-none img)
@@ -131,7 +131,7 @@
     (gimp-selection-layer-alpha tube-layer)
     (gimp-selection-invert img)
     (gimp-palette-set-background glow-color)
-    (gimp-edit-fill tube-layer BG-IMAGE-FILL)
+    (gimp-edit-fill tube-layer BACKGROUND-FILL)
 
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans tube-layer 0)
@@ -144,7 +144,7 @@
     (gimp-selection-invert img)
 
     (gimp-selection-feather img feather)
-    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
     (if (not (= shadow 0))
 	(begin
@@ -154,7 +154,7 @@
 	  (gimp-selection-feather img shadow-feather)
 	  (gimp-selection-translate img shadow-offx shadow-offy)
 	  (gimp-palette-set-background '(0 0 0))
-	  (gimp-edit-fill shadow-layer BG-IMAGE-FILL)))
+	  (gimp-edit-fill shadow-layer BACKGROUND-FILL)))
     (gimp-selection-none img)
 
     (gimp-layer-set-name tube-layer "Neon Tubes")

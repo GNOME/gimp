@@ -70,22 +70,22 @@
 
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill drawable1 BG-IMAGE-FILL)
+    (gimp-edit-fill drawable1 BACKGROUND-FILL)
 
     (let* (
 	   (tempSize (* size 3))
 	   (temp-img (car (gimp-image-new tempSize tempSize RGB)))
 	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize
-					   RGB_IMAGE "Jabar" 100 NORMAL)))
+					   RGB-IMAGE "Jabar" 100 NORMAL-MODE)))
       	   (temp-draw2 (car (gimp-layer-new temp-img tempSize tempSize
-					    RGB_IMAGE "Jabar" 100 NORMAL))))
+					    RGB-IMAGE "Jabar" 100 NORMAL-MODE))))
 
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
       (gimp-image-add-layer temp-img temp-draw2 0)
       (gimp-palette-set-background backcolor)
-      (gimp-edit-fill temp-draw BG-IMAGE-FILL)
-      (gimp-edit-fill temp-draw2 BG-IMAGE-FILL)
+      (gimp-edit-fill temp-draw BACKGROUND-FILL)
+      (gimp-edit-fill temp-draw2 BACKGROUND-FILL)
 
       ;weird aint it
       (gimp-palette-set-background begincolor)
@@ -101,7 +101,7 @@
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius
 		      SUB TRUE FALSE 0)
 
-      (gimp-blend temp-draw FG-BG-RGB NORMAL
+      (gimp-blend temp-draw FG-BG-RGB-MODE NORMAL-MODE
 		  GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		  supersample 3 .2 TRUE
 		  size size (* size 2) (/ size 2))
@@ -116,9 +116,9 @@
       (center-ellipse temp-img (* size 2) size  inner-radius inner-radius
 		      SUB TRUE FALSE 0)
 
-      ;(gimp-edit-fill temp-img temp-draw2 BG-IMAGE-FILL)
+      ;(gimp-edit-fill temp-img temp-draw2 BACKGROUND-FILL)
 
-      (gimp-blend temp-draw2 FG-BG-RGB NORMAL
+      (gimp-blend temp-draw2 FG-BG-RGB-MODE NORMAL-MODE
 		  GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		  supersample 3 .2 TRUE
 		  size size (* size 2) (* size 2))
@@ -161,9 +161,12 @@
 	 (height (* size ytiles))
 	 (img (car (gimp-image-new width height RGB)))
 	 (tile (car (gimp-image-new size size RGB)))
-	 (layer-one (car (gimp-layer-new img width height RGB "Rambis" 100 NORMAL)))
-	 (tiledraw1 (car (gimp-layer-new tile size size RGB "Johnson" 100 NORMAL)))
-	 (tiledraw2 (car (gimp-layer-new tile size size RGB "Cooper" 100 NORMAL)))
+	 (layer-one (car (gimp-layer-new img width height
+					 RGB-IMAGE "Rambis" 100 NORMAL-MODE)))
+	 (tiledraw1 (car (gimp-layer-new tile size size
+					 RGB-IMAGE "Johnson" 100 NORMAL-MODE)))
+	 (tiledraw2 (car (gimp-layer-new tile size size
+					 RGB-IMAGE "Cooper" 100 NORMAL-MODE)))
 	 (Xindex 0)
 	 (Yindex 0)
 	 (old-bg (car (gimp-palette-get-background)))
@@ -180,7 +183,7 @@
     ;just to look a little better
     (gimp-selection-all img)
     (gimp-palette-set-background backcolor)
-    (gimp-edit-fill layer-one BG-IMAGE-FILL)
+    (gimp-edit-fill layer-one BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (create-tile tile tiledraw1 tiledraw2 size thickness

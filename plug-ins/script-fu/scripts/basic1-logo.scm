@@ -7,8 +7,8 @@
 				  text-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE "Background" 100 NORMAL)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 MULTIPLY)))
+	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 MULTIPLY-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -18,18 +18,18 @@
     (gimp-image-add-layer img bg-layer 2)
     (gimp-palette-set-foreground text-color)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-edit-fill logo-layer FG-IMAGE-FILL)
+    (gimp-edit-fill logo-layer FOREGROUND-FILL)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-feather img 7.5)
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend logo-layer FG-BG-RGB MULTIPLY
+    (gimp-blend logo-layer FG-BG-RGB-MODE MULTIPLY-MODE
 		GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 width height)

@@ -41,9 +41,13 @@
 	 (diameter (* radius 2))
 	 (half-radius (/ radius 2))
 	 (blend-start (+ half-radius (/ half-radius 2)))
-	 (bullet-layer (car (gimp-layer-new img diameter diameter RGBA_IMAGE "Ruler" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img diameter diameter RGBA_IMAGE "ALien Glow" 100 NORMAL)))
-	 (bg-layer (car (gimp-layer-new img diameter diameter RGB_IMAGE "Back" 100 NORMAL)))
+	 (bullet-layer (car (gimp-layer-new img
+					    diameter diameter RGBA-IMAGE
+					    "Ruler" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img diameter diameter RGBA-IMAGE
+					  "ALien Glow" 100 NORMAL-MODE)))
+	 (bg-layer (car (gimp-layer-new img diameter diameter RGB-IMAGE
+					"Background" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -55,7 +59,7 @@
 
     ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear bullet-layer)
 
@@ -66,7 +70,7 @@
     (gimp-palette-set-foreground '(90 90 90))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend bullet-layer FG-BG-RGB NORMAL
+    (gimp-blend bullet-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-RADIAL 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		blend-start blend-start
@@ -75,7 +79,7 @@
     (gimp-palette-set-foreground glow-color)
     (gimp-selection-grow img border)
     (gimp-selection-feather img  border)
-    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
     (if (>= radius 16)
 	(plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)

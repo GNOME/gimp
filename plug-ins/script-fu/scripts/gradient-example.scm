@@ -24,7 +24,7 @@
 				    gradient-reverse)
   (let* ((img (car (gimp-image-new width height RGB)))
 	 (drawable (car (gimp-layer-new img width height RGB
-					"Gradient example" 100 NORMAL)))
+					"Gradient example" 100 NORMAL-MODE)))
 
 	 ; Save old foreground and background colors
 
@@ -47,7 +47,7 @@
 
     ; Render gradient
 
-    (gimp-blend drawable CUSTOM NORMAL
+    (gimp-blend drawable CUSTOM-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		0 0 (- width 1) 0)

@@ -111,9 +111,9 @@
 	 (img (car (gimp-image-new width height RGB)))
 
 	 (bumpmap (car (gimp-layer-new img width height
-				       RGBA_IMAGE "Bumpmap" 100 NORMAL)))
+				       RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
 	 (gradient (car (gimp-layer-new img width height
-					RGBA_IMAGE "Button" 100 NORMAL))))
+					RGBA-IMAGE "Button" 100 NORMAL-MODE))))
 
     (gimp-image-undo-disable img)
 
@@ -122,12 +122,12 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-selection-none img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (round-select img (/ bevel 2) (/ bevel 2)
 		  (- width bevel) (- height bevel) ratio)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap bevel 1 1)
@@ -140,7 +140,7 @@
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend gradient FG-BG-RGB NORMAL
+    (gimp-blend gradient FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 0 (- height 1))

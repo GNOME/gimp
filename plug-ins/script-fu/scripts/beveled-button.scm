@@ -44,7 +44,7 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
+  (gimp-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
 	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 	      FALSE 0 0 TRUE
 	      x1 y1 x2 y2))
@@ -75,8 +75,12 @@
 
 	 (img (car (gimp-image-new img-width img-height RGB)))
 
-	 (bumpmap (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Bumpmap" 100 NORMAL)))
-	 (gradient (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Gradient" 100 NORMAL))))
+	 (bumpmap (car (gimp-layer-new img
+				       img-width img-height RGBA-IMAGE
+				       "Bumpmap" 100 NORMAL-MODE)))
+	 (gradient (car (gimp-layer-new img
+					img-width img-height RGBA-IMAGE
+					"Gradient" 100 NORMAL-MODE))))
 
     (gimp-image-undo-disable img)
 
@@ -85,7 +89,7 @@
     (gimp-image-add-layer img bumpmap -1)
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-rect-select img 0 0 bevel-width img-height REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 0 (- bevel-width 1) 0)
@@ -107,7 +111,7 @@
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend gradient FG-BG-RGB NORMAL
+    (gimp-blend gradient FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 (- img-width 1) (- img-height 1))

@@ -21,14 +21,14 @@
 	 (width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
 	 (ripple-image (car (gimp-image-new width height GRAY)))
-	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY_IMAGE "Ripple Texture" 100 NORMAL))))
+	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY-IMAGE "Ripple Texture" 100 NORMAL-MODE))))
 
  ; this script generates its own displacement map
 
     (gimp-image-undo-disable ripple-image)
     (gimp-palette-set-background '(127 127 127) )
     (gimp-image-add-layer ripple-image ripple-layer 0)
-    (gimp-edit-fill ripple-layer BG-IMAGE-FILL)
+    (gimp-edit-fill ripple-layer BACKGROUND-FILL)
     (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
     ; tile noise
     (set! rippletiled-ret (plug-in-tile 1 ripple-image ripple-layer (* width 3) (* height 3) TRUE))
@@ -69,7 +69,7 @@
 			" (replace)"))
 	     (set! this-layer (car (gimp-layer-new out-imagestack
 						   width height RGB
-						   layer-name 100 NORMAL)))
+						   layer-name 100 NORMAL-MODE)))
 	     (gimp-image-add-layer out-imagestack this-layer 0)
 	     
 	     (copy-layer-ripple out-imagestack this-layer img drawable)

@@ -32,9 +32,9 @@
   (gimp-selection-all theImage)
 
   (set! theLayer (car (gimp-layer-new theImage theWidth theHeight
-				      RGBA_IMAGE
+				      RGBA-IMAGE
 				      "I've got more rubber ducks than you!"
-				      100 NORMAL)))
+				      100 NORMAL-MODE)))
   (gimp-image-add-layer theImage theLayer 0)
   (plug-in-solid-noise TRUE theImage theLayer 1 0 (rand 65536)
 		       inGrain inGrain inGrain)
@@ -42,8 +42,8 @@
   (if (= inWiden 1)
       (begin
 	(set! thinLayer (car (gimp-layer-new theImage theWidth theHeight
-					     RGBA_IMAGE "Camo Thin Layer"
-					     100 NORMAL)))
+					     RGBA-IMAGE "Camo Thin Layer"
+					     100 NORMAL-MODE)))
 	(gimp-image-add-layer theImage thinLayer 0)
 
 	(let ((theBigGrain (min 15 (* 2 inGrain))))
@@ -56,7 +56,7 @@
 	(let ((theMask (car (gimp-layer-create-mask thinLayer 0))))
 	  (gimp-image-add-layer-mask theImage thinLayer theMask)
 
-	  (gimp-blend theMask FG-BG-RGB NORMAL
+	  (gimp-blend theMask FG-BG-RGB-MODE NORMAL-MODE
 		      GRADIENT-LINEAR 100 0 REPEAT-TRIANGULAR FALSE
 		      FALSE 0 0 TRUE
 		      0 0 0 (/ theHeight 2)))

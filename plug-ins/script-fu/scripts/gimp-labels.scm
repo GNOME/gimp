@@ -43,7 +43,7 @@
 				     TRUE font-size PIXELS
 				     font)))
 	 (bg-layer (car (gimp-layer-new  img 125 height
-					 RGB_IMAGE "Background" 100 NORMAL)))
+					 RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (shadow-layer (car (gimp-layer-copy text-layer TRUE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
@@ -56,13 +56,13 @@
     (gimp-layer-set-preserve-trans shadow-layer TRUE)
     
     (gimp-palette-set-background text-color)
-    (gimp-edit-fill text-layer BG-IMAGE-FILL)
+    (gimp-edit-fill text-layer BACKGROUND-FILL)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-palette-set-background shadow-color)
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-layer-translate shadow-layer 1 1)
 
     (set! text-layer (car (gimp-image-flatten img)))

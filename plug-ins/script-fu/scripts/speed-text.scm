@@ -24,8 +24,8 @@
 	 (wid (+ (car text-ext) 20))
 	 (hi  (+ (nth 1 text-ext) 20))
 	 (img (car (gimp-image-new wid hi RGB)))
-	 (bg-layer (car (gimp-layer-new img wid hi  RGB_IMAGE "Background" 100 NORMAL)))
-	 (text-layer (car (gimp-layer-new img wid hi  RGBA_IMAGE "Text layer" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img wid hi  RGB-IMAGE "Background" 100 NORMAL-MODE)))
+	 (text-layer (car (gimp-layer-new img wid hi  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
 	 (text-mask 0)
 	 (saved-select 0)
 	 (cell-size (/ font-size 8))
@@ -48,28 +48,28 @@
     (set! saved-sel (car (gimp-selection-save img)))
 
     ; add layer mask
-    (set! text-mask (car (gimp-layer-create-mask text-layer ALPHA-MASK)))
+    (set! text-mask (car (gimp-layer-create-mask text-layer ADD-ALPHA-MASK)))
     (gimp-image-add-layer-mask img text-layer text-mask)
 
     ; grow the layer
     (gimp-layer-set-edit-mask text-layer FALSE)
     (gimp-selection-grow img 10)
     (gimp-palette-set-foreground text-color)
-    (gimp-edit-fill text-layer FG-IMAGE-FILL)
+    (gimp-edit-fill text-layer FOREGROUND-FILL)
 
     ; feather the mask
     (gimp-layer-set-edit-mask text-layer TRUE)
     (gimp-selection-load saved-sel)
     (gimp-selection-feather img 10)
     (gimp-palette-set-background (list grey grey grey))
-    (gimp-edit-fill text-mask BG-IMAGE-FILL)
-    (gimp-edit-fill text-mask BG-IMAGE-FILL)
-    (gimp-edit-fill text-mask BG-IMAGE-FILL)
+    (gimp-edit-fill text-mask BACKGROUND-FILL)
+    (gimp-edit-fill text-mask BACKGROUND-FILL)
+    (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-selection-clear img)
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)
 
-    (gimp-image-remove-layer-mask img text-layer APPLY)
+    (gimp-image-remove-layer-mask img text-layer MASK-APPLY)
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

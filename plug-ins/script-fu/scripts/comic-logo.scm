@@ -30,8 +30,8 @@
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (posx (- (car (gimp-drawable-offsets logo-layer))))
 	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-	 (bg-layer (car (gimp-layer-new img width height RGBA_IMAGE
-					"Background" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE
+					"Background" 100 NORMAL-MODE)))
 	 (white-layer (car (gimp-layer-copy logo-layer 1)))
 	 (black-layer (car (gimp-layer-copy logo-layer 1)))
 	 (old-gradient (car (gimp-gradients-get-gradient)))
@@ -49,13 +49,13 @@
   
     (gimp-selection-all img)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans white-layer TRUE)
     (gimp-palette-set-background ol-color)
     (gimp-selection-all img)
-    (gimp-edit-fill white-layer BG-IMAGE-FILL)
+    (gimp-edit-fill white-layer BACKGROUND-FILL)
     (gimp-layer-set-preserve-trans white-layer FALSE)
     (plug-in-spread 1 img white-layer (* 3 ol-width) (* 3 ol-width))
     (plug-in-gauss-rle 1 img white-layer (* 2 ol-width) 1 1)
@@ -65,7 +65,7 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-layer-set-preserve-trans black-layer TRUE)
     (gimp-selection-all img)
-    (gimp-edit-fill black-layer BG-IMAGE-FILL)
+    (gimp-edit-fill black-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans black-layer FALSE)
     (plug-in-gauss-rle 1 img black-layer ol-width 1 1)

@@ -22,9 +22,9 @@
 	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
 	 (img-width (+ width (* 0.15 height) 10))
 	 (img-height (+ (* 1.85 height) 10))
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGB_IMAGE "Background" 100 NORMAL)))
-	 (shadow-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE "Shadow" 100 NORMAL)))
-	 (reflect-layer (car (gimp-layer-new img width height RGBA_IMAGE "Reflection" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img img-width img-height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+	 (shadow-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE "Shadow" 100 NORMAL-MODE)))
+	 (reflect-layer (car (gimp-layer-new img width height RGBA-IMAGE "Reflection" 100 NORMAL-MODE)))
 	 (channel 0)
 	 (fs 0)
 	 (layer-mask 0)
@@ -40,14 +40,14 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear reflect-layer)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 
     (gimp-gradients-set-gradient gradient)
 
-    (gimp-blend logo-layer CUSTOM NORMAL
+    (gimp-blend logo-layer CUSTOM-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		0 0 0 (+ height 5))
@@ -67,7 +67,7 @@
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-invert img)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill channel BG-IMAGE-FILL)
+    (gimp-edit-fill channel BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (plug-in-bump-map 1 img logo-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
@@ -91,11 +91,11 @@
     (gimp-flip reflect-layer 1)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
-    (set! layer-mask (car (gimp-layer-create-mask reflect-layer WHITE-MASK)))
+    (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))
     (gimp-image-add-layer-mask img reflect-layer layer-mask)
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend layer-mask FG-BG-RGB NORMAL
+    (gimp-blend layer-mask FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 (- (/ height 2)) 0 height)

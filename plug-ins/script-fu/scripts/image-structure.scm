@@ -77,7 +77,7 @@
       (if (not (= -1 (car (gimp-layer-mask layer))))
 	  (gimp-image-remove-layer-mask img layer
 					(if (= TRUE apply-layer-mask?)
-					    APPLY
+					    MASK-APPLY
 					    DISCARD)))
       (if (= TRUE with-pad?)
 	  (begin
@@ -85,7 +85,7 @@
 	    (gimp-selection-invert img)
 	    (gimp-layer-set-preserve-trans layer FALSE)
 	    (gimp-palette-set-foreground padding-color)
-	    (gimp-bucket-fill layer FG-BUCKET-FILL NORMAL
+	    (gimp-bucket-fill layer FG-BUCKET-FILL NORMAL-MODE
 			      padding-opacity 0 0 0 0)
 	    (gimp-selection-none img)))
       
@@ -98,11 +98,11 @@
     (set! new-bg (- num-of-layers 1))
     (if (= TRUE with-background?)
 	(begin
-	  (set! new-bg (car (gimp-layer-new img new-width new-height RGBA_IMAGE
-					    "New Background" 100 NORMAL)))
+	  (set! new-bg (car (gimp-layer-new img new-width new-height RGBA-IMAGE
+					    "New Background" 100 NORMAL-MODE)))
 	  (gimp-image-add-layer img new-bg num-of-layers)
 	  (gimp-palette-set-background background-color)
-	  (gimp-edit-fill new-bg BG-IMAGE-FILL)))
+	  (gimp-edit-fill new-bg BACKGROUND-FILL)))
     (gimp-image-set-active-layer img (aref layers 0))
     (if (= TRUE with-layer-name?)
 	(let ((text-layer #f))
@@ -114,7 +114,7 @@
 					     (+ (* space index) old-height)
 					     (car layer-names)
 					     0 TRUE 14 PIXELS "-*-helvetica-*-r-*-*-14-*-*-*-p-*-*-*")))
-	    (gimp-layer-set-mode text-layer NORMAL)
+	    (gimp-layer-set-mode text-layer NORMAL-MODE)
 	    (set! index (+ index 1))
 	    (set! layer-names (cdr layer-names)))))
     (gimp-image-set-active-layer img new-bg)

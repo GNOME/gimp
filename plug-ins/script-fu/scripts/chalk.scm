@@ -26,7 +26,7 @@
 				 bg-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -34,7 +34,7 @@
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     ; the actual effect
     (gimp-layer-set-preserve-trans logo-layer FALSE)
@@ -90,7 +90,7 @@
     (gimp-layer-set-name text-layer text)
     (gimp-palette-set-foreground chalk-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-edit-fill text-layer FG-IMAGE-FILL)
+    (gimp-edit-fill text-layer FOREGROUND-FILL)
     (gimp-palette-set-foreground old-fg)
     (apply-chalk-logo-effect img text-layer bg-color)
     (gimp-image-undo-enable img)

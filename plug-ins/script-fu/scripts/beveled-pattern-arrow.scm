@@ -70,8 +70,8 @@
 (define (script-fu-beveled-pattern-arrow size orientation pattern)
   (let* ((old-bg-color (car (gimp-palette-get-background)))
 	 (img (car (gimp-image-new size size RGB)))
-	 (background (car (gimp-layer-new img size size RGB_IMAGE "Arrow" 100 NORMAL)))
-	 (bumpmap (car (gimp-layer-new img size size RGB_IMAGE "Bumpmap" 100 NORMAL)))
+	 (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
+	 (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
 	 (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
 	 (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
 	 (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
@@ -83,29 +83,29 @@
     ; Create pattern layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill background BG-IMAGE-FILL)
+    (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
-    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-rect-select img 1 1 (- size 2) (- size 2) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-rect-select img 2 2 (- size 4) (- size 4) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-free-select img 6 big-arrow REPLACE TRUE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(0 0 0))
     (gimp-free-select img 6 med-arrow REPLACE TRUE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
 
@@ -116,15 +116,15 @@
     ; Darken arrow
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(192 192 192))
     (gimp-free-select img 6 small-arrow REPLACE TRUE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
 
-    (gimp-layer-set-mode bumpmap MULTIPLY)
+    (gimp-layer-set-mode bumpmap MULTIPLY-MODE)
 
     (gimp-image-flatten img)
 

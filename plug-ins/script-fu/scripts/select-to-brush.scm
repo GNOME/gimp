@@ -53,12 +53,12 @@
     (gimp-edit-copy drawable)
 
     (set! brush_draw_type
-          (if (= type GRAYA_IMAGE)
-              GRAY_IMAGE
-              RGBA_IMAGE))
+          (if (= type GRAYA-IMAGE)
+              GRAY-IMAGE
+              RGBA-IMAGE))
 
     (set! brush_image_type
-          (if (= type GRAYA_IMAGE)
+          (if (= type GRAYA-IMAGE)
               GRAY
               RGB))
 
@@ -73,13 +73,13 @@
                                brush_draw_type
                                "Brush"
                                100
-                               NORMAL)))
+                               NORMAL-MODE)))
 
     (gimp-image-add-layer brush-image brush-draw 0)
 
     (gimp-selection-none brush-image)
 
-    (if (= type GRAYA_IMAGE)
+    (if (= type GRAYA-IMAGE)
         (begin 
           (gimp-palette-set-background '(255 255 255))
           (gimp-drawable-fill brush-draw BACKGROUND-FILL))

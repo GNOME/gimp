@@ -17,12 +17,14 @@
 ; a string. There are two new gimp-text procedures to ease the use of this
 ; return parameter:
 ;
-;  (gimp-text-fontname image drawable x-pos y-pos text border antialias size unit font)
+;  (gimp-text-fontname image drawable
+;                      x-pos y-pos text border antialias size unit font)
 ;  (gimp-text-get-extents-fontname text size unit font))
 ;
 ; where font is the fontname you get. The size specified in the fontname 
-; is silently ignored. It is only used in the font-selector. So you are asked to
-; set it to a useful value (24 pixels is a good choice) when using SF-FONT.
+; is silently ignored. It is only used in the font-selector. So you are
+; asked to set it to a useful value (24 pixels is a good choice) when
+; using SF-FONT.
 ;
 ; Usage:
 ; SF-FONT "label" "fontname"		
@@ -79,7 +81,8 @@
 ; If the button is pressed a file selection dialog will popup.
 ;
 ; Usage:
-; SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+; SF-FILENAME "Environment Map"
+;             (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 ;
 ; The value returned when the script is invoked is a string containing the 
 ; filename.
@@ -129,8 +132,8 @@
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB_IMAGE
-					"Sphere Layer" 100 NORMAL)))
+	 (drawable (car (gimp-layer-new img width height RGB-IMAGE
+					"Sphere Layer" 100 NORMAL-MODE)))
 	 (radians (/ (* light *pi*) 180))
 	 (cx (/ width 2))
 	 (cy (/ height 2))
@@ -151,7 +154,7 @@
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill drawable BG-IMAGE-FILL)
+    (gimp-edit-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(20 20 20))
 
     (if (and
@@ -169,13 +172,13 @@
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
 			       REPLACE TRUE TRUE 7.5)
 	  (gimp-patterns-set-pattern pattern)
-	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY
+	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
 			    100 0 FALSE 0 0)))
 
     (gimp-ellipse-select img (- cx radius) (- cy radius)
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable FG-BG-RGB NORMAL
+    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		light-x light-y light-end-x light-end-y)
@@ -185,7 +188,7 @@
     (gimp-gradients-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable CUSTOM NORMAL
+    (gimp-blend drawable CUSTOM-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		10 10 30 60)
@@ -230,8 +233,7 @@
 		                  (string-append ""
 						 gimp-data-dir
 						 "/scripts/images/beavis.jpg")
-		    SF-OPTION     "Orientation"        '("Horizontal"
-							 "Vertical")
+		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
 		    SF-DIRNAME    "Output Directory"   "/var/tmp/"
 		    SF-IMAGE      "Image"              -1
 		    SF-LAYER      "Layer"              -1

@@ -32,8 +32,8 @@
 				      s-offset-y)
   (let* ((width (car (gimp-drawable-width logo-layer)))
          (height (car (gimp-drawable-height logo-layer)))
-         (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
-         (pattern (car (gimp-layer-new img width height RGBA_IMAGE "Pattern" 100 NORMAL)))
+         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+         (pattern (car (gimp-layer-new img width height RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
     (gimp-selection-none img)
@@ -41,11 +41,11 @@
     (gimp-image-add-layer img pattern 1)
     (gimp-image-add-layer img bg-layer 2)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear pattern)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-palette-set-foreground '(0 0 0))
-    (gimp-edit-fill logo-layer FG-IMAGE-FILL)
+    (gimp-edit-fill logo-layer FOREGROUND-FILL)
     (gimp-layer-set-preserve-trans logo-layer FALSE)
     (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
 
@@ -58,10 +58,10 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
-    (gimp-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map noninteractive img pattern layer2 110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
-    (set! pattern-mask (car (gimp-layer-create-mask pattern ALPHA-MASK)))
+    (set! pattern-mask (car (gimp-layer-create-mask pattern ADD-ALPHA-MASK)))
     (gimp-image-add-layer-mask img pattern pattern-mask)
 
     (gimp-selection-all img)
@@ -69,7 +69,7 @@
     (set! floating_sel (car (gimp-edit-paste pattern-mask 0)))
     (gimp-floating-sel-anchor floating_sel)
 
-    (gimp-image-remove-layer-mask img pattern APPLY)
+    (gimp-image-remove-layer-mask img pattern MASK-APPLY)
     (gimp-invert layer3)
     (plug-in-gauss-iir 1 img layer3 shadow-blur-radius TRUE TRUE)
 

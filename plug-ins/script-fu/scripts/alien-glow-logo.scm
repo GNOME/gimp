@@ -10,8 +10,12 @@
 	 (feather (/ size 4))
 	 (width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Alien Glow" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img
+					width height RGB-IMAGE
+					"Background" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img
+					  width height RGBA-IMAGE
+					  "Alien Glow" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -21,19 +25,19 @@
     (gimp-image-add-layer img glow-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-grow img grow)
     (gimp-selection-feather img feather)
     (gimp-palette-set-foreground glow-color)
-    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-palette-set-background '(0 0 0))
     (gimp-palette-set-foreground '(79 79 79))
 
-    (gimp-blend logo-layer FG-BG-RGB NORMAL
+    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 1 1)

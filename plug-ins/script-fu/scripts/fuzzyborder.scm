@@ -51,10 +51,10 @@
 	(set! theLayer (car (gimp-layer-new 	theImage
 						theWidth
 						theHeight
-						RGBA_IMAGE
+						RGBA-IMAGE
 						"layer 1"
 						100
-						NORMAL
+						NORMAL-MODE
 	) ) )
 
 	(gimp-image-add-layer theImage theLayer 0)
@@ -84,7 +84,7 @@
 	(gimp-selection-invert theImage)
 	(gimp-edit-clear theLayer)
 	(gimp-palette-set-background inColor)
-	(gimp-edit-fill theLayer BG-IMAGE-FILL)
+	(gimp-edit-fill theLayer BACKGROUND-FILL)
         (gimp-selection-none inImage)
 	(chris-color-edge theImage theLayer inColor 1)
         
@@ -140,7 +140,7 @@
           (gimp-selection-shrink inImage inSize)
           (gimp-selection-invert inImage)
 	  (gimp-palette-set-background inColor)
-	(gimp-edit-fill theLayer BG-IMAGE-FILL)
+	(gimp-edit-fill theLayer BACKGROUND-FILL)
           (gimp-selection-none inImage)
 )
 

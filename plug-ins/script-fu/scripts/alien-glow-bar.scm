@@ -27,9 +27,15 @@
 					       flatten)
   (let* ((img (car (gimp-image-new height length RGB)))
 	 (border (/ height 4))
-	 (ruler-layer (car (gimp-layer-new img (+ length height) (+ height height) RGBA_IMAGE "Ruler" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img (+ length height) (+ height height) RGBA_IMAGE "ALien Glow" 100 NORMAL)))
-	 (bg-layer (car (gimp-layer-new img (+ length height) (+ height height) RGB_IMAGE "Back" 100 NORMAL)))
+	 (ruler-layer (car (gimp-layer-new img
+					   (+ length height) (+ height height)
+					   RGBA-IMAGE "Ruler" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img
+					  (+ length height) (+ height height)
+					  RGBA-IMAGE "ALien Glow" 100 NORMAL-MODE)))
+	 (bg-layer (car (gimp-layer-new img
+					(+ length height) (+ height height)
+					RGB-IMAGE "Backround" 100 NORMAL-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-undo-disable img)
@@ -40,7 +46,7 @@
      
    ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
     
@@ -48,14 +54,14 @@
     (gimp-palette-set-foreground '(79 79 79))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend ruler-layer FG-BG-RGB NORMAL
+    (gimp-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 height height)
 
     (gimp-palette-set-foreground glow-color)
     (gimp-selection-grow img border)
-    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
 

@@ -33,9 +33,9 @@
    (while (> theNumber 0)
 	  (set! theNumber (- theNumber 1))
 	  (set! theStain (car (gimp-layer-new theImage theSize theSize
-					      RGBA_IMAGE "Stain" 100
+					      RGBA-IMAGE "Stain" 100
 					      (if (= inDark TRUE)
-						  DARKEN-ONLY NORMAL))))
+						  DARKEN-ONLY NORMAL-MODE))))
 
 	  (gimp-image-add-layer theImage theStain 0)
 	  (gimp-selection-all theImage)
@@ -53,7 +53,7 @@
 
 	  (gimp-gradients-set-gradient "Coffee")
 
-	  (gimp-blend theStain CUSTOM NORMAL
+	  (gimp-blend theStain CUSTOM-MODE NORMAL-MODE
 		      GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
 		      FALSE 0 0 TRUE
 		      0 0 0 0)

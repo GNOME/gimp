@@ -39,10 +39,10 @@
   (set! theLayer (car (gimp-layer-new theImage
 				      10
 				      10
-				      RGBA_IMAGE
+				      RGBA-IMAGE
 				      "layer 1"
 				      100
-				      NORMAL) ) )
+				      NORMAL-MODE) ) )
 
   (gimp-palette-set-background inBackColor)
   (gimp-layer-set-name theLayer "Background")
@@ -68,7 +68,7 @@
   (gimp-selection-all theImage)
   (if (= inTrans TRUE)
       (gimp-edit-clear theLayer)
-      (gimp-edit-fill theLayer BG-IMAGE-FILL)
+      (gimp-edit-fill theLayer BACKGROUND-FILL)
       )
   (gimp-selection-none theImage)
   

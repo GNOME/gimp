@@ -100,10 +100,10 @@
 
               (if (= inClearUnselected  TRUE)
                   (begin
-                    (set! l-mask (car (gimp-layer-create-mask inLayer BLACK-MASK)))
+                    (set! l-mask (car (gimp-layer-create-mask inLayer ADD-BLACK-MASK)))
                    )
                   (begin
-                    (set! l-mask (car (gimp-layer-create-mask inLayer WHITE-MASK)))
+                    (set! l-mask (car (gimp-layer-create-mask inLayer ADD-WHITE-MASK)))
                   )
                )
 
@@ -127,7 +127,7 @@
                       )
                   )
                   (gimp-palette-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
-                  (gimp-edit-fill l-mask BG-IMAGE-FILL)
+                  (gimp-edit-fill l-mask BACKGROUND-FILL)
                   (set! l-idx (+ l-idx 1))
                   (set! l-gray (+ l-gray l-step))
                   (gimp-selection-shrink inImage 1)
@@ -144,7 +144,7 @@
                   (begin
                     (gimp-selection-load l-orig-selection)
                     (gimp-palette-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
-                    (gimp-edit-fill l-mask BG-IMAGE-FILL)
+                    (gimp-edit-fill l-mask BACKGROUND-FILL)
                     (gimp-selection-grow inImage inBorderSize)
                     (gimp-selection-invert inImage)
         	    (if (= inClearUnselected  TRUE)
@@ -156,7 +156,7 @@
                           (gimp-palette-set-background (list 255 255 255))
                 	)
         	     )
-                    (gimp-edit-fill l-mask BG-IMAGE-FILL)
+                    (gimp-edit-fill l-mask BACKGROUND-FILL)
                     (gimp-image-remove-channel inImage l-orig-selection)
                   )
                )

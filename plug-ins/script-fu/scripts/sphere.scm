@@ -15,8 +15,8 @@
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB_IMAGE
-					"Sphere Layer" 100 NORMAL)))
+	 (drawable (car (gimp-layer-new img width height RGB-IMAGE
+					"Sphere Layer" 100 NORMAL-MODE)))
 	 (radians (/ (* light *pi*) 180))
 	 (cx (/ width 2))
 	 (cy (/ height 2))
@@ -32,7 +32,7 @@
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill drawable BG-IMAGE-FILL)
+    (gimp-edit-fill drawable BACKGROUND-FILL)
     (gimp-palette-set-background '(20 20 20))
     (if (and
 	 (or (and (>= light 45) (<= light 75))
@@ -53,7 +53,7 @@
     (gimp-ellipse-select img (- cx radius) (- cy radius)
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
-    (gimp-blend drawable FG-BG-RGB NORMAL
+    (gimp-blend drawable FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		light-x light-y light-end-x light-end-y)

@@ -71,17 +71,17 @@
 
 	 ; Additional layers
 	 
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE
-					"bg-layer" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA-IMAGE
+					"bg-layer" 100 NORMAL-MODE)))
 	 (bumpmap-layer (car (gimp-layer-new img
 					     text-width
 					     text-height
-					     RGBA_IMAGE
+					     RGBA-IMAGE
 					     "bumpmap-layer"
 					     100
-					     NORMAL)))
-	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA_IMAGE
-					  "fore-layer" 100 NORMAL))))
+					     NORMAL-MODE)))
+	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA-IMAGE
+					  "fore-layer" 100 NORMAL-MODE))))
 
     ; Create image
 
@@ -103,17 +103,17 @@
     ; Create bumpmap layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bumpmap-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill bumpmap-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img bumpmap-layer 4.0 TRUE TRUE)
 
     ; Fore layer, bumpmap
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill fore-layer BG-IMAGE-FILL)
+    (gimp-edit-fill fore-layer BACKGROUND-FILL)
     (plug-in-bump-map 1 img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
 
     ; Text layer
@@ -121,7 +121,7 @@
     (gimp-layer-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
-    (gimp-blend text-layer CUSTOM NORMAL
+    (gimp-blend text-layer CUSTOM-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0.2 3 TRUE
 		padding padding
@@ -130,13 +130,13 @@
     ; Semicircle at the left
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
     (gimp-palette-set-background (car (gimp-color-picker img text-layer
 							 text-layers-offset 0
 							 TRUE FALSE 0)))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
     ; Fade-out gradient at the right
 
@@ -145,7 +145,7 @@
     (gimp-palette-set-foreground (car (gimp-palette-get-background)))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend bg-layer FG-BG-RGB NORMAL
+    (gimp-blend bg-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0.2 3 TRUE
 		(- img-width fade-width) 0 (- img-width 1) 0)

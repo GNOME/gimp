@@ -30,7 +30,9 @@
   (let* ((hsize (* qsize 2))
 	 (img-size (* qsize 4))
 	 (img (car (gimp-image-new img-size img-size RGB)))
-	 (drawable (car (gimp-layer-new img img-size img-size RGB "Swirly pattern" 100 NORMAL)))
+	 (drawable (car (gimp-layer-new img img-size img-size
+					RGB-IMAGE "Swirly pattern"
+					100 NORMAL-MODE)))
 
 	 ; Save old foregound and background colors
 

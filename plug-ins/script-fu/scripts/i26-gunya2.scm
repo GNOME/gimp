@@ -19,13 +19,13 @@
 					      TRUE font-size PIXELS font))) 
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
-	 (dist-text-layer (car (gimp-layer-new img width height RGBA_IMAGE
-					       "Distorted text" 100 NORMAL)))
-	 (dist-frame-layer (car (gimp-layer-new img width height RGBA_IMAGE
-						"Distorted text" 100 NORMAL)))
+	 (dist-text-layer (car (gimp-layer-new img width height RGBA-IMAGE
+					       "Distorted text" 100 NORMAL-MODE)))
+	 (dist-frame-layer (car (gimp-layer-new img width height RGBA-IMAGE
+						"Distorted text" 100 NORMAL-MODE)))
 	 (distortion-img (car (gimp-image-new width height GRAY)))
 	 (distortion-layer (car (gimp-layer-new distortion-img width height
-						GRAY_IMAGE "temp" 100 NORMAL)))
+						GRAY-IMAGE "temp" 100 NORMAL-MODE)))
 	 (radius (/ font-size 10))
 	 (prob 0.5)
 	 (old-fg (car (gimp-palette-get-foreground)))
@@ -45,15 +45,15 @@
     (gimp-selection-layer-alpha text-layer)
     ;; fill it with the specified color
     (gimp-palette-set-foreground text-color)
-    (gimp-edit-fill dist-text-layer FG-IMAGE-FILL)
+    (gimp-edit-fill dist-text-layer FOREGROUND-FILL)
     ;; get the border shape
     (gimp-selection-border img frame-size)
     (gimp-palette-set-background frame-color)
-    (gimp-edit-fill dist-frame-layer BG-IMAGE-FILL)
+    (gimp-edit-fill dist-frame-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     ;; now make the distortion data
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill distortion-layer BG-IMAGE-FILL)
+    (gimp-edit-fill distortion-layer BACKGROUND-FILL)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     (plug-in-c-astretch 1 distortion-img distortion-layer)
@@ -62,7 +62,7 @@
     (plug-in-displace 1 img dist-text-layer radius radius 1 1
 		      distortion-layer distortion-layer 0)
     ;; make the distortion data once again fro the frame
-    (gimp-edit-fill distortion-layer BG-IMAGE-FILL)
+    (gimp-edit-fill distortion-layer BACKGROUND-FILL)
     (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
     (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
     (plug-in-c-astretch 1 distortion-img distortion-layer)
@@ -73,7 +73,7 @@
     ;; Finally, clear the bottom layer (text-layer)
     (gimp-selection-all img)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill text-layer BG-IMAGE-FILL)
+    (gimp-edit-fill text-layer BACKGROUND-FILL)
     ;; post processing
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -23,8 +23,8 @@
 (define (script-fu-beveled-pattern-bullet diameter pattern transparent)
   (let* ((old-bg-color (car (gimp-palette-get-background)))
 	 (img (car (gimp-image-new diameter diameter RGB)))
-	 (background (car (gimp-layer-new img diameter diameter RGBA_IMAGE "Bullet" 100 NORMAL)))
-	 (bumpmap (car (gimp-layer-new img diameter diameter RGBA_IMAGE "Bumpmap" 100 NORMAL))))
+	 (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bullet" 100 NORMAL-MODE)))
+	 (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE))))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
     (gimp-image-add-layer img bumpmap -1)
@@ -32,21 +32,21 @@
     ; Create pattern layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill background BG-IMAGE-FILL)
+    (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
-    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-ellipse-select img 1 1 (- diameter 2) (- diameter 2) REPLACE TRUE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-ellipse-select img 2 2 (- diameter 4) (- diameter 4) REPLACE TRUE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
 

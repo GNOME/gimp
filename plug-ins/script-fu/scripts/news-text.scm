@@ -24,8 +24,8 @@
 	 (width (+ (car text-ext) 20 blur-radius))
 	 (height  (+ (nth 1 text-ext) 20 blur-radius))
 	 (img (car (gimp-image-new width height RGB)))
-	 (bg-layer (car (gimp-layer-new img width height  RGB_IMAGE "Background" 100 NORMAL)))
-	 (text-layer (car (gimp-layer-new img width height  RGBA_IMAGE "Text layer" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height  RGB-IMAGE "Background" 100 NORMAL-MODE)))
+	 (text-layer (car (gimp-layer-new img width height  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
 	 (text-mask 0)
 	 (grey (/ (* density 255) 100))
 	 (old-fg (car (gimp-palette-get-foreground)))
@@ -42,12 +42,12 @@
     (gimp-palette-set-foreground text-color)
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer (/ (+ 20 blur-radius) 2) (/ (+ 20 blur-radius) 2) string 0 TRUE font-size PIXELS font)))
 
-    (set! text-mask (car (gimp-layer-create-mask text-layer ALPHA-MASK)))
+    (set! text-mask (car (gimp-layer-create-mask text-layer ADD-ALPHA-MASK)))
     (gimp-image-add-layer-mask img text-layer text-mask)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-palette-set-background (list grey grey grey))
-    (gimp-edit-fill text-mask BG-IMAGE-FILL)
+    (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-selection-clear img)
     (if (> blur-radius 0)
         (plug-in-gauss-iir 1 img text-mask blur-radius 1 1)
@@ -55,8 +55,8 @@
 
     (plug-in-newsprint 1 img text-mask cell-size 0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
-    (gimp-edit-fill text-layer FG-IMAGE-FILL)
-    (gimp-image-remove-layer-mask img text-layer APPLY)
+    (gimp-edit-fill text-layer FOREGROUND-FILL)
+    (gimp-image-remove-layer-mask img text-layer MASK-APPLY)
 
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)

@@ -56,9 +56,9 @@
 
     (gimp-layer-set-preserve-trans mask-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill mask-layer BG-IMAGE-FILL)
+    (gimp-edit-fill mask-layer BACKGROUND-FILL)
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill mask BG-IMAGE-FILL)
+    (gimp-edit-fill mask BACKGROUND-FILL)
 
     (plug-in-tile 1 img layer1 width height FALSE)
 
@@ -87,9 +87,9 @@
     (gimp-palette-set-background '(180 180 180))
     (gimp-selection-load mask-fat)
     (gimp-selection-invert img)
-    (gimp-edit-fill mask-emboss BG-IMAGE-FILL)
+    (gimp-edit-fill mask-emboss BACKGROUND-FILL)
     (gimp-selection-load mask)
-    (gimp-edit-fill mask-emboss BG-IMAGE-FILL)
+    (gimp-edit-fill mask-emboss BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (set! mask-highlight (car (gimp-channel-copy mask-emboss)))
@@ -102,7 +102,7 @@
     (gimp-edit-copy mask-shadow)
     (set! shadow-layer (car (gimp-edit-paste layer1 FALSE)))
     (gimp-floating-sel-to-layer shadow-layer)
-    (gimp-layer-set-mode shadow-layer MULTIPLY)
+    (gimp-layer-set-mode shadow-layer MULTIPLY-MODE)
 
     (gimp-edit-copy mask-highlight)
     (set! highlight-layer (car (gimp-edit-paste shadow-layer FALSE)))
@@ -112,25 +112,25 @@
     (gimp-edit-copy mask)
     (set! cast-shadow-layer (car (gimp-edit-paste highlight-layer FALSE)))
     (gimp-floating-sel-to-layer cast-shadow-layer)
-    (gimp-layer-set-mode cast-shadow-layer MULTIPLY)
+    (gimp-layer-set-mode cast-shadow-layer MULTIPLY-MODE)
     (gimp-layer-set-opacity cast-shadow-layer 75)
     (plug-in-gauss-rle 1 img cast-shadow-layer feather TRUE TRUE)
     (gimp-layer-translate cast-shadow-layer offx offy)
 
-    (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer BLACK-MASK)))
+    (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))
     (gimp-image-add-layer-mask img cast-shadow-layer csl-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill csl-mask BG-IMAGE-FILL)
+    (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-add-layer img inset-layer 1)
 
-    (set! il-mask (car (gimp-layer-create-mask inset-layer BLACK-MASK)))
+    (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-image-add-layer-mask img inset-layer il-mask)
     (gimp-selection-load mask)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-edit-fill il-mask BG-IMAGE-FILL)
+    (gimp-edit-fill il-mask BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (gimp-levels inset-layer 0 0 255 inset-gamma 0 255)

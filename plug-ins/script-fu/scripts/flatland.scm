@@ -36,7 +36,8 @@
 (define (script-fu-flatland width height seed detail xscale yscale)
   (let* (
 	 (img (car (gimp-image-new width height RGB)))
-	 (layer-one (car (gimp-layer-new img width height RGB "bottom" 100 NORMAL)))
+	 (layer-one (car (gimp-layer-new img width height
+					 RGB-IMAGE "bottom" 100 NORMAL-MODE)))
 	)
 
   (gimp-image-undo-disable img)

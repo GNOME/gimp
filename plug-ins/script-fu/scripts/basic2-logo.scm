@@ -19,9 +19,9 @@
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (posx (- (car (gimp-drawable-offsets logo-layer))))
 	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (highlight-layer (car (gimp-layer-copy logo-layer TRUE)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 MULTIPLY)))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 MULTIPLY-MODE)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -32,21 +32,21 @@
     (gimp-image-add-layer img highlight-layer 1)
     (gimp-palette-set-foreground text-color)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
-    (gimp-edit-fill logo-layer FG-IMAGE-FILL)
+    (gimp-edit-fill logo-layer FOREGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-palette-set-foreground (color-highlight text-color))
     (gimp-layer-set-preserve-trans highlight-layer TRUE)
-    (gimp-edit-fill highlight-layer FG-IMAGE-FILL)
+    (gimp-edit-fill highlight-layer FOREGROUND-FILL)
     (gimp-palette-set-background bg-color)
-    (gimp-drawable-fill bg-layer BG-IMAGE-FILL)
+    (gimp-drawable-fill bg-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-feather img 7.5)
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend logo-layer FG-BG-RGB MULTIPLY
+    (gimp-blend logo-layer FG-BG-RGB-MODE MULTIPLY-MODE
 		GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 width height)

@@ -69,7 +69,7 @@
 						  type
 						  "effect layer"
 						  100
-						  NORMAL)))
+						  NORMAL-MODE)))
 	  
 	  (gimp-image-add-layer image effect-layer -1)
 	  (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)

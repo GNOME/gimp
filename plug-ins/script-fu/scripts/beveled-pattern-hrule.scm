@@ -23,8 +23,8 @@
 (define (script-fu-beveled-pattern-hrule width height pattern)
   (let* ((old-bg-color (car (gimp-palette-get-background)))
 	 (img (car (gimp-image-new width height RGB)))
-	 (background (car (gimp-layer-new img width height RGB_IMAGE "Hrule" 100 NORMAL)))
-	 (bumpmap (car (gimp-layer-new img width height RGBA_IMAGE "Bumpmap" 100 NORMAL))))
+	 (background (car (gimp-layer-new img width height RGB-IMAGE "Hrule" 100 NORMAL-MODE)))
+	 (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE))))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
     (gimp-image-add-layer img bumpmap -1)
@@ -32,21 +32,21 @@
     ; Create pattern layer
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill background BG-IMAGE-FILL)
+    (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
-    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
     (gimp-rect-select img 1 1 (- width 2) (- height 2) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-rect-select img 2 2 (- width 4) (- height 4) REPLACE FALSE 0)
-    (gimp-edit-fill bumpmap BG-IMAGE-FILL)
+    (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
 

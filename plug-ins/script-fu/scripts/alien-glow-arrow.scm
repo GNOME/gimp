@@ -78,10 +78,18 @@
 	 (grow-amount (/ size 12))
 	 (blur-radius (/ size 3))
 	 (offset (/ size 6))
-	 (ruler-layer (car (gimp-layer-new img size size  RGBA_IMAGE "Ruler" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img size size  RGBA_IMAGE "Alien Glow" 100 NORMAL)))
-	 (bg-layer (car (gimp-layer-new img size size  RGB_IMAGE "Back" 100 NORMAL)))
-	 (big-arrow (point-list->double-array (rotate-points (make-arrow size offset) size orientation)))
+	 (ruler-layer (car (gimp-layer-new img
+					   size size RGBA-IMAGE
+					   "Ruler" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img
+					  size size RGBA-IMAGE
+					  "Alien Glow" 100 NORMAL-MODE)))
+	 (bg-layer (car (gimp-layer-new img
+					size size RGB-IMAGE
+					"Background" 100 NORMAL-MODE)))
+	 (big-arrow (point-list->double-array
+		     (rotate-points (make-arrow size offset)
+				    size orientation)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
@@ -100,14 +108,14 @@
     (gimp-palette-set-foreground '(103 103 103))
     (gimp-palette-set-background '(0 0 0))
 
-    (gimp-blend ruler-layer FG-BG-RGB NORMAL
+    (gimp-blend ruler-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 size size)
     
     (gimp-selection-grow img grow-amount)
     (gimp-palette-set-foreground glow-color)
-    (gimp-edit-fill glow-layer FG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer FOREGROUND-FILL)
 
     (gimp-selection-none img)
 
@@ -115,7 +123,7 @@
     (plug-in-gauss-rle 1 img glow-layer blur-radius TRUE TRUE)
 
     (gimp-palette-set-background bg-color)
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)

@@ -146,12 +146,10 @@ static LISP  script_fu_register_call  (LISP      a);
 static LISP  script_fu_quit_call      (LISP      a);
 
 
-/*********
-
-	  Below can be found the functions responsible for registering the gimp functions
-	  and types against the scheme interpreter.
-
-********/
+/*
+ * Below can be found the functions responsible for registering the
+ * gimp functions and types against the scheme interpreter.
+ */
 
 
 static void

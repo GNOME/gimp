@@ -44,7 +44,7 @@
          (height (car (gimp-drawable-height logo-layer)))
          (posx (- (car (gimp-drawable-offsets logo-layer))))
          (posy (- (cadr (gimp-drawable-offsets logo-layer))))
-         (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
+         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
          (grow-me (car (gimp-layer-copy logo-layer TRUE)))
 
          (old-gradient (car (gimp-gradients-get-gradient)))
@@ -60,7 +60,7 @@
 
     (gimp-palette-set-background bg-color)
     (gimp-selection-all img)
-    (gimp-bucket-fill bg-layer BG-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
     (gimp-palette-set-background old-bg)
 
@@ -73,14 +73,14 @@
     (if (= use-pattern-text TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-text)
-        (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+        (gimp-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-text FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-text)
 
-        (gimp-blend logo-layer CUSTOM NORMAL
+        (gimp-blend logo-layer CUSTOM-MODE NORMAL-MODE
 		    GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-text-reverse
 		    FALSE 0 0 TRUE
 		    0 0 0 (+ height 5))))
@@ -98,14 +98,14 @@
     (if (= use-pattern-outline TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-outline)
-        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+        (gimp-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)))
 
     (if (= use-pattern-outline FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-outline)
 
-        (gimp-blend grow-me CUSTOM NORMAL
+        (gimp-blend grow-me CUSTOM-MODE NORMAL-MODE
 		    GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-outline-reverse
 		    FALSE 0 0 TRUE
 		    0 0 0 (+ height 5))))

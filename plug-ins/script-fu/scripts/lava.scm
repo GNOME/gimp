@@ -65,7 +65,7 @@
 						type
 						"Lava Layer"
 						100
-						NORMAL)))
+						NORMAL-MODE)))
 	  
 	  (gimp-image-add-layer image lava-layer -1)
 	  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)

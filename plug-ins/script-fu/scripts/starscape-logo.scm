@@ -56,9 +56,9 @@
 	 (cy (/ height 2.0))
 	 (bx (+ cx (car (find-blend-coords w h))))
 	 (by (+ cy (cdr (find-blend-coords w h))))
-	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
-	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Glow" 100 NORMAL)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Drop Shadow" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
+	 (glow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Glow" 100 NORMAL-MODE)))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (bump-channel (car (gimp-channel-new img width height "Bump Map" 50 '(0 0 0))))
 	 (old-pattern (car (gimp-patterns-get-pattern)))
 	 (old-fg (car (gimp-palette-get-foreground)))
@@ -73,7 +73,7 @@
     (gimp-layer-set-preserve-trans logo-layer TRUE)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-edit-fill bg-layer BG-IMAGE-FILL)
+    (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear glow-layer)
 
@@ -82,19 +82,19 @@
     (gimp-selection-feather img feather)
     (gimp-palette-set-background glow-color)
     (gimp-selection-feather img feather)
-    (gimp-edit-fill glow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-feather img shadow-feather)
     (gimp-palette-set-background '(0 0 0))
     (gimp-selection-translate img offx offy)
-    (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
+    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
 
     (gimp-selection-none img)
     (gimp-palette-set-background '(31 31 31))
     (gimp-palette-set-foreground '(255 255 255))
 
-    (gimp-blend logo-layer FG-BG-RGB NORMAL
+    (gimp-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
 		GRADIENT-BILINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		cx cy bx by)
@@ -103,7 +103,7 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Stone")
-    (gimp-bucket-fill bump-channel PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
+    (gimp-bucket-fill bump-channel PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map 1 img logo-layer bump-channel
 		      135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
     (gimp-image-remove-channel img bump-channel)

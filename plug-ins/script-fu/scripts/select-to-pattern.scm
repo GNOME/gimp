@@ -47,7 +47,7 @@
 
     (gimp-edit-copy drawable)
 
-    (set! pattern_draw_type RGB_IMAGE)
+    (set! pattern_draw_type RGB-IMAGE)
 
     (set! pattern_image_type RGB)
 
@@ -56,7 +56,7 @@
     (set! pattern-draw
           (car (gimp-layer-new pattern-image
                                selection-width
-                               selection-height pattern_draw_type "Pattern" 100 NORMAL)))
+                               selection-height pattern_draw_type "Pattern" 100 NORMAL-MODE)))
 
     (gimp-image-add-layer pattern-image pattern-draw 0)
 

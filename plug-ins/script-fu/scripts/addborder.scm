@@ -103,10 +103,10 @@
          (old-bg (car (gimp-palette-get-background)))
 	 (width (+ owidth (* 2 xsize)))
 	 (height (+ oheight (* 2 ysize)))
-	 (layer (car (gimp-layer-new img width height RGBA_IMAGE "Border-Layer" 100 NORMAL))))
+	 (layer (car (gimp-layer-new img width height RGBA-IMAGE "Border-Layer" 100 NORMAL-MODE))))
 ;Add this for debugging    (verbose 4)
     (gimp-undo-push-group-start img)
-    (gimp-drawable-fill layer TRANS-IMAGE-FILL)
+    (gimp-drawable-fill layer TRANSPARENT-FILL)
     (gimp-image-resize img
 		       width
     		       height
@@ -120,7 +120,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill layer BG-IMAGE-FILL)
+    (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-palette-set-background (adjcolour colour (/ dvalue 2)))
     (gimp-free-select img
 		      10
@@ -129,7 +129,7 @@
 		      0
 		      0
 		      0.0)
-    (gimp-edit-fill layer BG-IMAGE-FILL)
+    (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-palette-set-background (adjcolour colour (- 0 (/ dvalue 2))))
     (gimp-free-select img
 		      10
@@ -139,7 +139,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill layer BG-IMAGE-FILL)
+    (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-palette-set-background (adjcolour colour (- 0 dvalue)))
     (gimp-free-select img
 		      10
@@ -149,7 +149,7 @@
 		      0
 		      0.0)
 
-    (gimp-edit-fill layer BG-IMAGE-FILL)
+    (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
     (gimp-undo-push-group-end img)
