@@ -1,3 +1,16 @@
+1999-03-18  Jay Cox  <jaycox@earthlink.net>
+
+	* app/ops_buttons.h: removed a c++ style comment
+
+	* app/paint_funcs.c: applied Craig Wiegert's patch to fix
+ 	the rounding errors in the scaling code.
+	
+	* app/paint_funcs.c: Use a mutex lock in disolve pixels instead of
+ 	rand_r on linux systems since linux's rand_r appears to be broken.
+
+	* app/bezier_select.c: applied Shuji Narazaki's patch that corrects
+ 	for layer offsets in bezier_stroke.
+
 Thu Mar 18 19:35:48 EST 1999  Adrian Likins <adrian@gimp.org>
 
 	* app/paintbrush.c

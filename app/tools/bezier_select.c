@@ -2256,9 +2256,27 @@ bezier_stroke (BezierSelect *bezier_sel,
 
   if (stroke_points)
     {
+      GimpDrawable *drawable;
+      int offset_x, offset_y;
+    
+      drawable = gimage_active_drawable (gdisp->gimage);
+      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+
+      if ((offset_x != 0) || (offset_y != 0))
+       {
+         gdouble *ptr;
+
+         ptr = stroke_points;
+         while (ptr < stroke_points + (num_stroke_points * 2))
+           {
+             *ptr++ -= offset_x;
+             *ptr++ -= offset_y;
+           }
+       }
+
       return_vals = procedural_db_run_proc ("gimp_paintbrush",
 					    &nreturn_vals,
-					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
+					    PDB_DRAWABLE, drawable_ID (drawable),
 					    PDB_FLOAT, (gdouble) 0,
 					    PDB_INT32, (gint32) num_stroke_points * 2,
 					    PDB_FLOATARRAY, stroke_points,

@@ -24,7 +24,7 @@ typedef struct _OpsButton OpsButton;
 typedef void (*OpsButtonCallback) (GtkWidget *widget,
 				   gpointer   user_data);
 
-// typedef OpsButtonCallback OpsButtonExtCallbacks;
+/* typedef OpsButtonCallback OpsButtonExtCallbacks; */
 
 typedef enum {
   OPS_BUTTON_MODIFIER_NONE,

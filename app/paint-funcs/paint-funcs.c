@@ -39,6 +39,12 @@
 
 #include <stdio.h>
 
+#ifdef ENABLE_MP
+/* pthread.h is only needed because of an apparent bug in the
+   rand_r function in GNU Libc 2.1 */
+#include <pthread.h>
+#endif /* ENABLE_MP */
+
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
 #define HASH_TABLE_SIZE    1021
@@ -1000,13 +1006,23 @@ dissolve_pixels (const unsigned char *src,
 {
   int alpha, b;
   int rand_val;
-#ifdef ENABLE_MP
+  
+#if  defined(ENABLE_MP) && defined(linux)
+  /* rand_r seems to be broken on the linux systems we tried, so
+     disable it for now */
+  /* if we are mult-threaded and can't use rand_r then we must
+     use a mutex to force single-threaded execution of this function */
+  static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+  pthread_mutex_lock(&mutex);
+  {
+#elif defined(ENABLE_MP) && !defined(linux)
   /* if we are running with multiple threads rand_r give _much_
      better performance than rand */
   unsigned int seed;
   seed = random_table [y % RANDOM_TABLE_SIZE];
   for (b = 0; b < x; b++)
     rand_r(&seed);
+
 #else
   /*  Set up the random number generator  */
   srand (random_table [y % RANDOM_TABLE_SIZE]);
@@ -1022,7 +1038,7 @@ dissolve_pixels (const unsigned char *src,
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
-#ifdef ENABLE_MP
+#if  defined(ENABLE_MP) && !defined(linux)
       rand_val = (rand_r(&seed) & 0xFF);
 #else
       rand_val = (rand() & 0xFF);
@@ -1035,6 +1051,10 @@ dissolve_pixels (const unsigned char *src,
       dest += db;
       src += sb;
     }
+#if  defined(ENABLE_MP) && defined(linux)
+  }
+  pthread_mutex_unlock(&mutex);
+#endif /* defined(ENABLE_MP) && !defined(_SGI_REENTRANT_FUNCTIONS) */
 }
 
 void
@@ -3755,7 +3775,7 @@ scale_region (PixelRegion *srcPR,
 	    {
 	      b = bytes;
 	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac);
+		*d++ = (unsigned char) (*r++ * tot_frac + 0.5);
 	    }
 
 	  /*  set the pixel region span  */
@@ -3928,7 +3948,7 @@ subsample_region (PixelRegion *srcPR,
 	    {
 	      b = bytes;
 	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac);
+		*d++ = (unsigned char) (*r++ * tot_frac + 0.5);
 	    }
 
 	  dest += destwidth;
