@@ -1,5 +1,24 @@
 2005-02-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/presets.c (get_object_name): use
+	g_filename_display_basename().
+
+2005-02-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient-load.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/plug-in/plug-in.c
+	* libgimpbase/gimputils.c
+	* libgimpmodule/gimpmodule.c
+	* libgimpwidgets/gimppatheditor.c
+	* tools/pdbgen/pdb/image.pdb: use g_filename_display_name() or
+	g_filename_display_basename() where appropriate.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2005-02-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-processor.c: better error reporting.
 
 2005-02-20  Sven Neumann  <sven@gimp.org>

@@ -125,8 +125,8 @@ get_object_name (gchar *dir, gchar *filename, void *context)
    * */
 
   full_path = g_build_filename (dir, filename, NULL);
+
   unprocessed_line = get_early_line_from_preset (full_path, "name=");
-  g_free (full_path);
   if (unprocessed_line)
     {
       ret = g_strcompress (unprocessed_line);
@@ -135,8 +135,11 @@ get_object_name (gchar *dir, gchar *filename, void *context)
   else
     {
       /* The object name defaults to a filename-derived description */
-      ret = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      ret = g_filename_display_basename (full_path);
     }
+
+  g_free (full_path);
+
   return ret;
 }
 
