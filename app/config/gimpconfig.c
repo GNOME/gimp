@@ -116,7 +116,7 @@ gimp_config_serialize (GObject      *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  fd = open (filename, O_WRONLY | O_CREAT, 
+  fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 
 #ifndef G_OS_WIN32
              S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 #else
