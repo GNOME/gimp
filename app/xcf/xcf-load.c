@@ -49,6 +49,7 @@
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
+#include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
 
 #include "vectors/gimpanchor.h"
@@ -73,7 +74,8 @@ static gboolean        xcf_load_layer_props   (XcfInfo      *info,
                                                GimpLayer    *layer,
                                                gboolean     *apply_mask,
                                                gboolean     *edit_mask,
-                                               gboolean     *show_mask);
+                                               gboolean     *show_mask,
+                                               guint32      *text_layer_flags);
 static gboolean        xcf_load_channel_props (XcfInfo      *info,
                                                GimpImage    *gimage,
                                                GimpChannel **channel);
@@ -414,7 +416,7 @@ xcf_load_image_props (XcfInfo   *info,
 		gimp_parasite_free (p);
 	      }
 	    if (info->cp - base != prop_size)
-	      g_message ("Error detected while loading an image's parasites");
+	      g_message ("Error while loading an image's parasites");
 	  }
 	  break;
 
@@ -517,9 +519,10 @@ xcf_load_image_props (XcfInfo   *info,
 	  break;
 
 	default:
-	  g_message ("unexpected/unknown image property: %d (skipping)",
-                     prop_type);
-
+#ifdef GIMP_UNSTABLE
+	  g_printerr ("unexpected/unknown image property: %d (skipping)",
+                      prop_type);
+#endif
 	  {
 	    guint8 buf[16];
 	    guint  amount;
@@ -544,7 +547,8 @@ xcf_load_layer_props (XcfInfo   *info,
 		      GimpLayer *layer,
                       gboolean  *apply_mask,
                       gboolean  *edit_mask,
-                      gboolean  *show_mask)
+                      gboolean  *show_mask,
+                      guint32   *text_layer_flags)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -558,15 +562,18 @@ xcf_load_layer_props (XcfInfo   *info,
 	{
 	case PROP_END:
 	  return TRUE;
+
 	case PROP_ACTIVE_LAYER:
 	  info->active_layer = layer;
 	  break;
+
 	case PROP_FLOATING_SELECTION:
 	  info->floating_sel = layer;
 	  info->cp +=
             xcf_read_int32 (info->fp,
                             (guint32 *) &info->floating_sel_offset, 1);
 	  break;
+
 	case PROP_OPACITY:
           {
             guint32 opacity;
@@ -577,6 +584,7 @@ xcf_load_layer_props (XcfInfo   *info,
                                     GIMP_OPACITY_OPAQUE);
           }
 	  break;
+
 	case PROP_VISIBLE:
 	  {
 	    gboolean visible;
@@ -586,6 +594,7 @@ xcf_load_layer_props (XcfInfo   *info,
                                    visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
+
 	case PROP_LINKED:
           {
             gboolean linked;
@@ -595,19 +604,24 @@ xcf_load_layer_props (XcfInfo   *info,
                                   linked ? TRUE : FALSE, FALSE);
           }
 	  break;
+
 	case PROP_PRESERVE_TRANSPARENCY:
 	  info->cp +=
             xcf_read_int32 (info->fp, (guint32 *) &layer->preserve_trans, 1);
 	  break;
+
 	case PROP_APPLY_MASK:
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) apply_mask, 1);
 	  break;
+
 	case PROP_EDIT_MASK:
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) edit_mask, 1);
 	  break;
+
 	case PROP_SHOW_MASK:
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) show_mask, 1);
 	  break;
+
 	case PROP_OFFSETS:
 	  info->cp +=
             xcf_read_int32 (info->fp,
@@ -616,37 +630,46 @@ xcf_load_layer_props (XcfInfo   *info,
             xcf_read_int32 (info->fp,
                             (guint32 *) &GIMP_ITEM (layer)->offset_y, 1);
 	  break;
+
 	case PROP_MODE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->mode, 1);
 	  break;
+
 	case PROP_TATTOO:
 	  info->cp += xcf_read_int32 (info->fp,
 				      (guint32 *) &GIMP_ITEM (layer)->tattoo,
 				      1);
 	  break;
-	 case PROP_PARASITES:
-           {
-             glong         base = info->cp;
-             GimpParasite *p;
 
-             while (info->cp - base < prop_size)
-               {
-                 p = xcf_load_parasite (info);
-                 gimp_item_parasite_attach (GIMP_ITEM (layer), p);
-                 gimp_parasite_free (p);
-               }
-             if (info->cp - base != prop_size)
-               g_message ("Error detected while loading a layer's parasites");
-           }
-	 break;
+        case PROP_PARASITES:
+          {
+            glong         base = info->cp;
+            GimpParasite *p;
+
+            while (info->cp - base < prop_size)
+              {
+                p = xcf_load_parasite (info);
+                gimp_item_parasite_attach (GIMP_ITEM (layer), p);
+                gimp_parasite_free (p);
+              }
+            if (info->cp - base != prop_size)
+              g_message ("Error while loading a layer's parasites");
+          }
+          break;
+
+        case PROP_TEXT_LAYER_FLAGS:
+          info->cp += xcf_read_int32 (info->fp, text_layer_flags, 1);
+          break;
+
 	default:
 	  {
 	    guint8 buf[16];
 	    guint  amount;
 
-            g_message ("unexpected/unknown layer property: %d (skipping)",
-                       prop_type);
-
+#ifdef GIMP_UNSTABLE
+            g_printerr ("unexpected/unknown layer property: %d (skipping)",
+                        prop_type);
+#endif
 	    while (prop_size > 0)
 	      {
 		amount = MIN (16, prop_size);
@@ -678,9 +701,11 @@ xcf_load_channel_props (XcfInfo      *info,
 	{
 	case PROP_END:
 	  return TRUE;
-	case PROP_ACTIVE_CHANNEL:
+
+ 	case PROP_ACTIVE_CHANNEL:
 	  info->active_channel = *channel;
 	  break;
+
 	case PROP_SELECTION:
 	  g_object_unref (gimage->selection_mask);
 	  gimage->selection_mask =
@@ -699,6 +724,7 @@ xcf_load_channel_props (XcfInfo      *info,
 	  (*channel)->boundary_known = FALSE;
 	  (*channel)->bounds_known   = FALSE;
 	  break;
+
 	case PROP_OPACITY:
 	  {
 	    guint32 opacity;
@@ -707,6 +733,7 @@ xcf_load_channel_props (XcfInfo      *info,
 	    (*channel)->color.a = opacity / 255.0;
 	  }
 	  break;
+
 	case PROP_VISIBLE:
 	  {
 	    gboolean visible;
@@ -716,6 +743,7 @@ xcf_load_channel_props (XcfInfo      *info,
                                    visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
+
 	case PROP_LINKED:
           {
             gboolean linked;
@@ -725,6 +753,7 @@ xcf_load_channel_props (XcfInfo      *info,
                                   linked ? TRUE : FALSE, FALSE);
           }
 	  break;
+
 	case PROP_SHOW_MASKED:
           {
             gboolean show_masked;
@@ -733,6 +762,7 @@ xcf_load_channel_props (XcfInfo      *info,
             gimp_channel_set_show_masked (*channel, show_masked);
           }
 	  break;
+
 	case PROP_COLOR:
 	  {
 	    guchar col[3];
@@ -742,28 +772,33 @@ xcf_load_channel_props (XcfInfo      *info,
 	    gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
 	  }
 	  break;
+
 	case PROP_TATTOO:
 	  info->cp +=
             xcf_read_int32 (info->fp, &GIMP_ITEM (*channel)->tattoo, 1);
 	  break;
-	 case PROP_PARASITES:
-           {
-             glong         base = info->cp;
-             GimpParasite *p;
 
-             while ((info->cp - base) < prop_size)
-               {
-                 p = xcf_load_parasite (info);
-                 gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
-                 gimp_parasite_free (p);
-               }
-             if (info->cp - base != prop_size)
-               g_message("Error detected while loading a channel's parasites");
-           }
-           break;
+        case PROP_PARASITES:
+          {
+            glong         base = info->cp;
+            GimpParasite *p;
+
+            while ((info->cp - base) < prop_size)
+              {
+                p = xcf_load_parasite (info);
+                gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
+                gimp_parasite_free (p);
+              }
+            if (info->cp - base != prop_size)
+              g_message ("Error while loading a channel's parasites");
+          }
+          break;
+
 	default:
-	  g_message ("unexpected/unknown channel property: %d (skipping)",
-                     prop_type);
+#ifdef GIMP_UNSTABLE
+	  g_printerr ("unexpected/unknown channel property: %d (skipping)",
+                      prop_type);
+#endif
 
 	  {
 	    guint8 buf[16];
@@ -806,6 +841,7 @@ xcf_load_layer (XcfInfo   *info,
   gboolean       show_mask;
   gboolean       active;
   gboolean       floating;
+  guint32        text_layer_flags;
   gint           width;
   gint           height;
   gint           type;
@@ -832,7 +868,8 @@ xcf_load_layer (XcfInfo   *info,
 
   /* read in the layer properties */
   if (! xcf_load_layer_props (info, gimage, layer,
-                              &apply_mask, &edit_mask, &show_mask))
+                              &apply_mask, &edit_mask, &show_mask,
+                              &text_layer_flags))
     goto error;
 
   /* call the evil text layer hack that might change our layer pointer */
@@ -841,6 +878,9 @@ xcf_load_layer (XcfInfo   *info,
 
   if (gimp_text_layer_xcf_load_hack (&layer))
     {
+      gimp_text_layer_set_xcf_flags (GIMP_TEXT_LAYER (layer),
+                                     text_layer_flags);
+
       if (active)
         info->active_layer = layer;
       if (floating)
@@ -1690,6 +1730,7 @@ xcf_swap_func (gint      fd,
 	  nleft -= err;
 	}
       break;
+
     case SWAP_OUT:
     case SWAP_DELETE:
     case SWAP_COMPRESS:

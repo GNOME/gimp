@@ -534,8 +534,18 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_TATTOO, error,
                                   GIMP_ITEM (layer)->tattoo));
 
-  if (GIMP_IS_TEXT_LAYER (layer))
-    gimp_text_layer_xcf_save_prepare (GIMP_TEXT_LAYER (layer));
+  if (GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
+    {
+      GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
+      guint32        flags      = gimp_text_layer_get_xcf_flags (text_layer);
+
+      gimp_text_layer_xcf_save_prepare (text_layer);
+
+      if (flags)
+        xcf_check_error (xcf_save_prop (info,
+                                        gimage, PROP_TEXT_LAYER_FLAGS, error,
+                                        flags));
+    }
 
   if (gimp_parasite_list_length (GIMP_ITEM (layer)->parasites) > 0)
     {
@@ -615,6 +625,7 @@ xcf_save_prop (XcfInfo   *info,
       xcf_write_prop_type_check_error (info, prop_type);
       xcf_write_int32_check_error (info, &size, 1);
       break;
+
     case PROP_COLORMAP:
       {
 	guint32 ncolors;
@@ -630,6 +641,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int8_check_error  (info, colors, ncolors * 3);
       }
       break;
+
     case PROP_ACTIVE_LAYER:
     case PROP_ACTIVE_CHANNEL:
     case PROP_SELECTION:
@@ -638,6 +650,7 @@ xcf_save_prop (XcfInfo   *info,
       xcf_write_prop_type_check_error (info, prop_type);
       xcf_write_int32_check_error (info, &size, 1);
       break;
+
     case PROP_FLOATING_SELECTION:
       {
 	guint32 dummy;
@@ -651,6 +664,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &dummy, 1);
       }
       break;
+
     case PROP_OPACITY:
       {
 	gdouble opacity;
@@ -667,6 +681,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &uint_opacity, 1);
       }
       break;
+
     case PROP_MODE:
       {
 	gint32 mode;
@@ -679,6 +694,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, (guint32 *) &mode, 1);
       }
       break;
+
     case PROP_VISIBLE:
       {
 	guint32 visible;
@@ -691,6 +707,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &visible, 1);
       }
       break;
+
     case PROP_LINKED:
       {
 	guint32 linked;
@@ -703,6 +720,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &linked, 1);
       }
       break;
+
     case PROP_PRESERVE_TRANSPARENCY:
       {
 	guint32 preserve_trans;
@@ -715,6 +733,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &preserve_trans, 1);
       }
       break;
+
     case PROP_APPLY_MASK:
       {
 	guint32 apply_mask;
@@ -727,6 +746,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &apply_mask, 1);
       }
       break;
+
     case PROP_EDIT_MASK:
       {
 	guint32 edit_mask;
@@ -739,6 +759,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &edit_mask, 1);
       }
       break;
+
     case PROP_SHOW_MASK:
       {
 	guint32 show_mask;
@@ -751,6 +772,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &show_mask, 1);
       }
       break;
+
     case PROP_SHOW_MASKED:
       {
 	guint32 show_masked;
@@ -763,6 +785,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &show_masked, 1);
       }
       break;
+
     case PROP_OFFSETS:
       {
 	gint32 offsets[2];
@@ -776,6 +799,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, (guint32 *) offsets, 2);
       }
       break;
+
     case PROP_COLOR:
       {
 	guchar *color;
@@ -788,6 +812,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int8_check_error  (info, color, 3);
       }
       break;
+
     case PROP_COMPRESSION:
       {
 	guint8 compression;
@@ -800,6 +825,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int8_check_error  (info, &compression, 1);
       }
       break;
+
     case PROP_GUIDES:
       {
 	GList     *guides;
@@ -842,6 +868,7 @@ xcf_save_prop (XcfInfo   *info,
 	  }
       }
       break;
+
     case PROP_RESOLUTION:
       {
 	gfloat xresolution, yresolution;
@@ -860,6 +887,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_float_check_error (info, &yresolution, 1);
       }
       break;
+
     case PROP_TATTOO:
       {
 	guint32 tattoo;
@@ -872,6 +900,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &tattoo, 1);
       }
       break;
+
     case PROP_PARASITES:
       {
 	GimpParasiteList *list;
@@ -907,6 +936,7 @@ xcf_save_prop (XcfInfo   *info,
 	  }
       }
       break;
+
     case PROP_UNIT:
       {
 	guint32 unit;
@@ -920,6 +950,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_int32_check_error (info, &unit, 1);
       }
       break;
+
     case PROP_PATHS:
       {
 	guint32 base, length;
@@ -951,6 +982,7 @@ xcf_save_prop (XcfInfo   *info,
         xcf_check_error (xcf_seek_end (info, error));
       }
       break;
+
     case PROP_USER_UNIT:
       {
 	GimpUnit     unit;
@@ -984,6 +1016,7 @@ xcf_save_prop (XcfInfo   *info,
 	xcf_write_string_check_error (info, (gchar **) unit_strings, 5);
       }
       break;
+
     case PROP_VECTORS:
       {
 	guint32 base, length;
@@ -1013,6 +1046,19 @@ xcf_save_prop (XcfInfo   *info,
           }
 
         xcf_check_error (xcf_seek_end (info, error));
+      }
+      break;
+
+    case PROP_TEXT_LAYER_FLAGS:
+      {
+	guint32 flags;
+
+	flags = va_arg (args, guint32);
+	size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+	xcf_write_int32_check_error (info, &size, 1);
+	xcf_write_int32_check_error (info, &flags, 1);
       }
       break;
     }

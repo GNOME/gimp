@@ -37,6 +37,14 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  TEXT_LAYER_XCF_NONE              = 0,
+  TEXT_LAYER_XCF_DONT_AUTO_RENAME  = 1 << 0,
+  TEXT_LAYER_XCF_MODIFIED          = 1 << 1
+};
+
+
 static GimpLayer * gimp_text_layer_from_layer (GimpLayer *layer,
                                                GimpText  *text);
 
@@ -97,8 +105,7 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 void
 gimp_text_layer_xcf_save_prepare (GimpTextLayer *layer)
 {
-  GimpText     *text;
-  GimpParasite *parasite;
+  GimpText *text;
 
   g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
 
@@ -109,10 +116,40 @@ gimp_text_layer_xcf_save_prepare (GimpTextLayer *layer)
     return;
 
   text = gimp_text_layer_get_text (layer);
+  if (text)
+    {
+      GimpParasite *parasite = gimp_text_to_parasite (text);
 
-  parasite = gimp_text_to_parasite (text);
+      gimp_parasite_list_add (GIMP_ITEM (layer)->parasites, parasite);
+    }
+}
 
-  gimp_parasite_list_add (GIMP_ITEM (layer)->parasites, parasite);
+guint32
+gimp_text_layer_get_xcf_flags (GimpTextLayer *text_layer)
+{
+  guint flags = 0;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (text_layer), 0);
+
+  if (! text_layer->auto_rename)
+    flags |= TEXT_LAYER_XCF_DONT_AUTO_RENAME;
+
+  if (text_layer->modified)
+    flags |= TEXT_LAYER_XCF_MODIFIED;
+
+  return flags;
+}
+
+void
+gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
+                               guint32        flags)
+{
+  g_return_if_fail (GIMP_IS_TEXT_LAYER (text_layer));
+
+  g_object_set (text_layer,
+                "auto-rename", (flags & TEXT_LAYER_XCF_DONT_AUTO_RENAME) == 0,
+                "modified",    (flags & TEXT_LAYER_XCF_MODIFIED)         != 0,
+                NULL);
 }
 
 
@@ -145,7 +182,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
 
-  item = GIMP_ITEM (text_layer);
+  item     = GIMP_ITEM (text_layer);
   drawable = GIMP_DRAWABLE (text_layer);
 
   gimp_object_set_name (GIMP_OBJECT (text_layer),

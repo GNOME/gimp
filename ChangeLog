@@ -1,3 +1,23 @@
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c (gimp_display_shell_bucket_fill):
+	added a missing call to gimp_image_flush().
+
+	* app/tools/gimptexttool.c: propagate text changes to the tool
+	options.
+	
+	* app/text/gimptextlayer.c: made "text", "auto-rename" and
+	"modified" properties of the text layer and copy them when
+	duplicating a text layer.
+
+	* app/text/gimptextlayer-xcf.[ch]: added utility functions to
+	convert the new properties to flags to be saved in the XCF file.
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-save.c: load and save text layer properties.
+	Disabled warnings about unknown properties for stable branches.
+
 2004-03-18  Simon Budig  <simon@gimp.org>
 
 	* app/gui/layers-commands.c: Initialize a new layer

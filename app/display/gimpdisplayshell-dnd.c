@@ -204,9 +204,9 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                                       FALSE, 0.0, FALSE, /* fill params  */
                                       0.0, 0.0,          /* ignored      */
                                       color, pattern);
-
-      gimp_image_flush (gimage);
     }
+
+  gimp_image_flush (gimage);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp),
                             shell->gdisp);

@@ -84,6 +84,9 @@ static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
                                                 GimpText          *text);
 static void      gimp_text_tool_notify         (GimpTextTool      *text_tool,
                                                 GParamSpec        *pspec);
+static void      gimp_text_tool_text_notify    (GimpText          *text,
+                                                GParamSpec        *pspec,
+                                                GimpTextTool      *text_tool);
 static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 
@@ -212,10 +215,7 @@ gimp_text_tool_constructor (GType                  type,
 static void
 gimp_text_tool_dispose (GObject *object)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
-
-  if (text_tool->pending)
-    gimp_text_tool_apply (text_tool);
+  gimp_text_tool_connect (GIMP_TEXT_TOOL (object), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -330,6 +330,10 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
 
   if (text_tool->text)
     {
+      g_signal_handlers_disconnect_by_func (text_tool->text,
+                                            gimp_text_tool_text_notify,
+                                            text_tool);
+
       if (text_tool->pending)
         gimp_text_tool_apply (text_tool);
 
@@ -358,6 +362,10 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
       gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (text_tool->proxy), 0);
 
       text_tool->text = g_object_ref (text);
+
+      g_signal_connect (text, "notify",
+                        G_CALLBACK (gimp_text_tool_text_notify),
+                        text_tool);
 
       if (button)
         {
@@ -390,6 +398,32 @@ gimp_text_tool_notify (GimpTextTool *text_tool,
     }
 }
 
+static void
+gimp_text_tool_text_notify (GimpText     *text,
+                            GParamSpec   *pspec,
+                            GimpTextTool *text_tool)
+{
+  g_return_if_fail (text == text_tool->text);
+
+   if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
+     {
+       GValue value = { 0, };
+
+       g_value_init (&value, pspec->value_type);
+
+       g_object_get_property (G_OBJECT (text), pspec->name, &value);
+
+       g_signal_handlers_block_by_func (text_tool->proxy,
+                                        gimp_text_tool_notify, text_tool);
+       g_object_set_property (G_OBJECT (text_tool->proxy),
+                              pspec->name, &value);
+       g_signal_handlers_unblock_by_func (text_tool->proxy,
+                                          gimp_text_tool_notify, text_tool);
+
+       g_value_unset (&value);
+     }
+}
+
 static gboolean
 gimp_text_tool_idle_apply (GimpTextTool *text_tool)
 {
@@ -418,6 +452,9 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   src  = G_OBJECT (text_tool->proxy);
   dest = G_OBJECT (text_tool->text);
 
+  g_signal_handlers_block_by_func (dest,
+                                   gimp_text_tool_text_notify, text_tool);
+
   g_object_freeze_notify (dest);
 
   for (list = text_tool->pending; list; list = list->next)
@@ -438,6 +475,9 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
     }
 
   g_object_thaw_notify (dest);
+
+  g_signal_handlers_unblock_by_func (dest,
+                                     gimp_text_tool_text_notify, text_tool);
 
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;

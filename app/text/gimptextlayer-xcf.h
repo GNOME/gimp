@@ -25,7 +25,11 @@
 
 gboolean  gimp_text_layer_xcf_load_hack    (GimpLayer     **layer);
 
-void      gimp_text_layer_xcf_save_prepare (GimpTextLayer  *layer);
+void      gimp_text_layer_xcf_save_prepare (GimpTextLayer  *text_layer);
+
+guint32   gimp_text_layer_get_xcf_flags    (GimpTextLayer  *text_layer);
+void      gimp_text_layer_set_xcf_flags    (GimpTextLayer  *text_layer,
+                                            guint32         flags);
 
 
 #endif /* __GIMP_TEXT_LAYER_XCF_H__ */
