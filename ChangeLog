@@ -1,3 +1,16 @@
+2005-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch] (enum GimpUndoType) : reordered values
+	so layer and layer mask undos are grouped together.
+
+	* app/core/gimpimage-undo-push.[ch]: same here. Changed the new
+	layer mask undos to have 3 simple push functions for the 3
+	properties, just as the layer property undos. Also made the code
+	look like the layer properties undo stuff.
+
+	* app/core/gimplayermask.c (gimp_layer_mask_set_apply,edit,show):
+	changed accordingly.
+
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/bmp/bmp.h (Bitmap_Head_Struct)
@@ -39,9 +52,8 @@
 	* app/core/gimp.h: added "GSList *plug_in_menu_branches".
 
 	* app/plug-in/plug-in-types.h
-
 	* app/plug-in/plug-ins.[ch]: added API to register plug-in menu
-	branches, just as for locale and help domans. Cleaned up handling
+	branches, just as for locale and help domains. Cleaned up handling
 	of locale and help domains.
 
 	(plug_ins_exit): free the registered menu branches.

@@ -92,19 +92,6 @@ gboolean gimp_image_undo_push_layer_remove          (GimpImage     *gimage,
                                                      GimpLayer     *layer,
                                                      gint           prev_position,
                                                      GimpLayer     *prev_layer);
-gboolean gimp_image_undo_push_layer_mask_add        (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *layer,
-                                                     GimpLayerMask *mask);
-gboolean gimp_image_undo_push_layer_mask_remove     (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpLayer     *layer,
-                                                     GimpLayerMask *mask);
-gboolean gimp_image_undo_push_layer_mask_properties (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpUndoType   undo_type,
-                                                     GimpLayer     *layer,
-                                                     GimpLayerMask *mask);
 gboolean gimp_image_undo_push_layer_reposition      (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
@@ -128,6 +115,27 @@ gboolean gimp_image_undo_push_text_layer            (GimpImage     *gimage,
 gboolean gimp_image_undo_push_text_layer_modified   (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpTextLayer *layer);
+
+
+/*  layer mask undos  */
+
+gboolean gimp_image_undo_push_layer_mask_add        (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_remove     (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_apply      (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_edit       (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_show       (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayerMask *mask);
 
 
 /*  channel undos  */
