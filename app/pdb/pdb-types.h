@@ -28,4 +28,12 @@ typedef struct _ProcArg    ProcArg;
 typedef struct _ProcRecord ProcRecord;
 
 
+typedef enum
+{
+  GIMP_PDB_COMPAT_OFF,
+  GIMP_PDB_COMPAT_ON,
+  GIMP_PDB_COMPAT_WARN
+} GimpPDBCompatMode;
+
+
 #endif /* __PDB_TYPES_H__ */

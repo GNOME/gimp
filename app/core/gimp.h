@@ -91,6 +91,7 @@ struct _Gimp
   GimpMessageHandlerType  message_handler;
   gboolean                console_messages;
   GimpStackTraceMode      stack_trace_mode;
+  GimpPDBCompatMode       pdb_compat_mode;
 
   GimpThreadEnterFunc     gui_threads_enter_func;
   GimpThreadLeaveFunc     gui_threads_leave_func;
@@ -217,7 +218,8 @@ Gimp        * gimp_new                  (const gchar        *name,
                                          gboolean            no_interface,
                                          gboolean            use_shm,
                                          gboolean            console_messages,
-                                         GimpStackTraceMode  stack_trace_mode);
+                                         GimpStackTraceMode  stack_trace_mode,
+                                         GimpPDBCompatMode   pdb_compat_mode);
 
 void          gimp_load_config          (Gimp               *gimp,
                                          const gchar        *alternate_system_gimprc,

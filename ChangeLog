@@ -1,5 +1,28 @@
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/pdb-types.h: added enum GimpPDBCompatMode which can
+	be one of { OFF, ON, WARN }.
+
+	* app/main.c: added --pdb-compat-mode command line option. Renamed
+	--enable-stack-trace to --stack-trace-mode. Made default values of
+	stack_trace_mode and pdb_compat_mode depend on GIMP_MINOR_VERSION
+	(default to compat ON and stack_trace NEVER).
+
+	* app/app_procs.[ch]: pass pdb_compat_mode to gimp_new().
+
+	* app/core/gimp.[ch]: added pdb_compat_mode to the Gimp struct
+	and to gimp_new().
+
+	* app/pdb/procedural_db.c: leave the compat table empty for
+	GIMP_PDB_COMPAT_OFF.
+
+	* app/plug-in/plug-in-message.c: warn when a deprecated procedure
+	is called for GIMP_PDB_COMPAT_WARN.
+
+	* docs/gimp-1.3.1.in: changed accordingly.
+
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
 	Name all PDB procedures which deal with floating selections
 	consistently:
 

@@ -343,7 +343,18 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
                                        proc_run->name);
 
       if (proc_name)
-        proc_rec = procedural_db_lookup (plug_in->gimp, proc_name);
+        {
+          proc_rec = procedural_db_lookup (plug_in->gimp, proc_name);
+
+          if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
+            {
+              g_message ("WARNING: Plug-In '%s'\n\n(%s)\n\n"
+                         "called deprecated procedure '%s'.\n"
+                         "It should call '%s' instead!",
+                         plug_in->name, plug_in->prog,
+                         proc_run->name, proc_name);
+            }
+        }
     }
 
   if (! proc_name)

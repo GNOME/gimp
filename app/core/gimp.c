@@ -216,6 +216,7 @@ gimp_init (Gimp *gimp)
   gimp->use_shm          = FALSE;
   gimp->message_handler  = GIMP_CONSOLE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
+  gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
 
   gimp->gui_threads_enter_func     = NULL;
   gimp->gui_threads_leave_func     = NULL;
@@ -715,7 +716,8 @@ gimp_new (const gchar       *name,
           gboolean           no_interface,
           gboolean           use_shm,
           gboolean           console_messages,
-          GimpStackTraceMode stack_trace_mode)
+          GimpStackTraceMode stack_trace_mode,
+          GimpPDBCompatMode  pdb_compat_mode)
 {
   Gimp *gimp;
 
@@ -733,6 +735,7 @@ gimp_new (const gchar       *name,
   gimp->use_shm          = use_shm          ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
+  gimp->pdb_compat_mode  = pdb_compat_mode;
 
   return gimp;
 }

@@ -94,7 +94,8 @@ app_run (const gchar         *full_prog_name,
          gboolean             use_shm,
          gboolean             use_cpu_accel,
          gboolean             console_messages,
-         GimpStackTraceMode   stack_trace_mode)
+         GimpStackTraceMode   stack_trace_mode,
+         GimpPDBCompatMode    pdb_compat_mode)
 {
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
@@ -111,7 +112,8 @@ app_run (const gchar         *full_prog_name,
                    no_interface,
                    use_shm,
                    console_messages,
-                   stack_trace_mode);
+                   stack_trace_mode,
+                   pdb_compat_mode);
 
   g_log_set_handler ("Gimp",
 		     G_LOG_LEVEL_MESSAGE,

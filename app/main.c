@@ -107,7 +107,13 @@ main (int    argc,
   gboolean            use_cpu_accel           = TRUE;
   gboolean            console_messages        = FALSE;
   gboolean            use_debug_handler       = FALSE;
+#if ((GIMP_MINOR_VERSION % 2) == 0)
+  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
+  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_ON;
+#else
   GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
+  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_WARN;
+#endif
   gint                i, j;
 
 #if 0
@@ -345,7 +351,7 @@ main (int    argc,
 	      argv[i] = NULL;
             }
 	}
-      else if (strcmp (argv[i], "--enable-stack-trace") == 0)
+      else if (strcmp (argv[i], "--stack-trace-mode") == 0)
 	{
  	  argv[i] = NULL;
 	  if (argc <= ++i)
@@ -360,6 +366,27 @@ main (int    argc,
 		stack_trace_mode = GIMP_STACK_TRACE_QUERY;
 	      else if (! strcmp (argv[i], "always"))
 		stack_trace_mode = GIMP_STACK_TRACE_ALWAYS;
+	      else
+		show_help = TRUE;
+
+	      argv[i] = NULL;
+            }
+	}
+      else if (strcmp (argv[i], "--pdb-compat-mode") == 0)
+	{
+ 	  argv[i] = NULL;
+	  if (argc <= ++i)
+            {
+	      show_help = TRUE;
+	    }
+          else
+            {
+	      if (! strcmp (argv[i], "off"))
+		pdb_compat_mode = GIMP_PDB_COMPAT_OFF;
+	      else if (! strcmp (argv[i], "on"))
+		pdb_compat_mode = GIMP_PDB_COMPAT_ON;
+	      else if (! strcmp (argv[i], "warn"))
+		pdb_compat_mode = GIMP_PDB_COMPAT_WARN;
 	      else
 		show_help = TRUE;
 
@@ -456,7 +483,8 @@ main (int    argc,
            use_shm,
            use_cpu_accel,
            console_messages,
-           stack_trace_mode);
+           stack_trace_mode,
+           pdb_compat_mode);
 
   g_free (batch_cmds);
 
@@ -494,8 +522,10 @@ gimp_show_help (const gchar *progname)
   g_print (_("  --dump-gimprc            Output a gimprc file with default settings.\n"));
   g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
   g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
-  g_print (_("  --enable-stack-trace <never | query | always>\n"
+  g_print (_("  --stack-trace-mode <never | query | always>\n"
              "                           Debugging mode for fatal signals.\n"));
+  g_print (_("  --pdb-compat-mode <off | on | warn>\n"
+             "                           Procedural Database compat mode.\n"));
   g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
   g_print ("\n");
 };

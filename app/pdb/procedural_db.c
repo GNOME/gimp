@@ -151,17 +151,20 @@ procedural_db_init_procs (Gimp               *gimp,
     { "gimp_undo_push_group_end",      "gimp_image_undo_group_end"    }
   };
 
-  gint i;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
 
   internal_procs_init (gimp, status_callback);
 
-  for (i = 0; i < G_N_ELEMENTS (compat_procs); i++)
-    g_hash_table_insert (gimp->procedural_compat_ht,
-                         (gpointer) compat_procs[i].old_name,
-                         (gpointer) compat_procs[i].new_name);
+  if (gimp->pdb_compat_mode != GIMP_PDB_COMPAT_OFF)
+    {
+      gint i;
+
+      for (i = 0; i < G_N_ELEMENTS (compat_procs); i++)
+        g_hash_table_insert (gimp->procedural_compat_ht,
+                             (gpointer) compat_procs[i].old_name,
+                             (gpointer) compat_procs[i].new_name);
+    }
 }
 
 void

@@ -1,4 +1,4 @@
-.TH GIMP 1 "30 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "December 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp - an image manipulation and paint program.
 .SH SYNOPSIS
@@ -96,8 +96,11 @@ Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
 .B \-\-dump\-gimprc
 .TP 8
-.B \-\-enable\-stack\-trace \fI{never|query|always}\fP
+.B \-\-stack\-trace\-mode \fI{never|query|always}\fP
 If a stack-trace should be generated in case of fatal signals.
+.TP 8
+.B \-\-pdb\-compat\-mode \fI{off|on|warn}\fP
+If the PDB should provide aliases for deprecated functions.
 .TP 8
 .B \-b, \-\-batch \fI<commands>\fP
 Execute the set of \fI<commands>\fP non-interactively. The set
