@@ -46,8 +46,12 @@ static pthread_t preswap_thread;
 static pthread_mutex_t dirty_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t dirty_signal = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t tile_mutex  = PTHREAD_MUTEX_INITIALIZER;
+#define CACHE_LOCK pthread_mutex_lock(&tile_mutex)
+#define CACHE_UNLOCK pthread_mutex_unlock(&tile_mutex)
 #else
 static gint idle_swapper = 0;
+#define CACHE_LOCK /*nothing*/
+#define CACHE_UNLOCK /*nothing*/
 #endif
 
 
@@ -60,9 +64,7 @@ tile_cache_insert (Tile *tile)
   if (initialize)
     tile_cache_init ();
 
-#if USE_PTHREADS
-  pthread_mutex_lock(&tile_mutex);
-#endif
+  CACHE_LOCK;
   if (tile->data == NULL) goto out;	
 
   /* First check and see if the tile is already
@@ -100,6 +102,7 @@ tile_cache_insert (Tile *tile)
        *  if there is room in the cache. If not then we'll have
        *  to make room first. Note: it might be the case that the
        *  cache is smaller than the size of a tile in which case
+
        *  it won't be possible to put it in the cache.
        */
       while ((cur_cache_size + max_tile_size) > max_cache_size)
@@ -111,24 +114,6 @@ tile_cache_insert (Tile *tile)
        *  is referencing.
        */
       cur_cache_size += tile_size (tile);
-
-      /* Reference the tile so that it won't be swapped out
-       *  to disk. Swap the tile in if necessary.
-       * "tile_ref" cannot be used here since it calls this
-       *  function.
-       */
-      tile->ref_count += 1;
-      {
-	extern int tile_ref_count;
-	tile_ref_count += 1;
-      }
-      if (tile->ref_count == 1)
-	{
-	  tile_swap_in (tile);
-
-	  /*  the tile must be clean  */
-	  tile->dirty = FALSE;
-	}
     }
 
   /* Put the tile at the end of the proper list */
@@ -151,9 +136,7 @@ tile_cache_insert (Tile *tile)
 #endif
     }
 out:
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&tile_mutex);
-#endif
+  CACHE_UNLOCK;
 
 }
 
@@ -163,15 +146,9 @@ tile_cache_flush (Tile *tile)
   if (initialize)
     tile_cache_init ();
 
-#ifdef USE_PTHREADS
-  pthread_mutex_lock(&tile_mutex);
-#endif
-
+  CACHE_LOCK;
   tile_cache_flush_internal (tile);
-
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&tile_mutex);
-#endif
+  CACHE_UNLOCK;
 }
 
 static void
@@ -203,34 +180,6 @@ tile_cache_flush_internal (Tile *tile)
 	list->first = tile->next;
 
       tile->listhead = NULL;
-      
-      /* Unreference the tile.
-       */
-      {
-	extern int tile_ref_count;
-	tile_ref_count -= 1;
-      }
-
-      /* Decrement the reference count.
-       */
-      tile->ref_count -= 1;
-
-      /* If this was the last reference to the tile, then
-       *  swap it out to disk.
-       */
-      if (tile->ref_count == 0)
-	{
-	  /*  Only need to swap out in two cases:
-	   *   1)  The tile is dirty
-	   *   2)  The tile has never been swapped
-	   */
-	  if (tile->dirty || tile->swap_offset == -1)
-	    tile_swap_out (tile);
-	  /*  Otherwise, just throw out the data--the same stuff is in swap
-	   */
-	  g_free (tile->data);
-	  tile->data = NULL;
-	}
     }
 }
 
@@ -241,17 +190,12 @@ tile_cache_set_size (unsigned long cache_size)
     tile_cache_init ();
 
   max_cache_size = cache_size;
-
-#if USE_PTHREADS
-  pthread_mutex_lock(&tile_mutex);
-#endif
+  CACHE_LOCK;
   while (cache_size >= max_cache_size)
     {
       if (!tile_cache_zorch_next ()) break;
     }
-#if USE_PTHREADS
-  pthread_mutex_unlock(&tile_mutex);
-#endif
+  CACHE_UNLOCK;
 }
 
 
@@ -286,15 +230,11 @@ tile_cache_zorch_next ()
   else if (dirty_list.first) tile = dirty_list.first;
   else return FALSE;
 
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&tile_mutex);
-  pthread_mutex_lock(&(tile->mutex));
-  pthread_mutex_lock(&tile_mutex);
-#endif
+  CACHE_UNLOCK;
+  TILE_MUTEX_LOCK (tile);
+  CACHE_LOCK;
   tile_cache_flush_internal (tile);
-#ifdef USE_PTHREADS
-  pthread_mutex_unlock(&(tile->mutex));
-#endif
+  TILE_MUTEX_UNLOCK (tile);
   return TRUE;
 }
 
@@ -315,10 +255,10 @@ tile_idle_thread (void *data)
 	pthread_cond_wait(&dirty_signal,&dirty_mutex);
 	pthread_mutex_unlock(&dirty_mutex);
       }
-      if ((tile = dirty_list.first) &&
-	  (pthread_mutex_lock(&(tile->mutex)) == 0))
+      if ((tile = dirty_list.first)) 
 	{
-	  pthread_mutex_lock(&tile_mutex);
+	  TILE_MUTEX_LOCK (tile);
+	  CACHE_LOCK;
 
 	  list = tile->listhead;
 
@@ -342,9 +282,10 @@ tile_idle_thread (void *data)
 	  else                 clean_list.first = tile;
 	  clean_list.last = tile;
 
-	  pthread_mutex_unlock(&tile_mutex);
+	  CACHE_UNLOCK;
+
 	  tile_swap_out(tile);
-	  pthread_mutex_unlock(&(tile->mutex));
+	  TILE_MUTEX_UNLOCK (tile);
 	}
     }
 }
@@ -377,3 +318,4 @@ tile_idle_preswap (gpointer data)
   return TRUE;
 }
 #endif
+

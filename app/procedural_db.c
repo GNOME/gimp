@@ -1250,9 +1250,12 @@ procedural_db_hash_func (gconstpointer key)
 
 /* The id system's remnants ... */
 
+
 static gint next_image_id;
+/*
 static gint next_drawable_id;
 static gint next_display_id;
+*/
 
 static GHashTable* image_hash;
 static GHashTable* drawable_hash;

@@ -124,8 +124,7 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
 
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = x + (tile->ewidth - (x % TILE_WIDTH));
       inc = subsample * tile->bpp;
@@ -137,7 +136,7 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
 	  tile_data += inc;
 	}
 
-      tile_unref (tile, FALSE);
+      tile_release (tile, FALSE);
     }
 }
 
@@ -159,8 +158,7 @@ pixel_region_set_row (PR, x, y, w, data)
 
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0);
-      tile_ref2 (tile, TRUE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = x + (tile->ewidth - (x % TILE_WIDTH));
 
@@ -170,7 +168,7 @@ pixel_region_set_row (PR, x, y, w, data)
 	    *tile_data++ = *data++;
 	}
 
-      tile_unref (tile, TRUE);
+      tile_release (tile, TRUE);
     }
 }
 
@@ -194,8 +192,7 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
 
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
       inc = subsample * tile->bpp * tile->ewidth;
@@ -207,7 +204,7 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
 	  tile_data += inc;
 	}
 
-      tile_unref (tile, FALSE);
+      tile_release (tile, FALSE);
     }
 }
 
@@ -230,8 +227,7 @@ pixel_region_set_col (PR, x, y, h, data)
 
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0);
-      tile_ref2 (tile, TRUE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
       tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
       inc = tile->bpp * tile->ewidth;
@@ -243,7 +239,7 @@ pixel_region_set_col (PR, x, y, h, data)
 	  tile_data += inc;
 	}
 
-      tile_unref (tile, TRUE);
+      tile_release (tile, TRUE);
     }
 }
 
@@ -329,8 +325,8 @@ pixel_regions_process (PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0);
-	      tile_unref (tile, PRH->PR->dirty);
+	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, FALSE, FALSE);
+	      tile_release (tile, PRH->PR->dirty);
 	    }
 
 	  PRH->PR->x += PRI->portion_width;
@@ -376,8 +372,8 @@ pixel_regions_process_stop (PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0);
-	      tile_unref (tile, PRH->PR->dirty);
+	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, FALSE, FALSE);
+	      tile_release (tile, PRH->PR->dirty);
 	    }
 	}
 
@@ -550,8 +546,7 @@ pixel_region_configure (PRH, PRI)
       Tile *tile;
       int offx, offy;
 
-      tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0);
-      tile_ref2 (tile, PRH->PR->dirty);
+      tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, TRUE, PRH->PR->dirty);
 
       offx = PRH->PR->x % TILE_WIDTH;
       offy = PRH->PR->y % TILE_HEIGHT;

@@ -940,19 +940,17 @@ layer_pick_correlate (layer, x, y)
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0, TRUE, FALSE);
 
       val = tile->data[tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH) + 1) - 1];
       if (layer->mask)
 	{
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0);
-	  tile_ref2 (mask_tile, FALSE);
+	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0, TRUE, FALSE);
 	  val = (val * mask_tile->data[mask_tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)]) / 255;
-	  tile_unref (mask_tile, FALSE);
+	  tile_release (mask_tile, FALSE);
 	}
 
-      tile_unref (tile, FALSE);
+      tile_release (tile, FALSE);
 
       if (val > 63)
 	return TRUE;

@@ -1353,7 +1353,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile = tile_manager_get (tm, tile_info->tile_num, 0);
+      tile = tile_manager_get (tm, tile_info->tile_num, 0, TRUE, TRUE);
       if (!tile)
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");
@@ -1361,14 +1361,12 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile_ref2 (tile, TRUE);
-
       if (tile_data.use_shm)
 	memcpy (tile->data, shm_addr, tile_size (tile));
       else
 	memcpy (tile->data, tile_info->data, tile_size (tile));
 
-      tile_unref (tile, TRUE);
+      tile_release (tile, TRUE);
 
       wire_destroy (&msg);
       if (!gp_tile_ack_write (current_writefd))
@@ -1392,7 +1390,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile = tile_manager_get (tm, tile_req->tile_num, 0);
+      tile = tile_manager_get (tm, tile_req->tile_num, 0, TRUE, FALSE);
       if (!tile)
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");
@@ -1408,8 +1406,6 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_data.height = tile->eheight;
       tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
 
-      tile_ref2 (tile, FALSE);
-
       if (tile_data.use_shm)
 	memcpy (shm_addr, tile->data, tile_size (tile));
       else
@@ -1422,7 +1418,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile_unref (tile, FALSE);
+      tile_release (tile, FALSE);
 
       if (!wire_read_msg (current_readfd, &msg))
 	{

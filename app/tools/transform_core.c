@@ -61,8 +61,7 @@ static double      cubic                  (double, int, int, int, int);
 		    dy  * ((1-dx)*jk1 + dx*j1k1))
 
 #define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0); \
-     tile_ref2 (tile[i], FALSE); \
+     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0, TRUE, FALSE); \
      src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
 
 
@@ -1111,7 +1110,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 		      *d++ = a_val;
 
 		      for (b = 0; b < 16; b++)
-			tile_unref (tile[b], FALSE);
+			tile_release (tile[b], FALSE);
 		    }
 		  else  /*  linear  */
 		    {
@@ -1168,7 +1167,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 		      *d++ = a_val;
 
 		      for (b = 0; b < 4; b++)
-			tile_unref (tile[b], FALSE);
+			tile_release (tile[b], FALSE);
 		    }
 		}
 	      else  /*  no interpolation  */
@@ -1178,7 +1177,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 		  for (b = 0; b < bytes; b++)
 		    *d++ = src[0][b];
 
-		  tile_unref (tile[0], FALSE);
+		  tile_release (tile[0], FALSE);
 		}
 	    }
 	  else

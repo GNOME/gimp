@@ -360,21 +360,19 @@ by_color_select_button_release (Tool           *tool,
 	{
 	  if (x < 0 || y < 0 || x >= gdisp->gimage->width || y >= gdisp->gimage->height)
 	    return;
-	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0);
-	  tile_ref2 (tile, FALSE);
+	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0, TRUE, FALSE);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
           gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
-          tile_unref (tile, FALSE);
+          tile_release (tile, FALSE);
 	}
       else
 	{
 	  if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	    return;
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
-	  tile_ref2 (tile, FALSE);
+	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, FALSE);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
           gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
-          tile_unref (tile, FALSE);
+          tile_release (tile, FALSE);
 	}
 
       /*  select the area  */
@@ -933,8 +931,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, 0, TRUE, FALSE);
       col = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
     }
   else
@@ -946,8 +943,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
       if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, FALSE);
       col = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
     }
 
@@ -959,7 +955,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 		   by_color_options->feather_radius,
 		   by_color_options->sample_merged);
 
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 
   /*  show selection on all views  */
   gdisplays_flush ();

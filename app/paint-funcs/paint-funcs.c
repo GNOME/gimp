@@ -97,7 +97,9 @@ static unsigned char no_mask = OPAQUE_OPACITY;
 /*  Local function prototypes  */
 static int *  make_curve         (double, int *);
 static void   run_length_encode  (unsigned char *, int *, int, int);
+#if 0
 static void   draw_segments      (PixelRegion *, BoundSeg *, int, int, int, int);
+#endif
 static double cubic              (double, int, int, int, int);
 static void apply_layer_mode_replace (unsigned char *, unsigned char *,
 				      unsigned char *, unsigned char *,
@@ -194,7 +196,7 @@ run_length_encode (unsigned char *src,
     }
 }
 
-
+#if 0
 static void
 draw_segments (PixelRegion *destPR,
 	       BoundSeg    *bs,
@@ -261,7 +263,7 @@ draw_segments (PixelRegion *destPR,
 	}
     }
 }
-
+#endif
 
 static double
 cubic (double dx,
@@ -2434,7 +2436,6 @@ copy_region (PixelRegion *src,
       )
     {
       Tile *src_tile;
-      Tile *dest_tile;
       gint xstepper,ystepper;
 
 #if defined (TILE_DEBUG)
@@ -2453,18 +2454,12 @@ copy_region (PixelRegion *src,
 	    {
 	      src_tile = tile_manager_get_tile (src->tiles,
 						xstepper, ystepper,
-						0);
-	      dest_tile = tile_manager_get_tile (dest->tiles,
-						 xstepper, ystepper,
-						 0);
+						0, FALSE, FALSE);
 
-	      if (src_tile && dest_tile)
-		{
-		  /*		  printf(" @%p/%p@ ",
-			 tile_find_nonmirroring (src_tile),
-			 tile_find_nonmirroring (dest_tile));*/
-		  tile_mirror (dest_tile, src_tile);		  
-		}
+	      tile_manager_map_tile (dest->tiles,
+				     xstepper, ystepper, 0,
+				     src_tile);
+	      
 	    }	  
 	}
 #if defined (TILE_DEBUG)
@@ -3506,8 +3501,7 @@ shapeburst_region (PixelRegion *srcPR,
 
 	      while (y >= end)
 		{
-		  tile = tile_manager_get_tile (srcPR->tiles, x, y, 0);
-		  tile_ref2 (tile, FALSE);
+		  tile = tile_manager_get_tile (srcPR->tiles, x, y, 0, TRUE, FALSE);
 		  tile_data = tile->data + (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
 		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile->ewidth - (x % TILE_WIDTH) - 1));
 		  boundary = MINIMUM (boundary, (y - end)) + 1;
@@ -3530,7 +3524,7 @@ shapeburst_region (PixelRegion *srcPR,
 		      tile_data += inc;
 		    }
 
-		  tile_unref (tile, FALSE);
+		  tile_release (tile, FALSE);
 		}
 	    }
 

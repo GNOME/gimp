@@ -124,14 +124,12 @@ ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
 	   int x, int y, unsigned char **s, unsigned char **m)
 {
   if (*s_tile != NULL)
-    tile_unref (*s_tile, FALSE);
+    tile_release (*s_tile, FALSE);
   if (*m_tile != NULL)
-    tile_unref (*m_tile, TRUE);
+    tile_release (*m_tile, TRUE);
 
-  *s_tile = tile_manager_get_tile (src, x, y, 0);
-  *m_tile = tile_manager_get_tile (mask, x, y, 0);
-  tile_ref2 (*s_tile, FALSE);
-  tile_ref2 (*m_tile, TRUE);
+  *s_tile = tile_manager_get_tile (src, x, y, 0, TRUE, FALSE);
+  *m_tile = tile_manager_get_tile (mask, x, y, 0, TRUE, TRUE);
 
   *s = (*s_tile)->data + (*s_tile)->bpp * ((*s_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
   *m = (*m_tile)->data + (*m_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH);
@@ -154,8 +152,8 @@ find_contiguous_segment (unsigned char *col, PixelRegion *src,
   if (! (diff = is_pixel_sufficiently_different (col, s, antialias,
 						 threshold, bytes, has_alpha)))
     {
-      tile_unref (s_tile, FALSE);
-      tile_unref (m_tile, TRUE);
+      tile_release (s_tile, FALSE);
+      tile_release (m_tile, TRUE);
       return FALSE;
     }
 
@@ -196,8 +194,8 @@ find_contiguous_segment (unsigned char *col, PixelRegion *src,
 	}
     }
 
-  tile_unref (s_tile, FALSE);
-  tile_unref (m_tile, TRUE);
+  tile_release (s_tile, FALSE);
+  tile_release (m_tile, TRUE);
   return TRUE;
 }
 
@@ -216,10 +214,9 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
 
-  tile = tile_manager_get_tile (mask->tiles, x, y, 0);
-  tile_ref2 (tile, FALSE);
+  tile = tile_manager_get_tile (mask->tiles, x, y, 0, TRUE, FALSE);
   val = tile->data[tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)];
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
   if (val != 0)
     return;
 
@@ -283,17 +280,15 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   mask = channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, drawable_width (GIMP_DRAWABLE(mask)), drawable_height (GIMP_DRAWABLE(mask)), TRUE);
 
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, 0);
+  tile = tile_manager_get_tile (srcPR.tiles, x, y, 0, TRUE, FALSE);
   if (tile)
     {
-      tile_ref2 (tile, FALSE);
-
       start = tile->data + tile->ewidth * tile->bpp * (y % TILE_HEIGHT) +
 	tile->bpp * (x % TILE_WIDTH);
 
       find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, bytes, x, y, start);
 
-      tile_unref (tile, FALSE);
+      tile_release (tile, FALSE);
     }
 
   return mask;

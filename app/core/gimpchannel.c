@@ -548,10 +548,9 @@ channel_value (Channel *mask, int x, int y)
 	return 0;
     }
 
-  tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, 0);
-  tile_ref2 (tile, FALSE);
+  tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, 0, TRUE, FALSE);
   val = tile->data[(y % TILE_HEIGHT) * TILE_WIDTH + (x % TILE_WIDTH)];
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 
   return val;
 }

@@ -616,7 +616,6 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   Tile *undo_tile;
   int h;
   int pixelwidth;
-  int refd;
   unsigned char * s, * d;
   void * pr;
 
@@ -639,18 +638,15 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0);
+      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, TRUE, FALSE);
       if (undo_tile->valid == TRUE)
 	{
-	  tile_ref2 (undo_tile, FALSE);
 	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
-	  refd = TRUE;
 	}
       else
 	{
 	  s = srcPR.data;
-	  refd = FALSE;
 	}
 
       d = destPR.data;
@@ -663,8 +659,7 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
 	  d += destPR.rowstride;
 	}
 
-      if (refd)
-	tile_unref (undo_tile, FALSE);
+      tile_release (undo_tile, FALSE);
     }
 
   return orig_buf;
@@ -1208,16 +1203,15 @@ set_undo_tiles (drawable, x, y, w, h)
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0);
+	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, FALSE, FALSE);
 	  if (dest_tile->valid == FALSE)
 	    {
-	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0);
-	      tile_ref2 (src_tile, FALSE);
-	      tile_ref2 (dest_tile, TRUE);
+	      dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, TRUE, TRUE);
+	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0, TRUE, FALSE);
 	      memcpy (dest_tile->data, src_tile->data,
 		      (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
-	      tile_unref (src_tile, FALSE);
-	      tile_unref (dest_tile, TRUE);
+	      tile_release (src_tile, FALSE);
+	      tile_release (dest_tile, TRUE);
 	    }
 	}
     }
@@ -1235,12 +1229,12 @@ set_canvas_tiles (x, y, w, h)
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0);
+	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0, FALSE, FALSE);
 	  if (tile->valid == FALSE)
 	    {
-	      tile_ref2 (tile, TRUE);
+	      tile = tile_manager_get_tile (canvas_tiles, j, i, 0, TRUE, TRUE);
 	      memset (tile->data, 0, (tile->ewidth * tile->eheight * tile->bpp));
-	      tile_unref (tile, TRUE);
+	      tile_release (tile, TRUE);
 	    }
 	}
     }

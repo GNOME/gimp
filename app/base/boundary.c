@@ -124,9 +124,8 @@ find_empty_segs (PixelRegion  *maskPR,
       if ((x / TILE_WIDTH) != tilex)
 	{
 	  if (tile)
-	    tile_unref (tile, FALSE);
-	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, 0);
-	  tile_ref2 (tile, FALSE);
+	    tile_release (tile, FALSE);
+	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, 0, TRUE, FALSE);
 	  data = tile->data + tile->bpp *
 	    ((scanline % TILE_HEIGHT) * tile->ewidth + (x % TILE_WIDTH)) + (tile->bpp - 1);
 	  tilex = x / TILE_WIDTH;
@@ -153,7 +152,7 @@ find_empty_segs (PixelRegion  *maskPR,
   empty_segs[(*num_empty)++] = G_MAXINT;
 
   if (tile)
-    tile_unref (tile, FALSE);
+    tile_release (tile, FALSE);
 }
 
 

@@ -293,7 +293,7 @@ xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
   g_print ("Returned from decompressTile (tile, num_channels=%i)\n",
 	   num_channels_arr[layer_type]);
 
-  tile_unref (tile, TRUE);
+  tile_release (tile, TRUE);
 
   return 1;
 }
@@ -422,7 +422,7 @@ xcf_save_frac_compressed_tile (XcfInfo *info, Tile *tile)
 
   CloseOutputBitFile (frac_file);
 
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 
   return 1;
 

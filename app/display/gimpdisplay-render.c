@@ -2434,11 +2434,10 @@ render_image_tile_fault (RenderInfo *info)
   tilex = info->src_x / TILE_WIDTH;
   tiley = info->src_y / TILE_HEIGHT;
 
-  tile = tile_manager_get_tile (info->src_tiles, info->src_x, info->src_y, 0);
+  tile = tile_manager_get_tile (info->src_tiles, info->src_x, info->src_y, 0, TRUE, FALSE);
   if (!tile)
     return NULL;
 
-  tile_ref2 (tile, FALSE);
   data = (tile->data +
 	  ((info->src_y % TILE_HEIGHT) * tile->ewidth +
 	   (info->src_x % TILE_WIDTH)) * tile->bpp);
@@ -2462,14 +2461,13 @@ render_image_tile_fault (RenderInfo *info)
 
 	  if ((x >> tile_shift) != tilex)
 	    {
-	      tile_unref (tile, FALSE);
+	      tile_release (tile, FALSE);
 	      tilex += 1;
 
-	      tile = tile_manager_get_tile (info->src_tiles, x, info->src_y, 0);
+	      tile = tile_manager_get_tile (info->src_tiles, x, info->src_y, 0, TRUE, FALSE);
 	      if (!tile)
 		return tile_buf;
 
-	      tile_ref2 (tile, FALSE);
 	      data = (tile->data +
 		      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
 		       (x % TILE_WIDTH)) * tile->bpp);
@@ -2477,6 +2475,6 @@ render_image_tile_fault (RenderInfo *info)
 	}
     }
 
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
   return tile_buf;
 }

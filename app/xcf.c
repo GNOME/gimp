@@ -1046,16 +1046,16 @@ xcf_save_level (XcfInfo   *info,
 	  switch (info->compression)
 	    {
 	    case COMPRESS_NONE:
-	      xcf_save_tile (info, &level->tiles[i]);
+	      xcf_save_tile (info, level->tiles[i]);
 	      break;
 	    case COMPRESS_RLE:
-	      xcf_save_tile_rle (info, &level->tiles[i]);
+	      xcf_save_tile_rle (info, level->tiles[i]);
 	      break;
 	    case COMPRESS_ZLIB:
 	      g_error ("xcf: zlib compression unimplemented");
 	      break;
 	    case COMPRESS_FRACTAL:
-	      xcf_save_frac_compressed_tile (info, &level->tiles[i]);
+	      xcf_save_frac_compressed_tile (info, level->tiles[i]);
 	      break;
 	    }
 
@@ -1089,9 +1089,9 @@ static void
 xcf_save_tile (XcfInfo *info,
 	       Tile    *tile)
 {
-  tile_ref2 (tile, FALSE);
+  tile_lock (tile);
   info->cp += xcf_write_int8 (info->fp, tile->data, tile_size (tile));
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 }
 
 static void
@@ -1108,7 +1108,7 @@ xcf_save_tile_rle (XcfInfo *info,
   int bpp;
   int i, j, k;
 
-  tile_ref2 (tile, FALSE);
+  tile_lock (tile);
 
   bpp = tile->bpp;
 
@@ -1211,7 +1211,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	g_print ("xcf: uh oh! xcf rle tile saving error: %d\n", count);
     }
 
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 }
 
 
@@ -1851,39 +1851,6 @@ xcf_load_hierarchy (XcfInfo     *info,
   return TRUE;
 }
 
-static void
-tile_compare_and_maybe_mirror (Tile *new, Tile *old)
-{
-
-  if (
-      (old->ewidth == new->ewidth) &&
-      (old->eheight == new->eheight) &&
-      (old->bpp == new->bpp)
-      )
-    {
-      tile_ref2 (new, FALSE);
-      tile_ref2 (old, FALSE);
-
-      if (memcmp (new->data, old->data,
-                 old->ewidth * old->eheight * old->bpp) == 0)
-       {
-#if defined (TILE_DEBUG)
-         g_print ("M");
-#endif
-         tile_unref (new, FALSE);
-         tile_unref (old, FALSE);
-         tile_mirror (new, old);
-       }
-      else
-       {
-#if defined (TILE_DEBUG)
-         g_print (".");
-#endif
-         tile_unref (new, FALSE);
-         tile_unref (old, FALSE);
-       }
-    }
-}
 
 static gint
 xcf_load_level (XcfInfo     *info,
@@ -1897,7 +1864,9 @@ xcf_load_level (XcfInfo     *info,
   int width;
   int height;
   int i;
+  int fail;
   Tile *previous;
+  Tile *tile;
 
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
@@ -1914,12 +1883,6 @@ xcf_load_level (XcfInfo     *info,
   if (offset == 0)
     return TRUE;
 
-  /* get the first tile from this level. this will
-   *  cause 'level->tiles' to be created so that
-   *  we can load in the tiles.
-   */
-  tile_manager_get (tiles, 0, level_num);
-
   /* Initialise the reference for the in-memory tile-compression
    */
   previous = NULL;
@@ -1927,6 +1890,8 @@ xcf_load_level (XcfInfo     *info,
   ntiles = level->ntile_rows * level->ntile_cols;
   for (i = 0; i < ntiles; i++)
     {
+      fail = FALSE;
+
       if (offset == 0)
 	{
 	  g_message ("not enough tiles found in level");
@@ -1941,16 +1906,19 @@ xcf_load_level (XcfInfo     *info,
       /* seek to the tile offset */
       xcf_seek_pos (info, offset);
 
+      /* get the tile from the tile manager */
+      tile = tile_manager_get (tiles, i, level_num, TRUE, TRUE);
+
       /* read in the tile */
       switch (info->compression)
 	{
 	case COMPRESS_NONE:
-	  if (!xcf_load_tile (info, &level->tiles[i]))
-	    return FALSE;
+	  if (!xcf_load_tile (info, tile))
+	    fail = TRUE;
 	  break;
 	case COMPRESS_RLE:
-	  if (!xcf_load_tile_rle (info, &level->tiles[i]))
-	    return FALSE;
+	  if (!xcf_load_tile_rle (info, tile))
+	    fail = TRUE;
 	  break;
 	case COMPRESS_ZLIB:
 	  g_error ("xcf: zlib compression unimplemented");
@@ -1960,15 +1928,34 @@ xcf_load_level (XcfInfo     *info,
 	  break;
 	}
 
+      if (fail) 
+	{
+	  tile_release (tile, TRUE);
+	  return FALSE;
+	}
+	    
       /* To potentially save memory, we compare the
        *  newly-fetched tile against the last one, and
        *  if they're the same we copy-on-write mirror one against
        *  the other.
        */
-      if (previous != NULL)
-       tile_compare_and_maybe_mirror (&level->tiles[i], previous);
-
-      previous = &level->tiles[i];
+      if (previous != NULL) 
+	{
+	  tile_lock (previous);
+	  if (tile_size (tile) == tile_size (previous) &&
+	      memcmp (tile->data, previous->data,
+		      tile_size (tile)) == 0)
+	    {
+	      tile_release (tile, TRUE);
+	      tile_manager_map (tiles, i, level_num, previous);
+	    }
+	  else
+	    {
+	      tile_release (tile, TRUE);
+	    }
+	  tile_release (previous, FALSE);
+	}
+      previous = tile;
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -2006,9 +1993,7 @@ xcf_load_tile (XcfInfo *info,
 
 #else
 
-  tile_ref2 (tile, TRUE);
   info->cp += xcf_read_int8 (info->fp, tile->data, tile_size (tile));
-  tile_unref (tile, TRUE);
 
 #endif
 
@@ -2028,8 +2013,6 @@ xcf_load_tile_rle (XcfInfo *info,
   int tmp;
   int bpp;
   int i, j;
-
-  tile_ref2 (tile, TRUE);
 
   data = tile->data;
   bpp = tile->bpp;
@@ -2095,8 +2078,6 @@ xcf_load_tile_rle (XcfInfo *info,
 	    }
 	}
     }
-
-  tile_unref (tile, TRUE);
 
   return TRUE;
 }

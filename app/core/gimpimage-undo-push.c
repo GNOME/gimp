@@ -613,17 +613,15 @@ undo_pop_image (GImage *gimage,
 	{
 	  for (j = x; j < image_undo->x2; j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	    {
-	      src_tile = tile_manager_get_tile (tiles, j, i, 0);
+	      src_tile = tile_manager_get_tile (tiles, j, i, 0, TRUE, TRUE);
 	      if (src_tile->valid == TRUE)
 		{
-		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0);
-		  tile_ref2 (src_tile, TRUE);
-		  tile_ref2 (dest_tile, TRUE);
+		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0, TRUE, TRUE);
 		  swap_pixels (src_tile->data, dest_tile->data,
 			       (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
-		  tile_unref (src_tile, TRUE);
-		  tile_unref (dest_tile, TRUE);
+		  tile_release (dest_tile, TRUE);
 		}
+	      tile_release (src_tile, TRUE);
 	    }
 	}
     }

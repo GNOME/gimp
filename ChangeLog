@@ -1,3 +1,17 @@
+Thu Jul  9 21:23:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* tile.c tile_manager.c tile_cache.c tile.h tile_manager.h
+	  tile_manager_pvt.h tile_pvt.h:
+	  completely redid tile management.
+
+	* blend.c boundary.c by_color_select.c channel.c color_picker.c
+ 	  drawable_cmds.c frac.c fuzzy_select.c gimpimage.c image_render.c
+ 	  ink.c layer.c paint_core.c paint_funcs.c pixel_region.c
+ 	  plug_in.c preferences_dialog.c procedural_db.c transform_core.c
+ 	  undo.c xcf.c:
+	  changed to reflect new tile management protocols.  (Also killed
+	  a few compilation warnings.)
+
 Thu Jul  9 22:04:04 EDT 1998  Michael K. Johnson <johnsonm@redhat.com>
 
 	* app/clone.c: clone_motion: silently ignore cloning if the

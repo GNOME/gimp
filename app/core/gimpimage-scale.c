@@ -1226,7 +1226,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
       {
-	tile = tile_manager_get_tile (tm, j, i, 0);
+	tile = tile_manager_get_tile (tm, j, i, 0, FALSE, FALSE);
 
 	/*  invalidate all lower level tiles  */
 	/*tile_manager_invalidate_tiles (gimp_image_projection (gimage), tile);*/
@@ -1286,8 +1286,8 @@ gimp_image_validate (TileManager *tm, Tile *tile, int level)
   gimage = (GimpImage *) tm->user_data;
 
   /*  Find the coordinates of this tile  */
-  x = TILE_WIDTH * (tile->tile_num % tm->levels[0].ntile_cols);
-  y = TILE_HEIGHT * (tile->tile_num / tm->levels[0].ntile_cols);
+  x = TILE_WIDTH * (tile->tlink->tile_num % tm->levels[0].ntile_cols);
+  y = TILE_HEIGHT * (tile->tlink->tile_num / tm->levels[0].ntile_cols);
   w = tile->ewidth;
   h = tile->eheight;
 

@@ -62,7 +62,7 @@ static void file_prefs_save_callback (GtkWidget *, GtkWidget *);
 static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
 static gint file_prefs_delete_callback (GtkWidget *, GdkEvent *, GtkWidget *);
 static void file_prefs_toggle_callback (GtkWidget *, gpointer);
-static void file_prefs_text_callback (GtkWidget *, gpointer);
+/* static void file_prefs_text_callback (GtkWidget *, gpointer); */
 static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
@@ -527,6 +527,7 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
     }
 }
 
+/*  commented out because it's not used 
 static void
 file_prefs_text_callback (GtkWidget *widget,
 			  gpointer   data)
@@ -536,6 +537,7 @@ file_prefs_text_callback (GtkWidget *widget,
   val = data;
   *val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
+*/
 
 static void
 file_prefs_spinbutton_callback (GtkWidget *widget,

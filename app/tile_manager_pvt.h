@@ -29,7 +29,7 @@ struct _TileLevel
   int ntile_rows;                  /* the number of tiles in each row */
   int ntile_cols;                  /* the number of tiles in each columns */
 
-  Tile *tiles;                     /* the tiles for this level */
+  Tile **tiles;                    /* the tiles for this level */
 };
 
 struct _TileManager

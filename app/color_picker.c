@@ -327,8 +327,7 @@ get_color (GImage *gimage,
 
   if (x >= 0 && y >= 0 && x < width && y < height)
     {
-      tile = tile_manager_get_tile (tiles, x, y, 0);
-      tile_ref2 (tile, FALSE);
+      tile = tile_manager_get_tile (tiles, x, y, 0, TRUE, FALSE);
 
       src = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
     }
@@ -369,7 +368,7 @@ get_color (GImage *gimage,
       break;
     }
 
-  tile_unref (tile, FALSE);
+  tile_release (tile, FALSE);
 
   palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
 			    col_value [BLUE_PIX], final);

@@ -81,13 +81,28 @@ void tile_manager_set_validate_proc (TileManager      *tm,
 Tile* tile_manager_get_tile (TileManager *tm,
 			     int          xpixel,
 			     int          ypixel,
-			     int          level);
+			     int          level,
+			     int          wantread,
+			     int          wantwrite);
 
 /* Get a specified tile from a tile manager.
  */
 Tile* tile_manager_get (TileManager *tm,
 			int          tile_num,
-			int          level);
+			int          level,
+			int          wantread,
+			int          wantwrite);
+
+void tile_manager_map_tile (TileManager *tm,
+			    int          xpixel,
+			    int          ypixel,
+			    int          level,
+			    Tile        *srctile);
+
+void tile_manager_map (TileManager *tm,
+		       int          time_num,
+		       int          level,
+		       Tile        *srctile);
 
 /* Validate a tiles memory.
  */
