@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-09 08:48+0900\n"
-"PO-Revision-Date: 2004-03-09 08:50+0900\n"
+"POT-Creation-Date: 2004-03-15 10:55+0900\n"
+"PO-Revision-Date: 2004-03-15 10:56+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -410,6 +410,14 @@ msgstr "megabyte"
 #: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "gigabyte"
+
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Skrivbar"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Mapp"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
