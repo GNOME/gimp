@@ -93,18 +93,22 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* These can probably be better represented by enumerated types
- * but the following will do. */
-
-#define CHUNKS_PNG_D  0
-#define CHUNKS_JNG_D  1
-#define CHUNKS_PNG    2
-#define CHUNKS_JNG    3
-
-#define DISPOSE_COMBINE 0
-#define DISPOSE_REPLACE 1
 
 #define SCALE_WIDTH 125
+
+enum
+{
+  CHUNKS_PNG_D,
+  CHUNKS_JNG_D,
+  CHUNKS_PNG,
+  CHUNKS_JNG
+};
+
+enum
+{
+  DISPOSE_COMBINE,
+  DISPOSE_REPLACE
+};
 
 
 /* The contents of this struct remain static among multiple
@@ -163,7 +167,51 @@ struct mnglib_userdata_t
 };
 
 
-/* Callbacks for libmng. */
+/*
+ * Function prototypes
+ */
+
+static mng_ptr   myalloc                   (mng_size_t        size);
+static void      myfree                    (mng_ptr           ptr,
+                                            mng_size_t        size);
+static mng_bool  myopenstream              (mng_handle        handle);
+static mng_bool  myclosestream             (mng_handle        handle);
+static mng_bool  mywritedata               (mng_handle        handle,
+                                            mng_ptr           buf,
+                                            mng_uint32        size,
+                                            mng_uint32       *written_size);
+
+static gint32    parse_chunks_type_from_layer_name   (const gchar *str);
+static gint32    parse_disposal_type_from_layer_name (const gchar *str);
+static gint32    parse_ms_tag_from_layer_name        (const gchar *str);
+
+static gint      find_unused_ia_colour     (guchar           *pixels,
+                                            gint              numpixels,
+                                            gint             *colors);
+static gboolean  ia_has_transparent_pixels (guchar           *pixels,
+                                            gint              numpixels);
+static gboolean  respin_cmap               (png_structp       png_ptr,
+                                            png_infop         png_info_ptr,
+                                            guchar           *remap,
+                                            gint32            image_id,
+                                            GimpDrawable     *drawable);
+
+static gint      mng_save_image            (const gchar      *filename,
+                                            gint32            image_id,
+                                            gint32            drawable_id,
+                                            gint32            original_image_id);
+static gint      mng_save_dialog           (gint32            image_id);
+
+static void      query                     (void);
+static void      run                       (const gchar      *name,
+                                            gint              nparams,
+                                            const GimpParam  *param,
+                                            gint             *nreturn_vals,
+                                            GimpParam       **return_vals);
+
+/*
+ * Callbacks for libmng
+ */
 
 static mng_ptr
 myalloc (mng_size_t size)
@@ -178,7 +226,8 @@ myalloc (mng_size_t size)
 }
 
 static void
-myfree (mng_ptr ptr, mng_size_t size)
+myfree (mng_ptr    ptr,
+        mng_size_t size)
 {
   g_free (ptr);
 }
@@ -196,8 +245,10 @@ myclosestream (mng_handle handle)
 }
 
 static mng_bool
-mywritedata (mng_handle handle, mng_ptr buf, mng_uint32 size,
-             mng_uint32 * written_size)
+mywritedata (mng_handle  handle,
+             mng_ptr     buf,
+             mng_uint32  size,
+             mng_uint32 *written_size)
 {
   struct mnglib_userdata_t *userdata =
     (struct mnglib_userdata_t *) mng_get_userdata (handle);
@@ -464,50 +515,12 @@ mng_save_image (const gchar *filename,
 
   gint            num_layers;
   gint32         *layers;
-  GimpImageType   layer_drawable_type;
-  GimpDrawable   *layer_drawable;
-  gint            layer_offset_x, layer_offset_y;
-  gint            layer_rows, layer_cols;
-  gchar          *layer_name;
-  gint            layer_chunks_type;
-  volatile gint   layer_bpp;
-  GimpPixelRgn    layer_pixel_rgn;
-  gint            num_colors;
 
   struct mnglib_userdata_t *userdata;
   mng_handle      handle;
   mng_retcode     ret;
   guint32         mng_ticks_per_second;
   guint32         mng_simplicity_profile;
-  guint8          layer_mng_colortype;
-  guint8          layer_mng_compression_type;
-  guint8          layer_mng_interlace_type;
-  gboolean        layer_has_unique_palette;
-
-  gchar           frame_mode;
-  int             frame_delay;
-  gchar          *temp_file_name;
-  png_structp     png_ptr;
-  png_infop       png_info_ptr;
-  FILE           *infile, *outfile;
-  int             num_passes;
-  int             tile_height;
-  guchar        **layer_pixels, *layer_pixel;
-  int             pass, j, k, begin, end, num;
-  guchar         *fixed;
-  unsigned char   chunksize_chars[4];
-  unsigned long   chunksize;
-  unsigned char   chunkname[5];
-  guchar         *chunkbuffer;
-  guchar          layer_remap[256];
-
-  long            chunkwidth;
-  long            chunkheight;
-  char            chunkbitdepth;
-  char            chunkcolortype;
-  char            chunkcompression;
-  char            chunkfilter;
-  char            chunkinterlaced;
 
   layers = gimp_image_get_layers (image_id, &num_layers);
 
@@ -636,7 +649,8 @@ mng_save_image (const gchar *filename,
       return 0;
     }
 
-/*      how do we get this to work?
+#if 0
+        /* how do we get this to work? */
 
         if (mng_data.bkgd)
         {
@@ -664,7 +678,7 @@ mng_save_image (const gchar *filename,
                         return 0;
                 }
         }
-*/
+#endif
 
   if (mng_data.gama)
     {
@@ -683,7 +697,8 @@ mng_save_image (const gchar *filename,
         }
     }
 
-/*      how do we get this to work?
+#if 0
+        /* how do we get this to work? */
 
         if (mng_data.phys)
         {
@@ -707,7 +722,7 @@ mng_save_image (const gchar *filename,
                         return 0;
                 }
         }
-*/
+#endif
 
   if (mng_data.time)
     {
@@ -748,6 +763,35 @@ mng_save_image (const gchar *filename,
 
   for (i = (num_layers - 1); i >= 0; i--)
     {
+      gint            num_colors;
+      GimpImageType   layer_drawable_type;
+      GimpDrawable   *layer_drawable;
+      gint            layer_offset_x, layer_offset_y;
+      gint            layer_rows, layer_cols;
+      gchar          *layer_name;
+      gint            layer_chunks_type;
+      volatile gint   layer_bpp;
+      GimpPixelRgn    layer_pixel_rgn;
+
+      guint8          layer_mng_colortype;
+      guint8          layer_mng_compression_type;
+      guint8          layer_mng_interlace_type;
+      gboolean        layer_has_unique_palette;
+
+      gchar           frame_mode;
+      int             frame_delay;
+      gchar          *temp_file_name;
+      png_structp     png_ptr;
+      png_infop       png_info_ptr;
+      FILE           *infile, *outfile;
+      int             num_passes;
+      int             tile_height;
+      guchar        **layer_pixels, *layer_pixel;
+      int             pass, j, k, begin, end, num;
+      guchar         *fixed;
+      guchar          layer_remap[256];
+
+
       layer_name          = gimp_drawable_get_name (layers[i]);
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
@@ -1079,6 +1123,20 @@ mng_save_image (const gchar *filename,
 
       while (!feof (infile))
         {
+          unsigned char   chunksize_chars[4];
+          unsigned long   chunksize;
+          unsigned char   chunkname[5];
+          guchar         *chunkbuffer;
+
+          long            chunkwidth;
+          long            chunkheight;
+          char            chunkbitdepth;
+          char            chunkcolortype;
+          char            chunkcompression;
+          char            chunkfilter;
+          char            chunkinterlaced;
+
+
           if (fread (chunksize_chars, 1, 4, infile) != 4)
             break;
           if (fread (chunkname, 1, 4, infile) != 4)
@@ -1154,6 +1212,8 @@ mng_save_image (const gchar *filename,
             }
           else if (strncmp (chunkname, "PLTE", 4) == 0)
             {
+              /* if this frame's palette is the same as the global palette,
+                 write a 0-color palette chunk */
               if ((ret =
                    mng_putchunk_plte (handle,
                                       layer_has_unique_palette ? (chunksize / 3) : 0,

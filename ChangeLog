@@ -1,3 +1,7 @@
+2004-07-15  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/mng.c: cleanup.
+
 2004-07-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpviewable.c: added gtk-doc comments for public
