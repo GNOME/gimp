@@ -108,14 +108,8 @@ session_set_window_geometry (GtkWidget   *window,
   
   gtk_widget_set_uposition (window, info->x, info->y);
   
-  /* It seems that usizing the dialogs is a bad thing, because you can't
-     make them smaller then. Until a better solution is found, we don't set
-     the size ... 
-  */
-  set_size = FALSE;
-
   if ( (set_size) && (info->width > 0) && (info->height > 0) )
-    gtk_widget_set_usize (window, info->width, info->height);
+    gtk_window_set_default_size (GTK_WINDOW(window), info->width, info->height);
 }
 
 void

@@ -18,7 +18,7 @@ fix the palette dialogs
 	(it would be nice to be able to actually edit
 	palettes and the like), also replace that menubox with a clist or
 	something. Right now, the palette dialog is unresizeable, and
-	mostly useledd useless for anything other than picking colors.
+	mostly useless for anything other than picking colors.
 	Import/Export options for palettes here would be good to.
 
 	Palettes should become a first-class core data structure (like
@@ -49,20 +49,19 @@ more configurabilty (eek)
 		http://tigert.gimp.org/files/temp/wilber_palette.gif
 	It might work in such way that 
 	   1. you click add -> new button
-	   2. then right click  on it -> you would get the normal <Image>
-			-menu (like when clicking right mousebutton over an image) 
-		   from which  you could select  the plugin/tool  to assign to
-			this button. 
+	   2. then right click  on it -> you would get the normal <Image>-menu 
+              (like when clicking right mousebutton over an image) from which  
+              you could select  the plugin/tool  to assign to this button. 
  	   3. To apply  the thing  to an  image you  first  click  on the 
-			button and the  statusbar would  show something like 'click 
-			on an image to  apply function xxxx' ->  click an  image to
-			assign the tool an image and apply it.
+	      button and the  statusbar would  show something like 'click 
+	      on an image to  apply function xxxx' ->  click an  image to
+	      assign the tool an image and apply it.
 	Now this is just an idea, but  it might solve the 'which image do
 	we want to apply things to? -problem.
 	Also  see http://www.home.unix-ag.org/simon/gimp/gimpbuttons.html
 	Simon Budig  has an experiment  similar  to this.  Maybe it would
 	make sense to implement something like this?
-																				--tigert 
+								--tigert 
 
 fix stuff so that the tile size could actually be changed eventually
 
@@ -84,12 +83,12 @@ file new dialog stuff   (i'm working on this...Adrian)
 	3. make x,y values have dropdowns for last 5 or so used sizes
 	4. maybe an estimate of how much ram the image will take?
 	5. maybe some "preset" common image sizes? 
-		-> 
-			* 468x60 banner ad
-			* 88x31 banner ad (Netscape NOW! -button for example)
-			* A4, A5, A6, US Letter etc.. sizes so that they take 
-			  the chosen resolution into account ("Hm. I need to make
-			  an A4 sized pic in 300DPI...") --tigert
+	     -> 
+		* 468x60 banner ad
+		* 88x31 banner ad (Netscape NOW! -button for example)
+		* A4, A5, A6, US Letter etc.. sizes so that they take 
+                  the chosen resolution into account ("Hm. I need to make
+		  an A4 sized pic in 300DPI...") --tigert
 	6. resolution/units need to be exported to the whole app
 	(probabaly in gimage.c) so size/scale, text tool, etc can
 	use them.
@@ -97,7 +96,7 @@ file new dialog stuff   (i'm working on this...Adrian)
 export filters:
 
 	This is one that would make some alot of sense intuitively,
-	and could be very conveint for scripting. Currently, theres no
+	and could be very convenient for scripting. Currently, theres no
 	"one step" way to save images easily. This feaure would be
 	useful for example in the Mail plugin, where it could flatten,
 	convert, etc the image in one step.
@@ -484,4 +483,12 @@ tools
 	Make tools listen for gimage dirty signals to fix munging.
 	When a tool caches image data privately, you need to reset
 	when the image gets dirty.
+
+Grid
+
+	A gridding, and a snap to gridding. Basically a way of turning on 
+        and off a grid, and setting the grid size. Then also a way of starting  
+        to draw at a grid intersection and then end drawing at another 
+        intersection.
+				(this was suggested to me by email -- Sven)
 
