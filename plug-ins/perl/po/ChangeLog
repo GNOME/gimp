@@ -1,3 +1,19 @@
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* ca.po
+	* en_GB.po
+	* ga.po
+	* gl.po
+	* hr.po
+	* hu.po
+	* it.po
+	* ko.po
+	* nl.po
+	* pt_BR.po
+	* ro.po
+	* sk.po
+	* sv.po: fixed invalid encoding specs.
+
 2001-03-25  Fatih Demir <kabalak@gtranslator.org>
 
 	* tr.po: Copied over from gimp-1-2 branch.
