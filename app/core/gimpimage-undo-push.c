@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -47,7 +46,8 @@
 #include "undo.h"
 
 #include "tools/by_color_select.h"
-#include "tools/paint_core.h"
+#include "tools/gimpdrawtool.h"
+#include "tools/gimppainttool.h"
 #include "tools/tool.h"
 #include "tools/transform_core.h"
 

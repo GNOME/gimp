@@ -66,7 +66,7 @@ enum_headers = \
 	../../app/tools/convolve.h		\
 	../../app/tools/dodgeburn.h		\
 	../../app/tools/hue_saturation.h	\
-	../../app/tools/paint_core.h		\
+	../../app/tools/gimppainttool.h		\
 	../../app/tools/text_tool.h
 
 pdb_scripts = \

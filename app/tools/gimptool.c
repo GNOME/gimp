@@ -466,6 +466,121 @@ gimp_tool_real_oper_update (GimpTool       *tool,
 
 
 
+
+/*  Function definitions  */
+
+/*  Create a default tool object
+ */
+
+GimpTool *
+gimp_tool_new (void)
+{
+  GimpTool *tool;
+  
+  tool = gtk_type_new (GIMP_TYPE_TOOL);
+
+  return tool;
+}
+
+
+
+
+void
+gimp_tool_help_func (const gchar *help_data)
+{
+  gimp_standard_help_func (tool_manager_active_get_help_data());
+}
+
+
+#define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
+
+#define QUIET_STUB(x) void * x (void){return NULL;}
+
+STUB(curves_free)
+STUB(hue_saturation_free)
+STUB(levels_free)
+STUB(curves_calculate_curve)
+STUB(curves_lut_func)
+STUB(color_balance_create_lookup_tables)
+STUB(color_balance)
+STUB(hue_saturation_calculate_transfers)
+STUB(hue_saturation)
+STUB(threshold_2)
+STUB(color_balance_dialog_hide)
+STUB(hue_saturation_dialog_hide)
+STUB(brightness_contrast_dialog_hide)
+STUB(threshold_dialog_hide)
+STUB(levels_dialog_hide)
+STUB(curves_dialog_hide)
+STUB(posterize_dialog_hide)
+STUB(move_tool_start_hguide)
+STUB(move_tool_start_vguide)
+STUB(bucket_fill_region)
+STUB(pathpoints_copy)
+STUB(pathpoints_free)
+STUB(bezier_stroke)
+STUB(bezier_distance_along)
+STUB(bezier_select_free)
+STUB(paths_dialog_destroy_cb)
+STUB(bezier_select_reset)
+STUB(bezier_add_point)
+STUB(path_set_path)
+STUB(path_set_path_points)
+STUB(path_delete_path)
+STUB(by_color_select_initialize_by_image)
+STUB(path_transform_start_undo)
+STUB(path_transform_do_undo)
+STUB(path_transform_free_undo)
+STUB(undo_pop_paint)
+STUB(histogram_tool_histogram_range)
+STUB(paths_dialog_create)
+STUB(paths_dialog_flush)
+STUB(paths_dialog_update)
+STUB(paths_dialog_new_path_callback)
+STUB(paths_dialog_dup_path_callback)
+STUB(paths_dialog_path_to_sel_callback)
+STUB(paths_dialog_sel_to_path_callback)
+STUB(paths_dialog_stroke_path_callback)
+STUB(paths_dialog_delete_path_callback)
+STUB(paths_dialog_copy_path_callback)
+STUB(paths_dialog_paste_path_callback)
+STUB(paths_dialog_import_path_callback)
+STUB(paths_dialog_export_path_callback)
+STUB(paths_dialog_edit_path_attributes_callback)
+QUIET_STUB(GIMP_IS_FUZZY_SELECT)
+STUB(crop_image)
+STUB(dodgeburn_non_gui)
+STUB(dodgeburn_non_gui_default)
+STUB(ellipse_select)
+STUB(eraser_non_gui)
+STUB(eraser_non_gui_default)
+STUB(transform_core_cut)
+STUB(flip_tool_flip)
+STUB(transform_core_paste)
+STUB(free_select)
+STUB(find_contiguous_region)
+STUB(fuzzy_mask)
+STUB(fuzzy_select)
+STUB(pencil_non_gui)
+STUB(perspective_find_transform)
+STUB(perspective_tool_perspective)
+STUB(rect_select)
+STUB(rotate_tool_rotate)
+STUB(scale_tool_scale)
+STUB(shear_tool_shear)
+STUB(smudge_non_gui)
+STUB(smudge_non_gui_default)
+STUB(transform_core_do)
+STUB(airbrush_non_gui)
+STUB(airbrush_non_gui_default)
+STUB(blend)
+STUB(bucket_fill)
+STUB(by_color_select)
+STUB(clone_non_gui)
+STUB(clone_non_gui_default)
+STUB(convolve_non_gui)
+STUB(convolve_non_gui_default)
+
 #warning obsolete crap
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
@@ -482,7 +597,7 @@ ToolInfo tool_info[] =
     "tools/rect_select.html",
     RECT_SELECT,
     tools_new_rect_select,
-    tools_free_rect_select, 
+    tools_free_rect_select,
     NULL,
     NULL,
     NULL,
@@ -527,8 +642,8 @@ ToolInfo tool_info[] =
   },
 
   {
-    NULL, 
-    N_("Free Select"), 
+    NULL,
+    N_("Free Select"),
     N_("/Tools/Select Tools/Free Select"),
     "F",
     (char **) free_bits,
@@ -538,7 +653,7 @@ ToolInfo tool_info[] =
     "tools/free_select.html",
     FREE_SELECT,
     tools_new_free_select,
-    tools_free_free_select, 
+    tools_free_free_select,
     NULL,
     NULL,
     NULL,
@@ -553,7 +668,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Fuzzy Select"),
@@ -566,7 +681,7 @@ ToolInfo tool_info[] =
     "tools/fuzzy_select.html",
     FUZZY_SELECT,
     tools_new_fuzzy_select,
-    tools_free_fuzzy_select, 
+    tools_free_fuzzy_select,
     NULL,
     NULL,
     NULL,
@@ -581,7 +696,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Bezier Select"),
@@ -609,7 +724,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Intelligent Scissors"),
@@ -622,7 +737,7 @@ ToolInfo tool_info[] =
     "tools/intelligent_scissors.html",
     ISCISSORS,
     tools_new_iscissors,
-    tools_free_iscissors, 
+    tools_free_iscissors,
     NULL,
     NULL,
     NULL,
@@ -637,7 +752,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Move"),
@@ -650,7 +765,7 @@ ToolInfo tool_info[] =
     "tools/move.html",
     MOVE,
     tools_new_move_tool,
-    tools_free_move_tool, 
+    tools_free_move_tool,
     NULL,
     NULL,
     NULL,
@@ -678,7 +793,7 @@ ToolInfo tool_info[] =
     "tools/magnify.html",
     MAGNIFY,
     tools_new_magnify,
-    tools_free_magnify, 
+    tools_free_magnify,
     NULL,
     NULL,
     NULL,
@@ -721,7 +836,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Transform"),
@@ -749,7 +864,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* rotate */
-  
+
   {
     NULL,
     N_("Transform"),
@@ -762,7 +877,7 @@ ToolInfo tool_info[] =
     "tools/transform.html",
     SCALE,
     tools_new_transform_tool,
-    tools_free_transform_tool, 
+    tools_free_transform_tool,
     NULL,
     NULL,
     NULL,
@@ -777,7 +892,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* scale */
-  
+
   {
     NULL,
     N_("Transform"),
@@ -805,7 +920,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* shear */
-  
+
   {
     NULL,
     N_("Transform"),
@@ -833,7 +948,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* perspective */
-  
+
   {
     NULL,
     N_("Flip"),
@@ -861,7 +976,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-    
+
   {
     NULL,
     N_("Text"),
@@ -889,8 +1004,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Bucket Fill"),
     N_("/Tools/Paint Tools/Bucket Fill"),
@@ -918,7 +1033,7 @@ ToolInfo tool_info[] =
     }
   },
 
-  { 
+  {
     NULL,
     N_("Blend"),
     N_("/Tools/Paint Tools/Blend"),
@@ -945,7 +1060,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Pencil"),
@@ -973,36 +1088,9 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
+
   {
-    NULL,
-    N_("Paintbrush"),
-    N_("/Tools/Paint Tools/Paintbrush"),
-    "P",
-    (char **) paint_bits,
-    NULL,
-    NULL,
-    N_("Paint fuzzy brush strokes"),
-    "tools/paintbrush.html",
-    PAINTBRUSH,
-    tools_new_paintbrush,
-    tools_free_paintbrush, 
-    NULL,
-    NULL,
-    NULL,
-    {
-      paintbrush_small_bits, paintbrush_small_mask_bits,
-      paintbrush_small_width, paintbrush_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-  
-  { 
     NULL,
     N_("Airbrush"),
     N_("/Tools/Paint Tools/Airbrush"),
@@ -1029,7 +1117,7 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
+
   {
     NULL,
     N_("Ink"),
@@ -1058,7 +1146,7 @@ ToolInfo tool_info[] =
     }
   },
 
-  { 
+  {
     NULL,
     N_("Clone"),
     N_("/Tools/Paint Tools/Clone"),
@@ -1085,8 +1173,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Eraser"),
     N_("/Tools/Paint Tools/Eraser"),
@@ -1141,8 +1229,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Convolve"),
     N_("/Tools/Paint Tools/Convolve"),
@@ -1225,7 +1313,7 @@ ToolInfo tool_info[] =
       0, 0,
       0, 0, NULL, NULL, NULL
     }
-  },          
+  },
 */
 
   {
@@ -1240,7 +1328,7 @@ ToolInfo tool_info[] =
     "tools/measure.html",
     MEASURE,
     tools_new_measure_tool,
-    tools_free_measure_tool, 
+    tools_free_measure_tool,
     NULL,
     NULL,
     NULL,
@@ -1269,7 +1357,7 @@ ToolInfo tool_info[] =
     "tools/path.html",
     PATH_TOOL,
     tools_new_path_tool,
-    tools_free_path_tool, 
+    tools_free_path_tool,
     NULL,
     NULL,
     NULL,
@@ -1287,7 +1375,7 @@ ToolInfo tool_info[] =
 */
 
   /*  Non-toolbox tools  */
-  { 
+  {
     NULL,
     N_("By Color Select"),
     N_("/Select/By Color..."),
@@ -1314,8 +1402,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Color Balance"),
     N_("/Image/Colors/Color Balance..."),
@@ -1342,8 +1430,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Brightness-Contrast"),
     N_("/Image/Colors/Brightness-Contrast..."),
@@ -1370,8 +1458,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Hue-Saturation"),
     N_("/Image/Colors/Hue-Saturation..."),
@@ -1383,7 +1471,7 @@ ToolInfo tool_info[] =
     "tools/hue_saturation.html",
     HUE_SATURATION,
     tools_new_hue_saturation,
-    tools_free_hue_saturation, 
+    tools_free_hue_saturation,
     hue_saturation_initialize,
     NULL,
     NULL,
@@ -1399,7 +1487,7 @@ ToolInfo tool_info[] =
     }
   },
 
-  { 
+  {
     NULL,
     N_("Posterize"),
     N_("/Image/Colors/Posterize..."),
@@ -1426,10 +1514,10 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
-    N_("Threshold"), 
+    N_("Threshold"),
     N_("/Image/Colors/Threshold..."),
     NULL,
     (char **) levels_bits,
@@ -1454,8 +1542,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Curves"),
     N_("/Image/Colors/Curves..."),
@@ -1466,7 +1554,7 @@ ToolInfo tool_info[] =
     N_("Adjust color curves"),
     "tools/curves.html",
     CURVES,
-    tools_new_curves, 
+    tools_new_curves,
     tools_free_curves,
     curves_initialize,
     NULL,
@@ -1482,8 +1570,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Levels"),
     N_("/Image/Colors/Levels..."),
@@ -1494,7 +1582,7 @@ ToolInfo tool_info[] =
     N_("Adjust color levels"),
     "tools/levels.html",
     LEVELS,
-    tools_new_levels, 
+    tools_new_levels,
     tools_free_levels,
     levels_initialize,
     NULL,
@@ -1510,8 +1598,8 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   },
-  
-  { 
+
+  {
     NULL,
     N_("Histogram"),
     N_("/Image/Histogram..."),
@@ -1543,97 +1631,3 @@ ToolInfo tool_info[] =
 gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 #endif
 
-
-
-#define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
-
-#define QUIET_STUB(x) void * x (void){return NULL;}
-
-STUB(curves_free)
-STUB(hue_saturation_free)
-STUB(levels_free)
-STUB(curves_calculate_curve)
-STUB(curves_lut_func)
-STUB(color_balance_create_lookup_tables)
-STUB(color_balance)
-STUB(hue_saturation_calculate_transfers)
-STUB(hue_saturation)
-STUB(threshold_2)
-STUB(color_balance_dialog_hide)
-STUB(hue_saturation_dialog_hide)
-STUB(brightness_contrast_dialog_hide)
-STUB(threshold_dialog_hide)
-STUB(levels_dialog_hide)
-STUB(curves_dialog_hide)
-STUB(posterize_dialog_hide)
-STUB(move_tool_start_hguide)
-STUB(move_tool_start_vguide)
-STUB(bucket_fill_region)
-STUB(pathpoints_copy)
-STUB(pathpoints_free)
-STUB(bezier_stroke)
-STUB(bezier_distance_along)
-STUB(bezier_select_free)
-STUB(paths_dialog_destroy_cb)
-STUB(bezier_select_reset)
-STUB(bezier_add_point)
-STUB(path_set_path)
-STUB(path_set_path_points)
-STUB(path_delete_path)
-STUB(by_color_select_initialize_by_image)
-STUB(path_transform_start_undo)
-STUB(path_transform_do_undo)
-STUB(path_transform_free_undo)
-STUB(undo_pop_paint)
-STUB(histogram_tool_histogram_range)
-STUB(paths_dialog_create)
-STUB(paths_dialog_flush)
-STUB(paths_dialog_update)
-STUB(paths_dialog_new_path_callback)
-STUB(paths_dialog_dup_path_callback)
-STUB(paths_dialog_path_to_sel_callback)
-STUB(paths_dialog_sel_to_path_callback)
-STUB(paths_dialog_stroke_path_callback)
-STUB(paths_dialog_delete_path_callback)
-STUB(paths_dialog_copy_path_callback)
-STUB(paths_dialog_paste_path_callback)
-STUB(paths_dialog_import_path_callback)
-STUB(paths_dialog_export_path_callback)
-STUB(paths_dialog_edit_path_attributes_callback)
-STUB(tools_register)
-QUIET_STUB(GIMP_IS_FUZZY_SELECT)
-QUIET_STUB(GIMP_IS_MOVE_TOOL)
-STUB(crop_image)
-STUB(dodgeburn_non_gui)
-STUB(dodgeburn_non_gui_default)
-STUB(ellipse_select)
-STUB(eraser_non_gui)
-STUB(eraser_non_gui_default)
-STUB(transform_core_cut)
-STUB(flip_tool_flip)
-STUB(transform_core_paste)
-STUB(free_select)
-STUB(find_contiguous_region)
-STUB(fuzzy_mask)
-STUB(fuzzy_select)
-STUB(paintbrush_non_gui)
-STUB(paintbrush_non_gui_default)
-STUB(pencil_non_gui)
-STUB(perspective_find_transform)
-STUB(perspective_tool_perspective)
-STUB(rect_select)
-STUB(rotate_tool_rotate)
-STUB(scale_tool_scale)
-STUB(shear_tool_shear)
-STUB(smudge_non_gui)
-STUB(smudge_non_gui_default)
-STUB(transform_core_do)
-STUB(airbrush_non_gui)
-STUB(airbrush_non_gui_default)
-STUB(blend)
-STUB(bucket_fill)
-STUB(by_color_select)
-STUB(clone_non_gui)
-STUB(clone_non_gui_default)
-STUB(convolve_non_gui)
-STUB(convolve_non_gui_default)

@@ -30,7 +30,7 @@
 #include "bucket_fill.h"
 #include "by_color_select.h"
 #include "clone.h"
-#include "color_picker.h"
+#include "gimpcolorpickertool.h"
 #include "convolve.h"
 #include "crop.h"
 #include "dodgeburn.h"
@@ -43,7 +43,7 @@
 #include "gimpimage.h"
 #include "measure.h"
 #include "move.h"
-#include "paintbrush.h"
+#include "gimppaintbrushtool.h"
 #include "pencil.h"
 #include "perspective_tool.h"
 #include "rect_select.h"
@@ -52,16 +52,26 @@
 #include "shear_tool.h"
 #include "smudge.h"
 
+GimpPaintTool *non_gui_paint_tool;
+GimpPaintToolClass *non_gui_paint_tool_class;
+
 
 void
 register_tools (void)
 {
-  gimp_color_picker_register ();
-  gimp_measure_tool_register ();
+  gimp_color_picker_tool_register ();
+  gimp_paintbrush_tool_register ();
+  /*FIXME gimp_measure_tool_register (); */
   gimp_move_tool_register ();
-  gimp_text_tool_register ();
+  /*FIXME gimp_text_tool_register (); */
+
+  /* EEEEEEK! */
+  non_gui_paint_tool = gimp_paint_tool_new();
+  non_gui_paint_tool_class = GIMP_PAINT_TOOL_CLASS(gtk_type_class(GIMP_TYPE_PAINT_TOOL));
 
 /*
+  snatched from the pdb.  For inspiration only.  ;)
+
   procedural_db_register (&airbrush_proc);
   procedural_db_register (&airbrush_default_proc);
   procedural_db_register (&blend_proc);
@@ -81,8 +91,6 @@ register_tools (void)
   procedural_db_register (&flip_proc);
   procedural_db_register (&free_select_proc);
   procedural_db_register (&fuzzy_select_proc);
-  procedural_db_register (&paintbrush_proc);
-  procedural_db_register (&paintbrush_default_proc);
   procedural_db_register (&pencil_proc);
   procedural_db_register (&perspective_proc);
   procedural_db_register (&rect_select_proc);

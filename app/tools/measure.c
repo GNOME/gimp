@@ -31,7 +31,6 @@
 #include "apptypes.h"
 
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "info_dialog.h"
@@ -41,6 +40,8 @@
 #include "tool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+
+#include "tools/gimpdrawingtool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -143,7 +144,7 @@ gimp_measure_tool_get_type (void)
 	(GtkClassInitFunc) NULL,
       };
 
-      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+      tool_type = gtk_type_unique (GIMP_TYPE_DRAW_TOOL, &tool_info);
     }
 
   return tool_type;
@@ -185,24 +186,20 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 					  (ToolOptions *) measure_tool_options);
     }
 
-  measure_tool->core = draw_core_new (measure_tool_draw);
-
   tool->preserve = TRUE;  /*  Preserve on drawable change  */
 }
 
 static void
 gimp_measure_tool_destroy (GtkObject *object)
 {
-  GimpMeasureTool *measure_tool;
+  GimpDrawTool *draw_tool;
   GimpTool        *tool;
 
-  measure_tool = GIMP_MEASURE_TOOL (object);
+  draw_tool    = GIMP_DRAW_TOOL (object);
   tool         = GIMP_TOOL (object);
 
   if (tool->state == ACTIVE)
-    draw_core_stop (measure_tool->core, tool);
-
-  draw_core_free (measure_tool->core);
+    gimp_draw_tool_stop (draw_tool);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -388,7 +385,7 @@ measure_tool_button_press (GimpTool       *tool,
       if (tool->state == ACTIVE)
 	{
 	  /* reset everything */
-	  draw_core_stop (measure_tool->core, tool);
+	  gimp_draw_tool_stop (GIMP_DRAW_TOOL(measure_tool));
 
 	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
 			     measure_tool->context_id);
@@ -403,13 +400,13 @@ measure_tool_button_press (GimpTool       *tool,
       else
 	{
 	  /* initialize the statusbar display */
-	  measure_tool->context_id = 
+	  measure_tool->context_id =
 	    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
 					  "measure");
 	}
-      
+
       /*  set the first point and go into ADDING mode  */
-      gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
+      gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y,
 				   &measure_tool->x[0], &measure_tool->y[0],
 				   TRUE, FALSE);
       measure_tool->point      = 0;
@@ -420,7 +417,7 @@ measure_tool_button_press (GimpTool       *tool,
       tool->gdisp = gdisp;
 
       /*  start drawing the measure tool  */
-      draw_core_start (measure_tool->core, gdisp->canvas->window, tool);
+      gimp_draw_tool_start (GIMP_DRAW_TOOL(measure_tool), gdisp->canvas->window);
     }
 
   /*  create the info window if necessary  */
@@ -441,14 +438,14 @@ measure_tool_button_press (GimpTool       *tool,
 
 				      NULL);
     }
-  
+
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
   tool->state = ACTIVE;
-  
+
   /*  set the pointer to the crosshair,
    *  so one actually sees the cursor position
    */
@@ -466,7 +463,7 @@ measure_tool_button_release (GimpTool       *tool,
   GimpMeasureTool *measure_tool;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
-  
+
   measure_tool->function = FINISHED;
 
   gdk_pointer_ungrab (bevent->time);
@@ -492,15 +489,15 @@ measure_tool_motion (GimpTool       *tool,
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
   /*  undraw the current tool  */
-  draw_core_pause (measure_tool->core, tool);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL(measure_tool));
 
   /*  get the coordinates  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, FALSE);
 
-  /*  
+  /*
    *  A few comments here, because this routine looks quite weird at first ...
    *
-   *  The goal is to keep point 0, called the start point, to be always the one 
+   *  The goal is to keep point 0, called the start point, to be always the one
    *  in the middle or, if there are only two points, the one that is fixed.
    *  The angle is then always measured at this point.
    */
@@ -510,7 +507,7 @@ measure_tool_motion (GimpTool       *tool,
     case ADDING:
       switch (measure_tool->point)
 	{
-	case 0:  /*  we are adding to the start point  */  
+	case 0:  /*  we are adding to the start point  */
 	  break;
 	case 1:  /*  we are adding to the end point, make it the new start point  */
 	  tmp = measure_tool->x[0];
@@ -533,8 +530,8 @@ measure_tool_motion (GimpTool       *tool,
       measure_tool->point = measure_tool->num_points - 1;
       measure_tool->function = MOVING;
       /*  no, don't break here!  */
- 
-    case MOVING: 
+
+    case MOVING:
       /*  if we are moving the start point and only have two, make it the end point  */
       if (measure_tool->num_points == 2 && measure_tool->point == 0)
 	{
@@ -558,10 +555,10 @@ measure_tool_motion (GimpTool       *tool,
 	    {
 	      dx = measure_tool->x[i] - measure_tool->x[0];
 	      dy = measure_tool->y[i] - measure_tool->y[0];
-      
-	      measure_tool->x[i] = measure_tool->x[0] + 
+
+	      measure_tool->x[i] = measure_tool->x[0] +
 		(dx > 0 ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
-	      measure_tool->y[i] = measure_tool->y[0] + 
+	      measure_tool->y[i] = measure_tool->y[0] +
 		(dy > 0  ? MAX (abs (dx), abs (dy)) : - MAX (abs (dx), abs (dy)));
 	    }
 	  else
@@ -592,7 +589,7 @@ measure_tool_motion (GimpTool       *tool,
       /*  calculate distance and angle  */
       ax = measure_tool->x[1] - measure_tool->x[0];
       ay = measure_tool->y[1] - measure_tool->y[0];
-      
+
       if (measure_tool->num_points == 3)
 	{
 	  bx = measure_tool->x[2] - measure_tool->x[0];
@@ -603,23 +600,23 @@ measure_tool_motion (GimpTool       *tool,
 	  bx = 0;
 	  by = 0;
 	}
-      
+
       if (gdisp->dot_for_dot)
 	{
 	  distance = sqrt (SQR (ax - bx) + SQR (ay - by));
-	  
+	
 	  if (measure_tool->num_points != 3)
 	    bx = ax > 0 ? 1 : -1;
-	  
+	
 	  measure_tool->angle1 = measure_get_angle (ax, ay, 1.0, 1.0);
 	  measure_tool->angle2 = measure_get_angle (bx, by, 1.0, 1.0);
 	  angle = fabs (measure_tool->angle1 - measure_tool->angle2);
 	  if (angle > 180.0)
 	    angle = fabs (360.0 - angle);
-	  
+	
 	  g_snprintf (status_str, STATUSBAR_SIZE, "%.1f %s, %.2f %s",
 		      distance, _("pixels"), angle, _("degrees"));
-	  
+	
 	  if (measure_tool_options)
 	    {
 	      g_snprintf (distance_buf, MAX_INFO_BUF, "%.1f %s", distance, _("pixels"));
@@ -634,20 +631,20 @@ measure_tool_motion (GimpTool       *tool,
 			     gimp_unit_get_symbol (gdisp->gimage->unit),
 			     _("degrees"));
 
-	  distance =  gimp_unit_get_factor (gdisp->gimage->unit) * 
+	  distance =  gimp_unit_get_factor (gdisp->gimage->unit) *
 	    sqrt (SQR ((gdouble)(ax - bx) / gdisp->gimage->xresolution) +
 		  SQR ((gdouble)(ay - by) / gdisp->gimage->yresolution));
 
 	  if (measure_tool->num_points != 3)
 	    bx = ax > 0 ? 1 : -1;
 
-	  measure_tool->angle1 = measure_get_angle (ax, ay, 
-						    gdisp->gimage->xresolution, 
-						    gdisp->gimage->yresolution); 
-	  measure_tool->angle2 = measure_get_angle (bx, by,
-						    gdisp->gimage->xresolution, 
+	  measure_tool->angle1 = measure_get_angle (ax, ay,
+						    gdisp->gimage->xresolution,
 						    gdisp->gimage->yresolution);
-	  angle = fabs (measure_tool->angle1 - measure_tool->angle2);     
+	  measure_tool->angle2 = measure_get_angle (bx, by,
+						    gdisp->gimage->xresolution,
+						    gdisp->gimage->yresolution);
+	  angle = fabs (measure_tool->angle1 - measure_tool->angle2);
 	  if (angle > 180.0)
 	    angle = fabs (360.0 - angle);
 
@@ -680,7 +677,7 @@ measure_tool_motion (GimpTool       *tool,
     }  /*  measure_tool->function == MOVING  */
 
   /*  redraw the current tool  */
-  draw_core_resume (measure_tool->core, tool);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL(measure_tool));
 }
 
 static void
@@ -703,9 +700,9 @@ measure_tool_cursor_update (GimpTool       *tool,
     {
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
-				     &x[i], &y[i], FALSE);      
-	  
+	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i],
+				     &x[i], &y[i], FALSE);
+	
 	  if (mevent->x == CLAMP (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      mevent->y == CLAMP (mevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
@@ -752,6 +749,7 @@ static void
 measure_tool_draw (GimpTool *tool)
 {
   GimpMeasureTool *measure_tool;
+  GimpDrawTool	  *draw_tool;
   gint         x[3];
   gint         y[3];
   gint         i;
@@ -767,22 +765,22 @@ measure_tool_draw (GimpTool *tool)
 				 &x[i], &y[i], FALSE);
       if (i == 0 && measure_tool->num_points == 3)
 	{
-	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+	  gdk_draw_arc (draw_tool->win, draw_tool->gc, FALSE,
 			x[i] - (TARGET >> 1), y[i] - (TARGET >> 1),
 			TARGET, TARGET, 0, 23040);
 	}
       else
 	{
-	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-			 x[i] - TARGET, y[i], 
+	  gdk_draw_line (draw_tool->win, draw_tool->gc,
+			 x[i] - TARGET, y[i],
 			 x[i] + TARGET, y[i]);
-	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-			 x[i], y[i] - TARGET, 
+	  gdk_draw_line (draw_tool->win, draw_tool->gc,
+			 x[i], y[i] - TARGET,
 			 x[i], y[i] + TARGET);
 	}
       if (i > 0)
 	{
-	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+	  gdk_draw_line (draw_tool->win, draw_tool->gc,
 			 x[0], y[0],
 			 x[i], y[i]);
 	  /*  only draw the arc if the lines are long enough  */
@@ -790,29 +788,29 @@ measure_tool_draw (GimpTool *tool)
 	    draw_arc++;
 	}
     }
-  
+
   if (measure_tool->num_points > 1 && draw_arc == measure_tool->num_points - 1)
     {
       angle1 = measure_tool->angle2 * 64.0;
       angle2 = (measure_tool->angle1 - measure_tool->angle2) * 64.0;
-  
+
       if (angle2 > 11520)
 	  angle2 -= 23040;
       if (angle2 < -11520)
 	  angle2 += 23040;
-     
+
       if (angle2 != 0)
 	{
-	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+	  gdk_draw_arc (draw_tool->win, draw_tool->gc, FALSE,
 			x[0] - ARC_RADIUS, y[0] - ARC_RADIUS,
-			2 * ARC_RADIUS, 2 * ARC_RADIUS, 
-			angle1, angle2); 
+			2 * ARC_RADIUS, 2 * ARC_RADIUS,
+			angle1, angle2);
 
 	  if (measure_tool->num_points == 2)
-	    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+	    gdk_draw_line (draw_tool->win, draw_tool->gc,
 			   x[0], y[0],
-			   x[1] - x[0] <= 0 ? x[0] - ARC_RADIUS - (TARGET >> 1) : 
-			                      x[0] + ARC_RADIUS + (TARGET >> 1), 
+			   x[1] - x[0] <= 0 ? x[0] - ARC_RADIUS - (TARGET >> 1) :
+			                      x[0] + ARC_RADIUS + (TARGET >> 1),
 			   y[0]);
 	}
     }
@@ -823,24 +821,24 @@ measure_tool_control (GimpTool   *tool,
 		      ToolAction  action,
 		      GDisplay   *gdisp)
 {
-  GimpMeasureTool *measure_tool;
+  GimpDrawTool *draw_tool;
 
-  measure_tool = GIMP_MEASURE_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
 
   switch (action)
     {
     case PAUSE:
-      draw_core_pause (measure_tool->core, tool);
+      gimp_draw_tool_pause (draw_tool);
       break;
 
     case RESUME:
-      draw_core_resume (measure_tool->core, tool);
+      gimp_draw_tool_resume (draw_tool);
       break;
 
     case HALT:
       gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
 			 measure_tool->context_id);
-      draw_core_stop (measure_tool->core, tool);
+      gimp_draw_tool_stop (draw_tool);
       tool->state = INACTIVE;
       break;
 

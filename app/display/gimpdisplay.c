@@ -31,7 +31,6 @@
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
-#include "draw_core.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage.h"

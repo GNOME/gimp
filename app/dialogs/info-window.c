@@ -24,7 +24,7 @@
 
 #include "apptypes.h"
 
-#include "tools/color_picker.h"
+#include "tools/gimpcolorpickertool.h"
 #include "tools/tool.h"
 #include "tools/tool_manager.h"
 
@@ -161,7 +161,7 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (GIMP_TYPE_COLOR_PICKER)), 22, 0, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (GIMP_TYPE_COLOR_PICKER_TOOL)), 22, 0, FALSE);
   gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);

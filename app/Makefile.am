@@ -72,8 +72,6 @@ gimp_SOURCES = \
 	disp_callbacks.h	\
 	docindex.c		\
 	docindex.h		\
-	draw_core.c		\
-	draw_core.h		\
 	drawable.c		\
 	drawable.h		\
 	errorconsole.c		\

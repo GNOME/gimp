@@ -24,8 +24,8 @@ libapptools_la_SOURCES = \
 ##	clone.h			\
 ##	color_balance.c		\
 ##	color_balance.h		\
-	color_picker.c		\
-	color_picker.h		\
+	gimpcolorpickertool.c	\
+	gimpcolorpickertool.h	\
 ##	convolve.c		\
 ##	convolve.h		\
 ##	crop.c			\
@@ -34,6 +34,8 @@ libapptools_la_SOURCES = \
 ##	curves.h		\
 ##	dodgeburn.c		\
 ##	dodgeburn.h		\
+	gimpdrawtool.c		\
+	gimpdrawgtool.h		\
 ##	edit_selection.c	\
 ##	edit_selection.h	\
 ##	ellipse_select.c	\
@@ -60,15 +62,15 @@ libapptools_la_SOURCES = \
 ##	levels.h		\
 ##	magnify.c		\
 ##	magnify.h		\
-	measure.c		\
-	measure.h		\
+##	measure.c		\
+##	measure.h		\
 	move.c			\
 	move.h			\
-##	paintbrush.c		\
-##	paintbrush.h		\
-##	paint_core.c		\
-##	paint_core.h		\
-##	paint_core_kernels.h	\
+	gimppaintbrushtool.c	\
+	gimppaintbrushtool.h	\
+	gimppainttool.c		\
+	gimppainttool.h		\
+	gimppainttool_kernels.h	\
 	paint_options.c		\
 	paint_options.h		\
 ##	pencil.c		\

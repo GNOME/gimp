@@ -111,7 +111,7 @@ typedef struct _BoundSeg            BoundSeg;
 
 typedef struct _ColorNotebook       ColorNotebook;
 
-typedef struct _DrawCore            DrawCore;
+typedef struct _GimpDrawTool        GimpDrawTool;
 
 typedef struct _GDisplay            GDisplay;
 
@@ -133,7 +133,7 @@ typedef         gpointer            ImageMap;
 
 typedef struct _InfoDialog          InfoDialog;
 
-typedef struct _PaintCore           PaintCore;
+typedef struct _GimpPaintTool       GimpPaintTool;
 
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;

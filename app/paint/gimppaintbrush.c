@@ -36,14 +36,16 @@
 #include "selection.h"
 #include "temp_buf.h"
 
-#include "paint_core.h"
+#include "tools/gimppainttool.h"
 #include "paint_options.h"
-#include "paintbrush.h"
+#include "tools/gimppaintbrushtool.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
+#include "pixmaps2.h"
 
 #include "libgimp/gimpintl.h"
-
 
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
@@ -106,24 +108,51 @@ static gdouble   non_gui_incremental;
 static GimpUnit  non_gui_fade_unit;
 static GimpUnit  non_gui_gradient_unit;
 
+static GimpPaintToolClass *parent_class;
 
 /*  forward function declarations  */
-static void       paintbrush_motion     (PaintCore            *,
+static void  gimp_paintbrush_tool_motion     (GimpPaintTool     *,
 					 GimpDrawable         *,
 					 PaintPressureOptions *,
 					 gdouble               ,
 					 gdouble               ,
 					 PaintApplicationMode  ,
 					 GradientPaintMode     );
-static gpointer   paintbrush_paint_func (PaintCore            *paint_core,
+static void gimp_paintbrush_tool_paint_func  (GimpPaintTool     *paint_core,
 					 GimpDrawable         *drawable,
 					 PaintState            state);
-
+static void gimp_paintbrush_tool_class_init  (GimpPaintToolClass *klass);
 
 /*  functions  */
 
+GtkType
+gimp_paintbrush_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpPaintbrushTool",
+        sizeof (GimpPaintbrushTool),
+        sizeof (GimpPaintbrushToolClass),
+        (GtkClassInitFunc) gimp_paintbrush_tool_class_init,
+        (GtkObjectInitFunc) NULL /*gimp_paintbrush_tool_initialize*/,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        NULL
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+
 static void
-paintbrush_gradient_toggle_callback (GtkWidget *widget,
+gimp_paintbrush_tool_gradient_toggle_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   PaintbrushOptions *options = paintbrush_options;
@@ -147,7 +176,7 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
 }
 
 static void
-paintbrush_options_reset (void)
+gimp_paintbrush_tool_options_reset (void)
 {
   PaintbrushOptions *options = paintbrush_options;
   GtkWidget         *spinbutton;
@@ -181,12 +210,12 @@ paintbrush_options_reset (void)
 
   options->gradient_type = options->gradient_type_d;
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
 			       options->gradient_type_d);
 }
 
 static PaintbrushOptions *
-paintbrush_options_new (void)
+gimp_paintbrush_tool_options_new (void)
 {
   PaintbrushOptions *options;
 
@@ -199,24 +228,24 @@ paintbrush_options_new (void)
   /*  the new paint tool options structure  */
   options = g_new (PaintbrushOptions, 1);
   paint_options_init ((PaintOptions *) options,
-		      PAINTBRUSH,
-		      paintbrush_options_reset);
+		      GIMP_TYPE_PAINTBRUSH_TOOL,
+		      gimp_paintbrush_tool_options_reset);
 
-  options->use_fade        = 
+  options->use_fade        =
                   options->use_fade_d        = PAINTBRUSH_DEFAULT_USE_FADE;
-  options->fade_out        = 
+  options->fade_out        =
                   options->fade_out_d        = PAINTBRUSH_DEFAULT_FADE_OUT;
-  options->fade_unit        = 
+  options->fade_unit        =
                   options->fade_unit_d       = PAINTBRUSH_DEFAULT_FADE_UNIT;
-  options->use_gradient    = 
+  options->use_gradient    =
                   options->use_gradient_d    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
-  options->gradient_length = 
+  options->gradient_length =
                   options->gradient_length_d = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
-  options->gradient_unit        = 
+  options->gradient_unit        =
                   options->gradient_unit_d   = PAINTBRUSH_DEFAULT_GRADIENT_UNIT;
-  options->gradient_type   = 
+  options->gradient_type   =
                   options->gradient_type_d   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
-  
+
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
@@ -241,7 +270,7 @@ paintbrush_options_new (void)
   gtk_widget_show (options->use_fade_w);
 
   /*  the fade-out sizeentry  */
-  options->fade_out_w =  
+  options->fade_out_w =
     gtk_adjustment_new (options->fade_out_d,  1e-5, 32767.0, 1.0, 50.0, 0.0);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (options->fade_out_w), 1.0, 0.0);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton), GTK_SHADOW_NONE);
@@ -254,7 +283,7 @@ paintbrush_options_new (void)
   gtk_widget_show (spinbutton);
 
   /*  the fade-out unitmenu  */
-  options->fade_unit_w = 
+  options->fade_unit_w =
     gimp_unit_menu_new ("%a", options->fade_unit_d, TRUE, TRUE, TRUE);
   gtk_signal_connect (GTK_OBJECT (options->fade_unit_w), "unit_changed",
 		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
@@ -282,12 +311,12 @@ paintbrush_options_new (void)
     gtk_check_button_new_with_label (_("Gradient"));
   gtk_container_add (GTK_CONTAINER (abox), options->use_gradient_w);
   gtk_signal_connect (GTK_OBJECT (options->use_gradient_w), "toggled",
-		      GTK_SIGNAL_FUNC (paintbrush_gradient_toggle_callback),
+		      GTK_SIGNAL_FUNC (gimp_paintbrush_tool_gradient_toggle_callback),
 		      &options->use_gradient);
   gtk_widget_show (options->use_gradient_w);
 
   /*  the gradient length scale  */
-  options->gradient_length_w =  
+  options->gradient_length_w =
     gtk_adjustment_new (options->gradient_length_d,  1e-5, 32767.0, 1.0, 50.0, 0.0);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (options->gradient_length_w), 1.0, 0.0);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton), GTK_SHADOW_NONE);
@@ -300,7 +329,7 @@ paintbrush_options_new (void)
   gtk_widget_show (spinbutton);
 
   /*  the gradient unitmenu  */
-  options->gradient_unit_w = 
+  options->gradient_unit_w =
     gimp_unit_menu_new ("%a", options->gradient_unit_d, TRUE, TRUE, TRUE);
   gtk_signal_connect (GTK_OBJECT (options->gradient_unit_w), "unit_changed",
 		      GTK_SIGNAL_FUNC (gimp_unit_menu_update),
@@ -361,17 +390,17 @@ paintbrush_options_new (void)
 
 #define TIMED_BRUSH 0
 
-static gpointer
-paintbrush_paint_func (PaintCore    *paint_core,
-		       GimpDrawable *drawable,
-		       PaintState    state)
-{  
+static void
+gimp_paintbrush_tool_paint_func (GimpPaintTool *paint_tool,
+		       GimpDrawable     *drawable,
+		       PaintState        state)
+{
   GDisplay *gdisp = gdisplay_active ();
   double fade_out;
   double gradient_length;	
   double unit_factor;
-  
-  g_return_val_if_fail (gdisp != NULL, NULL);
+
+  g_return_if_fail (gdisp != NULL);
 
 #if TIMED_BRUSH
   static GTimer *timer = NULL;
@@ -392,40 +421,40 @@ paintbrush_paint_func (PaintCore    *paint_core,
 	  fade_out = paintbrush_options->fade_out;
 	  break;
 	case GIMP_UNIT_PERCENT:
-	  fade_out = MAX (gdisp->gimage->width, gdisp->gimage->height) * 
+	  fade_out = MAX (gdisp->gimage->width, gdisp->gimage->height) *
 	    paintbrush_options->fade_out / 100;
 	  break;
 	default:
 	  unit_factor = gimp_unit_get_factor (paintbrush_options->fade_unit);
-	  fade_out = paintbrush_options->fade_out * 
+	  fade_out = paintbrush_options->fade_out *
 	    MAX (gdisp->gimage->xresolution, gdisp->gimage->yresolution) / unit_factor;
 	  break;
 	}
-      
+
       switch (paintbrush_options->gradient_unit)
 	{
 	case GIMP_UNIT_PIXEL:
 	  gradient_length = paintbrush_options->gradient_length;
 	  break;
 	case GIMP_UNIT_PERCENT:
-	  gradient_length = MAX (gdisp->gimage->width, gdisp->gimage->height) * 
+	  gradient_length = MAX (gdisp->gimage->width, gdisp->gimage->height) *
 	    paintbrush_options->gradient_length / 100;
 	  break;
 	default:
 	  unit_factor = gimp_unit_get_factor (paintbrush_options->gradient_unit);
-	  gradient_length = paintbrush_options->gradient_length * 
+	  gradient_length = paintbrush_options->gradient_length *
 	    MAX (gdisp->gimage->xresolution, gdisp->gimage->yresolution) / unit_factor;
 	  break;
 	}
-      
-      paintbrush_motion (paint_core, drawable, 
+
+      gimp_paintbrush_tool_motion (paint_tool, drawable,
 			 paintbrush_options->paint_options.pressure_options,
-			 paintbrush_options->use_fade ? fade_out : 0, 
+			 paintbrush_options->use_fade ? fade_out : 0,
 			 paintbrush_options->use_gradient ? gradient_length : 0,
 			 paintbrush_options->paint_options.incremental,
 			 paintbrush_options->gradient_type);
       break;
-      
+
     case FINISH_PAINT :
 #if TIMED_BRUSH
       if (timer)
@@ -441,47 +470,45 @@ paintbrush_paint_func (PaintCore    *paint_core,
     default :
       break;
     }
-
-  return NULL;
 }
 
 
-Tool *
-tools_new_paintbrush ()
+GimpTool *
+gimp_paintbrush_tool_new (void)
 {
-  Tool * tool;
-  PaintCore * private;
-
-  /*  The tool options  */
-  if (! paintbrush_options)
-    {
-      paintbrush_options = paintbrush_options_new ();
-      tools_register (PAINTBRUSH, (ToolOptions *) paintbrush_options);
-
-      /*  press all default buttons  */
-      paintbrush_options_reset ();
-    }
-
-  tool = paint_core_new (PAINTBRUSH);
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = paintbrush_paint_func;
-  private->pick_colors = TRUE;
-  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-
-  return tool;
+  return gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
 }
-
 
 void
-tools_free_paintbrush (Tool *tool)
+gimp_paintbrush_tool_initialize (GimpPaintTool *tool)
 {
-  paint_core_free (tool);
+  tool->pick_colors = TRUE;
+  tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
+
+void
+gimp_paintbrush_tool_class_init (GimpPaintToolClass *klass)
+{
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+
+  klass->paint_func = gimp_paintbrush_tool_paint_func;
+}
+
+void
+gimp_paintbrush_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
+  			      "gimp:paintbrush_tool",
+  			      N_("Paintbrush"),
+  			      N_("Paint fuzzy brush strokes"),
+      			      N_("/Tools/Paint Tools/Paintbrush"), "P",
+  			      NULL, "tools/paintbrush.html", (const gchar **) paint_bits);
+}
+
 
 
 static void
-paintbrush_motion (PaintCore            *paint_core,
+gimp_paintbrush_tool_motion (GimpPaintTool     *paint_tool,
 		   GimpDrawable         *drawable,
 		   PaintPressureOptions *pressure_options,
 		   double                fade_out,
@@ -507,7 +534,7 @@ paintbrush_motion (PaintCore            *paint_core,
     return;
 
   if (pressure_options->size)
-    scale = paint_core->curpressure;
+    scale = paint_tool->curpressure;
   else
     scale = 1.0;
 
@@ -515,14 +542,14 @@ paintbrush_motion (PaintCore            *paint_core,
     gradient_length = 1.0; /* not really used, only for if cases */
 
   /*  Get a region which can be used to paint to  */
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
+  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
   /*  factor in the fade out value  */
   if (fade_out)
     {
       /*  Model the amount of paint left as a gaussian curve  */
-      x = ((double) paint_core->pixel_dist / fade_out);
+      x = ((double) paint_tool->pixel_dist / fade_out);
       paint_left = exp (- x * x * 5.541);    /*  ln (1/255)  */
       local_blend = (int) (255 * paint_left);
     }
@@ -537,9 +564,9 @@ paintbrush_motion (PaintCore            *paint_core,
 	{
 	  if (pressure_options->color)
 	    gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
-					paint_core->curpressure, &color);
+					paint_tool->curpressure, &color);
 	  else
-	    paint_core_get_color_from_gradient (paint_core, gradient_length, 
+	    gimp_paint_tool_get_color_from_gradient (paint_tool, gradient_length,
 						&color, mode);
 
 	  temp_blend =  (gint) ((color.a * local_blend));
@@ -558,14 +585,14 @@ paintbrush_motion (PaintCore            *paint_core,
 	}
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
-      else if (paint_core->brush && paint_core->brush->pixmap)
+      else if (paint_tool->brush && paint_tool->brush->pixmap)
 	{
-	  paint_core_color_area_with_pixmap (paint_core, gimage, drawable, 
-					     area, 
+	  gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage, drawable,
+					     area,
 					     scale, SOFT);
 	  paint_appl_mode = INCREMENTAL;
 	}
-      else 
+      else
 	{
 	  gimp_image_get_foreground (gimage, drawable, col);
 	  col[area->bytes - 1] = OPAQUE_OPACITY;
@@ -575,10 +602,10 @@ paintbrush_motion (PaintCore            *paint_core,
 
       opacity = (gdouble)temp_blend;
       if (pressure_options->opacity)
-	opacity = opacity * 2.0 * paint_core->curpressure;
+	opacity = opacity * 2.0 * paint_tool->curpressure;
 
-      paint_core_paste_canvas (paint_core, drawable, 
-			       MIN (opacity, 255), 
+      gimp_paint_tool_paste_canvas (paint_tool, drawable,
+			       MIN (opacity, 255),
 			       gimp_context_get_opacity (NULL) * 255,
 			       gimp_context_get_paint_mode (NULL),
 			       pressure_options->pressure ? PRESSURE : SOFT,
@@ -588,7 +615,7 @@ paintbrush_motion (PaintCore            *paint_core,
 
 
 static gpointer
-paintbrush_non_gui_paint_func (PaintCore    *paint_core,
+gimp_paintbrush_tool_non_gui_paint_func (GimpPaintTool    *paint_tool,
 			       GimpDrawable *drawable,
 			       PaintState    state)
 {
@@ -606,44 +633,44 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
       fade_out = non_gui_fade_out;
       break;
     case GIMP_UNIT_PERCENT:
-      fade_out = MAX (gimage->width, gimage->height) * 
+      fade_out = MAX (gimage->width, gimage->height) *
 	non_gui_fade_out / 100;
       break;
     default:
       unit_factor = gimp_unit_get_factor (non_gui_fade_unit);
-      fade_out = non_gui_fade_out * 
+      fade_out = non_gui_fade_out *
 	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
       break;
     }
-  
+
   switch (non_gui_gradient_unit)
     {
     case GIMP_UNIT_PIXEL:
       gradient_length = non_gui_gradient_length;
       break;
     case GIMP_UNIT_PERCENT:
-      gradient_length = MAX (gimage->width, gimage->height) * 
+      gradient_length = MAX (gimage->width, gimage->height) *
 	non_gui_gradient_length / 100;
       break;
     default:
       unit_factor = gimp_unit_get_factor (non_gui_gradient_unit);
-      gradient_length = non_gui_gradient_length * 
+      gradient_length = non_gui_gradient_length *
 	MAX (gimage->xresolution, gimage->yresolution) / unit_factor;
       break;
     }
 
-  paintbrush_motion (paint_core,drawable, 
+  gimp_paintbrush_tool_motion (paint_tool,drawable,
 		     &non_gui_pressure_options,
 		     fade_out,
 		     gradient_length,
-		     non_gui_incremental, 
+		     non_gui_incremental,
 		     non_gui_gradient_type);
 
   return NULL;
 }
 
 gboolean
-paintbrush_non_gui_default (GimpDrawable *drawable,
+gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 			    int            num_strokes,
 			    double        *stroke_array)
 {
@@ -676,10 +703,10 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
   if (use_fade == FALSE)
     fade_out = 0.0;
 
-  /* Hmmm... PDB paintbrush should have gradient type added to it!*/
-  /* thats why the code below is duplicated.
-   */ 
-  if (paint_core_init (&non_gui_paint_core, drawable,
+  /* Hmmm... PDB paintbrush should have gradient type added to it!
+   * thats why the code below is duplicated.
+   */
+  if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
       non_gui_fade_out        = fade_out;
@@ -690,31 +717,31 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
       non_gui_gradient_unit   = gradient_unit;
 
       /* Set the paint core's paint func */
-      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+      non_gui_paint_tool_class->paint_func =(PaintFunc) gimp_paintbrush_tool_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
+      non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
 
-      non_gui_paint_core.flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+      non_gui_paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
-      paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+      gimp_paintbrush_tool_non_gui_paint_func (&non_gui_paint_tool, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
        {
-         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+         non_gui_paint_tool->curx = stroke_array[i * 2 + 0];
+         non_gui_paint_tool->cury = stroke_array[i * 2 + 1];
 
-         paint_core_interpolate (&non_gui_paint_core, drawable);
+         gimp_paint_tool_interpolate (&non_gui_paint_tool, drawable);
 
-         non_gui_paint_core.lastx = non_gui_paint_core.curx;
-         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+         non_gui_paint_tool->lastx = non_gui_paint_tool->curx;
+         non_gui_paint_tool->lasty = non_gui_paint_tool->cury;
        }
 
       /* Finish the painting */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      gimp_paint_tool_finish (&non_gui_paint_tool, drawable);
 
       /* Cleanup */
-      paint_core_cleanup ();
+      gimp_paint_tool_cleanup ();
       return TRUE;
     }
   else
@@ -722,7 +749,7 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
 }
 
 gboolean
-paintbrush_non_gui (GimpDrawable *drawable,
+gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
                    int            num_strokes,
                    double        *stroke_array,
                    double         fade_out,
@@ -732,7 +759,7 @@ paintbrush_non_gui (GimpDrawable *drawable,
   int i;
 
   /* Code duplicated above */
-  if (paint_core_init (&non_gui_paint_core, drawable,
+  if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
                       stroke_array[0], stroke_array[1]))
     {
       non_gui_fade_out        = fade_out;
@@ -741,32 +768,32 @@ paintbrush_non_gui (GimpDrawable *drawable,
       non_gui_incremental     = method;
 
       /* Set the paint core's paint func */
-      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+      non_gui_paint_tool_class->paint_func = gimp_paintbrush_tool_non_gui_paint_func;
 
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+      non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
+      non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
 
-      non_gui_paint_core.flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+      non_gui_paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
       if (num_strokes == 1)
-       paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+       gimp_paintbrush_tool_non_gui_paint_func (&non_gui_paint_tool, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
        {
-         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+         non_gui_paint_tool->curx = stroke_array[i * 2 + 0];
+         non_gui_paint_tool->cury = stroke_array[i * 2 + 1];
 
-         paint_core_interpolate (&non_gui_paint_core, drawable);
+         gimp_paint_tool_interpolate (&non_gui_paint_tool, drawable);
 
-         non_gui_paint_core.lastx = non_gui_paint_core.curx;
-         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+         non_gui_paint_tool->lastx = non_gui_paint_tool->curx;
+         non_gui_paint_tool->lasty = non_gui_paint_tool->cury;
        }
 
       /* Finish the painting */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
+      gimp_paint_tool_finish (&non_gui_paint_tool, drawable);
 
       /* Cleanup */
-      paint_core_cleanup ();
+      gimp_paint_tool_cleanup ();
       return TRUE;
     }
   else

@@ -53,15 +53,15 @@
 #include "gimprc.h"
 
 /*  this needs to go away  */
-#include "tools/paint_core.h"
+#include "tools/gimppainttool.h"
 
 #include "libgimp/gimpparasiteio.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static GimpBrush * gimp_brush_pipe_select_brush     (PaintCore *paint_core);
-static gboolean    gimp_brush_pipe_want_null_motion (PaintCore *paint_core);
+static GimpBrush * gimp_brush_pipe_select_brush     (GimpPaintTool *paint_tool);
+static gboolean    gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool);
 static void        gimp_brush_pipe_destroy          (GtkObject *object);
 
 
@@ -69,16 +69,16 @@ static GimpBrushClass *parent_class = NULL;
 
 
 static GimpBrush *
-gimp_brush_pipe_select_brush (PaintCore *paint_core)
+gimp_brush_pipe_select_brush (GimpPaintTool *paint_tool)
 {
   GimpBrushPipe *pipe;
   gint           i, brushix, ix;
   gdouble        angle;
 
-  g_return_val_if_fail (paint_core != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), NULL);
+  g_return_val_if_fail (paint_tool != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_tool->brush), NULL);
 
-  pipe = GIMP_BRUSH_PIPE (paint_core->brush);
+  pipe = GIMP_BRUSH_PIPE (paint_tool->brush);
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -92,8 +92,8 @@ gimp_brush_pipe_select_brush (PaintCore *paint_core)
 	  ix = (pipe->index[i] + 1) % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_ANGULAR:
-	  angle = atan2 (paint_core->cury - paint_core->lasty,
-			 paint_core->curx - paint_core->lastx);
+	  angle = atan2 (paint_tool->cury - paint_tool->lasty,
+			 paint_tool->curx - paint_tool->lastx);
 	  /* Offset angle to be compatible with PSP tubes */
 	  angle += G_PI_2;
 	  /* Map it to the [0..2*G_PI) interval */
@@ -108,13 +108,13 @@ gimp_brush_pipe_select_brush (PaintCore *paint_core)
 	  ix = rand () % pipe->rank[i];
 	  break;
 	case PIPE_SELECT_PRESSURE:
-	  ix = RINT (paint_core->curpressure * (pipe->rank[i] - 1));
+	  ix = RINT (paint_tool->curpressure * (pipe->rank[i] - 1));
 	  break;
 	case PIPE_SELECT_TILT_X:
-	  ix = RINT (paint_core->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (paint_tool->curxtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	case PIPE_SELECT_TILT_Y:
-	  ix = RINT (paint_core->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (paint_tool->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
 	  break;
 	case PIPE_SELECT_CONSTANT:
 	default:
@@ -134,15 +134,15 @@ gimp_brush_pipe_select_brush (PaintCore *paint_core)
 }
 
 static gboolean
-gimp_brush_pipe_want_null_motion (PaintCore *paint_core)
+gimp_brush_pipe_want_null_motion (GimpPaintTool *paint_tool)
 {
   GimpBrushPipe *pipe;
   gint           i;
 
-  g_return_val_if_fail (paint_core != NULL, TRUE);
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), TRUE);
+  g_return_val_if_fail (paint_tool != NULL, TRUE);
+  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_tool->brush), TRUE);
 
-  pipe = GIMP_BRUSH_PIPE (paint_core->brush);
+  pipe = GIMP_BRUSH_PIPE (paint_tool->brush);
 
   if (pipe->nbrushes == 1)
     return TRUE;

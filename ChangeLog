@@ -1,3 +1,56 @@
+2001-02-26  Nathan Summers <rock@gimp.org>
+app/tools/gimpdrawtool.c
+        * app/tools/gimpdrawtool.h
+        * app/tools/gimppainttool.c
+        * app/tools/gimppainttool.h
+        * app/tools/gimppainttool_kernels.h: Created GimpDrawTool and
+        GimpPaintTool, real classes that replace the old DrawCore and
+        PaintCore
+
+        * app/Makefile.am
+        * app/apptypes.h
+        * app/context_manager.c
+        * app/gdisplay.c
+        * app/gimage_mask.c
+        * app/gimpbrush.c
+        * app/gimpbrush.h
+        * app/gimpbrushgenerated.c
+        * app/gimpbrushpipe.c
+        * app/gimpcontext.c
+        * app/info_window.c
+        * app/path_transform.h
+        * app/undo.c
+        * app/pdb/tools_cmds.c
+        * app/tools/Makefile.am
+        * app/tools/bezier_selectP.h
+        * app/tools/gimptoolinfo.c
+        * app/tools/measure.c
+        * app/tools/measure.h
+        * app/tools/move.c
+        * app/tools/paint_options.c
+        * app/tools/tool.c
+        * app/tools/tool.h
+        * app/tools/tools.c
+        * app/tools/transform_core.h
+        * tools/pdbgen/Makefile.am: changed accordingly
+
+        * libgimp/Makefile.am: fixed glitch in build
+
+        * app/tools/gimpcolorpickertool.c
+        * app/tools/gimpcolorpickertool.h
+        * app/tools/gimppaintbrushtool.c
+        * app/tools/gimppaintbrushtool.h:new names
+
+        * app/draw_core.c
+        * app/draw_core.h
+        * app/tools/color_picker.c
+        * app/tools/color_picker.h
+        * app/tools/paint_core.c
+        * app/tools/paint_core.h
+        * app/tools/paint_core_kernels.h
+        * app/tools/paintbrush.c
+        * app/tools/paintbrush.h: removed
+
 2001-02-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/channel_ops.c

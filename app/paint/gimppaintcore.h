@@ -16,15 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PAINT_CORE_H__
-#define __PAINT_CORE_H__
+#ifndef __GIMP_PAINT_TOOL_H__
+#define __GIMP_PAINT_TOOL_H__
 
+#include "tools/gimpdrawtool.h"
+
+#define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
+#define GIMP_PAINT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
+#define GIMP_IS_PAINT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PAINT_TOOL))
+#define GIMP_PAINT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))
+#define GIMP_IS_PAINT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_TOOL))
+
+GtkType	gimp_paint_tool_get_type (void);
 
 /* the different states that the painting function can be called with  */
 
 typedef enum /*< skip >*/
 {
-  INIT_PAINT,       /* Setup PaintFunc internals */ 
+  INIT_PAINT,       /* Setup PaintFunc internals */
   MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
   PAUSE_PAINT,      /* Unused. Reserved */
   RESUME_PAINT,     /* Unused. Reserved */
@@ -47,13 +56,13 @@ typedef enum /*< skip >*/
                                             */
 } ToolFlags;
 
-typedef gpointer (* PaintFunc) (PaintCore    *paint_core,
-				GimpDrawable *drawable,
-				PaintState    paint_state);
+typedef void (* PaintFunc) (GimpPaintTool    *tool,
+				GimpDrawable 	    *drawable,
+				PaintState    	     paint_state);
 
-struct _PaintCore
+struct _GimpPaintTool
 {
-  DrawCore      * core;          /*  Core select object         */
+  GimpDrawTool      parent_instance;
 
   gdouble         startx;        /*  starting x coord           */
   gdouble         starty;        /*  starting y coord           */
@@ -61,7 +70,7 @@ struct _PaintCore
   gdouble         startxtilt;    /*  starting xtilt             */
   gdouble         startytilt;    /*  starting ytilt             */
 #ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble         startwheel;    /*  starting wheel             */ 
+  gdouble         startwheel;    /*  starting wheel             */
 #endif /* GTK_HAVE_SIX_VALUATORS */
 
   gdouble         curx;          /*  current x coord            */
@@ -79,8 +88,8 @@ struct _PaintCore
   gdouble         lastxtilt;     /*  last xtilt                 */
   gdouble         lastytilt;     /*  last ytilt                 */
 #ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble         lastwheel;     /*  last wheel                 */ 
-#endif /* GTK_HAVE_SIX_VALUATORS */ 
+  gdouble         lastwheel;     /*  last wheel                 */
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
   gint            state;         /*  state of buttons and keys  */
 
@@ -93,8 +102,6 @@ struct _PaintCore
 
   GimpBrush     * brush;         /*  current brush	        */
 
-  PaintFunc       paint_func;    /*  painting function          */
-
   gboolean        pick_colors;   /*  pick color if ctrl or alt is pressed  */
   gboolean        pick_state;    /*  was ctrl or alt pressed when clicked? */
   ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
@@ -102,14 +109,28 @@ struct _PaintCore
   guint           context_id;    /*  for the statusbar          */
 };
 
-extern PaintCore  non_gui_paint_core;
+struct _GimpPaintToolClass
+{
+  GimpDrawToolClass parent_class;
+
+  PaintFunc            paint_func;    /*  painting function          */
+};
+
+typedef struct _GimpPaintToolClass GimpPaintToolClass;
+
+
+/* this should change */
+extern GimpPaintTool  *non_gui_paint_tool;
+extern GimpPaintToolClass *non_gui_paint_tool_class;
 
 /*  Special undo type  */
 typedef struct _PaintUndo PaintUndo;
 
 struct _PaintUndo
 {
-  gint     tool_ID;
+  GimpPaintTool     *tool;
+
+
   gdouble  lastx;
   gdouble  lasty;
   gdouble  lastpressure;
@@ -121,73 +142,73 @@ struct _PaintUndo
 };
 
 /*  paint tool action functions  */
-void          paint_core_button_press    (Tool                *tool,
+void  gimp_paint_tool_button_press    (GimpTool            *tool,
 					  GdkEventButton      *bevent,
 					  GDisplay            *gdisp);
-void          paint_core_button_release  (Tool                *tool,
+void  gimp_paint_tool_button_release  (GimpTool            *tool,
 					  GdkEventButton      *bevent,
 					  GDisplay            *gdisp);
-void          paint_core_motion          (Tool                *tool,
+void  gimp_paint_tool_motion          (GimpTool            *tool,
 					  GdkEventMotion      *mevent,
 					  GDisplay            *gdisp);
-void          paint_core_cursor_update   (Tool                *tool,
+void  gimp_paint_tool_cursor_update   (GimpTool            *tool,
 					  GdkEventMotion      *mevent,
 					  GDisplay            *gdisp);
 
-void          paint_core_control         (Tool                *tool, 
+void  gimp_paint_tool_control         (GimpTool	      *tool,
 					  ToolAction           action,
 					  GDisplay            *gdisp);
 
+void  gimp_paint_tool_paint		(GimpPaintTool     *tool,
+					 GimpDrawable	      *drawable,
+					 PaintState	       state);
+
 /*  paint tool functions  */
-void          paint_core_no_draw         (Tool                *tool);
+void  gimp_paint_tool_no_draw         (GimpPaintTool    *tool);
 
-/* ToolType doesn't exist an more
-Tool *        paint_core_new             (ToolType             type);
-*/
-
-void          paint_core_free            (Tool                *tool);
-int           paint_core_init            (PaintCore           *paint_core, 
-					  GimpDrawable        *drawable, 
-					  gdouble              x, 
+GimpPaintTool *gimp_paint_tool_new             (void);
+void  gimp_paint_tool_destroy         (GimpTool            *tool);
+int   gimp_paint_tool_start        (GimpPaintTool    *tool,
+					  GimpDrawable        *drawable,
+					  gdouble              x,
 					  gdouble              y);
-void          paint_core_interpolate     (PaintCore           *paint_core, 
+void  gimp_paint_tool_interpolate     (GimpPaintTool    *tool,
 					  GimpDrawable        *drawable);
-void          paint_core_finish          (PaintCore           *paint_core, 
-					  GimpDrawable        *drawable, 
-					  gint                 tool_ID);
-void          paint_core_cleanup         (void);
+void  gimp_paint_tool_finish          (GimpPaintTool    *tool,
+					  GimpDrawable        *drawable);
+void  gimp_paint_tool_cleanup         (void);
 
-void  paint_core_get_color_from_gradient (PaintCore            *paint_core, 
-					  gdouble               gradient_length, 
+void  gimp_paint_tool_get_color_from_gradient (GimpPaintTool         *tool,
+					  gdouble               gradient_length,
 					  GimpRGB              *color,
 					  GradientPaintMode     mode);
 
 /*  paint tool painting functions  */
-TempBuf *     paint_core_get_paint_area  (PaintCore            *paint_core,
+TempBuf * gimp_paint_tool_get_paint_area  (GimpPaintTool     *tool,
 					  GimpDrawable         *drawable,
 					  gdouble               scale);
-TempBuf *     paint_core_get_orig_image  (PaintCore            *paint_core,
+TempBuf * gimp_paint_tool_get_orig_image  (GimpPaintTool     *tool,
 					  GimpDrawable         *drawable,
-					  gint                  x1, 
-					  gint                  y1, 
+					  gint                  x1,
+					  gint                  y1,
 					  gint                  x2,
 					  gint                  y2);
-void          paint_core_paste_canvas    (PaintCore            *paint_core,
-					  GimpDrawable         *drawable, 
-					  gint                  brush_opacity, 
+void  gimp_paint_tool_paste_canvas    (GimpPaintTool     *tool,
+					  GimpDrawable         *drawable,
+					  gint                  brush_opacity,
 					  gint                  image_opacity,
 					  LayerModeEffects      paint_mode,
 					  BrushApplicationMode  brush_hardness,
 					  gdouble               brush_scale,
 					  PaintApplicationMode  mode);
-void          paint_core_replace_canvas  (PaintCore            *paint_core,
-					  GimpDrawable         *drawable, 
-					  gint                  brush_opacity, 
+void  gimp_paint_tool_replace_canvas  (GimpPaintTool     *tool,
+					  GimpDrawable         *drawable,
+					  gint                  brush_opacity,
 					  gint                  image_opacity,
 					  BrushApplicationMode  brush_hardness,
 					  gdouble               brush_scale,
 					  PaintApplicationMode  mode);
-void   paint_core_color_area_with_pixmap (PaintCore            *paint_core,
+void gimp_paint_tool_color_area_with_pixmap (GimpPaintTool     *tool,
 					  GimpImage            *dest, 
 					  GimpDrawable         *drawable,
 					  TempBuf              *area, 
@@ -195,4 +216,4 @@ void   paint_core_color_area_with_pixmap (PaintCore            *paint_core,
 					  BrushApplicationMode  mode);
 
 
-#endif  /*  __PAINT_CORE_H__  */
+#endif  /*  __GIMP_PAINT_TOOL_H__  */

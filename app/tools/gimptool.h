@@ -30,7 +30,6 @@
 #define GIMP_TYPE_BY_COLOR_SELECT_TOOL GTK_TYPE_NONE
 #define GIMP_TYPE_BUCKET_FILL_TOOL     GTK_TYPE_NONE
 #define GIMP_TYPE_BLEND_TOOL           GTK_TYPE_NONE
-#define GIMP_TYPE_PAINTBRUSH_TOOL      GTK_TYPE_NONE
 #define GIMP_TYPE_PENCIL_TOOL          GTK_TYPE_NONE
 #define GIMP_TYPE_ERASER_TOOL          GTK_TYPE_NONE
 #define GIMP_TYPE_AIRBRUSH_TOOL        GTK_TYPE_NONE
@@ -79,7 +78,6 @@ struct _GimpTool
   gboolean           toggled; /*  Bad hack to let the paint_core show the
 			       *  right toggle cursors
 			       */
-  PaintCore    *paintcore;  
 };
 
 struct _GimpToolClass
@@ -118,10 +116,6 @@ struct _GimpToolClass
 			   GdkEventMotion *mevent,
 			   GDisplay       *gdisp);
 };
-
-
-/*  Function declarations  */
-
 GtkType       gimp_tool_get_type        (void);
 
 void          gimp_tool_initialize      (GimpTool       *tool,
@@ -150,7 +144,6 @@ void          gimp_tool_cursor_update   (GimpTool       *tool,
 void          gimp_tool_oper_update     (GimpTool       *tool,
 					 GdkEventMotion *mevent,
 					 GDisplay       *gdisp);
-
 const gchar * gimp_tool_get_PDB_string  (GimpTool       *tool);
 
 

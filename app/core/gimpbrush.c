@@ -51,7 +51,7 @@
 #include "temp_buf.h"
 
 /*  this needs to go away  */
-#include "tools/paint_core.h"
+#include "tools/gimppainttool.h"
 #include "brush_scale.h"
 
 #include "libgimp/gimpintl.h"
@@ -65,8 +65,8 @@ static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 						gint            height);
 static gchar     * gimp_brush_get_extension    (GimpData       *data);
 
-static GimpBrush * gimp_brush_select_brush     (PaintCore      *paint_core);
-static gboolean    gimp_brush_want_null_motion (PaintCore      *paint_core);
+static GimpBrush * gimp_brush_select_brush     (GimpPaintTool  *paint_tool);
+static gboolean    gimp_brush_want_null_motion (GimpPaintTool  *paint_tool);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -108,7 +108,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   data_class     = (GimpDataClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DATA);
-  
+
   object_class->destroy = gimp_brush_destroy;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
@@ -180,7 +180,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
       gdouble ratio_x = (gdouble) brush_width  / width;
       gdouble ratio_y = (gdouble) brush_height / height;
 
-      brush_width  = (gdouble) brush_width  / MAX (ratio_x, ratio_y) + 0.5; 
+      brush_width  = (gdouble) brush_width  / MAX (ratio_x, ratio_y) + 0.5;
       brush_height = (gdouble) brush_height / MAX (ratio_x, ratio_y) + 0.5;
 
       mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
@@ -218,7 +218,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
               bg = (255 - *mask);
 
               *b++ = bg + (*mask * *pixmap++) / 255;
-              *b++ = bg + (*mask * *pixmap++) / 255; 
+              *b++ = bg + (*mask * *pixmap++) / 255;
               *b++ = bg + (*mask * *pixmap++) / 255;
 
               mask++;
@@ -305,7 +305,7 @@ gimp_brush_load (const gchar *filename)
   g_return_val_if_fail (filename != NULL, NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
-  if (fd == -1) 
+  if (fd == -1)
     return NULL;
 
   brush = gimp_brush_load_brush (fd, filename);
@@ -330,13 +330,13 @@ gimp_brush_load (const gchar *filename)
 }
 
 static GimpBrush *
-gimp_brush_select_brush (PaintCore *paint_core)
+gimp_brush_select_brush (GimpPaintTool *paint_core)
 {
   return paint_core->brush;
 }
 
 static gboolean
-gimp_brush_want_null_motion (PaintCore *paint_core)
+gimp_brush_want_null_motion (GimpPaintTool *paint_core)
 {
   return TRUE;
 }

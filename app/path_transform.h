@@ -29,7 +29,7 @@ void       path_transform_current_path  (GimpImage   *gimage,
 					 GimpMatrix3  transform,
 					 gboolean     forpreview);
 void       path_transform_draw_current  (GDisplay    *gimage, 
-					 DrawCore    *core, 
+					 GimpDrawTool    *core,
 					 GimpMatrix3  transform);
 
 void       path_transform_flip_horz     (GimpImage   *gimage);

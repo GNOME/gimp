@@ -33,6 +33,8 @@
 #include "tool.h"
 #include "tool_manager.h"
 
+#include "gimppaintbrushtool.h"
+
 #include "libgimp/gimpintl.h"
 
 

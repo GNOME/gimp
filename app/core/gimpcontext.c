@@ -1394,6 +1394,8 @@ gimp_context_real_set_tool (GimpContext  *context,
 			  GTK_SIGNAL_FUNC (gimp_context_tool_dirty),
 			  context);
 
+      /* FIXME if (tool_info != standard_tool_info) */
+
       if (tool_info != standard_tool_info)
 	context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
     }

@@ -46,9 +46,7 @@ typedef struct _GimpMeasureToolClass GimpMeasureToolClass;
 
 struct _GimpMeasureTool
 {
-  GimpTool  parent_instance;
-
-  DrawCore *core;       /*  Core select object  */
+  GimpDrawTool parent_instance;       /*  Core select object  */
 
   MeasureFunction  function;    /*  function we're performing  */
   gint             last_x;      /*  last x coordinate          */

@@ -38,7 +38,7 @@ typedef TileManager * (* TransformFunc) (Tool           *tool,
 
 struct _TransformCore
 {
-  DrawCore       *core;         /*  Core select object          */
+  GimpDrawTool    parent_instance;         /*  Core select object          */
 
   gint            startx;       /*  starting x coord            */
   gint            starty;       /*  starting y coord            */

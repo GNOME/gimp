@@ -25,7 +25,6 @@
 #include "apptypes.h"
 
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"

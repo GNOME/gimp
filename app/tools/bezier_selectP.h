@@ -19,7 +19,7 @@
 #ifndef __BEZIER_SELECTP_H__
 #define __BEZIER_SELECTP_H__
 
-#include "draw_core.h"
+#include "tools/gimpdrawtool.h"
 
 #define BEZIER_START     1
 #define BEZIER_ADD       2
@@ -56,7 +56,7 @@ struct _BezierSelect
   gint          state;        /* start, add, edit or drag          */
   gint          draw;         /* all or part                       */
   gint          closed;       /* is the last curve closed          */
-  DrawCore     *core;         /* Core drawing object               */
+  GimpDrawTool     *core;         /* Core drawing object               */
   BezierPoint  *points;       /* the curve                         */
   BezierPoint  *cur_anchor;   /* the current active anchor point   */
   BezierPoint  *cur_control;  /* the current active control point  */

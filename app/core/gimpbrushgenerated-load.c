@@ -41,7 +41,7 @@
 #include "temp_buf.h"
 
 /*  this needs to go away  */
-#include "tools/paint_core.h"
+#include "tools/gimppainttool.h"
 
 
 #define OVERSAMPLING 5

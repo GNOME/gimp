@@ -115,7 +115,7 @@ libgimpi_a_SOURCES = \
 
 if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
-libgimpi_a_DEPENDENCIES = libgimp.la
+libgimpi_a_DEPENDENCIES = libgimp-1.3.la
 endif
 
 # help `make' along by giving another name for the file, which it knows

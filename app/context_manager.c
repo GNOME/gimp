@@ -46,7 +46,6 @@
 #include "gimppattern.h"
 #include "gimprc.h"
 
-
 /*
  *  the list of all images
  */

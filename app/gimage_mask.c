@@ -22,7 +22,7 @@
 
 #include "apptypes.h"
 
-#include "tools/paint_core.h"
+#include "tools/gimppainttool.h"
 #include "tools/paint_options.h"
 #include "tools/tool.h"
 #include "tools/tool_manager.h"
