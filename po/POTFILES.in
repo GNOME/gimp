@@ -328,7 +328,6 @@ app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
 app/widgets/gimphistogrameditor.c
 app/widgets/gimpimagedock.c
-app/widgets/gimpitemfactory.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimpmessagebox.c

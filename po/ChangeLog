@@ -1,3 +1,7 @@
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: removed app/widgets/gimpitemfactory.h
+
 2004-11-03  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation
