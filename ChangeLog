@@ -1,5 +1,10 @@
 2004-03-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-undo-push.c (undo_pop_layer): when re-adding
+	a layer with mask, don't forget to set layer->mask->removed to FALSE.
+
+2004-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch]: added "gboolean removed" to the GimpItem
 	struct. Defaults to FALSE. Set it to TRUE in gimp_item_removed().
 	Added public function gimp_item_is_removed().

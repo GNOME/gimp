@@ -1400,6 +1400,9 @@ undo_pop_layer (GimpUndo            *undo,
 	gimp_image_floating_selection_changed (undo->gimage);
 
       GIMP_ITEM (layer)->removed = FALSE;
+
+      if (layer->mask)
+        GIMP_ITEM (layer->mask)->removed = FALSE;
     }
 
   if (old_has_alpha != gimp_image_has_alpha (undo->gimage))
