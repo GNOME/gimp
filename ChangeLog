@@ -1,5 +1,9 @@
 2004-02-04  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am (dist-hook): create an unversioned gimprc manpage.
+
+2004-02-04  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.0pre3 release.
 
 2004-02-04  Sven Neumann  <sven@gimp.org>

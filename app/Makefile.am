@@ -169,4 +169,4 @@ endif
 
 dist-hook: gimp-$(GIMP_APP_VERSION)$(EXEEXT)
 	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
-	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc-$(GIMP_APP_VERSION).5.in
+	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc.5.in
