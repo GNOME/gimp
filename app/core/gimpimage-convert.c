@@ -935,6 +935,8 @@ gimp_image_convert (GimpImage          *gimage,
 
   undo_push_group_end (gimage);
 
+  gimp_image_invalidate_layer_previews (gimage);
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
   gimp_image_mode_changed (gimage);
 
   gimp_unset_busy (gimage->gimp);

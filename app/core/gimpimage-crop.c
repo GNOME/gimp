@@ -222,6 +222,11 @@ gimp_image_crop (GimpImage *gimage,
 	  gimp_image_crop_adjust_guides (gimage, x1, y1, x2, y2);
 	}
 
+      gimp_image_update (gimage,
+                         0, 0,
+                         gimage->width,
+                         gimage->height);
+
       gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
       gimp_unset_busy (gimage->gimp);

@@ -277,7 +277,9 @@ gimp_image_new_create_image (Gimp               *gimp,
 
       gimp_image_clean_all (gimage);
 
-      gimp_create_display (gimp, gimage);
+      gimp_create_display (gimp, gimage, 0x0101);
+
+      g_object_unref (G_OBJECT (gimage));
     }
 
   return gimage;

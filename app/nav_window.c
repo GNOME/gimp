@@ -40,6 +40,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-scroll.h"
 #include "display/gimpdisplay-scale.h"
+#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimpnavigationpreview.h"
 
@@ -163,21 +164,21 @@ nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
 			   gint                   y,
 			   NavigationDialog      *nav_dialog)
 {
-  GimpDisplay *gdisp;
-  gdouble      xratio;
-  gdouble      yratio;
-  gint         xoffset;
-  gint         yoffset;
+  GimpDisplayShell *shell;
+  gdouble           xratio;
+  gdouble           yratio;
+  gint              xoffset;
+  gint              yoffset;
 
-  gdisp = nav_dialog->gdisp;
+  shell = GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell);
 
-  xratio = SCALEFACTOR_X (gdisp);
-  yratio = SCALEFACTOR_Y (gdisp);
+  xratio = SCALEFACTOR_X (nav_dialog->gdisp);
+  yratio = SCALEFACTOR_Y (nav_dialog->gdisp);
 
-  xoffset = x * xratio - gdisp->offset_x;
-  yoffset = y * yratio - gdisp->offset_y;
+  xoffset = x * xratio - shell->gdisp->offset_x;
+  yoffset = y * yratio - shell->gdisp->offset_y;
 
-  gimp_display_scroll (gdisp, xoffset, yoffset);
+  gimp_display_shell_scroll (shell, xoffset, yoffset);
 }
 
 static void
@@ -185,7 +186,11 @@ nav_dialog_zoom (GimpNavigationPreview *nav_preview,
 		 GimpZoomType           direction,
 		 NavigationDialog      *nav_dialog)
 {
-  gimp_display_scale (nav_dialog->gdisp, direction);
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell);
+
+  gimp_display_shell_scale (shell, direction);
 }
 
 static void
@@ -193,8 +198,11 @@ nav_dialog_scroll (GimpNavigationPreview *nav_preview,
 		   GdkScrollDirection     direction,
 		   NavigationDialog      *nav_dialog)
 {
-  GtkAdjustment *adj = NULL;
-  gdouble        value;
+  GimpDisplayShell *shell;
+  GtkAdjustment    *adj = NULL;
+  gdouble           value;
+
+  shell = GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell);
 
   g_print ("nav_dialog_scroll(%d)\n", direction);
 
@@ -202,12 +210,12 @@ nav_dialog_scroll (GimpNavigationPreview *nav_preview,
     {
     case GDK_SCROLL_LEFT:
     case GDK_SCROLL_RIGHT:
-      adj = nav_dialog->gdisp->hsbdata;
+      adj = shell->hsbdata;
       break;
 
     case GDK_SCROLL_UP:
     case GDK_SCROLL_DOWN:
-      adj = nav_dialog->gdisp->vsbdata;
+      adj = shell->vsbdata;
       break;
     }
 
@@ -512,19 +520,24 @@ nav_popup_click_handler (GtkWidget      *widget,
 			 gpointer        data)
 {
   GdkEventButton   *bevent;
-  GimpDisplay      *gdisp = data;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   NavigationDialog *nav_dialog;
   gint              x, y;
   gint              x_org, y_org;
   gint              scr_w, scr_h;
 
+  gdisp = GIMP_DISPLAY (data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
   bevent = (GdkEventButton *) event;
 
-  if (! gdisp->nav_popup)
+  if (! shell->nav_popup)
     {
       GtkWidget *frame;
 
-      gdisp->nav_popup = nav_dialog = nav_dialog_new (gdisp, NAV_POPUP);
+      shell->nav_popup = nav_dialog = nav_dialog_new (gdisp, NAV_POPUP);
 
       nav_dialog->shell = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_widget_set_events (nav_dialog->shell, PREVIEW_MASK);
@@ -553,7 +566,7 @@ nav_popup_click_handler (GtkWidget      *widget,
     }
   else
     {
-      nav_dialog = gdisp->nav_popup;
+      nav_dialog = shell->nav_popup;
 
       gtk_widget_hide (nav_dialog->shell);
 
@@ -676,12 +689,15 @@ static void
 nav_dialog_disp_area (NavigationDialog *nav_dialog,
 		      GimpDisplay      *gdisp)
 {
-  GimpImage *gimage;
-  gint       newwidth;
-  gint       newheight;
-  gdouble    xratio;
-  gdouble    yratio;     /* Screen res ratio */
-  gboolean   need_update = FALSE;
+  GimpDisplayShell *shell;
+  GimpImage        *gimage;
+  gint              newwidth;
+  gint              newheight;
+  gdouble           xratio;
+  gdouble           yratio;     /* Screen res ratio */
+  gboolean          need_update = FALSE;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /* Calculate preview size */
   gimage = gdisp->gimage;
@@ -698,17 +714,17 @@ nav_dialog_disp_area (NavigationDialog *nav_dialog,
 
       gimp_navigation_preview_set_marker
 	(GIMP_NAVIGATION_PREVIEW (nav_dialog->new_preview),
-	 RINT (gdisp->offset_x    / xratio),
-	 RINT (gdisp->offset_y    / yratio),
-	 RINT (gdisp->disp_width  / xratio),
-	 RINT (gdisp->disp_height / yratio));
+	 RINT (shell->gdisp->offset_x    / xratio),
+	 RINT (shell->gdisp->offset_y    / yratio),
+	 RINT (shell->gdisp->disp_width  / xratio),
+	 RINT (shell->gdisp->disp_height / yratio));
     }
 
-  nav_dialog->dispx = gdisp->offset_x * nav_dialog->ratio / xratio + 0.5;
-  nav_dialog->dispy = gdisp->offset_y * nav_dialog->ratio/yratio + 0.5;
+  nav_dialog->dispx = shell->gdisp->offset_x * nav_dialog->ratio / xratio + 0.5;
+  nav_dialog->dispy = shell->gdisp->offset_y * nav_dialog->ratio/yratio + 0.5;
 
-  nav_dialog->dispwidth  = (gdisp->disp_width  * nav_dialog->ratio) / xratio + 0.5;
-  nav_dialog->dispheight = (gdisp->disp_height * nav_dialog->ratio) / yratio + 0.5;
+  nav_dialog->dispwidth  = (shell->gdisp->disp_width  * nav_dialog->ratio) / xratio + 0.5;
+  nav_dialog->dispheight = (shell->gdisp->disp_height * nav_dialog->ratio) / yratio + 0.5;
 
   newwidth  = gimage->width;
   newheight = gimage->height;
@@ -719,12 +735,12 @@ nav_dialog_disp_area (NavigationDialog *nav_dialog,
 	(newwidth * gdisp->gimage->yresolution) / gdisp->gimage->xresolution;
 
       nav_dialog->dispx =
-	((gdisp->offset_x * 
+	((shell->gdisp->offset_x * 
 	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
 	 (gdisp->gimage->xresolution *  xratio)) + 0.5;     /*here*/
 
       nav_dialog->dispwidth =
-	((gdisp->disp_width * 
+	((shell->gdisp->disp_width * 
 	  gdisp->gimage->yresolution * nav_dialog->ratio) / 
 	 (gdisp->gimage->xresolution *  xratio)) + 0.5; /*here*/
     }
@@ -1172,18 +1188,18 @@ nav_dialog_update_real_view (NavigationDialog *nav_dialog,
 			     gint              tx,
 			     gint              ty)
 {
-  GimpDisplay *gdisp;
-  gdouble      xratio;
-  gdouble      yratio;
-  gint         xoffset;
-  gint         yoffset;
-  gint         xpnt;
-  gint         ypnt;
+  GimpDisplayShell *shell;
+  gdouble           xratio;
+  gdouble           yratio;
+  gint              xoffset;
+  gint              yoffset;
+  gint              xpnt;
+  gint              ypnt;
 
-  gdisp = nav_dialog->gdisp;
+  shell = GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell);
 
-  xratio = SCALEFACTOR_X (gdisp);
-  yratio = SCALEFACTOR_Y (gdisp);
+  xratio = SCALEFACTOR_X (nav_dialog->gdisp);
+  yratio = SCALEFACTOR_Y (nav_dialog->gdisp);
 
   if ((tx + nav_dialog->dispwidth) >= nav_dialog->pwidth)
     {
@@ -1201,14 +1217,15 @@ nav_dialog_update_real_view (NavigationDialog *nav_dialog,
 
   ypnt = (gint) (((gdouble) (ty) * yratio) / nav_dialog->ratio + 0.5);
 
-  if (! gdisp->dot_for_dot) /* here */
-    xpnt = ((gdouble) xpnt * 
-	    gdisp->gimage->xresolution) / gdisp->gimage->yresolution + 0.5;
+  if (! nav_dialog->gdisp->dot_for_dot) /* here */
+    xpnt = (((gdouble) xpnt * 
+             nav_dialog->gdisp->gimage->xresolution) /
+            nav_dialog->gdisp->gimage->yresolution) + 0.5;
 
-  xoffset = xpnt - gdisp->offset_x;
-  yoffset = ypnt - gdisp->offset_y;
+  xoffset = xpnt - shell->gdisp->offset_x;
+  yoffset = ypnt - shell->gdisp->offset_y;
 
-  gimp_display_scroll (nav_dialog->gdisp, xoffset, yoffset);
+  gimp_display_shell_scroll (shell, xoffset, yoffset);
 }
 
 static void
@@ -1275,6 +1292,7 @@ nav_dialog_preview_events (GtkWidget *widget,
 {
   NavigationDialog *nav_dialog;
   GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   GdkEventButton   *bevent;
   GdkEventMotion   *mevent;
   GdkEventKey      *kevent;
@@ -1291,6 +1309,8 @@ nav_dialog_preview_events (GtkWidget *widget,
     return FALSE;
 
   gdisp = nav_dialog->gdisp;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (event->type)
     {
@@ -1353,13 +1373,13 @@ nav_dialog_preview_events (GtkWidget *widget,
 	case 4:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      gimp_display_scale (gdisp, GIMP_ZOOM_IN);
+	      gimp_display_shell_scale (shell, GIMP_ZOOM_IN);
 	    }
 	  else
 	    {
 	      GtkAdjustment *adj =
 		(bevent->state & GDK_CONTROL_MASK) ?
-		gdisp->hsbdata : gdisp->vsbdata;
+		shell->hsbdata : shell->vsbdata;
 	      gfloat new_value = adj->value - adj->page_increment / 2;
 	      new_value =
 		CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
@@ -1370,13 +1390,13 @@ nav_dialog_preview_events (GtkWidget *widget,
 	case 5:
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    {
-	      gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
+	      gimp_display_shell_scale (shell, GIMP_ZOOM_OUT);
 	    }
 	  else
 	    {
 	      GtkAdjustment *adj =
 		(bevent->state & GDK_CONTROL_MASK) ?
-		gdisp->hsbdata : gdisp->vsbdata;
+		shell->hsbdata : shell->vsbdata;
 	      gfloat new_value = adj->value + adj->page_increment / 2;
 	      new_value = CLAMP (new_value,
 				 adj->lower, adj->upper - adj->page_size);
@@ -1441,10 +1461,10 @@ nav_dialog_preview_events (GtkWidget *widget,
 	  ty = nav_dialog->dispy + 1;
 	  break;
 	case GDK_equal:
-	  gimp_display_scale (gdisp, GIMP_ZOOM_IN);
+	  gimp_display_shell_scale (shell, GIMP_ZOOM_IN);
 	  break;
 	case GDK_minus:
-	  gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
+	  gimp_display_shell_scale (shell, GIMP_ZOOM_OUT);
 	  break;
 	default:
 	  break;
@@ -1508,7 +1528,8 @@ navwindow_zoomin (GtkWidget *widget,
   if(! nav_dialog || nav_dialog->frozen)
     return;
 
-  gimp_display_scale (nav_dialog->gdisp, GIMP_ZOOM_IN);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell),
+                            GIMP_ZOOM_IN);
 }
 
 static void
@@ -1522,7 +1543,8 @@ navwindow_zoomout (GtkWidget *widget,
   if (! nav_dialog || nav_dialog->frozen)
     return;
 
-  gimp_display_scale (nav_dialog->gdisp, GIMP_ZOOM_OUT);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (nav_dialog->gdisp->shell),
+                            GIMP_ZOOM_OUT);
 }
 
 static void
@@ -1550,7 +1572,8 @@ zoom_adj_changed (GtkAdjustment *adj,
     }
 
   nav_dialog->block_adj_sig = TRUE;
-  gimp_display_scale (nav_dialog->gdisp, (scaledest * 100) + scalesrc);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (nav_dialog->gdisp),
+                            (scaledest * 100) + scalesrc);
   nav_dialog->block_adj_sig = FALSE;
 }
 

@@ -37,6 +37,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpdrawable-invert.h"
+#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -797,6 +798,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  type;
+  GimpImage     *gimage;
 
   /*  Don't bother if the layer already has alpha  */
   switch (GIMP_DRAWABLE (layer)->type)
@@ -844,11 +846,16 @@ gimp_layer_add_alpha (GimpLayer *layer)
   /*  Configure the new layer  */
   GIMP_DRAWABLE (layer)->tiles         = new_tiles;
   GIMP_DRAWABLE (layer)->type          = type;
-  GIMP_DRAWABLE (layer)->bytes         = GIMP_DRAWABLE(layer)->bytes + 1;
+  GIMP_DRAWABLE (layer)->bytes         = GIMP_DRAWABLE (layer)->bytes + 1;
   GIMP_DRAWABLE (layer)->has_alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;
 
-  gimp_image_alpha_changed (gimp_drawable_gimage (GIMP_DRAWABLE (layer)));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
+
+  if (gimage->layers->num_children == 1)
+    {
+      gimp_image_alpha_changed (gimage);
+    }
 }
 
 static void

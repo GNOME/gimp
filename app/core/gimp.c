@@ -450,7 +450,7 @@ gimp_restore (Gimp               *gimp,
   (* status_callback) (NULL, _("Gradients"), 0.72);
   gimp_data_factory_data_init (gimp->gradient_factory, no_data); 
 
-  /*  initialize  the global parasite table  */
+  /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.90);
   gimp_documents_load (gimp);
 
@@ -557,18 +557,20 @@ gimp_create_image (Gimp              *gimp,
   return gimage;
 }
 
-void
+GimpObject *
 gimp_create_display (Gimp      *gimp,
-		     GimpImage *gimage)
+		     GimpImage *gimage,
+                     guint      scale)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (gimp->create_display_func)
     {
-      gimp->create_display_func (gimage);
-
-      g_object_unref (G_OBJECT (gimage));
+      return gimp->create_display_func (gimage, scale);
     }
+
+  return NULL;
 }
 
 /*
@@ -602,7 +604,7 @@ gimp_open_file (Gimp        *gimp,
       gimp_image_clean_all (gimage);
 
       if (with_display)
-	gimp_create_display (gimage->gimp, gimage);
+	gimp_create_display (gimage->gimp, gimage, 0x0101);
 
       absolute = file_open_absolute_filename (filename);
 

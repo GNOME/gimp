@@ -24,9 +24,10 @@
 #include "gimpimage-new.h"
 
 
-typedef void (* GimpCreateDisplayFunc) (GimpImage *gimage);
-typedef void (* GimpSetBusyFunc)       (Gimp      *gimp);
-typedef void (* GimpUnsetBusyFunc)     (Gimp      *gimp);
+typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage *gimage,
+                                                guint      scale);
+typedef void         (* GimpSetBusyFunc)       (Gimp      *gimp);
+typedef void         (* GimpUnsetBusyFunc)     (Gimp      *gimp);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -142,8 +143,9 @@ GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 GimpImageBaseType   type,
 					 gboolean            attach_comment);
 
-void          gimp_create_display       (Gimp               *gimp,
-					 GimpImage          *gimage);
+GimpObject  * gimp_create_display       (Gimp               *gimp,
+					 GimpImage          *gimage,
+                                         guint               scale);
 
 /*
 void          gimp_open_file            (Gimp               *gimp,

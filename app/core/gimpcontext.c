@@ -1302,6 +1302,9 @@ gimp_context_display_destroy (GObject     *disp_shell,
 			      GimpContext *context)
 {
   context->display = NULL;
+
+  gimp_context_real_set_image (context, NULL);
+
   gimp_context_display_changed (context);
 }
 
@@ -1309,11 +1312,16 @@ static void
 gimp_context_real_set_display (GimpContext *context,
 			       gpointer     display)
 {
+#ifdef __GNUC__
+#warning FIXME: EEKWrapper
+#endif
   typedef struct
   {
-    GimpObject  foobar;
-    GObject    *shell;
+    GimpObject  foo;
+    gint        bar;
     GimpImage  *gimage;
+    gint        baz;
+    GObject    *shell;
   } EEKWrapper;
 
   EEKWrapper *eek_wrapper;

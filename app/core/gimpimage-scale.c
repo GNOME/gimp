@@ -63,6 +63,8 @@
 #define TRC(x)
 #endif
 
+#define GUIDE_EPSILON 5
+
 
 /*  Local function declarations  */
 static void     gimp_image_class_init            (GimpImageClass *klass);
@@ -171,6 +173,8 @@ enum
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
+  RESOLUTION_CHANGED,
+  UNIT_CHANGED,
   SELECTION_CONTROL,
 
   CLEAN,
@@ -298,6 +302,24 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  gimp_image_signals[RESOLUTION_CHANGED] =
+    g_signal_new ("resolution_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  gimp_image_signals[UNIT_CHANGED] =
+    g_signal_new ("unit_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -763,22 +785,22 @@ gimp_image_set_resolution (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  /* nothing to do if setting res to the same as before */
-  if ((ABS (gimage->xresolution - xresolution) < 1e-5) &&
-      (ABS (gimage->yresolution - yresolution) < 1e-5))
-      return;
-
   /* don't allow to set the resolution out of bounds */
   if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
       yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     return;
 
-  undo_push_resolution (gimage);
+  if ((ABS (gimage->xresolution - xresolution) >= 1e-5) ||
+      (ABS (gimage->yresolution - yresolution) >= 1e-5))
+    {
+      undo_push_resolution (gimage);
 
-  gimage->xresolution = xresolution;
-  gimage->yresolution = yresolution;
+      gimage->xresolution = xresolution;
+      gimage->yresolution = yresolution;
 
-  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+      gimp_image_resolution_changed (gimage);
+      gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
+    }
 }
 
 void
@@ -799,9 +821,14 @@ gimp_image_set_unit (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  undo_push_resolution (gimage);
+  if (gimage->unit != unit)
+    {
+      undo_push_resolution (gimage);
 
-  gimage->unit = unit;
+      gimage->unit = unit;
+
+      gimp_image_unit_changed (gimage);
+    }
 }
 
 GimpUnit
@@ -1609,6 +1636,152 @@ gimp_image_delete_guide (GimpImage *gimage,
     }
 }
 
+GimpGuide *
+gimp_image_find_guide (GimpImage *gimage,
+                       gint       x,
+                       gint       y)
+{
+  GList     *list;
+  GimpGuide *guide;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  if (x < 0 || x >= gimage->width ||
+      y < 0 || y >= gimage->height)
+    {
+      return NULL;
+    }
+
+  for (list = gimage->guides; list; list = g_list_next (list))
+    {
+      guide = (GimpGuide *) list->data;
+
+      if (guide->position < 0)
+        continue;
+
+      switch (guide->orientation)
+        {
+        case ORIENTATION_HORIZONTAL:
+          if (ABS (guide->position - y) < GUIDE_EPSILON)
+            return guide;
+          break;
+
+        case ORIENTATION_VERTICAL:
+          if (ABS (guide->position - x) < GUIDE_EPSILON)
+            return guide;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  return NULL;
+}
+
+gboolean
+gimp_image_snap_point (GimpImage *gimage,
+                       gint       x,
+                       gint       y,
+                       gint      *tx,
+                       gint      *ty)
+{
+  GList     *list;
+  GimpGuide *guide;
+  gint       minxdist, minydist;
+  gint       dist;
+  gboolean   snapped = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (tx != NULL, FALSE);
+  g_return_val_if_fail (ty != NULL, FALSE);
+
+  *tx = x;
+  *ty = y;
+
+  if (x < 0 || x >= gimage->width ||
+      y < 0 || y >= gimage->height)
+    {
+      return FALSE;
+    }
+
+  minxdist = G_MAXINT;
+  minydist = G_MAXINT;
+
+  for (list = gimage->guides; list; list = g_list_next (list))
+    {
+      guide = (GimpGuide *) list->data;
+
+      switch (guide->orientation)
+        {
+        case ORIENTATION_HORIZONTAL:
+          dist = ABS (guide->position - y);
+
+          if (dist < MIN (GUIDE_EPSILON, minydist))
+            {
+              minydist = dist;
+              *ty = guide->position;
+              snapped = TRUE;
+            }
+          break;
+
+        case ORIENTATION_VERTICAL:
+          dist = ABS (guide->position - x);
+
+          if (dist < MIN (GUIDE_EPSILON, minxdist))
+            {
+              minxdist = dist;
+              *tx = guide->position;
+              snapped = TRUE;
+            }
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  return snapped;
+}
+
+gboolean
+gimp_image_snap_rectangle (GimpImage *gimage,
+                           gint       x1,
+                           gint       y1,
+                           gint       x2,
+                           gint       y2,
+                           gint      *tx1,
+                           gint      *ty1)
+{
+  gint     nx1, ny1;
+  gint     nx2, ny2;
+  gboolean snap1, snap2;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (tx1 != NULL, FALSE);
+  g_return_val_if_fail (ty1 != NULL, FALSE);
+
+  *tx1 = x1;
+  *ty1 = y1;
+
+  snap1 = gimp_image_snap_point (gimage, x1, y1, &nx1, &ny1);
+  snap2 = gimp_image_snap_point (gimage, x2, y2, &nx2, &ny2);
+  
+  if (snap1 || snap2)
+    {
+      if (x1 != nx1)
+	*tx1 = nx1;
+      else if (x2 != nx2)
+	*tx1 = x1 + (nx2 - x2);
+  
+      if (y1 != ny1)
+	*ty1 = ny1;
+      else if (y2 != ny2)
+	*ty1 = y1 + (ny2 - y2);
+    }
+
+  return snap1 || snap2;
+}
 
 GimpParasite *
 gimp_image_parasite_find (const GimpImage *gimage, 
@@ -1833,6 +2006,22 @@ gimp_image_mask_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[MASK_CHANGED], 0);
+}
+
+void
+gimp_image_resolution_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[RESOLUTION_CHANGED], 0);
+}
+
+void
+gimp_image_unit_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNIT_CHANGED], 0);
 }
 
 void
@@ -2726,6 +2915,8 @@ gimp_image_set_component_visible (GimpImage   *gimage,
       g_signal_emit (G_OBJECT (gimage),
 		     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
 		     type);
+
+      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
     }
 }
 

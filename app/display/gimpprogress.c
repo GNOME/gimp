@@ -25,6 +25,7 @@
 #include "core/core-types.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpprogress.h"
 
@@ -78,119 +79,136 @@ progress_start (GimpDisplay *gdisp,
 		GCallback    cancel_callback,
 		gpointer     cancel_data)
 {
-  GimpProgress *p;
-  guint         cid;
-  GtkWidget    *vbox;
+  GimpDisplayShell *shell = NULL;
+  GimpProgress     *progress;
+  guint             cid;
+  GtkWidget        *vbox;
 
-  p = g_new (GimpProgress, 1);
+  if (gdisp)
+    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  p->gdisp = gdisp;
-  p->dialog = NULL;
-  p->cancel_callback = NULL;
-  p->cancel_data = NULL;
+  progress = g_new0 (GimpProgress, 1);
+
+  progress->gdisp           = gdisp;
+  progress->dialog          = NULL;
+  progress->cancel_callback = NULL;
+  progress->cancel_data     = NULL;
 
   /* do we have a useful gdisplay and statusarea? */
-  if (gdisp && GTK_WIDGET_VISIBLE (gdisp->statusarea))
+  if (gdisp && GTK_WIDGET_VISIBLE (shell->statusarea))
     {
       if (message)
 	{
-	  cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
+	  cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 					      "progress");
 
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), cid, message);
+	  gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), cid, message);
 	}
 
-      /* really need image locking to stop multiple people going at
-       * the image */
-      if (gdisp->progressid)
-	g_warning("%d progress bars already active for display %p\n",
-		  gdisp->progressid, gdisp);
-      gdisp->progressid++;
+      /*  really need image locking to stop multiple people going at
+       *  the image
+       */
+      if (shell->progressid)
+        {
+          g_warning("%d progress bars already active for display %p\n",
+                    shell->progressid, gdisp);
+        }
+
+      shell->progressid++;
     }
   else
     {
       /* unimporant progress indications are occasionally failed */
-      if (!important)
+      if (! important)
 	{
-	  g_free (p);
+	  g_free (progress);
 	  return NULL;
 	}
 
-      p->gdisp = NULL;
-      p->dialog = gimp_dialog_new (_("Progress"), "plug_in_progress",
-				   NULL, NULL,
-				   GTK_WIN_POS_NONE,
-				   FALSE, TRUE, FALSE,
+      progress->gdisp  = NULL;
+      progress->dialog = gimp_dialog_new (_("Progress"), "plug_in_progress",
+                                          NULL, NULL,
+                                          GTK_WIN_POS_NONE,
+                                          FALSE, TRUE, FALSE,
 
-				   GTK_STOCK_CANCEL, NULL,
-				   NULL, NULL, &p->cancelbutton, TRUE, TRUE,
+                                          GTK_STOCK_CANCEL, NULL,
+                                          NULL, NULL, &progress->cancelbutton,
+                                          TRUE, TRUE,
 
-				   NULL);
+                                          NULL);
 
       vbox = gtk_vbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (p->dialog)->vbox), vbox);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (progress->dialog)->vbox),
+                         vbox);
       gtk_widget_show (vbox);
 
-      p->dialog_label = gtk_label_new (message ? message :
-				       _("Please wait..."));
-      gtk_misc_set_alignment (GTK_MISC (p->dialog_label), 0.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (vbox), p->dialog_label, FALSE, TRUE, 0);
-      gtk_widget_show (p->dialog_label);
+      progress->dialog_label = gtk_label_new (message ? message :
+                                              _("Please wait..."));
+      gtk_misc_set_alignment (GTK_MISC (progress->dialog_label), 0.0, 0.5);
+      gtk_box_pack_start (GTK_BOX (vbox), progress->dialog_label,
+                          FALSE, TRUE, 0);
+      gtk_widget_show (progress->dialog_label);
 
-      p->progressbar = gtk_progress_bar_new ();
-      gtk_widget_set_usize (p->progressbar, 150, 20);
-      gtk_box_pack_start (GTK_BOX (vbox), p->progressbar, TRUE, TRUE, 0);
-      gtk_widget_show (p->progressbar);
+      progress->progressbar = gtk_progress_bar_new ();
+      gtk_widget_set_usize (progress->progressbar, 150, 20);
+      gtk_box_pack_start (GTK_BOX (vbox), progress->progressbar, TRUE, TRUE, 0);
+      gtk_widget_show (progress->progressbar);
 
-      gtk_widget_show (p->dialog);
+      gtk_widget_show (progress->dialog);
     }
 
-  progress_signal_setup (p, cancel_callback, cancel_data);
+  progress_signal_setup (progress, cancel_callback, cancel_data);
 
-  return p;
+  return progress;
 }
 
 
 /* Update the message and/or the callbacks for a progress and reset
- * the bar to zero, with the minimum of disturbance to the user. */
+ * the bar to zero, with the minimum of disturbance to the user.
+ */
 GimpProgress *
-progress_restart (GimpProgress *p,
+progress_restart (GimpProgress *progress,
 		  const char   *message,
 		  GCallback     cancel_callback,
 		  gpointer      cancel_data)
 {
-  int cid;
   GtkWidget *bar;
+  gint       cid;
 
-  g_return_val_if_fail (p != NULL, p);
+  g_return_val_if_fail (progress != NULL, progress);
 
   /* change the message */
-  if (p->gdisp)
+  if (progress->gdisp)
     {
-      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (p->gdisp->statusbar),
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+
+      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 					  "progress");
-      gtk_statusbar_pop (GTK_STATUSBAR (p->gdisp->statusbar), cid);
+      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), cid);
 
       if (message)
-	gtk_statusbar_push (GTK_STATUSBAR (p->gdisp->statusbar), cid, message);
+	gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), cid, message);
 
-      bar = p->gdisp->progressbar;
+      bar = shell->progressbar;
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (p->dialog_label),
+      gtk_label_set_text (GTK_LABEL (progress->dialog_label),
 			  message ? message : _("Please wait..."));
-      bar = p->progressbar;
+
+      bar = progress->progressbar;
     }
 
   /* reset the progress bar */
   gtk_progress_bar_update (GTK_PROGRESS_BAR (bar), 0.0);
 
   /* do we need to change the callbacks? */
-  progress_signal_setup (p, cancel_callback, cancel_data);
+  progress_signal_setup (progress, cancel_callback, cancel_data);
 
-  return p;
+  return progress;
 }
 
 
@@ -202,14 +220,18 @@ progress_update (GimpProgress *progress,
 
   g_return_if_fail (progress != NULL);
 
-  if (!(percentage >= 0.0 && percentage <= 1.0))
+  if (percentage < 0.0 || percentage > 1.0)
     return;
 
   /* do we have a dialog box, or are we using the statusbar? */
   if (progress->gdisp)
-    bar = progress->gdisp->progressbar;
+    {
+      bar = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->progressbar;
+    }
   else
-    bar = progress->progressbar;
+    {
+      bar = progress->progressbar;
+    }
 
   gtk_progress_bar_update (GTK_PROGRESS_BAR (bar), percentage);
 }
@@ -241,9 +263,13 @@ progress_step (GimpProgress *progress)
   g_return_if_fail (progress != NULL);
 
   if (progress->gdisp)
-    bar = progress->gdisp->progressbar;
+    {
+      bar = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->progressbar;
+    }
   else
-    bar = progress->progressbar;
+    {
+      bar = progress->progressbar;
+    }
 
   val = gtk_progress_get_current_percentage (GTK_PROGRESS (bar)) + 0.01;
   if (val > 1.0)
@@ -255,70 +281,76 @@ progress_step (GimpProgress *progress)
 
 /* Finish using the progress bar "p" */
 void
-progress_end (GimpProgress *p)
+progress_end (GimpProgress *progress)
 {
   gint cid;
 
-  g_return_if_fail (p != NULL);
+  g_return_if_fail (progress != NULL);
 
   /* remove all callbacks so they don't get called while we're
-   * destroying widgets */
-  progress_signal_setup (p, NULL, NULL);
+   * destroying widgets
+   */
+  progress_signal_setup (progress, NULL, NULL);
 
-  if (p->gdisp)
+  if (progress->gdisp)
     {
-      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (p->gdisp->statusbar),
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (progress->gdisp->shell);
+
+      cid = gtk_statusbar_get_context_id (GTK_STATUSBAR (shell->statusbar),
 					  "progress");
-      gtk_statusbar_pop (GTK_STATUSBAR (p->gdisp->statusbar), cid);
+      gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), cid);
 
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (p->gdisp->progressbar), 0.0);
+      gtk_progress_bar_update (GTK_PROGRESS_BAR (shell->progressbar), 0.0);
 
-      if (p->gdisp->progressid > 0)
-	p->gdisp->progressid--;
+      if (shell->progressid > 0)
+        shell->progressid--;
     }
   else
     {
-      gtk_widget_destroy (p->dialog);
+      gtk_widget_destroy (progress->dialog);
     }
 
-  g_free (p);
+  g_free (progress);
 }
 
 
 /* Helper function to add or remove signals */
 static void
-progress_signal_setup (GimpProgress *p,
+progress_signal_setup (GimpProgress *progress,
                        GCallback     cancel_callback,
 		       gpointer      cancel_data)
 {
   GtkWidget *button;
   GtkWidget *dialog;
 
-  if (p->cancel_callback == cancel_callback && p->cancel_data == cancel_data)
+  if (progress->cancel_callback == cancel_callback &&
+      progress->cancel_data     == cancel_data)
     return;
 
   /* are we using the statusbar or a freestanding dialog? */
-  if (p->gdisp)
+  if (progress->gdisp)
     {
       dialog = NULL;
-      button = p->gdisp->cancelbutton;
+      button = GIMP_DISPLAY_SHELL (progress->gdisp->shell)->cancelbutton;
     }
   else
     {
-      dialog = p->dialog;
-      button = p->cancelbutton;
+      dialog = progress->dialog;
+      button = progress->cancelbutton;
     }
 
   /* remove any existing signal handlers */
-  if (p->cancel_callback)
+  if (progress->cancel_callback)
     {
       g_signal_handlers_disconnect_by_func (G_OBJECT (button),
-                                            p->cancel_callback, 
-                                            p->cancel_data);
+                                            progress->cancel_callback, 
+                                            progress->cancel_data);
       if (dialog)
 	g_signal_handlers_disconnect_by_func (G_OBJECT (dialog),
-                                              p->cancel_callback, 
-                                              p->cancel_data);
+                                              progress->cancel_callback, 
+                                              progress->cancel_data);
     }
 
   /* add the new handlers */
@@ -337,8 +369,6 @@ progress_signal_setup (GimpProgress *p,
   gtk_widget_set_sensitive (GTK_WIDGET (button),
 			    cancel_callback ? TRUE : FALSE);
 
-  p->cancel_callback = cancel_callback;
-  p->cancel_data     = cancel_data;
+  progress->cancel_callback = cancel_callback;
+  progress->cancel_data     = cancel_data;
 }
-
-/* End of gimpprogress.c */

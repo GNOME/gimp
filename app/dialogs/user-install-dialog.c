@@ -40,8 +40,7 @@
 
 #include "core/gimpunit.h"
 
-#include "display/gimpdisplay-ops.h"
-
+#include "gui/gui.h"
 #include "gui/resolution-calibrate-dialog.h"
 
 #include "appenv.h"
@@ -1156,7 +1155,7 @@ user_install_resolution (void)
   gdouble    xres, yres;
   gchar     *str;
 
-  gdisplay_xserver_resolution (&xres, &yres);
+  gui_get_screen_resolution (&xres, &yres);
 
   add_label (GTK_BOX (resolution_page),
 	     _("GIMP can obtain this information from the windowing system.\n"
@@ -1316,7 +1315,7 @@ user_install_resolution_done (void)
   gimprc_save (&update, &remove);
 
   if (gimprc.using_xserver_resolution)
-    gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
+    gui_get_screen_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
 
   g_list_free (update);
   g_list_free (remove);

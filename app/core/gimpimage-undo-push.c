@@ -47,6 +47,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
@@ -177,8 +178,10 @@ static Undo        * undo_new           (UndoType     undo_type,
 					 gboolean     dirties_image);
 
 
-static gboolean mode_changed = FALSE;
-static gboolean size_changed = FALSE;
+static gboolean mode_changed       = FALSE;
+static gboolean size_changed       = FALSE;
+static gboolean resolution_changed = FALSE;
+static gboolean unit_changed       = FALSE;
 
 
 static gint
@@ -450,31 +453,42 @@ pop_stack (GimpImage  *gimage,
 	  /*  Flush any image updates and displays  */
 	  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
 
-	  if (gdisp != NULL)
+	  if (gdisp)
 	    {
-	      if (gdisp->disp_xoffset || gdisp->disp_yoffset)
+              GimpDisplayShell *shell;
+
+              shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+	      if (shell->gdisp->disp_xoffset || shell->gdisp->disp_yoffset)
 		{
-		  gdk_drawable_get_size (gdisp->canvas->window, &x, &y);
-		  if (gdisp->disp_yoffset)
+		  gdk_drawable_get_size (shell->canvas->window, &x, &y);
+
+		  if (shell->gdisp->disp_yoffset)
 		    {
-		      gdisplay_expose_area (gdisp, 0, 0,
-					    gdisp->disp_width,
-					    gdisp->disp_yoffset);
-		      gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
-					    gdisp->disp_width,
-					    gdisp->disp_height);
+		      gimp_display_shell_add_expose_area (shell,
+                                                          0, 0,
+                                                          shell->gdisp->disp_width,
+                                                          shell->gdisp->disp_yoffset);
+		      gimp_display_shell_add_expose_area (shell,
+                                                          0, shell->gdisp->disp_yoffset + y,
+                                                          shell->gdisp->disp_width,
+                                                          shell->gdisp->disp_height);
 		    }
-		  if (gdisp->disp_xoffset)
+
+		  if (shell->gdisp->disp_xoffset)
 		    {
-		      gdisplay_expose_area (gdisp, 0, 0,
-					    gdisp->disp_xoffset,
-					    gdisp->disp_height);
-		      gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
-					    gdisp->disp_width,
-					    gdisp->disp_height);
+		      gimp_display_shell_add_expose_area (shell,
+                                                          0, 0,
+                                                          shell->gdisp->disp_xoffset,
+                                                          shell->gdisp->disp_height);
+		      gimp_display_shell_add_expose_area (shell,
+                                                          shell->gdisp->disp_xoffset + x, 0,
+                                                          shell->gdisp->disp_width,
+                                                          shell->gdisp->disp_height);
 		    }
 		}
 	    }
+
 	  gdisplays_flush ();
 
 	  /*  If the mode_changed flag was set  */
@@ -491,6 +505,22 @@ pop_stack (GimpImage  *gimage,
 	      gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
 	      size_changed = FALSE;
+	    }
+
+	  /*  If the resolution_changed flag was set  */
+	  if (resolution_changed)
+	    {
+	      gimp_image_resolution_changed (gimage);
+
+	      resolution_changed = FALSE;
+	    }
+
+	  /*  If the unit_changed flag was set  */
+	  if (unit_changed)
+	    {
+	      gimp_image_unit_changed (gimage);
+
+	      unit_changed = FALSE;
 	    }
 
 	  /* let others know that we just popped an action */
@@ -1601,6 +1631,7 @@ undo_pop_layer_mod (GimpImage *gimage,
   TileManager *tiles;
   TileManager *temp;
   GimpLayer   *layer;
+  gboolean     old_has_alpha;
 
   data = (gpointer *) data_ptr;
   layer = (GimpLayer *) data[0];
@@ -1608,11 +1639,11 @@ undo_pop_layer_mod (GimpImage *gimage,
   tiles = (TileManager *) data[1];
 
   /*  Issue the first update  */
-  gdisplays_update_area (gimage,
-			 GIMP_DRAWABLE (layer)->offset_x,
-			 GIMP_DRAWABLE (layer)->offset_y,
-			 GIMP_DRAWABLE (layer)->width,
-			 GIMP_DRAWABLE (layer)->height);
+  gimp_image_update (gimage,
+                     GIMP_DRAWABLE (layer)->offset_x,
+                     GIMP_DRAWABLE (layer)->offset_y,
+                     GIMP_DRAWABLE (layer)->width,
+                     GIMP_DRAWABLE (layer)->height);
 
   /*  Create a tile manager to store the current layer contents  */
   temp       = GIMP_DRAWABLE (layer)->tiles;
@@ -1621,6 +1652,8 @@ undo_pop_layer_mod (GimpImage *gimage,
 			    GIMP_DRAWABLE (layer)->offset_y);
   layer_type = (glong) data[2];
   data[2]    = (gpointer) ((glong) GIMP_DRAWABLE (layer)->type);
+
+  old_has_alpha = GIMP_DRAWABLE (layer)->has_alpha;
 
   /*  restore the layer's data  */
   GIMP_DRAWABLE (layer)->tiles     = tiles;
@@ -1640,9 +1673,11 @@ undo_pop_layer_mod (GimpImage *gimage,
 				&(GIMP_DRAWABLE (layer->mask)->offset_y));
     }
 
-  /*  If the layer type changed, update the gdisplay titles  */
-  if (GIMP_DRAWABLE (layer)->type != (glong) data[2])
-    gdisplays_update_title (GIMP_DRAWABLE (layer)->gimage);
+  if (GIMP_DRAWABLE (layer)->has_alpha != old_has_alpha &&
+      GIMP_DRAWABLE (layer)->gimage->layers->num_children == 1)
+    {
+      gimp_image_alpha_changed (GIMP_DRAWABLE (layer)->gimage);
+    }
 
   /*  Set the new tile manager  */
   data[1] = temp;
@@ -1651,7 +1686,7 @@ undo_pop_layer_mod (GimpImage *gimage,
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0, 
 			GIMP_DRAWABLE (layer)->width,
-			GIMP_DRAWABLE(layer)->height);
+			GIMP_DRAWABLE (layer)->height);
 
   return TRUE;
 }
@@ -2497,28 +2532,37 @@ undo_pop_resolution (GimpImage *gimage,
 		     gpointer   data_ptr)
 {
   ResolutionUndo *data;
-  gdouble         tmpres;
-  GimpUnit        tmpunit;
 
   data = data_ptr;
 
-  tmpres = gimage->xresolution;
-  gimage->xresolution = data->xres;
-  data->xres = tmpres;
+  if (ABS (data->xres - gimage->xresolution) >= 1e-5 ||
+      ABS (data->yres - gimage->yresolution) >= 1e-5)
+    {
+      gdouble old_xres;
+      gdouble old_yres;
 
-  tmpres = gimage->yresolution;
-  gimage->yresolution = data->yres;
-  data->yres = tmpres;
+      old_xres = gimage->xresolution;
+      old_yres = gimage->yresolution;
+
+      gimage->xresolution = data->xres;
+      gimage->yresolution = data->yres;
+
+      data->xres = old_xres;
+      data->yres = old_yres;
+
+      resolution_changed = TRUE;
+    }
 
   if (data->unit != gimage->unit)
     {
-      tmpunit = gimage->unit;
-      gimage->unit = data->unit;
-      data->unit = tmpunit;
-    }
+      GimpUnit old_unit;
 
-  /* FIXME: really just want to recalc size and repaint */
-  size_changed = TRUE;
+      old_unit = gimage->unit;
+      gimage->unit = data->unit;
+      data->unit = old_unit;
+
+      unit_changed = TRUE;
+    }
 
   return TRUE;
 }

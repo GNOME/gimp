@@ -37,6 +37,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimpcolorpanel.h"
 
@@ -115,31 +116,35 @@ qmask_removed_callback (GtkObject *qmask,
 void
 qmask_buttons_update (GimpDisplay *gdisp)
 {
+  GimpDisplayShell *shell;
+
   g_assert (gdisp);
   g_assert (gdisp->gimage);
 
-  if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON (gdisp->qmaskon)->active)
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON (shell->qmaskon)->active)
     {
       /* Disable toggle from doing anything */
-      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskoff),
+      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskoff),
 				       qmask_deactivate_callback,
 				       gdisp);
-      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskon),
+      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskon),
 				       qmask_activate_callback,
 				       gdisp);
    
       /* Change the state of the buttons */
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskon), 
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskon), 
 				    gdisp->gimage->qmask_state);
 
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskoff),
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff),
 				    ! gdisp->gimage->qmask_state);
    
       /* Enable toggle again */
-      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskoff),
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskoff),
 					 qmask_deactivate_callback,
 					 gdisp);
-      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskon),
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskon),
 					 qmask_activate_callback,
 					 gdisp);
     }

@@ -1,3 +1,130 @@
+2001-10-31  Michael Natterer  <mitch@gimp.org>
+
+	Chopped up the display stuff (beware: unfinished)...
+
+	The plan is that GimpDisplay is the object which collects
+	updates from the image, compresses them and waits for the GIMP
+	to be idle to actually paint them. It should be a non-GUI object
+	which is the model for the actual widget to connect to.
+
+	GimpDisplayShell has all the widgets and handles painting and
+	exposing of the result. Nobody should actually be required to
+	update ot look at it as it should be a view on the GimpDisplay
+	object.
+
+	Much stuff is still in the wrong place and the functions don't
+	follow their files' filename namespace any more. More to come...
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplay-ops.[ch]: removed. It's functions didn't
+	belong together anyway.
+
+	* app/display/gimpdisplay-area.[ch]: new files: the GimpArea
+	functions.
+
+	* app/display/gimpdisplay-handlers.[ch]: new files: signal
+	handlers for GimpImage signals. Mostly from app/gui.c.
+
+	* app/display/gimpdisplay.[ch]: removed all widgets and other
+	GUI stuff. There is still much undecided here...
+
+	* app/display/gimpdisplayshell.[ch]: actually use the object and
+	filled it with all the stuff from GimpDisplay.
+
+	* app/display/gimpdisplay-callbacks.[ch]
+	* app/display/gimpdisplay-foreach.[ch]
+	* app/display/gimpdisplay-render.c
+	* app/display/gimpdisplay-scale.[ch]
+	* app/display/gimpdisplay-scroll.[ch]
+	* app/display/gimpdisplay-selection.c: changed accordingly.
+
+	* app/core/gimp.[ch]: return a GimpObject from
+	gimp_create_display() so it can be used as single GUI independent
+	point to create displays, require the initial scale as parameter.
+
+	* app/core/gimpcontext.c: changed the ugly EEKWrapper according to
+	the GimpDisplay structure changes. Bugfix: set the image to NULL
+	in gimp_context_display_destroyed().
+
+	* app/core/gimpedit.c
+	* app/core/gimpimage-new.c: changed gimp_create_display() calls
+	accordingly.
+
+	* app/core/gimpimage-convert.c: invalidate the layer & image
+	previews here, not in the caller.
+
+	* app/core/gimpimage-crop.c: update the whole image after cropping.
+
+	* app/core/gimpimage.[ch]: added gimp_image_find_guide(),
+	gimp_image_snap_point() and gimp_image_snap_rectangle(). Added
+	"resolution_changed" and "unit_changed" signals and corresp.
+	public convenience functions to emit them.
+
+	* app/core/gimplayer.c: emit the image's "alpha_changed" signal
+	when adding alpha to the bottom (and only) layer of the image.
+
+	* app/gimpprogress.c
+	* app/image_map.c
+	* app/nav_window.c
+	* app/qmask.c
+	* app/undo.c
+	* app/user_install.c: changed accordingly.
+
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/gui/toolbox.c
+	* app/gui/view-commands.c: ditto.
+
+	* app/gui/gui.[ch]: removed most gimp->images handlers as the
+	displays connect to them themselves now. chaged gui_display_new()
+	according to the gimp_create_display() changes.
+	Added gui_get_screen_resolution().
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/xinput_airbrush.c: lots of changes because GimpDisplay
+	has become two objects. Lots of gdisp->shell casting uglyness
+	added. This is fine because exactly these parts will have to go
+	away.
+
+	(GimpDisplay will provide methods for XOR drawing upon the display
+	in image coordinates without the need to transform coordinates all
+	the time. Also the tools shouldn't see GdkEvents but get more
+	useful virtual functions which speak in image coordinates too).
+
+	* app/widgets/gimpcomponentlistitem.c: removed a now useless image
+	update.
+
+	* tools/pdbgen/pdb/display.pdb: use gimp_create_display().
+
+	* app/pdb/display_cmds.c: regenerated.
+
 2001-10-30  Simon Budig   <simon@gimp.org>
 
 	* app/pdb/tools_cmds.c
