@@ -1,3 +1,9 @@
+2002-03-06  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/input-devices.png:
+	* themes/Default/images/preferences/environment.png:
+	  start replacing generic icons with gimp-branded
+	
 2002-03-06  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/preferences/folders-modules.png
