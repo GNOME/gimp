@@ -448,7 +448,8 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       readDumpedImage(twSession);
     else
 #endif /* _DEBUG */
-      getImage(twSession);
+      if (!getImage(twSession))
+	PostQuitMessage(255);	/* TODO: close TWAIN before bailing out */
     break;
 			
   case WM_DESTROY:
@@ -739,6 +740,11 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   theClientData->image_id = gimp_image_new(imageInfo->ImageWidth, 
 					   imageInfo->ImageLength, imageType);
 			
+  /* set resolution for image */
+  gimp_image_set_resolution(theClientData->image_id,
+                            FIX32ToFloat(imageInfo->XResolution),
+                            FIX32ToFloat(imageInfo->YResolution));
+
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
 					   _("Background"),

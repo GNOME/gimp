@@ -221,7 +221,7 @@ start_browser (gchar *prog,
 {
 #ifdef G_OS_WIN32
 
-  ShellExecute (HWND_DESKTOP, "open", url, NULL, "C:\\", SW_SHOWNORMAL);
+  return (gint) ShellExecute (HWND_DESKTOP, "open", url, NULL, "C:\\", SW_SHOWNORMAL) > 32;
 
 #else
 #ifndef __EMX__

@@ -883,13 +883,10 @@ TwainProcessMessage(LPMSG lpMsg, pTW_SESSION twSession)
 			break;
 			
 		case MSG_CLOSEDSREQ:
-			/* Disable the datasource, Close the Data source
-			 * and close the data source manager
-			 */
 			LogMessage("CloseDSReq\n");
-			disableDS(twSession);
-			closeDS(twSession);
-			closeDSM(twSession);
+			/* Let the callback function do the job
+			 * instead of shutting down
+			 */
 			break;
 			
 			/* No message from the Source to the App break;
