@@ -102,6 +102,7 @@ EXPORTS
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
 	gimp_drawable_type
+	gimp_drawable_type_with_alpha
 	gimp_drawable_update
 	gimp_drawable_visible
 	gimp_drawable_width
@@ -268,6 +269,8 @@ EXPORTS
 	gimp_matrix3_yshear
 	gimp_matrix4_to_deg
 	gimp_message
+	gimp_message_get_handler
+	gimp_message_set_handler
 	gimp_micro_version
 	gimp_min_colors
 	gimp_minor_version

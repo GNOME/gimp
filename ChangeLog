@@ -1,5 +1,7 @@
 2002-02-13  Tor Lillqvist  <tml@iki.fi>
 
+	* libgimp/gimp.def: Add a couple of missing entry points.
+
 	* libgimp/Makefile.am: Don't need any -lm on Win32. Remove the
 	already commented-out makefile.mingw rule.
 
