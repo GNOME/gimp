@@ -466,7 +466,7 @@ gimp_session_info_deserialize (GScanner *scanner,
             case SESSION_INFO_OPEN:
               info->open = TRUE;
 
-              /*  for backward compatibility  */
+              /*  the screen number is optional  */
               if (g_scanner_peek_next_token (scanner) == G_TOKEN_RIGHT_PAREN)
                 break;
 

@@ -175,20 +175,21 @@ gimp_any_to_utf8 (const gchar  *str,
  * @memsize: A memory size in bytes.
  *
  * This function returns a human readable, translated representation
- * of the passed @memsize. Large values are rounded to the closest
- * reasonable memsize unit, e.g.: "3456" becomes "3456 Bytes", "4100"
- * becomes "4 KB" and so on.
+ * of the passed @memsize. Large values are displayed using a
+ * reasonable memsize unit, e.g.: "345" becomes "345 Bytes", "4500"
+ * becomes "4.4 KB" and so on.
  *
- * Return value: A human-readable, translated string.
+ * Return value: A newly allocated human-readable, translated string.
  **/
 gchar *
-gimp_memsize_to_string (gulong memsize)
+gimp_memsize_to_string (guint64 memsize)
 {
-  if (memsize < 4096)
+  if (memsize < 1024)
     {
       return g_strdup_printf (_("%d Bytes"), (gint) memsize);
     }
-  else if (memsize < 1024 * 10)
+
+  if (memsize < 1024 * 10)
     {
       return g_strdup_printf (_("%.2f KB"), (gdouble) memsize / 1024.0);
     }
@@ -200,15 +201,35 @@ gimp_memsize_to_string (gulong memsize)
     {
       return g_strdup_printf (_("%d KB"), (gint) memsize / 1024);
     }
-  else if (memsize < 1024 * 1024 * 10)
+
+  memsize /= 1024;
+
+  if (memsize < 1024 * 10)
     {
-      memsize /= 1024;
       return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 100)
+    {
+      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 1024)
+    {
+      return g_strdup_printf (_("%d MB"), (gint) memsize / 1024);
+    }
+
+  memsize /= 1024;
+
+  if (memsize < 1024 * 10)
+    {
+      return g_strdup_printf (_("%.2f GB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 100)
+    {
+      return g_strdup_printf (_("%.1f GB"), (gdouble) memsize / 1024.0);
     }
   else
     {
-      memsize /= 1024;
-      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%d GB"), (gint) memsize / 1024);
     }
 }
 

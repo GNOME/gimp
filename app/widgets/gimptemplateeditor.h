@@ -41,7 +41,6 @@ struct _GimpTemplateEditor
   GtkVBox        parent_instance;
 
   GimpTemplate  *template;
-  gulong         memsize;
 
   GimpContainer *stock_id_container;
   GimpContext   *stock_id_context;

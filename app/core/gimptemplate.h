@@ -54,8 +54,7 @@ struct _GimpTemplate
   gchar             *comment;
   gchar             *filename;
 
-  gulong             initial_size;
-  gboolean           initial_size_too_large;
+  guint64            initial_size;
 };
 
 struct _GimpTemplateClass

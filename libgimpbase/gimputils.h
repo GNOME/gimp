@@ -28,7 +28,7 @@ gchar * gimp_any_to_utf8       (const gchar *str,
                                 const gchar *warning_format,
                                 ...) G_GNUC_PRINTF (3, 4);
 
-gchar * gimp_memsize_to_string (gulong       memsize);
+gchar * gimp_memsize_to_string (guint64      memsize);
 
 gchar * gimp_strip_uline       (const gchar *str);
 

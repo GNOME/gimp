@@ -136,7 +136,6 @@ static void
 gimp_template_editor_init (GimpTemplateEditor *editor)
 {
   editor->template = NULL;
-  editor->memsize  = 0;
 }
 
 static void
@@ -668,7 +667,8 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                       GParamSpec         *param_spec,
                                       GimpTemplateEditor *editor)
 {
-  GimpAspectType aspect;
+  GimpAspectType  aspect;
+  gchar          *text;
 
   if (param_spec)
     {
@@ -684,20 +684,9 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
         }
     }
 
-  if (editor->memsize != template->initial_size)
-    {
-      gchar *text;
-
-      editor->memsize = template->initial_size;
-
-      if (template->initial_size_too_large)
-        text = g_strdup (_("Too large!"));
-      else
-        text = gimp_memsize_to_string (editor->memsize);
-
-      gtk_label_set_text (GTK_LABEL (editor->memsize_label), text);
-      g_free (text);
-    }
+  text = gimp_memsize_to_string (template->initial_size);
+  gtk_label_set_text (GTK_LABEL (editor->memsize_label), text);
+  g_free (text);
 
   if (editor->template->width > editor->template->height)
     aspect = GIMP_ASPECT_LANDSCAPE;

@@ -58,7 +58,6 @@ typedef struct
 
   Gimp         *gimp;
   GimpTemplate *template;
-  gulong        memsize;
 } FileNewDialog;
 
 
@@ -66,9 +65,6 @@ typedef struct
 
 static void   file_new_response        (GtkWidget         *widget,
                                         gint               response_id,
-                                        FileNewDialog     *dialog);
-static void   file_new_template_notify (GimpTemplate      *template,
-                                        GParamSpec        *param_spec,
                                         FileNewDialog     *dialog);
 static void   file_new_template_select (GimpContainerMenu *menu,
                                         GimpTemplate      *template,
@@ -94,7 +90,6 @@ file_new_dialog_new (Gimp *gimp)
 
   dialog->gimp     = gimp;
   dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
-  dialog->memsize  = 0;
 
   dialog->dialog =
     gimp_viewable_dialog_new (NULL,
@@ -155,10 +150,6 @@ file_new_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
-  g_signal_connect (dialog->template, "notify",
-                    G_CALLBACK (file_new_template_notify),
-                    dialog);
-
   return dialog->dialog;
 }
 
@@ -209,7 +200,7 @@ file_new_response (GtkWidget     *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      if (dialog->memsize >
+      if (dialog->template->initial_size >
           GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
         file_new_confirm_dialog (dialog);
       else
@@ -219,21 +210,6 @@ file_new_response (GtkWidget     *widget,
     default:
       gtk_widget_destroy (dialog->dialog);
       break;
-    }
-}
-
-static void
-file_new_template_notify (GimpTemplate  *template,
-                          GParamSpec    *param_spec,
-                          FileNewDialog *dialog)
-{
-  if (dialog->memsize != template->initial_size)
-    {
-      dialog->memsize = template->initial_size;
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog->dialog),
-                                         GTK_RESPONSE_OK,
-                                         ! template->initial_size_too_large);
     }
 }
 
@@ -288,7 +264,7 @@ file_new_confirm_dialog (FileNewDialog *dialog)
   gchar *max_size_str;
   gchar *text;
 
-  size_str     = gimp_memsize_to_string (dialog->memsize);
+  size_str     = gimp_memsize_to_string (dialog->template->initial_size);
   max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size);
 
   text = g_strdup_printf (_("You are trying to create an image with\n"

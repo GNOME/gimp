@@ -1,3 +1,20 @@
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.[ch] (gimp_memsize_to_string): take a
+	guint64 parameter and handle values beyond a gigabyte.
+
+	* app/core/gimptemplate.[ch]: use a guint64 for the initial memory
+	size and removed the gboolean that used to indicate a gulong
+	overflow.
+
+	* app/widgets/gimptemplateeditor.[ch]: changed accordingly.
+
+	* app/gui/file-new-dialog.c: don't set the OK button insensitive
+	when the initial memory size exceeds GULONG_MAX.
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_deserialize):
+	replaced a misleading comment.
+
 2003-11-14 Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectoroptions.c: Add two buttons to the
