@@ -1,3 +1,8 @@
+2004-11.28  Peteris Krisjanis <pecisk@gmail.com>
+
+	* lv.po: Added Latvian translation by
+	Gatis Kalnins <gatis.kalnins@metatrons.org>
+
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
 	* sk.po: reverted last commit, it only contained binary gibberish.
