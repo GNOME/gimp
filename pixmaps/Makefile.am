@@ -7,6 +7,7 @@ EXTRA_DIST = \
 	default.xpm	\
 	delete.xpm	\
 	duplicate.xpm	\
+	edit.xpm	\
 	eek.xpm		\
 	eye.xbm		\
 	first.xpm	\

@@ -3911,9 +3911,6 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer))); 
       h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer))); 
 
-      w = MAX (1, width);
-      h = MAX (1, height);
-      
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);
       x2 = CLAMP (x + w, 0, width);
@@ -3925,8 +3922,8 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       src1PR.w         = (x2 - x1);
       src1PR.h         = (y2 - y1);
       src1PR.rowstride = comp->width * src1PR.bytes;
-      src1PR.data      = 
-	temp_buf_data (comp) + y1 * src1PR.rowstride + x1 * src1PR.bytes;
+      src1PR.data      = (temp_buf_data (comp) +
+                          y1 * src1PR.rowstride + x1 * src1PR.bytes);
 
       layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer), w, h);
       src2PR.bytes     = layer_buf->bytes;
@@ -3935,8 +3932,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       src2PR.x         = src1PR.x; 
       src2PR.y         = src1PR.y;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
-      src2PR.data      = temp_buf_data (layer_buf) + 
-	(y1 - y) * src2PR.rowstride + (x1 - x) * src2PR.bytes;
+      src2PR.data      = (temp_buf_data (layer_buf) + 
+                          (y1 - y) * src2PR.rowstride +
+                          (x1 - x) * src2PR.bytes);
 
       if (layer->mask && layer->mask->apply_mask)
 	{
@@ -3944,8 +3942,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 						w, h);
 	  maskPR.bytes     = mask_buf->bytes;
 	  maskPR.rowstride = mask_buf->width;
-	  maskPR.data      = mask_buf_data (mask_buf) +
-	    (y1 - y) * maskPR.rowstride + (x1 - x) * maskPR.bytes;
+	  maskPR.data      = (mask_buf_data (mask_buf) +
+                              (y1 - y) * maskPR.rowstride +
+                              (x1 - x) * maskPR.bytes);
 	  mask = &maskPR;
 	}
       else

@@ -45,7 +45,7 @@
 #include "pixmaps/lower.xpm"
 #include "pixmaps/duplicate.xpm"
 #include "pixmaps/new.xpm"
-#include "pixmaps/pennorm.xpm"
+#include "pixmaps/edit.xpm"
 
 
 static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass);
@@ -245,7 +245,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_edit_clicked),
 		      view);  
 
-  pixmap = gimp_pixmap_new (pennorm_xpm);
+  pixmap = gimp_pixmap_new (edit_xpm);
   gtk_container_add (GTK_CONTAINER (view->edit_button), pixmap);
   gtk_widget_show (pixmap);
 

@@ -1,3 +1,22 @@
+2001-03-12  Michael Natterer  <mitch@gimp.org>
+
+	* pixmaps/Makefile.am
+	* pixmaps/edit.xpm: new pixmap. "Someone" needs to go over the
+	pixmaps one day ;)
+
+	* app/gimpdatafactoryview.c
+	* app/gimpdrawablelistview.c: use the new icon.
+
+	* app/floating_sel.c: stupid: the new gimp_layer_get_opacity()
+	accessor speaks in normalized [0.0..1.0] values, so the
+	floating selection was invisible after blindly using it.
+
+	* app/gimpimage.c: more stupid: a totally useless sanity clamping
+	made the composite preview ugly. Fixed.
+
+	* app/tools/tool_manager.c: why the heck did this never crash before:
+	don't dereference a NULL GDisplay pointer.
+
 2001-03-11  Seth Burgess      <sjburges@gimp.org>
 
 	* app/tools/Makefile.am

@@ -150,7 +150,8 @@ tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
 
   gimp_tool_initialize (active_tool, gdisp);
 
-  active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+  if (gdisp)
+    active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  don't set tool->gdisp here! (see commands.c)  */
 }

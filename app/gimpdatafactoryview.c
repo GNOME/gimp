@@ -45,7 +45,7 @@
 #include "pixmaps/delete.xpm"
 #include "pixmaps/duplicate.xpm"
 #include "pixmaps/new.xpm"
-#include "pixmaps/pennorm.xpm"
+#include "pixmaps/edit.xpm"
 #include "pixmaps/refresh.xpm"
 
 
@@ -182,7 +182,7 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 		      GTK_SIGNAL_FUNC (gimp_data_factory_view_edit_clicked),
 		      view);  
 
-  pixmap = gimp_pixmap_new (pennorm_xpm);
+  pixmap = gimp_pixmap_new (edit_xpm);
   gtk_container_add (GTK_CONTAINER (view->edit_button), pixmap);
   gtk_widget_show (pixmap);
 
