@@ -423,7 +423,6 @@ tileit_dialog ()
   gtk_table_attach(GTK_TABLE(table), xframe, 0, 1, 0, 2, GTK_EXPAND , GTK_EXPAND, 0, 0);
   gtk_widget_show(frame); 
   gtk_widget_show(table); 
-  gtk_container_add(GTK_CONTAINER(frame), xframe);
 
   /* Area for buttons etc */
   /* This was built up incrementally... shows does'nt it */

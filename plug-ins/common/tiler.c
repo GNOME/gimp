@@ -1,4 +1,4 @@
-/* Tiler v0.3
+/* Tiler v0.31
  * 22 May 1997
  * Tim Rowley <tor@cs.brown.edu>
  */
@@ -12,6 +12,7 @@
  * v0.1: initial version
  * v0.2: fix edge conditions
  * v0.3: port to 0.99 API
+ * v0.31: small bugfix
  */
 
 #include <stdio.h>
@@ -184,7 +185,7 @@ tile(GDrawable *drawable)
   for (row = 0; row <y; row++)
   {
     gimp_pixel_rgn_get_row(&destPR, dest_cur, x1, y1+row, (x2-x1));
-    memset(dest_cur, 0, y*bytes);
+    memset(dest_cur, 0, x*bytes);
     gimp_pixel_rgn_set_row(&destPR, dest_cur, x1, y1+row, (x2-x1));
   }
 

@@ -1,3 +1,11 @@
+Wed Apr 29 15:38:55 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/tiler/tiler.c: fix width > height case
+
+	* plug-ins/blinds/blinds.c
+	* plug-ins/convmatrix/convmatrix.c
+	* plug-ins/tileit/tileit.c: removed spurious gtk_container_add's
+
 Wed Apr 29 07:50:26 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* gimp.1: updated man page to reflect new --debug-handlers

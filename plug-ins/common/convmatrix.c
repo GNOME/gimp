@@ -783,7 +783,6 @@ static gint dialog()
 	
 	my_widgets.divisor=entry=gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(box), entry, TRUE, TRUE, 0);
-	gtk_container_add(GTK_CONTAINER(frame),entry);
 	gtk_widget_set_usize(entry, 40, 0);
 	gtk_signal_connect(GTK_OBJECT(entry), "changed",
 			   (GtkSignalFunc) entry_callback, &my_config.divisor);
@@ -799,7 +798,6 @@ static gint dialog()
 	
 	my_widgets.offset=entry=gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(box), entry, TRUE, TRUE, 0);
-	gtk_container_add(GTK_CONTAINER(frame),entry);
 	gtk_widget_set_usize(entry, 40, 0);
 	gtk_signal_connect(GTK_OBJECT(entry), "changed",
 			   (GtkSignalFunc) entry_callback, &my_config.offset);
