@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __INTERFACE_H__
-#define __INTERFACE_H__
+#ifndef __TOOLBOX_H__
+#define __TOOLBOX_H__
 
 
-void   create_display_shell (GDisplay     *gdisp,
-			     gint          width,
-			     gint          height,
-			     gchar        *title,
-			     gint          type);
+void   toolbox_create         (void);
+void   toolbox_free           (void);
+
+void   toolbox_raise_callback (GtkWidget *widget,
+			       gpointer   data);
 
 
-#endif /* __INTERFACE_H__ */
+#endif /* __TOOLBOX_H__ */

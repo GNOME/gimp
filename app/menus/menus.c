@@ -35,13 +35,13 @@
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "layers_dialog.h"
 #include "menus.h"
 #include "paths_dialog.h"
 #include "paint_funcs.h"
 #include "preferences_dialog.h"
 #include "scale.h"
+#include "toolbox.h"
 
 #include "tools/tools.h"
 

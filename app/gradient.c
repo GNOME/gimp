@@ -44,8 +44,6 @@
  * - Better handling of bogus gradient files and inconsistent
  *   segments.  Do not loop indefinitely in seg_get_segment_at() if
  *   there is a missing segment between two others.
- *
- * - Add a Gradient brush mode (color changes as you move it).
  */
 
 #include "config.h"
@@ -202,13 +200,13 @@ typedef struct
   GtkWidget *control_coloring_items[3 + 1];
 
   /*  Split uniformly dialog  */
-  gint split_parts;
+  gint       split_parts;
 
   /*  Replicate dialog  */
-  gint replicate_times;
+  gint       replicate_times;
 
   /*  Saved colors  */
-  GimpRGB saved_colors[GRAD_NUM_COLORS];
+  GimpRGB    saved_colors[GRAD_NUM_COLORS];
 
   GtkWidget *left_load_color_boxes[GRAD_NUM_COLORS + 3];
   GtkWidget *left_load_labels[GRAD_NUM_COLORS + 3];

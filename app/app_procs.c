@@ -65,7 +65,6 @@
 #include "gradient.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "interface.h"
 #include "lc_dialog.h"
 #include "menus.h"
 #include "paint_funcs.h"
@@ -78,6 +77,7 @@
 #include "temp_buf.h"
 #include "tile_swap.h"
 #include "tips_dialog.h"
+#include "toolbox.h"
 #include "undo.h"
 #include "unitrc.h"
 #include "xcf.h"
@@ -608,7 +608,8 @@ app_init (void)
     {
       devices_init ();
       session_init ();
-      create_toolbox ();
+
+      toolbox_create ();
 
       /*  Fill the "last opened" menu items with the first last_opened_size
        *  elements of the docindex

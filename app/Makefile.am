@@ -79,7 +79,6 @@ gimp_SOURCES = \
 	draw_core.h		\
 	drawable.c		\
 	drawable.h		\
-	drawable_pvt.h		\
 	edit_selection.c	\
 	edit_selection.h	\
 	errorconsole.c		\
@@ -271,6 +270,8 @@ gimp_SOURCES = \
 	tile_swap.h		\
 	tips_dialog.c		\
 	tips_dialog.h		\
+	toolbox.c		\
+	toolbox.h		\
 	undo.c			\
 	undo.h			\
 	undo_history.c		\

@@ -33,7 +33,9 @@
 
 static void tile_destroy (Tile *tile);
 
-int tile_count = 0;
+
+gint tile_count = 0;
+
 
 void
 tile_sanitize_rowhints (Tile *tile)
@@ -111,19 +113,20 @@ tile_init (Tile *tile,
 
 #ifdef USE_PTHREADS
   {
-    pthread_mutex_init(&tile->mutex, NULL);
+    pthread_mutex_init (&tile->mutex, NULL);
   }
-  tile_count++;
 #endif
+
+  tile_count++;
 }
 
-int tile_ref_count = 0;
-int tile_share_count = 0;
-int tile_active_count = 0;
+gint tile_ref_count    = 0;
+gint tile_share_count  = 0;
+gint tile_active_count = 0;
 
 #ifdef HINTS_SANITY
-int tile_exist_peak = 0;
-int tile_exist_count = 0;
+gint tile_exist_peak  = 0;
+gint tile_exist_count = 0;
 #endif
 
 void
@@ -131,13 +134,13 @@ tile_lock (Tile *tile)
 {
   /* Increment the global reference count.
    */
-  tile_ref_count += 1;
+  tile_ref_count++;
 
   /* Increment this tile's reference count.
    */
 
   TILE_MUTEX_LOCK (tile);
-  tile->ref_count += 1;
+  tile->ref_count++;
 
   if (tile->ref_count == 1) 
     {
@@ -146,7 +149,7 @@ tile_lock (Tile *tile)
 	  /* remove from cache, move to main store */
 	  tile_cache_flush (tile);
 	}
-      tile_active_count ++;
+      tile_active_count++;
     }
   if (tile->data == NULL)
     {
@@ -163,8 +166,6 @@ tile_lock (Tile *tile)
       /* an invalid tile should never be shared, so this should work */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
     }
-
-
 }
 
 
@@ -173,21 +174,21 @@ tile_release (Tile *tile, int dirty)
 {
   /* Decrement the global reference count.
    */
-  tile_ref_count -= 1;
+  tile_ref_count--;
 
   TILE_MUTEX_LOCK(tile);
 
   /* Decrement this tile's reference count.
    */
-  tile->ref_count -= 1;
+  tile->ref_count--;
 
   /* Decrement write ref count if dirtying
    */
   if (dirty)
     {
-      int y;
+      gint y;
 
-      tile->write_count -= 1;
+      tile->write_count--;
 
       if (tile->rowhint)
 	{
@@ -201,6 +202,7 @@ tile_release (Tile *tile, int dirty)
   if (tile->ref_count == 0)
     {
       tile_active_count--;
+
       if (tile->share_count == 0)
 	{
 	  /* tile is truly dead */
@@ -270,7 +272,8 @@ tile_destroy (Tile *tile)
   
   TILE_MUTEX_UNLOCK (tile); 
   g_free (tile);
-  tile_count --;
+
+  tile_count--;
 
 #ifdef HINTS_SANITY
   tile_exist_count--;
@@ -278,45 +281,38 @@ tile_destroy (Tile *tile)
 }
 
 
-int
+gint
 tile_size (Tile *tile)
 {
-  int size;
   /* Return the actual size of the tile data.
    *  (Based on its effective width and height).
    */
-  size = tile->ewidth * tile->eheight * tile->bpp;
-  return size;
+  return tile->ewidth * tile->eheight * tile->bpp;
 }
 
-
-int
+gint
 tile_ewidth (Tile *tile)
 {
   return tile->ewidth;
 }
 
-
-int
+gint
 tile_eheight (Tile *tile)
 {
   return tile->eheight;
 }
 
-
-int
+gint
 tile_bpp (Tile *tile)
 {
   return tile->bpp;
 }
 
-
-int 
+gint 
 tile_is_valid (Tile *tile)
 {
   return tile->valid;
 }
-
 
 void
 tile_mark_valid (Tile *tile)
@@ -326,9 +322,10 @@ tile_mark_valid (Tile *tile)
   TILE_MUTEX_UNLOCK (tile);
 }
 
-
 void
-tile_attach (Tile *tile, void *tm, int tile_num)
+tile_attach (Tile *tile,
+	     void *tm,
+	     gint  tile_num)
 {
   TileLink *tmp;
 
@@ -337,25 +334,30 @@ tile_attach (Tile *tile, void *tm, int tile_num)
       /* trying to share invalid tiles is problematic, not to mention silly */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
     }
+
   tile->share_count++;
   tile_share_count++;
+
 #ifdef TILE_DEBUG
   g_print("tile_attach: %p -> (%p,%d) *%d\n", tile, tm, tile_num, tile->share_count);
 #endif
 
   /* link this tile into the tile's tilelink chain */
   tmp = g_new (TileLink, 1);
-  tmp->tm = tm;
+  tmp->tm       = tm;
   tmp->tile_num = tile_num;
-  tmp->next = tile->tlink;
+  tmp->next     = tile->tlink;
+
   tile->tlink = tmp;
 }
 
 void
-tile_detach (Tile *tile, void *tm, int tile_num)
+tile_detach (Tile *tile,
+	     void *tm,
+	     gint  tile_num)
 {
   TileLink **link;
-  TileLink *tmp;
+  TileLink  *tmp;
 
 #ifdef TILE_DEBUG
   g_print("tile_detach: %p ~> (%p,%d) r%d *%d\n", tile, tm, tile_num,
@@ -391,10 +393,14 @@ tile_detach (Tile *tile, void *tm, int tile_num)
   TILE_MUTEX_UNLOCK (tile);
 }
 
-
-void *
-tile_data_pointer (Tile *tile, int xoff, int yoff)
+gpointer
+tile_data_pointer (Tile *tile,
+		   gint  xoff,
+		   gint  yoff)
 {
-  int offset = yoff * tile->ewidth + xoff;
-  return (void *)(tile->data + offset * tile->bpp);
+  gint offset;
+
+  offset = yoff * tile->ewidth + xoff;
+
+  return (gpointer) (tile->data + offset * tile->bpp);
 }

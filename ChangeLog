@@ -1,3 +1,21 @@
+2001-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/toolbox.[ch]: new files containing most of the code
+	from app/interface.[ch]
+
+	* app/interface.[ch]: only contains create_display_shell() now.
+	Needs to be somehow merged with other arbitrarily named display
+	files around.
+
+	* app/app_procs.c
+	* app/menus.c
+	* po/POTFILES.in: changed accordingly.
+
+	* app/asupsample.c
+	* app/gradient.c
+	* app/tile.c: cleanup.
+
 2001-01-22  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

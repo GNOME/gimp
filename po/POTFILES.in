@@ -68,6 +68,7 @@ app/resize.c
 app/resolution_calibrate.c
 app/scan_convert.c
 app/tips_dialog.c
+app/toolbox.c
 app/undo.c
 app/undo_history.c
 app/user_install.c

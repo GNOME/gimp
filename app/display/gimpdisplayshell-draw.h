@@ -20,22 +20,11 @@
 #define __INTERFACE_H__
 
 
-GtkWidget * create_pixmap_widget   (GdkWindow    *parent,
-				    gchar       **data,
-				    gint          width,
-				    gint          height);
-
-void        create_toolbox         (void);
-void	    toolbox_free           (void);
-
-void        toolbox_raise_callback (GtkWidget    *widget,
-				    gpointer      data);
-
-void        create_display_shell   (GDisplay     *gdisp,
-				    gint          width,
-				    gint          height,
-				    gchar        *title,
-				    gint          type);
+void   create_display_shell (GDisplay     *gdisp,
+			     gint          width,
+			     gint          height,
+			     gchar        *title,
+			     gint          type);
 
 
 #endif /* __INTERFACE_H__ */
