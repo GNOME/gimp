@@ -1,3 +1,15 @@
+2002-03-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-filter-dialog.c: treeviewized
+	and undeprecated.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpconstrainedhwrapbox.[ch]: removed this hack.
+
+	* app/widgets/gimpcontainergridview.[ch]: added "rows" and
+	"columns" fields, connect to the viewport's "size_allocate" signal
+	and set the size_request of the wrap_box in the callback.
+
 2002-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: renamed shell->cd_list to
