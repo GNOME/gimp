@@ -1068,8 +1068,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                               &device_coords);
 
                         if (device_coords.x == mevent->x &&
-                            device_coords.y == mevent->y)
-                          {
+                            device_coords.y == mevent->y
+#ifdef G_OS_WIN32
+                            /* The Win32 backend for GDK just returns the
+                             * coordinates from the last motion/button event
+                             * for extended input devices, so if the event is
+                             * put back in the queue, this will keep scrolling
+                             * until the edge of the image is reached (bug
+                             * #167960) */
+                            && mevent->device == gdk_display_get_core_pointer (
+                              gdk_display_get_default ())
+#endif /* G_OS_WIN32 */
+                           )
+                           {
                             /*  Put this event back on the queue
                              *  so it keeps scrolling
                              */
