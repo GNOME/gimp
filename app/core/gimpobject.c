@@ -42,6 +42,8 @@ enum
 
 static void   gimp_object_class_init (GimpObjectClass *klass);
 static void   gimp_object_init       (GimpObject      *object);
+
+static void   gimp_object_destroy    (GtkObject       *object);
 static void   gimp_object_set_arg    (GtkObject       *object,
 				      GtkArg          *arg,
 				      guint            arg_id);
@@ -103,6 +105,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 
   gtk_object_class_add_signals (object_class, object_signals, LAST_SIGNAL);
 
+  object_class->destroy = gimp_object_destroy;
   object_class->set_arg = gimp_object_set_arg;
   object_class->get_arg = gimp_object_get_arg;
 
@@ -113,6 +116,20 @@ static void
 gimp_object_init (GimpObject *object)
 {
   object->name = NULL;
+}
+
+static void
+gimp_object_destroy (GtkObject *object)
+{
+  GimpObject *gimp_object;
+
+  gimp_object = GIMP_OBJECT (object);
+
+  g_free (gimp_object->name);
+  gimp_object->name = NULL;
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

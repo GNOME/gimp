@@ -142,6 +142,9 @@ gimp_brush_destroy (GtkObject *object)
   if (brush->mask)
     temp_buf_free (brush->mask);
 
+  if (brush->pixmap)
+    temp_buf_free (brush->pixmap);
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }

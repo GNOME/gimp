@@ -129,15 +129,19 @@ save_func (gchar        *key,
 void
 gimp_parasiterc_save (void)
 {
-  gchar *filename;
+  gchar *tmp_filename = NULL;
+  gchar *bak_filename = NULL;
+  gchar *rc_filename = NULL;
   FILE  *fp;
 
-  filename = gimp_personal_rc_file ("#parasiterc.tmp~");
+  tmp_filename = gimp_personal_rc_file ("#parasiterc.tmp~");
+  bak_filename = gimp_personal_rc_file ("parasiterc.bak");
+  rc_filename  = gimp_personal_rc_file ("parasiterc");
 
-  fp = fopen (filename, "w");
-  g_free (filename);
+  fp = fopen (tmp_filename, "w");
+
   if (!fp)
-    return;
+    goto cleanup;
 
   fprintf (fp,
 	   "# GIMP parasiterc\n"
@@ -150,21 +154,23 @@ gimp_parasiterc_save (void)
 
 #if defined(G_OS_WIN32) || defined(__EMX__)
   /* First rename the old parasiterc out of the way */
-  unlink (gimp_personal_rc_file ("parasiterc.bak"));
-  rename (gimp_personal_rc_file ("parasiterc"),
-	  gimp_personal_rc_file ("parasiterc.bak"));
+  unlink (bak_filename);
+  rename (rc_filename, bak_filename);
 #endif
 
-  if (rename (gimp_personal_rc_file ("#parasiterc.tmp~"),
-	      gimp_personal_rc_file ("parasiterc")) != 0)
+  if (rename (tmp_filename, rc_filename) != 0)
     {
 #if defined(G_OS_WIN32) || defined(__EMX__)
       /* Rename the old parasiterc back */
-      rename (gimp_personal_rc_file ("parasiterc.bak"),
-	      gimp_personal_rc_file ("parasiterc"));
+      rename (bak_filename, rc_filename);
 #endif
-      unlink (gimp_personal_rc_file ("#parasiterc.tmp~"));
+      unlink (tmp_filename);
     }
+
+ cleanup:
+  g_free (tmp_filename);
+  g_free (bak_filename);
+  g_free (rc_filename);
 }
 
 void

@@ -168,13 +168,16 @@ gimp_brush_pipe_destroy (GtkObject *object)
   g_free (pipe->rank);
   g_free (pipe->stride);
 
-  for (i = 1; i < pipe->nbrushes; i++)
+  for (i = 0; i < pipe->nbrushes; i++)
     if (pipe->brushes[i])
       gtk_object_unref (GTK_OBJECT (pipe->brushes[i]));
 
   g_free (pipe->brushes);
   g_free (pipe->select);
   g_free (pipe->index);
+
+  GIMP_BRUSH (pipe)->mask   = NULL;
+  GIMP_BRUSH (pipe)->pixmap = NULL;
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

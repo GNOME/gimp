@@ -1,25 +1,39 @@
+2001-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpobject.c: : free all the pipe's brushes here.
+
+	* app/gimpparasite.c: gimp_personal_rc_file()'s return value has
+	to be g_free()'d.
+
+	* app/main.c: indentation.
+
+	Ported memleak fixes from 1.2:
+
+	* app/gimpbrush.c: don't leak all pixmaps.
+
+	* app/gimpbrushpipe.c: ported memleak fixes from 1.2
+
 2001-04-24  David Neary  <dneary@eircom.net>
- 
-    * app/authors.h: Synced this file from the earlier commit.
 
-    * app/pixmaps2.h
-    * app/pdb/tools_cmds.c
-    * app/tools/Makefile.am
-    * app/tools/gimpperspectivetool.c
-    * app/tools/gimpperspectivetool.h
-    * app/tools/gimprotatetool.c
-    * app/tools/gimprotatetool.h
-    * app/tools/gimpsheartool.c
-    * app/tools/gimpsheartool.h
-    * app/tools/gimptool.c
-    * app/tools/gimptool.h
-    * app/tools/gimptransformtool.c
-    * app/tools/tools.c
-    * tools/pdbgen/pdb/tools.pdb:    Enabled the rest of the 
-    transform tools and changed some of the options stuff in 
-    transform_options_new(). There are one or two outstanding 
-    (non-critical) runtime problems in that function.
+	* app/authors.h: Synced this file from the earlier commit.
 
+	* app/pixmaps2.h
+	* app/pdb/tools_cmds.c
+	* app/tools/Makefile.am
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpperspectivetool.h
+	* app/tools/gimprotatetool.c
+	* app/tools/gimprotatetool.h
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsheartool.h
+	* app/tools/gimptool.c
+	* app/tools/gimptool.h
+	* app/tools/gimptransformtool.c
+	* app/tools/tools.c
+	* tools/pdbgen/pdb/tools.pdb:    Enabled the rest of the 
+	transform tools and changed some of the options stuff in 
+	transform_options_new(). There are one or two outstanding 
+	(non-critical) runtime problems in that function.
 
 2001-04-24  Michael Natterer  <mitch@gimp.org>
 

@@ -295,8 +295,8 @@ main (int    argc,
        */
       else if (argv[i][0] == '-')
 	{
-		g_print (_("\nInvalid option.\n"));
-		show_help = TRUE;
+	  g_print (_("\nInvalid option \"%s\"\n"), argv[i]);
+	  show_help = TRUE;
 	}
     }
 
