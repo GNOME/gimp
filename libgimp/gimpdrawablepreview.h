@@ -27,7 +27,9 @@
 
 G_BEGIN_DECLS
 
+
 /* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_DRAWABLE_PREVIEW            (gimp_drawable_preview_get_type ())
 #define GIMP_DRAWABLE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreview))
@@ -51,14 +53,15 @@ struct _GimpDrawablePreviewClass
 };
 
 
-GType      gimp_drawable_preview_get_type        (void) G_GNUC_CONST;
+GType       gimp_drawable_preview_get_type        (void) G_GNUC_CONST;
 
-GtkWidget *gimp_drawable_preview_new             (GimpDrawable        *drawable);
-GtkWidget *gimp_drawable_preview_new_with_toggle (GimpDrawable        *drawable,
-                                                  gboolean            *toggle);
+GtkWidget * gimp_drawable_preview_new             (GimpDrawable        *drawable);
+GtkWidget * gimp_drawable_preview_new_with_toggle (GimpDrawable        *drawable,
+                                                   gboolean            *toggle);
 
-void       gimp_drawable_preview_draw            (GimpDrawablePreview *preview,
-                                                  guchar              *buf);
+void        gimp_drawable_preview_draw            (GimpDrawablePreview *preview,
+                                                   guchar              *buf);
+
 
 G_END_DECLS
 

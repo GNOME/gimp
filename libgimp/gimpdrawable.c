@@ -168,8 +168,10 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
       n_tiles = drawable->ntile_rows * drawable->ntile_cols;
       tiles = g_new (GimpTile, n_tiles);
 
-      right_tile  = drawable->width  - ((drawable->ntile_cols - 1) * TILE_WIDTH);
-      bottom_tile = drawable->height - ((drawable->ntile_rows - 1) * TILE_HEIGHT);
+      right_tile  = (drawable->width  -
+                     ((drawable->ntile_cols - 1) * TILE_WIDTH));
+      bottom_tile = (drawable->height -
+                     ((drawable->ntile_rows - 1) * TILE_HEIGHT));
 
       for (i = 0, k = 0; i < drawable->ntile_rows; i++)
         {

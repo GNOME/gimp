@@ -28,84 +28,77 @@
 
 #include "gimpdrawablepreview.h"
 
-#include "libgimp-intl.h"
 
 #define PREVIEW_SIZE (128)
 
-static void     gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);
-static void     gimp_drawable_preview_init       (GimpDrawablePreview      *preview);
+static void   gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);
+static void   gimp_drawable_preview_update     (GimpPreview  *preview);
 
-static void     gimp_drawable_preview_update     (GimpPreview              *preview);
 
 static GimpPreviewClass *parent_class = NULL;
+
 
 GType
 gimp_drawable_preview_get_type (void)
 {
-  static GType drawable_preview_type = 0;
+  static GType preview_type = 0;
 
-  if (!drawable_preview_type)
+  if (!preview_type)
     {
       static const GTypeInfo drawable_preview_info =
       {
         sizeof (GimpDrawablePreviewClass),
-        (GBaseInitFunc) NULL,
+        (GBaseInitFunc)     NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) gimp_drawable_preview_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpDrawablePreview),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_drawable_preview_init,
+        NULL            /* instance_init  */
       };
 
-      drawable_preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
-                                                      "GimpDrawablePreview",
-                                                      &drawable_preview_info, 0);
+      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
+                                             "GimpDrawablePreview",
+                                             &drawable_preview_info, 0);
     }
 
-  return drawable_preview_type;
+  return preview_type;
 }
 
 static void
 gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 {
+  GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
-  GIMP_PREVIEW_CLASS (klass)->update = gimp_drawable_preview_update;
-}
-
-static void
-gimp_drawable_preview_init (GimpDrawablePreview *preview)
-{
-  /* */
+  preview_class->update = gimp_drawable_preview_update;
 }
 
 static void
 gimp_drawable_preview_update (GimpPreview *preview)
 {
-  guint                rowstride;
-  GimpPixelRgn         srcPR;
+  GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
+  GimpDrawable        *drawable         = drawable_preview->drawable;
   guchar              *buffer;
-  GimpDrawablePreview *drawable_preview;
+  GimpPixelRgn         srcPR;
+  guint                rowstride;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
-
-  drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
-  
-  rowstride = preview->width * drawable_preview->drawable->bpp;
+  rowstride = preview->width * drawable->bpp;
   buffer    = g_new (guchar, rowstride * preview->height);
 
   preview->xoff = CLAMP (preview->xoff,
                          0, preview->xmax - preview->xmin - preview->width);
   preview->yoff = CLAMP (preview->yoff,
                          0, preview->ymax - preview->ymin - preview->height);
-  gimp_pixel_rgn_init (&srcPR, drawable_preview->drawable,
+
+  gimp_pixel_rgn_init (&srcPR, drawable,
                        preview->xoff + preview->xmin,
                        preview->yoff + preview->ymin,
                        preview->width, preview->height,
                        FALSE, FALSE);
-  
+
   gimp_pixel_rgn_get_rect (&srcPR, buffer,
                            preview->xoff + preview->xmin,
                            preview->yoff + preview->ymin,
@@ -113,18 +106,22 @@ gimp_drawable_preview_update (GimpPreview *preview)
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                           0, 0, preview->width, preview->height,
-                          gimp_drawable_type (drawable_preview->drawable->drawable_id),
+                          gimp_drawable_type (drawable->drawable_id),
                           buffer,
                           rowstride);
   g_free (buffer);
 }
 
+
 /**
  * gimp_drawable_preview_new:
+ * @drawable: a #GimpDrawable
  *
- * Creates a new #GimpDrawablePreview widget.
+ * Creates a new #GimpDrawablePreview widget for @drawable.
  *
  * Returns: A pointer to the new #GimpDrawablePreview widget.
+ *
+ * Since: GIMP 2.2
  **/
 GtkWidget *
 gimp_drawable_preview_new (GimpDrawable *drawable)
@@ -133,8 +130,11 @@ gimp_drawable_preview_new (GimpDrawable *drawable)
   GimpPreview         *preview;
   gint                 sel_width, sel_height;
 
+  g_return_val_if_fail (drawable != NULL, NULL);
+
   drawable_preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW, NULL);
   drawable_preview->drawable = drawable;
+
   preview = GIMP_PREVIEW (drawable_preview);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
@@ -143,7 +143,7 @@ gimp_drawable_preview_new (GimpDrawable *drawable)
 
   sel_width       = preview->xmax - preview->xmin;
   sel_height      = preview->ymax - preview->ymin;
-  preview->width  = MIN (sel_width, PREVIEW_SIZE);
+  preview->width  = MIN (sel_width,  PREVIEW_SIZE);
   preview->height = MIN (sel_height, PREVIEW_SIZE);
 
   gtk_range_set_increments (GTK_RANGE (preview->hscr),
@@ -159,16 +159,20 @@ gimp_drawable_preview_new (GimpDrawable *drawable)
 
   gtk_widget_set_size_request (preview->area,
                                preview->width, preview->height);
-  
+
   return GTK_WIDGET (preview);
 }
 
 /**
  * gimp_drawable_preview_new_with_toggle:
+ * @drawable: a #GimpDrawable
+ * @toggle:
  *
- * Creates a new #GimpDrawablePreview widget.
+ * Creates a new #GimpDrawablePreview widget for @drawable.
  *
  * Returns: A pointer to the new #GimpDrawablePreview widget.
+ *
+ * Since: GIMP 2.2
  **/
 GtkWidget *
 gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
@@ -178,10 +182,14 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
   GimpPreview         *preview;
   gint                 sel_width, sel_height;
 
+  g_return_val_if_fail (drawable != NULL, NULL);
+  g_return_val_if_fail (toggle != NULL, NULL);
+
   drawable_preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
                                    "show_toggle_preview", TRUE,
-                                   "update_preview", *toggle,
+                                   "update_preview",      *toggle,
                                    NULL);
+
   drawable_preview->drawable = drawable;
   preview = GIMP_PREVIEW (drawable_preview);
 
@@ -191,7 +199,7 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
 
   sel_width       = preview->xmax - preview->xmin;
   sel_height      = preview->ymax - preview->ymin;
-  preview->width  = MIN (sel_width, PREVIEW_SIZE);
+  preview->width  = MIN (sel_width,  PREVIEW_SIZE);
   preview->height = MIN (sel_height, PREVIEW_SIZE);
 
   gtk_range_set_increments (GTK_RANGE (preview->hscr),
@@ -219,17 +227,22 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
  *
  **/
 void
-gimp_drawable_preview_draw (GimpDrawablePreview  *drawable_preview,
-                            guchar       *buf)
+gimp_drawable_preview_draw (GimpDrawablePreview *drawable_preview,
+                            guchar              *buf)
 {
-  GimpPreview *preview;
-  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (drawable_preview));
+  GimpPreview  *preview;
+  GimpDrawable *drawable;
 
-  preview = GIMP_PREVIEW (drawable_preview);
+  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (drawable_preview));
+  g_return_if_fail (buf != NULL);
+
+  preview  = GIMP_PREVIEW (drawable_preview);
+  drawable = drawable_preview->drawable;
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
                           0, 0, preview->width, preview->height,
-                          gimp_drawable_type (drawable_preview->drawable->drawable_id),
+                          gimp_drawable_type (drawable->drawable_id),
                           buf,
-                          preview->width * drawable_preview->drawable->bpp);
+                          preview->width * drawable->bpp);
 }
 

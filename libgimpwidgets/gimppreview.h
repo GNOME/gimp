@@ -26,7 +26,9 @@
 
 G_BEGIN_DECLS
 
+
 /* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
 #define GIMP_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW, GimpPreview))
@@ -68,17 +70,17 @@ struct _GimpPreviewClass
 };
 
 
-GType      gimp_preview_get_type           (void) G_GNUC_CONST;
+GType   gimp_preview_get_type           (void) G_GNUC_CONST;
 
-gint       gimp_preview_get_width          (GimpPreview  *preview);
-gint       gimp_preview_get_height         (GimpPreview  *preview);
+gint    gimp_preview_get_width          (GimpPreview  *preview);
+gint    gimp_preview_get_height         (GimpPreview  *preview);
 
-void       gimp_preview_get_position       (GimpPreview  *preview,
-                                            gint         *x,
-                                            gint         *y);
+void    gimp_preview_get_position       (GimpPreview  *preview,
+                                         gint         *x,
+                                         gint         *y);
 
-void       gimp_preview_show_update_toggle (GimpPreview *preview,
-                                            gboolean     show_update);
+void    gimp_preview_show_update_toggle (GimpPreview *preview,
+                                         gboolean     show_update);
 
 G_END_DECLS
 
