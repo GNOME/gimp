@@ -1,23 +1,23 @@
 # This is the German catalog for the libgimp.
 # Copyright (C) 1999 - 2004 Free Software Foundation, Inc.
 # Daniel Egger <Daniel.Egger@suse.de>
-# Sven Neumann <sven@gimp.org>
 # Christian Neumair <christian-neumair@web.de>
 # Michael Natterer <mitch@gimp.org>
-# Sven Neumann <sven@gimp.org>, 2004.
+# Sven Neumann <sven@gimp.org>
+# Hendrik Brandt <eru@gmx.li>
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.1\n"
+"Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-25 16:19+0200\n"
-"PO-Revision-Date: 2004-10-25 16:21+0200\n"
-"Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
+"POT-Creation-Date: 2004-10-27 15:40+0200\n"
+"PO-Revision-Date: 2004-10-27 15:42+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
@@ -198,6 +198,10 @@ msgstr "Gradientenauswahl"
 msgid "(Empty)"
 msgstr "(Leer)"
 
+#: libgimp/gimppalettemenu.c:91
+msgid "Palette Selection"
+msgstr "Farbpalettenauswahl"
+
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Musterauswahl"
@@ -206,71 +210,71 @@ msgstr "Musterauswahl"
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimpbase/gimpbaseenums.c:15
+#: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr "Klein"
 
-#: libgimpbase/gimpbaseenums.c:16
+#: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr "Mittel"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr "Groß"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr "Helle Quadrate"
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr "Halbhelle Quadrate"
 
-#: libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr "Dunkle Quadrate"
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr "Nur Weiß"
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr "Nur Grau"
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:62
 msgid "Black Only"
 msgstr "Nur Schwarz"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr "RGB Farben"
 
-#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr "Indizierte Farben"
 
-#: libgimpbase/gimpbaseenums.c:84
+#: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:85
+#: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr "RGB-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:87
+#: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr "Graustufen-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:88
+#: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr "Indiziert"
 
-#: libgimpbase/gimpbaseenums.c:89
+#: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr "Indiziert-Alpha"
 
@@ -770,4 +774,3 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
-
