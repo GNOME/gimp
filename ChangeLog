@@ -1,3 +1,9 @@
+2004-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdasheditor.[ch]: removed static variables, don't
+	use GIMP_CONFIG_INSTALL_PROP_FOO() for non-config classes,
+	trailing whitespace, cleanup.
+
 2004-02-19  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/lic.c: fixed gimp_dialog_new invocation.

@@ -39,6 +39,7 @@
 
 #define DEFAULT_N_SEGMENTS 24
 
+
 enum
 {
   PROP_0,
@@ -51,6 +52,7 @@ enum
 static void gimp_dash_editor_class_init    (GimpDashEditorClass *klass);
 static void gimp_dash_editor_init          (GimpDashEditor      *editor);
 
+static void gimp_dash_editor_finalize           (GObject        *object);
 static void gimp_dash_editor_set_property       (GObject        *object,
                                                  guint           property_id,
                                                  const GValue   *value,
@@ -59,7 +61,7 @@ static void gimp_dash_editor_get_property       (GObject        *object,
                                                  guint           property_id,
                                                  GValue         *value,
                                                  GParamSpec     *pspec);
-static void gimp_dash_editor_finalize           (GObject        *object);
+
 static void gimp_dash_editor_size_request       (GtkWidget      *widget,
                                                  GtkRequisition *requisition);
 static gboolean gimp_dash_editor_expose         (GtkWidget      *widget,
@@ -72,15 +74,12 @@ static gboolean gimp_dash_editor_motion_notify  (GtkWidget      *widget,
                                                  GdkEventMotion *bevent);
 
 /* helper function */
-static void update_segments_from_options        (GimpDashEditor    *editor);
-static void update_options_from_segments        (GimpDashEditor    *editor);
-static void update_blocksize                    (GimpDashEditor    *editor);
-static gint dash_x_to_index                     (GimpDashEditor    *editor,
-                                                 gint               x);
+static void update_segments_from_options        (GimpDashEditor *editor);
+static void update_options_from_segments        (GimpDashEditor *editor);
+static void update_blocksize                    (GimpDashEditor *editor);
+static gint dash_x_to_index                     (GimpDashEditor *editor,
+                                                 gint            x);
 
-
-static gboolean edit_mode = TRUE;
-static gint     edit_button_x0 = 0;
 
 static GtkDrawingAreaClass *parent_class = NULL;
 
@@ -116,17 +115,14 @@ gimp_dash_editor_get_type (void)
 static void
 gimp_dash_editor_class_init (GimpDashEditorClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
-
+  object_class->finalize     = gimp_dash_editor_finalize;
   object_class->get_property = gimp_dash_editor_get_property;
   object_class->set_property = gimp_dash_editor_set_property;
-  object_class->finalize     = gimp_dash_editor_finalize;
 
   widget_class->size_request         = gimp_dash_editor_size_request;
   widget_class->expose_event         = gimp_dash_editor_expose;
@@ -135,33 +131,55 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
   widget_class->motion_notify_event  = gimp_dash_editor_motion_notify;
 
   g_object_class_install_property (object_class, PROP_STROKE_OPTIONS,
-                                   g_param_spec_object("stroke-options",
-                                                       NULL, NULL,
-                                                       GIMP_TYPE_STROKE_OPTIONS,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
+                                   g_param_spec_object ("stroke-options",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_STROKE_OPTIONS,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_SEGMENTS,
-                                "n-segments", NULL,
-                                2, 120, DEFAULT_N_SEGMENTS, 0);
+  g_object_class_install_property (object_class, PROP_N_SEGMENTS,
+                                   g_param_spec_int ("n-segments",
+                                                     NULL, NULL,
+                                                     2, 120, DEFAULT_N_SEGMENTS,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LENGTH,
-                                   "dash-length", NULL,
-                                   0.0, 2000.0, 0.5 * DEFAULT_N_SEGMENTS,
-                                   0);
+  g_object_class_install_property (object_class, PROP_LENGTH,
+                                   g_param_spec_double ("dash-length",
+                                                        NULL, NULL,
+                                                        0.0, 2000.0,
+                                                        0.5 * DEFAULT_N_SEGMENTS,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_dash_editor_init (GimpDashEditor *editor)
 {
-  editor->segments     = NULL;
-  editor->block_width  = 6;
-  editor->block_height = 6;
+  editor->segments       = NULL;
+  editor->block_width    = 6;
+  editor->block_height   = 6;
+  editor->edit_mode      = TRUE;
+  editor->edit_button_x0 = 0;
 
   gtk_widget_add_events (GTK_WIDGET (editor),
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
+}
+
+static void
+gimp_dash_editor_finalize (GObject *object)
+{
+  GimpDashEditor *editor = GIMP_DASH_EDITOR (object);
+
+  if (editor->stroke_options)
+    {
+      g_object_unref (editor->stroke_options);
+      editor->stroke_options = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -228,21 +246,6 @@ gimp_dash_editor_get_property (GObject      *object,
       break;
     }
 }
-
-static void
-gimp_dash_editor_finalize (GObject *object)
-{
-  GimpDashEditor *editor = GIMP_DASH_EDITOR (object);
-
-  if (editor->stroke_options)
-    {
-      g_object_unref (editor->stroke_options);
-      editor->stroke_options = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
 
 static void
 gimp_dash_editor_size_request (GtkWidget      *widget,
@@ -348,17 +351,17 @@ gimp_dash_editor_button_press (GtkWidget      *widget,
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
   gint            index;
 
-  if (bevent->button == 1)
+  if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
       gdk_pointer_grab (widget->window, FALSE,
 			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
 			NULL, NULL, bevent->time);
       index = dash_x_to_index (editor, bevent->x);
 
-      edit_mode = ! editor->segments [index];
-      edit_button_x0 = bevent->x;
+      editor->edit_mode = ! editor->segments [index];
+      editor->edit_button_x0 = bevent->x;
 
-      editor->segments [index] = edit_mode;
+      editor->segments [index] = editor->edit_mode;
 
       gtk_widget_queue_draw (widget);
     }
@@ -391,23 +394,23 @@ gimp_dash_editor_motion_notify (GtkWidget      *widget,
   gint            x, index;
 
   index = dash_x_to_index (editor, mevent->x);
-  editor->segments [index] = edit_mode;
+  editor->segments [index] = editor->edit_mode;
 
-  if (mevent->x > edit_button_x0)
+  if (mevent->x > editor->edit_button_x0)
     {
-      for (x = edit_button_x0; x < mevent->x; x += editor->block_width)
+      for (x = editor->edit_button_x0; x < mevent->x; x += editor->block_width)
         {
           index = dash_x_to_index (editor, x);
-          editor->segments[index] = edit_mode;
+          editor->segments[index] = editor->edit_mode;
         }
     }
 
-  if (mevent->x < edit_button_x0)
+  if (mevent->x < editor->edit_button_x0)
     {
-      for (x = edit_button_x0; x > mevent->x; x -= editor->block_width)
+      for (x = editor->edit_button_x0; x > mevent->x; x -= editor->block_width)
         {
           index = dash_x_to_index (editor, x);
-          editor->segments[index] = edit_mode;
+          editor->segments[index] = editor->edit_mode;
         }
     }
 
@@ -426,13 +429,13 @@ gimp_dash_editor_new (GimpStrokeOptions *stroke_options)
                        NULL);
 }
 
-
 void
 gimp_dash_editor_shift_right (GimpDashEditor *editor)
 {
-  gint i;
   gboolean swap;
-  
+  gint     i;
+
+  g_return_if_fail (GIMP_IS_DASH_EDITOR (editor));
   g_return_if_fail (editor->n_segments > 0);
 
   swap = editor->segments[editor->n_segments - 1];
@@ -446,9 +449,10 @@ gimp_dash_editor_shift_right (GimpDashEditor *editor)
 void
 gimp_dash_editor_shift_left (GimpDashEditor *editor)
 {
-  gint i;
   gboolean swap;
-  
+  gint     i;
+
+  g_return_if_fail (GIMP_IS_DASH_EDITOR (editor));
   g_return_if_fail (editor->n_segments > 0);
 
   swap = editor->segments[0];
@@ -462,9 +466,9 @@ gimp_dash_editor_shift_left (GimpDashEditor *editor)
 static void
 update_segments_from_options (GimpDashEditor *editor)
 {
-  gdouble  factor, sum = 0;
-  gint     i, j;
-  gboolean paint;
+  gdouble   factor, sum = 0;
+  gint      i, j;
+  gboolean  paint;
   GArray   *dash_info;
 
   if (editor->stroke_options == NULL || editor->segments == NULL)
@@ -567,8 +571,6 @@ update_options_from_segments (GimpDashEditor *editor)
   g_array_free (dash_array, TRUE);
 }
 
-
-
 static void
 update_blocksize (GimpDashEditor *editor)
 {
@@ -597,4 +599,3 @@ dash_x_to_index (GimpDashEditor *editor,
 
   return index;
 }
-

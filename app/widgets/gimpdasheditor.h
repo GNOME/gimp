@@ -52,26 +52,23 @@ struct _GimpDashEditor
   gint               y0;
   gint               block_width;
   gint               block_height;
+
+  gboolean           edit_mode;
+  gint               edit_button_x0;
 };
 
 struct _GimpDashEditorClass
 {
   GtkDrawingAreaClass  parent_class;
-
-  /*
-  void (* range_changed) (GimpDashEditor *view,
-			  gint               start,
-			  gint               end);
-  */
 };
 
 
-GType         gimp_dash_editor_get_type    (void) G_GNUC_CONST;
-                                         
-GtkWidget   * gimp_dash_editor_new         (GimpStrokeOptions *stroke_options);
+GType       gimp_dash_editor_get_type    (void) G_GNUC_CONST;
 
-void          gimp_dash_editor_shift_left  (GimpDashEditor *editor);
-void          gimp_dash_editor_shift_right (GimpDashEditor *editor);
+GtkWidget * gimp_dash_editor_new         (GimpStrokeOptions *stroke_options);
+
+void        gimp_dash_editor_shift_left  (GimpDashEditor    *editor);
+void        gimp_dash_editor_shift_right (GimpDashEditor    *editor);
 
 
 #endif /* __GIMP_DASH_EDITOR_H__ */
