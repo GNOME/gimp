@@ -1,5 +1,10 @@
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimperrordialog.c (gimp_error_dialog_add): fixed
+	handling of too many error messages.
+
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
 	Try to make floating selections more obvious:
 
 	* app/widgets/gimplayertreeview.c

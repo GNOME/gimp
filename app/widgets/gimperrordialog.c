@@ -212,7 +212,15 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
   g_return_if_fail (domain != NULL);
   g_return_if_fail (message != NULL);
 
-  if (++dialog->num_messages > GIMP_ERROR_DIALOG_MAX_MESSAGES)
+  if (dialog->last_box     &&
+      dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
+      dialog->last_message && strcmp (dialog->last_message, message) == 0)
+    {
+      if (gimp_message_box_repeat (GIMP_MESSAGE_BOX (dialog->last_box)))
+        return;
+    }
+
+  if (dialog->num_messages >= GIMP_ERROR_DIALOG_MAX_MESSAGES)
     {
       g_printerr ("%s: %s\n\n", domain, message);
 
@@ -222,6 +230,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
       message  = _("Messages are redirected to stderr.");
     }
 
+  /*  yes, these lines are repeated here for a reason  */
   if (dialog->last_box     &&
       dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
       dialog->last_message && strcmp (dialog->last_message, message) == 0)
@@ -234,6 +243,8 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
                       "stock_id",     stock_id,
                       "border_width", 12,
                       NULL);
+
+  dialog->num_messages++;
 
   if (overflow)
     gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), domain);
