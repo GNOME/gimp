@@ -105,6 +105,7 @@ EXPORTS
 	gimp_channel_shrink
 	gimp_channel_type_get_type
 	gimp_channel_value
+	gimp_check_glib_version
 	gimp_clone_get_type
 	gimp_clone_options_get_type
 	gimp_config_connect
@@ -391,6 +392,7 @@ EXPORTS
 	gimp_image_snap_point
 	gimp_image_snap_rectangle
 	gimp_image_undo
+	gimp_image_undo_can_compress
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_event
@@ -412,6 +414,7 @@ EXPORTS
 	gimp_imagefile_new
 	gimp_imagefile_update
 	gimp_initialize
+	gimp_ink_blob_type_get_type
 	gimp_ink_options_get_type
 	gimp_interpolation_type_get_type
 	gimp_item_convert
@@ -560,6 +563,7 @@ EXPORTS
 	gimp_selection_get_type
 	gimp_selection_save
 	gimp_set_busy
+	gimp_set_last_plug_in
 	gimp_smudge_options_get_type
 	gimp_stroke_anchor_convert
 	gimp_stroke_anchor_delete

@@ -1,3 +1,14 @@
+2004-08-09  Hans Breuer  <hans@breuer.org>
+
+	* app/core/gimp-edit.c(gimp_edit_paste_as_new) :
+	gimp_create_display() with the right parameters order 
+
+	* app/widgets/gimpwidgets-utils.c (gimp_message_box_set_icons)
+	handle gtk_style_lookup_icon_set() returnig NULL
+
+	* app/gimpcore.def app/widgets/makefile.msc
+	  themes/default/images/makefile.msc : updated
+ 
 2004-08-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/postscript.c (save_ps_header): use the basename

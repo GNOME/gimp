@@ -30,6 +30,7 @@ OBJECTS = \
 	gimpactionfactory.obj \
 	gimpactiongroup.obj \
 	gimpactionview.obj \
+	gimpblobeditor.obj \
 	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
 	gimpbrushselect.obj \
@@ -165,6 +166,7 @@ DEFINES = \
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \
+	widgets-enums.obj \
 !IFDEF DLLGIMP
 	$(PACKAGE)-$(PKG_VER).dll
 !ENDIF

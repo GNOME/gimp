@@ -3,9 +3,6 @@
 
 STOCK_VARIABLES = \
 	stock_anchor_16		stock-anchor-16.png	\
-	stock_brush_generated_circle_16	stock-brush-generated-circle-16.png \
-	stock_brush_generated_diamond_16	stock-brush-generated-diamond-16.png \
-	stock_brush_generated_square_16	stock-brush-generated-square-16.png \
 	stock_cap_butt_16	stock-cap-butt-16.png \
 	stock_cap_round_16	stock-cap-round-16.png \
 	stock_cap_square_16	stock-cap-square-16.png \
@@ -163,6 +160,9 @@ STOCK_VARIABLES = \
 	stock_selection_subtract_16		stock-selection-subtract-16.png	\
 	stock_selection_to_channel_16		stock-selection-to-channel-16.png	\
 	stock_selection_to_path_16		stock-selection-to-path-16.png	\
+	stock_shape_circle_16	stock-shape-circle-16.png \
+	stock_shape_diamond_16	stock-shape-diamond-16.png \
+	stock_shape_square_16	stock-shape-square-16.png \
 	stock_swap_colors_12		stock-swap-colors-12.png	\
 	stock_template_16		stock-template-16.png	\
 	stock_template_24		stock-template-24.png	\

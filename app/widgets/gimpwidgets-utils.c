@@ -219,6 +219,9 @@ gimp_message_box_set_icons (GtkWidget   *dialog,
 
   icon_set = gtk_style_lookup_icon_set (dialog->style, stock_id);
 
+  if (icon_set == NULL)
+    return;
+
   gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
 
   for (i = 0; i < n_sizes; i++)

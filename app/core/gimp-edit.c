@@ -242,7 +242,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   gimp_image_undo_enable (gimage);
 
-  gimp_create_display (gimp, gimage, 1.0, GIMP_UNIT_PIXEL);
+  gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
   g_object_unref (gimage);
 
   return gimage;
