@@ -149,11 +149,15 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  }
 		/* Reset the current tool if we're changing drawables... */
 		
-		if (active_tool->drawable) 
+		if (active_tool->drawable) {
 		  if ((drawable_ID(gimage_active_drawable(gdisp->gimage)) !=
 		       drawable_ID(GIMP_DRAWABLE(active_tool->drawable))) &&
-		      !active_tool->preserve) 
+		      !active_tool->preserve) {
 		    tools_initialize (active_tool->type, gdisp);
+		  } 
+		} else
+		  active_tool->drawable = gimage_active_drawable(gdisp->gimage);
+
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;

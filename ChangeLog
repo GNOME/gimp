@@ -1,3 +1,14 @@
+Sun Apr  5 17:43:50 EDT 1998 Matthew Wilson <msw@gimp.org
+
+	* app/bezier_select.c: Destroy the tool when changing displays.
+	* app/command.c: initialize pointers to drawables when selecting
+	tools
+	* app/disp_callbacks.c: initialize pointers to drawables on first
+	click of a gdisplay
+	* app/gimage.c: removed extra tool destruction
+	* app/tools.c: make a fallback case when starting tools so that
+	you'll always have an active tool.
+
 Sat Apr  4 15:43:28 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/ops_buttons.[c|h]

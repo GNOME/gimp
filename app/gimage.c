@@ -2637,8 +2637,6 @@ gimage_dirty (GImage *gimage)
 	tools_initialize (active_tool->type, gdisp);
       else
 	tools_initialize (active_tool->type, NULL);
-    else
-	tools_initialize (active_tool->type, NULL);
   }
   return gimage->dirty;
 }
