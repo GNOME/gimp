@@ -24,6 +24,9 @@
 
 #include "core/gimpdrawable.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
+
 #include "gimppaintcore.h"
 #include "gimppaintcore-stroke.h"
 
@@ -71,4 +74,101 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
     }
 
   return FALSE;
+}
+
+gboolean
+gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options,
+                                GimpVectors      *vectors)
+{
+  GimpStroke *stroke;
+  GimpCoords *coords = NULL;
+  gint        n_coords;
+  gboolean    closed;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (paint_options != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+
+  /*  gimp_stroke_interpolate() may return NULL, so iterate over the
+   *  list of strokes until one returns coords
+   */
+  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+    {
+      coords = gimp_stroke_interpolate (stroke, 1.0,
+                                        &n_coords,
+                                        &closed);
+
+      if (coords)
+        break;
+    }
+
+  if (! coords)
+    return FALSE;
+
+  if (! gimp_paint_core_start (core, drawable, &coords[0]))
+    {
+      g_free (coords);
+      return FALSE;
+    }
+
+  gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
+
+  do
+    {
+      gint i;
+
+      core->start_coords = coords[0];
+      core->last_coords  = coords[0];
+
+      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+
+      for (i = 1; i < n_coords; i++)
+        {
+          core->cur_coords = coords[i];
+
+          gimp_paint_core_interpolate (core, drawable, paint_options);
+
+          core->last_coords = core->cur_coords;
+       }
+
+      if (closed)
+        {
+          core->cur_coords = coords[0];
+
+          gimp_paint_core_interpolate (core, drawable, paint_options);
+
+          core->last_coords = core->cur_coords;
+        }
+
+      g_free (coords);
+      coords = NULL;
+
+      if (stroke->next)
+        {
+          stroke = stroke->next;
+
+          /*  see above  */
+          for ( ; stroke; stroke = stroke->next)
+            {
+              coords = gimp_stroke_interpolate (stroke, 1.0,
+                                                &n_coords,
+                                                &closed);
+
+              if (coords)
+                break;
+            }
+        }
+    }
+  while (coords);
+
+  gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
+
+  gimp_paint_core_finish (core, drawable);
+
+  gimp_paint_core_cleanup (core);
+
+  return TRUE;
 }

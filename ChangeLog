@@ -1,3 +1,15 @@
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.[ch]: added
+	gimp_paint_core_stroke_vectors() which strokes the whole vector
+	using one undo step.
+
+	* app/gui/vectors-commands.c: use the new function.
+
+	* app/tools/gimpvectortool.c: changed to do evil voodoo in
+	gimp_vectors_tool_set_vectors() and thus to always find a
+	display to show the vectors.
+
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
 	* NEWS: updated

@@ -20,11 +20,15 @@
 #define __GIMP_PAINT_CORE_STROKE_H__
 
 
-gboolean   gimp_paint_core_stroke (GimpPaintCore    *core,
-                                   GimpDrawable     *drawable,
-                                   GimpPaintOptions *paint_options,
-                                   GimpCoords       *strokes,
-                                   gint              n_strokes);
+gboolean   gimp_paint_core_stroke         (GimpPaintCore    *core,
+                                           GimpDrawable     *drawable,
+                                           GimpPaintOptions *paint_options,
+                                           GimpCoords       *strokes,
+                                           gint              n_strokes);
+gboolean   gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
+                                           GimpDrawable     *drawable,
+                                           GimpPaintOptions *paint_options,
+                                           GimpVectors      *vectors);
 
 
 #endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */

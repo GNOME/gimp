@@ -32,6 +32,8 @@
 #include "tools-types.h"
 #include "gui/gui-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimptoolinfo.h"
@@ -526,23 +528,79 @@ void
 gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                               GimpVectors    *vectors)
 {
+  GimpDrawTool *draw_tool;
+  GimpTool     *tool;
+  GimpItem     *item;
+
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+  draw_tool = GIMP_DRAW_TOOL (vector_tool);
+  tool      = GIMP_TOOL (vector_tool);
+  item      = GIMP_ITEM (vectors);
+
+  if (draw_tool->gdisp)
+    {
+      if (draw_tool->gdisp->gimage == item->gimage)
+        gimp_draw_tool_pause (draw_tool);
+      else
+        gimp_draw_tool_stop (draw_tool);
+    }
 
   if (vector_tool->vectors)
     g_object_unref (G_OBJECT (vector_tool->vectors));
 
-  vector_tool->vectors = vectors;
-  vector_tool->cur_stroke = NULL;
-  vector_tool->cur_anchor = NULL;
+  vector_tool->vectors        = vectors;
+  vector_tool->cur_stroke     = NULL;
+  vector_tool->cur_anchor     = NULL;
+  vector_tool->active_anchors = NULL;
+  vector_tool->function       = VECTORS_CREATING;
 
   if (vector_tool->vectors)
     g_object_ref (G_OBJECT (vector_tool->vectors));
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
+  if (draw_tool->gdisp && draw_tool->gdisp->gimage == item->gimage)
+    {
+      gimp_draw_tool_resume (draw_tool);
+    }
+  else if (tool->gdisp && tool->gdisp->gimage == item->gimage)
+    {
+      gimp_draw_tool_start (draw_tool, tool->gdisp);
+    }
+  else
+    {
+      GimpContext *context;
+      GimpDisplay *gdisp;
+
+      context = gimp_get_current_context (tool->tool_info->gimp);
+
+      gdisp = gimp_context_get_display (context);
+
+      if (gdisp->gimage != item->gimage)
+        {
+          GSList *list;
+
+          gdisp = NULL;
+
+          for (list = display_list; list; list = g_slist_next (list))
+            {
+              if (((GimpDisplay *) list->data)->gimage == item->gimage)
+                {
+                  gimp_context_set_display (context,
+                                            (GimpDisplay *) list->data);
+
+                  gdisp = gimp_context_get_display (context);
+                  break;
+                }
+            }
+
+          if (! gdisp)
+            return;
+        }
+
+      tool->gdisp = gdisp;
+      tool->state = ACTIVE;
+
+      gimp_draw_tool_start (draw_tool, tool->gdisp);
+    }
 }
-
-
-

@@ -35,7 +35,6 @@
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintcore-stroke.h"
 
-#include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpdisplay-foreach.h"
@@ -341,7 +340,6 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
       GimpToolInfo     *tool_info;
       GimpPaintOptions *paint_options;
       GimpDisplay      *gdisp;
-      GimpStroke       *stroke;
 
       tool_info = (GimpToolInfo *)
         gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
@@ -351,37 +349,16 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
 
       core_type = g_type_from_name (tool_info->paint_core_name);
 
-      core = g_object_new (g_type_from_name (tool_info->paint_core_name), NULL);
+      core = g_object_new (core_type, NULL);
 
       gdisp = gimp_context_get_display (gimp_get_current_context (gimage->gimp));
 
       tool_manager_control_active (gimage->gimp, PAUSE, gdisp);
 
-      undo_push_group_start (gimage, PAINT_UNDO_GROUP);
-
-      for (stroke = active_vectors->strokes; stroke; stroke = stroke->next)
-        {
-          GimpCoords *coords;
-          gint        n_coords;
-          gboolean    closed;
-
-          coords = gimp_stroke_interpolate (stroke, 1.0,
-                                            &n_coords,
-                                            &closed);
-
-          if (coords)
-            {
-              gimp_paint_core_stroke (core,
+      gimp_paint_core_stroke_vectors (core,
                                       active_drawable,
                                       paint_options,
-                                      coords,
-                                      n_coords);
-
-              g_free (coords);
-            }
-        }
-
-      undo_push_group_end (gimage);
+                                      active_vectors);
 
       tool_manager_control_active (gimage->gimp, RESUME, gdisp);
 
