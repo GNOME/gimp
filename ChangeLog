@@ -1,3 +1,10 @@
+Fri Feb  4 13:56:10 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* configure.in: Building the devel-docs should now work correctly.
+	You may specify the installation directory for the HTML docs by 
+	using the --with-html-dir=PATH configuration flag.
+
 2000-02-04  Robert Brady  <robert@susu.org.uk>
 
 	* configure.in: Added en_GB to ALL_LINGUAS

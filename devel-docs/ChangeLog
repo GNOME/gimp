@@ -1,3 +1,15 @@
+Fre Feb  4 13:59:25 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/.cvsignore
+	* libgimp/Makefile.am: fiddled with the installation
+	* libgimp/libgimp-decl-list.txt: removed
+	* libgimp/libgimp-decl.txt: rebuild
+
+Fri Feb  4 01:27:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/tmpl/gimpcolorbutton.sgml: documented GimpColorButton
+	to give you an example.
+
 Fri Feb  4 00:40:47 CET 2000  Sven Neumann <sven@gimp.org>
 
 	Set up the framework for the libgimp documenation.
@@ -6,7 +18,3 @@ Fri Feb  4 00:40:47 CET 2000  Sven Neumann <sven@gimp.org>
 	want to resort the chapters, add short explanantions and of
 	course, most importantly, add comment blocks into the source.
 
-Fri Feb  4 01:27:41 CET 2000  Sven Neumann <sven@gimp.org>
-
-	* libgimp/tmpl/gimpcolorbutton.sgml: documented GimpColorButton
-	to give you an example.

@@ -12,8 +12,6 @@ DOC_SOURCE_DIR=$(top_srcdir)/libgimp
 CFLAGS=`gimptool --cflags`
 LDFLAGS=`gimptool --libs`
 
-HTML_DIR=$(gimpdatadir)/devel-docs/html
-
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)
 
 tmpl_sources = 				\
@@ -53,7 +51,10 @@ tmpl_sources = 				\
 
 libgimp_docdir = $(HTML_DIR)
 
-EXTRA_DIST =				\
+libgimp_doc_DATA = libgimp.html
+
+EXTRA_DIST =
+	$(libgimp_doc_DATA)		\
 	libgimp.hierarchy		\
 	libgimp.signals			\
 	libgimp.types			\
@@ -62,11 +63,14 @@ EXTRA_DIST =				\
 	libgimp-sections.txt
 
 if ENABLE_GTK_DOC
+libgimp.html: html/book1.html
+	-cd $(srcdir) && cp html/book1.html libgimp.html
+else
+libgimp.html:
+endif
+
 html/book1.html: sgml/libgimp-doc.bottom
 	$(MAKE) html
-else
-html/book1.html:
-endif
 
 sgml/libgimp-doc.bottom: $(tmpl_sources)
 	$(MAKE) sgml
@@ -90,7 +94,7 @@ html:
 	-cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
 
 clean-local:
-	rm -f *~ *.bak *.signals *-unused.txt
+	rm -f *~ *.bak *-unused.txt
 
 maintainer-clean-local: clean
 	cd $(srcdir) && rm -rf sgml html $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt 
@@ -122,37 +126,4 @@ dist-hook:
 
 .PHONY : html sgml templates scan
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# devel-docs/libgimp/Makefile.am ends here

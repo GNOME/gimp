@@ -20,7 +20,7 @@ PACKAGE=gimp
 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-dnl Specify a header configuration file
+
 AM_CONFIG_HEADER(config.h)
 
 dnl Initialize libtool
@@ -466,6 +466,13 @@ fi
 
 AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
 
+AC_ARG_WITH(html-dir, [  --with-html-dir=PATH    path to installed docs ])
+if test "x$with_html_dir" = "x" ; then
+  HTML_DIR='${gimpdatadir}/devel-docs/html'
+else
+  HTML_DIR=$with_html_dir
+fi
+
 dnl This is for the mail plug-in
 sendmail_path=":"
 AC_ARG_ENABLE(sendmail_path, [  --with-sendmail=DIR     set sendmail command location],
@@ -626,10 +633,9 @@ if test "$INSTALL" = "$ac_install_sh"; then
 fi
 
 GIMPDOCS=
-GIMPDEVELDOCS=
 if test -n "$DISTMAKE"; then
   WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
-  XJT=xjt XPM=xpm GIMPDOCS=docs GIMPDEVELDOCS=devel-docs
+  XJT=xjt XPM=xpm GIMPDOCS=docs
 fi
 
 AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
@@ -685,11 +691,11 @@ AC_SUBST(GIMP_MP_FLAGS)
 AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMPDOCS)
-AC_SUBST(GIMPDEVELDOCS)
 AC_SUBST(GIMPINSTALL)
 AC_SUBST(HELPBROWSER)
 AC_SUBST(GTKXMHTML_CFLAGS)
 AC_SUBST(GTKXMHTML_LIBS)
+AC_SUBST(HTML_DIR)
 
 dnl easy way to skip the plug-in build
 GIMP_PLUGINS=plug-ins
