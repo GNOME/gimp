@@ -327,6 +327,9 @@ gimp_by_color_select_tool_destroy (GtkObject *object)
 {
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+
+  if (by_color_dialog)
+    by_color_select_close_callback(NULL, (gpointer) by_color_dialog);
 }
 
 /*  by_color selection machinery  */
