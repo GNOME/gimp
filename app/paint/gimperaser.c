@@ -178,7 +178,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 		area->width * area->height, area->bytes);
 
   if (pressure_options->opacity)
-    opacity *= 2.0 * paint_core->cur_coords.pressure;
+    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   gimp_paint_core_paste_canvas (paint_core, drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),

@@ -252,7 +252,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   rate = options->rate;
 
   if (pressure_options->rate)
-    rate *= 2.0 * paint_core->cur_coords.pressure;
+    rate *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   gimp_convolve_calculate_matrix (options->type, rate);
 

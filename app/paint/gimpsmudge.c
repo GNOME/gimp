@@ -307,8 +307,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* Enable pressure sensitive rate */
   if (pressure_options->rate)
-    rate = MIN (options->rate / 100.0 * 2.0 * paint_core->cur_coords.pressure,
-		1.0);
+    rate = MIN (options->rate / 100.0 * PRESSURE_SCALE *
+                paint_core->cur_coords.pressure, 1.0);
   else
     rate = options->rate / 100.0;
 
@@ -361,7 +361,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     copy_region (&tempPR, &destPR);
 
   if (pressure_options->opacity)
-    opacity *= 2.0 * paint_core->cur_coords.pressure;
+    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /* Replace the newly made paint area to the gimage */
   gimp_paint_core_replace_canvas (paint_core, drawable,

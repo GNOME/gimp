@@ -302,7 +302,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
     copy_region (&tempPR, &destPR);
 
   if (pressure_options->opacity)
-    opacity *= 2.0 * paint_core->cur_coords.pressure;
+    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /* Replace the newly dodgedburned area (canvas_buf) to the gimage */
   gimp_paint_core_replace_canvas (paint_core, drawable,
