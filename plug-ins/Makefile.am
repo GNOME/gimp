@@ -22,8 +22,9 @@ endif
 
 if OS_WIN32
 twain = twain
-uri = uri
 winsnap = winsnap
+else
+uri = uri
 endif
 
 if BUILD_XJT
