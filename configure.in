@@ -243,7 +243,7 @@ gimpdatadir=$datadir/$PACKAGE
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER
 
 dnl This is for generating PDB docuemntation.
-AC_PATH_PROG(EMACS, emacs)
+AC_PATH_PROG(EMACS, emacs, :)
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
