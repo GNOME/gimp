@@ -1,3 +1,17 @@
+2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/actions/documents-commands.c
+	* app/actions/file-commands.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c: undo changes of 12-24,
+	in favor of a better fix.
+
+	* app/widgets/gimperrordialog.c: fix bug #162147 properly,
+	as suggested by mitch.
+
 2004-12-25  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/weave.scm: limit the "Thread
