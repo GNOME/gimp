@@ -1711,7 +1711,7 @@ gimp_label_set_attributes (GtkLabel *label,
           break;
 
         case PANGO_ATTR_SIZE:
-          attr = pango_attr_stretch_new (va_arg (args, gint));
+          attr = pango_attr_size_new (va_arg (args, gint));
           break;
 
         case PANGO_ATTR_FONT_DESC:
