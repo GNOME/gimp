@@ -38,6 +38,7 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -427,7 +428,7 @@ gimp_dock_separator_new (GimpDock *dock)
 
   gimp_help_set_help_data (event_box,
                            _("You can drop dockable dialogs here."),
-                             "gimp-dock-separator");
+                           GIMP_HELP_DOCK_SEPARATOR);
 
   gtk_drag_dest_set (GTK_WIDGET (event_box),
                      GTK_DEST_DEFAULT_ALL,

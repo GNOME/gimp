@@ -400,6 +400,7 @@
 #define GIMP_HELP_DOCK_VIEW_AS_LIST               "gimp-dock-view-as-list"
 #define GIMP_HELP_DOCK_VIEW_AS_GRID               "gimp-dock-view-as-grid"
 #define GIMP_HELP_DOCK_CHANGE_SCREEN              "gimp-dock-change-screen"
+#define GIMP_HELP_DOCK_SEPARATOR                  "gimp-dock-separator"
 
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"
 #define GIMP_HELP_COLOR_DIALOG                    "gimp-color-dialog"

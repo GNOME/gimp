@@ -35,6 +35,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
+#include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -210,7 +211,7 @@ gimp_dockable_init (GimpDockable *dockable)
   gtk_widget_show (dockable->close_button);
 
   gimp_help_set_help_data (dockable->close_button, _("Close this Tab"),
-                           "gimp-dockable-close-tab");
+                           GIMP_HELP_DOCK_TAB_CLOSE);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_CLOSE, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockable->close_button), image);
