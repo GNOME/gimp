@@ -10,13 +10,14 @@ make test TEST_VERBOSE=1
 
 bugs
 
-  * install in /usr/local
+  * install in /usr/local (???? why? more options??)
   * install even without Gtk? NO!
   * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
   
 important issues
 
+  * install scripts in share/
   * fix auto-edit shebang for check-ins
   * gimp-tiles are not accessible in any way..
   * register dummy function to calm gimp down

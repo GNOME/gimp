@@ -25,24 +25,41 @@ PREREQUISITES
        To install/use this perl extension, you need to have the
        following software packages installed installed:
        
-       Perl5.005_02 (or higher):
-       While this extension should run fine with older versions (it has been
-       tested with 5.004_04), I get many unreproducable bug reports with
-       5.004 that I don't get with 5.005. When in doubt, upgrade.
-       
+       Perl5.004 (or higher):
+
+          While this extension should run fine with older versions (it has
+          been tested with 5.004_04), I work with Perl5.005 or higher,
+          which has much more bugs fixed than the old 5.004. When in
+          doubt, upgrade.
+
        The GNU Image Manipulation Program, i.e. The GIMP:
        ftp://ftp.gimp.org/pub/gimp/
-       
+
+          gimp-1.1 (or newer, i.e. CVS) is recommended, but any version
+          since 1.0.2 should do, some features not implemented in 1.0
+          don't work, though.
+
        GTK+, the X11 toolkit:
        ftp://ftp.gimp.org/pub/gtk/
-       
+
+          gtk+-1.2 or higher is recommended, but older versions mostly work
+          (some features not implemented in gtk+-1.0 do not work properly, of
+          course).
+
        Gtk, the perl extension for the above:
        ftp://ftp.gimp.org/pub/gtk/perl/
-       
+
+          Gtk-0.5 (or higher) is recommended. You might encounter
+          some problems compiling it for Perl5.004, in that case you
+          might want to try the updated gnome-perl version on the
+          gnome-cvs-server. Seth Burgess has a snapshot of it on his
+          homepage at http://www.gimp.org/~sjburges/.
+
        Optionally, you can install PDL (the perl data language), to easily
        manipulate pixel data. PDL is available at any CPAN mirror, version
-       1.9906 or higher is recommended.
-       
+       1.9906 or higher is recommended. Without PDL, some plug-ins do not
+       work, and accessing raw image data is impossible.
+
        General Information about The Gimp can be found at
        http://www.gimp.org/
 
@@ -59,7 +76,7 @@ INSTALLATION
        some other plug-ins, "make install-plugins"
        
        After installation, these perl plug-ins should be visible from with
-       The Gimp:
+       The Gimp (and many, many more):
        
        <Toolbox>/Xtns/Perl-Server
        <Image>/Filters/Artistic/Windify
@@ -93,4 +110,5 @@ SUPPORT/MAILING LISTS/MORE INFO
 
 
 
-       (c)1998 Marc Lehmann <pcg@goof.com>
+       (c)1998,1999 Marc Lehmann <pcg@goof.com>
+

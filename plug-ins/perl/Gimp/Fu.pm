@@ -165,7 +165,7 @@ sub interact($$$@) {
    # only pull these in if _really_ required
    # gets us some speed we really need
    eval {
-      require Gtkx; import Gtk;
+      require Gtk; import Gtk;
       init Gtk; # gross hack...
    };
    die "The Gtk perl module is required to run perl-scripts in interactive mode!\n" if $@;
@@ -224,33 +224,37 @@ sub interact($$$@) {
            &new_PF_STRING;
            
         } elsif($type == PF_FONT) {
-           my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-           my $def = "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1";
-           my $val;
-           
-           my $l=new Gtk::Label "!error!";
-           my $setval = sub {
-              $val=$_[0];
-              unless (defined $val && $fs->set_font_name ($val)) {
-                 warn "illegal default font description: $val" if defined $val;
-                 $val=$def;
-                 $fs->set_font_name ($val);
-              }
+           if ($Gimp::UI::gtk_10) {
+              &new_PF_STRING;
+           } else {
+              my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
+              my $def = "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1";
+              my $val;
               
-              my($n,$t)=Gimp::xlfd_size($val);
-              $l->set((split(/-/,$val))[2]."\@$n".($t ? "p" : ""));
-           };
-           
-           $fs->ok_button->signal_connect("clicked",sub {$setval->($fs->get_font_name); $fs->hide});
-           $fs->cancel_button->signal_connect("clicked",sub {$fs->hide});
-           
-           push(@setvals,$setval);
-           push(@getvals,sub { $val });
-           
-           $a=new Gtk::Button;
-           $a->add($l);
-           $a->signal_connect("clicked", sub { show $fs });
-           
+              my $l=new Gtk::Label "!error!";
+              my $setval = sub {
+                 $val=$_[0];
+                 unless (defined $val && $fs->set_font_name ($val)) {
+                    warn "illegal default font description: $val" if defined $val;
+                    $val=$def;
+                    $fs->set_font_name ($val);
+                 }
+                 
+                 my($n,$t)=Gimp::xlfd_size($val);
+                 $l->set((split(/-/,$val))[2]."\@$n".($t ? "p" : ""));
+              };
+              
+              $fs->ok_button->signal_connect("clicked",sub {$setval->($fs->get_font_name); $fs->hide});
+              $fs->cancel_button->signal_connect("clicked",sub {$fs->hide});
+              
+              push(@setvals,$setval);
+              push(@getvals,sub { $val });
+              
+              $a=new Gtk::Button;
+              $a->add($l);
+              $a->signal_connect("clicked", sub { show $fs });
+           }
+              
         } elsif($type == PF_SPINNER) {
            my $adj = _new_adjustment ($value,$extra);
            $a=new Gtk::SpinButton $adj,1,0;

@@ -1537,7 +1537,7 @@ gimp_pixel_rgn_resize(sv, x, y, width, height)
 	}
 
 SV *
-_gimp_pixel_rgn_get_pixel(pr, x, y)
+gimp_pixel_rgn__get_pixel(pr, x, y)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1550,7 +1550,7 @@ _gimp_pixel_rgn_get_pixel(pr, x, y)
 	RETVAL
 
 SV *
-_gimp_pixel_rgn_get_row(pr, x, y, width)
+gimp_pixel_rgn__get_row(pr, x, y, width)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1564,7 +1564,7 @@ _gimp_pixel_rgn_get_row(pr, x, y, width)
 	RETVAL
 
 SV *
-_gimp_pixel_rgn_get_col(pr, x, y, height)
+gimp_pixel_rgn__get_col(pr, x, y, height)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1578,7 +1578,7 @@ _gimp_pixel_rgn_get_col(pr, x, y, height)
 	RETVAL
 
 SV *
-_gimp_pixel_rgn_get_rect(pr, x, y, width, height)
+gimp_pixel_rgn__get_rect(pr, x, y, width, height)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1593,7 +1593,7 @@ _gimp_pixel_rgn_get_rect(pr, x, y, width, height)
 	RETVAL
 
 void
-_gimp_pixel_rgn_set_pixel(pr, data, x, y)
+gimp_pixel_rgn__set_pixel(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *	data
 	int	x
@@ -1606,7 +1606,7 @@ _gimp_pixel_rgn_set_pixel(pr, data, x, y)
 	gimp_pixel_rgn_set_pixel (pr, SvPV(data, dc), x, y);
 
 void
-_gimp_pixel_rgn_set_row(pr, data, x, y)
+gimp_pixel_rgn__set_row(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1619,7 +1619,7 @@ _gimp_pixel_rgn_set_row(pr, data, x, y)
 	gimp_pixel_rgn_set_row (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
-_gimp_pixel_rgn_set_col(pr, data, x, y)
+gimp_pixel_rgn__set_col(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1632,7 +1632,7 @@ _gimp_pixel_rgn_set_col(pr, data, x, y)
 	gimp_pixel_rgn_set_col (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
-_gimp_pixel_rgn_set_rect(pr, data, x, y, width)
+gimp_pixel_rgn__set_rect(pr, data, x, y, width)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1661,7 +1661,7 @@ PROTOTYPES: DISABLE
 # construction/destruction.
 
 SV *
-_get_data(tile)
+gimp_tile__get_data(tile)
 	GTile *	tile
 	CODE:
 	gimp_tile_ref (tile);
@@ -1671,7 +1671,7 @@ _get_data(tile)
 	RETVAL
 
 void
-_set_data(tile, data)
+gimp_tile__set_data(tile, data)
 	GTile *	tile
 	SV *	data
 	CODE:
