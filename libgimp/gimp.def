@@ -321,7 +321,6 @@ EXPORTS
 	gimp_show_tool_tips
 	gimp_smudge
 	gimp_smudge_default
-	gimp_standard_help_func
 	gimp_temp_name
 	gimp_text
 	gimp_text_fontname

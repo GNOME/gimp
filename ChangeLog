@@ -1,9 +1,20 @@
 2003-05-30  Tor Lillqvist  <tml@iki.fi>
 
+	* configure.in: As gimp uses fontconfig directly, check for it.
+
+	* app/Makefile.am: And link with it.
+
+	* app/gimp.sym: Remove dead symbols.
+
+	* libgimp/gimp.def
+	* libgimpwidgets/gimpwidgets.def: Move gimp_standard_help_func.
+
 	* plug-ins/common/wmf.c (load_image): Remove the message asking
 	the user to send files with unhandled opcodes to me. I'm really
 	not interested in getting them currently... (BTW, the wmf plug-in
 	really should be rewritten to use libwmf.)
+
+	* plug-ins/xjt/xjt.c: Use _mkdir() on Win32.
 
 2003-05-30  Maurits Rijk <lpeek.mrijk@consunet.nl>
 

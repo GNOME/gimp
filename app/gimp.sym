@@ -1,6 +1,4 @@
 gimp_object_get_type
-gimp_palette_get_background
-gimp_palette_get_foreground
 gimp_standard_help_func
 gimp_tool_control_get_cursor
 gimp_tool_control_get_cursor_modifier
@@ -14,8 +12,6 @@ gimp_tool_control_is_paused
 gimp_tool_control_is_toggled
 gimp_tool_control_pause
 gimp_tool_control_resume
-gimp_tool_real_button_press
-gimp_tool_real_button_release
 gimp_tool_set_cursor
 gimp_unit_get_abbreviation
 gimp_unit_get_digits

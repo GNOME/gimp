@@ -118,7 +118,7 @@ EXPORTS
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
 	gimp_spin_button_new
-;	gimp_standard_help_func
+	gimp_standard_help_func
 	gimp_stock_init
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update

@@ -102,6 +102,7 @@ gimp_1_3_LDADD = \
 	$(LIBART_LIBS)							\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
+	$(FONTCONFIG_LIBS)						\
 	$(INTLLIBS)							\
 	$(REGEXREPL)
 

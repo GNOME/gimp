@@ -285,6 +285,7 @@ PKG_CHECK_MODULES(LIBART, libart-2.0)
 AC_SUBST(LIBART_CFLAGS)
 AC_SUBST(LIBART_LIBS)
 
+PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= 1.0.1, have_fontconfig=true, :)
 
 ##########################################
 # Check for some special functions we need

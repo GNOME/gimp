@@ -67,6 +67,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef G_OS_WIN32
+#define mkdir(path,mode) _mkdir(path)
+#endif
+
 /* XJT includes */
 #include "xjpeg.h"
 #include "xpdb_calls.h"
