@@ -39,7 +39,7 @@
 #define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
-static G_GNUC_UNUSED char* dummyMRU = N_("/File/MRU00 ");
+static char* G_GNUC_UNUSED dummyMRU = N_("/File/MRU00 ");
 
 static void menus_init (void);
 static GtkItemFactoryEntry * translate_entries (const GtkItemFactoryEntry *, gint);
