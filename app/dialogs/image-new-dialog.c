@@ -154,8 +154,6 @@ file_new_dialog_new (Gimp *gimp)
                     G_CALLBACK (file_new_template_notify),
                     dialog);
 
-  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se));
-
   return dialog->dialog;
 }
 

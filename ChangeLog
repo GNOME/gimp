@@ -1,3 +1,9 @@
+2003-06-26  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-new-dialog.c (file_new_dialog_new): don't set the
+	focus on the size_entry. This change allows to accept the default
+	values by pressing OK. Fixes bug #115876.
+
 2003-06-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/user-install-dialog.c (user_install_dialog_create):
