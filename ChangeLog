@@ -1,3 +1,17 @@
+Fri Jul 17 01:37:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+        * gimptool.in: Added --cflags-noui and --libs-noui flags and
+        appropriate sed junk to craft it. Don't call gtk-config unless
+        GTK_CONFIG is set; hard code the info. Strip out redundant
+        stuff from the output. Made usage printout more verbose, added
+        --quiet and -n options
+
+        * gimp.m4: set NOUI stuff if available
+
+        * libgimp/gimp.h
+        * libgimp/gimpimage.c: make gimp_image_flatten return a value
+        to be consistent with the PDB
+
 Wed Jul 15 23:01:14 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* acconfig.h
