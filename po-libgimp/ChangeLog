@@ -1,3 +1,9 @@
+2001-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* hr.po
+	* hu.po
+	* sk.po: fixed invalid charset specs.
+
 2001-03-15  Fatih Demir <kabalak@gtranslator.org>
 
 	* tr.po: Copied Turkish translation from gimp-1-2.
