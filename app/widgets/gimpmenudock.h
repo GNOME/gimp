@@ -46,9 +46,6 @@ struct _GimpImageDock
   gboolean         show_image_menu;
   gboolean         auto_follow_active;
 
-  GimpUIManager   *ui_manager;
-  GQuark           image_flush_handler_id;
-
   GtkWidget       *image_combo;
   GtkWidget       *auto_button;
 

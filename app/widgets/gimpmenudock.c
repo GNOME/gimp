@@ -43,9 +43,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
-#include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
-#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -86,15 +84,10 @@ static void   gimp_image_dock_factory_display_changed (GimpContext    *context,
 static void   gimp_image_dock_factory_image_changed   (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
-static void   gimp_image_dock_display_changed         (GimpContext    *context,
-                                                       GimpObject     *display,
-                                                       GimpDock       *dock);
 static void   gimp_image_dock_image_changed           (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
 static void   gimp_image_dock_auto_clicked            (GtkWidget      *widget,
-                                                       GimpDock       *dock);
-static void   gimp_image_dock_image_flush             (GimpImage      *gimage,
                                                        GimpDock       *dock);
 
 
@@ -132,15 +125,10 @@ gimp_image_dock_get_type (void)
 static void
 gimp_image_dock_class_init (GimpImageDockClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkObjectClass *gtk_object_class;
-  GtkWidgetClass *widget_class;
-  GimpDockClass  *dock_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  gtk_object_class = GTK_OBJECT_CLASS (klass);
-  widget_class     = GTK_WIDGET_CLASS (klass);
-  dock_class       = GIMP_DOCK_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GimpDockClass  *dock_class       = GIMP_DOCK_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -202,13 +190,13 @@ gimp_image_dock_init (GimpImageDock *dock)
 
   dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
-				dock->auto_follow_active);
+                                dock->auto_follow_active);
   gtk_box_pack_start (GTK_BOX (hbox), dock->auto_button, FALSE, FALSE, 0);
   gtk_widget_show (dock->auto_button);
 
   g_signal_connect (dock->auto_button, "clicked",
-		    G_CALLBACK (gimp_image_dock_auto_clicked),
-		    dock);
+                    G_CALLBACK (gimp_image_dock_auto_clicked),
+                    dock);
 
   gimp_help_set_help_data (dock->auto_button,
                            _("When enabled the dialog automatically "
@@ -221,26 +209,12 @@ gimp_image_dock_constructor (GType                  type,
                              guint                  n_params,
                              GObjectConstructParam *params)
 {
-  GObject         *object;
-  GimpImageDock   *dock;
-  GimpMenuFactory *menu_factory;
-  GtkUIManager    *ui_manager;
-  GtkAccelGroup   *accel_group;
+  GObject       *object;
+  GimpImageDock *dock;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   dock = GIMP_IMAGE_DOCK (object);
-
-  menu_factory = GIMP_DOCK (object)->dialog_factory->menu_factory;
-
-  dock->ui_manager = gimp_menu_factory_manager_new (menu_factory, "<Dock>",
-                                                    dock, FALSE);
-
-  ui_manager = GTK_UI_MANAGER (dock->ui_manager);
-
-  accel_group = gtk_ui_manager_get_accel_group (ui_manager);
-
-  gtk_window_add_accel_group (GTK_WINDOW (object), accel_group);
 
   return object;
 }
@@ -256,19 +230,6 @@ gimp_image_dock_destroy (GtkObject *object)
       dock->update_title_idle_id = 0;
     }
 
-  if (dock->image_flush_handler_id)
-    {
-      gimp_container_remove_handler (dock->image_container,
-                                     dock->image_flush_handler_id);
-      dock->image_flush_handler_id = 0;
-    }
-
-  if (dock->ui_manager)
-    {
-      g_object_unref (dock->ui_manager);
-      dock->ui_manager = NULL;
-    }
-
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
    */
@@ -277,7 +238,7 @@ gimp_image_dock_destroy (GtkObject *object)
       dock->image_combo->parent)
     {
       gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
-			    dock->image_combo->parent);
+                            dock->image_combo->parent);
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -305,7 +266,7 @@ gimp_image_dock_style_set (GtkWidget *widget,
   gtk_widget_style_get (widget,
                         "minimal_width",     &minimal_width,
                         "menu_preview_size", &menu_preview_size,
-			NULL);
+                        NULL);
 
   screen = gtk_widget_get_screen (image_dock->image_combo);
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
@@ -316,7 +277,7 @@ gimp_image_dock_style_set (GtkWidget *widget,
   gtk_widget_style_get (image_dock->auto_button,
                         "focus_line_width", &focus_line_width,
                         "focus_padding",    &focus_padding,
-			NULL);
+                        NULL);
 
   ythickness = image_dock->auto_button->style->ythickness;
 
@@ -439,7 +400,7 @@ gimp_image_dock_book_removed (GimpDock     *dock,
 
 GtkWidget *
 gimp_image_dock_new (GimpDialogFactory *dialog_factory,
-		     GimpContainer     *image_container,
+                     GimpContainer     *image_container,
                      GimpContainer     *display_container)
 {
   GimpImageDock *image_dock;
@@ -462,11 +423,6 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 
   image_dock->image_container   = image_container;
   image_dock->display_container = display_container;
-
-  image_dock->image_flush_handler_id =
-    gimp_container_add_handler (image_container, "flush",
-                                G_CALLBACK (gimp_image_dock_image_flush),
-                                image_dock);
 
   gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
@@ -497,10 +453,6 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			   image_dock,
 			   0);
 
-  g_signal_connect_object (context, "display_changed",
-			   G_CALLBACK (gimp_image_dock_display_changed),
-			   image_dock,
-			   0);
   g_signal_connect_object (context, "image_changed",
 			   G_CALLBACK (gimp_image_dock_image_changed),
 			   image_dock,
@@ -630,16 +582,6 @@ gimp_image_dock_factory_image_changed (GimpContext *context,
 }
 
 static void
-gimp_image_dock_display_changed (GimpContext *context,
-                                 GimpObject  *display,
-                                 GimpDock    *dock)
-{
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
-
-  gimp_ui_manager_update (image_dock->ui_manager, display);
-}
-
-static void
 gimp_image_dock_image_changed (GimpContext *context,
 			       GimpImage   *gimage,
 			       GimpDock    *dock)
@@ -740,23 +682,5 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
         gimp_context_copy_property (dock->dialog_factory->context,
                                     dock->context,
                                     GIMP_CONTEXT_PROP_IMAGE);
-    }
-}
-
-static void
-gimp_image_dock_image_flush (GimpImage *gimage,
-                             GimpDock  *dock)
-{
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
-  GimpImage     *dock_image;
-
-  dock_image = gimp_context_get_image (dock->context);
-
-  if (dock_image == gimage)
-    {
-      GimpObject *display = gimp_context_get_display (dock->context);
-
-      if (display)
-        gimp_ui_manager_update (image_dock->ui_manager, display);
     }
 }

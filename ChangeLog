@@ -1,3 +1,31 @@
+2005-01-31  Michael Natterer  <mitch@gimp.org>
+
+	Some cleanup to make plug-in menu creation less hackish and
+	finally enable registering plug-in menu entries in much more UI
+	managers (not only in the image and toolbox menus):
+
+	* app/menus/menus.c: added a <Toolbox> UI manager instead of
+	creating the toolbox menu from the <Image> UI manager.
+
+	* app/widgets/gimpimagedock.[ch]: removed the ui_manager and the
+	signal connections to update it...
+
+	* app/widgets/gimpdock.[ch]: ...and added them here so all docks
+	have their own UI manager. Determine which manager to create from
+	looking at GimpDockClass::ui_manager_name (defaults to <Dock>).
+
+	* app/widgets/gimptoolbox.c: set ui_manager_name to <Toolbox> and
+	use the UI manager created by our parent class instead of using
+	the <Image> one.
+
+	(toolbox_create_tools): use gimp_action_get_accel_closure()
+	instead of doing evil hacks.
+
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.c: removed lots of special casing of the
+	<Image> UI manager. The code is almost ready for allowing plug-in
+	menus under <Layers>, <Channels>, <Brushes> etc.
+
 2005-01-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c: formatting.

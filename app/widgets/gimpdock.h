@@ -43,6 +43,9 @@ struct _GimpDock
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
 
+  GimpUIManager     *ui_manager;
+  GQuark             image_flush_handler_id;
+
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
 
@@ -65,6 +68,8 @@ struct _GimpDockClass
                             GimpDockbook   *dockbook);
   void    (* book_removed) (GimpDock       *dock,
                             GimpDockbook   *dockbook);
+
+  const gchar *ui_manager_name;
 };
 
 

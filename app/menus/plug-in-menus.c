@@ -142,11 +142,7 @@ plug_in_menus_setup (GimpUIManager *manager,
 
           for (path = proc_def->menu_paths; path; path = g_list_next (path))
             {
-              if ((! strncmp (path->data, "<Toolbox>", 9) &&
-                   ! strcmp (ui_path, "/toolbox-menubar")) ||
-                  (! strncmp (path->data, "<Image>", 7) &&
-                   (! strcmp (ui_path, "/image-menubar") ||
-                    ! strcmp (ui_path, "/dummy-menubar/image-popup"))))
+              if (! strncmp (path->data, manager->name, strlen (manager->name)))
                 {
                   PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
                   const gchar     *progname;

@@ -335,7 +335,6 @@ gui_display_create (GimpImage *gimage,
 
   gdisp = gimp_display_new (gimage, unit, scale,
                             global_menu_factory,
-
                             image_managers->data);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
@@ -369,6 +368,73 @@ gui_menus_init (Gimp        *gimp,
 }
 
 static void
+gui_menus_add_proc (Gimp          *gimp,
+                    PlugInProcDef *proc_def,
+                    const gchar   *menu_path)
+{
+  gchar *name;
+  gchar *p;
+  GList *list;
+
+  name = g_strdup (menu_path);
+
+  p = strchr (name, '>');
+
+  if (p)
+    {
+      p[1] = '\0';
+
+      for (list = gimp_ui_managers_from_name (name);
+           list;
+           list = g_list_next (list))
+        {
+          if (! strncmp (menu_path, "<Image>", 7))
+            {
+              plug_in_menus_add_proc (list->data, "/image-menubar",
+                                      proc_def, menu_path);
+              plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
+                                      proc_def, menu_path);
+            }
+          else if (! strncmp (menu_path, "<Toolbox>", 9))
+            {
+              plug_in_menus_add_proc (list->data, "/toolbox-menubar",
+                                      proc_def, menu_path);
+            }
+        }
+    }
+
+  g_free (name);
+}
+
+static void
+gui_menus_delete_proc (Gimp          *gimp,
+                       PlugInProcDef *proc_def,
+                       const gchar   *menu_path)
+{
+  gchar *name;
+  gchar *p;
+  GList *list;
+
+  name = g_strdup (menu_path);
+
+  p = strchr (name, '>');
+
+  if (p)
+    {
+      p[1] = '\0';
+
+      for (list = gimp_ui_managers_from_name (name);
+           list;
+           list = g_list_next (list))
+        {
+          plug_in_menus_remove_proc (list->data, proc_def);
+        }
+    }
+
+  g_free (name);
+}
+
+static void
 gui_menus_create_entry (Gimp          *gimp,
                         PlugInProcDef *proc_def,
                         const gchar   *menu_path)
@@ -389,45 +455,14 @@ gui_menus_create_entry (Gimp          *gimp,
         }
     }
 
-  for (list = gimp_ui_managers_from_name ("<Image>");
-       list;
-       list = g_list_next (list))
+  if (menu_path == NULL)
     {
-      if (menu_path == NULL)
-        {
-          GList *path;
-
-          for (path = proc_def->menu_paths; path; path = g_list_next (path))
-            {
-              if (! strncmp (path->data, "<Toolbox>", 9))
-                {
-                  plug_in_menus_add_proc (list->data, "/toolbox-menubar",
-                                          proc_def, path->data);
-                }
-              else if (! strncmp (path->data, "<Image>", 7))
-                {
-                  plug_in_menus_add_proc (list->data, "/image-menubar",
-                                          proc_def, path->data);
-                  plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
-                                          proc_def, path->data);
-                }
-            }
-        }
-      else
-        {
-          if (! strncmp (menu_path, "<Toolbox>", 9))
-            {
-              plug_in_menus_add_proc (list->data, "/toolbox-menubar",
-                                      proc_def, menu_path);
-            }
-          else if (! strncmp (menu_path, "<Image>", 7))
-            {
-              plug_in_menus_add_proc (list->data, "/image-menubar",
-                                      proc_def, menu_path);
-              plug_in_menus_add_proc (list->data, "/dummy-menubar/image-popup",
-                                      proc_def, menu_path);
-            }
-        }
+      for (list = proc_def->menu_paths; list; list = g_list_next (list))
+        gui_menus_add_proc (gimp, proc_def, list->data);
+    }
+  else
+    {
+      gui_menus_add_proc (gimp, proc_def, menu_path);
     }
 }
 
@@ -437,12 +472,8 @@ gui_menus_delete_entry (Gimp          *gimp,
 {
   GList *list;
 
-  for (list = gimp_ui_managers_from_name ("<Image>");
-       list;
-       list = g_list_next (list))
-    {
-      plug_in_menus_remove_proc (list->data, proc_def);
-    }
+  for (list = proc_def->menu_paths; list; list = g_list_next (list))
+    gui_menus_delete_proc (gimp, proc_def, list->data);
 
   for (list = gimp_action_groups_from_name ("plug-in");
        list;

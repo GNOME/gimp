@@ -163,6 +163,8 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   dock_class->book_added      = gimp_toolbox_book_added;
   dock_class->book_removed    = gimp_toolbox_book_removed;
 
+  dock_class->ui_manager_name = "<Toolbox>";
+
   gtk_widget_class_install_style_property
     (widget_class, g_param_spec_enum ("tool_icon_size",
                                       NULL, NULL,
@@ -218,7 +220,7 @@ gimp_toolbox_constructor (GType                  type,
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
 
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
+  manager = GIMP_DOCK (toolbox)->ui_manager;
 
   toolbox->menu_bar = gimp_ui_manager_ui_get (manager, "/toolbox-menubar");
 
@@ -227,9 +229,6 @@ gimp_toolbox_constructor (GType                  type,
       gtk_box_pack_start (GTK_BOX (vbox), toolbox->menu_bar, FALSE, FALSE, 0);
       gtk_widget_show (toolbox->menu_bar);
     }
-
-  gtk_window_add_accel_group (GTK_WINDOW (toolbox),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager)));
 
   toolbox->tool_wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
@@ -693,15 +692,9 @@ static void
 toolbox_create_tools (GimpToolbox *toolbox,
                       GimpContext *context)
 {
-  GimpUIManager *ui_manager;
-  GimpToolInfo  *active_tool;
-  GList         *list;
-  GSList        *group = NULL;
-
-  ui_manager = gimp_ui_managers_from_name ("<Image>")->data;
-
-  if (ui_manager)
-    gimp_ui_manager_ui_get (ui_manager, "/dummy-menubar");
+  GimpToolInfo *active_tool;
+  GList        *list;
+  GSList       *group = NULL;
 
   active_tool = gimp_context_get_tool (context);
 
@@ -749,7 +742,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (ui_manager)
+      if (GIMP_DOCK (toolbox)->ui_manager)
         {
           GtkAction   *action;
           const gchar *identifier;
@@ -764,37 +757,12 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          action = gimp_ui_manager_find_action (ui_manager, "tools", name);
+          action = gimp_ui_manager_find_action (GIMP_DOCK (toolbox)->ui_manager,
+                                                "tools", name);
 
           g_free (name);
 
-#if HAVE_GTK_ACTION_GET_ACCEL_CLOSURE
-          accel_closure = gtk_action_get_accel_closure (action);
-#else
-          {
-            GSList *list;
-
-            for (list = gtk_action_get_proxies (action);
-                 list;
-                 list = g_slist_next (list))
-              {
-                if (GTK_IS_MENU_ITEM (list->data))
-                  {
-                    GtkWidget *label = GTK_BIN (list->data)->child;
-
-                    if (GTK_IS_ACCEL_LABEL (label))
-                      {
-                        g_object_get (label,
-                                      "accel-closure", &accel_closure,
-                                      NULL);
-
-                        if (accel_closure)
-                          break;
-                      }
-                  }
-              }
-          }
-#endif
+          accel_closure = gimp_action_get_accel_closure (action);
 
           if (accel_closure)
             {
