@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpenumwidgets.c
  * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
@@ -27,9 +27,10 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgetstypes.h"
+
+#include "gimpenumwidgets.h"
 #include "gimpframe.h"
 #include "gimphelpui.h"
-#include "gimpenumwidgets.h"
 
 
 /**
@@ -46,6 +47,8 @@
  * #GimpEnumComboBox instead.
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
 gimp_enum_radio_box_new (GType       enum_type,
@@ -86,6 +89,8 @@ gimp_enum_radio_box_new (GType       enum_type,
  * enum values.
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
 gimp_enum_radio_box_new_with_range (GType       enum_type,
@@ -142,11 +147,11 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
   return vbox;
 }
 
-
 /**
  * gimp_enum_radio_frame_new:
  * @enum_type: the #GType of an enum.
- * @label_widget: a widget to put into the frame that will hold the radio box.
+ * @label_widget: a widget to use as label for the frame that will
+ *                hold the radio box.
  * @callback: a callback to connect to the "toggled" signal of each
  *            #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
@@ -156,13 +161,15 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  * #GtkFrame.
  *
  * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
-gimp_enum_radio_frame_new (GType        enum_type,
-                           GtkWidget   *label_widget,
-                           GCallback    callback,
-                           gpointer     callback_data,
-                           GtkWidget  **first_button)
+gimp_enum_radio_frame_new (GType       enum_type,
+                           GtkWidget  *label_widget,
+                           GCallback   callback,
+                           gpointer    callback_data,
+                           GtkWidget **first_button)
 {
   GtkWidget *frame;
   GtkWidget *radio_box;
@@ -203,15 +210,17 @@ gimp_enum_radio_frame_new (GType        enum_type,
  * vbox into a #GtkFrame.
  *
  * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
-gimp_enum_radio_frame_new_with_range (GType        enum_type,
-                                      gint         minimum,
-                                      gint         maximum,
-                                      GtkWidget   *label_widget,
-                                      GCallback    callback,
-                                      gpointer     callback_data,
-                                      GtkWidget  **first_button)
+gimp_enum_radio_frame_new_with_range (GType       enum_type,
+                                      gint        minimum,
+                                      gint        maximum,
+                                      GtkWidget  *label_widget,
+                                      GCallback   callback,
+                                      gpointer    callback_data,
+                                      GtkWidget **first_button)
 {
   GtkWidget *frame;
   GtkWidget *radio_box;
@@ -255,6 +264,8 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
  * nick to the given @stock_prefix.
  *
  * Return value: a new #GtkHbox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
 gimp_enum_stock_box_new (GType         enum_type,
@@ -300,6 +311,8 @@ gimp_enum_stock_box_new (GType         enum_type,
  * enum values.
  *
  * Return value: a new #GtkHbox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.4
  **/
 GtkWidget *
 gimp_enum_stock_box_new_with_range (GType         enum_type,
@@ -383,6 +396,8 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
  *
  * Sets the padding of all buttons in a box created by
  * gimp_enum_stock_box_new().
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
@@ -397,7 +412,7 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
        list;
        list = g_list_next (list))
     {
-      GtkBin *bin  = list->data;
+      GtkBin *bin = list->data;
 
       if (GTK_IS_MISC (bin->child))
         {

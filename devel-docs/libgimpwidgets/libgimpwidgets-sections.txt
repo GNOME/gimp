@@ -652,6 +652,18 @@ GIMP_STOCK_ZOOM_FOLLOW_WINDOW
 </SECTION>
 
 <SECTION>
+<FILE>gimpenumwidgets</FILE>
+<TITLE>GimpEnumWidgets</TITLE>
+gimp_enum_radio_box_new
+gimp_enum_radio_box_new_with_range
+gimp_enum_radio_frame_new
+gimp_enum_radio_frame_new_with_range
+gimp_enum_stock_box_new
+gimp_enum_stock_box_new_with_range
+gimp_enum_stock_box_set_child_padding
+</SECTION>
+
+<SECTION>
 <FILE>gimpwidgets</FILE>
 <TITLE>GimpWidgets</TITLE>
 gimp_radio_group_new

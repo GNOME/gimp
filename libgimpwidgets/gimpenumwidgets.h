@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpenumwidgets.h
  * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>

@@ -1,3 +1,9 @@
+2005-01-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpenumwidgets.sgml: updated.
+
 2005-01-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/libgimpconfig-docs.sgml
