@@ -1,3 +1,7 @@
+2003-07-25  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: fixed the --without-aa option I added lately.
+
 2003-07-24  Maurits Rijk <lpeek.mrijk@consunet.nl>
 
 	* libgimp/gimpmiscui.c (gimp_fixme_preview_do_row): minor optimisations
@@ -29,7 +33,6 @@
 	Selection" and added "Edit/Stroke Active Path". Added some missing
 	mnemonics to the "Edit" menu.
 
->>>>>>> 1.6017
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_create_vectors): set

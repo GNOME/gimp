@@ -852,7 +852,7 @@ fi
 
 
 AC_ARG_WITH(aa,  [  --without-aa           do not build the AA plug-in])
-if x$with_aa != xno test -z "$LIBAA"; then
+if test x$with_aa != xno && test -z "$LIBAA"; then
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
       AA='aa'; LIBAA='-laa',
