@@ -448,18 +448,18 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
 			 gint          width,
 			 gint          height)
 {
-  GimpTile *tile;
-  guchar   *src;
-  guchar   *dest;
-  gulong    bufstride;
-  gint      xstart, ystart;
-  gint      xend, yend;
-  gint      xboundary;
-  gint      yboundary;
-  gint      xstep, ystep;
-  gint      ty, bpp;
+  GimpTile     *tile;
+  const guchar *src;
+  guchar       *dest;
+  gulong        bufstride;
+  gint          xstart, ystart;
+  gint          xend, yend;
+  gint          xboundary;
+  gint          yboundary;
+  gint          xstep, ystep;
+  gint          ty, bpp;
 #ifndef MEMCPY_IS_NICE
-  gint      b, tx;
+  gint          b, tx;
 #endif
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);

@@ -3,8 +3,9 @@
 	* libgimp/gimpbrushselect.c
 	* libgimp/gimpfontselect.c
 	* libgimp/gimpgradientselect.c
-	* libgimp/gimppatternselect.c: added const qualifiers.
-	
+	* libgimp/gimppatternselect.c
+	* libgimp/gimppixelrgn.c: added const qualifiers.
+
 	* libgimp/gimpmiscui.c: reverted a bogus change from my last commit.
 
 2003-07-01  Sven Neumann  <sven@gimp.org>
