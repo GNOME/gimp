@@ -172,19 +172,19 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
-                                    "show-selection", NULL,
+                                    "show-selection", SHOW_SELECTION_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
-                                    "show-layer-boundary", NULL,
+                                    "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
-                                    "show-guides", NULL,
+                                    "show-guides", SHOW_GUIDES_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
-                                    "show-grid", NULL,
+                                    "show-grid", SHOW_GRID_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,
@@ -226,19 +226,19 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
-                                    "show-selection", NULL,
+                                    "show-selection", SHOW_SELECTION_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
-                                    "show-layer-boundary", NULL,
+                                    "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
-                                    "show-guides", NULL,
+                                    "show-guides", SHOW_GUIDES_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
-                                    "show-grid", NULL,
+                                    "show-grid", SHOW_GRID_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PADDING_MODE,

@@ -241,6 +241,22 @@ N_("When enabled, the scrollbars are visible by default. This can also be " \
 N_("When enabled, the statusbar is visible by default. This can also be " \
    "toggled with the \"View->Show Statusbar\" command.")
 
+#define SHOW_SELECTION_BLURB \
+N_("When enabled, the selection is visible by default. This can also be " \
+   "toggled with the \"View->Show Selection\" command.")
+
+#define SHOW_LAYER_BOUNDARY_BLURB \
+N_("When enabled, the layer boundary is visible by default. This can also " \
+   "be toggled with the \"View->Show Layer Boundary\" command.")
+
+#define SHOW_GUIDES_BLURB \
+N_("When enabled, the guides are visible by default. This can also be " \
+   "toggled with the \"View->Show Guides\" command.")
+
+#define SHOW_GRID_BLURB \
+N_("When enabled, the grid is visible by default. This can also be toggled " \
+   "with the \"View->Show Grid\" command.")
+
 #define SHOW_TIPS_BLURB \
 N_("Enable to display a handy GIMP tip on startup.")
 

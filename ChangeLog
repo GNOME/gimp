@@ -1,3 +1,9 @@
+2003-10-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/display/gimpdisplayoptions.c
+	* gimp/app/config/gimprc-blurbs.h: added blurbs to the remaining
+	properties of GimpDisplayOptions and GimpDisplayOptionsFullscreen
+
 2003-10-23  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-tools-16.png
