@@ -30,12 +30,7 @@
 
 #include "appenv.h"
 #include "plug_in.h"
-
-#ifdef HAVE_GLIBC_REGEX
-#include <regex.h>
-#else
-#include "regexrepl.h"
-#endif
+#include "regex.h"
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;

@@ -1,5 +1,17 @@
 2001-01-03  Daniel Egger  <egger@suse.de>
 
+	* app/plug_in_cmds.c:
+	* app/procedural_db_cmds.c:
+	* plug-ins/script-fu/Makefile.am:
+	* plug-ins/script-fu/interp_regex.c:
+	* plug-ins/script-fu/regexrepl.c: Conditionally compile
+	regex if not available in glibc.
+	
+	* plug-ins/script-fu/regex.c:
+	* plug-ins/script-fu/regex.h: Renamed files to regexrepl.[ch].
+
+2001-01-03  Daniel Egger  <egger@suse.de>
+
 	* configure.in: Extended the glibc regexp check and enabled
 	substitution for Makefiles.
 	

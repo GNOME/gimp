@@ -2,7 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "regex.h"
+
+
+#ifndef HAVE_GLIBC_REGEX
+#include "regexrepl.h"
+#else
+#include <regex.h>
+#endif
+
 #include "siod.h"
 
 /* OSF/1 doc says that POSIX and XPG4 include regcomp in libc.

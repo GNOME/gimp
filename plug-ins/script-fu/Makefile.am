@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if HAVE_GLIBC_REGEX
+regex_sources =
+else
+regex_sources = regexrepl.c regexrepl.h
+endif
+
 SUBDIRS = scripts
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -13,8 +19,6 @@ script_fu_SOURCES = \
 	interp_slib.c		\
 	interp_sliba.c		\
 	interp_trace.c		\
-	regex.c			\
-	regex.h			\
 	script-fu.c		\
 	script-fu-console.c	\
 	script-fu-console.h	\
@@ -27,7 +31,8 @@ script_fu_SOURCES = \
 	script-fu-server.h	\
 	script-fu-enums.h	\
 	siod.h			\
-	siodp.h
+	siodp.h			\
+	$(regex_sources)
 
 INCLUDES = \
 	-I$(top_srcdir)			\

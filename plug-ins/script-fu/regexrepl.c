@@ -160,7 +160,7 @@ init_syntax_once ()
 #endif /* not emacs */
 
 /* Get the interface, including the syntax bits.  */
-#include "regex.h"
+#include "regexrepl.h"
 
 /* isalpha etc. are used for the character classes.  */
 #include <ctype.h>
