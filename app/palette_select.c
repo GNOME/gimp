@@ -45,8 +45,6 @@
 
 #include "libgimp/gimpintl.h"
 
-PaletteSelectP top_level_palette = NULL;
-
 static GSList *active_dialogs = NULL; /* List of active dialogs */
 static void   palette_select_close_callback (GtkWidget *w,gpointer   client_data);
 static void   palette_select_edit_callback (GtkWidget *w,gpointer   client_data);
@@ -208,11 +206,8 @@ palette_select_close_callback (GtkWidget *w,
   if (GTK_WIDGET_VISIBLE (psp->shell))
     gtk_widget_hide (psp->shell);
 
-  if(psp != top_level_palette) 
-     { 
-       gtk_widget_destroy(psp->shell); 
-       palette_select_free(psp); 
-     } 
+  gtk_widget_destroy(psp->shell); 
+  palette_select_free(psp); 
 
   /* Free memory if poping down dialog which is not the main one */
 /*   if(gsp != gradient_select_dialog) */

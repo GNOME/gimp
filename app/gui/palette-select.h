@@ -45,6 +45,4 @@ void              palette_insert_clist(GtkWidget *clist,
 				       PaletteEntriesP p_entries,gint pos);
 
 
-extern            PaletteSelectP top_level_palette;
-
 #endif  /* __PALETTE_SELECT_H_ */
