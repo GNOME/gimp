@@ -171,9 +171,7 @@
 #define DEFAULT_UNIT_BLURB \
 "Set the default unit for new images and for the File/New dialog. " \
 "This units will be used for coordinate display when not in dot-for-dot " \
-"mode. The default unit can be one of inches , millimeters, points or " \
-"picas or the identifier of one of the units defined in your user units " \
-"database."
+"mode."
 
 #define DEFAULT_XRESOLUTION_BLURB \
 "Set the default horizontal resolution for new images and for the " \
@@ -185,9 +183,7 @@
 
 #define DEFAULT_RESOLUTION_UNIT_BLURB \
 "Set the units for the display of the default resolution in the " \
-"File/New dialog. The default resolution units can be one of inches, " \
-"millimeters, points or picas or the identifier of one of the units " \
-"defined in your user unit database. The default is inches."
+"File/New dialog."
 
 #define MONITOR_XRESOLUTION_BLURB \
 "Set the monitor's horizontal resolution, in dots per inch.  If set to " \
@@ -226,7 +222,8 @@
 "%h  image height in pixels\n" \
 "%H  image height in real-world units\n" \
 "%u  unit symbol\n" \
-"%U  unit abbreviation\n"
+"%U  unit abbreviation\n\n"
+
 
 #define IMAGE_STATUS_FORMAT_BLURB \
 "Set the text to appear in image window status bars. See image-title-format " \

@@ -43,15 +43,9 @@
 #include "gimpconfig-utils.h"
 
 
-static gboolean   gimp_config_serialize_property (GObject      *object,
-                                                  GParamSpec   *param_spec,
-                                                  GString      *str,
-                                                  gboolean      escaped);
-static void       gimp_config_serialize_comment  (GString      *str,
-                                                  const gchar  *comment);
-static void       serialize_unknown_token        (const gchar  *key,
-                                                  const gchar  *value,
-                                                  gpointer      data);
+static void  serialize_unknown_token (const gchar  *key,
+				      const gchar  *value,
+				      gpointer      data);
 
 
 /**
@@ -71,7 +65,6 @@ gimp_config_serialize_properties (GObject  *object,
   guint          n_property_specs;
   guint          i;
   GString       *str;
-  gboolean       property_written = FALSE;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   
@@ -86,33 +79,19 @@ gimp_config_serialize_properties (GObject  *object,
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec  *prop_spec;
-      const gchar *blurb;
-
-      prop_spec = property_specs[i];
+      GParamSpec *prop_spec = property_specs[i];
 
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (property_written)
-        g_string_assign (str, "\n");
-      else
-        g_string_assign (str, "");
-
-      if ((blurb = g_param_spec_get_blurb (prop_spec)) != NULL)
-        gimp_config_serialize_comment (str, blurb);
-
       gimp_config_string_indent (str, indent_level);
 
-      g_string_append_printf (str, "(%s ", prop_spec->name);
-
       if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
-        {
-          g_string_append (str, ")\n");
-          property_written = TRUE;
-
+	{
           if (write (fd, str->str, str->len) == -1)
             return FALSE;
+
+	  g_string_assign (str, "\n");
         }
       else if (prop_spec->value_type != G_TYPE_STRING)
         {
@@ -120,6 +99,8 @@ gimp_config_serialize_properties (GObject  *object,
                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
                      prop_spec->name, 
                      g_type_name (prop_spec->value_type));
+
+	  g_string_assign (str, "");
         }
     }
 
@@ -168,7 +149,6 @@ gimp_config_serialize_changed_properties (GObject *new,
   for (list = diff; list; list = g_list_next (list))
     {
       GParamSpec  *prop_spec;
-      const gchar *blurb;
       GValue       new_value = { 0, };
 
       prop_spec = (GParamSpec *) list->data;
@@ -181,9 +161,6 @@ gimp_config_serialize_changed_properties (GObject *new,
         g_string_assign (str, "\n");
       else
         g_string_assign (str, "");
-
-      if ((blurb = g_param_spec_get_blurb (prop_spec)) != NULL)
-        gimp_config_serialize_comment (str, blurb);
 
       gimp_config_string_indent (str, indent_level);
 
@@ -210,6 +187,75 @@ gimp_config_serialize_changed_properties (GObject *new,
 
   g_string_free (str, TRUE);
   g_list_free (diff);
+
+  return TRUE;
+}
+
+
+gboolean
+gimp_config_serialize_property (GObject      *object,
+                                GParamSpec   *param_spec,
+                                GString      *str,
+                                gboolean      escaped)
+{
+  GTypeClass          *owner_class;
+  GimpConfigInterface *config_iface;
+  GimpConfigInterface *parent_iface;
+  GValue               value = { 0, };
+
+  if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
+    return FALSE;
+
+  g_string_append_printf (str, "(%s ", param_spec->name);
+
+  g_value_init (&value, param_spec->value_type);
+  g_object_get_property (object, param_spec->name, &value);
+
+  owner_class = g_type_class_peek (param_spec->owner_type);
+
+  config_iface = g_type_interface_peek (owner_class,
+					GIMP_TYPE_CONFIG_INTERFACE);
+
+  /*  We must call deserialize_property() *only* if the *exact* class
+   *  which implements it is param_spec->owner_type's class.
+   *
+   *  Therefore, we ask param_spec->owner_type's immediate parent class
+   *  for it's GimpConfigInterface and check if we get a different pointer.
+   *
+   *  (if the pointers are the same, param_spec->owner_type's
+   *   GimpConfigInterface is inherited from one of it's parent classes
+   *   and thus not able to handle param_spec->owner_type's properties).
+   */
+  if (config_iface)
+    {
+      GTypeClass *owner_parent_class;
+
+      owner_parent_class = g_type_class_peek_parent (owner_class),
+
+      parent_iface = g_type_interface_peek (owner_parent_class,
+                                            GIMP_TYPE_CONFIG_INTERFACE);
+    }
+
+  if (config_iface                     &&
+      config_iface != parent_iface     && /* see comment above */
+      config_iface->serialize_property)
+    {
+      if (! config_iface->serialize_property (object,
+					      param_spec->param_id,
+					      (const GValue *) &value,
+					      param_spec,
+					      str))
+	return FALSE;
+    }
+  else
+    {
+      if (! gimp_config_serialize_value (&value, str, escaped))
+	return FALSE;
+    }
+
+  g_value_unset (&value);
+
+  g_string_append (str, ")\n");
 
   return TRUE;
 }
@@ -329,7 +375,8 @@ gimp_config_serialize_value (const GValue *value,
             {
               g_string_append (str, " ");
 
-              if (! gimp_config_serialize_value (g_value_array_get_nth (array, i),
+              if (! gimp_config_serialize_value (g_value_array_get_nth (array,
+									i),
                                                  str, escaped))
                 return FALSE;
             }
@@ -382,68 +429,7 @@ gimp_config_serialize_unknown_tokens (GObject *object,
   return (write (fd, str->str, str->len) != -1);
 }
 
-static gboolean
-gimp_config_serialize_property (GObject      *object,
-                                GParamSpec   *param_spec,
-                                GString      *str,
-                                gboolean      escaped)
-{
-  GTypeClass          *owner_class;
-  GimpConfigInterface *gimp_config_iface;
-  GimpConfigInterface *parent_iface;
-  GValue               value = { 0, };
-  gboolean             retval;
-
-  g_value_init (&value, param_spec->value_type);
-  g_object_get_property (object, param_spec->name, &value);
-
-  owner_class = g_type_class_peek (param_spec->owner_type);
-
-  gimp_config_iface = g_type_interface_peek (owner_class,
-                                             GIMP_TYPE_CONFIG_INTERFACE);
-
-  /*  We must call deserialize_property() *only* if the *exact* class
-   *  which implements it is param_spec->owner_type's class.
-   *
-   *  Therefore, we ask param_spec->owner_type's immediate parent class
-   *  for it's GimpConfigInterface and check if we get a different pointer.
-   *
-   *  (if the pointers are the same, param_spec->owner_type's
-   *   GimpConfigInterface is inherited from one of it's parent classes
-   *   and thus not able to handle param_spec->owner_type's properties).
-   */
-  if (gimp_config_iface)
-    {
-      GTypeClass *owner_parent_class;
-
-      owner_parent_class = g_type_class_peek_parent (owner_class),
-
-      parent_iface = g_type_interface_peek (owner_parent_class,
-                                            GIMP_TYPE_CONFIG_INTERFACE);
-    }
-
-  if (gimp_config_iface                     &&
-      gimp_config_iface != parent_iface     && /* see comment above */
-      gimp_config_iface->serialize_property &&
-      gimp_config_iface->serialize_property (object,
-                                             param_spec->param_id,
-                                             (const GValue *) &value,
-                                             param_spec,
-                                             str))
-    {
-      retval = TRUE;
-    }
-  else
-    {
-      retval = gimp_config_serialize_value (&value, str, escaped);
-    }
-
-  g_value_unset (&value);
-
-  return retval;
-}
-
-static void
+void
 gimp_config_serialize_comment (GString     *str,
                                const gchar *comment)
 {
@@ -474,8 +460,6 @@ gimp_config_serialize_comment (GString     *str,
       comment += i;
       len     -= i;
     }
-
-  g_string_append_printf (str, "#\n");
 }
 
 static void

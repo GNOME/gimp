@@ -33,8 +33,15 @@ gboolean  gimp_config_serialize_changed_properties (GObject      *new,
 gboolean  gimp_config_serialize_unknown_tokens     (GObject      *object,
                                                     gint          fd,
                                                     gint          indent_level);
+
+gboolean  gimp_config_serialize_property           (GObject      *object,
+						    GParamSpec   *param_spec,
+						    GString      *str,
+						    gboolean      escaped);
 gboolean  gimp_config_serialize_value              (const GValue *value,
                                                     GString      *str,
                                                     gboolean      escaped);
+void      gimp_config_serialize_comment            (GString      *str,
+						    const gchar  *comment);
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

@@ -1,5 +1,14 @@
 2002-12-01  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-blurbs.h: small cleanup.
+
+	* app/config/gimpconfig-serialize.[ch]: export more functionality.
+
+	* app/config/gimpconfig-dump.c: added some code to dump a
+	commented version of the system-wide gimprc with default values.
+
+2002-12-01  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h: prefix PIXELS and POINTS with GIMP
 	instead of SIZE so we don't break the libgimp API without a good
 	reason.
