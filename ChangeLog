@@ -1,3 +1,50 @@
+2000-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpui.[ch]
+	* app/preferences_dialog.c: removed & renamed some functions from
+	gimpui.[ch] (see below).
+
+	* libgimp/Makefile.am
+	* libgimp/gimpwidgets.[ch]; new files. Functions moved from
+	app/gimpui.[ch]. Added a constructor for the label + hscale +
+	entry combination used in many plugins (now hscale + spinbutton).
+
+	* libgimp/gimpui.h: include gimpwidgets.h
+
+	* plug-ins/megawidget/megawidget.[ch]: removed all functions
+	except the preview stuff (I'm not yet sure how to implement this
+	in libgimp because the libgimp preview should be general enough to
+	replace all the other plugin previews, too).
+
+	* plug-ins/borderaverage/Makefile.am
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/aa.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/waves.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/sinus/sinus.c: ui updates like removing megawidget,
+	using the dialog constructor, I18N fixes, indentation, ...
+
 Thu Jan 13 00:46:16 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 
 	* app/plug_in.c: replace spaces to be inserted in pluginrc

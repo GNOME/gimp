@@ -63,8 +63,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -75,33 +75,26 @@ static char rcsid[] = "$Id$";
 
 /* Some useful macros */
 
-#define TILE_CACHE_SIZE 16
-#define ENTSCALE_INT_SCALE_WIDTH 125
-#define ENTSCALE_INT_ENTRY_WIDTH 40
+#define TILE_CACHE_SIZE  16
+#define SCALE_WIDTH     125
+#define ENTRY_WIDTH      50
 
-typedef struct {
+typedef struct
+{
   gint pixelwidth;
 } PixelizeValues;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } PixelizeInterface;
 
-typedef struct {
+typedef struct
+{
   gint x, y, w, h;
   gint width;
   guchar *data;
 } PixelArea;
-
-typedef void (*EntscaleIntCallbackFunc) (gint value, gpointer data);
-
-typedef struct {
-  GtkObject     *adjustment;
-  GtkWidget     *entry;
-  gint          constraint;
-  EntscaleIntCallbackFunc	callback;
-  gpointer	call_data;
-} EntscaleIntData;
 
 /* Declare local functions.
  */
@@ -118,21 +111,9 @@ static void	pixelize_ok_callback (GtkWidget *widget,
 
 static void	pixelize	(GDrawable *drawable);
 static void	pixelize_large	(GDrawable *drawable, gint pixelwidth);
-static void	pixelize_small	(GDrawable *drawable, gint pixelwidth, gint tile_width);
-static void	pixelize_sub ( gint pixelwidth, gint bpp );
-
-void   entscale_int_new ( GtkWidget *table, gint x, gint y,
-			  gchar *caption, gint *intvar, 
-			  gint min, gint max, gint constraint,
-			  EntscaleIntCallbackFunc callback,
-			  gpointer data );
-static void   entscale_int_destroy_callback (GtkWidget *widget,
-					     gpointer data);
-static void   entscale_int_scale_update (GtkAdjustment *adjustment,
-					 gpointer      data);
-static void   entscale_int_entry_update (GtkWidget *widget,
-					 gpointer   data);
-
+static void	pixelize_small	(GDrawable *drawable, gint pixelwidth,
+				 gint tile_width);
+static void	pixelize_sub    (gint pixelwidth, gint bpp);
 
 /***** Local vars *****/
 
@@ -164,12 +145,12 @@ static void
 query (void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
-      { PARAM_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
-   };
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { PARAM_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
+  };
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
@@ -289,6 +270,7 @@ pixelize_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkObject *adjustment;
   gchar **argv;
   gint	  argc;
 
@@ -321,14 +303,19 @@ pixelize_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  entscale_int_new (table, 0, 0, _("Pixel Width:"), &pvals.pixelwidth,
-		    1, 64, FALSE,
-		    NULL, NULL);
+  adjustment =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  _("Pixel Width:"), SCALE_WIDTH, ENTRY_WIDTH,
+			  pvals.pixelwidth, 1, 64, 1, 8, 0,
+			  NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pvals.pixelwidth);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -610,185 +597,4 @@ pixelize_sub (gint pixelwidth,
 	    }
 	}
     }
-}
-
-/* ====================================================================== */
-
-/*
-  Entry and Scale pair 1.03
-
-  TODO:
-  - Do the proper thing when the user changes value in entry,
-  so that callback should not be called when value is actually not changed.
-  - Update delay
- */
-
-/*
- *  entscale: create new entscale with label. (int)
- *  1 row and 2 cols of table are needed.
- *  Input:
- *    x, y:       starting row and col in table
- *    caption:    label string
- *    intvar:     pointer to variable
- *    min, max:   the boundary of scale
- *    constraint: (bool) true iff the value of *intvar should be constraint
- *                by min and max
- *    callback:	  called when the value is actually changed
- *    call_data:  data for callback func
- */
-void
-entscale_int_new (GtkWidget              *table,
-		  gint                    x,
-		  gint                    y,
-		  gchar                  *caption,
-		  gint                   *intvar,
-		  gint                     min,
-		  gint                     max,
-		  gint                     constraint,
-		  EntscaleIntCallbackFunc  callback,
-		  gpointer                 call_data)
-{
-  EntscaleIntData *userdata;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *scale;
-  GtkObject *adjustment;
-  gchar    buffer[256];
-  gint	    constraint_val;
-
-  userdata = g_new (EntscaleIntData, 1);
-
-  label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  /*
-    If the first arg of gtk_adjustment_new() isn't between min and
-    max, it is automatically corrected by gtk later with
-    "value_changed" signal. I don't like this, since I want to leave
-    *intvar untouched when `constraint' is false.
-    The lines below might look oppositely, but this is OK.
-   */
-  userdata->constraint = constraint;
-  if( constraint )
-    constraint_val = *intvar;
-  else
-    constraint_val = ( *intvar < min ? min : *intvar > max ? max : *intvar );
-
-  userdata->adjustment = adjustment = 
-    gtk_adjustment_new ( constraint_val, min, max, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new ( GTK_ADJUSTMENT(adjustment) );
-  gtk_widget_set_usize (scale, ENTSCALE_INT_SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-
-  userdata->entry = entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTSCALE_INT_ENTRY_WIDTH, 0);
-  sprintf( buffer, "%d", *intvar );
-  gtk_entry_set_text( GTK_ENTRY (entry), buffer );
-
-  userdata->callback = callback;
-  userdata->call_data = call_data;
-
-  /* userdata is done */
-  gtk_object_set_user_data (GTK_OBJECT(adjustment), userdata);
-  gtk_object_set_user_data (GTK_OBJECT(entry), userdata);
-
-  /* now ready for signals */
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entscale_int_entry_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) entscale_int_scale_update,
-		      intvar);
-  gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-		      (GtkSignalFunc) entscale_int_destroy_callback,
-		      userdata );
-
-  /* start packing */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
-
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (entry);
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
-}  
-
-
-/* when destroyed, userdata is destroyed too */
-static void
-entscale_int_destroy_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  EntscaleIntData *userdata;
-
-  userdata = data;
-  g_free (userdata);
-}
-
-static void
-entscale_int_scale_update (GtkAdjustment *adjustment,
-			   gpointer       data)
-{
-  EntscaleIntData *userdata;
-  GtkEntry	*entry;
-  gchar		buffer[256];
-  gint		*intvar = data;
-  gint		new_val;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-
-  new_val = (gint) adjustment->value;
-
-  *intvar = new_val;
-
-  entry = GTK_ENTRY( userdata->entry );
-  sprintf (buffer, "%d", (int) new_val );
-  
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(entry), data );
-  gtk_entry_set_text ( entry, buffer);
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(entry), data );
-
-  if (userdata->callback)
-    (*userdata->callback) (*intvar, userdata->call_data);
-}
-
-static void
-entscale_int_entry_update (GtkWidget *widget,
-			   gpointer   data)
-{
-  EntscaleIntData *userdata;
-  GtkAdjustment	*adjustment;
-  int		new_val, constraint_val;
-  int		*intvar = data;
-
-  userdata = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT( userdata->adjustment );
-
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-  constraint_val = new_val;
-  if ( constraint_val < adjustment->lower )
-    constraint_val = adjustment->lower;
-  if ( constraint_val > adjustment->upper )
-    constraint_val = adjustment->upper;
-
-  if ( userdata->constraint )
-    *intvar = constraint_val;
-  else
-    *intvar = new_val;
-
-  adjustment->value = constraint_val;
-  gtk_signal_handler_block_by_data ( GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name ( GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data ( GTK_OBJECT(adjustment), data );
-  
-  if (userdata->callback)
-    (*userdata->callback) (*intvar, userdata->call_data);
 }

@@ -66,7 +66,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -75,25 +74,27 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#include <plug-ins/megawidget/megawidget.h>
-
-struct Grgb {
+struct Grgb
+{
   guint8 red;
   guint8 green;
   guint8 blue;
 };
 
-struct GRegion {
+struct GRegion
+{
   gint32 x;
   gint32 y;
   gint32 width;
   gint32 height;
 };
 
-struct piArgs {
+struct piArgs
+{
   gint32 image;
   gint32 drawable;
   gint32 mode;
@@ -101,15 +102,17 @@ struct piArgs {
   gint32 new_layerp;
 };
 
-typedef enum {
+typedef enum
+{
   act_lredux = 0,
   act_sredux = 1,
-  act_flag = 2
+  act_flag   = 2
 } hotAction;
 
-typedef enum {
+typedef enum
+{
   mode_ntsc = 0,
-  mode_pal = 1
+  mode_pal  = 1
 } hotModes;
 
 #define	CHROMA_LIM      50.0		/* chroma amplitude limit */
@@ -119,28 +122,29 @@ typedef enum {
  * RGB to YIQ encoding matrix.
  */
 
-struct {
-  double pedestal;
-  double gamma;
-  double code[3][3];
+struct
+{
+  gdouble pedestal;
+  gdouble gamma;
+  gdouble code[3][3];
 } mode[2] = {
   {
-     7.5,
-     2.2,
-     {
-        { 0.2989,  0.5866,  0.1144 },
-        { 0.5959, -0.2741, -0.3218 },
-        { 0.2113, -0.5227,  0.3113 }
-     }
+    7.5,
+    2.2,
+    {
+      { 0.2989,  0.5866,  0.1144 },
+      { 0.5959, -0.2741, -0.3218 },
+      { 0.2113, -0.5227,  0.3113 }
+    }
   },
   {
-     0.0,
-     2.8,
-     {
-        { 0.2989,  0.5866,  0.1144 },
-        { -0.1473, -0.2891,  0.4364 },
-        { 0.6149, -0.5145, -0.1004 }
-     }
+    0.0,
+    2.8,
+    {
+      { 0.2989,  0.5866,  0.1144 },
+      { -0.1473, -0.2891,  0.4364 },
+      { 0.6149, -0.5145, -0.1004 }
+    }
   }
 };
 
@@ -148,19 +152,23 @@ struct {
 #define SCALE	8192            /* scale factor: do floats with int math */
 #define MAXPIX	 255            /* white value */
 
-int	tab[3][3][MAXPIX+1];   /* multiply lookup table */
-double	chroma_lim;            /* chroma limit */
-double	compos_lim;            /* composite amplitude limit */
-long	ichroma_lim2;          /* chroma limit squared (scaled integer) */
-int	icompos_lim;           /* composite amplitude limit (scaled integer) */
+gint	tab[3][3][MAXPIX+1];   /* multiply lookup table */
+gdouble	chroma_lim;            /* chroma limit */
+gdouble	compos_lim;            /* composite amplitude limit */
+glong	ichroma_lim2;          /* chroma limit squared (scaled integer) */
+gint	icompos_lim;           /* composite amplitude limit (scaled integer) */
 
 static void query        (void);
-static void run          (char *name, int nparam, GParam *param,
-			  int *nretvals, GParam **retvals);
+static void run          (gchar   *name,
+			  gint     nparam,
+			  GParam  *param,
+			  gint    *nretvals,
+			  GParam **retvals);
 
-gint        pluginCore   (struct piArgs *argp);
-gint        pluginCoreIA (struct piArgs *argp);
-static gint hotp         (register guint8 r, register guint8 g,
+static gint pluginCore   (struct piArgs *argp);
+static gint pluginCoreIA (struct piArgs *argp);
+static gint hotp         (register guint8 r,
+			  register guint8 g,
 			  register guint8 b);
 static void build_tab    (int m);
 
@@ -188,14 +196,15 @@ static void build_tab    (int m);
 #define pix_decode(v)  ((double)v / (double)MAXPIX)
 #define pix_encode(v)  ((int)(v * (double)MAXPIX + 0.5))
 
-GPlugInInfo PLUG_IN_INFO = {
-  NULL, /* init */
-  NULL, /* quit */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init  */
+  NULL,  /* quit  */
   query, /* query */
-  run, /* run */
+  run,   /* run   */
 };
 
-MAIN()
+MAIN ()
 
 static void
 query (void)
@@ -230,10 +239,10 @@ query (void)
 }
 
 static void
-run (char    *name,
-     int      nparam,
+run (gchar   *name,
+     gint     nparam,
      GParam  *param,
-     int     *nretvals,
+     gint    *nretvals,
      GParam **retvals)
 {
   static GParam rvals[1];
@@ -243,10 +252,10 @@ run (char    *name,
   *nretvals = 1;
   *retvals = rvals;
 
-  memset(&args,(int)0,sizeof(struct piArgs));
-  args.mode=-1;
+  memset (&args, (int) 0, sizeof (struct piArgs));
+  args.mode = -1;
 
-  gimp_get_data("plug_in_hot", &args);
+  gimp_get_data ("plug_in_hot", &args);
 
   args.image = param[1].data.d_image;
   args.drawable = param[2].data.d_drawable;
@@ -260,17 +269,17 @@ run (char    *name,
       /* XXX: add code here for interactive running */
       if (args.mode == -1)
 	{
-	  args.mode = mode_ntsc;
-	  args.action =   act_lredux;
-	  args.new_layerp =   1;
+	  args.mode       = mode_ntsc;
+	  args.action     = act_lredux;
+	  args.new_layerp = 1;
 	}
 
-      if (pluginCoreIA(&args)==-1)
+      if (pluginCoreIA(&args) == -1)
 	{
 	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
-      gimp_set_data("plug_in_hot", &args, sizeof(struct piArgs));
-      
+      gimp_set_data ("plug_in_hot", &args, sizeof (struct piArgs));
+
     break;
 
     case RUN_NONINTERACTIVE:
@@ -281,11 +290,11 @@ run (char    *name,
 	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
 	  break;
 	}
-      args.mode = param[3].data.d_int32;
-      args.action = param[4].data.d_int32;
+      args.mode       = param[3].data.d_int32;
+      args.action     = param[4].data.d_int32;
       args.new_layerp = param[5].data.d_int32;
 
-      if (pluginCore(&args)==-1)
+      if (pluginCore(&args) == -1)
 	{
 	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
 	  break;
@@ -295,17 +304,15 @@ run (char    *name,
     case RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
-      if (pluginCore(&args)==-1)
+      if (pluginCore (&args) == -1)
 	{
 	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
     break;
-
   }
-
 }
 
-gint
+static gint
 pluginCore (struct piArgs *argp)
 {
   GDrawable *drw, *ndrw=NULL;
@@ -331,21 +338,23 @@ pluginCore (struct piArgs *argp)
   Bpp = drw->bpp;
   if (argp->new_layerp)
     {
-      char name[40];
-      char *mode_names[] = {
+      gchar name[40];
+      gchar *mode_names[] =
+      {
 	"ntsc",
 	"pal",
       };
-      char *action_names[] = {
+      gchar *action_names[] =
+      {
 	"lum redux",
 	"sat redux",
 	"flag",
       };
-      
+
       g_snprintf (name, sizeof (name), "hot mask (%s, %s)",
 		  mode_names[argp->mode],
 		  action_names[argp->action]);
-	     
+
       nl = gimp_layer_new (argp->image, name, width, height,
 			   RGBA_IMAGE, (gdouble)100, NORMAL_MODE);
       ndrw = gimp_drawable_get (nl);
@@ -353,8 +362,8 @@ pluginCore (struct piArgs *argp)
       gimp_image_add_layer (argp->image, nl, 0);
     }
 
-  src = (guchar*)malloc(width*height*Bpp);
-  dst = (guchar*)malloc(width*height*4);
+  src = g_new (guchar, width * height * Bpp);
+  dst = g_new (guchar, width * height * 4);
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   if (argp->new_layerp)
     {
@@ -365,29 +374,33 @@ pluginCore (struct piArgs *argp)
       gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
     }
 
-  gimp_pixel_rgn_get_rect(&srcPr, src, 0, 0, width, height);
+  gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
-  s=src;
-  d=dst;
+  s = src;
+  d = dst;
 
-  build_tab(argp->mode);
+  build_tab (argp->mode);
 
-  gimp_progress_init( _("Hot"));
-  prog_interval=height/10;
-  
-  for(y=0;y<height;y++)
+  gimp_progress_init (_("Hot"));
+  prog_interval = height / 10;
+
+  for (y = 0; y < height; y++)
     {
-      if (y % prog_interval == 0) gimp_progress_update((double)y/(double)height);
-      for(x=0;x<width;x++)
+      if (y % prog_interval == 0)
+	gimp_progress_update ((double) y / (double) height);
+      for (x = 0; x < width; x++)
 	{
-	  if (hotp(r=*(s+0),g=*(s+1),b=*(s+2)))
+	  if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))
 	    {
 	      if (argp->action == act_flag)
 		{
-		  for(i=0;i<3;i++)
-		    *d++=0;
-		  s+=3;
-		  if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
+		  for (i = 0; i < 3; i++)
+		    *d++ = 0;
+		  s += 3;
+		  if (Bpp == 4)
+		    *d++ = *s++;
+		  else if (argp->new_layerp)
+		    *d++ = 255;
 		}
 	      else
 		{
@@ -399,11 +412,11 @@ pluginCore (struct piArgs *argp)
 		      *d++ = new_r;
 		      *d++ = new_g;
 		      *d++ = new_b;
-		      s+=3;
-		      if (Bpp==4)
-			*d++=*s++;
+		      s += 3;
+		      if (Bpp == 4)
+			*d++ = *s++;
 		      else if (argp->new_layerp)
-			*d++=255;
+			*d++ = 255;
 		    }
 		  else
 		    {
@@ -424,12 +437,12 @@ pluginCore (struct piArgs *argp)
 		       * floating-point pixel RGB values.
 		       */
 		      fy = (double)Y / (double)SCALE;
-		      fc = hypot((double)I / (double)SCALE,
-				 (double)Q / (double)SCALE);
+		      fc = hypot ((double) I / (double) SCALE,
+				  (double) Q / (double) SCALE);
 
-		      pr = (double)pix_decode(r);
-		      pg = (double)pix_decode(g);
-		      pb = (double)pix_decode(b);
+		      pr = (double) pix_decode (r);
+		      pg = (double) pix_decode (g);
+		      pb = (double) pix_decode (b);
 
 		      /*
 		       * Reducing overall pixel intensity by scaling R,
@@ -443,7 +456,7 @@ pluginCore (struct piArgs *argp)
 		       * pixel with the same luminance (R=G=B=Y), we
 		       * change saturation without affecting luminance.
 		       */
-		      if(argp->action == act_lredux)
+		      if (argp->action == act_lredux)
 			{
 			  /*
 			   * Calculate a scale factor that will bring the pixel
@@ -461,12 +474,11 @@ pluginCore (struct piArgs *argp)
 			  t = compos_lim / (fy + fc);
 			  if (t < scale)
 			    scale = t;
-			  scale = pow(scale, mode[argp->mode].gamma);
+			  scale = pow (scale, mode[argp->mode].gamma);
 
-			  r = (guint8)pix_encode(scale * pr);
-			  g = (guint8)pix_encode(scale * pg);
-			  b = (guint8)pix_encode(scale * pb);
-
+			  r = (guint8) pix_encode (scale * pr);
+			  g = (guint8) pix_encode (scale * pg);
+			  b = (guint8) pix_encode (scale * pb);
 			}
 		      else
 			{ /* act_sredux hopefully */
@@ -486,21 +498,27 @@ pluginCore (struct piArgs *argp)
 			  if (t < scale)
 			    scale = t;
 
-			  pr = gc(pr,argp->mode);
-			  pg = gc(pg,argp->mode);
-			  pb = gc(pb,argp->mode);
+			  pr = gc (pr, argp->mode);
+			  pg = gc (pg, argp->mode);
+			  pb = gc (pb, argp->mode);
 			  py = pr * mode[argp->mode].code[0][0] + pg * 
 			    mode[argp->mode].code[0][1] + pb *
 			    mode[argp->mode].code[0][2];
-			  r = pix_encode(inv_gc(py + scale * (pr - py), argp->mode));
-			  g = pix_encode(inv_gc(py + scale * (pg - py), argp->mode));
-			  b = pix_encode(inv_gc(py + scale * (pb - py), argp->mode));
+			  r = pix_encode (inv_gc (py + scale * (pr - py),
+						  argp->mode));
+			  g = pix_encode (inv_gc (py + scale * (pg - py),
+						  argp->mode));
+			  b = pix_encode (inv_gc (py + scale * (pb - py),
+						  argp->mode));
 			}
 		      *d++ = new_r = r;
 		      *d++ = new_g = g;
 		      *d++ = new_b = b;
-		      s+=3;
-		      if (Bpp==4) *d++=*s++; else if (argp->new_layerp) *d++=255;
+		      s += 3;
+		      if (Bpp == 4)
+			*d++ = *s++;
+		      else if (argp->new_layerp)
+			*d++ = 255;
 		    }
 		}
 	    }
@@ -508,35 +526,35 @@ pluginCore (struct piArgs *argp)
 	    {
 	      if (!argp->new_layerp)
 		{
-		  for(i=0;i<Bpp;i++)
-		    *d++=*s++;
+		  for (i = 0; i < Bpp; i++)
+		    *d++ = *s++;
 		} 
 	      else
 		{
-		  s+=Bpp;
-		  d+=4;
+		  s += Bpp;
+		  d += 4;
 		}
 	    }
 	}
     }
-  gimp_pixel_rgn_set_rect(&dstPr, dst, 0, 0, width, height);
+  gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
-  free(src);
-  free(dst);
+  free (src);
+  free (dst);
 
-  if(argp->new_layerp)
+  if (argp->new_layerp)
     {
-      gimp_drawable_flush(ndrw);
-      gimp_drawable_update(nl, 0, 0, width, height);
+      gimp_drawable_flush (ndrw);
+      gimp_drawable_update (nl, 0, 0, width, height);
     }
   else
     {
-      gimp_drawable_flush(drw);
+      gimp_drawable_flush (drw);
       gimp_drawable_merge_shadow (drw->id, TRUE);
-      gimp_drawable_update(drw->id, 0, 0, width, height);
+      gimp_drawable_update (drw->id, 0, 0, width, height);
     }
 
-  gimp_displays_flush();
+  gimp_displays_flush ();
   
   return retval;
 }
@@ -552,42 +570,23 @@ hot_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-gint
+static gint
 pluginCoreIA (struct piArgs *argp)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
   GtkWidget *vbox;
+  GtkWidget *toggle;
+  GtkWidget *frame;
   gchar **argv;
   gint    argc;
-  gint    i;
 
-  struct mwRadioGroup modes[] =
-  {
-    { "NTSC", 1 },
-    { "PAL", 0 },
-    { NULL, 0 }
-  };
-  struct mwRadioGroup actions[] =
-  {
-    { N_("Reduce Luminance"), 0 },
-    { N_("Reduce Saturation"), 0 },
-    { N_("Blacken (flag)"), 0 },
-    { NULL, 0}
-  };
-
-  for (i = 0; actions[i].name != NULL; i++)
-     actions[i].name = gettext(actions[i].name);
-
-  /* Set args */
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("hot");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc());
-
-  actions[argp->action].var = 1;
 
   dlg = gimp_dialog_new (_("Hot"), "hot",
 			 gimp_plugin_help_func, "filters/hot.html",
@@ -614,19 +613,45 @@ pluginCoreIA (struct piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  mw_toggle_button_new (vbox, NULL, _("Create New Layer"), &argp->new_layerp);
-  mw_radio_group_new (vbox, _("Mode"), modes);
+  toggle = gtk_check_button_new_with_label (_("Create New Layer"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->new_layerp);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &argp->new_layerp);
+  gtk_widget_show (toggle);
 
-  mw_radio_group_new (hbox, _("Action"), actions);
+  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
+				 gimp_radio_button_update,
+				 &argp->mode, (gpointer) argp->mode,
+
+				 "NTSC", (gpointer) mode_ntsc, NULL,
+				 "PAL",  (gpointer) mode_pal, NULL,
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Action"),
+			   gimp_radio_button_update,
+			   &argp->action, (gpointer) argp->action,
+
+			   _("Reduce Luminance"),  (gpointer) act_lredux, NULL,
+			   _("Reduce Saturation"), (gpointer) act_sredux, NULL,
+			   _("Blacken"),           (gpointer) act_flag, NULL,
+
+			   NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
-  argp->mode = mw_radio_result (modes);
-  argp->action = mw_radio_result (actions);
-  
   if (run_flag)
     return pluginCore (argp);
   else

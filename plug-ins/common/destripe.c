@@ -35,7 +35,6 @@
  *   dialog_ientry_update()      - Update the value field using the text entry.
  *   dialog_histogram_callback()
  *   dialog_ok_callback()        - Start the filter...
- *   dialog_close_callback()     - Exit the filter dialog application.
  *
  *   1997/08/16 * Initial Revision.
  *   1998/02/06 * Minor changes.
@@ -72,20 +71,25 @@
  * Local functions...
  */
 
-static void	query(void);
-static void	run(char *, int, GParam *, int *, GParam **);
-static void	destripe(void);
-static gint	destripe_dialog(void);
-static void	dialog_create_ivalue(char *, GtkTable *, int, gint *, int, int);
-static void	dialog_iscale_update(GtkAdjustment *, gint *);
-static void	dialog_ientry_update(GtkWidget *, gint *);
-static void	dialog_ok_callback(GtkWidget *, gpointer);
-static void	dialog_close_callback(GtkWidget *, gpointer);
+static void	query (void);
+static void	run   (char *,
+		       int,
+		       GParam *,
+		       int *,
+		       GParam **);
 
-static void	preview_init(void);
-static void	preview_exit(void);
-static void	preview_update(void);
-static void	preview_scroll_callback(void);
+static void	destripe (void);
+
+static gint	destripe_dialog      (void);
+static void	dialog_create_ivalue (char *, GtkTable *, int, gint *, int, int);
+static void	dialog_iscale_update (GtkAdjustment *, gint *);
+static void	dialog_ientry_update (GtkWidget *, gint *);
+static void	dialog_ok_callback   (GtkWidget *, gpointer);
+
+static void	preview_init            (void);
+static void	preview_exit            (void);
+static void	preview_update          (void);
+static void	preview_scroll_callback (void);
 
 
 /*
@@ -333,7 +337,11 @@ preview_draw_row (int x, int y, int w, guchar *row)
 
 
 static void
-destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
+destripe_rect (gint      sel_x1,
+	       gint      sel_y1,
+	       gint      sel_x2,
+	       gint      sel_y2,
+	       gboolean  do_preview)
 {
   GPixelRgn src_rgn;	/* source image region */
   GPixelRgn dst_rgn;	/* destination image region */
@@ -357,50 +365,51 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
   if (!do_preview)
     {
       gimp_progress_init (_("Destriping..."));
-      
+
       progress = 0;
       progress_inc = 0.5 * tile_width / sel_width;
     }
-  
- /*
-  * Setup for filter...
-  */
 
-  gimp_pixel_rgn_init(&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  /*
+   * Setup for filter...
+   */
+
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst_rgn, drawable,
+		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
   hist = g_new (long, sel_width * img_bpp);
   corr = g_new (long, sel_width * img_bpp);
-  src_rows = g_malloc (tile_width * sel_height * img_bpp * sizeof (guchar));
-  
+  src_rows = g_new (guchar, tile_width * sel_height * img_bpp);
+
   memset (hist, 0, sel_width * img_bpp * sizeof (long));
   
   /*
    * collect "histogram" data.
    */
-  
+
   for (ox = sel_x1; ox < sel_x2; ox += tile_width)
     {
       guchar *rows = src_rows;
-      
+
       cols = sel_x2 - ox;
       if (cols > tile_width)
         cols = tile_width;
-      
+
       gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, sel_y1, cols, sel_height);
-      
+
       for (y = 0; y < sel_height; y++)
         {
           long *h = hist + (ox - sel_x1) * img_bpp;
           guchar *row_end = rows + cols * img_bpp;
-          
+
           while (rows < row_end)
             *h++ += *rows++;
         }
-      
+
       if (!do_preview)
         gimp_progress_update (progress += progress_inc);
-
     }
   
   /*
@@ -409,21 +418,30 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
   
   if (1)
     {
-      int extend = (avg_width >> 1) * img_bpp;
-      
+      gint extend = (avg_width >> 1) * img_bpp;
+
       for (i = 0; i < MIN (3, img_bpp); i++)
         {
           long *h = hist - extend + i;
           long *c = corr - extend + i;
           long sum = 0;
-          int cnt = 0;
-          
+          gint cnt = 0;
+
           for (x = -extend; x < sel_width * img_bpp; x += img_bpp)
             {
-              if (x + extend <  sel_width * img_bpp) { sum += h[ extend]; cnt++; };
-              if (x - extend >=                   0) { sum -= h[-extend]; cnt--; };
-              if (x          >=                   0) { *c = ((sum/cnt - *h) << 10) / *h; };
-              
+              if (x + extend < sel_width * img_bpp)
+		{
+		  sum += h[ extend]; cnt++;
+		}
+              if (x - extend >= 0)
+		{
+		  sum -= h[-extend]; cnt--;
+		}
+              if (x >= 0)
+		{
+		  *c = ((sum / cnt - *h) << 10) / *h;
+		}
+
               h += img_bpp;
               c += img_bpp;
             }
@@ -437,44 +455,43 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
           long *c = corr + i + sel_width * img_bpp - img_bpp;
           long i = *h;
           *c = 0;
-          
+
           do
             {
               h -= img_bpp;
               c -= img_bpp;
-              
+
               if (*h - i > avg_width && i - *h > avg_width)
                 i = *h;
-              
+
               *c = (i-128) << 10 / *h;
             }
           while (h > hist);
-          
         }
     }
-  
+
   /*
    * remove stripes.
    */
-  
+
   for (ox = sel_x1; ox < sel_x2; ox += tile_width)
     {
       guchar *rows = src_rows;
-      
+
       cols = sel_x2 - ox;
       if (cols > tile_width)
         cols = tile_width;
-      
+
       gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, sel_y1, cols, sel_height);
-      
+
       if (!do_preview)
         gimp_progress_update (progress += progress_inc);
-      
+
       for (y = 0; y < sel_height; y++)
         {
           long *c = corr + (ox - sel_x1) * img_bpp;
           guchar *row_end = rows + cols * img_bpp;
-          
+
           if (histogram)
             while (rows < row_end)
               {
@@ -487,24 +504,25 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
                 *rows = MIN (255, MAX (0, *rows + (*rows * *c >> 10) ));
                 c++; rows++;
               }
-          
+
           if (do_preview)
             preview_draw_row (ox - sel_x1, y, cols, rows - cols * img_bpp);
         }
-      
+
       if (!do_preview)
         {
-          gimp_pixel_rgn_set_rect (&dst_rgn, src_rows, ox, sel_y1, cols, sel_height);
+          gimp_pixel_rgn_set_rect (&dst_rgn, src_rows,
+				   ox, sel_y1, cols, sel_height);
           gimp_progress_update (progress += progress_inc);
         }
     }
-  
-  g_free(src_rows);
+
+  g_free (src_rows);
 
   /*
    * Update the screen...
    */
-  
+
   if (do_preview)
     {
       gtk_widget_draw (preview, NULL);
@@ -528,12 +546,12 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
 static void
 destripe (void)
 {
-  destripe_rect (sel_x1, sel_y1, sel_x2, sel_y2, 0);
+  destripe_rect (sel_x1, sel_y1, sel_x2, sel_y2, FALSE);
 }
 
 static void
-dialog_histogram_callback(GtkWidget *widget,	/* I - Toggle button */
-                          gpointer  data)	/* I - Data */
+dialog_histogram_callback (GtkWidget *widget,	/* I - Toggle button */
+			   gpointer  data)	/* I - Data */
 {
   histogram = !histogram;
   preview_update ();
@@ -544,23 +562,22 @@ dialog_histogram_callback(GtkWidget *widget,	/* I - Toggle button */
  */
 
 static gint
-destripe_dialog(void)
+destripe_dialog (void)
 {
-  GtkWidget	*dialog,	/* Dialog window */
-		*table,		/* Table "container" for controls */
-		*ptable,	/* Preview table */
-		*ftable,	/* Filter table */
-		*frame,		/* Frame for preview */
-		*scrollbar,	/* Horizontal + vertical scroller */
-		*button;
-  gint		argc;		/* Fake argc for GUI */
-  gchar		**argv;		/* Fake argv for GUI */
-  guchar	*color_cube;	/* Preview color cube... */
+  GtkWidget *dialog;     /* Dialog window */
+  GtkWidget *table;      /* Table "container" for controls */
+  GtkWidget *ptable;     /* Preview table */
+  GtkWidget *ftable;     /* Filter table */
+  GtkWidget *frame;      /* Frame for preview */
+  GtkWidget *scrollbar;  /* Horizontal + vertical scroller */
+  GtkWidget *button;
+  gint     argc;         /* Fake argc for GUI */
+  gchar  **argv;         /* Fake argv for GUI */
+  guchar  *color_cube;	 /* Preview color cube... */
 
-
- /*
-  * Initialize the program's display...
-  */
+  /*
+   * Initialize the program's display...
+   */
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -574,6 +591,7 @@ destripe_dialog(void)
   signal (SIGBUS, SIG_DFL);
 #endif
   signal (SIGSEGV, SIG_DFL);
+
   gtk_preview_set_gamma (gimp_gamma ());
   gtk_preview_set_install_cmap (gimp_install_cmap ());
   color_cube = gimp_color_cube ();
@@ -583,9 +601,9 @@ destripe_dialog(void)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
- /*
-  * Dialog window...
-  */
+  /*
+   * Dialog window...
+   */
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
 			    gimp_plugin_help_func, "filters/destripe.html",
@@ -600,85 +618,92 @@ destripe_dialog(void)
 			    NULL);
 
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (dialog_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
- /*
-  * Top-level table for dialog...
-  */
+  /*
+   * Top-level table for dialog...
+   */
 
-  table = gtk_table_new(3, 3, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 6);
-  gtk_table_set_row_spacings(GTK_TABLE(table), 4);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show(table);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
- /*
-  * Preview window...
-  */
+  /*
+   * Preview window...
+   */
 
-  ptable = gtk_table_new(2, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(ptable), 0);
-  gtk_table_attach(GTK_TABLE(table), ptable, 0, 2, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(ptable);
+  ptable = gtk_table_new (2, 2, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ptable, 0, 2, 0, 1,
+		    0, 0, 0, 0);
+  gtk_widget_show (ptable);
 
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1,
+		   0, 0, 0, 0);
+  gtk_widget_show (frame);
 
-  preview_width  = MIN(sel_x2 - sel_x1, PREVIEW_SIZE);
-  preview_height = MIN(sel_y2 - sel_y1, PREVIEW_SIZE);
+  preview_width  = MIN (sel_x2 - sel_x1, PREVIEW_SIZE);
+  preview_height = MIN (sel_y2 - sel_y1, PREVIEW_SIZE);
 
-  preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(preview), preview_width, preview_height);
-  gtk_container_add(GTK_CONTAINER(frame), preview);
-  gtk_widget_show(preview);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
 
-  hscroll_data = gtk_adjustment_new(0, 0, sel_x2 - sel_x1 - 1, 1.0,
-				    MIN(preview_width, sel_x2 - sel_x1),
-				    MIN(preview_width, sel_x2 - sel_x1));
+  hscroll_data = gtk_adjustment_new (0, 0, sel_x2 - sel_x1 - 1, 1.0,
+				     MIN (preview_width, sel_x2 - sel_x1),
+				     MIN (preview_width, sel_x2 - sel_x1));
 
-  gtk_signal_connect(hscroll_data, "value_changed",
-		     (GtkSignalFunc)preview_scroll_callback, NULL);
+  gtk_signal_connect (hscroll_data, "value_changed",
+		      GTK_SIGNAL_FUNC (preview_scroll_callback),
+		      NULL);
 
-  scrollbar = gtk_hscrollbar_new(GTK_ADJUSTMENT(hscroll_data));
-  gtk_range_set_update_policy(GTK_RANGE(scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach(GTK_TABLE(ptable), scrollbar, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
-  gtk_widget_show(scrollbar);
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (hscroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (scrollbar);
 
-  vscroll_data = gtk_adjustment_new(0, 0, sel_y2 - sel_y1 - 1, 1.0,
-				    MIN(preview_height, sel_y2 - sel_y1),
-				    MIN(preview_height, sel_y2 - sel_y1));
+  vscroll_data = gtk_adjustment_new (0, 0, sel_y2 - sel_y1 - 1, 1.0,
+				     MIN (preview_height, sel_y2 - sel_y1),
+				     MIN (preview_height, sel_y2 - sel_y1));
 
-  gtk_signal_connect(vscroll_data, "value_changed",
-		     (GtkSignalFunc)preview_scroll_callback, NULL);
+  gtk_signal_connect (vscroll_data, "value_changed",
+		      GTK_SIGNAL_FUNC (preview_scroll_callback),
+		      NULL);
 
-  scrollbar = gtk_vscrollbar_new(GTK_ADJUSTMENT(vscroll_data));
-  gtk_range_set_update_policy(GTK_RANGE(scrollbar), GTK_UPDATE_CONTINUOUS);
-  gtk_table_attach(GTK_TABLE(ptable), scrollbar, 1, 2, 0, 1, 0, GTK_FILL, 0, 0);
-  gtk_widget_show(scrollbar);
+  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1, 0,
+		    GTK_FILL, 0, 0);
+  gtk_widget_show (scrollbar);
 
-  preview_init();
+  preview_init ();
 
- /*
-  * Filter type controls...
-  */
+  /*
+   * Filter type controls...
+   */
 
-  ftable = gtk_table_new(4, 1, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(ftable), 4);
-  gtk_table_attach(GTK_TABLE(table), ftable, 2, 3, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(ftable);
+  ftable = gtk_table_new (4, 1, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ftable, 2, 3, 0, 1,
+		    0, 0, 0, 0);
+  gtk_widget_show (ftable);
 
-  button = gtk_check_button_new_with_label(_("Histogram"));
-  gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
-			       histogram ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-		     (GtkSignalFunc)dialog_histogram_callback,
-		     NULL);
-  gtk_widget_show(button);
+  button = gtk_check_button_new_with_label (_("Histogram"));
+  gtk_table_attach (GTK_TABLE (ftable), button, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				histogram ? TRUE : FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (dialog_histogram_callback),
+		      NULL);
+  gtk_widget_show (button);
 
 /*  button = gtk_check_button_new_with_label("Recursive");
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
@@ -690,34 +715,35 @@ destripe_dialog(void)
 		     NULL);
   gtk_widget_show(button);*/
 
- /*
-  * Box size (radius) control...
-  */
+  /*
+   * Box size (radius) control...
+   */
 
-  dialog_create_ivalue(_("Width"), GTK_TABLE(table), 2, &avg_width, 2, MAX_AVG);
+  dialog_create_ivalue (_("Width:"), GTK_TABLE (table), 2,
+			&avg_width, 2, MAX_AVG);
 
- /*
-  * Show it and wait for the user to do something...
-  */
+  /*
+   * Show it and wait for the user to do something...
+   */
 
-  gtk_widget_show(dialog);
+  gtk_widget_show (dialog);
 
-  preview_update();
+  preview_update ();
 
-  gtk_main();
-  gdk_flush();
+  gtk_main ();
+  gdk_flush ();
 
- /*
-  * Free the preview data...
-  */
+  /*
+   * Free the preview data...
+   */
 
-  preview_exit();
+  preview_exit ();
 
- /*
-  * Return ok/cancel...
-  */
+  /*
+   * Return ok/cancel...
+   */
 
-  return (run_filter);
+  return run_filter;
 }
 
 
@@ -726,21 +752,20 @@ destripe_dialog(void)
  */
 
 static void
-preview_init(void)
+preview_init (void)
 {
-  int width;		/* Byte width of the image */
+  gint width;  /* Byte width of the image */
 
-
- /*
-  * Setup for preview filter...
-  */
+  /*
+   * Setup for preview filter...
+   */
 
   width = preview_width * img_bpp;
 
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_x2 - sel_x1);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_y2 -sel_y1);
+  preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);
+  preview_y2 = preview_y1 + MIN (preview_height, sel_y2 -sel_y1);
 }
 
 
@@ -749,14 +774,14 @@ preview_init(void)
  */
 
 static void
-preview_scroll_callback(void)
+preview_scroll_callback (void)
 {
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT(hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT(vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_x2 - sel_x1);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_y2 - sel_y1);
+  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
+  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
+  preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);
+  preview_y2 = preview_y1 + MIN (preview_height, sel_y2 - sel_y1);
 
-  preview_update();
+  preview_update ();
 }
 
 
@@ -765,9 +790,9 @@ preview_scroll_callback(void)
  */
 
 static void
-preview_update(void)
+preview_update (void)
 {
-  destripe_rect (preview_x1, preview_y1, preview_x2, preview_y2, 1);
+  destripe_rect (preview_x1, preview_y1, preview_x2, preview_y2, TRUE);
 }
 
 
@@ -776,7 +801,7 @@ preview_update(void)
  */
 
 static void
-preview_exit(void)
+preview_exit (void)
 {
 }
 
@@ -786,32 +811,33 @@ preview_exit(void)
  */
 
 static void
-dialog_create_ivalue(char     *title,	/* I - Label for control */
-                     GtkTable *table,	/* I - Table container to use */
-                     int      row,	/* I - Row # for container */
-                     gint     *value,	/* I - Value holder */
-                     int      left,	/* I - Minimum value for slider */
-                     int      right)	/* I - Maximum value for slider */
+dialog_create_ivalue (char     *title,	/* I - Label for control */
+		      GtkTable *table,	/* I - Table container to use */
+		      int      row,	/* I - Row # for container */
+		      gint     *value,	/* I - Value holder */
+		      int      left,	/* I - Minimum value for slider */
+		      int      right)	/* I - Maximum value for slider */
 {
   GtkWidget	*label,		/* Control label */
 		*scale,		/* Scale widget */
 		*entry;		/* Text widget */
   GtkObject	*scale_data;	/* Scale data */
-  char		buf[256];	/* String buffer */
+  gchar		buf[256];	/* String buffer */
 
 
- /*
-  * Label...
-  */
+  /*
+   * Label...
+   */
 
   label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach(table, label, 0, 1, row, row + 1,
+		   GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
- /*
-  * Scale...
-  */
+  /*
+   * Scale...
+   */
 
   scale_data = gtk_adjustment_new(*value, left, right, 1.0, 1.0, 1.0);
 
@@ -821,7 +847,8 @@ dialog_create_ivalue(char     *title,	/* I - Label for control */
 
   scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
   gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(table, scale, 1, 2, row, row + 1,
+		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
   gtk_widget_show(scale);
@@ -834,12 +861,13 @@ dialog_create_ivalue(char     *title,	/* I - Label for control */
   gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
   gtk_object_set_user_data(scale_data, entry);
   gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buf, "%d", *value);
+  g_snprintf(buf, sizeof (buf), "%d", *value);
   gtk_entry_set_text(GTK_ENTRY(entry), buf);
   gtk_signal_connect(GTK_OBJECT(entry), "changed",
 		     (GtkSignalFunc) dialog_ientry_update,
 		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1,
+		   GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(entry);
 }
 
@@ -849,26 +877,25 @@ dialog_create_ivalue(char     *title,	/* I - Label for control */
  */
 
 static void
-dialog_iscale_update(GtkAdjustment *adjustment,	/* I - New value */
-                     gint          *value)	/* I - Current value */
+dialog_iscale_update (GtkAdjustment *adjustment, /* I - New value */
+                      gint          *value)      /* I - Current value */
 {
-  GtkWidget	*entry;		/* Text entry widget */
-  char		buf[256];	/* Text buffer */
-
+  GtkWidget *entry;     /* Text entry widget */
+  gchar      buf[256];  /* Text buffer */
 
   if (*value != adjustment->value)
-  {
-    *value = adjustment->value;
+    {
+      *value = adjustment->value;
 
-    entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-    sprintf(buf, "%d", *value);
+      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
+      g_snprintf(buf, sizeof (buf), "%d", *value);
 
-    gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-    gtk_entry_set_text(GTK_ENTRY(entry), buf);
-    gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
+      gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
+      gtk_entry_set_text(GTK_ENTRY(entry), buf);
+      gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
 
-    preview_update();
-  };
+      preview_update();
+    };
 }
 
 
@@ -883,24 +910,23 @@ dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
   GtkAdjustment	*adjustment;
   gint		new_value;
 
-
   new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
 
   if (*value != new_value)
-  {
-    adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-    if ((new_value >= adjustment->lower) &&
-	(new_value <= adjustment->upper))
     {
-      *value            = new_value;
-      adjustment->value = new_value;
+      adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
 
-      gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+      if ((new_value >= adjustment->lower) &&
+	  (new_value <= adjustment->upper))
+	{
+	  *value            = new_value;
+	  adjustment->value = new_value;
 
-      preview_update();
+	  gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+
+	  preview_update();
+	};
     };
-  };
 }
 
 /*
@@ -908,24 +934,10 @@ dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
  */
 
 static void
-dialog_ok_callback(GtkWidget *widget,	/* I - OK button widget */
-                   gpointer  data)	/* I - Dialog window */
+dialog_ok_callback (GtkWidget *widget,	/* I - OK button widget */
+		    gpointer   data)	/* I - Dialog window */
 {
   run_filter = TRUE;
-  gtk_widget_destroy(GTK_WIDGET(data));
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-
-
-/*
- * 'dialog_close_callback()' - Exit the filter dialog application.
- */
-
-static void
-dialog_close_callback(GtkWidget *widget,	/* I - Dialog window */
-                      gpointer  data)		/* I - Dialog window */
-{
-  gtk_main_quit();
-}
-
-

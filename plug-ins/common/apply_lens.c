@@ -23,12 +23,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * Compile with (on Linux):
- * gcc -I/usr/local/include -I/usr/local/include/glib -o apply_lens apply_lens.c -L/usr/local/lib -L/usr/X11/lib -lgtk -lgdk -lgimp -lglib -lXext -lX11 -lm
- *
- */
-
 /* Version 0.1:
  * 
  * First release. No known serious bugs, and basically does what you want.
@@ -58,22 +52,25 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH 100
 
 /* Declare local functions.
  */
-static void query(void);
-static void run(char *name, int nparams,
-		GParam *param,
-		int *nreturn_vals,
-		GParam **return_vals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
-static void drawlens(GDrawable *drawable);
-static gint lens_dialog(GDrawable *drawable);
+static void drawlens (GDrawable *drawable);
+
+static gint lens_dialog (GDrawable *drawable);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -107,10 +104,10 @@ static LensInterface bint =
   FALSE  /*  run  */
 };
 
-MAIN()
+MAIN ()
 
 static void
-query(void)
+query (void)
 {
   static GParamDef args[] =
   {
@@ -129,25 +126,25 @@ query(void)
 
   INIT_I18N();
 
-  gimp_install_procedure("plug_in_applylens",
-			 _("Apply a lens effect"),
-			 _("This plug-in uses Snell's law to draw an ellipsoid lens over the image"),
-			 "Morten Eriksen",
-			 "Morten Eriksen",
-			 "1997",
-			 N_("<Image>/Filters/Glass Effects/Apply Lens..."),
-			 "RGB*, GRAY*, INDEXED*",
-			 PROC_PLUG_IN,
-			 nargs, nreturn_vals,
-			 args, return_vals);
+  gimp_install_procedure ("plug_in_applylens",
+			  _("Apply a lens effect"),
+			  _("This plug-in uses Snell's law to draw an ellipsoid lens over the image"),
+			  "Morten Eriksen",
+			  "Morten Eriksen",
+			  "1997",
+			  N_("<Image>/Filters/Glass Effects/Apply Lens..."),
+			  "RGB*, GRAY*, INDEXED*",
+			  PROC_PLUG_IN,
+			  nargs, nreturn_vals,
+			  args, return_vals);
 }
 
 static void
-run(char *name,
-    int nparams,
-    GParam *param,
-    int *nreturn_vals,
-    GParam **return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -164,84 +161,93 @@ run(char *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  switch(run_mode) {
-  case RUN_INTERACTIVE:
-    gimp_get_data("plug_in_applylens", &lvals);
-    if(!lens_dialog(drawable)) return;
-    break;
+  switch(run_mode)
+    {
+    case RUN_INTERACTIVE:
+      gimp_get_data ("plug_in_applylens", &lvals);
+      if(!lens_dialog (drawable))
+	return;
+      break;
 
-  case RUN_NONINTERACTIVE:
-    if(nparams != 7) status = STATUS_CALLING_ERROR;
-    if(status == STATUS_SUCCESS) {
-      lvals.refraction = param[3].data.d_float;
-      lvals.keep_surr = param[4].data.d_int32;
-      lvals.use_bkgr = param[5].data.d_int32;
-      lvals.set_transparent = param[6].data.d_int32;
+    case RUN_NONINTERACTIVE:
+      if (nparams != 7)
+	status = STATUS_CALLING_ERROR;
+
+      if (status == STATUS_SUCCESS)
+	{
+	  lvals.refraction = param[3].data.d_float;
+	  lvals.keep_surr = param[4].data.d_int32;
+	  lvals.use_bkgr = param[5].data.d_int32;
+	  lvals.set_transparent = param[6].data.d_int32;
+	}
+
+      if (status == STATUS_SUCCESS && (lvals.refraction < 1.0))
+	status = STATUS_CALLING_ERROR;
+      break;
+
+    case RUN_WITH_LAST_VALS:
+      gimp_get_data ("plug_in_applylens", &lvals);
+      break;
+    
+    default:
+      break;
     }
 
-    if(status == STATUS_SUCCESS && (lvals.refraction < 1.0))
-      status = STATUS_CALLING_ERROR;
-    break;
+  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+  gimp_progress_init (_("Applying lens..."));
+  drawlens (drawable);
 
-  case RUN_WITH_LAST_VALS:
-    gimp_get_data ("plug_in_applylens", &lvals);
-    break;
-    
-  default:
-    break;
-  }
-
-  gimp_tile_cache_ntiles(2 *(drawable->width / gimp_tile_width() + 1));
-  gimp_progress_init(_("Applying lens..."));
-  drawlens(drawable);
-
-  if(run_mode != RUN_NONINTERACTIVE)
-    gimp_displays_flush();
-  if(run_mode == RUN_INTERACTIVE)
-    gimp_set_data("plug_in_applylens", &lvals, sizeof(LensValues));
+  if (run_mode != RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
+  if (run_mode == RUN_INTERACTIVE)
+    gimp_set_data ("plug_in_applylens", &lvals, sizeof (LensValues));
 
   values[0].data.d_status = status;
   
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 /*
   Ellipsoid formula: x^2/a^2 + y^2/b^2 + z^2/c^2 = 1
  */
 static void
-find_projected_pos(gfloat a, gfloat b,
-		   gfloat x, gfloat y,
-		   gfloat *projx, gfloat *projy)
+find_projected_pos (gfloat  a,
+		    gfloat  b,
+		    gfloat  x,
+		    gfloat  y,
+		    gfloat *projx,
+		    gfloat *projy)
 {
   gfloat c;
   gfloat n[3];
   gfloat nxangle, nyangle, theta1, theta2;
-  gfloat ri1 = 1.0, ri2 = lvals.refraction;
+  gfloat ri1 = 1.0;
+  gfloat ri2 = lvals.refraction;
 
   /* PARAM */
-  c = MIN(a, b);
+  c = MIN (a, b);
 
   n[0] = x;
   n[1] = y;
-  n[2] = sqrt((1-x*x/(a*a)-y*y/(b*b))*(c*c));
+  n[2] = sqrt ((1 - x * x / (a * a) - y * y / (b * b)) * (c * c));
 
-  nxangle = acos(n[0]/sqrt(n[0]*n[0]+n[2]*n[2]));
-  theta1 = G_PI/2 - nxangle;
-  theta2 = asin(sin(theta1)*ri1/ri2);
-  theta2 = G_PI/2 - nxangle - theta2;
-  *projx = x - tan(theta2)*n[2];
+  nxangle = acos (n[0] / sqrt(n[0] * n[0] + n[2] * n[2]));
+  theta1 = G_PI / 2 - nxangle;
+  theta2 = asin (sin (theta1) * ri1 / ri2);
+  theta2 = G_PI / 2 - nxangle - theta2;
+  *projx = x - tan (theta2) * n[2];
 
-  nyangle = acos(n[1]/sqrt(n[1]*n[1]+n[2]*n[2]));
-  theta1 = G_PI/2 - nyangle;
-  theta2 = asin(sin(theta1)*ri1/ri2);
-  theta2 = G_PI/2 - nyangle - theta2;
-  *projy = y - tan(theta2)*n[2];
+  nyangle = acos (n[1]/sqrt (n[1] * n[1] + n[2] * n[2]));
+  theta1 = G_PI / 2 - nyangle;
+  theta2 = asin (sin (theta1) * ri1 / ri2);
+  theta2 = G_PI / 2 - nyangle - theta2;
+  *projy = y - tan (theta2) * n[2];
 }
 
 static void
-drawlens(GDrawable *drawable)
+drawlens (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height;
@@ -254,130 +260,136 @@ drawlens(GDrawable *drawable)
   gfloat a, b, asqr, bsqr, x, y;
   glong pixelpos, pos;
   guchar bgr_red, bgr_blue, bgr_green, alphaval;
-  GDrawableType drawtype = gimp_drawable_type(drawable->id);
+  GDrawableType drawtype = gimp_drawable_type (drawable->id);
 
-  gimp_palette_get_background(&bgr_red, &bgr_green, &bgr_blue);
+  gimp_palette_get_background (&bgr_red, &bgr_green, &bgr_blue);
 
-  gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
-  regionwidth = x2-x1;
-  a = regionwidth/2;
-  regionheight = y2-y1;
-  b = regionheight/2;
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+  regionwidth = x2 - x1;
+  a = regionwidth / 2;
+  regionheight = y2 - y1;
+  b = regionheight / 2;
 
-  asqr = a*a;
-  bsqr = b*b;
+  asqr = a * a;
+  bsqr = b * b;
 
   width = drawable->width;
   height = drawable->height;
   bytes = drawable->bpp;
 
-  gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  src = g_malloc((x2-x1)*(y2-y1)*bytes);
-  dest = g_malloc((x2-x1)*(y2-y1)*bytes);
-  gimp_pixel_rgn_get_rect(&srcPR, src, x1, y1, regionwidth, regionheight);
+  src  = g_malloc ((x2 - x1) * (y2 - y1) * bytes);
+  dest = g_malloc ((x2 - x1) * (y2 - y1) * bytes);
+  gimp_pixel_rgn_get_rect (&srcPR, src, x1, y1, regionwidth, regionheight);
 
-  for(col = 0; col < regionwidth; col++) {
-    dx = (gfloat)col - a + 0.5;
-    xsqr = dx*dx;
-    for(row = 0; row < regionheight; row++) {
-      pixelpos = (col+row*regionwidth)*bytes;
-      dy = -((gfloat)row - b) - 0.5;
-      ysqr = dy*dy;
-      if(ysqr < (bsqr - (bsqr*xsqr)/asqr)) {
-	find_projected_pos(a, b, dx, dy, &x, &y);
-	y = -y;
-	pos = ((gint)(y+b)*regionwidth + (gint)(x+a)) * bytes;
+  for (col = 0; col < regionwidth; col++)
+    {
+      dx = (gfloat) col - a + 0.5;
+      xsqr = dx * dx;
+      for (row = 0; row < regionheight; row++)
+	{
+	  pixelpos = (col + row * regionwidth) * bytes;
+	  dy = -((gfloat) row - b) - 0.5;
+	  ysqr = dy * dy;
+	  if (ysqr < (bsqr - (bsqr * xsqr) / asqr))
+	    {
+	      find_projected_pos (a, b, dx, dy, &x, &y);
+	      y = -y;
+	      pos = ((gint) (y + b) * regionwidth + (gint) (x + a)) * bytes;
 
-	for(i = 0; i < bytes; i++) {
-	  dest[pixelpos+i] = src[pos+i];
+	      for (i = 0; i < bytes; i++)
+		{
+		  dest[pixelpos + i] = src[pos + i];
+		}
+	    }
+	  else
+	    {
+	      if (lvals.keep_surr)
+		{
+		  for (i = 0; i < bytes; i++)
+		    {
+		      dest[pixelpos + i] = src[pixelpos + i];
+		    }
+		}
+	      else
+		{
+		  if (lvals.set_transparent)
+		    alphaval = 0;
+		  else
+		    alphaval = 255;
+
+		  switch (drawtype)
+		    {
+		    case INDEXEDA_IMAGE:
+		      dest[pixelpos + 1] = alphaval;
+		    case INDEXED_IMAGE:
+		      dest[pixelpos + 0] = 0;
+		      break;
+
+		    case RGBA_IMAGE:
+		      dest[pixelpos + 3] = alphaval;
+		    case RGB_IMAGE:
+		      dest[pixelpos + 0] = bgr_red;
+		      dest[pixelpos + 1] = bgr_green;
+		      dest[pixelpos + 2] = bgr_blue;
+		      break;
+
+		    case GRAYA_IMAGE:
+		      dest[pixelpos + 1] = alphaval;
+		    case GRAY_IMAGE:
+		      dest[pixelpos+0] = bgr_red;
+		      break;
+		    }
+		}
+	    }
 	}
-      }
-      else {
-	if(lvals.keep_surr) {
-	  for(i = 0; i < bytes; i++) {
-	    dest[pixelpos+i] = src[pixelpos+i];
-	  }
-	}
-	else {
-	  if(lvals.set_transparent) alphaval = 0;
-	  else alphaval = 255;
-
-	  switch(drawtype) {
-	  case INDEXEDA_IMAGE:
-	    dest[pixelpos+1] = alphaval;
-	  case INDEXED_IMAGE:
-	    dest[pixelpos+0] = 0;
-	    break;
-
-	  case RGBA_IMAGE:
-	    dest[pixelpos+3] = alphaval;
-	  case RGB_IMAGE:
-	    dest[pixelpos+0] = bgr_red;
-	    dest[pixelpos+1] = bgr_green;
-	    dest[pixelpos+2] = bgr_blue;
-	    break;
-
-	  case GRAYA_IMAGE:
-	    dest[pixelpos+1] = alphaval;
-	  case GRAY_IMAGE:
-	    dest[pixelpos+0] = bgr_red;
-	    break;
-	  }
-	}
-      }
+      
+      if (((gint) (regionwidth-col) % 5) == 0)
+	gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
     }
 
-      
-    if(((gint)(regionwidth-col) % 5) == 0)
-      gimp_progress_update((gdouble)col/(gdouble)regionwidth);
-  }
+  gimp_pixel_rgn_set_rect (&destPR, dest, x1, y1, regionwidth, regionheight);
+  g_free (src);
+  g_free (dest);
 
-  gimp_pixel_rgn_set_rect(&destPR, dest, x1, y1, regionwidth, regionheight);
-  g_free(src);
-  g_free(dest);
-
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->id, TRUE);
-  gimp_drawable_update(drawable->id, x1, y1,(x2 - x1),(y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 static void
-lens_close_callback(GtkWidget *widget,
-		    gpointer   data)
-{
-  gtk_main_quit();
-}
-
-static void
-lens_ok_callback(GtkWidget *widget,
-		 gpointer   data)
+lens_ok_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   bint.run = TRUE;
-  gtk_widget_destroy(GTK_WIDGET (data));
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
-lens_toggle_update(GtkWidget *widget,
-		   gpointer   data)
+lens_toggle_update (GtkWidget *widget,
+		    gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *)data;
+  toggle_val = (int *) data;
 
-  if(GTK_TOGGLE_BUTTON (widget)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
 }
 
 static void
-lens_entry_callback(GtkWidget *widget,
-		    gpointer   data)
+lens_entry_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-  lvals.refraction = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-  if(lvals.refraction < 1.0) lvals.refraction = 1.0;
+  lvals.refraction = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
+
+  if (lvals.refraction < 1.0)
+    lvals.refraction = 1.0;
 }
 
 
@@ -399,8 +411,8 @@ lens_dialog (GDrawable *drawable)
 
   drawtype = gimp_drawable_type (drawable->id);
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("apply_lens");
 
   gtk_init (&argc, &argv);
@@ -419,19 +431,20 @@ lens_dialog (GDrawable *drawable)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (lens_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_radio_button_new_with_label (group,
-					    _("Keep original surroundings"));
+					    _("Keep Original Surroundings"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -444,8 +457,8 @@ lens_dialog (GDrawable *drawable)
     gtk_radio_button_new_with_label (group,
 				     drawtype == INDEXEDA_IMAGE ||
 				     drawtype == INDEXED_IMAGE ?
-				     _("Set surroundings to index 0") :
-				     _("Set surroundings to background color"));
+				     _("Set Surroundings to Index 0") :
+				     _("Set Surroundings to Background Bolor"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -460,7 +473,7 @@ lens_dialog (GDrawable *drawable)
     {
       toggle =
 	gtk_radio_button_new_with_label (group,
-					 _("Make surroundings transparent"));
+					 _("Make Surroundings Transparent"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -471,11 +484,11 @@ lens_dialog (GDrawable *drawable)
       gtk_widget_show (toggle);
   }
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Lens refraction index: "));
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+  label = gtk_label_new (_("Lens Refraction Index:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();

@@ -119,8 +119,9 @@
 #include <gdk/win32/gdkwin32.h>
 #endif
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -131,9 +132,7 @@
 #define DITHERTYPE GDK_RGB_DITHER_NORMAL
 #endif
 
-
 /* #define I_AM_STUPID yesiam */
-
 
 typedef enum
 {
@@ -146,10 +145,10 @@ typedef enum
 
 /* Declare local functions. */
 static void query (void);
-static void run   (char    *name,
-		   int      nparams,
+static void run   (gchar   *name,
+		   gint     nparams,
 		   GParam  *param,
-		   int     *nreturn_vals,
+		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
 static        void do_playback        (void);
@@ -181,7 +180,6 @@ static void         total_alpha_preview (guchar* ptr);
 static void         init_preview_misc   (void);
 
 
-
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
@@ -189,8 +187,6 @@ GPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc */
 };
-
-
 
 
 /* Global widgets'n'stuff */
@@ -270,10 +266,10 @@ query (void)
 }
 
 static void 
-run (char    *name, 
-     int      n_params, 
+run (gchar   *name, 
+     gint     n_params, 
      GParam  *param, 
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];

@@ -47,6 +47,8 @@ libgimpi_a_SOURCES = \
 	gimpsizeentry.h		\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
+	gimpwidgets.c		\
+	gimpwidgets.h		\
 	gimpwire.c		\
 	gimpwire.h		\
 	gserialize.c		\
@@ -116,7 +118,8 @@ libgimpui_la_SOURCES = \
 	gimphelpui.c		\
 	gimppatheditor.c	\
 	gimpsizeentry.c		\
-	gimpunitmenu.c
+	gimpunitmenu.c		\
+	gimpwidgets.c
 
 gimpinclude_HEADERS = \
 	color_display.h		\
@@ -143,6 +146,7 @@ gimpinclude_HEADERS = \
 	gimpui.h		\
 	gimpunit.h              \
 	gimpunitmenu.h          \
+	gimpwidgets.h		\
 	gimpintl.h		\
 	gserialize.h		\
 	parasite.h		\

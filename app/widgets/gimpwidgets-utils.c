@@ -24,181 +24,6 @@
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
-/* #include "pixmaps/wilber.xpm" */
-
-/*
- *  Widget Constructors...
- */
-
-GtkWidget *
-gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
-		      gpointer       initial,  /* user_data */
-
-		      /* specify menu items as va_list:
-		       *  gchar     *label,
-		       *  gpointer   data,
-		       *  gpointer   user_data,
-		       */
-
-		      ...)
-{
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GtkWidget *optionmenu;
-
-  /*  menu item variables  */
-  gchar     *label;
-  gpointer   data;
-  gpointer   user_data;
-
-  va_list    args;
-  gint       i;
-  gint       initial_index;
-
-  menu = gtk_menu_new ();
-
-  /*  create the menu items  */
-  initial_index = 0;
-  va_start (args, initial);
-  label = va_arg (args, gchar*);
-  for (i = 0; label; i++)
-    {
-      data = va_arg (args, gpointer);
-      user_data = va_arg (args, gpointer);
-
-      menuitem = gtk_menu_item_new_with_label (label);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  menu_item_callback, data);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
-      gtk_widget_show (menuitem);
-
-      /*  remember the initial menu item  */
-      if (user_data == initial)
-	initial_index = i;
-
-      label = va_arg (args, gchar*);
-    }
-  va_end (args);
-
-  optionmenu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-
-  /*  select the initial menu item  */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
-
-  return optionmenu;
-}
-
-GtkWidget *
-gimp_radio_group_new (gboolean  in_frame,
-		      gchar    *frame_title,
-
-		      /* specify radio buttons as va_list:
-		       *  gchar          *label,
-		       *  GtkSignalFunc   callback,
-		       *  gpointer        data,
-		       *  gpointer        user_data,
-		       *  GtkWidget     **widget_ptr,
-		       *  gboolean        active,
-		       */
-
-		      ...)
-{
-  GtkWidget *vbox;
-  GtkWidget *frame = NULL;
-  GtkWidget *button;
-  GSList    *group;
-
-  /*  radio button variables  */
-  gchar          *label;
-  GtkSignalFunc   callback;
-  gpointer        data;
-  gpointer        user_data;
-  GtkWidget     **widget_ptr;
-  gboolean        active;
-
-  va_list args;
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-
-  if (in_frame)
-    {
-      frame = gtk_frame_new (frame_title);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-    }
-
-  group = NULL;
-
-  /*  create the radio buttons  */
-  va_start (args, frame_title);
-  label = va_arg (args, gchar*);
-  while (label)
-    {
-      callback   = va_arg (args, GtkSignalFunc);
-      data       = va_arg (args, gpointer);
-      user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, gpointer);
-      active     = va_arg (args, gboolean);
-
-      button = gtk_radio_button_new_with_label (group, label);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (callback),
-			  data);
-
-      if (user_data)
-	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
-
-      if (widget_ptr)
-	*widget_ptr = button;
-
-      /*  press the initially active radio button  */
-      if (active)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      gtk_widget_show (button);
-
-      label = va_arg (args, gchar*);
-    }
-  va_end (args);
-
-  if (in_frame)
-    return frame;
-
-  return vbox;
-}
-
-GtkWidget *
-gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-		      gfloat      value,
-		      gfloat      lower,
-		      gfloat      upper,
-		      gfloat      step_increment,
-		      gfloat      page_increment,
-		      gfloat      page_size,
-		      gfloat      climb_rate,
-		      guint       digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-				    step_increment, page_increment, page_size);
-
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-				    climb_rate, digits);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, -1);
-
-  return spinbutton;
-}
-
-
 /*
  *  String, integer, double and size query boxes
  */
@@ -215,15 +40,15 @@ struct _QueryBox
   gpointer       data;
 };
 
-static QueryBox * create_query_box (gchar *, GimpHelpFunc, gchar *,
-				    GtkSignalFunc,
-				    gchar *, GtkObject *, gchar *,
-				    GimpQueryFunc, gpointer);
-static void  query_box_cancel_callback    (GtkWidget *, gpointer);
-static void  string_query_box_ok_callback (GtkWidget *, gpointer);
-static void  int_query_box_ok_callback    (GtkWidget *, gpointer);
-static void  double_query_box_ok_callback (GtkWidget *, gpointer);
-static void  size_query_box_ok_callback   (GtkWidget *, gpointer);
+static QueryBox * create_query_box             (gchar *, GimpHelpFunc, gchar *,
+						GtkSignalFunc,
+						gchar *, GtkObject *, gchar *,
+						GimpQueryFunc, gpointer);
+static void       query_box_cancel_callback    (GtkWidget *, gpointer);
+static void       string_query_box_ok_callback (GtkWidget *, gpointer);
+static void       int_query_box_ok_callback    (GtkWidget *, gpointer);
+static void       double_query_box_ok_callback (GtkWidget *, gpointer);
+static void       size_query_box_ok_callback   (GtkWidget *, gpointer);
 
 /*  create a generic query box without any entry widget  */
 static QueryBox *
@@ -675,45 +500,4 @@ gimp_message_box_close_callback (GtkWidget *widget,
   message_pool++;
 
   g_free (msg_box);
-}
-
-
-/*
- *  Helper Functions...
- */
-
-/*  add aligned label & widget to a two-column table  */
-void
-gimp_table_attach_aligned (GtkTable  *table,
-			   gint       row,
-			   gchar     *text,
-			   gfloat     xalign,
-			   gfloat     yalign,
-			   GtkWidget *widget,
-			   gboolean   left_adjust)
-{
-  GtkWidget *label;
-
-  label = gtk_label_new (text);
-  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
-  gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  if (left_adjust)
-    {
-      GtkWidget *alignment;
-
-      alignment = gtk_alignment_new (0.0, 1.0, 0.0, 0.0);
-      gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
-      gtk_widget_show (alignment);
-      gtk_container_add (GTK_CONTAINER (alignment), widget);
-    }
-  else
-    {
-      gtk_table_attach_defaults (table, widget, 1, 2, row, row + 1);
-    }
-
-  gtk_widget_show (widget);
 }

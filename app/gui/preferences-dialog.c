@@ -854,7 +854,7 @@ static void
 file_prefs_preview_size_callback (GtkWidget *widget,
                                   gpointer   data)
 {
-  lc_dialog_rebuild ((long) data);
+  lc_dialog_rebuild ((long) gtk_object_get_user_data (GTK_OBJECT (widget)));
   layer_select_update_preview_size ();
 }
 
@@ -862,7 +862,7 @@ static void
 file_prefs_nav_preview_size_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  nav_preview_size = (gint) data;
+  nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
   gdisplays_nav_preview_resized ();
 }
 
@@ -1518,9 +1518,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) default_type,
-			  _("RGB"),       &default_type, (gpointer) RGB,
-			  _("Grayscale"), &default_type, (gpointer) GRAY,
+			  &default_type, (gpointer) default_type,
+
+			  _("RGB"),       (gpointer) RGB, NULL,
+			  _("Grayscale"), (gpointer) GRAY, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Default Image Type:"), 1.0, 0.5,
@@ -1555,19 +1557,15 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) transparency_type,
-			  _("Light Checks"),
-			  &transparency_type, (gpointer) LIGHT_CHECKS,
-			  _("Mid-Tone Checks"),
-			  &transparency_type, (gpointer) GRAY_CHECKS,
-			  _("Dark Checks"),
-			  &transparency_type, (gpointer) DARK_CHECKS,
-			  _("White Only"),
-			  &transparency_type, (gpointer) WHITE_ONLY,
-			  _("Gray Only"),
-			  &transparency_type, (gpointer) GRAY_ONLY,
-			  _("Black Only"),
-			  &transparency_type, (gpointer) BLACK_ONLY,
+			  &transparency_type, (gpointer) transparency_type,
+
+			  _("Light Checks"),    (gpointer) LIGHT_CHECKS, NULL,
+			  _("Mid-Tone Checks"), (gpointer) GRAY_CHECKS, NULL,
+			  _("Dark Checks"),     (gpointer) DARK_CHECKS, NULL,
+			  _("White Only"),      (gpointer) WHITE_ONLY, NULL,
+			  _("Gray Only"),       (gpointer) GRAY_ONLY, NULL,
+			  _("Black Only"),      (gpointer) BLACK_ONLY, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Transparency Type:"), 1.0, 0.5,
@@ -1575,13 +1573,12 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) transparency_size,
-			  _("Small"),
-			  &transparency_size, (gpointer) SMALL_CHECKS,
-			  _("Medium"),
-			  &transparency_size, (gpointer) MEDIUM_CHECKS,
-			  _("Large"), 
-			  &transparency_size, (gpointer) LARGE_CHECKS,
+			  &transparency_type, (gpointer) transparency_size,
+
+			  _("Small"),  (gpointer) SMALL_CHECKS, NULL,
+			  _("Medium"), (gpointer) MEDIUM_CHECKS, NULL,
+			  _("Large"),  (gpointer) LARGE_CHECKS, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Check Size:"), 1.0, 0.5, optionmenu, TRUE);
@@ -1602,13 +1599,15 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) interpolation_type,
-			  _("Nearest Neighbor (Fast)"), &interpolation_type,
-			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION,
-			  _("Linear"), &interpolation_type,
-			  (gpointer) LINEAR_INTERPOLATION,
-			  _("Cubic (Slow)"), &interpolation_type,
-			  (gpointer) CUBIC_INTERPOLATION,
+			  &interpolation_type, (gpointer) interpolation_type,
+
+			  _("Nearest Neighbor (Fast)"),
+			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION, NULL,
+			  _("Linear"),
+			  (gpointer) LINEAR_INTERPOLATION, NULL,
+			  _("Cubic (Slow)"),
+			  (gpointer) CUBIC_INTERPOLATION, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Interpolation Type:"), 1.0, 0.5,
@@ -1650,23 +1649,27 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_preview_size_callback,
-			  (gpointer) preview_size,
-			  _("None"),   (gpointer)   0, (gpointer)   0,
-			  _("Tiny"),   (gpointer)  24, (gpointer)  24,
-			  _("Small"),  (gpointer)  32, (gpointer)  32,
-			  _("Medium"), (gpointer)  48, (gpointer)  48,
-			  _("Large"),  (gpointer)  64, (gpointer)  64,
-			  _("Huge"),   (gpointer) 128, (gpointer) 128,
+			  &preview_size, (gpointer) preview_size,
+
+			  _("None"),   (gpointer)   0, NULL,
+			  _("Tiny"),   (gpointer)  24, NULL,
+			  _("Small"),  (gpointer)  32, NULL,
+			  _("Medium"), (gpointer)  48, NULL,
+			  _("Large"),  (gpointer)  64, NULL,
+			  _("Huge"),   (gpointer) 128, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
 
   optionmenu =
     gimp_option_menu_new (file_prefs_nav_preview_size_callback,
-			  (gpointer) nav_preview_size,
-			  _("Small"),  (gpointer)  48, (gpointer)  48,
-			  _("Medium"), (gpointer)  80, (gpointer)  80,
-			  _("Large"),  (gpointer) 112, (gpointer) 112,
+			  &nav_preview_size, (gpointer) nav_preview_size,
+
+			  _("Small"),  (gpointer)  48, NULL,
+			  _("Medium"), (gpointer)  80, NULL,
+			  _("Large"),  (gpointer) 112, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Nav Preview Size:"), 1.0, 0.5, optionmenu, TRUE);
@@ -1753,11 +1756,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) help_browser,
-			  _("Internal"), &help_browser,
-			  (gpointer) HELP_BROWSER_GIMP,
-			  _("Netscape"), &help_browser,
-			  (gpointer) HELP_BROWSER_NETSCAPE,
+			  &help_browser, (gpointer) help_browser,
+
+			  _("Internal"), (gpointer) HELP_BROWSER_GIMP, NULL,
+			  _("Netscape"), (gpointer) HELP_BROWSER_NETSCAPE, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Help Browser to Use:"), 1.0, 0.5,
@@ -2005,10 +2008,12 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_mem_size_unit_callback,
-			  (gpointer) mem_size_unit,
-			  _("Bytes"),     adjustment, (gpointer) 1,
-			  _("KiloBytes"), adjustment, (gpointer) 1024,
-			  _("MegaBytes"), adjustment, (gpointer) (1024*1024),
+			  adjustment, (gpointer) mem_size_unit,
+
+			  _("Bytes"),     (gpointer) 1, NULL,
+			  _("KiloBytes"), (gpointer) 1024, NULL, 
+			  _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
+
 			  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
@@ -2046,10 +2051,12 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_mem_size_unit_callback,
-			  (gpointer) mem_size_unit,
-			  _("Bytes"),     adjustment, (gpointer) 1,
-			  _("KiloBytes"), adjustment, (gpointer) 1024,
-			  _("MegaBytes"), adjustment, (gpointer) (1024*1024),
+			  adjustment, (gpointer) mem_size_unit,
+
+			  _("Bytes"),     (gpointer) 1, NULL,
+			  _("KiloBytes"), (gpointer) 1024, NULL,
+			  _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
+
 			  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
@@ -2106,19 +2113,24 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  (gpointer) thumbnail_mode,
-			  _("Always"), &thumbnail_mode, (gpointer) 1,
-			  _("Never"),  &thumbnail_mode, (gpointer) 0,
+			  &thumbnail_mode, (gpointer) thumbnail_mode,
+
+			  _("Always"), (gpointer) 1, NULL,
+			  _("Never"),  (gpointer) 0, NULL,
+
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
 			     optionmenu, TRUE);
 
-  optionmenu = gimp_option_menu_new (file_prefs_toggle_callback,
-                                     (gpointer) trust_dirty_flag,
-                                     _("Only when modified"), &trust_dirty_flag, (gpointer) 1,
-                                     _("Always"), &trust_dirty_flag, (gpointer) 0,
-                                     NULL);
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  & trust_dirty_flag, (gpointer) trust_dirty_flag,
+
+			  _("Only when modified"), (gpointer) 1, NULL,
+			  _("Always"),             (gpointer) 0, NULL,
+
+			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
                              _("'File > Save' saves the image:"), 1.0, 0.5,
                                optionmenu, TRUE);

@@ -31,5 +31,6 @@
 #include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpunitmenu.h"
+#include "libgimp/gimpwidgets.h"
 
 #endif /* __GIMP_UI_H__ */

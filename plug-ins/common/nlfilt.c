@@ -48,31 +48,35 @@
 
 static mw_preview_t nlfilt_do_preview;
 
-struct Grgb {
+struct Grgb
+{
   guint8 red;
   guint8 green;
   guint8 blue;
 };
 
-struct GRegion {
+struct GRegion
+{
   gint32 x;
   gint32 y;
   gint32 width;
   gint32 height;
 };
 
-struct piArgs {
-  gint32 img;
-  gint32 drw;
+struct piArgs
+{
+  gint32  img;
+  gint32  drw;
   gdouble alpha;
   gdouble radius;
-  gint filter;
+  gint    filter;
 };
 
-typedef enum {
-   filter_alpha_trim,
-   filter_opt_est,
-   filter_edge_enhance
+typedef enum
+{
+  filter_alpha_trim,
+  filter_opt_est,
+  filter_edge_enhance
 } FilterType;
 
 /* other structure declarations */
@@ -81,30 +85,40 @@ static struct mwPreview *thePreview;
 
 /* function protos */
 
-static void query(void);
-static void run(char *name, gint nparam, GParam *param,
-                gint *nretvals, GParam **retvals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparam,
+		   GParam  *param,
+		   gint    *nretvals,
+		   GParam **retvals);
 
-gint pluginCore(struct piArgs *argp);
-gint pluginCoreIA(struct piArgs *argp);
+static gint pluginCore   (struct piArgs *argp);
+static gint pluginCoreIA (struct piArgs *argp);
 
-static inline gint nlfiltInit(gdouble alpha, gdouble radius,
-                              FilterType filter);
-static inline void nlfiltRow(guchar *src, guchar *dst, gint width,
-                            gint Bpp, gint filtno);
+static inline gint nlfiltInit (gdouble     alpha,
+			       gdouble     radius,
+			       FilterType  filter);
+static inline void nlfiltRow  (guchar     *src,
+			       guchar     *dst,
+			       gint        width,
+			       gint        Bpp,
+			       gint        filtno);
 
-GPlugInInfo PLUG_IN_INFO = {
-  NULL, /* init */
-  NULL, /* quit */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init  */
+  NULL,  /* quit  */
   query, /* query */
-  run, /* run */
+  run,   /* run   */
 };
 
-MAIN()
+MAIN ()
 
 static void
-query(void){
-  static GParamDef args[] = {
+query (void)
+{
+  static GParamDef args[] =
+  {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "img", "The Image to Filter" },
     { PARAM_DRAWABLE, "drw", "The Drawable" },
@@ -119,22 +133,26 @@ query(void){
 
   INIT_I18N();
   
-  gimp_install_procedure("plug_in_nlfilt",
-                         _("Nonlinear swiss army knife filter"),
-                         _("This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details."),
-                         "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
-                         "Graeme W. Gill, Eric L. Hernes",
-                         "1997",
-                         N_("<Image>/Filters/Enhance/NL Filter..."),
-                         "RGB,GRAY",
-                         PROC_PLUG_IN,
-                         nargs, nrets,
-                         args, rets);
+  gimp_install_procedure ("plug_in_nlfilt",
+			  _("Nonlinear swiss army knife filter"),
+			  _("This is the pnmnlfilt, in gimp's clothing.  See the pnmnlfilt manpage for details."),
+			  "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
+			  "Graeme W. Gill, Eric L. Hernes",
+			  "1997",
+			  N_("<Image>/Filters/Enhance/NL Filter..."),
+			  "RGB,GRAY",
+			  PROC_PLUG_IN,
+			  nargs, nrets,
+			  args, rets);
 }
 
 static void
-run(char *name, gint nparam, GParam *param,
-    gint *nretvals, GParam **retvals){
+run (gchar   *name,
+     gint     nparam,
+     GParam  *param,
+     gint    *nretvals,
+     GParam **retvals)
+{
   static GParam rvals[1];
 
   struct piArgs args;
@@ -142,73 +160,81 @@ run(char *name, gint nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  memset(&args,(int)0,sizeof(struct piArgs));
+  memset (&args, (int) 0, sizeof (struct piArgs));
 
-  args.radius=-1.0;
-  gimp_get_data("plug_in_nlfilt", &args);
+  args.radius = -1.0;
+  gimp_get_data ("plug_in_nlfilt", &args);
   args.img = param[1].data.d_image;
   args.drw = param[2].data.d_drawable;
 
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
-  switch (param[0].data.d_int32) {
-     GDrawable *drw;
+
+  switch (param[0].data.d_int32)
+    {
+      GDrawable *drw;
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* XXX: add code here for interactive running */
-      if (args.radius == -1) {
-         args.alpha = (gdouble)0.3;
-         args.radius = (gdouble)0.3;
-         args.filter = 0;
-      }
-      drw = gimp_drawable_get(args.drw);
-      thePreview = mw_preview_build(drw);
+      if (args.radius == -1)
+	{
+	  args.alpha  = (gdouble) 0.3;
+	  args.radius = (gdouble) 0.3;
+	  args.filter = 0;
+	}
+      drw = gimp_drawable_get (args.drw);
+      thePreview = mw_preview_build (drw);
 
-      if (pluginCoreIA(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      } else {
-         gimp_set_data("plug_in_nlfilt", &args, sizeof(struct piArgs));
-      }
-
-    break;
+      if (pluginCoreIA (&args) == -1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
+      else
+	{
+	  gimp_set_data ("plug_in_nlfilt", &args, sizeof (struct piArgs));
+	}
+      break;
 
     case RUN_NONINTERACTIVE:
       INIT_I18N();
       /* XXX: add code here for non-interactive running */
-      if (nparam != 6) {
-        rvals[0].data.d_status = STATUS_CALLING_ERROR;
-        break;
-      }
-      args.alpha = param[3].data.d_float;
+      if (nparam != 6)
+	{
+	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  break;
+	}
+      args.alpha  = param[3].data.d_float;
       args.radius = param[4].data.d_float;
       args.filter = param[5].data.d_int32;
 
-      if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-        break;
-      }
-    break;
+      if (pluginCore (&args) == -1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  break;
+	}
+      break;
 
     case RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
-      if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
-    break;
-
+      if (pluginCore (&args) == -1)
+	{
+	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
+      break;
   }
-
 }
 
-gint pluginCore(struct piArgs *argp) {
+static gint
+pluginCore (struct piArgs *argp)
+{
   GDrawable *drw;
   GPixelRgn srcPr, dstPr;
   guchar *srcbuf, *dstbuf;
   guint width, height, Bpp;
   gint filtno, y, rowsize, p_update;
 
-  drw = gimp_drawable_get(argp->drw);
+  drw = gimp_drawable_get (argp->drw);
 
   width = drw->width;
   height = drw->height;
@@ -219,42 +245,42 @@ gint pluginCore(struct piArgs *argp) {
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
 
-  srcbuf=(guchar*)malloc(width*Bpp*3);
-  dstbuf=(guchar*)malloc(width*Bpp);
+  srcbuf = g_new0 (guchar, width * Bpp * 3);
+  dstbuf = g_new0 (guchar, width * Bpp);
 
-  memset(srcbuf,(int)0,(size_t)(rowsize*3));
-  memset(dstbuf,(int)0,(size_t)rowsize);
+  filtno = nlfiltInit (argp->alpha, argp->radius, argp->filter);
+  gimp_progress_init (_("NL Filter"));
 
-  filtno=nlfiltInit(argp->alpha, argp->radius, argp->filter);
-  gimp_progress_init( _("NL Filter"));
+  /* first row */
+  gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, 0, width, 3);
+  memcpy (srcbuf, srcbuf + width * Bpp, rowsize);
+  nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
+  gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, 0, width);
 
-      /* first row */
-  gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, 0, width, 3);
-  memcpy(srcbuf, srcbuf+width*Bpp, rowsize);
-  nlfiltRow(srcbuf, dstbuf, width, Bpp, filtno);
-  gimp_pixel_rgn_set_row(&dstPr, dstbuf, 0, 0, width);
+  /* last row */
+  gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, height - 3, width, 3);
+  memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
+  nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
+  gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, height - 1, width);
 
-      /* last row */
-  gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, height-3, width, 3);
-  memcpy(srcbuf+rowsize*2, srcbuf+rowsize, rowsize);
-  nlfiltRow(srcbuf, dstbuf, width, Bpp, filtno);
-  gimp_pixel_rgn_set_row(&dstPr, dstbuf, 0, height-1, width);
+  for (y = 0; y < height - 2; y++)
+    {
+      if (y % p_update == 0)
+	gimp_progress_update ((gdouble) y / (gdouble) height);
 
-  for(y=0 ;y<height-2; y++){
-     if (y%p_update==0) gimp_progress_update((gdouble)y/(gdouble)height);
-     gimp_pixel_rgn_get_rect(&srcPr, srcbuf, 0, y, width, 3);
-     nlfiltRow(srcbuf, dstbuf, width, Bpp, filtno);
-     gimp_pixel_rgn_set_row(&dstPr, dstbuf, 0, y, width);
-  }
+      gimp_pixel_rgn_get_rect (&srcPr, srcbuf, 0, y, width, 3);
+      nlfiltRow (srcbuf, dstbuf, width, Bpp, filtno);
+      gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, y, width);
+    }
 
-  free(srcbuf);
-  free(dstbuf);
+  g_free (srcbuf);
+  g_free (dstbuf);
 
-  gimp_drawable_flush(drw);
+  gimp_drawable_flush (drw);
   gimp_drawable_merge_shadow (drw->id, TRUE);
-  gimp_drawable_update(drw->id, 0, 0, width, height);
-  gimp_displays_flush();
-  
+  gimp_drawable_update (drw->id, 0, 0, width, height);
+  gimp_displays_flush ();
+
   return 0;
 }
 
@@ -269,36 +295,46 @@ nlfilt_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-gint
+static void
+nlfilt_radio_button_update (GtkWidget *widget,
+			    gpointer   data)
+{
+  gimp_radio_button_update (widget, data);
+
+  if (do_preview)
+    nlfilt_do_preview (NULL);
+}
+
+static void
+nlfilt_double_adjustment_update (GtkAdjustment *adjustment,
+				 gpointer       data)
+{
+  gimp_double_adjustment_update (adjustment, data);
+
+  if (do_preview)
+    nlfilt_do_preview (NULL);
+}
+
+static gint
 pluginCoreIA (struct piArgs *argp)
 {
   gint retval = -1; /* default to error return */
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *preview;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
-  gint    i;
 
-  struct mwRadioGroup filter[] = {
-     { N_("Alpha Trimmed Mean"), 0 },
-     { N_("Optimal Estimation"), 0 },
-     { N_("Edge Enhancement"), 0 },
-     { NULL, 0 }
-  };
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("nlfilt");
 
-  /* Set args */
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("nlfilt");
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc());
-  filter[argp->filter].var = 1;
-
-  for (i = 0; filter[i].name != NULL; i++)
-    filter[i].name = gettext(filter[i].name);
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc());
 
   dlg = gimp_dialog_new (_("NL Filter"), "nlfilt",
 			 gimp_plugin_help_func, "filters/nlfilt.html",
@@ -316,42 +352,70 @@ pluginCoreIA (struct piArgs *argp)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  hbox = gtk_hbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(hbox), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show(hbox);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
-  preview = mw_preview_new(hbox, thePreview, &nlfilt_do_preview);
-  gtk_object_set_data(GTK_OBJECT(preview), "piArgs", argp);
-  gtk_object_set_data(GTK_OBJECT(preview), "mwRadioGroup", &filter);
-  nlfilt_do_preview(preview);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  mw_radio_group_new(hbox, _("Filter"), filter);
+  preview = mw_preview_new (hbox, thePreview, &nlfilt_do_preview);
+  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  nlfilt_do_preview (preview);
 
-  frame = gtk_frame_new( _("Parameters"));
+  frame = gimp_radio_group_new2 (TRUE, _("Filter"),
+				 nlfilt_radio_button_update,
+				 &argp->filter, (gpointer) argp->filter,
+
+				 _("Alpha Trimmed Mean"),
+				 (gpointer) filter_alpha_trim, NULL,
+				 _("Optimal Estimation"),
+				 (gpointer) filter_opt_est, NULL,
+				 _("Edge Enhancement"),
+				 (gpointer) filter_edge_enhance, NULL,
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  frame = gtk_frame_new (_("Parameters"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show(frame);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  table = gtk_table_new(4, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER (table), 5);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-  mw_fscale_entry_new(table, _("Alpha"), 0.0, 1.0, 0.05, 0.1, 0.0,
-                      0, 1, 1, 2, &argp->alpha);
-  mw_fscale_entry_new(table, _("Radius"), 0.3333333, 1.0, 0.05, 0.1, 0.0,
-                      0, 1, 2, 3, &argp->radius);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Alpha:"), 0, 0,
+			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
+		      &argp->alpha);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Radius:"), 0, 0,
+			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (nlfilt_double_adjustment_update),
+		      &argp->radius);
+
   gtk_widget_show(table);
 
-  gtk_widget_show(table);
   gtk_widget_show(dlg);
 
   gtk_main ();
   gdk_flush ();
 
-  argp->filter = mw_radio_result(filter);
-  
   if (run_flag)
     {
 #if 0
@@ -370,46 +434,49 @@ pluginCoreIA (struct piArgs *argp)
 }
 
 static void
-nlfilt_do_preview(GtkWidget *w) {
-   static GtkWidget *theWidget = NULL;
-   struct piArgs *ap;
-   struct mwRadioGroup *rgp;
-   guchar *dst, *c;
-   gint y, rowsize, filtno;
+nlfilt_do_preview (GtkWidget *w)
+{
+  static GtkWidget *theWidget = NULL;
+  struct piArgs *ap;
+  guchar *dst, *c;
+  gint y, rowsize, filtno;
   
-   if(theWidget==NULL){
-      theWidget=w;
-   }
+  if (theWidget == NULL)
+    {
+      theWidget = w;
+    }
 
-   ap = gtk_object_get_data(GTK_OBJECT(theWidget), "piArgs");
-   rgp = gtk_object_get_data(GTK_OBJECT(theWidget), "mwRadioGroup");
-   ap->filter = mw_radio_result(rgp);
+  ap = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
 
-   rowsize=thePreview->width*thePreview->bpp;
-   dst = malloc(rowsize);
-   c = malloc(rowsize*3);
-   memcpy(c, thePreview->bits, rowsize);
-   memcpy(c+rowsize, thePreview->bits, rowsize*2);
-   filtno =  nlfiltInit(ap->alpha, ap->radius, ap->filter);
-   nlfiltRow(c, dst, thePreview->width, thePreview->bpp, filtno);
-   gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                        dst, 0, 0, thePreview->width);
-   
-   memcpy(c, thePreview->bits+((thePreview->height-2)*rowsize), rowsize*2);
-   memcpy(c+(rowsize*2), thePreview->bits+((thePreview->height-1)*rowsize),
-          rowsize);
-   gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                        dst, 0, thePreview->height-1, thePreview->width);
-   free(c);
-   for(y=0, c=thePreview->bits;y<thePreview->height-2; y++, c+=rowsize){
-      nlfiltRow(c, dst, thePreview->width, thePreview->bpp, filtno);
-      gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                           dst, 0, y, thePreview->width);
-   }
+  rowsize = thePreview->width * thePreview->bpp;
+  dst = g_malloc (rowsize);
+  c   = g_malloc (rowsize * 3);
+  memcpy (c, thePreview->bits, rowsize);
+  memcpy (c + rowsize, thePreview->bits, rowsize * 2);
+  filtno =  nlfiltInit (ap->alpha, ap->radius, ap->filter);
+  nlfiltRow (c, dst, thePreview->width, thePreview->bpp, filtno);
+  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+			dst, 0, 0, thePreview->width);
 
-   gtk_widget_draw(theWidget, NULL);
-   gdk_flush();
-   free(dst);
+  memcpy (c,
+	  thePreview->bits + ((thePreview->height - 2) * rowsize),
+	  rowsize * 2);
+  memcpy (c + (rowsize * 2),
+	  thePreview->bits + ((thePreview->height - 1) * rowsize),
+	  rowsize);
+  gtk_preview_draw_row (GTK_PREVIEW( theWidget),
+			dst, 0, thePreview->height - 1, thePreview->width);
+  g_free (c);
+  for (y = 0, c = thePreview->bits; y<thePreview->height - 2; y++, c += rowsize)
+    {
+      nlfiltRow (c, dst, thePreview->width, thePreview->bpp, filtno);
+      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+			    dst, 0, y, thePreview->width);
+    }
+
+  gtk_widget_draw (theWidget, NULL);
+  gdk_flush ();
+  g_free (dst);
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter

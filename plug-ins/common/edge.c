@@ -62,29 +62,33 @@ static gchar rcsid[] = "$Id$";
 /* Some useful macros */
 
 #define TILE_CACHE_SIZE 48
-#define SCALE_WIDTH 92
-#define ENTRY_WIDTH 40
 
-#define  WRAP	0
-#define  SMEAR  1
-#define  BLACK  2
+enum
+{
+  WRAP,
+  SMEAR,
+  BLACK
+};
 
-typedef struct {
+typedef struct
+{
   gdouble  amount;
   gint    wrapmode;
 } EdgeVals;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } EdgeInterface;
 
-typedef struct {
-  GTile *tile;
-  gint	row, col;	/* tile's row, col */
-  gint  bpp;
-  gint  tile_width, tile_height;
+typedef struct
+{
+  GTile     *tile;
+  gint	     row, col;	/* tile's row, col */
+  gint       bpp;
+  gint       tile_width, tile_height;
   GDrawable *drawable;
-  gint  drawable_width, drawable_height;
+  gint       drawable_width, drawable_height;
 } TileBuf;
 
 /*
@@ -100,40 +104,37 @@ static void      run    (gchar    *name,
 
 static void      edge        (GDrawable *drawable);
 static gint      edge_dialog (GDrawable *drawable);
-static void      edge_ok_callback      (GtkWidget *widget,
-					    gpointer   data);
-static void      edge_toggle_update    (GtkWidget *widget,
-					    gpointer   data);
-static void      edge_scale_update     (GtkAdjustment *ajustment,
-					    gpointer   data);
-static void	 edge_entry_update	(GtkWidget *entry,
-					 gpointer data);
-static long      long_sqrt (long n);
 
-static void   init_tile_buf ( TileBuf *buf, GDrawable *drawable );
-static void   get_tile_pixel ( TileBuf *buf, gint x, gint y, 
-			      guchar *pixel, gint wrapmode );
-static void   end_tile_buf ( TileBuf *buf );
+static long      long_sqrt   (long n);
+
+static void   init_tile_buf  (TileBuf   *buf,
+			      GDrawable *drawable);
+static void   get_tile_pixel (TileBuf   *buf,
+			      gint       x,
+			      gint       y, 
+			      guchar    *pixel,
+			      gint       wrapmode);
+static void   end_tile_buf   (TileBuf   *buf);
 
 /***** Local vars *****/
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init  */
+  NULL,  /* quit  */
+  query, /* query */
+  run,   /* run   */
 };
 
 static EdgeVals evals =
 {
-  2.0,       /* amount */
-  SMEAR    /* wrapmode */
+  2.0,   /* amount   */
+  SMEAR  /* wrapmode */
 };
 
 static EdgeInterface eint =
 {
-  FALSE   /*  run  */
+  FALSE  /* run */
 };
 
 /***** Functions *****/
@@ -212,7 +213,7 @@ run (gchar  *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{
-	  evals.amount = param[3].data.d_float;
+	  evals.amount   = param[3].data.d_float;
 	  evals.wrapmode = param[4].data.d_int32;
 	}
       INIT_I18N();
@@ -229,9 +230,10 @@ run (gchar  *name,
     }
 
   /* make sure the drawable exist and is not indexed */
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ( _("Edge detection..."));
+      gimp_progress_init (_("Edge Detection..."));
 
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -265,64 +267,69 @@ run (gchar  *name,
  **********************************************************************/
 
 static void
-init_tile_buf( TileBuf *buf, GDrawable *drawable )
+init_tile_buf (TileBuf   *buf,
+	       GDrawable *drawable)
 {
   buf->tile = NULL;
   buf->col = 0;
   buf->row = 0;
-  if ( gimp_drawable_is_rgb( drawable->id ) )
+  if (gimp_drawable_is_rgb (drawable->id))
     buf->bpp = 3;
   else
     buf->bpp = 1;
   buf->tile_width = gimp_tile_width();
   buf->tile_height = gimp_tile_height();
   buf->drawable = drawable;
-  buf->drawable_width = gimp_drawable_width( drawable->id );
-  buf->drawable_height = gimp_drawable_height( drawable->id );
+  buf->drawable_width = gimp_drawable_width(drawable->id);
+  buf->drawable_height = gimp_drawable_height(drawable->id);
 }
 
 static void
-get_tile_pixel( TileBuf *buf, gint x, gint y, guchar *pixel, gint wrapmode )
+get_tile_pixel (TileBuf *buf,
+		gint     x,
+		gint     y,
+		guchar  *pixel,
+		gint     wrapmode)
 {
   gint b;
   gint offx, offy;
   gint row, col;
   guchar *ptr;
 
-  if ( x < 0 || x >= buf->drawable_width ||
-       y < 0 || y >= buf->drawable_height )
-    switch( wrapmode )
+  if (x < 0 || x >= buf->drawable_width ||
+      y < 0 || y >= buf->drawable_height)
+    switch (wrapmode)
       {
       case WRAP:
-	if ( x < 0 || x >= buf->drawable_width )
+	if (x < 0 || x >= buf->drawable_width)
 	  {
 	    x %= buf->drawable_width;
-	    if ( x < 0 )
+	    if (x < 0)
 	      x += buf->drawable_width;
 	  }
-	if ( y < 0 || y >= buf->drawable_height )
+	if (y < 0 || y >= buf->drawable_height)
 	  {
 	    y %= buf->drawable_height;
-	    if ( y < 0 )
+	    if (y < 0)
 	      y += buf->drawable_height;
 	  }
 	break;
       case SMEAR:
-	if ( x < 0 )
+	if (x < 0)
 	  x = 0;
-	if ( x >= buf->drawable_width )
+	if (x >= buf->drawable_width)
 	  x = buf->drawable_width - 1;
-	if ( y < 0 )
+	if (y < 0)
 	  y = 0;
-	if ( y >= buf->drawable_height )
+	if (y >= buf->drawable_height)
 	  y = buf->drawable_height - 1;
 	break;
       case BLACK:
-	if ( x < 0 || x >= buf->drawable_width || 
-	     y < 0 || y >= buf->drawable_height )
+	if (x < 0 || x >= buf->drawable_width || 
+	    y < 0 || y >= buf->drawable_height)
 	  {
-	    for ( b = 0; b < buf->bpp; b++ )
-	      pixel[b]=0;
+	    for (b = 0; b < buf->bpp; b++)
+	      pixel[b] = 0;
 	    return;
 	  }
 	break;
@@ -330,45 +337,41 @@ get_tile_pixel( TileBuf *buf, gint x, gint y, guchar *pixel, gint wrapmode )
 	return;
       }
 
-  
   col = x / buf->tile_width;
   offx = x % buf->tile_width;
   row = y / buf->tile_height;
   offy = y % buf->tile_height;
 
   /* retrieve tile */
-  if ( !buf->tile || col != buf->col || row != buf->row )
+  if (!buf->tile || col != buf->col || row != buf->row)
     {
-      if( buf->tile )
-	gimp_tile_unref( buf->tile, FALSE );
+      if(buf->tile)
+	gimp_tile_unref (buf->tile, FALSE);
       buf->col = col;
       buf->row = row;
-      buf->tile = gimp_drawable_get_tile( buf->drawable, FALSE, row, col );
-      gimp_tile_ref( buf->tile );
+      buf->tile = gimp_drawable_get_tile (buf->drawable, FALSE, row, col);
+      gimp_tile_ref (buf->tile);
     }
 
   /* retrieve target pixel */
-  ptr = buf->tile->data + ( offy * buf->tile->ewidth + offx ) * buf->tile->bpp;
-  for( b = 0; b < buf->bpp; b++ )
+  ptr = buf->tile->data + (offy * buf->tile->ewidth + offx) * buf->tile->bpp;
+  for(b = 0; b < buf->bpp; b++)
     pixel[b] = ptr[b];
 }
 
 static void
-end_tile_buf( TileBuf *buf )
+end_tile_buf (TileBuf *buf)
 {
-  if( buf->tile )
-    gimp_tile_unref( buf->tile, FALSE );
+  if (buf->tile)
+    gimp_tile_unref (buf->tile, FALSE);
 }
 
 /**********************************************************************
    TileBuf Util Routines End
  **********************************************************************/
 
-
-
 static long
-long_sqrt (n)
-     long n;
+long_sqrt (long n)
 {
 #define lsqrt_max4pow (1UL << 30)
   /* lsqrt_max4pow is the (machine-specific) largest power of 4 that can
@@ -392,11 +395,11 @@ long_sqrt (n)
    * Thus, we can increase x by 1/2 if we decrease (n-x^2) by (x+1/4)
    */
 
-  unsigned long residue;        /* n - x^2  */
-  unsigned long root;           /* x + 1/4  */
-  unsigned long half;           /* 1/2      */
+  gulong residue;        /* n - x^2  */
+  gulong root;           /* x + 1/4  */
+  gulong half;           /* 1/2      */
 
-  residue = n;                  /* n - (x = 0)^2, with suitable alignment */
+  residue = n;           /* n - (x = 0)^2, with suitable alignment */
 
   /*
    * if the correct answer fits in two bits, pull it out of a magic hat
@@ -452,19 +455,16 @@ long_sqrt (n)
 }
 
 /********************************************************/
-/*                                                      */
 /*              Edge Detection main                     */
-/*                                                      */
 /********************************************************/
 
 static void
-edge( GDrawable *drawable )
+edge (GDrawable *drawable)
 {
   /*
    * this function is too long, so I must split this into a few
    * functions later ...  -- taka
    */
-
   GPixelRgn src_rgn, dest_rgn;
   gpointer pr;
   TileBuf buf;
@@ -484,17 +484,19 @@ edge( GDrawable *drawable )
   gint max_progress;
   gint wrapmode;
 
-  if (evals.amount < 1.0 ) evals.amount = 1.0;
+  if (evals.amount < 1.0)
+    evals.amount = 1.0;
 
-  init_tile_buf( &buf, drawable );
+  init_tile_buf (&buf, drawable);
 
-  gimp_drawable_mask_bounds ( drawable->id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  width = gimp_drawable_width ( drawable->id );
-  height = gimp_drawable_height ( drawable->id );
-  alpha = gimp_drawable_bpp ( drawable->id );
-  has_alpha = gimp_drawable_has_alpha ( drawable->id );
-  if( has_alpha ) alpha--;
+  width = gimp_drawable_width (drawable->id);
+  height = gimp_drawable_height (drawable->id);
+  alpha = gimp_drawable_bpp (drawable->id);
+  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  if (has_alpha)
+    alpha--;
 
   maxval = 255;
   scale = (10 << 16) / evals.amount;
@@ -503,33 +505,33 @@ edge( GDrawable *drawable )
   cur_progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
-  gimp_pixel_rgn_init( &src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE );
-  gimp_pixel_rgn_init( &dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE );
+  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
 
-  for( pr = gimp_pixel_rgns_register( 2, &src_rgn, &dest_rgn ); 
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); 
        pr != NULL;
-       pr = gimp_pixel_rgns_process(pr) )
+       pr = gimp_pixel_rgns_process (pr))
     {
       srcrow = src_rgn.data;
       destrow = dest_rgn.data;
-      for ( y = dest_rgn.y;
+      for (y = dest_rgn.y;
 	    y < (dest_rgn.y + dest_rgn.h);
-	    y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride )
+	    y++, srcrow += src_rgn.rowstride, destrow += dest_rgn.rowstride)
 	{
 	  src = srcrow;
 	  dest = destrow;
-	  for( x = dest_rgn.x;
+	  for (x = dest_rgn.x;
 	       x < (dest_rgn.x + dest_rgn.w);
-	       x++,  src += src_rgn.bpp, dest += dest_rgn.bpp )
+	       x++,  src += src_rgn.bpp, dest += dest_rgn.bpp)
 	    {
-	      if( dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 1 &&
-		  dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 1 )
+	      if(dest_rgn.x < x &&  x < dest_rgn.x + dest_rgn.w - 1 &&
+		 dest_rgn.y < y &&  y < dest_rgn.y + dest_rgn.h - 1)
 		{
 		  /*
 		  ** 3x3 kernel is inside of the tile -- do fast
 		  ** version
 		  */
-		  for( chan = 0; chan < alpha; chan++ )
+		  for (chan = 0; chan < alpha; chan++)
 		    {
 		      /*
 		       * PIX(1,1) is the current pixel, so
@@ -545,20 +547,23 @@ edge( GDrawable *drawable )
 		       */
 #define PIX(X,Y)  src[ (Y-1)*(int)src_rgn.rowstride + (X-1)*(int)src_rgn.bpp + chan ]
 		      /* make convolution */
-		      sum1 = ( PIX(2,0) - PIX(0,0) ) +
-			 2 * ( PIX(2,1) - PIX(0,1) ) +
-			     ( PIX(2,2) - PIX(2,0) );
-		      sum2 = ( PIX(0,2) - PIX(0,0) ) +
-			 2 * ( PIX(1,2) - PIX(1,0) ) +
-			     ( PIX(2,2) - PIX(2,0) );
+		      sum1 = (PIX(2,0) - PIX(0,0)) +
+			 2 * (PIX(2,1) - PIX(0,1)) +
+			     (PIX(2,2) - PIX(2,0));
+		      sum2 = (PIX(0,2) - PIX(0,0)) +
+			 2 * (PIX(1,2) - PIX(1,0)) +
+			     (PIX(2,2) - PIX(2,0));
 #undef  PIX
 		      /* common job ... */
-		      sum = long_sqrt ( (long) sum1 * sum1 + (long) sum2 * sum2);
+		      sum = long_sqrt ((long) sum1 * sum1 + (long) sum2 * sum2);
 		      sum = (sum * scale) >> 16;    /* arbitrary scaling factor */
-		      if (sum > maxval) sum = maxval;
+		      if (sum > maxval)
+			sum = maxval;
 		      dest[chan] = sum;
 		    }
-		} else {
+		}
+	      else
+		{
 		  /*
 		  ** The kernel is not inside of the tile -- do slow
 		  ** version
@@ -568,50 +573,57 @@ edge( GDrawable *drawable )
 		   * image, get_tile_pixel() will (should) do the
 		   * right work with `wrapmode'.
 		   */
-		  get_tile_pixel( &buf, x-1, y-1, pix00, wrapmode );
-		  get_tile_pixel( &buf, x  , y-1, pix10, wrapmode );
-		  get_tile_pixel( &buf, x+1, y-1, pix20, wrapmode );
-		  get_tile_pixel( &buf, x-1, y  , pix01, wrapmode );
-		  get_tile_pixel( &buf, x+1, y  , pix21, wrapmode );
-		  get_tile_pixel( &buf, x-1, y+1, pix02, wrapmode );
-		  get_tile_pixel( &buf, x  , y+1, pix12, wrapmode );
-		  get_tile_pixel( &buf, x+1, y+1, pix22, wrapmode );
-	      
-		  for( chan = 0; chan < alpha; chan++ )
+		  get_tile_pixel (&buf, x-1, y-1, pix00, wrapmode);
+		  get_tile_pixel (&buf, x  , y-1, pix10, wrapmode);
+		  get_tile_pixel (&buf, x+1, y-1, pix20, wrapmode);
+		  get_tile_pixel (&buf, x-1, y  , pix01, wrapmode);
+		  get_tile_pixel (&buf, x+1, y  , pix21, wrapmode);
+		  get_tile_pixel (&buf, x-1, y+1, pix02, wrapmode);
+		  get_tile_pixel (&buf, x  , y+1, pix12, wrapmode);
+		  get_tile_pixel (&buf, x+1, y+1, pix22, wrapmode);
+
+		  for (chan = 0; chan < alpha; chan++)
 		    {
 		      /* make convolution */
-		      sum1 = (pix20[chan] - pix00[chan] ) +
-			 2 * (pix21[chan] - pix01[chan] ) +
-			     (pix22[chan] - pix20[chan] );
-		      sum2 = (pix02[chan] - pix00[chan] ) +
-			 2 * (pix12[chan] - pix10[chan] ) +
-			     (pix22[chan] - pix20[chan] );
+		      sum1 = (pix20[chan] - pix00[chan]) +
+			 2 * (pix21[chan] - pix01[chan]) +
+			     (pix22[chan] - pix20[chan]);
+		      sum2 = (pix02[chan] - pix00[chan]) +
+			 2 * (pix12[chan] - pix10[chan]) +
+			     (pix22[chan] - pix20[chan]);
 		      /* common job ... */
-		      sum = long_sqrt ( (long) sum1 * sum1 + (long) sum2 * sum2);
-		      sum = (sum * scale) >> 16;    /* arbitrary scaling factor */
+		      sum = long_sqrt ((long) sum1 * sum1 + (long) sum2 * sum2);
+		      sum = (sum * scale) >> 16;  /* arbitrary scaling factor */
 		      if (sum > maxval) sum = maxval;
 		      dest[chan] = sum;
 		    }
 		}
-	      if(has_alpha)
-		dest[alpha]=src[alpha];
+	      if (has_alpha)
+		dest[alpha] = src[alpha];
 	    }
         }
       cur_progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ( (double) cur_progress / (double) max_progress);
+      gimp_progress_update ((double) cur_progress / (double) max_progress);
     }
 
-  end_tile_buf( &buf );
+  end_tile_buf (&buf);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 /*******************************************************/
-/*                                                     */
 /*                    Dialog                           */
-/*                                                     */
 /*******************************************************/
+
+static void
+edge_ok_callback (GtkWidget *widget,
+		  gpointer   data)
+{
+  eint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
 
 static gint
 edge_dialog (GDrawable *drawable)
@@ -621,19 +633,14 @@ edge_dialog (GDrawable *drawable)
   GtkWidget *table;
   GtkWidget *hbox;
   GtkWidget *toggle;
-  GtkWidget *label;
-  GtkWidget *scale;
   GtkObject *scale_data;
-  GtkWidget *entry;
-  gchar	   buffer[256];
   GSList  *group = NULL;
   gchar	 **argv;
   gint	   argc;
 
-  gint	  use_wrap  = (evals.wrapmode == WRAP);
-  gint	  use_smear = (evals.wrapmode == SMEAR);
-  gint	  use_black = (evals.wrapmode == BLACK);
-  gdouble init_val;
+  gint	use_wrap  = (evals.wrapmode == WRAP);
+  gint	use_smear = (evals.wrapmode == SMEAR);
+  gint	use_black = (evals.wrapmode == BLACK);
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -671,49 +678,14 @@ edge_dialog (GDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  Label, scale, entry for evals.amount  */
-
-  label = gtk_label_new (_("Amount:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_widget_show (label);
-
-  /* This prevents annoying change of adjustment */
-  init_val = evals.amount < 1.0 ? 1.0 :
-	     evals.amount > 10.0 ? 10.0 : evals.amount;
-  scale_data = gtk_adjustment_new (init_val, 1.0, 10.0, 0.1, 0.1, 0.0);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-#if 0
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 1);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-#endif
-
-  entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-
-  gtk_widget_show (scale);
-  gtk_widget_show (entry);
-
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_FILL, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-		    GTK_FILL, 0, 0, 0);
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				     _("Amount:"), 100, 0,
+				     evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
+				     NULL, NULL);
 
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) edge_scale_update,
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &evals.amount);
-  g_snprintf (buffer, sizeof (buffer), "%0.1f", evals.amount);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) edge_entry_update,
-		      &evals.amount);
-
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
 
   /*  Radio buttons WRAP, SMEAR, BLACK  */
 
@@ -725,7 +697,7 @@ edge_dialog (GDrawable *drawable)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) edge_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_wrap);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
@@ -734,7 +706,7 @@ edge_dialog (GDrawable *drawable)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) edge_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_smear);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
@@ -743,7 +715,7 @@ edge_dialog (GDrawable *drawable)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) edge_toggle_update,
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &use_black);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
   gtk_widget_show (toggle);
@@ -764,73 +736,4 @@ edge_dialog (GDrawable *drawable)
     evals.wrapmode = BLACK;
 
   return eint.run;
-
-}
-
-
-/*  Edge detection interface functions  */
-
-static void
-edge_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  eint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-edge_toggle_update (GtkWidget *widget,
-			gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
-edge_scale_update (GtkAdjustment *adjustment,
-		       gpointer      data)
-{
-  GtkWidget	*entry;
-  gdouble *ptr = (gdouble *) data;
-
-  *ptr = adjustment->value;
-
-  entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-  if (entry)
-    {
-      gchar	buffer[256];
-
-      sprintf (buffer, "%0.1f", *ptr);
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), data);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), data);
-    }
-}
-
-static void
-edge_entry_update (GtkWidget *entry,
-		   gpointer data)
-{
-  GtkAdjustment		*adjustment;
-  gdouble		*ptr = (gdouble *) data;
-  gdouble		new_val;
-
-  *ptr = atof (gtk_entry_get_text (GTK_ENTRY (entry)));
-  
-  adjustment = gtk_object_get_user_data (GTK_OBJECT (entry));
-  if (adjustment)
-    {
-      new_val = *ptr < adjustment->lower ? adjustment->lower :
-		*ptr > adjustment->upper ? adjustment->upper : *ptr;
-      adjustment->value = new_val;
-      gtk_signal_handler_block_by_data (GTK_OBJECT (adjustment), data);
-      gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adjustment), data);
-    }
 }

@@ -26,66 +26,31 @@
  * $Id$
  */
 
-#ifndef MEGAWIDGET_H
+#ifndef __MEGAWIDGET_H__
+#define __MEGAWIDGET_H__
 
-struct mwRadioGroup {
-   gchar *name;
-   gint var;
-};
-struct mwValueRadioGroup {
-   gchar *name;
-   glong val;
-};
-
-struct mwPreview {
-   gint width;
-   gint height;
-   gint bpp;
-   gdouble scale;
-   guchar *bits;
+struct mwPreview
+{
+  gint     width;
+  gint     height;
+  gint     bpp;
+  gdouble  scale;
+  guchar  *bits;
 };
 
 #ifndef PREVIEW_SIZE
 #define PREVIEW_SIZE 100
 #endif
 
-void mw_fscale_entry_new(GtkWidget *table, char *name,
-                         gfloat lorange, gfloat hirange,
-                         gfloat st_inc, gfloat pg_inc, gfloat pgsiz,
-                         gint left_a, gint right_a, gint top_a,
-                         gint bottom_a, gdouble *var);
-void mw_iscale_entry_new(GtkWidget *table, char *name,
-                         gint lorange, gint hirange,
-                         gint st_inc, gint pg_inc, gint pgsiz,
-                         gint left_a, gint right_a, gint top_a,
-                         gint bottom_a, gint *var);
-
-GSList *mw_radio_new(GSList *gsl, GtkWidget *parent, gchar *name,
-             gint *varp, gint init);
-GSList *mw_radio_group_new(GtkWidget *parent, gchar *name,
-                           struct mwRadioGroup *rg);
-gint mw_radio_result(struct mwRadioGroup *rg);
-GSList * mw_value_radio_group_new(GtkWidget *parent, gchar *name,
-				  struct mwValueRadioGroup *rg, glong *var);
-
-GtkWidget *mw_toggle_button_new(GtkWidget *parent, gchar *fname,
-                                gchar *label, gint *varp);
-GtkWidget *mw_ientry_button_new(GtkWidget *parent, gchar *fname,
-                                gchar *name, gint *varp);
-GtkWidget *mw_fentry_button_new(GtkWidget *parent, gchar *fname,
-                                gchar *name, gdouble *varp);
-
-void mw_ientry_new(GtkWidget *parent, gchar *fname,
-		   gchar *name, gint *varp);
-void mw_fentry_new(GtkWidget *parent, gchar *fname,
-		   gchar *name, gdouble *varp);
+extern gint do_preview;
 
 typedef void mw_preview_t (GtkWidget *pvw);
 
-GtkWidget *mw_preview_new(GtkWidget *parent, struct mwPreview *mwp,
-                          mw_preview_t *fcn);
+GtkWidget        * mw_preview_new          (GtkWidget        *parent,
+					    struct mwPreview *mwp,
+					    mw_preview_t     *fcn);
 
-struct mwPreview *mw_preview_build(GDrawable *drw);
-struct mwPreview *mw_preview_build_virgin(GDrawable *drw);
+struct mwPreview * mw_preview_build        (GDrawable        *drw);
+struct mwPreview * mw_preview_build_virgin (GDrawable        *drw);
 
-#endif /* MEGAWIDGET_H */
+#endif /* __MEGAWIDGET_H__ */

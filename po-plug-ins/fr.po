@@ -724,7 +724,7 @@ msgstr "Erreur d'ouverture de \"%.100s\", je n'ai pu enregistrer les données."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1821
 msgid "Failed to write file\n"
-msgstr "Je n'ai pu écrire le fichier."
+msgstr "Je n'ai pu écrire le fichier.\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
 msgid "Save: No filename given"

@@ -34,16 +34,20 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
-#include <plug-ins/megawidget/megawidget.h>
 
+enum
+{
+  ODD_FIELDS,
+  EVEN_FIELDS
+};
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      deinterlace        (GDrawable  *drawable);
@@ -58,12 +62,12 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint DeinterlaceValue = 1;
+static gint DeinterlaceValue = EVEN_FIELDS;
 
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -92,10 +96,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -123,7 +127,6 @@ run (char    *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	DeinterlaceValue = param[3].data.d_int32;
-
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -141,8 +144,9 @@ run (char    *name,
       if (gimp_drawable_is_rgb (drawable->id) ||
 	  gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ( _("Deinterlace..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+	  gimp_progress_init (_("Deinterlace..."));
+	  gimp_tile_cache_ntiles (2 * (drawable->width /
+				       gimp_tile_width () + 1));
 	  deinterlace (drawable);
 
 	  if (run_mode != RUN_NONINTERACTIVE)
@@ -254,24 +258,18 @@ deinterlace_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
-  struct mwRadioGroup modes[] = {
-    { N_("Keep Odd Fields"), 0},
-    { N_("Keep Even Fields"), 0},
-    { NULL, 0}};
+  GtkWidget *frame;
   gchar **argv;
-  gint argc;
-  gint i;
-  for (i = 0; i < 2; i++)
-    modes[i].name = gettext(modes[i].name);
+  gint    argc;
+  gint    i;
 
   /* Set args */
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("deinterlace");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc());
-  modes[DeinterlaceValue].var = 1;
 
   dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
 			 gimp_plugin_help_func, "filters/deinterlace.html",
@@ -294,13 +292,22 @@ deinterlace_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  mw_radio_group_new (vbox, _("Mode"), modes);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Mode"),
+			   gimp_radio_button_update,
+			   &DeinterlaceValue, (gpointer) DeinterlaceValue,
+
+			   _("Keep Odd Fields"), (gpointer) ODD_FIELDS, NULL,
+			   _("Keep Even Fields"), (gpointer) EVEN_FIELDS, NULL,
+
+				 NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
+
   gtk_main ();
   gdk_flush ();
-
-  DeinterlaceValue = mw_radio_result (modes);
 
   return run_flag;
 }

@@ -30,12 +30,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -58,7 +58,6 @@
 
 #define MIDDLE 127
 
-#define ROUND(x)  ((int) ((x) + 0.5))
 #define SIGNED_ROUND(x)  ((int) (((x < 0) ? (x) - 0.5 : (x) + 0.5)  ))
 #define MIX_CHANNEL(a, b, m)  (((a * m) + (b * (255 - m))) / 255)
 
@@ -103,8 +102,8 @@
 typedef struct _BenderValues BenderValues;
 struct _BenderValues
 {
-  unsigned char  curve[2][256];            /* for curve_type freehand mode   0   <= curve  <= 255 */
-  gdouble        points[2][17][2];         /* for curve_type smooth mode     0.0 <= points <= 1.0 */
+  guchar  curve[2][256];            /* for curve_type freehand mode   0   <= curve  <= 255 */
+  gdouble points[2][17][2];         /* for curve_type smooth mode     0.0 <= points <= 1.0 */
 
   int            curve_type;
 
@@ -130,49 +129,49 @@ typedef struct _BenderDialog BenderDialog;
 
 struct _BenderDialog
 {
-  GtkWidget *    shell;
-  GtkWidget *    outline_menu;
-  GtkWidget *    pv_widget;
-  GtkWidget *    graph;
-  GtkWidget *    rotate_entry;
-  GdkPixmap *    pixmap;
-  GtkWidget *    filesel;
+  GtkWidget *shell;
+  GtkWidget *outline_menu;
+  GtkWidget *pv_widget;
+  GtkWidget *graph;
+  GtkWidget *rotate_entry;
+  GdkPixmap *pixmap;
+  GtkWidget *filesel;
 
-  GDrawable *    drawable;
-  int            color;
-  int            outline;
-  gint           preview;
+  GDrawable *drawable;
+  int        color;
+  int        outline;
+  gint       preview;
 
-  int            grab_point;
-  int            last;
-  int            leftmost;
-  int            rightmost;
-  int            curve_type;
-  gdouble        points[2][17][2];    /* 0.0 <= points    <= 1.0 */
-  unsigned char  curve[2][256];       /* 0   <= curve     <= 255 */
-  gint32        *curve_ptr[2];        /* 0   <= curve_ptr <= src_drawable_width 
-                                       * both arrays are allocated dynamic, depending on drawable width
-                                       */
-
-  gint32  min2[2];
-  gint32  max2[2];
-  gint32  zero2[2];
+  int        grab_point;
+  int        last;
+  int        leftmost;
+  int        rightmost;
+  int        curve_type;
+  gdouble    points[2][17][2];    /*  0.0 <= points    <= 1.0 */
+  guchar     curve[2][256];       /*  0   <= curve     <= 255 */
+  gint32    *curve_ptr[2];        /*  0   <= curve_ptr <= src_drawable_width 
+				   *  both arrays are allocated dynamic,
+				   *  depending on drawable width
+				   */
+  gint32     min2[2];
+  gint32     max2[2];
+  gint32     zero2[2];
     
-  int            show_progress;
-  gint           smoothing;
-  gint           antialias;
-  gint           work_on_copy;
-  gdouble        rotation;
+  gint       show_progress;
+  gint       smoothing;
+  gint       antialias;
+  gint       work_on_copy;
+  gdouble    rotation;
   
   
-  gint32         preview_image_id;
-  gint32         preview_layer_id1;
-  gint32         preview_layer_id2;
+  gint32     preview_image_id;
+  gint32     preview_layer_id1;
+  gint32     preview_layer_id2;
   
   BenderValues  *bval_from;
   BenderValues  *bval_to;
   BenderValues  *bval_curr;
-  
+
   gint           run;
 };
 
@@ -216,46 +215,39 @@ typedef void (*MenuItemCallback) (GtkWidget *widget,
 				  gpointer   user_data);
 struct _MenuItem
 {
-  char *label;
-  char  unused_accelerator_key;
-  int   unused_accelerator_mods;
+  gchar *label;
+  gchar  unused_accelerator_key;
+  gint   unused_accelerator_mods;
   MenuItemCallback callback;
   gpointer user_data;
   MenuItem *unused_subitems;
   GtkWidget *widget;
 };
 
-typedef void (*ActionCallback) (GtkWidget *, gpointer);
-
-typedef struct {
-  char *label;
-  ActionCallback callback;
-  gpointer user_data;
-  GtkWidget *widget;
-} ActionAreaItem;
-
-typedef struct {
-   GDrawable *drawable;
-   GPixelRgn  pr;
-   gint       x1;
-   gint       y1;
-   gint       x2;
-   gint       y2;
-   gint       index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
-   gint       bpp;
-   GTile     *tile;
-   gint       tile_row;
-   gint       tile_col;
-   gint       tile_width;
-   gint       tile_height;
-   gint       tile_dirty;
-   gint       shadow;
-   gint32     seldeltax;
-   gint32     seldeltay;
-   gint32     tile_swapcount;   
+typedef struct
+{
+  GDrawable *drawable;
+  GPixelRgn  pr;
+  gint       x1;
+  gint       y1;
+  gint       x2;
+  gint       y2;
+  gint       index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
+  gint       bpp;
+  GTile     *tile;
+  gint       tile_row;
+  gint       tile_col;
+  gint       tile_width;
+  gint       tile_height;
+  gint       tile_dirty;
+  gint       shadow;
+  gint32     seldeltax;
+  gint32     seldeltay;
+  gint32     tile_swapcount;   
 } t_GDRW;
 
-typedef struct {
+typedef struct
+{
   gint32 y;
   guchar color[4];
 } t_Last;
@@ -263,16 +255,19 @@ typedef struct {
 
 /*  curves action functions  */
 static void  query (void);
-static void  run (char *name,
-                  int nparams,            /* number of parameters passed in */
-                  GParam * param,         /* parameters passed in */
-                  int *nreturn_vals,      /* number of parameters returned */
-                  GParam ** return_vals); /* parameters to be returned */
+static void  run   (gchar   *name,
+		    gint     nparams,
+		    GParam  *param,
+		    gint    *nreturn_vals,
+		    GParam **return_vals);
 
 static BenderDialog *  bender_new_dialog              (GDrawable *);
 static void            bender_update                  (BenderDialog *, int);
-static void            bender_plot_curve              (BenderDialog *, int, int, int, int, gint32, gint32, gint);
-static void            bender_calculate_curve         (BenderDialog *, gint32, gint32, gint);
+static void            bender_plot_curve              (BenderDialog *,
+						       int, int, int, int,
+						       gint32, gint32, gint);
+static void            bender_calculate_curve         (BenderDialog *, gint32,
+						       gint32, gint);
 static void            bender_rotate_entry_callback   (GtkWidget *, gpointer);
 static void            bender_upper_callback          (GtkWidget *, gpointer);
 static void            bender_lower_callback          (GtkWidget *, gpointer);
@@ -291,9 +286,12 @@ static void            bender_preview_update          (GtkWidget *, gpointer);
 static void            bender_preview_update_once     (GtkWidget *, gpointer);
 static void            bender_load_callback           (GtkWidget *, gpointer);
 static void            bender_save_callback           (GtkWidget *, gpointer);
-static gint            bender_pv_widget_events        (GtkWidget *, GdkEvent *, BenderDialog *);
-static gint            bender_graph_events            (GtkWidget *, GdkEvent *, BenderDialog *);
-static void            bender_CR_compose              (CRMatrix, CRMatrix, CRMatrix);
+static gint            bender_pv_widget_events        (GtkWidget *, GdkEvent *,
+						       BenderDialog *);
+static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
+						       BenderDialog *);
+static void            bender_CR_compose              (CRMatrix, CRMatrix,
+						       CRMatrix);
 static void            bender_init_min_max            (BenderDialog *, gint32);
 static BenderDialog *  do_dialog                      (GDrawable *);
 GtkWidget           *  p_buildmenu (MenuItem *);

@@ -27,55 +27,47 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gck/gck.h"
-#include "plug-ins/megawidget/megawidget.h"
-
 #include "libgimp/stdplugins-intl.h"
-
-
 
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      borderaverage (GDrawable *drawable,
-				guchar *res_r, guchar *res_g, guchar *res_b);
+				guchar    *res_r,
+				guchar    *res_g,
+				guchar    *res_b);
 
 static gint      borderaverage_dialog (void);
 
-static void      add_new_color (gint bytes, guchar* buffer, gint* cube,
-				gint bucket_expo);
-
-static void      menu_callback (GtkWidget *widget,
-				gpointer   client_data);
+static void      add_new_color (gint    bytes,
+				guchar *buffer,
+				gint   *cube,
+				gint    bucket_expo);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init  */
+  NULL,  /* quit  */
+  query, /* query */
+  run,   /* run   */
 };
 
-static gint  borderaverage_thickness = 3;
+static gint  borderaverage_thickness       = 3;
 static gint  borderaverage_bucket_exponent = 4;
 
 struct borderaverage_data
 {
-  gint		thickness;
-  gint		bucket_exponent;
+  gint  thickness;
+  gint  bucket_exponent;
 } borderaverage_data = { 3, 4 };
 
-gchar * menu_labels[] = 
-{
-  "1 (nonsense?)", "2", "4", "8", "16", "32", "64", "128", "256 (nonsense?)"
-};
 
 MAIN ()
 
@@ -114,10 +106,10 @@ query (void)
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[3];
@@ -139,10 +131,10 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
-      gimp_get_data("plug_in_borderaverage", &borderaverage_data);
-      borderaverage_thickness = borderaverage_data.thickness;
+      gimp_get_data ("plug_in_borderaverage", &borderaverage_data);
+      borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
-      if (! borderaverage_dialog())
+      if (! borderaverage_dialog ())
 	status = STATUS_EXECUTION_ERROR;
       break;
 
@@ -150,13 +142,15 @@ run (char    *name,
       if (nparams != 5)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
-	borderaverage_thickness = param[3].data.d_int32;
-      borderaverage_bucket_exponent = param[4].data.d_int32;
+	{
+	  borderaverage_thickness       = param[3].data.d_int32;
+	  borderaverage_bucket_exponent = param[4].data.d_int32;
+	}
       break;
 
     case RUN_WITH_LAST_VALS:
-      gimp_get_data("plug_in_borderaverage", &borderaverage_data);
-      borderaverage_thickness = borderaverage_data.thickness;
+      gimp_get_data ("plug_in_borderaverage", &borderaverage_data);
+      borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
       break;
 
@@ -166,10 +160,10 @@ run (char    *name,
 
   if (status == STATUS_SUCCESS)
     {
-      /*	Make sure that the drawable is RGB color	*/
+      /*  Make sure that the drawable is RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-	  gimp_progress_init ("borderaverage");
+	  gimp_progress_init ("Border Average...");
 	  borderaverage (drawable,
 			 &result_color[0], &result_color[1], &result_color[2]);
 
@@ -178,13 +172,14 @@ run (char    *name,
 	      gimp_palette_set_foreground (result_color[0],
 					   result_color[1],
 					   result_color[2]);
-	      gimp_displays_flush ();
 	    }
 	  if (run_mode == RUN_INTERACTIVE)
-	    borderaverage_data.thickness = borderaverage_thickness;
-	  borderaverage_data.bucket_exponent = borderaverage_bucket_exponent;
-	  gimp_set_data ("plug_in_borderaverage",
-			 &borderaverage_data, sizeof (borderaverage_data));
+	    {
+	      borderaverage_data.thickness       = borderaverage_thickness;
+	      borderaverage_data.bucket_exponent = borderaverage_bucket_exponent;
+	      gimp_set_data ("plug_in_borderaverage",
+			     &borderaverage_data, sizeof (borderaverage_data));
+	    }
 	}
       else
 	{
@@ -212,22 +207,22 @@ borderaverage (GDrawable *drawable,
 	       guchar    *res_g, 
 	       guchar    *res_b) 
 {
-  gint		width;
-  gint		height;
-  gint		x1, x2, y1, y2;
-  gint		bytes;
-  gint		max;
+  gint         width;
+  gint         height;
+  gint         x1, x2, y1, y2;
+  gint         bytes;
+  gint         max;
  
-  guchar		r, g, b;
+  guchar       r, g, b;
 
-  guchar		*buffer;
-  gint		bucket_num, bucket_expo, bucket_rexpo;
+  guchar      *buffer;
+  gint         bucket_num, bucket_expo, bucket_rexpo;
 
-  gint*	cube;
+  gint        *cube;
 
-  gint		row, col, i,j,k; /* index variables */
+  gint         row, col, i,j,k; /* index variables */
  
-  GPixelRgn	myPR;
+  GPixelRgn    myPR;
 
   /* allocate and clear the cube before */
   bucket_expo = borderaverage_bucket_exponent;
@@ -377,13 +372,15 @@ borderaverage_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *vbox2;
   GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   GtkWidget *menu;
   gchar **argv;
   gint    argc;
 
-  /* Set args */
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("borderaverage");
@@ -403,29 +400,68 @@ borderaverage_dialog (void)
 
 			 NULL);
 
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  mw_ientry_new (vbox, _("Border Size"), _("Thickness:"),
-		 &borderaverage_thickness);
+  frame = gtk_frame_new (_("Border Size"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Thickness:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&adj, borderaverage_thickness,
+				     0, 256, 1, 5, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &borderaverage_thickness);
 
   frame = gtk_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
-  menu = gck_option_menu_new (_("Bucket Size:"), vbox2, TRUE, TRUE, 0,
-			      menu_labels,
-			      (GtkSignalFunc) menu_callback, NULL);
+  label = gtk_label_new (_("Bucket Size:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (menu),
-			       borderaverage_bucket_exponent);
+  menu = gimp_option_menu_new (gimp_menu_item_update,
+			       &borderaverage_bucket_exponent,
+			       (gpointer) borderaverage_bucket_exponent,
+
+			       _("1 (nonsense?)"),   (gpointer) 0, NULL,
+			       "2",                  (gpointer) 1, NULL,
+			       "4",                  (gpointer) 2, NULL,
+			       "8",                  (gpointer) 3, NULL,
+			       "16",                 (gpointer) 4, NULL,
+			       "32",                 (gpointer) 5, NULL,
+			       "64",                 (gpointer) 6, NULL,
+			       "128",                (gpointer) 7, NULL,
+			       _("256 (nonsense?)"), (gpointer) 8, NULL,
+
+			       NULL);
+
+  
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
   gtk_widget_show (dlg);
@@ -434,11 +470,4 @@ borderaverage_dialog (void)
   gdk_flush ();
 
   return run_flag;
-}
-
-void menu_callback (GtkWidget *widget, 
-		    gpointer   client_data) 
-{
-  borderaverage_bucket_exponent=
-    (gint) gtk_object_get_data (GTK_OBJECT (widget),"_GckOptionMenuItemID");
 }

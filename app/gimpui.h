@@ -27,49 +27,10 @@
 
 #include "libgimp/gimpdialog.h"
 #include "libgimp/gimpunit.h"
+#include "libgimp/gimpwidgets.h"
 
 /*  typedefs  */
 typedef void (* GimpQueryFunc) (GtkWidget *, gpointer, gpointer);
-
-
-/*  widget constructors  */
-
-GtkWidget * gimp_option_menu_new (GtkSignalFunc       menu_item_callback,
-				  gpointer            initial,  /* user_data */
-
-				  /* specify menu items as va_list:
-				   *  gchar          *label,
-				   *  gpointer        data,
-				   *  gpointer        user_data,
-				   */
-
-				  ...);
-
-GtkWidget * gimp_radio_group_new (gboolean            in_frame,
-				  gchar              *frame_title,
-
-				  /* specify radio buttons as va_list:
-				   *  gchar          *label,
-				   *  GtkSignalFunc   callback,
-				   *  gpointer        data,
-				   *  gpointer        user_data,
-				   *  GtkWidget     **widget_ptr,
-				   *  gboolean        active,
-				   */
-
-				  ...);
-
-GtkWidget * gimp_spin_button_new (/* return value: */
-				  GtkObject         **adjustment,
-
-				  gfloat              value,
-				  gfloat              lower,
-				  gfloat              upper,
-				  gfloat              step_increment,
-				  gfloat              page_increment,
-				  gfloat              page_size,
-				  gfloat              climb_rate,
-				  guint               digits);
 
 /*  some simple query dialogs
  *  if object != NULL then the query boxes will connect their cancel callback

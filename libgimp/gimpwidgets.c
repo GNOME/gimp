@@ -1,0 +1,460 @@
+/* LIBGIMP - The GIMP Library                                                   
+ * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball                
+ *
+ * gimpwidgets.c
+ * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.             
+ *                                                                              
+ * This library is distributed in the hope that it will be useful,              
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of               
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+#include "gimphelpui.h"
+#include "gimpwidgets.h"
+
+/*
+ *  Widget Constructors...
+ */
+
+GtkWidget *
+gimp_option_menu_new (GtkSignalFunc   menu_item_callback,
+		      gpointer        data,
+		      gpointer        initial, /* user_data */
+
+		      /* specify menu items as va_list:
+		       *  gchar      *label,
+		       *  gpointer    user_data,
+		       *  GtkWidget **widget_ptr,
+		       */
+
+		      ...)
+{
+  GtkWidget *menu;
+  GtkWidget *menuitem;
+  GtkWidget *optionmenu;
+
+  /*  menu item variables  */
+  gchar      *label;
+  gpointer    user_data;
+  GtkWidget **widget_ptr;
+
+  va_list args;
+  gint    i;
+  gint    initial_index;
+
+  menu = gtk_menu_new ();
+
+  /*  create the menu items  */
+  initial_index = 0;
+  va_start (args, initial);
+  label = va_arg (args, gchar*);
+  for (i = 0; label; i++)
+    {
+      user_data  = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, gpointer);
+
+      menuitem = gtk_menu_item_new_with_label (label);
+      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  menu_item_callback,
+			  data);
+
+      if (user_data)
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+
+      if (widget_ptr)
+	*widget_ptr = menuitem;
+
+      gtk_widget_show (menuitem);
+
+      /*  remember the initial menu item  */
+      if (user_data == initial)
+	initial_index = i;
+
+      label = va_arg (args, gchar*);
+    }
+  va_end (args);
+
+  optionmenu = gtk_option_menu_new ();
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+
+  /*  select the initial menu item  */
+  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+
+  return optionmenu;
+}
+
+GtkWidget *
+gimp_radio_group_new (gboolean            in_frame,
+		      gchar              *frame_title,
+
+		      /* specify radio buttons as va_list:
+		       *  gchar          *label,
+		       *  GtkSignalFunc   callback,
+		       *  gpointer        data,
+		       *  gpointer        user_data,
+		       *  GtkWidget     **widget_ptr,
+		       *  gboolean        active,
+		       */
+
+		      ...)
+{
+  GtkWidget *vbox;
+  GtkWidget *frame = NULL;
+  GtkWidget *button;
+  GSList    *group;
+
+  /*  radio button variables  */
+  gchar          *label;
+  GtkSignalFunc   callback;
+  gpointer        data;
+  gpointer        user_data;
+  GtkWidget     **widget_ptr;
+  gboolean        active;
+
+  va_list args;
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+
+  if (in_frame)
+    {
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+    }
+
+  group = NULL;
+
+  /*  create the radio buttons  */
+  va_start (args, frame_title);
+  label = va_arg (args, gchar*);
+  while (label)
+    {
+      callback   = va_arg (args, GtkSignalFunc);
+      data       = va_arg (args, gpointer);
+      user_data  = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, gpointer);
+      active     = va_arg (args, gboolean);
+
+      button = gtk_radio_button_new_with_label (group, label);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (callback),
+			  data);
+
+      if (user_data)
+	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+
+      if (widget_ptr)
+	*widget_ptr = button;
+
+      /*  press the initially active radio button  */
+      if (active)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      gtk_widget_show (button);
+
+      label = va_arg (args, gchar*);
+    }
+  va_end (args);
+
+  if (in_frame)
+    return frame;
+
+  return vbox;
+}
+
+GtkWidget *
+gimp_radio_group_new2 (gboolean        in_frame,
+		       gchar          *frame_title,
+		       GtkSignalFunc   callback,
+		       gpointer        data,
+		       gpointer        initial, /* user_data */
+
+		       /* specify radio buttons as va_list:
+			*  gchar      *label,
+			*  gpointer    user_data,
+			*  GtkWidget **widget_ptr,
+			*/
+
+		       ...)
+{
+  GtkWidget *vbox;
+  GtkWidget *frame = NULL;
+  GtkWidget *button;
+  GSList    *group;
+
+  /*  radio button variables  */
+  gchar      *label;
+  gpointer    user_data;
+  GtkWidget **widget_ptr;
+
+  va_list args;
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+
+  if (in_frame)
+    {
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+    }
+
+  group = NULL;
+
+  /*  create the radio buttons  */
+  va_start (args, initial);
+  label = va_arg (args, gchar*);
+  while (label)
+    {
+      user_data  = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, gpointer);
+
+      button = gtk_radio_button_new_with_label (group, label);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (callback),
+			  data);
+
+      if (user_data)
+	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+
+      if (widget_ptr)
+	*widget_ptr = button;
+
+      /*  press the initially active radio button  */
+      if (initial == user_data)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      gtk_widget_show (button);
+
+      label = va_arg (args, gchar*);
+    }
+  va_end (args);
+
+  if (in_frame)
+    return frame;
+
+  return vbox;
+}
+
+GtkWidget *
+gimp_spin_button_new (GtkObject **adjustment,  /* return value */
+		      gfloat      value,
+		      gfloat      lower,
+		      gfloat      upper,
+		      gfloat      step_increment,
+		      gfloat      page_increment,
+		      gfloat      page_size,
+		      gfloat      climb_rate,
+		      guint       digits)
+{
+  GtkWidget *spinbutton;
+
+  *adjustment = gtk_adjustment_new (value, lower, upper,
+				    step_increment, page_increment, page_size);
+
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+				    climb_rate, digits);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+
+  return spinbutton;
+}
+
+GtkObject *
+gimp_scale_entry_new (GtkTable *table,
+		      gint      column,
+		      gint      row,
+		      gchar    *text,
+		      gint      scale_usize,
+		      gint      spinbutton_usize,
+		      gfloat    value,
+		      gfloat    lower,
+		      gfloat    upper,
+		      gfloat    step_increment,
+		      gfloat    page_increment,
+		      guint     digits,
+		      gchar    *tooltip,
+		      gchar    *private_tip)
+{
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *spinbutton;
+  GtkObject *adjustment;
+
+  label = gtk_label_new (text);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label,
+                    column, column + 1, row, row + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
+				     step_increment, page_increment, 0.0,
+				     1.0, digits);
+  if (spinbutton_usize > 0)
+    gtk_widget_set_usize (spinbutton, spinbutton_usize, -1);
+
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  if (scale_usize > 0)
+    gtk_widget_set_usize (scale, scale_usize, -1);
+  gtk_scale_set_digits (GTK_SCALE (scale), digits);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_table_attach (GTK_TABLE (table), scale,
+		    column + 1, column + 2, row, row + 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (scale);
+
+  gtk_table_attach (GTK_TABLE (table), spinbutton,
+		    column + 2, column + 3, row, row + 1,
+		    GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
+
+  if (tooltip || private_tip)
+    {
+      gimp_help_set_help_data (scale, tooltip, private_tip);
+      gimp_help_set_help_data (spinbutton, tooltip, private_tip);
+    }
+
+  return adjustment;
+}
+
+/*
+ *  Standard Callbacks...
+ */
+
+void
+gimp_toggle_button_update (GtkWidget *widget,
+			   gpointer   data)
+{
+  GtkWidget *set_sensitive;
+  gint      *toggle_val;
+
+  toggle_val = (gint *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+
+  set_sensitive =
+    gtk_object_get_data (GTK_OBJECT (widget), "set_sensitive");
+  while (set_sensitive)
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), *toggle_val);
+      set_sensitive =
+        gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
+    }
+
+  set_sensitive =
+    gtk_object_get_data (GTK_OBJECT (widget), "inverse_sensitive");
+  while (set_sensitive)
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! *toggle_val);
+      set_sensitive =
+        gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
+    }
+}
+
+void
+gimp_menu_item_update (GtkWidget *widget,
+		       gpointer   data)
+{
+  gint *item_val;
+
+  item_val = (gint *) data;
+
+  *item_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+}
+
+void
+gimp_radio_button_update (GtkWidget *widget,
+			  gpointer   data)
+{
+  gint *toggle_val;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      toggle_val = (gint *) data;
+
+      *toggle_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+    }
+}
+
+void
+gimp_int_adjustment_update (GtkAdjustment *adjustment,
+			    gpointer       data)
+{
+  gint *val;
+
+  val = (gint *) data;
+  *val = (gint) (adjustment->value + 0.5);
+}
+
+void
+gimp_double_adjustment_update (GtkAdjustment *adjustment,
+			       gpointer       data)
+{
+  gdouble *val;
+
+  val = (gdouble *) data;
+  *val = adjustment->value;
+}
+
+/*
+ *  Helper Functions...
+ */
+
+/*  add aligned label & widget to a two-column table  */
+void
+gimp_table_attach_aligned (GtkTable  *table,
+			   gint       row,
+			   gchar     *text,
+			   gfloat     xalign,
+			   gfloat     yalign,
+			   GtkWidget *widget,
+			   gboolean   left_adjust)
+{
+  GtkWidget *label;
+
+  label = gtk_label_new (text);
+  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+  gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  if (left_adjust)
+    {
+      GtkWidget *alignment;
+
+      alignment = gtk_alignment_new (0.0, 1.0, 0.0, 0.0);
+      gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
+      gtk_widget_show (alignment);
+      gtk_container_add (GTK_CONTAINER (alignment), widget);
+    }
+  else
+    {
+      gtk_table_attach_defaults (table, widget, 1, 2, row, row + 1);
+    }
+
+  gtk_widget_show (widget);
+}

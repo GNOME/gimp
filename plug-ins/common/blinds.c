@@ -47,6 +47,7 @@
  * Added patches supplied by Tim Mooney mooney@dogbert.cc.ndsu.NoDak.edu
  * to allow the plug-in to build with Digitals compiler.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -55,8 +56,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimplimits.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
@@ -66,25 +69,22 @@
 #define SCALE_WIDTH  150
 #define ENTRY_WIDTH  30
 
-/* Even more stuff from Quartics plugins */
-#define CHECK_SIZE  8
-#define CHECK_DARK  ((int) (1.0 / 3.0 * 255))
-#define CHECK_LIGHT ((int) (2.0 / 3.0 * 255))
-
-#define MAX_FANS 10
+#define MAX_FANS   10
 
 #define HORIZONTAL 0
-#define VERTICAL 1
+#define VERTICAL   1
 
 /* Variables set in dialog box */
-typedef struct data {
-    gint angledsp;
-    gint numsegs;
-    gint orientation;
-    gint bg_trans;
+typedef struct data
+{
+  gint angledsp;
+  gint numsegs;
+  gint orientation;
+  gint bg_trans;
 } BlindVals;
 
-typedef struct {
+typedef struct
+{
   GtkWidget *preview;
   guchar     preview_row[PREVIEW_SIZE * 4];
   gint run;
@@ -94,18 +94,18 @@ typedef struct {
 
 static BlindsInterface bint =
 {
-  NULL,  /* Preview */
-  {'4','u'},    /* Preview_row */
-  FALSE, /* run */
+  NULL,          /* Preview */
+  { '4', 'u' },  /* Preview_row */
+  FALSE,         /* run */
   NULL,
-  4      /* bpp of drawable */
+  4              /* bpp of drawable */
 };
 
 /* Array to hold each size of fans. And no there are not each the
  * same size (rounding errors...)
  */
 
-int fanwidths[MAX_FANS];
+gint fanwidths[MAX_FANS];
 
 GDrawable *blindsdrawable;
 
@@ -116,17 +116,22 @@ static void      run    (gchar    *name,
 			 gint     *nreturn_vals,
 			 GParam  **return_vals);
 
-static gint      blinds_dialog (void);
-static void      blinds_close_callback (GtkWidget *widget, gpointer   data);
-static void      blinds_ok_callback (GtkWidget *widget, gpointer   data);
-static void      blinds_scale_update (GtkAdjustment *adjustment, gint  *size_val);
-static void      blinds_entry_update(GtkWidget *widget, gint *value);
-static void      blinds_toggle_update (GtkWidget *widget, gpointer   data);
-static void      blinds_button_update (GtkWidget *widget, gpointer   data);
-static void      dialog_update_preview(void);
-static void	 cache_preview(void);
-static void      apply_blinds(void);
-static int       blinds_get_bg(guchar *bg);
+static gint      blinds_dialog       (void);
+
+static void      blinds_ok_callback    (GtkWidget     *widget,
+					gpointer       data);
+static void      blinds_scale_update   (GtkAdjustment *adjustment,
+					gint          *size_val);
+static void      blinds_entry_update   (GtkWidget     *widget,
+					gint          *value);
+static void      blinds_toggle_update  (GtkWidget     *widget,
+					gpointer       data);
+static void      blinds_button_update  (GtkWidget     *widget,
+					gpointer       data);
+static void      dialog_update_preview (void);
+static void	 cache_preview         (void);
+static void      apply_blinds          (void);
+static int       blinds_get_bg         (guchar        *bg);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -201,8 +206,7 @@ run (gchar    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
 
-  int           pwidth, pheight;
-
+  gint pwidth, pheight;
 
   run_mode = param[0].data.d_int32;
 
@@ -212,33 +216,38 @@ run (gchar    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
-  if (run_mode == RUN_INTERACTIVE) {
-    INIT_I18N_UI();
-  } else {
-    INIT_I18N();
-  }
+  if (run_mode == RUN_INTERACTIVE)
+    {
+      INIT_I18N_UI();
+    }
+  else
+    {
+      INIT_I18N();
+    }
 
-  blindsdrawable = 
-    drawable = 
+  blindsdrawable = drawable = 
     gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
   
   /* Calculate preview size */
   
-  if (sel_width > sel_height) {
-    pwidth  = MIN(sel_width, PREVIEW_SIZE);
-    pheight = sel_height * pwidth / sel_width;
-  } else {
-    pheight = MIN(sel_height, PREVIEW_SIZE);
-    pwidth  = sel_width * pheight / sel_height;
-  }
-  
-  preview_width  = MAX(pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX(pheight, 2); 
+  if (sel_width > sel_height)
+    {
+      pwidth  = MIN (sel_width, PREVIEW_SIZE);
+      pheight = sel_height * pwidth / sel_width;
+    }
+  else
+    {
+      pheight = MIN (sel_height, PREVIEW_SIZE);
+      pwidth  = sel_width * pheight / sel_height;
+    }
+
+  preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
+  preview_height = MAX (pheight, 2); 
 
   switch (run_mode)
     {
@@ -271,11 +280,12 @@ run (gchar    *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init ( _("Adding Blinds ..."));
 
-      apply_blinds();
+      apply_blinds ();
    
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
@@ -299,6 +309,7 @@ static gint
 blinds_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *xframe;
   GtkWidget *table;
@@ -314,8 +325,8 @@ blinds_dialog (void)
   gint    argc;
   gchar   buf[256];
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("blinds");
 
   do_horizontal = (bvals.orientation == HORIZONTAL);
@@ -335,7 +346,7 @@ blinds_dialog (void)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  cache_preview(); /* Get the preview image and store it also set has_alpha */
+  cache_preview (); /* Get the preview image and store it also set has_alpha */
 
   dlg = gimp_dialog_new (_("Blinds"), "blinds",
 			 gimp_plugin_help_func, "filters/blinds.html",
@@ -350,36 +361,42 @@ blinds_dialog (void)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (blinds_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /* Start building the frame for the preview area */
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  frame = gtk_frame_new ( _("Preview"));
+  frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  table = gtk_table_new (5, 5, FALSE); 
-  gtk_container_border_width (GTK_CONTAINER (table), 10); 
-  gtk_container_add (GTK_CONTAINER (frame), table); 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  bint.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size(GTK_PREVIEW(bint.preview), preview_width, preview_height);
-  xframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_container_add(GTK_CONTAINER(xframe), bint.preview);
-  gtk_widget_show(xframe);
-  gtk_table_attach(GTK_TABLE(table), xframe, 0, 1, 0, 2, GTK_EXPAND , GTK_EXPAND, 0, 0);
-  gtk_widget_show(frame); /* ALT-I */
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  gtk_widget_show(table); 
+  table = gtk_table_new (5, 5, FALSE); 
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4); 
+  gtk_container_add (GTK_CONTAINER (frame), table); 
+  gtk_widget_show (table); 
+
+  xframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), xframe, 0, 1, 0, 2,
+		    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_widget_show (xframe);
+
+  bint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (bint.preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (xframe), bint.preview);
   gtk_widget_show(bint.preview);
 
-  frame = gtk_frame_new ( _("Orientation"));
+  frame = gtk_frame_new (_("Orientation"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
-  toggle_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
+  toggle_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   
   toggle = gtk_radio_button_new_with_label (orientation_group, _("Horizontal"));
@@ -401,84 +418,89 @@ blinds_dialog (void)
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
-  gtk_widget_show(frame);
+  gtk_widget_show (frame);
   
-  frame = gtk_frame_new ( _("Background"));
+  frame = gtk_frame_new (_("Background"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 5, 5);
-  toggle_vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
+  toggle_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
-  
-  toggle = gtk_check_button_new_with_label ( _("Transparent"));
+
+  toggle = gtk_check_button_new_with_label (_("Transparent"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) blinds_button_update,
 		      &do_trans);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_trans);
 
-  if(!has_alpha)
+  if (!has_alpha)
     {
-      gtk_widget_set_sensitive(toggle,FALSE);
+      gtk_widget_set_sensitive (toggle, FALSE);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
-  gtk_widget_show(frame);
+  gtk_widget_show (frame);
 
-  frame = gtk_frame_new ( _("Parameter Settings"));
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  table = gtk_table_new (5, 5, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  label = gtk_label_new ( _("Displacement "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 4, 0);
+  label = gtk_label_new (_("Displacement:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);
-
 
   size_data = gtk_adjustment_new (bvals.angledsp, 1, 90, 1, 1, 0);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (size_data));
   gtk_widget_set_usize (slider, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), slider, 2,3 , 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_LEFT);
+  gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 0, 1,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
-  gtk_range_set_update_policy (GTK_RANGE (slider),GTK_UPDATE_CONTINUOUS );
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
 		      (GtkSignalFunc) blinds_scale_update,
 		      &bvals.angledsp);
   gtk_widget_show (slider);
 
-
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), size_data);
-  gtk_object_set_user_data(size_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), size_data);
+  gtk_object_set_user_data (size_data, entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
   g_snprintf (buf, sizeof (buf), "%.2d", bvals.angledsp);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) blinds_entry_update,
-		     &bvals.angledsp);
-  gtk_table_attach(GTK_TABLE(table), entry, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(entry);
+  gtk_entry_set_text (GTK_ENTRY (entry), buf);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) blinds_entry_update,
+		      &bvals.angledsp);
+  gtk_table_attach (GTK_TABLE(table), entry, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (entry);
 
-
-  label = gtk_label_new ( _("Num Segments "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  label = gtk_label_new (_("Num Segments:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   size_data = gtk_adjustment_new (bvals.numsegs, 1, MAX_FANS, 2, 1, 0);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (size_data));
   gtk_widget_set_usize (slider, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), slider, 2, 3, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_LEFT);
+  gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 1, 2,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
   gtk_signal_connect (GTK_OBJECT (size_data), "value_changed",
@@ -486,23 +508,25 @@ blinds_dialog (void)
 		      &bvals.numsegs);
   gtk_widget_show (slider);
 
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), size_data);
-  gtk_object_set_user_data(size_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
+  entry = gtk_entry_new ();
+  gtk_object_set_user_data (GTK_OBJECT (entry), size_data);
+  gtk_object_set_user_data (size_data, entry);
+  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
   g_snprintf (buf, sizeof (buf), "%d", bvals.numsegs);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) blinds_entry_update,
-		     &bvals.numsegs);
-  gtk_table_attach(GTK_TABLE(table), entry, 3, 4, 2, 3, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_entry_set_text (GTK_ENTRY (entry), buf);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) blinds_entry_update,
+		      &bvals.numsegs);
+  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2,
+		   GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(entry);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
 
   gtk_widget_show (dlg);
-  dialog_update_preview();
+
+  dialog_update_preview ();
 
   gtk_main ();
   gdk_flush ();
@@ -520,13 +544,6 @@ blinds_dialog (void)
 }
 
 static void
-blinds_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 blinds_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
@@ -534,22 +551,21 @@ blinds_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-
 static void
 blinds_toggle_update (GtkWidget *widget,
 		      gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gint *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
-  {
-    /* Only do for event that sets a toggle button to true */
-    /* This will break if any more toggles are added? */
-    *toggle_val = TRUE;
-    dialog_update_preview();
-  }
+    {
+      /* Only do for event that sets a toggle button to true */
+      /* This will break if any more toggles are added? */
+      *toggle_val = TRUE;
+      dialog_update_preview ();
+    }
   else
     *toggle_val = FALSE;
 }                  
@@ -558,23 +574,22 @@ static void
 blinds_button_update (GtkWidget *widget,
 		      gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gint *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
-  {
-    /* Only do for event that sets a toggle button to true */
-    /* This will break if any more toggles are added? */
-    *toggle_val = TRUE;
-  }
+    {
+      /* Only do for event that sets a toggle button to true */
+      /* This will break if any more toggles are added? */
+      *toggle_val = TRUE;
+    }
   else
     *toggle_val = FALSE;
   
-  dialog_update_preview();
+  dialog_update_preview ();
 
 }                  
-
 
 static void
 blinds_scale_update (GtkAdjustment *adjustment,
@@ -628,7 +643,7 @@ blinds_entry_update (GtkWidget *widget,
 /* The preview_cache will contain the small image */
 
 static void
-cache_preview ()
+cache_preview (void)
 {
   GPixelRgn src_rgn;
   int y,x;
@@ -636,21 +651,22 @@ cache_preview ()
   guchar *p;
   int isgrey = 0;
 
-  gimp_pixel_rgn_init(&src_rgn,blindsdrawable,sel_x1,sel_y1,sel_width,sel_height,FALSE,FALSE);
+  gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
+		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 
-  src_rows = g_new(guchar ,sel_width*4); 
-  p = bint.pv_cache = g_new(guchar ,preview_width*preview_height*4);
+  src_rows = g_new (guchar, sel_width * 4); 
+  p = bint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  bint.img_bpp = gimp_drawable_bpp(blindsdrawable->id);   
+  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->id);   
 
-  has_alpha = gimp_drawable_has_alpha(blindsdrawable->id);
+  has_alpha = gimp_drawable_has_alpha (blindsdrawable->id);
 
-  if(bint.img_bpp < 3)
+  if (bint.img_bpp < 3)
     {
       bint.img_bpp = 3 + has_alpha;
     }
 
-  switch ( gimp_drawable_type (blindsdrawable->id) )
+  switch (gimp_drawable_type (blindsdrawable->id))
     {
     case GRAYA_IMAGE:
     case GRAY_IMAGE:
@@ -659,27 +675,31 @@ cache_preview ()
       break;
     }
 
-  for (y = 0; y < preview_height; y++) {
-  
-    gimp_pixel_rgn_get_row(&src_rgn,
-			   src_rows,
-			   sel_x1,
-			   sel_y1 + (y*sel_height)/preview_height,
-			   sel_width);
-      
-    for (x = 0; x < (preview_width); x ++) {
-      /* Get the pixels of each col */
-      int i;
-      for (i = 0 ; i < 3; i++ )
-	p[x*bint.img_bpp+i] = src_rows[((x*sel_width)/preview_width)*src_rgn.bpp +((isgrey)?0:i)]; 
-      if(has_alpha)
-	p[x*bint.img_bpp+3] = src_rows[((x*sel_width)/preview_width)*src_rgn.bpp + ((isgrey)?1:3)];
-    }
-    p += (preview_width*bint.img_bpp);
-  }
-  g_free(src_rows);
-}
+  for (y = 0; y < preview_height; y++)
+    {
+      gimp_pixel_rgn_get_row (&src_rgn,
+			      src_rows,
+			      sel_x1,
+			      sel_y1 + (y * sel_height) / preview_height,
+			      sel_width);
 
+      for (x = 0; x < (preview_width); x++)
+	{
+	  /* Get the pixels of each col */
+	  gint i;
+	  for (i = 0 ; i < 3; i++)
+	    p[x * bint.img_bpp + i] =
+	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
+		      ((isgrey) ? 0 : i)]; 
+	  if (has_alpha)
+	    p[x * bint.img_bpp + 3] =
+	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
+		      ((isgrey) ? 1 : 3)];
+	}
+      p += (preview_width * bint.img_bpp);
+    }
+  g_free (src_rows);
+}
 
 static void 
 blindsapply (guchar *srow,
@@ -690,9 +710,9 @@ blindsapply (guchar *srow,
 {
   guchar *src;
   guchar *dst;
-  int i,j,k;
-  double ang;
-  int available;
+  gint i,j,k;
+  gdouble ang;
+  gint available;
 
   /* Make the row 'shrink' around points along its length */
   /* The bvals.numsegs determins how many segments to slip it in to */
@@ -719,28 +739,26 @@ blindsapply (guchar *srow,
 
   available = width;
   for ( i = 0 ; i < bvals.numsegs; i++)
-  {
-
-	/* Width of segs are variable */
-	fanwidths[i] = available/(bvals.numsegs - i);
-        available -= fanwidths[i];
-  }
+    {
+      /* Width of segs are variable */
+      fanwidths[i] = available / (bvals.numsegs - i);
+      available -= fanwidths[i];
+    }
 
   /* do center points  first - just for fun...*/
   available = 0;
-  for (k = 1 ; k <= bvals.numsegs; k++)
+  for (k = 1; k <= bvals.numsegs; k++)
     {
       int point;
 
-      point = available + fanwidths[k-1]/2;
+      point = available + fanwidths[k - 1] / 2;
 
-      available += fanwidths[k-1];
+      available += fanwidths[k - 1];
 
-      src = &srow[point*bpp];
-      dst = &drow[point*bpp];
+      src = &srow[point * bpp];
+      dst = &drow[point * bpp];
   
       /* Copy pixels across */
-      
       for (j = 0 ; j < bpp; j++)
 	{
 	  dst[j] = src[j];
@@ -748,11 +766,11 @@ blindsapply (guchar *srow,
     }
 
   /* Disp for each point */
-  ang = (bvals.angledsp*2*G_PI)/360; /* Angle in rads */
-  ang = (1-fabs(cos(ang)));
+  ang = (bvals.angledsp * 2 * G_PI) / 360; /* Angle in rads */
+  ang = (1 - fabs (cos (ang)));
 
   available = 0;
-  for(k = 0 ; k < bvals.numsegs; k++)
+  for (k = 0 ; k < bvals.numsegs; k++)
     {
       int dx; /* Amount to move by */
       int fw;
@@ -760,27 +778,28 @@ blindsapply (guchar *srow,
       for (i = 0 ; i < (fanwidths[k]/2) ; i++)
 	{
 	  /* Copy pixels across of left half of fan */
-	  fw = fanwidths[k]/2;
-	  dx = (int)(ang * ((double)(fw - (double)(i%fw))));
+	  fw = fanwidths[k] / 2;
+	  dx = (int) (ang * ((double) (fw - (double)(i % fw))));
 
-	  src = &srow[(available+i)*bpp];      
-	  dst = &drow[(available+i+dx)*bpp];
-	  
-	  for (j = 0 ; j < bpp; j++)
+	  src = &srow[(available + i) * bpp];      
+	  dst = &drow[(available + i + dx) * bpp];
+
+	  for (j = 0; j < bpp; j++)
 	    {
 	      dst[j] = src[j];
 	    }
 
 	  /* Right side */
 	  j = i + 1;
-	  src = &srow[(available + fanwidths[k] - j - (fanwidths[k]%2))*bpp];      
-	  dst = &drow[(available + fanwidths[k] - j - (fanwidths[k]%2) - dx)*bpp];
+	  src = &srow[(available + fanwidths[k] - j
+		       - (fanwidths[k] % 2)) * bpp];      
+	  dst = &drow[(available + fanwidths[k] - j
+		       - (fanwidths[k] % 2) - dx) * bpp];
 
-	  for (j = 0 ; j < bpp; j++)
+	  for (j = 0; j < bpp; j++)
 	    {
 	      dst[j] = src[j];
 	    }
-
 	}
 
       available += fanwidths[k];
@@ -795,18 +814,16 @@ blinds_get_bg (guchar *bg)
   /* Get the background color */
   int retval = FALSE; /*Return TRUE if of GREYA type */
 
-
-  switch ( gimp_drawable_type (blindsdrawable->id) )
+  switch (gimp_drawable_type (blindsdrawable->id))
     {
     case RGBA_IMAGE:
-      bg[3] = (do_trans == TRUE)?0:255;
+      bg[3] = (do_trans == TRUE) ? 0 : 255;
       break;
-    case RGB_IMAGE :
 
+    case RGB_IMAGE :
       return_vals = gimp_run_procedure ("gimp_palette_get_foreground",
 					&nreturn_vals,
 					PARAM_END);
-
       return_vals = gimp_run_procedure ("gimp_palette_get_background",
 					&nreturn_vals,
 					PARAM_END);
@@ -824,15 +841,18 @@ blinds_get_bg (guchar *bg)
 	  bg[2] = 0;
 	}
       break;
+
     case GRAYA_IMAGE:
       retval = TRUE;
       bg[3] = (do_trans == TRUE)?0:255;
       break;
+
     case GRAY_IMAGE:
       bg[2] = 0;
       bg[1] = 0;
       bg[0] = 0;
       break;
+
     default:
       break;
     }
@@ -843,39 +863,40 @@ blinds_get_bg (guchar *bg)
 static void
 dialog_update_preview (void)
 {
-
   int     y;
   guchar *p;
-  guchar bg[4];
-  gint check,check_0,check_1;
+  guchar  bg[4];
+  gint    check, check_0, check_1;
   
   p = bint.pv_cache;
 
-  blinds_get_bg(bg);
+  blinds_get_bg (bg);
 
-  if(do_vertical)
+  if (do_vertical)
     {
-      for (y = 0; y < preview_height; y++) {
-	
-	/* bint.preview_row - this row contains the row to apply the action to */
-	
-	blindsapply(p,bint.preview_row,preview_width,bint.img_bpp,bg);
+      for (y = 0; y < preview_height; y++)
+	{
+	  /* bint.preview_row - this row contains the row to apply the action to */
+	  blindsapply (p, bint.preview_row, preview_width, bint.img_bpp, bg);
 
-	if ((y / CHECK_SIZE) & 1) {
-	  check_0 = CHECK_DARK;
-	  check_1 = CHECK_LIGHT;
-	} else {
-	  check_0 = CHECK_LIGHT;
-	  check_1 = CHECK_DARK;
-	}
+	  if ((y / GIMP_CHECK_SIZE) & 1)
+	    {
+	      check_0 = GIMP_CHECK_DARK * 255;
+	      check_1 = GIMP_CHECK_LIGHT * 255;
+	    }
+	  else
+	    {
+	      check_0 = GIMP_CHECK_LIGHT * 255;
+	      check_1 = GIMP_CHECK_DARK * 255;
+	    }
 
-	if(bint.img_bpp > 3)
-	  {
-	    int i,j;
+	  if (bint.img_bpp > 3)
+	    {
+	      int i,j;
 	    for (i = 0, j = 0 ; i < sizeof(bint.preview_row); i += 4, j += 3 )
 	      {
 		gint alphaval;
-		if (((i/4) / CHECK_SIZE) & 1)
+		if (((i/4) / GIMP_CHECK_SIZE) & 1)
 		  check = check_0;
 		else
 		  check = check_1;
@@ -891,10 +912,11 @@ dialog_update_preview (void)
 	      }
 	  }
 	
-	gtk_preview_draw_row(GTK_PREVIEW(bint.preview), bint.preview_row, 0, y, preview_width);
+	  gtk_preview_draw_row(GTK_PREVIEW(bint.preview),
+			       bint.preview_row, 0, y, preview_width);
 	
-	p += preview_width*bint.img_bpp;
-      } 
+	  p += preview_width * bint.img_bpp;
+	} 
     }
   else
     {
@@ -911,8 +933,8 @@ dialog_update_preview (void)
       /* Copy into here after translation*/
       guchar copy_row[PREVIEW_SIZE*4]; 
 
-      memset(dummybg,0,4);
-      memset(dr,0,(preview_height)*4); /* all dr rows are background rows */
+      memset (dummybg, 0, 4);
+      memset (dr, 0, (preview_height) * 4); /* all dr rows are background rows */
 
       /* Fill in with background color ? */
       for (i = 0 ; i < preview_width ; i++)
@@ -937,61 +959,65 @@ dialog_update_preview (void)
        * row not a set of bytes. - preview can't be > 255
        * or must make dr sr int rows. 
        */
-      blindsapply(sr,dr,preview_height,1,dummybg);
+      blindsapply (sr, dr, preview_height, 1, dummybg);
 
-      for (y = 0; y < preview_height; y++) {
+      for (y = 0; y < preview_height; y++)
+	{
+	  if ((y / GIMP_CHECK_SIZE) & 1)
+	    {
+	      check_0 = GIMP_CHECK_DARK * 255;
+	      check_1 = GIMP_CHECK_LIGHT * 255;
+	    }
+	  else
+	    {
+	      check_0 = GIMP_CHECK_LIGHT * 255;
+	      check_1 = GIMP_CHECK_DARK * 255;
+	    }
 
-	if ((y / CHECK_SIZE) & 1) {
-	  check_0 = CHECK_DARK;
-	  check_1 = CHECK_LIGHT;
-	} else {
-	  check_0 = CHECK_LIGHT;
-	  check_1 = CHECK_DARK;
-	}
+	  if (dr[y] == 0)
+	    {
+	      /* Draw background line */
+	      p = bint.preview_row;
+	    }
+	  else
+	    {
+	      /* Draw line from src */
+	      p = bint.pv_cache + (preview_width * bint.img_bpp * (dr[y] - 1));
+	    }
 
-	if(dr[y] == 0)
-	  {
-	    /* Draw background line */
-	    p = bint.preview_row;
-	  }
-	else
-	  {
-	    /* Draw line from src */
-	    p = bint.pv_cache + (preview_width*bint.img_bpp*(dr[y]-1));
-	  }
+	  if (bint.img_bpp > 3)
+	    {
+	      /* Take account of alpha channel HERE*/
+	      for (loop1 = 0, loop2 = 0 ; 
+		   loop1 < preview_width*bint.img_bpp; 
+		   loop1 += 4, loop2 += 3)
+		{
+		  gint alphaval;
+		  if (((loop1/4) / GIMP_CHECK_SIZE) & 1)
+		    check = check_0;
+		  else
+		    check = check_1;
 
-	if(bint.img_bpp > 3)
-	  {
-	    /* Take account of alpha channel HERE*/
-	    for (loop1 = 0, loop2 = 0 ; 
-		 loop1 < preview_width*bint.img_bpp; 
-		 loop1 += 4, loop2 += 3)
-	      {
-		gint alphaval;
-		if (((loop1/4) / CHECK_SIZE) & 1)
-		  check = check_0;
-		else
-		  check = check_1;
-		
-		alphaval = p[loop1 + 3];
-		
-		copy_row[loop2] = 
-		  check + (((p[loop1] - check)*alphaval)/255);
-		copy_row[loop2 + 1] = 
-		  check + (((p[loop1 + 1] - check)*alphaval)/255);
-		copy_row[loop2 + 2] = 
-		  check + (((p[loop1 + 2] - check)*alphaval)/255);
-	      }
-	    p = &copy_row[0];
-	  }
-	gtk_preview_draw_row(GTK_PREVIEW(bint.preview), p, 0, y, preview_width);
-      } 
-      g_free(sr);
-      g_free(dr);
+		  alphaval = p[loop1 + 3];
+
+		  copy_row[loop2] = 
+		    check + (((p[loop1] - check) * alphaval) / 255);
+		  copy_row[loop2 + 1] = 
+		    check + (((p[loop1 + 1] - check) * alphaval) / 255);
+		  copy_row[loop2 + 2] = 
+		    check + (((p[loop1 + 2] - check) * alphaval) / 255);
+		}
+	      p = &copy_row[0];
+	    }
+	  gtk_preview_draw_row (GTK_PREVIEW (bint.preview),
+				p, 0, y, preview_width);
+	} 
+      g_free (sr);
+      g_free (dr);
     }
-  
-  gtk_widget_draw(bint.preview, NULL);
-  gdk_flush();
+
+  gtk_widget_draw (bint.preview, NULL);
+  gdk_flush ();
 }
 
 /* STEP tells us how many rows/columns to gulp down in one go... */
@@ -1012,48 +1038,49 @@ apply_blinds (void)
 
   /* Adjust aplha channel if GREYA */
   if(blinds_get_bg(bg) == TRUE)
-    bg[1] = (do_trans == TRUE)?0:255;
+    bg[1] = (do_trans == TRUE) ? 0 : 255;
 
-  gimp_pixel_rgn_init(&src_rgn,blindsdrawable,sel_x1,sel_y1,sel_width,sel_height,FALSE,FALSE);
-  gimp_pixel_rgn_init(&des_rgn,blindsdrawable,sel_x1,sel_y1,sel_width,sel_height,TRUE,TRUE);
+  gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
+		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&des_rgn, blindsdrawable,
+		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  src_rows = g_new(guchar ,(MAX(sel_width,sel_height))*4*STEP); 
-  des_rows = g_new(guchar ,(MAX(sel_width,sel_height))*4*STEP); 
+  src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
+  des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
 
-  if(do_vertical)
+  if (do_vertical)
     {
-
       for (y = 0; y < sel_height; y += STEP) 
 	{
 	  int rr;
 	  int step;
-	  
+
 	  if((y + STEP) > sel_height)
 	    step = sel_height - y;
 	  else
 	    step = STEP;
-	  
-	  gimp_pixel_rgn_get_rect(&src_rgn,
-				  src_rows,
-				  sel_x1,
-				  sel_y1 + y,
-				  sel_width,
-				  step);
-	  
+
+	  gimp_pixel_rgn_get_rect (&src_rgn,
+				   src_rows,
+				   sel_x1,
+				   sel_y1 + y,
+				   sel_width,
+				   step);
+
 	  /* OK I could make this better */
-	  for(rr = 0 ; rr < STEP; rr++)
-	    blindsapply(src_rows+(sel_width*rr*src_rgn.bpp),
-			des_rows+(sel_width*rr*src_rgn.bpp),
-			sel_width,src_rgn.bpp,bg);
-	  
-	  gimp_pixel_rgn_set_rect(&des_rgn,
-				  des_rows,
-				  sel_x1,
-				  sel_y1 + y,
-				  sel_width,
-				  step);
-	  
-	  gimp_progress_update((double)y/(double)sel_height);
+	  for (rr = 0; rr < STEP; rr++)
+	    blindsapply (src_rows + (sel_width * rr * src_rgn.bpp),
+			 des_rows + (sel_width * rr * src_rgn.bpp),
+			 sel_width, src_rgn.bpp, bg);
+
+	  gimp_pixel_rgn_set_rect (&des_rgn,
+				   des_rows,
+				   sel_x1,
+				   sel_y1 + y,
+				   sel_width,
+				   step);
+
+	  gimp_progress_update ((double) y / (double) sel_height);
 	}
     }
   else
@@ -1064,14 +1091,14 @@ apply_blinds (void)
        * rows. Make row 0 invalid so we can find it again!
        */
       int i;
-      gint *sr = g_new(gint,(sel_height)*4);
-      gint *dr = g_new(gint,(sel_height)*4);
-      guchar *dst = g_new(guchar,STEP*4);
+      gint *sr = g_new (gint, sel_height * 4);
+      gint *dr = g_new (gint, sel_height * 4);
+      guchar *dst = g_new (guchar, STEP * 4);
       guchar dummybg[4];
 
-      memset(dummybg,0,4);
-      memset(dr,0,(sel_height)*4); /* all dr rows are background rows */
-      for ( y = 0 ; y < sel_height; y++)
+      memset (dummybg, 0, 4);
+      memset (dr, 0, sel_height * 4); /* all dr rows are background rows */
+      for (y = 0; y < sel_height; y++)
 	{
 	  sr[y] = y+1;
 	}
@@ -1080,15 +1107,16 @@ apply_blinds (void)
       /* This "swaps the intergers around that are held in in the
        * sr & dr arrays. 
        */
-      blindsapply((guchar*)sr,(guchar*)dr,sel_height,sizeof(gint),dummybg);
+      blindsapply ((guchar *) sr, (guchar *) dr,
+		   sel_height, sizeof (gint), dummybg);
 
       /* Fill in with background color ? */
       for (i = 0 ; i < STEP ; i++)
 	{
 	  int j;
 	  guchar *bgdst;
-	  bgdst = &dst[i*src_rgn.bpp];
-	  
+	  bgdst = &dst[i * src_rgn.bpp];
+
 	  for (j = 0 ; j < src_rgn.bpp; j++)
 	    {
 	      bgdst[j] = bg[j];
@@ -1100,55 +1128,57 @@ apply_blinds (void)
 	  int rr;
 	  int step;
 	  guchar *p;
-	  
+
 	  if((x + STEP) > sel_width)
 	    step = sel_width - x;
 	  else
 	    step = STEP;
-	  
-	  gimp_pixel_rgn_get_rect(&src_rgn,
-				  src_rows,
-				  sel_x1 + x,
-				  sel_y1,
-				  step,
-				  sel_height);
-	  
+
+	  gimp_pixel_rgn_get_rect (&src_rgn,
+				   src_rows,
+				   sel_x1 + x,
+				   sel_y1,
+				   step,
+				   sel_height);
+
 	  /* OK I could make this better */
-	  for(rr = 0 ; rr < sel_height; rr++)
+	  for (rr = 0; rr < sel_height; rr++)
 	    {
-		if(dr[rr] == 0)
+	      if(dr[rr] == 0)
 	  	{
-	    	   /* Draw background line */
-	    	   p = dst;
+		  /* Draw background line */
+		  p = dst;
 	  	}
-		else
+	      else
 	  	{
-	    	   /* Draw line from src */
-	    	   p = src_rows + (step*src_rgn.bpp*(dr[rr]-1));
+		  /* Draw line from src */
+		  p = src_rows + (step * src_rgn.bpp * (dr[rr] - 1));
 	  	}
-		memcpy(des_rows+(rr*step*src_rgn.bpp),p,step*src_rgn.bpp);
+	      memcpy (des_rows + (rr * step * src_rgn.bpp), p,
+		      step * src_rgn.bpp);
 	    }
 
-	  gimp_pixel_rgn_set_rect(&des_rgn,
-				  des_rows,
-				  sel_x1 + x,
-				  sel_y1,
-				  step,
-				  sel_height);
-	  
-	  gimp_progress_update((double)x/(double)sel_width);
+	  gimp_pixel_rgn_set_rect (&des_rgn,
+				   des_rows,
+				   sel_x1 + x,
+				   sel_y1,
+				   step,
+				   sel_height);
+
+	  gimp_progress_update ((double) x / (double) sel_width);
 	}
 
-      g_free(dst);
-      g_free(sr);
-      g_free(dr);
+      g_free (dst);
+      g_free (sr);
+      g_free (dr);
     }
 
-  g_free(src_rows);
-  g_free(des_rows);
+  g_free (src_rows);
+  g_free (des_rows);
 
-  gimp_drawable_flush(blindsdrawable);
-  gimp_drawable_merge_shadow(blindsdrawable->id, TRUE);
-  gimp_drawable_update(blindsdrawable->id, sel_x1, sel_y1, sel_width, sel_height);  
+  gimp_drawable_flush (blindsdrawable);
+  gimp_drawable_merge_shadow (blindsdrawable->id, TRUE);
+  gimp_drawable_update (blindsdrawable->id,
+			sel_x1, sel_y1, sel_width, sel_height);  
   
 }

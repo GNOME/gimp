@@ -40,7 +40,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -48,21 +47,23 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 
-#define ENTRY_WIDTH 75
+#define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 48
 
 #define WRAP   0
 #define SMEAR  1
 #define BLACK  2
 
-typedef struct {
+typedef struct
+{
   gdouble amount_x;
   gdouble amount_y;
   gint    do_x;
@@ -72,7 +73,8 @@ typedef struct {
   gint    displace_type;
 } DisplaceVals;
 
-typedef struct {
+typedef struct
+{
   GtkWidget *amount_x;
   GtkWidget *amount_y;
   GtkWidget *menu_x;
@@ -117,8 +119,6 @@ static gint      displace_map_constrain    (gint32     image_id,
 static void      displace_map_x_callback   (gint32     id,
 					    gpointer   data);
 static void      displace_map_y_callback   (gint32     id,
-					    gpointer   data);
-static void      displace_close_callback   (GtkWidget *widget,
 					    gpointer   data);
 static void      displace_ok_callback      (GtkWidget *widget,
 					    gpointer   data);
@@ -297,16 +297,17 @@ displace_dialog (GDrawable *drawable)
   GtkWidget *entry;
   GtkWidget *option_menu;
   GtkWidget *menu;
-  GSList *group = NULL;
-  gchar **argv;
-  gchar buffer[32];
-  gint argc;
-  gint use_wrap = (dvals.displace_type == WRAP);
+  GSList  *group = NULL;
+  gchar  **argv;
+  gchar    buffer[32];
+  gint     argc;
+
+  gint use_wrap  = (dvals.displace_type == WRAP);
   gint use_smear = (dvals.displace_type == SMEAR);
   gint use_black = (dvals.displace_type == BLACK);
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("displace");
 
 #if 0
@@ -330,35 +331,35 @@ displace_dialog (GDrawable *drawable)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (displace_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   /*  The main table  */
-  frame = gtk_frame_new ( _("Displace Options"));
+  frame = gtk_frame_new (_("Displace Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 10);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 10);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 10);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   /*  on_x, on_y  */
-  toggle = gtk_check_button_new_with_label ( _("X Displacement: "));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  toggle = gtk_check_button_new_with_label (_("X Displacement:"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_x_toggle_update,
 		      &dvals.do_x);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ( _("Y Displacement: "));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  toggle = gtk_check_button_new_with_label (_("Y Displacement:"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_y_toggle_update,
 		      &dvals.do_y);
@@ -369,7 +370,7 @@ displace_dialog (GDrawable *drawable)
   dint.amount_x = entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%f", dvals.amount_x);
+  g_snprintf (buffer, sizeof (buffer), "%f", dvals.amount_x);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) displace_entry_callback,
@@ -381,7 +382,7 @@ displace_dialog (GDrawable *drawable)
   dint.amount_y = entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%f", dvals.amount_y);
+  g_snprintf (buffer, sizeof (buffer), "%f", dvals.amount_y);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) displace_entry_callback,
@@ -409,9 +410,10 @@ displace_dialog (GDrawable *drawable)
   gtk_widget_show (option_menu);
 
   /*  Displacement Type  */
-  toggle_hbox = gtk_hbox_new (FALSE, 10);
+  toggle_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 5);
-  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle_hbox, 0, 3, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
 
   label = gtk_label_new ( _("On Edges: "));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), label, FALSE, FALSE, 0);
@@ -659,7 +661,9 @@ displace (GDrawable *drawable)
 
 
 static gdouble
-displace_map_give_value(guchar *pt, gint alpha, gint bytes)
+displace_map_give_value (guchar *pt,
+			 gint    alpha,
+			 gint    bytes)
 {
   gdouble ret, val_alpha;
   
@@ -749,7 +753,9 @@ displace_pixel (GDrawable * drawable,
 
 
 static guchar
-bilinear (gdouble x, gdouble y, guchar *v)
+bilinear (gdouble x,
+	  gdouble y,
+	  guchar *v)
 {
   gdouble m0, m1;
 
@@ -765,8 +771,7 @@ bilinear (gdouble x, gdouble y, guchar *v)
   m1 = (gdouble) v[2] + x * ((gdouble) v[3] - v[2]);
 
   return (guchar) (m0 + y * (m1 - m0));
-} /* bilinear */
-
+}
 
 /*  Displace interface functions  */
 
@@ -801,13 +806,6 @@ displace_map_y_callback (gint32     id,
 			 gpointer   data)
 {
   dvals.displace_map_y = id;
-}
-
-static void
-displace_close_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  gtk_main_quit ();
 }
 
 static void

@@ -26,8 +26,8 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -35,14 +35,14 @@
 #define RAND_MAX 2147483647
 #endif /* RAND_MAX */
 
-#define SCALE_WIDTH 125
-#define BLACK 0
-#define BG    1
-#define SUPERSAMPLE 3
-#define MAX_POINTS 4
-#define MIN_ANGLE -36000
-#define MAX_ANGLE 36000
-#define RANDOMNESS 5
+#define SCALE_WIDTH    125
+#define BLACK            0
+#define BG               1
+#define SUPERSAMPLE      3
+#define MAX_POINTS       4
+#define MIN_ANGLE   -36000
+#define MAX_ANGLE    36000
+#define RANDOMNESS       5
 
 typedef struct
 {
@@ -70,14 +70,13 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char       *name,
-			 int         nparams,
+static void      run    (gchar      *name,
+			 gint        nparams,
 			 GParam     *param,
-			 int        *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GParam    **return_vals);
 static void      cubism (GDrawable  *drawable);
 
-static gint      cubism_dialog        (void);
 static void      render_cubism        (GDrawable * drawable);
 static void      fill_poly_color      (Polygon *  poly,
 				       GDrawable * drawable,
@@ -112,14 +111,13 @@ static gint      polygon_extents      (Polygon *  poly,
 				       gdouble *  max_y);
 static void      polygon_reset        (Polygon *  poly);
 
-static void      cubism_close_callback  (GtkWidget *widget,
-					 gpointer   data);
-static void      cubism_ok_callback     (GtkWidget *widget,
-					 gpointer   data);
-static void      cubism_toggle_update   (GtkWidget *widget,
-					 gpointer   data);
-static void      cubism_scale_update    (GtkAdjustment *adjustment,
-					 double        *scale_val);
+static gint      cubism_dialog        (void);
+static void      cubism_ok_callback   (GtkWidget     *widget,
+				       gpointer       data);
+static void      cubism_toggle_update (GtkWidget     *widget,
+				       gpointer       data);
+static void      cubism_scale_update  (GtkAdjustment *adjustment,
+				       double        *scale_val);
 
 /*
  *  Local variables
@@ -185,10 +183,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -313,8 +311,8 @@ cubism_dialog (void)
   gchar **argv;
   gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("cubism");
 
   gtk_init (&argc, &argv);
@@ -333,60 +331,73 @@ cubism_dialog (void)
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (cubism_close_callback),
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Use Background Color"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) cubism_toggle_update,
+		      GTK_SIGNAL_FUNC (cubism_toggle_update),
 		      &cvals.bg_color);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (cvals.bg_color == BG));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				(cvals.bg_color == BG));
   gtk_widget_show (toggle);
 
-  label = gtk_label_new (_("Tile Size"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
+  label = gtk_label_new (_("Tile Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   scale_data = gtk_adjustment_new (cvals.tile_size, 0.0, 100.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
+		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 1);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) cubism_scale_update,
+		      GTK_SIGNAL_FUNC (cubism_scale_update),
 		      &cvals.tile_size);
-  gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new (_("Tile Saturation"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
-  scale_data = gtk_adjustment_new (cvals.tile_saturation, 0.0, 10.0, 0.1, 0.1, 0.0);
+  label = gtk_label_new (_("Tile Saturation:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  scale_data = gtk_adjustment_new (cvals.tile_saturation, 0.0, 10.0,
+				   0.1, 0.1, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
+  gtk_widget_set_usize (scale, SCALE_WIDTH, -1);
+  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3,
+		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 1);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) cubism_scale_update,
+		      GTK_SIGNAL_FUNC (cubism_scale_update),
 		      &cvals.tile_saturation);
-  gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  gtk_widget_show (frame);
   gtk_widget_show (table);
+  gtk_widget_show (frame);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -426,8 +437,11 @@ render_cubism (GDrawable *drawable)
   rows = ((y2 - y1) + cvals.tile_size - 1) / cvals.tile_size;
 
   /*  Fill the image with the background color  */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       count = src_rgn.w * src_rgn.h;
       dest = src_rgn.data;
@@ -445,7 +459,8 @@ render_cubism (GDrawable *drawable)
   randomize_indices (num_tiles, random_indices);
 
   count = 0;
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
   while (count < num_tiles)
     {
@@ -453,10 +468,8 @@ render_cubism (GDrawable *drawable)
       j = random_indices[count] % (cols + 1);
       x = j * cvals.tile_size + (cvals.tile_size / 4.0) - fp_rand (cvals.tile_size/2.0) + x1;
       y = i * cvals.tile_size + (cvals.tile_size / 4.0) - fp_rand (cvals.tile_size/2.0) + y1;
-      width = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) *
-	cvals.tile_saturation;
-      height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) *
-	cvals.tile_saturation;
+      width = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) * cvals.tile_saturation;
+      height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) * cvals.tile_saturation;
       theta = fp_rand (2 * G_PI);
       polygon_reset (&poly);
       polygon_add_point (&poly, -width / 2.0, -height / 2.0);
@@ -554,8 +567,9 @@ fill_poly_color (Polygon   *poly,
       one_over_dist = 1/dist;
       vec[0] = (ex - sx) * one_over_dist;
       vec[1] = (ey - sy) * one_over_dist;
-    } else
-      one_over_dist = 0.0;
+    }
+  else
+    one_over_dist = 0.0;
 
   supersample = SUPERSAMPLE;
   supersample2 = SQR (supersample);
@@ -597,33 +611,35 @@ fill_poly_color (Polygon   *poly,
     convert_segment (xs, ys, xe, ye, min_y * supersample,
 		     min_scanlines, max_scanlines);
 
-    for(i = 1, curptr = &poly->pts[0]; i < poly_npts; i++) {
-      xs = (gint) curptr->x;
-      ys = (gint) curptr->y;
-      curptr++;
-      xe = (gint) curptr->x;
-      ye = (gint) curptr->y;
+    for (i = 1, curptr = &poly->pts[0]; i < poly_npts; i++)
+      {
+	xs = (gint) curptr->x;
+	ys = (gint) curptr->y;
+	curptr++;
+	xe = (gint) curptr->x;
+	ye = (gint) curptr->y;
 
-      xs *= supersample;
-      ys *= supersample;
-      xe *= supersample;
-      ye *= supersample;
+	xs *= supersample;
+	ys *= supersample;
+	xe *= supersample;
+	ye *= supersample;
 
-      convert_segment (xs, ys, xe, ye, min_y * supersample,
-		       min_scanlines, max_scanlines);
-    }
+	convert_segment (xs, ys, xe, ye, min_y * supersample,
+			 min_scanlines, max_scanlines);
+      }
   }
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
-		       drawable->width, drawable->height,
-		       TRUE, TRUE);
+		       drawable->width, drawable->height, TRUE, TRUE);
 
-  vals = (gint *) malloc (sizeof (gint) * size_x);
+  vals = g_new (gint, size_x);
+
   for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
     {
-      if (! (i % supersample)) {
-	memset (vals, 0, sizeof (gint) * size_x);
-      }
+      if (! (i % supersample))
+	{
+	  memset (vals, 0, sizeof (gint) * size_x);
+	}
 
       yy = (gdouble)i / (gdouble)supersample + min_y;
 
@@ -702,11 +718,13 @@ convert_segment (gint  x1,
   gdouble xinc, xstart;
 
   if (y1 > y2)
-    { tmp = y2; y2 = y1; y1 = tmp;
-      tmp = x2; x2 = x1; x1 = tmp; }
+    {
+      tmp = y2; y2 = y1; y1 = tmp;
+      tmp = x2; x2 = x1; x1 = tmp;
+    }
   ydiff = (y2 - y1);
 
-  if ( ydiff )
+  if (ydiff)
     {
       xinc = (gdouble) (x2 - x1) / (gdouble) ydiff;
       xstart = x1 + 0.5 * xinc;
@@ -846,17 +864,11 @@ polygon_reset (Polygon *poly)
 /*  Cubism interface functions  */
 
 static void
-cubism_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 cubism_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   cint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

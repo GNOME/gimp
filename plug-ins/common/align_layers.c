@@ -22,15 +22,16 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define	PLUG_IN_NAME	"plug_in_align_layers"
@@ -52,33 +53,26 @@
 #define	GTKW_BORDER_WIDTH	5
 #define GTKW_FLOAT_MIN_ERROR	0.000001
 static gint	**gtkW_gint_wrapper_new (gint index, gint *pointer);
-static void	gtkW_close_callback (GtkWidget *widget, gpointer data);
 static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
 static void	gtkW_iscale_update (GtkAdjustment *adjustment, gpointer data);
 static void	gtkW_ientry_update (GtkWidget *widget, gpointer data);
-static GtkWidget *gtkW_dialog_new (char *name, GtkSignalFunc ok_callback,
-				   GtkSignalFunc close_callback);
-static void	gtkW_message_dialog (gint gtk_was_initialized, gchar *message);
-static GtkWidget *gtkW_message_dialog_new (char * name);
-static void
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value);
-static void
-gtkW_table_add_iscale_entry (GtkWidget	*table,
-			     gchar	*name,
-			     gint	x,
-			     gint	y,
-			     GtkSignalFunc	scale_update,
-			     GtkSignalFunc	entry_update,
-			     gint	*value,
-			     gdouble	min,
-			     gdouble	max,
-			     gdouble	step,
-			     gchar	*buffer);
+static void     gtkW_table_add_toggle (GtkWidget	*table,
+				       gchar	*name,
+				       gint	x,
+				       gint	y,
+				       GtkSignalFunc update,
+				       gint	*value);
+static void     gtkW_table_add_iscale_entry (GtkWidget	*table,
+					     gchar	*name,
+					     gint	x,
+					     gint	y,
+					     GtkSignalFunc	scale_update,
+					     GtkSignalFunc	entry_update,
+					     gint	*value,
+					     gdouble	min,
+					     gdouble	max,
+					     gdouble	step,
+					     gchar	*buffer);
 GtkWidget *gtkW_table_add_button (GtkWidget	*table,
 				  gchar	*name,
 				  gint	x0,
@@ -111,24 +105,25 @@ GtkWidget *gtkW_vbox_new (GtkWidget *parent);
 /* end of GtkW */
 
 static void	query	(void);
-static void	run	(char	*name,
-			 int	nparams,
-			 GParam	*param,
-			 int	*nreturn_vals,
+static void	run	(gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
 			 GParam **return_vals);
+
 static GStatusType align_layers (gint32 image_id);
 static void align_layers_get_align_offsets (gint32	drawable_id,
 					    gint	*x,
 					    gint	*y);
-static gint	DIALOG ();
-static void	OK_CALLBACK (GtkWidget *widget, gpointer   data);
+static gint DIALOG      (void);
+static void OK_CALLBACK (GtkWidget *widget, gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc */
+  query, /* query_proc */
+  run,   /* run_proc */
 };
 
 /* dialog variables */
@@ -208,7 +203,7 @@ static Interface INTERFACE = { FALSE };
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -238,11 +233,11 @@ query ()
 }
 
 static void
-run (char	*name,
-     int	nparams,
-     GParam	*param,
-     int	*nreturn_vals,
-     GParam	**return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam	 values[1];
   GStatusType	status = STATUS_EXECUTION_ERROR;
@@ -265,7 +260,7 @@ run (char	*name,
       gimp_image_get_layers (image_id, &layer_num);
       if (layer_num < 2)
 	{
-	  gtkW_message_dialog (0, _("Error: there are too few layers."));
+	  g_message (_("Align Visible Layers: there are too few layers."));
 	  return;
 	}
       gimp_get_data (PLUG_IN_NAME, &VALS);
@@ -314,7 +309,8 @@ align_layers (gint32 image_id)
 
   layers = gimp_image_get_layers (image_id, &layer_num);
   for (index = 0; index < layer_num; index++)
-    if (gimp_layer_get_visible (layers[index])) visible_layer_num++;
+    if (gimp_layer_get_visible (layers[index]))
+      visible_layer_num++;
 
   if (VALS.ignore_bottom)
     {
@@ -480,7 +476,7 @@ align_layers_get_align_offsets (gint32	drawable_id,
 
 /* dialog stuff */
 static int
-DIALOG ()
+DIALOG (void)
 {
   GtkWidget	*dlg;
   GtkWidget	*frame;
@@ -502,9 +498,21 @@ DIALOG ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new (_("Align Visible Layers"),
-			 (GtkSignalFunc) OK_CALLBACK,
-			 (GtkSignalFunc) gtkW_close_callback);
+  dlg = gimp_dialog_new (_("Align Visible Layers"), "align_layers",
+			 gimp_plugin_help_func, "filters/align_layers.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), OK_CALLBACK,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
   
 #ifdef OLD
   hbox = gtkW_hbox_new ((GTK_DIALOG (dlg)->vbox));
@@ -687,13 +695,6 @@ gtkW_gint_wrapper_new (gint index, gint *pointer)
 }
 
 static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 gtkW_toggle_update (GtkWidget *widget,
 		    gpointer   data)
 {
@@ -706,89 +707,6 @@ gtkW_toggle_update (GtkWidget *widget,
   else
     *toggle_val = FALSE;
   PREVIEW_UPDATE ();
-}
-
-static GtkWidget *
-gtkW_dialog_new (char * name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback)
-{
-  GtkWidget *dlg;
-
-  dlg = gimp_dialog_new (name, "align_layers",
-			 gimp_plugin_help_func, "filters/align_layers.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
-
-			 _("OK"), ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 NULL);
-
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (close_callback),
-		      NULL);
-
-  return dlg;
-}
-
-static void
-gtkW_message_dialog (gint gtk_was_initialized, gchar *message)
-{
-  GtkWidget *dlg;
-  GtkWidget *table;
-  GtkWidget *label;
-  gchar	**argv;
-  gint	argc;
-
-  if (! gtk_was_initialized)
-    {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup (PLUG_IN_NAME);
-      gtk_init (&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
-    }
-  
-  dlg = gtkW_message_dialog_new (PLUG_IN_NAME);
-  
-  table = gtk_table_new (1, 1, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
-
-  label = gtk_label_new (message);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
-		    0, 0, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (table);
-  gtk_widget_show (dlg);
-
-  gtk_main ();
-  gdk_flush ();
-}
-
-static GtkWidget *
-gtkW_message_dialog_new (char * name)
-{
-  GtkWidget *dlg;
-
-  dlg = gimp_dialog_new (name, "align_layers",
-			 gimp_plugin_help_func, "filters/align_layers.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
-
-			 _("OK"), gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, TRUE,
-
-			 NULL);
-
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtkW_close_callback),
-		      NULL);
-
-  return dlg;
 }
 
 GtkWidget *

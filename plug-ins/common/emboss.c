@@ -40,24 +40,34 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <plug-ins/megawidget/megawidget.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 static mw_preview_t emboss_do_preview;
 
-struct Grgb {
+enum
+{
+  FUNCTION_BUMPMAP = 0,
+  FUNCTION_EMBOSS  = 1
+};
+
+struct Grgb
+{
   guint8 red;
   guint8 green;
   guint8 blue;
 };
 
-struct GRegion {
+struct GRegion
+{
   gint32 x;
   gint32 y;
   gint32 width;
   gint32 height;
 };
 
-struct piArgs {
+struct piArgs
+{
   gint32 img;
   gint32 drw;
   gdouble azimuth;
@@ -66,45 +76,56 @@ struct piArgs {
   gint32 embossp;
 };
 
-struct embossFilter {
-   gdouble Lx;
-   gdouble Ly;
-   gdouble Lz;
-   gdouble Nz;
-   gdouble Nz2;
-   gdouble NzLz;
-   gdouble bg;
+struct embossFilter
+{
+  gdouble Lx;
+  gdouble Ly;
+  gdouble Lz;
+  gdouble Nz;
+  gdouble Nz2;
+  gdouble NzLz;
+  gdouble bg;
 } Filter;
 
-static void query(void);
-static void run(gchar *name, gint nparam, GParam *param,
-                gint *nretvals, GParam **retvals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparam,
+		   GParam  *param,
+		   gint    *nretvals,
+		   GParam **retvals);
 
-int pluginCore(struct piArgs *argp);
-int pluginCoreIA(struct piArgs *argp);
+static gint pluginCore   (struct piArgs *argp);
+static gint pluginCoreIA (struct piArgs *argp);
 
-
-static inline void EmbossInit(gdouble azimuth, gdouble elevation,
-                              gushort width45);
-static inline void EmbossRow(guchar *src, guchar *texture, guchar *dst,
-                             guint xSize, guint bypp, gint alpha);
+static inline void EmbossInit (gdouble  azimuth,
+			       gdouble  elevation,
+			       gushort  width45);
+static inline void EmbossRow  (guchar  *src,
+			       guchar  *texture,
+			       guchar  *dst,
+			       guint    xSize,
+			       guint    bypp,
+			       gint     alpha);
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
-GPlugInInfo PLUG_IN_INFO = {
-  NULL, /* init */
-  NULL, /* quit */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init  */
+  NULL,  /* quit  */
   query, /* query */
-  run, /* run */
+  run,   /* run   */
 };
 
 static struct mwPreview *thePreview;
 
-MAIN()
+MAIN ()
 
 static void
-query(void){
-  static GParamDef args[] = {
+query (void)
+{
+  static GParamDef args[] =
+  {
     { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
     { PARAM_IMAGE, "img", "The Image" },
     { PARAM_DRAWABLE, "drw", "The Drawable" },
@@ -119,22 +140,26 @@ query(void){
   static gint nrets = 0;
 
   INIT_I18N();
-  gimp_install_procedure("plug_in_emboss",
-                         _("Emboss filter"),
-                         _("Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source."),
-                         "Eric L. Hernes, John Schlag",
-                         "Eric L. Hernes",
-                         "1997",
-                         N_("<Image>/Filters/Distorts/Emboss..."),
-                         "RGB",
-                         PROC_PLUG_IN,
-                         nargs, nrets,
-                         args, rets);
+
+  gimp_install_procedure ("plug_in_emboss",
+			  _("Emboss filter"),
+			  _("Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source."),
+			  "Eric L. Hernes, John Schlag",
+			  "Eric L. Hernes",
+			  "1997",
+			  N_("<Image>/Filters/Distorts/Emboss..."),
+			  "RGB",
+			  PROC_PLUG_IN,
+			  nargs, nrets,
+			  args, rets);
 }
 
 static void
-run(gchar *name, gint nparam, GParam *param,
-    gint *nretvals, GParam **retvals)
+run (gchar   *name,
+     gint     nparam,
+     GParam  *param,
+     gint    *nretvals,
+     GParam **retvals)
 {
   static GParam rvals[1];
   struct piArgs args;
@@ -143,36 +168,37 @@ run(gchar *name, gint nparam, GParam *param,
   *nretvals = 1;
   *retvals = rvals;
 
-  memset(&args,(int)0,sizeof(struct piArgs));
+  memset(&args, (int) 0, sizeof (struct piArgs));
 
   rvals[0].type = PARAM_STATUS;
   rvals[0].data.d_status = STATUS_SUCCESS;
+
   switch (param[0].data.d_int32)
     {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
-      gimp_get_data("plug_in_emboss", &args);
+      gimp_get_data ("plug_in_emboss", &args);
       if (args.img == 0 && args.drw == 0)
 	{
 	  /* initial conditions */
 	  args.azimuth = 30.0;
 	  args.elevation = 45.0;
 	  args.depth = 20;
-	  args.embossp = 1;
+	  args.embossp = FUNCTION_EMBOSS;
 	}
 
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
-      drw = gimp_drawable_get(args.drw);
+      drw = gimp_drawable_get (args.drw);
       thePreview = mw_preview_build(drw);
 
-      if (pluginCoreIA(&args)==-1)
+      if (pluginCoreIA (&args) == -1)
 	{
 	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
       else
 	{
-	  gimp_set_data("plug_in_emboss", &args, sizeof(struct piArgs));
+	  gimp_set_data ("plug_in_emboss", &args, sizeof (struct piArgs));
 	}
 
       break;
@@ -213,27 +239,31 @@ run(gchar *name, gint nparam, GParam *param,
 }
 
 #define pixelScale 255.9
+
 static void
-EmbossInit(gdouble azimuth, gdouble elevation, gushort width45) {
-       /*
-        * compute the light vector from the input parameters.
-        * normalize the length to pixelScale for fast shading calculation.
-        */
-   Filter.Lx = cos(azimuth) * cos(elevation) * pixelScale;
-   Filter.Ly = sin(azimuth) * cos(elevation) * pixelScale;
-   Filter.Lz = sin(elevation) * pixelScale;
+EmbossInit (gdouble azimuth,
+	    gdouble elevation,
+	    gushort width45)
+{
+  /*
+   * compute the light vector from the input parameters.
+   * normalize the length to pixelScale for fast shading calculation.
+   */
+  Filter.Lx = cos (azimuth) * cos (elevation) * pixelScale;
+  Filter.Ly = sin (azimuth) * cos (elevation) * pixelScale;
+  Filter.Lz = sin (elevation) * pixelScale;
 
-       /*
-        * constant z component of image surface normal - this depends on the
-        * image slope we wish to associate with an angle of 45 degrees, which
-        * depends on the width of the filter used to produce the source image.
-        */
-   Filter.Nz = (6 * 255) / width45;
-   Filter.Nz2 = Filter.Nz * Filter.Nz;
-   Filter.NzLz = Filter.Nz * Filter.Lz;
+  /*
+   * constant z component of image surface normal - this depends on the
+   * image slope we wish to associate with an angle of 45 degrees, which
+   * depends on the width of the filter used to produce the source image.
+   */
+  Filter.Nz = (6 * 255) / width45;
+  Filter.Nz2 = Filter.Nz * Filter.Nz;
+  Filter.NzLz = Filter.Nz * Filter.Lz;
 
-       /* optimization for vertical normals: L.[0 0 1] */
-   Filter.bg = Filter.Lz;
+  /* optimization for vertical normals: L.[0 0 1] */
+  Filter.bg = Filter.Lz;
 }
 
 
@@ -254,64 +284,80 @@ EmbossInit(gdouble azimuth, gdouble elevation, gushort width45) {
  */
 
 static inline void
-EmbossRow(guchar *src, guchar *texture, guchar *dst,
-          guint xSize, guint bypp, gint alpha) {
-   glong Nx, Ny, NdotL;
-   guchar *s1, *s2, *s3;
-   gint x, shade, b;
-   gint bytes;
+EmbossRow (guchar *src,
+	   guchar *texture,
+	   guchar *dst,
+	   guint   xSize,
+	   guint   bypp,
+	   gint    alpha)
+{
+  glong Nx, Ny, NdotL;
+  guchar *s1, *s2, *s3;
+  gint x, shade, b;
+  gint bytes;
 
-       /* mung pixels, avoiding edge pixels */
-   s1 = src + bypp;
-   s2 = s1 + (xSize*bypp);
-   s3 = s2 + (xSize*bypp);
-   dst += bypp;
+  /* mung pixels, avoiding edge pixels */
+  s1 = src + bypp;
+  s2 = s1 + (xSize * bypp);
+  s3 = s2 + (xSize * bypp);
+  dst += bypp;
 
-   bytes = (alpha) ? bypp - 1 : bypp;
+  bytes = (alpha) ? bypp - 1 : bypp;
 
-   if (texture) texture += bypp;
-   for (x = 1; x < xSize-1; x++, s1+=bypp, s2+=bypp, s3+=bypp) {
-          /*
-           * compute the normal from the src map. the type of the
-           * expression before the cast is compiler dependent. in
-           * some cases the sum is unsigned, in others it is
-           * signed. ergo, cast to signed.
-           */
-      Nx = (int)(s1[-(int)bypp] + s2[-(int)bypp] + s3[-(int)bypp]
-                 - s1[bypp] - s2[bypp] - s3[bypp]);
-      Ny = (int)(s3[-(int)bypp] + s3[0] + s3[bypp] - s1[-(int)bypp]
-                 - s1[0] - s1[bypp]);
+  if (texture)
+    texture += bypp;
 
-          /* shade with distant light source */
+  for (x = 1; x < xSize - 1; x++, s1 += bypp, s2 += bypp, s3 += bypp)
+    {
+      /*
+       * compute the normal from the src map. the type of the
+       * expression before the cast is compiler dependent. in
+       * some cases the sum is unsigned, in others it is
+       * signed. ergo, cast to signed.
+       */
+      Nx = (int) (s1[-(int)bypp] + s2[-(int)bypp] + s3[-(int)bypp]
+		  - s1[bypp] - s2[bypp] - s3[bypp]);
+      Ny = (int) (s3[-(int)bypp] + s3[0] + s3[bypp] - s1[-(int)bypp]
+		  - s1[0] - s1[bypp]);
+
+      /* shade with distant light source */
       if ( Nx == 0 && Ny == 0 )
-         shade = Filter.bg;
-      else if ( (NdotL = Nx*Filter.Lx + Ny*Filter.Ly + Filter.NzLz) < 0 )
-         shade = 0;
+	shade = Filter.bg;
+      else if ( (NdotL = Nx * Filter.Lx + Ny * Filter.Ly + Filter.NzLz) < 0 )
+	shade = 0;
       else
-         shade = NdotL / sqrt(Nx*Nx + Ny*Ny + Filter.Nz2);
+	shade = NdotL / sqrt(Nx*Nx + Ny*Ny + Filter.Nz2);
 
-          /* do something with the shading result */
-      if ( texture ) {
-         for(b=0;b<bytes;b++) {
-            *dst++ = (*texture++ * shade) >> 8;
-         }
-         if (alpha) {
-            *dst++=s2[bytes]; /* preserve the alpha */
-            texture++;
-         }
-      }
-      else {
-         for(b=0;b<bytes;b++) {
-            *dst++ = shade;
-         }
-         if (alpha) *dst++=s2[bytes]; /* preserve the alpha */
-
-      }
-   }
-   if (texture) texture += bypp;
+      /* do something with the shading result */
+      if (texture)
+	{
+	  for (b = 0; b < bytes; b++)
+	    {
+	      *dst++ = (*texture++ * shade) >> 8;
+	    }
+	  if (alpha)
+	    {
+	      *dst++ = s2[bytes]; /* preserve the alpha */
+	      texture++;
+	    }
+	}
+      else
+	{
+	  for (b = 0; b < bytes; b++)
+	    {
+	      *dst++ = shade;
+	    }
+	  if (alpha)
+	    *dst++ = s2[bytes]; /* preserve the alpha */
+	}
+    }
+  if (texture)
+    texture += bypp;
 }
 
-int pluginCore(struct piArgs *argp) {
+static gint
+pluginCore (struct piArgs *argp)
+{
   GDrawable *drw;
   GPixelRgn src, dst;
   gint p_update;
@@ -321,66 +367,69 @@ int pluginCore(struct piArgs *argp) {
   gint bypp, rowsize, has_alpha;
   guchar *srcbuf, *dstbuf;
 
-  drw=gimp_drawable_get(argp->drw);
+  drw = gimp_drawable_get (argp->drw);
 
-  gimp_drawable_mask_bounds(argp->drw, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (argp->drw, &x1, &y1, &x2, &y2);
 
   /* expand the bounds a little */
-  x1 = MAX(0, x1 - 5);
-  y1 = MAX(0, y1 - 5);
-  x2 = MIN(drw->width, x2+5);
-  y2 = MIN(drw->height, y2+5);
+  x1 = MAX (0, x1 - 5);
+  y1 = MAX (0, y1 - 5);
+  x2 = MIN (drw->width, x2 + 5);
+  y2 = MIN (drw->height, y2 + 5);
 
   width = x2 - x1;
   height = y2 - y1;
-  bypp=drw->bpp;
-  p_update = height/20;
+  bypp = drw->bpp;
+  p_update = height / 20;
   rowsize = width * bypp;
   has_alpha = gimp_drawable_has_alpha (argp->drw);
 
   gimp_pixel_rgn_init (&src, drw, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst, drw, x1, y1, width, height, TRUE, TRUE);
 
-  srcbuf=(guchar*)g_malloc(rowsize*3);
-  dstbuf=(guchar*)g_malloc(rowsize);
+  srcbuf = g_new (guchar, rowsize * 3);
+  dstbuf = g_new (guchar, rowsize);
 
-  memset(srcbuf,(int)0,(size_t)(rowsize*3));
-  memset(dstbuf,(int)0,(size_t)rowsize);
+  memset (srcbuf, 0, (size_t) rowsize * 3);
+  memset (dstbuf, 0, (size_t) rowsize);
 
-  EmbossInit(DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
-  gimp_progress_init( _("Emboss"));
+  EmbossInit (DtoR(argp->azimuth), DtoR(argp->elevation), argp->depth);
+  gimp_progress_init (_("Emboss"));
 
-  gimp_tile_cache_ntiles((width + gimp_tile_width() - 1) / gimp_tile_width());
+  gimp_tile_cache_ntiles ((width + gimp_tile_width () - 1) / gimp_tile_width ());
 
   /* first row */
-  gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y1, width, 3);
-  memcpy(srcbuf, srcbuf+rowsize, rowsize);
-  EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
-            dstbuf, width, bypp, has_alpha);
-  gimp_pixel_rgn_set_row(&dst, dstbuf, 0, 0, width);
+  gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1, width, 3);
+  memcpy (srcbuf, srcbuf + rowsize, rowsize);
+  EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+	     dstbuf, width, bypp, has_alpha);
+  gimp_pixel_rgn_set_row (&dst, dstbuf, 0, 0, width);
 
   /* last row */
-  gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y2-3, width, 3);
-  memcpy(srcbuf+rowsize*2, srcbuf+rowsize, rowsize);
-  EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
-            dstbuf, width, bypp, has_alpha);
-  gimp_pixel_rgn_set_row(&dst, dstbuf, x1, y2-1, width);
+  gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y2-3, width, 3);
+  memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
+  EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+	     dstbuf, width, bypp, has_alpha);
+  gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y2-1, width);
 
-  for(y=0 ;y<height-2; y++){
-     if (y%p_update==0) gimp_progress_update((gdouble)y/(gdouble)height);
-     gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y1+y, width, 3);
-     EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
-               dstbuf, width, bypp, has_alpha);
-     gimp_pixel_rgn_set_row(&dst, dstbuf, x1, y1+y+1, width);
+  for (y = 0; y < height - 2; y++)
+    {
+      if (y % p_update == 0)
+	gimp_progress_update ((gdouble) y / (gdouble) height);
+
+      gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
+      EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
+		 dstbuf, width, bypp, has_alpha);
+     gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
   }
 
-  g_free(srcbuf);
-  g_free(dstbuf);
+  g_free (srcbuf);
+  g_free (dstbuf);
 
-  gimp_drawable_flush(drw);
+  gimp_drawable_flush (drw);
   gimp_drawable_merge_shadow (drw->id, TRUE);
-  gimp_drawable_update(drw->id, x1, y1, width, height);
-  gimp_displays_flush();
+  gimp_drawable_update (drw->id, x1, y1, width, height);
+  gimp_displays_flush ();
 
   return 0;
 }
@@ -396,36 +445,67 @@ emboss_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-int
+static void
+emboss_radio_button_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  gint *toggle_val;
+
+  toggle_val = (gint32 *) data;
+
+  *toggle_val = (gint32) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  if (do_preview)
+    emboss_do_preview (NULL);
+}
+
+static void
+emboss_float_adjustment_callback (GtkAdjustment *adj,
+				  gpointer       data)
+{
+  gdouble *value;
+
+  value = (gdouble *) data;
+
+  *value = adj->value;
+
+  if (do_preview)
+    emboss_do_preview (NULL);
+}
+
+static void
+emboss_int_adjustment_callback (GtkAdjustment *adj,
+				gpointer       data)
+{
+  gint *value;
+
+  value = (gint *) data;
+
+  *value = (gint) adj->value;
+
+  if (do_preview)
+    emboss_do_preview (NULL);
+}
+
+static gint
 pluginCoreIA (struct piArgs *argp)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *preview;
   GtkWidget *frame;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
-  gint    i;
 
-  struct mwRadioGroup functions[] = {
-     { N_("Emboss"), 0 },
-     { N_("Bumpmap"), 0 },
-     { NULL, 0 },
-  };
- 
-  /* Set args */
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("emboss");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
-
-  for (i = 0; functions[i].name != NULL; i++)
-    functions[i].name = gettext(functions[i].name);
-
-  functions[!argp->embossp].var = 1;
 
   dlg = gimp_dialog_new (_("Emboss"), "emboss",
 			 gimp_plugin_help_func, "filters/emboss.html",
@@ -443,44 +523,73 @@ pluginCoreIA (struct piArgs *argp)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(hbox), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show(hbox);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  preview = mw_preview_new(hbox, thePreview, &emboss_do_preview);
-  gtk_object_set_data(GTK_OBJECT(preview), "piArgs", argp);
-  gtk_object_set_data(GTK_OBJECT(preview), "mwRadioGroup", &functions);
-  emboss_do_preview(preview);
+  preview = mw_preview_new (hbox, thePreview, &emboss_do_preview);
+  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  emboss_do_preview (preview);
 
-  mw_radio_group_new(hbox, _("Function"), functions);
+  frame = gimp_radio_group_new2 (TRUE, _("Function"),
+				 emboss_radio_button_callback,
+				 &argp->embossp, (gpointer) argp->embossp,
 
-  frame = gtk_frame_new( _("Parameters"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 5);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show(frame);
+				 _("Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,
+				 _("Emboss"), (gpointer) FUNCTION_EMBOSS, NULL,
 
-  table = gtk_table_new(4, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER (table), 5);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+				 NULL);
 
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-  mw_fscale_entry_new(table, _("Azimuth"), 0.0, 360.0, 1.0, 10.0, 0.0,
-                      0, 1, 1, 2, &argp->azimuth);
-  mw_fscale_entry_new(table, _("Elevation"), 0.0, 180.0, 1.0, 10.0, 0.0,
-                      0, 1, 2, 3, &argp->elevation);
-  mw_iscale_entry_new(table, _("Depth"), 1, 100, 1, 5, 0,
-                      0, 1, 3, 4, &argp->depth);
-  gtk_widget_show(table);
+  frame = gtk_frame_new (_("Parameters"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  gtk_widget_show(table);
-  gtk_widget_show(dlg);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Azimuth:"), 100, 0,
+			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
+		      &argp->azimuth);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Elevation:"), 100, 0,
+			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (emboss_float_adjustment_callback),
+		      &argp->elevation);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Depth:"), 100, 0,
+			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (emboss_int_adjustment_callback),
+		      &argp->depth);
+
+  gtk_widget_show (table);
+
+  gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
-
-  argp->embossp = !mw_radio_result(functions);
 
   if (run_flag)
     return pluginCore (argp);
@@ -488,63 +597,54 @@ pluginCoreIA (struct piArgs *argp)
     return -1;
 }
 
-
-
 static void
-emboss_do_preview(GtkWidget *w) {
-   static GtkWidget *theWidget = NULL;
-   struct piArgs *ap;
-   struct mwRadioGroup *rgp;
-   guchar *dst, *c;
-   gint y, rowsize;
+emboss_do_preview (GtkWidget *w)
+{
+  static GtkWidget *theWidget = NULL;
+  struct piArgs *ap;
+  guchar *dst, *c;
+  gint y, rowsize;
 
-   if(theWidget==NULL){
-      theWidget=w;
-   }
+  if (theWidget == NULL)
+    {
+      theWidget = w;
+    }
 
-   ap = gtk_object_get_data(GTK_OBJECT(theWidget), "piArgs");
-   rgp = gtk_object_get_data(GTK_OBJECT(theWidget), "mwRadioGroup");
-   ap->embossp = !mw_radio_result(rgp);
-   rowsize=thePreview->width*thePreview->bpp;
+  ap = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
+  rowsize = thePreview->width * thePreview->bpp;
 
-   dst = g_malloc(rowsize);
-   c = g_malloc(rowsize*3);
-   memcpy(c, thePreview->bits, rowsize);
-   memcpy(c+rowsize, thePreview->bits, rowsize*2);
-   EmbossInit(DtoR(ap->azimuth), DtoR(ap->elevation), ap->depth);
+  dst = g_malloc (rowsize);
+  c = g_malloc (rowsize * 3);
+  memcpy (c, thePreview->bits, rowsize);
+  memcpy (c + rowsize, thePreview->bits, rowsize * 2);
+  EmbossInit (DtoR (ap->azimuth), DtoR (ap->elevation), ap->depth);
 
-   EmbossRow(c, ap->embossp ? (guchar *)0 : c,
+  EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
              dst, thePreview->width, thePreview->bpp, FALSE);
-   gtk_preview_draw_row(GTK_PREVIEW(theWidget),
+  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
                         dst, 0, 0, thePreview->width);
 
-   memcpy(c, thePreview->bits+((thePreview->height-2)*rowsize), rowsize*2);
-   memcpy(c+(rowsize*2), thePreview->bits+((thePreview->height-1)*rowsize),
+  memcpy (c,
+	  thePreview->bits + ((thePreview->height-2) * rowsize),
+	  rowsize * 2);
+  memcpy (c + (rowsize * 2),
+	  thePreview->bits + ((thePreview->height - 1) * rowsize),
           rowsize);
-   EmbossRow(c, ap->embossp ? (guchar *)0 : c,
+  EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
              dst, thePreview->width, thePreview->bpp, FALSE);
-   gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                        dst, 0, thePreview->height-1, thePreview->width);
-   g_free(c);
+  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+                        dst, 0, thePreview->height - 1, thePreview->width);
+  g_free (c);
 
-   for(y=0, c=thePreview->bits;y<thePreview->height-2; y++, c+=rowsize){
-      EmbossRow(c, ap->embossp ? (guchar *)0 : c,
-                dst, thePreview->width, thePreview->bpp, FALSE);
-      gtk_preview_draw_row(GTK_PREVIEW(theWidget),
-                           dst, 0, y, thePreview->width);
-   }
+  for (y = 0, c = thePreview->bits; y<thePreview->height - 2; y++, c += rowsize)
+    {
+      EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
+		 dst, thePreview->width, thePreview->bpp, FALSE);
+      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+			    dst, 0, y, thePreview->width);
+    }
 
-   gtk_widget_draw(theWidget, NULL);
-   gdk_flush();
-   g_free(dst);
+  gtk_widget_draw (theWidget, NULL);
+  gdk_flush ();
+  g_free (dst);
 }
-
-/*
- * Local Variables:
- * mode: C
- * c-indent-level: 2
- *
- * End:
- */
-
-/* end of file: emboss/emboss.c */

@@ -26,14 +26,60 @@
  *   run()                       - Run the plug-in...
  *   load_image()                - Load a PNG image into a new image window.
  *   save_image()                - Save the specified image to a PNG file.
- *   save_close_callback()       - Close the save dialog window.
  *   save_ok_callback()          - Destroy the save dialog and save the image.
- *   save_compression_callback() - Update the image compression level.
  *   save_dialog()               - Pop up the save dialog.
  *
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.17  2000/01/13 15:39:25  mitch
+ *   2000-01-13  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* app/gimpui.[ch]
+ *   	* app/preferences_dialog.c: removed & renamed some functions from
+ *   	gimpui.[ch] (see below).
+ *
+ *   	* libgimp/Makefile.am
+ *   	* libgimp/gimpwidgets.[ch]; new files. Functions moved from
+ *   	app/gimpui.[ch]. Added a constructor for the label + hscale +
+ *   	entry combination used in many plugins (now hscale + spinbutton).
+ *
+ *   	* libgimp/gimpui.h: include gimpwidgets.h
+ *
+ *   	* plug-ins/megawidget/megawidget.[ch]: removed all functions
+ *   	except the preview stuff (I'm not yet sure how to implement this
+ *   	in libgimp because the libgimp preview should be general enough to
+ *   	replace all the other plugin previews, too).
+ *
+ *   	* plug-ins/borderaverage/Makefile.am
+ *   	* plug-ins/borderaverage/borderaverage.c
+ *   	* plug-ins/common/plugin-defs.pl
+ *   	* plug-ins/common/Makefile.am
+ *   	* plug-ins/common/aa.c
+ *   	* plug-ins/common/align_layers.c
+ *   	* plug-ins/common/animationplay.c
+ *   	* plug-ins/common/apply_lens.c
+ *   	* plug-ins/common/blinds.c
+ *   	* plug-ins/common/bumpmap.c
+ *   	* plug-ins/common/checkerboard.c
+ *   	* plug-ins/common/colorify.c
+ *   	* plug-ins/common/convmatrix.c
+ *   	* plug-ins/common/cubism.c
+ *   	* plug-ins/common/curve_bend.c
+ *   	* plug-ins/common/deinterlace.c
+ *   	* plug-ins/common/despeckle.c
+ *   	* plug-ins/common/destripe.c
+ *   	* plug-ins/common/displace.c
+ *   	* plug-ins/common/edge.c
+ *   	* plug-ins/common/emboss.c
+ *   	* plug-ins/common/hot.c
+ *   	* plug-ins/common/nlfilt.c
+ *   	* plug-ins/common/pixelize.c
+ *   	* plug-ins/common/waves.c
+ *   	* plug-ins/sgi/sgi.c
+ *   	* plug-ins/sinus/sinus.c: ui updates like removing megawidget,
+ *   	using the dialog constructor, I18N fixes, indentation, ...
+ *
  *   Revision 1.16  2000/01/01 15:38:59  neo
  *   added gettext support
  *
@@ -199,19 +245,21 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#include "sgi.h"		/* SGI image library definitions */
-
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
+#include "sgi.h"		/* SGI image library definitions */
 
 
 /*
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.1 - 17 May 1998"
+#define PLUG_IN_VERSION  "1.1.1 - 17 May 1998"
 
 
 /*
@@ -219,16 +267,19 @@
  */
 
 static void	query       (void);
-static void	run         (char *, int, GParam *, int *, GParam **);
-static gint32	load_image  (char *);
-static gint	save_image  (char *, gint32, gint32);
+static void	run         (gchar   *name,
+			     gint     nparams,
+			     GParam  *param,
+			     gint    *nreturn_vals,
+			     GParam **return_vals);
 
-static void     init_gtk                  (void);
-static gint	save_dialog               (void);
-static void	save_close_callback       (GtkWidget *, gpointer);
-static void	save_ok_callback          (GtkWidget *, gpointer);
-static void	save_compression_callback (GtkWidget *, gpointer);
+static gint32	load_image  (gchar   *filename);
+static gint	save_image  (gchar   *filename,
+			     gint32   image_ID,
+			     gint32   drawable_ID);
 
+static void     init_gtk         (void);
+static gint	save_dialog      (void);
 
 /*
  * Globals...
@@ -242,22 +293,14 @@ GPlugInInfo	PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-int		compression = SGI_COMP_RLE;
-int		runme = FALSE;
+gint  compression = SGI_COMP_RLE;
+gint  runme       = FALSE;
 
 
-/*
- * 'main()' - Main entry - just call gimp_main()...
- */
-
-MAIN()
-
-/*
- * 'query()' - Respond to a plug-in query...
- */
+MAIN ()
 
 static void
-query(void)
+query (void)
 {
   static GParamDef	load_args[] =
   {
@@ -282,41 +325,47 @@ query(void)
   };
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-
   INIT_I18N();
 
-  gimp_install_procedure("file_sgi_load",
-      _("Loads files in SGI image file format"),
-      _("This plug-in loads SGI image files."),
-      "Michael Sweet <mike@easysw.com>",
-      "Copyright 1997-1998 by Michael Sweet",
-      PLUG_IN_VERSION,
-      "<Load>/SGI", NULL, PROC_PLUG_IN, nload_args, nload_return_vals,
-      load_args, load_return_vals);
+  gimp_install_procedure ("file_sgi_load",
+			  _("Loads files in SGI image file format"),
+			  _("This plug-in loads SGI image files."),
+			  "Michael Sweet <mike@easysw.com>",
+			  "Copyright 1997-1998 by Michael Sweet",
+			  PLUG_IN_VERSION,
+			  "<Load>/SGI",
+			  NULL,
+			  PROC_PLUG_IN,
+			  nload_args,
+			  nload_return_vals,
+			  load_args,
+			  load_return_vals);
 
-  gimp_install_procedure("file_sgi_save",
-      _("Saves files in SGI image file format"),
-      _("This plug-in saves SGI image files."),
-      "Michael Sweet <mike@easysw.com>",
-      "Copyright 1997-1998 by Michael Sweet",
-      PLUG_IN_VERSION,
-      "<Save>/SGI", "RGB*,GRAY*", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
+  gimp_install_procedure ("file_sgi_save",
+			  _("Saves files in SGI image file format"),
+			  _("This plug-in saves SGI image files."),
+			  "Michael Sweet <mike@easysw.com>",
+			  "Copyright 1997-1998 by Michael Sweet",
+			  PLUG_IN_VERSION,
+			  "<Save>/SGI",
+			  "RGB*,GRAY*",
+			  PROC_PLUG_IN,
+			  nsave_args,
+			  0,
+			  save_args,
+			  NULL);
 
-  gimp_register_magic_load_handler("file_sgi_load", "rgb,bw,sgi,icon", "", "0,short,474");
-  gimp_register_save_handler("file_sgi_save", "rgb,bw,sgi,icon", "");
+  gimp_register_magic_load_handler ("file_sgi_load", "rgb,bw,sgi,icon",
+				    "", "0,short,474");
+  gimp_register_save_handler ("file_sgi_save", "rgb,bw,sgi,icon", "");
 }
 
-
-/*
- * 'run()' - Run the plug-in...
- */
-
 static void
-run (char    *name,		/* I - Name of filter program. */
-     int      nparams,		/* I - Number of parameters passed in */
-     GParam  *param,		/* I - Parameter values */
-     int     *nreturn_vals,	/* O - Number of return values */
-     GParam **return_vals)	/* O - Return values */
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   GParam               *values;         /* Return values */
   GRunModeType          run_mode;       
@@ -324,12 +373,11 @@ run (char    *name,		/* I - Name of filter program. */
   gint32                drawable_ID;
   GimpExportReturnType  export = EXPORT_CANCEL;
 
+  /*
+   * Initialize parameter data...
+   */
 
- /*
-  * Initialize parameter data...
-  */
-
-  values = g_new(GParam, 2);
+  values = g_new (GParam, 2);
 
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_SUCCESS;
@@ -338,105 +386,106 @@ run (char    *name,		/* I - Name of filter program. */
 
   *return_vals = values;
 
- /*
-  * Load or save an image...
-  */
+  /*
+   * Load or save an image...
+   */
 
-  if (strcmp(name, "file_sgi_load") == 0)
-  {
-    *nreturn_vals = 2;
-
-    image_ID = load_image(param[1].data.d_string);
-
-    if (image_ID != -1)
+  if (strcmp (name, "file_sgi_load") == 0)
     {
-      values[1].type         = PARAM_IMAGE;
-      values[1].data.d_image = image_ID;
+      *nreturn_vals = 2;
+
+      image_ID = load_image (param[1].data.d_string);
+
+      if (image_ID != -1)
+	{
+	  values[1].type         = PARAM_IMAGE;
+	  values[1].data.d_image = image_ID;
+	}
+      else
+	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     }
-    else
-      values[0].data.d_status = STATUS_EXECUTION_ERROR;
-  }
   else if (strcmp (name, "file_sgi_save") == 0)
-  {
-    *nreturn_vals = 1;
-    run_mode    = param[0].data.d_int32;
-    image_ID    = param[1].data.d_int32;
-    drawable_ID = param[2].data.d_int32;
-
-    /*  eventually export the image */ 
-    switch (run_mode)
-      {
-      case RUN_INTERACTIVE:
-      case RUN_WITH_LAST_VALS:
-	init_gtk ();
-	export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
-				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
-	if (export == EXPORT_CANCEL)
-	  {
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	    return;
-	  }
-	break;
-      default:
-	break;
-      }
-
-    switch (run_mode)
     {
-      case RUN_INTERACTIVE :
-         /*
-          * Possibly retrieve data...
-          */
+      *nreturn_vals = 1;
+      run_mode    = param[0].data.d_int32;
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
 
-          gimp_get_data("file_sgi_save", &compression);
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
+				      (CAN_HANDLE_RGB |
+				       CAN_HANDLE_GRAY |
+				       CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
 
-         /*
-          * Then acquire information with a dialog...
-          */
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	  /*
+	   * Possibly retrieve data...
+	   */
+          gimp_get_data ("file_sgi_save", &compression);
 
-          if (!save_dialog())
-            return;
+	  /*
+	   * Then acquire information with a dialog...
+	   */
+          if (!save_dialog ())
+            goto finish;
           break;
 
-      case RUN_NONINTERACTIVE :
-         /*
-          * Make sure all the arguments are there!
-          */
-
+	case RUN_NONINTERACTIVE:
+	  /*
+	   * Make sure all the arguments are there!
+	   */
           if (nparams != 6)
             values[0].data.d_status = STATUS_CALLING_ERROR;
           else
-          {
-            compression = param[5].data.d_int32;
+	    {
+	      compression = param[5].data.d_int32;
 
-            if (compression < 0 || compression > 2)
-              values[0].data.d_status = STATUS_CALLING_ERROR;
-          };
+	      if (compression < 0 || compression > 2)
+		values[0].data.d_status = STATUS_CALLING_ERROR;
+	    };
           break;
 
-      case RUN_WITH_LAST_VALS :
-         /*
-          * Possibly retrieve data...
-          */
+	case RUN_WITH_LAST_VALS:
+	  /*
+	   * Possibly retrieve data...
+	   */
 
           gimp_get_data ("file_sgi_save", &compression);
           break;
 
-      default :
+	default:
           break;
-    };
+	};
 
-    if (values[0].data.d_status == STATUS_SUCCESS)
-    {
-      if (save_image(param[3].data.d_string, image_ID, drawable_ID))
-        gimp_set_data("file_sgi_save", &compression, sizeof(compression));
-      else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-    };
+      if (values[0].data.d_status == STATUS_SUCCESS)
+	{
+	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	    gimp_set_data ("file_sgi_save", &compression, sizeof (compression));
+	  else
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	};
 
-    if (export == EXPORT_EXPORT)
-      gimp_image_delete (image_ID);
-  }
+    finish:
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
+    }
   else
     values[0].data.d_status = STATUS_EXECUTION_ERROR;
 }
@@ -447,7 +496,7 @@ run (char    *name,		/* I - Name of filter program. */
  */
 
 static gint32
-load_image (char *filename)	/* I - File to load */
+load_image (gchar *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
 		x,		/* Current X coordinate */
@@ -653,15 +702,14 @@ save_image (char   *filename,	 /* I - File to save to */
   unsigned short **rows;	 /* SGI image data */
   gchar		*progress;	 /* Title for progress display... */
 
+  /*
+   * Get the drawable for the current image...
+   */
 
- /*
-  * Get the drawable for the current image...
-  */
+  drawable = gimp_drawable_get (drawable_ID);
 
-  drawable = gimp_drawable_get(drawable_ID);
-
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-                      drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
+		       drawable->height, FALSE, FALSE);
 
   zsize = 0;
   switch (gimp_drawable_type(drawable_ID))
@@ -684,17 +732,17 @@ save_image (char   *filename,	 /* I - File to save to */
       break;
     };
 
- /*
-  * Open the file for writing...
-  */
+  /*
+   * Open the file for writing...
+   */
 
-  sgip = sgiOpen(filename, SGI_WRITE, compression, 1, drawable->width,
-                 drawable->height, zsize);
+  sgip = sgiOpen (filename, SGI_WRITE, compression, 1, drawable->width,
+		  drawable->height, zsize);
   if (sgip == NULL)
-  {
-    g_warning ("can't create image file\n");
-    return FALSE;
-  };
+    {
+      g_warning ("can't create image file\n");
+      return FALSE;
+    };
 
   if (strrchr(filename, '/') != NULL)
     progress = g_strdup_printf (_("Saving %s:"), strrchr(filename, '/') + 1);
@@ -726,204 +774,115 @@ save_image (char   *filename,	 /* I - File to save to */
   */
 
   for (y = 0; y < drawable->height; y += count)
-  {
-   /*
-    * Grab more pixel data...
-    */
-
-    if ((y + tile_height) >= drawable->height)
-      count = drawable->height - y;
-    else
-      count = tile_height;
-
-    gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, y, drawable->width, count);
-
-   /*
-    * Convert to shorts and write each color plane separately...
-    */
-
-    for (i = 0, pptr = pixels[0]; i < count; i ++)
     {
-      for (x = 0; x < drawable->width; x ++)
-        for (j = 0; j < zsize; j ++, pptr ++)
-          rows[j][x] = *pptr;
+      /*
+       * Grab more pixel data...
+       */
 
-      for (j = 0; j < zsize; j ++)
-        sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
+      if ((y + tile_height) >= drawable->height)
+	count = drawable->height - y;
+      else
+	count = tile_height;
+
+      gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, y, drawable->width, count);
+
+      /*
+       * Convert to shorts and write each color plane separately...
+       */
+
+      for (i = 0, pptr = pixels[0]; i < count; i ++)
+	{
+	  for (x = 0; x < drawable->width; x ++)
+	    for (j = 0; j < zsize; j ++, pptr ++)
+	      rows[j][x] = *pptr;
+
+	  for (j = 0; j < zsize; j ++)
+	    sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
+	};
+
+      gimp_progress_update ((double) y / (double) drawable->height);
     };
 
-    gimp_progress_update((double)y / (double)drawable->height);
-  };
+  /*
+   * Done with the file...
+   */
 
- /*
-  * Done with the file...
-  */
+  sgiClose (sgip);
 
-  sgiClose(sgip);
-
-  g_free(pixel);
-  g_free(pixels);
-  g_free(rows[0]);
-  g_free(rows);
+  g_free (pixel);
+  g_free (pixels);
+  g_free (rows[0]);
+  g_free (rows);
 
   return TRUE;
 }
 
-
-/*
- * 'save_close_callback()' - Close the save dialog window.
- */
-
 static void
-save_close_callback (GtkWidget *w,	/* I - Close button */
-		     gpointer   data)	/* I - Callback data */
-{
-  gtk_main_quit();
-}
-
-
-/*
- * 'save_ok_callback()' - Destroy the save dialog and save the image.
- */
-
-static void
-save_ok_callback (GtkWidget *w,		/* I - OK button */
-                  gpointer   data)	/* I - Callback data */
+save_ok_callback (GtkWidget *widget,
+                  gpointer   data)
 {
   runme = TRUE;
 
   gtk_widget_destroy(GTK_WIDGET(data));
 }
 
-
-/*
- * 'save_compression_callback()' - Update the image compression level.
- */
-
-static void
-save_compression_callback (GtkWidget *w,        /* I - Compression button */
-                           gpointer   data)	/* I - Callback data */
-{
-  if (GTK_TOGGLE_BUTTON(w)->active)
-    compression = (long)data;
-}
-
-
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("sgi");
   
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
 
-/*
- * 'save_dialog()' - Pop up the save dialog.
- */
-
 static gint
-save_dialog(void)
+save_dialog (void)
 {
-  int		i;		/* Looping var */
-  GtkWidget	*dlg,		/* Dialog window */
-		*hbbox,         /* button_box for OK/cancel buttons */
-		*button,	/* OK/cancel/compression buttons */
-		*frame,		/* Frame for dialog */
-		*vbox;		/* Box for compression types */
-  GSList	*group;		/* Button grouping for compression */
-  static char	*types[] =	/* Compression types... */
-		{
-		  N_("No Compression"),
-		  N_("RLE Compression"),
-		  N_("Aggressive RLE\n(Not supported by SGI)")
-		};
+  GtkWidget *dlg;
+  GtkWidget *frame;
 
+  dlg = gimp_dialog_new (_("Save as SGI"), "sgi",
+			 gimp_plugin_help_func, "filters/sgi.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, FALSE, FALSE,
 
- /*
-  * Open a dialog window...
-  */
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-  dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "SGI - " PLUG_IN_VERSION);
-  gtk_window_set_wmclass(GTK_WINDOW(dlg), "sgi", "Gimp");
-  gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-                     (GtkSignalFunc)save_close_callback, NULL);
+			 NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
+				 gimp_radio_button_update,
+				 &compression, (gpointer) compression,
 
- /*
-  * Compression type...
-  */
+				 _("No Compression"),
+				 (gpointer) SGI_COMP_NONE, NULL,
+				 _("RLE Compression"),
+				 (gpointer) SGI_COMP_RLE, NULL,
+				 _("Aggressive RLE\n(Not Supported by SGI)"),
+				 (gpointer) SGI_COMP_ARLE, NULL,
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 10);
-  gtk_box_pack_start(GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
+				 NULL);
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
-  gtk_container_add(GTK_CONTAINER(frame), vbox);
-  gtk_widget_show(vbox);
+  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-  group = NULL;
+  gtk_widget_show (dlg);
 
-  for (i = 0; i < (sizeof(types) / sizeof(types[0])); i ++)
-  {
-    button = gtk_radio_button_new_with_label(group, gettext (types[i]));
-    group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-    if (i == compression)
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+  gtk_main ();
+  gdk_flush ();
 
-    gtk_signal_connect(GTK_OBJECT(button), "toggled",
-  		       (GtkSignalFunc)save_compression_callback,
-		       (gpointer)((long)i));
-    gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
-    gtk_widget_show(button);
-  };
-
- /*
-  * Show everything and go...
-  */
-
-  gtk_widget_show(frame);
-  gtk_widget_show(dlg);
-
-  gtk_main();
-  gdk_flush();
-
-  return (runme);
+  return runme;
 }
-
-/*
- * End of "$Id$".
- */

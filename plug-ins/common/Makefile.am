@@ -372,7 +372,6 @@ deinterlace_SOURCES = \
 	deinterlace.c
 
 deinterlace_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
@@ -632,7 +631,6 @@ hot_SOURCES = \
 	hot.c
 
 hot_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\

@@ -55,9 +55,6 @@
 #define RAND_MAX 2147483647
 #endif /* RAND_MAX */
 
-#define ROUND_TO_INT(val) ((int) ((val) + 0.5))
-
-
 /*
  * This structure is used for persistent data.
  */
@@ -105,17 +102,17 @@ static SinusVals svals =
 
 typedef struct
 {
-  gint height, width;
-  double c11,c12,c13, c21,c22,c23, c31,c32,c33;
+  gint   height, width;
+  double c11, c12, c13, c21, c22, c23, c31, c32, c33;
   double (*blend) (double );
-  guchar r,g,b,a;
-  int   dr,dg,db,da;
+  guchar r, g, b, a;
+  int    dr, dg, db, da;
 } params;
 
 
-static gint drawable_is_grayscale = FALSE;
+static gint              drawable_is_grayscale = FALSE;
 static struct mwPreview *thePreview;
-static GDrawable *drawable;
+static GDrawable        *drawable;
 
 /* Declare functions */
 
@@ -134,14 +131,14 @@ static gdouble cosinus  (gdouble v);
 static gint    sinus_dialog     (void);
 static void    sinus_do_preview (GtkWidget *widget);
 
-inline void compute_block_4 (guchar *dest_row, guint rowstride,
-			     gint x0, gint y0, gint h, gint w, params *p);
-inline void compute_block_3 (guchar *dest_row, guint rowstride,
-			     gint x0, gint y0, gint h, gint w, params *p);
-inline void compute_block_2 (guchar *dest_row, guint rowstride,
-			     gint x0, gint y0, gint h, gint w, params *p);
-inline void compute_block_1 (guchar *dest_row, guint rowstride,
-			     gint x0, gint y0, gint h, gint w, params *p);
+static inline void compute_block_4 (guchar *dest_row, guint rowstride,
+				    gint x0, gint y0, gint h, gint w, params *p);
+static inline void compute_block_3 (guchar *dest_row, guint rowstride,
+				    gint x0, gint y0, gint h, gint w, params *p);
+static inline void compute_block_2 (guchar *dest_row, guint rowstride,
+				    gint x0, gint y0, gint h, gint w, params *p);
+static inline void compute_block_1 (guchar *dest_row, guint rowstride,
+				    gint x0, gint y0, gint h, gint w, params *p);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -227,9 +224,9 @@ run (gchar   *name,
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       thePreview = mw_preview_build_virgin(drawable);
       if (gimp_drawable_is_gray (drawable->id))
-	drawable_is_grayscale= TRUE;
+	drawable_is_grayscale = TRUE;
       else
-	drawable_is_grayscale= FALSE;
+	drawable_is_grayscale = FALSE;
 
       if (!sinus_dialog())
         return;
@@ -304,13 +301,13 @@ run (gchar   *name,
  *  Main procedure
  */
 
-void 
+static void 
 prepare_coef (params *p)
 {
-  typedef struct { guchar r,g,b,a;} type_color;
+  typedef struct { guchar r, g, b, a; } type_color;
   type_color col1,col2;
-  double  scalex=svals.scalex;
-  double  scaley=svals.scaley;
+  double scalex = svals.scalex;
+  double scaley = svals.scaley;
 
   srand(svals.seed);
   switch (svals.colorization)
@@ -353,12 +350,12 @@ prepare_coef (params *p)
 
   if (svals.tiling)
     {
-      p->c11= ROUND_TO_INT(p->c11/(2*G_PI))*2*G_PI;
-      p->c12= ROUND_TO_INT(p->c12/(2*G_PI))*2*G_PI;
-      p->c21= ROUND_TO_INT(p->c21/(2*G_PI))*2*G_PI;
-      p->c22= ROUND_TO_INT(p->c22/(2*G_PI))*2*G_PI;
-      p->c31= ROUND_TO_INT(p->c31/(2*G_PI))*2*G_PI;
-      p->c32= ROUND_TO_INT(p->c32/(2*G_PI))*2*G_PI;
+      p->c11= ROUND (p->c11/(2*G_PI))*2*G_PI;
+      p->c12= ROUND (p->c12/(2*G_PI))*2*G_PI;
+      p->c21= ROUND (p->c21/(2*G_PI))*2*G_PI;
+      p->c22= ROUND (p->c22/(2*G_PI))*2*G_PI;
+      p->c31= ROUND (p->c31/(2*G_PI))*2*G_PI;
+      p->c32= ROUND (p->c32/(2*G_PI))*2*G_PI;
     }
 
   col2.a=svals.col2[3];
@@ -455,28 +452,30 @@ sinus (void)
   gimp_drawable_update (drawable->id, ix1, iy1, (ix2-ix1), (iy2-iy1));
 }
 
-gdouble 
+static gdouble 
 linear (gdouble v)
 {
   register double a = v - (int) v;
+
   return (a < 0 ? 1.0 + a : a);
 }
 
-gdouble 
+static gdouble 
 bilinear (gdouble v)
 {
   register double a = v - (int) v;
+
   a = (a < 0 ? 1.0 + a : a);
   return (a > 0.5 ? 2 - 2 * a : 2 * a);
 }
 
-gdouble 
+static gdouble 
 cosinus (gdouble v)
 {
-  return 0.5-0.5*sin((v+0.25)*G_PI*2);
+  return 0.5 - 0.5 * sin ((v + 0.25) * G_PI * 2);
 }
 
-inline void 
+static inline void 
 compute_block_4 (guchar *dest_row, 
 		 guint   rowstride,
 		 gint    x0,
@@ -510,7 +509,7 @@ compute_block_4 (guchar *dest_row,
     }
 }
 
-inline void 
+static inline void 
 compute_block_3 (guchar *dest_row, 
 		 guint   rowstride,
 		 gint    x0,
@@ -543,7 +542,7 @@ compute_block_3 (guchar *dest_row,
     }
 }
 
-inline void 
+static inline void 
 compute_block_2 (guchar *dest_row, 
 		 guint   rowstride,
 		 gint    x0,
@@ -575,7 +574,7 @@ compute_block_2 (guchar *dest_row,
     }
 }
 
-inline void 
+static inline void 
 compute_block_1 (guchar *dest_row, 
 		 guint   rowstride,
 		 gint    x0,
@@ -639,6 +638,9 @@ alpha_scale_update (GtkWidget *color_button,
   gtk_signal_handler_block_by_data (GTK_OBJECT (adj), data);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), (gfloat)(*val) / 255.0);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
 }
 
 gboolean run_flag = FALSE;
@@ -652,6 +654,46 @@ sinus_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
+static void
+sinus_toggle_button_update (GtkWidget *widget,
+			    gpointer   data)
+{
+  gimp_toggle_button_update (widget, data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
+}
+
+static void
+sinus_radio_button_update (GtkWidget *widget,
+			   gpointer   data)
+{
+  gimp_radio_button_update (widget, data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
+}
+
+static void
+sinus_int_adjustment_update (GtkAdjustment *adjustment,
+			     gpointer       data)
+{
+  gimp_int_adjustment_update (adjustment, data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
+}
+
+static void
+sinus_double_adjustment_update (GtkAdjustment *adjustment,
+				gpointer       data)
+{
+  gimp_double_adjustment_update (adjustment, data);
+
+  if (do_preview)
+    sinus_do_preview (NULL);
+}
+
 /*****************************************/
 /* The note book                         */
 /*****************************************/
@@ -660,12 +702,20 @@ gint
 sinus_dialog (void)
 {
   GtkWidget *dlg;
+  GtkWidget *main_hbox;
   GtkWidget *preview;
-  GtkWidget *main_hbox, *notebook;
-  GtkWidget *page,*frame, *label, *vbox, *hbox, *table;
+  GtkWidget *notebook;
+  GtkWidget *page;
+  GtkWidget *frame;
+  GtkWidget *label;
+  GtkWidget *vbox;
+  GtkWidget *vbox2;
+  GtkWidget *hbox;
+  GtkWidget *table;
+  GtkWidget *toggle;
   GtkWidget *push_col1 = NULL;
   GtkWidget *push_col2 = NULL;
-  GtkWidget *scale;
+  GtkWidget *spinbutton;
   GtkObject *adj;
 #ifdef USE_LOGO
   GtkWidget *logo;
@@ -676,25 +726,6 @@ sinus_dialog (void)
   gchar **argv;
   gint argc;
 
-  static struct mwValueRadioGroup coloriz_radio[] = {
-    { "Linear", LINEAR },
-    { "Bilinear", BILINEAR },
-    { "Sinusoidal", SINUS },
-    { NULL, 0 },
-  };
-  static struct mwValueRadioGroup colors_radio[] = {
-    { "Black & White", B_W },
-    { "Foreground & Background", USE_FG_BG },
-    { "Choose here:", USE_COLORS},
-    { NULL, 0 },
-  };
-  static struct mwValueRadioGroup coefs_radio[] = {
-    { "Ideal", IDEAL },
-    { "Distorted", PERTURBED },
-    { NULL, 0 },
-  };
-
-  /* Set args */
   argc    = 1;
   argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("sinus");
@@ -769,15 +800,36 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new(3, 2, FALSE);
+  table = gtk_table_new(3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER(frame), table);
-  mw_fscale_entry_new (table, _("X Scale: "), 0.0001, 100.0, 0.001, 5, 0,
-		       0, 1, 1, 2, &(svals.scalex));
-  mw_fscale_entry_new (table, _("Y Scale: "), 0.0001, 100.0, 0.001, 5, 0,
-		       0, 1, 2, 3, &(svals.scaley));
-  mw_fscale_entry_new (table, _("Complexity: "), 0, 15.0, 0.01, 5, 0,
-		       0, 1, 3, 4, &(svals.cmplx));
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("X Scale:"), 140, 0,
+			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
+		      &svals.scalex);
+  
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Y Scale:"), 140, 0,
+			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
+		      &svals.scaley);
+  
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      _("Complexity:"), 140, 0,
+			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
+		      &svals.cmplx);
+
   gtk_widget_show (table);
 
   frame= gtk_frame_new (_("Calculation Settings"));
@@ -785,14 +837,50 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  mw_ientry_new (vbox, NULL, _("Random Seed:"), &svals.seed);
-  mw_toggle_button_new (vbox, NULL, _("Force Tiling?"), &svals.tiling);
-  mw_value_radio_group_new (vbox, NULL , coefs_radio, &svals.perturbation);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Random Seed:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&adj, svals.seed,
+				     -10000000000, 1000000000, 1, 10,
+				     0, 0, 0);
+  gtk_widget_set_usize (spinbutton, 100, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (sinus_int_adjustment_update),
+		      &svals.seed);
+  gtk_widget_show (spinbutton);
+
+  toggle = gtk_check_button_new_with_label (_("Force Tiling?"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (sinus_toggle_button_update),
+		      &svals.tiling);
+  gtk_widget_show (toggle);
+
+  vbox2 =
+    gimp_radio_group_new2 (FALSE, NULL,
+			   sinus_radio_button_update,
+			   &svals.perturbation, (gpointer) svals.perturbation,
+
+			   _("Ideal"),     (gpointer) IDEAL, NULL,
+			   _("Distorted"), (gpointer) PERTURBED, NULL,
+
+			   NULL);
+
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
 
   label = gtk_label_new (_("Settings"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
@@ -804,18 +892,18 @@ sinus_dialog (void)
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
 
-  frame = gtk_frame_new (_("Colors"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
   if (drawable_is_grayscale) 
     {
+      frame = gtk_frame_new (_("Colors"));
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+      gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
       /*if in grey scale, the colors are necessarily black and white */
       label = gtk_label_new (_("The colors are white and black."));
       gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
@@ -824,15 +912,35 @@ sinus_dialog (void)
     } 
   else
     {
-      mw_value_radio_group_new (vbox, NULL, colors_radio, &svals.colors);
-      hbox = gtk_hbox_new (TRUE, 20);
-      gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+      frame = gimp_radio_group_new2 (TRUE, _("Colors"),
+				     sinus_radio_button_update,
+				     &svals.colors, (gpointer) svals.colors,
 
-      push_col1 = gimp_color_button_new (_("First Color"), 32, 32, svals.col1, 4);
+				     _("Black & White"),
+				     (gpointer) B_W, NULL,
+				     _("Foreground & Background"),
+				     (gpointer) USE_FG_BG, NULL,
+				     _("Choose here:"),
+				     (gpointer) USE_COLORS, NULL,
+
+				     NULL);
+
+      gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox = GTK_BIN (frame)->child;
+
+      hbox = gtk_hbox_new (TRUE, 20);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+      push_col1 = gimp_color_button_new (_("First Color"),
+					 32, 32, svals.col1, 4);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
 
-      push_col2 = gimp_color_button_new (_("Second Color"), 32, 32, svals.col2, 4);
+      push_col2 = gimp_color_button_new (_("Second Color"),
+					 32, 32, svals.col2, 4);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
 
@@ -844,66 +952,47 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("First Color:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("First Color:"), 0, 0,
+			      svals.col1[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
 
-  adj = gtk_adjustment_new ((gfloat)(svals.col1[3]) / 255.0, 0.0, 1.0, 0.01, 0.1, 0.0);
   gtk_object_set_user_data (GTK_OBJECT (adj), push_col1);      
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      (GtkSignalFunc) alpha_scale_cb,
+                      GTK_SIGNAL_FUNC (alpha_scale_cb),
                       &svals.col1[3]);
+
   if (push_col1)
     {
       gtk_object_set_user_data (GTK_OBJECT (push_col1), adj);
       gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed",
-			  (GtkSignalFunc) alpha_scale_update,
+			  GTK_SIGNAL_FUNC (alpha_scale_update),
 			  &svals.col1[3]);
     }
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2, 
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (scale);
 
-  label = gtk_label_new (_("Second Color:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Second Color:"), 0, 0,
+			      svals.col2[3] / 255.0, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
 
-  adj = gtk_adjustment_new ((gfloat)(svals.col2[3]) / 255.0, 0.0, 1.0, 0.01, 0.1, 0.0);
   gtk_object_set_user_data (GTK_OBJECT (adj), push_col2);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-                      (GtkSignalFunc) alpha_scale_cb,
+                      GTK_SIGNAL_FUNC (alpha_scale_cb),
                       &svals.col2[3]);
+
   if (push_col2)
     {
-      gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed",
-			  (GtkSignalFunc) alpha_scale_update,
-			  &svals.col2[3]);
       gtk_object_set_user_data (GTK_OBJECT (push_col2), adj);
+      gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed",
+			  GTK_SIGNAL_FUNC (alpha_scale_update),
+			  &svals.col2[3]);
     }
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 2, 3, 
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (scale);
-
-/*   mw_iscale_entry_new (table, _("First color "), 0, 255, 1, 5, 0, */
-/* 		       0, 1, 1, 2, &(svals.col1[3])); */
-/*   mw_iscale_entry_new (table, _("Second color "), 0, 255, 1, 5, 0, */
-/* 		       0, 1, 2, 3, &(svals.col2[3])); */
 
   gtk_widget_show (table);
 
@@ -926,13 +1015,33 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_widget_show (vbox);
-  mw_value_radio_group_new (vbox, _("Gradient"), coloriz_radio, &svals.colorization);
+
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Gradient"),
+			   sinus_radio_button_update,
+			   &svals.colorization, (gpointer) svals.colorization,
+
+			   _("Linear"),     (gpointer) LINEAR, NULL,
+			   _("Bilinear"),   (gpointer) BILINEAR, NULL,
+			   _("Sinusodial"), (gpointer) SINUS, NULL,
+
+			   NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (vbox), table);
 
-  mw_fscale_entry_new (table, _("Exponent:"), -7.5, 7.5, 0.01, 5.0, 0.0,
-		       0, 1, 0, 1, &svals.blend_power);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Exponent:"), 0, 0,
+			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (sinus_double_adjustment_update),
+		      &svals.blend_power);
+
   gtk_widget_show (table);
 
   label = gtk_label_new (_("Blend"));
@@ -945,7 +1054,6 @@ sinus_dialog (void)
   gtk_main ();
   gdk_flush ();
 
-  /* argp->type = mw_radio_result(mode); */
   return run_flag;
 }
 
