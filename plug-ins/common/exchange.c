@@ -29,6 +29,12 @@
  *		- locken van scales met elkaar
  */
 
+/* 
+ * 1999/03/17   Fixed RUN_NONINTERACTIVE and RUN_WITH_LAST_VALS. 
+ *              There were uninitialized variables.
+ *                                        --Sven <sven@gimp.org>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "libgimp/gimp.h"
@@ -126,7 +132,6 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 {
 	static GParam	values[1];
 	GRunModeType	runmode;
-	gint32  	imageID;
 	GStatusType 	status = STATUS_SUCCESS;
 
 	*nreturn_vals = 1;
@@ -135,19 +140,19 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	values[0].type = PARAM_STATUS;
 	values[0].data.d_status = status;
 
-	switch (runmode = param[0].data.d_int32)
+	runmode = param[0].data.d_int32;
+	xargs.image = param[1].data.d_image;
+	xargs.drawable = param[2].data.d_drawable;
+	drw = gimp_drawable_get(xargs.drawable);
+
+	switch (runmode)
 	{
-		case RUN_INTERACTIVE:
+	        case RUN_INTERACTIVE:
 				/* retrieve stored arguments (if any) */
 				gimp_get_data("plug_in_exchange", &xargs);
 				/* initialize using foreground color */
 				gimp_palette_get_foreground(&xargs.fromred, &xargs.fromgreen, &xargs.fromblue);
-				if (!xargs.image && !xargs.drawable)
-					xargs.red_threshold = xargs.green_threshold = xargs.blue_threshold = 0;
 				/* and initialize some other things */
-				xargs.image = param[1].data.d_image;
-				xargs.drawable = param[2].data.d_drawable;
-				drw = gimp_drawable_get(param[2].data.d_drawable);
 				gimp_drawable_mask_bounds(drw->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 				sel_width = sel_x2 - sel_x1;
 				sel_height = sel_y2 - sel_y1;
@@ -163,6 +168,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 					return;
 				break;
 		case RUN_WITH_LAST_VALS:
+				gimp_get_data("plug_in_exchange", &xargs);
 				/* 
 				 * instead of recalling the last-set values,
 				 * run with the current foreground as 'from'
@@ -189,24 +195,25 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 		default:	
 				break;
 	}
-	imageID = param[1].data.d_image;
 	if (status == STATUS_SUCCESS)
 	{
 		if (gimp_drawable_color(drw->id))
 		{
 			gimp_progress_init("Color Exchange...");
 			gimp_tile_cache_ntiles(2 * (drw->width / gimp_tile_width() + 1));
-			exchange();
+			exchange();	
+			gimp_drawable_detach(drw);
 			/* store our settings */
-			gimp_set_data("plug_in_exchange", &xargs, sizeof(myParams));
+			if (runmode == RUN_INTERACTIVE)
+			  gimp_set_data("plug_in_exchange", &xargs, sizeof(myParams));
 			/* and flush */
-			gimp_displays_flush();
+			if (runmode != RUN_NONINTERACTIVE)
+			  gimp_displays_flush ();
 		}
 		else
 			status = STATUS_EXECUTION_ERROR;
 	}
 	values[0].data.d_status = status;
-	gimp_drawable_detach(drw);
 }
 
 /* do the exchanging */
@@ -247,7 +254,7 @@ int	doDialog()
 	color_cube = gimp_color_cube();
 	gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]); 
 	gtk_widget_set_default_visual(gtk_preview_get_visual());
-    gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+	gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 	
 	/* load pixelregion */
 	gimp_pixel_rgn_init(&origregion, drw, 0, 0, PREVIEW_SIZE, PREVIEW_SIZE, FALSE, FALSE);
@@ -415,8 +422,8 @@ void	real_exchange(gint x1, gint y1, gint x2, gint y2, int dopreview)
 {
 	GPixelRgn	srcPR, destPR;
 	guchar		*src_row, *dest_row;
-	int			x, y, bpp = drw->bpp;
-	int			width, height;
+	int		x, y, bpp = drw->bpp;
+	int		width, height;
 
 	/* fill if necessary */
 	if (x1 == -1 || y1 == -1 || x2 == -1 || y2 == -1)
@@ -518,3 +525,11 @@ void	real_exchange(gint x1, gint y1, gint x2, gint y2, int dopreview)
 		gimp_drawable_update(drw->id, x1, y1, width, height);
 	}
 }
+
+
+
+
+
+
+
+

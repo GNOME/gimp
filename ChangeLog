@@ -1,3 +1,8 @@
+Wed Mar 17 21:46:08 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/plug-ins/exchange/exchange.c: fixed NON_INTERACTIVE
+	and RUN_WITH_LAST_VALS modes
+
 Tue Mar 16 23:39:26 EST 1999 Adrian Likins <adrian@gimp.org>
 
 	* app/paintbrush.c: paintbrush_motion, added the ability
