@@ -1812,7 +1812,6 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (vbox);
 
       monitor_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-
       monitor_resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
 						  FALSE, TRUE, 75,
 						  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
@@ -1844,8 +1843,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  TRUE, TRUE, 0);
       gtk_widget_show (monitor_resolution_sizeentry);
       
-      gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
-				    TRUE);
+      if (ABS (monitor_xres - monitor_yres) < 1e-5)
+	gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
+				      TRUE);
       gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
 				 monitor_resolution_force_equal, 1, 3, 3, 4);
       gtk_widget_show (monitor_resolution_force_equal);

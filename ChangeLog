@@ -1,3 +1,8 @@
+Sun Mar 14 17:56:14 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* app/preferences_dialog.c: correctly set the status of the
+	chain_button in the monitors section when creating the dialog
+
 Sun Mar 14 13:26:11 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: reverted Michaels change as it is defintely
