@@ -1,5 +1,11 @@
 2004-09-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_uri_list_dest_add): reverse
+	order of DND dests so "text/uri-list" is preferred again after my
+	DND change of 2004-06-29. Fixes dropping of multiple files.
+
+2004-09-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcomponenteditor.[ch]: set the viewable
 	renderer's "renderer" property to NULL when clearing the
 	view to work around bug #149906.

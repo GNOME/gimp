@@ -992,13 +992,13 @@ gimp_dnd_uri_list_dest_add (GtkWidget              *widget,
                        GTK_DEST_DEFAULT_ALL, NULL, 0,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
                           G_CALLBACK (set_uri_list_func),
                           data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
                           G_CALLBACK (set_uri_list_func),
                           data);
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
                           G_CALLBACK (set_uri_list_func),
                           data);
 }
