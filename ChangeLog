@@ -1,3 +1,9 @@
+2003-02-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/ifscompose/ifscompose.c: applied another patch from
+	David Necas <yeti@physics.muni.cz> that fixes #82470. Added some
+	stock icons and mnemonics.
+
 2003-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo.c: unified some comments, some cleanup.
