@@ -1,3 +1,7 @@
+Wed Jan 26 11:06:46 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/xjt/xjpeg.c: s/malloc/g_malloc/ ; s/free/g_free/
+
 Wed Jan 26 04:12:08 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* PLUGIN_CVS: mirroring control script (read it for more info).
@@ -38,7 +42,6 @@ Wed Jan 26 00:10:34 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/*: don't include the two files.
 
->>>>>>> 1.2135
 Tue Jan 25 21:58:49 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/layer.c: applied a change suggested by Steinar H. Gunderson.
@@ -51,8 +54,8 @@ Tue Jan 25 21:16:57 CET 2000  Sven Neumann <sven@gimp.org>
 Tue Jan 25 20:08:35 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/colorify.c: use gimp_tile_cache_ntiles ()
-	* plug-ins/common/lic.c: when creating a new image, disable undo, enable
-	it later when the new image is completed
+	* plug-ins/common/lic.c: when creating a new image, disable undo, 
+	enable it later when the new image is completed
 
 2000-01-25  Michael Natterer  <mitch@gimp.org>
 
