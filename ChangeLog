@@ -2,7 +2,7 @@
 
 	* app/gui/gradient-editor-menu.c (gradient_editor_menu_update):
 	Fix typo which caused warnings when Sinusoidal blending mode was
-	selected for a segment.
+	selected for a segment. Fixes bug #148300.
 
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
