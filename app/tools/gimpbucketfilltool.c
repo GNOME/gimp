@@ -263,7 +263,7 @@ bucket_options_new (void)
   gtk_widget_show (label);
 
   options->threshold_w =
-    gtk_adjustment_new (default_threshold, 1.0, 255.0, 1.0, 1.0, 0.0);
+    gtk_adjustment_new (default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);

@@ -1,3 +1,8 @@
+2001-03-22  Stanislav Brabec  <utx@penguin.cz>  
+
+        * app/tools/gimpbucketfilltool.c: Bucket fill threshold=0 must
+        be allowed.
+
 2001-03-18  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/app.pl: guard inclusion of <process.h> by G_OS_WIN32
