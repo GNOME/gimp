@@ -1,3 +1,10 @@
+2001-08-07  Emese Kovacs <emese@gnome.hu>
+
+        * tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
+	targets. 
+
+	* tips/gimp_tips.hu.txt: Added Hungarian tips file. 
+
 2001-08-01  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tga.c: Fix for small TGA2 files
