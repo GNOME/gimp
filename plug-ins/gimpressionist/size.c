@@ -11,6 +11,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define NUMSIZERADIO 8
+
 static GtkObject *sizenumadjust = NULL;
 static GtkObject *sizefirstadjust = NULL;
 static GtkObject *sizelastadjust = NULL;
@@ -21,6 +23,11 @@ static void size_store(GtkWidget *wg, void *d)
   pcvals.sizetype = GPOINTER_TO_INT (d);
 }
 
+int size_type_input (int in)
+{
+  return CLAMP_UP_TO(in, NUMSIZERADIO);
+}
+
 static void size_type_restore(void)
 {
   gtk_toggle_button_set_active (
@@ -28,6 +35,7 @@ static void size_type_restore(void)
     TRUE
     );
 }
+
 void size_restore(void)
 {
   size_type_restore();

@@ -24,6 +24,11 @@ void place_restore()
   gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_density_adjust), pcvals.brushdensity);
 }
 
+int place_type_input (int in)
+{
+  return CLAMP_UP_TO(in, NUM_PLACE_RADIO);
+}
+
 void place_store()
 {
   pcvals.placement_center = GTK_TOGGLE_BUTTON (placement_center)->active;

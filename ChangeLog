@@ -1,3 +1,11 @@
+2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: fixed bug #148088: ("Gimpressioinst crashes if 
+	given malicious presets with out of range values, in the radio buttons 
+	group numeric values: "placetype", "orienttype", etc. ").
+	
+	This was done by adding clamps to the relevant values in the preset.
+
 2004-07-25  Raphaël Quinet  <quinet@gamers.org>
 
 	* INSTALL: Minor fixes and improvements.  Suggest using a

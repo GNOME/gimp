@@ -50,6 +50,11 @@ void general_store(void)
   pcvals.devthresh = GTK_ADJUSTMENT(dev_thresh_adjust)->value;
 }
 
+int general_bg_type_input (int in)
+{
+  return CLAMP_UP_TO (in, NUMGENERALBGRADIO);
+}
+
 void general_restore(void)
 {
   gtk_toggle_button_set_active (

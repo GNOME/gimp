@@ -13,8 +13,10 @@ enum SIZE_TYPE_ENUM
     SIZE_TYPE_MANUAL = 7,
 };
 
-void size_restore(void);
+void size_restore (void);
 
-void create_sizepage(GtkNotebook *);
+void create_sizepage (GtkNotebook *);
+
+int size_type_input (int in);
 
 #endif /* #ifndef __SIZE_H */

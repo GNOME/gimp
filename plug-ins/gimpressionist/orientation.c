@@ -21,6 +21,11 @@ static void orientation_store (GtkWidget *wg, void *d)
     pcvals.orienttype = GPOINTER_TO_INT (d);
 }
 
+int orientation_type_input (int in)
+{
+  return CLAMP_UP_TO (in, NUMORIENTRADIO);
+}
+
 void orientation_restore(void)
 {
   gtk_toggle_button_set_active (

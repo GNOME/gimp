@@ -17,8 +17,6 @@
 #define MAXORIENTVECT   50
 #define MAXSIZEVECT     50
 
-#define NUMSIZERADIO 8
-
 /* Type declaration and definitions */
 
 typedef struct vector
@@ -154,9 +152,11 @@ void restore_default_values (void);
 GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
                                 void (*callback)(GtkWidget *wg, void *d),
                                 gchar *label, gchar *help_string,
-                                GSList **radio_group, 
+                                GSList **radio_group,
                                 GtkWidget **buttons_array
                                );
+
+#define CLAMP_UP_TO(x, max) (CLAMP((x),(0),(max-1)))
 
 #endif /* #ifndef __GIMPRESSIONIST_H */
 

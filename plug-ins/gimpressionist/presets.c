@@ -17,6 +17,13 @@
 #include "gimpressionist.h"
 #include "presets.h"
 
+#include "color.h"
+#include "general.h"
+#include "orientation.h"
+#include "placement.h"
+#include "size.h"
+
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifdef G_OS_WIN32
@@ -298,7 +305,7 @@ static void set_values (const gchar *key, const gchar *val)
   else if(!strcmp(key, "orientlast"))
     pcvals.orientlast = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orienttype"))
-   pcvals.orienttype = atoi(val);
+   pcvals.orienttype = orientation_type_input (atoi (val));
 
   else if(!strcmp(key, "sizenum"))
     pcvals.sizenum = atoi(val);
@@ -307,7 +314,7 @@ static void set_values (const gchar *key, const gchar *val)
   else if(!strcmp(key, "sizelast"))
     pcvals.sizelast = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "sizetype"))
-   pcvals.sizetype = atoi(val);
+   pcvals.sizetype = size_type_input (atoi (val));
 
   else if(!strcmp(key, "brushrelief"))
     pcvals.brushrelief = g_ascii_strtod (val, NULL);
@@ -324,7 +331,7 @@ static void set_values (const gchar *key, const gchar *val)
     pcvals.brushaspect = g_ascii_strtod (val, NULL);
 
   else if(!strcmp(key, "generalbgtype"))
-    pcvals.generalbgtype = atoi(val);
+    pcvals.generalbgtype = general_bg_type_input (atoi(val));
   else if(!strcmp(key, "generaldarkedge"))
     pcvals.generaldarkedge = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "generalpaintedges"))
@@ -352,7 +359,7 @@ static void set_values (const gchar *key, const gchar *val)
     pcvals.paper_overlay = atoi(val);
 
   else if(!strcmp(key, "placetype"))
-    pcvals.placetype = atoi(val);
+    pcvals.placetype = place_type_input (atoi (val));
   else if(!strcmp(key, "placecenter"))
     pcvals.placement_center = atoi(val);
 
@@ -387,7 +394,7 @@ static void set_values (const gchar *key, const gchar *val)
    pcvals.sizevoronoi = atoi(val);
 
   else if(!strcmp(key, "colortype"))
-    pcvals.colortype = atoi(val);
+    pcvals.colortype = color_type_input (atoi (val));
   else if(!strcmp(key, "colornoise"))
     pcvals.colornoise = g_ascii_strtod (val, NULL);
 }

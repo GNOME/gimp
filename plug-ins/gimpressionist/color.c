@@ -23,6 +23,11 @@ void color_restore(void)
   gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
 }
 
+int color_type_input (int in)
+{
+  return CLAMP_UP_TO (in, NUMCOLORRADIO);
+}
+
 void create_colorpage(GtkNotebook *notebook)
 {
   GtkWidget *vbox;
