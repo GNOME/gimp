@@ -1,4 +1,4 @@
-# gimp Portuguese translation.
+# gimp's Portuguese translation.
 # Copyright (C) 2003, 2004, gimp
 # Distributed under the same licence as the gimp package.
 # 
@@ -13,9 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:22+0100\n"
-"PO-Revision-Date: 2004-01-03 02:05+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-01-11 14:18+0000\n"
+"PO-Revision-Date: 2004-01-11 14:25+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1114,12 +1114,12 @@ msgid "Indexed-Alpha"
 msgstr "Alfa-Indexado"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1714
-#: app/gui/user-install-dialog.c:1292
+#: app/gui/user-install-dialog.c:1300
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: app/core/core-enums.c:392 app/gui/preferences-dialog.c:1716
-#: app/gui/user-install-dialog.c:1294
+#: app/gui/user-install-dialog.c:1302
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -1252,20 +1252,20 @@ msgid "Linked Item"
 msgstr "Item Ligado"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:569 app/core/gimplayer.c:571
-#: app/gui/layers-commands.c:1070 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1067 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Camada de Escala"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:607 app/core/gimplayer.c:609
-#: app/gui/layers-commands.c:1164 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1161 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Redimensionar Camada"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:632
-#: app/core/gimplayer.c:982 app/gui/layers-commands.c:945
-#: app/gui/layers-commands.c:984
+#: app/core/gimplayer.c:982 app/gui/layers-commands.c:942
+#: app/gui/layers-commands.c:981
 msgid "Add Layer Mask"
 msgstr "Adicionar Máscara de Camada"
 
@@ -1358,8 +1358,8 @@ msgstr "Renomear Item"
 msgid "Set Item Linked"
 msgstr "Definir Item Ligado"
 
-#: app/core/core-enums.c:629 app/gui/layers-commands.c:655
-#: app/gui/layers-commands.c:686 app/gui/layers-commands.c:720
+#: app/core/core-enums.c:629 app/gui/layers-commands.c:652
+#: app/gui/layers-commands.c:683 app/gui/layers-commands.c:717
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:212
 msgid "New Layer"
 msgstr "Nova Camada"
@@ -1471,9 +1471,8 @@ msgid "Fill with Transparency"
 msgstr "Preencher com Transparente"
 
 #: app/core/gimp-edit.c:248
-#, fuzzy
 msgid "Fill with Pattern"
-msgstr "/Editar/Preencher com P_adrão"
+msgstr "Preencher com Padrão"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -2095,45 +2094,45 @@ msgstr "Caminho não pode ser mais descido"
 msgid "Lower Path"
 msgstr "Baixar Caminho"
 
-#: app/core/gimpimagefile.c:469
+#: app/core/gimpimagefile.c:458
 msgid "Remote image"
 msgstr "Imagem remota"
 
-#: app/core/gimpimagefile.c:474
+#: app/core/gimpimagefile.c:463
 msgid "Could not open"
 msgstr "Incapaz de abrir"
 
-#: app/core/gimpimagefile.c:495
+#: app/core/gimpimagefile.c:484
 msgid "No preview available"
 msgstr "Antevisão indisponível"
 
-#: app/core/gimpimagefile.c:499
+#: app/core/gimpimagefile.c:488
 msgid "Loading preview ..."
 msgstr "A carregar antevisão..."
 
-#: app/core/gimpimagefile.c:503
+#: app/core/gimpimagefile.c:492
 msgid "Preview is out of date"
 msgstr "Antevisão está desactualizada"
 
-#: app/core/gimpimagefile.c:507
+#: app/core/gimpimagefile.c:496
 msgid "Cannot create preview"
 msgstr "Não é possível criar antevisão"
 
-#: app/core/gimpimagefile.c:514 app/gui/info-window.c:505
+#: app/core/gimpimagefile.c:503 app/gui/info-window.c:505
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixeis"
 
-#: app/core/gimpimagefile.c:529
+#: app/core/gimpimagefile.c:518
 msgid "1 Layer"
 msgstr "1 Camada"
 
-#: app/core/gimpimagefile.c:531
+#: app/core/gimpimagefile.c:520
 #, c-format
 msgid "%d Layers"
 msgstr "%d Camadas"
 
-#: app/core/gimpimagefile.c:568
+#: app/core/gimpimagefile.c:557
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Incapaz de abrir ficheiro de imagem de referência '%s': %s"
@@ -2375,7 +2374,7 @@ msgstr "Incapaz de cortar ou copiar pois a região seleccionada está vazia."
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Incapaz de flutuar selecção pois a região seleccionada está vazia."
 
-#: app/core/gimpselection.c:837 app/gui/layers-commands.c:903
+#: app/core/gimpselection.c:837 app/gui/layers-commands.c:900
 msgid "Floating Selection"
 msgstr "Selecção Flutuante"
 
@@ -2528,15 +2527,15 @@ msgstr "Filtros de Apresentação de Cores"
 msgid "Layer Select"
 msgstr "Seleccionar Camada"
 
-#: app/display/gimpdisplayshell-scale.c:468
+#: app/display/gimpdisplayshell-scale.c:499
 msgid "Zoom Ratio"
 msgstr "Rácio de Escala"
 
-#: app/display/gimpdisplayshell-scale.c:470
+#: app/display/gimpdisplayshell-scale.c:501
 msgid "Select Zoom Ratio"
 msgstr "Seleccionar Rácio Escala"
 
-#: app/display/gimpdisplayshell-scale.c:499
+#: app/display/gimpdisplayshell-scale.c:530
 msgid "Zoom Ratio:"
 msgstr "Rácio de Escala:"
 
@@ -2642,7 +2641,7 @@ msgstr "Tradução por"
 #. we'd prefer just the names, please no email adresses.
 #: app/gui/about-dialog.c:56
 msgid "translator-credits"
-msgstr ""
+msgstr "Duarte Loreto"
 
 #: app/gui/about-dialog.c:61
 msgid "Contributions by"
@@ -2854,8 +2853,7 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Você está a tentar converter uma imagem com um canal alfa em cores "
-"indexadas.\n"
+"Está a tentar converter uma imagem com um canal alfa em cores indexadas.\n"
 "Caso se deseje criar um GIF transparente ou animado a partir desta imagem, "
 "não deverá gerar uma paleta com mais de 255 cores."
 
@@ -3235,8 +3233,8 @@ msgstr "/Gravar _Todos os Erros em Ficheiro..."
 msgid "/Save _Selection to File..."
 msgstr "/Gravar _Selecção em Ficheiro..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:714
-#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:477
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:712
+#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3364,7 +3362,7 @@ msgstr "_Antevisão"
 msgid "No Selection"
 msgstr "Sem Selecção"
 
-#: app/gui/file-open-dialog.c:503 app/gui/file-open-dialog.c:534
+#: app/gui/file-open-dialog.c:501 app/gui/file-open-dialog.c:532
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Imagem de Referência %d de %d"
@@ -4241,7 +4239,7 @@ msgstr "/Camadas/_Remover Camada"
 
 #: app/gui/image-menu.c:624
 msgid "/Layer/Discard _Text Information"
-msgstr ""
+msgstr "/Camada/Descartar Informação de _Texto"
 
 #. <Image>/Layer/Stack
 #: app/gui/image-menu.c:634
@@ -4750,7 +4748,7 @@ msgid "Extended"
 msgstr "Estendida"
 
 #: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1696
-#: app/gui/user-install-dialog.c:1277 app/widgets/gimpgrideditor.c:266
+#: app/gui/user-install-dialog.c:1285 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
 msgstr "Pixels"
@@ -4835,7 +4833,7 @@ msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
-#: app/gui/user-install-dialog.c:1296
+#: app/gui/user-install-dialog.c:1304
 msgid "dpi"
 msgstr "dpi"
 
@@ -4859,24 +4857,24 @@ msgstr "Cortar Camada"
 msgid "Layer Mask to Selection"
 msgstr "Máscara de Camada para Selecção"
 
-#: app/gui/layers-commands.c:661
+#: app/gui/layers-commands.c:658
 msgid "Empty Layer Copy"
 msgstr "Cópia de Camada Vazia"
 
-#: app/gui/layers-commands.c:688
+#: app/gui/layers-commands.c:685
 msgid "Create a New Layer"
 msgstr "Criar Nova Camada"
 
-#: app/gui/layers-commands.c:722
+#: app/gui/layers-commands.c:719
 msgid "Layer _Name:"
 msgstr "_Nome Camada:"
 
 #. The size labels
-#: app/gui/layers-commands.c:726
+#: app/gui/layers-commands.c:723
 msgid "Layer Width:"
 msgstr "Largura Camada:"
 
-#: app/gui/layers-commands.c:732 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:729 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:999 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4884,35 +4882,35 @@ msgstr "Largura Camada:"
 msgid "Height:"
 msgstr "Altura:"
 
-#: app/gui/layers-commands.c:791
+#: app/gui/layers-commands.c:788
 msgid "Layer Fill Type"
 msgstr "Tipo Preenchimento Camada:"
 
-#: app/gui/layers-commands.c:868
+#: app/gui/layers-commands.c:865
 msgid "Layer Attributes"
 msgstr "Atributos Camada"
 
-#: app/gui/layers-commands.c:870 app/widgets/gimplayertreeview.c:210
+#: app/gui/layers-commands.c:867 app/widgets/gimplayertreeview.c:210
 msgid "Edit Layer Attributes"
 msgstr "Editar Atributos Camada"
 
-#: app/gui/layers-commands.c:906
+#: app/gui/layers-commands.c:903
 msgid "Layer _Name"
 msgstr "_Nome Camada"
 
-#: app/gui/layers-commands.c:986
+#: app/gui/layers-commands.c:983
 msgid "Add a Mask to the Layer"
 msgstr "Adicionar Máscara à Camada"
 
-#: app/gui/layers-commands.c:1005
+#: app/gui/layers-commands.c:1002
 msgid "Initialize Layer Mask to:"
 msgstr "Inicializar Camada da Máscara para:"
 
-#: app/gui/layers-commands.c:1022
+#: app/gui/layers-commands.c:1019
 msgid "In_vert Mask"
 msgstr "In_verter Máscara"
 
-#: app/gui/layers-commands.c:1095 app/gui/layers-commands.c:1189
+#: app/gui/layers-commands.c:1092 app/gui/layers-commands.c:1186
 msgid "Invalid width or height. Both must be positive."
 msgstr "Largura ou altura inválida(s). Ambas têm de ser positivas."
 
@@ -4957,9 +4955,8 @@ msgid "/_Delete Layer"
 msgstr "/_Remover Camada"
 
 #: app/gui/layers-menu.c:101
-#, fuzzy
 msgid "/_Discard Text Information"
-msgstr "Informação Imagem"
+msgstr "/_Descartar Informação de Texto"
 
 #: app/gui/layers-menu.c:109
 msgid "/Layer B_oundary Size..."
@@ -4998,12 +4995,12 @@ msgid "/Al_pha to Selection"
 msgstr "/Alfa _para Selecção"
 
 #: app/gui/layers-menu.c:161
-msgid "/Merge Visible Layers..."
-msgstr "/Mesclar Camadas Visíveis..."
+msgid "/Merge _Visible Layers..."
+msgstr "/Juntar Camadas _Visíveis..."
 
 #: app/gui/layers-menu.c:166
-msgid "/Flatten Image"
-msgstr "/Unificar Imagem"
+msgid "/_Flatten Image"
+msgstr "/_Unificar Imagem"
 
 #: app/gui/menus.c:113
 msgid "Toolbox Menu"
@@ -5354,24 +5351,24 @@ msgstr ""
 "crashado."
 
 #: app/gui/patterns-menu.c:45
-msgid "/Edit Pattern..."
-msgstr "/Editar Textura..."
+msgid "/_Edit Pattern..."
+msgstr "/_Editar Textura..."
 
 #: app/gui/patterns-menu.c:53
-msgid "/New Pattern"
-msgstr "/Nova Textura"
+msgid "/_New Pattern"
+msgstr "/_Nova Textura"
 
 #: app/gui/patterns-menu.c:58
-msgid "/Duplicate Pattern"
-msgstr "/Duplicar Textura"
+msgid "/D_uplicate Pattern"
+msgstr "/D_uplicar Textura"
 
 #: app/gui/patterns-menu.c:63
-msgid "/Delete Pattern..."
-msgstr "/Remover Textura..."
+msgid "/_Delete Pattern..."
+msgstr "/_Remover Textura..."
 
 #: app/gui/patterns-menu.c:71
-msgid "/Refresh Patterns"
-msgstr "/Actualizar Texturas"
+msgid "/_Refresh Patterns"
+msgstr "/_Actualizar Texturas"
 
 #: app/gui/plug-in-menus.c:339
 #, c-format
@@ -5736,7 +5733,7 @@ msgstr "Número Mínimo de Cores:"
 msgid "Install Colormap"
 msgstr "Instalar Mapa de Cores"
 
-#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:960
+#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:962
 msgid "Monitor Resolution"
 msgstr "Resolução do Monitor"
 
@@ -5806,7 +5803,7 @@ msgstr "Número Mínimo de Níveis Desfazer:"
 msgid "Maximum Undo Memory:"
 msgstr "Memória Máxima Desfazer:"
 
-#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1169
+#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1173
 msgid "Tile Cache Size:"
 msgstr "Tamanho Cache Blocos:"
 
@@ -5916,7 +5913,7 @@ msgstr "Seleccionar Dir Temp"
 msgid "Swap Dir:"
 msgstr "Dir Swap:"
 
-#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1191
+#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1196
 msgid "Select Swap Dir"
 msgstr "Seleccionar Dir Swap"
 
@@ -6224,32 +6221,32 @@ msgstr "A escrever '%s'\n"
 msgid "Adding theme '%s' (%s)\n"
 msgstr "A adicionar tema '%s' (%s)\n"
 
-#: app/gui/tips-dialog.c:94
+#: app/gui/tips-dialog.c:93
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr "<b>Parece que o seu ficheiro de dicas GIMP está em falta!</b>"
 
-#: app/gui/tips-dialog.c:96
+#: app/gui/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Deveria existir um ficheiro chamado '%s'. Verifique a sua instalação."
 
-#: app/gui/tips-dialog.c:102
+#: app/gui/tips-dialog.c:101
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>O ficheiro de dicas GIMP não pode ser parseado!</b>"
 
-#: app/gui/tips-dialog.c:133
+#: app/gui/tips-dialog.c:134
 msgid "GIMP Tip of the Day"
 msgstr "Dica do Dia GIMP"
 
-#: app/gui/tips-dialog.c:197
+#: app/gui/tips-dialog.c:198
 msgid "Show tip next time GIMP starts"
 msgstr "Mostrar dica na próxima inicialização do GIMP"
 
-#: app/gui/tips-dialog.c:221
+#: app/gui/tips-dialog.c:222
 msgid "_Previous Tip"
 msgstr "Dica _Anterior"
 
-#: app/gui/tips-dialog.c:231
+#: app/gui/tips-dialog.c:232
 msgid "_Next Tip"
 msgstr "Dica _Seguinte"
 
@@ -6284,28 +6281,28 @@ msgid "Enter a new name for the saved options"
 msgstr "Introduza um novo nome para as opções gravadas"
 
 #: app/gui/tool-options-menu.c:57
-msgid "/Save Options to/New Entry..."
-msgstr "/Gravar Opções para/Nova Entrada..."
+msgid "/_Save Options to/_New Entry..."
+msgstr "/_Gravar Opções para/_Nova Entrada..."
 
 #: app/gui/tool-options-menu.c:68
-msgid "/Restore Options from/(None)"
-msgstr "/Repor Opções de/(Nenhuma)"
+msgid "/_Restore Options from/(None)"
+msgstr "/_Repor Opções de/(Nenhuma)"
 
 #: app/gui/tool-options-menu.c:74
-msgid "/Rename Saved Options/(None)"
-msgstr "/Renomear Opções Gravadas/(Nenhuma)"
+msgid "/Re_name Saved Options/(None)"
+msgstr "/Re_nomear Opções Gravadas/(Nenhuma)"
 
 #: app/gui/tool-options-menu.c:80
-msgid "/Delete Saved Options/(None)"
-msgstr "/Remover Opções Gravadas/(Nenhuma)"
+msgid "/_Delete Saved Options/(None)"
+msgstr "/Re_mover Opções Gravadas/(Nenhuma)"
 
 #: app/gui/tool-options-menu.c:89
-msgid "/Reset Tool Options"
-msgstr "/Repor Opções de Ferramentas"
+msgid "/R_eset Tool Options"
+msgstr "/R_epor Opções de Ferramentas"
 
 #: app/gui/tool-options-menu.c:94
-msgid "/Reset all Tool Options..."
-msgstr "/Repor todas as Opções Ferramentas"
+msgid "/Reset _all Tool Options..."
+msgstr "/Repor todas _as Opções de Ferramentas..."
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
@@ -6461,274 +6458,228 @@ msgstr "/Ajuda/_Sobre"
 
 #: app/gui/user-install-dialog.c:132
 msgid ""
-"The gimprc is used to store personal preferences\n"
-"that affect GIMP's default behavior.\n"
-"Paths to search for brushes, palettes, gradients,\n"
-"patterns, plug-ins and modules can also configured\n"
-"here."
+"The gimprc is used to store personal preferences that affect GIMP's default "
+"behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
+"ins and modules can also configured here."
 msgstr ""
-"O gimprc é utilizado para armazenar preferências que\n"
-"afectam o comportamento padrão do GIMP.\n"
-"Os caminhos para busca por pincéis, paletas, gradientes,\n"
-"texturas, plug-ins e módulos também podem ser configurados\n"
-"aqui."
+"O gimprc é utilizado para armazenar preferências que afectam o comportamento "
+"por omissão do GIMP.  Os caminhos onde procurar pincéis, paletas, gradientes, "
+"texturas, plug-ins e módulos podem também ser configurados aqui."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
-"GIMP uses an additional gtkrc file so you can\n"
-"configure it to look differently than other GTK apps."
+"GIMP uses an additional gtkrc file so you can configure it to look "
+"differently than other GTK apps."
 msgstr ""
-"O GIMP utiliza um ficheiro gtkrc adicional para que\n"
-"possa configurá-lo para ter uma aparência diferente das\n"
-"outras aplicações GTK."
+"O GIMP utiliza um ficheiro gtkrc adicional para que possa configurá-lo "
+"para ter uma aparência diferente das outras aplicações GTK."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
-"Plug-ins and extensions are external programs run\n"
-"by the GIMP which provide additional functionality.\n"
-"These programs are searched for at run-time and\n"
-"information about their functionality and mod-times\n"
-"is cached in this file.  This file is intended to\n"
-"be GIMP-readable only, and should not be edited."
+"Plug-ins and extensions are external programs run by the GIMP which provide "
+"additional functionality.  These programs are searched for at run-time and "
+"information about their functionality and mod-times is cached in this file.  "
+"This file is intended to be GIMP-readable only, and should not be edited."
 msgstr ""
-"Os plug-ins e suas extensões são programas externos executados\n"
-"pelo GIMP que podem disponibilizar funcionalidades adicionais.\n"
-"Estes programas são procurados durante a execução\n"
-"e as informações sobre suas funcionalidades e modos\n"
-"são guardadas neste ficheiro. Este ficheiro deve ser lido\n"
-"somente pelo GIMP e não deve ser editado."
+"Os plug-ins e suas extensões são aplicações externas executadas pelo GIMP que "
+"podem disponibilizar funcionalidades adicionais.  Estas aplicações são "
+"procuradas durante a execução e as informações sobre as suas funcionalidades "
+"e modos são guardadas neste ficheiro. Este ficheiro deve ser lido somente "
+"pelo GIMP e não deve ser editado."
 
 #: app/gui/user-install-dialog.c:157
 msgid ""
-"Key shortcuts can be dynamically redefined in The GIMP.\n"
-"The menurc is a dump of your configuration so it can.\n"
-"be remembered for the next session.  You may edit this\n"
-"file if you wish, but it is much easier to define the\n"
-"keys from within The GIMP.  Deleting this file will\n"
-"restore the default shortcuts."
+"Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
+"of your configuration so it can. be remembered for the next session.  You "
+"may edit this file if you wish, but it is much easier to define the keys "
+"from within The GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
-"Os atalhos de teclado podem ser redefinidos dinamicamente no\n"
-"GIMP. O menurc é um depósito de sua configuração, para que possa\n"
-"ser lembrada na próxima sessão. Caso queira, você pode editar\n"
-"este ficheiro, mas é muito mais fácil definir as teclas dentro\n"
-"do GIMP. A eliminação deste ficheiro irá recuperar os atalhos\n"
-"de teclado padrões."
+"Os atalhos de teclado podem ser redefinidos dinamicamente no GIMP. O menurc é "
+"um depósito de sua configuração, para que possa ser recordada na sessão seguinte. "
+"Caso deseje, poderá editar este ficheiro, mas é muito mais fácil definir as "
+"teclas dentro do GIMP. Se remover este ficheiro recuperará os atalhos de teclado "
+"por omissão."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
-"The sessionrc is used to store what dialog windows were\n"
-"open the last time you quit The GIMP.  You can configure\n"
-"The GIMP to reopen these dialogs at the saved position."
+"The sessionrc is used to store what dialog windows were open the last time "
+"you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
+"the saved position."
 msgstr ""
-"O sessionrc é usado para armazenar as janelas de diálogo abertas\n"
-"na última vez que o GIMP foi finalizado. Você pode configurar o\n"
-"GIMP para abrir estes diálogos novamente na posição gravada."
+"O sessionrc é usado para armazenar as janelas de diálogo abertas da última "
+"vez que o GIMP foi finalizado. Pode configurar o GIMP para abrir estes "
+"diálogos novamente na posição gravada."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
-"This file holds a collection of standard media sizes that\n"
-"serve as image templates."
+"This file holds a collection of standard media sizes that serve as image "
+"templates."
 msgstr ""
-"Este ficheiro armazena uma colecção de media de tamanhos\n"
-"padrão que servem como modelos de imagens."
+"Este ficheiro armazena uma colecção de media de tamanhos padrão que servem "
+"como modelos de imagens."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
-"The unitrc is used to store your user units database.\n"
-"You can define additional units and use them just\n"
-"like you use the built-in units inches, millimeters,\n"
-"points and picas.  This file is overwritten each time\n"
-"you quit the GIMP."
+"The unitrc is used to store your user units database.  You can define "
+"additional units and use them just like you use the built-in units inches, "
+"millimeters, points and picas.  This file is overwritten each time you quit "
+"the GIMP."
 msgstr ""
-"O unitrc é utilizado para armazenar a base de dados de\n"
-"unidades dos utilizadores. Pode definir unidades adicionais\n"
-"e utiliza-las da mesma forma que utiliza medidas internas\n"
-"como polegadas, milímetros, pontos e picas. Este ficheiro é\n"
-"sobreposto de cada vez que sair do GIMP."
+"O unitrc é utilizado para armazenar a base de dados de unidades dos "
+"utilizadores. Pode definir unidades adicionais e utiliza-las da mesma forma "
+"que utiliza medidas internas como polegadas, milímetros, pontos e picas. Este "
+"ficheiro é sobreposto de cada vez que sair do GIMP."
 
 #: app/gui/user-install-dialog.c:189
 msgid ""
-"This folder is used to store user defined brushes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP brushes installation when searching for\n"
-"brushes."
+"This folder is used to store user defined brushes. The GIMP checks this "
+"folder in addition to the system-wide GIMP brushes installation when "
+"searching for brushes."
 msgstr ""
-"Esta pasta é utilizada para armazenar pincéis criados\n"
-"pelos utilizadores. O GIMP verifica esta pasta além\n"
-"dos pincéis padrão do sistema, ao pesquisar por pincéis."
+"Esta pasta é utilizada para armazenar pincéis criados pelos utilizadores. "
+"O GIMP verifica esta pasta além dos pincéis padrão do sistema, ao "
+"pesquisar por pincéis."
 
 #: app/gui/user-install-dialog.c:197
 msgid ""
-"This folder is used to store fonts you only want\n"
-"visible in the GIMP. The GIMP checks this folder in\n"
-"addition to the system-wide GIMP fonts installation\n"
-"when searching for fonts. Use this only if you really\n"
-"want to have GIMP-only fonts, otherwise put things\n"
-"in your global font directory."
+"This folder is used to store fonts you only want visible in the GIMP. The "
+"GIMP checks this folder in addition to the system-wide GIMP fonts "
+"installation when searching for fonts. Use this only if you really want to "
+"have GIMP-only fonts, otherwise put things in your global font directory."
 msgstr ""
-"Esta pasta é utilizada para armazenar fontes que\n"
-"apenas deseja visíveis no GIMP. O GIMP verifica\n"
-"esta pasta além das fontes padrão instaladas no\n"
-"sistema, ao procurar texturas. Utilize isto apenas\n"
-"se desejar mesmo ter fontes apenas para o GIMP, caso\n"
-"contrário coloque-as no seu directório de fontes."
+"Esta pasta é utilizada para armazenar fontes que apenas deseja visíveis no "
+"GIMP. O GIMP verifica esta pasta além das fontes padrão instaladas no "
+"sistema, ao procurar texturas. Utilize isto apenas se desejar mesmo ter "
+"fontes apenas para o GIMP, caso contrário coloque-as no seu directório de "
+"fontes."
 
 #: app/gui/user-install-dialog.c:207
 msgid ""
-"This folder is used to store user defined gradients.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP gradients installation when searching for\n"
-"gradients."
+"This folder is used to store user defined gradients.  The GIMP checks this "
+"folder in addition to the system-wide GIMP gradients installation when "
+"searching for gradients."
 msgstr ""
-"Esta pasta é utilizada para armazenar gradientes\n"
-"definidos pelo utilizador. O GIMP verifica esta\n"
-"pasta além dos gradientes padrão pré-instalados\n"
-"com o GIMP, ao procurar gradientes."
+"Esta pasta é utilizada para armazenar gradientes definidos pelo utilizador. "
+"O GIMP verifica esta pasta além dos gradientes padrão pré-instalados com o "
+"GIMP, ao procurar gradientes."
 
-#: app/gui/user-install-dialog.c:215
+#: app/gui/user-install-dialog.c:214
 msgid ""
-"This folder is used to store user defined palettes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP palettes installation when searching for\n"
-"palettes."
+"This folder is used to store user defined palettes.  The GIMP checks this "
+"folder in addition to the system-wide GIMP palettes installation when "
+"searching for palettes."
 msgstr ""
-"Esta pasta é utilizada para armazenar paletas\n"
-"definidas pelo utilizador. O GIMP verifica esta\n"
-"pasta além das paletes padrão pré-instaladas\n"
-"com o sistema, ao procurar paletes."
+"Esta pasta é utilizada para armazenar paletas definidas pelo utilizador. O "
+"GIMP verifica esta pasta além das paletes padrão pré-instaladas com o "
+"sistema, ao procurar paletes."
 
-#: app/gui/user-install-dialog.c:223
+#: app/gui/user-install-dialog.c:221
 msgid ""
-"This folder is used to store user defined patterns.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP patterns installation when searching for\n"
-"patterns."
+"This folder is used to store user defined patterns.  The GIMP checks this "
+"folder in addition to the system-wide GIMP patterns installation when "
+"searching for patterns."
 msgstr ""
-"Esta pasta é utilizada para armazenar texturas\n"
-"definidas pelo utilizador. O GIMP verifica esta\n"
-"pasta além das texturas padrão pré-instaladas\n"
-"com o sistema, ao procurar texturas."
+"Esta pasta é utilizada para armazenar texturas definidas pelo utilizador. O "
+"GIMP verifica esta pasta além das texturas padrão pré-instaladas com o "
+"sistema, ao procurar texturas."
 
-#: app/gui/user-install-dialog.c:231
+#: app/gui/user-install-dialog.c:228
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported plug-ins.  The GIMP\n"
-"checks this folder in addition to the system-wide\n"
-"GIMP plug-in folder when searching for plug-ins."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported plug-ins.  The GIMP checks this folder in addition to the "
+"system-wide GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Esta pasta é utilizada para armazenar plug-ins temporários\n"
-"ou não suportados pelo sistema que foram criados pelo utilizador.\n"
-"O GIMP verifica esta pasta além dos plug-ins padrão\n"
-"pré-instalados com o sistema, ao procurar plug-ins."
+"Esta pasta é utilizada para armazenar plug-ins temporários ou não suportados "
+"pelo sistema que foram criados pelo utilizador. O GIMP verifica esta pasta "
+"além dos plug-ins padrão pré-instalados com o sistema, ao procurar plug-ins."
 
-#: app/gui/user-install-dialog.c:239
+#: app/gui/user-install-dialog.c:236
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported DLL modules.  The\n"
-"GIMP checks this folder in addition to the system-wide\n"
-"GIMP module folder when searching for modules to load\n"
-"during initialization."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported DLL modules.  The GIMP checks this folder in addition to "
+"the system-wide GIMP module folder when searching for modules to load during "
+"initialization."
 msgstr ""
-"Esta pasta é utilizada para armazenar módulos DLL temporários\n"
-"ou não suportados pelo sistema que foram criados pelo utilizador.\n"
-"O GIMP verifica esta pasta além dos módulos padrão\n"
-"pré-instalados com o sistema, ao procurar módulos para carregar\n"
-"durante a inicialização."
+"Esta pasta é utilizada para armazenar módulos DLL temporários ou não "
+"suportados pelo sistema que foram criados pelo utilizador. O GIMP verifica "
+"esta pasta além dos módulos padrão pré-instalados com o sistema, ao procurar "
+"módulos para carregar durante a inicialização."
 
-#: app/gui/user-install-dialog.c:248
+#: app/gui/user-install-dialog.c:245
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported additions to the\n"
-"plug-in environment.  The GIMP checks this folder in\n"
-"addition to the system-wide GIMP environment folder\n"
-"when searching for plug-in environment modification\n"
-"files."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported additions to the plug-in environment.  The GIMP checks this "
+"folder in addition to the system-wide GIMP environment folder when searching "
+"for plug-in environment modification files."
 msgstr ""
-"Esta pasta é utilizada para armazenar plug-ins temporários,\n"
-"não suportados pelo sistema ou que foram criados pelo utilizador.\n"
-"O GIMP verifica esta pasta além dos plug-ins padrão\n"
-"pré-instalados com o sistema, ao procurar ficheiros de alteração\n"
-"de ambiente de plug-ins."
+"Esta pasta é utilizada para armazenar plug-ins temporários, não suportados "
+"pelo sistema ou que foram criados pelo utilizador. O GIMP verifica esta pasta "
+"além dos plug-ins padrão pré-instalados com o sistema, ao procurar ficheiros "
+"de alteração de ambiente de plug-ins."
 
-#: app/gui/user-install-dialog.c:258
+#: app/gui/user-install-dialog.c:255
 msgid ""
-"This folder is used to store user created and installed\n"
-"scripts.  The GIMP checks this folder in addition to\n"
-"the systemwide GIMP scripts folder when searching for\n"
-"scripts."
+"This folder is used to store user created and installed scripts.  The GIMP "
+"checks this folder in addition to the systemwide GIMP scripts folder when "
+"searching for scripts."
 msgstr ""
-"Esta pasta é utilizada para armazenar scripts criados\n"
-"e instalados pelo utilizador. O GIMP verifica esta pasta\n"
-"além dos scripts padrão pré-instalados com o sistema, ao\n"
-"procurar scripts."
+"Esta pasta é utilizada para armazenar scripts criados e instalados pelo "
+"utilizador. O GIMP verifica esta pasta além dos scripts padrão pré-instalados "
+"com o sistema, ao procurar scripts."
 
-#: app/gui/user-install-dialog.c:266
+#: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
 msgstr "Nesta pasta são procurados modelos de imagens."
 
-#: app/gui/user-install-dialog.c:271
+#: app/gui/user-install-dialog.c:268
 msgid "This folder is searched for user-installed themes."
 msgstr "Nesta pasta são procurados temas instalados pelo utilizador."
 
-#: app/gui/user-install-dialog.c:276
+#: app/gui/user-install-dialog.c:273
 msgid ""
-"This folder is used to temporarily store undo buffers\n"
-"to reduce memory usage.  If The GIMP is unceremoniously\n"
-"killed, files of the form: gimp<#>.<#> may persist in\n"
-"this folder.  These files are useless across GIMP\n"
+"This folder is used to temporarily store undo buffers to reduce memory "
+"usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
+"<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
 msgstr ""
-"Esta pasta é utilizada para armazenar buffers de desfazer\n"
-"para reduzir o consumo de memória. Se o GIMP for terminado\n"
-"abruptamente, ficheiros com o formato: gimp<#>.<#> poderão\n"
-"persistir nesta pasta. Estes ficheiros são inúteis para\n"
-"o GIMP e podem ser destruidos sem preocupações."
+"Esta pasta é utilizada para armazenar buffers de desfazer para reduzir o "
+"consumo de memória. Se o GIMP for terminado abruptamente, ficheiros com o "
+"formato: gimp<#>.<#> poderão persistir nesta pasta. Estes ficheiros são "
+"inúteis para o GIMP e podem ser removidos sem preocupações."
 
-#: app/gui/user-install-dialog.c:285
+#: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
 msgstr "Esta pasta é utilizada para armazenar opções de ferramentas."
 
-#: app/gui/user-install-dialog.c:290
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Curves tool."
+#: app/gui/user-install-dialog.c:287
+msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
-"Esta pasta é utilizada para armazenar ficheiros de\n"
-"parâmetros para a ferramenta Curvas."
+"Esta pasta é utilizada para armazenar ficheiros de parâmetros para a "
+"ferramenta Curvas."
 
-#: app/gui/user-install-dialog.c:296
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Levels tool."
+#: app/gui/user-install-dialog.c:292
+msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
-"Esta pasta é utilizada para armazenar ficheiros de\n"
-"parâmetros para a ferramenta Níveis."
+"Esta pasta é utilizada para armazenar ficheiros de parâmetros para a "
+"ferramenta Níveis."
 
-#: app/gui/user-install-dialog.c:397
-msgid ""
-"Installation successful.\n"
-"Click \"Continue\" to proceed."
-msgstr ""
-"Instalação com sucesso.\n"
-"Prima \"Continuar\" para prosseguir."
+#: app/gui/user-install-dialog.c:392
+msgid "Installation successful.  Click \"Continue\" to proceed."
+msgstr "Instalação com sucesso. Prima \"Continuar\" para prosseguir."
 
-#: app/gui/user-install-dialog.c:403
-msgid ""
-"Installation failed.\n"
-"Contact system administrator."
-msgstr ""
-"Instalação falhou.\n"
-"Contacte o seu administrador de sistemas."
+#: app/gui/user-install-dialog.c:398
+msgid "Installation failed.  Contact system administrator."
+msgstr "Instalação falhou. Contacte o seu administrador de sistemas."
 
-#: app/gui/user-install-dialog.c:595
+#: app/gui/user-install-dialog.c:591
 msgid "GIMP User Installation"
 msgstr "Instalação Utilizador do GIMP"
 
-#: app/gui/user-install-dialog.c:600
+#: app/gui/user-install-dialog.c:596
 msgid "Continue"
 msgstr "Continuar"
 
-#: app/gui/user-install-dialog.c:750
+#: app/gui/user-install-dialog.c:748
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6736,95 +6687,86 @@ msgstr ""
 "Bem-vindo à\n"
 "Instalação de Utilizador do GIMP"
 
-#: app/gui/user-install-dialog.c:752
+#: app/gui/user-install-dialog.c:750
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Clique em \"Continuar\" para entrar na instalação de utilizador do GIMP."
 
-#: app/gui/user-install-dialog.c:757
+#: app/gui/user-install-dialog.c:755
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2003\n"
+"Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "<b>O GIMP - Aplicação GNU de Manipulação de Imagem</b>\n"
-"Copyright (C) 1995-2003\n"
+"Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis e a Equipa de Desenvolvimento do GIMP."
 
-#: app/gui/user-install-dialog.c:767
+#: app/gui/user-install-dialog.c:765
 msgid ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version."
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
 msgstr ""
-"Esta aplicação é livre; pode ser redistribuída e/ou modificada sob os\n"
-"termos da Licença Pública Geral GNU tal como publicada pela Free\n"
-"Software Foundation; na sua versão 2 ou (a seu critério) em qualquer\n"
+"Esta aplicação é livre; pode ser redistribuída e/ou modificada sob os "
+"termos da Licença Pública Geral GNU tal como publicada pela Free "
+"Software Foundation; na sua versão 2 ou (a seu critério) em qualquer "
 "versão posterior."
 
-#: app/gui/user-install-dialog.c:773
+#: app/gui/user-install-dialog.c:771
 msgid ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details."
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
 msgstr ""
-"Esta aplicação é distribuída com o intuito de ser útil,\n"
-"mas NÃO CONTÉM QUALQUER GARANTIA, nem mesmo a garantia\n"
-"implícita de ser COMERCIALIZÁVEL ou ADEQUADA A UM DETERMINADO\n"
-"FIM. Veja a Licença Pública GNU para mais detalhes."
+"Esta aplicação é distribuída com o intuito de ser útil, mas NÃO CONTÉM "
+"QUALQUER GARANTIA, nem mesmo a garantia implícita de ser COMERCIALIZÁVEL ou "
+"ADEQUADA A UM DETERMINADO FIM. Veja a Licença Pública GNU para mais detalhes."
 
-#: app/gui/user-install-dialog.c:779
+#: app/gui/user-install-dialog.c:777
 msgid ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"Deverá ter recebido uma cópia da Licença Pública GNU\n"
-"com esta aplicação. Caso contrário escreva para a Free\n"
-"Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
-"Boston, MA 02111-1307, USA."
+"Deverá ter recebido uma cópia da Licença Pública GNU com esta aplicação. Caso "
+"contrário escreva para a Free Software Foundation, Inc., 59 Temple Place - "
+"Suite 330, Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:804
+#: app/gui/user-install-dialog.c:802
 msgid "Personal GIMP Folder"
 msgstr "Pasta Pessoal do GIMP"
 
-#: app/gui/user-install-dialog.c:805
+#: app/gui/user-install-dialog.c:803
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Clique em \"Continuar\" para criar a sua pasta pessoal GIMP."
 
-#: app/gui/user-install-dialog.c:849
+#: app/gui/user-install-dialog.c:847
 #, c-format
 msgid ""
-"For a proper GIMP installation, a folder named\n"
-"'<b>%s</b>' needs to be created."
+"For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
+"created."
 msgstr ""
-"Para uma instalação adequada do GIMP, tem de ser\n"
-"criada uma pasta chamada '<b>%s</b>'."
+"Para uma instalação adequada do GIMP, tem de ser criada uma pasta "
+"chamada '<b>%s</b>'."
 
-#: app/gui/user-install-dialog.c:856
+#: app/gui/user-install-dialog.c:854
 msgid ""
-"This folder will contain a number of important files.\n"
-"Click on one of the files or folders in the tree\n"
-"to get more information about the selected item."
+"This folder will contain a number of important files.  Click on one of the "
+"files or folders in the tree to get more information about the selected item."
 msgstr ""
-"Esta pasta irá conter vários ficheiros importantes.\n"
-"Clique num dos ficheiros ou pastas na árvore para\n"
-"obter mais informações sobre o item seleccionado."
+"Esta pasta irá conter vários ficheiros importantes.  Clique num dos ficheiros "
+"ou pastas na árvore para obter mais informações sobre o item seleccionado."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
 msgstr "Registo de Instalação Utilizador"
 
 #: app/gui/user-install-dialog.c:943
-msgid ""
-"Please wait while your personal\n"
-"GIMP folder is being created..."
-msgstr ""
-"Aguarde que a sua pasta\n"
-"pessoal do GIMP seja criada..."
+msgid "Please wait while your personal GIMP folder is being created..."
+msgstr "Aguarde que a sua pasta pessoal do GIMP seja criada..."
 
 #: app/gui/user-install-dialog.c:950
 msgid "GIMP Performance Tuning"
@@ -6834,18 +6776,18 @@ msgstr "Ajuste do Desempenho GIMP"
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Clique em \"Continuar\" para aceitar as configurações acima."
 
-#: app/gui/user-install-dialog.c:955
+#: app/gui/user-install-dialog.c:956
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para desempenho óptimo do GIMP, poderão ter de ser ajustadas algumas "
 "configurações.</b>"
 
-#: app/gui/user-install-dialog.c:961
+#: app/gui/user-install-dialog.c:963
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Clique em \"Continuar\" para iniciar o GIMP."
 
-#: app/gui/user-install-dialog.c:965
+#: app/gui/user-install-dialog.c:968
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6853,88 +6795,83 @@ msgstr ""
 "<b>Para exibir imagens no seu tamanho natural, o GIMP tem de conhecer a "
 "resolução do seu monitor.</b>"
 
-#: app/gui/user-install-dialog.c:970
+#: app/gui/user-install-dialog.c:973
 msgid "Aborting Installation..."
 msgstr "A Abortar a Instalação..."
 
-#: app/gui/user-install-dialog.c:1053 app/gui/user-install-dialog.c:1086
+#: app/gui/user-install-dialog.c:1056 app/gui/user-install-dialog.c:1089
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "A criar pasta '%s'..."
 
-#: app/gui/user-install-dialog.c:1067
+#: app/gui/user-install-dialog.c:1070
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Incapaz de criar pasta '%s': %s"
 
-#: app/gui/user-install-dialog.c:1099
+#: app/gui/user-install-dialog.c:1102
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "Incapaz de criar pasta: %s"
 
-#: app/gui/user-install-dialog.c:1111
+#: app/gui/user-install-dialog.c:1114
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "A copiar ficheiro '%s' de '%s'..."
 
-#: app/gui/user-install-dialog.c:1157
+#: app/gui/user-install-dialog.c:1160
 msgid ""
-"GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
+"GIMP uses a limited amount of memory to store image data, the so-called "
+"\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 msgstr ""
 "O Gimp utiliza uma quantidade limitada de memória para armazenar dados de "
-"imagem,\n"
-"a chamada \"Cache Blocos\". Deve ajustar o seu tamanho para que caiba em "
-"memória.\n"
-"Considere a memória utilizada por outros processos em execução."
+"imagem, a chamada \"Cache de Blocos\".  Deve ajustar o seu tamanho para que "
+"caiba em memória.  Considere a memória utilizada por outros processos em "
+"execução."
 
-#: app/gui/user-install-dialog.c:1181
+#: app/gui/user-install-dialog.c:1185
 msgid ""
-"All image and undo data which doesn't fit into the Tile Cache will be\n"
-"written to a swap file. This file should be located on a local filesystem\n"
-"with enough free space (several hundred MB). On a UNIX system, you\n"
-"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+"All image and undo data which doesn't fit into the Tile Cache will be "
+"written to a swap file.  This file should be located on a local filesystem "
+"with enough free space (several hundred MB). On a UNIX system, you may want "
+"to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"Toda imagem e dados de desfazer que não couberem na Cache Blocos serão\n"
-"gravados num ficheiro swap. Este deve estar localizado num sistema des\n"
-"ficheiros local com espaço livre suficiente (centenas de MB). Num sistema\n"
+"Toda imagem e dados de desfazer que não couberem na Cache Blocos serão "
+"gravados num ficheiro swap. Este deve estar localizado num sistema de "
+"ficheiros local com espaço livre suficiente (centenas de MB). Num sistema "
 "UNIX, pode utilizar o directório temp geral (\"/tmp\" ou \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1196
+#: app/gui/user-install-dialog.c:1201
 msgid "Swap Folder:"
 msgstr "Pasta Swap:"
 
-#: app/gui/user-install-dialog.c:1247
+#: app/gui/user-install-dialog.c:1252
 msgid ""
-"GIMP can obtain this information from the windowing system.\n"
-"However, usually this does not give useful values."
+"GIMP can obtain this information from the windowing system.  However, "
+"usually this does not give useful values."
 msgstr ""
-"O GIMP pode obter esta informação do gestor de janelas.\n"
-"No entanro, normalmente isto não indica valores úteis."
+"O GIMP pode obter esta informação do gestor de janelas.  No entanto, "
+"normalmente isto não indica valores úteis."
 
-#: app/gui/user-install-dialog.c:1255
+#: app/gui/user-install-dialog.c:1260
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Obter Resolução do sistema de janelas (Actualmente %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1275
-msgid ""
-"Alternatively, you can set\n"
-"the monitor resolution manually."
-msgstr ""
-"Alternativamente, pode definir\n"
-"a resolução do monitor manualmente."
+#: app/gui/user-install-dialog.c:1279
+msgid "Alternatively, you can set the monitor resolution manually."
+msgstr "Alternativamente, pode definir a resolução do monitor manualmente."
 
-#: app/gui/user-install-dialog.c:1320
+#: app/gui/user-install-dialog.c:1328
 msgid ""
-"You can also press the \"Calibrate\" button to open a window\n"
-"which lets you determine your monitor resolution interactively."
+"You can also press the \"Calibrate\" button to open a window which lets you "
+"determine your monitor resolution interactively."
 msgstr ""
-"Você também pode pressionar o botão \"Calibrar\" para abrir uma janela\n"
-"que permite a deteminação interactiva da resolução do seu monitor."
+"Pode também pressionar o botão \"Calibrar\" para abrir uma janela que "
+"permite a deteminação interactiva da resolução do seu monitor."
 
-#: app/gui/user-install-dialog.c:1323
+#: app/gui/user-install-dialog.c:1332
 msgid "Calibrate"
 msgstr "Calibrar"
 
@@ -7434,9 +7371,8 @@ msgid "Text Layer"
 msgstr "Camada Texto"
 
 #: app/text/gimptextlayer.c:341
-#, fuzzy
 msgid "Discard Text Information"
-msgstr "Informação Imagem"
+msgstr "Descartar Informação de Texto"
 
 #: app/text/gimptextlayer.c:420
 msgid "Due to lack of any fonts, text functionality is not available."

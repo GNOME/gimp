@@ -1,8 +1,8 @@
-# gimp-script-fu Portuguese translation.
-# Copyright (C) 2003 gimp
+# gimp-script-fu's Portuguese translation.
+# Copyright (C) 2002, 2004 gimp
 # This file is distributed under the same license as the GIMP package
-# Filipe Maia <fmaia@gmx.net> 2002
-# Duarte Loreto <happyguy_pt@hotmail.com> 2003
+# Filipe Maia <fmaia@gmx.net>, 2002
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004
 #
 # Baseado na versão brasileria por  Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # 
@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
-"PO-Revision-Date: 2003-11-26 01:10+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-01-11 14:42+0000\n"
+"PO-Revision-Date: 2004-01-11 14:45+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -661,8 +661,8 @@ msgid "Width of Gaps"
 msgstr "Largura dos Intervalos"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Script-Fu/Utilitários/ASCII para Camada de Imagem..."
+msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
+msgstr "<Image>/Script-Fu/Utilitários/_ASCII para Camada..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
