@@ -3,6 +3,8 @@ Revision history for Gimp-Perl extension.
 1.20
 	- image types updated to reflect gimp's reality.
         - updated perlotine.
+        - fixed logulator (bugs are actually in the script-fu parts).
+        - moved gimp_drawable_bounds from Gimp::Util to Gimp.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

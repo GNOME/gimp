@@ -3,6 +3,8 @@
 use Gimp;
 use Gimp::Fu;
 
+N_"/Xtns/Render"; N_"/Xtns/Render/Logos"; # i18n workaround
+
 sub fire {
    my ($image, $drawable, $threshold, $strength, $gradient, $displace) = @_;
 

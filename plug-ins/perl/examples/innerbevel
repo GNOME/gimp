@@ -11,6 +11,8 @@ use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 
+N_"/Xtns/Render"; N_"/Xtns/Render/Logos"; # i18n workaround
+
 $defaultcolor1 = [124,10,18];
 $defaultcolor2 = [200,19,27];
 

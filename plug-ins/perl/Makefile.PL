@@ -28,7 +28,7 @@ if ($ARGV[0] ne "--writemakefile") {
 
 @pins =
    qw(windify prep4gif webify PDB tex-to-float ditherize
-      feedback xachlego xachshadow parasite-editor
+      feedback xachlego xachshadow parasite-editor roundsel
       scratches blowinout terral_text xachvision perlcc
       animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel

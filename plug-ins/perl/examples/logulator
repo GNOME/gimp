@@ -4,6 +4,8 @@ use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 
+N_"/Filters/Logulator";  # workaround for i18n weirdnesses
+
 #Gimp::set_trace(TRACE_CALL);
 
 my $global_drawable;
@@ -2229,7 +2231,7 @@ register "perl_fu_sota_chrome_logo",
    [
       [PF_ADJUSTMENT,'chrome_saturation',"Chrome Saturation", [-80, -100, 100, 1, 10, 0, 0]],
       [PF_ADJUSTMENT,'chrome_lightness', "Chrome Lightness", [-47, -100, 100, 1, 10, 0, 0]],
-      [PF_ADJUSTMENT,'chrome_factor',    "Chrome Factor", [.75, 0, 1, .1, .01, 2, 0]],
+      [PF_ADJUSTMENT,'chrome_factor',    "Chrome Factor", [.75, 0, 1, .1, .01, 0, 0]],
       [PF_STRING,    'text_string',      "Text String", "The GIMP"],
       [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [150, 2, 1000, 1, 10, 0, 1]],
       [PF_FONT,      'font',             "Font", "-*-RoostHeavy-*-r-*-*-24-*-*-*-p-*-*-*"],
@@ -2750,7 +2752,7 @@ sub script_fu_title_header {
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($bg_layer);
       gimp_ellipse_select ($img, 0, 0, $text_height, $text_height, REPLACE, 1, 0, 0);
-      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0));
+      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0, 2, 0));
       gimp_edit_fill ($bg_layer);
       gimp_rect_select ($img, ($img_width - $fade_width), 0, $fade_width, $text_height, REPLACE, 0, 0);
       gimp_palette_set_foreground (gimp_palette_get_background ());

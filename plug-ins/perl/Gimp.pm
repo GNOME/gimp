@@ -982,6 +982,12 @@ channels. The reason why this is documented is that the usual way to return
 C<PARAM_INT32ARRAY>'s would be to return a B<reference> to an B<array of
 integers>, rather than blessed objects.
 
+=item gimp_drawable_bounds drawable/gdrawable
+
+Returns an array (0,0,w,h) containing the upper left corner and the
+size of currently selected parts of the drawable, just as needed by
+PixelRgn->new and similar functions.
+
 =item server_eval(string)
 
 This evaluates the given string in array context and returns the

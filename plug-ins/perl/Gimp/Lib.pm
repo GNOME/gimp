@@ -80,6 +80,11 @@ sub gimp_progress_init {
    }
 }
 
+sub gimp_drawable_bounds {
+   my @b = (shift->mask_bounds)[1..4];
+   (@b[0,1],$b[2]-$b[0],$b[3]-$b[1]);
+}
+
 1;
 __END__
 

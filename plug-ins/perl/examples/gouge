@@ -8,7 +8,6 @@
 use Gimp::Feature 'pdl';
 use Gimp 1.098;
 use Gimp::Fu;
-use Gimp::Util;
 use PDL::LiteF;
 
 sub iterate {

@@ -20,11 +20,11 @@ API generalization
 
 firetext! AND _grayscale_ for map_gradient(!)
 
+sota-chrome pagesize of 2 is _wrong_
+
 bugs
-  * never grayed out = "undef" imagetypes!!!
-  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
-    gimp (pid:27638): [E]xit, [H]alt, show [S]tack trace or [P]roceed:
-    this should not crash the gimp itself, but rather gimp-perl (or libc).
+[DONE]  * never grayed out = "undef" imagetypes!!!
+[DONE]  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
 [KILL]  * ftp://metalab.unc.edu/pub/Linux/X11/gtkbuffet/libs/gtkxmhtml/ into INSTALL
   * gtview_log (perlcc & helpfenster) erste zeile anzeigen + scrollbar
 [DONE]  * make test should not be run without DISPLAY
@@ -32,17 +32,15 @@ bugs
   * fix Gimp::Feature::missing => on_query-dir!
 [DONE]  * update logulator
   * on-query => remove gimp::fu parasite(?)
-  * bricks requires disable for pattern(?)
-  * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
+[????]  * bricks requires disable for pattern(?)
+[KILL]  * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-  * scroll behaviour, use clist instead of list?
+[KILL]  * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
   * Kommandozeilenmodus(!). (???)
-[KILL]  * auto-flush of gdrawable when merge_shadow(?)
   * gimp-piddle must be written back automatically on destroy, if changed
   * gimp-tile set dirty automatically(!)
-[KILL]  * get rid of xs_exit. please please fuck me plenty.
   * create gimpstyle.pod
   
 important issues
@@ -51,24 +49,25 @@ important issues
   * constant names (RADIO) automatically into help strings!
   * migrate BOOT: into INIT() (forgot why but important for B)
   * gimp_progress_done, gimp_progress_close
-  * maybe implement --enable-perl=runtime-only?
+[KILL]  * maybe implement --enable-perl=runtime-only?
   * gimp_default_display (...) for libgimp
   * Gimp::Module for modules (!)
+  * gimp for dummies (you don't understand this, harharhar!)
   * PerlCC configurable options for Perl-Server startup, Gipm_host etc.
   * implement CALLBACKS via the Perl-Server
   * PF_COORDS (just as Light Effects/FlareFX)
   * PF_PREVIEW(!)
-  * change set_usize to something else..
+[KILL]  * change set_usize to something else..
   * Gimp::IO (?)
   * install scripts in share/
-  * gimp->object_id, drawable_object_id remove!
+[KILL]  * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
   * Gimp::ping
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button
-  * weighted movement in drawing tools
-  * --function localfunc to select one of the registered scripts
-  * create working progress when Net and $verbose
+[KILL]  * weighted movement in drawing tools
+[KILL]  * --function localfunc to select one of the registered scripts
+[KILL]  * create working progress when Net and $verbose
   * default parameters at end(!)
   * try to deduce default parameters
 

@@ -5,6 +5,8 @@ use Gimp::Feature qw(gimp-1.1 persistency);
 use Gimp::Fu;
 use Gimp::Data;
 
+N_"/Xtns/Render"; N_"/Xtns/Render/Logos"; N_"/Xtns/Render/Povray"; # i18n workaround
+
 use constant DEG2RAD => 4 / 180 * atan2 1,1;
 
 sub set_preferences {

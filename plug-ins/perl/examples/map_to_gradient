@@ -3,7 +3,6 @@
 use Gimp::Feature 'pdl';
 use Gimp 1.1;
 use Gimp::Fu;
-use Gimp::Util;
 use PDL::LiteF;
 
 # convert to greyscale. could be improved, but should still be fast!

@@ -488,6 +488,7 @@ sub _new_adjustment {
    $adj[3]||=($adj[1]-$adj[0])*0.01;
    $adj[4]||=0;
    
+   print "new adjustment $_[0], @adj\n";
    new Gtk::Adjustment $_[0],@adj;
 }
 

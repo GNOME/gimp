@@ -17,6 +17,8 @@ use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_f
 use Gimp qw(__ N_);
 use Gimp::Net ();
 
+N_"/Xtns/Perl"; # workaround for i18n weirdnesses
+
 Gimp::set_trace(\$trace_res);
 Gimp::ignore_functions(qw(gimp_progress_init gimp_progress_update));
 

@@ -12,9 +12,11 @@
 
 require 5.004;
 
-use Gimp qw(:auto __ N_);
+use Gimp qw(:auto N_);
 use Gimp::Fu;
 use Gimp::Util;
+
+N_"/Xtns/Render"; N_"/Xtns/Render/Logos"; # i18n workaround
 
 use strict;
 use vars qw($glowing_steel_version $glowing_steel_released

@@ -179,10 +179,10 @@ nth	=> 'sub nth {
    }
 }
 
-script	: (...!/$/ stmt)(s) nl /$/
+script	: ( ...!/$/ stmt)(s) nl /$/
 	| <error:unable to recognize next statement>
 
-stmts	: (...!')' nl stmt)(s?)
+stmts	: ( ...!')' nl stmt)(s?)
 
 stmt	: '(' command ')'
 	| expr gen[";"]

@@ -277,26 +277,33 @@ static int gpixelrgn_free (SV *obj, MAGIC *mg)
 
 static MGVTBL vtbl_gpixelrgn = {0, 0, 0, 0, gpixelrgn_free};
 
+/* coerce whatever was given into a gdrawable-sv */
+static SV *force_gdrawable (SV *drawable)
+{
+  if (!(sv_derived_from (drawable, PKG_GDRAWABLE)))
+    {
+      if (sv_derived_from (drawable, PKG_DRAWABLE)
+          || sv_derived_from (drawable, PKG_LAYER)
+          || sv_derived_from (drawable, PKG_CHANNEL))
+        drawable = sv_2mortal (new_gdrawable (SvIV (SvRV (drawable))));
+      else
+        croak (__("argument is not of type %s"), PKG_GDRAWABLE);
+    }
+
+  return drawable;
+}
+
 static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, int dirty, int shadow)
 {
   static HV *stash;
   SV *sv = newSVn (sizeof (GPixelRgn));
   GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(sv);
 
-  if (!(sv_derived_from (gdrawable, PKG_GDRAWABLE)))
-    {
-      if (sv_derived_from (gdrawable, PKG_DRAWABLE)
-          || sv_derived_from (gdrawable, PKG_LAYER)
-          || sv_derived_from (gdrawable, PKG_CHANNEL))
-        gdrawable = sv_2mortal (new_gdrawable (SvIV (SvRV (gdrawable))));
-      else
-        croak (__("argument is not of type %s"), PKG_GDRAWABLE);
-    }
-
   if (!stash)
     stash = gv_stashpv (PKG_PIXELRGN, 1);
   
-  gimp_pixel_rgn_init (pr, old_gdrawable (gdrawable), x, y, width, height, dirty, shadow);
+  gimp_pixel_rgn_init (pr, old_gdrawable (gdrawable),
+                       x, y, width, height, dirty, shadow);
 
   sv_magic (sv, SvRV(gdrawable), '~', 0, 0);
   mg_find (sv, '~')->mg_virtual = &vtbl_gpixelrgn;
@@ -1760,7 +1767,7 @@ gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
 	int	dirty
 	int	shadow
 	CODE:
-        RETVAL = new_gpixelrgn (gdrawable,x,y,width,height,dirty,shadow);
+        RETVAL = new_gpixelrgn (force_gdrawable (gdrawable),x,y,width,height,dirty,shadow);
 	OUTPUT:
 	RETVAL
 
@@ -2140,7 +2147,7 @@ gimp_pixel_rgn_data(pr,newdata=0)
             PDL_Long dims[3];
 
             dims[0] = pr->bpp;
-            dims[1] = pr->w;/*D*/
+            dims[1] = pr->rowstride / pr->bpp;
             dims[2] = pr->h;
 
             PDL->setdims (p, dims, 3);

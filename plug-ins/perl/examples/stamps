@@ -3,6 +3,8 @@
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
+N_"/Xtns/Render"; # dummy translation for i18n bugs
+
 sub stamps {
 	my ($size, $hole, $paper, $diameter, $gap) = @_;
 
