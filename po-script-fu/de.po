@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:20+0100\n"
-"PO-Revision-Date: 2004-10-25 16:25+0200\n"
+"POT-Creation-Date: 2004-11-01 17:34+0100\n"
+"PO-Revision-Date: 2004-11-01 17:34+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -198,9 +198,8 @@ msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:425
-#, fuzzy
 msgid "1 Procedure"
-msgstr "%d Prozeduren"
+msgstr "Eine Prozedur"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
@@ -2472,3 +2471,4 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+

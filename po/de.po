@@ -12,13 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:14+0100\n"
-"PO-Revision-Date: 2004-10-25 16:16+0200\n"
+"POT-Creation-Date: 2004-11-01 17:19+0100\n"
+"PO-Revision-Date: 2004-11-01 17:30+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -909,9 +909,8 @@ msgid "M_ove to Screen..."
 msgstr "Auf Bildschirm _verschieben..."
 
 #: app/actions/dockable-actions.c:76
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "_Auswahl anzeigen"
+msgstr "_Bildauswahl anzeigen"
 
 #: app/actions/dockable-actions.c:82
 msgid "Auto _Follow Active Image"
@@ -1057,20 +1056,20 @@ msgstr ""
 "%s"
 
 #: app/actions/drawable-actions.c:45
-msgid "_White Balance"
-msgstr ""
-
-#: app/actions/drawable-actions.c:50
 msgid "_Desaturate"
 msgstr "Sättigung ent_fernen"
 
-#: app/actions/drawable-actions.c:55
+#: app/actions/drawable-actions.c:50
 msgid "_Equalize"
 msgstr "_Egalisieren"
 
-#: app/actions/drawable-actions.c:60
+#: app/actions/drawable-actions.c:55
 msgid "In_vert"
 msgstr "_Invertieren"
+
+#: app/actions/drawable-actions.c:60
+msgid "_White Balance"
+msgstr "_Weißabgleich"
 
 #: app/actions/drawable-actions.c:65
 msgid "_Offset..."
@@ -1105,22 +1104,21 @@ msgstr "_180° drehen"
 msgid "Rotate 90 degrees CC_W"
 msgstr "90° drehen (_links)"
 
-#: app/actions/drawable-commands.c:60
-#, fuzzy
-msgid "White Balance operates only on RGB color layers."
-msgstr "Der Farbabgleich funktioniert nur bei RGB Ebenen."
-
-#: app/actions/drawable-commands.c:78
+#: app/actions/drawable-commands.c:58
 msgid "Desaturate operates only on RGB color layers."
 msgstr "Die Sättigung kann nur bei RGB-Ebenen verringert werden."
 
-#: app/actions/drawable-commands.c:96
+#: app/actions/drawable-commands.c:76
 msgid "Equalize does not operate on indexed layers."
 msgstr "Das Angleichen funktioniert mit indizierten Ebenen nicht."
 
-#: app/actions/drawable-commands.c:162
+#: app/actions/drawable-commands.c:94
 msgid "Invert does not operate on indexed layers."
 msgstr "Das Invertieren funktioniert mit indizierten Ebenen nicht."
+
+#: app/actions/drawable-commands.c:114
+msgid "White Balance operates only on RGB color layers."
+msgstr "Der Weißabgleich funktioniert nur bei RGB Ebenen."
 
 #: app/actions/edit-actions.c:61
 msgid "_Edit"
@@ -1864,7 +1862,7 @@ msgstr "Größe verändern..."
 msgid "Flipping..."
 msgstr "Spiegeln..."
 
-#: app/actions/image-commands.c:278 app/pdb/drawable_transform_cmds.c:632
+#: app/actions/image-commands.c:278 app/pdb/drawable_transform_cmds.c:603
 #: app/pdb/transform_tools_cmds.c:340 app/tools/gimprotatetool.c:159
 msgid "Rotating..."
 msgstr "Drehe..."
@@ -1887,7 +1885,7 @@ msgid "Scale Image"
 msgstr "Bild skalieren"
 
 #: app/actions/image-commands.c:462 app/actions/layers-commands.c:959
-#: app/pdb/drawable_transform_cmds.c:795 app/pdb/transform_tools_cmds.c:459
+#: app/pdb/drawable_transform_cmds.c:766 app/pdb/transform_tools_cmds.c:459
 #: app/tools/gimpscaletool.c:153
 msgid "Scaling..."
 msgstr "Skalierung"
@@ -3278,7 +3276,7 @@ msgstr "${%s} konnte nicht nicht expandiert werden"
 #: app/core/gimpbrushpipe.c:344 app/core/gimpgradient-load.c:63
 #: app/core/gimppalette.c:360 app/core/gimppattern.c:328
 #: app/tools/gimpimagemaptool.c:602 app/widgets/gimptexteditor.c:435
-#: app/xcf/xcf.c:293
+#: app/xcf/xcf.c:291
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
@@ -3287,7 +3285,7 @@ msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
 #: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:601
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:350
+#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:348
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
@@ -3557,7 +3555,9 @@ msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
 "versions."
-msgstr ""
+msgstr "Wenn diese Option ausgewählt ist, wird das Verschiebenwerkzeug die aktive Ebene oder den "
+"aktiven Pfad wechseln, wenn eine Ebene oder ein Pfad angeklickt wird. Diese Funktion bildet das "
+"normale Verhalten älterer The-Gimp-Versionen nach."
 
 #: app/config/gimprc-blurbs.h:214
 msgid ""
@@ -5616,7 +5616,8 @@ msgstr ""
 "Daniel Egger\n"
 "Michael Natterer\n"
 "Sven Neumann\n"
-"Christian Neumair"
+"Christian Neumair\n"
+"Hendrik Brandt"
 
 # CHECK
 #: app/dialogs/about-dialog.c:59
@@ -6432,14 +6433,12 @@ msgid "Paint Options Shared Between Tools"
 msgstr "Maleinstellungen werden von Werkzeuge gemeinsam benutzt."
 
 #: app/dialogs/preferences-dialog.c:1593
-#, fuzzy
 msgid "Move Tool"
-msgstr "Verschieben: "
+msgstr "Verschiebewerkzeug"
 
 #: app/dialogs/preferences-dialog.c:1597
-#, fuzzy
 msgid "Change current layer or path"
-msgstr "Nur die aktive Ebene"
+msgstr "Aktive Ebene oder aktiven Pfad wechseln"
 
 #: app/dialogs/preferences-dialog.c:1610 app/dialogs/preferences-dialog.c:1613
 msgid "Toolbox"
@@ -6888,13 +6887,12 @@ msgid "I_nterpolation:"
 msgstr "I_nterpolation:"
 
 #: app/dialogs/scale-dialog.c:194
-#, fuzzy
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
 msgstr ""
-"Indizierte Farbebenen werden durchgehend ohne Interpolation skaliert.Die "
-"ausgewählte Interpolation wird nur auf Kanäle und Maske Auswirkunghaben."
+"Indizierte Farbebenen werden immer ohne Interpolation skaliert. Die "
+"ausgewählte Interpolation wird nur auf Kanäle und Maske Auswirkungen haben."
 
 #: app/dialogs/stroke-dialog.c:104
 msgid "Choose Stroke Style"
@@ -7171,13 +7169,13 @@ msgstr "Weiter"
 #. GPL_PAGE
 #. version number
 #: app/dialogs/user-install-dialog.c:764
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 msgstr ""
 "Willkommen zur\n"
-"GIMP-Benutzerinstallation"
+"The-Gimp-Benutzerinstallation"
 
 #: app/dialogs/user-install-dialog.c:770
 msgid "Click \"Continue\" to enter the GIMP user installation."
@@ -7231,27 +7229,24 @@ msgstr ""
 
 #: app/dialogs/user-install-dialog.c:809
 msgid "Migrate User Settings"
-msgstr ""
+msgstr "Benutzereinstellungen übernehmen"
 
 #: app/dialogs/user-install-dialog.c:810
-#, fuzzy
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr ""
-"Drücken Sie »Weiter«, um die\n"
-"GIMP-Benutzerinstallation zu starten."
+"Klicken Sie auf »Weiter«, um mit der Benutzerinstallation fortzufahren."
 
 #: app/dialogs/user-install-dialog.c:815
 msgid "It seems you have used GIMP 2.0 before."
-msgstr ""
+msgstr "Scheinbar haben Sie bereits The Gimp in der Version 2.0 benutzt."
 
 #: app/dialogs/user-install-dialog.c:819
 msgid "_Migrate GIMP 2.0 user settings"
-msgstr ""
+msgstr "_Benutzereinstellunge aus The Gimp 2.0 übernehmen"
 
 #: app/dialogs/user-install-dialog.c:822
-#, fuzzy
 msgid "Do a _fresh user installation"
-msgstr "GIMP-Benutzerinstallation"
+msgstr "Eine _neue Benutzerinstallation erstellen"
 
 #: app/dialogs/user-install-dialog.c:850
 msgid "Personal GIMP Folder"
@@ -7712,23 +7707,22 @@ msgstr "Farbton-Sättigung"
 msgid "Threshold"
 msgstr "Schwellwert"
 
-#: app/pdb/drawable_transform_cmds.c:272
-#, fuzzy
+#: app/pdb/drawable_transform_cmds.c:243
 msgid "Flip..."
 msgstr "Spiegeln..."
 
-#: app/pdb/drawable_transform_cmds.c:448 app/pdb/transform_tools_cmds.c:197
+#: app/pdb/drawable_transform_cmds.c:419 app/pdb/transform_tools_cmds.c:197
 #: app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
 msgstr "Perspektive..."
 
-#: app/pdb/drawable_transform_cmds.c:958 app/pdb/transform_tools_cmds.c:587
+#: app/pdb/drawable_transform_cmds.c:929 app/pdb/transform_tools_cmds.c:587
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
 msgstr "Scheren..."
 
-#: app/pdb/drawable_transform_cmds.c:1126
-#: app/pdb/drawable_transform_cmds.c:1328 app/pdb/transform_tools_cmds.c:720
+#: app/pdb/drawable_transform_cmds.c:1097
+#: app/pdb/drawable_transform_cmds.c:1299 app/pdb/transform_tools_cmds.c:720
 msgid "2D Transform..."
 msgstr "2D Transformation..."
 
@@ -7774,9 +7768,8 @@ msgid "Drawable procedures"
 msgstr "Bild-Prozeduren"
 
 #: app/pdb/internal_procs.c:113
-#, fuzzy
 msgid "Transformation procedures"
-msgstr "Transformwerkzeug Prozeduren"
+msgstr "Transformationswerkzeug Prozeduren"
 
 #: app/pdb/internal_procs.c:116
 msgid "Edit procedures"
@@ -7909,9 +7902,9 @@ msgid "Free Select"
 msgstr "Freie Auswahl"
 
 #: app/plug-in/plug-in.c:543 app/plug-in/plug-in.c:573
-#, fuzzy, c-format
+#, c-format
 msgid "Terminating plug-in: '%s'\n"
-msgstr "Plugin »%s« wird abgefragt\n"
+msgstr "Plugin wird abgebrochen: »%s«\n"
 
 #: app/plug-in/plug-in.c:720
 #, c-format
@@ -8889,9 +8882,8 @@ msgid "Distance:"
 msgstr "Abstand:"
 
 #: app/tools/gimpmoveoptions.c:171
-#, fuzzy
 msgid "Pick a layer or guide"
-msgstr "Ebene oder Hilfslinie zum Verschieben auswählen"
+msgstr "Ebene oder Hilfslinie auswählen"
 
 #: app/tools/gimpmoveoptions.c:172
 msgid "Move the current layer"
@@ -8902,9 +8894,8 @@ msgid "Move selection"
 msgstr "Auswahl verschieben"
 
 #: app/tools/gimpmoveoptions.c:180
-#, fuzzy
 msgid "Pick a path"
-msgstr "Pfad zum Verschieben auswählen"
+msgstr "Pfad auswählen"
 
 #: app/tools/gimpmoveoptions.c:181
 msgid "Move the current path"
@@ -9793,7 +9784,7 @@ msgstr "Ereignis"
 
 #: app/widgets/gimpcontrollereditor.c:513
 msgid "Select Controller Event Action"
-msgstr ""
+msgstr "Ereigniskontrolleuraktion auswählen"
 
 #: app/widgets/gimpcontrollerkeyboard.c:68
 msgid "Key Up (Shift + Control + Alt)"
@@ -10399,14 +10390,14 @@ msgid "pixels/%a"
 msgstr "Pixel/%a"
 
 #: app/widgets/gimpsizebox.c:557
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d dpi"
-msgstr "%d x %d dpi, %s"
+msgstr "%d x %d dpi"
 
 #: app/widgets/gimpsizebox.c:561
-#, fuzzy, c-format
+#, c-format
 msgid "%d dpi"
-msgstr "%d dpi, %s"
+msgstr "%d dpi"
 
 #: app/widgets/gimpstrokeeditor.c:198
 msgid "Line Width:"
@@ -10820,7 +10811,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Ungültiger UTF-8 Text in XCF Datei"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:344
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:342
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fehler beim Schreiben der XCF-Datei: %s"
@@ -10839,7 +10830,7 @@ msgstr "Fehler beim Spulen in XCF-Datei: %s"
 msgid "GIMP XCF image"
 msgstr "GIMP XCF Bild"
 
-#: app/xcf/xcf.c:284
+#: app/xcf/xcf.c:282
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
@@ -10852,44 +10843,3 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 msgid "Image Editor"
 msgstr "Bildeditor"
 
-#~ msgid "_Show Image Menu"
-#~ msgstr "Bild_menü anzeigen"
-
-#~ msgid "_Discard Changes"
-#~ msgstr "Änderungen _verwerfen"
-
-#~ msgid "Scale Layer Options"
-#~ msgstr "Einstellungen zu Ebene skalieren"
-
-#~ msgid "Scale Image Options"
-#~ msgstr "Einstellungen zu Bild skalieren"
-
-#~ msgid "Pixel Dimensions"
-#~ msgstr "Abmessungen der Pixel"
-
-#~ msgid "Layer Boundary Size"
-#~ msgstr "Ebenengröße"
-
-#~ msgid "New width:"
-#~ msgstr "Neue Breite:"
-
-#~ msgid "New height:"
-#~ msgstr "Neue Höhe:"
-
-#~ msgid "X ratio:"
-#~ msgstr "Faktor X:"
-
-#~ msgid "Y ratio:"
-#~ msgstr "Faktor Y:"
-
-#~ msgid "Constrain aspect ratio"
-#~ msgstr "Ansichtsverhältnis beschränken"
-
-#~ msgid "Print Size & Display Unit"
-#~ msgstr "Druckgröße und Anzeigeeinheit"
-
-#~ msgid "X resolution:"
-#~ msgstr "Auflösung X:"
-
-#~ msgid "Y resolution:"
-#~ msgstr "Auflösung Y:"
