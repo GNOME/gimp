@@ -1,8 +1,16 @@
+2004-09-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD:
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_menu_position): improved the fix for bug
+	#152662 and removed trailing whitespace.
+
 2004-09-15  Nathan Summers  <rock@gimp.org>
 
 	Merged from HEAD:
 
-        * app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainertreeview.c
         (gimp_container_tree_view_menu_position): clamp the popup
 	menu's Y position to the visible area of the GtkTreeView.
 	Fixes #152662.
