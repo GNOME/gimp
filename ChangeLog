@@ -1,3 +1,8 @@
+Sun May 17 23:06:38 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/app_procs.c: applied patch from Michael Sweet to correct
+	NULL deref in splash screen.
+
 Mon May 18 02:50:03 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/tiff/tiff.c: updated tiff plug-in

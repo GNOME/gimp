@@ -315,7 +315,8 @@ destroy_initialization_status_window(void)
   if(win_initstatus)
     {
       gtk_widget_destroy(win_initstatus);
-      gdk_pixmap_unref(logo_pixmap);
+      if (logo_pixmap != NULL)
+	gdk_pixmap_unref(logo_pixmap);
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
       gtk_idle_remove(idle_tag);
