@@ -1,5 +1,21 @@
 2003-01-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerlistview.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemlistview.c: check preview sizes to be
+	smaller than GIMP_PREVIEW_MAX_SIZE instead of using a hardcoded
+	and much too small value of 64.
+
+	* app/widgets/gimpdialogfactory.c: check that the preview size is
+	in range of the GimpPreviewSize enum when parsing the sessionrc.
+
+2003-01-04  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-swap.c (tile_swap_find_offset): use off_t to
 	return the offset. Finally allows to handle swap files larger than
 	2 GB (fixes bug #74478).

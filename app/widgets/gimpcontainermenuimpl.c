@@ -125,7 +125,8 @@ gimp_container_menu_new (GimpContainer *container,
 
   g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
+  g_return_val_if_fail (preview_size > 0 &&
+			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
 
   menu_impl = g_object_new (GIMP_TYPE_CONTAINER_MENU_IMPL, NULL);
 

@@ -431,7 +431,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
        *  - the factory's context, which happens when raising a toplevel
        *    dialog was the original request.
        */
-      if (preview_size < 16)
+      if (preview_size < GIMP_PREVIEW_SIZE_TINY)
         preview_size = entry->preview_size;
 
       if (context)
@@ -1104,7 +1104,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 
                       view = gimp_container_view_get_by_dockable (dockable);
 
-                      if (view && view->preview_size >= 16)
+                      if (view && view->preview_size >= GIMP_PREVIEW_SIZE_TINY)
                         {
                           preview_size = view->preview_size;
                         }
@@ -1202,7 +1202,8 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 
                       preview_size = atoi (substring + 1);
 
-                      if (preview_size < 16)
+                      if (preview_size < GIMP_PREVIEW_SIZE_TINY ||
+			  preview_size > GIMP_PREVIEW_SIZE_GIGANTIC)
                         preview_size = -1;
                     }
 

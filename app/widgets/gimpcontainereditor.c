@@ -35,6 +35,7 @@
 #include "gimpcontainerlistview.h"
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
+#include "gimppreview.h"
 
 
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
@@ -144,7 +145,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), FALSE);
 
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
+  g_return_val_if_fail (preview_size > 0 &&
+			preview_size <= GIMP_PREVIEW_MAX_SIZE, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 

@@ -294,7 +294,8 @@ gimp_item_list_view_new (gint                  preview_size,
   GimpItemListView  *list_view;
   GimpContainerView *view;
 
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
+  g_return_val_if_fail (preview_size > 0 &&
+			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
   g_return_val_if_fail (get_container_func != NULL, NULL);
