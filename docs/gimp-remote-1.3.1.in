@@ -4,7 +4,7 @@ gimp-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS
 .B gimp-remote
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
-\fIfilename\fP ...
+[\-e] [\-\-existing] [-q] [\-\-query] \fIfilename\fP ...
 
 .SH DESCRIPTION
 .PP
@@ -18,7 +18,8 @@ or URL can be specified on the commandline.
 .PP
 If no GIMP window is found, \fIgimp-remote\fP will start a new GIMP
 instance and ask it to load the specified images. If no filename or
-URL is given, \fIgimp-remote\fP will always start a new GIMP.
+URL is given, \fIgimp-remote\fP will start a new GIMP. This behaviour
+can be altered using the command-line options described below.
 
 
 .SH OPTIONS
@@ -33,6 +34,13 @@ Output the version info.
 .TP 8
 .B \-\-display  \fIdisplay\fP
 Use the designated X display.
+.TP 8
+.B \-e, \-\-existing
+If no running GIMP instance is found, don't start a new one but exit.
+.TP 8
+.B \-q, \-\-query
+Check if GIMP is running and exit. A status code of 0 indicates that
+a GIMP toolbox window has been found on this display.
 
 .SH EXAMPLES
 .TP

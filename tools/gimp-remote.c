@@ -52,6 +52,9 @@
 
 #define GIMP_BINARY "gimp-1.3"
 
+static gboolean  existing = FALSE;
+static gboolean  query    = FALSE;
+
 
 static GdkWindow *
 gimp_remote_find_window (GdkDisplay *display,
@@ -158,18 +161,20 @@ usage (const gchar *name)
   g_print ("Tells a running Gimp to open a (local or remote) image file.\n\n"
 	   "Usage: %s [options] [FILE|URI]...\n\n", name);
   g_print ("Valid options are:\n"
-           "  --display <display>  Use the designated X display.\n"
-	   "  -h --help            Output this help.\n"
-	   "  -v --version         Output version info.\n"
-             "\n");
+	   "  -h, --help            Output this help.\n"
+	   "  -v, --version         Output version info.\n"
+           "  --display <display>   Use the designated X display.\n"
+           "  -e, --existing        Use a running GIMP only, never start a new one.\n"
+           "  -q, --query           Query if a GIMP is running, then quit.\n"
+           "\n");
   g_print ("Example:  %s http://www.gimp.org/icons/frontpage-small.gif\n"
 	   "     or:  %s localfile.png\n\n", name, name);
 }
 
 static void
-start_new_gimp (GdkScreen *screen,
-                gchar     *argv0,
-                GString   *file_list)
+start_new_gimp (GdkScreen   *screen,
+                const gchar *argv0,
+                GString     *file_list)
 {
   gchar        *display_name;
   gchar       **argv;
@@ -246,6 +251,7 @@ start_new_gimp (GdkScreen *screen,
   /*  if execv and execvp return, there was an arror  */
   g_printerr ("Couldn't start %s for the following reason: %s\n",
               GIMP_BINARY, g_strerror (errno));
+
   exit (EXIT_FAILURE);
 }
 
@@ -267,8 +273,15 @@ parse_option (const gchar *progname,
       usage (progname);
       exit (EXIT_SUCCESS);
     }
-  else if (strcmp (arg, "-n") == 0 ||
-	   strcmp (arg, "--new") == 0)
+  else if (strcmp (arg, "-e") == 0 || strcmp (arg, "--existing") == 0)
+    {
+      existing = TRUE;
+    }
+  else if (strcmp (arg, "-q") == 0 || strcmp (arg, "--query") == 0)
+    {
+      query = TRUE;
+    }
+  else if (strcmp (arg, "-n") == 0 || strcmp (arg, "--new") == 0)
     {
       /*  accepted for backward compatibility; this is now the default  */
     }
@@ -353,12 +366,17 @@ main (gint    argc,
   screen  = gdk_screen_get_default ();
 
   /*  if called without any filenames, always start a new GIMP  */
-  if (file_list->len == 0)
+  if (file_list->len == 0 && !query && !existing)
     {
       start_new_gimp (screen, argv[0], file_list);
     }
 
   gimp_window = gimp_remote_find_window (display, screen);
+
+  if (query)
+    {
+      exit (gimp_window ? EXIT_SUCCESS : EXIT_FAILURE);
+    }
 
   if (gimp_window)
     {
@@ -423,6 +441,9 @@ main (gint    argc,
     }
   else
     {
+      if (existing)
+        exit (EXIT_FAILURE);
+
       start_new_gimp (screen, argv[0], file_list);
     }
 

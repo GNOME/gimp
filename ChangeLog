@@ -1,3 +1,11 @@
+2004-01-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c: added new command-line options --existing
+	and --query. The former allows to get the old behaviour back and
+	the latter might be useful one day.
+
+	* docs/gimp-remote-1.3.1.in: document the new options.
+
 2004-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp-ids.h: added help IDs for the libgimp
