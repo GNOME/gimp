@@ -1640,8 +1640,15 @@ gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, im
               gimp_install_temp_proc(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
                                      type,nparams,nreturn_vals,apd,rpd,pii_run);
             else
-              gimp_install_procedure(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
-                                     type,nparams,nreturn_vals,apd,rpd);
+              {
+                /* this is horrendously ugly :( */
+#if GIMP_CHECK_VERSION(1,1,18)
+	        gimp_plugin_domain_add_with_path ("gimp-perl", datadir "/locale");
+#endif
+
+                gimp_install_procedure(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
+                                       type,nparams,nreturn_vals,apd,rpd);
+              }
             
             g_free (rpd);
             g_free (apd);
@@ -2215,10 +2222,6 @@ gimp_pixel_rgn_data(...)
 
 BOOT:
 	trace_file = PerlIO_stderr ();
-#if GIMP_CHECK_VERSION(1,1,17)
-	gimp_plugin_add_domain ("gimp-perl", datadir "/locale");
-#endif
-
 
 #
 # this function overrides a pdb function for speed
