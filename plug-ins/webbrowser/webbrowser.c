@@ -34,6 +34,9 @@
 #include <unistd.h>
 #include <errno.h>
 #include <ctype.h>
+#ifdef __EMX__
+#include <process.h>
+#endif
 
 #include <X11/X.h>
 #include <X11/Xatom.h>
@@ -192,6 +195,7 @@ run (char *name,
 static gint
 start_browser (char *prog, char *url)
 {
+#ifndef __EMX__
     pid_t cpid;
 
     if ((cpid = fork()) == 0)
@@ -201,6 +205,9 @@ start_browser (char *prog, char *url)
     }
 
     return (cpid > 0);
+#else
+    return (spawnlp(P_NOWAIT, prog, prog, url, NULL) != -1);
+#endif
 }
 
 static gint

@@ -22,6 +22,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#ifdef __EMX__
+#include <process.h>
+#endif
 #include "libgimp/gimp.h"
 
 /* Author: Josh MacDonald. */
@@ -138,6 +141,7 @@ load_image (char *filename)
 
   tmpname = params[1].data.d_string;
 
+#ifndef __EMX__
   if ((pid = fork()) < 0)
     {
       g_message ("url: fork failed: %s\n", g_strerror(errno));
@@ -150,6 +154,14 @@ load_image (char *filename)
       _exit(127);
     }
   else
+#else /* __EMX__ */
+  pid = spawnlp (P_NOWAIT, "wget", "wget", filename, "-O", tmpname, NULL);
+  if (pid == -1)
+    {
+      g_message ("url: spawn failed: %s\n", g_strerror(errno));
+      return -1;
+    }
+#endif
     {
       waitpid (pid, &status, 0);
 

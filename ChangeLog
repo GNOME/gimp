@@ -1,5 +1,9 @@
 Thu Apr 29 16:32:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* plug-ins/url/url.c (load_image): 
+	* plug-ins/webbrowser/webbrowser.c (start_browser): 
+	Use spawnlp() instead of fork().
+
 	* plug-ins/gfig/gfig.c : OS/2 patches.
  	use G_SEARCHPATH_SEPARATOR_S instead of ":", add sys/types.h,,.
 
