@@ -109,7 +109,7 @@ gimp_message_box (gchar       *message,
       fprintf (stderr, "%s: %s\n", prog_name, message);
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
-		  "Messages are redirected to stderr.\n");
+		  "Messages are redirected to stderr.");
     }
   
   msg_box = g_new0 (MessageBox, 1);

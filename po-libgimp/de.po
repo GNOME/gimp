@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-07 12:12+0100\n"
-"PO-Revision-Date: 2000-02-07 12:02+0100\n"
-"Last-Translator: Daniel Egger <Daniel.Egger@suse.de>\n"
+"POT-Creation-Date: 2000-02-13 12:21+0100\n"
+"PO-Revision-Date: 2000-02-13 12:25+0100\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -112,9 +112,9 @@ msgstr "Exportieren"
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
-#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
-#: libgimp/gimpquerybox.c:275
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:175
+#: libgimp/gimpquerybox.c:229 libgimp/gimpquerybox.c:285
+#: libgimp/gimpquerybox.c:348
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -129,23 +129,22 @@ msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
-#: libgimp/gimpfileselection.c:394
+#: libgimp/gimpfileselection.c:377
 msgid "Select File"
 msgstr "Datei auswählen"
 
-# gehört zu einem GAP-Dialog (z.b. wollen sie speichern ?). 'Auswahl' ist am allgemeinsten, so kollidiert es nicht mit anderen Vorkommen von 'Select'
-#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
+#: libgimp/gimpfileselection.c:387 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "Auswahl"
 
-#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
+#: libgimp/gimpfileselection.c:388 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Schliessen"
 
-#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
-#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+#: libgimp/gimpquerybox.c:175 libgimp/gimpquerybox.c:229
+#: libgimp/gimpquerybox.c:285 libgimp/gimpquerybox.c:348
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
@@ -230,4 +229,3 @@ msgid ""
 msgstr ""
 "Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
 "vernünftige Wahrscheinlichkeit"
-

@@ -147,7 +147,7 @@ run (gchar   *name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable_id))
 	{
-	  g_message (_("MaxRGB: Can only operate on RGB drawables."));
+	  g_message (_("Max RGB: Can only operate on RGB drawables."));
 	  return;
 	}
       if (! dialog ())
@@ -200,7 +200,7 @@ main_function (gint32 drawable_id)
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-  gimp_progress_init ( _("max_rgb: scanning..."));
+  gimp_progress_init ( _("Max RGB: Scanning..."));
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
       for (y = 0; y < src_rgn.h; y++)

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-02-01 22:50+0100\n"
+"POT-Creation-Date: 2000-02-13 12:24+0100\n"
+"PO-Revision-Date: 2000-02-13 12:41+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,8 @@ msgid "About the GIMP"
 msgstr "Über GIMP"
 
 #: app/about_dialog.c:244
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:248
 #, c-format
@@ -41,23 +40,20 @@ msgid "Pressure:"
 msgstr "Druck:"
 
 #: app/app_procs.c:266
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:270 app/app_procs.c:272 app/interface.c:520
 msgid "The GIMP"
 msgstr "GIMP"
 
 #: app/app_procs.c:275
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:285 app/app_procs.c:287
-#, fuzzy
 msgid "brought to you by"
-msgstr "Version %s wurde Euch gebracht von"
+msgstr "wurde Euch gebracht von"
 
 #: app/app_procs.c:355
 msgid "GIMP Startup"
@@ -321,7 +317,7 @@ msgstr "Pinseleditor"
 #: app/colormap_dialog.i.c:162 app/crop.c:1054 app/devices.c:755
 #: app/docindexif.c:105 app/errorconsole.c:281 app/gdisplay_ops.c:354
 #: app/gradient.c:801 app/gradient_select.c:153 app/histogram_tool.c:292
-#: app/info_window.c:255 app/lc_dialog.c:196 app/measure.c:273
+#: app/info_window.c:254 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1369 app/palette.c:2094 app/palette.c:2110
 #: app/palette.c:3156 app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1047
@@ -719,8 +715,10 @@ msgstr "Intensität:"
 #: app/color_picker.c:625 app/color_picker.c:626 app/color_picker.c:627
 #: app/color_picker.c:628 app/color_picker.c:629 app/color_picker.c:630
 #: app/color_picker.c:631 app/color_picker.c:649 app/color_picker.c:664
-#: app/color_picker.c:682 app/info_window.c:160 app/info_window.c:165
-#: app/info_window.c:170 app/info_window.c:175
+#: app/color_picker.c:682 app/info_window.c:184 app/info_window.c:190
+#: app/info_window.c:196 app/info_window.c:202 app/info_window.c:421
+#: app/info_window.c:422 app/info_window.c:423 app/info_window.c:424
+#: app/info_window.c:446
 msgid "N/A"
 msgstr "n.v."
 
@@ -746,7 +744,6 @@ msgid "Feather Selection"
 msgstr "Auswahl weichzeichnen"
 
 #: app/commands.c:339
-#, fuzzy
 msgid "Feather Selection by:"
 msgstr "Auswahl weichzeichnen um:"
 
@@ -755,7 +752,6 @@ msgid "Shrink Selection"
 msgstr "Auswahl verkleinern"
 
 #: app/commands.c:375
-#, fuzzy
 msgid "Shrink Selection by:"
 msgstr "Auswahl verkleinern um:"
 
@@ -768,7 +764,6 @@ msgid "Grow Selection"
 msgstr "Auswahl vergrößern"
 
 #: app/commands.c:409
-#, fuzzy
 msgid "Grow Selection by:"
 msgstr "Auswahl vergrößern um:"
 
@@ -777,7 +772,6 @@ msgid "Border Selection"
 msgstr "Randauswahl"
 
 #: app/commands.c:432
-#, fuzzy
 msgid "Border Selection by:"
 msgstr "Randauswahl um:"
 
@@ -1460,18 +1454,19 @@ msgstr "Unbekanntes Pinselformat Version #%d in \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
 msgid "Brush pipes should have at least one brush."
-msgstr ""
+msgstr "Pinselanimationen sollten wenigstens einen Pinsel haben."
 
 #: app/gimpbrushpipe.c:396
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
+"Konnte einen Pinsel in der\n"
+"Pinselanimation nicht laden."
 
 #: app/gimpbrushpipe.c:457
-#, fuzzy
 msgid "Failed to load pixmap brush."
-msgstr "Konnte keinen Pfad aus %s lesen"
+msgstr "Konnte keinen bunten Pinsel laden"
 
 #: app/gimpdrawable.c:168
 msgid "Can't fill unknown image type."
@@ -1500,6 +1495,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Konnte den GIMP Hilfebrowser nicht finden.\n"
+"Eventuell ist er nicht kompiliert worden,\n"
+"weil GtkXmHTML nicht installiert ist."
 
 #: app/gimpimage.c:1135
 msgid "attach parasite to image"
@@ -1548,7 +1546,7 @@ msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:2812
+#: app/gimpimage.c:2805
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1556,7 +1554,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:2816
+#: app/gimpimage.c:2809
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1564,7 +1562,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:2820
+#: app/gimpimage.c:2813
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1572,20 +1570,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:2827
+#: app/gimpimage.c:2820
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:2930
+#: app/gimpimage.c:2923
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2979
+#: app/gimpimage.c:2972
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3185 app/palette.c:379 app/palette.c:956 app/palette.c:1092
+#: app/gimpimage.c:3178 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2040 app/palette.c:2787 app/palette.c:2919
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -1606,7 +1604,7 @@ msgstr "Fortschritt"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Bitte warten..."
 
 #: app/gimprc.c:399 app/plug_in.c:304
 msgid "Resource configuration"
@@ -1654,18 +1652,21 @@ msgstr "Kann nicht in %s schreiben; %s"
 #: app/gimpui.c:83
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Meldung %d mal wiederholt"
 
 #: app/gimpui.c:96
 msgid "Message repeated once"
-msgstr ""
+msgstr "Meldung einmal wiederholt"
 
 #: app/gimpui.c:110
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
-"Messages are redirected to stderr.\n"
+"Messages are redirected to stderr."
 msgstr ""
+"WARNUNG:\n"
+"Es sind zu viele Dialoge mit Fehlermeldungen geöffnet.\n"
+"Ausgabe erfolgt jetzt auf der Standardfehlerausgabe."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -2185,7 +2186,7 @@ msgstr "Helligkeit"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:538
+#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:533
 #: app/preferences_dialog.c:1638
 msgid "Grayscale"
 msgstr "Graustufen"
@@ -2252,7 +2253,7 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: app/info_dialog.c:180 app/preferences_dialog.c:1782
+#: app/info_dialog.c:181 app/preferences_dialog.c:1782
 #: app/preferences_dialog.c:1888
 msgid "General"
 msgstr "Allgemein"
@@ -2277,74 +2278,79 @@ msgstr "Echtfarben"
 msgid "Direct Color"
 msgstr "Direktfarben"
 
-#: app/info_window.c:180
-msgid "A:"
-msgstr "A:"
-
-#: app/info_window.c:185
-msgid "B:"
-msgstr "B:"
-
-#: app/info_window.c:190
-msgid "G:"
-msgstr "G:"
-
-#: app/info_window.c:195
+#: app/info_window.c:160
 msgid "R:"
 msgstr "R:"
 
-#: app/info_window.c:207
+#: app/info_window.c:166
+msgid "G:"
+msgstr "G:"
+
+#: app/info_window.c:172
+msgid "B:"
+msgstr "B:"
+
+#: app/info_window.c:178
+msgid "A:"
+msgstr "A:"
+
+#: app/info_window.c:210
 msgid "Extended"
 msgstr "Erweitert"
 
 #. add the information fields
-#: app/info_window.c:274
+#: app/info_window.c:273
 msgid "Dimensions (w x h):"
 msgstr "Dimensionen (b x h):"
 
-#: app/info_window.c:278
+#: app/info_window.c:277
 msgid "Resolution:"
 msgstr "Auflösung:"
 
-#: app/info_window.c:280
+#: app/info_window.c:279
 msgid "Scale Ratio:"
 msgstr "Skalierungsfaktor:"
 
-#: app/info_window.c:282
+#: app/info_window.c:281
 msgid "Display Type:"
 msgstr "Anzeigeart:"
 
-#: app/info_window.c:284
+#: app/info_window.c:283
 msgid "Visual Class:"
 msgstr "Visuelle Klasse:"
 
-#: app/info_window.c:286
+#: app/info_window.c:285
 msgid "Visual Depth:"
 msgstr "Visuelle Tiefe:"
 
 #. create the info dialog
-#: app/info_window.c:314
+#: app/info_window.c:313
 #, c-format
 msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
-#: app/info_window.c:512
-#, fuzzy, c-format
+#: app/info_window.c:507
+#, c-format
 msgid "%d x %d pixels"
-msgstr "Pixel"
+msgstr "%d x %d Pixel"
 
-#: app/info_window.c:536
+#. image resolution
+#: app/info_window.c:519
+#, c-format
+msgid "%g x %g dpi"
+msgstr "%g x %g dpi"
+
+#: app/info_window.c:531
 msgid "RGB Color"
 msgstr "RGB Farbe"
 
-#: app/info_window.c:541
+#: app/info_window.c:536
 msgid "Indexed Color"
 msgstr "Indizierte Farben"
 
-#: app/info_window.c:541
-#, fuzzy
+#: app/info_window.c:536
 msgid "colors"
-msgstr "Farbe"
+msgstr "Farben"
 
 #. size slider
 #: app/ink.c:296
@@ -2734,9 +2740,8 @@ msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:295
-#, fuzzy
 msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 
 #: app/install.c:296
 msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
@@ -4244,7 +4249,7 @@ msgstr "/Pfad exportieren..."
 msgid "/Edit Path Attributes..."
 msgstr "/Pfadeigenschaften..."
 
-#: app/menus.c:1334
+#: app/menus.c:1338
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"
