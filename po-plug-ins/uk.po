@@ -12715,7 +12715,7 @@ msgstr "Передача даних TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Розш./Нав╕гатор WWW/В╕дкрити URL..."
+msgstr "<Toolbox>/Розш./Переглядач WWW/В╕дкрити URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
