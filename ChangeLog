@@ -1,5 +1,10 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.h: a cut'n'paste bug prevented tools and
+	imagefiles from being dropped.
+
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c: get the active_tool
 	_after_ maybe changing it by calling devices_check_change().
 
