@@ -487,7 +487,7 @@ create_options_page (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("Enable/disable jagged edges removal"
+			   _("Enable/disable jagged edges removal "
 			     "(antialiasing)"), NULL);
 
   table = gtk_table_new (2, 3, FALSE);
