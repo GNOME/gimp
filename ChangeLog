@@ -1,5 +1,11 @@
 2002-05-15  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/pagecurl/pagecurl.c: tiny fix, there was an
+	ancient non working call to gimp_layer_add_alpha still
+	hanging around...
+
+2002-05-15  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/pagecurl/pagecurl.c: Made the pagecurl plugin
 	automatically add an alpha channel. Fixes #81611.
 

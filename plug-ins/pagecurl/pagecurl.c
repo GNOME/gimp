@@ -688,6 +688,7 @@ init_calculation (void)
   GimpRGB      color;
 
   gimp_layer_add_alpha (drawable->drawable_id);
+  drawable = gimp_drawable_get (drawable->drawable_id);
 
   /* Image parameters */
 
@@ -1011,8 +1012,6 @@ static void
 page_curl (void)
 {
   gimp_undo_push_group_start (image_id);
-  gimp_layer_add_alpha (drawable->drawable_id);
-  drawable = gimp_drawable_get (drawable->drawable_id);
   gimp_progress_init (_("Page Curl..."));
   init_calculation ();
   do_curl_effect ();
