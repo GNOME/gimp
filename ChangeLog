@@ -1,8 +1,17 @@
-2002-05-27  Michael Natterer  <mitch@gimp.org>
+2002-05-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label):
-	set the spinbutton which is attached right of the label as
-	mnemonic_widget for the label.
+	* plug-ins/common/randomize.c (randomize_dialog)
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/nova.c (nova_dialog)
+	* plug-ins/common/sparkle.c (sparkle_dialog)
+	* plug-ins/common/plasma.c (plasma_dialog)
+	* plug-ins/common/waves.c (pluginCoreIA): enable_mnemonics.
+
+2002-05-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/apply_lens.c (lens_dialog): call to
+	gimp_drawable_has_alpha iso seperate check on GIMP_INDEXEDA_IMAGE |
+	GIMP_GRAYA_IMAGE | GIMP_RGBA_IMAGE
 
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 

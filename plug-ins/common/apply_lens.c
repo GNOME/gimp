@@ -380,9 +380,6 @@ lens_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GimpImageType drawtype;
-
-  drawtype = gimp_drawable_type (drawable->drawable_id);
 
   gimp_ui_init ("apply_lens", FALSE);
 
@@ -424,9 +421,9 @@ lens_dialog (GimpDrawable *drawable)
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (GTK_RADIO_BUTTON (toggle),
-     drawtype == GIMP_INDEXEDA_IMAGE || drawtype == GIMP_INDEXED_IMAGE ?
-     _("_Set Surroundings to Index 0") :
-     _("_Set Surroundings to Background Color"));
+     gimp_drawable_is_indexed (drawable->drawable_id)
+     ? _("_Set Surroundings to Index 0")
+     : _("_Set Surroundings to Background Color"));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
@@ -435,9 +432,7 @@ lens_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &lvals.use_bkgr);
 
-  if ((drawtype == GIMP_INDEXEDA_IMAGE) ||
-      (drawtype == GIMP_GRAYA_IMAGE)    ||
-      (drawtype == GIMP_RGBA_IMAGE))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       toggle = gtk_radio_button_new_with_mnemonic_from_widget
         (GTK_RADIO_BUTTON (toggle), _("_Make Surroundings Transparent"));

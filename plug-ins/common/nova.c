@@ -516,7 +516,7 @@ nova_dialog (GimpDrawable *drawable)
 				  SCALE_WIDTH - 8, 16, 
 				  &pvals.color, GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Color:"), 1.0, 0.5,
+			     _("Co_lor:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
   g_signal_connect (G_OBJECT (button), "color_changed", 
@@ -527,7 +527,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Radius:"), SCALE_WIDTH, 0,
+			      _("_Radius:"), SCALE_WIDTH, 0,
 			      pvals.radius, 1, 100, 1, 10, 0,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -539,7 +539,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Spokes:"), SCALE_WIDTH, 0,
+			      _("_Spokes:"), SCALE_WIDTH, 0,
 			      pvals.nspoke, 1, 1024, 1, 16, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -551,7 +551,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("Random Hue:"), SCALE_WIDTH, 0,
+			      _("R_andom Hue:"), SCALE_WIDTH, 0,
 			      pvals.randomhue, 0, 360, 1, 15, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -634,7 +634,7 @@ nova_center_create (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new (_("X:"));
+  label = gtk_label_new_with_mnemonic (_("_X:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -647,6 +647,7 @@ nova_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_object_set_data (G_OBJECT (center->xadj), "center", center);
 
@@ -654,7 +655,7 @@ nova_center_create (GimpDrawable *drawable)
                     G_CALLBACK (nova_center_adjustment_update),
                     &pvals.xcenter);
 
-  label = gtk_label_new (_("Y:"));
+  label = gtk_label_new_with_mnemonic (_("_Y:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -667,6 +668,7 @@ nova_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_object_set_data (G_OBJECT (center->yadj), "center", center);
 
@@ -700,7 +702,7 @@ nova_center_create (GimpDrawable *drawable)
 
   gtk_widget_show (frame);
 
-  check = gtk_check_button_new_with_label (_("Show Cursor"));
+  check = gtk_check_button_new_with_label (_("S_how Cursor"));
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);

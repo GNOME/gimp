@@ -53,30 +53,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-struct Grgb
-{
-  guint8 red;
-  guint8 green;
-  guint8 blue;
-};
-
-struct GRegion
-{
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
-};
-
-struct piArgs
+typedef struct
 {
   gint32  img;
   gint32  drw;
   gdouble alpha;
   gdouble radius;
   gint    filter;
-};
+} piArgs;
 
 typedef enum
 {
@@ -87,23 +71,23 @@ typedef enum
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 
-struct mwPreview
+typedef struct
 {
   gint     width;
   gint     height;
   gint     bpp;
   gdouble  scale;
   guchar  *bits;
-};
+} mwPreview;
 
 #define PREVIEW_SIZE 100
 
 static gint   do_preview = TRUE;
-static struct mwPreview *thePreview;
+static mwPreview *thePreview;
 
-static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
-                                            struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GimpDrawable     *drw);
+static GtkWidget * mw_preview_new   (GtkWidget    *parent,
+				     mwPreview    *mwp);
+static mwPreview * mw_preview_build (GimpDrawable *drw);
 
 
 /* function protos */
@@ -115,8 +99,8 @@ static void run   (gchar      *name,
 		   gint       *nretvals,
 		   GimpParam **retvals);
 
-static gint pluginCore        (struct piArgs *argp);
-static gint pluginCoreIA      (struct piArgs *argp);
+static gint pluginCore        (piArgs *argp);
+static gint pluginCoreIA      (piArgs *argp);
 
 static void nlfilt_do_preview (GtkWidget  *preview);
 
@@ -176,12 +160,12 @@ run (gchar      *name,
 {
   static GimpParam rvals[1];
 
-  struct piArgs args;
+  piArgs args;
 
   *nretvals = 1;
   *retvals  = rvals;
 
-  memset (&args, (int) 0, sizeof (struct piArgs));
+  memset (&args, (int) 0, sizeof (piArgs));
 
   args.radius = -1.0;
   gimp_get_data ("plug_in_nlfilt", &args);
@@ -212,7 +196,7 @@ run (gchar      *name,
 	}
       else
 	{
-	  gimp_set_data ("plug_in_nlfilt", &args, sizeof (struct piArgs));
+	  gimp_set_data ("plug_in_nlfilt", &args, sizeof (piArgs));
 	}
       break;
 
@@ -247,22 +231,22 @@ run (gchar      *name,
 }
 
 static gint
-pluginCore (struct piArgs *argp)
+pluginCore (piArgs *argp)
 {
   GimpDrawable *drw;
   GimpPixelRgn srcPr, dstPr;
   guchar *srcbuf, *dstbuf;
   guchar *lastrow, *thisrow, *nextrow, *temprow;
-  guint width, height, Bpp;
+  guint width, height, bpp;
   gint filtno, y, rowsize, exrowsize, p_update;
 
   drw = gimp_drawable_get (argp->drw);
 
   width = drw->width;
   height = drw->height;
-  Bpp = drw->bpp;
-  rowsize = width * Bpp;
-  exrowsize = (width + 2) * Bpp;
+  bpp = drw->bpp;
+  rowsize = width * bpp;
+  exrowsize = (width + 2) * bpp;
   p_update = width / 20 + 1;
 
   gimp_tile_cache_ntiles (2 * (width / gimp_tile_width () + 1));
@@ -275,7 +259,7 @@ pluginCore (struct piArgs *argp)
   dstbuf = g_new0 (guchar, rowsize);
 
   /* pointers to second pixel in each source row */
-  lastrow = srcbuf + Bpp;
+  lastrow = srcbuf + bpp;
   thisrow = lastrow + exrowsize;
   nextrow = thisrow + exrowsize;
 
@@ -285,10 +269,10 @@ pluginCore (struct piArgs *argp)
   /* first row */
   gimp_pixel_rgn_get_row (&srcPr, thisrow, 0, 0, width);
   /* copy thisrow[0] to thisrow[-1], thisrow[width-1] to thisrow[width] */
-  memcpy (thisrow - Bpp, thisrow, Bpp);
-  memcpy (thisrow + rowsize, thisrow + rowsize - Bpp, Bpp);
+  memcpy (thisrow - bpp, thisrow, bpp);
+  memcpy (thisrow + rowsize, thisrow + rowsize - bpp, bpp);
   /* copy whole thisrow to lastrow */
-  memcpy (lastrow - Bpp, thisrow - Bpp, exrowsize);
+  memcpy (lastrow - bpp, thisrow - bpp, exrowsize);
 
   for (y = 0; y < height - 1; y++)
     {
@@ -296,9 +280,9 @@ pluginCore (struct piArgs *argp)
 	gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_row (&srcPr, nextrow, 0, y + 1, width);
-      memcpy (nextrow - Bpp, nextrow, Bpp);
-      memcpy (nextrow + rowsize, nextrow + rowsize - Bpp, Bpp);
-      nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, Bpp, filtno);
+      memcpy (nextrow - bpp, nextrow, bpp);
+      memcpy (nextrow + rowsize, nextrow + rowsize - bpp, bpp);
+      nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
       gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, y, width);
       /* rotate row buffers */
       temprow = lastrow; lastrow = thisrow;
@@ -306,8 +290,8 @@ pluginCore (struct piArgs *argp)
     }
 
   /* last row */
-  memcpy (nextrow - Bpp, thisrow - Bpp, exrowsize);
-  nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, Bpp, filtno);
+  memcpy (nextrow - bpp, thisrow - bpp, exrowsize);
+  nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
   gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, height - 1, width);
 
   g_free (srcbuf);
@@ -353,7 +337,7 @@ nlfilt_double_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static gint
-pluginCoreIA (struct piArgs *argp)
+pluginCoreIA (piArgs *argp)
 {
   gint retval = -1; /* default to error return */
   GtkWidget *dlg;
@@ -400,11 +384,11 @@ pluginCoreIA (struct piArgs *argp)
 				 G_CALLBACK (nlfilt_radio_button_update),
 				 &argp->filter, (gpointer) argp->filter,
 
-				 _("Alpha Trimmed Mean"),
+				 _("_Alpha Trimmed Mean"),
 				 (gpointer) filter_alpha_trim, NULL,
-				 _("Optimal Estimation"),
+				 _("Op_timal Estimation"),
 				 (gpointer) filter_opt_est, NULL,
-				 _("Edge Enhancement"),
+				 _("_Edge Enhancement"),
 				 (gpointer) filter_edge_enhance, NULL,
 
 				 NULL);
@@ -424,7 +408,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Alpha:"), 0, 0,
+			      _("A_lpha:"), 0, 0,
 			      argp->alpha, 0.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -433,7 +417,7 @@ pluginCoreIA (struct piArgs *argp)
                     &argp->alpha);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Radius:"), 0, 0,
+			      _("_Radius:"), 0, 0,
 			      argp->radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -450,13 +434,6 @@ pluginCoreIA (struct piArgs *argp)
 
   if (run_flag)
     {
-#if 0
-      fprintf (stderr, "running:\n");
-      fprintf (stderr, "\t(image %d)\n", argp->img);
-      fprintf (stderr, "\t(drawable %d)\n", argp->drw);
-      fprintf (stderr, "\t(alpha %f)\n", argp->alpha);
-      fprintf (stderr, "\t(radius %f)\n", argp->radius);
-#endif
       return pluginCore (argp);
     }
   else
@@ -469,7 +446,7 @@ static void
 nlfilt_do_preview (GtkWidget *w)
 {
   static GtkWidget *theWidget = NULL;
-  struct piArgs *ap;
+  piArgs *ap;
   guchar *dst, *src0, *src1, *src2;
   gint y, rowsize, filtno;
   
@@ -512,12 +489,12 @@ mw_preview_toggle_callback (GtkWidget *widget,
     nlfilt_do_preview (NULL);
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build_virgin (GimpDrawable *drw)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
 
-  mwp = g_new (struct mwPreview, 1);
+  mwp = g_new (mwPreview, 1);
 
   if (drw->width > drw->height)
     {
@@ -538,10 +515,10 @@ mw_preview_build_virgin (GimpDrawable *drw)
   return mwp;
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build (GimpDrawable *drw)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drwBits;
@@ -571,7 +548,7 @@ mw_preview_build (GimpDrawable *drw)
 
 static GtkWidget *
 mw_preview_new (GtkWidget        *parent,
-                struct mwPreview *mwp)
+                mwPreview *mwp)
 {
   GtkWidget *preview;
   GtkWidget *frame;
@@ -599,7 +576,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
 
-  button = gtk_check_button_new_with_label (_("Do Preview"));
+  button = gtk_check_button_new_with_label (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -713,31 +690,31 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #define UNSCALE(x) ((x) >> SCALEB)
 
 /* Note: modified by David Hodson, nlfiltRow now accesses
- * srclast, srcthis, and srcnext from [-Bpp] to [width*Bpp-1].
+ * srclast, srcthis, and srcnext from [-bpp] to [width*bpp-1].
  * Beware if you use this code anywhere else!
  */
 static void
 nlfiltRow(guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
-          gint width, gint Bpp, gint filtno) {
+          gint width, gint bpp, gint filtno) {
 
    gint pf[9];
    guchar *ip0, *ip1, *ip2, *or, *orend;
 
    or = dst;
-   orend = dst + width * Bpp;
+   orend = dst + width * bpp;
    ip0 = srclast;
    ip1 = srcthis;
    ip2 = srcnext;
    for (or = dst; or < orend; ip0++, ip1++, ip2++, or++) {
       pf[0] = *ip1;
-      pf[1] = *(ip1 - Bpp);
-      pf[2] = *(ip2 - Bpp);
+      pf[1] = *(ip1 - bpp);
+      pf[2] = *(ip2 - bpp);
       pf[3] = *(ip2);
-      pf[4] = *(ip2 + Bpp);
-      pf[5] = *(ip1 + Bpp);
-      pf[6] = *(ip0 + Bpp);
+      pf[4] = *(ip2 + bpp);
+      pf[5] = *(ip1 + bpp);
+      pf[6] = *(ip0 + bpp);
       pf[7] = *(ip0);
-      pf[8] = *(ip0 - Bpp);
+      pf[8] = *(ip0 - bpp);
       *or=(atfuncs[filtno])(pf);
    }
 }

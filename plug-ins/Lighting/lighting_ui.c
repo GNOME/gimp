@@ -425,7 +425,7 @@ create_options_page (void)
 			   _("Enable/disable environment mapping (reflection)"),
 			   NULL);
   */
-  toggle = gtk_check_button_new_with_label (_("Transparent Background"));
+  toggle = gtk_check_button_new_with_mnemonic (_("T_ransparent Background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -438,7 +438,7 @@ create_options_page (void)
 			   _("Make destination image transparent where bump "
 			     "height is zero"),NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Create New Image"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Cre_ate New Image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -450,7 +450,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Create a new image when applying filter"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("High Quality Preview"));
+  toggle = gtk_check_button_new_with_mnemonic (_("High _Quality Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.previewquality);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -473,7 +473,7 @@ create_options_page (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Enable Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.antialiasing);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -496,7 +496,7 @@ create_options_page (void)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Depth:"), 0, 0,
+			      _("_Depth:"), 0, 0,
 			      mapvals.max_depth, 1.0, 5.0, 0.5, 1.0,
 			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
@@ -506,7 +506,7 @@ create_options_page (void)
                     &mapvals.max_depth);
   
  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Threshold:"), 0, 0,
+			      _("T_hreshold:"), 0, 0,
 			      mapvals.pixel_treshold, 0.01, 1000.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      _("Stop when pixel differences are smaller than "
@@ -579,7 +579,7 @@ create_light_page (void)
 
 				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Light Type:"), 1.0, 0.5,
+			     _("L_ight Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   gimp_help_set_help_data (optionmenu, _("Type of light source to apply"), NULL);
@@ -592,7 +592,7 @@ create_light_page (void)
                     G_CALLBACK (gimp_color_button_get_color), 
                     &mapvals.lightsource.color);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Light Color:"), 1.0, 0.5,
+			     _("Lig_ht Color:"), 1.0, 0.5,
 			     colorbutton, 1, TRUE);
 
   gimp_help_set_help_data (colorbutton,
@@ -615,7 +615,7 @@ create_light_page (void)
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("X:"), 1.0, 0.5,
+			     _("_X:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -628,7 +628,7 @@ create_light_page (void)
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Y:"), 1.0, 0.5,
+			     _("_Y:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -641,7 +641,7 @@ create_light_page (void)
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Z:"), 1.0, 0.5,
+			     _("_Z:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -715,6 +715,7 @@ create_material_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *label;
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -740,9 +741,9 @@ create_material_page (void)
   /* Ambient intensity */
 
   pixmap = gimp_pixmap_new (amb1_xpm);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Ambient:"), 1.0, 0.5,
-			     pixmap, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("_Ambient:"), 1.0, 0.5,
+				     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -752,6 +753,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Amount of original color to show where no "
@@ -765,9 +767,9 @@ create_material_page (void)
   /* Diffuse intensity */
 
   pixmap = gimp_pixmap_new (diffint1_xpm);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Diffuse:"), 1.0, 0.5,
-			     pixmap, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+				     _("_Diffuse:"), 1.0, 0.5,
+				     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -777,6 +779,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Intensity of original color when lit by a light "
@@ -804,9 +807,9 @@ create_material_page (void)
   /* Diffuse reflection */
 
   pixmap = gimp_pixmap_new (diffref1_xpm);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Diffuse:"), 1.0, 0.5,
-			     pixmap, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("D_iffuse:"), 1.0, 0.5,
+				     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_ref,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -816,6 +819,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_ref);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Higher values makes the object reflect more "
@@ -829,9 +833,9 @@ create_material_page (void)
   /* Specular reflection */
 
   pixmap = gimp_pixmap_new (specref1_xpm);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Specular:"), 1.0, 0.5,
-			     pixmap, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+				     _("_Specular:"), 1.0, 0.5,
+				     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -841,6 +845,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Controls how intense the highlights will be"),
@@ -854,9 +859,9 @@ create_material_page (void)
   /* Highlight */
 
   pixmap = gimp_pixmap_new (high1_xpm);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Highlight:"), 1.0, 0.5,
-			     pixmap, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+				     _("_Highlight:"), 1.0, 0.5,
+				     pixmap, 1, FALSE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -866,6 +871,7 @@ create_material_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   gimp_help_set_help_data (spinbutton,
 			   _("Higher values makes the highlights more focused"),
@@ -907,7 +913,7 @@ create_bump_page (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Enable Bump Mapping"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Bump Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bump_mapped);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -934,7 +940,7 @@ create_bump_page (void)
 				 NULL, mapvals.bumpmap_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Bumpmap Image:"), 1.0, 0.5,
+			     _("Bumpm_ap Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
@@ -950,13 +956,13 @@ create_bump_page (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Curve:"), 1.0, 0.5,
+			     _("Cu_rve:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Maximum Height:"), 1.0, 0.5,
+			     _("Ma_ximum Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -969,7 +975,7 @@ create_bump_page (void)
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmin,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Minimum Height:"), 1.0, 0.5,
+			     _("M_inimum Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -979,7 +985,7 @@ create_bump_page (void)
 			   _("Minimum height for bumps"),
 			   NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Autostretch to Fit Value Range"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Auto_stretch to Fit Value Range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bumpstretch);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
@@ -1019,7 +1025,7 @@ create_environment_page (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Enable Environment Mapping"));
+  toggle = gtk_check_button_new_with_mnemonic (_("E_nable Environment Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -1046,7 +1052,7 @@ create_environment_page (void)
 				 NULL, mapvals.envmap_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Environment Image:"), 1.0, 0.5,
+			     _("En_vironment Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   gimp_help_set_help_data (optionmenu,
@@ -1073,23 +1079,23 @@ create_main_notebook (GtkWidget *container)
 
   page = create_options_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Options")));
+			    gtk_label_new_with_mnemonic (_("Op_tions")));
 
   page = create_light_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Light")));
+			    gtk_label_new_with_mnemonic (_("_Light")));
 
   page = create_material_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Material")));
+			    gtk_label_new_with_mnemonic (_("_Material")));
 
   page = create_bump_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Bump Map")));
+			    gtk_label_new_with_mnemonic (_("_Bump Map")));
 
   page = create_environment_page ();
   gtk_notebook_append_page (options_note_book, page,
-			    gtk_label_new (_("Environment Map")));
+			    gtk_label_new_with_mnemonic (_("_Environment Map")));
 
   /*
   if (mapvals.bump_mapped == TRUE)
@@ -1191,7 +1197,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("Update Preview"));
+  button = gtk_button_new_with_mnemonic (_("_Update Preview"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",

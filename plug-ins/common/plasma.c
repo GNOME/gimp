@@ -376,7 +376,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
 			       &pvals.timeseed,
 			       TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Random Seed:"), 1.0, 0.5,
+			     _("_Random Seed:"), 1.0, 0.5,
 			     seed, 1, TRUE);
   g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
                             "value_changed",
@@ -388,7 +388,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Turbulence:"), SCALE_WIDTH, 0,
+			      _("T_urbulence:"), SCALE_WIDTH, 0,
 			      pvals.turbulence,
 			      0.1, 7.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,

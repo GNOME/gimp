@@ -847,7 +847,7 @@ gimp_random_seed_new (gint       *seed,
                              "seed - this allows you to repeat a "
                              "given \"random\" operation"), NULL);
 
-  button = gtk_toggle_button_new_with_label (_("Time"));
+  button = gtk_toggle_button_new_with_mnemonic (_("_Time"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   g_signal_connect (G_OBJECT (button), "toggled",
                     G_CALLBACK (gimp_random_seed_toggle_update),

@@ -690,6 +690,7 @@ randomize_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *label;
   GtkWidget *seed_hbox;
   GtkObject *adj;
 
@@ -734,15 +735,17 @@ randomize_dialog (void)
   seed_hbox = gimp_random_seed_new (&pivals.rndm_seed,
 				    &pivals.seed_type,
 				    SEED_TIME, SEED_USER);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Random Seed:"), 1.0, 0.5,
-                             seed_hbox, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("_Random Seed:"), 1.0, 0.5,
+				     seed_hbox, 1, TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
 
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Randomization (%):"), SCALE_WIDTH, 0,
+			      _("R_andomization (%):"), SCALE_WIDTH, 0,
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
@@ -754,7 +757,7 @@ randomize_dialog (void)
    *  Repeat count label & scale (1 to 100)
    */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Repeat:"), SCALE_WIDTH, 0,
+			      _("R_epeat:"), SCALE_WIDTH, 0,
 			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);

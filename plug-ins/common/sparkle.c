@@ -380,7 +380,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Luminosity Threshold:"), SCALE_WIDTH, 0,
+			  _("Luminosity _Threshold:"), SCALE_WIDTH, 0,
 			  svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  _("Adjust the Luminosity Threshold"), NULL);
@@ -390,7 +390,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("Flare Intensity:"), SCALE_WIDTH, 0,
+			  _("F_lare Intensity:"), SCALE_WIDTH, 0,
 			  svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Flare Intensity"), NULL);
@@ -400,7 +400,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("Spike Length:"), SCALE_WIDTH, 0,
+			  _("_Spike Length:"), SCALE_WIDTH, 0,
 			  svals.spike_len, 1, 100, 1, 10, 0,
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Length"), NULL);
@@ -410,7 +410,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			  _("Spike Points:"), SCALE_WIDTH, 0,
+			  _("Sp_ike Points:"), SCALE_WIDTH, 0,
 			  svals.spike_pts, 0, 16, 1, 4, 0,
 			  TRUE, 0, 0,
 			  _("Adjust the Number of Spikes"), NULL);
@@ -420,7 +420,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			  _("Spike Angle (-1: Random):"), SCALE_WIDTH, 0,
+			  _("Spi_ke Angle (-1: Random):"), SCALE_WIDTH, 0,
 			  svals.spike_angle, -1, 360, 1, 15, 0,
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Angle "
@@ -431,7 +431,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			  _("Spike Density:"), SCALE_WIDTH, 0,
+			  _("Spik_e Density:"), SCALE_WIDTH, 0,
 			  svals.density, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Spike Density"), NULL);
@@ -441,7 +441,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-			  _("Opacity:"), SCALE_WIDTH, 0,
+			  _("Op_acity:"), SCALE_WIDTH, 0,
 			  svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Opacity of the Spikes"), NULL);
@@ -451,7 +451,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
-			  _("Random Hue:"), SCALE_WIDTH, 0,
+			  _("_Random Hue:"), SCALE_WIDTH, 0,
 			  svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Hue should "
@@ -462,7 +462,7 @@ sparkle_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
-			  _("Random Saturation:"), SCALE_WIDTH, 0,
+			  _("Rando_m Saturation:"), SCALE_WIDTH, 0,
 			  svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Adjust the Value how much the Saturation should "
@@ -483,7 +483,7 @@ sparkle_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Preserve Luminosity"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				svals.preserve_luminosity);
@@ -496,7 +496,7 @@ sparkle_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.preserve_luminosity);
 
-  toggle = gtk_check_button_new_with_label (_("Inverse"));
+  toggle = gtk_check_button_new_with_mnemonic (_("In_verse"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.invers);
   gtk_widget_show (toggle);
@@ -507,7 +507,7 @@ sparkle_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.invers);
 
-  toggle = gtk_check_button_new_with_label (_("Add Border"));
+  toggle = gtk_check_button_new_with_mnemonic (_("A_dd Border"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_widget_show (toggle);
@@ -530,13 +530,13 @@ sparkle_dialog (void)
                                 &svals.colortype,
                                 GINT_TO_POINTER (svals.colortype),
 
-                                _("Natural Color"),
+                                _("_Natural Color"),
                                 GINT_TO_POINTER (NATURAL), &r1,
 
-                                _("Foreground Color"),
+                                _("_Foreground Color"),
                                 GINT_TO_POINTER (FOREGROUND), &r2,
 
-                                _("Background Color"),
+                                _("_Background Color"),
                                 GINT_TO_POINTER (BACKGROUND), &r3,
 
                                 NULL);

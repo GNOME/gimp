@@ -541,21 +541,21 @@ solid_noise_dialog (void)
 				    &snvals.timeseed,
 				    TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Random Seed:"), 1.0, 0.5,
+			     _("_Random Seed:"), 1.0, 0.5,
 			     seed_hbox, 1, TRUE);
 
   /*  Detail  */
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
 				     1, 15, 1, 3, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Detail:"), 1.0, 0.5,
+			     _("_Detail:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &snvals.detail);
 
   /*  Turbulent  */
-  toggle = gtk_check_button_new_with_label ( _("Turbulent"));
+  toggle = gtk_check_button_new_with_label ( _("T_urbulent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
@@ -566,7 +566,7 @@ solid_noise_dialog (void)
                     &snvals.turbulent);
 
   /*  Tilable  */
-  toggle = gtk_check_button_new_with_label ( _("Tilable"));
+  toggle = gtk_check_button_new_with_label ( _("T_ilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
@@ -578,7 +578,7 @@ solid_noise_dialog (void)
 
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("X Size:"), SCALE_WIDTH, 0,
+			      _("_X Size:"), SCALE_WIDTH, 0,
 			      snvals.xsize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -588,7 +588,7 @@ solid_noise_dialog (void)
 
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Y Size:"), SCALE_WIDTH, 0,
+			      _("_Y Size:"), SCALE_WIDTH, 0,
 			      snvals.ysize, 0.1, SCALE_MAX, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);

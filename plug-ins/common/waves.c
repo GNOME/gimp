@@ -50,50 +50,35 @@ enum
   MODE_BLACKEN
 };
 
-struct Grgb
-{
-  guint8 red;
-  guint8 green;
-  guint8 blue;
-};
-
-struct GRegion
-{
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
-};
-
-struct piArgs
+typedef struct 
 {
   gdouble amplitude;
   gdouble phase;
   gdouble wavelength;
   gint32  type;
   gint32  reflective;
-};
+} piArgs;
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 
-struct mwPreview
+typedef struct 
 {
   gint     width;
   gint     height;
   gint     bpp;
   gdouble  scale;
   guchar  *bits;
-};
+} mwPreview;
 
 #define PREVIEW_SIZE 100
 
 static gint do_preview = TRUE;
 
-static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
-                                            struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GimpDrawable        *drawable);
+static GtkWidget *mw_preview_new (GtkWidget *parent,
+				  mwPreview *mwp);
+static mwPreview *mw_preview_build (GimpDrawable *drawable);
 
-static struct mwPreview *mwp;
+static mwPreview *mwp;
 
 
 static void query (void);
@@ -103,10 +88,10 @@ static void run   (gchar      *name,
 		   gint       *nretvals,
 		   GimpParam **retvals);
 
-static gint pluginCore       (struct piArgs *argp,
-			      gint32         drawable);
-static gint pluginCoreIA     (struct piArgs *argp,
-			      gint32         drawable);
+static gint pluginCore       (piArgs *argp,
+			      gint32  drawable);
+static gint pluginCoreIA     (piArgs *argp,
+			      gint32  drawable);
 
 static void waves_do_preview (GtkWidget     *preview);
 
@@ -175,7 +160,7 @@ run (gchar      *name,
 {
   static GimpParam rvals[1];
 
-  struct piArgs args;
+  piArgs args;
 
   *nretvals = 1;
   *retvals  = rvals;
@@ -183,7 +168,7 @@ run (gchar      *name,
   rvals[0].type          = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
 
-  memset (&args, (int) 0, sizeof (struct piArgs));
+  memset (&args, (int) 0, sizeof (piArgs));
   args.type = -1;
   gimp_get_data ("plug_in_waves", &args);
 
@@ -212,7 +197,7 @@ run (gchar      *name,
 	}
       else
 	{
-	  gimp_set_data ("plug_in_waves", &args, sizeof (struct piArgs));
+	  gimp_set_data ("plug_in_waves", &args, sizeof (piArgs));
 	}
 
     break;
@@ -250,8 +235,8 @@ run (gchar      *name,
 }
 
 static gint
-pluginCore (struct piArgs *argp,
-	    gint32         drawable)
+pluginCore (piArgs *argp,
+	    gint32  drawable)
 {
   gint retval=0;
   GimpDrawable *drw;
@@ -329,7 +314,7 @@ waves_double_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static gint
-pluginCoreIA (struct piArgs *argp,
+pluginCoreIA (piArgs *argp,
 	      gint32         drawable)
 {
   gint r=-1; /* default to error return */
@@ -380,8 +365,8 @@ pluginCoreIA (struct piArgs *argp,
 				 G_CALLBACK (waves_radio_button_update),
 				 &argp->type, (gpointer) argp->type,
 
-				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,
-				 _("Blacken"), (gpointer) MODE_BLACKEN, NULL,
+				 _("_Smear"),   (gpointer) MODE_SMEAR, NULL,
+				 _("_Blacken"), (gpointer) MODE_BLACKEN, NULL,
 
 				 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
@@ -393,7 +378,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  toggle = gtk_check_button_new_with_label ( _("Reflective"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Reflective"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -414,7 +399,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Amplitude:"), 140, 0,
+			      _("_Amplitude:"), 140, 0,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -423,7 +408,7 @@ pluginCoreIA (struct piArgs *argp,
                     &argp->amplitude);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Phase:"), 140, 0,
+			      _("_Phase:"), 140, 0,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -432,7 +417,7 @@ pluginCoreIA (struct piArgs *argp,
                     &argp->phase);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Wavelength:"), 140, 0,
+			      _("_Wavelength:"), 140, 0,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -449,16 +434,6 @@ pluginCoreIA (struct piArgs *argp,
 
   if (run_flag)
     {
-#if 0
-      fprintf (stderr, "running:\n");
-      /*fprintf (stderr, "\t(image %d)\n", argp->image);*/
-      fprintf (stderr, "\t(drawable %d)\n", argp->drawable);
-      fprintf (stderr, "\t(amplitude %f)\n", argp->amplitude);
-      fprintf (stderr, "\t(phase %f)\n", argp->phase);
-      fprintf (stderr, "\t(wavelength %f)\n", argp->wavelength);
-      fprintf (stderr, "\t(type %d)\n", argp->type);
-      fprintf (stderr, "\t(reflective %d)\n", argp->reflective);
-#endif
       return pluginCore (argp, drawable);
     }
   else
@@ -471,7 +446,7 @@ static void
 waves_do_preview (GtkWidget *widget)
 {
   static GtkWidget *theWidget = NULL;
-  struct piArgs *argp;
+  piArgs *argp;
   guchar *dst;
   gint y;
 
@@ -509,12 +484,12 @@ mw_preview_toggle_callback (GtkWidget *widget,
     waves_do_preview (NULL);
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build_virgin (GimpDrawable *drawable)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
 
-  mwp = g_new (struct mwPreview, 1);
+  mwp = g_new (mwPreview, 1);
 
   if (drawable->width > drawable->height)
     {
@@ -535,10 +510,10 @@ mw_preview_build_virgin (GimpDrawable *drawable)
   return mwp;
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build (GimpDrawable *drawable)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drawableBits;
@@ -570,8 +545,8 @@ mw_preview_build (GimpDrawable *drawable)
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget        *parent,
-                struct mwPreview *mwp)
+mw_preview_new (GtkWidget *parent,
+                mwPreview *mwp)
 {
   GtkWidget *preview;
   GtkWidget *frame;
@@ -599,7 +574,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
 
-  button = gtk_check_button_new_with_label (_("Do Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("_Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
