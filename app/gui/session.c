@@ -67,70 +67,70 @@ SessionInfo toolbox_session_info =
 {
   "toolbox",
   NULL,
-  0, 0, 0, 0, FALSE
+  0, 0, 0, 0, 0, FALSE
 };
 
 SessionInfo lc_dialog_session_info =
 {
   "lc-dialog",
   (GtkItemFactoryCallback) dialogs_lc_cmd_callback,
-  0, 400, 0, 0, FALSE
+  0, 400, 0, 0, 0, FALSE
 };
 
 SessionInfo info_dialog_session_info =
 {
   "info-dialog",
   NULL,
-  165, 0, 0, 0, FALSE
+  165, 0, 0, 0, 0, FALSE
 };
 
 SessionInfo tool_options_session_info =
 {
   "tool-options",
   (GtkItemFactoryCallback) dialogs_tool_options_cmd_callback,
-  0, 345, 0, 0, FALSE
+  0, 345, 0, 0, 0, FALSE
 };
 
 SessionInfo palette_session_info =
 {
   "palette",
   (GtkItemFactoryCallback) dialogs_palette_cmd_callback,
-  140, 180, 0, 0, FALSE
+  140, 180, 0, 0, 0, FALSE
 };
 
 SessionInfo brush_select_session_info =
 {
   "brush-select",
   (GtkItemFactoryCallback) dialogs_brushes_cmd_callback,
-  150, 180, 0, 0, FALSE
+  150, 180, 0, 0, 0, FALSE
 };
 
 SessionInfo pattern_select_session_info =
 {
   "pattern-select",
   (GtkItemFactoryCallback) dialogs_patterns_cmd_callback,
-  160, 180, 0, 0, FALSE
+  160, 180, 0, 0, 0, FALSE
 };
 
 SessionInfo gradient_select_session_info =
 {
   "gradient-select",
   (GtkItemFactoryCallback) dialogs_gradients_cmd_callback,
-  170, 180, 0, 0, FALSE
+  170, 180, 0, 0, 0, FALSE
 };
 
 SessionInfo device_status_session_info =
 {
   "device-status",
   (GtkItemFactoryCallback) dialogs_device_status_cmd_callback,
-  0, 600, 0, 0, FALSE
+  0, 600, 0, 0, 0, FALSE
 };
 
 SessionInfo error_console_session_info =
 {
   "error-console",
   (GtkItemFactoryCallback) dialogs_error_console_cmd_callback,
-  400, 0, 250, 300, FALSE
+  400, 0, 250, 300, 0, FALSE
 };
 
 
@@ -139,7 +139,7 @@ void
 session_get_window_info (GtkWidget   *window, 
 			 SessionInfo *info)
 {
-  if (!save_session_info || info == NULL || window->window == NULL)
+  if (info == NULL || window == NULL || window->window == NULL)
     return;
 
   gdk_window_get_root_origin (window->window, &info->x, &info->y);
@@ -148,8 +148,14 @@ session_get_window_info (GtkWidget   *window,
   if (we_are_exiting)
     info->open = GTK_WIDGET_VISIBLE (window);
 
-  if (g_list_find (session_info_updates, info) == NULL)
-    session_info_updates = g_list_append (session_info_updates, info);
+  /*  this place is free for a new window, reset the counter  */
+  info->count = 0;
+
+  if (save_session_info && 
+      g_list_find (session_info_updates, info) == NULL)
+    {
+      session_info_updates = g_list_append (session_info_updates, info);
+    }
 }
 
 void 
@@ -157,19 +163,39 @@ session_set_window_geometry (GtkWidget   *window,
 			     SessionInfo *info,
 			     gboolean     set_size)
 {
-  if ( window == NULL || info == NULL)
-    return;
+  static gint screen_width = 0;
+  static gint screen_height = 0;
+  gint x;
+  gint y;
   
-#ifdef GDK_WINDOWING_WIN32
-  /* We should not position windows so that no decoration is visible */
-  if (info->y > 0)
-    gtk_widget_set_uposition (window, info->x, info->y);
-#else
-  gtk_widget_set_uposition (window, info->x, info->y);
-#endif
+  g_return_if_fail (window != NULL && info != NULL);
+  
+  if (screen_width == 0 || screen_height == 0)
+    {
+      screen_width  = gdk_screen_width ();
+      screen_height = gdk_screen_height ();
+    }
 
-  if ((set_size) && (info->width > 0) && (info->height > 0))
-    gtk_window_set_default_size (GTK_WINDOW(window), info->width, info->height);
+  /*  cascade multiple windows of same type (e.g. info_dialogs)  */ 
+  x = info->x + info->count * 32;
+  y = info->y + info->count * 32;
+  info->count++;
+
+  if (set_size)
+    {
+      if (x >= 0 && x + info->width < screen_width &&
+	  y >= 0 && y + info->height < screen_height)
+	{
+	  gtk_widget_set_uposition (window, x, y);
+	  gtk_window_set_default_size (GTK_WINDOW(window), info->width, info->height);
+	}
+    }
+  else
+    {
+      if (x >= 0 && x + 32 < screen_width && 
+	  y >= 0 && y + 32 < screen_height)
+	gtk_widget_set_uposition (window, x, y);
+    }
 }
 
 void

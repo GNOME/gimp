@@ -1,3 +1,10 @@
+Fri Mar 24 23:08:08 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/session.[ch]: clamp windows to screen and cascade multiple
+	windows of the same type (e.g. info_dialogs). The cascading is a
+	somehow trivial approach which is not always correct, but it seems
+	to work reasonably well.
+
 2000-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am
@@ -8,7 +15,7 @@
 
 	* app/app_procs.c: load gimp_splash.ppm
 
-	The idea if shearing the data_dir between Gimp versions has
+	The idea of sharing the data_dir between Gimp versions has
 	vanished, so this seems like the right thing to do (TM).
 
 	Keep the 1.0 splash around for sentimental reasons but don't

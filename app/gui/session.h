@@ -32,7 +32,8 @@ struct _SessionInfo
   gint                    y;
   gint                    width;
   gint                    height;
-  gint                    open;
+  gint                    count;
+  gboolean                open;
 };
 
 /*  global session variables  */
