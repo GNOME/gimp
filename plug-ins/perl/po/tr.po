@@ -1,27 +1,35 @@
 # -- gimp-perl tr.po --
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
+# Alper Ersoy <aersoy@tfz.net>, 2001.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.2.1\n"
-"POT-Creation-Date: Sun Mar 25 16:33:13 2001\n"
-"PO-Revision-Date: 2001-07-14 11:58+0300\n"
-"Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: 2001-07-16 07:19+0300\n"
+"Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Gimp/Lib.xs:0
-msgid " = [argument error]\n"
-msgstr "= [argüman hatasý]\n"
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr "HAYATÝ: $tmp yaratýlamadý: $!\n"
 
-#: examples/PDB:0
-msgid " matching functions"
-msgstr "eþlenen fonksiyon"
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
+msgstr ""
+"INT32 deðer bekleniyordu fakat '%s' alýndý. Eðer gerçekten dizgi içinde "
+"geçirmek istiyorsanýz '*1' ekleyin"
 
-#: Gimp/Fu.pm:0
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Filtreler/Að/GIF için hazýrla..."
+
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Image>/Filtreler/Animasyon/Hücreleri Anime Et..."
+
 msgid ""
 "       interface-arguments are\n"
 "           -o | --output <filespec>   write image to disk, don't display\n"
@@ -34,7 +42,140 @@ msgstr ""
 "                                  izin ver\n"
 "       program-argümanlarý\n"
 
-#: Gimp.pm:0
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr "<Toolbox>/Xtns/Hesapla/Yazýtipi Tablosu..."
+
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr "'%s' olarak çaðrýldý, ancak '%s' IVT'de kayýtlý deðil"
+
+msgid "argument type %s expected (not %s)"
+msgstr "argüman tipi %s bekleniyordu (%s deðil)"
+
+msgid "Browse"
+msgstr "Gözat"
+
+msgid "Reset all values to their default"
+msgstr "Tüm deðerleri öntanýmlý deðerlere çevir"
+
+msgid "WARNING: client tried to unlock without holding a lock"
+msgstr "UYARI: alýcý kilitlenmeden kilidi açmaya çalýþtý"
+
+msgid "required callback 'run' not found\n"
+msgstr "gerekli geriçaðrý 'run' bulunamadý\n"
+
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr "$_: hatalý anahtar $0, --help'i deneyin\n"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Parlayan Çelik"
+
+msgid "Brush Selection Dialog"
+msgstr "Fýrça Seçim Penceresi"
+
+msgid "gimp procedure '%s' not found"
+msgstr "gimp iþlemi '%s' bulunamadý"
+
+msgid "Pattern Selection Dialog"
+msgstr "Desen Seçim Penceresi"
+
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filtreler/Að/Perl-o-tin..."
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr "'$exe' fonksiyonu bu programda bulunamadý (þunlardan biri olmalý: "
+
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr ""
+"piksel boyu uyumsuzluðu, pdl %d kanallý piksele sahip fakat %d kanal gerekli"
+
+msgid "Load"
+msgstr "Yükle"
+
+msgid "/Xtns/Render"
+msgstr "/Xtns/Hesapla"
+
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr "<Toolbox>/Xtns/Perl/Yönetim Merkezi..."
+
+msgid "illegal parasite specification, reference expected"
+msgstr "geçersiz parazit tanýmý, dayanak bekleniyordu"
+
+msgid "Date/Version"
+msgstr "Tarih/Sürüm"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "<Image>/Layers/Center Layer"
+msgstr "<Image>/Katmanlar/Katmaný Ortala"
+
+msgid "wrong authorization, aborting connection"
+msgstr "yanlýþ yetki, baðlantý kesiliyor"
+
+msgid "BG"
+msgstr "AP"
+
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr "<Toolbox>/Xtns/Hesapla/Tuðlalar..."
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr "<Toolbox>/Xtns/Animasyon/Seth Dönüþü..."
+
+msgid "illegal type for colour specification"
+msgstr "renk tanýmý için geçersiz tip"
+
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr "xlfd_unpack: karþýlýksýz XLFD '$fontname'\n"
+
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr "<Toolbox>/Xtns/Hesapla/Povray/Ayarlar..."
+
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Image>/Filtreler/Hesapla/Raslantýsal Harmanlar..."
+
+msgid "Plug-In Path"
+msgstr "Eklenti Yolu"
+
+msgid "You can't run this script with an INDEXED image!!"
+msgstr "Bu programý DÝZÝNLÝ bir resimle çalýþtýramazsýnýz!!"
+
+msgid "<Image>/Guides/Guide Grid..."
+msgstr "<Image>/Kýlavuzlar/Elek Kýlavuzlar..."
+
+msgid "accepted unix connection"
+msgstr "unix baðlantýsý kabul edildi"
+
+msgid "server going down..."
+msgstr "sunucu kapanýyor..."
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr "\"$opt\" seçenekleriyle gimp'i çalýþtýrma deneniyor\n"
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "soketin diðer ucunda perl-sunucusu bekleniyordu, @r ile karþýlaþýldý\n"
+
+msgid "pdl height != region height"
+msgstr "pdl yüksekliði != bölüm yüksekliði"
+
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr "<Toolbox>/Xtns/Gimp::Fu Örneði..."
+
+msgid "received QUIT request"
+msgstr "QUIT isteði alýndý"
+
+msgid " = [argument error]\n"
+msgstr "= [argüman hatasý]\n"
+
+msgid "%s arguments for function '%s'"
+msgstr "%s tane '%s' fonksiyonu için argüman"
+
+msgid " matching functions"
+msgstr " eþlenen fonksiyon"
+
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr "<Toolbox>/Xtns/Hesapla/Raslantýsal Sanat #1..."
+
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -56,476 +197,149 @@ msgstr ""
 "için, Gimp::Net(3)'i\n"
 "                                            okuyun)\n"
 
-#: Gimp.pm:0
-msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$pkg paketi için $_ geçerli bir import etiketi deðil"
-
-#: Gimp/Fu.pm:0
-msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: hatalý anahtar, $0 --help'i deneyin\n"
-
-#: Gimp/Fu.pm:0
-msgid "$_: unknown/illegal file-save option"
-msgstr "$_: bilinmeyen/hatalý dosya kayýt seçeneði"
-
-#: Gimp/Fu.pm:0
-msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
-"and _ allowed"
-msgstr ""
-"$function: '$p->[1]' argümaný geçersiz karakterler içeriyor, sadece 0-9, a-z "
-"ve _ kullanýlabilir"
-
-#: Gimp/Fu.pm:0
-msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
-"$function: argüman/dönüþ deðeri '$p->[1]' geçersiz '$p->[0]' tipine sahip"
-
-#: Gimp.pm:0
-msgid ""
-"$function: calling $AUTOLOAD without specifying the :auto import tag is "
-"deprecated!\n"
-msgstr ""
-"$function: :auto import etiketi olmadan $AUTOLOAD çaðrýmý artýk geçersiz!\n"
-
-#: Gimp/Fu.pm:0
-msgid ""
-"$function: function name contains unusual characters, good style is to use "
-"only 0-9, a-z and _"
-msgstr ""
-"$function: fonksiyon ismi garip karakterler içeriyor, düzgün stil sadece 0-9, "
-"a-z ve _ karakterlerini kullanmak"
-
-#: Gimp/Fu.pm:0
-msgid "$s: not an integer\n"
-msgstr "$s: tamsayý deðil\n"
-
-#: Gimp/Lib.xs:0
-msgid "%s arguments for function '%s'"
-msgstr "%s tane '%s' fonksiyonu için argüman"
-
-#: Gimp/Lib.xs:0
-msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
-"%s: Ýþlemsel VeriTabaný çalýþtýrýlýrken geçersiz giriþ argümanlarý hatasý "
-"oluþtu"
-
-#: Gimp/Lib.xs:0
-msgid "%s: procedural database execution failed"
-msgstr "%s: Ýþlemsel VeriTabaný çalýþtýrýlýrken hata oluþtu"
-
-#: Gimp/Lib.xs:0
-msgid "(UNINITIALIZED)"
-msgstr "(ÖN HAZIRLIKSIZ)"
-
-#: UI/UI.pm:0
-msgid "(none)"
-msgstr "(yok)"
-
-#: Gimp/Lib.xs:0
-msgid ", %d bytes data]"
-msgstr ", %d bayt veri]"
-
-#: Perl-Server:0
-msgid ", authorization required"
-msgstr ", yetki gerekli"
-
-#: UI/UI.pm:0
-msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-9"
-
-#: UI/UI.pm:0
-msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-9"
-
-#: examples/logulator:0
-msgid "/Filters/Logulator"
-msgstr "/Filtreler/Logulator"
-
-#: Perl-Server:0
-msgid "/Xtns/Perl"
-msgstr "/Xtns/Perl"
-
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
-#: examples/povray:0
-#: examples/stamps:0
-msgid "/Xtns/Render"
-msgstr "/Xtns/Hesapla"
-
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
-#: examples/povray:0
-msgid "/Xtns/Render/Logos"
-msgstr "/Xtns/Hesapla/Logolar"
-
-#: examples/povray:0
-msgid "/Xtns/Render/Povray"
-msgstr "/Xtns/Hesapla/Povray"
-
-#: UI/UI.pm:0
-msgid "9x15bold"
-msgstr "9x15bold"
-
-#: Gimp/Fu.pm:0
-msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "<Image> eklentisi resim ve çizilebilir argümanlarý olmadan çaðrýldý!\n"
-
-#: examples/repdup:0
-msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Düzenleme/Tekrar Et & Çoðalt"
-
-#: examples/animate_cells:0
-msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtreler/Animasyon/Hücreleri Oynat..."
-
-#: examples/blowinout:0
-msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filtreler/Animasyon/ÝçeDýþaÜfle..."
-
-#: examples/frame_filter:0
-msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtreler/Perl Ýfadesi Uygula..."
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filtreler/Bulanýk/2x2 Bulanýk"
-
-#: examples/colourtoalpha:0
-msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filtreler/Renkler/Renk Alfa'ya..."
-
-#: examples/fire:0
-msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filtreler/Renkler/Ateþ..."
-
-#: examples/map_to_gradient:0
-msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filtreler/Renkler/Dereceliye Bindir..."
-
-#: examples/mirrorsplit:0
-msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filtreler/Boz/AynaAyrýmý"
-
-#: examples/scratches:0
-msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filtreler/Boz/Ýzler..."
-
-#: examples/windify:0
-msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filtreler/Boz/Rüzgar..."
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filtreler/Kenar-Tarama/2x2 Kenar Tarama"
-
-#: examples/gouge:0
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtreler/Ýyileþtir/2x2 Kontrastý Ýyileþtir"
-
-#: examples/warp-sharp:0
-msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filtreler/Ýyileþtir/Silerek Keskinleþtir..."
-
-#: examples/blended2:0
-msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/Filtreler/Logulator/Harman II..."
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filtreler/Logulator/Oyuk"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filtreler/Logulator/Kristal"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Filtreler/Logulator/Imigre-26"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filtreler/Logulator/Gazete Baskýsý Yazý"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Filtreler/Logulator/SOTA Krom"
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Filtreler/Logulator/Hýzlý Yazý"
-
-#: examples/translogo:0
-msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Filtreler/Logulator/Þeffaf Logo..."
-
-#: examples/logulator:0
-msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filtreler/Logulator/Web baþlýðý"
-
-#: examples/image_tile:0
-msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filtreler/Bindirme/Resim Döþeme..."
-
-#: examples/pixelmap:0
-msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filtreler/Bindirme/Pikselbindirme..."
-
-#: examples/xachlego:0
-msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Filtreler/Bindirme/Xach Bloklarý..."
-
-#: examples/xachshadow:0
-msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Filtreler/Bindirme/Xach Gölgeleri..."
-
-#: examples/border:0
-msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filtreler/Çeþitli/Çerçeve Ortalamasý..."
-
-#: examples/gimpmagick:0
-msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/Filtreler/Çeþitli/Magick..."
-
-#: examples/ditherize:0
-msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filtreler/Gürültü/Geçiþlendir..."
-
-#: examples/feedback:0
-msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filtreler/Gürültü/Geri Ýtilim..."
-
-#: examples/xachvision:0
-msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtreler/Gürültü/Xach Görüntüsü..."
-
-#: examples/dust:0
-msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filtreler/Hesapla/Toz Ekle..."
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filtreler/Hesapla/Parlama Ekle"
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Filtreler/Hesapla/Fýrçalanmýþ Metal..."
-
-#: examples/burst:0
-msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtreler/Hesapla/Patlama..."
-
-#: examples/fit-text:0
-msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Filtreler/Hesapla/Uygun Yazý..."
-
-#: examples/glowing_steel:0
-msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filtreler/Hesapla/Kenarlarý Parlat..."
-
-#: examples/randomblends:0
-msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtreler/Hesapla/Raslantýsal Harmanlar..."
-
-#: examples/stampify:0
-msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filtreler/Hesapla/Pullaþtýr..."
-
-#: examples/tex-to-float:0
-msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Filtreler/Hesapla/TeX Yazýsý..."
-
-#: examples/terral_text:0
-msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/Filtreler/Hesapla/Yüzeysel Yazý..."
-
-#: examples/perlotine:0
-msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Filtreler/Að/Perl-o-tine..."
-
-#: examples/prep4gif:0
-msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filtreler/Að/GIF için hazýrla..."
-
-#: examples/webify:0
-msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filtreler/Að/Webize..."
-
-#: examples/centerguide:0
-msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Kýlavuzlar/Orta Kýlavuz..."
-
-#: examples/guidegrid:0
-msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Kýlavuzlar/Elek Kýlavuzlar..."
-
-#: examples/guide_remove:0
-msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Kýlavuzlar/Kýlavuzlarý Kaldýr"
-
-#: examples/guides_to_selection:0
-msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Kýlavuzlar/Seçime Dönüþtür..."
-
-#: examples/alpha2color:0
-msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Resim/Alfa/Alfa'dan Renge..."
-
-#: examples/clear_alpha:0
-msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Resim/Alfa/Alfa'yý Sil..."
-
-#: examples/layerfuncs:0
-msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Katmanlar/Katmaný Ortala"
-
-#: examples/frame_reshuffle:0
-msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Katmanlar/Küme/Katmanlarý Tekrar Diz..."
-
-#: examples/roundrectsel:0
-msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Seçim/Yuvarlak Köþeli Dörtgen Seçim..."
-
-#: examples/roundsel:0
-msgid "<Image>/Select/Round..."
-msgstr "<Image>/Seçim/Yuvarlaklaþtýr..."
-
-#: examples/triangle:0
-msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Seçim/Üçgen..."
-
-#: examples/gap-vcr:0
-msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/VCR Konsolu..."
-
-#: examples/view3d:0
-msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Görüntü/3 Boyutlu Yüzey..."
-
-#: Gimp/Fu.pm:0
-msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> eklenti 3 standart argüman olmadan çaðrýldý!\n"
-
-#: Gimp/Fu.pm:0
-msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> eklenti 5 standart argüman olmadan çaðrýldý!\n"
-
-#: examples/billboard:0
-msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Xtns/Animasyon/Iþýklý Tabela..."
-
-#: examples/sethspin:0
-msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animasyon/Seth Dönüþü..."
-
-#: examples/Create_Images:0
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Xtns/Resimler_Yarat"
-
-#: examples/example-fu:0
-msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Xtns/Gimp::Fu Örneði..."
-
-#: examples/homepage-logo:0
-msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Xtns/Anasayfa-Logosu"
-
-#: examples/PDB:0
-msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Xtns/IVT Gezgini..."
-
-#: examples/parasite-editor:0
-msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Xtns/Parazit Editörü..."
-
-#: examples/example-oo:0
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/Örnek Perl Eklenti"
-
-#: examples/perlcc:0
-msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Xtns/Perl/Yönetim Merkezi..."
-
-#: Perl-Server:0
-msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Perl/Sunucu"
-
-#: examples/bricks:0
-msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Xtns/Hesapla/Tuðlalar..."
-
-#: examples/font_table:0
-msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Xtns/Hesapla/Yazýtipi Tablosu..."
-
-#: examples/goldenmean:0
-msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Hesapla/Altýn Oran..."
-
-#: examples/fire:0
-msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ateþyazý..."
-
-#: examples/glowing_steel:0
-msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Parlayan Çelik"
-
-#: examples/innerbevel:0
-msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ýç Eðim..."
-
-#: examples/pixelmap:0
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Hesapla/Pikselyaratýcý..."
-
-#: examples/povray:0
-msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Xtns/Hesapla/Povray/Ayarlar..."
-
-#: examples/povray:0
-msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Xtns/Hesapla/Povray/Kaplama..."
-
-#: examples/randomart1:0
-msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Xtns/Hesapla/Raslantýsal Sanat #1..."
-
-#: examples/stamps:0
-msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Xtns/Hesapla/Pullar..."
-
-#: examples/yinyang:0
-msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Xtns/Hesapla/Yin-Yang..."
-
-#: examples/visual:0
-msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Xtns/Görsel Programlayýcý..."
-
-#: examples/PDB:0
-msgid "Accelerator"
-msgstr "Basam"
-
-#: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
 "Geri döndürme için çift sayýda kare gerekir.\n"
-"Kare sayýsý $frame olarak ayarlandý"
+"Kare sayýsý $frame olarak düzeltildi"
 
-#: examples/PDB:0
-msgid "Author"
-msgstr "Yazar"
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Resim/Alfa/Alfa'dan Renge..."
 
-#: UI/UI.pm:0
-msgid "BG"
-msgstr "AP"
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr "<Image>/Filtreler/Logulatör/SOTA Krom"
 
-#: UI/UI.pm:0
+msgid "%s: procedural database execution failed"
+msgstr "%s: Ýþlemsel Veritabaný çalýþtýrýlýrken hata"
+
+msgid "authorization required for tcp connections"
+msgstr "tcp baðlantýlarý için yetki gerekiyor"
+
+msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Toolbox>/Xtns/Perl/Sunucu"
+
+msgid "function name contains dashes instead of underscores"
+msgstr "fonksiyon ismi alt çizgi yerine tireler içeriyor"
+
+msgid "authorization ok, but: $r[1]\n"
+msgstr "yetki tamam, fakat: $r[1]\n"
+
+msgid "a color must have three components (array elements)"
+msgstr "bir renk üç bileþene sahip olmalý (dizi elemanlarý)"
+
+msgid "Spin Layer SRC (250ms)"
+msgstr "Dönüþ Katmaný KAYNAK (250ms)"
+
+msgid "$_: unknown/illegal file-save option"
+msgstr "$_: bilinmeyen/hatalý dosya-kayýt seçeneði"
+
+msgid "TYPE"
+msgstr "TÝP"
+
+msgid "Gradient Selection Dialog"
+msgstr "Gradyan Seçim Penceresi"
+
+msgid "<Image>/Filters/Map/Circular Shape..."
+msgstr "<Image>/Filtreler/Bindirme/Dairesel Þekil..."
+
+msgid "Function Info"
+msgstr "Fonksiyon Bilgisi"
+
+msgid "unable to open $rgb_db_path"
+msgstr "$rgb_db_path açýlamadý"
+
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr "<Image>/Filtreler/Logulatör/Imigre-26"
+
+msgid "Text"
+msgstr "Metin"
+
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr "<Image>/Filtreler/Renkler/Renk Alfa'ya..."
+
+msgid ""
+"Your text is too long, and would result in a too big layer! Please, shorten "
+"it and retry"
+msgstr ""
+"Metniniz cok uzun ve çok büyük bir katman yaratýlmasýna sebep olacaktý! "
+"Lütfen biraz kýsaltýp tekrar deneyin"
+
+msgid "/Xtns/Perl"
+msgstr "/Xtns/Perl"
+
+msgid "no additional information available, use --help\n"
+msgstr "daha fazla bilgi mevcut deðil, --help'i kullanýn\n"
+
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr "<Toolbox>/Xtns/Parazit Editörü..."
+
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr "gimp_tile_set_data henüz desteklenmiyor\n"
+
+msgid "Visual Scriptor"
+msgstr "Görsel Senaryolayici"
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr "Hiç yatay veya dikey kýlavuz bulunamadý. Ýptal edildi."
+
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Image>/Filtreler/Bindirme/Resim Döþeme..."
+
+msgid "<Image>/Guides/To Selection..."
+msgstr "<Image>/Kýlavuzlar/Seçime Dönüþtür..."
+
+msgid "<Image>/Guides/Remove Guides"
+msgstr "<Image>/Kýlavuzlar/Kýlavuzlarý Kaldýr"
+
+msgid "get current background colour from the gimp"
+msgstr "gimp'ten seçili arkaplan rengini al"
+
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr "<Toolbox>/Xtns/IVT Gezgini..."
+
+msgid "WARNING: shared locking requested but not implemented"
+msgstr "UYARI: paylaþýmlý kilitlenme istendi fakat desteklenmiyor"
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr "'$entry->[1]' parametresi seçimli deðil\n"
+
+msgid "$s: not an integer\n"
+msgstr "$s: tamsayý deðil\n"
+
+msgid "unable to read '$fn': $!"
+msgstr "'$fn' okunamadý: $!"
+
+msgid "[undefined]"
+msgstr "[tanýmsýz]"
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr "fonksiyon/makro \"$name\", $class içinde bulunamadý"
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Xtns/Hesapla/Pikselyaratýcý..."
+
+msgid "accepted tcp connection from "
+msgstr "tcp baðlantýsýnýn kabul edildiði adres"
+
+msgid "illegal parasite specification, expected three array members"
+msgstr "geçersiz parazit tanýmý, üç dizi elemaný bekleniyordu"
+
+msgid "unable to read temporary file $tmp: $!"
+msgstr "$tmp geçici dosyasý okunamadý: $!"
+
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr "<Toolbox>/Xtns/Hesapla/Yin-Yang..."
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr "IVT Gezgini - olof baskýsý (halen alfa sürüm)"
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr "$function için gerersiz yazýtipi tanýmý: $val\n"
+
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr "<Image>/Seçim/Yuvarlatýlmýþ Dörtgen Seçim..."
+
 msgid ""
 "BLURB:\n"
 "\n"
@@ -543,304 +357,55 @@ msgstr ""
 "\n"
 "$help"
 
-#: examples/example-fu:0
-msgid "Background"
-msgstr "Arkaplan"
-
-#: UI/UI.pm:0
-msgid "Browse"
-msgstr "Gözat"
-
-#: UI/UI.pm:0
-msgid "Brush Selection Dialog"
-msgstr "Fýrça Seçim Penceresi"
-
-#: examples/translogo:0
-msgid "Bumpmap"
-msgstr "Kabartýharita"
-
-#: UI/UI.pm:0
-#: UI/UI.pm:0
-msgid "Cancel"
-msgstr "Ýptal"
-
-#: Gimp.pm:0
-msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "'$AUTOLOAD' þu an çaðrýlamaz"
-
-#: examples/PDB:0
-#: examples/PDB:0
-msgid "Close"
-msgstr "Kapat"
-
-#: UI/UI.pm:0
-msgid "Color"
-msgstr "Renk"
-
-#: examples/PDB:0
-msgid "Command"
-msgstr "Komut"
-
-#: examples/PDB:0
-msgid "Copyright"
-msgstr "Telif hakký"
-
-#: examples/PDB:0
-msgid "DESCRIPTION"
-msgstr "AÇIKLAMA"
-
-#: examples/PDB:0
-msgid "Date/Version"
-msgstr "Tarih/Sürüm"
-
-#: UI/UI.pm:0
-msgid "Defaults"
-msgstr "Öntanýmlýlar"
-
-#: examples/PDB:0
-msgid "Description"
-msgstr "Tanýmlama"
-
-#: UI/UI.pm:0
-msgid "Edit"
-msgstr "Düzenle"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
-msgstr ""
-"INT32 deðer bekleniyordu fakat '%s' alýndý. Eðer gerçekten yazý içinde "
-"geçirmek istiyorsanýz '*1' ekleyin"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
-msgstr ""
-"INT32 deðer bekleniyordu fakat '%s' alýndý. Belki '%s' demek istediniz ve "
-"'use strict'i unuttunuz."
-
-#: Gimp/Lib.xs:0
-msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "HAYATÝ: canonicalize_colour geriye deðer döndürmedi!"
-
-#: UI/UI.pm:0
-msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "HAYATÝ: $tmp yaratýlamadý: $!\n"
-
-#: UI/UI.pm:0
-msgid "FG"
-msgstr "ÖP"
-
-#: UI/UI.pm:0
 msgid "Fileselector for $name"
 msgstr "$name icin dosyaismi"
 
-#: UI/UI.pm:0
-msgid "Font Selection Dialog ($desc)"
-msgstr "Dosya Seçim Penceresi ($desc)"
+msgid "accepting connections on port $port"
+msgstr "$port iskelesinden baðlantýlar kabul ediliyor"
 
-#: examples/PDB:0
-msgid "Function Info"
-msgstr "Fonksiyon Bilgisi"
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Image>/Filtreler/Logulatör/Harman II..."
 
-#: UI/UI.pm:0
-msgid "Gradient Selection Dialog"
-msgstr "Dereceli Geçiþ Seçim Penceresi"
-
-#: UI/UI.pm:0
-msgid "Help for "
+msgid ""
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
 msgstr ""
+"$function: fonksiyon ismi garip karakterler içeriyor, düzgün stil sadece 0-9, "
+"a-z ve _ karakterlerini kullanmak"
 
-#: UI/UI.pm:0
-msgid "Help"
-msgstr "Yardým"
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+"menüyolu _mutlaka_ <Image>, <Toolbox>, <Load>, <Save> veya <None> ile "
+"baþlamalý!"
 
-#: UI/UI.pm:0
-msgid "Illegal default font description for $function: $val\n"
-msgstr "$function için gerersiz yazýtipi tanýmý: $val\n"
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr "<Image>/Filtreler/Hesapla/Parlayan Kenarlar..."
 
-#: examples/PDB:0
-msgid "Image Types"
-msgstr "Resim Tipleri"
-
-#: examples/PDB:0
-msgid "Last Modified"
-msgstr "Son Deðiþtirme"
-
-#: UI/UI.pm:0
-msgid "Load $name"
-msgstr "$name Yüklensin"
-
-#: UI/UI.pm:0
-msgid "Load"
-msgstr "Yükle"
-
-#: examples/PDB:0
-msgid "Menu Path"
-msgstr "Mönü Yolu"
-
-#: examples/PDB:0
-msgid "More..."
-msgstr "Daha fazla..."
-
-#: examples/PDB:0
-msgid "NAME"
-msgstr "ISIM"
-
-#: examples/perlotine:0
-msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Yatay veya dikey kýlavuz bulunamadý. Ýptal edildi."
-
-#: UI/UI.pm:0
-#: UI/UI.pm:0
-#: UI/UI.pm:0
-msgid "OK"
-msgstr "Tamam"
-
-#: examples/PDB:0
-msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "IVT Gezgini - olof baskýsý (halen alfa sürüm)"
-
-#: UI/UI.pm:0
-msgid "Pattern Selection Dialog"
-msgstr "Desen Seçim Penceresi"
-
-#: examples/PDB:0
-msgid "Plug-In Path"
-msgstr "Eklenti Yolu"
-
-#: UI/UI.pm:0
-msgid "Previous"
-msgstr "Önceki"
-
-#: UI/UI.pm:0
-msgid "Reset all values to their default"
-msgstr "Tüm deðerleri öntanýmlý deðerlere çevir"
-
-#: UI/UI.pm:0
-msgid "Restore values to the previous ones"
-msgstr "Deðerleri bir önceki seçime çevir"
-
-#: UI/UI.pm:0
-msgid "Save $name"
-msgstr "$name dosyasýný kaydet"
-
-#: UI/UI.pm:0
-msgid "Save"
-msgstr "Kaydet"
-
-#: examples/colorhtml:0
-msgid "Saving '$filename' as COLORHTML..."
-msgstr "'$filename' COLORHTML olarak kaydediliyor..."
-
-#: examples/dataurl:0
-msgid "Saving '$filename' as DATAURL..."
-msgstr "'$filename' DATAURL olarak kaydediliyor..."
-
-#: examples/sethspin:0
-msgid "Seth Spin..."
-msgstr "Seth Dönüþü..."
-
-#: examples/PDB:0
-msgid "Shortcuts"
-msgstr "Kýsa yollar"
-
-#: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
 msgstr "Dönüþ Katmaný HEDEF (250ms)"
 
-#: examples/sethspin:0
-msgid "Spin Layer SRC (250ms)"
-msgstr "Dönüþ Katmaný KAYNAK (250ms)"
+msgid "register called with too many or wrong arguments\n"
+msgstr "kayýt çok fazla veya yanlýþ argümanla çaðrýldý\n"
 
-#: examples/PDB:0
-msgid "Status"
-msgstr "Durum"
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr "parametreler ve dönüþ deðerleri dizi dayanak olmalý (boþ olsa bile)!"
 
-#: examples/PDB:0
-msgid "Synopsis"
-msgstr "Özet"
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr "$pkg paketi için $_ geçerli bir içe aktarým etiketi deðil"
 
-#: examples/PDB:0
-msgid "TYPE"
-msgstr "TÝP"
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Image>/Filtreler/Renkler/Gradyana Bindir..."
 
-#: examples/translogo:0
-msgid "Text"
-msgstr "Metin"
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ateþyazý..."
 
-#: Gimp/Lib.xs:0
-msgid "This module was built without support for PDL."
-msgstr "Bu modül IVT desteði olmadan kurulmuþ."
+msgid "unable to accept unix connection: $!\n"
+msgstr "unix baðlantýsý kabul edilemedi: $!\n"
 
-#: Gimp/Lib.xs:0
-msgid "Unable to convert a reference to type '%s'"
-msgstr "Referans '%s' tipine dönüþtürülemiyor"
+msgid "Save"
+msgstr "Kaydet"
 
-#: Gimp.pm:0
-msgid "Unable to grok '%s' as colour specifier"
-msgstr "'%s' renk tanýmý olarak kullanýlamýyor"
-
-#: examples/colorhtml:0
-#: examples/dataurl:0
-msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "'$filename' yazma için açýlamadý: $!\n"
-
-#: examples/dataurl:0
-msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "$tmp geçici döþeme resmi okunamadý: $!"
-
-#: UI/UI.pm:0
-msgid "Unsupported argumenttype $type"
-msgstr "$type desteklenmeyen argüman tipi"
-
-#: examples/visual:0
-msgid "Visual Scriptor"
-msgstr "Görsel Programlayýcý"
-
-#: Gimp.pm:0
-msgid "WARNING"
-msgstr "UYARI"
-
-#: Gimp/Fu.pm:0
-msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "UYARI: $function geriye resim olmayan bir deðer döndürdü: \"$img\"\n"
-
-#: Perl-Server:0
-msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "UYARI: aktif bir kilit varken alýcý baðlantýyý kesti\n"
-
-#: Perl-Server:0
-msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "UYARI: alýcý kilitlenmeden kiliti açmaya çalýþtý"
-
-#: Perl-Server:0
-msgid "WARNING: shared locking requested but not implemented"
-msgstr "UYARI: paylaþýmlý kilitlenme istendi fakat desteklenmiyor"
-
-#: examples/translogo:0
-msgid "You can't run this script with an INDEXED image!!"
-msgstr "Bu programý KATALOGLU bir resimle çalýþtýramazsýnýz!!"
-
-#: examples/translogo:0
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Bu programý ALFA KANALI olmadan çalýþtýramazsýnýz!"
-
-#: examples/prep4gif:0
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "prep4gif için en azýndan 2 katmana ihtiyacýnýz var"
-
-#: Gimp/Lib.xs:0
-msgid "[undefined]"
-msgstr "[tanýmsýz]"
-
-#: Gimp/Lib.xs:0
-msgid "[unfinished]\n"
-msgstr "[bitmemiþ]\n"
-
-#: UI/UI.pm:0
 msgid ""
 "\n"
 "\n"
@@ -851,315 +416,9 @@ msgstr ""
 "\n"
 "GÖMÜLÜ POD BELGELERÝ:\n"
 
-#: Gimp/Lib.xs:0
-msgid "a color must have three components (array elements)"
-msgstr "bir renk üç bileþene sahip olmalý (array elemanlarý)"
+msgid "/Filters/Logulator"
+msgstr "/Filtreler/Logulatör"
 
-#: Perl-Server:0
-msgid "accepted tcp connection from "
-msgstr "tcp baðlantýsý kabul edildi: "
-
-#: Perl-Server:0
-msgid "accepted unix connection"
-msgstr "unix baðlantýsý kabul edildi"
-
-#: Perl-Server:0
-msgid "accepting connections in $host"
-msgstr "$host adresinde baðlantýlar kabul ediliyor"
-
-#: Perl-Server:0
-msgid "accepting connections on $unix_path"
-msgstr "$unix_path yolundan baðlantýlar kabul ediliyor"
-
-#: Perl-Server:0
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "$Gimp::Net::default_tcp_port portundan baðlantýlar kabul ediliyor"
-
-#: Perl-Server:0
-msgid "accepting connections on port $port"
-msgstr "$port portundan baðlantýlar kabul ediliyor"
-
-#: Gimp/Lib.xs:0
-msgid "argument incompatible with type IMAGE"
-msgstr "argüman IMAGE tipi ile uyumsuz"
-
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-msgid "argument is not of type %s"
-msgstr "argüman %s tipinde deðil"
-
-#: Gimp/Lib.xs:0
-msgid "argument type %s expected (not %s)"
-msgstr "argüman tipi %s bekleniyordu (%s deðil)"
-
-#: Gimp/Lib.xs:0
-msgid "arguments to main not yet supported!"
-msgstr "main'e argümanlar henüz desteklenmiyor!"
-
-#: Net/Net.pm:0
-msgid "authorization failed: $r[1]\n"
-msgstr "yetki baþarýsýz: $r[1]\n"
-
-#: Net/Net.pm:0
-msgid "authorization ok, but: $r[1]\n"
-msgstr "yetki tamam, fakat: $r[1]\n"
-
-#: Perl-Server:0
-msgid "authorization required for tcp connections"
-msgstr "tcp baðlantýlarý için yetki gerekiyor"
-
-#: Perl-Server:0
-msgid "authorization unnecessary"
-msgstr "yetekli gerekli deðil"
-
-#: Gimp/Lib.xs:0
-msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "'%s' olarak çaðrýldý, ancak '%s' IVT'de kayýtlý deðil"
-
-#: Perl-Server:0
-msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "%d baðlantýsý kapaniyor (%d istek / %g saniye)"
-
-#: Gimp/Fu.pm:0
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "$pf_type2string{$type} tipine dönüþ henüz desteklenmiyor\n"
-
-#: Net/Net.pm:0
-msgid ""
-"could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
-"gimp sunucusuna baðlanýlamadý (Perl-Sunucusu'nun çalýþtýðýndan emin olun)"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr "boyut uyumsuzluðu, pdl %d boyutunda, ancak en az %d boyutu gerekiyor"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr ""
-"boyut uyumsuzluðu, pdl %d boyutunda, fakat en çok %d boyutu kabul ediliyor"
-
-#: Gimp/Lib.xs:0
-msgid "dunno how to pass arg type %d"
-msgstr "%d argüman tipinin nasýl geçirileceði bilinmiyor"
-
-#: Gimp/Lib.xs:0
-msgid "dunno how to return param type %d"
-msgstr "%d parametre tipinin nasýl geri döndürüldüðü bilinmiyor"
-
-#: Net/Net.pm:0
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
-"baðlantýnýn öbür ucunda perl-sunucusu soketi bekleniyordu, @r ile "
-"karþýlaþýldý\n"
-
-#: Net/Net.pm:0
-msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
-"$Gimp::_PROT_VERSION protokol versiyonu bekleniyordu, fakat sunucu $r[0] "
-"kullanýyor.\n"
-
-#: examples/colorhtml:0
-#: examples/dataurl:0
-msgid "export failed"
-msgstr "ihraç baþarýsýz"
-
-#: Gimp/Fu.pm:0
-msgid "function '$exe' not found in this script (must be one of "
-msgstr "'$exe' fonksiyonu bu programda bulunamadý (þunlardan biri olmalý: "
-
-#: Gimp/Fu.pm:0
-msgid "function name contains dashes instead of underscores"
-msgstr "fonksiyon ismi alt çizgi yerine tireler içeriyor"
-
-#: Gimp.pm:0
-msgid "function/macro \"$name\" not found in $class"
-msgstr "fonksiyon/makro \"$name\", $class içinde bulunamadý"
-
-#: UI/UI.pm:0
-msgid "get current background colour from the gimp"
-msgstr "gimp'ten seçili arkaplan rengini al"
-
-#: UI/UI.pm:0
-msgid "get current foreground colour from the gimp"
-msgstr "gimp'ten seçili önplan rengini al"
-
-#: Gimp/Lib.xs:0
-msgid "gimp procedure '%s' not found"
-msgstr "gimp iþlemi '%s' bulunamadý"
-
-#: Net/Net.xs:0
-msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel fonksiyonlarý PDL:Core modülüne ihtiyac duyar"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
-msgstr ""
-"gimp_pixel_rgns_register sadece 1, 2 veya 3 argümaný destekler, kurulumu "
-"gimp-1.1'e yükseltin ve bu hatayý bildirin"
-
-#: Gimp/Lib.xs:0
-msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data henüz desteklenmiyor\n"
-
-#: Gimp/Lib.xs:0
-msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data henüz desteklenmiyor\n"
-
-#: Perl-Server:0
-msgid "illegal command received, aborting connection"
-msgstr "geçersiz komut alýndý, baðlantý kesiliyor"
-
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, arrayref expected"
-msgstr "geçersiz parazit tanýmý, arrayref bekleniyordu"
-
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, expected three array members"
-msgstr "geçersiz parazit tanýmý, üç array elemaný bekleniyordu"
-
-#: Gimp/Lib.xs:0
-msgid "illegal parasite specification, reference expected"
-msgstr "geçersiz parazit tanýmý, referans bekleniyordu"
-
-#: Gimp/Lib.xs:0
-msgid "illegal type for colour specification"
-msgstr "renk tanýmý için geçersiz tip"
-
-#: Gimp.pm:0
-msgid "interface '$interface_type' unsupported."
-msgstr "'$interface_type' arayüzü desteklenmiyor."
-
-#: Gimp.pm:0
-msgid "interface=... tag is no longer supported\n"
-msgstr "interface=... etiketi artýk desteklenmiyor\n"
-
-#: Perl-Server:0
-msgid ""
-"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
-"geçersiz GIMP_HOST: 'spawn' bu sunucu için geçerli bir baðlantý yöntemi deðil"
-
-#: UI/UI.xs:0
-msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "gimp_pattern_select_widget'a son argüman skaler ref olmalý"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
-msgstr ""
-"bozuk parametre tanýmý, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] veya PARAM_TYPE "
-"bekleniyordu"
-
-#: Gimp/Fu.pm:0
-#: Gimp/Fu.pm:0
-msgid ""
-"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
-"mönüyolu _mutlaka_ <Image>, <Toolbox>, <Load>, <Save> veya <None> ile "
-"baþlamalý!"
-
-#: Gimp/Fu.pm:0
-msgid "no additional information available, use --help\n"
-msgstr "daha fazla bilgi mevcut deðil, --help'i kullanýn\n"
-
-#: Gimp/Util.pm:0
-#: Gimp/Util.pm:0
-msgid "no font specified, using default"
-msgstr "yazýtipi tanýmlanmadý, öntanýmlý deðer kullanýlýyor"
-
-#: Gimp/Lib.xs:0
-msgid "not enough"
-msgstr "yeterli deðil"
-
-#: Gimp/Lib.xs:0
-msgid "only blessed scalars accepted here"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "'$entry->[1]' parametresi isteðe baðlý deðil\n"
-
-#: Gimp/Lib.xs:0
-msgid "params and return_vals must be array refs (even if empty)!"
-msgstr "parametreler ve dönüþ deðerleri dizi referansý olmalý (boþ olsa bile)!"
-
-#: Gimp/Lib.xs:0
-msgid "pdl height != region height"
-msgstr "pdl yüksekliði != bölüm yüksekliði"
-
-#: Gimp/Lib.xs:0
-msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-diziref gimp-dizisi için veritipi olarak gerekli"
-
-#: Gimp/Lib.xs:0
-msgid ""
-"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
-"piksel boyu uyumsuzluðu, pdl %d kanal piksele sahip fakat %d kanal gerekli"
-
-#: Gimp/Lib.xs:0
-msgid "plug-in returned %d more values than expected"
-msgstr "eklenti beklenenden %d fazla deðer geri döndürdü"
-
-#: Perl-Server:0
-msgid "received QUIT request"
-msgstr "QUIT isteði alýndý"
-
-#: Gimp/Fu.pm:0
-msgid "register called with too many or wrong arguments\n"
-msgstr "kayýt çok fazla veya yanlýþ argümanlarla çaðrýldý\n"
-
-#: Gimp.pm:0
-msgid "required callback 'net' not found\n"
-msgstr "gerekli geriçaðrý 'net' bulunamadý\n"
-
-#: Gimp.pm:0
-msgid "required callback 'query' not found\n"
-msgstr "gerekli geriçaðrý 'query' bulunamadý\n"
-
-#: Gimp.pm:0
-msgid "required callback 'run' not found\n"
-msgstr "gerekli geriçaðrý 'run' bulunamadý\n"
-
-#: Gimp/Fu.pm:0
-msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
-"çalýþma modu INTERACTIVE, NONINTERACTIVE veya RUN_WITH_LAST_VALS olmalý\n"
-
-#: Perl-Server:0
-msgid "server going down..."
-msgstr "sunucu kapanýyor..."
-
-#: Net/Net.pm:0
-msgid "server requests authorization, but no authorization available\n"
-msgstr "sunucu yetki istiyor, fakat yetki mevcut deðil\n"
-
-#: Perl-Server:0
-msgid "server version $Gimp::VERSION started"
-msgstr "sürüm $Gimp::VERSION sunu çalýþtý"
-
-#: Gimp/Util.pm:0
-#: Gimp/Util.pm:0
-msgid "text string is empty"
-msgstr "metin boþ"
-
-#: Gimp/Fu.pm:0
-msgid ""
-"the gtk perl module is required to open a dialog\n"
-"window, running with default values"
-msgstr ""
-"pencere açmak için gtk perl modülüne ihtiyaç var, öntanýmlý deðerlerle "
-"çalýþtýrýlýyor"
-
-#: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
@@ -1167,86 +426,549 @@ msgstr ""
 "bu eklentiyi etkileþimli olarak çalýþtýrmak için\n"
 "gtk perl modülüne ihtiyaç duyuluyor\n"
 
-#: examples/PDB:0
-msgid "too many arguments"
-msgstr "çok fazla argüman"
+msgid "interface '$interface_type' unsupported."
+msgstr "'$interface_type' arayüzü desteklenmiyor."
 
-#: Gimp/Lib.xs:0
-msgid "too many"
-msgstr "çok fazla"
-
-#: Net/Net.pm:0
-msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "\"$opt\" seçenekleriyle gimp'i çalýþtýrma deneniyor\n"
-
-#: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
 msgstr "tcp baðlantýsý kabul edilemedi: $!\n"
 
-#: Perl-Server:0
-msgid "unable to accept unix connection: $!\n"
-msgstr "unix baðlantýsý kabul edilemedi: $!\n"
+msgid "<Image>/Image/Alpha/Clear Alpha..."
+msgstr "<Image>/Resim/Alfa/Alfa'yý Sil..."
 
-#: Gimp/Lib.xs:0
-msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "Gimp::Drawable, Gimp::DimpDrawable olarak dönüþtürülemedi (id %d)"
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr "boyut uyumsuzluðu, pdl %d boyutunda, ancak en az %d boyutu gerekiyor"
 
-#: UI/UI.pm:0
-msgid "unable to create '$fn': $!"
-msgstr "'$fn' oluþturulamadý: $!"
+msgid "[unfinished]\n"
+msgstr "[bitmemiþ]\n"
 
-#: Perl-Server:0
-#: Perl-Server:0
-msgid "unable to create listening tcp socket: $!\n"
-msgstr "tcp dinleme soketi oluþturulamadý: $!\n"
+msgid ""
+"could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr ""
+"gimp sunucusuna baðlanýlamadý (Perl-Sunucusu'nun çalýþtýðýndan emin olun)"
 
-#: Perl-Server:0
-#: Perl-Server:0
-msgid "unable to create listening unix socket: $!\n"
-msgstr "unix dinleme soketi oluþturulamadý: $!\n"
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filtreler/Logulatör/Kristal"
 
-#: Net/Net.pm:0
-msgid "unable to create socketpair for gimp communications: $!"
-msgstr "gimp iletiþimi için soket çifti oluþturulamadý: $!"
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr "'$AUTOLOAD' þu an çaðrýlamaz"
 
-#: Net/Net.pm:0
-msgid "unable to fork: $!"
-msgstr "çatallanamýyor: $!"
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr "<Toolbox>/Xtns/Hesapla/Povray/Kaplama..."
 
-#: Gimp/Lib.xs:0
-msgid "unable to grok colour specification"
-msgstr "renk tanýmý anlaþýlamadý"
-
-#: Gimp.pm:0
-msgid "unable to open $rgb_db_path"
-msgstr "$rgb_db_path açýlamadý"
-
-#: Perl-Server:0
-msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "Gimp::Net iletiþim soketi açýlamadý: $!\n"
-
-#: UI/UI.pm:0
-msgid "unable to read '$fn': $!"
-msgstr "'$fn' okunamadý: $!"
-
-#: UI/UI.pm:0
-msgid "unable to read temporary file $tmp: $!"
-msgstr "$tmp geçici dosyasý okunamadý: $!"
-
-#: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
 msgstr "yetkisiz komut alýndý, baðlantý kesiliyor"
 
-#: examples/dataurl:0
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Toolbox>/Xtns/Animasyon/Iþýklý Tabela..."
+
+msgid "Defaults"
+msgstr "Öntanýmlýlar"
+
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Filtreler/Hesapla/Toz Ekle..."
+
+msgid "text string is empty"
+msgstr "metin dizgisi boþ"
+
+msgid "server requests authorization, but no authorization available\n"
+msgstr "sunucu yetki istiyor, fakat yetki mevcut deðil\n"
+
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr "<Toolbox>/Xtns/Görsel Programlayýcý..."
+
+msgid "/Xtns/Render/Logos"
+msgstr "/Xtns/Hesapla/Logolar"
+
+msgid "Image Types"
+msgstr "Resim Tipleri"
+
+msgid "Menu Path"
+msgstr "Menü Yolu"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr "'%s' renk tanýmý olarak algýlanamýyor"
+
+msgid "9x15bold"
+msgstr "9x15bold"
+
+msgid "Accelerator"
+msgstr "Basam"
+
+msgid "too many arguments, use --help\n"
+msgstr "çok fazla argüman, --help'i deneyin\n"
+
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr "gimp-perl-pixel fonksiyonlarý PDL:Core modülüne ihtiyac duyar"
+
+msgid "dunno how to return param type %d"
+msgstr "%d parametre tipinin nasýl geri döndürüldüðü bilinmiyor"
+
+msgid "Cancel"
+msgstr "Ýptal"
+
+msgid "only blessed scalars accepted here"
+msgstr ""
+
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgstr ""
+"boyut uyumsuzluðu, pdl %d boyutunda, fakat en çok %d boyutu kabul ediliyor"
+
+msgid "argument is not of type %s"
+msgstr "argüman %s tipinde deðil"
+
+msgid "WARNING"
+msgstr "UYARI"
+
+msgid "Description"
+msgstr "Tanýmlama"
+
+msgid "Unable to convert a reference to type '%s'"
+msgstr "Dayanak '%s' tipine dönüþtürülemiyor"
+
+msgid ""
+"conversion from string to type $pf_type2string{$type} is not yet implemented\n"
+msgstr "dizgiden $pf_type2string{$type} tipine dönüþ henüz desteklenmiyor\n"
+
+msgid "argument incompatible with type IMAGE"
+msgstr "argüman IMAGE tipi ile uyumsuz"
+
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr "<Image>/Filtreler/Bulanýk/2x2 Bulanýk"
+
+msgid "not enough"
+msgstr "yeterli deðil"
+
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtreler/Hesapla/Patlama..."
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-9"
+
+msgid "Synopsis"
+msgstr "Özet"
+
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Filtreler/Bindirme/Pikselbindirme..."
+
+msgid "Color"
+msgstr "Renk"
+
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr "HAYATÝ: canonicalize_colour geriye deðer döndürmedi!"
+
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Filtreler/Perl Ýfadesi Uygula..."
+
+msgid "DESCRIPTION"
+msgstr "TANIMLAMA"
+
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr "'$filename' yazma için açýlamadý: $!\n"
+
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Image>/Filtreler/Boz/AynaAyrýmý..."
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr "<Save> eklentisi 5 standart argüman olmadan çaðrýldý!\n"
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr "gimp iletiþimi için soket çifti oluþturulamadý: $!"
+
+msgid "accepting connections in $host"
+msgstr "$host adresinde baðlantýlar kabul ediliyor"
+
+msgid "unable to create '$fn': $!"
+msgstr "'$fn' oluþturulamadý: $!"
+
+msgid "Previous"
+msgstr "Önceki"
+
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr "UYARI: $function geriye resim olmayan bir deðer döndürdü: \"$img\"\n"
+
+msgid "Command"
+msgstr "Komut"
+
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr "perl-dizidayanak gimp-dizisi için veritipi olarak gerekli"
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr "$Gimp::Net::default_tcp_port portundan baðlantýlar kabul ediliyor"
+
+msgid "required callback 'query' not found\n"
+msgstr "gerekli geriçaðrý 'query' bulunamadý\n"
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Xtns/Resimler_Yarat"
+
+msgid "Save $name"
+msgstr "$name dosyasýný kaydet"
+
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr ""
+"çalýþma modu INTERACTIVE, NONINTERACTIVE veya RUN_WITH_LAST_VALS olmalý\n"
+
+msgid "<Image>/Video/VCR Console..."
+msgstr "<Image>/Video/VCR Konsolu..."
+
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr "<Image>/Filtreler/Kenar-Tarama/2x2 Kenar Tarama"
+
+msgid "Copyright"
+msgstr "Telif hakký"
+
+msgid "interface=... tag is no longer supported\n"
+msgstr "interface=... etiketi artýk desteklenmiyor\n"
+
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
+msgstr ""
+"INT32 deðer bekleniyordu fakat '%s' alýndý. Belki '%s' demek istediniz ve "
+"'use strict'i unuttunuz."
+
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<Image>/Filtreler/Logulatör/Þeffaf Logo..."
+
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
+msgstr ""
+"bozuk parametre tanýmý, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] veya PARAM_TYPE "
+"bekleniyordu"
+
+msgid "Background"
+msgstr "Arkaplan"
+
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr "gimp_pattern_select_widget'a son argüman sayýl dayanak olmalý"
+
+msgid "<Toolbox>/Xtns/Render/Stamps..."
+msgstr "<Toolbox>/Xtns/Hesapla/Pullar..."
+
+msgid "accepting connections on $unix_path"
+msgstr "$unix_path yolundan baðlantýlar kabul ediliyor"
+
+msgid "Load $name"
+msgstr "$name Yüklensin"
+
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr "<Image>/Filtreler/Gürültü/Geçiþlendir..."
+
+msgid "Saving '$filename' as DATAURL..."
+msgstr "'$filename' DATAURL olarak kaydediliyor..."
+
+msgid ", %d bytes data]"
+msgstr ", %d bayt veri]"
+
+msgid "unable to create listening tcp socket: $!\n"
+msgstr "tcp dinleme soketi oluþturulamadý: $!\n"
+
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
+"gimp-1.1 and report this error"
+msgstr ""
+"gimp_pixel_rgns_register sadece 1, 2 veya 3 argümaný destekler, kurulumu "
+"gimp-1.1'e yükseltin ve bu hatayý bildirin"
+
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr "<Image>/Filtreler/Hesapla/Fýrçalanmýþ Metal..."
+
+msgid "Bumpmap"
+msgstr "Kabartýharita"
+
+msgid "<Image>/Filters/Text/TeX String..."
+msgstr "<Image>/Filtreler/Metin/TeX Dizgisi..."
+
+msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
+msgstr "Gimp::Drawable, Gimp::GimpDrawable olarak dönüþtürülemedi (id %d)"
+
+msgid "Saving '$filename' as COLORHTML..."
+msgstr "'$filename' COLORHTML olarak kaydediliyor..."
+
+msgid "too many"
+msgstr "çok fazla"
+
+msgid "required callback 'net' not found\n"
+msgstr "gerekli geriçaðrý 'net' bulunamadý\n"
+
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr "<Image>/Filtreler/Hesapla/Parlama Ekle"
+
+msgid "Author"
+msgstr "Yazar"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!\n"
+msgstr "Bu programý ALFA KANALI olmadan çalýþtýramazsýnýz!!\n"
+
+msgid "More..."
+msgstr "Daha fazla..."
+
+msgid "Seth Spin..."
+msgstr "Seth Dönüþü..."
+
+msgid "arguments to main not yet supported!"
+msgstr "main'e argümanlar henüz desteklenmiyor!"
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Filtreler/Logulatör/Gazete Baskýsý Metin"
+
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filtreler/Gürültü/Xach Görüntüsü..."
+
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr "UYARI: aktif bir kilit varken alýcý baðlantýyý kesti\n"
+
+msgid "NAME"
+msgstr "ISIM"
+
+msgid "Help"
+msgstr "Yardým"
+
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Filtreler/Logulatör/Oyuk"
+
+msgid "no font specified, using default"
+msgstr "yazýtipi tanýmlanmadý, öntanýmlý deðer kullanýlýyor"
+
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Filtreler/Bindirme/Xach Gölgeleri..."
+
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr "<Image>/Filtreler/Bindirme/Xach Bloklarý..."
+
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "gimp_tile_get_data henüz desteklenmiyor\n"
+
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Filtreler/Logulatör/Hýzlý Metin"
+
+msgid "unable to grok colour specification"
+msgstr "renk tanýmý anlaþýlamadý"
+
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "prep4gif için en azýndan 2 katmana ihtiyacýnýz var"
+
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr "<Image>/Düzenleme/Tekrar Et & Çoðalt"
+
+msgid "too many arguments"
+msgstr "çok fazla argüman"
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+"$Gimp::_PROT_VERSION protokol versiyonu bekleniyordu, fakat sunucu $r[0] "
+"kullanýyor.\n"
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-9"
+
+msgid "Restore values to the previous ones"
+msgstr "Deðerleri bir önceki seçime çevir"
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr "<Image> eklentisi resim ve çizilebilir argümanlarý olmadan çaðrýldý!\n"
+
+msgid ", authorization required"
+msgstr ", yetki gerekli"
+
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Image>/Filtreler/Gürültü/Geri Ýtilim..."
+
+msgid "unable to create listening unix socket: $!\n"
+msgstr "unix dinleme soketi oluþturulamadý: $!\n"
+
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr ""
+"geçersiz GIMP_HOST: 'spawn' bu sunucu için geçerli bir baðlantý yöntemi deðil"
+
+msgid "<Image>/View/3D Surface..."
+msgstr "<Image>/Görüntü/3B Yüzey..."
+
+msgid "Last Modified"
+msgstr "Son Deðiþtirme"
+
+msgid "Shortcuts"
+msgstr "Kýsa yollar"
+
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr ""
+"pencere açmak için gtk perl modülüne ihtiyaç var,\n"
+"öntanýmlý deðerlerle çalýþtýrýlýyor"
+
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr "<Image>/Filtreler/Logulatör/Web baþlýðý"
+
+msgid "<Image>/Filters/Web/Webify..."
+msgstr "<Image>/Filtreler/Að/Að'laþtýr..."
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr "<Load> eklentisi 3 standart argüman olmadan çaðrýldý!\n"
+
+msgid "Font Selection Dialog ($desc)"
+msgstr "Dosya Seçim Penceresi ($desc)"
+
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+"%s: Ýþlemsel Veritabaný çalýþtýrýlýrken geçersiz giriþ argümanlarý hatasý "
+"oluþtu"
+
+msgid "(UNINITIALIZED)"
+msgstr "(ÖN HAZIRLIKSIZ)"
+
+msgid "closing connection %d (%d requests in %g seconds)"
+msgstr "%d baðlantýsý kapaniyor (%d istek / %g saniye)"
+
+msgid "<Image>/Filters/Text/Fit Text..."
+msgstr "<Image>/Filtreler/Text/Uygun Yazý..."
+
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr "<Toolbox>/Xtns/Hesapla/Altýn Oran..."
+
+msgid "authorization failed: $r[1]\n"
+msgstr "yetki baþarýsýz: $r[1]\n"
+
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Image>/Kýlavuzlar/Orta Kýlavuz..."
+
+msgid "server version $Gimp::VERSION started"
+msgstr "sürüm $Gimp::VERSION sunucu çalýþtý"
+
+msgid "authorization unnecessary"
+msgstr "yetki gerekli deðil"
+
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr ""
+"$function: :otomatik dýþa aktarým etiketi olmadan $AUTOLOAD çaðrýmý artýk "
+"geçersiz!\n"
+
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Filtreler/Ýyileþtir/Silerek Keskinleþtir..."
+
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr "Gimp::Net iletiþim soketi açýlamadý: $!\n"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr "<Toolbox>/Xtns/Hesapla/Logolar/Ýç Kabartý..."
+
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr "<Image>/Filtreler/Boz/Ýzler..."
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "illegal parasite specification, arrayref expected"
+msgstr "geçersiz parazit tanýmý, dizidayanak bekleniyordu"
+
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr "<Image>/Filtreler/Çeþitli/Çerçeve Ortalamasý..."
+
+msgid "unable to fork: $!"
+msgstr "çatallanamýyor: $!"
+
+msgid "Unsupported argumenttype $type"
+msgstr "$type desteklenmeyen argüman tipi"
+
+msgid "get current foreground colour from the gimp"
+msgstr "gimp'ten seçili önplan rengini al"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr "Bu programý ALFA KANALI olmadan çalýþtýramazsýnýz!"
+
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr "<Toolbox>/Xtns/Örnek Perl Eklenti"
+
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Image>/Filtreler/Çeþitli/Magick..."
+
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Image>/Filtreler/Hesapla/Pullaþtýr..."
+
+msgid "<Image>/Select/Round..."
+msgstr "<Image>/Seçim/Yuvarlaklaþtýr..."
+
+msgid "Unable to read temporary image tile $tmp: $!"
+msgstr "$tmp geçici döþeme resmi okunamadý: $!"
+
+msgid "Help for "
+msgstr ""
+
+msgid "export failed"
+msgstr "dýþa aktarým baþarýsýz"
+
+msgid "<Image>/Filters/Text/Terral Text..."
+msgstr "<Image>/Filtreler/Hesapla/Yüzeysel Metin..."
+
+msgid "dunno how to pass arg type %d"
+msgstr "%d argüman tipinin nasýl geçirileceði bilinmiyor"
+
+msgid "/Xtns/Render/Povray"
+msgstr "/Xtns/Hesapla/Povray"
+
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Filtreler/Boz/Rüzgar..."
+
+msgid " (press Tab to complete)"
+msgstr " (tamamlamak icin Tab'a basýn)"
+
+msgid "This module was built without support for PDL."
+msgstr "Bu modül IVT desteði olmadan kurulmuþ."
+
+msgid "plug-in returned %d more values than expected"
+msgstr "eklenti beklenenden %d fazla deðer geri döndürdü"
+
+msgid "<Toolbox>/Xtns/Homepage-Logo"
+msgstr "<Toolbox>/Xtns/Anasayfa-Logosu"
+
+msgid "FG"
+msgstr "ÖP"
+
 msgid "url size is too large ($max > 1024)\n"
 msgstr "url boyu çok büyük ($max > 1024)\n"
 
-#: Perl-Server:0
-msgid "wrong authorization, aborting connection"
-msgstr "yanlýþ yetki, baðlantý kesiliyor"
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+"$function: argüman/dönüþ deðeri '$p->[1]' geçersiz '$p->[0]' tipine sahip"
 
-#: Gimp/Compat.pm:0
-msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: karþýlýksýz XLFD '$fontname'\n"
+msgid "Edit"
+msgstr "Düzenle"
+
+msgid "<Image>/Select/Triangle..."
+msgstr "<Image>/Seçim/Üçgen..."
+
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Image>/Filtreler/Animasyon/ÝçeDýþaÜfle..."
+
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Katmanlar/Küme/Katmanlarý Tekrar Sýrala..."
+
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Filtreler/Ýyileþtir/2x2 Kontrastý Ýyileþtir"
+
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
+msgstr ""
+"$function: '$p->[1]' argümaný geçersiz karakterler içeriyor, sadece 0-9, a-z "
+"ve _ kullanýlabilir"
+
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Image>/Filtreler/Renkler/Ateþ..."
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "illegal command received, aborting connection"
+msgstr "geçersiz komut alýndý, baðlantý kesiliyor"
+
+msgid "(none)"
+msgstr "(yok)"
 
 
