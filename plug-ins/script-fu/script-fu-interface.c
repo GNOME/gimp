@@ -275,6 +275,7 @@ script_fu_add_script (LISP a)
   int i;
   gdouble color[3];
   LISP color_list;
+  gchar *menu_path = NULL;
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
@@ -292,6 +293,10 @@ script_fu_add_script (LISP a)
   val = get_c_string (car (a));
   script->description = g_strdup (val);
   a = cdr (a);
+
+  /* Allow scripts with no menus */
+  if (strncmp(val, "<None>", 6) != 0)
+      menu_path = script->description;
 
   /*  Find the script help  */
   val = get_c_string (car (a));
@@ -458,7 +463,7 @@ script_fu_add_script (LISP a)
 			  script->author,
 			  script->copyright,
 			  script->date,
-			  script->description,
+			  menu_path,
 			  script->img_types,
 			  PROC_TEMPORARY,
 			  script->num_args + 1, 0,

@@ -441,6 +441,7 @@ plug-ins/hot/Makefile
 plug-ins/gz/Makefile
 plug-ins/header/Makefile
 plug-ins/grid/Makefile
+plug-ins/gee/Makefile
 plug-ins/gradmap/Makefile
 plug-ins/gqbist/Makefile
 plug-ins/gif/Makefile
@@ -543,6 +544,7 @@ plug-ins/libgck/gck/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
+plug-ins/screenshot/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

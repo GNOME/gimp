@@ -1,3 +1,9 @@
+Sun Apr 19 20:18:29 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* added screenshot plug-in
+
+	* plug-ins/animationplay/animationplay.c: fix sigsegv on close
+
 Sun Apr 19 14:16:44 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/app_procs.c: truncate labels in the splash screen if they

@@ -66,8 +66,6 @@
  *    the contents are frozen).  Starvation of GTK's redrawing thread?
  *    How do I fix this?
  *
- *  Often segfaults on exit.  GTK stuff.  Help.
- *
  *  Any more?  Let me know!
  */
 
@@ -112,6 +110,9 @@ static        void do_playback        (void);
 static         int parse_ms_tag       (char *str);
 static DisposeType parse_disposal_tag (char *str);
 
+static gint window_delete_callback (GtkWidget *widget,
+				    GdkEvent  *event,
+				    gpointer   data);
 static void window_close_callback  (GtkWidget *widget,
 				    gpointer   data);
 static void playstop_callback  (GtkWidget *widget,
@@ -411,7 +412,7 @@ shape_motion (GtkWidget      *widget,
 
   gdk_window_get_pointer (root_win, &xp, &yp, &mask);
 
-  //  printf("%u %d\n", mask, event->state);fflush(stdout);
+  /*  printf("%u %d\n", mask, event->state);fflush(stdout); */
 
   /* if a button is still held by the time we process this event... */
   if (mask & (GDK_BUTTON1_MASK|
@@ -520,9 +521,9 @@ build_dialog(GImageType basetype,
   gtk_window_set_title (GTK_WINDOW (dlg), windowname);
   g_free(windowname);
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) window_close_callback,
-		      GTK_OBJECT (dlg));
+  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
+		      (GtkSignalFunc) window_delete_callback,
+		      NULL);
 
   
   /* Action area - 'close' button only. */
@@ -1398,6 +1399,23 @@ get_frame_disposal (guint whichframe)
 
 /*  Callbacks  */
 
+static gint
+window_delete_callback (GtkWidget *widget,
+		        GdkEvent  *event,
+		        gpointer   data)
+{
+  if (playing)
+    playstop_callback(NULL, NULL);
+
+  if (shape_window)
+    gtk_widget_destroy(GTK_WIDGET(shape_window));
+
+  gdk_flush();
+  gtk_main_quit();
+
+  return FALSE;
+}
+
 static void
 window_close_callback (GtkWidget *widget,
 		       gpointer   data)
@@ -1405,22 +1423,7 @@ window_close_callback (GtkWidget *widget,
   if (data)
     gtk_widget_destroy(GTK_WIDGET(data));
 
-  if (shape_window)
-    gtk_widget_destroy(GTK_WIDGET(shape_window));
-
-  if (playing)
-    playstop_callback(NULL, NULL);
-
-  gdk_flush();
-
-  /* catch up on outstanding events, or gtk_main_quit won't quit (!?) */
-  /*  sleep(1);*/
-  while (gtk_events_pending())
-    gtk_main_iteration_do(TRUE);
-
-  /* FIXME: Why are we segfaulting? */
-
-  gtk_main_quit();
+  window_delete_callback (NULL, NULL, NULL);
 }
 
 static gint

@@ -55,6 +55,7 @@ SUBDIRS = 			\
 	gauss_iir		\
 	gauss_rle		\
 	gbr			\
+	gee			\
 	gfig			\
 	gfli			\
 	gicon			\
@@ -99,6 +100,7 @@ SUBDIRS = 			\
 	rotate			\
 	rotators		\
 	scatter_hsv		\
+	screenshot		\
 	semiflatten		\
 	sgi			\
 	shift			\
