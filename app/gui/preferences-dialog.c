@@ -1125,7 +1125,7 @@ prefs_dialog_new (Gimp    *gimp,
                           GTK_BOX (vbox2));
 
   prefs_check_button_add (config, "can-change-accels",
-                          _("Dynamic _Keyboard Shortcuts (does not work in GNOME2 yet)"),
+                          _("Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
 
   /* Window Positions */

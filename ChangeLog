@@ -1,3 +1,10 @@
+2003-04-01  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/menus.c: turns out we can override the XSetting.. do so.
+
+	* app/gui/preferences_dialog.c: Remove GNOME2 warning, it should work
+	fine now.
+
 2003-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.h: #define GIMP_VIEWABLE_MAX_PREVIEW_SIZE
@@ -77,14 +84,14 @@
 
 2003-04-01  Manish Singh  <yosh@gimp.org>
 
-	* config/gimpguiconfig.[ch]: added gboolean can_change_accels
+	* app/config/gimpguiconfig.[ch]: added gboolean can_change_accels
 
-	* config/gimprc-blurbs.h: blurb for the above
+	* app/config/gimprc-blurbs.h: blurb for the above
 
-	* gui/preferences-dialog.c: UI for the above. Has warning about
+	* app/gui/preferences-dialog.c: UI for the above. Has warning about
 	not working in GNOME2 yet (pending resolution of Bug #109653)
 
-	* gui/menus.c: use can_change_accels. It simply parses the rc
+	* app/gui/menus.c: use can_change_accels. It simply parses the rc
 	string gtk-can-change-accels = [0|1] depending on the state
 	of can_change_accels in the gui config.
 

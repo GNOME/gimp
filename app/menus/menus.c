@@ -97,10 +97,13 @@ menus_init (Gimp *gimp)
 
   menus_initialized = TRUE;
 
-  g_signal_connect (gimp->config, "notify::can-change-accels",
-                    G_CALLBACK (menu_can_change_accels), NULL);
+  /* We need to make sure the property is installed before using it */
+  g_type_class_ref (GTK_TYPE_MENU);
 
   menu_can_change_accels (GIMP_GUI_CONFIG (gimp->config));
+
+  g_signal_connect (gimp->config, "notify::can-change-accels",
+                    G_CALLBACK (menu_can_change_accels), NULL);
 
   global_menu_factory = gimp_menu_factory_new (gimp);
 
@@ -437,12 +440,7 @@ menus_last_opened_reorder (GimpContainer   *container,
 static void
 menu_can_change_accels (GimpGuiConfig *config)
 {
-  gchar *rc_string;
-
-  rc_string = g_strdup_printf ("gtk-can-change-accels = %s",
-                               config->can_change_accels ? "1" : "0");
-  
-  gtk_rc_parse_string (rc_string);
-
-  g_free (rc_string);
+  g_object_set (gtk_settings_get_default (),
+                "gtk-can-change-accels", config->can_change_accels,
+                NULL);
 }
