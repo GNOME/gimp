@@ -1,5 +1,10 @@
 2005-02-08  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/Makefile.am: install sphere.py in unstable
+	releases only.
+
+2005-02-08  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/sphere.py
 	* plug-ins/pygimp/plug-ins/gimpcons.py
 	* plug-ins/pygimp/plug-ins/pdbbrowse.py: Just leave imagetypes empty,
