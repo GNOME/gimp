@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+#
+# Convert a script from the 1.0 Script-Fu interface to the new API
+#
+#   (  This script is simple hack but may be useful for someone, so  )
+#   (  I include it here. It is not meant to be distributed with a   )
+#   (  gimp release.                   Sven Neumann <sven@gimp.org>  )  
+#
+#
+# Changes so far are:
+# - Use SF-STRING instead of SF-VALUE where appropriate
+#
+while (<>) {
+    if (/SF-VALUE/) {
+	if (s/\"\\\"(.*)\\\"\"/\"$1\"/) {
+	    s/SF-VALUE/SF-STRING/;
+	}
+    }
+    print;
+}
+
