@@ -223,17 +223,14 @@ static void
 gimp_levels_tool_init (GimpLevelsTool *l_tool)
 {
   GimpImageMapTool *image_map_tool;
-  Gimp             *gimp;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
 
   image_map_tool->shell_desc = _("Adjust Color Levels");
 
-  gimp = GIMP_TOOL (l_tool)->tool_info->gimp;
-
   l_tool->lut           = gimp_lut_new ();
   l_tool->levels        = g_new0 (Levels, 1);
-  l_tool->hist          = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+  l_tool->hist          = NULL;
   l_tool->channel       = GIMP_HISTOGRAM_VALUE;
   l_tool->active_picker = NULL;
 
@@ -281,6 +278,13 @@ gimp_levels_tool_initialize (GimpTool    *tool,
     {
       g_message (_("Levels for indexed drawables cannot be adjusted."));
       return;
+    }
+
+  if (!l_tool->hist)
+    {
+      Gimp *gimp = GIMP_TOOL (l_tool)->tool_info->gimp;
+
+      l_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     }
 
   drawable = gimp_image_active_drawable (gdisp->gimage);

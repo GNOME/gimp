@@ -151,16 +151,13 @@ static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
   GimpImageMapTool *image_map_tool;
-  Gimp             *gimp;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
 
   image_map_tool->shell_desc  = _("Apply Threshold");
 
-  gimp = GIMP_TOOL (t_tool)->tool_info->gimp;
-
   t_tool->threshold = g_new0 (Threshold, 1);
-  t_tool->hist      = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+  t_tool->hist      = NULL;
 
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;
@@ -201,6 +198,13 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
     {
       g_message (_("Threshold does not operate on indexed drawables."));
       return;
+    }
+
+  if (!t_tool->hist)
+    {
+      Gimp *gimp = GIMP_TOOL (t_tool)->tool_info->gimp;
+
+      t_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     }
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
