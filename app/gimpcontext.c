@@ -1446,7 +1446,7 @@ gimp_context_real_set_brush (GimpContext *context,
   if (brush)
     {
       gtk_object_ref (GTK_OBJECT (brush));
-      gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+      gtk_signal_connect (GTK_OBJECT (brush), "invalidate_preview",
 			  GTK_SIGNAL_FUNC (gimp_context_brush_dirty),
 			  context);
       gtk_signal_connect (GTK_OBJECT (brush), "name_changed",

@@ -806,7 +806,7 @@ paint_core_init (PaintCore    *paint_core,
     }
 
   gtk_object_ref (GTK_OBJECT (brush));
-  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+  gtk_signal_connect (GTK_OBJECT (brush), "invalidate_preview",
 		      GTK_SIGNAL_FUNC (paint_core_invalidate_cache),
 		      NULL);
 

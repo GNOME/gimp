@@ -459,9 +459,10 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 	  centerp[-1*y*gbrush->mask->width - x] = a;
 	}
     }
+
   g_free (lookup);
 
-  gtk_signal_emit_by_name (GTK_OBJECT (brush), "dirty");
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (brush));
 }
 
 gfloat

@@ -1,5 +1,20 @@
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpbrush.[ch]
+	* app/gimpbrushpreview.c: moved the scale and pipe indicator
+	rendering code from GimpBrush to GimpBrushPreview.
+	Removed the "dirty" signal from GimpBrush and use
+	"invalidate_preview" of the GimpViewable class.
+
+	* app/brush_edit.c
+	* app/brush_select.c
+	* app/gimpbrushgenerated.c
+	* app/gimpcontext.c
+	* app/gimpcontextpreview.c
+	* app/tools/paint_core.c: changed accordingly.
+
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimpimagepreview.[ch]: new object with own implementations
 	of "create_preview" and "create_popup".

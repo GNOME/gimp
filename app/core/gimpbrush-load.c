@@ -52,16 +52,8 @@
 /*  this needs to go away  */
 #include "tools/paint_core.h"
 #include "brush_scale.h"
-#include "gimpbrushpipe.h"
 
 #include "libgimp/gimpintl.h"
-
-
-enum
-{
-  DIRTY,
-  LAST_SIGNAL
-};
 
 
 static void        gimp_brush_class_init       (GimpBrushClass *klass);
@@ -74,8 +66,6 @@ static TempBuf   * gimp_brush_get_new_preview  (GimpViewable   *viewable,
 static GimpBrush * gimp_brush_select_brush     (PaintCore      *paint_core);
 static gboolean    gimp_brush_want_null_motion (PaintCore      *paint_core);
 
-
-static guint gimp_brush_signals[LAST_SIGNAL] = { 0 };
 
 static GimpViewableClass *parent_class = NULL;
 
@@ -115,22 +105,9 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
   
-  gimp_brush_signals[DIRTY] =
-    gtk_signal_new ("dirty",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpBrushClass,
-				       dirty),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
-
   object_class->destroy = gimp_brush_destroy;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
-
-  klass->dirty            = NULL;
 
   klass->select_brush     = gimp_brush_select_brush;
   klass->want_null_motion = gimp_brush_want_null_motion;
@@ -173,8 +150,6 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 			    gint          height)
 {
   GimpBrush   *brush;
-  gboolean     is_popup   = FALSE;
-
   gboolean     scale      = FALSE;
   gint         brush_width;
   gint         brush_height;
@@ -267,105 +242,13 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-#define indicator_width  7
-#define indicator_height 7
-
-#define WHT { 255, 255, 255 }
-#define BLK {   0,   0,   0 }
-#define RED { 255, 127, 127 }
-
   if (scale)
     {
-      static const guchar scale_indicator_bits[7][7][3] = 
-      {
-	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-	{ WHT, BLK, BLK, BLK, BLK, BLK, WHT },
-	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT }
-      };
-
-      static const guchar scale_pipe_indicator_bits[7][7][3] = 
-      {
-	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, BLK, WHT, WHT, RED },
-	{ WHT, WHT, WHT, BLK, WHT, RED, RED },
-	{ WHT, BLK, BLK, BLK, BLK, BLK, RED },
-	{ WHT, WHT, WHT, BLK, RED, RED, RED },
-	{ WHT, WHT, RED, BLK, RED, RED, RED },
-	{ WHT, RED, RED, RED, RED, RED, RED }
-      };
-
-      offset_x = width  - indicator_width;
-      offset_y = height - indicator_height;
-
-      b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
-
-      for (y = 0; y < indicator_height; y++)
-	{
-	  for (x = 0; x < indicator_height; x++)
-	    {
-	      if (GIMP_IS_BRUSH_PIPE (brush))
-		{
-		  *b++ = scale_pipe_indicator_bits[y][x][0];
-		  *b++ = scale_pipe_indicator_bits[y][x][1];
-		  *b++ = scale_pipe_indicator_bits[y][x][2];
-		}
-	      else
-		{
-		  *b++ = scale_indicator_bits[y][x][0];
-		  *b++ = scale_indicator_bits[y][x][1];
-		  *b++ = scale_indicator_bits[y][x][2];
-		}
-	    }
-
-	  b += (return_buf->width - indicator_width) * return_buf->bytes;
-	}
-
       temp_buf_free (mask_buf);
 
       if (pixmap_buf)
         temp_buf_free (pixmap_buf);
     }
-  else if (!is_popup && GIMP_IS_BRUSH_PIPE (brush))
-    {
-      static const guchar pipe_indicator_bits[7][7][3] = 
-      {
-	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-	{ WHT, WHT, WHT, WHT, WHT, WHT, RED },
-	{ WHT, WHT, WHT, WHT, WHT, RED, RED },
-	{ WHT, WHT, WHT, WHT, RED, RED, RED },
-	{ WHT, WHT, WHT, RED, RED, RED, RED },
-	{ WHT, WHT, RED, RED, RED, RED, RED },
-	{ WHT, RED, RED, RED, RED, RED, RED }
-      };
-
-      offset_x = width  - indicator_width;
-      offset_y = height - indicator_height;
-
-      b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
-
-      for (y = 0; y < indicator_height; y++)
-	{
-	  for (x = 0; x < indicator_height; x++)
-	    {
-	      *b++ = pipe_indicator_bits[y][x][0];
-	      *b++ = pipe_indicator_bits[y][x][1];
-	      *b++ = pipe_indicator_bits[y][x][2];
-	    }
-
-	  b += (return_buf->width - indicator_width) * return_buf->bytes;
-	}
-    }
-
-#undef indicator_width
-#undef indicator_height
-
-#undef WHT
-#undef BLK
-#undef RED
 
   return return_buf;
 }

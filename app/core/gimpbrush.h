@@ -48,8 +48,6 @@ struct _GimpBrushClass
 {
   GimpViewableClass parent_class;
 
-  void        (* dirty)            (GimpBrush *brush);
-
   /* FIXME: these are no virtual function pointers but bad hacks: */
   GimpBrush * (* select_brush)     (PaintCore *paint_core);
   gboolean    (* want_null_motion) (PaintCore *paint_core);

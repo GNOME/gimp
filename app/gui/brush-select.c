@@ -534,7 +534,7 @@ brush_select_new (gchar   *title,
 
   bsp->dirty_handler_id =
     gimp_container_add_handler
-    (GIMP_CONTAINER (global_brush_list), "dirty",
+    (GIMP_CONTAINER (global_brush_list), "invalidate_preview",
      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
      bsp);
 

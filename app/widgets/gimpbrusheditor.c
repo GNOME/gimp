@@ -173,7 +173,7 @@ brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
 
   brush = GIMP_BRUSH_GENERATED (gbrush);
 
-  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+  gtk_signal_connect (GTK_OBJECT (brush), "invalidate_preview",
 		      GTK_SIGNAL_FUNC (brush_edit_brush_dirty_callback),
 		      begw);
   gtk_signal_connect (GTK_OBJECT (brush), "name_changed",

@@ -343,7 +343,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
     {
     case GCP_BRUSH:
       gimp_context_preview_draw_brush (gcp);
-      gtk_signal_connect (GTK_OBJECT (gcp->data), "dirty",
+      gtk_signal_connect (GTK_OBJECT (gcp->data), "invalidate_preview",
 			  GTK_SIGNAL_FUNC (brush_dirty_callback), gcp);
       gtk_signal_connect (GTK_OBJECT (gcp->data), "name_changed",
 			  GTK_SIGNAL_FUNC (brush_rename_callback), gcp);
