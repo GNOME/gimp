@@ -1,3 +1,7 @@
+2001-12-29  Sven Neumann  <sven@gimp.org>
+
+	* data/brushes/vine.gih: fixed rank and increased spacing.
+
 2001-12-28  Sven Neumann  <sven@gimp.org>
 
 	* app/scan_convert.c (scan_converter_to_channel): fixed a stupid bug
