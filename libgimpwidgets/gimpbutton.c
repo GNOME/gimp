@@ -153,7 +153,7 @@ gimp_button_button_press (GtkWidget      *widget,
 
   button = GIMP_BUTTON (widget);
 
-  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+  if (bevent->button == 1)
     {
       button->press_state = bevent->state;
     }
@@ -165,7 +165,7 @@ gimp_button_button_press (GtkWidget      *widget,
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
     return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
