@@ -4,6 +4,8 @@ gimpincludedir = $(includedir)/libgimp
 
 scriptdata =
 
+EXTRA_DIST = gimpfeatures.h.in
+
 lib_LTLIBRARIES = libgimp-1.1.la libgimpui-1.1.la
 noinst_LIBRARIES = libgimpi.a
 
@@ -37,6 +39,7 @@ libgimpui_1_1_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h		\
+	gimpfeatures.h	\
 	gimpenums.h	\
 	gimpmenu.h	\
 	gimpui.h
