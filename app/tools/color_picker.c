@@ -477,6 +477,7 @@ pick_color_do (GimpImage    *gimage,
   GetColorFunc get_color_func;
   GtkObject *get_color_obj;
 
+
   if (!drawable && !sample_merged) 
     return FALSE;
 
@@ -503,9 +504,16 @@ pick_color_do (GimpImage    *gimage,
 
   has_alpha = TYPE_HAS_ALPHA (sample_type);
 
-  if (!(color = (*get_color_func) (get_color_obj, x, y)))
-    return FALSE;
-
+  if( x >= 0 && x < gimp_drawable_width (drawable) && 
+      y >= 0 && y < gimp_drawable_height (drawable))
+    {
+      if (!(color = (*get_color_func) (get_color_obj, x, y)))
+	return FALSE;
+    }
+  else
+    {
+      return FALSE;
+    }
   if (sample_average)
     {
       gint i, j;

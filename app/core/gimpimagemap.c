@@ -312,39 +312,47 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
 
   _image_map = (_ImageMap *) image_map;
 
-  /* Check if done damage to original image */
-  if(!_image_map->undo_tiles)
-    return (gimp_drawable_get_color_at(_image_map->drawable,x,y));
+  if( x >= 0 && x < gimp_drawable_width (_image_map->drawable) && 
+      y >= 0 && y < gimp_drawable_height (_image_map->drawable))
+    {
+      /* Check if done damage to original image */
+      if(!_image_map->undo_tiles)
+	return (gimp_drawable_get_color_at(_image_map->drawable,x,y));
 
-  if (!image_map ||
-      (!gimp_drawable_gimage(_image_map->drawable) && 
-       gimp_drawable_is_indexed(_image_map->drawable)) ||
-      x < 0 || y < 0 ||
-      x >= _image_map->undo_tiles->width ||
-      y >= _image_map->undo_tiles->height)
-  {
-    return NULL;
-  }
+      if (!image_map ||
+	  (!gimp_drawable_gimage(_image_map->drawable) && 
+	   gimp_drawable_is_indexed(_image_map->drawable)) ||
+	  x < 0 || y < 0 ||
+	  x >= _image_map->undo_tiles->width ||
+	  y >= _image_map->undo_tiles->height)
+	{
+	  return NULL;
+	}
 
-  dest = g_new(unsigned char, 5);
+      dest = g_new(unsigned char, 5);
 
-  tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
-				TRUE, FALSE);
+      tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
+				    TRUE, FALSE);
 
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-  gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
-			gimp_drawable_type (_image_map->drawable), dest, src);
+      gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
+			    gimp_drawable_type (_image_map->drawable), dest, src);
 
-  if(TYPE_HAS_ALPHA(gimp_drawable_type (_image_map->drawable)))
-    dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
-  else
-    dest[3] = 255;
-  if (gimp_drawable_is_indexed(_image_map->drawable))
-    dest[4] = src[0];
-  else
-    dest[4] = 0;
-  tile_release (tile, FALSE);
-  return dest;
+      if(TYPE_HAS_ALPHA(gimp_drawable_type (_image_map->drawable)))
+	dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];
+      else
+	dest[3] = 255;
+      if (gimp_drawable_is_indexed(_image_map->drawable))
+	dest[4] = src[0];
+      else
+	dest[4] = 0;
+      tile_release (tile, FALSE);
+      return dest;
+    }
+  else /* out of bounds error */
+    {
+      return NULL;
+    }
 }
 

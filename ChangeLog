@@ -1,3 +1,22 @@
+2000-02-28 02:40-GMT Garry R. Osgood <gosgood@idt.net>
+
+        * gimp/app/by_color_select.c 
+	* gimp/app/color_picker.c 
+	* gimp/app/gimpdrawable.c 
+	* gimp/app/image_map.c 
+	* gimp/app/paint_core.c
+	Inadvertent logic error in g_return_val_if_fail() 
+	style sanity checks implemented in 
+	gimp_drawable_get_color_at() gave rise to
+	segment violation reported in #6624; 
+	error admitted out-of-bounds x&y that
+	do not map to tiles. Closes #6624.
+	GTK-critical warnings which result from
+	this new sanity check require that
+	gimp_drawable_get_color_at() clients 
+	perform initial culling of out-of-bounds
+	x & y coordinates.
+ 	
 2000-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpfileselection.c

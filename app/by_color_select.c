@@ -396,35 +396,39 @@ by_color_select_button_release (Tool           *tool,
       gdisplay_untransform_coords (gdisp, by_color_sel->x, by_color_sel->y,
 				   &x, &y, FALSE, use_offsets);
 
-      /*  Get the start color  */
-      if (by_color_options->sample_merged)
+      if( x >= 0 && x < gimp_drawable_width (drawable) && 
+	  y >= 0 && y < gimp_drawable_height (drawable))
 	{
-	  if (!(color = gimp_image_get_color_at (gdisp->gimage, x, y)))
-	    return;
+	  /*  Get the start color  */
+	  if (by_color_options->sample_merged)
+	    {
+	      if (!(color = gimp_image_get_color_at (gdisp->gimage, x, y)))
+		return;
+	    }
+	  else
+	    {
+	      if (!(color = gimp_drawable_get_color_at (drawable, x, y)))
+		return;
+	    }
+
+	  /*  select the area  */
+	  by_color_select (gdisp->gimage, drawable, color,
+			   by_color_dialog->threshold,
+			   by_color_sel->operation,
+			   by_color_options->antialias,
+			   by_color_options->feather,
+			   by_color_options->feather_radius,
+			   by_color_options->sample_merged);
+
+	  g_free (color);
+
+	  /*  show selection on all views  */
+	  gdisplays_flush ();
+
+	  /*  update the preview window  */
+	  by_color_select_render (by_color_dialog, gdisp->gimage);
+	  by_color_select_draw (by_color_dialog, gdisp->gimage);
 	}
-      else
-	{
-	  if (!(color = gimp_drawable_get_color_at (drawable, x, y)))
-	    return;
-	}
-
-      /*  select the area  */
-      by_color_select (gdisp->gimage, drawable, color,
-		       by_color_dialog->threshold,
-		       by_color_sel->operation,
-		       by_color_options->antialias,
-		       by_color_options->feather,
-		       by_color_options->feather_radius,
-		       by_color_options->sample_merged);
-
-      g_free (color);
-
-      /*  show selection on all views  */
-      gdisplays_flush ();
-
-      /*  update the preview window  */
-      by_color_select_render (by_color_dialog, gdisp->gimage);
-      by_color_select_draw (by_color_dialog, gdisp->gimage);
     }
 }
 
