@@ -1532,6 +1532,7 @@ nav_window_free (GDisplay *del_gdisp,InfoDialog *info_win)
 
 	      gtk_widget_set_sensitive(nav_window_auto->vbox,FALSE);
 	      iwd->gdisp_ptr = NULL;
+	      gtk_widget_hide(GTK_WIDGET(nav_window_auto->shell));
 	    }
 	}
       return;

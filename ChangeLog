@@ -1,3 +1,10 @@
+Thu Mar  2 21:45:17 GMT 2000 Andy Thomas <alt@gimp.org>
+
+        * gimp/app/nav_window.c
+
+	The "follow display" nav window is now hidden when the 
+        last window is closed.
+
 2000-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/iscissors.c: Iscissors was using rect_select_cursor_update
