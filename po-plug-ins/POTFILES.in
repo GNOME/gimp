@@ -147,6 +147,7 @@ plug-ins/gap/gap_dbbrowser_utils.c
 plug-ins/gap/gap_decode_mpeg_main.c
 plug-ins/gap/gap_filter_foreach.c
 plug-ins/gap/gap_filter_main.c
+plug-ins/gap/gap_frontends_main.c
 plug-ins/gap/gap_lib.c
 plug-ins/gap/gap_main.c
 plug-ins/gap/gap_mod_layer.c

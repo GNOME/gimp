@@ -94,6 +94,12 @@
 
 int gap_debug; /* ==0  ... dont print debug infos */
 
+/*  for i18n  */
+static gchar G_GNUC_UNUSED *dummy_entries[] =
+{
+  N_("<Image>/Video/Split Video to Frames"),
+  N_("<Toolbox>/Xtns/Split Video to Frames")
+};
 
 static void   query      (void);
 static void   run        (char    *name,

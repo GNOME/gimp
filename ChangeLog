@@ -1,3 +1,11 @@
+2000-01-27  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/gap/gap_decode_mpeg_main.c: added dummy menus
+	for menu path translation.
+	
+	* po-plug-ins/POTFILES.in: added missing
+	plug-ins/gap/gap_frontends_main.c.
+
 Thu Jan 27 14:55:00 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/print/*: updated to version 3.0.5
