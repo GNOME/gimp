@@ -1,3 +1,9 @@
+2003-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/resolution-calibrate-dialog.c (resolution_calibrate_ok):
+	use the GIMP_COORDINATES_CHAINBUTTON() macro instead of trying to
+	get it using a hardcoded and misspelled identifier.
+
 2003-09-28  DindinX <david@dindinx.net>
 
 	* libgimpmath/gimpmatrix.[ch]:

@@ -46,20 +46,19 @@ resolution_calibrate_ok (GtkWidget *button,
 {
   GtkWidget *resolution_entry;
   GtkWidget *chain_button;
-  gdouble x, y;
+  gdouble    x, y;
 
   resolution_entry = g_object_get_data (G_OBJECT (data), "resolution-entry");
 
   x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
   y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
 
-  calibrate_xres = (gdouble)ruler_width  * calibrate_xres / x;
-  calibrate_yres = (gdouble)ruler_height * calibrate_yres / y;
+  calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
+  calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
 
-  chain_button = g_object_get_data (G_OBJECT (resolution_entry),
-                                    "chain_button");
-  if (chain_button &&
-      ABS (x -y) > GIMP_MIN_RESOLUTION)
+  chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
+
+  if (ABS (x -y) > GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
