@@ -1,3 +1,12 @@
+2003-09-03  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Changed slightly - I overestimated/overanticipated 
+	some things.
+
+	* HACKING: Updated to fix some indentation issues, and clear 
+	up some small points (like not building as root) following 
+	suggestions from Emmet Caulfield <emmet@netrogen.com>
+
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c (gimp_rgb_to_cmyk_int): allow to

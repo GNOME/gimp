@@ -3,23 +3,24 @@ Requirements
 If you want to hack on the GIMP project, it will make your life easier
 to have the following packages (or newer versions) installed:
 
-	- GNU autoconf 2.54
-	- GNU automake 1.6
-	- GNU libtool 1.3.4
+    * GNU autoconf 2.52
+        - ftp://ftp.gnu.org/gnu/autoconf/
+    * GNU automake 1.6
+        - ftp://ftp.gnu.org/gnu/automake/
+    * GNU libtool 1.3.4
+        - ftp://ftp.gnu.org/gnu/libtool/
 
-These should be available by ftp from prep.ai.mit.edu or any of the
-fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
+Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
+Beta software can be found at alpha.gnu.org.
 
-	- pkg-config 0.7.0 (or a newer version)
-		
-Available from http://www.freedesktop.org/software/pkgconfig/.
+    * pkg-config 0.7.0 (or a newer version)
+        - http://www.freedesktop.org/software/pkgconfig/
 
-	- intltoolize 0.17 (or a newer version)
-
-Available from ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/.
+    * intltoolize 0.17 (or a newer version)
+        - ftp://ftp.gnome.org/pub/gnome/sources/intltool/
 
 These are only the additional requirements if you want to compile from
-CVS.  The file INSTALL lists the various libraries we depend on.
+CVS. The file INSTALL lists the various libraries we depend on.
 
 
 Compilation
@@ -28,24 +29,23 @@ If you are accessing gimp via CVS, then you will need to take several
 steps to get it to compile.  You can do all these steps at once
 by running:
 
-        cvsroot/gimp# ./autogen.sh
+    cvsroot/gimp$ ./autogen.sh
 
 Basically this does the following for you:
 
-        cvsroot/gimp# aclocal-1.7; libtoolize; automake-1.7 -a;
-        cvsroot/gimp# autoconf; glib-gettextize; intltoolize
+    cvsroot/gimp$ aclocal-1.7; libtoolize; automake-1.7 -a;
+    cvsroot/gimp$ autoconf; glib-gettextize; intltoolize
 
-        The above commands create the "configure" script.  Now you
-        can run the configure script in cvsroot/gimp to create all
-        the Makefiles.
+The above commands create the "configure" script.  Now you can run the
+configure script in cvsroot/gimp to create all the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
 your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-2.0.m4,
 pkg.m4 and intltool.m4 are either installed in the same
 $prefix/share/aclocal relative to your automake/aclocal installation
-or call autogen.sh with
+or call autogen.sh as follows:
 
-	'ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh'.
+    $ ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh
 
 Note that autogen.sh runs configure for you.  If you wish to pass
 options like --prefix=/usr to configure you can give those options to
@@ -66,21 +66,22 @@ gtk+, libart, gtkhtml2 as well as intltool and gtk-doc from the same
 CVS server. You can use the following commands to get them from the
 anonymous CVS server:
 
-   $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
-   $ cvs login
-     (there is no password, just hit return)
-   $ cvs -z3 checkout [-r <branch>] <module>
+    $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
+    $ cvs login
+         (there is no password, just hit return)
+    $ cvs -z3 checkout [-r <branch>] <module>
 
 The interesting modules and the suggested branches to use are:
 
-   glib        (glib-2-2)
-   atk         (gnome-2-2)
-   pango       (pango-1-2)
-   gtk+        (gtk-2-2)
-   libart_lgpl
-   gtkhtml2
-   intltool
-   gtk-doc
+    * gimp
+    * glib        (glib-2-2)
+    * atk         (gnome-2-2)
+    * pango       (pango-1-2)
+    * gtk+        (gtk-2-2)
+    * libart_lgpl
+    * gtkhtml2
+    * intltool
+    * gtk-doc
 
 
 Patches
@@ -112,20 +113,23 @@ We encourage you to follow the GIMP coding style throughout the GIMP
 project.  For the core components (application and libs) this coding
 style is enforced.  The GIMP coding style is defined as follows:
 
-  Function names are lowercase, words separated by underscores.
-  Macros and enums are all uppercase, words seperated by underscores.
-  Types are all words capitalized, no separators between words.
+    * Function names are lowercase, words separated by underscores.
 
-  All functions in header files need to be prototyped.
+    * Macros and enums are all uppercase, words seperated by
+      underscores.
 
-  Indentation rules are GNU coding style, in particular:
-    - 2 characters indentation level
-    - Do not use tabs (of course your editor can use tabs, but it 
-      should write them to file as 8 spaces each).
-    - Opening brackets are on a new line and indented one level.
-    - Function header have the return type on one line, the name
-      starting in the first column of the following line. All
-      parameters are prototyped and there's a new line for each.
+    * Types are all words capitalized, no separators between words.
+
+    * All functions in header files need to be prototyped.
+
+    * Indentation rules are GNU coding style, in particular:
+        - 2 characters indentation level
+        - Do not use tabs (of course your editor can use tabs, but it 
+          should write them to file as 8 spaces each).
+        - Opening brackets are on a new line and indented one level.
+        - Function header have the return type on one line, the name
+          starting in the first column of the following line. All
+          parameters are prototyped and there's a new line for each.
 
 Try to make use of GLib's object system as much as possible. Do not
 create wrappers around functions of parent classes. If you end up

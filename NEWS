@@ -10,19 +10,19 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.20
 ==================================
-- New help system finished [Mitch]
+- Basic framework for future help system in place [Mitch]
 - Screenshot plug-in replaced [Brix]
 - Font list updates on the fly [Yosh]
-- Text tool improvements [Sven]
 - Generic interface for stroking selections and paths [Mitch]
 - Further improvements to the path tool [Simon]
-- Get rid of libgck [Mitch]
+- Remove libgck from public API [Mitch]
 - Lots of bug fixes
 
 Other contributors: 
   Maurits Rijk, Sven Neumann, Ville Pätsi, Manish Singh, Larry
   Ewing, Dmitry G. Mastrukov, Pedro Gimeno, Raphael Quinet, S.
-  Mukund, Andy Wallis, Carl Adams, Tino Schwarz, Tor Lilliqvist
+  Mukund, Andy Wallis, Carl Adams, Tino Schwarz, Tor Lilliqvist,
+  Emmet Caulfield
 
 Overview of Changes in GIMP 1.3.19
 ==================================
