@@ -1,3 +1,9 @@
+2003-04-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): when editing an object's
+	name, make sure we really edit its name, not its description.
+
 2003-04-29  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint-funcs/paint-funcs.c (shrink_line): Serialize access to

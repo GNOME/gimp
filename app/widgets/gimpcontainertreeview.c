@@ -806,6 +806,23 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   if (column->editable_widget)
                     gtk_cell_editable_remove_widget (column->editable_widget);
 
+#ifdef __GNUC__
+#warning FIXME: make sure the orig text gets restored when cancelling editing
+#endif
+                  if (edit_cell == tree_view->name_cell)
+                    {
+                      const gchar *real_name;
+
+                      real_name =
+                        gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+
+                      gtk_list_store_set (GTK_LIST_STORE (tree_view->model),
+                                          &iter,
+                                          tree_view->model_column_name,
+                                          real_name,
+                                          -1);
+                    }
+
                   gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
                                                     column, edit_cell, TRUE);
                 }
