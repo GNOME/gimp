@@ -18,8 +18,8 @@ AC_ARG_WITH(libs,    [  --with-libs=DIR         Additionally search for librarie
 
 AC_PATH_PROGS(GIMP,gimp)
 
-AM_PATH_GIMP(1.0.2,, AC_MSG_ERROR(
-** unable to find gimp, make sure it's in your path (version 1.0.2+ required!)
+AM_PATH_GIMP(1.0.4,, AC_MSG_ERROR(
+** unable to find gimp, make sure it's in your path (version 1.0.4+ required!)
 ** You can get the Gimp from ftp://ftp.gimp.org/pub/gimp.
 ))
 

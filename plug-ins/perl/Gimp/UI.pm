@@ -4,8 +4,6 @@ use Carp;
 use Gimp ();
 use Gtk;
 
-$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
-
 $VERSION = $Gimp::VERSION;
 
 =head1 NAME
@@ -170,7 +168,7 @@ sub GTK_OBJECT_INIT {
       $l->selection and
          $self->set_preview($l->selection->children->get);
    });
-   $gtk_10 ? $s->add ($l) : $s->add_with_viewport ($l);
+   $s->add_with_viewport ($l);
    
    my $button = new Gtk::Button "OK";
    signal_connect $button "clicked", sub {

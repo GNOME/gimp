@@ -1,5 +1,9 @@
 Revision history for Gimp-Perl extension.
 
+1.095 Tue Jun 29 01:22:01 CEST 1999
+	- finally cut support for gimp-1.0.2 and gtk-1.0,
+          fix the underscore confusion in Gimp/Net.pm.
+
 1.094 Fri Jun 25 01:21:17 CEST 1999
 	- finally(?) fixed the runmode confusion by making these constants
           magic. Also hopefully fixed the error message.

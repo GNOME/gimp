@@ -289,37 +289,33 @@ sub interact($$$$@) {
            &new_PF_STRING;
            
         } elsif($type == PF_FONT) {
-           if ($Gimp::UI::gtk_10) {
-              &new_PF_STRING;
-           } else {
-              my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-              my $def = "-*-helvetica-medium-r-normal-*-24-*-*-*-p-*-iso8859-1";
-              my $val;
+           my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
+           my $def = "-*-helvetica-medium-r-normal-*-24-*-*-*-p-*-iso8859-1";
+           my $val;
+           
+           my $l=new Gtk::Label "!error!";
+           my $setval = sub {
+              $val=$_[0];
+              unless (defined $val && $fs->set_font_name ($val)) {
+                 warn "illegal default font description for $function: $val\n" if defined $val;
+                 $val=$def;
+                 $fs->set_font_name ($val);
+              }
               
-              my $l=new Gtk::Label "!error!";
-              my $setval = sub {
-                 $val=$_[0];
-                 unless (defined $val && $fs->set_font_name ($val)) {
-                    warn "illegal default font description for $function: $val\n" if defined $val;
-                    $val=$def;
-                    $fs->set_font_name ($val);
-                 }
-                 
-                 my($n,$t)=Gimp::xlfd_size($val);
-                 $l->set((split(/-/,$val))[2]."\@$n".($t ? "p" : ""));
-              };
-              
-              $fs->ok_button->signal_connect("clicked",sub {$setval->($fs->get_font_name); $fs->hide});
-              $fs->cancel_button->signal_connect("clicked",sub {$fs->hide});
-              
-              push(@setvals,$setval);
-              push(@getvals,sub { $val });
-              
-              $a=new Gtk::Button;
-              $a->add($l);
-              $a->signal_connect("clicked", sub { show $fs });
-           }
-              
+              my($n,$t)=Gimp::xlfd_size($val);
+              $l->set((split(/-/,$val))[2]."\@$n".($t ? "p" : ""));
+           };
+           
+           $fs->ok_button->signal_connect("clicked",sub {$setval->($fs->get_font_name); $fs->hide});
+           $fs->cancel_button->signal_connect("clicked",sub {$fs->hide});
+           
+           push(@setvals,$setval);
+           push(@getvals,sub { $val });
+           
+           $a=new Gtk::Button;
+           $a->add($l);
+           $a->signal_connect("clicked", sub { show $fs });
+           
         } elsif($type == PF_SPINNER) {
            my $adj = _new_adjustment ($value,$extra);
            $a=new Gtk::SpinButton $adj,1,0;
@@ -1175,11 +1171,7 @@ EOF
 };
 
 sub logo {
-   if ($Gimp::UI::gtk_10) {
-      new Gtk::Label "Gimp-Perl";
-   } else {
-      &logo_xpm;
-   }
+   &logo_xpm;
 }
 
 sub logo_xpm {
