@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -381,10 +381,10 @@ rectangle_create_info_widget(GtkWidget *frame)
 
    table = gtk_table_new(4, 4, FALSE);
    gtk_container_add(GTK_CONTAINER(frame), table);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 0);
 
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
    
    label = create_label_in_table(table, 0, 0, _("Upper left _x:"));

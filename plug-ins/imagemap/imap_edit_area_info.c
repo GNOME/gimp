@@ -190,7 +190,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    table = gtk_table_new(11, 1, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
    frame = gimp_frame_new(_("Link Type"));
@@ -334,7 +334,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    table = gtk_table_new(11, 1, FALSE);
    gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
    label = create_label_in_table(table, 0, 0, "o_nMouseover:");

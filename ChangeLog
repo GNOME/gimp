@@ -1,3 +1,14 @@
+2004-09-28  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/imagemap/imap_circle.c: 
+	* plug-ins/imagemap/imap_cmd_gimp_guides.c
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_polygon.c 
+	* plug-ins/imagemap/imap_rectangle.c
+	* plug-ins/imagemap/imap_settings.c: first set of changes to make
+	imagemap fully HIG compliant. More to come.
+
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/file/gimprecentlist.c: seek to the start of the file before

@@ -492,8 +492,8 @@ polygon_create_info_widget(GtkWidget *frame)
 
    table = gtk_table_new(6, 3, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, FALSE);
    gtk_widget_show(table);
 

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ create_grid_settings_dialog()
    data->hidden = button;
    g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_HIDDEN);
-   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
    gtk_widget_show(button);
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(
@@ -228,7 +228,7 @@ create_grid_settings_dialog()
    g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), (gpointer) GRID_LINES);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
    gtk_widget_show(button);
 
    button = gtk_radio_button_new_with_mnemonic_from_widget(
@@ -237,15 +237,14 @@ create_grid_settings_dialog()
    g_signal_connect(button, "toggled", 
                     G_CALLBACK (type_toggled_cb), 
                     (gpointer) GRID_CROSSES);
-   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
    gtk_widget_show(button);
    
    data->granularity_frame = frame = gimp_frame_new(_("Grid Granularity"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 1, 2, 3);
    table = gtk_table_new(2, 4, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_container_add(GTK_CONTAINER(frame), table);
 
    label = create_label_in_table(table, 0, 0, _("_Width"));
@@ -271,9 +270,8 @@ create_grid_settings_dialog()
    data->offset_frame = frame = gimp_frame_new(_("Grid Offset"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 1, 2, 2, 3);
    table = gtk_table_new(2, 3, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_container_add(GTK_CONTAINER(frame), table);
 
    label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));

@@ -158,12 +158,12 @@ make_gimp_guides_dialog(void)
 
    data->alternate = 
       gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("Al_ternate"));
-   gtk_box_pack_start(GTK_BOX(hbox), data->alternate, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), data->alternate, TRUE, TRUE, 0);
    gtk_widget_show(data->alternate);
 
    data->all = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->alternate), _("A_ll"));
-   gtk_box_pack_start(GTK_BOX(hbox), data->all, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), data->all, TRUE, TRUE, 0);
    gtk_widget_show(data->all);
 
    frame = gimp_frame_new(_("Add Additional Guides"));
@@ -171,7 +171,6 @@ make_gimp_guides_dialog(void)
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 1, 2);
 
    vbox = gtk_vbox_new(FALSE, 1);
-   gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
    gtk_container_add(GTK_CONTAINER(frame), vbox);
    gtk_widget_show(vbox);
 

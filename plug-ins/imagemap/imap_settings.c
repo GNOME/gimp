@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,21 +135,21 @@ create_settings_dialog()
    data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");
    g_signal_connect(data->ncsa, "toggled", 
 		    G_CALLBACK(type_toggled_cb), (gpointer) NCSA);
-   gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, TRUE, TRUE, 0);
    gtk_widget_show(data->ncsa);
 
    data->cern = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->ncsa), "C_ERN");
    g_signal_connect(data->cern, "toggled", 
 		    G_CALLBACK(type_toggled_cb), (gpointer) CERN);
-   gtk_box_pack_start(GTK_BOX(hbox), data->cern, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), data->cern, TRUE, TRUE, 0);
    gtk_widget_show(data->cern);
    
    data->csim = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->cern), "C_SIM");
    g_signal_connect(data->csim, "toggled", 
 		    G_CALLBACK(type_toggled_cb), (gpointer) CSIM);
-   gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 0);
    gtk_widget_show(data->csim);
 
    return data;
