@@ -38,6 +38,16 @@
 	* app/widgets/gimpstringaction.[ch]: added some completely unused
 	GtkAction infrastructure.
 
+2004-04-15  Manish Singh  <yosh@gimp.org>
+
+	* tools/Makefile.am
+	* app/Makefile.am
+	* configure.in: app, tools, and user dir bumped to version 2.1 names.
+
+	* app/text/gimpfontlist.c: since we now depend on pango 1.4, we can
+	use pango_fc_font_description_from_pattern() instead of our
+	cut-n-paste function, gimp_font_list_font_desc_from_pattern().
+
 2004-04-15  Tor Lillqvist  <tml@iki.fi>
 
 	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install)
