@@ -1,4 +1,4 @@
-2003-06-26  Manish Singh  <yosh@gimp.org>
+2003-06-27  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpui.py: Missing self. reference. Fixes #115714.
 
