@@ -28,6 +28,40 @@ DIE=0
 	DIE=1
 }
 
+echo "I am testing that you have the required versions of autoconf, automake"
+echo "and gettext. This test is not foolproof, so if anything goes wrong,"
+echo "see the file HACKING for more information..."
+echo
+
+echo "Testing autoconf... "
+VER=`autoconf --version | sed "s/[a-zA-Z]*//g"`
+if expr $VER \>= 2.13 >/dev/null; then
+	echo "looks OK."
+else
+	echo "too old! (Need 2.13, have $VER)"
+	DIE=1
+fi
+
+echo "Testing automake... "
+VER=`automake --version | grep automake | sed "s/[a-zA-Z()]//g"`
+if expr $VER \>= 1.4 >/dev/null; then
+	echo "looks OK."
+else
+	echo "too old! (Need 1.4, have $VER)"
+	DIE=1
+fi
+
+echo "Testing gettextize... "
+VER=`gettextize --version | grep gettext | sed "s#[a-zA-Z()/]##g;s/0.//"`
+if expr $VER \>= 10.35 >/dev/null; then
+	echo "looks OK."
+else
+	echo "too old! (Need (0.)10.35, have $VER)"
+	DIE=1
+fi
+
+echo
+
 if test "$DIE" -eq 1; then
 	exit 1
 fi
