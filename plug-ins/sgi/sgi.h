@@ -17,11 +17,16 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/04/13 05:43:39  yosh
+ *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/04/07 03:41:19  yosh
  *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
  *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find

@@ -19,7 +19,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Contents:
  *
@@ -37,6 +37,11 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/04/13 05:43:08  yosh
+ *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/03/30 19:05:47  adrian
  *   updated png.c so non-interactive mode works now
  *   -adrian

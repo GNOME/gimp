@@ -17,11 +17,16 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.4  1998/04/13 05:43:17  yosh
+ *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *
+ *   -Yosh
+ *
  *   Revision 1.3  1998/04/01 22:14:49  neo
  *   Added checks for print spoolers to configure.in as suggested by Michael
  *   Sweet. The print plug-in still needs some changes to Makefile.am to make

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -167,7 +167,7 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "along with this program; if not, write to the Free Software\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.\n", -1);
+		   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\n\n", -1);
 

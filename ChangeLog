@@ -1,3 +1,9 @@
+Sun Apr 12 22:31:11 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Changed address for FSF in all .h and .c files
+
+	* app/configure.in: check for freebsd tiff libs
+
 Mon Apr 13 00:41:50 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/command.c: Duh. We have a message_box.  Why not use it for
