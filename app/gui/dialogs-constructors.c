@@ -45,6 +45,7 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpdocumentview.h"
 #include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
@@ -78,7 +79,6 @@
 
 #include "app_procs.h"
 #include "devices.h"
-#include "docindex.h"
 #include "gimprc.h"
 #include "undo_history.h"
 
@@ -203,13 +203,6 @@ dialogs_palette_select_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
   return palette_dialog_create ();
-}
-
-GtkWidget *
-dialogs_document_index_get (GimpDialogFactory *factory,
-			    GimpContext       *context)
-{
-  return document_index_create ();
 }
 
 GtkWidget *
@@ -350,6 +343,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
   view = gimp_container_list_view_new (context->gimp->images,
 				       context,
 				       32,
+                                       FALSE,
 				       5, 3);
 
   return dialogs_dockable_new (view,
@@ -448,6 +442,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
   view = gimp_container_list_view_new (context->gimp->tool_info_list,
 				       context,
 				       22,
+                                       FALSE,
 				       5, 3);
 
   return dialogs_dockable_new (view,
@@ -487,6 +482,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
   view = gimp_container_grid_view_new (context->gimp->images,
 				       context,
 				       32,
+                                       FALSE,
 				       5, 3);
 
   return dialogs_dockable_new (view,
@@ -585,6 +581,7 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
   view = gimp_container_grid_view_new (context->gimp->tool_info_list,
 				       context,
 				       22,
+                                       FALSE,
 				       5, 3);
 
   return dialogs_dockable_new (view,
@@ -747,15 +744,17 @@ dialogs_document_history_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_list_view_new (context->gimp->documents,
-				       context,
-				       32,
-				       5, 3);
+  view = gimp_document_view_new (GIMP_VIEW_TYPE_LIST,
+                                 context->gimp->documents,
+                                 context,
+                                 32,
+                                 5, 3,
+                                 NULL);
 
   return dialogs_dockable_new (view,
 			       "Document History", "History",
 			       NULL,
-			       dialogs_set_view_context_func);
+			       dialogs_set_editor_context_func);
 }
 
 GtkWidget *

@@ -40,6 +40,7 @@ typedef enum
   GIMP_CONTEXT_PROP_GRADIENT,
   GIMP_CONTEXT_PROP_PALETTE,
   GIMP_CONTEXT_PROP_BUFFER,
+  GIMP_CONTEXT_PROP_IMAGEFILE,
   GIMP_CONTEXT_NUM_PROPS
 } GimpContextPropType;
 
@@ -57,6 +58,7 @@ typedef enum
   GIMP_CONTEXT_GRADIENT_MASK   = 1 <<  9,
   GIMP_CONTEXT_PALETTE_MASK    = 1 << 10,
   GIMP_CONTEXT_BUFFER_MASK     = 1 << 11,
+  GIMP_CONTEXT_IMAGEFILE_MASK  = 1 << 12,
 
   /*  aliases  */
   GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
@@ -71,6 +73,7 @@ typedef enum
 				   GIMP_CONTEXT_TOOL_MASK       |
 				   GIMP_CONTEXT_PALETTE_MASK    |
 				   GIMP_CONTEXT_BUFFER_MASK     |
+				   GIMP_CONTEXT_IMAGEFILE_MASK  |
 				   GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
 
@@ -120,6 +123,7 @@ struct _GimpContext
   gchar            *palette_name;
 
   GimpBuffer       *buffer;
+  GimpImagefile    *imagefile;
 };
 
 struct _GimpContextClass
@@ -152,6 +156,8 @@ struct _GimpContextClass
 			       GimpPalette      *palette);
   void (* buffer_changed)     (GimpContext      *context,
 			       GimpBuffer       *buffer);
+  void (* imagefile_changed)  (GimpContext      *context,
+			       GimpImagefile    *imagefile);
 };
 
 
@@ -298,6 +304,13 @@ GimpBuffer       * gimp_context_get_buffer         (GimpContext     *context);
 void               gimp_context_set_buffer         (GimpContext     *context,
 						    GimpBuffer      *palette);
 void               gimp_context_buffer_changed     (GimpContext     *context);
+
+
+/*  imagefile  */
+GimpImagefile    * gimp_context_get_imagefile      (GimpContext     *context);
+void               gimp_context_set_imagefile      (GimpContext     *context,
+						    GimpImagefile   *imagefile);
+void               gimp_context_imagefile_changed  (GimpContext     *context);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

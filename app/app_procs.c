@@ -53,7 +53,6 @@
 #include "app_procs.h"
 #include "batch.h"
 #include "colormaps.h"
-#include "docindex.h"
 #include "errors.h"
 #include "gimprc.h"
 #include "plug_in.h"

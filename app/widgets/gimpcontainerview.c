@@ -195,14 +195,18 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 static void
 gimp_container_view_init (GimpContainerView *view)
 {
-  view->container    = NULL;
-  view->context      = NULL;
+  view->container     = NULL;
+  view->context       = NULL;
 
-  view->hash_table   = g_hash_table_new (g_direct_hash, g_direct_equal);
+  view->hash_table    = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-  view->preview_size = 0;
+  view->preview_size  = 0;
+  view->reorderable   = FALSE;
 
-  view->button_box   = NULL;
+  view->get_name_func = NULL;
+
+  view->button_box    = NULL;
+  view->dnd_widget    = NULL;
 }
 
 static void

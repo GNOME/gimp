@@ -243,9 +243,9 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   SEPARATOR ("/File/Dialogs/---"),
 
-  { { N_("/File/Dialogs/Document Index..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:document-index-dialog",
+  { { N_("/File/Dialogs/Document History..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0 },
+    "gimp:document-history",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
@@ -866,9 +866,9 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Dialogs/---"),
 
-  { { N_("/Dialogs/Document Index..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:document-index-dialog",
+  { { N_("/Dialogs/Document History..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0 },
+    "gimp:document-history",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },

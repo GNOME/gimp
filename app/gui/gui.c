@@ -45,7 +45,6 @@
 #include "color-select.h"
 #include "devices.h"
 #include "dialogs.h"
-#include "docindex.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
 #include "gradient-select.h"
@@ -292,31 +291,22 @@ gui_init (Gimp *gimp)
   gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
 
   /*  Fill the "last opened" menu items with the first last_opened_size
-   *  elements of the docindex
+   *  elements of gimp->documents
    */
   {
-    FILE   *fp;
-    gchar **filenames = g_new0 (gchar *, gimprc.last_opened_size);
-    gint    i;
+    GimpImagefile *imagefile;
+    gint           i;
 
-    if ((fp = document_index_parse_init ()))
+    for (i = gimprc.last_opened_size - 1; i >= 0; i--)
       {
-	/*  read the filenames...  */
-	for (i = 0; i < gimprc.last_opened_size; i++)
-	  if ((filenames[i] = document_index_parse_line (fp)) == NULL)
-	    break;
+        imagefile = (GimpImagefile *)
+          gimp_container_get_child_by_index (gimp->documents, i);
 
-	/*  ...and add them in reverse order  */
-	for (--i; i >= 0; i--)
-	  {
-	    menus_last_opened_add (filenames[i]);
-	    g_free (filenames[i]);
-	  }
+        if (! imagefile)
+          continue;
 
-	fclose (fp);
+        menus_last_opened_add (gimp_object_get_name (GIMP_OBJECT (imagefile)));
       }
-
-    g_free (filenames);
   }
 }
 
@@ -364,7 +354,6 @@ gui_exit (Gimp *gimp)
   dialogs_exit (gimp);
 
   /*  handle this in the dialog factory:  */
-  document_index_free ();
   tool_options_dialog_free ();
   toolbox_free ();
 

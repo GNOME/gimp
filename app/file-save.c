@@ -69,7 +69,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "docindex.h"
 #include "gui/menus.h"
 
 #include "file-save.h"
@@ -178,7 +177,6 @@ file_save (GimpImage   *gimage,
       gimp_image_clean_all (gimage);
 
       gimp_documents_add (gimage->gimp, filename);
-      document_index_add (filename);
       menus_last_opened_add (filename);
 
       /*  use the same plug-in for this image next time  */

@@ -109,6 +109,7 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 				 GimpContainer            *container,
 				 GimpContext              *context,
 				 gint                      preview_size,
+                                 gboolean                  reorderable,
 				 gint                      min_items_x,
 				 gint                      min_items_y,
 				 GimpContainerContextFunc  context_func)
@@ -130,6 +131,7 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
 							   context,
 							   preview_size,
+                                                           reorderable,
 							   min_items_x,
 							   min_items_y));
       break;
@@ -139,6 +141,7 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_list_view_new (container,
 							   context,
 							   preview_size,
+                                                           reorderable,
 							   min_items_x,
 							   min_items_y));
       break;

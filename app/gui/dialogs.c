@@ -45,7 +45,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:palette-select-dialog",  dialogs_palette_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE,  TRUE,  TRUE,  TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:module-browser-dialog",  dialogs_module_browser_get,  TRUE,  FALSE, FALSE, TRUE  },
@@ -58,8 +57,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:gradient-editor",        dialogs_gradient_editor_get, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp:palette-editor",         dialogs_palette_editor_get,  TRUE,  TRUE,  TRUE,  FALSE }
 };
-static const gint n_toplevel_entries = (sizeof (toplevel_entries) /
-					sizeof (toplevel_entries[0]));
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
@@ -88,8 +85,6 @@ static const GimpDialogFactoryEntry dock_entries[] =
 
   { "gimp:error-console",    dialogs_error_console_get,      TRUE,  FALSE, FALSE, TRUE }
 };
-static const gint n_dock_entries = (sizeof (dock_entries) /
-				    sizeof (dock_entries[0]));
 
 
 /*  public functions  */
@@ -109,7 +104,7 @@ dialogs_init (Gimp *gimp)
 						 menus_get_dialogs_factory (),
 						 dialogs_dock_new);
 
-  for (i = 0; i < n_toplevel_entries; i++)
+  for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,
 					toplevel_entries[i].identifier,
 					toplevel_entries[i].new_func,
@@ -118,7 +113,7 @@ dialogs_init (Gimp *gimp)
 					toplevel_entries[i].remember_size,
 					toplevel_entries[i].remember_if_open);
 
-  for (i = 0; i < n_dock_entries; i++)
+  for (i = 0; i < G_N_ELEMENTS (dock_entries); i++)
     gimp_dialog_factory_register_entry (global_dock_factory,
 					dock_entries[i].identifier,
 					dock_entries[i].new_func,
@@ -134,6 +129,6 @@ dialogs_exit (Gimp *gimp)
   g_object_unref (G_OBJECT (global_dialog_factory));
   g_object_unref (G_OBJECT (global_dock_factory));
 
-  global_dialog_factory     = NULL;
-  global_dock_factory       = NULL;
+  global_dialog_factory = NULL;
+  global_dock_factory   = NULL;
 }

@@ -48,6 +48,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdockable.h			\
 	gimpdockbook.c			\
 	gimpdockbook.h			\
+	gimpdocumentview.c		\
+	gimpdocumentview.h		\
 	gimpdrawablelistitem.c		\
 	gimpdrawablelistitem.h		\
 	gimpdrawablelistview.c		\

@@ -78,6 +78,7 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
 					      GimpContainer        *container,
 					      GimpContext          *context,
 					      gint                  preview_size,
+                                              gboolean              reorderable,
 					      gint                  min_items_x,
 					      gint                  min_items_y,
 					      GimpContainerContextFunc  context_func);

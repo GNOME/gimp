@@ -138,6 +138,7 @@ typedef struct _GimpChannelListView     GimpChannelListView;
 
 typedef struct _GimpContainerEditor     GimpContainerEditor;
 typedef struct _GimpBufferView          GimpBufferView;
+typedef struct _GimpDocumentView        GimpDocumentView;
 typedef struct _GimpDataFactoryView     GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
 

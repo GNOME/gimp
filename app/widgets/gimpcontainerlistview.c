@@ -152,6 +152,7 @@ GtkWidget *
 gimp_container_list_view_new (GimpContainer *container,
 			      GimpContext   *context,
 			      gint           preview_size,
+                              gboolean       reorderable,
 			      gint           min_items_x,
 			      gint           min_items_y)
 {
@@ -170,6 +171,7 @@ gimp_container_list_view_new (GimpContainer *container,
   view = GIMP_CONTAINER_VIEW (list_view);
 
   view->preview_size = preview_size;
+  view->reorderable  = reorderable ? TRUE : FALSE;
 
   window_border =
     GTK_SCROLLED_WINDOW (list_view->scrolled_win)->vscrollbar->requisition.width +
@@ -206,6 +208,10 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 
   gimp_list_item_set_name_func (GIMP_LIST_ITEM (list_item),
 				view->get_name_func);
+
+  if (view->reorderable)
+    gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item), TRUE,
+                                    view->container);
 
   g_signal_connect (G_OBJECT (list_item), "button_press_event",
 		    G_CALLBACK (gimp_container_list_view_item_activated),

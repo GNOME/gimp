@@ -57,6 +57,7 @@ GType       gimp_container_grid_view_get_type (void);
 GtkWidget * gimp_container_grid_view_new      (GimpContainer *container,
 					       GimpContext   *context,
 					       gint           preview_size,
+                                               gboolean       reorderable,
 					       gint           min_items_x,
 					       gint           min_items_y);
 

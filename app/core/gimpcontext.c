@@ -37,6 +37,7 @@
 #include "gimpcontext.h"
 #include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
+#include "gimpimagefile.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
@@ -187,6 +188,19 @@ static void gimp_context_real_set_buffer     (GimpContext      *context,
 static void gimp_context_copy_buffer         (GimpContext      *src,
 					      GimpContext      *dest);
 
+/*  imagefile  */
+static void gimp_context_imagefile_dirty     (GimpImagefile    *imagefile,
+					      GimpContext      *context);
+static void gimp_context_imagefile_removed   (GimpContainer    *container,
+					      GimpImagefile    *imagefile,
+					      GimpContext      *context);
+static void gimp_context_imagefile_list_thaw (GimpContainer    *container,
+					      GimpContext      *context);
+static void gimp_context_real_set_imagefile  (GimpContext      *context,
+					      GimpImagefile    *imagefile);
+static void gimp_context_copy_imagefile      (GimpContext      *src,
+					      GimpContext      *dest);
+
 
 /*  properties & signals  */
 
@@ -204,7 +218,8 @@ enum
   PROP_PATTERN,
   PROP_GRADIENT,
   PROP_PALETTE,
-  PROP_BUFFER
+  PROP_BUFFER,
+  PROP_IMAGEFILE
 };
 
 enum
@@ -221,6 +236,7 @@ enum
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
   BUFFER_CHANGED,
+  IMAGEFILE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -237,7 +253,8 @@ static gchar *gimp_context_prop_names[] =
   "pattern",
   "gradient",
   "palette",
-  "buffer"
+  "buffer",
+  "imagefile"
 };
 
 static GimpContextCopyPropFunc gimp_context_copy_prop_funcs[] =
@@ -253,7 +270,8 @@ static GimpContextCopyPropFunc gimp_context_copy_prop_funcs[] =
   gimp_context_copy_pattern,
   gimp_context_copy_gradient,
   gimp_context_copy_palette,
-  gimp_context_copy_buffer
+  gimp_context_copy_buffer,
+  gimp_context_copy_imagefile
 };
 
 static GType gimp_context_prop_types[] =
@@ -265,6 +283,7 @@ static GType gimp_context_prop_types[] =
   G_TYPE_NONE,
   G_TYPE_NONE,
   G_TYPE_NONE,
+  0,
   0,
   0,
   0,
@@ -285,7 +304,8 @@ static gchar *gimp_context_signal_names[] =
   "pattern_changed",
   "gradient_changed",
   "palette_changed",
-  "buffer_changed"
+  "buffer_changed",
+  "imagefile_changed"
 };
 
 static GCallback gimp_context_signal_handlers[] =
@@ -301,7 +321,8 @@ static GCallback gimp_context_signal_handlers[] =
   G_CALLBACK (gimp_context_real_set_pattern),
   G_CALLBACK (gimp_context_real_set_gradient),
   G_CALLBACK (gimp_context_real_set_palette),
-  G_CALLBACK (gimp_context_real_set_buffer)
+  G_CALLBACK (gimp_context_real_set_buffer),
+  G_CALLBACK (gimp_context_real_set_imagefile)
 };
 
 
@@ -467,6 +488,16 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_BUFFER);
 
+  gimp_context_signals[IMAGEFILE_CHANGED] =
+    g_signal_new (gimp_context_signal_names[IMAGEFILE_CHANGED],
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpContextClass, imagefile_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_IMAGEFILE);
+
   object_class->set_property = gimp_context_set_property;
   object_class->get_property = gimp_context_get_property;
   object_class->finalize     = gimp_context_finalize;
@@ -483,14 +514,16 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->gradient_changed    = NULL;
   klass->palette_changed     = NULL;
   klass->buffer_changed      = NULL;
+  klass->imagefile_changed    = NULL;
 
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]    = GIMP_TYPE_IMAGE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]     = GIMP_TYPE_TOOL_INFO;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]    = GIMP_TYPE_BRUSH;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]  = GIMP_TYPE_PATTERN;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT] = GIMP_TYPE_GRADIENT;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]  = GIMP_TYPE_PALETTE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]   = GIMP_TYPE_BUFFER;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]     = GIMP_TYPE_IMAGE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]      = GIMP_TYPE_TOOL_INFO;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]     = GIMP_TYPE_BRUSH;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]   = GIMP_TYPE_PATTERN;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]  = GIMP_TYPE_GRADIENT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]   = GIMP_TYPE_PALETTE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
 
   g_object_class_install_property (object_class,
 				   PROP_IMAGE,
@@ -576,6 +609,13 @@ gimp_context_class_init (GimpContextClass *klass)
 							NULL, NULL,
 							GIMP_TYPE_BUFFER,
 							G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
+				   PROP_IMAGEFILE,
+				   g_param_spec_object (gimp_context_prop_names[IMAGEFILE_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_IMAGEFILE,
+							G_PARAM_READWRITE));
 }
 
 static void
@@ -612,6 +652,7 @@ gimp_context_init (GimpContext *context)
   context->palette_name  = NULL;
 
   context->buffer        = NULL;
+  context->imagefile     = NULL;
 }
 
 static void
@@ -688,6 +729,12 @@ gimp_context_finalize (GObject *object)
       context->buffer = NULL;
     }
 
+  if (context->imagefile)
+    {
+      g_object_unref (G_OBJECT (context->imagefile));
+      context->imagefile = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -738,6 +785,9 @@ gimp_context_set_property (GObject      *object,
       break;
     case PROP_BUFFER:
       gimp_context_set_buffer (context, g_value_get_object (value));
+      break;
+    case PROP_IMAGEFILE:
+      gimp_context_set_imagefile (context, g_value_get_object (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -792,6 +842,9 @@ gimp_context_get_property (GObject    *object,
       break;
     case PROP_BUFFER:
       g_value_set_object (value, gimp_context_get_buffer (context));
+      break;
+    case PROP_IMAGEFILE:
+      g_value_set_object (value, gimp_context_get_imagefile (context));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -875,6 +928,15 @@ gimp_context_new (Gimp        *gimp,
 			   0);
   g_signal_connect_object (G_OBJECT (gimp->named_buffers), "thaw",
 			   G_CALLBACK (gimp_context_buffer_list_thaw),
+			   G_OBJECT (context),
+			   0);
+
+  g_signal_connect_object (G_OBJECT (gimp->documents), "remove",
+			   G_CALLBACK (gimp_context_imagefile_removed),
+			   G_OBJECT (context),
+			   0);
+  g_signal_connect_object (G_OBJECT (gimp->documents), "thaw",
+			   G_CALLBACK (gimp_context_imagefile_list_thaw),
 			   G_OBJECT (context),
 			   0);
 
@@ -2492,6 +2554,173 @@ gimp_context_copy_buffer (GimpContext *src,
     {
       g_free (dest->buffer_name);
       dest->buffer_name = g_strdup (src->buffer_name);
+    }
+  */
+}
+
+
+/*****************************************************************************/
+/*  imagefile  ***************************************************************/
+
+/*
+static GimpImagefile *standard_imagefile = NULL;
+*/
+
+GimpImagefile *
+gimp_context_get_imagefile (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->imagefile;
+}
+
+void
+gimp_context_set_imagefile (GimpContext   *context,
+                            GimpImagefile *imagefile)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  context_find_defined (context, GIMP_CONTEXT_IMAGEFILE_MASK);
+
+  gimp_context_real_set_imagefile (context, imagefile);
+}
+
+void
+gimp_context_imagefile_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (G_OBJECT (context),
+		 gimp_context_signals[IMAGEFILE_CHANGED], 0,
+		 context->imagefile);
+}
+
+/*  the active imagefile was modified  */
+static void
+gimp_context_imagefile_dirty (GimpImagefile *imagefile,
+                              GimpContext   *context)
+{
+  /*
+  g_free (context->imagefile_name);
+  context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
+  */
+
+  gimp_context_imagefile_changed (context);
+}
+
+/*  the global gradient list is there again after refresh  */
+static void
+gimp_context_imagefile_list_thaw (GimpContainer *container,
+                                  GimpContext   *context)
+{
+  /*
+  GimpBuffer *imagefile;
+
+  if (! context->imagefile_name)
+    context->imagefile_name = g_strdup (context->gimp->config->default_imagefile);
+
+  if ((imagefile = (GimpImagefile *)
+       gimp_container_get_child_by_name (container,
+					 context->imagefile_name)))
+    {
+      gimp_context_real_set_imagefile (context, imagefile);
+      return;
+    }
+  */
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_imagefile
+      (context,
+       GIMP_IMAGEFILE (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_imagefile_changed (context);
+
+  /*
+  else
+    gimp_context_real_set_imagefile (context,
+				     GIMP_IMAGEFILE (gimp_imagefile_get_standard ()));
+  */
+}
+
+/*  the active imagefile disappeared  */
+static void
+gimp_context_imagefile_removed (GimpContainer *container,
+                                GimpImagefile *imagefile,
+                                GimpContext   *context)
+{
+  if (imagefile == context->imagefile)
+    {
+      context->imagefile = NULL;
+
+      g_signal_handlers_disconnect_by_func (G_OBJECT (imagefile),
+					    gimp_context_imagefile_dirty,
+					    context);
+      g_object_unref (G_OBJECT (imagefile));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_imagefile_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_real_set_imagefile (GimpContext   *context,
+                                 GimpImagefile *imagefile)
+{
+  /*
+  if (! standard_imagefile)
+    standard_imagefile = GIMP_IMAGEFILE (gimp_imagefile_get_standard ());
+  */
+
+  if (context->imagefile == imagefile)
+    return;
+
+  /*
+  if (context->imagefile_name && imagefile != standard_imagefile)
+    {
+      g_free (context->imagefile_name);
+      context->imagefile_name = NULL;
+    }
+  */
+
+  /*  disconnect from the old imagefile's signals  */
+  if (context->imagefile)
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (context->imagefile),
+					    gimp_context_imagefile_dirty,
+					    context);
+      g_object_unref (G_OBJECT (context->imagefile));
+    }
+
+  context->imagefile = imagefile;
+
+  if (imagefile)
+    {
+      g_object_ref (G_OBJECT (imagefile));
+
+      g_signal_connect_object (G_OBJECT (imagefile), "name_changed",
+			       G_CALLBACK (gimp_context_imagefile_dirty),
+			       G_OBJECT (context),
+			       0);
+
+      /*
+      if (imagefile != standard_imagefile)
+	context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
+      */
+    }
+
+  gimp_context_imagefile_changed (context);
+}
+
+static void
+gimp_context_copy_imagefile (GimpContext *src,
+                             GimpContext *dest)
+{
+  gimp_context_real_set_imagefile (dest, src->imagefile);
+
+  /*
+  if ((!src->imagefile || src->imagefile == standard_imagefile) && src->imagefile_name)
+    {
+      g_free (dest->imagefile_name);
+      dest->imagefile_name = g_strdup (src->imagefile_name);
     }
   */
 }

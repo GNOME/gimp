@@ -134,6 +134,7 @@ container_multi_view_new (gboolean       list,
       view = gimp_container_list_view_new (container,
 					   context,
 					   preview_size,
+                                           FALSE,
 					   5, 5);
     }
   else
@@ -141,6 +142,7 @@ container_multi_view_new (gboolean       list,
       view = gimp_container_grid_view_new (container,
 					   context,
 					   preview_size,
+                                           FALSE,
 					   5, 5);
     }
 

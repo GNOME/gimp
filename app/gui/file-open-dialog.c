@@ -53,7 +53,6 @@
 #include "menus.h"
 
 #include "app_procs.h"
-#include "docindex.h"
 #include "file-open.h"
 #include "file-utils.h"
 #include "plug_in.h"
@@ -203,7 +202,6 @@ file_open_with_proc_and_display (const gchar   *filename,
       absolute = file_open_absolute_filename (filename);
 
       gimp_documents_add (the_gimp, filename);
-      document_index_add (absolute);
       menus_last_opened_add (absolute);
 
       g_free (absolute);

@@ -61,9 +61,6 @@ static void   gimp_drawable_list_view_destroy    (GtkObject                 *obj
 static void   gimp_drawable_list_view_real_set_image    (GimpDrawableListView *view,
 							 GimpImage            *gimage);
 
-static gpointer gimp_drawable_list_view_insert_item     (GimpContainerView    *view,
-							 GimpViewable         *viewable,
-							 gint                  index);
 static void   gimp_drawable_list_view_select_item       (GimpContainerView    *view,
 							 GimpViewable         *item,
 							 gpointer              insert_data);
@@ -167,7 +164,6 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 
   object_class->destroy               = gimp_drawable_list_view_destroy;
 
-  container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
   container_view_class->activate_item = gimp_drawable_list_view_activate_item;
   container_view_class->context_item  = gimp_drawable_list_view_context_item;
@@ -313,6 +309,7 @@ gimp_drawable_list_view_new (gint                     preview_size,
   view = GIMP_CONTAINER_VIEW (list_view);
 
   view->preview_size = preview_size;
+  view->reorderable  = TRUE;
 
   list_view->drawable_type         = drawable_type;
   list_view->signal_name           = g_strdup (signal_name);
@@ -421,25 +418,6 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
 
 
 /*  GimpContainerView methods  */
-
-static gpointer
-gimp_drawable_list_view_insert_item (GimpContainerView *view,
-				     GimpViewable      *viewable,
-				     gint               index)
-{
-  gpointer list_item = NULL;
-
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item)
-    list_item = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view,
-								       viewable,
-								       index);
-
-  if (list_item)
-    gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item),
-				    TRUE, view->container);
-
-  return list_item;
-}
 
 static void
 gimp_drawable_list_view_select_item (GimpContainerView *view,

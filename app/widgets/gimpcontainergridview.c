@@ -167,6 +167,7 @@ GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
 			      GimpContext   *context,
 			      gint           preview_size,
+                              gboolean       reorderable,
 			      gint           min_items_x,
 			      gint           min_items_y)
 {
@@ -185,6 +186,7 @@ gimp_container_grid_view_new (GimpContainer *container,
   view = GIMP_CONTAINER_VIEW (grid_view);
 
   view->preview_size = preview_size;
+  view->reorderable  = reorderable ? TRUE : FALSE;
 
   window_border =
     GTK_SCROLLED_WINDOW (grid_view->scrolled_win)->vscrollbar->requisition.width +

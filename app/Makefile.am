@@ -14,8 +14,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	colormaps.h		\
 	devices.c		\
 	devices.h		\
-	docindex.c		\
-	docindex.h		\
 	gimpprogress.c		\
 	gimpprogress.h		\
 	nav_window.c		\

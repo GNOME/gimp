@@ -1,5 +1,41 @@
 2001-10-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/docindex.[ch]: removed.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpdocumentview.[ch]: new widget as replacement.
+
+	* app/core/gimpcontext.[ch]: added context->imagefile property.
+
+	* app/app_procs.c
+	* app/file-save.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/test-commands.c: changed accordingly.
+
+	* app/widgets/gimpcontainerview.[ch]: added "gboolean reorderable"
+	property which needs to be set by subclasses.
+
+	* app/widgets/gimpdrawablelistview.c: removed the "insert_item"
+	implementation which was used to make the items reorderable.
+
+	* app/widgets/gimpcontainerlistview.[ch]: make the list items
+	reorderable depending on view->reorderable.
+
+	* app/widgets/gimpbufferview.c: made it reorderable.
+
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpdatafactoryview.c: changed accordingly.
+
+2001-10-22  Michael Natterer  <mitch@gimp.org>
+
 	General cleanup of the selection tools and their PDB wrappers:
 
 	* app/core/Makefile.am

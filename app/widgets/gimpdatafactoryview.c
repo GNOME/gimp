@@ -165,9 +165,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
 {
   GimpContainerEditor *editor;
 
-  g_return_val_if_fail (factory_view != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
-  g_return_val_if_fail (factory != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
@@ -181,6 +179,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView      *factory_view,
 					 factory->container,
 					 context,
 					 preview_size,
+                                         FALSE, /* reorderable */
 					 min_items_x,
 					 min_items_y,
 					 context_func))

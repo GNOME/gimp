@@ -132,6 +132,7 @@ gimp_buffer_view_new (GimpViewType              view_type,
 					 container,
 					 context,
 					 preview_size,
+                                         TRUE, /* reorderable */
 					 min_items_x,
 					 min_items_y,
 					 context_func))

@@ -42,7 +42,6 @@
 #include "menus.h"
 
 #include "app_procs.h"
-#include "docindex.h"
 #include "gimprc.h"
 #include "file-save.h"
 #include "file-utils.h"
