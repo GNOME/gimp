@@ -17,12 +17,12 @@ SUBDIRS = $(D_pdbgen) $(D_authorgen)
 bin_PROGRAMS = $(GIMP_REMOTE)
 
 EXTRA_PROGRAMS = \
-	gimp-remote-2.1	\
+	gimp-remote-2.2	\
 	kernelgen
 
-gimp_remote_2_1_SOURCES = gimp-remote.c
+gimp_remote_2_2_SOURCES = gimp-remote.c
 
-gimp_remote_2_1_LDADD = \
+gimp_remote_2_2_LDADD = \
 	$(GTK_LIBS)	\
 	$(LIBXMU)
 

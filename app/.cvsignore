@@ -3,5 +3,5 @@ Makefile.in
 makefile.mingw
 .deps
 .libs
-gimp-2.1
-gimp-console-2.1
+gimp-2.2
+gimp-console-2.2

@@ -11,29 +11,30 @@ AC_PREREQ(2.54)
 # set GIMP_BINARY_AGE and GIMP_INTERFACE_AGE to 0.
 
 m4_define([gimp_major_version], [2])
-m4_define([gimp_minor_version], [1])
-m4_define([gimp_micro_version], [7])
+m4_define([gimp_minor_version], [2])
+m4_define([gimp_micro_version], [0])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
 m4_define([gimp_interface_age], [0])
-m4_define([gimp_binary_age], [0])
+m4_define([gimp_binary_age],
+          [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-# m4_define([gimp_version], [2.0])
+m4_define([gimp_version], [2.2.0-pre1])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.1])
-m4_define([gimp_plugin_version], [2.1])
-m4_define([gimp_tool_version], [2.1])
+m4_define([gimp_app_version], [2.2])
+m4_define([gimp_plugin_version], [2.0])
+m4_define([gimp_tool_version], [2.0])
 m4_define([gimp_pkgconfig_version], [2.0])
-m4_define([gimp_data_version], [2.1])
-m4_define([gimp_sysconf_version], [2.1])
-m4_define([gimp_user_version], [2.1])
+m4_define([gimp_data_version], [2.0])
+m4_define([gimp_sysconf_version], [2.0])
+m4_define([gimp_user_version], [2.0])
 
 m4_define([gimp_unstable],
           m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
@@ -124,14 +125,8 @@ AC_SUBST(GIMP_DESKTOP_ICON)
 m4_define([lt_current], [m4_eval(100 * gimp_minor_version + gimp_micro_version - gimp_interface_age)])
 m4_define([lt_revision], [gimp_interface_age])
 m4_define([lt_age], [m4_eval(gimp_binary_age - gimp_interface_age)])
-LT_CURRENT=lt_current
-LT_REVISION=lt_revision
-LT_AGE=lt_age
 LT_VERSION_INFO="lt_current:lt_revision:lt_age"
 LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
-AC_SUBST(LT_CURRENT)
-AC_SUBST(LT_REVISION)
-AC_SUBST(LT_AGE)
 AC_SUBST(LT_VERSION_INFO)
 AC_SUBST(LT_CURRENT_MINUS_AGE)
 
