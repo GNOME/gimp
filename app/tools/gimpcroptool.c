@@ -754,10 +754,10 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpCropTool       *crop      = GIMP_CROP_TOOL (tool);
+  GimpCropTool       *crop     = GIMP_CROP_TOOL (tool);
   GimpCropOptions    *options;
-  GdkCursorType       ctype     = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpCursorType      cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
@@ -766,12 +766,12 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
       switch (crop->function)
         {
         case MOVING:
-          cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
 
         case RESIZING_LEFT:
         case RESIZING_RIGHT:
-          cmodifier = GIMP_CURSOR_MODIFIER_RESIZE;
+          modifier = GIMP_CURSOR_MODIFIER_RESIZE;
           break;
 
         default:
@@ -779,13 +779,13 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
         }
     }
 
-  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_cursor (tool->control, cursor);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      options->crop_mode ==
                                      GIMP_CROP_MODE_CROP ?
                                      GIMP_TOOL_CURSOR_CROP :
                                      GIMP_TOOL_CURSOR_RESIZE);
-  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

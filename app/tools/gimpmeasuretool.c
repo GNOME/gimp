@@ -508,8 +508,8 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 {
   GimpMeasureTool   *mtool     = GIMP_MEASURE_TOOL (tool);
   gboolean           in_handle = FALSE;
-  GdkCursorType      ctype     = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpCursorType     cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier modifier  = GIMP_CURSOR_MODIFIER_NONE;
   gint               i;
 
   if (gimp_tool_control_is_active (tool->control) && tool->gdisp == gdisp)
@@ -531,36 +531,36 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 	      if (state & GDK_CONTROL_MASK)
 		{
 		  if (state & GDK_MOD1_MASK)
-		    ctype = GDK_BOTTOM_RIGHT_CORNER;
+		    cursor = GDK_BOTTOM_RIGHT_CORNER;
 		  else
-		    ctype = GDK_BOTTOM_SIDE;
+		    cursor = GDK_BOTTOM_SIDE;
 		  break;
 		}
 
 	      if (state & GDK_MOD1_MASK)
 		{
-		  ctype = GDK_RIGHT_SIDE;
+		  cursor = GDK_RIGHT_SIDE;
 		  break;
 		}
 
 	      if (state & GDK_SHIFT_MASK)
-		cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
+		modifier = GIMP_CURSOR_MODIFIER_PLUS;
 	      else
-		cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+		modifier = GIMP_CURSOR_MODIFIER_MOVE;
 
 	      if (i == 0 && mtool->num_points == 3 &&
-		  cmodifier == GIMP_CURSOR_MODIFIER_PLUS)
-		cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+		  modifier == GIMP_CURSOR_MODIFIER_PLUS)
+		modifier = GIMP_CURSOR_MODIFIER_MOVE;
 	      break;
 	    }
 	}
 
       if (! in_handle && mtool->num_points > 1 && state & GDK_MOD1_MASK)
-        cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+        modifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gimp_tool_control_set_cursor (tool->control, ctype);
-  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
+  gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

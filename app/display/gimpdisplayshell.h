@@ -118,11 +118,12 @@ struct _GimpDisplayShell
   gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */
 
-  GdkCursorType       current_cursor;  /*  Currently installed main cursor    */
+  GimpCursorFormat    cursor_format;   /*  Currently used cursor format       */
+  GimpCursorType      current_cursor;  /*  Currently installed main cursor    */
   GimpToolCursorType  tool_cursor;     /*  Current Tool cursor                */
   GimpCursorModifier  cursor_modifier; /*  Cursor modifier (plus, minus, ...) */
 
-  GdkCursorType     override_cursor;   /*  Overriding cursor                  */
+  GimpCursorType    override_cursor;   /*  Overriding cursor                  */
   gboolean          using_override_cursor; /*  is the cursor overridden?      */
 
   gboolean          draw_cursor;       /* should we draw software cursor ?    */

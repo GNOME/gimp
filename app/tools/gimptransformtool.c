@@ -638,8 +638,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
   if (tr_tool->use_grid)
     {
       GimpChannel        *selection = gimp_image_get_mask (gdisp->gimage);
-      GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
-      GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+      GimpCursorType      cursor    = GDK_TOP_LEFT_ARROW;
+      GimpCursorModifier  modifier  = GIMP_CURSOR_MODIFIER_NONE;
 
       switch (options->type)
         {
@@ -652,14 +652,14 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
                 if (GIMP_IS_LAYER (drawable) &&
                     gimp_layer_get_mask (GIMP_LAYER (drawable)))
                   {
-                    ctype = GIMP_CURSOR_BAD;
+                    cursor = GIMP_CURSOR_BAD;
                   }
                 else if (gimp_display_coords_in_active_drawable (gdisp, coords))
                   {
                     if (gimp_channel_is_empty (selection) ||
                         gimp_channel_value (selection, coords->x, coords->y))
                       {
-                        ctype = GIMP_CURSOR_MOUSE;
+                        cursor = GIMP_CURSOR_MOUSE;
                       }
                   }
               }
@@ -670,25 +670,25 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           if (gimp_channel_is_empty (selection) ||
               gimp_channel_value (selection, coords->x, coords->y))
             {
-              ctype = GIMP_CURSOR_MOUSE;
+              cursor = GIMP_CURSOR_MOUSE;
             }
           break;
 
         case GIMP_TRANSFORM_TYPE_PATH:
           if (gimp_image_get_active_vectors (gdisp->gimage))
-            ctype = GIMP_CURSOR_MOUSE;
+            cursor = GIMP_CURSOR_MOUSE;
           else
-            ctype = GIMP_CURSOR_BAD;
+            cursor = GIMP_CURSOR_BAD;
           break;
         }
 
       if (tr_tool->use_center && tr_tool->function == TRANSFORM_HANDLE_CENTER)
         {
-          cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
         }
 
-      gimp_tool_control_set_cursor          (tool->control, ctype);
-      gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
+      gimp_tool_control_set_cursor          (tool->control, cursor);
+      gimp_tool_control_set_cursor_modifier (tool->control, modifier);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

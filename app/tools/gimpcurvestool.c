@@ -896,9 +896,9 @@ curves_graph_events (GtkWidget      *widget,
 		     GdkEvent       *event,
 		     GimpCurvesTool *tool)
 {
-  static GdkCursorType cursor_type = GDK_TOP_LEFT_ARROW;
+  static GimpCursorType cursor_type = GDK_TOP_LEFT_ARROW;
 
-  GdkCursorType   new_cursor = GDK_X_CURSOR;
+  GimpCursorType  new_cursor = GDK_X_CURSOR;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
   gint            i;

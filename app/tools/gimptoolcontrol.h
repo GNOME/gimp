@@ -53,11 +53,11 @@ struct _GimpToolControl
                                       *  active drawable                      */
   GimpMotionMode motion_mode;        /*  how to process motion events before  *
                                       *  they are forwarded to the tool       */
-  GdkCursorType      cursor;
+  GimpCursorType     cursor;
   GimpToolCursorType tool_cursor;
   GimpCursorModifier cursor_modifier;
 
-  GdkCursorType      toggle_cursor;
+  GimpCursorType     toggle_cursor;
   GimpToolCursorType toggle_tool_cursor;
   GimpCursorModifier toggle_cursor_modifier;
 
@@ -115,10 +115,10 @@ void               gimp_tool_control_snap_offsets               (GimpToolControl
                                                                  gint               *width,
                                                                  gint               *height);
 
-GdkCursorType      gimp_tool_control_get_cursor                 (GimpToolControl    *control);
+GimpCursorType     gimp_tool_control_get_cursor                 (GimpToolControl    *control);
 
 void               gimp_tool_control_set_cursor                 (GimpToolControl    *control,
-                                                                 GdkCursorType       cursor);
+                                                                 GimpCursorType      cursor);
 GimpToolCursorType gimp_tool_control_get_tool_cursor            (GimpToolControl    *control);
 
 void               gimp_tool_control_set_tool_cursor            (GimpToolControl    *control,
@@ -127,10 +127,10 @@ GimpCursorModifier gimp_tool_control_get_cursor_modifier        (GimpToolControl
 
 void               gimp_tool_control_set_cursor_modifier        (GimpToolControl    *control,
                                                                  GimpCursorModifier  cmodifier);
-GdkCursorType      gimp_tool_control_get_toggle_cursor          (GimpToolControl    *control);
+GimpCursorType     gimp_tool_control_get_toggle_cursor          (GimpToolControl    *control);
 
 void               gimp_tool_control_set_toggle_cursor          (GimpToolControl    *control,
-                                                                 GdkCursorType       cursor);
+                                                                 GimpCursorType      cursor);
 GimpToolCursorType gimp_tool_control_get_toggle_tool_cursor     (GimpToolControl    *control);
 
 void               gimp_tool_control_set_toggle_tool_cursor     (GimpToolControl    *control,

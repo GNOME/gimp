@@ -1,3 +1,21 @@
+2004-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: remember the last used
+	GimpCursorFormat so changing the format in prefs applies
+	instantly, and not after the next tool change.
+
+	* app/display/gimpdisplayshell-cursor.[ch]
+	* app/tools/gimptool.[ch]
+	* app/tools/gimptoolcontrol.[ch]
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptransformtool.c: s/GdkCursorType/GimpCursorType/g
+
 2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): Preview

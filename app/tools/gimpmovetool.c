@@ -586,7 +586,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
   GimpMoveOptions  *options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
-  GdkCursorType      cursor      = GIMP_CURSOR_BAD;
+  GimpCursorType     cursor      = GIMP_CURSOR_BAD;
   GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_MOVE;
   GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
 

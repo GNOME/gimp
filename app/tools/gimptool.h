@@ -156,7 +156,7 @@ void          gimp_tool_pop_status         (GimpTool           *tool);
 
 void          gimp_tool_set_cursor         (GimpTool           *tool,
                                             GimpDisplay        *gdisp,
-                                            GdkCursorType       cursor,
+                                            GimpCursorType      cursor,
                                             GimpToolCursorType  tool_cursor,
                                             GimpCursorModifier  modifier);
 

@@ -224,7 +224,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 			       GimpDisplay     *gdisp)
 {
   GimpCloneOptions *options;
-  GdkCursorType     ctype = GIMP_CURSOR_MOUSE;
+  GimpCursorType    ctype = GIMP_CURSOR_MOUSE;
 
   options = (GimpCloneOptions *) tool->tool_info->tool_options;
 

@@ -261,7 +261,7 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
 
   if (color_tool->enabled)
     {
-      GdkCursorType      cursor   = GIMP_CURSOR_BAD;
+      GimpCursorType     cursor   = GIMP_CURSOR_BAD;
       GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
 
       if (coords->x > 0 && coords->x < gdisp->gimage->width  &&

@@ -44,7 +44,7 @@
 
 
 static void  gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
-						 GdkCursorType       cursor_type,
+						 GimpCursorType      cursor_type,
 						 GimpToolCursorType  tool_cursor,
 						 GimpCursorModifier  modifier,
 						 gboolean            always_install);
@@ -52,7 +52,7 @@ static void  gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 
 void
 gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
-                               GdkCursorType       cursor_type,
+                               GimpCursorType      cursor_type,
                                GimpToolCursorType  tool_cursor,
                                GimpCursorModifier  modifier)
 {
@@ -70,7 +70,7 @@ gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
 
 void
 gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
-                                        GdkCursorType     cursor_type)
+                                        GimpCursorType    cursor_type)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -82,7 +82,7 @@ gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
       shell->using_override_cursor = TRUE;
 
       gimp_cursor_set (shell->canvas,
-                       GIMP_GUI_CONFIG (shell->gdisp->gimage->gimp->config)->cursor_format,
+                       shell->cursor_format,
                        cursor_type,
                        GIMP_TOOL_CURSOR_NONE,
                        GIMP_CURSOR_MODIFIER_NONE);
@@ -181,12 +181,13 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
 
 static void
 gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
-                                    GdkCursorType       cursor_type,
+                                    GimpCursorType      cursor_type,
                                     GimpToolCursorType  tool_cursor,
                                     GimpCursorModifier  modifier,
                                     gboolean            always_install)
 {
   GimpDisplayConfig *config;
+  GimpCursorFormat   cursor_format;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -212,17 +213,20 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
 	}
     }
 
-  if (shell->current_cursor  != cursor_type ||
-      shell->tool_cursor     != tool_cursor ||
-      shell->cursor_modifier != modifier    ||
+  cursor_format = GIMP_GUI_CONFIG (config)->cursor_format;
+
+  if (shell->cursor_format   != cursor_format ||
+      shell->current_cursor  != cursor_type   ||
+      shell->tool_cursor     != tool_cursor   ||
+      shell->cursor_modifier != modifier      ||
       always_install)
     {
+      shell->cursor_format   = cursor_format;
       shell->current_cursor  = cursor_type;
       shell->tool_cursor     = tool_cursor;
       shell->cursor_modifier = modifier;
 
-      gimp_cursor_set (shell->canvas,
-                       GIMP_GUI_CONFIG (config)->cursor_format,
+      gimp_cursor_set (shell->canvas, cursor_format,
                        cursor_type, tool_cursor, modifier);
     }
 }
