@@ -98,7 +98,8 @@ uri_backend_load_image (const gchar  *uri,
       putenv ("LANG=C");
 #endif
 
-      execlp ("wget", "wget", "-T", TIMEOUT, uri, "-O", tmpname, NULL);
+      execlp ("wget", "wget", "e", "server-response=off", "-T", TIMEOUT,
+              uri, "-O", tmpname, NULL);
       g_set_error (error, 0, 0, "exec() failed: wget: %s", g_strerror (errno));
       _exit (127);
     }
