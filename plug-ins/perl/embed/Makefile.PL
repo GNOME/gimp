@@ -50,9 +50,9 @@ WriteMakefile(
     INSTALLDIRS => 'perl',
     INSTALLARCHLIB => '/tmp',
     OBJECT	=> 'perlmod$(OBJ_EXT) perlxsi$(OBJ_EXT)',
-    INC		=> "-I.. $_ccopts $_gccflags $CPPFLAGS $CFLAGS $DEFS".($IN_GIMP ? " -DIN_GIMP" : ""),
+    INC		=> "$INC1 $GIMP_INC_NOUI $_ccopts $_gccflags $CPPFLAGS $CFLAGS $DEFS".($IN_GIMP ? " -DIN_GIMP" : ""),
+    DEFINE	=> "$DEFINE1",
     macro	=> \%cfg,
-    DEFINE	=> '',
     dynamic_lib	=> { OTHERLDFLAGS => "$LDFLAGS $LIBS $_ldopts $_gldflags" },
     clean	=> { FILES => 'perlmod$(OBJ_EXT) perlxsi.c perlxsi$(OBJ_EXT)' }
 );

@@ -279,6 +279,8 @@ if ($IN_GIMP) {
    $dont_embed = "true";
 }
 
+system("cd embed && perl Makefile.PL");
+
 WriteMakefile(
     'dist'	=> {
 	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',

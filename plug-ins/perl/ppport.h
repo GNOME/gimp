@@ -2,16 +2,17 @@
 #ifndef _P_P_PORTABILITY_H_
 #define _P_P_PORTABILITY_H_
 
-/* Perl/Pollution/Portability Version 1.0005 */
+/* Perl/Pollution/Portability Version 1.0007 */
 
 /* Copyright (C) 1999, Kenneth Albanowski. This code may be used and
    distributed under the same license as any version of Perl. */
    
-/* For the latest version of this code, please contact the author at
-   <kjahds@kjahds.com>, or check with the Perl maintainers. */
+/* For the latest version of this code, please retreive the Devel::PPPort
+   module from CPAN, contact the author at <kjahds@kjahds.com>, or check
+   with the Perl maintainers. */
    
 /* If you needed to customize this file for your project, please mention
-   your changes. */
+   your changes, and visible alter the version number. */
 
 
 /*
@@ -39,7 +40,7 @@
    special defines should be used, ppport.h can be run through Perl to check
    your source code. Simply say:
    
-   	perl -x ppport.h *.c *.h *.xs [etc]
+   	perl -x ppport.h *.c *.h *.xs foo/any.c [etc]
    
    The result will be a list of patches suggesting changes that should at
    least be acceptable, if not necessarily the most efficient solution, or a
@@ -62,6 +63,7 @@ foreach (<DATA>) {
 	$macros{$1} = 1 if /^#\s*define\s+([a-zA-Z0-9_]+)/;
 	$replace = $1 if /Replace:\s+(\d+)/;
 	$badmacros{$2}=$1 if $replace and /^#\s*define\s+([a-zA-Z0-9_]+).*?\s+([a-zA-Z0-9_]+)/;
+	$badmacros{$1}=$2 if /Replace (\S+) with (\S+)/;
 }
 foreach $filename (map(glob($_),@ARGV)) {
 	unless (open(IN, "<$filename")) {
@@ -139,22 +141,27 @@ foreach $filename (map(glob($_),@ARGV)) {
 __DATA__
 */
 
+#ifndef PERL_REVISION
+#   ifndef __PATCHLEVEL_H_INCLUDED__
+#       include "patchlevel.h"
+#   endif
+#   ifndef PERL_REVISION
+#	define PERL_REVISION	(5)
+        /* Replace: 1 */
+#       define PERL_VERSION	PATCHLEVEL
+#       define PERL_SUBVERSION	SUBVERSION
+        /* Replace PERL_PATCHLEVEL with PERL_VERSION */
+        /* Replace: 0 */
+#   endif
+#endif
 
-#include "patchlevel.h"
-#ifndef PERL_PATCHLEVEL
-/* Replace: 1 */
-#	define PERL_PATCHLEVEL PATCHLEVEL
-/* Replace: 0 */
-#endif
-#ifndef PERL_SUBVERSION
-#	define PERL_SUBVERSION SUBVERSION
-#endif
+#define PERL_BCDVERSION ((PERL_REVISION * 0x1000000L) + (PERL_VERSION * 0x1000L) + PERL_SUBVERSION)
 
 #ifndef ERRSV
 #	define ERRSV perl_get_sv("@",FALSE)
 #endif
 
-#if (PERL_PATCHLEVEL < 4) || ((PERL_PATCHLEVEL == 4) && (PERL_SUBVERSION <= 4))
+#if (PERL_VERSION < 4) || ((PERL_VERSION == 4) && (PERL_SUBVERSION <= 5))
 /* Replace: 1 */
 #	define PL_sv_undef	sv_undef
 #	define PL_sv_yes	sv_yes
@@ -166,11 +173,10 @@ __DATA__
 #	define PL_curstash	curstash
 #	define PL_copline	copline
 #	define PL_Sv		Sv
-#	define PL_perl_destruct_level perl_destruct_level
 /* Replace: 0 */
 #endif
 
-#if (PERL_PATCHLEVEL < 5)
+#ifndef dTHR
 #  ifdef WIN32
 #	define dTHR extern int Perl___notused
 #  else
@@ -222,7 +228,7 @@ static SV * newRV_noinc (SV * sv)
 /* Provide: newCONSTSUB */
 
 /* newCONSTSUB from IO.xs is in the core starting with 5.004_63 */
-#if (PERL_PATCHLEVEL < 4) || ((PERL_PATCHLEVEL == 4) && (PERL_SUBVERSION < 63))
+#if (PERL_VERSION < 4) || ((PERL_VERSION == 4) && (PERL_SUBVERSION < 63))
 
 #if defined(NEED_newCONSTSUB)
 static
@@ -249,11 +255,11 @@ SV *sv;
 
 	newSUB(
 
-#if (PERL_PATCHLEVEL < 3) || ((PERL_PATCHLEVEL == 3) && (PERL_SUBVERSION < 22))
+#if (PERL_VERSION < 3) || ((PERL_VERSION == 3) && (PERL_SUBVERSION < 22))
      /* before 5.003_22 */
 		start_subparse(),
 #else
-#  if (PERL_PATCHLEVEL == 3) && (PERL_SUBVERSION == 22)
+#  if (PERL_VERSION == 3) && (PERL_SUBVERSION == 22)
      /* 5.003_22 */
      		start_subparse(0),
 #  else

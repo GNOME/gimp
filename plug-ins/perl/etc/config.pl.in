@@ -1,5 +1,9 @@
 # this is ugly, but it makes Gimp installable from within CPAN
 
+$topdir=".";
+
+$topdir.="/.." while ! -f "$topdir/MANIFEST";
+
 %cfg = (
    _CPPFLAGS		=> q[@CPPFLAGS@],
    _CFLAGS		=> q[@CFLAGS@],
@@ -49,12 +53,10 @@ $GIMP = $bindir."/gimp" if $IN_GIMP;
 $GIMP     = expand($GIMP);
 $GIMPTOOL = expand($GIMPTOOL);
 
-if (defined $topdir) {
-   $GIMP_INC		=~ s/\$topdir/$topdir/g;
-   $GIMP_INC_NOUI	=~ s/\$topdir/$topdir/g;
-   $GIMP_LIBS		=~ s/\$topdir/$topdir/g;
-   $GIMP_LIBS_NOUI	=~ s/\$topdir/$topdir/g;
-}
+$GIMP_INC	=~ s%\$topdir%$topdir%g;
+$GIMP_INC_NOUI	=~ s%\$topdir%$topdir%g;
+$GIMP_LIBS	=~ s%\$topdir%$topdir%g;
+$GIMP_LIBS_NOUI	=~ s%\$topdir%$topdir%g;
 
 if ($IN_GIMP) {
    $GIMP_PREFIX=expand($prefix);
@@ -72,4 +74,8 @@ if (!$IN_GIMP) {
 }
 
 $cfg{_DEFS} = $DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';
+
+# $...1 variables should be put in front of the corresponding MakeMaker values.
+$INC1     = "-I$topdir";
+$DEFINES1 = $IN_GIMP ? "-DIN_GIMP" : "";
 

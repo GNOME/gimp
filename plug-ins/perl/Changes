@@ -8,10 +8,12 @@ Revision history for Gimp-Perl extension.
 	- made Gimp->color_cube work.
 	- added Gimp::init_gtk function to initialize Gtk in a Gimp-compatible
 	  way.
-	- replaced the default colour database by something far better.
+	- replaced the default colour database by something far better ;)
 	- exchanged order of some compiler commandline arguments.
 	- improved Makefile support for embed.
         - added embed.
+        - improved many parts of the build process.
+        - updated ppport.h.
 
 1.08  Fri Apr  9 03:20:54 CEST 1999
 	- added guidegrid, git-text, roundrectsel, repdup, centerguide,

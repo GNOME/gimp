@@ -12,5 +12,8 @@
 /* Define if you have the vsnprintf function.  */
 #undef HAVE_VSNPRINTF
 
+/* Define if you have the <libgimp/gimpmodule.h> header file.  */
+#undef HAVE_LIBGIMP_GIMPMODULE_H
+
 /* Define if you have the <unistd.h> header file.  */
 #undef HAVE_UNISTD_H
