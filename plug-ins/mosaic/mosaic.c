@@ -28,11 +28,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -540,10 +535,10 @@ mosaic_dialog (void)
   GtkWidget *toggle_vbox;
   GtkWidget *main_hbox;
   GtkWidget *frame;
-  GtkWidget *preview;
+  GtkWidget *logo;
   GtkWidget *table;
   GtkObject *scale_data;
-  gint y;
+  GdkPixbuf *pixbuf;
 
   gimp_ui_init ("mosaic", TRUE);
 
@@ -580,23 +575,20 @@ mosaic_dialog (void)
 
   logo_box = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), logo_box, FALSE, FALSE, 0);
+  gtk_widget_show (logo_box);
 
   frame = gtk_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (logo_box), frame, FALSE, FALSE, 0);
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
-
-  for (y = 0; y < logo_height; y++)
-    gtk_preview_draw_row (GTK_PREVIEW (preview),
-			  logo_data + y * logo_width * logo_bpp,
-			  0, y, logo_width);
-
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
   gtk_widget_show (frame);
-  gtk_widget_show (logo_box);
+
+  pixbuf = gdk_pixbuf_new_from_inline (-1, mosaic_logo, FALSE, NULL);
+  logo = gtk_image_new_from_pixbuf (pixbuf);
+  g_object_unref (pixbuf);
+
+  gtk_container_add (GTK_CONTAINER (frame), logo);
+  gtk_widget_show (logo);
 
   /*  the vertical box and its toggle buttons  */
   frame = gtk_frame_new (_("Options"));

@@ -1632,7 +1632,7 @@ gimp_plist_build_combo (GtkWidget      *combo,       /* I - Combo widget */
   if (*callback_id != -1)
     g_signal_handler_disconnect (entry, *callback_id);
 
-  gtk_entry_set_editable (entry, FALSE);
+  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
 
   if (num_items == 0)
     {
@@ -2160,7 +2160,7 @@ gimp_media_size_callback (GtkWidget *widget,
 		size *= 2.54;
 	      set_entry_value (custom_size_width, size, FALSE);
 	      gtk_widget_set_sensitive (GTK_WIDGET (custom_size_width), TRUE);
-	      gtk_entry_set_editable (GTK_ENTRY (custom_size_width), TRUE);
+              gtk_editable_set_editable (GTK_EDITABLE (custom_size_width), TRUE);
 	      stp_set_page_width (*pv, default_width);
 	    }
 	  else
@@ -2170,7 +2170,7 @@ gimp_media_size_callback (GtkWidget *widget,
 		size *= 2.54;
 	      set_entry_value (custom_size_width, size, FALSE);
 	      gtk_widget_set_sensitive (GTK_WIDGET (custom_size_width), FALSE);
-	      gtk_entry_set_editable (GTK_ENTRY (custom_size_width), FALSE);
+              gtk_editable_set_editable (GTK_EDITABLE (custom_size_width), FALSE);
 	      stp_set_page_width (*pv, stp_papersize_get_width (pap));
 	    }
 
@@ -2183,7 +2183,7 @@ gimp_media_size_callback (GtkWidget *widget,
 		size *= 2.54;
 	      set_entry_value (custom_size_height, size, FALSE);
 	      gtk_widget_set_sensitive (GTK_WIDGET (custom_size_height), TRUE);
-	      gtk_entry_set_editable (GTK_ENTRY (custom_size_height), TRUE);
+              gtk_editable_set_editable (GTK_EDITABLE (custom_size_height), TRUE);
 	      stp_set_page_height (*pv, default_height);
 	    }
 	  else
@@ -2193,7 +2193,7 @@ gimp_media_size_callback (GtkWidget *widget,
 		size *= 2.54;
 	      set_entry_value (custom_size_height, size, FALSE);
 	      gtk_widget_set_sensitive (GTK_WIDGET (custom_size_height), FALSE);
-	      gtk_entry_set_editable (GTK_ENTRY (custom_size_height), FALSE);
+              gtk_editable_set_editable (GTK_EDITABLE (custom_size_height), FALSE);
 	      stp_set_page_height (*pv, stp_papersize_get_height (pap));
 	    }
 	}
