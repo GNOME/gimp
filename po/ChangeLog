@@ -1,3 +1,7 @@
+2001-08-30  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* ga.po: fixed header (it used non standard charset name)
+
 2001-08-13  Abel Chueng  <maddog@linux.org.hk>
 
 	* zh_TW.Big5.po: Fixed a previous incorrect translation, and add

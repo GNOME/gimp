@@ -4,14 +4,14 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.23\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"Project-Id-Version: gimp 1.2.2\n"
+"POT-Creation-Date: 2001-08-30 08:24+0200\n"
 "PO-Revision-Date: 2000-08-27 12:00-0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <ga@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO_8859-1\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:137
 msgid "About the GIMP"
@@ -315,13 +315,13 @@ msgstr ""
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
-#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
-#: app/tools.c:1549 app/undo_history.c:759
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/gdisplay_ops.c:310
+#: app/gradient.c:918 app/gradient_select.c:161 app/histogram_tool.c:294
+#: app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:326
+#: app/nav_window.c:1426 app/palette.c:2058 app/palette.c:2074
+#: app/palette.c:3111 app/palette_select.c:70 app/pattern_select.c:178
+#: app/preferences_dialog.c:386 app/tips_dialog.c:163 app/tools.c:1549
+#: app/undo_history.c:759
 msgid "Close"
 msgstr "Dún"
 
@@ -1113,35 +1113,6 @@ msgstr ""
 msgid "Anti Erase"
 msgstr ""
 
-#: app/errorconsole.c:173
-#, c-format
-msgid "Error opening file %s: %s"
-msgstr ""
-
-#: app/errorconsole.c:190
-msgid "Can't save, nothing selected!"
-msgstr ""
-
-#: app/errorconsole.c:194
-msgid "Save error log to file..."
-msgstr ""
-
-#: app/errorconsole.c:276
-msgid "GIMP Error Console"
-msgstr ""
-
-#: app/errorconsole.c:282
-msgid "Clear"
-msgstr "Glan"
-
-#: app/errorconsole.c:305
-msgid "Write all errors to file..."
-msgstr ""
-
-#: app/errorconsole.c:312
-msgid "Write selection to file..."
-msgstr ""
-
 #: app/file_new_dialog.c:195
 #, no-c-format
 msgid ""
@@ -1676,7 +1647,7 @@ msgstr ""
 msgid "pixel"
 msgstr ""
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
 msgid "pixels"
 msgstr ""
 
@@ -3723,7 +3694,7 @@ msgstr ""
 msgid "Navigation: No Image"
 msgstr ""
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr ""
 
@@ -6098,6 +6069,9 @@ msgstr ""
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Stair Dath"
+
+#~ msgid "Clear"
+#~ msgstr "Glan"
 
 #~ msgid "Remove"
 #~ msgstr "Scríos"
