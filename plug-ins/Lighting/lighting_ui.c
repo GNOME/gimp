@@ -1,6 +1,21 @@
-/**************************************************************/
-/* Dialog creation and updaters, callbacks and event-handlers */
-/**************************************************************/
+/* Lighting Effects - A plug-in for GIMP
+ *
+ * Dialog creation and updaters, callbacks and event-handlers
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
 #include <gtk/gtk.h>
 
@@ -29,9 +44,10 @@
 #include "high1.xpm"
 #include "high2.xpm"
 
+/*
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
-
+*/
 
 extern LightingValues mapvals;
 
@@ -68,12 +84,10 @@ static void xyzval_update             (GtkEntry *entry);
 
 static void toggle_update             (GtkWidget *widget,
 				       gpointer   data);
-
 static void togglebump_update         (GtkWidget *widget,
 				       gpointer   data);
+
 static void toggleenvironment_update  (GtkWidget *widget,
-				       gpointer   data);
-static void toggletips_update         (GtkWidget *widget,
 				       gpointer   data);
 
 static void lightmenu_callback        (GtkWidget *widget,
@@ -93,10 +107,8 @@ static gint envmap_constrain          (gint32   image_id,
 				       gpointer data);
 static void envmap_drawable_callback  (gint32   id,
 				       gpointer data);
-
 static GtkWidget *create_bump_page        (void);
 static GtkWidget *create_environment_page (void);
-
 
 #ifdef _LIGHTNING_UNUSED_CODE
 /**********************************************************/
@@ -144,7 +156,7 @@ togglebump_update (GtkWidget *widget,
 
       bump_page = create_bump_page ();
       gtk_notebook_append_page (options_note_book, bump_page,
-				gtk_label_new (_("Bump")));
+				gtk_label_new (_("Bumpmap")));
     }
   else
     {
@@ -171,7 +183,7 @@ toggleenvironment_update (GtkWidget *widget,
 
       env_page = create_environment_page ();
       gtk_notebook_append_page (options_note_book, env_page,
-				gtk_label_new (_("Env")));
+				gtk_label_new (_("Environment")));
     }
   else
     {
@@ -180,22 +192,6 @@ toggleenvironment_update (GtkWidget *widget,
         bump_page_pos--;
       env_page_pos = 0;
     }
-}
-
-/**************************/
-/* Tooltips toggle update */
-/**************************/
-
-static void
-toggletips_update (GtkWidget *widget,
-		   gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  if (mapvals.tooltips_enabled)
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
 }
 
 /*****************************************/
@@ -247,25 +243,25 @@ preview_callback (GtkWidget *widget)
 /*********************************************/
 /* Main window "-" (zoom in) button callback */
 /*********************************************/
-
+/*
 static void
 zoomout_callback (GtkWidget *widget)
 {
   mapvals.preview_zoom_factor *= 0.5;
   draw_preview_image (TRUE);
 }
-
+*/
 /*********************************************/
 /* Main window "+" (zoom out) button callback */
 /*********************************************/
-
+/*
 static void
 zoomin_callback (GtkWidget *widget)
 {
   mapvals.preview_zoom_factor *= 2.0;
   draw_preview_image (TRUE);
 }
-
+*/
 /**********************************************/
 /* Main window "Apply" button callback.       */ 
 /* Render to GIMP image, close down and exit. */
@@ -382,7 +378,7 @@ create_options_page (void)
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *table;
-  GtkWidget *spinbutton;
+  // GtkWidget *spinbutton;
   GtkObject *adj;
 
   page = gtk_vbox_new (FALSE, 4);
@@ -450,7 +446,7 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Create a new image when applying filter"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("High Preview Quality"));
+  toggle = gtk_check_button_new_with_label (_("High Quality Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.previewquality);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -460,16 +456,7 @@ create_options_page (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("Enable/disable high quality previews"), NULL);
-
-  toggle = gtk_check_button_new_with_label (_("Enable Tooltips"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				mapvals.tooltips_enabled);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (toggletips_update),
-		      &mapvals.tooltips_enabled);
-  gtk_widget_show (toggle);
+			   _("Enable/disable high quality preview"), NULL);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable tooltip messages"), NULL); 
@@ -495,7 +482,7 @@ create_options_page (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("Enable/disable jagged edges removal "
+			   _("Enable/disable jagged edges removal"
 			     "(antialiasing)"), NULL);
 
   table = gtk_table_new (2, 3, FALSE);
@@ -516,7 +503,18 @@ create_options_page (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &mapvals.max_depth);
+  
+ adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Threshold:"), 0, 0,
+			      mapvals.pixel_treshold, 0.01, 1000.0, 1.0, 15.0, 2,
+			      TRUE, 0, 0,
+			      _("Stop when pixel differences are smaller than "
+			        "this value"), NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &mapvals.pixel_treshold);
 
+  /*
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixel_treshold,
 				     0.001, 1000, 0.1, 1, 1, 0, 3);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -529,7 +527,7 @@ create_options_page (void)
   gimp_help_set_help_data (spinbutton,
 			   _("Stop when pixel differences are smaller than "
 			     "this value"), NULL);
-
+  */
   gtk_widget_show (page);
 
   return page;
@@ -568,18 +566,18 @@ create_light_page (void)
 				      &mapvals.lightsource.type,
 				      (gpointer) mapvals.lightsource.type,
 
-				      _("Point Light"),
-				      (gpointer) POINT_LIGHT, NULL,
-				      _("Directional Light"),
-				      (gpointer) DIRECTIONAL_LIGHT, NULL,
-				      _("Spot Light"),
-				      (gpointer) SPOT_LIGHT, NULL,
-				      _("No Light"),
+				      _("None"),
 				      (gpointer) NO_LIGHT, NULL,
+				      _("Directional"),
+				      (gpointer) DIRECTIONAL_LIGHT, NULL,
+				      _("Point"),
+				      (gpointer) POINT_LIGHT, NULL,
+				      _("Spot"),
+				      (gpointer) SPOT_LIGHT, NULL,
 
 				      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Lightsource Type:"), 1.0, 0.5,
+			     _("Light Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   gimp_help_set_help_data (optionmenu, _("Type of light source to apply"), NULL);
@@ -588,7 +586,7 @@ create_light_page (void)
 					      64, 16,
 					      &mapvals.lightsource.color.r, 3);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Lightsource Color:"), 1.0, 0.5,
+			     _("Light Color:"), 1.0, 0.5,
 			     colorbutton, 1, TRUE);
 
   gimp_help_set_help_data (colorbutton,
@@ -891,12 +889,11 @@ create_bump_page (void)
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
-
   frame = gtk_frame_new (_("Bumpmap Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 2, FALSE);
+  table = gtk_table_new (6, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
@@ -944,7 +941,7 @@ create_bump_page (void)
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &mapvals.bumpmax);
 
-  toggle = gtk_check_button_new_with_label (_("Autostretch to Fit Value Range"));
+ toggle = gtk_check_button_new_with_label (_("Autostretch to Fit Value Range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bumpstretch);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
@@ -952,7 +949,7 @@ create_bump_page (void)
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &mapvals.bumpstretch);
   gtk_widget_show (toggle);
-
+  
   gtk_widget_show (page);
 
   return page;
@@ -996,9 +993,9 @@ create_environment_page (void)
   return page;
 }
 
-/****************************/
-/* Create notbook and pages */
-/****************************/
+/*****************************/
+/* Create notebook and pages */
+/*****************************/
 
 static void
 create_main_notebook (GtkWidget *container)
@@ -1026,7 +1023,7 @@ create_main_notebook (GtkWidget *container)
       bump_page = create_bump_page ();
       bump_page_pos = g_list_length (options_note_book->children);
       gtk_notebook_append_page (options_note_book, bump_page,
-				gtk_label_new (_("Bump")));
+				gtk_label_new (_("Bumpmap")));
     }
 
   if (mapvals.env_mapped == TRUE)
@@ -1034,7 +1031,7 @@ create_main_notebook (GtkWidget *container)
       env_page = create_environment_page ();
       env_page_pos = g_list_length (options_note_book->children);
       gtk_notebook_append_page (options_note_book, env_page,
-				gtk_label_new (_("Env")));
+				gtk_label_new (_("Environment")));
     }
 
   gtk_widget_show (GTK_WIDGET (options_note_book));
@@ -1127,7 +1124,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("Preview!"));
+  button = gtk_button_new_with_label (_("Update Preview"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -1135,6 +1132,7 @@ main_dialog (GimpDrawable *drawable)
 		      NULL);
   gtk_widget_show (button);
 
+/*
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
   button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
@@ -1154,6 +1152,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button, _("Zoom in (make image bigger)"), NULL);
+*/
 
   create_main_notebook (main_hbox);
 
@@ -1167,9 +1166,6 @@ main_dialog (GimpDrawable *drawable)
     gdk_cursor_destroy (newcursor);
     gdk_flush ();
   }
-
-  if (!mapvals.tooltips_enabled)
-    gimp_help_disable_tooltips ();
 
   image_setup (drawable, TRUE);
 

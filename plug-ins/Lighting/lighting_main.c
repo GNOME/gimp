@@ -76,7 +76,6 @@ set_default_settings (void)
   mapvals.antialiasing           = FALSE;
   mapvals.create_new_image       = FALSE;
   mapvals.transparent_background = FALSE;
-  mapvals.tooltips_enabled       = FALSE;
   mapvals.bump_mapped            = FALSE;
   mapvals.env_mapped             = FALSE;
   mapvals.ref_mapped             = FALSE;

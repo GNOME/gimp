@@ -80,7 +80,6 @@ typedef struct
   gint antialiasing;
   gint create_new_image;
   gint transparent_background;
-  gint tooltips_enabled;
   gint bump_mapped;
   gint env_mapped;
   gint ref_mapped;
