@@ -93,7 +93,7 @@ sub insert_eye {
     gimp_ellipse_select($img,$x,$y,$width,$height,2,$aa,0,0);
     gimp_palette_set_foreground($color);
     if ($do_image) {
-	my $eye = gimp_file_load(NON_INTERACTIVE,$file,$file);
+	my $eye = gimp_file_load(RUN_NONINTERACTIVE,$file,$file);
 	gimp_image_scale($eye,$width,$height);
 	gimp_selection_all($eye);
 	my $eyedraw = gimp_image_active_drawable($eye);
