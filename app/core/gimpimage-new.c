@@ -111,7 +111,7 @@ gimp_image_new_get_memsize_string (gsize memsize)
 {
   if (memsize < 4096)
     {
-      return g_strdup_printf (_("%lu Bytes"), memsize);
+      return g_strdup_printf (_("%d Bytes"), (gint) memsize);
     }
   else if (memsize < 1024 * 10)
     {
@@ -123,7 +123,7 @@ gimp_image_new_get_memsize_string (gsize memsize)
     }
   else if (memsize < 1024 * 1024)
     {
-      return g_strdup_printf (_("%lu KB"), memsize / 1024);
+      return g_strdup_printf (_("%d KB"), (gint) memsize / 1024);
     }
   else if (memsize < 1024 * 1024 * 10)
     {

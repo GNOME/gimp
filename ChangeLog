@@ -1,5 +1,10 @@
 2003-01-05  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpimage-new.c: oops, cast here instead of changing the
+	format string so we're ok on 32-bit too.
+
+2003-01-05  Manish Singh  <yosh@gimp.org>
+
 	* app/undo_history.c
 	* app/core/gimpbrush.c
 	* app/core/gimpimage-new.c
