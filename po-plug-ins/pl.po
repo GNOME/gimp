@@ -6,7 +6,7 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
 # translators@gnome.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# GNOME PL Team <translators@gnome.pl>, 1999-2003
+# GNOME PL Team <translators@gnome.pl>, 1999-2004
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 #
 # Light Effects / Lighting Effects - teraz oba to "efekty świetlne"
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp14-std-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:49+0100\n"
-"PO-Revision-Date: 2004-01-19 14:00+0100\n"
+"POT-Creation-Date: 2004-02-16 09:48+0100\n"
+"PO-Revision-Date: 2004-02-13 14:44+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,9 +45,30 @@ msgid "About"
 msgstr "Informacje o"
 
 #. Preview
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
@@ -290,6 +311,7 @@ msgid "Color Function"
 msgstr "Funkcja koloru"
 
 #. Redmode radio frame
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -356,12 +378,14 @@ msgstr ""
 "mniejszymi"
 
 #. Greenmode radio frame
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Zielony"
 
 #. Bluemode radio frame
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -403,9 +427,9 @@ msgstr "_Fraktale"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:835
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
-#: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1218
+#: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1298
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
@@ -414,7 +438,7 @@ msgstr "_Fraktale"
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1763 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
@@ -446,20 +470,21 @@ msgid "Save Fractal Parameters"
 msgstr "Zapis parametrów fraktala"
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:887
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:761
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
-#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1738
+#: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
 #: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:502 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -1172,6 +1197,11 @@ msgid "Bad colormap"
 msgstr "Niepoprawna mapa kolorów"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1179,8 +1209,8 @@ msgstr "Niepoprawna mapa kolorów"
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
-#: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:507
+#: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1216,9 +1246,9 @@ msgstr "Błąd przy odczytywaniu nagłówka formatu BMP z pliku \"%s\""
 #: plug-ins/common/jpeg.c:926 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2130 plug-ins/common/smooth_palette.c:252
+#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:252
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:800 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
@@ -1238,15 +1268,17 @@ msgid "Cannot operate on unknown image types."
 msgstr "Nie można pracować na nieznanych typach obrazów."
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
-#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1003
+#: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1253
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1768
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
@@ -1323,7 +1355,7 @@ msgid "Cos_ine"
 msgstr "Cos_inus"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2067
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
 msgid "_None"
 msgstr "_Brak"
 
@@ -1968,6 +2000,35 @@ msgstr "Wyrównaj widoczne warstwy"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:322
@@ -2860,135 +2921,141 @@ msgstr "Na_sycenie kafla:"
 msgid "Cubistic Transformation"
 msgstr "Transformacja kubistyczna"
 
-#: plug-ins/common/curve_bend.c:568
+#: plug-ins/common/curve_bend.c:577
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtry/Zniekształcenia/Wygięcie _krzywizną..."
 
-#: plug-ins/common/curve_bend.c:699
-msgid "CurveBend operates on layers only (but was called on channel or mask)"
+#: plug-ins/common/curve_bend.c:709
+msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
-"Wygięcie krzywizną działa tylko na warstwach (wywołano na kanale lub masce)"
+"Operacja może być wykonana tylko na warstwie (użyto jej na kanale lub masce)."
+
+#: plug-ins/common/curve_bend.c:734
+msgid "Cannot operate on empty selections."
+msgstr "Nie można wykonywać operacji na pustych zaznaczeniach."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1214
+#: plug-ins/common/curve_bend.c:1238
 msgid "Curve Bend"
 msgstr "Wygięcie krzywizną"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1278
+#: plug-ins/common/curve_bend.c:1302
 msgid "_Preview Once"
 msgstr "U_twórz podgląd"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1287
+#: plug-ins/common/curve_bend.c:1311
 msgid "Automatic Pre_view"
 msgstr "A_utomatyczne odświeżanie podglądu"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1297 plug-ins/common/mosaic.c:528
+#. the vertical box and its toggle buttons
+#. Options section
+#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
 msgid "Options"
 msgstr "Opcje"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1312
+#: plug-ins/common/curve_bend.c:1336
 msgid "Rotat_e:"
 msgstr "Obrót:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1330
+#: plug-ins/common/curve_bend.c:1354
 msgid "Smoo_thing"
 msgstr "Wygła_dzanie"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1340 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "_Antyaliasing"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1350
+#: plug-ins/common/curve_bend.c:1374
 msgid "Work on Cop_y"
 msgstr "Praca na kopii"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1360
+#: plug-ins/common/curve_bend.c:1384
 msgid "Modify Curves"
 msgstr "Modyfikacje krzywej"
 
-#: plug-ins/common/curve_bend.c:1389
+#: plug-ins/common/curve_bend.c:1413
 msgid "Curve for Border"
 msgstr "Krzywa do krawędzi"
 
-#: plug-ins/common/curve_bend.c:1393
+#: plug-ins/common/curve_bend.c:1417
 msgid "_Upper"
 msgstr "_Górnej"
 
-#: plug-ins/common/curve_bend.c:1394
+#: plug-ins/common/curve_bend.c:1418
 msgid "_Lower"
 msgstr "_Dolnej"
 
-#: plug-ins/common/curve_bend.c:1404
+#: plug-ins/common/curve_bend.c:1428
 msgid "Curve Type"
 msgstr "Typ krzywej"
 
-#: plug-ins/common/curve_bend.c:1408
+#: plug-ins/common/curve_bend.c:1432
 msgid "Smoot_h"
 msgstr "_Wygładzony"
 
-#: plug-ins/common/curve_bend.c:1409
+#: plug-ins/common/curve_bend.c:1433
 msgid "_Free"
 msgstr "_Swobodny"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1424
+#: plug-ins/common/curve_bend.c:1448
 msgid "_Copy"
 msgstr "_Kopia"
 
-#: plug-ins/common/curve_bend.c:1429
+#: plug-ins/common/curve_bend.c:1453
 msgid "Copy the active curve to the other border"
 msgstr "Kopiuje aktywną krzywą do drugiej krawędzi"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1460
 msgid "_Mirror"
 msgstr "_Odbij"
 
-#: plug-ins/common/curve_bend.c:1441
+#: plug-ins/common/curve_bend.c:1465
 msgid "Mirror the active curve to the other border"
 msgstr "Tworzy odbicie lustrzane aktywnej krzywej"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1472
 msgid "S_wap"
 msgstr "_Zamień"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1477
 msgid "Swap the two curves"
 msgstr "Zamienia krzywe"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
 msgstr "Resetuje aktywną krzywą"
 
-#: plug-ins/common/curve_bend.c:1482
+#: plug-ins/common/curve_bend.c:1506
 msgid "Load the curves from a file"
 msgstr "Odczytuje krzywą z pliku"
 
-#: plug-ins/common/curve_bend.c:1494
+#: plug-ins/common/curve_bend.c:1518
 msgid "Save the curves to a file"
 msgstr "Zapisuje krzywą do pliku"
 
-#: plug-ins/common/curve_bend.c:2031
+#: plug-ins/common/curve_bend.c:2055
 msgid "Load Curve Points from file"
 msgstr "Odczyt punktów krzywej z pliku"
 
-#: plug-ins/common/curve_bend.c:2058
+#: plug-ins/common/curve_bend.c:2082
 msgid "Save Curve Points to file"
 msgstr "Zapis punktów krzywej do pliku"
 
-#: plug-ins/common/curve_bend.c:2958
+#: plug-ins/common/curve_bend.c:2980
 msgid "Curve Bend..."
 msgstr "Wyginanie krzywizną..."
 
@@ -3783,9 +3850,9 @@ msgid "Error in GIMP brush file '%s'"
 msgstr "Błąd w pliku \"%s\" z pędzlami GIMP-a."
 
 #: plug-ins/common/gbr.c:395
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Niepoprawny napis UTF-8 w pliku PSD"
+msgstr "Niepoprawny napis UTF-8 w pliku z pędzlami \"%s\"."
 
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
 #: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2986
@@ -3794,7 +3861,7 @@ msgstr "Bez nazwy"
 
 #: plug-ins/common/gbr.c:573
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Pędzle programu GIMP są w odcieniach szarości lub jako RGBA"
+msgstr "Pędzle programu GIMP zapisywane są w odcieniach szarości lub jako RGBA"
 
 #: plug-ins/common/gbr.c:658
 msgid "Save as Brush"
@@ -3854,13 +3921,13 @@ msgstr "Zapis jako GIcon"
 msgid "Icon Name:"
 msgstr "Nazwa ikony:"
 
-#: plug-ins/common/gif.c:689
+#: plug-ins/common/gif.c:688
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 "Nie można w prosty sposób bardziej zredukować kolorów. Zapis bez "
 "przezroczystości."
 
-#: plug-ins/common/gif.c:911
+#: plug-ins/common/gif.c:910
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3868,14 +3935,14 @@ msgstr ""
 "Format GIF obsłguje jednynie komentarze zapisane przy użyciu 7-bitowego "
 "kodowania ASCII. Komentarz nie został zapisany."
 
-#: plug-ins/common/gif.c:972
+#: plug-ins/common/gif.c:971
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nie można zapisywać obrazów RGB w formacie GIF. Należy najpierw "
 "przekonwertować obraz do odcieni szarości lub do trybu indeksowanego."
 
-#: plug-ins/common/gif.c:1115
+#: plug-ins/common/gif.c:1114
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
@@ -3885,17 +3952,17 @@ msgstr ""
 "Kolor przezroczysty zapisany w pliku może być błędnie wyświetlany w "
 "przeglądarkach, które nie obsługują przezroczystości."
 
-#: plug-ins/common/gif.c:1154
+#: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr ""
 "Wstawiono niezerowe opóźnienie, aby uniknąć animacji pochłaniającej moc "
 "procesora."
 
-#: plug-ins/common/gif.c:1197
+#: plug-ins/common/gif.c:1196
 msgid "GIF Warning"
 msgstr "GIF: Ostrzeżenie"
 
-#: plug-ins/common/gif.c:1215
+#: plug-ins/common/gif.c:1214
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3913,61 +3980,61 @@ msgstr ""
 "Możesz wybrać pomiędzy przycięciem wszystkich warstw\n"
 "do granic obrazu lub anulowaniem zapisu."
 
-#: plug-ins/common/gif.c:1262
+#: plug-ins/common/gif.c:1261
 msgid "Save as GIF"
 msgstr "Zapis jako GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1277
+#: plug-ins/common/gif.c:1276
 msgid "GIF Options"
 msgstr "Opcje GIF"
 
-#: plug-ins/common/gif.c:1284 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
 msgid "Interlace"
 msgstr "Przeplot"
 
-#: plug-ins/common/gif.c:1300
+#: plug-ins/common/gif.c:1299
 msgid "GIF Comment:"
 msgstr "Komentarz:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1360
 msgid "Animated GIF Options"
 msgstr "Opcje animacji GIF"
 
-#: plug-ins/common/gif.c:1368
+#: plug-ins/common/gif.c:1367
 msgid "Loop forever"
 msgstr "Zapętlenie na zawsze"
 
-#: plug-ins/common/gif.c:1381
+#: plug-ins/common/gif.c:1380
 msgid "Delay between Frames where Unspecified:"
 msgstr "Opóźnienie dla ramek animacji, dla których jest nieokreślone:"
 
-#: plug-ins/common/gif.c:1394
+#: plug-ins/common/gif.c:1393
 msgid "Milliseconds"
 msgstr "Milisekundy"
 
-#: plug-ins/common/gif.c:1404
+#: plug-ins/common/gif.c:1403
 msgid "Frame Disposal where Unspecified: "
 msgstr "Rodzaj ramek animacji, dla których jest nieokreślony: "
 
-#: plug-ins/common/gif.c:1412
+#: plug-ins/common/gif.c:1411
 msgid "I don't Care"
 msgstr "Bez znaczenia"
 
-#: plug-ins/common/gif.c:1414
+#: plug-ins/common/gif.c:1413
 msgid "Cumulative Layers (Combine)"
 msgstr "Kumulacja warstw (składanie)"
 
-#: plug-ins/common/gif.c:1416
+#: plug-ins/common/gif.c:1415
 msgid "One Frame per Layer (Replace)"
 msgstr "Jedna ramka na warstwę (zastępowanie)"
 
-#: plug-ins/common/gif.c:2624
+#: plug-ins/common/gif.c:2623
 msgid "Error writing output file."
 msgstr "Błąd podczas zapisu do pliku"
 
-#: plug-ins/common/gif.c:2694
+#: plug-ins/common/gif.c:2693
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Długość domyślnego komentarza jest ograniczona do %d znaków."
@@ -5140,6 +5207,7 @@ msgid "_Factory Defaults"
 msgstr "Wartości _domyślne"
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Wygładzanie"
@@ -5356,9 +5424,9 @@ msgid "<Image>/Filters/Map/_Paper Tile..."
 msgstr "<Image>/Filtry/Odwzorowanie/_Kawałki papieru..."
 
 #: plug-ins/common/pat.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Niepoprawny napis UTF-8 w pliku PSD"
+msgstr "Niepoprawny napis UTF-8 w pliku z deseniem \"%s\"."
 
 #: plug-ins/common/pat.c:496
 msgid "Save as Pattern"
@@ -5539,8 +5607,6 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Błąd przy zapisie pliku \"%s\". Nie można zapisać obrazu."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -5711,7 +5777,7 @@ msgstr "Zapis PostScript nie obsługuje obrazów z kanałami alfa"
 #: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
 #, c-format
 msgid "Error starting ghostscript (%s)"
-msgstr ""
+msgstr "Błąd przy uruchamianiu programu ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
@@ -5838,7 +5904,7 @@ msgstr "_Podgląd"
 msgid "Preview _Size:"
 msgstr "_Rozmiar podglądu:"
 
-#: plug-ins/common/psd.c:468
+#: plug-ins/common/psd.c:488
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Niepoprawny napis UTF-8 w pliku PSD"
 
@@ -6088,6 +6154,7 @@ msgstr "Błąd przy pobieraniu zrzutu ekranu"
 # plug-ins/common/screenshot.c - "Zrzut"
 # plug-ins/winsnap/winsnap.c - "Zrzuć"
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Zrzut"
@@ -6827,12 +6894,12 @@ msgstr "Połączenie zaimportowanych ścieżek"
 #: plug-ins/common/tga.c:426
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "Nie można odczytać stopki z \"%s\""
+msgstr "Nie można odczytać stopki z pliku \"%s\""
 
 #: plug-ins/common/tga.c:442
 #, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "Nie można odczytać rozszerzenia z \"%s\""
+msgstr "Nie można odczytać rozszerzenia z pliku \"%s\""
 
 #: plug-ins/common/tga.c:1193
 msgid "Save as TGA"
@@ -6877,16 +6944,16 @@ msgstr "Progowanie alfy"
 msgid "Threshold:"
 msgstr "Próg:"
 
-#: plug-ins/common/tiff.c:802
+#: plug-ins/common/tiff.c:831
 #, c-format
 msgid "Page %d"
 msgstr "Strona %d"
 
-#: plug-ins/common/tiff.c:816
+#: plug-ins/common/tiff.c:846
 msgid "TIFF Channel"
 msgstr "Kanały TIFF"
 
-#: plug-ins/common/tiff.c:825
+#: plug-ins/common/tiff.c:855
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6898,7 +6965,7 @@ msgstr ""
 "tylko 8 bitów, więc obraz zostanie skonwertowany. Z tego powodu część danych "
 "może zostać utracona."
 
-#: plug-ins/common/tiff.c:1900
+#: plug-ins/common/tiff.c:1930
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6907,36 +6974,36 @@ msgstr ""
 "zapisane w kodowaniu 7bit ASCII.\n"
 "Komentarz nie został zapisany."
 
-#: plug-ins/common/tiff.c:2049
+#: plug-ins/common/tiff.c:2079
 msgid "Save as TIFF"
 msgstr "Zapis jako TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2063
+#: plug-ins/common/tiff.c:2093
 msgid "Compression"
 msgstr "Kompresja danych"
 
-#: plug-ins/common/tiff.c:2068
+#: plug-ins/common/tiff.c:2098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2069
+#: plug-ins/common/tiff.c:2099
 msgid "_Pack Bits"
 msgstr "_Kompresowanie bitów"
 
-#: plug-ins/common/tiff.c:2070
+#: plug-ins/common/tiff.c:2100
 msgid "_Deflate"
 msgstr "_Deflacja"
 
-#: plug-ins/common/tiff.c:2071
+#: plug-ins/common/tiff.c:2101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2080
+#: plug-ins/common/tiff.c:2110
 msgid "Save _color values from transparent pixels"
 msgstr "Zapis wartości ko_lorów dla przezroczystych punktów"
 
-#: plug-ins/common/tiff.c:2095 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Komentarz:"
 
@@ -7575,6 +7642,7 @@ msgstr "Wiatr"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Styl"
@@ -7741,7 +7809,6 @@ msgstr ""
 "\"%s\":\n"
 "Nie podano typu danych obrazu"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8793,6 +8860,7 @@ msgid "(none)"
 msgstr "(brak)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr "<BRAK>"
 
@@ -8879,6 +8947,9 @@ msgstr "Domyślne"
 
 #.
 #. *  Scales
+#.
+#.
+#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2672 plug-ins/gflare/gflare.c:3483
 #: plug-ins/gflare/gflare.c:3590 plug-ins/gflare/gflare.c:3729
@@ -9288,7 +9359,6 @@ msgstr "<Image>/Filtry/Artystyczne/_Gimpresjonista..."
 msgid "Painting..."
 msgstr "Malowanie..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""

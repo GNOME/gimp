@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:50+0100\n"
-"PO-Revision-Date: 2004-01-09 12:56+0100\n"
+"POT-Creation-Date: 2004-02-16 09:47+0100\n"
+"PO-Revision-Date: 2004-01-22 10:37+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1996,25 +1996,22 @@ msgstr "<Image>/Script-Fu/Zaznaczenie/Do o_brazu"
 
 # zostawiam (cyba)
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid ""
 ")))\n"
 "  (set! filename2 (string-append data-dir\n"
 "\t\t\t\t "
 msgstr ""
 ")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t   "
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Script-Fu/Zaznaczenie/_Do pędzla..."
+msgstr "<Image>/Script-Fu/Zaznaczenie/D_o desenia..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-#, fuzzy
 msgid "Pattern Name"
-msgstr "Deseń"
+msgstr "Nazwa desenia"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
