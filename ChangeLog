@@ -1,3 +1,9 @@
+Mon Aug 31 23:32:40 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/gimpimage.c (gimp_image_remove_layer_mask): add back a call to
+	gdisplays_flush that seems to have been lost in the
+	objectification.
+
 Mon Aug 31 15:15:01 1998  Raph Levien  <raph@gimp.org>
 
 	* app/color_select.c (color_select_update_colors): made it use the
