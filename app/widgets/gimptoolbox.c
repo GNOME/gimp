@@ -34,6 +34,9 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-open.h"
+#include "file/file-utils.h"
+
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
@@ -110,6 +113,10 @@ static gboolean    toolbox_tool_button_press     (GtkWidget      *widget,
 static gboolean    toolbox_check_device          (GtkWidget      *widget,
                                                   GdkEvent       *event,
                                                   Gimp           *gimp);
+
+static void        toolbox_paste_received        (GtkClipboard   *clipboard,
+                                                  const gchar    *text,
+                                                  gpointer        data);
 
 
 /*  local variables  */
@@ -963,12 +970,22 @@ toolbox_tool_button_press (GtkWidget      *widget,
 			   GdkEventButton *event,
 			   GimpToolbox    *toolbox)
 {
-  if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
+  if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
     {
       gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
                                         gtk_widget_get_screen (widget),
                                         "gimp-tool-options",
                                         -1);
+    }
+  else if (event->type == GDK_BUTTON_PRESS && event->button == 2)
+    {
+      GimpContext *context = GIMP_DOCK (toolbox)->context;
+      GtkClipboard *clipboard;
+
+      clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
+
+      g_object_ref (context);
+      gtk_clipboard_request_text (clipboard, toolbox_paste_received, context);
     }
 
   return FALSE;
@@ -982,4 +999,39 @@ toolbox_check_device (GtkWidget *widget,
   gimp_devices_check_change (gimp, event);
 
   return FALSE;
+}
+
+static void
+toolbox_paste_received (GtkClipboard *clipboard,
+                        const gchar  *text,
+                        gpointer      data)
+{
+  GimpContext *context = GIMP_CONTEXT (data);
+
+  if (text && g_utf8_validate (text, -1, NULL))
+    {
+      GimpImage         *image;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
+
+      /* FIXME: need to validate the URI here!!
+       */
+
+      image = file_open_with_display (context->gimp, context, NULL,
+                                      text, &status, &error);
+
+      if (! image && status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename = file_utils_uri_to_utf8_filename (text);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+
+          g_clear_error (&error);
+          g_free (filename);
+        }
+
+    }
+
+  g_object_unref (context);
 }
