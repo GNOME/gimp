@@ -35,29 +35,28 @@ pkgconfig_DATA = gimp-1.3.pc gimpui-1.3.pc
 EXTRA_SCRIPTS = gimpinstall-1.3
 
 EXTRA_DIST = \
-	AUTHORS				\
-	COPYING				\
-	ChangeLog			\
-	ChangeLog.pre-1-0		\
-	ChangeLog.pre-1-2		\
-	HACKING				\
-	INSTALL				\
-	MAINTAINERS			\
-	NEWS				\
-	PLUGIN_MAINTAINERS		\
-	README				\
-	README.i18n			\
-	README.perl			\
-	README.win32			\
-	TODO				\
-	TODO.xml			\
-	config.h.win32			\
-	intltool-extract.in		\
-	intltool-merge.in		\
-	intltool-update.in		\
-	po-libgimp/update.sh		\
-	po-plug-ins/update.sh		\
-	po-script-fu/script-fu-xgettext	\
+	AUTHORS			\
+	COPYING			\
+	ChangeLog		\
+	ChangeLog.pre-1-0	\
+	ChangeLog.pre-1-2	\
+	HACKING			\
+	INSTALL			\
+	MAINTAINERS		\
+	NEWS			\
+	PLUGIN_MAINTAINERS	\
+	README			\
+	README.i18n		\
+	README.perl		\
+	README.win32		\
+	TODO			\
+	TODO.xml		\
+	config.h.win32		\
+	intltool-extract.in	\
+	intltool-merge.in	\
+	intltool-update.in	\
+	po-libgimp/update.sh	\
+	po-plug-ins/update.sh	\
 	po-script-fu/update.sh
 
 gimpinstall-1.3:
