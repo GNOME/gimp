@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include "imap_toolbar.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpstock.h"
 
 static gboolean _command_lock;
 
@@ -74,7 +75,7 @@ command_list_changed(Command_t *command, gpointer data)
 void
 toolbar_shapes_selected(ToolBar_t *toolbar, gint count)
 {
-   gint sensitive = (count > 0);
+   gboolean sensitive = (count > 0);
    gtk_widget_set_sensitive(toolbar->cut, sensitive);
    gtk_widget_set_sensitive(toolbar->copy, sensitive);
    gtk_widget_set_sensitive(toolbar->to_front, sensitive);
@@ -158,7 +159,8 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 					   &data->cmd_send_to_back);
    gtk_widget_set_sensitive(data->to_back, FALSE);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->grid = make_toolbar_toggle_icon(toolbar, IMAP_STOCK_GRID, "Grid",
+
+   data->grid = make_toolbar_toggle_icon(toolbar, GIMP_STOCK_GRID, "Grid",
 					 _("Grid"), toolbar_command, 
 					 &data->cmd_grid);
 

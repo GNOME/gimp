@@ -227,7 +227,6 @@ static gint
 sel_gauss_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -252,17 +251,7 @@ sel_gauss_dialog (void)
                     NULL);
 
   /* parameter settings */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
-		      TRUE, TRUE, 0);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
@@ -284,7 +273,6 @@ sel_gauss_dialog (void)
                     &bvals.maxdelta);
 
   gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -411,13 +399,10 @@ sel_gauss (GimpDrawable *drawable,
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width  = (x2 - x1);
-  height = (y2 - y1);
+  width  = x2 - x1;
+  height = y2 - y1;
   bytes  = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
-
-  if ((width < 1) || (height < 1) || (bytes < 1))
-    return;
 
   numrad = (gint) (radius + 1.0);
   mat = g_new (gdouble *, numrad);

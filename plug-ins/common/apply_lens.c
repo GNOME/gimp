@@ -374,7 +374,6 @@ lens_dialog (GimpDrawable *drawable)
   GtkWidget *dlg;
   GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *sep;
   GtkWidget *hbox;
@@ -400,14 +399,7 @@ lens_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (NULL, _("_Keep Original Surroundings"));
@@ -469,8 +461,6 @@ lens_dialog (GimpDrawable *drawable)
                     &lvals.refraction);
 
   gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   gtk_main ();

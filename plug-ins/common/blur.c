@@ -579,7 +579,6 @@ static gint
 blur_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *seed_hbox;
@@ -609,17 +608,7 @@ blur_dialog (void)
    *
    *  First set up the basic containers, label them, etc.
    */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 3, 3);
 
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.blur_seed);
@@ -652,8 +641,6 @@ blur_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.blur_rcount);
-
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 

@@ -49,6 +49,12 @@ struct _GimpPixelFetcher
   gboolean      shadow;
 };
 
+struct _GimpRgnIterator 
+{
+  GimpDrawable *drawable;
+  gint 		x1, y1, x2, y2;
+  GimpRunMode   run_mode;
+};
 
 GimpPixelFetcher *
 gimp_pixel_fetcher_new (GimpDrawable *drawable)
@@ -258,6 +264,39 @@ gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
   g_free (pf);
 }
 
+static void
+gimp_get_color_guchar (GimpDrawable *drawable,
+		       GimpRGB	    *color,
+		       gboolean      transparent,
+		       guchar       *bg)
+{
+  switch (gimp_drawable_type (drawable->drawable_id))
+    {
+    case GIMP_RGB_IMAGE :
+      gimp_rgb_get_uchar (color, &bg[0], &bg[1], &bg[2]);
+      bg[3] = 255;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      gimp_rgb_get_uchar (color, &bg[0], &bg[1], &bg[2]);
+      bg[3] = transparent ? 0 : 255;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      bg[0] = gimp_rgb_intensity_uchar (color);
+      bg[1] = 255;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      bg[0] = gimp_rgb_intensity_uchar (color);
+      bg[1] = transparent ? 0 : 255;
+      break;
+
+    default:
+      break;
+    }
+}
+
 void		 
 gimp_get_bg_guchar (GimpDrawable *drawable,
 		    gboolean      transparent,
@@ -266,32 +305,106 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
   GimpRGB  background;
 
   gimp_palette_get_background (&background);
+  gimp_get_color_guchar (drawable, &background, transparent, bg);
+}
 
-  switch (gimp_drawable_type (drawable->drawable_id))
+void		 
+gimp_get_fg_guchar (GimpDrawable *drawable,
+		    gboolean      transparent,
+		    guchar       *fg)
+{
+  GimpRGB  foreground;
+
+  gimp_palette_get_foreground (&foreground);
+  gimp_get_color_guchar (drawable, &foreground, transparent, fg);
+}
+
+GimpRgnIterator*
+gimp_rgn_iterator_new (GimpDrawable *drawable, GimpRunMode run_mode)
+{
+  GimpRgnIterator *iter = g_new (GimpRgnIterator, 1);
+  
+  iter->drawable = drawable;
+  iter->run_mode = run_mode;
+  gimp_drawable_mask_bounds (drawable->drawable_id, &iter->x1, &iter->y1, 
+			     &iter->x2, &iter->y2);
+
+  return iter;
+}
+
+void
+gimp_rgn_iterator_free (GimpRgnIterator *iter)
+{
+  g_free (iter);
+}
+
+static void
+gimp_rgn_iterator_iter_single (GimpRgnIterator *iter, GimpPixelRgn *srcPR, 
+			       GimpRgnFuncSrc func, gpointer data)
+{
+  gpointer  pr;
+  gint      total_area, area_so_far;
+
+  total_area = (iter->x2 - iter->x1) * (iter->y2 - iter->y1);
+  area_so_far   = 0;
+  
+  for (pr = gimp_pixel_rgns_register (1, srcPR);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-    case GIMP_RGB_IMAGE :
-      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
-      bg[3] = 255;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
-      bg[3] = transparent ? 0 : 255;
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (&background);
-      bg[1] = 255;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (&background);
-      bg[1] = transparent ? 0 : 255;
-      break;
-
-    default:
-      break;
+      guchar *src = srcPR->data;
+      gint    y;
+      
+      for (y = srcPR->y; y < srcPR->y + srcPR->h; y++)
+	{
+	  guchar *s = src;
+	  gint x;
+	  
+	  for (x = srcPR->x; x < srcPR->x + srcPR->w; x++)
+	    {
+              func (x, y, s, srcPR->bpp, data);
+	      s += srcPR->bpp;
+	    }
+	  
+	  src += srcPR->rowstride;
+	}
+      
+      if (iter->run_mode != GIMP_RUN_NONINTERACTIVE)
+	{
+	  area_so_far += srcPR->w * srcPR->h;
+	  gimp_progress_update ((gdouble) area_so_far /
+				(gdouble) total_area);
+	}
     }
+}
+
+void
+gimp_rgn_iterator_src (GimpRgnIterator *iter, GimpRgnFuncSrc func, 
+		       gpointer data)
+{
+  GimpPixelRgn srcPR;
+  
+  gimp_pixel_rgn_init (&srcPR, iter->drawable, iter->x1, iter->y1, 
+		       iter->x2 - iter->x1, iter->y2 - iter->y1, FALSE, FALSE);
+  gimp_rgn_iterator_iter_single (iter, &srcPR, func, data);
+}
+
+void
+gimp_rgn_iterator_dest (GimpRgnIterator *iter, 
+			GimpRgnFuncDest func, 
+			gpointer data)
+{
+  GimpPixelRgn destPR;
+  
+  gimp_pixel_rgn_init (&destPR, iter->drawable, iter->x1, iter->y1, 
+		       iter->x2 - iter->x1, iter->y2 - iter->y1, TRUE, TRUE);
+  gimp_rgn_iterator_iter_single (iter, &destPR, func, data);
+  
+  /*  update the processed region  */
+  gimp_drawable_flush (iter->drawable);
+  gimp_drawable_merge_shadow (iter->drawable->drawable_id, TRUE);
+  gimp_drawable_update (iter->drawable->drawable_id, iter->x1, iter->y1, 
+			iter->x2 - iter->x1, iter->y2 - iter->y1);
 }
 
 static void

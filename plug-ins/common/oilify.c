@@ -442,7 +442,6 @@ static gint
 oilify_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
@@ -465,17 +464,7 @@ oilify_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Use Intensity Algorithm"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
@@ -495,8 +484,6 @@ oilify_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.mask_size);
 
-  gtk_widget_show (frame);
-  gtk_widget_show (table);
   gtk_widget_show (dlg);
 
   gtk_main ();

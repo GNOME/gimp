@@ -333,7 +333,6 @@ sparkle_dialog (void)
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkWidget *sep;
@@ -360,16 +359,7 @@ sparkle_dialog (void)
                     NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
-  gtk_widget_show (main_vbox);
+  main_vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 1, 3);
 
   table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);

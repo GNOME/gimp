@@ -98,6 +98,10 @@ gchar   * gimp_plug_in_get_path              (const gchar *path_name,
                                               const gchar *dir_name);
 
 
+GtkWidget *gimp_parameter_settings_new 	     (GtkWidget *parent,
+					      guint rows,
+					      guint columns);
+
 G_END_DECLS
 
 #endif /* __GIMP_MISCUI_H__ */

@@ -1643,7 +1643,6 @@ save_dialog (void)
   GtkWidget     *main_vbox;
   GtkWidget     *label;
   GtkWidget     *scale;
-  GtkWidget     *frame;
   GtkWidget     *table;
   GtkWidget     *toggle;
   GtkWidget     *abox;
@@ -1720,16 +1719,7 @@ save_dialog (void)
 
   make_preview ();
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
-  table = gtk_table_new (9, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gimp_parameter_settings_new (main_vbox, 9, 3);
 
   label = gtk_label_new (_("Quality:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
@@ -1939,7 +1929,6 @@ save_dialog (void)
   
   gtk_widget_show (com_frame);
 
-  gtk_widget_show (frame);
   gtk_widget_show (table);
   gtk_widget_show (dlg);
 

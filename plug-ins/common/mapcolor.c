@@ -92,7 +92,7 @@ typedef struct
  IMG_PREVIEW *map_preview;
 } PLInterface;
 
-
+static guchar redmap[256], greenmap[256], bluemap[256];
 static gboolean run_flag = FALSE;
 
 /* Declare some local functions.
@@ -161,35 +161,23 @@ img_preview_alloc (guint width,
   IMG_PREVIEW *ip;
 
   ip = g_new (IMG_PREVIEW, 1);
-  ip->img = g_new (guchar, width*height*3);
-  if (ip->img == NULL)
-    {
-      g_free (ip);
-      return NULL;
-    }
+  ip->img = g_new (guchar, width * height*3);
   ip->width = width;
   ip->height = height;
   
   return ip;
 }
 
-
 /* Free image preview */
 static void
 img_preview_free (IMG_PREVIEW *ip)
 {
- if (ip)
- {
-   if (ip->img)
-   {
-     g_free (ip->img);
-     ip->img = NULL;
-   }
-   ip->width = ip->height = 0;
-   g_free (ip);
- }
+  if (ip)
+    {
+      g_free (ip->img);
+      g_free (ip);
+    }
 }
-
 
 /* Copy image preview. Create/modify destination preview */
 static void
@@ -199,40 +187,37 @@ img_preview_copy (IMG_PREVIEW  *src,
 {
   gint numbytes;
   IMG_PREVIEW *dst_p;
-
- if ((src == NULL) || (src->img == NULL) || (dst == NULL)) return;
-
- numbytes = src->width * src->height * 3; /* 1 byte spare */
- if (numbytes <= 0) return;
-
- if (*dst == NULL)  /* Create new preview ? */
- {
-   *dst = img_preview_alloc (src->width, src->height);
-   if (*dst == NULL) return;
-   memcpy ((*dst)->img, src->img, numbytes);
-   return;
- }
-
- /* destination preview already exists */
- dst_p = *dst;
-
- /* Did not already allocate enough memory ? */
- if ((dst_p->img != NULL) && (dst_p->width*dst_p->height*3 < numbytes))
- {
-   g_free (dst_p->img);
-   dst_p->width = dst_p->height = 0;
-   dst_p->img = NULL;
- }
- if (dst_p->img == NULL)
- {
-   dst_p->img = (guchar *)g_malloc (numbytes);
-   if (dst_p->img == NULL) return;
- }
- dst_p->width = src->width;
- dst_p->height = src->height;
- memcpy (dst_p->img, src->img, numbytes);
+  
+  if ((src == NULL) || (src->img == NULL) || (dst == NULL)) return;
+  
+  numbytes = src->width * src->height * 3; /* 1 byte spare */
+  if (numbytes <= 0) return;
+  
+  if (*dst == NULL)  /* Create new preview ? */
+    {
+      *dst = img_preview_alloc (src->width, src->height);
+      memcpy ((*dst)->img, src->img, numbytes);
+      return;
+    }
+  
+  /* destination preview already exists */
+  dst_p = *dst;
+  
+  /* Did not already allocate enough memory ? */
+  if ((dst_p->img != NULL) && (dst_p->width*dst_p->height*3 < numbytes))
+    {
+      g_free (dst_p->img);
+      dst_p->width = dst_p->height = 0;
+      dst_p->img = NULL;
+    }
+  if (dst_p->img == NULL)
+    {
+      dst_p->img = (guchar *)g_malloc (numbytes);
+    }
+  dst_p->width = src->width;
+  dst_p->height = src->height;
+  memcpy (dst_p->img, src->img, numbytes);
 }
-
 
 static IMG_PREVIEW *
 img_preview_create_from_drawable (guint  maxsize, 
@@ -314,7 +299,6 @@ img_preview_create_from_drawable (guint  maxsize,
  g_free (img_data);
  return ip;
 }
-
 
 MAIN ()
 
@@ -636,24 +620,17 @@ add_color_button (gint       csel_index,
                   gint       left,
                   gint       top,
                   GtkWidget *table)
-
 {
-  GtkWidget *label;
   GtkWidget *button;
-
-  label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, left, left+1, top, top+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
 
   button = gimp_color_button_new (gettext (csel_title[csel_index]),
 				  PRV_WIDTH, PRV_HEIGHT,
 				  &plvals.colors[csel_index], 
 				  GIMP_COLOR_AREA_FLAT);
-  gtk_table_attach (GTK_TABLE (table), button, left+1, left+2, top, top+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (button);
+  gimp_table_attach_aligned (GTK_TABLE (table), left + 1, top, 
+			     (left == 0) ? _("From:") : _("To:"),
+			     1.0, 0.5,
+			     button, 1, TRUE);
 
   g_signal_connect (button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
@@ -663,11 +640,9 @@ add_color_button (gint       csel_index,
                     NULL);
 }
 
-
 static void
 mapcolor_ok_callback (GtkWidget *widget,
                       gpointer   data)
-
 {
   plvals.map_mode = 0;  /* Currently always linear mapping */
 
@@ -687,13 +662,12 @@ get_mapping (GimpRGB *src_col1,
              guchar  *redmap,
              guchar  *greenmap,
              guchar  *bluemap)
-
 {
   guchar  src1[3];
   guchar  src2[3];
   guchar  dst1[3];
   guchar  dst2[3];
-  gint    rgb, i, j, a, as, b, bs;
+  gint    rgb, i, a, as, b, bs;
   guchar *colormap[3];
 
   /* Currently we always do a linear mapping */
@@ -720,29 +694,31 @@ get_mapping (GimpRGB *src_col1,
 	    b = a + 1;
 	  for (i = 0; i < 256; i++)
             {
-              j = CLAMP (((i - a) * (bs - as)) / (b - a) + as, 0, 255);
-              colormap[rgb][i] = j;
+	      gint j = ((i - a) * (bs - as)) / (b - a) + as;
+              colormap[rgb][i] = CLAMP0255(j);
             }
 	}
       break;
     }
 }
 
+static void 
+mapcolor_func (const guchar *src,
+	       guchar       *dest,
+	       gint          bpp,
+	       gpointer      data)
+{
+  dest[0] = redmap[src[0]];
+  dest[1] = greenmap[src[1]];
+  dest[2] = bluemap[src[2]];
+  if (bpp > 3) 
+    dest[3] = src[3];
+}
+
 static void
 color_mapping (GimpDrawable *drawable)
 
 {
-  gint processed, total;
-  gint x, y, xmin, xmax, ymin, ymax;
-  guint bpp = drawable->bpp;
-  guchar *src;
-  guchar *dest;
-  GimpPixelRgn src_rgn;
-  GimpPixelRgn dest_rgn;
-  gpointer pr;
-  gdouble  progress;
-  guchar   redmap[256], greenmap[256], bluemap[256];
-
   if (gimp_rgb_distance (&plvals.colors[0], &plvals.colors[1]) < 0.0001)
     return;
 
@@ -751,18 +727,8 @@ color_mapping (GimpDrawable *drawable)
       g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
       return;
     }
-  
-  gimp_drawable_mask_bounds (drawable->drawable_id, &xmin, &ymin, &xmax, &ymax);
-  if ((ymin == ymax) || (xmin == xmax)) return;
-  total = (xmax - xmin) * (ymax - ymin);
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_pixel_rgn_init (&src_rgn, drawable, xmin, ymin,
-                       (xmax - xmin), (ymax - ymin), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, xmin, ymin,
-                       (xmax - xmin), (ymax - ymin), TRUE, TRUE);
-
-  pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
 
   get_mapping (plvals.colors, 
 	       plvals.colors + 1, 
@@ -771,38 +737,5 @@ color_mapping (GimpDrawable *drawable)
 	       plvals.map_mode,
                redmap, greenmap, bluemap);
 
-  processed = 0;
-  progress  = 0.0;
-
-  for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-    {
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  src = src_rgn.data + y * src_rgn.rowstride;
-	  dest = dest_rgn.data + y * dest_rgn.rowstride;
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      dest[0] = redmap[src[0]];
-	      dest[1] = greenmap[src[1]];
-	      dest[2] = bluemap[src[2]];
-	      if (bpp > 3) dest[3] = src[3];
-	      src += bpp;
-	      dest += bpp;
-	      processed++;
-	    }
-	}
-
-      if ((gdouble) processed / (gdouble) total - progress > 0.1)
-        {
-          progress = (gdouble) processed / (gdouble) total;
-          gimp_progress_update (progress);
-        }
-    }
-
-  gimp_progress_update (1.0);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, 
-			xmin, ymin, (xmax - xmin), (ymax - ymin));
+  gimp_rgn_iterate2 (drawable, l_run_mode, mapcolor_func, NULL);
 }

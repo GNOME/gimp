@@ -15,7 +15,6 @@ EXTRA_DIST = \
 	circle.xpm	\
 	coord.xpm	\
 	dimension.xpm	\
-	grid.xpm	\
 	java.xpm	\
 	link.xpm	\
 	map_info.xpm	\

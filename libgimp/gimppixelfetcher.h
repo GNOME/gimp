@@ -39,7 +39,7 @@ enum
 };
 
 typedef struct _GimpPixelFetcher GimpPixelFetcher;
-
+typedef struct _GimpRgnIterator GimpRgnIterator;
 
 GimpPixelFetcher * gimp_pixel_fetcher_new          (GimpDrawable     *drawable);
 void               gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
@@ -64,6 +64,9 @@ void               gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
 void		   gimp_get_bg_guchar              (GimpDrawable *drawable,
 						    gboolean      transparent,
 						    guchar       *bg);
+void		   gimp_get_fg_guchar              (GimpDrawable *drawable,
+						    gboolean      transparent,
+						    guchar       *fg);
 
 
 typedef void (* GimpRgnFunc1) (const guchar *src,
@@ -73,6 +76,22 @@ typedef void (* GimpRgnFunc2) (const guchar *src,
                                guchar       *dest,
                                gint          bpp,
                                gpointer      data);
+typedef void (* GimpRgnFuncSrc) (gint x,
+				 gint y,
+				 guchar *src,
+				 gint bpp,
+				 gpointer data);
+typedef GimpRgnFuncSrc GimpRgnFuncDest;
+
+GimpRgnIterator *gimp_rgn_iterator_new (GimpDrawable *drawable, 
+					GimpRunMode run_mode);
+void 		 gimp_rgn_iterator_free (GimpRgnIterator *iter);
+void		 gimp_rgn_iterator_src (GimpRgnIterator *iter, 
+					GimpRgnFuncSrc func, 
+					gpointer data);
+void		 gimp_rgn_iterator_dest (GimpRgnIterator *iter, 
+					 GimpRgnFuncDest func, 
+					 gpointer data);
 
 void gimp_rgn_iterate1 (GimpDrawable *drawable, 
 			GimpRunMode   run_mode,

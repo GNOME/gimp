@@ -31,7 +31,6 @@
 #include "circle.xpm"
 #include "coord.xpm"
 #include "dimension.xpm"
-#include "grid.xpm"
 #include "java.xpm"
 #include "link.xpm"
 #include "map_info.xpm"
@@ -44,7 +43,6 @@
 
 static GtkStockItem imap_stock_items[] = {
    {IMAP_STOCK_MAP_INFO, N_("Edit Map Info..."), 0, 0, "imap"},
-   {IMAP_STOCK_GRID, N_("Grid"), 0, 0, "imap"},
 };
 
 static void
@@ -70,7 +68,6 @@ init_stock_icons(void)
    add_stock_icon(factory, IMAP_STOCK_CIRCLE, (const char**) circle_xpm);
    add_stock_icon(factory, IMAP_STOCK_COORD, (const char**) coord_xpm);
    add_stock_icon(factory, IMAP_STOCK_DIMENSION, (const char**) dimension_xpm);
-   add_stock_icon(factory, IMAP_STOCK_GRID, (const char**) grid_xpm);
    add_stock_icon(factory, IMAP_STOCK_JAVA, (const char**) java_xpm);
    add_stock_icon(factory, IMAP_STOCK_LINK, (const char**) link_xpm);
    add_stock_icon(factory, IMAP_STOCK_MAP_INFO, (const char**) map_info_xpm);

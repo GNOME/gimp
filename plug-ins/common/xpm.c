@@ -760,7 +760,6 @@ static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
 
@@ -780,18 +779,7 @@ save_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 1, 3);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("_Alpha Threshold:"), SCALE_WIDTH, 0,

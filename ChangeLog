@@ -1,3 +1,66 @@
+2003-09-13  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/grid.xpm: removed
+
+	* plug-ins/imagemap/Makefile.am: removed grid.xpm from distribution
+
+	* plug-ins/imagemap/imap_stock.[ch] 
+	* plug-ins/imagemap/imap_toolbar.c: use gimp stock icon for grid
+
+2003-09-13  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmiscui.[ch]
+	* libgimp/gimpmisc.[ch]: a few more reusable routines extracted from
+	several plug-ins.
+
+	* plug-ins/common/align_layers.c: 
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/xpm.c: use new stuff from libgimp/gimpmiscui.[ch]
+	plus some minor cleanup like removing unused header files (for 
+	example signal.h)
+
 2003-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]

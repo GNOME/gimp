@@ -425,17 +425,7 @@ align_layers_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 7, 3);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
@@ -535,8 +525,6 @@ align_layers_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.grid_size);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
   
   gtk_main ();

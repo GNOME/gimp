@@ -335,7 +335,6 @@ gauss_rle_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
 
@@ -358,15 +357,7 @@ gauss_rle_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
   toggle = gtk_check_button_new_with_label (_("Blur Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -404,8 +395,6 @@ gauss_rle_dialog (void)
                     &bvals.radius);
 
   gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   gtk_main ();

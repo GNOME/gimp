@@ -48,6 +48,8 @@ static CheckInterface cint =
   FALSE
 };
 
+static GimpRunMode run_mode;
+
 static void      query  (void);
 static void      run    (const gchar       *name,
 			 gint               nparams,
@@ -118,7 +120,6 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   gint32             image_ID;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
@@ -186,57 +187,52 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  guchar fg[4];
+  guchar bg[4];
+} CheckerboardParam_t;
+
+static void
+checkerboard_func (gint x,
+		   gint y,
+		   guchar *dest,
+		   gint bpp,
+		   gpointer data)
+{
+  CheckerboardParam_t *param = (CheckerboardParam_t*) data;
+  gint val, xp, yp;
+  gint b;
+
+  if (cvals.mode)
+    {
+      /* Psychobilly Mode */
+      val = (inblock (x, cvals.size) != inblock (y, cvals.size));
+    }
+  else
+    {
+      /* Normal, regular checkerboard mode.
+       * Determine base factor (even or odd) of block
+       * this x/y position is in.
+       */
+      xp = x / cvals.size;
+      yp = y / cvals.size;
+      
+      /* if both even or odd, color sqr */
+      val = ( (xp & 1) != (yp & 1) );
+    }
+  
+  for (b = 0; b < bpp; b++)
+    dest[b] = val ? param->fg[b] : param->bg[b];
+}
 
 static void
 do_checkerboard_pattern (GimpDrawable *drawable)
 {
-  GimpPixelRgn dest_rgn;
-  guchar   *dest_row;
-  guchar   *dest;
-  gint      row, col;
-  gint      progress, max_progress;
-  gint      x1, y1, x2, y2, x, y;
-  GimpRGB   foreground;
-  GimpRGB   background;
-  guchar    fg[4];
-  guchar    bg[4];
-  gint      bp;
-  gpointer  pr;
+  CheckerboardParam_t param;
+  GimpRgnIterator *iter;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  progress     = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  /* Get the foreground and background colors */
-
-  gimp_palette_get_foreground (&foreground);
-  gimp_palette_get_background (&background);
-
-  switch (gimp_drawable_type (drawable->drawable_id))
-    {
-    case GIMP_RGBA_IMAGE:
-      fg[3] = 255;
-      bg[3] = 255;
-    case GIMP_RGB_IMAGE:
-      gimp_rgb_get_uchar (&foreground, &fg[0], &fg[1], &fg[2]);
-      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      fg[1] = 255;
-      bg[1] = 255;
-    case GIMP_GRAY_IMAGE:
-      fg[0] = gimp_rgb_intensity_uchar (&foreground);
-      bg[0] = gimp_rgb_intensity_uchar (&background);
-      break;
-
-    default:
-      break;
-    }
-
+  gimp_get_bg_guchar (drawable, FALSE, param.bg);
+  gimp_get_fg_guchar (drawable, FALSE, param.fg);
 
   if (cvals.size < 1)
     {
@@ -244,59 +240,9 @@ do_checkerboard_pattern (GimpDrawable *drawable)
       cvals.size = 1;
     }
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      y = dest_rgn.y;
-
-      dest_row = dest_rgn.data;
-      for ( row = 0; row < dest_rgn.h; row++)
-	{
-	  dest = dest_row;
-	  x = dest_rgn.x;
-
-	  for (col = 0; col < dest_rgn.w; col++)
-	    {
-	      gint val, xp, yp;
-
-	      if (cvals.mode)
-		{
-		  /* Psychobilly Mode */
-		  val = ((inblock (x, cvals.size) == inblock (y, cvals.size))
-                         ? 0 : 1);
-		}
-	      else
-		{
-		  /* Normal, regular checkerboard mode.
-		   * Determine base factor (even or odd) of block
-		   * this x/y position is in.
-		   */
-		  xp = x / cvals.size;
-		  yp = y / cvals.size;
-
-		  /* if both even or odd, color sqr */
-		  val = ( (xp&1) == (yp&1) ) ? 0 : 1;
-		}
-
-	      for (bp = 0; bp < dest_rgn.bpp; bp++)
-		dest[bp] = val ? fg[bp] : bg[bp];
-
-	      dest += dest_rgn.bpp;
-	      x++;
-	    }
-
-	  dest_row += dest_rgn.rowstride;
-	  y++;
-	}
-
-      progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
-    }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_dest (iter, checkerboard_func, &param);
+  gimp_rgn_iterator_free (iter);
 }
 
 static gint
@@ -355,7 +301,6 @@ do_checkerboard_dialog (gint32        image_ID,
 			GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *size_entry;
@@ -391,16 +336,7 @@ do_checkerboard_dialog (gint32        image_ID,
   height = gimp_drawable_height (drawable->drawable_id);
   size   = MIN (width, height);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -457,7 +393,6 @@ check_size_update_callback(GtkWidget * widget, gpointer data)
 {
   cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }
-
 
 static void
 check_ok_callback (GtkWidget *widget,
