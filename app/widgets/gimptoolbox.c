@@ -164,7 +164,7 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_window_set_wmclass (GTK_WINDOW (toolbox), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (toolbox), _("The GIMP"));
 
-  /* Docks are utility windows by default, but the toolbox doesn't fit
+  /*  Docks are utility windows by default, but the toolbox doesn't fit
    *  into this category.  'Normal' is not correct as well but there
    *  doesn't seem to be a better match :-(
    */
@@ -198,6 +198,12 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
+
+  /*  A container that keeps references on the buttons that are not
+   *  added to the toolbox. Just to make sure they are freed on exit.
+   */
+  toolbox->trash = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (vbox), toolbox->trash);
 }
 
 static gboolean
@@ -636,6 +642,10 @@ toolbox_create_tools (GimpToolbox *toolbox,
           image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
           gtk_container_add (GTK_CONTAINER (button), image);
           gtk_widget_show (image);
+        }
+      else
+        {
+          gtk_container_add (GTK_CONTAINER (toolbox->trash), button);
         }
 
       g_object_set_data (G_OBJECT (tool_info), "toolbox-button", button);

@@ -1,5 +1,11 @@
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptoolbox.[ch]: added a container that keeps
+	references to the buttons which are not added to the wrap box.
+	Just to make sure they are destroyed on exit.
+
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
 	* etc/Makefile.am
 	* etc/sessionrc: added a sample sessiorc which will be used after
 	user installation.
