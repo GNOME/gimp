@@ -1,3 +1,12 @@
+2003-03-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-scroll.c: need to update the
+	scrollbars now that the call to gimp_display_shell_scale_setup()
+	was commented out.  Removed the commented stuff and don't #include
+	"gimpdisplayshell-scale.h".  Resume the active tool *after*
+	calling gdk_window_process_updates() to skip more useless drawing
+	operations.
+
 2003-03-06  Manish Sing  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/guides.pdb: fix find_next_guide to return 0 on

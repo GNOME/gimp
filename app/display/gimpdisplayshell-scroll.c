@@ -33,7 +33,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
 
@@ -61,12 +60,6 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 
   if (x_offset || y_offset)
     {
-      /* The call to gimp_display_shell_scale_setup() shouldn't be needed
-         here if all other places are correct.
-
-         gimp_display_shell_scale_setup (shell);
-      */
-
       /*  reset the old values so that the tool can accurately redraw  */
       shell->offset_x = old_x;
       shell->offset_y = old_y;
@@ -80,11 +73,18 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
 
+      /*  Make sure expose events are processed before scrolling again  */
+      gdk_window_process_updates (shell->canvas->window, FALSE);
+
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
                                    shell->gdisp);
 
-      /*  Make sure expose events are processed before scrolling again  */
-      gdk_window_process_updates (shell->canvas->window, FALSE);
+      /*  Update the scrollbars  */
+      shell->hsbdata->value = shell->offset_x;
+      shell->vsbdata->value = shell->offset_y;
+
+      gtk_adjustment_changed (shell->hsbdata);
+      gtk_adjustment_changed (shell->vsbdata);
 
       gimp_display_shell_scrolled (shell);
 
