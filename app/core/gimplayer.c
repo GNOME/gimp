@@ -731,6 +731,7 @@ GimpLayerMask *
 gimp_layer_create_mask (const GimpLayer *layer,
 			GimpAddMaskType  add_mask_type)
 {
+  GimpDrawable  *drawable;
   PixelRegion    srcPR;
   PixelRegion    destPR;
   GimpLayerMask *mask;
@@ -740,20 +741,21 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
-  gimage = gimp_item_get_image (GIMP_ITEM (layer));
+  drawable = GIMP_DRAWABLE (layer);
+  gimage   = gimp_item_get_image (GIMP_ITEM (layer));
 
   mask_name = g_strdup_printf (_("%s mask"),
 			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  mask = gimp_layer_mask_new (gimp_item_get_image (GIMP_ITEM (layer)),
-			      GIMP_DRAWABLE (layer)->width,
-			      GIMP_DRAWABLE (layer)->height,
+  mask = gimp_layer_mask_new (gimage,
+			      drawable->width,
+			      drawable->height,
 			      mask_name, &black);
 
   g_free (mask_name);
 
-  GIMP_DRAWABLE (mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-  GIMP_DRAWABLE (mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+  GIMP_DRAWABLE (mask)->offset_x = drawable->offset_x;
+  GIMP_DRAWABLE (mask)->offset_y = drawable->offset_y;
 
   switch (add_mask_type)
     {
@@ -782,12 +784,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_ALPHA_MASK:
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_has_alpha (drawable))
 	{
-	  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
+	  pixel_region_init (&srcPR, drawable->tiles, 
 			     0, 0, 
-			     GIMP_DRAWABLE (layer)->width, 
-			     GIMP_DRAWABLE (layer)->height, 
+			     drawable->width, 
+			     drawable->height, 
 			     FALSE);
 	  extract_alpha_region (&srcPR, NULL, &destPR);
 	}
@@ -799,13 +801,63 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         selection = gimp_image_get_mask (gimage);
 
-        pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles, 
-                           GIMP_DRAWABLE (layer)->offset_x,
-                           GIMP_DRAWABLE (layer)->offset_y, 
-                           GIMP_DRAWABLE (layer)->width, 
-                           GIMP_DRAWABLE (layer)->height, 
-                           FALSE);
-        copy_region (&srcPR, &destPR);
+        if (drawable->offset_x < 0 ||
+            drawable->offset_y < 0 ||
+            drawable->offset_x + drawable->width  > gimage->width ||
+            drawable->offset_y + drawable->height > gimage->height)
+          {
+            gint width, height;
+
+            width  = drawable->width;
+            height = drawable->height;
+
+            if (drawable->offset_x < 0)
+              width += drawable->offset_x;
+
+            if (drawable->offset_y < 0)
+              height += drawable->offset_y;
+
+            if (drawable->offset_x + drawable->width > gimage->width)
+              width -= drawable->offset_x + drawable->width - gimage->width;
+
+            if (drawable->offset_y + drawable->height > gimage->height)
+              height -= drawable->offset_y + drawable->height - gimage->height;
+
+            if (width < drawable->width || height < drawable->height)
+              gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
+
+            if (width > 0 && height > 0)
+              {
+                gint x, y;
+
+                x = MAX (0, drawable->offset_x);
+                y = MAX (0, drawable->offset_y);
+
+                pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles,
+                                   x, y, width, height,
+                                   FALSE);
+
+                x = MAX (0, -drawable->offset_x);
+                y = MAX (0, -drawable->offset_y);
+
+                pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+                                   x, y, width, height,
+                                   TRUE);
+
+                copy_region (&srcPR, &destPR);
+              }
+          }
+        else
+          {
+            pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles, 
+                               drawable->offset_x,
+                               drawable->offset_y, 
+                               drawable->width, 
+                               drawable->height, 
+                               FALSE);
+
+            copy_region (&srcPR, &destPR);
+          }
 
         if (! (selection->bounds_known && selection->empty))
           GIMP_CHANNEL (mask)->bounds_known = FALSE;
@@ -817,7 +869,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
         TileManager   *copy_tiles = NULL;
         GimpImageType  layer_type;
 
-        layer_type = GIMP_DRAWABLE (layer)->type;
+        layer_type = drawable->type;
 
         if (GIMP_IMAGE_TYPE_BASE_TYPE (layer_type) != GIMP_GRAY)
           {
@@ -826,30 +878,30 @@ gimp_layer_create_mask (const GimpLayer *layer,
             copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
                          GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
-            copy_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
-                                           GIMP_DRAWABLE (layer)->height,
+            copy_tiles = tile_manager_new (drawable->width,
+                                           drawable->height,
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-            gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
+            gimp_drawable_convert_grayscale (drawable,
                                              copy_tiles,
                                              GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
 
             pixel_region_init (&srcPR, copy_tiles,
                                0, 0,
-                               GIMP_DRAWABLE (layer)->width, 
-                               GIMP_DRAWABLE (layer)->height, 
+                               drawable->width, 
+                               drawable->height, 
                                FALSE);
           }
         else
           {
-            pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+            pixel_region_init (&srcPR, drawable->tiles,
                                0, 0,
-                               GIMP_DRAWABLE (layer)->width, 
-                               GIMP_DRAWABLE (layer)->height, 
+                               drawable->width, 
+                               drawable->height, 
                                FALSE);
           }
 
-        if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        if (gimp_drawable_has_alpha (drawable))
           {
             guchar black_uchar[] = { 0, 0, 0, 0 };
 

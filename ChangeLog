@@ -1,5 +1,13 @@
 2003-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.c (gimp_layer_create_mask): when adding a
+	layer mask from selection, don't crash if the layer is not
+	entirely inside the image boundary but clip the copy_region()
+	accordingly. Fixes bug #112409. Added a local GimpDrawable variable
+	so we don't need to GIMP_DRAWABLE(layer) all the time.
+
+2003-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/gimpvectors.c: forgot to commit this one.
 
 2003-05-07  Michael Natterer  <mitch@gimp.org>
