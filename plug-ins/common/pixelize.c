@@ -516,14 +516,14 @@ pixelize_large (GimpDrawable *drawable,
                 {
                   gulong alpha = average[bpp-1];
 
-                  if (average[bpp-1] = alpha/count)
-                      for (b = 0; b < bpp-1; b++)
-                          average[b] /= alpha;
+                  if ((average[bpp-1] = alpha / count))
+		    for (b = 0; b < bpp-1; b++)
+		      average[b] /= alpha;
                 }
               else
                 {
                   for (b = 0; b < bpp; b++)
-                      average[b] /= count;
+		    average[b] /= count;
                 }
 	    }
 
@@ -541,7 +541,8 @@ pixelize_large (GimpDrawable *drawable,
 		    {
 		      for (b = 0; b < bpp; b++)
 			dest[b] = average[b];
-		      dest += dest_rgn.bpp;
+
+		      dest  += dest_rgn.bpp;
 		      count += 1;
 		    }
 		  dest_row += dest_rgn.rowstride;
@@ -706,16 +707,16 @@ pixelize_sub (gint pixelwidth,
                 {
                   gulong alpha = average[bpp-1];
 
-                  if (average[bpp-1] = alpha/count)
+                  if ((average[bpp-1] = alpha / count))
                     {
                       for (i = 0; i < bpp-1; i++)
-                          average[i] /= alpha;
+			average[i] /= alpha;
                     }
                 }
               else
                 {
                   for (i = 0; i < bpp; i++)
-                      average[i] /= count;
+		    average[i] /= count;
                 }
 	    }
 
@@ -729,6 +730,7 @@ pixelize_sub (gint pixelwidth,
 		{
 		  for (i = 0; i < bpp; i++)
 		    buf[i] = average[i];
+
 		  count++;
 		  buf += bpp;
 		}

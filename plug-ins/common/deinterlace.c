@@ -234,17 +234,17 @@ deinterlace (GimpDrawable *drawable)
 
 	      for (col = 0; col < x2-x1; col++)
                 {
-                  gint b;
+                  gint  b;
                   guint ualpha = upix[bytes-1];
                   guint lalpha = lpix[bytes-1];
-                  guint alpha = ualpha + lalpha;
+                  guint alpha  = ualpha + lalpha;
 
-                  if (dpix[bytes-1] = alpha >> 1)
+                  if ((dpix[bytes-1] = (alpha >> 1)))
                     {
                       for (b = 0; b < bytes-1; b++)
-                          dpix[b] = (upix[b] * ualpha
-                                     + lpix[b] * lalpha) / alpha;
+			dpix[b] = (upix[b] * ualpha + lpix[b] * lalpha) / alpha;
                     }
+
                   upix += bytes;
                   lpix += bytes;
                   dpix += bytes;

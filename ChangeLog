@@ -1,5 +1,11 @@
 2003-03-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/pixelize.c: added parentheses where gcc
+	suggested them.
+
+2003-03-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/hue-saturation.[ch]: changed the hue_saturation()
 	function as suggested by Martin Weber in bug #94067.  Changed the
 	function signature to use a typed instead of a void pointer.
