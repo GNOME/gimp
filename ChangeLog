@@ -1,3 +1,7 @@
+2004-01-19  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gui/about-dialog.c (decorate_text): Fix gccism.
+
 2004-01-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.0pre3 (1.3.26),

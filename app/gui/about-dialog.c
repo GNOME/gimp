@@ -567,8 +567,8 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
   PangoRectangle lrect = {0, 0, 0, 0};
   PangoColor mix;
 
-  mix_colors (&(pp ? backgr0und : background),
-              &(pp ? foregr0und : foreground),
+  mix_colors ((pp ? &backgr0und : &background),
+              (pp ? &foregr0und : &foreground),
               &mix, time);
 
   text = pango_layout_get_text (layout);
@@ -663,8 +663,8 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
           else
             pos = ((gdouble) (letter_count - border)) / 15;
 
-          mix_colors (&(pp ? foregr0und : foreground),
-                      &(pp ? backgr0und : background),
+          mix_colors ((pp ? &foregr0und : &foreground),
+                      (pp ? &backgr0und : &background),
                       &mix, pos);
 
           ptr = g_utf8_next_char (ptr);
