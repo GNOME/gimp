@@ -690,9 +690,11 @@ save_gimprc_strings (const gchar *token,
   ut->token = g_strdup (token);
   ut->value = g_strdup (value);
 
-  for (list = unknown_tokens; list; list = g_list_next (list))
+  list = unknown_tokens;
+  while (list)
     {
       tmp = (UnknownToken *) list->data;
+      list = list->next;
 
       if (strcmp (tmp->token, ut->token) == 0)
 	{
@@ -702,7 +704,6 @@ save_gimprc_strings (const gchar *token,
 	  g_free (tmp);
 	}
     }
-
   unknown_tokens = g_list_append (unknown_tokens, ut);
 
   fclose (fp_new);
