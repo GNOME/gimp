@@ -1,6 +1,8 @@
 /* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * gimpenv.c
+ *
  * Copyright (C) 1999 Tor Lillqvist
  *
  * This program is free software; you can redistribute it and/or modify
@@ -76,7 +78,7 @@ extern const char *__XOS2RedirRoot(const char *);
  * freed with g_free().
  *
  * Returns: The user-specific GIMP settings directory.
- */
+ **/
 gchar*
 gimp_directory (void)
 {
@@ -158,7 +160,7 @@ gimp_directory (void)
  * with g_free() after use.
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
- */
+ **/
 gchar*
 gimp_personal_rc_file (gchar *basename)
 {
@@ -181,7 +183,7 @@ gimp_personal_rc_file (gchar *basename)
  * freed with g_free().
  *
  * Returns: The top directory for GIMP data.
- */
+ **/
 gchar*
 gimp_data_directory (void)
 {
@@ -256,7 +258,8 @@ gimp_data_directory (void)
  * The returned string is allocated just once, and should *NOT* be
  * freed with g_free().
  *
- * Returns: The top directory for GIMP config files.  */
+ * Returns: The top directory for GIMP config files.
+ **/
 gchar*
 gimp_sysconf_directory (void)
 {
@@ -328,7 +331,7 @@ gimp_sysconf_directory (void)
  * freed with g_free().
  *
  * Returns: The name of the GIMP's application-specific gtkrc file.
- */ 
+ **/ 
 gchar*
 gimp_gtkrc (void)
 {
@@ -356,7 +359,7 @@ gimp_gtkrc (void)
  *
  * Returns: A #GList of all directories in @path. Each list element
  *	    is guaranteed to end with a #G_PATH_SEPARATOR.
- */
+ **/
 GList *
 gimp_path_parse (gchar     *path,
 		 gint       max_paths,
@@ -440,8 +443,7 @@ gimp_path_parse (gchar     *path,
  * @path: A list of directories as returned by gimp_path_parse().
  *
  * Returns: A searchpath string separated by #G_SEARCHPATH_SEPARATOR.
- *
- */
+ **/
 gchar *
 gimp_path_to_str (GList *path)
 {
@@ -476,8 +478,7 @@ gimp_path_to_str (GList *path)
  * @path: A list of directories as returned by gimp_path_parse().
  *
  * This function frees the memory allocated for the list and it's strings.
- *
- */
+ **/
 void
 gimp_path_free (GList *path)
 {
@@ -501,8 +502,7 @@ gimp_path_free (GList *path)
  * Note that you have to g_free() the returned string.
  *
  * Returns: The first directory in @path where the user has write permission.
- *
- */
+ **/
 gchar *
 gimp_path_get_user_writable_dir (GList *path)
 {
