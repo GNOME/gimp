@@ -1156,7 +1156,7 @@ alienmap2_dialog (void)
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (dialog_response),
-                    dialog);
+                    NULL);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -1347,7 +1347,7 @@ dialog_response (GtkWidget *widget,
       wint.run = TRUE;
 
     default:
-      gtk_widget_destroy (GTK_WIDGET (data));
+      gtk_widget_destroy (widget);
       break;
     }
 }

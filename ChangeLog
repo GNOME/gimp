@@ -1,3 +1,9 @@
+2003-11-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c: fix it properly. There's really no
+	need to pass the same pointer twice.
+
 2003-11-29  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/AlienMap.c: 
