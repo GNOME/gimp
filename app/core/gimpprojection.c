@@ -1605,8 +1605,11 @@ gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
 }
 
 void
-gdisplay_install_tool_cursor (GDisplay      *gdisp,
-			      GdkCursorType  cursor_type)
+gdisplay_install_tool_cursor (GDisplay       *gdisp,
+			      GdkCursorType   cursor_type) /*,
+			      ToolType        tool_type,
+			      CursorModifier  modifier,
+			      gboolean        toggle_cursor) */
 {
   if (!gdisp->using_override_cursor)
     gdisplay_real_install_tool_cursor (gdisp,
@@ -1614,6 +1617,9 @@ gdisplay_install_tool_cursor (GDisplay      *gdisp,
 				       TOOL_TYPE_NONE,
 				       CURSOR_MODIFIER_NONE,
 				       FALSE,
+				       /*tool_type,
+				       modifier,
+				       toggle_cursor,*/
 				       FALSE);
 }
 
@@ -1647,7 +1653,7 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
       gdisp->using_override_cursor = FALSE;
       gdisplay_real_install_tool_cursor (gdisp,
 					 gdisp->current_cursor,
-					 active_tool->type,
+					 gdisp->cursor_tool,
 					 CURSOR_MODIFIER_NONE,
 					 FALSE,
 					 TRUE);

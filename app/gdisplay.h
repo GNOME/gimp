@@ -183,18 +183,21 @@ void       gdisplay_transform_coords_f     (GDisplay *, gdouble, gdouble,
 void       gdisplay_untransform_coords_f   (GDisplay *, gdouble, gdouble, 
 					                gdouble *, gdouble *, gboolean);
 
-void       gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
-					      GdkCursorType  cursor_type,
-					      ToolType       tool_type,
-					      CursorModifier modifier,
-					      gboolean       toggle_cursor,
-					      gboolean       always_install);
-void       gdisplay_install_tool_cursor      (GDisplay      *gdisp,
-					      GdkCursorType  cursor_type);
-void       gdisplay_remove_tool_cursor       (GDisplay      *gdisp);
-void       gdisplay_install_override_cursor  (GDisplay      *gdisp,
-					      GdkCursorType  cursor_type);
-void       gdisplay_remove_override_cursor   (GDisplay      *gdisp);
+void       gdisplay_real_install_tool_cursor (GDisplay       *gdisp,
+					      GdkCursorType   cursor_type,
+					      ToolType        tool_type,
+					      CursorModifier  modifier,
+					      gboolean        toggle_cursor,
+					      gboolean        always_install);
+void       gdisplay_install_tool_cursor      (GDisplay       *gdisp,
+					      GdkCursorType   cursor_type); /*,
+					      ToolType        tool_type,
+					      CursorModifier  modifier,
+					      gboolean        toggle_cursor); */
+void       gdisplay_remove_tool_cursor       (GDisplay       *gdisp);
+void       gdisplay_install_override_cursor  (GDisplay       *gdisp,
+					      GdkCursorType   cursor_type);
+void       gdisplay_remove_override_cursor   (GDisplay       *gdisp);
 
 void       gdisplay_set_menu_sensitivity   (GDisplay *);
 void       gdisplay_expose_area            (GDisplay *, gint, gint, gint, gint);

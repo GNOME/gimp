@@ -78,7 +78,7 @@ end_grab_and_scroll (GDisplay       *gdisp,
 {
   gdisplay_real_install_tool_cursor (gdisp,
 				     gdisp->current_cursor,
-				     active_tool->type,
+				     gdisp->cursor_tool,
 				     CURSOR_MODIFIER_NONE,
 				     FALSE,
 				     TRUE);

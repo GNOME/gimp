@@ -1,5 +1,10 @@
 2000-06-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gdisplay.[ch]
+	* app/scroll.c: oops, my last commit caused a segfault.
+
+2000-06-09  Michael Natterer  <mitch@gimp.org>
+
 	Cursor patch II:
 	This is only the logic inside the cursor system and not yet used.
 
