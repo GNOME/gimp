@@ -8,7 +8,7 @@
 
 # params: brick width/height, brick pattern, random light skew, border color
 
-use Gimp ':auto';
+use Gimp qw(:auto N_);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -124,7 +124,7 @@ register
         "Tels", 
         "http://bloodgate.com", 
         "10/26/1999a",
-        __"<Toolbox>/Xtns/Render/Bricks", 
+        N_"<Toolbox>/Xtns/Render/Bricks", 
         "*",
         [ 
          [PF_PATTERN,  "background", "Brick pattern", "Leather"],

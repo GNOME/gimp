@@ -137,7 +137,7 @@ sub extension_homepage_logo {
 sub query {
   gimp_install_procedure("extension_homepage_logo", "a test extension in perl",
                         "try it out", "Marc Lehmann", "Marc Lehmann", "1997-02-06",
-                        __"<Toolbox>/Xtns/Homepage-Logo", "*", PROC_EXTENSION,
+                        N_"<Toolbox>/Xtns/Homepage-Logo", "*", PROC_EXTENSION,
                         [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
 }
 

@@ -8,7 +8,7 @@
 # Written by Aaron Sherman, (c) 1998
 
 use Gimp::Feature 'unix';
-use Gimp qw(:auto __);
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 sub font_table {
@@ -173,7 +173,7 @@ register
   "Create a tabular index of fonts",
   "Create a tabular index of fonts",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-03-16",
-  __"<Toolbox>/Xtns/Render/Font Table",
+  N_"<Toolbox>/Xtns/Render/Font Table",
   "*",
   [
    [PF_STRING, "foundery", "Foundery (perl regex or \"*\")", "*"],

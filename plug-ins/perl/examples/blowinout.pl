@@ -91,7 +91,7 @@ register
 	"John Pitney",
 	"John Pitney <pitney\@uiuc.edu>",
 	"1999-03-15",
-	__"<Image>/Filters/Distorts/BlowInOut",
+	N_"<Image>/Filters/Distorts/BlowInOut",
 	"*",
 	[
 	 [PF_INT32, "angle", "Wind Angle, 0 is left", 120],

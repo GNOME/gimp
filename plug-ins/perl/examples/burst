@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 # <sjburges@gimp.org> (original release)
 #
 use Gimp;
@@ -21,15 +19,15 @@ use Gimp::Util;
 # Gimp::set_trace(TRACE_ALL);
 
 register "burst",
-  "Bursts from a central location\n",
+  "Bursts from a central location",
   "Creates a Burst of various sizes from the center of the currently 
 selected areas.  Can create either an elliptical burst, or go to sqare
 spots.  Also, you can specify how much (in pixels) to leave blank on
-the inside and the outside of the burst. \n",
+the inside and the outside of the burst.",
   "Seth Burgess",
   "Seth Burgess <sjburges\@gimp.org>",
   "1999-07-31",
-  __"<Image>/Filters/Misc/Burst",
+  N_"<Image>/Filters/Misc/Burst",
   "*",
   [
    [PF_RADIO, "shape", "Shape To Burst Into", 0,  [Rectangle => 1, Ellipse=> 0]],

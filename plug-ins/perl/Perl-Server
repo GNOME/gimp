@@ -15,7 +15,7 @@ use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
             $auth @authorized $exclusive $rm $saved_rm %stats);
 # the '' might be required (i.e. no ()). why??
-use Gimp ('__');
+use Gimp qw(__ N_);
 use Gimp::Net ();
 
 Gimp::set_trace(\$trace_res);
@@ -304,7 +304,7 @@ sub query {
    Gimp->install_procedure("extension_perl_server", "Start the Gimp-Perl Server",
                            "This is the server for plug-ins written using the Gimp::Net module",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1998-07-22",
-                           __"<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
+                           N_"<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"],
                             [&Gimp::PARAM_INT32, "flags", "internal flags (must be 0)"],

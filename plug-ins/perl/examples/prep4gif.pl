@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp qw(:auto);
+use Gimp qw(:auto N_ __);
 use Gimp::Fu;
 
 # This script requires a Gimp version >= 0.96 (I haven't checked - ymmv)
@@ -33,8 +33,7 @@ sub prep {
 
 # if there's not enough layers, abort.
 	if ($#layers <= 0) {
-		gimp_message("You need at least 2 layers to perform prep4gif");
-		print "Only ", scalar(@layers), " layers found!(", $layers[0],")\n";
+		gimp_message(__"You need at least 2 layers to perform prep4gif");
 		return;
 		}
 
@@ -95,7 +94,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"2-15-98",
-	__"<Image>/Filters/Web/Prepare for GIF",
+	N_"<Image>/Filters/Web/Prepare for GIF",
 	"RGB*",
 	[
 	 [PF_INT32, "lower_threshold", "Lower Alpha Threshold", 64],

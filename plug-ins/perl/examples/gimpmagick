@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 use Gimp::Feature qw(gtk perl-5.005);
-use Gimp 1.06 (':auto','__');
+use Gimp 1.06 (':auto','__','N_');
 use Gimp::Fu;
 use Gtk;
 BEGIN { eval "use Image::Magick 1.45"; $@ and Gimp::Feature::missing ("Image::Magick version 1.45 or higher") };
@@ -274,7 +274,7 @@ register "gimp_magick",
          "Marc Lehmann",
          "Marc Lehmann",
          $VERSION,
-         __"<Image>/Filters/Misc/Magick",
+         N_"<Image>/Filters/Misc/Magick",
          "*",
          [
          ],

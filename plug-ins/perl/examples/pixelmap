@@ -57,7 +57,7 @@ register "pixelmap",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19991115",
-         __"<Image>/Filters/Map/Pixelmap",
+         N_"<Image>/Filters/Map/Pixelmap",
          "*",	
          [
            [PF_TEXT,		"expression"	, "The perl expression to use",	"outer(\$x*0.1,\$y*0.2)\n->slice(\"*\$bpp\")"]
@@ -70,7 +70,7 @@ register "pixelgen",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19991115",
-         __"<Toolbox>/Xtns/Render/Pixelgenerator",
+         N_"<Toolbox>/Xtns/Render/Pixelgenerator",
          "*",	
          [
            [PF_SPINNER,		"width"		, "The width of the new image to generate",	512, [1, 4096, 1]],

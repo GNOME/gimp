@@ -22,9 +22,11 @@ msgstr "zu viele"
 msgid "$s: not an integer\n"
 msgstr "$s: kein integer\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Fit Text"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Render/Text Einpassen"
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
 
 msgid "Help for "
 msgstr "Hilfe für "
@@ -134,6 +136,10 @@ msgstr "Konnte Gimp::Drawable nicht in Gimp::GDrawable konvertieren (id %d)"
 msgid "Restore values to the previous ones"
 msgstr "Parameter auf vorherige Werte zurücksetzen"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
 msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr ""
 
@@ -161,8 +167,20 @@ msgstr ""
 msgid "register called with too many or wrong arguments\n"
 msgstr "'register' mit zu vielen oder falschen Argumenten aufgerufen\n"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Webify"
+msgstr "<Image>/Filter/"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
@@ -185,6 +203,9 @@ msgstr ""
 
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
 
 #, fuzzy
 msgid "<Image>/Filters/Render/TeX String"
@@ -211,6 +232,14 @@ msgstr ""
 msgid "Close"
 msgstr "Schließen"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
 msgid "unable to open $rgb_db_path"
 msgstr "Konnte $rgb_db_path nicht öffnen"
 
@@ -231,6 +260,10 @@ msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
 "and _ allowed"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
@@ -275,11 +308,19 @@ msgid ""
 "strict'"
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
 msgid "[undefined]"
 msgstr "[undefiniert]"
 
 msgid "<Image>/Guides/Remove Guides"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
@@ -290,8 +331,9 @@ msgstr "%s: PDB-Aufruf fehlgeschlagen"
 msgid "<Image>/Filters/"
 msgstr "<Image>/Filter/"
 
-msgid "<Image>/Filters/Misc/Prepare for GIF"
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid ", authorization required"
 msgstr ", Autorisierung notwendig"
@@ -308,6 +350,10 @@ msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "accepted unix connection"
 msgstr "Unix-Verbindung angenommen"
@@ -380,6 +426,10 @@ msgstr "Beschreibung"
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: Unbekannter Schlater, wie wär's mit $0 --help stattdessen?\n"
 
@@ -389,6 +439,10 @@ msgstr "Konnte Referenz auf Typ '%s' nicht konvertieren"
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 msgstr "<Toolbox>/Xtn/Erzeuge/Logo/Feuerlogo"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 msgid "<Image>/Filters/Render/Random Blends"
@@ -436,6 +490,10 @@ msgstr "Anfrage ohne Autorisierung empfangen, Verbindung abgebrochen"
 
 msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr "%s: PDB-Aufruf fehlgeschlagen wegen ungültiger Argumente"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "NAME"
 msgstr ""
@@ -493,6 +551,10 @@ msgstr ""
 
 msgid "too many arguments"
 msgstr "Zu viele Argumente"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr "Ungültige Dimension: pdl hat die Dimension %d, höchstens %d erlaubt"
@@ -553,14 +615,17 @@ msgstr "Die Farbangabe hat einen falschen Typ"
 msgid "get current background colour from the gimp"
 msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
+
 msgid "No horizontal or vertical guides found. Aborted."
+msgstr ""
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
 
 msgid "Menu Path"
@@ -568,9 +633,6 @@ msgstr "Menupfad"
 
 msgid "TYPE"
 msgstr "TYP"
-
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr ""
 
 msgid "<Image>/Guides/To Selection"
 msgstr ""
@@ -589,8 +651,15 @@ msgstr "<Toolbox>/Xtn/Animation/Billboard"
 msgid "<Image>/Filters/Misc/Border Average"
 msgstr "<Image>/Filter/Verschiedenes/Rahmenfarbe"
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 msgid "<Image>/Layers/Layer to Image Size"
@@ -598,6 +667,10 @@ msgstr "<Image>/Filter/"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "interface '$interface_type' unsupported."
 msgstr ""
@@ -631,20 +704,24 @@ msgstr "<Toolbox>/Xtn/Erzeuge/Yin-Yang"
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
 
+msgid "server version $Gimp::VERSION started"
+msgstr "Server Version $Gimp::VERSION gestartet"
+
 msgid "argument is not of type %s"
 msgstr "Argument nicht vom Typ %s"
 
 msgid "<Image>/Filters/Distorts/Scratches"
 msgstr ""
 
-msgid "server version $Gimp::VERSION started"
-msgstr "Server Version $Gimp::VERSION gestartet"
-
 msgid "%s arguments for function '%s'"
 msgstr "%s Argumente für die Funktion '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "only blessed scalars accepted here"
 msgstr "Objekt (nicht Referenz oder Skalar) benötigt"
@@ -695,6 +772,14 @@ msgstr "Vorherige"
 msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr "<Image>/Filter/"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
+msgstr "<Toolbox>/Xtn/Perl/Server"
+
 msgid "Command"
 msgstr "Befehl"
 
@@ -712,6 +797,10 @@ msgstr "BESCHREIBUNG"
 msgid "Accelerator"
 msgstr "Tastenkombination"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
+
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -727,6 +816,10 @@ msgstr ""
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Web/Prepare for GIF"
+msgstr "<Image>/Filter/"
+
 msgid "This module was built without support for PDL."
 msgstr "Dieses Modul wurde ohne PDL-Unterstützung übersetzt."
 
@@ -741,8 +834,8 @@ msgid "Date/Version"
 msgstr "Datum/Version"
 
 #, fuzzy
-msgid "<Image>/Filters/Misc/Webify"
-msgstr "<Image>/Filter/"
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr ""
@@ -759,11 +852,11 @@ msgstr ""
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr ""
 
-msgid "Status"
-msgstr ""
-
 msgid "accepted tcp connection from "
 msgstr "TCP-Verbindung angenommen von "
+
+msgid "Status"
+msgstr ""
 
 msgid "Load $name"
 msgstr "Lade $name"
@@ -771,21 +864,21 @@ msgstr "Lade $name"
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr ""
 
+msgid "unable to accept unix connection: $!\n"
+msgstr "Konnte Unix-Verbindung nicht annehmen: $!\n"
+
 #, fuzzy
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Xtn/PDB-Buch"
 
-msgid "unable to accept unix connection: $!\n"
-msgstr "Konnte Unix-Verbindung nicht annehmen: $!\n"
-
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr "<Image>/Filter/Noise/Rastern"
 
-msgid "(UNINITIALIZED)"
-msgstr "(UNINITIALISIERT)"
-
 msgid "unable to accept tcp connection: $!\n"
 msgstr "Konnte TCp-Verbindung nicht annehmen: $!\n"
+
+msgid "(UNINITIALIZED)"
+msgstr "(UNINITIALISIERT)"
 
 msgid "<Toolbox>/Xtns/Parasite Editor"
 msgstr ""
@@ -805,14 +898,17 @@ msgstr ""
 msgid "<Image>/Filters/Misc/Magick"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+
 msgid "Color"
 msgstr "Farbe"
 
-msgid "illegal parasite specification, reference expected"
-msgstr ""
-
 msgid "authorization unnecessary"
 msgstr "Autorisierung unnötig"
+
+msgid "illegal parasite specification, reference expected"
+msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal"
@@ -838,6 +934,10 @@ msgstr "<Toolbox>/Xtn/"
 
 msgid "plug-in returned %d more values than expected"
 msgstr ""
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ ist kein gültiger Import-Tag für $pkg"
@@ -868,100 +968,3 @@ msgstr "Akzeptiere Verbindungen auf $unix_path"
 
 #~ msgid "<Toolbox>/Xtns/Animation/Seth Spin"
 #~ msgstr "<Toolbox>/Xtn/Animation/Seth's Dreher"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-#~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-#~ msgstr "<Toolbox>/Xtn/Perl/Server"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"

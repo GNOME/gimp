@@ -187,7 +187,7 @@ sub xlfd_size($) {
         : ($pt,&Gimp::POINTS);
 }
 
-# the identity function
+# the monadic identity function
 sub N_($) { shift }
 
 my @init_functions;

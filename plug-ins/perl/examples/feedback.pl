@@ -15,7 +15,7 @@ register "feedback",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "2-15-99",
-         __"<Image>/Filters/Noise/Feedback",
+         N_"<Image>/Filters/Noise/Feedback",
          "RGB, GRAY",
          [
           [PF_SLIDER,	"offset",	"the amount the frames will offset", 3, [0, 255, 1]],

@@ -26,6 +26,9 @@ msgstr ""
 msgid "<Image>/Filters/Render/Fit Text"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+msgstr ""
+
 msgid "Help for "
 msgstr ""
 
@@ -133,6 +136,9 @@ msgstr ""
 msgid "Restore values to the previous ones"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
+msgstr ""
+
 msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr ""
 
@@ -160,7 +166,16 @@ msgstr ""
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
+msgstr ""
+
 msgid "Internal error: Gimp::Net #101, please report!"
+msgstr ""
+
+msgid "<Image>/Filters/Web/Webify"
 msgstr ""
 
 msgid ""
@@ -183,6 +198,9 @@ msgid ""
 msgstr ""
 
 msgid "Internal error: stashname too long, please report!"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
 msgstr ""
 
 msgid "<Image>/Filters/Render/TeX String"
@@ -209,6 +227,12 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
+msgstr ""
+
 msgid "unable to open $rgb_db_path"
 msgstr ""
 
@@ -227,6 +251,9 @@ msgstr ""
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
 "and _ allowed"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
 msgstr ""
 
 msgid ""
@@ -268,10 +295,16 @@ msgid ""
 "strict'"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
+msgstr ""
+
 msgid "[undefined]"
 msgstr ""
 
 msgid "<Image>/Guides/Remove Guides"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
 msgstr ""
 
 msgid "WARNING: shared locking requested but not implemented"
@@ -283,7 +316,7 @@ msgstr ""
 msgid "<Image>/Filters/"
 msgstr ""
 
-msgid "<Image>/Filters/Misc/Prepare for GIF"
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
 msgstr ""
 
 msgid ", authorization required"
@@ -299,6 +332,9 @@ msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
 msgstr ""
 
 msgid "accepted unix connection"
@@ -371,6 +407,9 @@ msgstr ""
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
+msgstr ""
+
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
@@ -378,6 +417,9 @@ msgid "Unable to convert a reference to type '%s'"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Random Blends"
@@ -423,6 +465,9 @@ msgid "unauthorized command received, aborting connection"
 msgstr ""
 
 msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
 msgstr ""
 
 msgid "NAME"
@@ -476,6 +521,9 @@ msgid ""
 msgstr ""
 
 msgid "too many arguments"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
 msgstr ""
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
@@ -537,23 +585,23 @@ msgstr ""
 msgid "get current background colour from the gimp"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr ""
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr ""
+
 msgid "No horizontal or vertical guides found. Aborted."
+msgstr ""
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
 
 msgid "Menu Path"
 msgstr ""
 
 msgid "TYPE"
-msgstr ""
-
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
 
 msgid "<Image>/Guides/To Selection"
@@ -571,13 +619,22 @@ msgstr ""
 msgid "<Image>/Filters/Misc/Border Average"
 msgstr ""
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
 msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
 msgstr ""
 
 msgid "<Image>/Layers/Layer to Image Size"
 msgstr ""
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
 msgstr ""
 
 msgid "interface '$interface_type' unsupported."
@@ -610,19 +667,22 @@ msgstr ""
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
 
+msgid "server version $Gimp::VERSION started"
+msgstr ""
+
 msgid "argument is not of type %s"
 msgstr ""
 
 msgid "<Image>/Filters/Distorts/Scratches"
 msgstr ""
 
-msgid "server version $Gimp::VERSION started"
-msgstr ""
-
 msgid "%s arguments for function '%s'"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
 msgstr ""
 
 msgid "only blessed scalars accepted here"
@@ -673,6 +733,12 @@ msgstr ""
 msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
+msgstr ""
+
 msgid "Command"
 msgstr ""
 
@@ -690,6 +756,9 @@ msgstr ""
 msgid "Accelerator"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
+msgstr ""
+
 msgid "Cancel"
 msgstr ""
 
@@ -705,6 +774,9 @@ msgstr ""
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
+msgid "<Image>/Filters/Web/Prepare for GIF"
+msgstr ""
+
 msgid "This module was built without support for PDL."
 msgstr ""
 
@@ -717,7 +789,7 @@ msgstr ""
 msgid "Date/Version"
 msgstr ""
 
-msgid "<Image>/Filters/Misc/Webify"
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
 msgstr ""
 
 msgid "<Image>/Filters/Animation/Animate Cells"
@@ -735,10 +807,10 @@ msgstr ""
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr ""
 
-msgid "Status"
+msgid "accepted tcp connection from "
 msgstr ""
 
-msgid "accepted tcp connection from "
+msgid "Status"
 msgstr ""
 
 msgid "Load $name"
@@ -747,19 +819,19 @@ msgstr ""
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgid "unable to accept unix connection: $!\n"
 msgstr ""
 
-msgid "unable to accept unix connection: $!\n"
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr ""
 
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr ""
 
-msgid "(UNINITIALIZED)"
+msgid "unable to accept tcp connection: $!\n"
 msgstr ""
 
-msgid "unable to accept tcp connection: $!\n"
+msgid "(UNINITIALIZED)"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Parasite Editor"
@@ -780,13 +852,16 @@ msgstr ""
 msgid "<Image>/Filters/Misc/Magick"
 msgstr ""
 
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+msgstr ""
+
 msgid "Color"
 msgstr ""
 
-msgid "illegal parasite specification, reference expected"
+msgid "authorization unnecessary"
 msgstr ""
 
-msgid "authorization unnecessary"
+msgid "illegal parasite specification, reference expected"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Brushed Metal"
@@ -811,6 +886,9 @@ msgid "<Toolbox>/Xtns/"
 msgstr ""
 
 msgid "plug-in returned %d more values than expected"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
 msgstr ""
 
 msgid "$_ is not a valid import tag for package $pkg"

@@ -15,7 +15,7 @@ register "border_average",
          "Marc Lehmann",
          "Marc Lehmann",
          "0.2.2",
-         __"<Image>/Filters/Misc/Border Average",
+         N_"<Image>/Filters/Misc/Border Average",
          "RGB",
          [
           [PF_INT32,	"thickness",		"Border size to take in count", 10],

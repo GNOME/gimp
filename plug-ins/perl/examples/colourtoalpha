@@ -13,7 +13,7 @@ register "colour_to_alpha",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990729",
-         __"<Image>/Filters/Colors/Colour To Alpha",
+         N_"<Image>/Filters/Colors/Colour To Alpha",
          "RGB*",	
          [
            [PF_COLOR,		"colour",	"The colour to replace"],

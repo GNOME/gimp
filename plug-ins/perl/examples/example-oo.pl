@@ -29,7 +29,7 @@ sub net {
 sub query {
   gimp_install_procedure("plug_in_example_oo", "a test plug-in in perl",
                          "try it out", "Marc Lehmann", "Marc Lehmann", "1998-04-27",
-                         __"<Toolbox>/Xtns/Perl Example Plug-in", "*", PROC_EXTENSION,
+                         N_"<Toolbox>/Xtns/Perl Example Plug-in", "*", PROC_EXTENSION,
                          [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
 }
 

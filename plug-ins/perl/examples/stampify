@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp qw(:auto __);
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 #Gimp::set_trace(TRACE_ALL);
@@ -11,7 +11,7 @@ register	"stampify",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990328",
-		__"<Image>/Script-Fu/Decor/Stampify",
+		N_"<Image>/Script-Fu/Decor/Stampify",
 		"*",
 		[
 	[PF_COLOR, "paper", "Paper colour", [242, 242, 242]],

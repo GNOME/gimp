@@ -12,7 +12,7 @@
 
 require 5.004;
 
-use Gimp qw(:auto __);
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -261,7 +261,7 @@ register
 	"it appear to have height. Not quite the same as a beveled edge, ".
 	"this is a somewhat more subtle technique.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  __"<Image>/Filters/Render/Highlight Edges",
+  N_"<Image>/Filters/Render/Highlight Edges",
   "*",
   [
    [PF_INT32, "edging", "Pixels", 1]
@@ -289,7 +289,7 @@ register
 	"is very different from drop shadows, as the glow will extend out ".
 	"in the given radius from all edges of the layer.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  __"<Image>/Filters/Render/Add Glow",
+  N_"<Image>/Filters/Render/Add Glow",
   "*",
   [
    [PF_COLOR, "glow_color", "Color", [0x00, 0x00, 0xff]],
@@ -304,7 +304,7 @@ register
 	"a glowing surface. This effect was inspired by a poster for the ".
 	"film \"Lost In Space\".",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  __"<Toolbox>/Xtns/Render/Logos/Glowing Steel",
+  N_"<Toolbox>/Xtns/Render/Logos/Glowing Steel",
   "*",
   [
    [PF_STRING, "string", "string", "GET LOST"],

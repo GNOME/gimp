@@ -11,7 +11,7 @@ register "gimp_fu_example_script",			# fill in a function name
          "Marc Lehmann <pcg\@goof.com>",		# don't forget your name (author)
          "(c) 1998, 1999 Marc Lehmann",			# and your copyright!
          "19990316",					# the date this script was written
-         __"<Toolbox>/Xtns/Gimp::Fu Example",		# the menu path
+         N_"<Toolbox>/Xtns/Gimp::Fu Example",		# the menu path
          "RGB*, GRAYA",					# image types to accept (RGB, RGAB amnd GRAYA)
          [
          # argument type, switch name	, a short description		, default value, extra arguments

@@ -27,7 +27,7 @@ register "plug_in_ditherize",
          "Marc Lehmann",
          "Marc Lehmann",
          "1.2",
-         __"<Image>/Filters/Noise/Ditherize",
+         N_"<Image>/Filters/Noise/Ditherize",
          "RGB*, GRAY*",
          [
           [PF_RADIO,		"dither_type",	"The dither type (see gimp_convert_indexed)", 1,

@@ -3,7 +3,7 @@
 #BEGIN {$^W=1};
 
 use Gimp::Feature qw(perl-5.005 gtk-1.2);
-use Gimp (':consts','__');
+use Gimp (':consts','__','N_');
 use Gimp::Fu;
 use Gtk;
 use Gtk::Gdk;
@@ -485,7 +485,7 @@ register "extension_pdb_explorer",
          "Marc Lehmann",
          "Marc Lehmann",
          "0.4alpha",
-         __"<Toolbox>/Xtns/PDB Explorer",
+         N_"<Toolbox>/Xtns/PDB Explorer",
          "",
          [],
          sub {

@@ -12,7 +12,7 @@
 # If you have more additions, etc please don't hesitate to send them in!
 
 
-use Gimp;
+use Gimp qw(:auto N_);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -134,7 +134,7 @@ register "perlotine",
  "Seth Burgess",
  "Seth Burgess <sjburges\@gimp.org>",
  "1999-03-19",
- __"<Image>/Guides/Perl-o-tine",
+ N_"<Image>/Guides/Perl-o-tine",
  "*",
  [
   [PF_STRING, "save_path", "The path to export the HTML to",$ENV{HOME}],

@@ -1,7 +1,5 @@
 #!/usr/bin/perl
  
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 #
 # 11/7/99 <brendy@swipnet.se>
 # Guides are pretty good, but I want to be able to remove them.
@@ -19,7 +17,7 @@ register "guide_remove",
          "Brendon Humphrey",
          "Brendon Humphrey <brendy\@swipnet.se>",
          "1999-07-20",
-         __"<Image>/Guides/Remove Guides",
+         N_"<Image>/Guides/Remove Guides",
          "*",
          [],
          [],

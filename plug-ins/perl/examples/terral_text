@@ -26,7 +26,7 @@
 #[terral] input levels of 0, .24, 113                                    [22:11]
 #[terral] --end of script                                                [22:12]
 
-use Gimp ':auto';
+use Gimp qw(:auto N_);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -40,7 +40,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"19991119",
-	__"<Image>/Filters/Render/Terral Text",
+	N_"<Image>/Filters/Render/Terral Text",
 	"RGB*,GRAY*",
 	[ 
 	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, ["solid noise" => 1, "current picture" => 0]],

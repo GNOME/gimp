@@ -16,7 +16,7 @@ Gimp::Fu - "easy to use" framework for Gimp scripts
 
   use Gimp;
   use Gimp::Fu;
-  
+
   (this module uses Gtk, so make sure it's correctly installed)
 
 =head1 DESCRIPTION
@@ -35,14 +35,14 @@ C<http://imagic.weizmann.ac.il/~dov/gimp/perl-tut.html>.
 In general, a Gimp::Fu script looks like this:
 
    #!/path/to/your/perl
-   
+
    use Gimp;
    use Gimp::Fu;
-   
+
    register <many arguments>, sub {
       your code;
    }
-   
+
    exit main;
 
 (This distribution comes with example scripts. One is
@@ -175,7 +175,7 @@ my $old_trace;
 
 sub interact {
    eval { require Gtk };
-   
+
    if ($@) {
       my @res = map {
          die __"the gtk perl module is required to run\nthis plug-in in interactive mode\n" unless defined $_->[3];
@@ -267,7 +267,7 @@ Gimp::on_net {
    my $this = this_script;
    my(%map,@args);
    my($interact)=1;
-   
+
    my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
       $menupath,$imagetypes,$params,$results,$features,$code,$type)=@$this;
 
@@ -300,7 +300,7 @@ Gimp::on_net {
 	 $interact--;
       }
    }
-   
+
    # Fill in default arguments
    foreach my $i (0..@$params-1) {
        next if defined $args[$i];
@@ -308,7 +308,7 @@ Gimp::on_net {
        $args[$i] = $entry->[3];             # Default value
        die __"parameter '$entry->[1]' is not optional\n" unless defined $args[$i] || $interact>0;
    }
-   
+
    # Go for it
    $perl_sub->(($interact>0 ? &Gimp::RUN_FULLINTERACTIVE : &Gimp::RUN_NONINTERACTIVE),
                @args);
@@ -343,7 +343,7 @@ Gimp::on_query {
       sub odd_values(@) {
          my %x = @_; values %x;
       }
-      
+
       for(@$params) {
          $_->[0]=Gimp::PARAM_INT32	if $_->[0] == PF_TOGGLE;
          $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
@@ -641,12 +641,12 @@ sub register($$$$$$$$$;@) {
          die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
    }
-   $menupath =~ s%^<Toolbox>/Xtns/%__("<Toolbox>/Xtns/")%e;
-   $menupath =~ s%^<Image>/Filters/%__("<Image>/Filters/")%e;
+   #$menupath =~ s%^<Toolbox>/Xtns/%__("<Toolbox>/Xtns/")%e;
+   #$menupath =~ s%^<Image>/Filters/%__("<Image>/Filters/")%e;
    undef $menupath if $menupath eq "<None>";#d#
-   
+
    @_==0 or die __"register called with too many or wrong arguments\n";
-   
+
    for my $p (@$params,@$results) {
       next unless ref $p;
       int($p->[0]) eq $p->[0] or croak __"$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
@@ -654,7 +654,7 @@ sub register($$$$$$$$$;@) {
    }
 
    $function="perl_fu_".$function unless $function =~ /^(?:perl_fu_|extension_|plug_in_|file_)/ || $function =~ s/^\+//;
-   
+
    $function=~/^[0-9a-z_]+(-ALT)?$/ or carp __"$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
 
    Gimp::logger message => __"function name contains dashes instead of underscores",
@@ -670,7 +670,7 @@ sub register($$$$$$$$$;@) {
 	    $params->[$_]->[3]=$defaults[$_];
 	 }
       }
-      
+
       # supplement default arguments
       for (0..$#{$params}) {
          $_[$_]=$params->[$_]->[3] unless defined($_[$_]);
@@ -702,13 +702,13 @@ sub register($$$$$$$$$;@) {
             if (@_) {
                # prevent the standard arguments from showing up in interact
                my @hide = splice @$params, 0, scalar@pre;
-               
+
                my $res;
                local $^W=0; # perl -w is braindamaged
                # gimp is braindamaged, is doesn't deliver useful values!!
                ($res,@_)=interact($function,$blurb,$help,$params,@{$fudata});
                return unless $res;
-               
+
                unshift @$params, @hide;
             }
          }
@@ -726,15 +726,15 @@ sub register($$$$$$$$$;@) {
       }
       $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
       $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
-      
+
       $Gimp::Data{"$function/_fu_data"}=[@_];
-      
+
       print $function,"(",join(",",(@pre,@_)),")\n" if $Gimp::verbose;
-      
+
       Gimp::set_trace ($old_trace);
       my @imgs = &$code(@pre,@_);
       $old_trace = Gimp::set_trace (0);
-      
+
       if ($menupath !~ /^<Load>\//) {
          if (@imgs) {
             for my $i (0..$#imgs) {
@@ -752,14 +752,14 @@ sub register($$$$$$$$$;@) {
                   } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
                      $img->display_new unless $input_image && $$img == $$input_image;
                   }
-               } elsif (!@$retvals) { 
+               } elsif (!@$retvals) {
                   warn __"WARNING: $function returned something that is not an image: \"$img\"\n";
                }
             }
          }
          Gimp->displays_flush;
       }
-      
+
       Gimp::set_trace ($old_trace);
       wantarray ? @imgs : $imgs[0];
    };
@@ -792,11 +792,17 @@ IMAGETYPE is one of GIF, JPG, JPEG, PNM or PNG, options include
  options valid for all images
  +F	flatten the image (default depends on the image)
  -F	do not flatten the image
- 
+
  options for GIF and PNG images
  +I	do save as interlaced (GIF only)
  -I	do not save as interlaced (default)
- 
+
+ options for GIF animations (use with -F)
+ +L	save as looping animation
+ -L	save as non-looping animation (default)
+ -Dn	default frame delay (default is 0)
+ -Pn	frame disposal method: 0=don't care, 1 = combine, 2 = replace
+
  options for PNG images
  -Cn	use compression level n
 
@@ -804,7 +810,7 @@ IMAGETYPE is one of GIF, JPG, JPEG, PNM or PNG, options include
  -Qn	use quality "n" to save file (JPEG only)
  -S	do not smooth (default)
  +S	smooth before saving
- 
+
 some examples:
 
  test.jpg		save the image as a simple jpeg
@@ -819,13 +825,16 @@ some examples:
 
 sub save_image($$) {
    my($img,$path)=@_;
-   my($interlace,$flatten,$quality,$type,$smooth,$compress);
-   
+   my($interlace,$flatten,$quality,$type,$smooth,$compress,$loop,$dispose);
+
    $interlace=0;
    $quality=75;
    $smooth=0;
    $compress=7;
-   
+   $loop=0;
+   $delay=0;
+   $dispose=0;
+
    $_=$path=~s/^([^:]+):// ? $1 : "";
    $type=uc($1) if $path=~/\.([^.]+)$/;
    $type=uc($1) if s/^(GIF|JPG|JPEG|PNM|PNG)//i;
@@ -835,15 +844,18 @@ sub save_image($$) {
       $smooth=$1 eq "+", 	next if s/^([-+])[sS]//;
       $quality=$1*0.01,		next if s/^-[qQ](\d+)//;
       $compress=$1,		next if s/^-[cC](\d+)//;
+      $loop=$1 eq "+",		next if s/^([-+])[lL]//;
+      $delay=$1,		next if s/^-[dD](\d+)//;
+      $dispose=$1,		next if s/^-[pP](\d+)//;
       croak __"$_: unknown/illegal file-save option";
    }
    $flatten=(()=$img->get_layers)>1 unless defined $flatten;
-   
+
    $img->flatten if $flatten;
-   
+
    # always save the active layer
    my $layer = $img->get_active_layer;
-   
+
    if ($type eq "JPG" or $type eq "JPEG") {
       eval { $layer->file_jpeg_save($path,$path,$quality,$smooth,1) };
       $layer->file_jpeg_save($path,$path,$quality,$smooth,1,$interlace,"",0,1,0,0) if $@;
@@ -852,7 +864,7 @@ sub save_image($$) {
          eval { $img->convert_indexed(1,256) };
          $img->convert_indexed(2,&Gimp::MAKE_PALETTE,256,1,1,"") if $@;
       }
-      $layer->file_gif_save($path,$path,$interlace,0,0,0);
+      $layer->file_gif_save($path,$path,$interlace,$loop,$delay,$dispose);
    } elsif ($type eq "PNG") {
       $layer->file_png_save($path,$path,$interlace,$compress);
    } elsif ($type eq "PNM") {

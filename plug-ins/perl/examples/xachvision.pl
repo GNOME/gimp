@@ -12,7 +12,7 @@ register "xachvision",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1999-02-28",
-         __"<Image>/Filters/Noise/Xach Vision",
+         N_"<Image>/Filters/Noise/Xach Vision",
          "RGB*, GRAY*",
          [
           [PF_COLOR,	"color",	"What Color to see the world in", [0, 255, 0]],

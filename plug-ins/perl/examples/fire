@@ -35,7 +35,7 @@ register "fire",
 	 "Marc Lehmann <pcg\@goof.com>",
 	 "Marc Lehmann",
 	 "19990802",
-	 __"<Image>/Filters/Colors/Fire",
+	 N_"<Image>/Filters/Colors/Fire",
 	 "*",
 	 [
           [PF_SLIDER,	"threshold",	"Intensity at which to start smearing", 10, [0,255,1]],

@@ -12,7 +12,7 @@
 
 require 5.004;
 
-use Gimp qw(:auto __);
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -82,7 +82,7 @@ register
   "Use this plugin to animate a series of layers in the same way that\
 	a physical animation process would use cells.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-03-15",
-  __"<Image>/Filters/Animation/Animate Cells",
+  N_"<Image>/Filters/Animation/Animate Cells",
   "*",
   [
    [PF_TOGGLE, "work_on_copy", "", 1]

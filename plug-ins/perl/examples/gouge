@@ -49,7 +49,7 @@ register "blur_2x2",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990725",
-         __"<Image>/Filters/Blur/2x2 Blur",
+         N_"<Image>/Filters/Blur/2x2 Blur",
          "RGB*, GRAY*",	
          [],
          sub {

@@ -23,6 +23,10 @@ msgstr "$s: non e` un intero\n"
 msgid "<Image>/Filters/Render/Fit Text"
 msgstr "<Image>/Filters/Render/Riempito da Testo"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "Help for "
 msgstr "Aiuto per "
 
@@ -141,6 +145,10 @@ msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
 msgid "Restore values to the previous ones"
 msgstr "Ripristina i valori a quelli precedenti"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr "<Image>/Filters/Animation/Applica Espressione Perl"
 
@@ -171,8 +179,20 @@ msgstr ""
 msgid "register called with too many or wrong arguments\n"
 msgstr "registro chiamato con troppy o sbagliati argomenti\n"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr "Errore Interno: Gimp::Net #101."
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Webify"
+msgstr "<Image>/Filters/Misc/Webify"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
@@ -206,6 +226,10 @@ msgstr ""
 msgid "Internal error: stashname too long, please report!"
 msgstr "Errore interno: stashname troppo lungo!"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "<Image>/Filters/Render/TeX String"
 msgstr "<Image>/Filters/Render/Stringa TeX"
 
@@ -232,6 +256,14 @@ msgstr ""
 msgid "Close"
 msgstr "Chiudi"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "unable to open $rgb_db_path"
 msgstr "non riesco ad aprire $rgb_db_path"
 
@@ -253,6 +285,10 @@ msgid ""
 msgstr ""
 "$function: nome di argumento '$p->[1]' contiene caratteri illegal, solo 0-9, a-z "
 "and _ allowed"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
@@ -299,6 +335,10 @@ msgstr ""
 "Atteso un INT32 ma ottenuto '%s'. Forse intendevate %s e avete dimenticato 'use "
 "strict'"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "[undefined]"
 msgstr "[non definito]"
 
@@ -306,6 +346,10 @@ msgstr "[non definito]"
 # msgstr "Errore interno: stashname troppo lungo, please report!"
 msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Guide/Rimuovi Guide"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "WARNING: shared locking requested but not implemented"
 msgstr "ATTENZIONE: richiesta condivisa di lock, ma non implementata"
@@ -316,8 +360,9 @@ msgstr "%s: fallimento di esecuzione database procedurale"
 msgid "<Image>/Filters/"
 msgstr "<Image>/Filters/"
 
-msgid "<Image>/Filters/Misc/Prepare for GIF"
-msgstr "<Image>/Filters/Misc/Prepara per GIF"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid ", authorization required"
 msgstr ", autorizzazione richiesta"
@@ -334,6 +379,10 @@ msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Xtns/Perl/Server"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "accepted unix connection"
 msgstr "connessione unix accettata"
@@ -417,6 +466,10 @@ msgstr ""
 "i parametri ed i valori di ritorno devono essere riferimenti ad array (anche "
 "quando vuoti)!"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: switch illegale, provare $0 --help\n"
 
@@ -424,6 +477,10 @@ msgid "Unable to convert a reference to type '%s'"
 msgstr "Incapace di convertire un riferimento a tipo '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
 msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "<Image>/Filters/Render/Random Blends"
@@ -472,6 +529,10 @@ msgid "%s: procedural database execution failed on invalid input arguments"
 msgstr ""
 "%s: fallimento di esecuzione database procedurale su argomenti individuali di "
 "ingresso"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "NAME"
 msgstr "NOME"
@@ -541,6 +602,10 @@ msgstr ""
 msgid "too many arguments"
 msgstr "troppi argomenti"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 "dimensione non prevista, pdl ha dimensione %d ma al piu` sono permesse %d "
@@ -604,17 +669,20 @@ msgstr "colore specificato di tipo illegale"
 msgid "get current background colour from the gimp"
 msgstr "ottiene il corrente colore di sfondo da gimp"
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
 "cortesia riportare"
 
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
+
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr "ora accetto connessioni alla porta $Gimp::Net::default_tcp_port"
 
 msgid "Menu Path"
 msgstr "Percorso del Menu"
@@ -622,9 +690,6 @@ msgstr "Percorso del Menu"
 # grok ?
 msgid "TYPE"
 msgstr "TIPO"
-
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "ora accetto connessioni alla porta $Gimp::Net::default_tcp_port"
 
 msgid "<Image>/Guides/To Selection"
 msgstr "<Image>/Guide/A Selezione"
@@ -641,14 +706,25 @@ msgstr "<Toolbox>/Xtns/Animation/Billboard"
 msgid "<Image>/Filters/Misc/Border Average"
 msgstr "<Image>/Filters/Misc/Media Bordo"
 
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
 msgid "<Image>/Filters/Blur/2x2 Blur"
 msgstr "<Image>/Filters/Blur/2x2 Sfocatura"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "<Image>/Layers/Layer to Image Size"
 msgstr "<Image>/Layers/Porta a Grandezza Immagine"
 
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr "conversione a tipo $pf_type2string{$type} non e` ancora implementata\n"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 # msgid "dunno how to pass arg type %d"
 # msgstr "come passare il tipo di argomenti %d"
@@ -684,19 +760,23 @@ msgstr "<Toolbox>/Xtns/Render/Francobolli"
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "ATTENZIONE: sconnessione client durante un lock attivo\n"
 
+msgid "server version $Gimp::VERSION started"
+msgstr "versione del server $Gimp::VERSION avviata"
+
 msgid "argument is not of type %s"
 msgstr "argomeno non del tipo %s"
 
 msgid "<Image>/Filters/Distorts/Scratches"
 msgstr "<Image>/Filters/Distorts/Graffiatura"
 
-msgid "server version $Gimp::VERSION started"
-msgstr "versione del server $Gimp::VERSION avviata"
-
 msgid "%s arguments for function '%s'"
 msgstr "%s argomenti per funzione '%s'"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
 msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "only blessed scalars accepted here"
@@ -754,6 +834,14 @@ msgstr "Precedente"
 msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr "<Image>/Filters/Map/Xach Shadows"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "Command"
 msgstr "Comando"
 
@@ -775,6 +863,10 @@ msgstr "DESCRIZIONE"
 msgid "Accelerator"
 msgstr "Acceleratore"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 msgid "Cancel"
 msgstr "Cancella"
 
@@ -794,6 +886,10 @@ msgstr ""
 "grandezza dei pixel non prevista, pdl ha %d pixel di canali ma sono richiesti %d "
 "canali"
 
+#, fuzzy
+msgid "<Image>/Filters/Web/Prepare for GIF"
+msgstr "<Image>/Filters/Misc/Prepara per GIF"
+
 msgid "This module was built without support for PDL."
 msgstr "Questo modulo e` stato costruito senza supporto di PDL."
 
@@ -806,8 +902,9 @@ msgstr "<Toolbox>/Xtns/Logo per Homepage"
 msgid "Date/Version"
 msgstr "Data/Versione"
 
-msgid "<Image>/Filters/Misc/Webify"
-msgstr "<Image>/Filters/Misc/Webify"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/Filters/Animazione/Animazione Celle"
@@ -826,11 +923,11 @@ msgstr "funzione '$exe' non trovata in questo script (deve essere una de "
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr "<Image>/Filters/Render/Evidenzia contorni"
 
-msgid "Status"
-msgstr "Status"
-
 msgid "accepted tcp connection from "
 msgstr "accettata connessione tcp da "
+
+msgid "Status"
+msgstr "Status"
 
 msgid "Load $name"
 msgstr "Carico $name"
@@ -838,20 +935,20 @@ msgstr "Carico $name"
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr "<Salva> plug-in chiamato senza i 5 argomenti standard!\n"
 
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/Plug-in Perl di Esempio"
-
 msgid "unable to accept unix connection: $!\n"
 msgstr "impossibile accettare connessioni unix: $!\n"
+
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr "<Toolbox>/Xtns/Plug-in Perl di Esempio"
 
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr "<Image>/Filters/Noise/Ditherize"
 
-msgid "(UNINITIALIZED)"
-msgstr "(NON INIZIALIZZATO)"
-
 msgid "unable to accept tcp connection: $!\n"
 msgstr "non riesco ad accettare connessione tcp: $!\n"
+
+msgid "(UNINITIALIZED)"
+msgstr "(NON INIZIALIZZATO)"
 
 msgid "<Toolbox>/Xtns/Parasite Editor"
 msgstr "<Toolbox>/Xtns/Parasite Editor"
@@ -871,16 +968,20 @@ msgstr "<Image>/Immagine/Colori/Alfa a Colore"
 msgid "<Image>/Filters/Misc/Magick"
 msgstr "<Image>/Filters/Misc/Magick"
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+
 # msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 # msgstr ""
 msgid "Color"
 msgstr "Colore"
 
-msgid "illegal parasite specification, reference expected"
-msgstr "specifica di parametro aggiuntivo illegale, riferimento atteso"
-
 msgid "authorization unnecessary"
 msgstr "autorizzazione non necessaria"
+
+msgid "illegal parasite specification, reference expected"
+msgstr "specifica di parametro aggiuntivo illegale, riferimento atteso"
 
 msgid "<Image>/Filters/Render/Brushed Metal"
 msgstr "<Image>/Filters/Render/Punte metallizzate"
@@ -905,6 +1006,10 @@ msgstr "<Toolbox>/Xtns/"
 
 msgid "plug-in returned %d more values than expected"
 msgstr "plug-in restituisce %d valori in piu` rispetto alle attese"
+
+#, fuzzy
+msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
+msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
 
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ non e` un tag valido per importare il pacchetto $pkg"

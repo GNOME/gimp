@@ -6,6 +6,10 @@ Revision history for Gimp-Perl extension.
         - half-hearted attempt to i18nize logulator.
         - preliminary support for N_ (this function should
           not be necessary in perl).
+        - used N_ to mark all the menu paths, since gimp now tries to
+          do the translation.
+        - patch by Frank Loemker <floemker@TechFak.Uni-Bielefeld.DE> to fix
+          many missing :auto tags.
 
 1.16  Sun Nov 21 02:37:16 CET 1999
 	- removed sethspin.pl & billboard, they are no longer maintained :(
