@@ -1,3 +1,11 @@
+2003-08-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_reorder_item): when reordering the
+	selected item, don't just scroll to its position but call
+	gimp_container_view_select_item(), so the views' state
+	(e.g. raise/lower buttons) updates correctly. Fixes bug #120177.
+
 2003-08-19  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.h

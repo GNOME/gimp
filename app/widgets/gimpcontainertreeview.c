@@ -488,12 +488,7 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
         }
 
       if (selected)
-        {
-          path = gtk_tree_model_get_path (tree_view->model, iter);
-          gtk_tree_view_scroll_to_cell (tree_view->view, path,
-                                        NULL, FALSE, 0.0, 0.0);
-          gtk_tree_path_free (path);
-        }
+        gimp_container_view_select_item (view, viewable);
     }
 }
 
