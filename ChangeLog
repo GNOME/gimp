@@ -1,6 +1,6 @@
 2004-06-09  Sven Neumann  <sven@gimp.org>
 
-	* app/tools/gimppenciltool.c (gimp_pencil_tool_init): no need
+	* app/tools/gimppenciltool.c (gimp_pencil_tool_init): no need to
 	request GIMP_MOTION_MODE_EXACT here since the parent class does
 	that already.
 
