@@ -109,8 +109,8 @@ query (void)
   INIT_I18N();
   gimp_install_procedure ("plug-in-rotate-colormap",
 			  _("Colormap rotation as in xv"),
-			  _("Exchanges two color ranges."
-			    "Based on code from Pavel Grinfeld (pavel@ml.com)."
+			  _("Exchanges two color ranges. "
+			    "Based on code from Pavel Grinfeld (pavel@ml.com). "
 			    "This version written by Sven Anders (anderss@fmi.uni-passau.de)."),
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",

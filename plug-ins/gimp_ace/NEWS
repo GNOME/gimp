@@ -1,0 +1,30 @@
+0.5.0, 12/31/1999:
+
+ * The method used to reconstitute colors is now selectable from the
+   dialog.  The operational description used for Alex's method is "add
+   white", while the method from 0.4.990720 is called "limit".  Better
+   translations are always apprecaite.
+
+0.4.991003:
+
+ * Merged with Alex's update in theory, little changed in practice.
+
+0.4.990721:
+
+ * Button to link strength and brightness adjust.
+
+0.4.990720:
+
+ * Color image handling changed.  No more frost, but red is weird.
+
+0.4.990719:
+
+ * Addition of a user interface to fiddle with the options.
+
+ * gettext support in place (I hope).  Translations appreciated.
+
+ * The coefficients used in the RGB -> luminosity conversion changed.
+   See file "color.h"
+
+ * I wrote some help-text to go with the interface.
+   http://www.oberlin.edu/~kturner/gimp/ace/gimp_ace-help.html
