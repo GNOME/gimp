@@ -1,3 +1,11 @@
+2001-06-20  David Neary  <dneary@eircom.net>
+
+	* configure.in
+	* libgimp/gimpmath.h: Added a fix which tests for ieee NaN
+	functions and includes them as the correct name if they
+	exist. This closes bug #51822. This fix is courtesy of
+	<bugzilla-gnome@thewrittenword.com>.
+
 2001-06-20  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 1.2.2, removed some 
