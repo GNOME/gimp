@@ -45,6 +45,8 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "text/gimpfont.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "file/file-open.h"
@@ -169,6 +171,12 @@ static void        gimp_dnd_set_gradient_data  (GtkWidget *widget,
 static void        gimp_dnd_set_palette_data   (GtkWidget *widget,
 					        GCallback  set_palette_func,
 					        gpointer   set_palette_data,
+					        guchar    *vals,
+					        gint       format,
+					        gint       length);
+static void        gimp_dnd_set_font_data      (GtkWidget *widget,
+					        GCallback  set_font_func,
+					        gpointer   set_font_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
@@ -358,6 +366,17 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
     gimp_dnd_set_palette_data
+  },
+
+  {
+    GIMP_TARGET_FONT,
+
+    "gimp_dnd_set_font_func",
+    "gimp_dnd_set_font_data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_data_data,
+    gimp_dnd_set_font_data
   },
 
   {
@@ -1148,6 +1167,10 @@ gimp_dnd_data_type_get_by_g_type (GType type)
     {
       dnd_type = GIMP_DND_TYPE_PALETTE;
     }
+  else if (g_type_is_a (type, GIMP_TYPE_FONT))
+    {
+      dnd_type = GIMP_DND_TYPE_FONT;
+    }
   else if (g_type_is_a (type, GIMP_TYPE_BUFFER))
     {
       dnd_type = GIMP_DND_TYPE_BUFFER;
@@ -1626,6 +1649,42 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
     (* (GimpDndDropViewableFunc) set_palette_func) (widget,
 						    GIMP_VIEWABLE (palette),
 						    set_palette_data);
+}
+
+
+/************************/
+/*  font dnd functions  */
+/************************/
+
+static void
+gimp_dnd_set_font_data (GtkWidget *widget,
+                        GCallback  set_font_func,
+                        gpointer   set_font_data,
+                        guchar    *vals,
+                        gint       format,
+                        gint       length)
+{
+  GimpFont *font;
+  gchar    *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid font data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  if (strcmp (name, "Standard") == 0)
+    font = gimp_font_get_standard ();
+  else
+    font = (GimpFont *)
+      gimp_container_get_child_by_name (the_gimp->fonts, name);
+
+  if (font)
+    (* (GimpDndDropViewableFunc) set_font_func) (widget,
+                                                 GIMP_VIEWABLE (font),
+                                                 set_font_data);
 }
 
 
