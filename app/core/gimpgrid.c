@@ -43,15 +43,15 @@
 enum
 {
   PROP_0,
+  PROP_STYLE,
+  PROP_FGCOLOR,
+  PROP_BGCOLOR,
   PROP_XSPACING,
   PROP_YSPACING,
   PROP_SPACING_UNIT,
   PROP_XOFFSET,
   PROP_YOFFSET,
-  PROP_OFFSET_UNIT,
-  PROP_FGCOLOR,
-  PROP_BGCOLOR,
-  PROP_STYLE
+  PROP_OFFSET_UNIT
 };
 
 static void gimp_grid_class_init   (GimpGridClass *klass);
@@ -123,6 +123,23 @@ gimp_grid_class_init (GimpGridClass *klass)
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
+                                 "style",
+                                 N_("Line style used for the grid."),
+                                 GIMP_TYPE_GRID_STYLE,
+                                 GIMP_GRID_INTERSECTIONS,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FGCOLOR,
+				  "fgcolor",
+                                  N_("The foreground color of the grid."),
+				  &black,
+				  0);
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BGCOLOR,
+				  "bgcolor",
+                                  N_("The background color of the grid; "
+                                     "only used in double dashed line style."),
+				  &white,
+				  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XSPACING,
 				   "xspacing",
                                    N_("Horizontal spacing of grid lines."),
@@ -155,23 +172,6 @@ gimp_grid_class_init (GimpGridClass *klass)
 				 "offset-unit", NULL,
 				 FALSE, FALSE, GIMP_UNIT_INCH,
 				 0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FGCOLOR,
-				  "fgcolor",
-                                  N_("The foreground color of the grid."),
-				  &black,
-				  0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BGCOLOR,
-				  "bgcolor",
-                                  N_("The background color of the grid; "
-                                     "only used in double dashed line style."),
-				  &white,
-				  0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_STYLE,
-                                 "style",
-                                 N_("Line style used for the grid."),
-                                 GIMP_TYPE_GRID_STYLE,
-                                 GIMP_GRID_INTERSECTIONS,
-                                 0);
 }
 
 static void
@@ -191,6 +191,15 @@ gimp_grid_get_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_STYLE:
+      g_value_set_enum (value, grid->style);
+      break;
+    case PROP_FGCOLOR:
+      g_value_set_boxed (value, &grid->fgcolor);
+      break;
+    case PROP_BGCOLOR:
+      g_value_set_boxed (value, &grid->bgcolor);
+      break;
     case PROP_XSPACING:
       g_value_set_double (value, grid->xspacing);
       break;
@@ -209,15 +218,6 @@ gimp_grid_get_property (GObject      *object,
     case PROP_OFFSET_UNIT:
       g_value_set_int (value, grid->offset_unit);
       break;
-    case PROP_FGCOLOR:
-      g_value_set_boxed (value, &grid->fgcolor);
-      break;
-    case PROP_BGCOLOR:
-      g_value_set_boxed (value, &grid->bgcolor);
-      break;
-    case PROP_STYLE:
-      g_value_set_enum (value, grid->style);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -235,6 +235,17 @@ gimp_grid_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_STYLE:
+      grid->style = g_value_get_enum (value);
+      break;
+    case PROP_FGCOLOR:
+      color = g_value_get_boxed (value);
+      grid->fgcolor = *color;
+      break;
+    case PROP_BGCOLOR:
+      color = g_value_get_boxed (value);
+      grid->bgcolor = *color;
+      break;
     case PROP_XSPACING:
       grid->xspacing = g_value_get_double (value);
       break;
@@ -252,17 +263,6 @@ gimp_grid_set_property (GObject      *object,
       break;
     case PROP_OFFSET_UNIT:
       grid->offset_unit = g_value_get_int (value);
-      break;
-    case PROP_FGCOLOR:
-      color = g_value_get_boxed (value);
-      grid->fgcolor = *color;
-      break;
-    case PROP_BGCOLOR:
-      color = g_value_get_boxed (value);
-      grid->bgcolor = *color;
-      break;
-    case PROP_STYLE:
-      grid->style = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

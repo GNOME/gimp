@@ -1,3 +1,13 @@
+2003-10-19  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/test-config.c: it became impossible to link the test
+	because the GimpRc class pulls in too many symbols. Changed it to
+	use a GimpGrid object instead.
+
+	* app/core/gimpgrid.[ch]: reordered properties so they match the
+	order they appear in the grid dialog.
+
 2003-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockbook.c: removed the "Select Tab" menu and

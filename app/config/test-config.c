@@ -26,15 +26,14 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimplimits.h"
-#include "libgimpbase/gimpbasetypes.h"
+#include "libgimpbase/gimpbase.h"
 
-#include "config-types.h"
+#include "core/core-types.h"
+#include "core/gimpgrid.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
-#include "gimprc.h"
 
 
 static void  notify_callback      (GObject     *object,
@@ -48,8 +47,8 @@ int
 main (int   argc,
       char *argv[])
 {
-  GimpConfig  *gimprc;
-  GimpConfig  *gimprc2;
+  GimpConfig  *grid;
+  GimpConfig  *grid2;
   const gchar *filename = "foorc";
   gchar       *header;
   gchar       *result;
@@ -70,20 +69,20 @@ main (int   argc,
 
   g_type_init ();
 
-  g_print ("\nTesting GimpConfig ...\n\n");
+  g_print ("\nTesting GimpConfig ...\n");
 
-  g_print (" Creating a new GimpRc object ...");
-  gimprc = g_object_new (GIMP_TYPE_RC, NULL);
-  g_print (" done.\n\n");
+  g_print (" Creating a new Grid object ...");
+  grid = g_object_new (GIMP_TYPE_GRID, NULL);
+  g_print (" done.\n");
 
   g_print (" Adding the unknown token (foobar \"hadjaha\") ...");
-  gimp_config_add_unknown_token (gimprc, "foobar", "hadjaha");
-  g_print (" done.\n\n");
+  gimp_config_add_unknown_token (grid, "foobar", "hadjaha");
+  g_print (" done.\n");
 
   g_print (" Serializing %s to '%s' ...",
-           g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
+           g_type_name (G_TYPE_FROM_INSTANCE (grid)), filename);
 
-  if (! gimp_config_serialize_to_file (gimprc,
+  if (! gimp_config_serialize_to_file (grid,
 				       filename,
 				       "foorc", "end of foorc",
 				       NULL, &error))
@@ -91,69 +90,40 @@ main (int   argc,
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
     }
-  g_print (" done.\n\n");
+  g_print (" done.\n");
 
-  g_signal_connect (gimprc, "notify",
+  g_signal_connect (grid, "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
-  g_print (" Deserializing from '%s' ...\n\n", filename);
-  if (! gimp_config_deserialize_file (gimprc, filename, NULL, &error))
+  g_print (" Deserializing from '%s' ...\n", filename);
+  if (! gimp_config_deserialize_file (grid, filename, NULL, &error))
     {
       g_print ("%s\n", error->message);
       return EXIT_FAILURE;
     }
-  header = "\n  Unknown string tokens:\n";
-  gimp_config_foreach_unknown_token (gimprc, output_unknown_token, &header);
-  g_print ("\n done.\n");
-
-  g_print ("\n Changing a property ...");
-  g_object_set (gimprc, "use-help", FALSE, NULL);
-
-  g_print ("\n Testing gimp_config_duplicate() ...");
-  gimprc2 = gimp_config_duplicate (gimprc);
+  header = " Unknown string tokens:\n";
+  gimp_config_foreach_unknown_token (grid, output_unknown_token, &header);
   g_print (" done.\n");
 
-  g_signal_connect (gimprc2, "notify",
+  g_print (" Changing a property ...");
+  g_object_set (grid, "style", GIMP_GRID_DOTS, NULL);
+
+  g_print (" Testing gimp_config_duplicate() ...");
+  grid2 = gimp_config_duplicate (grid);
+  g_print (" done.\n");
+
+  g_signal_connect (grid2, "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
-  g_print ("\n Changing a property in the duplicate ...");
-  g_object_set (gimprc2, "show-tips", FALSE, NULL);
+  g_print (" Changing a property in the duplicate ...");
+  g_object_set (grid2, "xspacing", 20.0, NULL);
 
-  g_print ("\n Querying for \"default-comment\" ... ");
+  g_object_unref (grid2);
 
-  result = gimp_rc_query (GIMP_RC (gimprc2), "default-comment");
-  if (result)
-    {
-      g_print ("OK, found \"%s\".\n", result);
-    }
-  else
-    {
-      g_print ("failed!\n");
-      return EXIT_FAILURE;
-    }
-  g_free (result);
-
-  g_print (" Querying for \"foobar\" ... ");
-
-  result = gimp_rc_query (GIMP_RC (gimprc2), "foobar");
-  if (result && strcmp (result, "hadjaha") == 0)
-    {
-      g_print ("OK, found \"%s\".\n", result);
-    }
-  else
-    {
-      g_print ("failed!\n");
-      return EXIT_FAILURE;
-    }
-
-  g_free (result);
-
-  g_object_unref (gimprc2);
-
-  g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
-  if (! gimp_config_deserialize_file (gimprc, "gimpconfig.c", NULL, &error))
+  g_print (" Deserializing from gimpconfig.c (should fail) ...");
+  if (! gimp_config_deserialize_file (grid, "gimpconfig.c", NULL, &error))
     {
       g_print (" OK, failed. The error was:\n %s\n", error->message);
       g_error_free (error);
@@ -165,13 +135,13 @@ main (int   argc,
       return EXIT_FAILURE;
     }
 
-  g_print ("\n Serializing to a string and back ... ");
+  g_print (" Serializing to a string and back ... ");
 
-  result = gimp_config_serialize_to_string (gimprc, NULL);
+  result = gimp_config_serialize_to_string (grid, NULL);
 
-  gimprc2 = g_object_new (GIMP_TYPE_RC, NULL);
+  grid2 = g_object_new (GIMP_TYPE_GRID, NULL);
 
-  if (! gimp_config_deserialize_string (gimprc2, result, -1, NULL, &error))
+  if (! gimp_config_deserialize_string (grid2, result, -1, NULL, &error))
     {
       g_print ("failed!\nThe error was:\n %s\n", error->message);
       g_error_free (error);
@@ -179,7 +149,7 @@ main (int   argc,
     }
   else
     {
-      GList *diff = gimp_config_diff (gimprc, gimprc2, 0);
+      GList *diff = gimp_config_diff (grid, grid2, 0);
 
       if (diff)
         {
@@ -198,10 +168,10 @@ main (int   argc,
     }
 
   g_free (result);
-  g_object_unref (gimprc2);
-  g_object_unref (gimprc);
+  g_object_unref (grid2);
+  g_object_unref (grid);
 
-  g_print ("\nFinished test of GimpConfig.\n\n");
+  g_print ("Finished test of GimpConfig.\n\n");
 
   return EXIT_SUCCESS;
 }

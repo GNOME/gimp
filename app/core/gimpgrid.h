@@ -38,17 +38,17 @@ typedef struct _GimpGridClass  GimpGridClass;
 
 struct _GimpGrid
 {
-  GimpObject    parent_instance;
+  GimpObject     parent_instance;
 
+  GimpGridStyle  style;
+  GimpRGB        fgcolor;
+  GimpRGB        bgcolor;
   gdouble        xspacing;
   gdouble        yspacing;
   GimpUnit       spacing_unit;
   gdouble        xoffset;
   gdouble        yoffset;
   GimpUnit       offset_unit;
-  GimpRGB        fgcolor;
-  GimpRGB        bgcolor;
-  GimpGridStyle  style;
 };
 
 

@@ -67,11 +67,11 @@ TESTS = test-config
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
 test_config_LDADD = \
-	libappconfig.a							\
         ../base/libappbase.a						\
         ../core/libappcore.a						\
 	../display/libappdisplay.a					\
         ../widgets/libappwidgets.a					\
+	libappconfig.a							\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
