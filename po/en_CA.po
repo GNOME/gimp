@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-26 00:58-0500\n"
-"PO-Revision-Date: 2005-01-26 14:29-0400\n"
+"POT-Creation-Date: 2005-02-01 02:29-0500\n"
+"PO-Revision-Date: 2005-02-01 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: app/main.c:222 app/widgets/gimptoolbox.c:559
+#: app/main.c:222 app/widgets/gimptoolbox.c:558
 #: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
 msgstr "The GIMP"
@@ -897,9 +897,21 @@ msgstr "_Tip of the Day"
 msgid "_About"
 msgstr "_About"
 
-#: app/actions/dock-actions.c:45
+#: app/actions/dock-actions.c:42
+msgid "M_ove to Screen"
+msgstr "M_ove to Screen"
+
+#: app/actions/dock-actions.c:46
 msgid "Close Dock"
 msgstr "Close Dock"
+
+#: app/actions/dock-actions.c:54
+msgid "_Show Image Selection"
+msgstr "_Show Image Selection"
+
+#: app/actions/dock-actions.c:60
+msgid "Auto _Follow Active Image"
+msgstr "Auto _Follow Active Image"
 
 #: app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
@@ -925,79 +937,67 @@ msgstr "_Close Tab"
 msgid "_Detach Tab"
 msgstr "_Detach Tab"
 
-#: app/actions/dockable-actions.c:68
-msgid "M_ove to Screen..."
-msgstr "M_ove to Screen..."
-
-#: app/actions/dockable-actions.c:76
-msgid "_Show Image Selection"
-msgstr "_Show Image Selection"
-
-#: app/actions/dockable-actions.c:82
-msgid "Auto _Follow Active Image"
-msgstr "Auto _Follow Active Image"
-
-#: app/actions/dockable-actions.c:101
+#: app/actions/dockable-actions.c:81
 msgid "_Tiny"
 msgstr "_Tiny"
 
-#: app/actions/dockable-actions.c:102
+#: app/actions/dockable-actions.c:82
 msgid "E_xtra Small"
 msgstr "E_xtra Small"
 
-#: app/actions/dockable-actions.c:103
+#: app/actions/dockable-actions.c:83
 msgid "_Small"
 msgstr "_Small"
 
-#: app/actions/dockable-actions.c:104
+#: app/actions/dockable-actions.c:84
 msgid "_Medium"
 msgstr "_Medium"
 
-#: app/actions/dockable-actions.c:105
+#: app/actions/dockable-actions.c:85
 msgid "_Large"
 msgstr "_Large"
 
-#: app/actions/dockable-actions.c:106
+#: app/actions/dockable-actions.c:86
 msgid "Ex_tra Large"
 msgstr "Ex_tra Large"
 
-#: app/actions/dockable-actions.c:107
+#: app/actions/dockable-actions.c:87
 msgid "_Huge"
 msgstr "_Huge"
 
-#: app/actions/dockable-actions.c:108
+#: app/actions/dockable-actions.c:88
 msgid "_Enormous"
 msgstr "_Enormous"
 
-#: app/actions/dockable-actions.c:109
+#: app/actions/dockable-actions.c:89
 msgid "_Gigantic"
 msgstr "_Gigantic"
 
-#: app/actions/dockable-actions.c:114
+#: app/actions/dockable-actions.c:94
 msgid "_Icon"
 msgstr "_Icon"
 
-#: app/actions/dockable-actions.c:115
+#: app/actions/dockable-actions.c:95
 msgid "Current _Status"
 msgstr "Current _Status"
 
-#: app/actions/dockable-actions.c:116
+#: app/actions/dockable-actions.c:96
 msgid "_Text"
 msgstr "_Text"
 
-#: app/actions/dockable-actions.c:117
+#: app/actions/dockable-actions.c:97
 msgid "I_con & Text"
 msgstr "I_con & Text"
 
-#: app/actions/dockable-actions.c:118
+#: app/actions/dockable-actions.c:98
 msgid "St_atus & Text"
 msgstr "St_atus & Text"
 
-#: app/actions/dockable-actions.c:127
+#: app/actions/dockable-actions.c:107
 msgid "View as _List"
 msgstr "View as _List"
 
-#: app/actions/dockable-actions.c:132
+#: app/actions/dockable-actions.c:112
 msgid "View as _Grid"
 msgstr "View as _Grid"
 
@@ -1534,7 +1534,7 @@ msgid "Zoom In"
 msgstr "Zoom In"
 
 #: app/actions/gradient-editor-actions.c:302
-#: app/actions/palette-editor-actions.c:78 app/actions/view-actions.c:228
+#: app/actions/palette-editor-actions.c:78 app/actions/view-actions.c:227
 #: app/widgets/widgets-enums.c:353
 msgid "Zoom in"
 msgstr "Zoom in"
@@ -1544,7 +1544,7 @@ msgid "Zoom Out"
 msgstr "Zoom Out"
 
 #: app/actions/gradient-editor-actions.c:308
-#: app/actions/palette-editor-actions.c:84 app/actions/view-actions.c:222
+#: app/actions/palette-editor-actions.c:84 app/actions/view-actions.c:221
 #: app/widgets/widgets-enums.c:354
 msgid "Zoom out"
 msgstr "Zoom out"
@@ -1913,7 +1913,7 @@ msgstr "_Raise Views"
 msgid "Raise this image's displays"
 msgstr "Raise this image's displays"
 
-#: app/actions/images-actions.c:53 app/actions/view-actions.c:68
+#: app/actions/images-actions.c:53 app/actions/view-actions.c:72
 msgid "_New View"
 msgstr "_New View"
 
@@ -1941,7 +1941,7 @@ msgstr "_Layer"
 msgid "Stac_k"
 msgstr "Stac_k"
 
-#: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:663
+#: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:662
 msgid "_Auto"
 msgstr "_Auto"
 
@@ -2172,7 +2172,7 @@ msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
 #: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
-#: app/dialogs/layer-add-mask-dialog.c:62
+#: app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
 
@@ -2208,11 +2208,11 @@ msgstr "New Colour from _BG"
 msgid "New color from BG"
 msgstr "New colour from BG"
 
-#: app/actions/palette-editor-actions.c:77 app/actions/view-actions.c:227
+#: app/actions/palette-editor-actions.c:77 app/actions/view-actions.c:226
 msgid "Zoom _In"
 msgstr "Zoom _In"
 
-#: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:221
+#: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:220
 msgid "Zoom _Out"
 msgstr "Zoom _Out"
 
@@ -3052,179 +3052,179 @@ msgstr "Path to Selection"
 msgid "Stroke Path"
 msgstr "Stroke Path"
 
-#: app/actions/view-actions.c:63
+#: app/actions/view-actions.c:64
 msgid "_View"
 msgstr "_View"
 
-#: app/actions/view-actions.c:64
+#: app/actions/view-actions.c:65
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: app/actions/view-actions.c:65
+#: app/actions/view-actions.c:66
 msgid "_Padding Color"
 msgstr "_Padding Colour"
 
-#: app/actions/view-actions.c:73
+#: app/actions/view-actions.c:68
+msgid "Move to Screen"
+msgstr "Move to Screen"
+
+#: app/actions/view-actions.c:77
 msgid "_Close"
 msgstr "_Close"
 
-#: app/actions/view-actions.c:78
+#: app/actions/view-actions.c:82
 msgid "_Fit Image in Window"
 msgstr "_Fit Image in Window"
 
-#: app/actions/view-actions.c:79
+#: app/actions/view-actions.c:83
 msgid "Fit image in window"
 msgstr "Fit image in window"
 
-#: app/actions/view-actions.c:84
+#: app/actions/view-actions.c:88
 msgid "Fit Image to Window"
 msgstr "Fit Image to Window"
 
-#: app/actions/view-actions.c:85
+#: app/actions/view-actions.c:89
 msgid "Fit image to window"
 msgstr "Fit image to window"
 
-#: app/actions/view-actions.c:90
+#: app/actions/view-actions.c:94
 msgid "_Info Window"
 msgstr "_Info Window"
 
-#: app/actions/view-actions.c:95
+#: app/actions/view-actions.c:99
 msgid "Na_vigation Window"
 msgstr "Na_vigation Window"
 
-#: app/actions/view-actions.c:100
+#: app/actions/view-actions.c:104
 msgid "Display _Filters..."
 msgstr "Display _Filters..."
 
-#: app/actions/view-actions.c:105
+#: app/actions/view-actions.c:109
 msgid "Shrink _Wrap"
 msgstr "Shrink _Wrap"
 
-#: app/actions/view-actions.c:106
+#: app/actions/view-actions.c:110
 msgid "Shrink wrap"
 msgstr "Shrink wrap"
 
-#: app/actions/view-actions.c:111
-msgid "Move to Screen..."
-msgstr "Move to Screen..."
-
-#: app/actions/view-actions.c:119
+#: app/actions/view-actions.c:118
 msgid "_Dot for Dot"
 msgstr "_Dot for Dot"
 
-#: app/actions/view-actions.c:125
+#: app/actions/view-actions.c:124
 msgid "Show _Selection"
 msgstr "Show _Selection"
 
-#: app/actions/view-actions.c:131
+#: app/actions/view-actions.c:130
 msgid "Show _Layer Boundary"
 msgstr "Show _Layer Boundary"
 
-#: app/actions/view-actions.c:137
+#: app/actions/view-actions.c:136
 msgid "Show _Guides"
 msgstr "Show _Guides"
 
-#: app/actions/view-actions.c:143
+#: app/actions/view-actions.c:142
 msgid "S_how Grid"
 msgstr "S_how Grid"
 
-#: app/actions/view-actions.c:149
+#: app/actions/view-actions.c:148
 msgid "Sn_ap to Guides"
 msgstr "Sn_ap to Guides"
 
-#: app/actions/view-actions.c:155
+#: app/actions/view-actions.c:154
 msgid "Sna_p to Grid"
 msgstr "Sna_p to Grid"
 
-#: app/actions/view-actions.c:161
+#: app/actions/view-actions.c:160
 msgid "Snap to _Canvas Edges"
 msgstr "Snap to _Canvas Edges"
 
-#: app/actions/view-actions.c:167
+#: app/actions/view-actions.c:166
 msgid "Snap t_o Active Path"
 msgstr "Snap t_o Active Path"
 
-#: app/actions/view-actions.c:173
+#: app/actions/view-actions.c:172
 msgid "Show _Menubar"
 msgstr "Show _Menubar"
 
-#: app/actions/view-actions.c:179
+#: app/actions/view-actions.c:178
 msgid "Show R_ulers"
 msgstr "Show R_ulers"
 
-#: app/actions/view-actions.c:185
+#: app/actions/view-actions.c:184
 msgid "Show Scroll_bars"
 msgstr "Show Scroll_bars"
 
-#: app/actions/view-actions.c:191
+#: app/actions/view-actions.c:190
 msgid "Show S_tatusbar"
 msgstr "Show S_tatusbar"
 
-#: app/actions/view-actions.c:197
+#: app/actions/view-actions.c:196
 msgid "Fullscr_een"
 msgstr "Fullscr_een"
 
-#: app/actions/view-actions.c:246
+#: app/actions/view-actions.c:245
 msgid "16:1  (1600%)"
 msgstr "16:1  (1600%)"
 
-#: app/actions/view-actions.c:251
+#: app/actions/view-actions.c:250
 msgid "8:1  (800%)"
 msgstr "8:1  (800%)"
 
-#: app/actions/view-actions.c:256
+#: app/actions/view-actions.c:255
 msgid "4:1  (400%)"
 msgstr "4:1  (400%)"
 
-#: app/actions/view-actions.c:261
+#: app/actions/view-actions.c:260
 msgid "2:1  (200%)"
 msgstr "2:1  (200%)"
 
-#: app/actions/view-actions.c:266
+#: app/actions/view-actions.c:265
 msgid "1:1  (100%)"
 msgstr "1:1  (100%)"
 
-#: app/actions/view-actions.c:267
+#: app/actions/view-actions.c:266
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
-#: app/actions/view-actions.c:272
+#: app/actions/view-actions.c:271
 msgid "1:2  (50%)"
 msgstr "1:2  (50%)"
 
-#: app/actions/view-actions.c:277
+#: app/actions/view-actions.c:276
 msgid "1:4  (25%)"
 msgstr "1:4  (25%)"
 
-#: app/actions/view-actions.c:282
+#: app/actions/view-actions.c:281
 msgid "1:8  (12.5%)"
 msgstr "1:8  (12.5%)"
 
-#: app/actions/view-actions.c:287
+#: app/actions/view-actions.c:286
 msgid "1:16  (6.25%)"
 msgstr "1:16  (6.25%)"
 
-#: app/actions/view-actions.c:292
+#: app/actions/view-actions.c:291
 msgid "O_ther..."
 msgstr "O_ther..."
 
-#: app/actions/view-actions.c:300
+#: app/actions/view-actions.c:299
 msgid "From _Theme"
 msgstr "From _Theme"
 
-#: app/actions/view-actions.c:305
+#: app/actions/view-actions.c:304
 msgid "_Light Check Color"
 msgstr "_Light Check Colour"
 
-#: app/actions/view-actions.c:310
+#: app/actions/view-actions.c:309
 msgid "_Dark Check Color"
 msgstr "_Dark Check Colour"
 
-#: app/actions/view-actions.c:315
+#: app/actions/view-actions.c:314
 msgid "Select _Custom Color..."
 msgstr "Select _Custom Colour..."
 
-#: app/actions/view-actions.c:320
+#: app/actions/view-actions.c:319
 msgid "As in _Preferences"
 msgstr "As in _Preferences"
 
@@ -3238,13 +3238,18 @@ msgstr "Other (%s) ..."
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: app/actions/view-commands.c:603
+#: app/actions/view-commands.c:598
 msgid "Set Canvas Padding Color"
 msgstr "Set Canvas Padding Colour"
 
-#: app/actions/view-commands.c:605
+#: app/actions/view-commands.c:600
 msgid "Set Custom Canvas Padding Color"
 msgstr "Set Custom Canvas Padding Colour"
+
+#: app/actions/window-actions.c:65
+#, c-format
+msgid "Screen %d (%s)"
+msgstr "Screen %d (%s)"
 
 #: app/base/base-enums.c:23
 msgid "Smooth"
@@ -3260,15 +3265,15 @@ msgstr "Freehand"
 msgid "Value"
 msgstr "Value"
 
-#: app/base/base-enums.c:56 app/tools/gimpcolorbalancetool.c:301
+#: app/base/base-enums.c:56 app/tools/gimpcolorbalancetool.c:300
 msgid "Red"
 msgstr "Red"
 
-#: app/base/base-enums.c:57 app/tools/gimpcolorbalancetool.c:308
+#: app/base/base-enums.c:57 app/tools/gimpcolorbalancetool.c:307
 msgid "Green"
 msgstr "Green"
 
-#: app/base/base-enums.c:58 app/tools/gimpcolorbalancetool.c:315
+#: app/base/base-enums.c:58 app/tools/gimpcolorbalancetool.c:314
 msgid "Blue"
 msgstr "Blue"
 
@@ -4242,7 +4247,7 @@ msgid "Invert"
 msgstr "Invert"
 
 #: app/core/gimpdrawable-levels.c:112 app/core/gimpdrawable-levels.c:162
-#: app/tools/gimplevelstool.c:158
+#: app/tools/gimplevelstool.c:157
 msgid "Levels"
 msgstr "Levels"
 
@@ -4621,8 +4626,8 @@ msgstr "Cannot create preview"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:431 app/widgets/gimptemplateeditor.c:635
-#: app/widgets/gimptemplateeditor.c:673
+#: app/widgets/gimpsizebox.c:431 app/widgets/gimptemplateeditor.c:634
+#: app/widgets/gimptemplateeditor.c:672
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixels"
@@ -4983,44 +4988,44 @@ msgstr "About The GIMP"
 msgid "Channel Name:"
 msgstr "Channel Name:"
 
-#: app/dialogs/convert-dialog.c:120
+#: app/dialogs/convert-dialog.c:119
 msgid "Indexed Color Conversion"
 msgstr "Indexed Colour Conversion"
 
-#: app/dialogs/convert-dialog.c:123
+#: app/dialogs/convert-dialog.c:122
 msgid "Convert Image to Indexed Colors"
 msgstr "Convert Image to Indexed Colours"
 
-#: app/dialogs/convert-dialog.c:164 app/dialogs/dialogs.c:171
+#: app/dialogs/convert-dialog.c:163 app/dialogs/dialogs.c:171
 msgid "Colormap"
 msgstr "Colourmap"
 
-#: app/dialogs/convert-dialog.c:178
+#: app/dialogs/convert-dialog.c:177
 msgid "_Maximum number of colors:"
 msgstr "_Maximum number of colours:"
 
-#: app/dialogs/convert-dialog.c:205
+#: app/dialogs/convert-dialog.c:204
 msgid "_Remove unused colors from final palette"
 msgstr "_Remove unused colours from final palette"
 
 #. dithering
-#: app/dialogs/convert-dialog.c:220 app/tools/gimpblendoptions.c:267
+#: app/dialogs/convert-dialog.c:219 app/tools/gimpblendoptions.c:267
 msgid "Dithering"
 msgstr "Dithering"
 
-#: app/dialogs/convert-dialog.c:232
+#: app/dialogs/convert-dialog.c:231
 msgid "Color _dithering:"
 msgstr "Colour _dithering:"
 
-#: app/dialogs/convert-dialog.c:247
+#: app/dialogs/convert-dialog.c:246
 msgid "Enable dithering of _transparency"
 msgstr "Enable dithering of _transparency"
 
-#: app/dialogs/convert-dialog.c:273
+#: app/dialogs/convert-dialog.c:272
 msgid "Converting to indexed..."
 msgstr "Converting to indexed..."
 
-#: app/dialogs/convert-dialog.c:381
+#: app/dialogs/convert-dialog.c:380
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Cannot convert to a palette with more than 256 colours."
 
@@ -5335,38 +5340,38 @@ msgstr "Indexed Colour"
 msgid "colors"
 msgstr "colours"
 
-#: app/dialogs/layer-add-mask-dialog.c:64
+#: app/dialogs/layer-add-mask-dialog.c:63
 msgid "Add a Mask to the Layer"
 msgstr "Add a Mask to the Layer"
 
-#: app/dialogs/layer-add-mask-dialog.c:86
+#: app/dialogs/layer-add-mask-dialog.c:85
 msgid "Initialize Layer Mask to:"
 msgstr "Initialize Layer Mask to:"
 
-#: app/dialogs/layer-add-mask-dialog.c:96
+#: app/dialogs/layer-add-mask-dialog.c:95
 msgid "In_vert Mask"
 msgstr "In_vert Mask"
 
-#: app/dialogs/layer-options-dialog.c:116
+#: app/dialogs/layer-options-dialog.c:115
 msgid "Layer _Name:"
 msgstr "Layer _Name:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1047
-#: app/tools/gimpselectionoptions.c:529
+#: app/dialogs/layer-options-dialog.c:126 app/tools/gimpcroptool.c:1046
+#: app/tools/gimpselectionoptions.c:558
 msgid "Width:"
 msgstr "Width:"
 
-#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1051
-#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:537
+#: app/dialogs/layer-options-dialog.c:132 app/tools/gimpcroptool.c:1050
+#: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:566
 msgid "Height:"
 msgstr "Height:"
 
-#: app/dialogs/layer-options-dialog.c:190
+#: app/dialogs/layer-options-dialog.c:189
 msgid "Layer Fill Type"
 msgstr "Layer Fill Type"
 
-#: app/dialogs/layer-options-dialog.c:205
+#: app/dialogs/layer-options-dialog.c:204
 msgid "Set Name from _Text"
 msgstr "Set Name from _Text"
 
@@ -6194,28 +6199,28 @@ msgstr "Print Size"
 
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
-#: app/widgets/gimptemplateeditor.c:234
+#: app/widgets/gimptemplateeditor.c:233
 msgid "_Width:"
 msgstr "_Width:"
 
 #: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:226
-#: app/widgets/gimptemplateeditor.c:241
+#: app/widgets/gimptemplateeditor.c:240
 msgid "H_eight:"
 msgstr "H_eight:"
 
 #. the resolution labels
 #: app/dialogs/print-size-dialog.c:210 app/widgets/gimpsizebox.c:275
-#: app/widgets/gimptemplateeditor.c:361
+#: app/widgets/gimptemplateeditor.c:360
 msgid "_X resolution:"
 msgstr "_X resolution:"
 
 #: app/dialogs/print-size-dialog.c:217 app/widgets/gimpsizebox.c:278
-#: app/widgets/gimptemplateeditor.c:368
+#: app/widgets/gimptemplateeditor.c:367
 msgid "_Y resolution:"
 msgstr "_Y resolution:"
 
 #: app/dialogs/print-size-dialog.c:228 app/widgets/gimpsizebox.c:271
-#: app/widgets/gimptemplateeditor.c:381
+#: app/widgets/gimptemplateeditor.c:380
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
@@ -6266,7 +6271,7 @@ msgid "_Vertical:"
 msgstr "_Vertical:"
 
 #. Image size frame
-#: app/dialogs/scale-dialog.c:96 app/widgets/gimptemplateeditor.c:212
+#: app/dialogs/scale-dialog.c:96 app/widgets/gimptemplateeditor.c:211
 msgid "Image Size"
 msgstr "Image Size"
 
@@ -6944,7 +6949,7 @@ msgstr "Plug-In could not save image"
 msgid "Invalid character sequence in URI"
 msgstr "Invalid character sequence in URI"
 
-#: app/gui/session.c:245 app/menus/menus.c:352 app/widgets/gimpdevices.c:216
+#: app/gui/session.c:245 app/menus/menus.c:371 app/widgets/gimpdevices.c:216
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Deleting \"%s\" failed: %s"
@@ -7028,11 +7033,11 @@ msgid "Posterize"
 msgstr "Posterize"
 
 #: app/pdb/color_cmds.c:745 app/pdb/color_cmds.c:870
-#: app/tools/gimpcurvestool.c:139
+#: app/tools/gimpcurvestool.c:138
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:995 app/tools/gimpcolorbalancetool.c:96
+#: app/pdb/color_cmds.c:995 app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Colour Balance"
 
@@ -7469,7 +7474,7 @@ msgstr "Number of grid lines"
 msgid "Grid line spacing"
 msgstr "Grid line spacing"
 
-#: app/tools/gimp-tools.c:282
+#: app/tools/gimp-tools.c:284
 msgid "This tool has no options."
 msgstr "This tool has no options."
 
@@ -7494,7 +7499,7 @@ msgstr "Pressure:"
 msgid "Offset:"
 msgstr "Offset:"
 
-#: app/tools/gimpblendoptions.c:253 app/widgets/gimpbrusheditor.c:145
+#: app/tools/gimpblendoptions.c:253 app/widgets/gimpbrusheditor.c:144
 msgid "Shape:"
 msgstr "Shape:"
 
@@ -7511,7 +7516,7 @@ msgid "Max Depth:"
 msgstr "Max Depth:"
 
 #: app/tools/gimpblendoptions.c:302 app/tools/gimpbucketfilloptions.c:295
-#: app/tools/gimpmagnifyoptions.c:226 app/tools/gimpselectionoptions.c:466
+#: app/tools/gimpmagnifyoptions.c:226 app/tools/gimpselectionoptions.c:495
 msgid "Threshold:"
 msgstr "Threshold:"
 
@@ -7564,7 +7569,7 @@ msgstr "Allow completely transparent regions to be filled"
 msgid "Base filled area on all visible layers"
 msgstr "Base filled area on all visible layers"
 
-#: app/tools/gimpbucketfilloptions.c:141 app/tools/gimpselectionoptions.c:161
+#: app/tools/gimpbucketfilloptions.c:141 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr "Maximum colour difference"
 
@@ -7588,7 +7593,7 @@ msgstr "Fill whole selection"
 msgid "Fill similar colors"
 msgstr "Fill similar colours"
 
-#: app/tools/gimpbucketfilloptions.c:261 app/tools/gimpselectionoptions.c:438
+#: app/tools/gimpbucketfilloptions.c:261 app/tools/gimpselectionoptions.c:467
 msgid "Finding Similar Colors"
 msgstr "Finding Similar Colours"
 
@@ -7597,8 +7602,8 @@ msgid "Fill transparent areas"
 msgstr "Fill transparent areas"
 
 #: app/tools/gimpbucketfilloptions.c:283
-#: app/tools/gimpcolorpickeroptions.c:178 app/tools/gimpselectionoptions.c:454
-#: app/tools/gimpselectionoptions.c:502
+#: app/tools/gimpcolorpickeroptions.c:178 app/tools/gimpselectionoptions.c:483
+#: app/tools/gimpselectionoptions.c:531
 msgid "Sample merged"
 msgstr "Sample merged"
 
@@ -7638,47 +7643,47 @@ msgstr "Source"
 msgid "Alignment"
 msgstr "Alignment"
 
-#: app/tools/gimpcolorbalancetool.c:97
+#: app/tools/gimpcolorbalancetool.c:96
 msgid "Adjust color balance"
 msgstr "Adjust colour balance"
 
-#: app/tools/gimpcolorbalancetool.c:98
+#: app/tools/gimpcolorbalancetool.c:97
 msgid "Color _Balance..."
 msgstr "Colour _Balance..."
 
-#: app/tools/gimpcolorbalancetool.c:149
+#: app/tools/gimpcolorbalancetool.c:148
 msgid "Adjust Color Balance"
 msgstr "Adjust Colour Balance"
 
-#: app/tools/gimpcolorbalancetool.c:193
+#: app/tools/gimpcolorbalancetool.c:192
 msgid "Color balance operates only on RGB color layers."
 msgstr "Colour balance operates only on RGB colour layers."
 
-#: app/tools/gimpcolorbalancetool.c:276
+#: app/tools/gimpcolorbalancetool.c:275
 msgid "Select Range to Modify"
 msgstr "Select Range to Modify"
 
-#: app/tools/gimpcolorbalancetool.c:284
+#: app/tools/gimpcolorbalancetool.c:283
 msgid "Modify Selected Range's Color Levels"
 msgstr "Modify Selected Range's Colour Levels"
 
-#: app/tools/gimpcolorbalancetool.c:301
+#: app/tools/gimpcolorbalancetool.c:300
 msgid "Cyan"
 msgstr "Cyan"
 
-#: app/tools/gimpcolorbalancetool.c:308
+#: app/tools/gimpcolorbalancetool.c:307
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:315
+#: app/tools/gimpcolorbalancetool.c:314
 msgid "Yellow"
 msgstr "Yellow"
 
-#: app/tools/gimpcolorbalancetool.c:325
+#: app/tools/gimpcolorbalancetool.c:324
 msgid "R_eset range"
 msgstr "R_eset range"
 
-#: app/tools/gimpcolorbalancetool.c:334
+#: app/tools/gimpcolorbalancetool.c:333
 msgid "Preserve _luminosity"
 msgstr "Preserve _luminosity"
 
@@ -7718,8 +7723,8 @@ msgstr "_Lightness:"
 msgid "Sample average"
 msgstr "Sample average"
 
-#: app/tools/gimpcoloroptions.c:193 app/tools/gimpselectionoptions.c:416
-#: app/widgets/gimpbrusheditor.c:153
+#: app/tools/gimpcoloroptions.c:193 app/tools/gimpselectionoptions.c:445
+#: app/widgets/gimpbrusheditor.c:152
 msgid "Radius:"
 msgstr "Radius:"
 
@@ -7789,95 +7794,95 @@ msgstr "Allow enlarging  %s"
 msgid "Keep aspect ratio  %s"
 msgstr "Keep aspect ratio  %s"
 
-#: app/tools/gimpcroptool.c:165
+#: app/tools/gimpcroptool.c:164
 msgid "Crop & Resize"
 msgstr "Crop & Resize"
 
-#: app/tools/gimpcroptool.c:166
+#: app/tools/gimpcroptool.c:165
 msgid "Crop or Resize an image"
 msgstr "Crop or Resize an image"
 
-#: app/tools/gimpcroptool.c:167
+#: app/tools/gimpcroptool.c:166
 msgid "_Crop & Resize"
 msgstr "_Crop & Resize"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:500 app/tools/gimpcroptool.c:984
+#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:983
 msgid "Crop: "
 msgstr "Crop: "
 
-#: app/tools/gimpcroptool.c:1011
+#: app/tools/gimpcroptool.c:1010
 msgid "Crop & Resize Information"
 msgstr "Crop & Resize Information"
 
-#: app/tools/gimpcroptool.c:1030
+#: app/tools/gimpcroptool.c:1029
 msgid "Origin X:"
 msgstr "Origin X:"
 
-#: app/tools/gimpcroptool.c:1034
+#: app/tools/gimpcroptool.c:1033
 msgid "Origin Y:"
 msgstr "Origin Y:"
 
-#: app/tools/gimpcroptool.c:1072 app/widgets/gimpbrusheditor.c:194
+#: app/tools/gimpcroptool.c:1071 app/widgets/gimpbrusheditor.c:193
 msgid "Aspect ratio:"
 msgstr "Aspect ratio:"
 
-#: app/tools/gimpcroptool.c:1083
+#: app/tools/gimpcroptool.c:1082
 msgid "From selection"
 msgstr "From selection"
 
-#: app/tools/gimpcroptool.c:1091
+#: app/tools/gimpcroptool.c:1090
 msgid "Auto shrink"
 msgstr "Auto shrink"
 
-#: app/tools/gimpcurvestool.c:140
+#: app/tools/gimpcurvestool.c:139
 msgid "Adjust color curves"
 msgstr "Adjust colour curves"
 
-#: app/tools/gimpcurvestool.c:141
+#: app/tools/gimpcurvestool.c:140
 msgid "_Curves..."
 msgstr "_Curves..."
 
-#: app/tools/gimpcurvestool.c:200
+#: app/tools/gimpcurvestool.c:199
 msgid "Adjust Color Curves"
 msgstr "Adjust Colour Curves"
 
-#: app/tools/gimpcurvestool.c:202
+#: app/tools/gimpcurvestool.c:201
 msgid "Load Curves"
 msgstr "Load Curves"
 
-#: app/tools/gimpcurvestool.c:203
+#: app/tools/gimpcurvestool.c:202
 msgid "Load curves settings from file"
 msgstr "Load curves settings from file"
 
-#: app/tools/gimpcurvestool.c:204
+#: app/tools/gimpcurvestool.c:203
 msgid "Save Curves"
 msgstr "Save Curves"
 
-#: app/tools/gimpcurvestool.c:205
+#: app/tools/gimpcurvestool.c:204
 msgid "Save curves settings to file"
 msgstr "Save curves settings to file"
 
-#: app/tools/gimpcurvestool.c:281
+#: app/tools/gimpcurvestool.c:280
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curves for indexed layers cannot be adjusted."
 
-#: app/tools/gimpcurvestool.c:477 app/tools/gimplevelstool.c:413
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:159
 msgid "Channel:"
 msgstr "Channel:"
 
-#: app/tools/gimpcurvestool.c:492 app/tools/gimplevelstool.c:428
+#: app/tools/gimpcurvestool.c:491 app/tools/gimplevelstool.c:427
 msgid "R_eset channel"
 msgstr "R_eset channel"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:594 app/tools/gimplevelstool.c:638
+#: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:637
 msgid "All Channels"
 msgstr "All Channels"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:612
+#: app/tools/gimpcurvestool.c:611
 msgid "Curve Type"
 msgstr "Curve Type"
 
@@ -8056,7 +8061,7 @@ msgid "Size:"
 msgstr "Size:"
 
 #: app/tools/gimpinkoptions-gui.c:79 app/tools/gimpmeasuretool.c:891
-#: app/tools/gimprotatetool.c:169 app/widgets/gimpbrusheditor.c:207
+#: app/tools/gimprotatetool.c:169 app/widgets/gimpbrusheditor.c:206
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -8102,65 +8107,65 @@ msgstr "Select shapes from image"
 msgid "Intelligent _Scissors"
 msgstr "Intelligent _Scissors"
 
-#: app/tools/gimplevelstool.c:159
+#: app/tools/gimplevelstool.c:158
 msgid "Adjust color levels"
 msgstr "Adjust colour levels"
 
-#: app/tools/gimplevelstool.c:160
+#: app/tools/gimplevelstool.c:159
 msgid "_Levels..."
 msgstr "_Levels..."
 
-#: app/tools/gimplevelstool.c:218
+#: app/tools/gimplevelstool.c:217
 msgid "Adjust Color Levels"
 msgstr "Adjust Colour Levels"
 
-#: app/tools/gimplevelstool.c:220
+#: app/tools/gimplevelstool.c:219
 msgid "Load Levels"
 msgstr "Load Levels"
 
-#: app/tools/gimplevelstool.c:221
+#: app/tools/gimplevelstool.c:220
 msgid "Load levels settings from file"
 msgstr "Load levels settings from file"
 
-#: app/tools/gimplevelstool.c:222
+#: app/tools/gimplevelstool.c:221
 msgid "Save Levels"
 msgstr "Save Levels"
 
-#: app/tools/gimplevelstool.c:223
+#: app/tools/gimplevelstool.c:222
 msgid "Save levels settings to file"
 msgstr "Save levels settings to file"
 
-#: app/tools/gimplevelstool.c:283
+#: app/tools/gimplevelstool.c:282
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Levels for indexed layers cannot be adjusted."
 
-#: app/tools/gimplevelstool.c:353
+#: app/tools/gimplevelstool.c:352
 msgid "Pick black point"
 msgstr "Pick black point"
 
-#: app/tools/gimplevelstool.c:357
+#: app/tools/gimplevelstool.c:356
 msgid "Pick gray point"
 msgstr "Pick gray point"
 
-#: app/tools/gimplevelstool.c:361
+#: app/tools/gimplevelstool.c:360
 msgid "Pick white point"
 msgstr "Pick white point"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:443
+#: app/tools/gimplevelstool.c:442
 msgid "Input Levels"
 msgstr "Input Levels"
 
-#: app/tools/gimplevelstool.c:537
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:567
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Output Levels"
 
-#: app/tools/gimplevelstool.c:665
+#: app/tools/gimplevelstool.c:664
 msgid "Adjust levels automatically"
 msgstr "Adjust levels automatically"
 
@@ -8262,7 +8267,7 @@ msgstr "_Paintbrush"
 msgid "Opacity:"
 msgstr "Opacity:"
 
-#: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:374
+#: app/tools/gimppaintoptions-gui.c:107 app/tools/gimpselectionoptions.c:402
 #: app/widgets/gimpbrushselect.c:218 app/widgets/gimplayertreeview.c:324
 msgid "Mode:"
 msgstr "Mode:"
@@ -8451,39 +8456,47 @@ msgstr "Scale ratio Y:"
 msgid "Aspect Ratio:"
 msgstr "Aspect Ratio:"
 
-#: app/tools/gimpselectionoptions.c:136
+#: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
 msgstr "Smooth edges"
 
-#: app/tools/gimpselectionoptions.c:150
+#: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
 msgstr "Allow completely transparent regions to be selected"
 
-#: app/tools/gimpselectionoptions.c:156
+#: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
 msgstr "Base selection on all visible layers"
 
-#: app/tools/gimpselectionoptions.c:171
+#: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: app/tools/gimpselectionoptions.c:382 app/tools/gimptextoptions.c:446
+#: app/tools/gimpselectionoptions.c:199 app/tools/gimpselectionoptions.c:590
+msgid "Adjustable"
+msgstr "Adjustable"
+
+#: app/tools/gimpselectionoptions.c:204 app/tools/gimpselectionoptions.c:599
+msgid "Show dialog"
+msgstr "Show dialogue"
+
+#: app/tools/gimpselectionoptions.c:410 app/tools/gimptextoptions.c:446
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: app/tools/gimpselectionoptions.c:399
+#: app/tools/gimpselectionoptions.c:428
 msgid "Feather edges"
 msgstr "Feather edges"
 
-#: app/tools/gimpselectionoptions.c:425
+#: app/tools/gimpselectionoptions.c:454
 msgid "Show interactive boundary"
 msgstr "Show interactive boundary"
 
-#: app/tools/gimpselectionoptions.c:448
+#: app/tools/gimpselectionoptions.c:477
 msgid "Select transparent areas"
 msgstr "Select transparent areas"
 
-#: app/tools/gimpselectionoptions.c:488
+#: app/tools/gimpselectionoptions.c:517
 msgid "Auto shrink selection"
 msgstr "Auto shrink selection"
 
@@ -8939,19 +8952,19 @@ msgstr "Removing shortcut failed."
 msgid "Invalid shortcut."
 msgstr "Invalid shortcut."
 
-#: app/widgets/gimpbrusheditor.c:168
+#: app/widgets/gimpbrusheditor.c:167
 msgid "Spikes:"
 msgstr "Spikes:"
 
-#: app/widgets/gimpbrusheditor.c:181
+#: app/widgets/gimpbrusheditor.c:180
 msgid "Hardness:"
 msgstr "Hardness:"
 
-#: app/widgets/gimpbrusheditor.c:220 app/widgets/gimpbrushfactoryview.c:114
+#: app/widgets/gimpbrusheditor.c:219 app/widgets/gimpbrushfactoryview.c:114
 msgid "Spacing:"
 msgstr "Spacing:"
 
-#: app/widgets/gimpbrusheditor.c:223 app/widgets/gimpbrushfactoryview.c:117
+#: app/widgets/gimpbrusheditor.c:222 app/widgets/gimpbrushfactoryview.c:117
 msgid "Percentage of width of brush"
 msgstr "Percentage of width of brush"
 
@@ -9415,15 +9428,15 @@ msgstr "Foreground: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Background: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
+#: app/widgets/gimpdock.c:389 app/widgets/gimpdock.c:400
 msgid "Close all tabs?"
 msgstr "Close all tabs?"
 
-#: app/widgets/gimpdock.c:354
+#: app/widgets/gimpdock.c:395
 msgid "Close all Tabs"
 msgstr "Close all Tabs"
 
-#: app/widgets/gimpdock.c:361
+#: app/widgets/gimpdock.c:402
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
@@ -9432,7 +9445,7 @@ msgstr ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 
-#: app/widgets/gimpdock.c:474
+#: app/widgets/gimpdock.c:760
 msgid "You can drop dockable dialogs here."
 msgstr "You can drop dockable dialogues here."
 
@@ -9645,11 +9658,11 @@ msgstr "Count:"
 msgid "Percentile:"
 msgstr "Percentile:"
 
-#: app/widgets/gimpimagedock.c:203
+#: app/widgets/gimpimagedock.c:191
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpimagedock.c:214
+#: app/widgets/gimpimagedock.c:202
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -9692,7 +9705,7 @@ msgstr "Undefined"
 msgid "Columns:"
 msgstr "Columns:"
 
-#: app/widgets/gimppropwidgets.c:1533
+#: app/widgets/gimppropwidgets.c:1532
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "This text input field is limited to %d characters."
@@ -9754,41 +9767,41 @@ msgstr "Dash preset:"
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
-#: app/widgets/gimptemplateeditor.c:253
+#: app/widgets/gimptemplateeditor.c:252
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: app/widgets/gimptemplateeditor.c:328
+#: app/widgets/gimptemplateeditor.c:327
 msgid "_Advanced Options"
 msgstr "_Advanced Options"
 
-#: app/widgets/gimptemplateeditor.c:435
+#: app/widgets/gimptemplateeditor.c:434
 msgid "Color_space:"
 msgstr "Colour_space:"
 
-#: app/widgets/gimptemplateeditor.c:443
+#: app/widgets/gimptemplateeditor.c:442
 msgid "_Fill with:"
 msgstr "_Fill with:"
 
-#: app/widgets/gimptemplateeditor.c:453
+#: app/widgets/gimptemplateeditor.c:452
 msgid "Comme_nt:"
 msgstr "Comme_nt:"
 
-#: app/widgets/gimptemplateeditor.c:563
+#: app/widgets/gimptemplateeditor.c:562
 msgid "_Name:"
 msgstr "_Name:"
 
-#: app/widgets/gimptemplateeditor.c:574
+#: app/widgets/gimptemplateeditor.c:573
 msgid "_Icon:"
 msgstr "_Icon:"
 
-#: app/widgets/gimptemplateeditor.c:697
+#: app/widgets/gimptemplateeditor.c:696
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: app/widgets/gimptemplateeditor.c:699
+#: app/widgets/gimptemplateeditor.c:698
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
@@ -9855,7 +9868,7 @@ msgstr ""
 "The active gradient.\n"
 "Click to open the Gradient Dialogue."
 
-#: app/widgets/gimptoolbox.c:854
+#: app/widgets/gimptoolbox.c:822
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
