@@ -492,7 +492,7 @@ msgstr "Прозоре"
 #. The by half height and half width option
 #: app/channel_ops.c:205
 msgid "Offset by (x/2),(y/2)"
-msgstr ""
+msgstr "Зм╕щення на (x/2),(y/2)"
 
 #: app/channels_dialog.c:187 app/channels_dialog.c:2463
 msgid "New Channel"
@@ -730,7 +730,7 @@ msgstr "Операц╕╖"
 
 #: app/colormap_dialog.i.c:997 app/lc_dialog.c:621
 msgid "none"
-msgstr ""
+msgstr "нема╓"
 
 #: app/commands.c:329
 msgid "Feather Selection"
@@ -770,11 +770,11 @@ msgstr ""
 
 #: app/commands.c:1298
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Помилка зм╕ни розм╕ру: ширина ╕ висота мусять бути б╕льшими нуля."
 
 #: app/commands.c:1360
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Помилка масштабування: ширина ╕ висота мусять бути б╕льшими нуля."
 
 #: app/convert.c:492
 msgid "Indexed Color Conversion"
@@ -847,6 +847,10 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
+"Ви намага╓тесь перетворити зображення з альфа/шарами з RGB/Градац╕й с╕рого в "
+"╕ндексоване.\n"
+"Ви не повинн╕ генерувати пал╕тру б╕льш н╕ж з 255 кольор╕в, якщо ви "
+"спод╕ва╓тесь створити прозорий чи ан╕мований GIF-файл з цього зображення."
 
 #: app/convolve.c:136
 msgid "Blur"
@@ -854,11 +858,11 @@ msgstr "Розмивання"
 
 #: app/convolve.c:136
 msgid "Sharpen"
-msgstr ""
+msgstr "Р╕зк╕сть"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
-msgstr ""
+msgstr "Тип розмивання"
 
 #: app/crop.c:171 app/crop.c:1037
 msgid "Crop"
@@ -940,15 +944,15 @@ msgstr "Альфа"
 
 #: app/curves.c:428
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr ""
+msgstr "Крив╕ для ╕ндексованих зображень не можуть бути в╕дрегульован╕."
 
 #: app/curves.c:528
 msgid "Smooth"
-msgstr ""
+msgstr "Гладка"
 
 #: app/curves.c:529
 msgid "Free"
-msgstr ""
+msgstr "В╕льна"
 
 #. The shell and main vbox
 #: app/curves.c:555 app/tools.c:663
@@ -1146,7 +1150,7 @@ msgstr "Нове зображення"
 
 #: app/file_new_dialog.c:479 app/preferences_dialog.c:1428
 msgid "Pixels"
-msgstr ""
+msgstr "П╕ксел╕в"
 
 #. the resolution labels
 #: app/file_new_dialog.c:548 app/resize.c:566
@@ -1169,13 +1173,15 @@ msgstr "Завантажити зображення"
 #. format-chooser frame
 #: app/fileops.c:288
 msgid "Determine file type"
-msgstr ""
+msgstr "Визначити тип файлу"
 
 #: app/fileops.c:382
 msgid ""
 "generate\n"
 "preview"
 msgstr ""
+"створювати\n"
+"поперн╕й перегляд"
 
 #: app/fileops.c:417
 msgid "No selection."
@@ -1187,11 +1193,11 @@ msgstr "Зберегти зображення"
 
 #: app/fileops.c:509
 msgid "Save Options"
-msgstr ""
+msgstr "Параметри збереження"
 
 #: app/fileops.c:518
 msgid "Determine file type:"
-msgstr ""
+msgstr "Визначити тип файлу:"
 
 #: app/fileops.c:571
 msgid "Can't revert. No filename associated with this image"
@@ -1223,7 +1229,7 @@ msgstr ""
 
 #: app/fileops.c:1291
 msgid "no preview available"
-msgstr ""
+msgstr "попередн╕й перегляд не доступний"
 
 #: app/fileops.c:1405
 msgid "(could not make preview)"
@@ -1231,7 +1237,7 @@ msgstr ""
 
 #: app/fileops.c:1477 app/fileops.c:1558
 msgid "Open failed: "
-msgstr ""
+msgstr "Невдале в╕дкривання: "
 
 #: app/fileops.c:1618
 #, c-format
@@ -1240,7 +1246,7 @@ msgstr ""
 
 #: app/fileops.c:1632 app/fileops.c:1734
 msgid "Save failed: "
-msgstr ""
+msgstr "Невдале збереження: "
 
 #: app/fileops.c:1679
 #, c-format
@@ -1262,12 +1268,12 @@ msgstr "Н╕"
 #: app/flip_tool.c:75 app/preferences_dialog.c:1477
 #: app/preferences_dialog.c:2232
 msgid "Horizontal"
-msgstr ""
+msgstr "Горизонтальне"
 
 #: app/flip_tool.c:75 app/preferences_dialog.c:1479
 #: app/preferences_dialog.c:2234
 msgid "Vertical"
-msgstr ""
+msgstr "Вертикальне"
 
 #: app/flip_tool.c:81
 msgid "Flip Tool Options"
@@ -1285,6 +1291,9 @@ msgid ""
 "selection because it belongs to a\n"
 "layer mask or channel."
 msgstr ""
+"Неможливо створити новий шар з плаваючого\n"
+"вид╕лення, тому що воно належить\n"
+"масц╕ шару чи каналу."
 
 #: app/gdisplay.c:217
 msgid "RGB-empty"
@@ -1308,11 +1317,11 @@ msgstr ""
 
 #: app/gdisplay.c:223
 msgid "indexed"
-msgstr ""
+msgstr "╕ндексоване"
 
 #: app/gdisplay_color_ui.c:117
 msgid "Configure"
-msgstr ""
+msgstr "Сконф╕гурувати"
 
 #: app/gdisplay_color_ui.c:120
 msgid "Color Display Filters"
@@ -1320,11 +1329,11 @@ msgstr ""
 
 #: app/gdisplay_color_ui.c:144
 msgid "Available Filters"
-msgstr ""
+msgstr "Доступн╕ ф╕льтри"
 
 #: app/gdisplay_color_ui.c:167
 msgid "Active Filters"
-msgstr ""
+msgstr "Активн╕ ф╕льтри"
 
 #: app/gdisplay_ops.c:373
 #, c-format
@@ -1419,7 +1428,7 @@ msgstr ""
 
 #: app/gimpimage.c:2171
 msgid "Layer is already on top"
-msgstr ""
+msgstr "Шар вже зверху"
 
 #: app/gimpimage.c:2177
 msgid "Can't raise Layer without alpha"
@@ -1427,7 +1436,7 @@ msgstr ""
 
 #: app/gimpimage.c:2204
 msgid "Layer is already on bottom"
-msgstr ""
+msgstr "Шар вже внизу"
 
 #: app/gimpimage.c:2259
 msgid "BG has no alpha, layer was placed above"
@@ -1588,7 +1597,7 @@ msgstr ""
 
 #: app/global_edit.c:290 app/global_edit.c:359
 msgid "Pasted Layer"
-msgstr ""
+msgstr "Вставлений шар"
 
 #: app/global_edit.c:704
 msgid "Paste"
@@ -1688,7 +1697,7 @@ msgstr "Перейменувати град╕╓нт"
 
 #: app/gradient.c:909 app/gradient.c:1889
 msgid "Save as POV-Ray"
-msgstr ""
+msgstr "Зберегти як POV-Ray"
 
 #. Zoom all button
 #: app/gradient.c:927
@@ -1800,7 +1809,7 @@ msgstr ""
 
 #: app/gradient.c:3438 app/gradient.c:3480
 msgid "Load from"
-msgstr ""
+msgstr "Завантажити з"
 
 #: app/gradient.c:3442
 msgid "Left neighbor's right endpoint"
@@ -1812,7 +1821,7 @@ msgstr ""
 
 #: app/gradient.c:3453 app/gradient.c:3495
 msgid "Save to"
-msgstr ""
+msgstr "Зберегти в"
 
 #: app/gradient.c:3469 app/gradient.c:4563
 msgid "Right endpoint's color"
@@ -1848,7 +1857,7 @@ msgstr ""
 
 #: app/gradient.c:3776
 msgid "Delete segment"
-msgstr ""
+msgstr "Видалити сегмент"
 
 #: app/gradient.c:3778
 msgid "Re-center segment's midpoint"
@@ -1860,7 +1869,7 @@ msgstr ""
 
 #: app/gradient.c:3782
 msgid "Flip segment"
-msgstr ""
+msgstr "В╕дзеркалити сегмент"
 
 #: app/gradient.c:3784 app/gradient.c:5427
 msgid "Replicate segment"
@@ -1896,7 +1905,7 @@ msgstr ""
 
 #: app/gradient.c:3803
 msgid "Flip selection"
-msgstr ""
+msgstr "В╕дзеркалити вид╕лення"
 
 #: app/gradient.c:3805 app/gradient.c:5428
 msgid "Replicate selection"
@@ -2046,7 +2055,7 @@ msgstr "Тон-Насичен╕сть"
 
 #: app/hue_saturation.c:444
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr "П╕дб╕р Тону / Яскравост╕ / Насиченост╕"
+msgstr "Регулювання Тону / Яскравост╕ / Насиченост╕"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:456 app/layers_dialog.c:236 app/paint_funcs.c:94
@@ -2153,19 +2162,19 @@ msgstr ""
 
 #: app/info_window.c:225
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:230
 msgid "B:"
-msgstr ""
+msgstr "B:"
 
 #: app/info_window.c:235
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #: app/info_window.c:240
 msgid "R:"
-msgstr ""
+msgstr "R:"
 
 #: app/info_window.c:259
 msgid "Extended"
@@ -2220,15 +2229,15 @@ msgstr "╤нформац╕я: %s-%d.%d"
 
 #: app/info_window.c:575
 msgid "%%d x %%d pixels (%%.%df x %%.%df %s)"
-msgstr ""
+msgstr "%%d x %%d п╕ксел╕в (%%.%df x %%.%df %s)"
 
 #: app/info_window.c:601
 msgid "RGB Color"
-msgstr ""
+msgstr "RGB-кол╕р"
 
 #: app/info_window.c:605
 msgid "Indexed Color"
-msgstr ""
+msgstr "╤ндексований кол╕р"
 
 #. size slider
 #: app/ink.c:293
@@ -2284,6 +2293,8 @@ msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "\n"
 msgstr ""
+"GIMP - Програма ман╕пулювання зображеннями GNU\n"
+"\n"
 
 #: app/install.c:118
 msgid ""
@@ -2314,6 +2325,8 @@ msgid ""
 "Personal GIMP Installation\n"
 "\n"
 msgstr ""
+"Персональна ╕нсталяц╕я GIMP\n"
+"\n"
 
 #: app/install.c:135
 msgid "For a proper GIMP installation, a subdirectory called\n"
@@ -2487,19 +2500,19 @@ msgstr "╤нсталяц╕я GIMP"
 
 #: app/install.c:268
 msgid "Install"
-msgstr ""
+msgstr "╤нсталювати"
 
 #: app/install.c:270
 msgid "Ignore"
-msgstr ""
+msgstr "╤гнорувати"
 
 #: app/install.c:411
 msgid "Installation Log"
-msgstr ""
+msgstr "Журнал ╕нсталяц╕╖"
 
 #: app/install.c:416
 msgid "Continue"
-msgstr ""
+msgstr "Продовжити"
 
 #: app/install.c:447
 msgid ""
@@ -2530,6 +2543,8 @@ msgid ""
 "\n"
 "Installation successful!\n"
 msgstr ""
+"\n"
+"╤нсталяц╕ю усп╕шно завершено!\n"
 
 #: app/install.c:540
 msgid ""
@@ -2549,7 +2564,7 @@ msgstr "GIMP"
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
-msgstr ""
+msgstr "Внутр╕шн╕ процедури"
 
 #: app/internal_procs.c:68
 msgid "Brush UI"
@@ -2769,11 +2784,11 @@ msgstr ""
 
 #: app/layers_dialog.c:2069 app/layers_dialog.c:3157 app/layers_dialog.c:3580
 msgid "Floating Selection"
-msgstr ""
+msgstr "Плаваючи вид╕лення"
 
 #: app/layers_dialog.c:3343
 msgid "New Layer Options"
-msgstr ""
+msgstr "Параметри нового шару"
 
 #. The name label and entry
 #: app/layers_dialog.c:3368
@@ -2800,19 +2815,19 @@ msgstr "Назва шару:"
 
 #: app/layers_dialog.c:3661
 msgid "White (Full Opacity)"
-msgstr ""
+msgstr "Б╕лий (Повна непрозор╕сть)"
 
 #: app/layers_dialog.c:3662
 msgid "Black (Full Transparency)"
-msgstr ""
+msgstr "Чорний (Повна прозор╕сть)"
 
 #: app/layers_dialog.c:3663
 msgid "Layer's Alpha Channel"
-msgstr ""
+msgstr "Альфа-канал шару"
 
 #: app/layers_dialog.c:3674
 msgid "Add Mask Options"
-msgstr ""
+msgstr "Параметри додавання маски"
 
 #. The radio frame and box
 #: app/layers_dialog.c:3694
@@ -2821,26 +2836,28 @@ msgstr ""
 
 #: app/layers_dialog.c:3786
 msgid "Layer Mask Options"
-msgstr ""
+msgstr "Параметри маски шару"
 
 #: app/layers_dialog.c:3792
 msgid "Apply"
-msgstr ""
+msgstr "Застосувати"
 
 #: app/layers_dialog.c:3794
 msgid "Discard"
-msgstr ""
+msgstr "Скасувати"
 
 #. The name entry hbox, label and entry
 #: app/layers_dialog.c:3808
 msgid "Apply layer mask?"
-msgstr ""
+msgstr "Застосувати маску до шару?"
 
 #: app/layers_dialog.c:3862 app/layers_dialog.c:3950
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
+"Нев╕рн╕ ширина чи висота.\n"
+"╤хн╕ значення мусять бути позитивними."
 
 #: app/layers_dialog.c:4061
 msgid "Expanded as necessary"
@@ -2868,7 +2885,7 @@ msgstr ""
 
 #: app/lc_dialog.c:100
 msgid "Layers & Channels"
-msgstr ""
+msgstr "Шари та канали"
 
 #. The Auto-button
 #: app/lc_dialog.c:148 app/levels.c:593
@@ -2885,11 +2902,11 @@ msgstr "Канали"
 
 #: app/levels.c:195
 msgid "Levels Options"
-msgstr ""
+msgstr "Параметри р╕вн╕в"
 
 #: app/levels.c:243
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr ""
+msgstr "Р╕вн╕ для ╕ндексованих зображень неможуть бути в╕дрегульован╕."
 
 #. The shell and main vbox
 #: app/levels.c:345 app/tools.c:679
@@ -2898,36 +2915,36 @@ msgstr "Р╕вн╕"
 
 #: app/levels.c:374
 msgid "Modify Levels for Channel:"
-msgstr ""
+msgstr "Модиф╕кувати р╕вн╕ для каналу:"
 
 #: app/levels.c:390
 msgid "Input Levels:"
-msgstr ""
+msgstr "Р╕вн╕ вводу:"
 
 #: app/levels.c:499
 msgid "Output Levels:"
-msgstr ""
+msgstr "Р╕вн╕ виводу:"
 
 #: app/levels.c:603 app/module_db.c:829
 msgid "Load"
-msgstr ""
+msgstr "Завантажити"
 
 #: app/levels.c:1124
 msgid "Load Levels"
-msgstr ""
+msgstr "Завантажити р╕вн╕"
 
 #: app/levels.c:1139
 msgid "Save Levels"
-msgstr ""
+msgstr "Зберегти р╕вн╕"
 
 #: app/levels.c:1456
 msgid "Load/Save Levels"
-msgstr ""
+msgstr "Завантаження/Збереження р╕вн╕в"
 
 #: app/levels.c:1494 app/levels.c:1512 app/paths_dialog.c:2217
 #, c-format
 msgid "Unable to open file %s"
-msgstr ""
+msgstr "Неможливо в╕дкрити файл %s"
 
 #: app/magnify.c:95
 msgid "Magnify Options"
@@ -2935,11 +2952,11 @@ msgstr "Параметри лупи"
 
 #: app/magnify.c:104
 msgid "Allow Window Resizing"
-msgstr ""
+msgstr "Дозволити зм╕ну розм╕р╕в в╕кна"
 
 #: app/main.c:301
 msgid "GIMP version"
-msgstr ""
+msgstr "Верс╕я GIMP"
 
 #: app/main.c:305
 #, c-format
@@ -2948,7 +2965,7 @@ msgstr "Використання: %s [option ...] [files ...]\n"
 
 #: app/main.c:306
 msgid "Valid options are:\n"
-msgstr ""
+msgstr "Допустим╕ параметри:\n"
 
 #: app/main.c:307
 msgid "  -h --help                Output this help.\n"
@@ -3398,7 +3415,7 @@ msgstr ""
 
 #: app/menus.c:322
 msgid "/Select/Sharpen"
-msgstr ""
+msgstr "/Вид╕лення/Р╕зк╕сть"
 
 #: app/menus.c:324
 msgid "/Select/Shrink..."
@@ -5329,7 +5346,7 @@ msgstr "Параметри клонування"
 
 #: app/tool_options.c:564
 msgid "Convolver Options"
-msgstr ""
+msgstr "Параметри розмивання"
 
 #: app/tool_options.c:566
 msgid "Ink Options"
@@ -5591,7 +5608,7 @@ msgstr "/╤нструменти/Аерограф"
 
 #: app/tools.c:425
 msgid "Airbrush with variable pressure"
-msgstr "Аерогра ╕з зм╕нним натиском"
+msgstr "Аерограф ╕з зм╕нним натиском"
 
 #: app/tools.c:437
 msgid "Clone"
@@ -5607,15 +5624,15 @@ msgstr ""
 
 #: app/tools.c:453
 msgid "Convolve"
-msgstr ""
+msgstr "Розмивач"
 
 #: app/tools.c:454
 msgid "/Tools/Convolve"
-msgstr ""
+msgstr "/╤нструменти/Розмивач"
 
 #: app/tools.c:457
 msgid "Blur or sharpen"
-msgstr ""
+msgstr "Розмивання чи р╕зк╕сть"
 
 #: app/tools.c:469
 msgid "Ink"
@@ -5774,6 +5791,8 @@ msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr ""
+"Перетворення не працюють на\n"
+"шарах, що м╕стять маски шар╕в."
 
 #: app/transform_core.c:1582
 msgid "Transformation"
