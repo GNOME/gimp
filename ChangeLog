@@ -1,3 +1,13 @@
+Thu Jun 17 22:30:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+	
+	* app/colormap_dialog.i.c : set usize on indexed color pallete, 
+          so it has a height when started.
+
+	* app/devices.c
+	* app/indicator_area.c
+	* app/interface.c: fixed so that --no-data and -n no longer crash
+	or give ugly warnings on startup.  --no-data disables indicators.
+
 Thu Jun 17 22:26:38 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/crop.c: default to the old-fashioned behaviour (crop and 
@@ -76,7 +86,7 @@ Thu Jun 17 22:26:38 MEST 1999 Sven Neumann <sven@gimp.org>
 
 Sun Jun 13 21:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
-	* app/devices
+	* app/devices.c
 	* app/gimprc.[c,h]
 	* app/interface.c
 	* app/preferences_dialog.c: Make the indicator area on the toolbar

@@ -165,6 +165,8 @@ ipal_create (GimpSet* context)
   evbox = gtk_event_box_new ();
   gtk_container_set_resize_mode (GTK_CONTAINER(evbox),
 				 GTK_RESIZE_QUEUE); 
+  gtk_widget_set_usize(GTK_WIDGET(evbox), -2, 60); /* give it some initial 
+                                                      size */
   gtk_signal_connect(GTK_OBJECT(evbox), "size_request",
     GTK_SIGNAL_FUNC(window_size_req_cb), ipal);
   gtk_signal_connect(GTK_OBJECT(evbox), "size_allocate",
@@ -182,7 +184,7 @@ ipal_create (GimpSet* context)
 		      ipal);
   gtk_signal_handler_block(GTK_OBJECT(ipal->palette),
 			   ipal->event_handler);
-  
+
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(ipal->palette));
   
   

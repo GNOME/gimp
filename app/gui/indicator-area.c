@@ -121,6 +121,7 @@ brush_area_update ()
   int ystart;
   int i, j;
 
+  if (no_data || no_interface) return;
 
   brush = get_active_brush();
   if (!brush) 
@@ -227,8 +228,11 @@ pattern_area_update()
   int yend;
   int ystart;
   int i, j;
+  GPatternP pattern = NULL;
+ 
+  if (no_data || no_interface) return;
 
-  GPatternP pattern = get_active_pattern();
+  pattern = get_active_pattern();
   
   buffer = g_new (guchar, pattern->mask->width * 3);
   pattern_buf = pattern->mask;

@@ -1132,7 +1132,7 @@ device_update_brush(GimpBrushP brush,int preview_id)
   int yend;
   int ystart;
   int i, j;
-
+  if (no_data || no_interface) return;
   /* Set the tip to be the name of the brush */
   gtk_tooltips_set_tip(tool_tips,deviceD->brushes[preview_id],brush->name,NULL);
 
@@ -1189,7 +1189,7 @@ device_update_pattern(GPatternP pattern,int preview_id)
   int yend;
   int ystart;
   int i, j;
-
+  if (no_interface || no_data) return;
   /* Set the tip to be the name of the brush */
   gtk_tooltips_set_tip(tool_tips,deviceD->patterns[preview_id],pattern->name,NULL);
 
@@ -1352,12 +1352,13 @@ device_status_update (guint32 deviceid)
 
 
 	  device_update_brush(device_info->brush,i);
-	  gtk_widget_draw (deviceD->brushes[i],NULL);
-	  gtk_widget_show (deviceD->brushes[i]);
-
+/*	  gtk_widget_draw (deviceD->brushes[i],NULL);
+ *	  gtk_widget_show (deviceD->brushes[i]);
+ */
 	  device_update_pattern(device_info->pattern,i);
-	  gtk_widget_draw (deviceD->patterns[i],NULL);
-	  gtk_widget_show (deviceD->patterns[i]);
+/*	  gtk_widget_draw (deviceD->patterns[i],NULL);
+ *	  gtk_widget_show (deviceD->patterns[i]);
+ */
 	}
     }
   if (show_indicators) {
