@@ -465,7 +465,7 @@ HELP
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
-	headers => [ qw(<string.h> "channel.h" "layer.h") ],
+	headers => [ qw(<string.h> "gimplayer.h") ],
 	code => <<'CODE'
 {
   TempBuf * buf;

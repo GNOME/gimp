@@ -46,11 +46,11 @@
 #include "apptypes.h"
 
 #include "draw_core.h"
-#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"

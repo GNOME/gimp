@@ -20,7 +20,7 @@
 #define __GIMP_LAYER_MASK_H__
 
 
-#include "channel.h"
+#include "gimpchannel.h"
 
 
 #define GIMP_TYPE_LAYER_MASK            (gimp_layer_mask_get_type ())

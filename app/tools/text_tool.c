@@ -35,16 +35,16 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
 #include "gimpui.h"
 #include "global_edit.h"
-#include "layer.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "plug_in.h"

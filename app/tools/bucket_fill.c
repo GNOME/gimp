@@ -26,12 +26,12 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "paint_funcs.h"

@@ -26,11 +26,11 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "channel.h"
 #include "drawable.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
-#include "layer.h"
+#include "gimplayer.h"
 
 static ProcRecord selection_bounds_proc;
 static ProcRecord selection_value_proc;

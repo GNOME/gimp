@@ -28,8 +28,8 @@
 
 #include "drawable.h"
 #include "gimage_mask.h"
+#include "gimplayer.h"
 #include "global_edit.h"
-#include "layer.h"
 
 extern TileManager *global_buf;
 

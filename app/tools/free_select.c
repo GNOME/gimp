@@ -27,13 +27,13 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "draw_core.h"
 #include "errors.h"
 #include "floating_sel.h"
-#include "gimage_mask.h"
-#include "gimpimage.h"
 #include "gdisplay.h"
+#include "gimage_mask.h"
+#include "gimpchannel.h"
+#include "gimpimage.h"
 #include "scan_convert.h"
 
 #include "edit_selection.h"

@@ -29,14 +29,14 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "color_panel.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
-#include "gimpimage.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpimage.h"
 #include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"

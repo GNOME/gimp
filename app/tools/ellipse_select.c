@@ -24,11 +24,11 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "draw_core.h"
 #include "edit_selection.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "rect_select.h"
 #include "rect_selectP.h"

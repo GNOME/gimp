@@ -26,7 +26,6 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -35,6 +34,7 @@
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "rect_select.h"
 #include "bezier_select.h"

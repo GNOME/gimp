@@ -26,7 +26,7 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "pixel_region.h"

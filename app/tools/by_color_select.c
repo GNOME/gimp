@@ -28,11 +28,11 @@
 
 #include "appenv.h"
 #include "boundary.h"
-#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimprc.h"

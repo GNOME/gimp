@@ -29,12 +29,12 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
-#include "gimpdrawable.h"
-#include "layer.h"
-#include "gimppreviewcache.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
+#include "gimppreviewcache.h"
 #include "gimpparasite.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"

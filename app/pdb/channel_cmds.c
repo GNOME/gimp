@@ -26,8 +26,8 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "channel.h"
 #include "drawable.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "pdb_glue.h"
 

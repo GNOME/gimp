@@ -30,13 +30,13 @@
 
 #include "appenv.h"
 #include "boundary.h"
-#include "channel.h"
 #include "drawable.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
+#include "gimplayer.h"
 #include "gimppreviewcache.h"
 #include "gimplut.h"
-#include "layer.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "pixel_processor.h"
@@ -1595,25 +1595,25 @@ gimp_channel_layer_mask (GimpChannel *mask,
   gimp_channel_push_undo (mask);
 
   /*  clear the mask  */
-  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
+  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 
 		     0, 0, 
-		     GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, 
+		     GIMP_DRAWABLE (mask)->width, GIMP_DRAWABLE (mask)->height, 
 		     TRUE);
   color_region (&destPR, &empty);
 
-  x1 = CLAMP (GIMP_DRAWABLE(layer)->offset_x, 0, GIMP_DRAWABLE(mask)->width);
-  y1 = CLAMP (GIMP_DRAWABLE(layer)->offset_y, 0, GIMP_DRAWABLE(mask)->height);
-  x2 = CLAMP (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 
-	      0, GIMP_DRAWABLE(mask)->width);
-  y2 = CLAMP (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 
-	      0, GIMP_DRAWABLE(mask)->height);
+  x1 = CLAMP (GIMP_DRAWABLE (layer)->offset_x, 0, GIMP_DRAWABLE (mask)->width);
+  y1 = CLAMP (GIMP_DRAWABLE (layer)->offset_y, 0, GIMP_DRAWABLE (mask)->height);
+  x2 = CLAMP (GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width, 
+	      0, GIMP_DRAWABLE (mask)->width);
+  y2 = CLAMP (GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height, 
+	      0, GIMP_DRAWABLE (mask)->height);
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer->mask)->tiles,
-		     (x1 - GIMP_DRAWABLE(layer)->offset_x), 
-		     (y1 - GIMP_DRAWABLE(layer)->offset_y),
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer->mask)->tiles,
+		     (x1 - GIMP_DRAWABLE (layer)->offset_x), 
+		     (y1 - GIMP_DRAWABLE (layer)->offset_y),
 		     (x2 - x1), (y2 - y1), 
 		     FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 
+  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 
 		     x1, y1, 
 		     (x2 - x1), (y2 - y1), 
 		     TRUE);

@@ -28,7 +28,7 @@
 
 #include "drawable.h"
 #include "floating_sel.h"
-#include "layer.h"
+#include "gimplayer.h"
 
 static ProcRecord floating_sel_remove_proc;
 static ProcRecord floating_sel_anchor_proc;

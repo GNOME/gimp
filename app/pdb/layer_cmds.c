@@ -26,11 +26,11 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "channel.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gimpimage.h"
-#include "layer.h"
+#include "gimplayer.h"
+#include "gimplayermask.h"
 #include "pdb_glue.h"
 #include "undo.h"
 

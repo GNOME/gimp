@@ -27,7 +27,6 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -36,11 +35,11 @@
 #include "gimpcontext.h"
 #include "gimpdrawablepreview.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
-#include "layer.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"

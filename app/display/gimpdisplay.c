@@ -28,7 +28,6 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "channel.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
@@ -37,14 +36,15 @@
 #include "gdisplay_ops.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "gimpdrawable.h"
+#include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpdrawable.h"
+#include "gimplayer.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
 #include "info_window.h"
 #include "interface.h"
-#include "layer.h"
 #include "lc_dialog.h"
 #include "menus.h"
 #include "nav_window.h"
@@ -83,45 +83,46 @@ GSList               * display_list            = NULL;
 static gint            display_num             = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
+
 /*  Local functions  */
-static void     gdisplay_format_title       (GDisplay  *,
-					     gchar     *,
-					     gint       );
-static void     gdisplay_delete             (GDisplay  *);
-static GSList * gdisplay_free_area_list     (GSList    *);
-static GSList * gdisplay_process_area_list  (GSList    *,
-					     GimpArea  *);
-static void     gdisplay_add_update_area    (GDisplay  *,
-					     gint       ,
-					     gint       ,
-					     gint       ,
-					     gint       );
-static void     gdisplay_add_display_area   (GDisplay  *,
-					     gint       ,
-					     gint       ,
-					     gint       ,
-					     gint       );
-static void     gdisplay_paint_area         (GDisplay  *,
-					     gint       ,
-					     gint       ,
-					     gint       ,
-					     gint       );
-static void	gdisplay_draw_cursor	    (GDisplay  *);
-static void     gdisplay_display_area       (GDisplay  *,
-					     gint       ,
-					     gint       ,
-					     gint       ,
-					     gint       );
-static guint    gdisplay_hash               (GDisplay  *);
-static void     gdisplay_cleandirty_handler (GimpImage *,
-					     gpointer   );
+static void     gdisplay_format_title       (GDisplay  *gdisp,
+					     gchar     *title,
+					     gint       title_len);
+static void     gdisplay_delete             (GDisplay  *gdisp);
+static GSList * gdisplay_free_area_list     (GSList    *list);
+static GSList * gdisplay_process_area_list  (GSList    *list,
+					     GimpArea  *ga1);
+static void     gdisplay_add_update_area    (GDisplay  *gdisp,
+					     gint       x,
+					     gint       y,
+					     gint       w,
+					     gint       h);
+static void     gdisplay_add_display_area   (GDisplay  *gdisp,
+					     gint       x,
+					     gint       y,
+					     gint       w,
+					     gint       h);
+static void     gdisplay_paint_area         (GDisplay  *gdisp,
+					     gint       x,
+					     gint       y,
+					     gint       w,
+					     gint       h);
+static void	gdisplay_draw_cursor	    (GDisplay  *gdisp);
+static void     gdisplay_display_area       (GDisplay  *gdisp,
+					     gint       x,
+					     gint       y,
+					     gint       w,
+					     gint       h);
+static guint    gdisplay_hash               (GDisplay  *gdisp);
+static void     gdisplay_cleandirty_handler (GimpImage *gdisp,
+					     gpointer   data);
 
 
 static GHashTable *display_ht = NULL;
 
 /* FIXME: GDisplays really need to be GtkObjects */
 
-GDisplay*
+GDisplay *
 gdisplay_new (GimpImage *gimage,
 	      guint      scale)
 {
@@ -196,7 +197,7 @@ gdisplay_new (GimpImage *gimage,
   gdisp->color_type = (gimp_image_base_type (gimage) == GRAY) ? GRAY : RGB;
 
   /* set the qmask buttons */
-  qmask_buttons_update(gdisp);
+  qmask_buttons_update (gdisp);
 
   /*  set the user data  */
   if (!display_ht)
@@ -214,7 +215,7 @@ gdisplay_new (GimpImage *gimage,
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
 
-  lc_dialog_preview_update(gimage);
+  lc_dialog_preview_update (gimage);
 
   /* We're interested in clean and dirty signals so we can update the
    * title if need be. */
@@ -225,7 +226,6 @@ gdisplay_new (GimpImage *gimage,
 
   return gdisp;
 }
-
 
 static int print (char *, int, int, const char *, ...) G_GNUC_PRINTF (4, 5);
 
@@ -252,10 +252,10 @@ gdisplay_format_title (GDisplay *gdisp,
 		       gint      title_len)
 {
   GimpImage *gimage;
-  char *image_type_str;
-  int empty;
-  int i;
-  char *format;
+  gchar     *image_type_str;
+  gint       empty;
+  gint       i;
+  gchar     *format;
 
   gimage = gdisp->gimage;
 
@@ -280,87 +280,88 @@ gdisplay_format_title (GDisplay *gdisp,
   format = image_title_format;
 
   while (i < title_len && *format)
-  {
-    switch (*format) {
-    case '%':
-      format++;
-      switch (*format) {
-      case 0:
-	  g_warning ("image-title-format string ended within %%-sequence");
-	  break;
-
-      case '%':
-	  title[i++] = '%';
-	  break;
-
-      case 'f': /* pruned filename */
-	  i += print (title, title_len, i,
-		      "%s", g_basename (gimp_image_filename (gimage)));
-	  break;
-
-      case 'F': /* full filename */
-	  i += print (title, title_len, i, "%s", gimp_image_filename (gimage));
-	  break;
-
-      case 'p': /* PDB id */
-	  i += print (title, title_len, i, "%d", pdb_image_to_id (gimage));
-	  break;
-
-      case 'i': /* instance */
-	  i += print (title, title_len, i, "%d", gdisp->instance);
-	  break;
-
-      case 't': /* type */
-	  i += print (title, title_len, i, "%s", image_type_str);
-	  break;
-
-      case 's': /* user source zoom factor */
-	  i += print (title, title_len, i, "%d", SCALESRC (gdisp));
-	  break;
-
-      case 'd': /* user destination zoom factor */
-	  i += print (title, title_len, i, "%d", SCALEDEST (gdisp));
-	  break;
-
-      case 'z': /* user zoom factor (percentage) */
-	  i += print (title, title_len, i,
-		      "%d", 100 * SCALEDEST (gdisp) / SCALESRC (gdisp));
-	  break;
-
-      case 'D': /* dirty flag */
-	  if (format[1] == 0)
-	  {
-	      g_warning("image-title-format string ended within %%D-sequence");
-	      break;
-	  }
-	  if (gimage->dirty)
-	      title[i++] = format[1];
+    {
+      switch (*format)
+	{
+	case '%':
 	  format++;
+	  switch (*format)
+	    {
+	    case 0:
+	      g_warning ("image-title-format string ended within %%-sequence");
+	      break;
+
+	    case '%':
+	      title[i++] = '%';
+	      break;
+
+	    case 'f': /* pruned filename */
+	      i += print (title, title_len, i,
+			  "%s", g_basename (gimp_image_filename (gimage)));
+	      break;
+
+	    case 'F': /* full filename */
+	      i += print (title, title_len, i, "%s", gimp_image_filename (gimage));
+	      break;
+
+	    case 'p': /* PDB id */
+	      i += print (title, title_len, i, "%d", pdb_image_to_id (gimage));
+	      break;
+
+	    case 'i': /* instance */
+	      i += print (title, title_len, i, "%d", gdisp->instance);
+	      break;
+
+	    case 't': /* type */
+	      i += print (title, title_len, i, "%s", image_type_str);
+	      break;
+
+	    case 's': /* user source zoom factor */
+	      i += print (title, title_len, i, "%d", SCALESRC (gdisp));
+	      break;
+
+	    case 'd': /* user destination zoom factor */
+	      i += print (title, title_len, i, "%d", SCALEDEST (gdisp));
+	      break;
+
+	    case 'z': /* user zoom factor (percentage) */
+	      i += print (title, title_len, i,
+			  "%d", 100 * SCALEDEST (gdisp) / SCALESRC (gdisp));
+	      break;
+
+	    case 'D': /* dirty flag */
+	      if (format[1] == 0)
+		{
+		  g_warning("image-title-format string ended within %%D-sequence");
+		  break;
+		}
+	      if (gimage->dirty)
+		title[i++] = format[1];
+	      format++;
+	      break;
+
+	      /* Other cool things to be added:
+	       * %m = memory used by picture
+	       * some kind of resolution / image size thing
+	       * people seem to want to know the active layer name
+	       */
+
+	    default:
+	      g_warning ("image-title-format contains unknown format sequence '%%%c'", *format);
+	      break;
+	    }
 	  break;
 
-	  /* Other cool things to be added:
-	   * %m = memory used by picture
-	   * some kind of resolution / image size thing
-	   * people seem to want to know the active layer name
-	   */
-
-      default:
-	  g_warning ("image-title-format contains unknown format sequence '%%%c'", *format);
+	default:
+	  title[i++] = *format;
 	  break;
-      }
-      break;
+	}
 
-    default:
-      title[i++] = *format;
-      break;
+      format++;
     }
-
-    format++;
-  }
 
   title[MIN(i, title_len-1)] = 0;
 }
-
 
 static void
 gdisplay_delete (GDisplay *gdisp)
@@ -429,20 +430,17 @@ gdisplay_delete (GDisplay *gdisp)
   g_free (gdisp);
 }
 
-
 static GSList *
 gdisplay_free_area_list (GSList *list)
 {
-  GSList *l = list;
+  GSList   *l;
   GimpArea *ga;
 
-  while (l)
+  for (l = list; l; l = g_slist_next (l))
     {
-      /*  free the data  */
       ga = (GimpArea *) l->data;
-      g_free (ga);
 
-      l = g_slist_next (l);
+      g_free (ga);
     }
 
   if (list)
@@ -451,14 +449,13 @@ gdisplay_free_area_list (GSList *list)
   return NULL;
 }
 
-
 /*
  *  As far as I can tell, this function takes a GimpArea and unifies it with
  *  an existing list of GimpAreas, trying to avoid overdraw.  [adam]
  */
 static GSList *
-gdisplay_process_area_list (GSList *list,
-			    GimpArea  *ga1)
+gdisplay_process_area_list (GSList   *list,
+			    GimpArea *ga1)
 {
   GSList *new_list;
   GSList *l = list;
@@ -1310,15 +1307,15 @@ gdisplay_display_area (GDisplay *gdisp,
 		       gint      w,
 		       gint      h)
 {
-  gint sx, sy;
-  gint x1, y1;
-  gint x2, y2;
-  gint dx, dy;
-  gint i, j;
+  gint    sx, sy;
+  gint    x1, y1;
+  gint    x2, y2;
+  gint    dx, dy;
+  gint    i, j;
   guchar *buf;
-  gint bpp, bpl;
+  gint    bpp, bpl;
 #ifdef DISPLAY_FILTERS
-  GList *list;
+  GList  *list;
 #endif /* DISPLAY_FILTERS */
 
   buf = gximage_get_data ();
@@ -1419,7 +1416,6 @@ gdisplay_display_area (GDisplay *gdisp,
       }
 }
 
-
 gint
 gdisplay_mask_value (GDisplay *gdisp,
 		     gint      x,
@@ -1430,7 +1426,6 @@ gdisplay_mask_value (GDisplay *gdisp,
 
   return gimage_mask_value (gdisp->gimage, x, y);
 }
-
 
 gint
 gdisplay_mask_bounds (GDisplay *gdisp,
@@ -1480,7 +1475,6 @@ gdisplay_mask_bounds (GDisplay *gdisp,
   return TRUE;
 }
 
-
 void
 gdisplay_transform_coords (GDisplay *gdisp,
 			   gint      x,
@@ -1491,8 +1485,8 @@ gdisplay_transform_coords (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x;
-  gint offset_y;
+  gint    offset_x;
+  gint    offset_y;
 
   /*  transform from image coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1513,7 +1507,6 @@ gdisplay_transform_coords (GDisplay *gdisp,
   *ny += gdisp->disp_yoffset;
 }
 
-
 void
 gdisplay_untransform_coords (GDisplay *gdisp,
 			     gint       x,
@@ -1525,8 +1518,8 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x;
-  gint offset_y;
+  gint    offset_x;
+  gint    offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1555,7 +1548,6 @@ gdisplay_untransform_coords (GDisplay *gdisp,
     }
 }
 
-
 void
 gdisplay_transform_coords_f (GDisplay *gdisp,
 			     gdouble   x,
@@ -1566,8 +1558,8 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x;
-  gint offset_y;
+  gint    offset_x;
+  gint    offset_y;
 
   /*  transform from gimp coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1588,7 +1580,6 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
   *ny += gdisp->disp_yoffset;
 }
 
-
 void
 gdisplay_untransform_coords_f (GDisplay *gdisp,
 			       gdouble    x,
@@ -1599,8 +1590,8 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 {
   gdouble scalex;
   gdouble scaley;
-  gint offset_x;
-  gint offset_y;
+  gint    offset_x;
+  gint    offset_y;
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1620,7 +1611,6 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
   *nx = (x + gdisp->offset_x) / scalex - offset_x;
   *ny = (y + gdisp->offset_y) / scaley - offset_y;
 }
-
 
 /*  install and remove tool cursor from gdisplay...  */
 void
@@ -1685,8 +1675,6 @@ gdisplay_install_tool_cursor (GDisplay       *gdisp,
 				       FALSE);
 }
 
-
-/*  install an override-cursor on gdisplay...  */
 void
 gdisplay_install_override_cursor (GDisplay      *gdisp,
 				  GdkCursorType  cursor_type)
@@ -1705,8 +1693,6 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
     }
 }
 
-
-/*  remove an override-cursor from gdisplay...  */
 void
 gdisplay_remove_override_cursor (GDisplay *gdisp)
 {
@@ -1722,13 +1708,11 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
     }
 }
 
-
 void
 gdisplay_remove_tool_cursor (GDisplay *gdisp)
 {
   unset_win_cursor (gdisp->canvas->window);
 }
-
 
 void
 gdisplay_set_menu_sensitivity (GDisplay *gdisp)
@@ -1965,7 +1949,6 @@ gdisplay_active (void)
   return gimp_context_get_display (gimp_context_get_user ());
 }
 
-
 GDisplay *
 gdisplay_get_by_ID (gint ID)
 {
@@ -1986,7 +1969,6 @@ gdisplay_get_by_ID (gint ID)
   return NULL;
 }
 
-
 void
 gdisplay_update_title (GDisplay *gdisp)
 {
@@ -2004,21 +1986,19 @@ gdisplay_update_title (GDisplay *gdisp)
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), context_id, title);
 }
 
-
 void
 gdisplays_update_title (GimpImage *gimage)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
-      if (gdisp->gimage == gimage)
-	   gdisplay_update_title (gdisp);
 
-      list = g_slist_next (list);
+      if (gdisp->gimage == gimage)
+	gdisplay_update_title (gdisp);
     }
 }
 
@@ -2026,16 +2006,15 @@ void
 gdisplays_resize_cursor_label (GimpImage *gimage)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	gdisplay_resize_cursor_label (gdisp);
-
-      list = g_slist_next (list);
     }
 }
 
@@ -2043,16 +2022,15 @@ void
 gdisplays_setup_scale (GimpImage *gimage)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	setup_scale (gdisp);
-
-      list = g_slist_next (list);
     }
 }
 
@@ -2064,14 +2042,15 @@ gdisplays_update_area (GimpImage *gimage,
 		       gint       h)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
   /* int x1, y1, x2, y2; */
   /*  int count = 0; */
 
   /*  traverse the linked list of displays  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	{
 	  /*  We only need to update the first instance that
@@ -2102,71 +2081,62 @@ gdisplays_update_area (GimpImage *gimage,
 	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
 	  */
 	}
-      list = g_slist_next (list);
     }
 }
-
 
 void
 gdisplays_expose_guides (GimpImage *gimage)
 {
   GDisplay *gdisp;
-  GList *tmp_list;
-  GSList *list;
+  GSList   *list;
+  GList    *guide_list;
 
   /*  traverse the linked list of displays, handling each one  */
-  list = display_list;
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	{
-	  tmp_list = gdisp->gimage->guides;
-	  while (tmp_list)
+	  for (guide_list = gdisp->gimage->guides;
+	       guide_list;
+	       guide_list = g_list_next (guide_list))
 	    {
-	      gdisplay_expose_guide (gdisp, tmp_list->data);
-	      tmp_list = tmp_list->next;
+	      gdisplay_expose_guide (gdisp, guide_list->data);
 	    }
 	}
-
-      list = g_slist_next (list);
     }
 }
-
 
 void
 gdisplays_expose_guide (GimpImage *gimage,
 			Guide     *guide)
 {
   GDisplay *gdisp;
-  GSList *list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  list = display_list;
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
-	{
-	  gdisplay_expose_guide (gdisp, guide);
-	}
-	  
-      list = g_slist_next (list);
+	gdisplay_expose_guide (gdisp, guide);
     }
 }
-
 
 void
 gdisplays_update_full (GimpImage* gimage)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
-  gint count = 0;
+  GSList   *list;
+  gint      count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	{
 	  if (! count)
@@ -2180,42 +2150,37 @@ gdisplays_update_full (GimpImage* gimage)
 
 	  count++;
 	}
-
-      list = g_slist_next (list);
     }
 }
-
 
 void
 gdisplays_shrink_wrap (GimpImage *gimage)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage)
 	shrink_wrap_display (gdisp);
-
-      list = g_slist_next (list);
     }
 }
-
 
 void
 gdisplays_expose_full (void)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       gdisplay_expose_full (gdisp);
-      list = g_slist_next (list);
     }
 }
 
@@ -2223,10 +2188,10 @@ void
 gdisplays_nav_preview_resized (void)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
 
@@ -2235,8 +2200,6 @@ gdisplays_nav_preview_resized (void)
       
       if (gdisp->nav_popup)
 	nav_window_popup_preview_resized (&gdisp->nav_popup);
-
-      list = g_slist_next (list);
     }
 }
 
@@ -2249,9 +2212,10 @@ gdisplays_selection_visibility (GimpImage        *gimage,
   gint      count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
-  for (list  = display_list; list; list = g_slist_next (list))
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->gimage == gimage && gdisp->select)
 	{
 	  switch (function)
@@ -2277,43 +2241,40 @@ gdisplays_selection_visibility (GimpImage        *gimage,
     }
 }
 
-
 gboolean
 gdisplays_dirty (void)
 {
   gboolean  dirty = FALSE;
-  GSList   *list  = display_list;
+  GSList   *list;
 
   /*  traverse the linked list of displays  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       if (((GDisplay *) list->data)->gimage->dirty != 0)
 	dirty = TRUE;
-      list = g_slist_next (list);
     }
 
   return dirty;
 }
 
-
 void
 gdisplays_delete (void)
 {
-  GSList *list = display_list;
   GDisplay *gdisp;
+  GSList   *list;
 
   /*  traverse the linked list of displays  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
-      list = g_slist_next (list);
+
       gtk_widget_destroy (gdisp->shell);
     }
 
   /*  free up linked list data  */
   g_slist_free (display_list);
+  display_list = NULL;
 }
-
 
 GDisplay *
 gdisplays_check_valid (GDisplay  *gtest, 
@@ -2324,30 +2285,31 @@ gdisplays_check_valid (GDisplay  *gtest,
    * gimage. If none found return NULL;
    */
 
-  GSList *list = display_list;
   GDisplay *gdisp;
   GDisplay *gdisp_found = NULL;
+  GSList   *list;
 
   /*  traverse the linked list of displays  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp == gtest)
-	return (gtest);
+	return gtest;
+
       if (!gdisp_found && gdisp->gimage == gimage)
 	gdisp_found = gdisp;
-      list = g_slist_next (list);
     }
 
-  return (gdisp_found);
+  return gdisp_found;
 }
-
 
 static void
 gdisplays_flush_whenever (gboolean now)
 {
   static gboolean flushing = FALSE;
-  GSList *list = display_list;
+
+  GSList *list;
 
   /*  no flushing necessary without an interface  */
   if (no_interface)
@@ -2363,10 +2325,9 @@ gdisplays_flush_whenever (gboolean now)
   flushing = TRUE;
 
   /*  traverse the linked list of displays  */
-  while (list)
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisplay_flush_whenever ((GDisplay *) list->data, now);
-      list = g_slist_next (list);
     }
 
   /*  for convenience, we call the L&C flush here  */
@@ -2429,7 +2390,6 @@ gdisplay_reconnect (GDisplay  *gdisp,
   gdisplay_expose_full (gdisp);
   gdisplay_flush (gdisp);
 }
-
 
 void
 gdisplays_reconnect (GimpImage *old,

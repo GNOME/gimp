@@ -278,7 +278,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("channel.h" "pdb_glue.h");
+@headers = qw("pdb_glue.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete
 		   channel_combine_masks);

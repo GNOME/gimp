@@ -36,7 +36,6 @@
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "layer.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
 #include "resolution_calibrate.h"

@@ -34,8 +34,6 @@ gimp_SOURCES = \
 	brush_scale.h		\
 	brush_select.c		\
 	brush_select.h		\
-	channel.c		\
-	channel.h		\
 	channels_dialog.c	\
 	channels_dialog.h	\
 	channel_ops.c		\
@@ -110,6 +108,8 @@ gimp_SOURCES = \
 	gimpbrushlist.h		\
 	gimpbrushpipe.c		\
 	gimpbrushpipe.h		\
+	gimpchannel.c		\
+	gimpchannel.h		\
 	gimpcontext.c		\
 	gimpcontext.h		\
 	gimpcontextpreview.c	\
@@ -126,6 +126,8 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimplayer.c		\
+	gimplayer.h		\
 	gimplayermask.c		\
 	gimplayermask.h		\
 	gimplist.c		\
@@ -177,8 +179,6 @@ gimp_SOURCES = \
 	interface.h		\
 	invert.c		\
 	invert.h		\
-	layer.c			\
-	layer.h			\
 	layer_select.c		\
 	layer_select.h		\
 	layers_dialog.c		\

@@ -1,3 +1,22 @@
+2001-02-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpchannel.[ch]
+	* app/gimplayer.[ch]: new files moved here by Yosh.
+
+	* app/channel.[ch]
+	* app/layer.[ch]: removed.
+
+	* app/gdisplay.c: cleanup stuff.
+
+	* app/[lotsa files].c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed includes accordingly.
+
 2001-01-31  Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/perl/po/POTFILES.in : removed bilb/lib/Gimp.pm from list,

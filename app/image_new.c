@@ -28,9 +28,9 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimplayer.h"
 #include "gimprc.h"
 #include "image_new.h"
-#include "layer.h"
 #include "paint_funcs.h"
 #include "tile_manager.h"
 

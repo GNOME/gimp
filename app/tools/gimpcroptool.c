@@ -29,16 +29,16 @@
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
-#include "layer.h"
 #include "pixel_region.h"
 #include "undo.h"
 

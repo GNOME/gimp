@@ -66,7 +66,6 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "docindex.h"
@@ -79,7 +78,6 @@
 #include "gimprc.h"
 #include "fileops.h"
 #include "fileopsP.h"
-#include "layer.h"
 #include "menus.h"
 #include "plug_in.h"
 #include "temp_buf.h"

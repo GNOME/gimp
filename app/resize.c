@@ -27,8 +27,8 @@
 
 #include "gdisplay.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
 #include "gimprc.h"
-#include "layer.h"
 #include "resize.h"
 #include "undo.h"
 

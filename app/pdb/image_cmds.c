@@ -27,13 +27,14 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
-#include "layer.h"
+#include "gimplayer.h"
+#include "gimplayermask.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

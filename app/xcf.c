@@ -37,15 +37,15 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
+#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimprc.h"
-#include "layer.h"
 #include "plug_in.h"
 #include "parasitelist.h"
 #include "path.h"

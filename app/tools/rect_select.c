@@ -27,11 +27,11 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "floating_sel.h"
 

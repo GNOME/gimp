@@ -31,7 +31,6 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
 #include "gimpdrawable.h"
 #include "gimphistogram.h"
 #include "gimpimage.h"

@@ -24,12 +24,12 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
+#include "gimplayer.h"
 #include "gimppreviewcache.h"
-#include "layer.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"

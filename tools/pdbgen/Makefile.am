@@ -56,7 +56,6 @@ enum_headers = \
 	../../app/convert.h			\
 	../../app/errors.h			\
 	../../app/gimpimage.h			\
-	../../app/layer.h			\
 	../../app/lut_funcs.h			\
 	../../app/paint_funcs.h			\
 	../../app/plug_in.h			\
