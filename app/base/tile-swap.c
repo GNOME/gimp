@@ -111,7 +111,7 @@ static void    tile_swap_default_out      (DefSwapFile *def_swap_file,
 static void    tile_swap_default_delete   (DefSwapFile *def_swap_file,
 					   gint         fd,
 					   Tile        *tile);
-static glong   tile_swap_find_offset      (DefSwapFile *def_swap_file,
+static off_t   tile_swap_find_offset      (DefSwapFile *def_swap_file,
 					   gint         fd,
 					   off_t        bytes);
 static void    tile_swap_resize           (DefSwapFile *def_swap_file,
@@ -755,7 +755,7 @@ tile_swap_resize (DefSwapFile *def_swap_file,
   def_swap_file->swap_file_end = new_size;
 }
 
-static long
+static off_t
 tile_swap_find_offset (DefSwapFile *def_swap_file,
 		       gint         fd,
 		       off_t        bytes)

@@ -1,3 +1,9 @@
+2003-01-04  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-swap.c (tile_swap_find_offset): use off_t to
+	return the offset. Finally allows to handle swap files larger than
+	2 GB (fixes bug #74478).
+
 2003-01-03  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped the version number to 1.3.12.
