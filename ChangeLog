@@ -1,5 +1,9 @@
 2004-10-14  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/neon.c: fixed the handling of drawable with alpha.
+
+2004-10-14  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/nlfilt.c: Ported to GimpDrawablePreview, the
 	previous preview was absolutely useless. Done some cleanups, too.
 

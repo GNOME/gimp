@@ -240,7 +240,7 @@ neon (GimpDrawable *drawable,
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          width, height;
-  gint          bytes;
+  gint          bytes, bpp;
   gboolean      has_alpha;
   guchar       *dest;
   guchar       *src, *src2, *sp_p, *sp_m;
@@ -277,7 +277,10 @@ neon (GimpDrawable *drawable,
     return;
 
   bytes     = drawable->bpp;
+  bpp       = bytes;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  if (has_alpha)
+    bpp--;
 
   val_p = g_new (gdouble, MAX (width, height) * bytes);
   val_m = g_new (gdouble, MAX (width, height) * bytes);
@@ -335,16 +338,16 @@ neon (GimpDrawable *drawable,
 
           terms = (row < 4) ? row : 4;
 
-          for (b = 0; b < bytes; b++)
+          for (b = 0; b < bpp; b++)
             {
               vpptr = vp + b; vmptr = vm + b;
 
               for (i = 0; i <= terms; i++)
                 {
                   *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-                    d_p[i] * vp[(-i * bytes) + b];
+                            d_p[i] * vp[(-i * bytes) + b];
                   *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-                    d_m[i] * vm[(i * bytes) + b];
+                            d_m[i] * vm[(i * bytes) + b];
                 }
 
               for (j = i; j <= 4; j++)
@@ -352,6 +355,11 @@ neon (GimpDrawable *drawable,
                   *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
                   *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
                 }
+            }
+          if (has_alpha)
+            {
+              vp[bpp] = sp_p[bpp];
+              vm[bpp] = sp_m[bpp];
             }
 
           sp_p += bytes;
@@ -418,16 +426,16 @@ neon (GimpDrawable *drawable,
 
           terms = (col < 4) ? col : 4;
 
-          for (b = 0; b < bytes; b++)
+          for (b = 0; b < bpp; b++)
             {
               vpptr = vp + b; vmptr = vm + b;
 
               for (i = 0; i <= terms; i++)
                 {
                   *vpptr += n_p[i] * sp_p[(-i * bytes) + b] -
-                    d_p[i] * vp[(-i * bytes) + b];
+                            d_p[i] * vp[(-i * bytes) + b];
                   *vmptr += n_m[i] * sp_m[(i * bytes) + b] -
-                    d_m[i] * vm[(i * bytes) + b];
+                            d_m[i] * vm[(i * bytes) + b];
                 }
 
               for (j = i; j <= 4; j++)
@@ -435,6 +443,11 @@ neon (GimpDrawable *drawable,
                   *vpptr += (n_p[j] - bd_p[j]) * initial_p[b];
                   *vmptr += (n_m[j] - bd_m[j]) * initial_m[b];
                 }
+            }
+          if (has_alpha)
+            {
+              vp[bpp] = sp_p[bpp];
+              vm[bpp] = sp_m[bpp];
             }
 
           sp_p += bytes;
