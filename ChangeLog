@@ -1,3 +1,8 @@
+2005-03-25  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/common/displace.c: Fixed off-by-one error in check for
+	number of passed parameters.
+
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.[ch]: added

@@ -247,7 +247,7 @@ run (const gchar      *name,
           dvals.displace_map_x = param[7].data.d_int32;
           dvals.displace_map_y = param[8].data.d_int32;
           dvals.displace_type  = param[9].data.d_int32;
-          if (nparams == 10)
+          if (nparams == 11)
             dvals.mode = param[10].data.d_int32;
           else
             dvals.mode = CARTESIAN_MODE;
