@@ -33,9 +33,12 @@ Bugs fixed in GIMP 2.0pre3
 - 132596: Use default values for color DND (Mitch)
 - 132493: Tuned Comic Logo script (Pedro Gimeno)
 - 132649: Allow to fill the whole selection using bucket-fill (Mitch)
+- 131902: Improved handling of missing tags in TIFF loader (Andrey Kiselev)
+- 93806:  Validate script-fu input (Yosh)
+- 132214: Differentiate writable and readonly data directories (Mitch)
 
 Other contributions:
-  Manish Singh, Tor Lillqvist
+  Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer, Sven Neumann
 
 
 Bugs fixed in GIMP 2.0pre2
