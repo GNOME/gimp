@@ -3,6 +3,7 @@ package Gimp::Fu;
 use Carp;
 use Gimp ();
 use Gimp::Data;
+use File::Basename;
 
 require Exporter;
 

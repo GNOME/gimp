@@ -3,6 +3,7 @@ Revision history for Gimp-Perl extension.
 	- fixed sunos/solaris socketpair "protocol not implemented" problem.
         - disabled paintbrush in testsuite since it has different calling
           parameters in 1.1.
+        - added use File::Basename to Fu.pm.
 
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".
