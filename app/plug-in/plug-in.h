@@ -43,10 +43,6 @@ struct _PlugIn
   GIOChannel   *my_write;
   GIOChannel   *his_read;         /*  Plug-in's read and write channels       */
   GIOChannel   *his_write;
-#ifdef G_OS_WIN32
-  guint         his_thread_id;    /*  Plug-in's thread ID                     */
-  gint          his_read_fd;      /*  Plug-in's read pipe fd                  */
-#endif
 
   guint32       input_id;         /*  Id of input proc                        */
 

@@ -1,3 +1,11 @@
+2002-11-16  Manish Sing  <yosh@gimp.org>
+
+	* app/plug-in/plug-in.c: use g_spawn_async now. If the OS/2 port
+	is still being maintained, there needs to be work done Glib side.
+	If not, we should probably drop the other support code.
+
+	* app/plug-in/plug-in.h: remove unused Win32 only structure members
+
 2002-11-14  Michael Natterer  <mitch@gimp.org>
 
 	Transform tool cleanup:

@@ -63,7 +63,6 @@
 #include <process.h>
 #define _O_BINARY O_BINARY
 #define _P_NOWAIT P_NOWAIT
-#define xspawnv spawnv
 #endif
 
 #ifdef HAVE_IPC_H
@@ -156,13 +155,15 @@ static void plug_in_handle_proc_uninstall (PlugIn            *plug_in,
 static void plug_in_handle_extension_ack  (PlugIn            *plug_in);
 static void plug_in_handle_has_init       (PlugIn            *plug_in);
 
-static Argument * plug_in_temp_run       (ProcRecord *proc_rec,
-					  Argument   *args,
-					  gint        argc);
+static Argument * plug_in_temp_run       (ProcRecord         *proc_rec,
+					  Argument           *args,
+					  gint                argc);
 static void       plug_in_init_shm       (void);
 
-static gchar    * plug_in_search_in_path (gchar      *search_path,
-					  gchar      *filename);
+static gchar    * plug_in_search_in_path (gchar              *search_path,
+					  gchar              *filename);
+
+static void       plug_in_prep_for_exec  (gpointer            data);
 
 
 PlugIn     *current_plug_in    = NULL;
@@ -471,62 +472,27 @@ plug_in_destroy (PlugIn *plug_in)
     }
 }
 
-#ifdef G_OS_WIN32
-/* The Microsoft _spawnv() does not allow to run scripts. But
- * this is essential to get scripting extension up and running.
- * Following the replacement function xspawnv().
- */
-gint
-xspawnv (gint                mode,
-	 const gchar        *cmdname,
-	 const gchar *const *argv)
+static void
+plug_in_prep_for_exec (gpointer data)
 {
-  gchar sExecutable[_MAX_PATH*2];
-  gchar** sArgsList;
-  gchar sCmndLine[1024];
-  gchar* sPath;
-  HINSTANCE hInst;
-  gint i;
-  gint pid;
+#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN) && !defined(__EMX__)
+  PlugIn *plug_in = data;
 
-  /* only use it if _spawnv fails */
-  pid = _spawnv (mode, cmdname, argv);
-  if (pid != -1) return pid;
+  g_io_channel_unref (plug_in->my_read);
+  plug_in->my_read  = NULL;
 
-  /* stuff parameters into one cmndline */
-  sCmndLine[0] = 0;
-  for (i = 1; argv[i] != NULL; i++)
-    {
-       strcat (sCmndLine, argv[i]);
-       strcat (sCmndLine, " ");
-    }
-  /* remove last blank */
-  sCmndLine[strlen (sCmndLine)-1] = 0;
-
-  /* do we really need _spawnv (ShelExecute seems not to do it)*/
-  if (32 <= (int) FindExecutable (cmdname, 
-				  gimp_directory (),
-				  sExecutable))
-    {
-      /* g_print("_spawnlp %s %s %s", sExecutable, cmdname, sCmndLine); */
-      
-      pid = _spawnlp (mode, sExecutable, "-c", cmdname, sCmndLine, NULL);
-    }
-  else
-    {
-      g_warning ("Execution error for: %s", cmdname);
-      return -1;
-    }
-  return pid;
+  g_io_channel_unref (plug_in->my_write);
+  plug_in->my_write  = NULL;
+#endif
 }
-
-#endif /* G_OS_WIN32 */
 
 gboolean
 plug_in_open (PlugIn *plug_in)
 {
   gint my_read[2];
   gint my_write[2];
+  gchar **envp;
+  GError *error = NULL;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
 
@@ -595,42 +561,29 @@ plug_in_open (PlugIn *plug_in)
 
       plug_in->args[5] = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
 
-      /* Fork another process. We'll remember the process id
-       *  so that we can later use it to kill the filter if
-       *  necessary.
-       */
 #ifdef __EMX__
       fcntl (my_read[0], F_SETFD, 1);
       fcntl (my_write[1], F_SETFD, 1);
 #endif
-#if defined(G_OS_WIN32) || defined (G_WITH_CYGWIN) || defined(__EMX__)
-      plug_in->pid = xspawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
-      if (plug_in->pid == -1)
-#else
-      plug_in->pid = fork ();
 
-      if (plug_in->pid == 0)
+      /* Fork another process. We'll remember the process id
+       *  so that we can later use it to kill the filter if
+       *  necessary.
+       */
+      envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
+      if (! g_spawn_async (NULL, plug_in->args, envp,
+                           G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
+                           G_SPAWN_DO_NOT_REAP_CHILD,
+                           plug_in_prep_for_exec, plug_in,
+                           &plug_in->pid,
+                           &error))
 	{
-	  g_io_channel_unref (plug_in->my_read);
-	  plug_in->my_read  = NULL;
-
-	  g_io_channel_unref (plug_in->my_write);
-	  plug_in->my_write  = NULL;
-
-          /* Execute the filter. The "_exit" call should never
-           *  be reached, unless some strange error condition
-           *  exists.
-           */
-          execve (plug_in->args[0], plug_in->args,
-	          gimp_environ_table_get_envp (plug_in->gimp->environ_table));
-          _exit (1);
-	}
-      else if (plug_in->pid == -1)
-#endif
-	{
-          g_message ("fork() failed: Unable to run Plug-In: \"%s\"\n(%s)",
+          g_message ("Unable to run Plug-In: \"%s\"\n(%s)\n%s",
 		     g_path_get_basename (plug_in->args[0]),
-		     plug_in->args[0]);
+		     plug_in->args[0],
+		     error->message);
+          g_error_free (error);
+
           plug_in_destroy (plug_in);
           return FALSE;
 	}
