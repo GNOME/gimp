@@ -62,6 +62,9 @@ static void   resize_dialog_response (GtkWidget    *dialog,
                                       ResizeDialog *private);
 static void   resize_dialog_reset    (ResizeDialog *private);
 
+static void   size_notify            (GimpSizeBox  *box,
+                                      GParamSpec   *pspec,
+                                      ResizeDialog *private);
 static void   offset_update          (GtkWidget    *widget,
                                       ResizeDialog *private);
 static void   offsets_changed        (GtkWidget    *area,
@@ -235,7 +238,6 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offset_center_clicked),
                     private);
 
-  /*  frame to hold GimpOffsetArea  */
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
@@ -243,6 +245,7 @@ resize_dialog_new (GimpViewable       *viewable,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   private->area = gimp_offset_area_new (width, height);
   gtk_container_add (GTK_CONTAINER (frame), private->area);
@@ -257,7 +260,9 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offsets_changed),
                     private);
 
-  gtk_widget_show (frame);
+  g_signal_connect (private->box, "notify",
+                    G_CALLBACK (size_notify),
+                    private);
 
   return dialog;
 }
@@ -267,7 +272,9 @@ resize_dialog_response (GtkWidget    *dialog,
                         gint          response_id,
                         ResizeDialog *private)
 {
-  gint  width, height;
+  GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
+  gint           width;
+  gint           height;
 
   switch (response_id)
     {
@@ -287,7 +294,10 @@ resize_dialog_response (GtkWidget    *dialog,
 
       private->callback (dialog,
                          private->viewable,
-                         width, height, 0, 0,
+                         width,
+                         height,
+                         gimp_size_entry_get_refval (entry, 0),
+                         gimp_size_entry_get_refval (entry, 1),
                          private->user_data);
       break;
     }
@@ -300,8 +310,23 @@ resize_dialog_reset (ResizeDialog *private)
                 "width",   private->old_width,
                 "height",  private->old_height,
                 NULL);
+}
 
-  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->offset), 0, 0);
+static void
+size_notify (GimpSizeBox  *box,
+             GParamSpec   *pspec,
+             ResizeDialog *private)
+{
+  gint  diff_x = box->width  - private->old_width;
+  gint  diff_y = box->height - private->old_height;
+
+  gimp_offset_area_set_size (GIMP_OFFSET_AREA (private->area),
+                             box->width, box->height);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset), 0,
+                                         MIN (0, diff_x), MAX (0, diff_x));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset), 1,
+                                         MIN (0, diff_y), MAX (0, diff_y));
 }
 
 static gint
