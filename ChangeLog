@@ -1,4 +1,11 @@
-1998-07-10  Seth Burgess <sjburges@ou.edu>
+1998-07-11  Seth Burgess <sjburges@gimp.org>
+
+	* app/main.c:
+ 	* app/gimprc.c:
+	Added commandline for alternate systemwide gimprc.  Fixed alternate
+	gimprc (guess I should have tested a little more).
+
+1998-07-10  Seth Burgess <sjburges@gimp.org>
 
 	* app/main.c:
 	* app/gimprc.c: 

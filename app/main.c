@@ -53,6 +53,7 @@ MessageHandlerType message_handler;
 
 char *prog_name;		/* The path name we are invoked with */
 char *alternate_gimprc;
+char *alternate_system_gimprc;
 char **batch_cmds;
 
 /* LOCAL data */
@@ -120,6 +121,7 @@ main (int argc, char **argv)
   batch_cmds[0] = NULL;
   
   alternate_gimprc = NULL;
+  alternate_system_gimprc = NULL;
 
   show_version = FALSE;
   show_help = FALSE;
@@ -143,6 +145,17 @@ main (int argc, char **argv)
 	    }
 	  batch_cmds[j] = NULL;
 	}
+       else if (strcmp (argv[i], "--system-gimprc") == 0)  
+	{
+	  if (argc <= ++i) 
+            {
+	     show_help = TRUE;
+	    }	
+          else 
+            {
+             alternate_system_gimprc = argv[i];
+            }
+         } 
       else if ((strcmp (argv[i], "--gimprc") == 0) || 
                (strcmp (argv[i], "-g") == 0)) 
 	{
@@ -209,20 +222,21 @@ main (int argc, char **argv)
     {
       g_print ("\007Usage: %s [option ...] [files ...]\n", argv[0]);
       g_print ("Valid options are:\n");
-      g_print ("  -h --help              Output this help.\n");
-      g_print ("  -v --version           Output version info.\n");
-      g_print ("  -b --batch <commands>  Run in batch mode.\n");
-      g_print ("  -g --gimprc <gimprc>   Use an alternate gimprc file\n");
-      g_print ("  -n --no-interface      Run without a user interface.\n");
-      g_print ("  --no-data              Do not load patterns, gradients, palettes, brushes.\n");
-      g_print ("  --verbose              Show startup messages.\n");
-      g_print ("  --no-splash            Do not show the startup window.\n");
-      g_print ("  --no-splash-image      Do not add an image to the startup window.\n");
-      g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
-      g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
-      g_print ("  --console-messages     Display warnings to console instead of a dialog box.\n");
-      g_print ("  --debug-handlers       Enable debugging signal handlers.\n");
-      g_print ("  --display <display>    Use the designated X display.\n\n");
+      g_print ("  -h --help                Output this help.\n");
+      g_print ("  -v --version             Output version info.\n");
+      g_print ("  -b --batch <commands>    Run in batch mode.\n");
+      g_print ("  -g --gimprc <gimprc>     Use an alternate gimprc file.\n");
+      g_print ("  -n --no-interface        Run without a user interface.\n");
+      g_print ("  --no-data                Do not load patterns, gradients, palettes, brushes.\n");
+      g_print ("  --verbose                Show startup messages.\n");
+      g_print ("  --no-splash              Do not show the startup window.\n");
+      g_print ("  --no-splash-image        Do not add an image to the startup window.\n");
+      g_print ("  --no-shm                 Do not use shared memory between GIMP and its plugins.\n");
+      g_print ("  --no-xshm                Do not use the X Shared Memory extension.\n");
+      g_print ("  --console-messages       Display warnings to console instead of a dialog box.\n");
+      g_print ("  --debug-handlers         Enable debugging signal handlers.\n");
+      g_print ("  --display <display>      Use the designated X display.\n\n");
+      g_print ("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n");
 
     }
 
