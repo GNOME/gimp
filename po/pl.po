@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
+"POT-Creation-Date: 2004-07-09 20:16+0200\n"
 "PO-Revision-Date: 2004-03-22 10:58+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -319,6 +319,10 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Nie można otworzyć pliku wymiany. Program Gimp wyczerpał dostępną pamięć i "
+"nie może użyć pliku wymiany. Część elementów obrazów może być uszkodzona. "
+"Należy podjąć próbę zapisu danuch pod inną nazwą, ponownie uruchomić program "
+"i sprawdzić położenie katalogu wymiany w preferencjach."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -504,7 +508,6 @@ msgstr ""
 "siatka."
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -513,11 +516,11 @@ msgid ""
 "the default threshold."
 msgstr ""
 "Narzędzia, takie jak zaznaczenie rozmyte, czy wypełnienie kubełkiem, "
-"identyfikują ciągłę obszary w oparciu o algorytm wypełniania przez "
+"identyfikują ciągłe obszary w oparciu o algorytm wypełniania przez "
 "wysiewanie. Wysiewanie rozpoczyna się we wskazanym punkcie początkowym i "
 "postępuje we wszystkich kierunkach, aż do momentu, w którym różnica jasności "
 "pomiędzy punktem bieżącym i początkowym jest większa od pewnego progu. "
-"Ustawienie dotyczy tego właśnie progu."
+"Ustawienie reprezentuje domyślną wartość progu."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -616,6 +619,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Ustala rozdzielczość poziomą monitora w punktach na cal. Jeżeli ustawione "
+"jest 0, wymusza zapytanie X serwera o rozdzielczość pionową i poziomą."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -623,6 +628,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Ustala rozdzielczość pionową monitora w punktach na cal. Jeżeli ustawione "
+"jest 0, wymusza zapytanie X serwera o rozdzielczość pionową i poziomą."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1682,7 +1689,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Niepoprawny napis UTF-8 w pliku z pędzlami \"%s\"."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -2059,7 +2066,7 @@ msgstr "Włączenie szybkiej maski"
 msgid "Disable QuickMask"
 msgstr "Wyłączenie szybkiej maski"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć operacji %s"
@@ -2504,7 +2511,6 @@ msgstr ""
 "ustawiony tryb \"punkt do punktu\"."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
 msgstr "Pozioma rozdzielczość obrazu."
 
@@ -3697,7 +3703,6 @@ msgid "/blendingfunction/_Curved"
 msgstr "/funkcja_gradientu/_Zakrzywiona"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
 msgstr "/funkcja_gradientu/_Sinusoidalna"
 
@@ -5810,7 +5815,6 @@ msgid "Fit to Window"
 msgstr "Dopasowany do okna"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "Początkowy współczynnik powiększenia:"
 
@@ -8054,17 +8058,17 @@ msgstr "Zapis krzywych"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Nie można zmieniać krzywych na warstwach indeksowanych."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Kanał:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Zr_esetuj kanał"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Wszystkie kanały"
 
@@ -8333,45 +8337,45 @@ msgstr "Zapis poziomów"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Nie można modyfikować poziomów na warstwach indeksowanych."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Wybiera czarny punkt"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Wybiera szary punkt"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Wybiera biały punkt"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Poziomy wejściowe"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Poziomy wyjściowe"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Odczyt ustawień poziomów z pliku"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Zapis ustawień poziomów w pliku"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Automatycznie"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Dopasowuje poziomy automatycznie"
 
