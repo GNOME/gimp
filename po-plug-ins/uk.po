@@ -1258,7 +1258,7 @@ msgstr "Перегляд!"
 
 #: plug-ins/Lighting/lighting_ui.c:1138 plug-ins/MapObject/mapobject_ui.c:1442
 msgid "Recompute preview image"
-msgstr ""
+msgstr "Перерахувати перегляд зображення"
 
 #: plug-ins/Lighting/lighting_ui.c:1147 plug-ins/MapObject/mapobject_ui.c:1451
 msgid "Zoom out (make image smaller)"
@@ -2311,7 +2311,7 @@ msgstr "Прозорий"
 
 #: plug-ins/common/blinds.c:416
 msgid "Displacement:"
-msgstr ""
+msgstr "Зам╕щення:"
 
 #: plug-ins/common/blinds.c:425
 msgid "Num Segments:"
@@ -3211,12 +3211,12 @@ msgstr "Параметри зм╕щення"
 #. X options
 #: plug-ins/common/displace.c:322
 msgid "X Displacement:"
-msgstr "Зм╕щення по X:"
+msgstr "Зам╕щення по X:"
 
 #. Y Options
 #: plug-ins/common/displace.c:357
 msgid "Y Displacement:"
-msgstr "Зм╕щення по Y:"
+msgstr "Зам╕щення по Y:"
 
 #. =======================================================================
 #. Displacement Type
@@ -4717,7 +4717,7 @@ msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/Oilify..."
 
 #: plug-ins/common/oilify.c:194
 msgid "Oil Painting..."
-msgstr ""
+msgstr "Малювання ол╕╓ю..."
 
 #: plug-ins/common/oilify.c:453
 msgid "Oilify"
@@ -6001,12 +6001,12 @@ msgstr "Неможливо в╕дкрити файл на запис"
 #: plug-ins/common/xwd.c:1624 plug-ins/common/xwd.c:1875
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "Неоч╕куваний к╕нець файлу на зчитуванн╕"
 
 #: plug-ins/common/sunras.c:1448 plug-ins/common/sunras.c:1556
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
 msgid "Write error occured"
-msgstr ""
+msgstr "Сталася помилка запису"
 
 #: plug-ins/common/sunras.c:1572
 msgid "Save as SUNRAS"
@@ -9555,6 +9555,11 @@ msgstr "п╕ксел╕"
 msgid "points"
 msgstr "точки"
 
+#: plug-ins/gdyntext/font_selection.c:315
+#, c-format
+msgid "Unknown font family \"%s\".\n"
+msgstr "Нев╕дома ╜арн╕тура шрифту \"%s\".\n"
+
 #: plug-ins/gdyntext/gdyntext.c:95
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Dynamic Text..."
@@ -10509,7 +10514,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3973
 msgid "Probability Gradient:"
-msgstr ""
+msgstr "Град╕╓нт в╕рог╕дност╕:"
 
 #.
 #. *	Shape Radio Button Frame
@@ -10723,7 +10728,7 @@ msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/╫╕мпресион╕ст..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
-msgstr ""
+msgstr "Малювання..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:96
 #, c-format
@@ -10761,11 +10766,11 @@ msgstr "Напрямки:"
 
 #: plug-ins/gimpressionist/orientation.c:77
 msgid "Start angle:"
-msgstr ""
+msgstr "Початковий кут:"
 
 #: plug-ins/gimpressionist/orientation.c:81
 msgid "Angle span:"
-msgstr ""
+msgstr "Д╕апазон кут╕в:"
 
 #: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
 msgid "The number of directions (i.e. brushes) to use"
@@ -10874,7 +10879,7 @@ msgstr "Додати новий вектор"
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
 msgid "Kill"
-msgstr ""
+msgstr "Знищити"
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
@@ -10903,17 +10908,17 @@ msgstr "Вихор3"
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
 msgid "Apply and exit the editor"
-msgstr ""
+msgstr "Застосувати та вийти з редактора"
 
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/gimpressionist/sizemap.c:497
 msgid "Apply, but stay inside the editor"
-msgstr ""
+msgstr "Застосувати, але лишитись в редактор╕"
 
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
 msgid "Cancel all changes and exit"
-msgstr ""
+msgstr "В╕дм╕нити ус╕ зм╕ни та вийти"
 
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
@@ -10976,15 +10981,15 @@ msgstr ""
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
 msgid "Placement"
-msgstr ""
+msgstr "Розм╕щення"
 
 #: plug-ins/gimpressionist/placement.c:77
 msgid "Placement:"
-msgstr ""
+msgstr "Розм╕щення:"
 
 #: plug-ins/gimpressionist/placement.c:87
 msgid "Randomly"
-msgstr ""
+msgstr "Випадково"
 
 #: plug-ins/gimpressionist/placement.c:93
 msgid "Place strokes randomly around the image"
@@ -11119,7 +11124,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
-msgstr ""
+msgstr "Sm-вектори"
 
 #: plug-ins/gimpressionist/sizemap.c:379
 msgid ""
@@ -11129,23 +11134,23 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
-msgstr ""
+msgstr "Вибрати попередний sm-вектор"
 
 #: plug-ins/gimpressionist/sizemap.c:429
 msgid "Select next smvector"
-msgstr ""
+msgstr "Вибрати наступний sm-вектор"
 
 #: plug-ins/gimpressionist/sizemap.c:436
 msgid "Add new smvector"
-msgstr ""
+msgstr "Додати новий sm-вектор"
 
 #: plug-ins/gimpressionist/sizemap.c:443
 msgid "Delete selected smvector"
-msgstr ""
+msgstr "Стерти вибраний sm-вектор"
 
 #: plug-ins/gimpressionist/sizemap.c:463
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "Зм╕нити кут вибраного sm-вектора"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"
@@ -11191,7 +11196,7 @@ msgstr "Покажчик"
 #: plug-ins/helpbrowser/helpbrowser.c:417 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
-msgstr ""
+msgstr "<Неназвано>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:752
 #: plug-ins/helpbrowser/helpbrowser.c:768
@@ -11249,44 +11254,44 @@ msgstr "IfsCompose: Ц╕ль"
 
 #: plug-ins/ifscompose/ifscompose.c:646
 msgid "Scale Hue by:"
-msgstr ""
+msgstr "Масштабувати в╕дт╕нок за:"
 
 #: plug-ins/ifscompose/ifscompose.c:661
 msgid "Scale Value by:"
-msgstr ""
+msgstr "Масштабувати яскрав╕сть за:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:678
 msgid "Full"
-msgstr ""
+msgstr "Повний"
 
 #: plug-ins/ifscompose/ifscompose.c:687
 msgid "IfsCompose: Red"
-msgstr ""
+msgstr "IfsCompose: Червоний"
 
 #: plug-ins/ifscompose/ifscompose.c:696
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsCompose: Зелений"
 
 #: plug-ins/ifscompose/ifscompose.c:705
 msgid "IfsCompose: Blue"
-msgstr ""
+msgstr "IfsCompose: Син╕й"
 
 #: plug-ins/ifscompose/ifscompose.c:714
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsCompose: Чорний"
 
 #: plug-ins/ifscompose/ifscompose.c:776
 msgid "IfsCompose"
-msgstr ""
+msgstr "IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:860 plug-ins/ifscompose/ifscompose.c:1130
 msgid "Rotate/Scale"
-msgstr ""
+msgstr "Обертання/масштаб"
 
 #: plug-ins/ifscompose/ifscompose.c:869 plug-ins/ifscompose/ifscompose.c:1142
 msgid "Stretch"
-msgstr ""
+msgstr "Розтягнути"
 
 #: plug-ins/ifscompose/ifscompose.c:889
 msgid "Render Options"
@@ -11306,17 +11311,17 @@ msgstr "Перетворення кольор╕в"
 
 #: plug-ins/ifscompose/ifscompose.c:952
 msgid "Relative Probability:"
-msgstr ""
+msgstr "В╕дносна в╕рог╕дн╕сть:"
 
 #: plug-ins/ifscompose/ifscompose.c:1159
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap_menu.c:294
 msgid "Select All"
-msgstr ""
+msgstr "Вибрати все"
 
 #: plug-ins/ifscompose/ifscompose.c:1171
 msgid "Recompute Center"
-msgstr ""
+msgstr "Перерахувати центр"
 
 #: plug-ins/ifscompose/ifscompose.c:1195 plug-ins/imagemap/imap_toolbar.c:123
 msgid "Redo"
@@ -11324,15 +11329,15 @@ msgstr "Повернути"
 
 #: plug-ins/ifscompose/ifscompose.c:1228
 msgid "IfsCompose Options"
-msgstr ""
+msgstr "Париметри IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:1248
 msgid "Max. Memory:"
-msgstr ""
+msgstr "Макс. пам'ять:"
 
 #: plug-ins/ifscompose/ifscompose.c:1275
 msgid "Subdivide:"
-msgstr ""
+msgstr "П╕дрозд╕ляти:"
 
 #: plug-ins/ifscompose/ifscompose.c:1288
 msgid "Spot Radius:"
@@ -11373,7 +11378,7 @@ msgstr "Створити"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
-msgstr ""
+msgstr "Виправлення об'╓кта"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
 msgid "Create Guides"
@@ -12442,39 +12447,39 @@ msgstr "Проти годинниковою"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
-msgstr ""
+msgstr "Зм╕нити порядок стр╕лок"
 
 #: plug-ins/rcm/rcm_dialog.c:275
 msgid "Select all"
-msgstr ""
+msgstr "Вибрати все"
 
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:285 plug-ins/rcm/rcm_dialog.c:356
 msgid "From"
-msgstr ""
+msgstr "З"
 
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:307
 msgid "to"
-msgstr ""
+msgstr "в"
 
 #: plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
-msgstr ""
+msgstr "В"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
 msgid "Treat as this"
-msgstr ""
+msgstr "Обробляти як це"
 
 #: plug-ins/rcm/rcm_dialog.c:490
 msgid "Change to this"
-msgstr ""
+msgstr "Зм╕нити до цього"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "What is Gray?"
-msgstr ""
+msgstr "Що тут с╕ре?"
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:589
@@ -12513,11 +12518,11 @@ msgstr "Обертання мапи кольор╕в"
 
 #: plug-ins/rcm/rcm_dialog.c:773
 msgid "Main"
-msgstr ""
+msgstr "Основне"
 
 #: plug-ins/rcm/rcm_dialog.c:776
 msgid "Misc"
-msgstr ""
+msgstr "Р╕зне"
 
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
