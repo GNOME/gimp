@@ -1,3 +1,9 @@
+2004-03-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c (struct my_error_mgr): Move setjump_buffer
+	to the beginning of the structure, to make sure it is aligned on a
+	16-byte boundary for ia64, even with icc. Fixes #138357.
+
 2004-03-29  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: changed the default for "help-locales"
