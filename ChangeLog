@@ -1,3 +1,9 @@
+1999-07-27  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* pixmaps/zoom_in.xpm
+	* pixmaps/zoom_out.xpm: I think the zoom buttons needed
+	handles to make them easier to grab. %-)
+
 1999-07-27  Tomas Ogren  <stric@ing.umu.se>
 
 	* configure.in: Added 'cs' to ALL_LINGUAS
