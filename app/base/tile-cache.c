@@ -133,11 +133,14 @@ tile_cache_insert (Tile *tile)
   if (tile->dirty) 
     {
       cur_cache_dirty += tile_size (tile);
+      if (1)
+	{
 #ifdef USE_PTHREADS
-      pthread_mutex_lock(&dirty_mutex);
-      pthread_cond_signal(&dirty_signal);
-      pthread_mutex_unlock(&dirty_mutex);
+	  pthread_mutex_lock(&dirty_mutex);
+	  pthread_cond_signal(&dirty_signal);
+	  pthread_mutex_unlock(&dirty_mutex);
 #endif
+	}
     }
 out:
   CACHE_UNLOCK;
@@ -240,6 +243,12 @@ tile_cache_zorch_next ()
   TILE_MUTEX_LOCK (tile);
   CACHE_LOCK;
   tile_cache_flush_internal (tile);
+  if (tile->dirty)
+    {
+      tile_swap_out (tile);
+    }
+  g_free (tile->data);
+  tile->data = NULL;
   TILE_MUTEX_UNLOCK (tile);
   return TRUE;
 }
@@ -250,14 +259,17 @@ tile_idle_thread (void *data)
 {
   Tile *tile;
   TileList *list;
+  int count;
 
   fprintf (stderr,"starting tile preswapper\n");
 
+  count = 0;
   while(1) 
     {
       CACHE_LOCK;
-      while (cur_cache_dirty < max_cache_size - cur_cache_size) {
+      if (count > 5 || dirty_list.first == NULL) {
 	CACHE_UNLOCK;
+	count = 0;
 	pthread_mutex_lock(&dirty_mutex);
 	pthread_cond_wait(&dirty_signal,&dirty_mutex);
 	pthread_mutex_unlock(&dirty_mutex);
@@ -308,6 +320,7 @@ tile_idle_thread (void *data)
 	{
 	  CACHE_UNLOCK;
 	}
+      count++;
     }
 }
 
