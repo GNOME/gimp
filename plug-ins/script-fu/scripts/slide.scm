@@ -16,7 +16,12 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; slide.scm   version 0.20   07/28/97
+; slide.scm   version 0.30   12/13/97
+;
+; CHANGE-LOG:
+; 0.20 - first public release
+; 0.30 - some code cleanup
+;        now uses the rotate plug-in to improve speed
 ;
 ; !still in development!
 ; TODO: - change the script so that the film is rotated, not the image
@@ -80,12 +85,14 @@
 					type 
 					"Background" 
 					100 
-					NORMAL))))
+					NORMAL)))
+	 (pic-layer (car (gimp-image-active-drawable image)))
+	 (numbera (string-append number "A")))
+
 
   (gimp-image-disable-undo image)
 
 ; add an alpha channel to the image
-  (set! pic-layer (car (gimp-image-active-drawable image)))
   (gimp-layer-add-alpha pic-layer)
 
 ; crop, resize and eventually rotate the image 
@@ -99,10 +106,11 @@
 		     height 
 		     (/ (- width crop-width) 2)
 		     (/ (- height crop-height) 2))
-  (if (< ratio 1) (set! pic-layer (car (gimp-rotate image 
-						    pic-layer
-						    FALSE
-		               			    (/ *pi* 2))))) 
+  (if (< ratio 1) (plug-in-rotate 1
+				  image 
+				  pic-layer
+				  1
+				  FALSE)) 
 
 ; add the background layer
   (gimp-drawable-fill bg-layer BG-IMAGE-FILL)
@@ -150,52 +158,49 @@
 					    TRUE
 					    (* 0.050 height) PIXELS
 					    "*" font-family "*" "*" "*" "*" )))
-  (set! numbera (string-append number "A"))
   (gimp-floating-sel-anchor (car (gimp-text image
-					    film-layer		  
-					    (+ hole-start (* 0.85 width))
-					    (* 0.95 height)
-					    numbera
-					    0
-					    TRUE
-					    (* 0.045 height) PIXELS
-					    "*" font-family "*" "*" "*" "*" )))
+					      film-layer		  
+					      (+ hole-start (* 0.85 width))
+					      (* 0.95 height)
+					      numbera
+					      0
+					      TRUE
+					      (* 0.045 height) PIXELS
+					      "*" font-family "*" "*" "*" "*" )))
 
-; create a mask for the holes
-  (set! film-mask (car (gimp-layer-create-mask film-layer WHITE-MASK)))
-  
-; cut out the holes...
-  (gimp-selection-none image)
-  (set! hole hole-start)
-  (set! top-y (* height 0.06))
-  (set! bottom-y(* height 0.855))
-  (while (< hole 8)
-	 (gimp-rect-select image 
-			   (* hole-space hole)
-			   top-y
-			   hole-width
-			   hole-height
-			   ADD
-			   FALSE
-			   0)	 
-	 (gimp-rect-select image 
-			   (* hole-space hole)
-			   bottom-y
-			   hole-width
-			   hole-height
-			   ADD
-			   FALSE
-			   0)
-	 (set! hole (+ hole 1)))
+; create a mask for the holes and cut them out
+  (let* ((film-mask (car (gimp-layer-create-mask film-layer WHITE-MASK)))
+	 (hole hole-start)
+	 (top-y (* height 0.06))
+	 (bottom-y(* height 0.855))) 
+    (gimp-selection-none image)
+    (while (< hole 8)
+	   (gimp-rect-select image 
+			     (* hole-space hole)
+			     top-y
+			     hole-width
+			     hole-height
+			     ADD
+			     FALSE
+			     0)	 
+	   (gimp-rect-select image 
+			     (* hole-space hole)
+			     bottom-y
+			     hole-width
+			     hole-height
+			     ADD
+			     FALSE
+			     0)
+	   (set! hole (+ hole 1)))
 
-  (gimp-palette-set-foreground '(0 0 0))
-  (gimp-edit-fill image film-mask)
-  (gimp-selection-none image)
-  (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
-  (gimp-threshold image film-mask 127 255)
+    (gimp-palette-set-foreground '(0 0 0))
+    (gimp-edit-fill image film-mask)
+    (gimp-selection-none image)
+    (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
+    (gimp-threshold image film-mask 127 255)
 
-  (gimp-image-add-layer image film-layer -1)
-  (gimp-image-add-layer-mask image film-layer film-mask)
+    (gimp-image-add-layer image film-layer -1)
+    (gimp-image-add-layer-mask image film-layer film-mask))
 
 ; reorder the layers
   (gimp-image-raise-layer image pic-layer)
@@ -214,7 +219,7 @@
 		    "Gives the image the look of a slide"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "07/28/1997"
+		    "12/13/1997"
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

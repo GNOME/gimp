@@ -1,3 +1,10 @@
+Tue Feb 17 09:24:44 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* updated all of Sven Neumanns scripts. Including 
+	blend-anim.scm, waves-anim.scm, drop-shadows.scm, 
+	perspective-shadow.scm, round-corners.scm, slide.scm,
+	and selection-round.scm.
+
 Sat Feb 14 15:34:08 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/iscissors.c: iscissors released for initial public

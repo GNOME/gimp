@@ -16,9 +16,14 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; selection-round.scm   version 1.00   09/04/97
+; selection-round.scm   version 1.02   02/06/98
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
+; CHANGE-LOG:
+; 1.00 - initial release
+; 1.01 - some code cleanup, no real changes
+; 1.02 - made script undoable
+;
+; Copyright (C) 1997,1998 Sven Neumann (neumanns@uni-duesseldorf.de)
 ; 
 ;  
 ; Rounds the current selection by cutting of rectangles from the edges and 
@@ -39,9 +44,11 @@
 	 (select-x2 (cadr (cddr select-bounds)))
 	 (select-y2 (caddr (cddr select-bounds)))
 	 (select-width (- select-x2 select-x1))
-	 (select-height (- select-y2 select-y1)))
+	 (select-height (- select-y2 select-y1))
+	 (cut-radius 0)
+	 (ellipse-radius 0))
 
-  (gimp-image-disable-undo image)
+  (gimp-undo-push-group-start image)
 
   (if (> select-width select-height)
       (begin
@@ -111,7 +118,7 @@
 		       TRUE
 		       FALSE 0) 
 
-  (gimp-image-enable-undo image)
+  (gimp-undo-push-group-end image)
   (gimp-displays-flush)))
 
 
@@ -121,7 +128,7 @@
                      rectangular."
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "09/04/97"
+		    "02/06/98"
 		    "RGB RGBA GRAY GRAYA INDEXED INDEXEDA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

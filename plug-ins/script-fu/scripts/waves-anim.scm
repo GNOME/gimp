@@ -16,7 +16,11 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; waves-anim.scm   version 1.00   09/04/97
+; waves-anim.scm   version 1.01   12/13/97
+;
+; CHANGE-LOG:
+; 1.00 - initial release
+; 1.01 - some code cleanup, no real changes
 ;
 ; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
 ; 
@@ -37,22 +41,22 @@
 	 (remaining-frames num-frames)
 	 (phase 0)
 	 (phaseshift (/ 360 num-frames))
-         (image (car (gimp-channel-ops-duplicate img))))
+         (image (car (gimp-channel-ops-duplicate img)))
+	 (source-layer (car (gimp-image-get-active-layer image))))
    
   (gimp-image-disable-undo image)
 
   (if (= invert TRUE)
       (set! phaseshift (- 0 phaseshift)))
-  (set! source-layer (car (gimp-image-get-active-layer image)))
   
   (while (> remaining-frames 1)
-         (set! waves-layer (car (gimp-layer-copy source-layer TRUE)))
+	 (let* ((waves-layer (car (gimp-layer-copy source-layer TRUE)))
+		(layer-name (string-append "Frame " 
+					   (number->string
+					    (- (+ num-frames 2) 
+					       remaining-frames) 10))))
          (gimp-layer-set-preserve-trans waves-layer FALSE)
 	 (gimp-image-add-layer image waves-layer -1)
-	 (set! layer-name (string-append "Frame " 
-					 (number->string
-					  (- (+ num-frames 2) 
-					     remaining-frames) 10)))
 	 (gimp-layer-set-name waves-layer layer-name)
 	 
 	 (plug-in-waves 1 
@@ -65,7 +69,7 @@
 			FALSE)
 	  
 	 (set! remaining-frames (- remaining-frames 1))
-	 (set! phase (- phase phaseshift)))
+	 (set! phase (- phase phaseshift))))
 
   (gimp-layer-set-name source-layer "Frame 1")
   (plug-in-waves 1 
@@ -85,7 +89,7 @@
 		    "Animate an image like a stone's been thrown into it"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "09/04/1997"
+		    "12/13/1997"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

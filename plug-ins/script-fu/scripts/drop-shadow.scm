@@ -16,11 +16,12 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; drop-shadow.scm   version 1.01   08/11/97
+; drop-shadow.scm   version 1.02   12/13/97
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
+; 1.02 - some code cleanup, no real changes
 ;
 ;
 ; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
@@ -47,7 +48,10 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-palette-get-background)))
+	 (from-selection 0)
+	 (active-selection 0)
+	 (shadow-layer 0))
 
   (gimp-image-disable-undo image)
   
@@ -60,64 +64,65 @@
 	(set! from-selection TRUE)
 	(set! active-selection (car (gimp-selection-save image)))))
   
-  (set! selection-bounds (gimp-selection-bounds image))
-  (set! select-offset-x (cadr selection-bounds))
-  (set! select-offset-y (caddr selection-bounds))
-  (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
-  (set! select-height (- (caddr (cddr selection-bounds)) select-offset-y))
+  (let* ((selection-bounds (gimp-selection-bounds image))
+	 (select-offset-x (cadr selection-bounds))
+	 (select-offset-y (caddr selection-bounds))
+	 (select-width (- (cadr (cddr selection-bounds)) select-offset-x))
+	 (select-height (- (caddr (cddr selection-bounds)) select-offset-y))
   
-  (set! shadow-width (+ select-width (* 2 shadow-blur)))
-  (set! shadow-height (+ select-height (* 2 shadow-blur)))
+	 (shadow-width (+ select-width (* 2 shadow-blur)))
+	 (shadow-height (+ select-height (* 2 shadow-blur)))
 
-  (set! shadow-offset-x (- select-offset-x shadow-blur))
-  (set! shadow-offset-y (- select-offset-y shadow-blur))
+	 (shadow-offset-x (- select-offset-x shadow-blur))
+	 (shadow-offset-y (- select-offset-y shadow-blur)))
 
-  (if (= allow-resize TRUE)
-      (begin
-	(set! new-image-width image-width)
-	(set! new-image-height image-height)
-	(set! image-offset-x 0)
-	(set! image-offset-y 0)
+    (if (= allow-resize TRUE)
+	(let* ((new-image-width image-width)
+	       (new-image-height image-height)
+	       (image-offset-x 0)
+	       (image-offset-y 0))
 
-	(if (< (+ shadow-offset-x shadow-transl-x) 0)
-	    (begin
-	      	(set! image-offset-x (- 0 (+ shadow-offset-x shadow-transl-x)))
+	  (if (< (+ shadow-offset-x shadow-transl-x) 0)
+	      (begin
+		(set! image-offset-x (- 0 (+ shadow-offset-x 
+					     shadow-transl-x)))
 		(set! shadow-offset-x (- 0 shadow-transl-x))
 		(set! new-image-width (- new-image-width image-offset-x))))
 
-	(if (< (+ shadow-offset-y shadow-transl-y) 0)
-	    (begin
-	      	(set! image-offset-y (- 0 (+ shadow-offset-y shadow-transl-y)))
+	  (if (< (+ shadow-offset-y shadow-transl-y) 0)
+	      (begin
+		(set! image-offset-y (- 0 (+ shadow-offset-y 
+					     shadow-transl-y)))
 		(set! shadow-offset-y (- 0 shadow-transl-y))
 		(set! new-image-height (- new-image-height image-offset-y))))
 
-	(if (> (+ (+ shadow-width shadow-offset-x) shadow-transl-x) 
-	       new-image-width)
-	    (set! new-image-width 
-		  (+ (+ shadow-width shadow-offset-x) shadow-transl-x)))
+	  (if (> (+ (+ shadow-width shadow-offset-x) shadow-transl-x) 
+		 new-image-width)
+	      (set! new-image-width 
+		    (+ (+ shadow-width shadow-offset-x) shadow-transl-x)))
 
-	(if (> (+ (+ shadow-height shadow-offset-y) shadow-transl-y) 
-	       new-image-height)
-	    (set! new-image-height
-		  (+ (+ shadow-height shadow-offset-y) shadow-transl-y)))
+	  (if (> (+ (+ shadow-height shadow-offset-y) shadow-transl-y) 
+		 new-image-height)
+	      (set! new-image-height
+		    (+ (+ shadow-height shadow-offset-y) shadow-transl-y)))
 
-	(gimp-image-resize image
-			   new-image-width 
-			   new-image-height 
-			   image-offset-x 
-			   image-offset-y)))
+	  (gimp-image-resize image
+			     new-image-width 
+			     new-image-height 
+			     image-offset-x 
+			     image-offset-y)))
 
 
-  (set! shadow-layer (car (gimp-layer-new image 
-					  shadow-width 
-					  shadow-height 
-					  type
-					  "Drop-Shadow" 
-					  shadow-opacity
-					  NORMAL)))
-  (gimp-layer-set-offsets shadow-layer 
-			  shadow-offset-x
-			  shadow-offset-y)
+    (set! shadow-layer (car (gimp-layer-new image 
+					    shadow-width 
+					    shadow-height 
+					    type
+					    "Drop-Shadow" 
+					    shadow-opacity
+					    NORMAL)))
+    (gimp-layer-set-offsets shadow-layer 
+			    shadow-offset-x
+			    shadow-offset-y))
 
   (gimp-drawable-fill shadow-layer TRANS-IMAGE-FILL)
   (gimp-palette-set-background shadow-color)
@@ -155,7 +160,7 @@
                      alpha-channel"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "08/11/1997"
+		    "12/13/1997"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

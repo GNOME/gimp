@@ -16,7 +16,11 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; round-corners.scm   version 1.00   07/28/97
+; round-corners.scm   version 1.01   12/13/97
+;
+; CHANGE-LOG:
+; 1.00 - initial release
+; 1.01 - some code cleanup, no real changes
 ;
 ; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de) 
 ;  
@@ -52,12 +56,12 @@
 	 (image (cond ((= work-on-copy TRUE) 
 		       (car (gimp-channel-ops-duplicate img)))
 		      ((= work-on-copy FALSE) 
-		       img))))
+		       img)))
+	 (pic-layer (car (gimp-image-active-drawable image))))
 
   (gimp-image-disable-undo image)
 
   ; add an alpha channel to the image
-  (set! pic-layer (car (gimp-image-active-drawable image)))
   (gimp-layer-add-alpha pic-layer)
   
   ; round the edges  
@@ -91,14 +95,13 @@
       
   ; optionally add a background
   (if (= background-toggle TRUE)
-      (begin
-	(set! bg-layer (car (gimp-layer-new image 
+      (let* ((bg-layer (car (gimp-layer-new image 
 					    width 
 					    height 
 					    type 
 					    "Background" 
 					    100 
-					    NORMAL)))  
+					    NORMAL))))  
 	(gimp-drawable-fill bg-layer BG-IMAGE-FILL)
 	(gimp-image-add-layer image bg-layer -1)
 	(gimp-image-raise-layer image pic-layer)
@@ -116,7 +119,7 @@
 		    "Round the corners of an image and optionally adds a drop-shadow and a background"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"
-		    "07/28/1997"
+		    "12/13/1997"
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
