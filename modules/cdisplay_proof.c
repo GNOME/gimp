@@ -42,7 +42,7 @@ static GType  cdisplay_proof_intent_get_type (GTypeModule *module);
 static const GEnumValue enum_values[] =
 {
   { INTENT_PERCEPTUAL,
-    "INTENT_PERCEPTUAL",            "perceptual    "        },
+    "INTENT_PERCEPTUAL",            "perceptual"            },
   { INTENT_RELATIVE_COLORIMETRIC,
     "INTENT_RELATIVE_COLORIMETRIC", "relative-colorimetric" },
   { INTENT_SATURATION,
