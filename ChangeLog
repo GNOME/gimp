@@ -1,3 +1,9 @@
+2003-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_translate): transform the
+	channel's bounding box later so we really update the channel's new
+	*and* old area.
+
 2003-09-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.c: changed buffer size and improved

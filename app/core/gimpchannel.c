@@ -353,13 +353,11 @@ gimp_channel_translate (GimpItem *item,
   channel = GIMP_CHANNEL (item);
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
-  x1 = CLAMP ((x1 + off_x), 0, GIMP_ITEM (channel)->width);
-  y1 = CLAMP ((y1 + off_y), 0, GIMP_ITEM (channel)->height);
-  x2 = CLAMP ((x2 + off_x), 0, GIMP_ITEM (channel)->width);
-  y2 = CLAMP ((y2 + off_y), 0, GIMP_ITEM (channel)->height);
 
-  width  = x2 - x1;
-  height = y2 - y1;
+  /*  update the old area  */
+  gimp_drawable_update (GIMP_DRAWABLE (item),
+                        x1, y1,
+                        x2 - x1, y2 - y1);
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -367,10 +365,13 @@ gimp_channel_translate (GimpItem *item,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  /*  update the old area  */
-  gimp_drawable_update (GIMP_DRAWABLE (item),
-                        x1, y1,
-                        x2 - x1, y2 - y1);
+  x1 = CLAMP ((x1 + off_x), 0, GIMP_ITEM (channel)->width);
+  y1 = CLAMP ((y1 + off_y), 0, GIMP_ITEM (channel)->height);
+  x2 = CLAMP ((x2 + off_x), 0, GIMP_ITEM (channel)->width);
+  y2 = CLAMP ((y2 + off_y), 0, GIMP_ITEM (channel)->height);
+
+  width  = x2 - x1;
+  height = y2 - y1;
 
   /*  make sure width and height are non-zero  */
   if (width != 0 && height != 0)
