@@ -270,14 +270,14 @@ static const gchar *
 midi_get_event_name (GimpController *controller,
                      gint            event_id)
 {
-  if (event_id <= 383)
+  if (event_id < (128 + 128 + 128))
     {
       if (! midi_events[event_id].name)
         {
           if (event_id < 128)
             midi_events[event_id].name = g_strdup_printf ("note-on-%02x",
                                                           event_id);
-          else if (event_id < (128 + 128)
+          else if (event_id < (128 + 128))
             midi_events[event_id].name = g_strdup_printf ("note-off-%02x",
                                                           event_id - 128);
           else if (event_id < (128 + 128 + 128))
