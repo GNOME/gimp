@@ -1250,9 +1250,8 @@ run (const gchar      *name,
 static gboolean
 struc_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *table;
@@ -1262,26 +1261,22 @@ struc_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("struc", FALSE);
 
-  dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-apply-canvas",
+  dialog = gimp_dialog_new (_("Apply Canvas"), "struc",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-apply-canvas",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, &svals.update_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
@@ -1298,7 +1293,7 @@ struc_dialog (GimpDrawable *drawable)
                                     _("Bottom-_right"), BOTTOM_RIGHT, &radio4,
 
                                     NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   g_signal_connect_swapped (radio1, "toggled",
@@ -1316,7 +1311,7 @@ struc_dialog (GimpDrawable *drawable)
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1331,11 +1326,11 @@ struc_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

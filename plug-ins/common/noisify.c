@@ -60,30 +60,31 @@ typedef struct
   GtkObject *channel_adj[4];
 } NoisifyInterface;
 
+
 /* Declare local functions.
  */
-static void       query  (void);
-static void       run    (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void     query        (void);
+static void     run          (const gchar      *name,
+                              gint              nparams,
+                              const GimpParam  *param,
+                              gint             *nreturn_vals,
+                              GimpParam       **return_vals);
 
 
-static void    noisify_func (const guchar        *src,
-                             guchar              *dest,
-                             gint                 bpp,
-                             gpointer             data);
+static void     noisify_func (const guchar        *src,
+                              guchar              *dest,
+                              gint                 bpp,
+                              gpointer             data);
 
-static void    noisify      (GimpDrawablePreview *preview);
+static void     noisify      (GimpDrawablePreview *preview);
 
 
-static gdouble gauss                            (GRand *gr);
+static gdouble  gauss                            (GRand *gr);
 
-static gint    noisify_dialog                   (GimpDrawable    *drawable,
-                                                 gint             channels);
-static void    noisify_double_adjustment_update (GtkAdjustment   *adjustment,
-                                                 gpointer         data);
+static gboolean noisify_dialog                   (GimpDrawable    *drawable,
+                                                  gint             channels);
+static void     noisify_double_adjustment_update (GtkAdjustment   *adjustment,
+                                                  gpointer         data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -356,13 +357,12 @@ noisify_add_alpha_channel (GtkWidget    *table,
   noise_int.channel_adj[channel] = adj;
 }
 
-static gint
+static gboolean
 noisify_dialog (GimpDrawable *drawable,
                 gint          channels)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *table;
@@ -370,35 +370,34 @@ noisify_dialog (GimpDrawable *drawable,
 
   gimp_ui_init ("noisify", FALSE);
 
-  dlg = gimp_dialog_new (_("Scatter RGB"), "noisify",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-noisify",
+  dialog = gimp_dialog_new (_("Scatter RGB"), "noisify",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-noisify",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (noisify), NULL);
+                    G_CALLBACK (noisify),
+                    NULL);
 
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       toggle = gtk_check_button_new_with_mnemonic (_("_Independent RGB"));
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    nvals.independent);
+      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
@@ -412,7 +411,7 @@ noisify_dialog (GimpDrawable *drawable,
   table = gtk_table_new (channels, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   noise_int.channels = channels;
@@ -457,11 +456,11 @@ noisify_dialog (GimpDrawable *drawable,
         }
     }
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -503,6 +502,7 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
   if (! nvals.independent)
     {
       gint i;
+
       switch (noise_int.channels)
         {
         case 1:

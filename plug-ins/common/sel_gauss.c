@@ -26,8 +26,8 @@
  *      - create more selective and adaptive filters
  *      - threading
  *      - optimization
- *
  */
+
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -211,9 +211,8 @@ run (const gchar      *name,
 static gboolean
 sel_gauss_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *spinbutton;
@@ -222,36 +221,33 @@ sel_gauss_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("sel_gauss", FALSE);
 
-  dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-sel-gauss",
+  dialog = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-sel-gauss",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = gimp_drawable_preview_new (drawable,
-                                       &bvals.update_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  preview = gimp_drawable_preview_new (drawable, &bvals.update_preview);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (preview_update), NULL);
+                    G_CALLBACK (preview_update),
+                    NULL);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj,
                                      bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
@@ -278,12 +274,11 @@ sel_gauss_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (table);
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -399,26 +394,26 @@ matrixmult (guchar   *src,
 
 static void
 sel_gauss (GimpDrawable *drawable,
-           gdouble    radius,
-           gint       maxdelta)
+           gdouble       radius,
+           gint          maxdelta)
 {
   GimpPixelRgn src_rgn, dest_rgn;
-  gint      width, height;
-  gint      bytes;
-  gint      has_alpha;
-  guchar   *dest;
-  guchar   *src;
-  gint      x1, y1, x2, y2;
-  gint      i;
-  gdouble **mat;
-  gint      numrad;
+  gint         width, height;
+  gint         bytes;
+  gboolean     has_alpha;
+  guchar      *dest;
+  guchar      *src;
+  gint         x1, y1, x2, y2;
+  gint         i;
+  gdouble    **mat;
+  gint         numrad;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width  = x2 - x1;
-  height = y2 - y1;
-  bytes  = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  width     = x2 - x1;
+  height    = y2 - y1;
+  bytes     = drawable->bpp;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   numrad = (gint) (radius + 1.0);
   mat = g_new (gdouble *, numrad);
@@ -516,4 +511,3 @@ preview_update (GimpDrawablePreview *preview)
 
   g_free (render_buffer);
 }
-

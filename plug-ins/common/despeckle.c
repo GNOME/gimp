@@ -566,7 +566,6 @@ despeckle_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
-  GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
@@ -587,26 +586,23 @@ despeckle_dialog (void)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   preview = gimp_drawable_preview_new (drawable, &update_toggle);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
-                    G_CALLBACK (preview_update), NULL);
+                    G_CALLBACK (preview_update),
+                    NULL);
 
   /*
    * Filter type controls...
    */
 
   frame = gimp_frame_new (_("Type"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 6);

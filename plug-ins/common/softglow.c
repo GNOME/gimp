@@ -647,9 +647,8 @@ find_constants (gdouble n_p[],
 static gboolean
 softglow_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
@@ -657,26 +656,22 @@ softglow_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("softglow", FALSE);
 
-  dlg = gimp_dialog_new (_("Softglow"), "softglow",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-softglow",
+  dialog = gimp_dialog_new (_("Softglow"), "softglow",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-softglow",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
@@ -686,7 +681,7 @@ softglow_dialog (GimpDrawable *drawable)
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), table);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for svals.amount  */
@@ -731,11 +726,11 @@ softglow_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

@@ -216,37 +216,30 @@ run (const gchar      *name,
 static gboolean
 sobel_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *toggle;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
+  GtkWidget *toggle;
   gboolean   run;
 
   gimp_ui_init ("sobel", FALSE);
 
-  dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-sobel",
+  dialog = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-sobel",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  /*  parameter settings  */
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  /*  preview  */
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect (preview, "invalidated",
@@ -254,8 +247,8 @@ sobel_dialog (GimpDrawable *drawable)
                     NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -266,8 +259,8 @@ sobel_dialog (GimpDrawable *drawable)
                             preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Vertically"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -279,8 +272,8 @@ sobel_dialog (GimpDrawable *drawable)
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Keep sign of result "
                                                  "(one direction only)"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.keep_sign);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -290,11 +283,11 @@ sobel_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

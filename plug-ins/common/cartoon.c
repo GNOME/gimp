@@ -795,9 +795,8 @@ find_constants (gdouble n_p[],
 static gboolean
 cartoon_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *table;
   GtkObject *scale_data;
@@ -805,34 +804,32 @@ cartoon_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("cartoon", FALSE);
 
-  dlg = gimp_dialog_new (_("Cartoon"), "cartoon",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-cartoon",
+  dialog = gimp_dialog_new (_("Cartoon"), "cartoon",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-cartoon",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, &cvals.update_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
+
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (cartoon), drawable);
+                            G_CALLBACK (cartoon),
+                            drawable);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (vbox), table);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  Label, scale, entry for cvals.amount  */
@@ -846,7 +843,8 @@ cartoon_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.mask_radius);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Label, scale, entry for cvals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -859,13 +857,14 @@ cartoon_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.pct_black);
   g_signal_connect_swapped (scale_data, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate), preview);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }

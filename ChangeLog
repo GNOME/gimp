@@ -1,3 +1,22 @@
+2004-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/unsharp.c: pack all drawable previews expanding.
+	Also did some general cleanups like consistently naming the dialog
+	variable "dialog" and the main vbox "main_vbox".
+
 2004-09-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: right-align the preview for RTL
