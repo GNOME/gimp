@@ -1,3 +1,12 @@
+2003-11-12  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/widgets/gimphelp.c
+	* gimp/app/config/gimpguiconfig.c
+	* gimp/app/widgets/widgets-enums.[ch] changed
+	GIMP_HELP_BROWSER_WEBBROWSER to GIMP_HELP_BROWSER_WEB_BROWSER and
+	changed all occurrences of webbrowser to web_browser for
+	consistency.
+
 2003-11-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpmemsizeentry.c: fixed a problem with the

@@ -66,15 +66,15 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help       (gpointer     data);
-static gboolean  gimp_help_internal   (Gimp        *gimp,
-                                       const gchar *help_domain,
-                                       const gchar *help_locale,
-                                       const gchar *help_id);
-static void      gimp_help_webbrowser (Gimp        *gimp,
-                                       const gchar *help_domain,
-                                       const gchar *help_locale,
-                                       const gchar *help_id);
+static gint      gimp_idle_help        (gpointer     data);
+static gboolean  gimp_help_internal    (Gimp        *gimp,
+                                        const gchar *help_domain,
+                                        const gchar *help_locale,
+                                        const gchar *help_id);
+static void      gimp_help_web_browser (Gimp        *gimp,
+                                        const gchar *help_domain,
+                                        const gchar *help_locale,
+                                        const gchar *help_id);
 
 
 /*  public functions  */
@@ -142,11 +142,11 @@ gimp_idle_help (gpointer data)
 			      idle_help->help_id))
 	break;
 
-    case GIMP_HELP_BROWSER_WEBBROWSER:
-      gimp_help_webbrowser (idle_help->gimp,
-                            idle_help->help_domain,
-                            idle_help->help_locale,
-                            idle_help->help_id);
+    case GIMP_HELP_BROWSER_WEB_BROWSER:
+      gimp_help_web_browser (idle_help->gimp,
+                             idle_help->help_domain,
+                             idle_help->help_locale,
+                             idle_help->help_id);
       break;
 
     default:
@@ -163,14 +163,14 @@ gimp_idle_help (gpointer data)
 
 static void
 gimp_help_internal_not_found_callback (GtkWidget *widget,
-				       gboolean   use_webbrowser,
+				       gboolean   use_web_browser,
 				       gpointer   data)
 {
   Gimp *gimp = GIMP (data);
 
-  if (use_webbrowser)
+  if (use_web_browser)
     g_object_set (gimp->config,
-		  "help-browser", GIMP_HELP_BROWSER_WEBBROWSER,
+		  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
 		  NULL);
 
   gtk_main_quit ();
@@ -222,7 +222,7 @@ gimp_help_internal (Gimp        *gimp,
           busy = FALSE;
 
 	  return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-		  != GIMP_HELP_BROWSER_WEBBROWSER);
+		  != GIMP_HELP_BROWSER_WEB_BROWSER);
 	}
 
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
@@ -264,7 +264,7 @@ gimp_help_internal (Gimp        *gimp,
       busy = FALSE;
 
       return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-              != GIMP_HELP_BROWSER_WEBBROWSER);
+              != GIMP_HELP_BROWSER_WEB_BROWSER);
     }
   else
     {
@@ -289,10 +289,10 @@ gimp_help_internal (Gimp        *gimp,
 }
 
 static void
-gimp_help_webbrowser (Gimp        *gimp,
-                      const gchar *help_domain,
-                      const gchar *help_locale,
-                      const gchar *help_id)
+gimp_help_web_browser (Gimp        *gimp,
+                       const gchar *help_domain,
+                       const gchar *help_locale,
+                       const gchar *help_id)
 {
   Argument *return_vals;
   gint      nreturn_vals;

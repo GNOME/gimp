@@ -52,7 +52,7 @@ gimp_color_frame_mode_get_type (void)
 static const GEnumValue gimp_help_browser_type_enum_values[] =
 {
   { GIMP_HELP_BROWSER_GIMP, N_("Internal"), "gimp" },
-  { GIMP_HELP_BROWSER_WEBBROWSER, N_("Web Browser"), "webbrowser" },
+  { GIMP_HELP_BROWSER_WEB_BROWSER, N_("Web Browser"), "web-browser" },
   { 0, NULL, NULL }
 };
 
