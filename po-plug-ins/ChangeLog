@@ -1,3 +1,9 @@
+1999-11-16  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Moved the libgimp strings here. They are used by
+	plug-ins, and thus need to be in the gimp-std-plugins message
+	catalog.
+
 1999-10-31  Tor Lillqvist  <tml@iki.fi>
 
 	* makefile.cygwin: Use the generic (UTF-8 based) makefile.cygwin
