@@ -1,3 +1,13 @@
+Sat Apr 24 11:30:34 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* libgimp/gimp.c (set_gimp_PLUG_IN_INFO): Set the PLUG_IN_INFO
+	structure in a normal way (at run-time). 
+	The UNIX PLUG_IN_INFO is set at linking time!
+
+	The read/writechannel is set in BINARY mode (OS/2 version). 
+
+	* libgimp/gimp.h (MAIN): Add MAIN macro for OS/2 plugins.
+
 1999-04-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/bucket_fill.c: added a "BG Color Fill" radio button.

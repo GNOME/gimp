@@ -57,6 +57,9 @@
 #    include <io.h>
 #  endif
 #endif
+#ifdef __EMX__
+#  include <fcntl.h>
+#endif
 
 #include "gimp.h"
 #include "gimpprotocol.h"
@@ -112,7 +115,15 @@ static GHashTable *temp_proc_ht = NULL;
 static GPlugInInfo *PLUG_IN_INFO_PTR;
 #define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
 #else
+#ifndef __EMX__
 extern GPlugInInfo PLUG_IN_INFO;
+#else
+static GPlugInInfo PLUG_IN_INFO;
+void set_gimp_PLUG_IN_INFO(const GPlugInInfo *p)
+{
+  PLUG_IN_INFO = *p;
+}
+#endif
 #endif
 
 
@@ -161,6 +172,10 @@ gimp_main (int   argc,
 #ifndef NATIVE_WIN32
   _readchannel = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
+#ifdef __EMX__
+  setmode(g_io_channel_unix_get_fd(_readchannel), O_BINARY);
+  setmode(g_io_channel_unix_get_fd(_writechannel), O_BINARY);
+#endif
 #else
   _readchannel = g_io_channel_win32_new_pipe (atoi (argv[2]));
   peer = strchr (argv[3], ':') + 1;

@@ -206,12 +206,22 @@ struct _GParam
      return gimp_main (argc, argv);	\
    }
 #else
+#ifndef __EMX__
 #  define MAIN()			\
    int					\
    main (int argc, char *argv[])	\
    {					\
      return gimp_main (argc, argv);	\
    }
+#else
+#  define MAIN()				\
+   int						\
+   main (int argc, char *argv[])		\
+   {						\
+     set_gimp_PLUG_IN_INFO(&PLUG_IN_INFO);	\
+     return gimp_main (argc, argv);		\
+   }
+#endif
 #endif
 
 
