@@ -311,9 +311,9 @@ gimp_display_shell_selection_invis (Selection *select)
   /*  Find the bounds of the selection  */
   if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
     {
-      gimp_display_shell_add_expose_area (select->shell,
-                                          x1, y1,
-                                          (x2 - x1), (y2 - y1));
+      gimp_display_shell_expose_area (select->shell,
+                                      x1, y1,
+                                      (x2 - x1), (y2 - y1));
     }
   else
     {
@@ -351,18 +351,18 @@ gimp_display_shell_selection_layer_invis (Selection *select)
       y4 = select->segs_layer[3].y2 - 1;
 
       /*  expose the region  */
-      gimp_display_shell_add_expose_area (select->shell,
-                                          x1, y1,
-                                          (x2 - x1) + 1, (y3 - y1) + 1);
-      gimp_display_shell_add_expose_area (select->shell,
-                                          x1, y3,
-                                          (x3 - x1) + 1, (y4 - y3) + 1);
-      gimp_display_shell_add_expose_area (select->shell,
-                                          x1, y4,
-                                          (x2 - x1) + 1, (y2 - y4) + 1);
-      gimp_display_shell_add_expose_area (select->shell,
-                                          x4, y3,
-                                          (x2 - x4) + 1, (y4 - y3) + 1);
+      gimp_display_shell_expose_area (select->shell,
+                                      x1, y1,
+                                      (x2 - x1) + 1, (y3 - y1) + 1);
+      gimp_display_shell_expose_area (select->shell,
+                                      x1, y3,
+                                      (x3 - x1) + 1, (y4 - y3) + 1);
+      gimp_display_shell_expose_area (select->shell,
+                                      x1, y4,
+                                      (x2 - x1) + 1, (y2 - y4) + 1);
+      gimp_display_shell_expose_area (select->shell,
+                                      x4, y3,
+                                      (x2 - x4) + 1, (y4 - y3) + 1);
     }
 }
 

@@ -585,8 +585,6 @@ gimp_display_idlerender_callback (gpointer data)
 
   gimp_display_paint_area (gdisp, workx, worky, workw, workh);
 
-  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
-
   gdisp->idle_render.x += CHUNK_WIDTH;
 
   if (gdisp->idle_render.x >=
@@ -673,6 +671,5 @@ gimp_display_paint_area (GimpDisplay *gdisp,
   gimp_display_shell_transform_xy (shell, x, y, &x1, &y1, FALSE);
   gimp_display_shell_transform_xy (shell, x + w, y + h, &x2, &y2, FALSE);
 
-  gimp_display_shell_add_expose_area (shell,
-                                      x1, y1, (x2 - x1), (y2 - y1));
+  gimp_display_shell_expose_area (shell, x1, y1, (x2 - x1), (y2 - y1));
 }

@@ -384,9 +384,6 @@ gimp_display_shell_check_notify_handler (GObject          *config,
     default:
       break;
     }
-
-  gimp_display_shell_expose_full (shell);
-  gimp_display_shell_flush (shell);
 }
 
 static void
@@ -431,7 +428,6 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
       gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
       gimp_display_shell_expose_full (shell);
-      gimp_display_shell_flush (shell);
     }
 }
 
@@ -450,9 +446,6 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       gimp_display_shell_set_padding (shell,
                                       display_config->canvas_padding_mode,
                                       &display_config->canvas_padding_color);
-
-      gimp_display_shell_expose_full (shell);
-      gimp_display_shell_flush (shell);
     }
 }
 

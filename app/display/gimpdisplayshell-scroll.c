@@ -43,8 +43,6 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
                            gint              y_offset)
 {
   gint      old_x, old_y;
-  gint      src_x, src_y;
-  gint      dest_x, dest_y;
   GdkEvent *event;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
@@ -67,64 +65,21 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
        */
       gimp_display_shell_scale_setup (shell);
 
-      src_x  = (x_offset < 0) ? 0 : x_offset;
-      src_y  = (y_offset < 0) ? 0 : y_offset;
-      dest_x = (x_offset < 0) ? -x_offset : 0;
-      dest_y = (y_offset < 0) ? -y_offset : 0;
-
       /*  reset the old values so that the tool can accurately redraw  */
       shell->offset_x = old_x;
       shell->offset_y = old_y;
 
-      /*  freeze the active tool  */
       tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
                                    shell->gdisp);
+
+      gdk_window_scroll (shell->canvas->window, -x_offset, -y_offset);
 
       /*  set the offsets back to the new values  */
       shell->offset_x += x_offset;
       shell->offset_y += y_offset;
 
-      gdk_draw_drawable (shell->canvas->window,
-			 shell->render_gc,
-			 shell->canvas->window,
-			 src_x, src_y,
-			 dest_x, dest_y,
-			 (shell->disp_width  - abs (x_offset)),
-			 (shell->disp_height - abs (y_offset)));
-
-      /*  re-enable the active tool  */
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
                                    shell->gdisp);
-
-      /*  scale the image into the exposed regions  */
-      if (x_offset)
-	{
-	  src_x = (x_offset < 0) ? 0 : shell->disp_width - x_offset;
-	  src_y = 0;
-
-	  gimp_display_shell_add_expose_area (shell,
-                                              src_x, src_y,
-                                              abs (x_offset),
-                                              shell->disp_height);
-	}
-
-      if (y_offset)
-	{
-	  src_x = 0;
-	  src_y = (y_offset < 0) ? 0 : shell->disp_height - y_offset;
-
-	  gimp_display_shell_add_expose_area (shell,
-                                              src_x, src_y,
-                                              shell->disp_width,
-                                              abs (y_offset));
-	}
-
-      if (x_offset || y_offset)
-        {
-          gimp_display_flush (shell->gdisp);
-        }
-
-      gimp_display_shell_scrolled (shell);
 
       /* Make sure graphics expose events are processed before scrolling
        * again
@@ -145,6 +100,8 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 	}
 
       gdk_window_process_updates (shell->canvas->window, FALSE);
+
+      gimp_display_shell_scrolled (shell);
 
       return TRUE;
     }

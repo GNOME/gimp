@@ -95,8 +95,6 @@ struct _GimpDisplayShell
 
   Selection        *select;            /*  Selection object    */
 
-  GSList           *display_areas;     /*  display areas list  */
-
   GtkAdjustment    *hsbdata;           /*  adjustments         */
   GtkAdjustment    *vsbdata;
 
@@ -201,7 +199,7 @@ gboolean    gimp_display_shell_mask_bounds           (GimpDisplayShell *shell,
                                                       gint             *x2,
                                                       gint             *y2);
 
-void        gimp_display_shell_add_expose_area       (GimpDisplayShell *shell,
+void        gimp_display_shell_expose_area           (GimpDisplayShell *shell,
                                                       gint              x,
                                                       gint              y,
                                                       gint              w,
@@ -211,16 +209,23 @@ void        gimp_display_shell_expose_guide          (GimpDisplayShell *shell,
 void        gimp_display_shell_expose_full           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_flush                 (GimpDisplayShell *shell);
+
+void        gimp_display_shell_draw_area             (GimpDisplayShell *shell,
+                                                      gint              x,
+                                                      gint              y,
+                                                      gint              w,
+                                                      gint              h);
+void        gimp_display_shell_draw_cursor           (GimpDisplayShell *shell);
+void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
+                                                      GimpGuide        *guide,
+                                                      gboolean          active);
+void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
+
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_set_padding           (GimpDisplayShell *shell,
                                                       GimpDisplayPaddingMode  mode,
                                                       GimpRGB          *color);
-
-void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
-                                                      GimpGuide        *guide,
-                                                      gboolean          active);
-void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
 

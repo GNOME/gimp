@@ -186,7 +186,6 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
   if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->hidden)
     {
       gimp_display_shell_selection_toggle (shell->select);
-      gimp_display_shell_flush (shell);
 
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Show Selection",
@@ -211,7 +210,6 @@ view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
   if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->layer_hidden)
     {
       gimp_display_shell_selection_toggle_layer (shell->select);
-      gimp_display_shell_flush (shell);
 
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Show Layer Boundary",

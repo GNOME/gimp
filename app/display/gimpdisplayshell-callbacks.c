@@ -318,25 +318,38 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GdkEventExpose   *eevent,
                                   GimpDisplayShell *shell)
 {
-  glong x1, y1, x2, y2;
+  GdkRectangle *rects;
+  gint          n_rects;
+  gint          i;
 
-  x1 = eevent->area.x;
-  y1 = eevent->area.y;
-  x2 = (eevent->area.x + eevent->area.width);
-  y2 = (eevent->area.y + eevent->area.height);
+  /*  pause the currently active tool  */
+  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
+                               shell->gdisp);
 
-  x1 = CLAMP (x1, 0, shell->disp_width);
-  y1 = CLAMP (y1, 0, shell->disp_height);
-  x2 = CLAMP (x2, 0, shell->disp_width);
-  y2 = CLAMP (y2, 0, shell->disp_height);
+  gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
 
-  if ((x2 - x1) && (y2 - y1))
-    {
-      gimp_display_shell_add_expose_area (shell,
-                                          x1, y1,
-                                          (x2 - x1), (y2 - y1));
-      gimp_display_shell_flush (shell);
-    }
+  for (i = 0; i < n_rects; i++)
+    gimp_display_shell_draw_area (shell,
+                                  rects[i].x,
+                                  rects[i].y,
+                                  rects[i].width,
+                                  rects[i].height);
+
+  g_free (rects);
+
+  /* draw the guides */
+  gimp_display_shell_draw_guides (shell);
+
+  /* and the cursor (if we have a software cursor) */
+  if (shell->have_cursor)
+    gimp_display_shell_draw_cursor (shell);
+
+  /* restart (and recalculate) the selection boundaries */
+  gimp_display_shell_selection_start (shell->select, TRUE);
+
+  /* start the currently active tool */
+  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
+                               shell->gdisp);
 
   return TRUE;
 }
@@ -1095,7 +1108,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   /*  if we reached this point in gimp_busy mode, return now  */
   if (gimp->busy)
-    return TRUE;
+    return return_val;
 
   /*  cursor update support  */
 
@@ -1304,9 +1317,6 @@ gimp_display_shell_color_button_changed (GtkWidget        *widget,
   gimp_display_shell_set_padding (shell,
                                   GIMP_DISPLAY_PADDING_MODE_CUSTOM,
                                   &color);
-
-  gimp_display_shell_expose_full (shell);
-  gimp_display_shell_flush (shell);
 }
 
 void  
@@ -1343,9 +1353,6 @@ gimp_display_shell_color_button_menu_callback (gpointer   callback_data,
           gimp_display_shell_set_padding (shell, callback_action,
                                           &shell->padding_color);
         }
-
-      gimp_display_shell_expose_full (shell);
-      gimp_display_shell_flush (shell);
     }
 }
 
@@ -1661,8 +1668,8 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 
   for (list = requeued_events; list; list = g_list_next (list))
     {
-      gdk_event_put ((GdkEvent*) list->data);
-      gdk_event_free ((GdkEvent*) list->data);
+      gdk_event_put ((GdkEvent *) list->data);
+      gdk_event_free ((GdkEvent *) list->data);
     }
 
   g_list_free (requeued_events);

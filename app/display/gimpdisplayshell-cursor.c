@@ -115,7 +115,6 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 {
   GimpImage *gimage;
   gboolean   new_cursor;
-  gboolean   flush = FALSE;
   gint       t_x = -1;
   gint       t_y = -1;
 
@@ -134,25 +133,17 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
                              x != shell->cursor_x ||
                              y != shell->cursor_y))
     {
-      gimp_display_shell_add_expose_area (shell,
-                                          shell->cursor_x - 7,
-                                          shell->cursor_y - 7,
-                                          15, 15);
+      gimp_display_shell_expose_area (shell,
+                                      shell->cursor_x - 7,
+                                      shell->cursor_y - 7,
+                                      15, 15);
       if (! new_cursor)
-	{
-	  shell->have_cursor = FALSE;
-	  flush = TRUE;
-	}
+        shell->have_cursor = FALSE;
     }
 
   shell->have_cursor = new_cursor;
   shell->cursor_x    = x;
   shell->cursor_y    = y;
-  
-  if (new_cursor || flush)
-    {
-      gimp_display_shell_flush (shell);
-    }
 
   if (x > 0 && y > 0)
     {

@@ -43,7 +43,6 @@
 #define UPDATE_DISPLAY(cdd) G_STMT_START         \
 {	                                         \
   gimp_display_shell_expose_full ((cdd)->shell); \
-  gimp_display_shell_flush ((cdd)->shell);       \
 } G_STMT_END
 
 

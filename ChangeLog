@@ -1,3 +1,34 @@
+2003-02-21  Michael Natterer  <mitch@gimp.org>
+
+	Refactored the GimpDisplayShell update/draw code:
+
+	* app/display/gimpdisplayshell.[ch]: removed the display_areas
+	list which used to hold the GimpAreas to update. Instead, simply
+	queue draws using gtk_widget_queue_draw[_area]() in
+	gimp_display_shell_expose_area(), _expose_full() and
+	_expose_guide(). Made all _draw() functions public because they
+	are now called from the "expose_event" handler.  Removed rendering
+	from gimp_display_shell_flush() because stuff is now flushed
+	automatically by the gtk idle renderer.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): draw everything here (the code
+	removed from gimp_display_shell_flush() without the GimpArea list).
+	(gimp_display_shell_canvas_tool_events): return "return_val", not
+	TRUE if gimp->busy is TRUE. Fixes unupdated (windowk bg color)
+	display areas. Fixes bug #106595.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-cursor.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/gui/view-commands.c: changed accordingly. Removed calls to
+	gimp_display_shell_flush() all over the place.
+
+	* app/display/gimpdisplayshell-scroll.c: replaced lots of code by
+	a single call to gdk_window_scroll().
+
 2003-02-21  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: fixed URL of libart package, spotted by Michael J. Hammel.

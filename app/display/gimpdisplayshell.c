@@ -56,7 +56,6 @@
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-area.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
@@ -89,13 +88,6 @@ static void      gimp_display_shell_init          (GimpDisplayShell      *shell)
 static void      gimp_display_shell_destroy            (GtkObject        *object);
 static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
 							GdkEventAny      *aevent);
-
-static void      gimp_display_shell_display_area       (GimpDisplayShell *shell,
-							gint              x,
-							gint              y,
-							gint              w,
-							gint              h);
-static void	 gimp_display_shell_draw_cursor        (GimpDisplayShell *shell);
 
 static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
@@ -206,8 +198,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->proximity             = FALSE;
 
   shell->select                = NULL;
-
-  shell->display_areas         = NULL;
 
   shell->hsbdata               = NULL;
   shell->vsbdata               = NULL;
@@ -339,8 +329,6 @@ gimp_display_shell_destroy (GtkObject *object)
       gimp_display_shell_selection_free (shell->select);
       shell->select = NULL;
     }
-
-  shell->display_areas = gimp_display_area_list_free (shell->display_areas);
 
   gimp_display_shell_filter_detach_all (shell);
 
@@ -1052,23 +1040,15 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_add_expose_area (GimpDisplayShell *shell,
-                                    gint              x,
-                                    gint              y,
-                                    gint              w,
-                                    gint              h)
+gimp_display_shell_expose_area (GimpDisplayShell *shell,
+                                gint              x,
+                                gint              y,
+                                gint              w,
+                                gint              h)
 {
-  GimpArea *area;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  area = gimp_area_new (CLAMP (x,     0, shell->disp_width),
-                        CLAMP (y,     0, shell->disp_height),
-                        CLAMP (x + w, 0, shell->disp_width),
-                        CLAMP (y + h, 0, shell->disp_height));
-
-  shell->display_areas = gimp_display_area_list_process (shell->display_areas,
-                                                         area);
+  gtk_widget_queue_draw_area (shell->canvas, x, y, w, h);
 }
 
 void
@@ -1093,11 +1073,11 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
   switch (guide->orientation)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_add_expose_area (shell, 0, y, shell->disp_width, 1);
+      gimp_display_shell_expose_area (shell, 0, y, shell->disp_width, 1);
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_add_expose_area (shell, x, 0, 1, shell->disp_height);
+      gimp_display_shell_expose_area (shell, x, 0, 1, shell->disp_height);
       break;
 
     default:
@@ -1110,10 +1090,7 @@ gimp_display_shell_expose_full (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_add_expose_area (shell,
-                                      0, 0,
-                                      shell->disp_width,
-                                      shell->disp_height);
+  gtk_widget_queue_draw (shell->canvas);
 }
 
 void
@@ -1130,48 +1107,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 
   /*  update the gdisplay's info dialog  */
   info_window_update (shell->gdisp);
-
-  if (shell->display_areas)
-    {
-      GSList   *list;
-      GimpArea *area;
-
-      /*  stop the currently active tool  */
-      tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
-                                   shell->gdisp);
-
-      for (list = shell->display_areas; list; list = g_slist_next (list))
-	{
-	  /*  Paint the area specified by the GimpArea  */
-
-	  area = (GimpArea *) list->data;
-
-	  gimp_display_shell_display_area (shell,
-                                           area->x1,
-                                           area->y1,
-                                           (area->x2 - area->x1),
-                                           (area->y2 - area->y1));
-	}
-
-      /*  Free the update lists  */
-      shell->display_areas = gimp_display_area_list_free (shell->display_areas);
-
-      /* draw the guides */
-      gimp_display_shell_draw_guides (shell);
-
-      /* and the cursor (if we have a software cursor) */
-      if (shell->have_cursor)
-	gimp_display_shell_draw_cursor (shell);
-
-      /* restart (and recalculate) the selection boundaries */
-      gimp_display_shell_selection_start (shell->select, TRUE);
-
-      /* start the currently active tool */
-      tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
-                                   shell->gdisp);
-    }
 }
-
 
 void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
@@ -1279,6 +1215,8 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
                                          gimp_display_shell_color_button_changed,
                                          shell);
     }
+
+  gimp_display_shell_expose_full (shell);
 }
 
 void
@@ -1528,21 +1466,20 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
     }
 }
 
-
-/*  private functions  */
-
-static void
-gimp_display_shell_display_area (GimpDisplayShell *shell,
-                                 gint              x,
-                                 gint              y,
-                                 gint              w,
-                                 gint              h)
+void
+gimp_display_shell_draw_area (GimpDisplayShell *shell,
+                              gint              x,
+                              gint              y,
+                              gint              w,
+                              gint              h)
 {
   gint    sx, sy;
   gint    x1, y1;
   gint    x2, y2;
   gint    dx, dy;
   gint    i, j;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   sx = SCALEX (shell, shell->gdisp->gimage->width);
   sy = SCALEY (shell, shell->gdisp->gimage->height);
@@ -1634,7 +1571,7 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
     }
 }
 
-static void
+void
 gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 {
   gint x, y;
@@ -1663,6 +1600,9 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 		 shell->canvas->style->white_gc,
 		 x+1, y - 7, x+1, y + 7);
 }
+
+
+/*  private functions  */
 
 static void
 gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
