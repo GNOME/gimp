@@ -16,44 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __GIMP_INK_OPTIONS_H__
-#define  __GIMP_INK_OPTIONS_H__
+#ifndef  __GIMP_INK_OPTIONS_GUI_H__
+#define  __GIMP_INK_OPTIONS_GUI_H__
 
-
-#include "paint/gimppaintoptions.h"
-
-
-#define GIMP_TYPE_INK_OPTIONS            (gimp_ink_options_get_type ())
-#define GIMP_INK_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INK_OPTIONS, GimpInkOptions))
-#define GIMP_INK_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INK_OPTIONS, GimpInkOptionsClass))
-#define GIMP_IS_INK_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INK_OPTIONS))
-#define GIMP_IS_INK_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INK_OPTIONS))
-#define GIMP_INK_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK_OPTIONS, GimpInkOptionsClass))
-
-
-typedef struct _GimpInkOptions        GimpInkOptions;
-typedef struct _GimpPaintOptionsClass GimpInkOptionsClass;
-
-struct _GimpInkOptions
-{
-  GimpPaintOptions  paint_options;
-
-  gdouble           size;
-  gdouble           tilt_angle;
-
-  gdouble           size_sensitivity;
-  gdouble           vel_sensitivity;
-  gdouble           tilt_sensitivity;
-
-  GimpInkBlobType   blob_type;
-  gdouble           blob_aspect;
-  gdouble           blob_angle;
-};
-
-
-GType       gimp_ink_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_ink_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_INK_OPTIONS_H__  */
+#endif  /*  __GIMP_INK_OPTIONS_GUI_H__  */

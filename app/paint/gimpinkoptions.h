@@ -20,7 +20,7 @@
 #define  __GIMP_INK_OPTIONS_H__
 
 
-#include "paint/gimppaintoptions.h"
+#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_INK_OPTIONS            (gimp_ink_options_get_type ())
@@ -51,9 +51,7 @@ struct _GimpInkOptions
 };
 
 
-GType       gimp_ink_options_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_ink_options_gui      (GimpToolOptions *tool_options);
+GType   gimp_ink_options_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_INK_OPTIONS_H__  */

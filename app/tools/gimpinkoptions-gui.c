@@ -18,225 +18,28 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpconfig-params.h"
-
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimptoolinfo.h"
+#include "paint/gimpink-blob.h"
+#include "paint/gimpinkoptions.h"
 
 #include "widgets/gimppropwidgets.h"
 
-#include "gimpinkoptions.h"
-#include "gimpinktool-blob.h"
+#include "gimpinkoptions-gui.h"
 #include "gimppaintoptions-gui.h"
 
 #include "gimp-intl.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_SIZE,
-  PROP_TILT_ANGLE,
-  PROP_SIZE_SENSITIVITY,
-  PROP_VEL_SENSITIVITY,
-  PROP_TILT_SENSITIVITY,
-  PROP_BLOB_TYPE,
-  PROP_BLOB_ASPECT,
-  PROP_BLOB_ANGLE
-};
-
-
-static void   gimp_ink_options_init       (GimpInkOptions      *options);
-static void   gimp_ink_options_class_init (GimpInkOptionsClass *options_class);
-
-static void   gimp_ink_options_set_property (GObject         *object,
-                                             guint            property_id,
-                                             const GValue    *value,
-                                             GParamSpec      *pspec);
-static void   gimp_ink_options_get_property (GObject         *object,
-                                             guint            property_id,
-                                             GValue          *value,
-                                             GParamSpec      *pspec);
-
 static GtkWidget * brush_widget_new         (GimpInkOptions  *options);
 static GtkWidget * blob_button_new          (GimpInkBlobType  blob_type);
 
-
-static GimpPaintOptionsClass *parent_class = NULL;
-
-
-GType
-gimp_ink_options_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    {
-      static const GTypeInfo info =
-      {
-        sizeof (GimpInkOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_ink_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpInkOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_ink_options_init,
-      };
-
-      type = g_type_register_static (GIMP_TYPE_PAINT_OPTIONS,
-                                     "GimpInkOptions",
-                                     &info, 0);
-    }
-
-  return type;
-}
-
-static void
-gimp_ink_options_class_init (GimpInkOptionsClass *klass)
-{
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->set_property = gimp_ink_options_set_property;
-  object_class->get_property = gimp_ink_options_get_property;
-
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
-                                   "size", NULL,
-                                   0.0, 20.0, 4.4,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
-                                   "tilt-angle", NULL,
-                                   -90.0, 90.0, 0.0,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE_SENSITIVITY,
-                                   "size-sensitivity", NULL,
-                                   0.0, 1.0, 1.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VEL_SENSITIVITY,
-                                   "vel-sensitivity", NULL,
-                                   0.0, 1.0, 0.8,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_SENSITIVITY,
-                                   "tilt-sensitivity", NULL,
-                                   0.0, 1.0, 0.4,
-                                   0);
-
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BLOB_TYPE,
-                                 "blob-type", NULL,
-                                 GIMP_TYPE_INK_BLOB_TYPE,
-                                 GIMP_INK_BLOB_TYPE_ELLIPSE,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
-                                   "blob-aspect", NULL,
-                                   1.0, 10.0, 1.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
-                                   "blob-angle", NULL,
-                                   -90.0, 90.0, 0.0,
-                                   0);
-}
-
-static void
-gimp_ink_options_init (GimpInkOptions *options)
-{
-}
-
-static void
-gimp_ink_options_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
-{
-  GimpInkOptions *options;
-
-  options = GIMP_INK_OPTIONS (object);
-
-  switch (property_id)
-    {
-    case PROP_SIZE:
-      options->size = g_value_get_double (value);
-      break;
-    case PROP_TILT_ANGLE:
-      options->tilt_angle = g_value_get_double (value);
-      break;
-    case PROP_SIZE_SENSITIVITY:
-      options->size_sensitivity = g_value_get_double (value);
-      break;
-    case PROP_VEL_SENSITIVITY:
-      options->vel_sensitivity = g_value_get_double (value);
-      break;
-    case PROP_TILT_SENSITIVITY:
-      options->tilt_sensitivity = g_value_get_double (value);
-      break;
-    case PROP_BLOB_TYPE:
-      options->blob_type = g_value_get_enum (value);
-      break;
-    case PROP_BLOB_ASPECT:
-      options->blob_aspect = g_value_get_double (value);
-      break;
-    case PROP_BLOB_ANGLE:
-      options->blob_angle = g_value_get_double (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_ink_options_get_property (GObject    *object,
-                               guint       property_id,
-                               GValue     *value,
-                               GParamSpec *pspec)
-{
-  GimpInkOptions *options;
-
-  options = GIMP_INK_OPTIONS (object);
-
-  switch (property_id)
-    {
-    case PROP_SIZE:
-      g_value_set_double (value, options->size);
-      break;
-    case PROP_TILT_ANGLE:
-      g_value_set_double (value, options->tilt_angle);
-      break;
-    case PROP_SIZE_SENSITIVITY:
-      g_value_set_double (value, options->size_sensitivity);
-      break;
-    case PROP_VEL_SENSITIVITY:
-      g_value_set_double (value, options->vel_sensitivity);
-      break;
-    case PROP_TILT_SENSITIVITY:
-      g_value_set_double (value, options->tilt_sensitivity);
-      break;
-    case PROP_BLOB_TYPE:
-      g_value_set_enum (value, options->blob_type);
-      break;
-    case PROP_BLOB_ASPECT:
-      g_value_set_double (value, options->blob_aspect);
-      break;
-    case PROP_BLOB_ANGLE:
-      g_value_set_double (value, options->blob_angle);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
 
 GtkWidget *
 gimp_ink_options_gui (GimpToolOptions *tool_options)
@@ -456,17 +259,8 @@ brush_widget_notify (GimpInkOptions *options,
                      GParamSpec     *pspec,
                      BrushWidget    *brush_w)
 {
-  switch (pspec->param_id)
-    {
-    case PROP_BLOB_TYPE:
-    case PROP_BLOB_ASPECT:
-    case PROP_BLOB_ANGLE:
-      gtk_widget_queue_draw (brush_w->widget);
-      break;
-
-    default:
-      break;
-    }
+  if (! strncmp (pspec->name, "blob", 4))
+    gtk_widget_queue_draw (brush_w->widget);
 }
 
 static void

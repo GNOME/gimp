@@ -429,6 +429,10 @@ gimp_tools_register (GType                   tool_type,
     {
       paint_core_name = "GimpDodgeBurn";
     }
+  else if (tool_type == GIMP_TYPE_INK_TOOL)
+    {
+      paint_core_name = "GimpInk";
+    }
   else
     {
       paint_core_name = "GimpPaintbrush";

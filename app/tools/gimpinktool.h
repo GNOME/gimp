@@ -20,12 +20,7 @@
 #define  __GIMP_INK_TOOL_H__
 
 
-#include "gimptool.h"
-#include "gimpinktool-blob.h"  /* only used by ink */
-
-
-#define DIST_SMOOTHER_BUFFER 10
-#define TIME_SMOOTHER_BUFFER 10
+#include "gimppainttool.h"
 
 
 #define GIMP_TYPE_INK_TOOL            (gimp_ink_tool_get_type ())
@@ -41,30 +36,12 @@ typedef struct _GimpInkToolClass GimpInkToolClass;
 
 struct _GimpInkTool
 {
-  GimpTool  parent_instance;
-  
-  Blob     *last_blob;	   /*  blob for last cursor position  */
-
-  gint      x1, y1;        /*  image space coordinate         */
-  gint      x2, y2;        /*  image space coords             */
-
-  /* circular distance history buffer */
-  gdouble   dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint      dt_index;
-
-  /* circular timing history buffer */
-  guint32   ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint      ts_index;
-
-  gdouble   last_time;     /*  previous time of a motion event      */
-  gdouble   lastx, lasty;  /*  previous position of a motion event  */
-
-  gboolean  init_velocity;
+  GimpPaintTool parent_instance;
 };
 
 struct _GimpInkToolClass
 {
-  GimpToolClass  parent_class;
+  GimpPaintToolClass parent_class;
 };
 
 

@@ -1,5 +1,29 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/Makefile.am
+	* app/paint/gimpink-blob.[ch]
+	* app/paint/gimpink.[ch]
+	* app/paint/gimpinkoptions.[ch]: new files. Ported the ink tool
+	to be a direct GimpPaintCore subclass without any GUI.
+
+	* app/paint/gimp-paint.c: register GimpInk with the list of paint
+	cores.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpinkoptions.[ch]
+	* app/tools/gimpinktool-blob.[ch]: removed these files.
+
+	* app/tools/gimpinkoptions-gui.[ch]: new files containing only
+	the GUI for GimpInkOptions.
+
+	* app/tools/gimpinktool.[ch]: reduced to some few lines which
+	implement a simple GimpPaintTool subclass.
+
+	* app/tools/gimp-tools.c: associate the GimpInk paint_core with
+	the GimpInkTool.
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore-stroke.c: check if we really have
 	a GimpBrushCore before casting and accessing its members.
 

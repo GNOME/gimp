@@ -72,12 +72,10 @@ libapptools_a_sources = \
 	gimpimagemapoptions.h		\
 	gimpimagemaptool.c		\
 	gimpimagemaptool.h		\
-	gimpinkoptions.c		\
-	gimpinkoptions.h		\
+	gimpinkoptions-gui.c		\
+	gimpinkoptions-gui.h		\
 	gimpinktool.c			\
 	gimpinktool.h			\
-	gimpinktool-blob.c		\
-	gimpinktool-blob.h		\
 	gimpiscissorstool.c		\
 	gimpiscissorstool.h		\
 	gimplevelstool.c		\

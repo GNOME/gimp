@@ -16,62 +16,60 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __GIMP_INK_TOOL_H__
-#define  __GIMP_INK_TOOL_H__
+#ifndef  __GIMP_INK_H__
+#define  __GIMP_INK_H__
 
 
-#include "gimptool.h"
-#include "gimpinktool-blob.h"  /* only used by ink */
+#include "gimppaintcore.h"
+#include "gimpink-blob.h"
 
 
 #define DIST_SMOOTHER_BUFFER 10
 #define TIME_SMOOTHER_BUFFER 10
 
 
-#define GIMP_TYPE_INK_TOOL            (gimp_ink_tool_get_type ())
-#define GIMP_INK_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INK_TOOL, GimpInkTool))
-#define GIMP_INK_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INK_TOOL, GimpInkToolClass))
-#define GIMP_IS_INK_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INK_TOOL))
-#define GIMP_IS_INK_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INK_TOOL))
-#define GIMP_INK_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK_TOOL, GimpInkToolClass))
+#define GIMP_TYPE_INK            (gimp_ink_get_type ())
+#define GIMP_INK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INK, GimpInk))
+#define GIMP_INK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INK, GimpInkClass))
+#define GIMP_IS_INK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INK))
+#define GIMP_IS_INK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INK))
+#define GIMP_INK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK, GimpInkClass))
 
 
-typedef struct _GimpInkTool      GimpInkTool;
-typedef struct _GimpInkToolClass GimpInkToolClass;
+typedef struct _GimpInk      GimpInk;
+typedef struct _GimpInkClass GimpInkClass;
 
-struct _GimpInkTool
+struct _GimpInk
 {
-  GimpTool  parent_instance;
-  
-  Blob     *last_blob;	   /*  blob for last cursor position  */
+  GimpPaintCore  parent_instance;
 
-  gint      x1, y1;        /*  image space coordinate         */
-  gint      x2, y2;        /*  image space coords             */
+  Blob          *blob;         /*  current blob                   */
+  Blob          *last_blob;    /*  blob for last cursor position  */
 
   /* circular distance history buffer */
-  gdouble   dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint      dt_index;
+  gdouble        dt_buffer[DIST_SMOOTHER_BUFFER];
+  gint           dt_index;
 
   /* circular timing history buffer */
-  guint32   ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint      ts_index;
+  guint32        ts_buffer[TIME_SMOOTHER_BUFFER];
+  gint           ts_index;
 
-  gdouble   last_time;     /*  previous time of a motion event      */
-  gdouble   lastx, lasty;  /*  previous position of a motion event  */
+  gdouble        last_time;     /*  previous time of a motion event      */
+  gdouble        lastx, lasty;  /*  previous position of a motion event  */
 
-  gboolean  init_velocity;
+  gboolean       init_velocity;
 };
 
-struct _GimpInkToolClass
+struct _GimpInkClass
 {
-  GimpToolClass  parent_class;
+  GimpPaintCoreClass  parent_class;
 };
 
 
-void    gimp_ink_tool_register (GimpToolRegisterCallback  callback,
-                                gpointer                  data);
+void    gimp_ink_register (Gimp                      *gimp,
+                           GimpPaintRegisterCallback  callback);
 
-GType   gimp_ink_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_ink_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_INK_TOOL_H__  */
+#endif  /*  __GIMP_INK_H__  */

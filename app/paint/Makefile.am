@@ -43,6 +43,12 @@ libapppaint_a_sources = \
 	gimperaser.h		\
 	gimperaseroptions.c	\
 	gimperaseroptions.h	\
+	gimpink.c		\
+	gimpink.h		\
+	gimpink-blob.c		\
+	gimpink-blob.h		\
+	gimpinkoptions.c	\
+	gimpinkoptions.h	\
 	gimppaintcore.c		\
 	gimppaintcore.h		\
 	gimppaintcore-stroke.c	\

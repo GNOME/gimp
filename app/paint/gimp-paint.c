@@ -32,6 +32,7 @@
 #include "gimpconvolve.h"
 #include "gimpdodgeburn.h"
 #include "gimperaser.h"
+#include "gimpink.h"
 #include "gimppaintoptions.h"
 #include "gimppaintbrush.h"
 #include "gimppencil.h"
@@ -61,6 +62,7 @@ gimp_paint_init (Gimp *gimp)
     gimp_eraser_register,
     gimp_paintbrush_register,
     gimp_pencil_register,
+    gimp_ink_register
   };
 
   gint i;

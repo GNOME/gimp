@@ -1,6 +1,6 @@
 /* blob.h: routines for manipulating scan converted convex
  *         polygons.
- *  
+ *
  * Copyright 1998, Owen Taylor <otaylor@gtk.org>
  *
  * > Please contact the above author before modifying the copy <
@@ -22,20 +22,20 @@
  *
 */
 
-#ifndef __GIMP_INK_TOOL_BLOB_H__
-#define __GIMP_INK_TOOL_BLOB_H__
+#ifndef __GIMP_INK_BLOB_H__
+#define __GIMP_INK_BLOB_H__
 
 
 typedef struct _BlobPoint BlobPoint;
 typedef struct _BlobSpan  BlobSpan;
 typedef struct _Blob      Blob;
 
-typedef Blob * (* BlobFunc) (gdouble,
-			     gdouble,
-			     gdouble,
-			     gdouble,
-			     gdouble,
-			     gdouble);
+typedef Blob * (* BlobFunc) (gdouble xc,
+                             gdouble yc,
+                             gdouble xp,
+                             gdouble yp,
+                             gdouble xq,
+                             gdouble yq);
 
 struct _BlobPoint
 {
@@ -57,33 +57,33 @@ struct _Blob
 };
 
 
-Blob * blob_convex_union (Blob      *b1,
-			  Blob      *b2);
 Blob * blob_polygon      (BlobPoint *points,
-			  gint       npoints);
+                          gint       npoints);
 Blob * blob_square       (gdouble    xc,
-			  gdouble    yc,
-			  gdouble    xp,
-			  gdouble    yp,
-			  gdouble    xq,
-			  gdouble    yq);
+                          gdouble    yc,
+                          gdouble    xp,
+                          gdouble    yp,
+                          gdouble    xq,
+                          gdouble    yq);
 Blob * blob_diamond      (gdouble    xc,
-			  gdouble    yc,
-			  gdouble    xp,
-			  gdouble    yp,
-			  gdouble    xq,
-			  gdouble    yq);
+                          gdouble    yc,
+                          gdouble    xp,
+                          gdouble    yp,
+                          gdouble    xq,
+                          gdouble    yq);
 Blob * blob_ellipse      (gdouble    xc,
-			  gdouble    yc,
-			  gdouble    xp,
-			  gdouble    yp,
-			  gdouble    xq,
-			  gdouble    yq);
+                          gdouble    yc,
+                          gdouble    xp,
+                          gdouble    yp,
+                          gdouble    xq,
+                          gdouble    yq);
 void   blob_bounds       (Blob      *b,
-			  gint      *x,
-			  gint      *y,
-			  gint      *width,
-			  gint      *height);
+                          gint      *x,
+                          gint      *y,
+                          gint      *width,
+                          gint      *height);
+Blob * blob_convex_union (Blob      *b1,
+                          Blob      *b2);
 
 
-#endif /* __GIMP_INK_TOOL_BLOB_H__ */
+#endif /* __GIMP_INK_BLOB_H__ */
