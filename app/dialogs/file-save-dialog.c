@@ -97,8 +97,7 @@ file_save_dialog_show (GimpImage *gimage,
 
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
 
-  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave),
-                              gimage, TRUE, TRUE);
+  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave), gimage, TRUE, TRUE);
 
   file_dialog_show (filesave, parent);
 }

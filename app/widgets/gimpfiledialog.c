@@ -424,6 +424,7 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
                             gboolean        set_image_clean)
 {
   const gchar *uri;
+  gboolean     uri_set = FALSE;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -435,8 +436,9 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
   if (uri)
-    gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
-  else
+    uri_set = gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
+
+  if (! uri_set)
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
 
   gimp_file_dialog_set_file_proc (dialog, NULL);

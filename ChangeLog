@@ -1,3 +1,14 @@
+2004-08-23  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): unset
+	the filename if gtk_file_chooser_set_uri() failed.
+
+	* app/actions/file-commands.c
+	* app/gui/file-save-dialog.c: trivial cleanups.
+
+	* app/widgets/gimpwidgets-utils.c: removed an unused extern
+	variable declaration.
+
 2004-08-23  DindinX  <david@dindinx.org>
 
 	* app/tools/tools-utils.c: fixed a typo that broke the build.

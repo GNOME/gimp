@@ -65,8 +65,6 @@ static void  gimp_message_box_response  (GtkWidget   *widget,
                                          MessageBox  *msg_box);
 
 
-extern gchar *prog_name;
-
 static GList *message_boxes = NULL;
 
 

@@ -165,9 +165,7 @@ file_save_cmd_callback (GtkAction *action,
   if (gdisp->gimage->dirty ||
       ! GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->trust_dirty_flag)
     {
-      const gchar *uri;
-
-      uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
       if (! uri)
         {
