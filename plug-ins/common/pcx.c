@@ -6,6 +6,8 @@
 
 /* New for 1998 -- Load 1, 4, 8 & 24 bit PCX files */
 /*              -- Save 8 & 24 bit PCX files */
+/* 1998-01-19 - fixed some endianness problems (Raphael Quinet) */
+/* 1998-02-05 - merged patch with "official" tree, some tidying up (njl) */
 
 /* Please contact me if you can't use your PCXs with this tool, I want
    The GIMP to have the best file filters on the planet */
@@ -21,6 +23,22 @@
 static void query (void);
 static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
                  GParam **return_vals);
+
+#if defined(_BIG_ENDIAN) || defined(sparc) || defined (__sgi)
+#define qtohl(x) \
+        ((unsigned long int)((((unsigned long int)(x) & 0x000000ffU) << 24) | \
+                             (((unsigned long int)(x) & 0x0000ff00U) <<  8) | \
+                             (((unsigned long int)(x) & 0x00ff0000U) >>  8) | \
+                             (((unsigned long int)(x) & 0xff000000U) >> 24)))
+#define qtohs(x) \
+        ((unsigned short int)((((unsigned short int)(x) & 0x00ff) << 8) | \
+                              (((unsigned short int)(x) & 0xff00) >> 8)))
+#else
+#define qtohl(x) (x)
+#define qtohs(x) (x)
+#endif
+#define htoql(x) qtohl(x)
+#define htoqs(x) qtohs(x)
 
 GPlugInInfo PLUG_IN_INFO = { NULL, NULL, query, run, };
 
@@ -55,7 +73,7 @@ static void query () {
                           "FIXME: write help for pcx_load",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@ecs.soton.ac.uk>",
-                          "1997",
+                          "January 1997",
                           "<Load>/PCX",
 			  NULL,
                           PROC_PLUG_IN,
@@ -67,7 +85,7 @@ static void query () {
                           "FIXME: write help for pcx_save",
                           "Francisco Bustamante & Nick Lamb",
                           "Nick Lamb <njl195@ecs.soton.ac.uk>",
-                          "1997",
+                          "January 1997",
                           "<Save>/PCX",
 			  "INDEXED, RGB, GRAY",
                           PROC_PLUG_IN,
@@ -154,25 +172,23 @@ static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
     }
 }
 
-#define BitSet(byte, bit)  (((byte) & (bit)) == (bit))
-
 guchar mono[6]= {0, 0, 0, 255, 255, 255};
 
 static struct {
-    unsigned char manufacturer;
-    unsigned char version;
-    unsigned char compression;
-    unsigned char bpp;
-    short int x1, y1;
-    short int x2, y2;
-    short int hdpi;
-    short int vdpi;
-    unsigned char colormap[48];
-    unsigned char reserved;
-    unsigned char planes;
-    short int bytesperline;
-    short int color;
-    unsigned char filler[58];
+    guint8 manufacturer;
+    guint8 version;
+    guint8 compression;
+    guint8 bpp;
+    gint16 x1, y1;
+    gint16 x2, y2;
+    gint16 hdpi;
+    gint16 vdpi;
+    guint8 colormap[48];
+    guint8 reserved;
+    guint8 planes;
+    gint16 bytesperline;
+    gint16 color;
+    guint8 filler[58];
 } pcx_header;
 
 static gint32 load_image (char *filename) {
@@ -205,10 +221,10 @@ static gint32 load_image (char *filename) {
     return -1;
   }
 
-  offset_x = pcx_header.x1;
-  offset_y = pcx_header.y1;
-  width = pcx_header.x2 - offset_x + 1;
-  height = pcx_header.y2 - offset_y + 1;
+  offset_x = qtohs (pcx_header.x1);
+  offset_y = qtohs (pcx_header.y1);
+  width = qtohs (pcx_header.x2) - offset_x + 1;
+  height = qtohs (pcx_header.y2) - offset_y + 1;
 
   if (pcx_header.planes == 3 && pcx_header.bpp == 8) {
     image= gimp_image_new (width, height, RGB);
@@ -226,21 +242,21 @@ static gint32 load_image (char *filename) {
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1) {
   dest = (guchar *) g_malloc (width * height);
-    load_1(fd, width, height, dest, pcx_header.bytesperline);
+    load_1(fd, width, height, dest, qtohs (pcx_header.bytesperline));
     gimp_image_set_cmap (image, mono, 2);
   } else if (pcx_header.planes == 4 && pcx_header.bpp == 1) {
   dest = (guchar *) g_malloc (width * height);
-    load_4(fd, width, height, dest, pcx_header.bytesperline);
+    load_4(fd, width, height, dest, qtohs (pcx_header.bytesperline));
     gimp_image_set_cmap (image, pcx_header.colormap, 16);
   } else if (pcx_header.planes == 1 && pcx_header.bpp == 8) {
   dest = (guchar *) g_malloc (width * height);
-    load_8(fd, width, height, dest, pcx_header.bytesperline);
+    load_8(fd, width, height, dest, qtohs (pcx_header.bytesperline));
     fseek(fd, -768L, SEEK_END);
     fread(cmap, 768, 1, fd);
     gimp_image_set_cmap (image, cmap, 256);
   } else if (pcx_header.planes == 3 && pcx_header.bpp == 8) {
   dest = (guchar *) g_malloc (width * height * 3);
-    load_24(fd, width, height, dest, pcx_header.bytesperline);
+    load_24(fd, width, height, dest, qtohs (pcx_header.bytesperline));
   } else {
     fprintf(stderr, "PCX: Unusual PCX flavour, giving up\n");
     return -1;
@@ -380,23 +396,23 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
     case INDEXED_IMAGE:
       cmap= gimp_image_get_cmap(image, &colors);
       pcx_header.bpp = 8;
-      pcx_header.bytesperline = width;
+      pcx_header.bytesperline = htoqs (width);
       pcx_header.planes = 1;
-      pcx_header.color = 1;
+      pcx_header.color = htoqs (1);
       break;
 
     case RGB_IMAGE:
       pcx_header.bpp = 8;
       pcx_header.planes = 3;
-      pcx_header.color = 1;
-      pcx_header.bytesperline = width;
+      pcx_header.color = htoqs (1);
+      pcx_header.bytesperline = htoqs (width);
       break;
 
     case GRAY_IMAGE:
       pcx_header.bpp = 8;
       pcx_header.planes = 1;
-      pcx_header.color = 2;
-      pcx_header.bytesperline = width;
+      pcx_header.color = htoqs (2);
+      pcx_header.bytesperline = htoqs (width);
       break;
 
     default:
@@ -413,13 +429,13 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
   pixels= (guchar *) g_malloc(width * height * pcx_header.planes);
   gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, 0, width, height);
 
-  pcx_header.x1 = offset_x;
-  pcx_header.y1 = offset_y;
-  pcx_header.x2 = offset_x + width - 1;
-  pcx_header.y2 = offset_y + height - 1;
+  pcx_header.x1 = htoqs (offset_x);
+  pcx_header.y1 = htoqs (offset_y);
+  pcx_header.x2 = htoqs (offset_x + width - 1);
+  pcx_header.y2 = htoqs (offset_y + height - 1);
 
-  pcx_header.hdpi = 300;
-  pcx_header.vdpi = 300;
+  pcx_header.hdpi = htoqs (300);
+  pcx_header.vdpi = htoqs (300);
   pcx_header.reserved = 0;
 
   fwrite(&pcx_header, 128, 1, fp);

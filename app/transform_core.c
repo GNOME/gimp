@@ -267,6 +267,9 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
       undo_push_group_end (gdisp->gimage);
 
       /*  Flush the gdisplays  */
+      /* FIXME: this expose is a performance drag, but it prevents display
+         artifacts */
+      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width, gdisp->disp_height);
       gdisplays_flush ();
     }
   else

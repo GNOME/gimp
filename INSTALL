@@ -10,6 +10,10 @@ GIMP on unix:
   5. Install the GIMP by running `make install'.
   6. Optionally install the separate gimp-data-extras package.
 
+Please make sure you don't have any old GTK, jpeg, etc. libraries lying
+around on your system, otherwise configure will fail to find the new
+ones.
+
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,

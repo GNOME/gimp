@@ -4,7 +4,7 @@ to have the following packages installed:
 	- GNU autoconf 2.12
 	- GNU automake 1.2f
 		Available in ftp://ftp.cygnus.com/pub/tromey
-	- GNU libtool 1.0f
+	- GNU libtool 1.1
 
 These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.

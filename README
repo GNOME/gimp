@@ -119,9 +119,9 @@ More information about Byxnet can be found at
 
 	http://rudolf.canberra.edu.au/gimp/byxnet.html
 
-Manish Singh (yosh@gimp.org) has contributed a set of keybindings similar
-to those in Adobe Photoshop (tm).  You can find them in the ps-menurc file.
-To use them, copy this file to ~/.gimp/menurc
+Included is a set of keybindings similar to those in Adobe Photoshop (tm).
+You can find them in the ps-menurc file.  To use them, copy this file to
+~/.gimp/menurc
 
 We sincerely hope you enjoy the program.  Please report problems to
 gimp-developer@scam.xcf.berkeley.edu.  Before reporting a problem, you

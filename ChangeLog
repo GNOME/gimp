@@ -1,3 +1,12 @@
+Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* updated to use libtool 1.1
+
+	* app/transform_core.c: fixed display artifacts for the
+	transform tools, sorta.
+
+	* plug-ins/pcx/pcx.c: updated pcx plug-in
+
 Sat Mar 14 18:50:29 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/main.c: applied gimp-ovchinnikov-970312-0.patch which
