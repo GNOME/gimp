@@ -1,3 +1,10 @@
+Mon Jun  8 04:30:00 EDT 1998 Chris Lahey  <clahey@umich.edu>
+
+        * plug-ins/depthmerge/depthmerge.c: stdio.h
+        * plug-ins/gtm/gtm.c: stdio.h
+        * plug-ins/nlfilt/nlfilt.c: stdio.h, stdlib.h
+        Added the listed includes to get it to compile. (1-1-0 sync)
+
 Sun Jun  7 18:44:17 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/webbrowser/web-browser.scm: changed the URL for the
