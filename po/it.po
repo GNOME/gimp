@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.16\n"
+"Project-Id-Version: gimp 1.1.17\n"
 "POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: dom feb  6 15:21:10 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
@@ -16,9 +16,8 @@ msgid "About the GIMP"
 msgstr "Informazioni su GIMP"
 
 #: app/about_dialog.c:244
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:248
 #, c-format
@@ -38,23 +37,20 @@ msgid "Pressure:"
 msgstr "Pressione:"
 
 #: app/app_procs.c:266
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:270 app/app_procs.c:272 app/interface.c:520
 msgid "The GIMP"
 msgstr "The GIMP"
 
 #: app/app_procs.c:275
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:285 app/app_procs.c:287
-#, fuzzy
 msgid "brought to you by"
-msgstr "Versione %s realizzata da"
+msgstr "realizzata da"
 
 #: app/app_procs.c:355
 msgid "GIMP Startup"
@@ -740,21 +736,19 @@ msgstr "Nessuna"
 
 #: app/commands.c:336
 msgid "Feather Selection"
-msgstr "Selezione Feather"
+msgstr "Selezione Piumata"
 
 #: app/commands.c:339
-#, fuzzy
 msgid "Feather Selection by:"
-msgstr "da Maschera a Selezione con:"
+msgstr "Selezione Piumata per:"
 
 #: app/commands.c:372
 msgid "Shrink Selection"
 msgstr "Riduci Selezione"
 
 #: app/commands.c:375
-#, fuzzy
 msgid "Shrink Selection by:"
-msgstr "Riduci Selezione con:"
+msgstr "Riduci Selezione per:"
 
 #: app/commands.c:384
 msgid "Shrink from image border"
@@ -765,18 +759,16 @@ msgid "Grow Selection"
 msgstr "Espandi Selezione"
 
 #: app/commands.c:409
-#, fuzzy
 msgid "Grow Selection by:"
-msgstr "Espandi Selezione con:"
+msgstr "Espandi Selezione per:"
 
 #: app/commands.c:429
 msgid "Border Selection"
 msgstr "Selezione Bordo"
 
 #: app/commands.c:432
-#, fuzzy
 msgid "Border Selection by:"
-msgstr "Selezione Bordo con:"
+msgstr "Selezione Bordo per:"
 
 #: app/commands.c:1307
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -1602,7 +1594,7 @@ msgstr "Progresso"
 
 #: app/gimpprogress.c:123 app/gimpprogress.c:170
 msgid "Please wait..."
-msgstr ""
+msgstr "Si prega di aspettare..."
 
 #: app/gimprc.c:399 app/plug_in.c:304
 msgid "Resource configuration"
@@ -2329,9 +2321,9 @@ msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
 #: app/info_window.c:512
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d pixels"
-msgstr "pixel"
+msgstr "%d x &d pixel"
 
 #: app/info_window.c:536
 msgid "RGB Color"
@@ -2342,9 +2334,8 @@ msgid "Indexed Color"
 msgstr "Scala di Colore"
 
 #: app/info_window.c:541
-#, fuzzy
 msgid "colors"
-msgstr "Colore"
+msgstr "colori"
 
 #. size slider
 #: app/ink.c:296
@@ -2717,9 +2708,8 @@ msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
 msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 
 #: app/install.c:295
-#, fuzzy
 msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
 
 #: app/install.c:296
 msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
@@ -2735,7 +2725,7 @@ msgstr "Continua"
 
 #: app/install.c:441
 msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
@@ -2747,7 +2737,7 @@ msgstr ""
 
 #: app/install.c:457
 msgid " does not exist.  Cannot install.\n"
-msgstr " non esistente. Non è possibile installare.\n"
+msgstr " non esistente. Non è possibile portare a termine l'installazione.\n"
 
 #: app/install.c:465
 msgid ""
@@ -2755,7 +2745,7 @@ msgid ""
 "Cannot install."
 msgstr ""
 " ha permessi invalidi.\n"
-"Installazione impossibile."
+"Non è possibile portare a termine l'installazione."
 
 #: app/install.c:499
 msgid ""
@@ -2946,11 +2936,11 @@ msgstr "Dissoluta"
 
 #: app/layers_dialog.c:219 app/paint_funcs.c:86 app/tool_options.c:875
 msgid "Multiply (Burn)"
-msgstr "Toni chiari"
+msgstr "Multipla (Burn)"
 
 #: app/layers_dialog.c:221 app/paint_funcs.c:98 app/tool_options.c:876
 msgid "Divide (Dodge)"
-msgstr "Toni Scuri"
+msgstr "Divisa (Dodge)"
 
 #: app/layers_dialog.c:223 app/paint_funcs.c:87 app/tool_options.c:877
 msgid "Screen"
@@ -3098,11 +3088,11 @@ msgstr "Opzioni Incolla Livello"
 
 #: app/layers_dialog.c:4011
 msgid "Final, Merged Layer should be:"
-msgstr "Per finire, i Livelli Incollati devono essere:"
+msgstr "Il Livello Incollato Finale deve essere:"
 
 #: app/layers_dialog.c:4012
 msgid "Final, Anchored Layer should be:"
-msgstr "Per finire, i Livelli Ancorati devono essere:"
+msgstr "Il Livello Ancorato Finale deve essere:"
 
 #: app/layers_dialog.c:4017
 msgid "Expanded as necessary"
@@ -3123,7 +3113,7 @@ msgstr "Livelli e Canali"
 #. The Auto-button
 #: app/lc_dialog.c:148 app/levels.c:594
 msgid "Auto"
-msgstr "Automatico"
+msgstr "Auto"
 
 #: app/lc_dialog.c:170
 msgid "Layers"
@@ -3720,11 +3710,11 @@ msgstr "/Visualizza/Barra di stato"
 
 #: app/menus.c:383
 msgid "/View/Toggle Guides"
-msgstr "Visualizza/Griglia"
+msgstr "/Visualizza/Griglia"
 
 #: app/menus.c:385
 msgid "/View/Snap to Guides"
-msgstr "Visualizza/Punti a Griglia"
+msgstr "/Visualizza/Punti a Griglia"
 
 #: app/menus.c:390
 msgid "/View/New View"
@@ -4094,7 +4084,7 @@ msgstr "/Elimina Livello"
 
 #: app/menus.c:716
 msgid "/Layer Boundary Size..."
-msgstr "Dimensione Confine del Livello..."
+msgstr "/Dimensione Confine del Livello..."
 
 #: app/menus.c:718
 msgid "/Layer to Imagesize"
@@ -4194,7 +4184,7 @@ msgstr "/Tracciato a Selezione"
 
 #: app/menus.c:805
 msgid "/Selection to Path"
-msgstr "Selezione a Tracciato "
+msgstr "/Selezione a Tracciato "
 
 #: app/menus.c:807
 msgid "/Stroke Path"

@@ -146,7 +146,7 @@ msgstr "Chiudi"
 #: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
 #: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
