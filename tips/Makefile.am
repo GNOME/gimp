@@ -10,6 +10,7 @@ tipsdata_DATA = \
 	gimp_tips.it.txt	\
 	gimp_tips.ko.txt	\
 	gimp_conseils.fr.txt	\
+	gimp_tips.nl.txt	\
 	gimp_tips.ru.txt	\
 	gimp_tips.pl.txt	\
 	gimp_tips.uk.txt        \

@@ -1,3 +1,8 @@
+2001-06-25  Sven Neumann  <sven@gimp.org>
+
+	* nl.po: 
+	updates to the dutch translation by Branko Collin <collin@xs4all.nl>
+
 2001-05-29  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* sk.po: Correct "charset" field in header.

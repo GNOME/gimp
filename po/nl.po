@@ -1,4 +1,4 @@
-# Dutch translation of Gimp 1.2
+# Dutch translation of the Gimp 1.2 (core functions)
 # Copyright (C) 2000-2001 Free Software Foundation, Inc.
 # Wing Tung Leung <tg@skynet.be>, 1998.
 # Gert Dewit <Gert.Dewit@sos.be>, 2000
@@ -16,7 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/about_dialog.c:137
-# what is the standard Dutch translation for this phrase?
 msgid "About the GIMP"
 msgstr "Over de GIMP"
 
@@ -27,13 +26,12 @@ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:209
 #, c-format
-# what is the standard Dutch translation for this phrase?
 msgid "Version %s brought to you by"
-msgstr "Versie %s, u gebracht door"
+msgstr "Versie %s, u aangeboden door"
 
 #: app/about_dialog.c:259
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Gelieve http://www.gimp.org/ te bezoeken voor meer info"
+msgstr "Bezoek http://www.gimp.org/ voor meer informatie"
 
 #: app/airbrush.c:145 app/convolve.c:170 app/smudge.c:121
 msgid "Rate:"
@@ -58,9 +56,8 @@ msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:307 app/app_procs.c:309
-# what is the standard Dutch translation for this phrase?
 msgid "brought to you by"
-msgstr "u gebracht door"
+msgstr "u aangeboden door"
 
 #: app/app_procs.c:378
 msgid "GIMP Startup"
@@ -73,7 +70,6 @@ msgstr "bezig met parsen van \"%s\"\n"
 
 #. initialize the xcf file format routines
 #: app/app_procs.c:569
-# what is the Gimp doing here exactly? 'Data' could be anything
 msgid "Looking for data files"
 msgstr "Bezig met zoeken naar gegevensbestanden"
 
@@ -102,9 +98,9 @@ msgid "Gradients"
 msgstr "Verlopen"
 
 #: app/app_procs.c:767
-# what is the standard Dutch translation for this phrase?
+# Dialog title
 msgid "Really Quit?"
-msgstr "Echt afsluiten?"
+msgstr "Werkelijk afsluiten?"
 
 #: app/app_procs.c:771
 msgid ""
@@ -114,7 +110,7 @@ msgid ""
 msgstr ""
 "Sommige bestanden zijn niet bewaard.\n"
 "\n"
-"De GIMP afsluiten?"
+"Weet u zeker dat u de GIMP wilt afsluiten?"
 
 #: app/app_procs.c:772
 msgid "Quit"
@@ -174,7 +170,7 @@ msgstr "Aangepast verloop"
 
 #: app/blend.c:317
 msgid "Blend:"
-msgstr "Meng:"
+msgstr "Verloop:"
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
@@ -201,19 +197,17 @@ msgid "Conical (asymmetric)"
 msgstr "Conisch (asymmetrisch)"
 
 #: app/blend.c:331
-# What is 'Shapeburst'?
+# 'Shapeburst' means 'follow the form of a selection'
 msgid "Shapeburst (angular)"
-msgstr "Vorm (hoekig)"
+msgstr "Naar vorm (hoekig)"
 
 #: app/blend.c:332
-# What is 'Shapeburst'?
 msgid "Shapeburst (spherical)"
-msgstr "Vorm (hoekig)"
+msgstr "Naar vorm (rond)"
 
 #: app/blend.c:333
-# What is 'Shapeburst'?
 msgid "Shapeburst (dimpled)"
-msgstr "Vorm (putjes)"
+msgstr "Naar vorm (putjes)"
 
 #: app/blend.c:334
 msgid "Spiral (clockwise)"
@@ -225,7 +219,7 @@ msgstr "Spiraalvormig (tegen de wijzers in)"
 
 #: app/blend.c:339
 msgid "Gradient:"
-msgstr "Verloop:"
+msgstr "Type:"
 
 #: app/blend.c:347 app/by_color_select.c:848 app/preferences_dialog.c:1840
 msgid "None"
@@ -282,7 +276,7 @@ msgstr "Helderheid-contrast"
 
 #: app/brightness_contrast.c:175
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Helderheid-contrast werkt niet op geïndexeerde tekeningen."
+msgstr "Helderheid-contrast werkt niet op geïndexeerde tekengebieden."
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
@@ -396,7 +390,6 @@ msgid "Delete"
 msgstr "Verwijderen"
 
 #: app/brush_select.c:516
-# How can one use non-ASCII characters?
 msgid "Spacing:"
 msgstr "Spatiëring:"
 
@@ -500,13 +493,11 @@ msgid "Selection Mask"
 msgstr "Selectiemasker"
 
 #: app/channel_ops.c:91 app/resize.c:436
-# What is the standard Dutch translation for this phrase?
 msgid "Offset"
 msgstr "Verspringing"
 
 #. The offset labels
 #: app/channel_ops.c:115
-# What is the standard Dutch translation for this phrase?
 msgid "Offset X:"
 msgstr "Verspringing X:"
 
@@ -532,7 +523,6 @@ msgstr "Transparant"
 
 #. The by half height and half width option
 #: app/channel_ops.c:193
-# What is the standard Dutch translation for this phrase?
 msgid "Offset by (x/2),(y/2)"
 msgstr "Verspringing met (x/2),(y/2)"
 
@@ -602,7 +592,6 @@ msgstr "Kanaalnaam:"
 
 #. The opacity scale
 #: app/channels_dialog.c:2581 app/channels_dialog.c:2744
-# What is the standard Dutch translation for this phrase?
 msgid "Fill Opacity:"
 msgstr "Ondoorzichtigheid van vullen:"
 
@@ -648,9 +637,9 @@ msgid "Color Balance"
 msgstr "Kleurbalans"
 
 #: app/color_balance.c:217
-# What is a 'drawable'?
+# A 'drawable' is that part of the image you can currently draw on (layer, channel or layer mask)
 msgid "Color balance operates only on RGB color drawables."
-msgstr "Kleurbalans werkt enkel op RGB-tekeningen."
+msgstr "Kleurbalans werkt enkel op RGB-tekengebieden."
 
 #: app/color_balance.c:266 app/dodgeburn.c:186
 msgid "Shadows"
@@ -685,9 +674,8 @@ msgstr "Geel"
 
 #. The preserve luminosity toggle
 #: app/color_balance.c:442
-# What is the Dutch translation of 'Luminosity'?
 msgid "Preserve Luminosity"
-msgstr "Lichtheid behouden"
+msgstr "Helderheid behouden"
 
 #: app/color_notebook.c:120
 msgid "Color Selection"
@@ -702,9 +690,9 @@ msgid "Color Picker"
 msgstr "Kleurkiezer"
 
 #: app/color_picker.c:177
-# Is 'sample' a verb or a noun here?
+# Sample the average of all colors within a radius of the center point.
 msgid "Sample Average"
-msgstr "Samplegemiddelde"
+msgstr "Sample gemiddelde"
 
 #: app/color_picker.c:220
 msgid "Update Active Color"
@@ -821,38 +809,33 @@ msgid "Feather Selection by:"
 msgstr "Straalselectie door:"
 
 #: app/commands.c:376
-# '(the) shrink selection' or 'shrink (the) selection'?
+# Is this the title of the dialog? It does not seem to get translated.
 msgid "Shrink Selection"
-msgstr "Krimpselectie"
+msgstr "Selectie krimpen"
 
 #: app/commands.c:379
-# '(the) shrink selection' or 'shrink (the) selection'?
 msgid "Shrink Selection by:"
-msgstr "Krimpselectie door:"
+msgstr "Krimp selectie met:"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
 msgstr "Krimp vanaf de afbeeldingsrand"
 
 #: app/commands.c:410
-# '(the) grow selection' or 'grow (the) selection'?
 msgid "Grow Selection"
-msgstr "Groeiselectie"
+msgstr "Selectie uitdijen"
 
 #: app/commands.c:413
-# '(the) grow selection' or 'grow (the) selection'?
 msgid "Grow Selection by:"
-msgstr "Groeiselectie door :"
+msgstr "Dij selectie uit met:"
 
 #: app/commands.c:433
-# '(the) border selection' or 'border (the) selection'?
 msgid "Border Selection"
-msgstr "Randselectie"
+msgstr "Bandselectie"
 
 #: app/commands.c:436
-# '(the) border selection' or 'border (the) selection'?
 msgid "Border Selection by:"
-msgstr "Randselectie door:"
+msgstr "Naar bandselectie op:"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -1030,9 +1013,8 @@ msgid "Curves"
 msgstr "Curves"
 
 #: app/curves.c:448
-# What is a 'drawable'?
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "Curves voor geïndexeerde tekeningen kunnen niet aangepast worden."
+msgstr "Curves voor geïndexeerde tekengebieden kunnen niet aangepast worden."
 
 #: app/curves.c:584
 msgid "Modify Curves for Channel:"
@@ -1057,12 +1039,12 @@ msgstr "Vrij"
 
 #: app/curves.c:708 app/levels.c:607 app/module_db.c:878
 msgid "Load"
-msgstr "Laad"
+msgstr "Laden"
 
 #: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
-msgstr "Bewaar"
+msgstr "Opslaan"
 
 #: app/curves.c:1315
 msgid "Load Curves"
@@ -1083,9 +1065,8 @@ msgid "Unable to open file %s"
 msgstr "Kan bestand %s niet openen"
 
 #: app/desaturate.c:43
-# What is a 'drawable'?
 msgid "Desaturate operates only on RGB color drawables."
-msgstr "Desatureren werkt enkel op RGB kleurentekeningen."
+msgstr "Desatureren werkt enkel op RGB-kleurentekengebieden."
 
 #: app/devices.c:752
 msgid "Device Status"
@@ -1097,7 +1078,6 @@ msgid "Pasted Layer"
 msgstr "Geplakte laag"
 
 #: app/docindex.c:116
-# What does 'dialog' refer to?
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1105,7 +1085,7 @@ msgid ""
 msgstr ""
 "Open het geselecteerde item\n"
 "<Shift> Haal venster naar voren als het al geopend is\n"
-"<Ctrl> Laad Afbeeldingsdialoogvenster"
+"<Ctrl> Open dialoogvenster 'Laad Afbeelding'"
 
 #: app/docindex.c:121
 msgid ""
@@ -1113,18 +1093,18 @@ msgid ""
 "<Shift> To top"
 msgstr ""
 "Verplaats de geselecteerde ingang in de index\n"
-"<Shift> naar boven"
+"<Shift> Naar begin"
 
 #: app/docindex.c:125
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
 msgstr "Verplaats de geselecteerde ingang in de index\n"
-"<Shift> naar beneden"
+"<Shift> Naar einde"
 
 #: app/docindex.c:129
 msgid "Remove the selected entry from the index"
-msgstr "Verwijder de selecteerde ingang uit de index"
+msgstr "Verwijder de geselecteerde ingang uit de index"
 
 #: app/docindex.c:770
 msgid "Document Index"
@@ -1143,12 +1123,12 @@ msgstr "Type"
 #: app/dodgeburn.c:166
 # What is the Dutch translation of this phrase?
 msgid "Dodge"
-msgstr "Dodge"
+msgstr "Tegenhouden"
 
 #: app/dodgeburn.c:168
 # What is the Dutch translation of this phrase?
 msgid "Burn"
-msgstr "Burn"
+msgstr "Doordrukken"
 
 #: app/dodgeburn.c:178
 msgid "Mode"
@@ -1165,7 +1145,7 @@ msgstr "Beweeg: "
 #: app/equalize.c:42
 # What is 'equalize'?
 msgid "Equalize does not operate on indexed drawables."
-msgstr "'Gelijkmaken' werkt niet op geïndexeerde tekeningen."
+msgstr "'Gelijkmaken' werkt niet op geïndexeerde tekengebieden."
 
 #. the hard toggle
 #: app/eraser.c:112
@@ -1250,7 +1230,7 @@ msgstr "Nieuwe afbeelding"
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:1593 app/user_install.c:1198
 msgid "Pixels"
-msgstr "pixels"
+msgstr "pixel"
 
 #. the resolution labels
 #: app/file_new_dialog.c:529 app/resize.c:598
@@ -1325,11 +1305,12 @@ msgid ""
 "(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
-"%s wordt teruggehaald naar\n"
-"%s\n"
+"\"%s\" terughalen uit\n"
+"%s?\n"
 "\n"
-"(U verliest alle veranderingen\n)"
-"inclusief de informatie voor Ongedaan maken)"
+"(U verliest alle veranderingen,\n"
+"waaronder de informatie voor\n"
+"Ongedaan maken.)"
 
 #: app/fileops.c:628
 msgid "Revert Image?"
@@ -1593,7 +1574,7 @@ msgstr ""
 #: app/gimage_mask.c:570
 # What is meant here with stroke?
 msgid "No selection to stroke!"
-msgstr "Er is geen selectie om te stroken!"
+msgstr "Er is geen selectie om een lijn op te tekenen!"
 
 #: app/gimpbrush.c:294
 #, c-format
@@ -1615,7 +1596,7 @@ msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP-penseelbestand lijkt afgeknot te zijn: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, c-format, fuzzy
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP-penseelbestand lijkt afgeknot te zijn: \"%s\"."
 
@@ -1662,18 +1643,16 @@ msgid "Can't fill unknown image type."
 msgstr "Kan geen onbekend afbeeldingstype vullen."
 
 #: app/gimpdrawable.c:509
-# What is a 'drawable'? 
 # Is 'attach' an infinitive? 
 # What is a 'parasite'?
 msgid "parasite attach to drawable"
-msgstr "parasiet vastmaken aan afbeelding"
+msgstr "parasiet vastmaken aan tekengebied"
 
 #: app/gimpdrawable.c:544
-# What is a 'drawable'? 
 # Is 'detach' an infinitive? 
 # What is a 'parasite'?
 msgid "detach parasite from drawable"
-msgstr "parasiet losmaken van afbeelding"
+msgstr "parasiet losmaken van tekengebied"
 
 #: app/gimpdrawable.c:752
 msgid "unnamed"
@@ -1696,7 +1675,7 @@ msgid ""
 msgstr ""
 "Kan de GIMP Helpbrowser-procedure niet vinden.\n"
 "Hij was waarschijnlijk niet gecompileerd, omdat\n"
-"u GtkXmHTML niet heeft geïnstalleerd."
+"u GtkXmHTML niet hebt geïnstalleerd."
 
 #: app/gimphelp.c:196
 msgid "Use Netscape instead"
@@ -1859,7 +1838,7 @@ msgstr "pixel"
 
 #: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
 msgid "pixels"
-msgstr "pixels"
+msgstr "pixel"
 
 #. standard units
 #: app/gimpunit.c:66
@@ -1868,7 +1847,7 @@ msgstr "duim"
 
 #: app/gimpunit.c:66
 msgid "inches"
-msgstr "duimen"
+msgstr "duim"
 
 #: app/gimpunit.c:67
 msgid "millimeter"
@@ -1876,7 +1855,7 @@ msgstr "millimeter"
 
 #: app/gimpunit.c:67
 msgid "millimeters"
-msgstr "millimeters"
+msgstr "millimeter"
 
 #. professional units
 #: app/gimpunit.c:70
@@ -1885,7 +1864,7 @@ msgstr "punt"
 
 #: app/gimpunit.c:70
 msgid "points"
-msgstr "punten"
+msgstr "punt"
 
 #: app/gimpunit.c:71
 msgid "pica"
@@ -1893,7 +1872,7 @@ msgstr "pica"
 
 #: app/gimpunit.c:71
 msgid "picas"
-msgstr "pica's"
+msgstr "pica"
 
 #: app/gimpunit.c:78
 msgid "percent"
@@ -2292,9 +2271,8 @@ msgid "Histogram"
 msgstr "Histogram"
 
 #: app/histogram_tool.c:209
-# What is a 'drawable'?
 msgid "Histogram does not operate on indexed drawables."
-msgstr "Histogram werkt niet op geïndexeerde tekeningen."
+msgstr "Histogram werkt niet op geïndexeerde tekengebieden."
 
 #: app/histogram_tool.c:261
 msgid "Mean:"
@@ -2310,7 +2288,7 @@ msgstr "Mediaan:"
 
 #: app/histogram_tool.c:264
 msgid "Pixels:"
-msgstr "pixels:"
+msgstr "Pixels:"
 
 #: app/histogram_tool.c:266
 # 'Tellen:'?
@@ -2335,7 +2313,7 @@ msgstr "Hue-Saturation (Tint-Verzadiging)"
 #: app/hue_saturation.c:292
 # What is the Dutch translation of this phrase?
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Hue-saturation werkt enkel op RGB-tekeningen."
+msgstr "Hue-saturation werkt enkel op RGB-tekengebieden."
 
 #: app/hue_saturation.c:360
 # What is the Dutch translation of this phrase?
@@ -2554,9 +2532,8 @@ msgstr "kleuren"
 
 #. adjust sliders
 #: app/ink.c:296
-#, fuzzy
 msgid "Adjustment"
-msgstr "Aanpassing:"
+msgstr "Aanpassing"
 
 #: app/ink.c:313 app/ink.c:351
 msgid "Size:"
@@ -2621,7 +2598,7 @@ msgstr "GDisplay-procedures"
 #: app/internal_procs.c:89
 # What is a 'drawable'
 msgid "Drawable procedures"
-msgstr "Tekeningprocedures"
+msgstr "Tekengebiedprocedures"
 
 #: app/internal_procs.c:92
 msgid "Edit procedures"
@@ -2717,7 +2694,7 @@ msgstr "Eenheden"
 #: app/invert.c:46
 # What is a 'drawable'?
 msgid "Invert does not operate on indexed drawables."
-msgstr "Inverteren werkt niet op geïndexeerde tekeningen."
+msgstr "Inverteren werkt niet op geïndexeerde tekengebieden."
 
 #: app/invert.c:56
 msgid "Invert operation failed."
@@ -2780,11 +2757,11 @@ msgstr "Oplossen"
 
 #: app/layers_dialog.c:380 app/paint_funcs.c:91 app/tool_options.c:925
 msgid "Multiply (Burn)"
-msgstr "Vermenigvuldig (burn)"
+msgstr "Vermenigvuldig (Doordrukken)"
 
 #: app/layers_dialog.c:381 app/paint_funcs.c:103 app/tool_options.c:926
 msgid "Divide (Dodge)"
-msgstr "Deel (Dodge)"
+msgstr "Deel (Tegenhouden)"
 
 #: app/layers_dialog.c:382 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Screen"
@@ -2932,7 +2909,7 @@ msgstr "Niveaus"
 
 #: app/levels.c:244
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "Niveaus voor geïndexeerde tekeningen kunnen niet aangepast worden."
+msgstr "Niveaus voor geïndexeerde tekengebieden kunnen niet aangepast worden."
 
 #: app/levels.c:370
 msgid "Modify Levels for Channel:"
@@ -3041,7 +3018,7 @@ msgstr "  -r, --restore-session    Probeer opgeslagen sessie te herstellen.\n"
 
 #: app/main.c:318
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          Laat opstartvenster niet zien.\n"
+msgstr "  -s, --no-splash          Opstartvenster niet tonen.\n"
 
 #: app/main.c:319
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
@@ -3061,7 +3038,7 @@ msgid ""
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Gebruik geen gedeeld geheugen tussen GIMP en "
-"plugins.\n"
+"plug-ins.\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -3214,7 +3191,7 @@ msgstr "/Help/Tip van de dag..."
 
 #: app/menus.c:190
 msgid "/Help/About..."
-msgstr "/Help/Over..."
+msgstr "/Help/Info..."
 
 #: app/menus.c:193
 msgid "/Help/Dump Items (Debug)"
@@ -3229,7 +3206,6 @@ msgid "/File/Save As..."
 msgstr "/Bestand/Opslaan als..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
 msgstr "/Bestand/Haal terug..."
 
@@ -3294,7 +3270,7 @@ msgstr "/Bewerken/Vullen met AG-kleur"
 #: app/menus.c:269
 # What does 'Stroke' mean?
 msgid "/Edit/Stroke"
-msgstr "/Bewerken/Stroke"
+msgstr "/Bewerken/Lijn tekenen"
 
 #. <Image>/Selecteren
 #: app/menus.c:277
@@ -3327,11 +3303,11 @@ msgstr "/Selecteren/Krimpen..."
 
 #: app/menus.c:294
 msgid "/Select/Grow..."
-msgstr "/Selecteren/Groeien..."
+msgstr "/Selecteren/Uitdijen..."
 
 #: app/menus.c:296
 msgid "/Select/Border..."
-msgstr "/Selecteren/Rand..."
+msgstr "/Selecteren/Band..."
 
 #: app/menus.c:301
 msgid "/Select/Save to Channel"
@@ -3463,7 +3439,7 @@ msgstr "/Afbeelding/Tranformaties/Verspringing..."
 
 #: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
-msgstr "/Afbeelding/Tranformaties/Rotatie"
+msgstr "/Afbeelding/Tranformaties/Draaien"
 
 #: app/menus.c:408
 msgid "/Image/Canvas Size..."
@@ -3834,7 +3810,7 @@ msgstr "/Selectie naar pad"
 # Is 'stroke' a verb here?
 # What is the Dutch translation of 'stroke'?
 msgid "/Stroke Path"
-msgstr "/Pad stroken"
+msgstr "/Pad naar lijn"
 
 #: app/menus.c:733
 msgid "/Delete Path"
@@ -3879,17 +3855,14 @@ msgid "Load failed"
 msgstr "Laden mislukte"
 
 #: app/module_db.c:69
-# What does 'unload' mean?
 msgid "Unload requested"
-msgstr "Verzocht ontladen"
+msgstr "Ontladen aangevraagd"
 
 #: app/module_db.c:70
-# What does 'unload' mean?
 msgid "Unloaded OK"
 msgstr "Goed ontladen"
 
 #: app/module_db.c:313
-# What is 'Module DB'?
 msgid "Module DB"
 msgstr "Module DB"
 
@@ -3927,7 +3900,6 @@ msgid "nowhere (click 'refresh')"
 msgstr "nergens (klik op 'vernieuwen')"
 
 #: app/module_db.c:887
-# What does 'unload' mean?
 msgid "Unload"
 msgstr "Ontladen"
 
@@ -3957,16 +3929,15 @@ msgstr "Locatie:"
 
 #: app/module_db.c:909
 msgid "State:"
-msgstr "Staat:"
+msgstr "Status:"
 
 #: app/module_db.c:928
 msgid "Autoload during startup"
 msgstr "Autoladen tijdens opstarten"
 
 #: app/move.c:500
-# Is 'Move Tool' one or two words?
 msgid "Move Tool"
-msgstr "Verplaats gereedschap"
+msgstr "Verplaatsingsgereedschap"
 
 #. create the info dialog
 #: app/nav_window.c:1308
@@ -4210,7 +4181,7 @@ msgstr "Selectie naar pad"
 # Is 'stroke' used as a noun or a verb here?
 # What does 'Stroke' mean? 
 msgid "Stroke Path"
-msgstr "Pad stroken"
+msgstr "Pad naar lijn"
 
 #: app/paths_dialog.c:187
 msgid "Delete Path"
@@ -4342,7 +4313,7 @@ msgstr "schrijf \"%s\"\n"
 
 #: app/plug_in.c:405
 msgid "Starting extensions: "
-msgstr "Extensies worden gestart:"
+msgstr "Bezig met starten van extensies:"
 
 #: app/plug_in.c:407
 msgid "Extensions"
@@ -4371,9 +4342,8 @@ msgstr ""
 "slaan en de GIMP af te sluiten en opnieuw op te starten."
 
 #: app/posterize.c:158
-# What is the Dutch translation of 'drawable'?
 msgid "Posterize does not operate on indexed drawables."
-msgstr "Posterizeren werkt niet op geïndexeerde tekeningen."
+msgstr "Posterizeren werkt niet op geïndexeerde tekengebieden."
 
 #: app/posterize.c:203 app/tools.c:1110
 msgid "Posterize"
@@ -4437,14 +4407,14 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
-"Ten minste één van de veranderigen die u heeft\n"
+"Ten minste één van de veranderigen die u hebt\n"
 "gemaakt zal pas worden geeffectueerd nadat u de GIMP\n"
-"opnieuw heeft uitgevoerd.\n"
+"opnieuw hebt gestart.\n"
 "\n"
-"U kunt nu 'Bewaren' kiezen om u verandering\n"
-"permanent te maken, opdat u GIMP kunt herstarten, of\n"
-"'Sluiten' kiezen, waarom uw veranderinge gedeeltelijk\n"
-"niet worden toegepast."
+"U kunt nu 'Opslaan' kiezen en daarna GIMP herstarten\n"
+"om uw verandering permanent te maken of u kunt \n"
+"'Sluiten' kiezen, waarop uw veranderingen\n" 
+"(gedeeltelijk) niet worden toegepast."
 
 #: app/preferences_dialog.c:492
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4776,7 +4746,7 @@ msgstr "Aantal niveaus 'Ongedaan maken':"
 
 #: app/preferences_dialog.c:2218 app/user_install.c:1111
 msgid "Tile Cache Size:"
-msgstr "Grootte van de tegelcache:"
+msgstr "Grootte van de tegelbuffer:"
 
 #: app/preferences_dialog.c:2229
 msgid "Number of Processors to Use:"
@@ -5084,7 +5054,7 @@ msgstr "X:"
 
 #: app/resize.c:521
 msgid "Print Size & Display Unit"
-msgstr "Druk grootte & weergave-eenheid af"
+msgstr "Afdrukgrootte & weergave-eenheid"
 
 #: app/resize.c:1310
 msgid "Scale Error: Both width and height must be greater than zero."
@@ -5122,7 +5092,7 @@ msgstr "Verticaal:"
 
 #: app/rotate_tool.c:88
 msgid "Rotation Information"
-msgstr "Rotatie-informatie"
+msgstr "Draai-informatie"
 
 #: app/rotate_tool.c:108
 msgid "Center X:"
@@ -5130,7 +5100,7 @@ msgstr "Midden X:"
 
 #: app/rotate_tool.c:395
 msgid "Rotating..."
-msgstr "Rotatie..."
+msgstr "Draaien..."
 
 #: app/scale_tool.c:81
 msgid "Scaling Information"
@@ -5207,18 +5177,16 @@ msgid "Threshold"
 msgstr "Drempel"
 
 #: app/threshold.c:217
-# What is a 'drawable'?
 msgid "Threshold does not operate on indexed drawables."
-msgstr "Drempel werkt niet op geïndexeerde tekeningen."
+msgstr "Drempel werkt niet op geïndexeerde tekengebieden."
 
 #: app/threshold.c:298
 msgid "Threshold Range:"
 msgstr "Drempelbereik:"
 
 #: app/tips_dialog.c:75
-# This should become 'gimp_tips.nl.txt' as soon as a translation is available.
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.nl.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
@@ -5302,7 +5270,7 @@ msgstr "Emmervullen"
 #: app/tool_options.c:476
 # What is the Dutch translation of this phrase?
 msgid "Blend Tool"
-msgstr "Mengtool"
+msgstr "Kleurverloop"
 
 #: app/tool_options.c:478 app/tools.c:657
 msgid "Pencil"
@@ -5338,7 +5306,7 @@ msgstr "Inktgereedschap"
 #: app/tool_options.c:492 app/tools.c:853 app/tools.c:859
 # What is the Dutch translation of this phrase?
 msgid "Dodge or Burn"
-msgstr "Duiken of branden"
+msgstr "Tegenhouden of doordrukken"
 
 #: app/tool_options.c:494
 # What is the Dutch translation of this phrase?
@@ -5355,7 +5323,7 @@ msgstr "Drukgevoeligheid"
 
 #: app/tool_options.c:734
 msgid "Opacity"
-msgstr "Ondoorzichtigheid"
+msgstr "Ondoorzichtigheid:"
 
 #: app/tool_options.c:757
 msgid "Hardness"
@@ -5613,7 +5581,7 @@ msgstr "Teken in inkt"
 
 #: app/tools.c:854
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Gereedschappen/Schildergereedschappen/Duiken en branden"
+msgstr "/Gereedschappen/Schildergereedschappen/TegenhoudenDoordrukken"
 
 #: app/tools.c:881 app/tools.c:887
 msgid "Smudge"
@@ -5805,7 +5773,7 @@ msgstr "afbeelding"
 #: app/undo.c:2908
 # What is this about?
 msgid "image mod"
-msgstr ""
+msgstr "afbeeldingsverandering"
 
 #: app/undo.c:2909
 msgid "mask"
@@ -5837,7 +5805,7 @@ msgstr "verwijder laag"
 #: app/undo.c:2915
 # What is this about?
 msgid "layer mod"
-msgstr ""
+msgstr "laagverandering"
 
 #: app/undo.c:2916
 msgid "add layer mask"
@@ -5870,28 +5838,28 @@ msgstr "verwijder kanaal"
 #: app/undo.c:2922
 # What is this about?
 msgid "channel mod"
-msgstr ""
+msgstr "kanaalverandering"
 
 #: app/undo.c:2923
 # What is this about?
 msgid "FS to layer"
-msgstr ""
+msgstr "drijvende sel. naar laag"
 
 #. ok
 #: app/undo.c:2924
 # What is this about?
 msgid "gimage"
-msgstr ""
+msgstr "afbeelding"
 
 #: app/undo.c:2925
 # What is this about?
 msgid "FS rigor"
-msgstr ""
+msgstr "drijvende sel. tonen"
 
 #: app/undo.c:2926
 # What is this about?
 msgid "FS relax"
-msgstr ""
+msgstr "drijvende sel. verbergen"
 
 #: app/undo.c:2927
 msgid "guide"
@@ -5943,12 +5911,12 @@ msgstr "laag samenvoegen"
 #: app/undo.c:2938
 # What is this about?
 msgid "FS anchor"
-msgstr ""
+msgstr "drijvende sel. verankeren"
 
 #: app/undo.c:2939
 # What is this about?
 msgid "gimage mod"
-msgstr ""
+msgstr "afbeeldingsverandering"
 
 #: app/undo.c:2940
 msgid "crop"
@@ -5965,7 +5933,7 @@ msgstr "laag schalen"
 #: app/undo.c:2943
 # What is this about?
 msgid "quickmask"
-msgstr ""
+msgstr "QMask"
 
 #: app/undo.c:2944
 # What is the Dutch translation of 'parasite'?
@@ -5995,7 +5963,7 @@ msgstr "overige"
 #: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
-msgstr "Overzich 'Ongedaan maken': %s"
+msgstr "Overzicht 'Ongedaan maken': %s"
 
 #: app/undo_history.c:483
 msgid "[ base image ]"
@@ -6043,7 +6011,7 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
-"GIMP gebruikt een additioneel gtkrc-bestand zodat\n"
+"GIMP gebruikt een eigen gtkrc-bestand zodat\n"
 "u het programma kunt instellen om er anders uit te\n"
 "zien dan andere GTK-toepassingen."
 
@@ -6057,10 +6025,10 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 "Plug-ins en extensies zijn externe programma's die\n"
-"door de GIMP worden gerund om in additionele\n" 
+"door de GIMP worden gerund om in extra\n" 
 "functionaliteit te kunnen voorzien. Deze programma's\n"
 "worden bij het starten gezocht en informatie over\n"
-"hun functionaliteit en 'mod-times' wordt tussentijds"
+"hun functionaliteit en 'mod-times' wordt tussentijds\n"
 "opgeslagen in dit bestand. Het is de bedoeling dat\n"
 "alleen de GIMP dit bestand kan lezen en het mag\n"
 "dan ook niet bewerkt worden."
@@ -6076,11 +6044,11 @@ msgid ""
 msgstr ""
 "Sneltoetsen kunnen dynamisch opnieuw worden toegekend in\n"
 "de GIMP. Het bestand menurc is een 'dump' van uw\n"
-"instellingen en kan dus worden herinnerd voor de volgende\n"
-"sessie. U kunt dit bestand bewerken als u dat wil, maar het\n"
-"is gemakkelijker om de sneltoetsen vanuit de GIMP toe te\n"
-"kennen. Het verwijderen van dit bestand leidt ertoe dat de\n"
-"oorspronkelijke sneltoetsen weer worden gebruikt."
+"instellingen: de GIMP 'herinnert' zich uw instellingen in de\n"
+"volgende sessie. U kunt dit bestand bewerken als u dat wilt,\n"
+"maar het is gemakkelijker om de sneltoetsen vanuit de GIMP\n"
+"toe te kennen. Het verwijderen van dit bestand leidt ertoe\n"
+"dat de oorspronkelijke sneltoetsen weer worden gebruikt."
 
 #: app/user_install.c:186
 msgid ""
@@ -6088,10 +6056,10 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
-"Het bestand sessionrc wordt gebruikt om op te slaan welke\n"
-"dialoogvensters geopend waren op het moment dat u de GIMP\n"
-"de afgelopen keer afsloot. U kunt de GIMP zo instellen dat\n"
-"deze dialoogvensters op dezelfde plek weer geopend worden."
+"In het bestand sessionrc wordt een overzicht bewaard van de\n"
+"dialoogvensters die geopend waren op het moment dat u de GIMP\n"
+"het laatst afsloot. U kunt de GIMP zo instellen dat deze\n"
+"dialoogvensters op dezelfde plek weer geopend worden."
 
 #: app/user_install.c:192
 msgid ""
@@ -6101,12 +6069,12 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"Het bestand unitrc wordt gebruikt om uw\n"
-"gebruikerseenhedendatabase in te bewaren. U kunt\n"
-"additionele eenheden instellen en deze net zo\n" 
+"Het bestand unitrc wordt gebruikt om de door u\n"
+"gebruikte maateenheden in te bewaren. U kunt\n"
+"extra eenheden instellen en deze net zo\n" 
 "gebruiken als de ingebouwde eenheden: duimen,\n"
-"millimeters, punten en pica's. Dit bestand wordt elke\n"
-"keer dat u de GIMP afsluit overschreven."
+"millimeters, punten en pica's. Dit bestand wordt\n"
+"elke keer dat u de GIMP afsluit overschreven."
 
 #: app/user_install.c:200
 msgid ""
@@ -6166,7 +6134,7 @@ msgstr ""
 "standaard gimprc-bestand kijkt alleen in deze\n"
 "subdirectory (en niet in de systeeminstallatie) bij\n"
 "het zoeken naar paletten. Tijdens de installatie\n"
-"worden de systeempaletten hier naar toe gekopieerd.\n"
+"worden de systeempaletten hiernaartoe gekopieerd.\n"
 "Dit wordt zo gedaan, om wijzigingen die tijdens het\n"
 "uitvoeren van GIMP zijn gedaan over sessiegrenzen\n"
 "heen hetzelfde te laten blijven."
@@ -6243,11 +6211,11 @@ msgid ""
 msgstr ""
 "Deze subdirectory wordt door de GIMP gebruikt om\n"
 "tijdelijk 'Ongedaan maken'-buffers te bewaren en zo\n"
-"geheugengebruikt terug te dringen. Als de GIMP niet" 
+"geheugengebruik terug te dringen. Als de GIMP niet\n" 
 "normaal wordt afgesloten, kunnen er bestanden\n"
 "achterblijven in de vorm: gimp<#>.<#>. Deze bestanden\n"
-"geen nut in een volgende sessie en kunnen zonder twijfel\n"
-"worden verwijderd."
+"hebben geen nut in een volgende sessie en kunnen zonder\n"
+"problemen worden verwijderd."
 
 #: app/user_install.c:273
 msgid ""
@@ -6262,8 +6230,8 @@ msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
-"Deze subdirectory wordt gebruikt om parameterbestanden van"
-"de het Niveau-gereedschap te bewaren."
+"Deze subdirectory wordt gebruikt om parameterbestanden van\n"
+"het Niveau-gereedschap in te bewaren."
 
 #: app/user_install.c:283
 msgid ""
@@ -6413,7 +6381,8 @@ msgid ""
 "%s needs to be created."
 msgstr ""
 "Voor een correcte GIMP-installatie moet een subdirectory met\n"
-"de naam %s aangemaakt worden."
+"de naam %s\n" 
+"aangemaakt worden."
 
 #: app/user_install.c:765
 msgid ""
@@ -6431,7 +6400,7 @@ msgstr "Gebruikersinstallatielog"
 
 #: app/user_install.c:855
 msgid "GIMP Performance Tuning"
-msgstr "GIMP-performantietuning"
+msgstr "GIMP-prestatieafstemming"
 
 #: app/user_install.c:856
 msgid "Click \"Continue\" to accept the settings above."
@@ -6520,7 +6489,7 @@ msgstr ""
 "Alle afbeeldingsgegevens en 'Ongedaan maken'-gegevens die niet in de\n"
 "\"Tile Cache\" (tegelbuffer) passen zullen naar een swap-bestand worden\n"
 "geschreven. Dit bestand moet op een lokaal bestandssysteem aanwezig zijn\n"
-"met genoeg vrije ruimte (meerdere honderden MB). Op een UNIX-systeem\n"
+"met genoeg vrije ruimte (meerdere honderden MB's). Op een UNIX-systeem\n"
 "zult u wellicht een tijdelijke directory willen gebruiken die voor het\n"
 "hele systeem toegankelijk is (\"/tmp\" or \"/var/tmp\")."
 
@@ -6539,7 +6508,7 @@ msgstr ""
 #: app/user_install.c:1178
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Vraag resoltie aan het venstersysteem (momenteel %d x %d dpi)"
+msgstr "Vraag resolutie aan het venstersysteem (momenteel %d x %d dpi)"
 
 #: app/user_install.c:1192
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6603,13 +6572,13 @@ msgstr "Contrast-cycles:"
 #: modules/colorsel_gtk.c:53
 # What is meant with 'plugable' here?
 msgid "GTK color selector as a pluggable color selector"
-msgstr "GTK-kleurkiezer als een plugbare kleurkiezer"
+msgstr "GTK-kleurkiezer als een laadbare module"
 
 #: modules/colorsel_triangle.c:79
 # What is meant with 'plugable' here?
 # What is meant with 'Painter' here?
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr "Painterachtige kleurkiezer als een plugbare kleurkiezer"
+msgstr "Painterachtige kleurkiezer als een laadbare module"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
 msgid "Triangle"
@@ -6618,7 +6587,7 @@ msgstr "Driehoek"
 #: modules/colorsel_water.c:76
 # What is meant with 'plugable' here?
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Waterverfachtige kleurkiezer als een plugbare module"
+msgstr "Waterverfachtige kleurkiezer als een laadbare module"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
