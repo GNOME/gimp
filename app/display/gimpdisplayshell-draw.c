@@ -106,11 +106,6 @@ static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
                                                         gint              title_len,
                                                         const gchar      *format);
 
-static void       gimp_display_shell_update_icon       (GimpDisplayShell *gdisp);
-static gboolean gimp_display_shell_update_icon_invoker (gpointer          data);
-static void   gimp_display_shell_update_icon_scheduler (GimpImage        *gimage,
-                                                        gpointer          data);
-
 static void    gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
                                                         const gchar      *image_name);
 static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
@@ -331,12 +326,6 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_object_unref (shell->render_gc);
       shell->render_gc = NULL;
-    }
-
-  if (shell->icon_idle_id)
-    {
-      g_source_remove (shell->icon_idle_id);
-      shell->icon_idle_id = 0;
     }
 
   if (shell->padding_gc)
@@ -669,13 +658,6 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 		    gdisp);
 
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
-
-  /*  Icon stuff  */
-  g_signal_connect (G_OBJECT (gdisp->gimage), "invalidate_preview",
-		    G_CALLBACK (gimp_display_shell_update_icon_scheduler),
-		    shell);
-
-  gimp_display_shell_update_icon_scheduler (gdisp->gimage, shell);
 
   /*  create the contents of the status area *********************************/
 
@@ -1492,6 +1474,37 @@ gimp_display_shell_update_title (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_update_icon (GimpDisplayShell *shell)
+{
+  GdkPixbuf *pixbuf;
+  gint       width, height;
+  gdouble    factor;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  factor = ((gdouble) gimp_image_get_height (shell->gdisp->gimage) /
+            (gdouble) gimp_image_get_width (shell->gdisp->gimage));
+
+  if (factor >= 1)
+    {
+      height = MAX (shell->icon_size, 1);
+      width  = MAX (((gdouble) shell->icon_size) / factor, 1);
+    }
+  else
+    {
+      height = MAX (((gdouble) shell->icon_size) * factor, 1);
+      width  = MAX (shell->icon_size, 1);
+    }
+
+  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                                 width, height);
+
+  gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
+
+  g_object_unref (G_OBJECT (pixbuf));
+}
+
+void
 gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                GimpGuide        *guide,
                                gboolean          active)
@@ -1997,75 +2010,6 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
   gdk_draw_line (shell->canvas->window,
 		 shell->canvas->style->white_gc,
 		 x+1, y - 7, x+1, y + 7);
-}
-
-static void
-gimp_display_shell_update_icon (GimpDisplayShell *shell)
-{
-  GdkPixbuf *pixbuf;
-  gint       width, height;
-  gdouble    factor;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  factor = ((gdouble) gimp_image_get_height (shell->gdisp->gimage) /
-            (gdouble) gimp_image_get_width (shell->gdisp->gimage));
-
-  if (factor >= 1)
-    {
-      height = MAX (shell->icon_size, 1);
-      width  = MAX (((gdouble) shell->icon_size) / factor, 1);
-    }
-  else
-    {
-      height = MAX (((gdouble) shell->icon_size) * factor, 1);
-      width  = MAX (shell->icon_size, 1);
-    }
-
-  pixbuf = gimp_viewable_get_new_preview_pixbuf (GIMP_VIEWABLE (shell->gdisp->gimage),
-                                                 width, height);
-
-  gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
-
-  g_object_unref (G_OBJECT (pixbuf));
-}
-
-/* Just a dumb invoker for gdisplay_update_icon ()
- */
-static gboolean
-gimp_display_shell_update_icon_invoker (gpointer data)
-{
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
-
-  shell->icon_idle_id = 0;
-
-  gimp_display_shell_update_icon (shell);
-
-  return FALSE;
-}
-
-/* This function marks the icon as invalid and sets up the infrastructure
- * to check every 8 seconds if an update is necessary.
- */
-static void
-gimp_display_shell_update_icon_scheduler (GimpImage *gimage,
-                                          gpointer   data)
-{
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
-
-  if (shell->icon_idle_id)
-    {
-      g_source_remove (shell->icon_idle_id);
-    }
-
-  shell->icon_idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                         gimp_display_shell_update_icon_invoker,
-                                         shell,
-                                         NULL);
 }
 
 static gint print (gchar       *buf,

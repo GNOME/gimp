@@ -1,5 +1,14 @@
 2002-02-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]: made
+	gimp_display_shell_update_icon() public, removed the update_icon
+	signal handler and idle function.
+
+	* app/display/gimpdisplayshell-handlers.c: added the update_icon
+	stuff here so it get's properly dis- and reconnected.
+
+2002-02-17  Michael Natterer  <mitch@gimp.org>
+
 	Fixed #34633 (wheel mouse zooming leaves straigth-line helpline on
 	image) and maybe some other stuff caused by the misbehaviour
 	described below:

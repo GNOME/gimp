@@ -116,7 +116,7 @@ struct _GimpDisplayShellClass
 
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
-GtkWidget * gimp_display_shell_new                   (GimpDisplay *gdisp);
+GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp);
 
 void        gimp_display_shell_close                 (GimpDisplayShell *shell,
                                                       gboolean          kill_it);
@@ -180,6 +180,7 @@ void	    gimp_display_shell_update_cursor	     (GimpDisplayShell *shell,
                                                       gint              x,
                                                       gint              y);
 void        gimp_display_shell_update_title          (GimpDisplayShell *shell);
+void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
                                                       GimpGuide        *guide,

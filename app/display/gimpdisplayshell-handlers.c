@@ -59,6 +59,10 @@ static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *g
 static void   gimp_display_shell_update_guide_handler       (GimpImage        *gimage,
                                                              GimpGuide        *guide,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+
+static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
 
 /*  public functions  */
@@ -104,6 +108,11 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (G_OBJECT (gimage), "update_guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
                     shell);
+  g_signal_connect (G_OBJECT (gimage), "invalidate_preview",
+		    G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
+		    shell);
+
+  gimp_display_shell_invalidate_preview_handler (gimage, shell);
 }
 
 void
@@ -117,6 +126,15 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimage = shell->gdisp->gimage;
 
+  if (shell->icon_idle_id)
+    {
+      g_source_remove (shell->icon_idle_id);
+      shell->icon_idle_id = 0;
+    }
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_invalidate_preview_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_update_guide_handler,
                                         shell);
@@ -237,4 +255,33 @@ gimp_display_shell_update_guide_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_guide (shell, guide);
+}
+
+static void
+gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
+                                               GimpDisplayShell *shell)
+{
+  if (shell->icon_idle_id)
+    {
+      g_source_remove (shell->icon_idle_id);
+    }
+
+  shell->icon_idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                         gimp_display_shell_idle_update_icon,
+                                         shell,
+                                         NULL);
+}
+
+static gboolean
+gimp_display_shell_idle_update_icon (gpointer data)
+{
+  GimpDisplayShell *shell;
+
+  shell = GIMP_DISPLAY_SHELL (data);
+
+  shell->icon_idle_id = 0;
+
+  gimp_display_shell_update_icon (shell);
+
+  return FALSE;
 }
