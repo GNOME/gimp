@@ -11,4 +11,4 @@ Categories=Application;Graphics;RasterGraphics;
 X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=GIMP
 StartupNotify=true
-MimeType=image/bmp;image/g;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-compressed-xcf;image/x-fits;image/x-gray;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-sun-raster;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;image/x-xwindowdump;
+MimeType=image/bmp;image/g3fax;image/gif;image/jpeg;image/jpg;image/pjpeg;image/png;image/tiff;image/x-bmp;image/x-compressed-xcf;image/x-fits;image/x-gray;image/x-pcx;image/x-png;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-sun-raster;image/x-tga;image/x-xbitmap;image/x-xcf;image/x-xpixmap;image/x-xwindowdump;

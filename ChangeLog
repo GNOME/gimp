@@ -1,10 +1,14 @@
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* data/misc/gimp.desktop.in.in (MimeType): image/g -> image/g3fax.
+
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactionview.c: rephrased the text for the dialog
 	that appears if a new shortcut collides with an existing one.
 
 	* libgimpcolor/gimprgb.[ch]: added new function gimp_rgb_parse_name()
-	which accepts RGB colors in hexadezimal notation or as SVG color
+	which accepts RGB colors in hexadecimal notation or as SVG color
 	keywords.
 
 2004-07-22  Michael Natterer  <mitch@gimp.org>
