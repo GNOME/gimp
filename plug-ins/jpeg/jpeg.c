@@ -255,7 +255,7 @@ static void     save_restart_update        (GtkAdjustment   *adjustment,
 static void     make_preview               (void);
 static void     destroy_preview            (void);
 
-static void     menu_callback              (GtkWidget       *widget,
+static void     combo_changed_callback     (GtkWidget       *widget,
 					    gpointer         data);
 
 
@@ -1664,7 +1664,7 @@ save_dialog (void)
   GtkWidget     *preview;
   /* GtkWidget *preview_size; -- global */
 
-  GtkWidget     *menu;
+  GtkWidget     *combo;
 
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
@@ -1884,42 +1884,40 @@ save_dialog (void)
 #endif
 
   /* Subsampling */
-  menu =
-    gimp_int_option_menu_new (FALSE,
-			      G_CALLBACK (menu_callback),
-			      &jsvals.subsmp, jsvals.subsmp,
+  combo = gimp_int_combo_box_new ("2x2,1x1,1x1",         0,
+                                  "2x1,1x1,1x1 (4:2:2)", 1,
+                                  "1x1,1x1,1x1",         2,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp);
 
-			      "2x2,1x1,1x1",         0, NULL,
-			      "2x1,1x1,1x1 (4:2:2)", 1, NULL,
-			      "1x1,1x1,1x1",         2, NULL,
-
-			      NULL);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (combo_changed_callback),
+                    &jsvals.subsmp);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 7,
 			     _("Subsampling:"),
 			     1.0, 0.5,
-			     menu, 1, FALSE);
+			     combo, 1, FALSE);
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
-    gtk_widget_set_sensitive (menu, FALSE);
+    gtk_widget_set_sensitive (combo, FALSE);
 
   /* DCT method */
-  menu =
-    gimp_int_option_menu_new (FALSE,
-			      G_CALLBACK (menu_callback),
-			      &jsvals.dct, jsvals.dct,
+  combo = gimp_int_combo_box_new (_("Fast Integer"),   1,
+                                  _("Integer"),        0,
+                                  _("Floating-Point"), 2,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.dct);
 
-			      _("Fast Integer"),   1, NULL,
-			      _("Integer"),        0, NULL,
-			      _("Floating-Point"), 2, NULL,
-
-			      NULL);
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (combo_changed_callback),
+                    &jsvals.dct);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 8,
 			     _("DCT method (Speed/quality tradeoff):"),
 			     1.0, 0.5,
-			     menu, 1, FALSE);
+			     combo, 1, FALSE);
 
   com_frame = gtk_frame_new (_("Image comments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
@@ -1990,9 +1988,10 @@ save_restart_update (GtkAdjustment *adjustment,
 }
 
 static void
-menu_callback (GtkWidget *widget,
-	       gpointer   data)
+combo_changed_callback (GtkWidget *widget,
+                        gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+
   make_preview ();
 }

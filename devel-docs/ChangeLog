@@ -1,3 +1,11 @@
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpintcombobox.sgml: added docs for the new
+	GimpIntComboBox widget.
+
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt: more updates (everything but the new actions).

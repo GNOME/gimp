@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+GimpIntComboBox
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpIntComboBox ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+
+<!-- ##### FUNCTION gimp_int_combo_box_new ##### -->
+<para>
+
+</para>
+
+@first_label: 
+@first_value: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_new_valist ##### -->
+<para>
+
+</para>
+
+@first_label: 
+@first_value: 
+@values: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_set_active ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_get_active ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@value: 
+@Returns: 
+
+

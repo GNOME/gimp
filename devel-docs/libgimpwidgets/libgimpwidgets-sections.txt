@@ -161,6 +161,25 @@ GIMP_PIXMAP_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpintcombobox</FILE>
+<TITLE>GimpIntComboBox</TITLE>
+GimpIntComboBox
+gimp_int_combo_box_new
+gimp_int_combo_box_new_valist
+gimp_int_combo_box_set_active
+gimp_int_combo_box_get_active
+<SUBSECTION Standard>
+GimpIntComboBoxClass
+GIMP_INT_COMBO_BOX
+GIMP_IS_INT_COMBO_BOX
+GIMP_TYPE_INT_COMBO_BOX
+gimp_int_combo_box_get_type
+GIMP_INT_COMBO_BOX_CLASS
+GIMP_IS_INT_COMBO_BOX_CLASS
+GIMP_INT_COMBO_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpmemsizeentry</FILE>
 <TITLE>GimpMemsizeEntry</TITLE>
 GimpMemsizeEntry

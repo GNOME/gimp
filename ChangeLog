@@ -1,5 +1,19 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpintcombobox.[ch]: added new widget
+	GimpIntComboBox, a GtkComboBox with a simple list store to hold a
+	label and an associated integer value. This is going to replace
+	gimp_int_option_menu.
+
+	* plug-ins/common/jpeg.c
+	* plug-ins/print/gimp_main_window.c: ported these two plug-ins to
+	the newly added widget.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig.c: removed unused return locations for menu
 	item pointers.
 

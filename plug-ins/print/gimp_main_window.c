@@ -478,15 +478,19 @@ create_positioning_frame (void)
    */
 
   orientation_menu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (gimp_orientation_callback), NULL,
-                              ORIENT_AUTO,
-                              _("Auto"),        ORIENT_AUTO,       NULL,
-                              _("Portrait"),    ORIENT_PORTRAIT,   NULL,
-                              _("Landscape"),   ORIENT_LANDSCAPE,  NULL,
-                              _("Upside down"), ORIENT_UPSIDEDOWN, NULL,
-                              _("Seascape"),    ORIENT_SEASCAPE,   NULL,
-                              NULL);
+    gimp_int_combo_box_new (_("Auto"),        ORIENT_AUTO,
+                            _("Portrait"),    ORIENT_PORTRAIT,
+                            _("Landscape"),   ORIENT_LANDSCAPE,
+                            _("Upside down"), ORIENT_UPSIDEDOWN,
+                            _("Seascape"),    ORIENT_SEASCAPE,
+                            NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (orientation_menu),
+                                 ORIENT_AUTO);
+
+  g_signal_connect (orientation_menu, "changed",
+                    G_CALLBACK (gimp_orientation_callback),
+                    NULL);
+
   gimp_help_set_help_data (orientation_menu,
                            _("Select the orientation: portrait, landscape, "
                              "upside down, or seascape (upside down "
@@ -1746,8 +1750,8 @@ gimp_do_misc_updates (void)
 
   gimp_do_color_updates ();
 
-  gimp_int_option_menu_set_history (GTK_OPTION_MENU (orientation_menu),
-                                    stp_get_orientation (*pv));
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (orientation_menu),
+                                 stp_get_orientation (*pv));
 
   if (stp_get_unit(*pv) == 0)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unit_inch), TRUE);
@@ -2287,7 +2291,7 @@ gimp_orientation_callback (GtkWidget *widget,
 {
   gint  orientation;
 
-  gimp_menu_item_update (widget, &orientation);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &orientation);
 
   reset_preview ();
 

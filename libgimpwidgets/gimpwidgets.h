@@ -41,6 +41,7 @@
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpfileentry.h>
 #include <libgimpwidgets/gimphelpui.h>
+#include <libgimpwidgets/gimpintcombobox.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>
 #include <libgimpwidgets/gimpoffsetarea.h>
 #include <libgimpwidgets/gimppatheditor.h>
