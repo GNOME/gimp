@@ -34,8 +34,6 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
-#include "gui/channels-dialog.h"
-#include "gui/layers-dialog.h"
 #include "gui/paths-dialog.h"
 
 #include "context_manager.h"
@@ -121,7 +119,7 @@ lc_dialog_create (GimpImage *gimage)
   lc_dialog->gimage             = NULL;
   lc_dialog->auto_follow_active = TRUE;
 
-  lc_dialog->shell = gimp_dialog_new (_("Layers, Channels & Paths"),
+  lc_dialog->shell = gimp_dialog_new ("Old Paths Dialog",
 				      "layers_channels_paths",
 				      lc_dialog_help_func,
 				      "dialogs/layers_and_channels.html",
@@ -193,16 +191,6 @@ lc_dialog_create (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (lc_dialog->subshell), lc_dialog->notebook,
 		      TRUE, TRUE, 0);
 
-  label = gtk_label_new (_("Layers"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
-			    layers_dialog_create (), label);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Channels"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
-			    channels_dialog_create (), label);
-  gtk_widget_show (label);
-
   label = gtk_label_new (_("Paths"));
   gtk_notebook_append_page (GTK_NOTEBOOK (lc_dialog->notebook),
 			    paths_dialog_create (), label);
@@ -217,10 +205,6 @@ lc_dialog_create (GimpImage *gimage)
   /*  The action area  */
   gtk_container_set_border_width
     (GTK_CONTAINER (GTK_DIALOG (lc_dialog->shell)->action_area), 1);
-
-  /*  Make sure the channels page is realized  */
-  gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 1);
-  gtk_notebook_set_page (GTK_NOTEBOOK (lc_dialog->notebook), 0);
 
   gtk_signal_connect (GTK_OBJECT (image_context), "add",
 		      GTK_SIGNAL_FUNC (lc_dialog_add_callback), NULL);
@@ -244,9 +228,6 @@ lc_dialog_free (void)
 {
   if (lc_dialog == NULL)
     return;
-
-  layers_dialog_free ();
-  channels_dialog_free ();
 
   gtk_widget_destroy (lc_dialog->shell);
 
@@ -285,8 +266,6 @@ lc_dialog_flush (void)
   if (! lc_dialog || lc_dialog->gimage == NULL)
     return;
 
-  layers_dialog_flush ();
-  channels_dialog_flush ();
   paths_dialog_flush ();
 }
 
@@ -319,7 +298,6 @@ lc_dialog_preview_update (GimpImage *gimage)
   if (!preview_size)
     return;
 
-  layers_dialog_invalidate_previews (gimage);
   gtk_idle_add ((GtkFunction) image_menu_preview_update_do, gimage);
 }
 
@@ -385,9 +363,6 @@ lc_dialog_update_image_list (void)
     }
   else
     {
-      layers_dialog_clear ();
-      channels_dialog_clear ();
-
       lc_dialog->gimage = NULL;
 
       if (GTK_WIDGET_IS_SENSITIVE (lc_dialog->subshell))
@@ -407,8 +382,6 @@ lc_dialog_update (GimpImage *gimage)
 
   lc_dialog->gimage = gimage;
 
-  layers_dialog_update (gimage);
-  channels_dialog_update (gimage);
   paths_dialog_update (gimage);
 }
 
@@ -750,12 +723,12 @@ lc_dialog_help_func (const gchar *help_data)
   gchar *help_page;
   gint page_num;
 
-  static gchar* dialog_names[] = { "layers", "channels", "paths" };
+  static gchar* dialog_names[] = { "paths" };
 
   page_num =
     gtk_notebook_get_current_page (GTK_NOTEBOOK (lc_dialog->notebook));
 
-  if (page_num > 2)
+  if (page_num > 0)
     return;
 
   help_page = g_strconcat (dialog_names[page_num], "/",

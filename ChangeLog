@@ -1,3 +1,17 @@
+2001-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/channels-dialog.[ch]
+	* app/gui/layers-dialog.[ch]: at the end of their epoch, the
+	dinosaurs were wiped out by a "cvs remove" impact from space.
+
+	* app/lc_dialog.c: changed accordingly.
+
+	* app/gui/layer-select.c: use the new preview system (mostly code
+	removal).
+
+	* app/gui/menus.c: reorder the dialog factory menu.
+
 2001-05-10  David Neary  <dneary@eircom.net>
 
         * app/tools/gimpbycolorselecttool.[ch]

@@ -11,8 +11,6 @@ libappgui_la_SOURCES = \
 	brush-select.h		\
 	channels-commands.c	\
 	channels-commands.h	\
-	channels-dialog.c	\
-	channels-dialog.h	\
 	color-area.c		\
 	color-area.h		\
 	color-notebook.c	\
@@ -55,8 +53,6 @@ libappgui_la_SOURCES = \
 	layer-select.h		\
 	layers-commands.c	\
 	layers-commands.h	\
-	layers-dialog.c		\
-	layers-dialog.h		\
 	menus.c			\
 	menus.h			\
 	offset-dialog.c		\
