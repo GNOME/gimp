@@ -1,16 +1,17 @@
 This document exists to document the important things to care for
 because of locale support. 
 Actually this one is maintained by me, that is Daniel Egger 
-(Daniel.Egger@t-online.de). 
+(Daniel.Egger@rz.fh-muenchen.de). 
 
 1. Why localisation?
 
  Many persons from many countries start to get used to Linux.
  Unfortunately not everyone is able to understand English. But
- even those people some times like to use good and free software 
+ even those people sometimes like to use good and free software 
  without using a dictionary to get the unknown words.
  So why not simply localise the software to make it available to 
- the mass which isn't wholly English native?
+ the mass which isn't wholly English native? Of course this also
+ eases the migration from PhotoX to GIMP. :))
 
 2. How?
 
@@ -32,40 +33,40 @@ Actually this one is maintained by me, that is Daniel Egger
  libgimp directory which check whether gettext is available on the system 
  which GIMP is compiled on and will deactivate language support if it's not.
  You CAN use such a compiled GIMP even without the catalogs or on a system
- which dosen't enable language support.
+ which dosen't have language support.
 
  If the gettext system is there it will declare 3 functions which will be 
  described below.
 
 3.1 _() [more correctly: char * _( char * )]
 
- This one is a macro for the function gettext(). With it every text may be 
- wrapped that is directly called directly in a function. If you use it the
- given string will be tried to get translated in the native language of the
+ This one is a macro for the function gettext(). You can wrap any text with
+ it that is allowed to be a return value of a function. If you use it then
+ libintl will try to translate it into the native language of the
  user according to his/her environmental settings. 
- The gettext() function will do a lookup in the hashed gimp.mo which contains 
+ The gettext() function will do a lookup in the hashed catalog which contains 
  all the translated texts.
 
  - If it is found a pointer to the string will be returned to the caller.
- - If not the caller will receive a pointer to the original string.
+ - If not, the caller will receive a pointer to the original string.
 
  This way it is ensured that there isn't any harm caused to the program 
- (i.e. The GIMP) if no catalog isn't installed. 
+ (i.e. The GIMP) if no useful catalog is installed. 
 
  Please note that it is important to use _() directly (and not gettext())
  for simple messages because of reasons that will be mentioned below.
 
  NOTE: I know some of the developer like short functions like _() but
  for a better source understanding I suggest to use it consistently only
- for text (like _("That's text!") ) and not for variables (like _(text) BUT
- gettext(text) instead)
+ for text (like _("That's text!")) and not for variables (like _(text) ) BUT
+ gettext(text) instead.
  
 
 3.2 N_() [more correctly: void ( void ) ]
 
  This one is a macro for the function gettext_noop(). As you can see and
- guess it doesn't really anything in the programm i.e. it is a dummy
- function but nevertheless important. As it isn't possible to call functions
+ guess it doesn't really do anything in the programm i.e. it is a dummy
+ macro but nevertheless important. As it isn't possible to call functions
  in a structure as seen here:
 
  struct blurb
@@ -74,12 +75,12 @@ Actually this one is maintained by me, that is Daniel Egger
  }
 
  you have to do it in some other way. In GIMP such structures are often used 
- to create menues or similar things very simply. Here you have to use the
- dummy to allow the generation of a template which will be described below.
- This one doesn't do anything but it marks the text as important to the 
- gettext extractor.
+ to create menus or similar things very simply. Here you have to use the
+ dummy to allow the generation of the template catalog which will be described 
+ below. This one doesn't do anything but it marks the text as important to 
+ the xgettext extractor.
 
- The text has to be translated "by hand" with the next function.  
+ The text has to be translated manually with the next function.  
  
 3.3 gettext()
 
@@ -137,7 +138,7 @@ Actually this one is maintained by me, that is Daniel Egger
  add all strings that are in the template but not in the uncompiled catalog 
  to it. Msgmerge does this job very nicely and also tries to use some kind
  of fuzzy logic method for already translated strings for possible reduction
- of programmers work: If a original string seems similar to a new one 
+ of translators work: If a original string seems similar to a new one 
  and it already has a translation, it will be taken over to the new catalog
  together with a remark that this one may not necessarily fit.
  
@@ -145,7 +146,7 @@ Actually this one is maintained by me, that is Daniel Egger
 
  I hope I mentioned everything that is worth it and hope that this document
  will clarify some things. If it doesn't please write me a mail and tell me
- what you want to know. This text may contain errors, so if you find one
+ what you want to know. This text of course contains errors, so if you find one
  tell it to me, too....
 
 Happy Gimping. Yours,

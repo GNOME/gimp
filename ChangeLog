@@ -118,7 +118,6 @@ Thu Dec 30 15:21:29 GMT 1999  Adam D. Moss <adam@gimp.org>
 	* plug-ins/common/animoptimize.c: PDB interface patch
 	from Andreas Jaekel <jaekel@cablecats.de>
 
->>>>>>> 1.1987
 Thu Dec 30 02:34:49 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* app/gradient.c: Applied patch by Daniel Egger:
