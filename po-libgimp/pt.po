@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-09 17:33+0100\n"
-"PO-Revision-Date: 2003-09-09 17:35+0000\n"
+"POT-Creation-Date: 2003-09-14 13:06+0100\n"
+"PO-Revision-Date: 2003-09-14 13:10+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -195,6 +195,10 @@ msgstr ""
 "Tem de adicionar uma entrada tal como\n"
 "(%s \"%s\")\n"
 "ao seu ficheiro %s."
+
+#: libgimp/gimpmiscui.c:556
+msgid "Parameter Settings"
+msgstr "Definição de Parâmetros"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -427,23 +431,23 @@ msgstr "Espaçamento L_inhas"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:259
 msgid "_Scale"
 msgstr "E_scala"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:237
 msgid "Crop"
 msgstr "Cortar"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Rotate"
 msgstr "_Rodar"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:260
 msgid "_Shear"
 msgstr "Retal_har"
 

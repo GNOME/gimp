@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-12 15:29+0100\n"
-"PO-Revision-Date: 2003-09-12 15:35+0000\n"
+"POT-Creation-Date: 2003-09-14 13:07+0100\n"
+"PO-Revision-Date: 2003-09-14 13:10+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -778,7 +778,7 @@ msgstr "Quando activo, primir F1 abrirá o navegador de ajuda."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
 #: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:74
-#: app/vectors/gimpvectors-import.c:140
+#: app/vectors/gimpvectors-import.c:149
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Falha ao abrir o ficheiro: '%s': %s"
@@ -1087,20 +1087,20 @@ msgstr "Cortar Imagem"
 msgid "Merge Layers"
 msgstr "Juntar Camadas"
 
-#: app/core/core-enums.c:499 app/core/core-enums.c:527
+#: app/core/core-enums.c:499 app/core/core-enums.c:528
 msgid "QuickMask"
 msgstr "Máscara Rápida"
 
-#: app/core/core-enums.c:500 app/core/core-enums.c:528
+#: app/core/core-enums.c:500 app/core/core-enums.c:529
 #: app/core/gimpimage-grid.c:63 app/gui/grid-dialog.c:416
 msgid "Grid"
 msgstr "Grelha"
 
-#: app/core/core-enums.c:501 app/core/core-enums.c:529
+#: app/core/core-enums.c:501 app/core/core-enums.c:530
 msgid "Guide"
 msgstr "Guia"
 
-#: app/core/core-enums.c:502 app/core/core-enums.c:531
+#: app/core/core-enums.c:502 app/core/core-enums.c:532
 #: app/core/gimpchannel.c:1497 app/core/gimpselection.c:593
 msgid "Selection Mask"
 msgstr "Máscara de Selecção"
@@ -1109,11 +1109,11 @@ msgstr "Máscara de Selecção"
 msgid "Item Properties"
 msgstr "Propriedades Item"
 
-#: app/core/core-enums.c:504 app/core/core-enums.c:533
+#: app/core/core-enums.c:504 app/core/core-enums.c:534
 msgid "Move Item"
 msgstr "Mover Item"
 
-#: app/core/core-enums.c:505 app/core/core-enums.c:534
+#: app/core/core-enums.c:505 app/core/core-enums.c:535
 msgid "Item Visibility"
 msgstr "Visibilidade Item"
 
@@ -1167,151 +1167,155 @@ msgstr "Copiar"
 msgid "Text"
 msgstr "Texto"
 
-#: app/core/core-enums.c:517 app/core/core-enums.c:557
+#: app/core/core-enums.c:517 app/core/core-enums.c:558
 #: app/core/gimpdrawable-transform.c:825
 msgid "Transform"
 msgstr "Transformar"
 
-#: app/core/core-enums.c:518 app/core/core-enums.c:558
+#: app/core/core-enums.c:518 app/core/core-enums.c:559
 #: app/paint/gimppaintcore.c:477
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/core/core-enums.c:519 app/core/core-enums.c:559 app/core/gimpitem.c:867
+#: app/core/core-enums.c:519 app/core/core-enums.c:560 app/core/gimpitem.c:867
 msgid "Attach Parasite"
 msgstr "Anexar Informações Anexas"
 
-#: app/core/core-enums.c:520 app/core/core-enums.c:560
+#: app/core/core-enums.c:520 app/core/core-enums.c:561
 msgid "Remove Parasite"
 msgstr "Remover Informações Anexas"
 
-#: app/core/core-enums.c:521 app/pdb/drawable_cmds.c:117
+#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:186
+msgid "Import Paths"
+msgstr "Importar Caminhos"
+
+#: app/core/core-enums.c:522 app/pdb/drawable_cmds.c:117
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: app/core/core-enums.c:522 app/pdb/internal_procs.c:132
+#: app/core/core-enums.c:523 app/pdb/internal_procs.c:132
 msgid "Image"
 msgstr "Imagem"
 
-#: app/core/core-enums.c:523
+#: app/core/core-enums.c:524
 msgid "Image Mod"
 msgstr "Mod da Imagem"
 
-#: app/core/core-enums.c:524 app/widgets/gimptemplateeditor.c:370
+#: app/core/core-enums.c:525 app/widgets/gimptemplateeditor.c:370
 msgid "Image Type"
 msgstr "Tipo de Imagem"
 
 #. Image size frame
-#: app/core/core-enums.c:525 app/widgets/gimptemplateeditor.c:134
+#: app/core/core-enums.c:526 app/widgets/gimptemplateeditor.c:134
 msgid "Image Size"
 msgstr "Tamanho da Imagem"
 
-#: app/core/core-enums.c:526
+#: app/core/core-enums.c:527
 msgid "Resolution Change"
 msgstr "Alteração de Resolução"
 
-#: app/core/core-enums.c:530
+#: app/core/core-enums.c:531
 msgid "Change Indexed Palette"
 msgstr "Alterar Paleta Indexada"
 
-#: app/core/core-enums.c:532
+#: app/core/core-enums.c:533
 msgid "Rename Item"
 msgstr "Renomear Item"
 
-#: app/core/core-enums.c:535
+#: app/core/core-enums.c:536
 msgid "Set Item Linked"
 msgstr "Definir Item Ligado"
 
-#: app/core/core-enums.c:536 app/gui/layers-commands.c:633
+#: app/core/core-enums.c:537 app/gui/layers-commands.c:633
 #: app/gui/layers-commands.c:665 app/gui/layers-commands.c:697
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:208
 msgid "New Layer"
 msgstr "Nova Camada"
 
-#: app/core/core-enums.c:537 app/widgets/gimplayertreeview.c:214
+#: app/core/core-enums.c:538 app/widgets/gimplayertreeview.c:214
 msgid "Delete Layer"
 msgstr "Remover Camada"
 
-#: app/core/core-enums.c:538
+#: app/core/core-enums.c:539
 msgid "Layer Mod"
 msgstr "Mod da Camada"
 
-#: app/core/core-enums.c:539 app/core/gimplayer.c:962
+#: app/core/core-enums.c:540 app/core/gimplayer.c:962
 #: app/gui/layers-commands.c:947
 msgid "Add Layer Mask"
 msgstr "Adicionar Máscara de Camada"
 
-#: app/core/core-enums.c:540
+#: app/core/core-enums.c:541
 msgid "Delete Layer Mask"
 msgstr "Remover Máscara de Camada"
 
-#: app/core/core-enums.c:541
+#: app/core/core-enums.c:542
 msgid "Reposition Layer"
 msgstr "Reposicionar Camada"
 
-#: app/core/core-enums.c:542
+#: app/core/core-enums.c:543
 msgid "Set Layer Mode"
 msgstr "Definir Modo da Camada"
 
-#: app/core/core-enums.c:543
+#: app/core/core-enums.c:544
 msgid "Set Layer Opacity"
 msgstr "Definir Opacidade Camada"
 
-#: app/core/core-enums.c:544
+#: app/core/core-enums.c:545
 msgid "Set Preserve Trans"
 msgstr "Definir Preservar Transp."
 
-#: app/core/core-enums.c:545 app/gui/channels-commands.c:312
+#: app/core/core-enums.c:546 app/gui/channels-commands.c:312
 #: app/gui/channels-commands.c:343 app/gui/channels-commands.c:380
 #: app/widgets/gimpchanneltreeview.c:119
 msgid "New Channel"
 msgstr "Novo Canal"
 
-#: app/core/core-enums.c:546 app/widgets/gimpchanneltreeview.c:125
+#: app/core/core-enums.c:547 app/widgets/gimpchanneltreeview.c:125
 msgid "Delete Channel"
 msgstr "Remover Canal"
 
-#: app/core/core-enums.c:547
+#: app/core/core-enums.c:548
 msgid "Channel Mod"
 msgstr "Mod do Canal"
 
-#: app/core/core-enums.c:548
+#: app/core/core-enums.c:549
 msgid "Reposition Channel"
 msgstr "Reposicionar Canal"
 
-#: app/core/core-enums.c:549
+#: app/core/core-enums.c:550
 msgid "Channel Color"
 msgstr "Cor de Canal"
 
-#: app/core/core-enums.c:550
+#: app/core/core-enums.c:551
 msgid "New Vectors"
 msgstr "Novos Vectores"
 
-#: app/core/core-enums.c:551
+#: app/core/core-enums.c:552
 msgid "Delete Vectors"
 msgstr "Remover Vectores"
 
-#: app/core/core-enums.c:552
+#: app/core/core-enums.c:553
 msgid "Vectors Mod"
 msgstr "Mod de Vectores"
 
-#: app/core/core-enums.c:553
+#: app/core/core-enums.c:554
 msgid "Reposition Vectors"
 msgstr "Reposicionar Vectores"
 
-#: app/core/core-enums.c:554
+#: app/core/core-enums.c:555
 msgid "FS to Layer"
 msgstr "FS para Camada"
 
-#: app/core/core-enums.c:555
+#: app/core/core-enums.c:556
 msgid "FS Rigor"
 msgstr "FS Rigor"
 
-#: app/core/core-enums.c:556
+#: app/core/core-enums.c:557
 msgid "FS Relax"
 msgstr "FS Relax"
 
-#: app/core/core-enums.c:561
+#: app/core/core-enums.c:562
 msgid "EEK: can't undo"
 msgstr "EEK: impossível desfazer"
 
@@ -1425,7 +1429,7 @@ msgstr "Expressão UTF-8 inválida no ficheiro de pincel '%s'."
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:335
+#: app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -2249,9 +2253,11 @@ msgstr "Nenhuma selecção para ser aclarada."
 msgid "Stroke Selection"
 msgstr "Aclarar Selecção"
 
-#: app/core/gimpselection.c:625
-msgid "Selection from Channel"
-msgstr "Selecção de Canal"
+#: app/core/gimpselection.c:625 app/gui/channels-commands.c:206
+#: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1031
+#: app/widgets/gimpchanneltreeview.c:291
+msgid "Channel to Selection"
+msgstr "Canal para Selecção"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2597,11 +2603,6 @@ msgstr "/_Apagar Buffer"
 msgid "%s Channel Copy"
 msgstr "Cópia de Canal %s"
 
-#: app/gui/channels-commands.c:206 app/pdb/selection_cmds.c:915
-#: app/pdb/selection_cmds.c:1031 app/widgets/gimpchanneltreeview.c:291
-msgid "Channel to Selection"
-msgstr "Canal para Selecção"
-
 #: app/gui/channels-commands.c:316
 msgid "Empty Channel Copy"
 msgstr "Cópia de Canal Vazia"
@@ -2901,7 +2902,7 @@ msgid "Channel List"
 msgstr "Lista Canais"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:141
+#: app/tools/gimpvectortool.c:127
 msgid "Paths"
 msgstr "Caminhos"
 
@@ -2965,6 +2966,10 @@ msgstr "Editor Paleta"
 #: app/gui/dialogs-menu.c:61
 msgid "/_Select Tab"
 msgstr "/_Seleccionar Aba"
+
+#: app/gui/dialogs-menu.c:64
+msgid "/_Add Tab"
+msgstr "/_Adicionar Aba"
 
 #: app/gui/dialogs-menu.c:66
 msgid "/Add Tab/Tool _Options..."
@@ -3054,6 +3059,10 @@ msgstr "/Adicionar Aba/Ferramentas..."
 msgid "/_Remove Tab"
 msgstr "/_Remover Aba"
 
+#: app/gui/dialogs-menu.c:129
+msgid "/Preview Si_ze"
+msgstr "/Taman_ho Antevisão"
+
 #: app/gui/dialogs-menu.c:131
 msgid "/Preview Size/_Tiny"
 msgstr "/Tamanho Antevisão/M_inúsculo"
@@ -3089,6 +3098,10 @@ msgstr "/Tamanho Antevisão/Enormí_ssimo"
 #: app/gui/dialogs-menu.c:144
 msgid "/Preview Size/_Gigantic"
 msgstr "/Tamanho Antevisão/Gigan_tesco"
+
+#: app/gui/dialogs-menu.c:146
+msgid "/_Tab Style"
+msgstr "/Estilo _Aba/"
 
 #: app/gui/dialogs-menu.c:148
 msgid "/Tab Style/_Icon"
@@ -3178,7 +3191,7 @@ msgstr "Inserir um nome para este buffer"
 msgid "Copy Named"
 msgstr "Cópia com Denominação"
 
-#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:189
+#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:194
 #: app/widgets/gimpvectorstreeview.c:317
 msgid "There is no active layer or channel to stroke to."
 msgstr "Não existe nenhuma camada ou canal activo para aclarar."
@@ -4701,12 +4714,12 @@ msgid "_Zoom (%d:%d)"
 msgstr "_Zoom (%d:%d)"
 
 #: app/gui/images-menu.c:42
-msgid "/_Raise Displays"
-msgstr "/_Elevar Monitores"
+msgid "/_Raise Views"
+msgstr "/_Elevar Vistas"
 
 #: app/gui/images-menu.c:46
-msgid "/_New Display"
-msgstr "/_Novo Monitor"
+msgid "/_New View"
+msgstr "/_Nova Vista"
 
 #: app/gui/images-menu.c:50
 msgid "/_Delete Image"
@@ -6743,36 +6756,44 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Calibrar"
 
-#: app/gui/vectors-commands.c:157 app/pdb/paths_cmds.c:1128
+#: app/gui/vectors-commands.c:162 app/pdb/paths_cmds.c:1128
 #: app/widgets/gimpvectorstreeview.c:271
 msgid "Path to Selection"
 msgstr "Caminho para Selecção"
 
-#: app/gui/vectors-commands.c:415
+#: app/gui/vectors-commands.c:407
 msgid "Empty Vectors Copy"
 msgstr "Cópia Vectores Vazios"
 
-#: app/gui/vectors-commands.c:429 app/gui/vectors-commands.c:475
+#: app/gui/vectors-commands.c:421 app/gui/vectors-commands.c:467
 #: app/widgets/gimpvectorstreeview.c:126
 msgid "New Path"
 msgstr "Novo Caminho"
 
-#: app/gui/vectors-commands.c:431
+#: app/gui/vectors-commands.c:423
 msgid "New Path Options"
 msgstr "Novas Opções de Caminho"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:464 app/gui/vectors-commands.c:579
+#: app/gui/vectors-commands.c:456 app/gui/vectors-commands.c:571
 msgid "Path name:"
 msgstr "Nome caminho:"
 
-#: app/gui/vectors-commands.c:544
+#: app/gui/vectors-commands.c:536
 msgid "Path Attributes"
 msgstr "Atributos Caminho"
 
-#: app/gui/vectors-commands.c:546 app/widgets/gimpvectorstreeview.c:130
+#: app/gui/vectors-commands.c:538 app/widgets/gimpvectorstreeview.c:130
 msgid "Edit Path Attributes"
 msgstr "Editar Atributos do Caminho"
+
+#: app/gui/vectors-commands.c:631
+msgid "Import Paths from SVG"
+msgstr "Importar Caminhos de SVG"
+
+#: app/gui/vectors-commands.c:690
+msgid "Export Path to SVG"
+msgstr "Exportar Caminhos para SVG"
 
 #: app/gui/vectors-menu.c:44
 msgid "/Path _Tool"
@@ -8537,11 +8558,11 @@ msgstr "Modo Edição"
 msgid "Polygonal"
 msgstr "Poligonal"
 
-#: app/tools/gimpvectortool.c:142
+#: app/tools/gimpvectortool.c:128
 msgid "Create and edit paths"
 msgstr "Criar e editar caminhos"
 
-#: app/tools/gimpvectortool.c:143
+#: app/tools/gimpvectortool.c:129
 msgid "/Tools/_Paths"
 msgstr "/Ferramentas/Ca_minhos"
 
@@ -8585,9 +8606,14 @@ msgstr "Transformar Caminho"
 msgid "Cannot stroke empty path."
 msgstr "Incapaz de aclarar caminho vazio."
 
-#: app/vectors/gimpvectors-import.c:231
+#: app/vectors/gimpvectors-import.c:188 app/vectors/gimpvectors-import.c:198
 msgid "Imported Path"
 msgstr "Caminho Importado"
+
+#: app/vectors/gimpvectors-import.c:211
+#, c-format
+msgid "No paths found in '%s'"
+msgstr "Nenhum caminho encontrado em '%s'"
 
 #: app/widgets/widgets-enums.c:14
 msgid "Portrait"
@@ -9428,6 +9454,15 @@ msgstr "Criar e editar imagens ou fotografias"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "O GIMP (instável)"
+
+#~ msgid "Selection from Channel"
+#~ msgstr "Selecção de Canal"
+
+#~ msgid "/_Raise Displays"
+#~ msgstr "/_Elevar Monitores"
+
+#~ msgid "/_New Display"
+#~ msgstr "/_Novo Monitor"
 
 #~ msgid "Adding theme '%s' (%s)\n"
 #~ msgstr "A adicionar tema '%s' (%s)\n"
