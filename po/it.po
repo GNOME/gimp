@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-07 16:48+0200\n"
+"PO-Revision-Date: 2003-10-13 16:46+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -769,7 +769,7 @@ msgid ""
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr ""
+msgstr "Imposta il navigatore web esterno da utilizzare. Può essere un percorso assoluto o il nome dell'eseguibile da cercare nel percorso dell'utente. Se il comando contiene un '%s', esso verrà rimpiazzato dall'URL, altrimenti l'URL verrà posto alla fine del comando, separato da uno spazio."
 
 #: app/config/gimpscanner.c:93 app/tools/gimpcurvestool.c:1292
 #: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:78
@@ -6391,25 +6391,26 @@ msgstr "The GIMP"
 #: app/gui/stroke-dialog.c:96
 #, fuzzy
 msgid "Stroke Options"
-msgstr "Disegna selezione"
+msgstr "Opzioni di tratto"
 
 #: app/gui/stroke-dialog.c:98
+#, fuzzy
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "Scegli stile di tratto"
 
 #: app/gui/stroke-dialog.c:128
 #, fuzzy
 msgid "Stroke"
-msgstr "Aggiungi tratto"
+msgstr "Tratto"
 
 #: app/gui/stroke-dialog.c:158
+#, fuzzy
 msgid "Stroke Using a Paint Tool"
-msgstr ""
+msgstr "Tratto con uno strumento di disegno"
 
 #: app/gui/stroke-dialog.c:184
-#, fuzzy
 msgid "Paint Tool:"
-msgstr "Strumento tracciato"
+msgstr "Strumento di disegno:"
 
 #: app/gui/templates-commands.c:133
 msgid "New Template"
@@ -6440,14 +6441,13 @@ msgid "/_Edit Template..."
 msgstr "/_Modifica palette..."
 
 #: app/gui/templates-menu.c:66
-#, fuzzy
 msgid "/_Delete Template"
-msgstr "Elimina modello"
+msgstr "/_Elimina modello"
 
 #: app/gui/themes.c:151
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
-msgstr ""
+msgstr "Aggiunta tema '%s' (%s)\n"
 
 #: app/gui/tips-dialog.c:94
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
@@ -6518,35 +6518,32 @@ msgid "Enter a new name for the saved options"
 msgstr "Inserire un nome per questo buffer"
 
 #: app/gui/tool-options-menu.c:57
-#, fuzzy
 msgid "/Save Options to/New Entry..."
-msgstr "/Salva la selezione in un file..."
+msgstr "/Salva le opzioni su/Nuova voce"
 
 #: app/gui/tool-options-menu.c:62
 msgid "/Save Options to/new-separator"
-msgstr ""
+msgstr "/Salva le opzioni su/nuovo-separatore"
 
 #: app/gui/tool-options-menu.c:68
 msgid "/Restore Options from/(None)"
-msgstr ""
+msgstr "/Recupera opzioni da/(nessuno)"
 
 #: app/gui/tool-options-menu.c:74
 msgid "/Rename Saved Options/(None)"
-msgstr ""
+msgstr "/Rinomina opzioni salvate/(Nessuno)"
 
 #: app/gui/tool-options-menu.c:80
 msgid "/Delete Saved Options/(None)"
-msgstr ""
+msgstr "/Cancella opzioni salvate/(Nessuno)"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Reset Tool Options"
-msgstr "Opzioni strumenti"
+msgstr "/Reimposta opzioni strumenti"
 
 #: app/gui/tool-options-menu.c:94
-#, fuzzy
 msgid "/Reset all Tool Options..."
-msgstr "/Aggiungi scheda/_Opzioni strumenti..."
+msgstr "/Reimposta tutte le opzioni strumenti..."
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
@@ -6554,9 +6551,8 @@ msgid "/File/_Acquire"
 msgstr "/File/_Acquisizione"
 
 #: app/gui/toolbox-menu.c:83
-#, fuzzy
 msgid "/File/_Preferences"
-msgstr "/File/_Preferenze..."
+msgstr "/File/_Preferenze"
 
 #. <Toolbox>/File/Dialogs
 #: app/gui/toolbox-menu.c:91
@@ -6564,129 +6560,104 @@ msgid "/File/_Dialogs"
 msgstr "/File/_Finestre"
 
 #: app/gui/toolbox-menu.c:93
-#, fuzzy
 msgid "/File/Dialogs/Create New Doc_k"
-msgstr "/Finestre/Finestre/tearoff1"
+msgstr "/File/Finestre/Crea nuovo pannello"
 
 #: app/gui/toolbox-menu.c:95
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/File/Finestre/Livelli, canali e tracciati..."
+msgstr "/File/Finestre/Crea nuovo pannello/_Livelli, canali e tracciati"
 
 #: app/gui/toolbox-menu.c:99
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/Crea nuovo pannello/Pennelli, pattern e gradienti"
 
 #: app/gui/toolbox-menu.c:103
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/Crea nuovo pannello/_Varie"
 
 #: app/gui/toolbox-menu.c:108
-#, fuzzy
 msgid "/File/Dialogs/Tool _Options"
-msgstr "/File/Finestre/Opzioni strumenti..."
+msgstr "/File/Finestre/_Opzioni strumenti"
 
 #: app/gui/toolbox-menu.c:113
-#, fuzzy
 msgid "/File/Dialogs/_Device Status"
-msgstr "/File/Finestre/Stato dispositivi..."
+msgstr "/File/Finestre/Stato _dispositivi"
 
 #: app/gui/toolbox-menu.c:121
-#, fuzzy
 msgid "/File/Dialogs/_Layers"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/_Livelli"
 
 #: app/gui/toolbox-menu.c:126
-#, fuzzy
 msgid "/File/Dialogs/_Channels"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/_Canali"
 
 #: app/gui/toolbox-menu.c:131
-#, fuzzy
 msgid "/File/Dialogs/_Paths"
-msgstr "/File/Finestre/Palette..."
+msgstr "/File/Finestre/_Tracciati"
 
 #: app/gui/toolbox-menu.c:136
-#, fuzzy
 msgid "/File/Dialogs/_Indexed Palette"
-msgstr "/Finestre/Palette in scala di colore..."
+msgstr "/Finestre/Palette _indicizzata"
 
 #: app/gui/toolbox-menu.c:141
-#, fuzzy
 msgid "/File/Dialogs/_Selection Editor"
-msgstr "/File/Finestre/Indice documenti..."
+msgstr "/File/Finestre/_Selezione editor"
 
 #: app/gui/toolbox-menu.c:146
-#, fuzzy
 msgid "/File/Dialogs/Na_vigation"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/Na_vigazione"
 
 #: app/gui/toolbox-menu.c:151
-#, fuzzy
 msgid "/File/Dialogs/_Undo History"
-msgstr "/File/Finestre/Indice documenti..."
+msgstr "/File/Finestre/Cronologia modifiche"
 
 #: app/gui/toolbox-menu.c:159
-#, fuzzy
 msgid "/File/Dialogs/Colo_rs"
-msgstr "/File/Finestre/Pennelli..."
+msgstr "/File/Finestre/Colo_ri"
 
 #: app/gui/toolbox-menu.c:164
-#, fuzzy
 msgid "/File/Dialogs/Brus_hes"
-msgstr "/File/Finestre/Pennelli..."
+msgstr "/File/Finestre/Pennelli"
 
 #: app/gui/toolbox-menu.c:169
-#, fuzzy
 msgid "/File/Dialogs/P_atterns"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/P_attern"
 
 #: app/gui/toolbox-menu.c:174
-#, fuzzy
 msgid "/File/Dialogs/_Gradients"
-msgstr "/File/Finestre/Gradienti..."
+msgstr "/File/Finestre/_Gradienti"
 
 #: app/gui/toolbox-menu.c:179
-#, fuzzy
 msgid "/File/Dialogs/Pal_ettes"
-msgstr "/File/Finestre/Palette..."
+msgstr "/File/Finestre/Pal_ette"
 
 #: app/gui/toolbox-menu.c:184
-#, fuzzy
 msgid "/File/Dialogs/_Fonts"
-msgstr "/File/Finestre/Palette..."
+msgstr "/File/Finestre/Caratteri"
 
 #: app/gui/toolbox-menu.c:189
-#, fuzzy
 msgid "/File/Dialogs/_Buffers"
-msgstr "/File/Finestre/Pennelli..."
+msgstr "/File/Finestre/_Buffer"
 
 #: app/gui/toolbox-menu.c:197
-#, fuzzy
 msgid "/File/Dialogs/I_mages"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/I_mmagini"
 
 #: app/gui/toolbox-menu.c:202
-#, fuzzy
 msgid "/File/Dialogs/Document Histor_y"
-msgstr "/File/Finestre/Indice documenti..."
+msgstr "/File/Finestre/Cronologia documenti"
 
 #: app/gui/toolbox-menu.c:207
-#, fuzzy
 msgid "/File/Dialogs/_Templates"
-msgstr "/File/Finestre/Pattern..."
+msgstr "/File/Finestre/Modelli"
 
 #: app/gui/toolbox-menu.c:212
-#, fuzzy
 msgid "/File/Dialogs/Error Co_nsole"
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/File/Finestre/Con_sole degli errori"
 
 #: app/gui/toolbox-menu.c:219
-#, fuzzy
 msgid "/File/D_ebug"
-msgstr "/Filtri/Web"
+msgstr "/File/D_ebug"
 
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:239
@@ -6694,9 +6665,8 @@ msgid "/_Xtns"
 msgstr "/_Xtns"
 
 #: app/gui/toolbox-menu.c:241
-#, fuzzy
 msgid "/Xtns/_Module Manager"
-msgstr "/Xtns/Gestione moduli..."
+msgstr "/Xtns/Gestione _moduli"
 
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:250
@@ -6704,24 +6674,20 @@ msgid "/_Help"
 msgstr "/_Aiuto"
 
 #: app/gui/toolbox-menu.c:252
-#, fuzzy
 msgid "/Help/_Help"
-msgstr "/Aiuto/Aiuto..."
+msgstr "/Aiuto/_Aiuto"
 
 #: app/gui/toolbox-menu.c:257
-#, fuzzy
 msgid "/Help/_Context Help"
-msgstr "/Aiuto/Aiuto contestuale..."
+msgstr "/Aiuto/Aiuto _contestuale"
 
 #: app/gui/toolbox-menu.c:262
-#, fuzzy
 msgid "/Help/_Tip of the Day"
-msgstr "/Aiuto/Suggerimenti del giorno..."
+msgstr "/Aiuto/Suggerimenti del _giorno"
 
 #: app/gui/toolbox-menu.c:267
-#, fuzzy
 msgid "/Help/_About"
-msgstr "/Aiuto/Informazioni..."
+msgstr "/Aiuto/_Informazioni"
 
 #: app/gui/user-install-dialog.c:138
 msgid ""
