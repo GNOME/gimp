@@ -2716,7 +2716,7 @@ scale_region_no_resample (PixelRegion *srcPR,
   y_src_offsets = g_new (gint, height);
   src  = g_new (guchar, orig_width * bytes);
   dest = g_new (guchar, width * bytes);
-  
+
   /*  pre-calc the scale tables  */
   for (b = 0; b < bytes; b++)
     for (x = 0; x < width; x++)
@@ -2746,7 +2746,7 @@ scale_region_no_resample (PixelRegion *srcPR,
 
       pixel_region_set_row (destPR, 0, y, width, dest);
     }
-  
+
   g_free (x_src_offsets);
   g_free (y_src_offsets);
   g_free (src);
@@ -2868,10 +2868,11 @@ shrink_line (gdouble               *dest,
   gint          b;
   gdouble      *srcp;
   gdouble      *destp;
-  gdouble       accum;
+  gdouble       accum[4];
   gdouble       slice;
   const gdouble avg_ratio = (gdouble) width / old_width;
-  gint          srcpos;
+  const gdouble inv_width = 1.0 / width;
+  gint          slicepos;      /* slice position relative to width */
 
 #if 0
   g_printerr ("shrink_line bytes=%d old_width=%d width=%d interp=%d "
@@ -2879,55 +2880,76 @@ shrink_line (gdouble               *dest,
               bytes, old_width, width, interp, avg_ratio);
 #endif
 
+  g_return_if_fail (bytes <= 4);
 
+  /* This algorithm calculates the weighted average of pixel data that
+     each output pixel must receive, taking into account that it always
+     scales down, i.e. there's always more than one input pixel per each
+     output pixel.  */
+
+  srcp = src;
+  destp = dest;
+
+  slicepos = 0;
+
+  /* Initialize accum to the first pixel slice.  As there is no partial
+     pixel at start, that value is 0.  The source data is interleaved, so
+     we maintain BYTES accumulators at the same time to deal with that
+     many channels simultaneously.  */
   for (b = 0; b < bytes; b++)
+    accum[b] = 0.0;
+
+  for (x = 0; x < width; x++)
     {
-      /* This algorithm calculates the weighted average of pixel data that
-         each output pixel must receive, taking into account that it always
-         scales down, i.e. there's always more than one input pixel per each
-         output pixel.
-      */
-
-      srcp = &src[b];
-      destp = &dest[b];
-
-      srcpos = 0;
-
-      /* Initialize accum to the first pixel slice.  As there is no partial
-         pixel at start, that value is 0.  */
-      accum = 0.0;
-
-      for (x = 0; x < width; x++)
+      /* Accumulate whole pixels.  */
+      do
         {
-          /* Accumulate whole pixels.  */
-          while (srcpos < old_width)
-            {
-              accum += *srcp;
-              srcp += bytes;
+          for (b = 0; b < bytes; b++)
+            accum[b] += *srcp++;
 
-              srcpos += width;
-            }
-
-          srcpos -= old_width;
-
-          /* We've accumulated a whole pixel where just a slice of it was
-             needed.  Subtract it now.  */
-          slice = (srcpos == 0) ? 0.0 : (srcp[-bytes] * srcpos) / width;
-          accum -= slice;
-
-          *destp = accum * avg_ratio;
-          destp += bytes;
-
-          /* That slice is the initial value for the next round.  */
-          accum = slice;
+          slicepos += width;
         }
+      while (slicepos < old_width);
+      slicepos -= old_width;
 
-#if 0
-      /* Sanity check: srcp should point to the next-to-last position.  */
-      if (!(srcp - src - b == old_width * bytes))
-        g_warning ("Assertion (srcp - src - b == old_width * bytes) failed.");
-#endif
+      if (! (slicepos < width))
+        g_warning ("Assertion (slicepos < width) failed. Please report.");
+
+      if (slicepos == 0)
+        {
+          /* Simplest case: we have reached a whole pixel boundary.  Store
+             the average value per channel and reset the accumulators for
+             the next round.
+
+             The main reason to treat this case separately is to avoid an
+             access to out-of-bounds memory for the first pixel.  */
+          for (b = 0; b < bytes; b++)
+            {
+              *destp++ = accum[b] * avg_ratio;
+              accum[b] = 0.0;
+            }
+        }
+      else
+        {
+          for (b = 0; b < bytes; b++)
+            {
+              /* We have accumulated a whole pixel per channel where just a
+                 slice of it was needed.  Subtract now the previous pixel's
+                 extra slice.  */
+              slice = srcp[- bytes + b] * slicepos * inv_width;
+              *destp++ = (accum[b] - slice) * avg_ratio;
+
+              /* That slice is the initial value for the next round.  */
+              accum[b] = slice;
+            }
+        }
     }
+
+  /* Sanity check: srcp should point to the next-to-last position, and
+     slicepos should be zero.  */
+  if (! (srcp - src == old_width * bytes && slicepos == 0))
+    g_warning ("Assertion (srcp - src == old_width * bytes && slicepos == 0)"
+               " failed. Please report.");
 }
 
 static void

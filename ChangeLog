@@ -1,3 +1,10 @@
+2003-04-29  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/paint-funcs/paint-funcs.c (shrink_line): Serialize access to
+	source and destination memory to reduce the chance of cache misses
+	when dealing with large images. Enable some assertions temporarily
+	to ensure that the algorithm works properly before backporting it.
+
 2003-04-28  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/jpeg.c: default to not showing the in-display
@@ -14,8 +21,8 @@
 	* app/paint-funcs/paint-funcs.c: Some reformattings to improve
 	readability.
 	(shrink_line): Added some explanatory comments.
-	(border_region): Fixed wrong (though harmless) allocation bug: used
-	sizeof(gint16 *) where sizeof(gint16) was needed.
+	(border_region): Fixed wrong (though harmless) allocation bug:
+	used sizeof(gint16 *) where sizeof(gint16) was needed.
 
 2003-04-23  Sven Neumann  <sven@gimp.org>
 
