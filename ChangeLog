@@ -1,3 +1,8 @@
+Mon May 24 21:16:14 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/faxg3/faxg3.c: 
+	* plug-ins/faxg3/g3.c: Add include <sys/types.h> for OS/2
+
 Sun May 23 14:13:03 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/threshold_alpha/threshold_alpha.c: Added
