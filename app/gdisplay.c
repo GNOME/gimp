@@ -631,10 +631,11 @@ gdisplay_add_update_area (GDisplay *gdisp,
   GArea * ga;
 
   ga = (GArea *) g_malloc (sizeof (GArea));
-  ga->x1 = BOUNDS (x, 0, gdisp->gimage->width);
-  ga->y1 = BOUNDS (y, 0, gdisp->gimage->height);
-  ga->x2 = BOUNDS (x + w, 0, gdisp->gimage->width);
-  ga->y2 = BOUNDS (y + h, 0, gdisp->gimage->height);
+
+  ga->x1 = x /* BOUNDS (x, 0, gdisp->gimage->width) */;
+  ga->y1 = y /* BOUNDS (y, 0, gdisp->gimage->height) */;
+  ga->x2 = x + w /* BOUNDS (x + w, 0, gdisp->gimage->width) */;
+  ga->y2 = y + h /* BOUNDS (y + h, 0, gdisp->gimage->height) */;
 
   gdisp->update_areas = gdisplay_process_area_list (gdisp->update_areas, ga);
 }
@@ -651,10 +652,10 @@ gdisplay_add_display_area (GDisplay *gdisp,
 
   ga = (GArea *) g_malloc (sizeof (GArea));
 
-  ga->x1 = BOUNDS (x, 0, gdisp->disp_width);
-  ga->y1 = BOUNDS (y, 0, gdisp->disp_height);
-  ga->x2 = BOUNDS (x + w, 0, gdisp->disp_width);
-  ga->y2 = BOUNDS (y + h, 0, gdisp->disp_height);
+  ga->x1 = x /* BOUNDS (x, 0, gdisp->disp_width) */;
+  ga->y1 = y /* BOUNDS (y, 0, gdisp->disp_height) */;
+  ga->x2 = x + w /* BOUNDS (x + w, 0, gdisp->disp_width) */;
+  ga->y2 = y + h /* BOUNDS (y + h, 0, gdisp->disp_height) */;
 
   gdisp->display_areas = gdisplay_process_area_list (gdisp->display_areas, ga);
 }
@@ -668,27 +669,31 @@ gdisplay_paint_area (GDisplay *gdisp,
 		     int       h)
 {
   int x1, y1, x2, y2;
+  int xb, yb, wb, hb;
 
   /*  Bounds check  */
   x1 = BOUNDS (x, 0, gdisp->gimage->width);
   y1 = BOUNDS (y, 0, gdisp->gimage->height);
   x2 = BOUNDS (x + w, 0, gdisp->gimage->width);
   y2 = BOUNDS (y + h, 0, gdisp->gimage->height);
-  x = x1;
-  y = y1;
-  w = (x2 - x1);
-  h = (y2 - y1);
+  xb = x1;
+  yb = y1;
+  wb = (x2 - x1);
+  hb = (y2 - y1);
 
   /*  calculate the extents of the update as limited by what's visible  */
   gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
   gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE, FALSE);
 
-  gimage_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
+  gimage_invalidate (gdisp->gimage, xb, yb, wb, hb, x1, y1, x2, y2);
 
     /*  display the area  */
-  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
-  gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+  gdisplay_transform_coords (gdisp, xb, yb, &x1, &y1, FALSE);
+  gdisplay_transform_coords (gdisp, xb + wb, yb + hb, &x2, &y2, FALSE);
+
+  /* expose needs to be done on the unbounded area */
+
+  gdisplay_expose_area (gdisp, x, y, w, h);
 }
 
 
