@@ -1,3 +1,9 @@
+2004-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: don't g_free(error) but
+	g_free_error(&error) the GError.
+
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/resize-dialog.[ch]: started to redo the Resize
