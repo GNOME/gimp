@@ -1,5 +1,22 @@
 2003-02-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/distress_selection.scm
+	* plug-ins/script-fu/scripts/old_photo.scm
+	* plug-ins/script-fu/scripts/select_to_brush.scm
+	* plug-ins/script-fu/scripts/select_to_image.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm: removed.
+
+	* plug-ins/script-fu/scripts/distress-selection.scm
+	* plug-ins/script-fu/scripts/old-photo.scm
+	* plug-ins/script-fu/scripts/select-to-brush.scm
+	* plug-ins/script-fu/scripts/select-to-image.scm
+	* plug-ins/script-fu/scripts/spinning-globe.scm: new filenames
+	with '-' instead of '_'.
+
+	* plug-ins/script-fu/scripts/Makefile.am: changed accordingly.
+
+2003-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/Makefile.am
 	* plug-ins/script-fu/scripts/select-to-pattern.scm: added new
 	script from Cameron Gregory. Closes bug #105624.

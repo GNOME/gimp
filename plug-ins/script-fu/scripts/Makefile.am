@@ -41,7 +41,7 @@ scriptdata_DATA = \
 	coolmetal-logo.scm			\
 	copy-visible.scm			\
 	crystal-logo.scm			\
-	distress_selection.scm			\
+	distress-selection.scm			\
 	drop-shadow.scm				\
 	erase-rows.scm				\
 	fade-outline.scm			\
@@ -62,7 +62,7 @@ scriptdata_DATA = \
 	land.scm				\
 	lava.scm				\
 	line-nova.scm				\
-	old_photo.scm				\
+	old-photo.scm				\
 	mkbrush.scm				\
 	neon-logo.scm				\
 	news-text.scm				\
@@ -72,15 +72,15 @@ scriptdata_DATA = \
 	rendermap.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\
-	select_to_brush.scm			\
-	select_to_image.scm			\
+	select-to-brush.scm			\
+	select-to-image.scm			\
 	select-to-pattern.scm			\
 	selection-round.scm			\
 	slide.scm				\
 	sota-chrome-logo.scm			\
 	speed-text.scm				\
 	sphere.scm				\
-	spinning_globe.scm			\
+	spinning-globe.scm			\
 	starburst-logo.scm			\
 	starscape-logo.scm			\
 	swirltile.scm				\
