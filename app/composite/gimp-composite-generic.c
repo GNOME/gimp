@@ -377,40 +377,49 @@ gimp_composite_hue_any_any_any_generic (GimpCompositeContext * ctx)
   guint r1, g1, b1;
   guint r2, g2, b2;
 
-  if (bytes1 > 2) {
-    /*  assumes inputs are only 4 byte RGBA pixels  */
-    while (length--)
-      {
-        r1 = src1[0];
-        g1 = src1[1];
-        b1 = src1[2];
-        r2 = src2[0];
-        g2 = src2[1];
-        b2 = src2[2];
-        gimp_rgb_to_hsv_int(&r1, &g1, &b1);
-        gimp_rgb_to_hsv_int(&r2, &g2, &b2);
+  if (bytes1 > 2)
+    {
+      /*  assumes inputs are only 4 byte RGBA pixels  */
+      while (length--)
+        {
+          r1 = src1[0];
+          g1 = src1[1];
+          b1 = src1[2];
 
-        r1 = r2;
+          r2 = src2[0];
+          g2 = src2[1];
+          b2 = src2[2];
 
-        /*  set the destination  */
-        gimp_hsv_to_rgb_int(&r1, &g1, &b1);
+          gimp_rgb_to_hsv_int (&r1, &g1, &b1);
+          gimp_rgb_to_hsv_int (&r2, &g2, &b2);
 
-        dest[0] = r1;
-        dest[1] = g1;
-        dest[2] = b1;
+          /*  Composition should have no effect if saturation is zero.
+           *  otherwise, black would be painted red (see bug #123296).
+           */
+          if (g2)
+            r1 = r2;
 
-        if (has_alpha1 && has_alpha2)
-          dest[3] = MIN(src1[3], src2[3]);
-        else if (has_alpha2)
-          dest[3] = src2[3];
+          /*  set the destination  */
+          gimp_hsv_to_rgb_int (&r1, &g1, &b1);
 
-        src1 += bytes1;
-        src2 += bytes2;
-        dest += bytes2;
-      }
-  } else {
-    ctx->D = ctx->B;
-  }
+          dest[0] = r1;
+          dest[1] = g1;
+          dest[2] = b1;
+
+          if (has_alpha1 && has_alpha2)
+            dest[3] = MIN (src1[3], src2[3]);
+          else if (has_alpha2)
+            dest[3] = src2[3];
+
+          src1 += bytes1;
+          src2 += bytes2;
+          dest += bytes2;
+        }
+    }
+  else
+    {
+      ctx->D = ctx->B;
+    }
 }
 
 
