@@ -1,3 +1,8 @@
+2003-01-30  Seth Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/laplace.c: fixed off-by-1 error that caused 
+	gimp_pixel_rgn_get_row() critical warnings (but managed to work).
+
 2003-01-30  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
 	* configure.in: Added Vietnamese (vi) to ALL_LINGUAS

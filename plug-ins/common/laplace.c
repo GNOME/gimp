@@ -19,6 +19,11 @@
 /* This plugin by thorsten@arch.usyd.edu.au           */
 /* Based on S&P's Gauss and Laplace filters              */
 
+/* updated 1/30/03: <sjburges@gimp.org>
+ * fixed an off-by-1 error that was causing an attempt to read a 
+ * get_pixel_by_row at the -1'th row
+ */
+
 /* updated 11/04/97:
    Use 8-pixel neighbourhood to create outline,
    use min-max operation for local gradient,
@@ -147,13 +152,13 @@ laplace_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  if (y == 0)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
+  if (y < 0)
+      gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
   else if (y == pixel_rgn->h)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y - 1), w);
+      gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y - 1), w);
   else
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
-
+      gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
+  
   /*  Fill in edge pixels  */
   for (b = 0; b < pixel_rgn->bpp; b++)
     {
