@@ -181,9 +181,6 @@ typedef struct
   GtkObject   *offset_adj_x;
   GtkObject   *offset_adj_y;
 
-  guchar      *check_row_0;
-  guchar      *check_row_1;
-
   guchar     **src_rows;
   guchar     **bm_rows;
 
@@ -298,8 +295,6 @@ static bumpmap_interface_t bmint =
   DRAG_NONE, /* drag_mode */
   NULL,      /* offset_adj_x */
   NULL,      /* offset_adj_y */
-  NULL,      /* check_row_0 */
-  NULL,      /* check_row_1 */
   NULL,      /* src_rows */
   NULL,      /* bm_rows */
   0,         /* src_yofs */
@@ -908,12 +903,9 @@ bumpmap_dialog (void)
 
   bmint.preview = preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (bmint.preview,
-                               bmint.preview_width,
-                               bmint.preview_height);
+                               bmint.preview_width, bmint.preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), bmint.preview);
   gtk_widget_show (bmint.preview);
-  g_signal_connect (bmint.preview, "size_allocate", 
-                    G_CALLBACK (dialog_update_preview), NULL);
 
   bmint.preview_adj_x =
     gtk_adjustment_new (0, 0, sel_width, 1, 10, bmint.preview_width);
@@ -1091,12 +1083,11 @@ bumpmap_dialog (void)
 
   gtk_widget_show (dialog);
 
+  dialog_update_preview ();
+
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
-
-  g_free (bmint.check_row_0);
-  g_free (bmint.check_row_1);
 
   for (i = 0; i < bmint.preview_height; i++)
     g_free (bmint.src_rows[i]);
@@ -1118,23 +1109,6 @@ static void
 dialog_init_preview (void)
 {
   gint x;
-
-  /* Create checkerboard rows */
-
-  bmint.check_row_0 = g_new (guchar, bmint.preview_width);
-  bmint.check_row_1 = g_new (guchar, bmint.preview_width);
-
-  for (x = 0; x < bmint.preview_width; x++)
-    if ((x / GIMP_CHECK_SIZE) & 1)
-      {
-        bmint.check_row_0[x] = GIMP_CHECK_DARK  * 255;
-        bmint.check_row_1[x] = GIMP_CHECK_LIGHT * 255;
-      }
-    else
-      {
-        bmint.check_row_0[x] = GIMP_CHECK_LIGHT * 255;
-        bmint.check_row_1[x] = GIMP_CHECK_DARK  * 255;
-      }
 
   /* Initialize source rows */
 
@@ -1410,9 +1384,12 @@ dialog_update_preview (void)
                    &bmint.params);
 
     }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (bmint.preview), 0, 0,
+
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (bmint.preview),
+                          0, 0,
                           bmint.preview_width, bmint.preview_height,
-                          GIMP_RGBA_IMAGE, dest_row,
+                          GIMP_RGBA_IMAGE,
+                          dest_row,
                           bmint.preview_width * 4);
 }
 

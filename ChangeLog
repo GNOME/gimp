@@ -1,3 +1,8 @@
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/bumpmap.c: removed preview code that isn't used
+	any longer.
+
 2004-07-30  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/bumpmap.c: use GimpPreviewArea instead of
