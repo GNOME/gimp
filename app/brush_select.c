@@ -26,7 +26,6 @@
 #include "canvas.h"
 #include "colormaps.h"
 #include "disp_callbacks.h"
-#include "lookup_tables.h"
 #include "errors.h"
 #include "paint_funcs.h"
 #include "tag.h"
@@ -490,7 +489,7 @@ display_brush_get_row_u8(
       break;
     }	
 }
-
+#define U16_TO_U8(x) ((x)>>8)
 static void  
 display_brush_get_row_u16(  
                         guchar *buf,
@@ -512,7 +511,7 @@ display_brush_get_row_u16(
       /*  Invert the mask for display. */ 
       for (i = 0; i < width; i++)
         {
-	  *b++ = 255 - g_lookup_16_to_8[*s++];
+	  *b++ = 255 - U16_TO_U8(*s++);
         }
       break;	
     default:

@@ -24,7 +24,6 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "lookup_tables.h"
 #include "pixel_region.h"
 #include "scale.h"
 #include "canvas.h"
@@ -36,7 +35,6 @@ typedef void (*RenderFunc) (RenderInfo *info);
 struct _RenderInfo
 {
   GDisplay *gdisp;
-  TileManager *src_tiles;
   Canvas *src_canvas;
   guint *alpha;
   guchar *scale;
@@ -66,7 +64,6 @@ guchar *temp_buf = NULL;
 
 static guint   check_mod;
 static guint   check_shift;
-static guint   tile_shift;
 static guchar  check_combos[6][2] =
 {
   { 204, 255 },
@@ -85,18 +82,10 @@ render_setup (int check_type,
 {
   int i, j;
 
-  /*  based on the tile size, determine the tile shift amount
-   *  (assume here that tile_height and tile_width are equal)
-   */
-  tile_shift = 0;
-  while ((1 << tile_shift) < TILE_WIDTH)
-    tile_shift++;
-
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (!tile_buf)
-#define IMAGE_RENDER_C_1_cw
     tile_buf = g_new (guchar, GXIMAGE_WIDTH * MAX_CHANNELS * 4);
-
+  
   if (check_type < 0 || check_type > 5)
     g_error ("invalid check_type argument to render_setup: %d", check_type);
   if (check_size < 0 || check_size > 2)
@@ -249,7 +238,6 @@ static guchar* render_image_accelerate_scaling (int           width,
 						int           scalesrc,
 						int           scaledest);
 static guint*  render_image_init_alpha         (int           mult);
-static guchar* render_image_tile_fault         (RenderInfo   *info);
 static guchar* render_image_canvas_fault       (RenderInfo *info);
 
 static RenderFunc render_funcs_u8[6][4] =
@@ -364,8 +352,6 @@ render_image (GDisplay *gdisp,
 {
   RenderInfo info;
   int image_type;
-#define IMAGE_RENDER_C_2_cw
-/* Precision prec = PRECISION_U8; */
 
   render_image_init_info (&info, gdisp, x, y, w, h);
 
@@ -382,10 +368,8 @@ render_image (GDisplay *gdisp,
       g_warning ("unsupported destination bytes per pixel: %d", info.dest_bpp);
       return;
     }
- 
-#define IMAGE_RENDER_C_3_cw
+  
   switch( tag_precision (canvas_tag (info.src_canvas)))
-  /*switch( prec )*/
     {
       case PRECISION_U8:
         (* render_funcs_u8[image_type][info.dest_bpp-1]) (&info);
@@ -433,7 +417,6 @@ render_image_indexed_u8_1 (RenderInfo *info)
   y = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-#define IMAGE_RENDER_C_4_cw
   info->src = render_image_canvas_fault (info);
   for (; y < ye; y++)
     {
@@ -2387,6 +2370,7 @@ render_image_rgb_a_u8_4 (RenderInfo *info)
 /*************************/
 /*  16 Bit channel data functions */
 /*************************/
+#define U16_TO_U8(x)  ((x)>>8)
 
 static void
 render_image_gray_u16_1 (RenderInfo *info)
@@ -2416,7 +2400,7 @@ render_image_gray_u16_1 (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
 	{
-	  gray = dither_gray[g_lookup_16_to_8[*src++]];
+	  gray = dither_gray[U16_TO_U8(*src++)];
 	  matrix = dither_matrix[x & 0x7];
 	  *dest++ = gray.c[matrix[gray.s[1]]];
 	}
@@ -2469,9 +2453,9 @@ render_image_gray_u16_2 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[0] = val;
@@ -2481,9 +2465,9 @@ render_image_gray_u16_2 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[0] = val >> 8;
@@ -2542,9 +2526,9 @@ render_image_gray_u16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[0] = val;
@@ -2555,9 +2539,9 @@ render_image_gray_u16_3 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[0] = val >> 16;
@@ -2617,9 +2601,9 @@ render_image_gray_u16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[0] = val;
@@ -2630,9 +2614,9 @@ render_image_gray_u16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]],
-				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]),
+				     U16_TO_U8(src[GRAY_PIX]));
 		src += 1;
 
 		dest[1] = val >> 16;
@@ -2689,11 +2673,11 @@ render_image_gray_a_u16_1 (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
 	{
-	  a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+	  a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 	  if (dark_light & 0x1)
-	    gray = dither_gray[blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])]];
+	    gray = dither_gray[blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))]];
 	  else
-	    gray = dither_gray[blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])]];
+	    gray = dither_gray[blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))]];
 	  src += 2;
 
 	  matrix = dither_matrix[x & 0x7];
@@ -2757,11 +2741,11 @@ render_image_gray_a_u16_2 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -2775,11 +2759,11 @@ render_image_gray_a_u16_2 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -2848,11 +2832,11 @@ render_image_gray_a_u16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -2867,11 +2851,11 @@ render_image_gray_a_u16_3 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -2941,11 +2925,11 @@ render_image_gray_a_u16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -2960,11 +2944,11 @@ render_image_gray_a_u16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		a = alpha[U16_TO_U8(src[ALPHA_G_PIX])];
 		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_dark_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		else
-		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		  val = blend_light_check[(a | U16_TO_U8(src[GRAY_PIX]))];
 		val = COLOR_COMPOSE (val, val, val);
 		src += 2;
 
@@ -3025,9 +3009,9 @@ render_image_rgb_u16_1 (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
 	{
-	  ra = dither_red[g_lookup_16_to_8[src[RED_PIX]]];
-	  ga = dither_green[g_lookup_16_to_8[src[GREEN_PIX]]];
-	  ba = dither_blue[g_lookup_16_to_8[src[BLUE_PIX]]];
+	  ra = dither_red[U16_TO_U8(src[RED_PIX])];
+	  ga = dither_green[U16_TO_U8(src[GREEN_PIX])];
+	  ba = dither_blue[U16_TO_U8(src[BLUE_PIX])];
 	  src += 3;
 
 	  matrix = dither_matrix[x & 0x7];
@@ -3085,9 +3069,9 @@ render_image_rgb_u16_2 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[0] = val;
@@ -3097,9 +3081,9 @@ render_image_rgb_u16_2 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[0] = val >> 8;
@@ -3158,9 +3142,9 @@ render_image_rgb_u16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[0] = val;
@@ -3172,9 +3156,9 @@ render_image_rgb_u16_3 (RenderInfo *info)
 	    for (x = info->x; x < xe; x++)
 	      {
 
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[0] = val >> 16;
@@ -3234,9 +3218,9 @@ render_image_rgb_u16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[0] = val;
@@ -3247,9 +3231,9 @@ render_image_rgb_u16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
-				     g_lookup_16_to_8[src[GREEN_PIX]],
-				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		val = COLOR_COMPOSE (U16_TO_U8(src[RED_PIX]),
+				     U16_TO_U8(src[GREEN_PIX]),
+				     U16_TO_U8(src[BLUE_PIX]));
 		src += 3;
 
 		dest[1] = val >> 16;
@@ -3312,18 +3296,18 @@ render_image_rgb_a_u16_1 (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
 	{
-	  a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	  a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 	  if (dark_light & 0x1)
 	    {
-	      ra = dither_red[blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])]];
-	      ga = dither_green[blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])]];
-	      ba = dither_blue[blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])]];
+	      ra = dither_red[blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))]];
+	      ga = dither_green[blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))]];
+	      ba = dither_blue[blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))]];
 	    }
 	  else
 	    {
-	      ra = dither_red[blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])]];
-	      ga = dither_green[blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])]];
-	      ba = dither_blue[blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])]];
+	      ra = dither_red[blend_light_check[(a | U16_TO_U8(src[RED_PIX]))]];
+	      ga = dither_green[blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))]];
+	      ba = dither_blue[blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))]];
 	    }
 	  src += 4;
 
@@ -3391,18 +3375,18 @@ render_image_rgb_a_u16_2 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3418,18 +3402,18 @@ render_image_rgb_a_u16_2 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3501,18 +3485,18 @@ render_image_rgb_a_u16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3529,18 +3513,18 @@ render_image_rgb_a_u16_3 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3613,18 +3597,18 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -3641,18 +3625,18 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
 	  else
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	        a = alpha[U16_TO_U8(src[ALPHA_PIX])];
 		if (dark_light & 0x1)
 		  {
-		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_dark_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_dark_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 		else
 		  {
-		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
-		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
-		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		    r = blend_light_check[(a | U16_TO_U8(src[RED_PIX]))];
+		    g = blend_light_check[(a | U16_TO_U8(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | U16_TO_U8(src[BLUE_PIX]))];
 		  }
 
 		val = COLOR_COMPOSE (r, g, b);
@@ -4998,8 +4982,6 @@ render_image_init_info (RenderInfo *info,
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
 
-#define IMAGE_RENDER_C_5_cw
-  /* info->src_tiles = gimage_projection (gdisp->gimage);*/
   info->src_canvas = gimage_projection_canvas (gdisp->gimage);
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
   info->alpha = NULL;
@@ -5061,7 +5043,6 @@ render_image_accelerate_scaling (int width,
   return scale;
 }
 
-#define IMAGE_RENDER_C_6_cw
 static guchar*
 render_image_canvas_fault (RenderInfo *info)
 {
@@ -5130,67 +5111,3 @@ render_image_canvas_fault (RenderInfo *info)
   canvas_portion_unref (info->src_canvas, x_portion, y_portion);
   return tile_buf;
 }
-
-static guchar*
-render_image_tile_fault (RenderInfo *info)
-{
-  Tile *tile;
-  guchar *data;
-  guchar *dest;
-  guchar *scale;
-  int width;
-  int tilex;
-  int tiley;
-  int step;
-  int x, b;
-
-  tilex = info->src_x / TILE_WIDTH;
-  tiley = info->src_y / TILE_HEIGHT;
-
-  tile = tile_manager_get_tile (info->src_tiles, info->src_x, info->src_y, 0);
-  if (!tile)
-    return NULL;
-
-  tile_ref (tile);
-  data = (tile->data +
-	  ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-	   (info->src_x % TILE_WIDTH)) * tile->bpp);
-
-  scale = info->scale;
-  step = info->scalesrc * info->src_bpp;
-  dest = tile_buf;
-
-  x = info->src_x;
-  width = info->w;
-
-  while (width--)
-    {
-      for (b = 0; b < info->src_bpp; b++)
-	*dest++ = data[b];
-
-      if (*scale++ != 0)     /*time to get a new pixel from src */
-	{
-	  x += info->scalesrc;
-	  data += step;
-
-	  if ((x >> tile_shift) != tilex)  /*leaving the tile -- get a new one*/
-	    {
-	      tile_unref (tile, FALSE);
-	      tilex += 1;
-
-	      tile = tile_manager_get_tile (info->src_tiles, x, info->src_y, 0);
-	      if (!tile)
-		return tile_buf;
-
-	      tile_ref (tile);
-	      data = (tile->data +
-		      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-		       (x % TILE_WIDTH)) * tile->bpp);
-	    }
-	}
-    }
-
-  tile_unref (tile, FALSE);
-  return tile_buf;
-}
-

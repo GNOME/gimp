@@ -27,7 +27,6 @@
 #include "colormaps.h"
 #include "disp_callbacks.h"
 #include "errors.h"
-#include "lookup_tables.h"
 #include "paint_funcs.h"
 #include "tag.h"
 
@@ -390,7 +389,7 @@ display_pattern_get_row_u8(
       break;
     }	
 }
-
+#define U16_TO_U8(x) ((x)>>8)
 static void  
 display_pattern_get_row_u16(  
                         guchar *buf,
@@ -411,17 +410,17 @@ display_pattern_get_row_u16(
     case FORMAT_RGB:
       for (i = 0; i < width; i++)
 	{
-	  *b++ = g_lookup_16_to_8[*s++];
-	  *b++ = g_lookup_16_to_8[*s++];
-	  *b++ = g_lookup_16_to_8[*s++];
+	  *b++ = U16_TO_U8(*s++);
+	  *b++ = U16_TO_U8(*s++);
+	  *b++ = U16_TO_U8(*s++);
 	}
       break;	
     case FORMAT_GRAY:
       for (i = 0; i < width; i++)
         {
-	  *b++ = g_lookup_16_to_8[*s];
-	  *b++ = g_lookup_16_to_8[*s];
-	  *b++ = g_lookup_16_to_8[*s++];
+	  *b++ = U16_TO_U8(*s);
+	  *b++ = U16_TO_U8(*s);
+	  *b++ = U16_TO_U8(*s++);
         }
       break;	
     default:

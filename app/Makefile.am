@@ -12,8 +12,6 @@ gimp_SOURCES = \
 	paint.h                 \
 	canvas.c                \
 	canvas.h                \
-	lookup_tables.c         \
-	lookup_tables.h         \
 	pixelrow.c              \
 	pixelrow.h              \
 	pixelarea.c             \
