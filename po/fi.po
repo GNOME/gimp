@@ -2947,7 +2947,7 @@ msgid ""
 "  --debug-handlers         Enable debugging signal handlers for non-fatal "
 "signals.\n"
 msgstr ""
-"  --debug-handlers         Laita p‰‰lle debuggaus signaali hallitsijat
+"  --debug-handlers         Laita p‰‰lle debuggaus signaali hallitsijat "
 "ei fataaleille signaaleille.\n"
 
 #: app/main.c:316
@@ -2956,7 +2956,7 @@ msgstr "  --enable-stack-trace {never|query|always}\n"
 
 #: app/main.c:317
 msgid "                           Debugging mode for fatal signals.\n"
-msgstr "			  Debuggaus tila fataaleille signaaleille.\n""
+msgstr "			  Debuggaus tila fataaleille signaaleille.\n"
 
 #: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
