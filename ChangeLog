@@ -1,3 +1,14 @@
+Mon Oct 11 23:50:50 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	[both these are from patches by SHIRASAKI Yasuhiro]
+
+	* app/menus.c: tearoff i18n patch
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap/Makefile.am
+	* plug-ins/AlienMap2/AlienMap.c
+	* plug-ins/AlienMap2/Makefile.am: misc i18n fixes
+	
 1999-10-12  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/winsnap/winsnap.c: Don't resize layer, it causes image

@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gtk/gtk.h"
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "logo.h"
 #include "libgimp/stdplugins-intl.h"
@@ -190,7 +191,7 @@ query ()
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  _("1th May 1997"),
-        		  N_("<Image>/Filters/Colors/Alien Map"),
+        		  _("<Image>/Filters/Colors/Alien Map"),
         		  "RGB*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,

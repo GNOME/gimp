@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gtk/gtk.h"
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "logo.h"
 #include "libgimp/stdplugins-intl.h"

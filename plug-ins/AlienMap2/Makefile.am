@@ -8,6 +8,9 @@ AlienMap2_SOURCES = \
 	AlienMap2.c	\
 	logo.h
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

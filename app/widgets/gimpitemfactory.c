@@ -63,12 +63,7 @@ static void   tearoff_cmd_callback (GtkWidget            *widget,
 static gchar* G_GNUC_UNUSED dummyMenus[] =
 {
   N_("/File/MRU00 "),
-  N_("/File"),
   N_("/File/Dialogs"),
-  N_("/Image/Transforms"),
-  N_("/Layers"),
-  N_("/Tools"),
-  N_("/Dialogs"),
   N_("/View/Zoom"),
   N_("/Stack")
 };
@@ -1233,16 +1228,27 @@ menu_translate (const gchar *path,
   retval = gettext (path);
   if (!strcmp (path, retval))
     {
-      strcpy (menupath, "<Image>");
-      strncat (menupath, path, sizeof(menupath) - sizeof("<Image>"));
-      retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Image>");
-
-      if (!strcmp (path, retval))
-	{
-	  strcpy (menupath, "<Toolbox>");
-	  strncat (menupath, path, sizeof(menupath) - sizeof("<Toolbox>"));
-	  retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Toolbox>");
-    	}
+      strcpy (menupath, path);
+      strncat (menupath, "/tearoff1", sizeof(menupath) - strlen(menupath) - 1);
+      retval = gettext(menupath);
+      if (strcmp (menupath, retval))
+        {
+          strcpy(menupath, retval);
+          *(strrchr(menupath, '/')) = '\0';
+          return menupath;
+        }
+      else
+        {
+          strcpy (menupath, "<Image>");
+          strncat (menupath, path, sizeof(menupath) - sizeof("<Image>"));
+          retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Image>");
+          if (!strcmp (path, retval))
+            {
+              strcpy (menupath, "<Toolbox>");
+              strncat (menupath, path, sizeof(menupath) - sizeof("<Toolbox>"));
+              retval = dgettext ("gimp-std-plugins", menupath) + strlen ("<Toolbox>");
+            }
+        }
     }
 
   return retval;
