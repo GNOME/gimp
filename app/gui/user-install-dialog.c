@@ -567,8 +567,8 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
                     FALSE, FALSE, 0);
   gtk_widget_show (eek_box);
 
-  gdk_color_parse ("black", &black_color);
-  gdk_color_parse ("white", &white_color);
+  gdk_color_parse ("black",       &black_color);
+  gdk_color_parse ("white",       &white_color);
   gdk_color_parse ("dark orange", &title_color);
 
   gtk_widget_realize (dialog);
@@ -578,12 +578,19 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   g_object_ref (page_style);
 
   page_style->fg[GTK_STATE_NORMAL]   = black_color;
-  page_style->text[GTK_STATE_NORMAL] = black_color;
   page_style->bg[GTK_STATE_NORMAL]   = white_color;
 
-  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_FG |
-						GTK_RC_BG |
-						GTK_RC_TEXT);
+  page_style->text[GTK_STATE_NORMAL] = black_color;
+  page_style->base[GTK_STATE_NORMAL] = white_color;
+
+  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_FG   | GTK_RC_BG   |
+						GTK_RC_TEXT | GTK_RC_BASE);
+
+  page_style->fg[GTK_STATE_ACTIVE]   = black_color;
+  page_style->bg[GTK_STATE_ACTIVE]   = white_color;
+
+  page_style->color_flags[GTK_STATE_ACTIVE] |= (GTK_RC_FG | GTK_RC_BG);
+
 
   /*  B/Colored Style for the page title  */
   title_style = gtk_rc_style_copy (page_style);
@@ -1070,6 +1077,7 @@ user_install_run (void)
 	  log_view = gtk_text_view_new_with_buffer (log_buffer);
 	  g_object_unref (log_buffer);
 
+	  PAGE_STYLE (log_view);
 	  gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
 
 	  gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
@@ -1215,7 +1223,7 @@ user_install_resolution (GimpRc *gimprc)
     (_("Get Resolution from windowing system (Currently %d x %d dpi)"),
      ROUND (xres), ROUND (yres));
 
-  toggle = 
+  toggle =
     gimp_prop_check_button_new (G_OBJECT (gimprc),
 				"monitor-resolution-from-windowing-system",
 				str);
