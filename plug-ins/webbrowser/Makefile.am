@@ -4,9 +4,9 @@ scriptdatadir = $(gimpdatadir)/scripts
 
 scriptdata_DATA = web-browser.scm
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = webbrowser
+libexec_PROGRAMS = webbrowser
 
 webbrowser_SOURCES = \
 	webbrowser.c   

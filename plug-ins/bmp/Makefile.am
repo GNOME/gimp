@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = bmp
+libexec_PROGRAMS = bmp
 
 bmp_SOURCES = \
 	bmp.c		\

@@ -1,8 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(libdir)
-
-pluginlib_LIBRARIES = libgpc.a
+lib_LIBRARIES = libgpc.a
 
 libgpc_a_SOURCES = \
 	gpc.c		\

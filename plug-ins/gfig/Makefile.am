@@ -2,11 +2,11 @@
 
 SUBDIRS = gfig-examples
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = README
 
-pluginlib_PROGRAMS = gfig
+libexec_PROGRAMS = gfig
 
 gfig_SOURCES = \
 	gfig.c		\

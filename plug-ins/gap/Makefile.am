@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
 scriptdatadir = $(gimpdatadir)/scripts
 
@@ -95,7 +95,7 @@ EXTRA_DIST = \
 	iter_ALT/old/plug_in_warp_iter_ALT.inc			\
 	$(scriptdata_DATA)
 
-pluginlib_PROGRAMS = \
+libexec_PROGRAMS = \
 	gap_plugins	\
 	gap_filter
 

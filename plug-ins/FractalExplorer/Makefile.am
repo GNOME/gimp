@@ -2,9 +2,9 @@
 
 SUBDIRS = fractalexplorer-examples
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = FractalExplorer
+libexec_PROGRAMS = FractalExplorer
 
 FractalExplorer_SOURCES = \
 	Callbacks.h		\

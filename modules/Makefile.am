@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-moduledir = $(gimpplugindir)/modules
+libexecdir = $(gimpplugindir)/modules
 
 CPPFLAGS = \
 	-DMODULE_COMPILATION
@@ -15,7 +15,7 @@ EXTRA_DIST = \
 	makefile.msc		\
 	module.def
 
-module_LTLIBRARIES = \
+libexec_LTLIBRARIES = \
 	libcolorsel_gtk.la 	\
 	libcolorsel_triangle.la	\
 	libcolorsel_water.la

@@ -2,9 +2,9 @@
 
 SUBDIRS = scripts
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = script-fu
+libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
 	interp_md5.c		\

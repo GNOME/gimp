@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = print
+libexec_PROGRAMS = print
 
 print_SOURCES = \
 	print-escp2.c	\

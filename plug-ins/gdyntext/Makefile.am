@@ -16,9 +16,9 @@ EXTRA_DIST = \
 	README					\
 	TODO
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = gdyntext
+libexec_PROGRAMS = gdyntext
 
 gdyntext_SOURCES = \
 	charmap.c		\

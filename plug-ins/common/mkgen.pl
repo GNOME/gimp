@@ -22,7 +22,7 @@ foreach (sort keys %plugins) {
 foreach ($bins, $opts) { s/ \\\n$//s }
 
 print MK <<EOT;
-pluginlibdir = \$(gimpplugindir)/plug-ins
+libexecdir = \$(gimpplugindir)/plug-ins
 
 AM_CPPFLAGS = \\
 	-DLOCALEDIR=\\""\$(localedir)"\\"
@@ -32,11 +32,19 @@ INCLUDES = \\
 	\$(GTK_CFLAGS)		\\
 	-I\$(includedir)
 
-pluginlib_PROGRAMS = \\
+libexec_PROGRAMS = \\
 $bins
 
 EXTRA_PROGRAMS = \\
 $opts
+
+install-\%: \%
+	\@\$(NORMAL_INSTALL)
+	\$(mkinstalldirs) \$(DESTDIRS)\$(libexecdir)
+	\@if test -f \$<; then \\
+	  echo " \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`"; \\
+	  \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`; \\
+	else :; fi
 EOT
 
 foreach (sort keys %plugins) {

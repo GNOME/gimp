@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = Lighting
+libexec_PROGRAMS = Lighting
 
 Lighting_SOURCES = \
 	amb1.xpm		\

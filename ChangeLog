@@ -1,3 +1,15 @@
+Thu Jun 24 18:13:35 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/Makefile.am: added a pattern rule to install
+	single plugins
+
+	* all plugin Makefiles: use $libexecdir instead of $pluginlibdir
+	so we get installed on make install-exec
+
+	* plug-ins/gap/gap_filter_iterators.c: removed old Colorify_iter_ALT
+	reference
+
 Thu Jun 24 22:49:41 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* layers_dialog.c

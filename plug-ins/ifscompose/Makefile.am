@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = README.ifscompose
 
-pluginlib_PROGRAMS = ifscompose
+libexec_PROGRAMS = ifscompose
 
 ifscompose_SOURCES = \
 	ifscompose.c		\

@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = README
 
-pluginlib_PROGRAMS = flame
+libexec_PROGRAMS = flame
 
 flame_SOURCES = \
 	cmap.c		\

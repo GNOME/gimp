@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = mosaic
+libexec_PROGRAMS = mosaic
 
 mosaic_SOURCES = \
 	mosaic.c	\

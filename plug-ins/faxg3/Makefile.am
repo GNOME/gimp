@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = faxg3
+libexec_PROGRAMS = faxg3
 
 faxg3_SOURCES = \
 	faxg3.c		\

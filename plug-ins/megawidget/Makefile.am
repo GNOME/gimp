@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-pluginlibdir = $(libdir)
+libdir = $(libdir)
 
-pluginlib_LIBRARIES = libmegawidget.a
+lib_LIBRARIES = libmegawidget.a
 
 libmegawidget_a_SOURCES = \
 	megawidget.c		\

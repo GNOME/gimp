@@ -402,7 +402,6 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/mod/plug_in_solid_noise_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_sparkle_iter_ALT.inc"
 
-#include "iter_ALT/old/Colorify_iter_ALT.inc"
 #include "iter_ALT/old/plug_in_CentralReflection_iter_ALT.inc"
 #include "iter_ALT/old/plug_in_anamorphose_iter_ALT.inc"
 #include "iter_ALT/old/plug_in_blur2_iter_ALT.inc"
