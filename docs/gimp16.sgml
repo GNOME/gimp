@@ -1,0 +1,1151 @@
+<!doctype linuxdoc system>
+
+<linuxdoc>
+  <report>
+
+    <titlepag>
+      <title>The Gimp - Arbitrary Precision Image Support</title>
+
+      <author>
+        <name>Ray Lehtiniemi</name>
+      </author>
+
+      <date>June 22, 1998</date>
+
+      <abstract>Work is being done by Ray Lehtiniemi, Calvin
+      Williamson, and Bill Bishop to add 16 bit image support to the
+      Gimp.  This report outlines the progress to date.  Detailed
+      descriptions of the APIs developed so far are presented.  Open
+      issues are presented and discussed.</abstract>
+
+    </titlepag>
+
+
+    <toc>
+
+    <chapt>
+      <heading>Current Status</heading>
+
+      <p>The most current version of the Gimp16 work is available from
+      the regular Gimp CVS tree, under the <tt>HOLLYWOOD</tt> tag. By
+      default, the code comes up with 16 bit support.  Use the
+      <tt>--enable-precision</tt> configure option to change it.</p>
+
+      <p>At the time of writing, the following code is working in 16
+      bit mode:<list>
+          <item>brushes</item>
+          <item>patterns</item>
+          <item>almost 100% of paint_core, including all six tools</item>
+          <item>most of blend tool</item>
+          <item>selected parts of undo</item>
+          <item>tiff, sgi, gbr, and pat plugins</item>
+          <item>combine_regions, including most of paint_funcs</item>
+          <item>image_render</item>
+          <item>image_map and image adjustments</item>
+        </list></p>
+
+      <p>transform core is under way.  A major thing still missing is
+      layers and channel support, as well as cut/paste.</p>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Basic Concepts</heading>
+
+      <sect>
+        <heading>The Strategy Pattern</heading>
+        
+        <p>Most of the ideas implemented to date are examples of the
+        Strategy pattern from the book "Design Patterns".  In a
+        nutshell, data buffers have tags which the paint code uses to
+        select an appropriate data manipulation strategy.  Image
+        buffers have a storage format which specifies a tiled vs. non
+        tiled storage strategy.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Tagged Data</heading>
+
+        <p>One of the major issues with the current Gimp is guchar
+        pointers.  Data is passed around in anonymous buffers; the
+        precision and format of the data is not explicitly stated
+        anywhere. This information must instead be inferred from
+        heuristics involving bpp and image type.</p>
+
+        <p>The first concept employed in adding 16 bit support to Gimp
+        is that of <em>tags</em>.  A tag is a specially encoded value
+        describing the data precision, channel format, and presence of
+        an associated alpha channel for a data buffer.  It is attached
+        to a buffer by the creator, who presumably knows what the
+        buffer contains.  Downstream users then know the exact buffer
+        contents without making best guesses based on the information
+        at hand.</p>
+
+        <p>Tags are integral parts of data buffers.  They are set when
+        a buffer is created, and may not be changed thereafter.  Any
+        change of format or precision, or the addition/removal of an
+        alpha channel, requires the buffer to be copied.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Generic Image Buffers</heading>
+
+        <p>Another issue with the current Gimp is the transparency of
+        the image data buffers.  All high level code has intimate
+        knowledge about tiled vs. non-tiled data, and many routines
+        will only work with one format or the other.</p>
+
+        <p>There is no reason why high level image operations should
+        care about the details of the image storage format.  They
+        should instead code to an appropriate abstract image buffer
+        interface.  This abstract interface is called Canvas.</p>
+
+        <p>Canvas could be implemented in many different ways.  At
+        present, there are two implementations, TileBuf and FlatBuf.
+        These correspond to TileManager and TempBuf,
+        respectively. Other possibilities include blocks of memory
+        shared with another process and mmap()ed TIFF or XCF
+        files.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Completed Work</heading>
+
+      <sect>
+        <heading>Tag</heading>
+
+        <p>Image buffers are currently tagged with a specially encoded
+        integer.  This integer holds information about the precision
+        (U8, U16, or FLOAT), format (RGB, GRAY, INDEXED), and alpha
+        channel (YES, NO).  Macros exist to set and get each component
+        individually.  Derivative information, such as the number of
+        channels, the bpp, and so on, are also available via functions
+        on tags.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Canvas</heading>
+
+        <p>The purpose of the Canvas object is to provide an abstract
+        "image buffer" for high level code to program to.  It should
+        be generic enough to support several different
+        implementations.  The current interface provides point
+        operators with random access to arbitrarily tiled image
+        data.</p>
+
+        <p>There are currently two implementations of the canvas
+        interface, tilebuf and flatbuf.  They are selected by the
+        chosen storage format.</p>
+
+        <sect1>
+          <heading>TileBuf</heading>
+
+          <p>TileBuf is the replacement for TileManager.  The exact
+          tile size is encapsulated within tilebuf.c in the form of 2
+          #defines.  No other code knows or cares about it.  The tile
+          swap is not yet implemented.</p>
+
+        </sect1>
+
+        <sect1>
+          <heading>FlatBuf</heading>
+
+          <p>FlatBuf is the replacement for TempBuf.  Again, swapping
+          to disk is unimplemented at present.</p>
+          
+        </sect1>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>PixelRow and PixelArea</heading>
+
+        <p>PixelRow and PixelArea are one and two-dimensional data
+        buffer accessors.  PixelRow operates on a void pointer to a
+        data buffer.  The buffer must be contiguous (not tiled) and in
+        memory (not swapped to disk).  PixelArea works on an arbitrary
+        Canvas object.  It is the replacement for the PixelRegion
+        object, and works transparently on both tiled and contiguous
+        images.</p>
+
+        <p>PixelArea is primarily designed for point operators.
+        Window operators, such as convolve, Gaussian blur, etc are
+        discussed in the open issues section.</p>
+
+        <p>PixelArea objects may be registered in a pixelarea_process
+        loop, which iterates over a set of areas, performing any
+        required tile swapping.  Any combination of tiled and
+        non-tiled Canvas objects may be registered in a single
+        pixelarea_process() loop.  A PixelArea may not be involved in
+        two pixelarea_process() loops simultaneously.</p>
+
+        <p>Both of these objects are meant to be instantiated on the
+        stack.  The lifetime of a given iterator should not exceed
+        that of the function executing the point operator.  The
+        exception is the PixelArea in the image_map code, where the
+        iterator lives in a heap allocated structure.  However, the
+        iterator is still destroyed when the point operator
+        completes.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Paint Funcs</heading>
+
+        <p>The low level paint funcs are split into two groups, area
+        functions and row functions.  In general, most area functions
+        accept one or more PixelArea pointers and proceed to iterate
+        over them, calling the row functions. The row functions accept
+        one or more PixelRow objects and operate on the entire data
+        buffer contained within.</p>
+
+        <p>All row and area functions are (or will be) smart enough to
+        check the tags of their arguments, then select the appropriate
+        low-level routines.  Different routines will have more or less
+        restrictive tag constraints.  In particular, copy_area() might
+        be capable of doing arbitrary precision and format
+        conversions. Other routines may be more selective about their
+        input buffers.</p>
+
+        <p>In the current implementation, you should <em>not</em> call
+        area functions from inside a pixelarea_process() loop.  This
+        is because the area funcs perform a pixelarea_process() loop
+        themselves, and these loops are not reentrant.  Only row
+        functions may be called from inside a pixelarea_process()
+        loop.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Applications</heading>
+
+        <p>At the moment, all six paint core tools look pretty good.
+        The blend tool is mostly there, with the exception of
+        supersampling.  Brushes and patterns are in place.  Limited
+        undo functionality is supported.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+
+      <heading>Open Issues</heading>
+
+      <sect>
+        <heading>Libgimp</heading>
+        
+        <p>The plugin interface appears to be a bottle neck in
+        customer testing.  More bandwidth to the plugins is crucial
+        when working on film-size images.  Quick preliminary testing
+        indicates we need about an order of magnitude speedup on loads
+        and saves to compete with existing commercial packages.  Gimp
+        loaded a 2048x1536 image in 122 seconds, versus 8-20 seconds
+        for various other packages.</p>
+
+      </sect>
+
+
+      
+      <sect>
+        <heading>Processing Pipeline</heading>
+
+        <p>The current design is very modular.  By this, I mean there
+        is a pretty clear separation between functional units, such as
+        paint_core, undo, and image_render.  Each section generally
+        completes its work with an image before passing the result to
+        the next unit for further processing. In many cases,
+        allocation of resources is done immediately for the entire
+        image, although the actual operation being done usually
+        proceeds incrementally over small image sections via a
+        pixelarea_process() loop.</p>
+
+        <p>This sort of design is nice to work with, since it is quite
+        easy to see how things fit together.  Unfortunately, it's not
+        particularly efficient, especially when working with film
+        resolution images.  A 2048x1536x16bit RGBA image is about 24
+        megabytes.  Allocating an entire image worth of scratch space
+        while doing a fill and then copying it several times between
+        the fill, undo, and render modules takes some time, even on a
+        fast machine.</p>
+
+        <p>To get processing times down to a reasonable level, some
+        form of pipelined processing could help.  Don't treat the code
+        as modules which accept images as input and output.  Instead,
+        treat the images as data sources and sinks which are connected
+        by smart pipelines that incrementally move the data from
+        source to sink while performing manipulations on it.</p>
+          
+        <p>Again, speeding this up will be crucial to making this work
+        for film resolution images.  As a quick test, I modified
+        gradient_fill_region() to work with 64 pixel tall subimages
+        instead of simply creating a single large image and rendering
+        into that.  This provided dramatic speedups when the image
+        size exceeded the amount of physical memory available.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Point Operators vs. Window Operators</heading>
+
+        <p>Currently, there is good support for point
+        operators. PixelArea iterators allow easy and fairly efficient
+        access to corresponding pixels for several images.  Each pixel
+        may have arbitrary point operators applied to it.</p>
+
+        <p>The situation is a little muddier for window
+        operators. There is no general support for panning windows
+        across each pixel of a source image.  In situations where this
+        is needed, the solutions are adhoc.  Transform core keeps
+        arrays of Tile pointers, one for each pixel in the window.
+        Brush mask subsampling and convolution manually iterate over
+        each pixel in the operator kernel, assuming a non-tiled image.
+        Border conditions are handled differently in each situation.
+        Gaussian blur and transform core duplicate edge pixels, while
+        convolution copies border pixels directly from source to
+        destination and only convolves non-border pixels.</p>
+
+        <p>I'm not sure what is the best way to handle this, but I
+        think it will involve a new object called Window.</p>
+
+        <p>There will be several flavors of Window, suited for
+        different tasks.  Convolve and subsample will have square
+        windows.  Gaussian blur will have a linear window.  Other apps
+        may requires oddly shaped windows like circles or stars.</p>
+
+        <p>Each window should be attachable to any pixel of a source
+        image.  The origin, or point of attachment, within the window
+        should be variable.</p>
+
+        <p> Each window has the ability to determine for itself
+        if a pixel is a border pixel or not.  Each window has a
+        specific policy for handling border conditions, such as
+        duplicating edge pixels or refusing to attach to a border
+        pixel.</p>
+
+        <p>Each window will probably operate by keeping a local copy
+        of each pixel it covers.  The format of this temporary copy is
+        window specific and not defined in the interface.  It would
+        also be good to have windows that just keep pointers to the
+        underlying image data to avoid the copying overhead.  This
+        would oviously only work if the underlying image was not being
+        modifed.</p>
+
+        <p>Since the internal layout is not known, pixels in the
+        window will not be accessed directly.  Instead, they are
+        accessed through a function similar to canvas_portion_data().
+        However, the indexing parameters to this function are also
+        window specific.  Square windows could have an xy based
+        scheme.  Oddly shaped windows might use other indexing
+        schemes.</p>
+
+        <p>These thoughts are still <em>very</em>
+        preliminary. However, this issue needs to be solved quite
+        generally, as it causes a significant amount of needless
+        complexity, non-portability, and duplication of effort in the
+        high level routines.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Indexed Images And Other Freaks Of Nature</heading>
+
+        <p>Indexed images are still the odd man out.  We'll likely be
+        throwing a few more quirks into the mix, such as images with
+        "headroom" and "footroom", as well as intensity based images
+        with non-linear (ie: logarithmic) intensity channels.
+        Finally, images with arbitrary channels per pixel would be
+        good to have.</p>
+
+        <p>I have no idea what this will look like yet.  I suspect the
+        current implementation of Tag (an encoded integer) may get
+        replaced with a pointer to some kind of object that knows how
+        to demultiplex the channels in a pixel, how to interpret the
+        data in the channel, and how to talk to other objects of this
+        sort to do format conversions.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Code Structure</heading>
+
+        <p>The high level painting code operates entirely on the level
+        of Canvas objects, accessed via PixelArea and PixelRow
+        objects.  Operations are performed by paint funcs that use
+        these accessors.  Inside the paint funcs, the actual format of
+        the data is examined, and different implementations, or
+        strategies, of the function are called based on the argument
+        tags</p>
+
+        <p>Currently, this strategy selection is performed on each
+        invocation of a paint func method.  This is pretty
+        inefficient, since most invocations are part of a larger
+        iteration, and the same method will be looked up on each call.
+        Furthermore, each strategy is a globally visible symbol, which
+        tends to fill the symbol table with a lot of very similar
+        function names.</p>
+
+        <p>It would be good to make all strategies for a given
+        operation static and provide a method that retrieves a
+        particular strategy based on a set of Tags.  Rather than
+        looking up a strategy on each paint funcs call, clients would
+        retrieve a strategy at the beginning of their operation and
+        invoke it directly.</p>
+
+        <p>The code to check tags for logical consistency could be
+        shared Similar tags constraints would presumably apply to the
+        area and row version of any operation, such as shade or blend.
+        The same checking routine could be used from the area and row
+        routines to validate the tags of the input buffers.</p>
+
+      </sect>
+
+
+
+      <sect>
+        <heading>Proxies and Macro Recording</heading>
+
+        <p>Due to the large size of film images, it is desirable to
+        work on proxy images, save the actions performed, and replay
+        them on the full scale original.  This would involve a robust
+        and resolution independent macro recording and playback
+        facility. </p>
+
+        <p>Paint core will require some work in order to record brush
+        strokes.  The user should have the ability to edit the brush
+        stroke before replaying it.  Ideally, the strokes would be
+        captured in some normalized format.  This would allow strokes
+        to be captured on a proxy image and replayed on the full
+        scale original.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Tag API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p><url url="tag.h"> and <url url="tag.c">.</p>
+
+      </sect>
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>A Tag is an attribute of a buffer containing image data. It
+        is intended to describe the semantic content and physical
+        layout of the data.  In general, any object containing data will
+        have an immutable Tag attached to it at creation time.</p>
+
+        <p>There are three components, precision, format and alpha.
+        Precision refers to the data type used for each channel of a
+        pixel.  Right now we support u8, u16, and floating point
+        channels.  Format refers to the layout of channels within a
+        pixel. Currently, RGB, INDEXED, and GRAY pixels are supported.
+        Alpha refers to the presence of an associated alpha channel.
+        It is a boolean value.</p>
+
+        <p>In high level code, it is not meaningful to operate on a
+        buffer without a Tag.  At the high-low level boundary, the Tag
+        is used to select the appropriate low level data manipulators.
+        In the low level code, the data pointers are simply cast to
+        the correct type based on the precision.  Pixels are decoded
+        according to the format and alpha.</p>
+
+        <p>Each element of a Tag may be individually set, queried, and
+        printed.  Derived information, such as the number of channels
+        or the bytes per pixel is available.  Consistency and equality
+        checks are provided, as is a constructor for a "null" Tag.
+        Finally, some temporary glue is provided to bridge the current
+        "bpp/type" driven code.</p>
+
+      </sect>
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>At some point in time, the format and alpha elements will
+        need to be revisited.  I think the precision is handled fairly
+        well in the high level code where it is used to select
+        alternate implementations of the low level bit-munching code.
+        However, the format and alpha information is still pretty much
+        hardcoded in the low-level algorithms, making it difficult to
+        do things like arbitrary channels per pixel, non-linear
+        intensities, and so on.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Canvas API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p>Check out <url url="canvas.h"> and <url
+        url="canvas.c">. Also, see implementations in <itemize>
+            <item><url url="tilebuf.h"></item>
+            <item><url url="tilebuf.c"></item>
+            <item><url url="flatbuf.h"></item>
+            <item><url url="flatbuf.c"></item>
+          </itemize></p>
+
+      </sect>
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>Canvas is intended to be an abstract image buffer
+        interface.  High level painting code should program to this
+        interface instead of using knowledge of a particular image
+        format such as tiles.  In this way, a high level operation
+        like convolution will work on both tiled and non-tiled images
+        without modification.</p>
+
+        <p>A canvas may be created from scratch or cloned from an
+        existing canvas.  However a canvas is created, the image size
+        and tag are fixed. These values may not be subsequently
+        changed. Query operations are provided to retrieve these
+        values. (It might be good to provide canvas resizing, but a
+        change of tag will require an image copy anyway, so there is
+        no benefit over simply copying the image to a differently
+        tagged buffer)</p>
+
+        <p>The essential interface provided by the canvas object is
+        the "portion".  A portion is an area of the image defined
+        relative to a single coordinate.  Specifically, the coordinate
+        fixes the upper left corner of a rectangular portion of the
+        image. Every pixel in an image defines an associated
+        portion of some size.</p>
+
+        <p>The distinguishing feature of a portion is that it is
+        entirely contained on a single piece of backing store.  It has
+        a width, defined as the horizontal distance to the right edge
+        of the backing store.  It has a height, similarly defined as
+        the vertical distance to the bottom edge of the backing store.
+        Finally, the portion has an associated rowstride since the
+        upper left corner may not lie on the left edge of the backing
+        store.</p>
+
+        <p>Given these definitions, it is clear that canvases are
+        constructed of rectangular tiles of indeterminate size.  Any
+        given point on a tile splits that tile into quadrants.  The
+        portion associated with that pixel at that point is defined to
+        be the lower right quadrant.</p>
+
+        <p>Memory management is done by "referencing" portions.  The
+        act of referencing a portion causes memory for that portion to
+        be either allocated or swapped in.  Allocating memory for the
+        portion will also cause memory for the other three quadrants
+        to be allocated (unless the pixel is the top left corner of a
+        tile).  The allocated memory is zero-filled.  Additional
+        references to a given portion increment the refcount.
+        Unreferencing the portion reduces the refcount.  If this count
+        drops to zero, the portion is swapped to disk
+        (unimplemented).</p>
+
+        <p>No memory is allocated for the image portions at canvas
+        creation time.  By default, pieces of backing store are
+        allocated on an as-needed basis when canvas portions are
+        referenced.  If this automatic allocation feature is not
+        desirable, it may be disabled for any canvas.</p>
+
+        <p>If a portion has allocated backing store, then a pointer to
+        the image data for the portion may be retrieved.  Using the
+        height, width, and rowstride values, point operators may be
+        applied to every pixel in the portion.  This relies on the
+        fact that the portion defines a contiguous rectangular area of
+        the image.</p>
+
+        <p>Currently, two canvas storage formats are supported.
+        STORAGE_FLAT is modelled after the old TempBuf paradigm, and
+        STORAGE_TILED is the replacement for TileManagers.  In the
+        future, a format is planned using shared memory with a package
+        called Chalice.</p>
+
+      </sect>
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>There are only about 1000 better ways to implement
+        canvas.c.  Also, it should be possible avoid polluting the
+        global namespace with the tilebuf and flatbuf implementations
+        of the canvas API functions.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>PixelArea API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p><url url="pixelarea.h"> and <url url="pixelarea.c">.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>PixelArea is a fairly straightforward port of the
+        PixelRegion code.  A few points are worth mentioning.</p>
+
+        <p>In general, it is preferable to treat areas as opaque
+        objects.  Image manipulation is done by wrapping a Canvas up
+        in a PixelArea and passing the area to the paint_funcs_area
+        API.  If the desired operation is not implemented in the
+        paint_funcs_area API, the area must be processed manually,
+        rowwise, in a pixelarea_process loop.  In the worst case, a
+        point operator must be applied to each pixel individually.</p>
+
+        <p>Inside a pixelarea_process loop, the high level code has no
+        knowledge of low level data formats.  Therefore the data
+        pointer is never manipulated directly. Instead, it is accessed
+        via the pixelarea_getdata() method. This causes the data
+        pointer to be wrapped in a PixelRow, suitable for passing to
+        the paint_funcs_row API, or for direct pixel manipulation
+        using the PixelRow API.</p>
+
+        <p>As a convenience, the pixelarea_process loop will
+        automatically handle referencing and dereferencing canvas
+        portions on each pass.  However, this may not be what you
+        want.  If you would prefer to manually reference each portion
+        of each canvas on each pass, use the <tt>noref</tt> variant of
+        the pixelarea_register function.</p>
+
+        <p>PixelArea objects are meant to be allocated on the stack.
+        They should not outlive the image manipulation operation being
+        performed.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>There is a lot of cleanup to do here, mostly driven by the
+        needs of window operators.  Point operators are fairly well
+        supported, window operators are not.</p>
+
+        <p>For starters, the pixelarea_process loop is not reentrant
+        for a given area.  Really bad things happen if you register a
+        single area in two loops simultaneously.  This would sometimes
+        be convenient to do.</p>
+
+        <p>Second, the {copy,write}_{row,col} interface is actually a
+        special case of a window.  Generalized window functions are
+        required for local operators.  When these are in place, the
+        copy and write routines can probably go.</p>
+
+        <p>Pixelareagroup should really come out of pixelarea.c and
+        stand as an object in its own right.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>PixelRow API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p><url url="pixelrow.h"> and <url url="pixelrow.c">.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>A simple wrapper around a generic void pointer.  Any
+        contiguous buffer may be registered in a PixelRow with an
+        appropriate tag and buffer length.  This allows the high level
+        code to pass the pointer around without losing the metadata. A
+        pointer to any given pixel may be retrieved for use by the low
+        level code.</p>
+
+        <p>Like pixelarea, pixelrow objects are meant to be allocated
+        on the stack.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>No rework is planned at this time.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Paint Funcs API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p>Check out <itemize>
+            <item><url url="paint_funcs_area.h"></item>
+            <item><url url="paint_funcs_area.c"></item>
+            <item><url url="paint_funcs_row.h"></item>
+            <item><url url="paint_funcs_row.c"></item>
+            <item><url url="paint_funcs_row_u8.c"></item>
+            <item><url url="paint_funcs_row_u16.c"></item>
+          </itemize></p>
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>The Paint Funcs module has undergone a lot of work to make
+        it capable of working with 16bit and float data types. The
+        primary changes are that PixelRegions have been replaced by
+        PixelAreas and routines previously passed unsigned char
+        buffers for data are now passed PixelRows (ie
+        tag+buffer). This enables the routines to determine what type
+        of data is being passed in the buffers, and then call the
+        correct pixel processing routine based on the tag.</p>
+
+        <p>To make this work the "region" routines were renamed to
+        "area" routines. This means things like color_region,
+        blend_region, convolve_region, etc. have become color_area,
+        blend_area, convolve_area, etc. The new area routines are
+        passed PixelArea pointers instead of PixelRegion
+        pointers. Most of the area routines iterate over PixelAreas
+        portions just like the old regions routines did. This is done
+        with pixelarea_register and pixelarea_process. This allows
+        iterating over the tile portions of a canvas or if the canvas
+        is not tiled then it allows operating on the whole
+        canvas. </p>
+
+        <p>Also the "pixels" routines were renamed to "row"
+        routines. This means things like color_pixels, darken_pixels,
+        lighten_pixels, etc. have become color_row, darken_row,
+        lighten_row, etc. The new row routines are passed
+        PixelRows(tag+buffer) instead of just unsigned char
+        buffers. </p>
+
+        <p>A typical area routine (like blend_area) checks the tags of
+        the PixelAreas passed to it and based on the tags sets up some
+        function pointers to the right row routine to call. It sets up
+        a pixelarea iterator loop with pixelarea_register and
+        pixelarea_process and each time through uses the function
+        pointer set up above to call the right row processing
+        routine. </p>
+
+        <p>This works fine for point processses but some operations
+        require more than just one pixel for image processing. These
+        area routines (like convolve_area) need chunks of the image to
+        work on. Currently in our scheme these area routines dont
+        iterate over PixelArea portions, but rather just set up
+        function pointers and then call the appropriate routine (eg a
+        convolve_area_u8, or convolve_area_u16) to do the image
+        processing on the type of data specified in the tag. So this
+        type of area routine might not have any row routine it
+        calls. </p>
+
+        <p>And then some area routines have a variety of different
+        calculations they must do (like gaussian_blur_area) and each
+        of these calculations depend on the tag of the image
+        data. This type of routine sets up function pointers for each
+        of the tag-specific calculations it must perform. </p>
+
+        <p>All of the above follow the strategy pattern of deciding
+        which functions or sets of functions to call based on the tag
+        from the PixelArea passed to these routines.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>The Paint Funcs has a lot of routines in it currently. It
+        would ease things if it were broken up a bit. It would be nice
+        to separate different tag type operations into separate files
+        as well eventually. Id propose separating these routines into
+        their own files to start:</p>
+
+        <p><list>
+            <item>convolve_area </item>
+            <item>gaussian_blur_area </item>
+            <item>border_area </item>
+            <item>scale_area</item>
+            <item>scale_area_noresample</item>
+            <item>subsample_area</item>
+            <item>shapeburst_area</item>
+            <item>thin_area</item>
+          </list></p>
+
+        <p>Each of these files will have the routines for the
+        different tags as well (eg the convolve_area file would have
+        convolve_area_u8, convolve_area_u16, and convolve_area_float
+        routines). At some point we may want to break each of these
+        into separate files as well: convolve_area.c,
+        convolve_area_u8.c, convolve_area_u16.c,
+        convolve_area_float.c.</p>
+
+        <p>The rest of the area routines are similar, and could stay
+        in paint_funcs_area.c. All the row routines called by these
+        routines are in the files paint_funcs_row_u8.c,
+        paint_funcs_row_u16.c, and paint_funcs_row_float.c.</p>
+
+        <p>The 16bit image processing in the row routines of
+        paint_funcs_row_u16.c is all based on integer math and so is
+        fast enough for interactive stuff like painting at present. It
+        would also be possible to speed up the 8bit image processing
+        of paint_funcs_row_u8.c by changing everything to integer math
+        as well. This would be easy to do and is probably worth
+        doing.</p>
+
+      </sect>
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Colors API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p>At present, color handling is done in <tt>palette.[ch]</tt>
+        as follows:<code>
+#define COLOR16_NEW(name, tag) \
+        PixelRow name; \
+        Tag name##_tag = tag; \
+        guchar name##_data[TAG_MAX_BYTES]
+
+#define COLOR16_NEWDATA(name, type, prec, format, alpha) \
+        PixelRow name; \
+        Tag name##_tag = tag_new (prec, format, alpha); \
+        type name##_data[TAG_MAX_BYTES/sizeof(type)]
+
+#define COLOR16_INIT(name) \
+        pixelrow_init (&amp;name, name##_tag, (guchar *)name##_data, 1)
+          
+void color16_black        (struct _PixelRow *);
+void color16_white        (struct _PixelRow *);
+void color16_transparent  (struct _PixelRow *);
+void color16_foreground   (struct _PixelRow *);
+void color16_background   (struct _PixelRow *);
+
+</code></p>
+
+        <p>Here are a few of the functions:<code>
+void 
+color16_white  (
+                PixelRow * color
+                )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
+  COLOR16_INIT (init);
+  copy_row (&amp;init, color);
+}
+
+void 
+color16_transparent  (
+                      PixelRow * color
+                      )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES) = {0.0, 0.0, 0.0, 0.0};
+  COLOR16_INIT (init);
+  copy_row (&amp;init, color);
+}
+
+void 
+color16_foreground  (
+                     PixelRow * color
+                     )
+{
+  PixelRow init;
+  pixelrow_init (&amp;init, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), foreground, 1);
+  copy_row (&amp;init, color);
+}
+
+</code></p>
+      </sect>
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>These macros are convenience wrappers, nothing more.  As
+        can be seen in <tt>color16_foreground()</tt>, color handling
+        is actually an application of the PixelRow API.  It is
+        perfectly acceptable to use the raw PixelRow API to do color
+        handling.  However, these macros do save a lot of needless
+        typing.</p>
+
+        <p>The <tt>COLOR16_NEW</tt> macro creates an anonymous buffer
+        with the desired Tag and PixelRow, ready to be initialized and
+        filled.  The tag argument is generally selected to be the same
+        as the Canvas or PixelArea the color is intended for.</p>
+
+        <p>The <tt>COLOR16_NEWDATA</tt> macro is a bit more
+        complicated, and is intended to be followed by an array
+        initializer.  This is used when you have a fixed color that is
+        known at compile time.  This color is stored in the array
+        initializer in some arbitrary data format.  The compiler will
+        copy it into the data buffer of the color object, where it
+        will almost certainly be copied immediately into another color
+        object with the right Tag for the task at hand.</p>
+
+        <p>Finally, the <tt>COLOR16_INIT</tt> macro does the actual
+        setup of the PixelRow object with the Tag and anonymous
+        buffer.  This is decoupled from the variable declarations so
+        that more than one color may be declared on a single stack
+        frame.</p>
+
+        <p>The important points to remember are that the <tt>NEW</tt>
+        macros are actually automatic variable declarations, and the
+        <tt>type</tt> arg to <tt>COLOR16_NEWDATA</tt> must match the
+        <tt>prec</tt> arg.</p>
+
+      </sect>
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>No rework is planned at this time.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Paint Core API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+
+        <p><url url="paint_core_16.h"> and <url url="paint_core_16.c"></p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>The external API presented by the paint core has not
+        changed, aside from naming cleanups.  The interface is split
+        into the high level tool operations and the low level paint
+        area operations.  Both levels are essentially identical to the
+        previous interface.</p>
+
+        <p>At the implementation level, all areas are now treated as
+        canvases.  This means a tiled brush can be used to clone a
+        non-tiled pattern onto a tiled image, and everything works
+        seamlessly.  Internally, the concept of a painthit has been
+        introduced to help structure the code.  By and large, the low
+        level guts of paint core have been reimplemented from the
+        ground up.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>A lot of work remains.  To support macro recording and
+        proxy images, a new abstraction encapsulating the brush stroke
+        needs to be implemented.  The static variables used in the
+        current implementation should really be local to a given brush
+        stroke.  The brush masks need to be done generically.
+        Finally, the interface to gimage could use some
+        sanitizing.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+    <chapt>
+      <heading>Image Render API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+        
+        <p><url url="image_render.c"></p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>The image render API has changed to use the Canvas object
+        that comes from the GImage being displayed. The RenderInfo
+        object now has a pointer to the canvas it gets from the gimage
+        projection instead of a tile manager. To match this the
+        routine that faults in the tiles now faults in the canvas
+        portions it needs for the area to be displayed.</p>
+
+        <p>Routines have been added to display 16bit and float
+        channels in image render.c. The render_image routine sets up
+        the info for the type of image and calls the correct
+        routine. These routines translate the image data pixels to
+        32bit long packed pixels suitable for the X-server. These
+        routines (for 16bit and float) are similar to the 8 bit
+        counterparts. Any other added data types (eg CMYK, etc) would
+        need similar sets of routines added. </p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>Currently a gamma lut for a given display is built by the
+        gtk on startup and included in the the GtkPreviewInfo arrays
+        lookup_red, lookup_green, and lookup_blue. These display gamma
+        lut arrays are based on 8bit channel data. </p>
+
+        <p>For a lot film resolution images it is desirable to install
+        additional or different display luts (other than just the
+        simple gamma lut). Image data in film images could be in
+        logrithmic or some other form that requires a special display
+        method. It would be good to add some way of allowing the user
+        to specify display luts (including the gamma one). This could
+        be as simple as tables read from a file, or a something more
+        like the curves dialog. We should probably build a version
+        that just reads tables first and then decide if a curves-type
+        ui for display luts is necessary.  </p>
+
+        <p>Once the display luts are constructed they must also be
+        used by other gtk ui components (like previews) so that
+        display via image render matches display in the other ui parts
+        of gimp (eg in the channels and layers dialog). </p>
+
+      </sect>
+
+    </chapt>
+
+
+    <chapt>
+      <heading>Image Map API</heading>
+
+      <sect>
+        <heading>The Code</heading>
+        
+        <p>for example, see: <itemize>
+            <item><url url="image_map.c"></item>
+            <item><url url="invert.c"></item>
+            <item><url url="brightness_contrast.c"></item>
+            <item><url url="levels.c"></item>
+            <item><url url="curves.c"></item>
+          </itemize></p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Description</heading>
+
+        <p>The image adjustments consist of equalize, invert,
+        posterize, threshold, color balance, hue-saturation, curves,
+        levels, desaturate, and histogram. Thats everything under the
+        Image menu and histogram. Most of these operations use the
+        ImageMap(image_map.c) structure to register their image
+        processing routines and set up callbacks to do the
+        processing. ImageMap takes care of setting up the source,
+        destination and the shadow image buffer (used as a temporary
+        buffer) and processing the image in chunks given by the tiles.
+        </p>
+
+        <p>The ImageMap code has been changed to use Canvas objects
+        and PixelAreas instead of Tile Managers and PixelRegions.</p>
+
+        <p>Each of the image adjustments usually involve calculating
+        transfer tables to apply to the image data in one form or
+        another. These tables are usually stored as part of the dialog
+        (eg. BrightnessContrastDialog) associated with the operation,
+        and are based on 8bit channel data. Most of these arrays have
+        been changed to be PixelRows (ie tag+buffer) to allow them to
+        have data types other than unsigned char and lengths other
+        than 256. </p>
+
+        <p>In some cases(eg curves)it is necessary to have both 8bit
+        transfer tables for the ui as well as 16bit transfer tables
+        (in the form of a PixelRow) for the underlying image
+        data. </p>
+
+        <p>Each of the image adjustments sets up whatever function
+        pointers it needs in order to do the correct image processing
+        for the specified data type and also to deal with ui issues as
+        well. A text field may need to display 0-65535 instead of
+        0-255 if the image is 16bit (eg in levels.c). This is the same
+        way of separating out data-type dependencies as in Paint Funcs
+        and the other parts of Gimp16.</p>
+
+      </sect>
+
+
+      <sect>
+        <heading>Future Directions</heading>
+
+        <p>No rework is planned.</p>
+
+      </sect>
+
+    </chapt>
+
+
+
+  </report>
+
+</linuxdoc>
