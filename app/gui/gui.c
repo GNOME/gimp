@@ -638,7 +638,13 @@ gui_device_change_notify (Gimp *gimp)
                                                         "gimp-device-status");
 
   if (session_info && session_info->widget)
-    gimp_device_status_update (GIMP_DEVICE_STATUS (session_info->widget));
+    {
+      GtkWidget *device_status;
+
+      device_status = GTK_BIN (session_info->widget)->child;
+
+      gimp_device_status_update (GIMP_DEVICE_STATUS (device_status));
+    }
 }
 
 

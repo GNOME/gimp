@@ -1,5 +1,11 @@
 2003-09-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui.c (gui_device_change_notify): session_info->widget
+	is not a GimpDeviceStatus but its parent GimpDockable. Use the
+	dockable's child instead. Fixes bug #122684.
+
+2003-09-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcolorpickertool.c: moved the call to
 	gimp_color_tool_enable() from GimpTool::initialize() to
 	GObject::constructor() so the right cursor is shown before the
