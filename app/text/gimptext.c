@@ -49,6 +49,7 @@ enum
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
   PROP_HINTING,
+  PROP_AUTOHINT,
   PROP_ANTIALIAS,
   PROP_LANGUAGE,
   PROP_COLOR,
@@ -151,9 +152,13 @@ gimp_text_class_init (GimpTextClass *klass)
 				 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HINTING,
                                     "hinting",
-                                    N_("Hinting alters the font outline to"
+                                    N_("Hinting alters the font outline to "
                                        "produce a crisp bitmap at small sizes"),
                                     TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
+                                    "autohint", NULL,
+                                    FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
@@ -251,6 +256,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_HINTING:
       g_value_set_boolean (value, text->hinting);
       break;
+    case PROP_AUTOHINT:
+      g_value_set_boolean (value, text->autohint);
+      break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, text->antialias);
       break;
@@ -308,6 +316,9 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_HINTING:
       text->hinting = g_value_get_boolean (value);
+      break;
+    case PROP_AUTOHINT:
+      text->autohint = g_value_get_boolean (value);
       break;
     case PROP_ANTIALIAS:
       text->antialias = g_value_get_boolean (value);

@@ -83,6 +83,7 @@ text_render (GimpImage    *gimage,
                         "text",      text,
                         "font",      fontname,
                         "font-size", size,
+			"antialias", antialias,
                         "border",    border,
                         "color",     &color,
                         NULL);

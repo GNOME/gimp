@@ -41,6 +41,7 @@ struct _GimpText
   gdouble                font_size;
   GimpUnit               font_size_unit;
   gboolean               hinting;
+  gboolean               autohint;
   gboolean               antialias;
   gchar                 *language;
   GimpRGB                color;

@@ -218,6 +218,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *vbox;
   GtkWidget       *table;
   GtkWidget       *button;
+  GtkWidget       *auto_button;
   GtkWidget       *preview;
   GtkWidget       *menu;
   GtkWidget       *font_selection;
@@ -230,7 +231,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  table = gtk_table_new (8, 3, FALSE);
+  table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -272,29 +273,43 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
+  auto_button = gimp_prop_check_button_new (config, "autohint",
+					    _("Force use of auto-hinter"));
+  gtk_table_attach (GTK_TABLE (table), auto_button, 1, 3, 4, 5,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (auto_button);
+
+  gtk_widget_set_sensitive (auto_button, options->text->hinting);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", auto_button);
+
+  button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
+  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 5, 6,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (button);
+
   button = gimp_prop_color_button_new (config, "color",
 				       _("Text Color"),
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
                              _("Color:"), 1.0, 0.5,
 			     button, 1, FALSE);
 
   box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
                              _("Justify:"), 1.0, 0.5,
 			     box, 2, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 8,
                              _("Indent:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 7,
+  gimp_table_attach_stock (GTK_TABLE (table), 9,
                            _("Line\nSpacing:"), 0.0,
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 

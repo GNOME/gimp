@@ -1,3 +1,15 @@
+2003-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c: respect the antialias parameter.
+
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayout.c: added autohint property that allows
+	to force the use of the Freetype auto-hinter.
+
+	* app/tools/gimptextoptions.c: added check buttons for autohint
+	and antialias. You need to patch PangoFT2 if you want to the
+	antialias setting to have any effect (see #109370).
+
 2003-03-27  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp_splash.png: lighten up a bit

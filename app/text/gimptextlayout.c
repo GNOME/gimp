@@ -344,16 +344,11 @@ static void
 gimp_text_ft2_subst_func (FcPattern *pattern,
                           gpointer   data)
 {
-  gboolean  hinting;
-  gboolean  antialias;
+  GimpText *text = GIMP_TEXT (data);
 
-  g_object_get (data,
-                "hinting",   &hinting,
-                "antialias", &antialias,
-                NULL);
-  
-  FcPatternAddBool (pattern, FC_HINTING,   hinting);
-  FcPatternAddBool (pattern, FC_ANTIALIAS, antialias);
+  FcPatternAddBool (pattern, FC_HINTING,   text->hinting);
+  FcPatternAddBool (pattern, FC_AUTOHINT,  text->autohint);
+  FcPatternAddBool (pattern, FC_ANTIALIAS, text->antialias);
 }
 
 static PangoContext *
