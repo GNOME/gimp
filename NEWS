@@ -6,6 +6,35 @@ here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
 
+Bugs fixed in GIMP 2.0.2
+========================
+
+- several build fixes (#140115, #142907, #143069)
+- allow plug-ins to register menu entries from within init() (#139969)
+- fixed focus issues with tool dialogs (#139349)
+- allow to load grayscale TGA files
+- a couple of string and i18n fixes (#140296, #140039, #137036, #142996)
+- fixed crash in template editor (#140315)
+- fixed crash in IWarp plug-in (#140554)
+- fixed snap to guides (#140649)
+- made the PNG plug-in handle empty colormaps (#142029)
+- fixed bug in text editor dialog (#141792)
+- fixed Old Photo script-fu (#142326)
+- fixed glitch in the Curves tool dialog (#142506)
+- don't allow tablet pressure to become negative (#123811)
+- improved range of tablet pressure values (#142808)
+- better defaults for tablet pressure (#143626)
+- fixed use of screen color picker with XInput devices (#143166)
+- actually return values from the run function of Python scripts (#141338)
+- documentation fixes (#142618)
+- fixed bug in the save routine of the TIFF plug-in (#143522)
+- don't let Curve Bend silently apply the layer mask (#134748)
+- fixed bug in Blur plug-in (#142318)
+- fixed mask offsets after crop operations (#143860)
+- let extensions run synchronously when called via PDB (#140112)
+- updated (and some new) translations
+
+
 Bugs fixed in GIMP 2.0.1
 ========================
 - don't leak file descriptor for the POSIX shm implementation (Yosh)
