@@ -334,6 +334,12 @@ package Gimp::CodeGen::enums;
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
 	},
+    ToolFlags =>
+	{ contig => 0,
+	  header => 'paint_core.h',
+	  symbols => [ qw(TOOL_CAN_HANDLE_CHANGING_BRUSH) ],
+	  mapping => { TOOL_CAN_HANDLE_CHANGING_BRUSH => '0x0001' }
+	},
     RunModeType =>
 	{ contig => 1,
 	  header => 'plug_in.h',
