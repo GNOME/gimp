@@ -47,49 +47,55 @@
 #define GIMP_COORDS_DEFAULT_WHEEL     0.5
 
 
-/*  base objects  */
+/*  base classes  */
 
 typedef struct _GimpObject          GimpObject;
-
-typedef struct _Gimp                Gimp;
-
-typedef struct _GimpContainer       GimpContainer;
-typedef struct _GimpList            GimpList;
-
-typedef struct _GimpContext         GimpContext;
-
 typedef struct _GimpViewable        GimpViewable;
 typedef struct _GimpItem            GimpItem;
 
+typedef struct _Gimp                Gimp;
 typedef struct _GimpImage           GimpImage;
 
 
-/*  item objects  */
+/*  containers  */
 
-typedef struct _GimpDrawable        GimpDrawable;
+typedef struct _GimpContainer       GimpContainer;
+typedef struct _GimpList            GimpList;
+typedef struct _GimpDocumentList    GimpDocumentList;
 
-typedef struct _GimpChannel         GimpChannel;
-typedef struct _GimpSelection       GimpSelection;
 
-typedef struct _GimpLayer           GimpLayer;
-typedef struct _GimpLayerMask       GimpLayerMask;
+/*  context objects  */
+
+typedef struct _GimpContext         GimpContext;
+typedef struct _GimpStrokeOptions   GimpStrokeOptions;
+typedef struct _GimpToolOptions     GimpToolOptions;
+
+
+/*  info objects  */
+
+typedef struct _GimpPaintInfo       GimpPaintInfo;
+typedef struct _GimpToolInfo        GimpToolInfo;
 
 
 /*  data objects  */
 
 typedef struct _GimpDataFactory     GimpDataFactory;
-
 typedef struct _GimpData            GimpData;
-
 typedef struct _GimpBrush	    GimpBrush;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;
-
 typedef struct _GimpGradient        GimpGradient;
-
 typedef struct _GimpPattern         GimpPattern;
-
 typedef struct _GimpPalette         GimpPalette;
+
+
+/*  drawable objects  */
+
+typedef struct _GimpDrawable        GimpDrawable;
+typedef struct _GimpChannel         GimpChannel;
+typedef struct _GimpSelection       GimpSelection;
+typedef struct _GimpLayer           GimpLayer;
+typedef struct _GimpLayerMask       GimpLayerMask;
 
 
 /*  undo objects  */
@@ -100,24 +106,16 @@ typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 
 
-/*  info & option objects  */
-
-typedef struct _GimpPaintInfo       GimpPaintInfo;
-typedef struct _GimpToolInfo        GimpToolInfo;
-
-typedef struct _GimpStrokeOptions   GimpStrokeOptions;
-typedef struct _GimpToolOptions     GimpToolOptions;
-
-
 /*  misc objects  */
 
 typedef struct _GimpBuffer          GimpBuffer;
+typedef struct _GimpEnvironTable    GimpEnvironTable;
+/* typedef struct _GimpGrid         GimpGrid; in config-types.h */
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpImageMap        GimpImageMap;
-typedef struct _GimpDocumentList    GimpDocumentList;
-typedef struct _GimpEnvironTable    GimpEnvironTable;
 typedef struct _GimpParasiteList    GimpParasiteList;
 typedef struct _GimpProjection      GimpProjection;
+/* typedef struct _GimpTemplate     GimpTemplate; in config-types.h */
 
 
 /*  interfaces  */

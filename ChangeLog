@@ -1,3 +1,17 @@
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/config-types.h: removed GimpConfigInterface typedef,
+	added comments to typedefs which don't belong here.
+
+	* app/config/gimpconfig.h: added GimpConfigInterface typedef.
+
+	* app/core/core-types.h
+	* app/display/display-types.h: added commented out typedefs for
+	types that live in config-types.h for obscure reasons.
+
+	* app/core/core-types.h: reordered stuff to match the order in the
+	API docs (makes keeping stuff in sync much easier).
+
 2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/repaint.c: replaced a few if's+destructors

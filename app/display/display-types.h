@@ -25,16 +25,17 @@
 #include "display/display-enums.h"
 
 
-typedef struct _GimpCanvas         GimpCanvas;
+typedef struct _GimpCanvas            GimpCanvas;
 
-typedef struct _GimpDisplay        GimpDisplay;
-typedef struct _GimpDisplayShell   GimpDisplayShell;
+typedef struct _GimpDisplay           GimpDisplay;
+typedef struct _GimpDisplayShell      GimpDisplayShell;
+/* typedef struct _GimpDisplayOptions GimpDisplayOptions; in config-types.h */
 
-typedef struct _GimpNavigationView GimpNavigationView;
-typedef struct _GimpScaleComboBox  GimpScaleComboBox;
-typedef struct _GimpStatusbar      GimpStatusbar;
+typedef struct _GimpNavigationView    GimpNavigationView;
+typedef struct _GimpScaleComboBox     GimpScaleComboBox;
+typedef struct _GimpStatusbar         GimpStatusbar;
 
-typedef struct _Selection          Selection;
+typedef struct _Selection             Selection;
 
 
 #endif /* __DISPLAY_TYPES_H__ */

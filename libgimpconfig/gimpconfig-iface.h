@@ -29,6 +29,8 @@
 #define GIMP_CONFIG_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG, GimpConfigInterface))
 
 
+typedef struct _GimpConfigInterface GimpConfigInterface;
+
 struct _GimpConfigInterface
 {
   GTypeInterface base_iface;

@@ -24,7 +24,6 @@
 
 
 typedef struct _GimpConfig           GimpConfig; /* dummy typedef */
-typedef struct _GimpConfigInterface  GimpConfigInterface;
 
 typedef struct _GimpBaseConfig       GimpBaseConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
@@ -36,7 +35,10 @@ typedef struct _GimpRc               GimpRc;
 typedef struct _GimpConfigWriter     GimpConfigWriter;
 typedef struct _GimpXmlParser        GimpXmlParser;
 
+/* should be in display/display-types.h */
 typedef struct _GimpDisplayOptions   GimpDisplayOptions;
+
+/* should be in core/core-types.h */
 typedef struct _GimpGrid             GimpGrid;
 typedef struct _GimpTemplate         GimpTemplate;
 
