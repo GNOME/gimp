@@ -1,3 +1,9 @@
+2000-04-29  Jay Cox  <jaycox@earthlink.net>
+
+	* modules/Makefile.am
+	* modules/cdisplay_highcontrast.c: Implement a high contrast 
+	display filter.
+
 2000-04-28  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.c: Correctly initialize the max arrays in
