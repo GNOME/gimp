@@ -38,9 +38,9 @@ HELP
 
     @outargs = (
 	{ name => 'path_list', type => 'stringarray',
-	  desc => 'List of the paths belonging to this image',
+	  desc => 'List of the paths belonging to this image.',
 	  array => { name => 'num_paths',
-		     desc => 'The number of paths returned' },
+		     desc => 'The number of paths returned.' },
 	  init => 1 }
     );
 
@@ -61,9 +61,9 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose points should be listed' }
+	  desc => 'The name of the path whose points should be listed.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to list the paths from';
+    $inargs[0]->{desc} = 'The ID of the image to list the paths from.';
 
     @outargs = (
 	{ name => 'path_type', type => 'int32', init => 1,
@@ -77,12 +77,12 @@ HELP
 		   the x pos, next is the y pos, last is the type of the pnt.
 		   The type field is dependant on the path type. For beziers
 		   (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR,
-		   2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel
-		   resolution',
+		   2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points
+		   are returned in pixel resolution.',
 	  init => 1,
 	  array => { name => 'num_path_point_details',
 		     desc => 'The number of points returned. Each point is
-			      made up of (x, y, pnt_type) of floats',
+			      made up of (x, y, pnt_type) of floats.',
 		     alias => 'num_point_details', init => 1 } }
     );
 
@@ -142,11 +142,11 @@ HELP
     &pdb_misc;
 
     @inargs = ( &std_image_arg );
-    $inargs[0]->{desc} = 'The ID of the image to get the current path from';
+    $inargs[0]->{desc} = 'The ID of the image to get the current path from.';
 
     @outargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the current path',
+	  desc => 'The name of the current path.',
 	  init => 1 }
     );
 
@@ -169,7 +169,7 @@ sub path_set_current {
     $blurb = 'Sets the current path associated with the passed image.';
 
     $help = <<'HELP';
-List the paths associated with the passed image.
+Sets a named path as the current path.
 HELP
 
     &pdb_misc;
@@ -177,9 +177,9 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path to set the current path to' }
+	  desc => 'The name of the path to make current.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to list set the paths in';
+    $inargs[0]->{desc} = 'The ID of the image in which a path will become current.';
 
     %invoke = (
 	vars => [ 'GimpVectors *vectors' ],
@@ -208,38 +208,40 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path to create (if it exists then a unique
+	  desc => 'The name of the path to create. If it exists then a unique
 		   name will be created - query the list of paths if you want
 		   to make sure that the name of the path you create is 
 		   unique. This will be set as the current path.',
 	  init => 1 },
 	{ name => 'ptype', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
-		   is supported' },
+		   is supported.' },
 	{ name => 'points_pairs', type => 'floatarray',
 	  desc => 'The points in the path represented as 3 floats. The first is
 		   the x pos, next is the y pos, last is the type of the pnt.
 		   The type field is dependant on the path type. For beziers
 		   (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR,
-		   2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel
-		   resolution',
+		   2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are
+		   returned in pixel resolution.',
 	  array => { name => 'num_path_points',
-		     desc => 'The number of points in the path. Each point is
+		     desc => 'The number of elements in the array, i.e. the number
+			      of points in the path * 3. Each point is
 			      made up of (x, y, type) of floats. Currently only
 			      the creation of bezier curves is allowed. The type
 			      parameter must be set to (1) to indicate a BEZIER
-			      type curve. For BEZIERS. Note the that points
-			      must be given in the following order... ACCACCAC
-			      ... If the path is not closed the last control
+			      type curve. Note that for BEZIER curves, points
+			      must be given in the following order: ACCACCAC...
+			      If the path is not closed the last control
 			      point is missed off. Points consist of three
 			      control points (control/anchor/control) so for a
 			      curve that is not closed there must be at least
-			      two points passed (2 x,y pairs). If num_path_pnts
-			      % 3 = 0 then the path is assumed to be closed
-			      and the points are ACCACCACCACC.',
+			      two points passed (2 x,y pairs). If
+			      (num_path_points/3) % 3 = 0 then the path is
+			      assumed to be closed and the points are
+			      ACCACCACCACC.',
 		     init => 1 } }
     );
-    $inargs[0]->{desc} = 'The ID of the image to set the paths in';
+    $inargs[0]->{desc} = 'The ID of the image to set the paths in.';
 
     %invoke = (
 	vars => [ 'gboolean closed = FALSE' ],
@@ -297,7 +299,7 @@ HELP
 
     @inargs = ( &std_image_arg );
     $inargs[0]->{desc} = 'The ID of the image which contains the path to
-			  stroke';
+			  stroke.';
 
     %invoke = (
 	vars => [ 'GimpVectors *vectors', 'GimpDrawable *drawable' ],
@@ -326,8 +328,8 @@ sub  path_get_point_at_dist {
 
     $help = <<'HELP';
 This will return the x,y position of a point at a given distance along the
-bezier curve. The distance will the obtained by first digitizing the 
-curve internally an then walking along the curve. For a closed curve the
+bezier curve. The distance will be obtained by first digitizing the 
+curve internally and then walking along the curve. For a closed curve the
 start of the path is the first point on the path that was created. This might
 not be obvious. Note the current path is used.
 HELP
@@ -337,17 +339,17 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'distance', type => 'float',
-	  desc => 'The distance along the path' }
+	  desc => 'The distance along the path.' }
     );
     $inargs[0]->{desc} = 'The ID of the image the paths belongs to';
 
     @outargs = (
 	{ name => 'x_point', type => 'int32',
-	  desc => 'The x position of the point', init => 1 },
+	  desc => 'The x position of the point.', init => 1 },
 	{ name => 'y_point', type => 'int32',
-	  desc => 'The y position of the point', init => 1 },
+	  desc => 'The y position of the point.', init => 1 },
 	{ name => 'gradient', type => 'float',
-	  desc => 'The gradient at the specified point', init => 1 }
+	  desc => 'The gradient at the specified point.', init => 1 }
     );
 
     %invoke = (
@@ -372,7 +374,9 @@ sub path_get_tattoo {
     $blurb = 'Returns the tattoo associated with the name path.';
 
     $help = <<'HELP';
-This procedure returns the tattoo associated with the specified path.  A tattoo is a unique and permanent identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.
+This procedure returns the tattoo associated with the specified path.  A
+tattoo is a unique and permanent identifier attached to a path that can
+be used to uniquely identify a path within an image even between sessions.
 HELP
 
     &pdb_misc;
@@ -380,12 +384,12 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose tattoo should be obtained' }
+	  desc => 'The name of the path whose tattoo should be obtained.' }
     );
 
     @outargs = (
 	{ name => 'tattoo', type => 'int32',
-	  desc => 'The tattoo associated with the name path', init => 1  }
+	  desc => 'The tattoo associated with the named path.', init => 1  }
     );
 
     %invoke = (
@@ -407,7 +411,11 @@ sub path_set_tattoo {
     $blurb = 'Sets the tattoo associated with the named path.';
 
     $help = <<'HELP';
-This procedure sets the tattoo associated with the specified path.  A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.
+This procedure sets the tattoo associated with the specified path.  A
+tattoo is a unique and permenant identifier attached to a path that
+can be used to uniquely identify a path within an image even between
+sessions. Note that the value passed to this function must have been
+obtained from a previous call to path_get_tattoo.
 HELP
 
     &pdb_misc;
@@ -417,7 +425,9 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
-	  desc => "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here", init => 1  }
+	  desc => "The tattoo associated with the name path. Only values
+		   returned from 'path_get_tattoo' should be used here",
+		   init => 1  }
     );
 
     %invoke = (
@@ -440,7 +450,10 @@ sub get_path_by_tattoo {
     $blurb = 'Return the name of the path with the given tattoo.';
 
     $help = <<'HELP';
-The procedure returns the name of the path in the specified image which has the passed tattoo. The tattoos are unique within the image and will be preserved across sessions and through renaming of the path. An error is returned if no path woth the specified tattoo can be found.
+The procedure returns the name of the path in the specified image
+which has the passed tattoo. The tattoos are unique within the image
+and will be preserved across sessions and through renaming of the path.
+An error is returned if no path with the specified tattoo can be found.
 HELP
 
     &pdb_misc;
@@ -448,12 +461,12 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'tattoo', type => 'int32',
-	  desc => 'The tattoo of the required path' }
+	  desc => 'The tattoo of the required path.' }
     );
 
     @outargs = (
 	{ name => 'name', type => 'string', init => 1,
-	  desc => 'The name of the path with the specified tattoo' }
+	  desc => 'The name of the path with the specified tattoo.' }
     );
 
     %invoke = (
@@ -483,9 +496,9 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path to delete' }
+	  desc => 'The name of the path to delete.' }
     );
-    $inargs[0]->{desc} = 'The ID of the image to list delete the paths from';
+    $inargs[0]->{desc} = 'The ID of the image to delete the path from.';
 
     %invoke = (
 	vars => [ 'GimpVectors *vectors' ],
@@ -506,7 +519,9 @@ sub path_get_locked {
     $blurb = 'Returns the locked status associated with the named path.';
 
     $help = <<'HELP';
-This procedure returns the lock status associated with the specified path.  A path can be "locked" which means that the transformation tool operations will also apply to the path.
+This procedure returns the lock status associated with the specified
+path.  A path can be "locked" which means that the transformation
+tool operations will also apply to the path.
 HELP
 
     &pdb_misc;
@@ -514,13 +529,15 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'the name of the path whose locked status should be
-		   obtained' }
+	  desc => 'The name of the path whose locked status should be
+		   obtained.' }
     );
 
     @outargs = (
 	{ name => 'lockstatus', type => 'int32',
-	  desc => 'The lock status associated with the name path. 0 returned if the path is not locked. 1 is returned if the path is locked', init => 1  }
+	  desc => 'The lock status associated with the name path. 0 is
+		   returned if the path is not locked. 1 is returned if the
+		   path is locked.', init => 1  }
     );
 
     %invoke = (
@@ -542,7 +559,9 @@ sub path_set_locked {
     $blurb = 'Set the locked status associated with the named path.';
 
     $help = <<'HELP';
-This procedure sets the lock status associated with the specified path.  A path can be "locked" which means that the transformation tool operations will also apply to the path.
+This procedure sets the lock status associated with the specified path.  A
+path can be "locked" which means that the transformation tool operations
+will also apply to the path.
 HELP
 
     &pdb_misc;
@@ -586,17 +605,17 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'name', type => 'string',
-	  desc => 'The name of the path which should be made into selection' },
+	  desc => 'The name of the path which should be made into selection.' },
         { name => 'op', type => 'enum GimpChannelOps',
-	  desc => 'The desired operation with current selection' },
+	  desc => 'The desired operation with current selection.' },
 	{ name => 'antialias', type => 'boolean',
-	  desc => 'Antialias selection' },
+	  desc => 'Antialias selection.' },
 	{ name => 'feather', type => 'boolean',
-	  desc => 'Feather selection' },
+	  desc => 'Feather selection.' },
 	{ name => 'feather_radius_x', type => 'float',
-	  desc => 'Feather radius x'  },
+	  desc => 'Feather radius x.'  },
 	{ name => 'feather_radius_y', type => 'float',
-	  desc => 'Feather radius y'  }
+	  desc => 'Feather radius y.'  }
     );
 
     %invoke = (
@@ -625,7 +644,7 @@ sub path_import {
     $blurb = 'Import paths from an SVG file.';
 
     $help = <<'HELP';
-This procedure imports path from an SVG file. This is a temporary solution
+This procedure imports paths from an SVG file. This is a temporary solution
 until the new vectors PDB API is in place. Don't rely on this function
 being available in future GIMP releases.
 HELP
@@ -638,9 +657,9 @@ HELP
 	{ name => 'filename', type => 'string', no_validate => 1,
 	  desc => 'The name of the SVG file to import.' },
 	{ name => 'merge', type => 'boolean',
-	  desc => 'Merge paths into a single vectors object' },
+	  desc => 'Merge paths into a single vectors object.' },
 	{ name => 'scale', type => 'boolean',
-	  desc => 'Scale the SVG to image dimensions' }
+	  desc => 'Scale the SVG to image dimensions.' }
     );
 
     %invoke = (
