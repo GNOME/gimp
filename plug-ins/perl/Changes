@@ -7,6 +7,7 @@ Revision history for Gimp-Perl extension.
           "sysv rules the world, but sun shines everyhwere".
         - added ... to hopefully all plug-ins that open a dialog.
 	- make clean wrongly deleted po/Makefile.
+	- po/Makefile.PL left temporary files around.
 
 1.2   Thu May 11 18:55:13 CEST 2000
 	- image types updated to reflect gimp's reality.
