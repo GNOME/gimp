@@ -121,10 +121,10 @@ color_notebook_new (gint                   red,
 
 		     wants_updates ? _("Close") : _("OK"),
 		     color_notebook_ok_callback,
-		     cnp, NULL, NULL, TRUE, FALSE,
+		     cnp, NULL, NULL, TRUE, wants_updates,
 		     wants_updates ? _("Revert to Old Color") : _("Cancel"),
 		     color_notebook_cancel_callback,
-		     cnp, NULL, NULL, FALSE, TRUE,
+		     cnp, NULL, NULL, FALSE, !wants_updates,
 
 		     NULL);
 

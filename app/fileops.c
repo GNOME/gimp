@@ -406,7 +406,7 @@ file_save_callback (GtkWidget *widget,
 	  gint   status;
 
 	  raw_filename = g_basename (gimage_filename (gdisplay->gimage));
-
+	  
 	  status = file_save (gdisplay->gimage,
 			      gimage_filename (gdisplay->gimage),
 			      raw_filename,
@@ -1002,6 +1002,9 @@ file_save (GimpImage   *gimage,
   if (!file_proc)
     return FALSE;
 
+  /* ref the image, so it can't get deleted during save */
+  gtk_object_ref (GTK_OBJECT (gimage));
+
   proc = &file_proc->db_info;
 
   args = g_new0 (Argument, proc->num_args);
@@ -1053,6 +1056,8 @@ file_save (GimpImage   *gimage,
 
   g_free (return_vals);
   g_free (args);
+
+  gtk_object_unref (GTK_OBJECT (gimage));
 
   return status;
 }

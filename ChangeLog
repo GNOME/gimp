@@ -1,3 +1,20 @@
+Sun Mar 12 02:25:58 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/color_notebook.c: connect the wm close event to the Close
+	button. This is somehwaqt inconsistent since the Close button takes
+	the role of the OK button in this dialog, but IMO it's better that
+	way and fixes bug #7078.
+
+	* app/fileops.c: ref the image when doing a save operation. This 
+	lets the save plugin complete its job even if the user decided
+	to close the display and thereby deleted the image. You may still
+	crash the plugin by deleting layers from the Layers dialog, but I 
+	guess we will not be able to fix this w/o a major redesign.
+	Fixes (well, more or less) bug #2291.
+
+	* app/gradient.c:
+	* libgimp/gimpcolorbutton.c: cosmetics
+
 Sun Mar 12 01:09:27 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am

@@ -465,6 +465,8 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_color_selection_set_opacity (colorsel, (gcb->bpp == 4));
       gtk_color_selection_set_color (colorsel, gcb->dcolor);
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->help_button);
+      gtk_container_set_border_width (GTK_CONTAINER (gcb->dialog), 2);
+
       gtk_signal_connect (GTK_OBJECT (gcb->dialog), "destroy",
 			  (GtkSignalFunc) gtk_widget_destroyed, &gcb->dialog);
       gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->ok_button), 

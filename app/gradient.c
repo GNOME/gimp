@@ -4401,6 +4401,8 @@ cpopup_create_color_dialog (gchar         *title,
   GtkColorSelectionDialog *csd;
 
   window = gtk_color_selection_dialog_new (title);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 2);
+  gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (window)->help_button);
 
   gimp_help_connect_help_accel (window, gimp_standard_help_func,
 				"dialogs/gradient_editor/gradient_editor.html");
