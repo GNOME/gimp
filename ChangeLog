@@ -1,5 +1,10 @@
 2004-12-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp.c: compute preview for the displayed area
+	only, some more code cleanup.
+
+2004-12-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/unsharp.c (preview_update): fixed bug #157910.
 	More code cleanup and some trivial optimizations.
 

@@ -69,16 +69,16 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static inline void  blur_line (const gdouble *ctable,
-                               const gdouble *cmatrix,
-                               gint           cmatrix_length,
-                               const guchar  *src,
-                               guchar        *dest,
-                               gint           y,
-                               glong          bytes);
+static inline void  blur_line            (const gdouble *ctable,
+                                          const gdouble *cmatrix,
+                                          gint           cmatrix_length,
+                                          const guchar  *src,
+                                          guchar        *dest,
+                                          gint           y,
+                                          glong          bytes);
 static gint      gen_convolve_matrix     (gdouble        std_dev,
                                           gdouble      **cmatrix);
-static gdouble * gen_lookup_table        (gdouble       *cmatrix,
+static gdouble * gen_lookup_table        (const gdouble *cmatrix,
                                           gint           cmatrix_length);
 static void      unsharp_region          (GimpPixelRgn  *srcPTR,
                                           GimpPixelRgn  *dstPTR,
@@ -300,7 +300,7 @@ blur_line (const gdouble *ctable,
                 {
                   if ((j >= row - cmatrix_middle) &&
                       (j <= row + cmatrix_middle))
-                    sum += src[j*bytes + i] * cmatrix[j];
+                    sum += src[j * bytes + i] * cmatrix[j];
                 }
 
               dest[row * bytes + i] = (guchar) ROUND (sum / scale);
@@ -326,6 +326,7 @@ blur_line (const gdouble *ctable,
                   sum +=
                     src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
                 }
+
               dest[row * bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
@@ -347,6 +348,7 @@ blur_line (const gdouble *ctable,
                   src_p1 += bytes;
                   ctable_p += 256;
                 }
+
               src_p++;
               *(dest_p++) = ROUND (sum);
             }
@@ -367,6 +369,7 @@ blur_line (const gdouble *ctable,
                   sum +=
                     src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
                 }
+
               dest[row * bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
@@ -395,7 +398,8 @@ unsharp_mask (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&srcPR,  drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  unsharp_region (&srcPR, &destPR, bytes, radius, amount, x1, x2, y1, y2, TRUE);
+  unsharp_region (&srcPR, &destPR,
+                  bytes, radius, amount, x1, x2, y1, y2, TRUE);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -492,9 +496,9 @@ unsharp_region (GimpPixelRgn *srcPR,
               if (abs (2 * diff) < threshold)
                 diff = 0;
 
-              value = src[u*bytes+v] + amount * diff;
+              value = src[u * bytes + v] + amount * diff;
 
-              dest[u*bytes+v] = CLAMP (value, 0, 255);
+              dest[u * bytes + v] = CLAMP (value, 0, 255);
             }
         }
       /* update progress bar every five rows */
@@ -537,7 +541,7 @@ gen_convolve_matrix (gdouble   radius,
    * the standard deviation, and the radius of effect is the
    * standard deviation * 2.  It's a little confusing.
    */
-  radius = fabs(radius) + 1.0;
+  radius = fabs (radius) + 1.0;
 
   std_dev = radius;
   radius = std_dev * 2;
@@ -583,6 +587,7 @@ gen_convolve_matrix (gdouble   radius,
     {
       sum += exp (- SQR (0.5 + 0.02 * j) / (2 * SQR (std_dev)));
     }
+
   cmatrix[matrix_length / 2] = sum / 51;
 
   /* normalize the distribution by scaling the total sum to one */
@@ -602,20 +607,19 @@ gen_convolve_matrix (gdouble   radius,
    value.
 */
 static gdouble *
-gen_lookup_table (gdouble *cmatrix,
-                  gint     cmatrix_length)
+gen_lookup_table (const gdouble *cmatrix,
+                  gint           cmatrix_length)
 {
-  int i, j;
-  gdouble* lookup_table = g_new (gdouble, cmatrix_length * 256);
-  gdouble* lookup_table_p = lookup_table;
-  gdouble* cmatrix_p      = cmatrix;
+  gdouble       *lookup_table   = g_new (gdouble, cmatrix_length * 256);
+  gdouble       *lookup_table_p = lookup_table;
+  const gdouble *cmatrix_p      = cmatrix;
+  gint           i, j;
 
   for (i = 0; i < cmatrix_length; i++)
     {
       for (j = 0; j < 256; j++)
-        {
-          *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
-        }
+        *(lookup_table_p++) = *cmatrix_p * (gdouble)j;
+
       cmatrix_p++;
     }
 
@@ -741,7 +745,7 @@ preview_update (GimpPreview *preview)
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
-                  x1, x2, y1, y2,
+                  x, x + width, y, y + width,
                   FALSE);
 
   gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, FALSE, TRUE);
