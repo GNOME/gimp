@@ -1,3 +1,24 @@
+2003-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimppaintinfo.[ch]: derive it from GimpViewable.
+
+	* app/core/gimptoolinfo.c (gimp_tool_info_new): set the
+	paint_info's stock_id from the tool_info's stock_id.
+
+	* app/widgets/widgets-types.h: resurrected GimpItemStrokeFunc.
+
+	* app/widgets/gimpvectorstreeview.[ch]: added a item_stroke_func
+	pointer and use it instead of implementing stroking here.
+
+	* app/gui/vectors-commands.[ch]: added vectors_stroke_vectors()
+	which has the signature of a GimpItemStrokeFunc.
+
+	* app/gui/dialogs-constructors.c: use it for the paths dialog.
+
+	* app/gui/stroke-dialog.[ch]: extended to handle both libart and
+	GimpPaintCore stroking. Use a GimpContainerMenu view on the
+	gimp->paint_info_list container to select the paint core to use.
+
 2003-09-27  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/info-window.c (info_window_update): improved readability

@@ -185,32 +185,9 @@ vectors_stroke_cmd_callback (GtkWidget *widget,
 {
   GimpImage    *gimage;
   GimpVectors  *active_vectors;
-  GimpDrawable *active_drawable;
-  GimpToolInfo *tool_info;
-  GtkWidget    *dialog;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  active_drawable = gimp_image_active_drawable (gimage);
-
-  if (! active_drawable)
-    {
-      g_message (_("There is no active layer or channel to stroke to."));
-      return;
-    }
-
-  dialog = stroke_dialog_new (active_drawable,
-                              GIMP_ITEM (active_vectors),
-                              NULL);
-
-  gtk_widget_show (dialog);
-
-  /*
-  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
-
-  gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
-                    GIMP_OBJECT (tool_info->paint_info));
-  gimp_image_flush (gimage);
-  */
+  vectors_stroke_vectors (GIMP_ITEM (active_vectors));
 }
 
 void
@@ -279,6 +256,38 @@ vectors_edit_attributes_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors, data);
 
   vectors_edit_vectors_query (active_vectors);
+}
+
+void
+vectors_stroke_vectors (GimpItem *item)
+{
+  GimpImage    *gimage;
+  GimpDrawable *active_drawable;
+  GtkWidget    *dialog;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  gimage = gimp_item_get_image (item);
+
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to"));
+      return;
+    }
+
+  dialog = stroke_dialog_new (active_drawable, item, NULL,
+                              GIMP_STOCK_PATH_STROKE, GIMP_HELP_PATH_STROKE);
+  gtk_widget_show (dialog);
+
+  /*
+  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
+
+  gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
+                    GIMP_OBJECT (tool_info->paint_info));
+  gimp_image_flush (gimage);
+  */
 }
 
 void

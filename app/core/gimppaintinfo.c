@@ -26,13 +26,15 @@
 #include "gimppaintinfo.h"
 
 
-static void   gimp_paint_info_class_init (GimpPaintInfoClass *klass);
-static void   gimp_paint_info_init       (GimpPaintInfo      *paint_info);
+static void    gimp_paint_info_class_init      (GimpPaintInfoClass *klass);
+static void    gimp_paint_info_init            (GimpPaintInfo      *paint_info);
 
-static void   gimp_paint_info_finalize   (GObject            *object);
+static void    gimp_paint_info_finalize        (GObject            *object);
+static gchar * gimp_paint_info_get_description (GimpViewable       *viewable,
+                                                gchar             **tooltip);
 
 
-static GimpObjectClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
 
 GType
@@ -55,7 +57,7 @@ gimp_paint_info_get_type (void)
           (GInstanceInitFunc) gimp_paint_info_init,
         };
 
-      paint_info_type = g_type_register_static (GIMP_TYPE_OBJECT,
+      paint_info_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
                                                 "GimpPaintInfo",
                                                 &paint_info_info, 0);
     }
@@ -66,13 +68,17 @@ gimp_paint_info_get_type (void)
 static void
 gimp_paint_info_class_init (GimpPaintInfoClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass      *object_class;
+  GimpViewableClass *viewable_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_paint_info_finalize;
+  object_class->finalize          = gimp_paint_info_finalize;
+
+  viewable_class->get_description = gimp_paint_info_get_description;
 }
 
 static void
@@ -104,6 +110,18 @@ gimp_paint_info_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gchar *
+gimp_paint_info_get_description (GimpViewable  *viewable,
+                                 gchar        **tooltip)
+{
+  GimpPaintInfo *paint_info = GIMP_PAINT_INFO (viewable);
+
+  if (tooltip)
+    *tooltip = NULL;
+
+  return g_strdup (paint_info->blurb);
 }
 
 GimpPaintInfo *

@@ -24,7 +24,9 @@
 
 GtkWidget * stroke_dialog_new (GimpDrawable      *drawable,
                                GimpItem          *item,
-                               GimpStrokeOptions *stroke_options);
+                               GimpStrokeOptions *stroke_options,
+                               const gchar       *stock_id,
+                               const gchar       *help_id);
 
 
 #endif  /*  __STROKE_DIALOG_H__  */

@@ -40,6 +40,7 @@ struct _GimpVectorsTreeView
 {
   GimpItemTreeView            parent_instance;
 
+  GimpStrokeItemFunc          stroke_item_func;
   GimpSelectionToVectorsFunc  selection_to_vectors_func;
 
   GtkWidget                  *toselection_button;

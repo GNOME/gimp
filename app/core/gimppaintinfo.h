@@ -20,7 +20,7 @@
 #define __GIMP_PAINT_INFO_H__
 
 
-#include "gimpdata.h"
+#include "gimpviewable.h"
 
 
 #define GIMP_TYPE_PAINT_INFO            (gimp_paint_info_get_type ())
@@ -35,7 +35,7 @@ typedef struct _GimpPaintInfoClass GimpPaintInfoClass;
 
 struct _GimpPaintInfo
 {
-  GimpObject        parent_instance;
+  GimpViewable      parent_instance;
 
   Gimp             *gimp;
 
@@ -49,7 +49,7 @@ struct _GimpPaintInfo
 
 struct _GimpPaintInfoClass
 {
-  GimpObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 
