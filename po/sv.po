@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-08-02 22:14+0200\n"
-"PO-Revision-Date: 2003-08-02 22:15+0200\n"
+"POT-Creation-Date: 2003-08-02 22:32+0200\n"
+"PO-Revision-Date: 2003-08-02 22:35+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1751,7 +1751,7 @@ msgstr "Flytande markering"
 
 #: app/core/gimpimage-mask.c:446 app/gui/select-commands.c:148
 msgid "Feather Selection"
-msgstr "Fjädermarkering"
+msgstr "Fjädra markering"
 
 #: app/core/gimpimage-mask.c:461
 msgid "Sharpen Selection"
@@ -5876,7 +5876,7 @@ msgstr "_Vertikal:"
 
 #: app/gui/select-commands.c:151
 msgid "Feather Selection by:"
-msgstr "Fjädermarkering:"
+msgstr "Fjädermarkera med:"
 
 #: app/gui/select-commands.c:186
 msgid "Shrink Selection by:"
