@@ -338,10 +338,10 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   GimpRGB      color;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (gimp_image_base_type (gimage) == INDEXED, NULL);
+  g_return_val_if_fail (gimp_image_base_type (gimage) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
-  if (! (gimage && gimp_image_base_type (gimage) == INDEXED))
+  if (! (gimage && gimp_image_base_type (gimage) == GIMP_INDEXED))
     return NULL;
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));

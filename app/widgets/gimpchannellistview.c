@@ -381,19 +381,19 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
 
   switch (gimp_image_base_type (gimage))
     {
-    case RGB:
+    case GIMP_RGB:
       n_components  = 3;
       components[0] = RED_CHANNEL;
       components[1] = GREEN_CHANNEL;
       components[2] = BLUE_CHANNEL;
       break;
 
-    case GRAY:
+    case GIMP_GRAY:
       n_components  = 1;
       components[0] = GRAY_CHANNEL;
       break;
 
-    case INDEXED:
+    case GIMP_INDEXED:
       n_components  = 1;
       components[0] = INDEXED_CHANNEL;
       break;

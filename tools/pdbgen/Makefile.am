@@ -56,6 +56,7 @@ enum_headers = \
 	../../app/base/base-enums.h			\
 	../../app/base/base-types.h			\
 	../../app/core/core-types.h			\
+	../../app/core/core-enums.h			\
 	../../app/plug-in/plug-in-types.h		\
 	../../app/tools/tools-types.h			\
 	../../app/tools/gimpclonetool.h			\

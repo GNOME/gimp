@@ -1258,7 +1258,7 @@ layers_menu_update (GtkItemFactory *factory,
   alpha = layer && gimp_layer_has_alpha (layer);
 
   lp      = ! gimp_image_is_empty (gimage);
-  indexed = (gimp_image_base_type (gimage) == INDEXED);
+  indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
 
   for (list = GIMP_LIST (gimage->layers)->list;
        list;

@@ -662,7 +662,7 @@ gimp_clone_tool_line_image (GimpImage    *dest,
   while (width--)
     {
       gimp_image_get_color (src, gimp_drawable_type (s_drawable), rgb, s);
-      gimp_image_transform_color (dest, d_drawable, rgb, d, RGB);
+      gimp_image_transform_color (dest, d_drawable, rgb, d, GIMP_RGB);
 
       if (has_alpha)
 	d[dest_alpha] = s[src_alpha];
@@ -697,7 +697,7 @@ gimp_clone_tool_line_pattern (GimpImage    *dest,
   /*  Get a pointer to the appropriate scanline of the pattern buffer  */
   pat = temp_buf_data (pattern->mask) +
     (y % pattern->mask->height) * pattern->mask->width * pattern->mask->bytes;
-  color = (pattern->mask->bytes == 3) ? RGB : GRAY;
+  color = (pattern->mask->bytes == 3) ? GIMP_RGB : GIMP_GRAY;
 
   alpha = bytes - 1;
 

@@ -1,3 +1,54 @@
+2001-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h: removed GimpImageBaseType enum ...
+
+	* app/core/core-enums.h: and added it here with proper namespace
+	(enum values prefixed with GIMP_).
+
+	* app/gimprc.c
+	* app/core/gimpcoreconfig.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/core/gimppalette-import.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell.c
+	* app/file/file-utils.c
+	* app/gui/colormap-dialog.c
+	* app/gui/convert-dialog.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/toolbox.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimppainttool.c
+	* app/widgets/gimpchannellistview.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+	* tools/pdbgen/enums.pl
+	* app/pdb/convert_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpconvert_pdb.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-params.h
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpcoreconfig.[ch]: added more stuff to GimpCoreConfig.
+
 2001-12-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am

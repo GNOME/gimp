@@ -1241,9 +1241,9 @@ parse_image_type (gpointer val1p,
   token = get_next_token ();
  
   if (!strcmp (token_sym, "rgb"))
-    *typep = RGB;
+    *typep = GIMP_RGB;
   else if ((!strcmp (token_sym, "gray")) || (!strcmp (token_sym, "grey")))
-    *typep = GRAY;
+    *typep = GIMP_GRAY;
   else
     return ERROR;
 
@@ -2927,7 +2927,7 @@ image_type_to_str (gpointer val1p,
   gint type;
 
   type = *((gint *)val1p);
-  if (type == GRAY)
+  if (type == GIMP_GRAY)
     return g_strdup ("gray");
   else
     return g_strdup ("rgb");

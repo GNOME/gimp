@@ -82,16 +82,16 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   switch (gimp_drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
-      bytes = 4; type = RGB;
+      bytes = 4; type = GIMP_RGB;
       break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      bytes = 2; type = GRAY;
+      bytes = 2; type = GIMP_GRAY;
       break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      bytes = 4; type = INDEXED;
+      bytes = 4; type = GIMP_INDEXED;
       break;
     default:
-      bytes = 3; type = RGB;
+      bytes = 3; type = GIMP_RGB;
       break;
     }
 
@@ -104,7 +104,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   pixel_region_init (&destPR, tiles,
 		     0, 0, src_width, src_height, TRUE);
 
-  if (type == INDEXED)
+  if (type == GIMP_INDEXED)
     {
       /*  If the layer is indexed...we need to extract pixels  */
       extract_from_region (&srcPR, &destPR, NULL,

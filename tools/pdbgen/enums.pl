@@ -170,14 +170,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
 	},
-    GimpImageBaseType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(RGB GRAY INDEXED) ],
-	  mapping => { RGB => '0',
-		       GRAY => '1',
-		       INDEXED => '2' }
-	},
     GimpImageType =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
@@ -364,6 +356,14 @@ package Gimp::CodeGen::enums;
 	  mapping => { REPEAT_NONE => '0',
 		       REPEAT_SAWTOOTH => '1',
 		       REPEAT_TRIANGULAR => '2' }
+	},
+    GimpImageBaseType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_RGB GIMP_GRAY GIMP_INDEXED) ],
+	  mapping => { GIMP_RGB => '0',
+		       GIMP_GRAY => '1',
+		       GIMP_INDEXED => '2' }
 	},
     RunModeType =>
 	{ contig => 1,

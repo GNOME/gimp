@@ -30,6 +30,7 @@
 #include "procedural_db.h"
 
 #include "base/temp-buf.h"
+#include "core/core-enums.h"
 #include "core/core-types.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -266,7 +267,7 @@ image_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   type = args[2].value.pdb_int;
-  if (type < RGB || type > INDEXED)
+  if (type < GIMP_RGB || type > GIMP_INDEXED)
     success = FALSE;
 
   if (success)
@@ -295,7 +296,7 @@ static ProcArg image_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "type",
-    "The type of image: { RGB (0), GRAY (1), INDEXED (2) }"
+    "The type of image: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }"
   }
 };
 
@@ -410,7 +411,7 @@ static ProcArg image_base_type_outargs[] =
   {
     GIMP_PDB_INT32,
     "base_type",
-    "The image's base type: { RGB (0), GRAY (1), INDEXED (2) }"
+    "The image's base type: { GIMP_RGB (0), GIMP_GRAY (1), GIMP_INDEXED (2) }"
   }
 };
 
@@ -1477,9 +1478,9 @@ image_add_layer_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != RGB) ||
-	  (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GRAY) ||
-	  (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != INDEXED))
+      if ((gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_RGB) ||
+	  (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_GRAY) ||
+	  (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_INDEXED))
 	success = FALSE;
       else
 	success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
@@ -1974,7 +1975,7 @@ static ProcRecord image_get_cmap_proc =
 {
   "gimp_image_get_cmap",
   "Returns the image's colormap",
-  "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be \"num_bytes\" / 3. If the image is not of base type INDEXED, this pointer will be NULL.",
+  "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be \"num_bytes\" / 3. If the image is not of base type GIMP_INDEXED, this pointer will be NULL.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3218,11 +3219,11 @@ image_get_component_active_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GRAY;
+	success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == INDEXED;
+	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == RGB;
+	success = gimp_image_base_type (gimage) == GIMP_RGB;
     }
 
   return_args = procedural_db_return_args (&image_get_component_active_proc, success);
@@ -3294,11 +3295,11 @@ image_set_component_active_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GRAY;
+	success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == INDEXED;
+	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == RGB;
+	success = gimp_image_base_type (gimage) == GIMP_RGB;
     
       if (success)
 	gimp_image_set_component_active (gimage, component, active);
@@ -3362,11 +3363,11 @@ image_get_component_visible_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GRAY;
+	success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == INDEXED;
+	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == RGB;
+	success = gimp_image_base_type (gimage) == GIMP_RGB;
     }
 
   return_args = procedural_db_return_args (&image_get_component_visible_proc, success);
@@ -3438,11 +3439,11 @@ image_set_component_visible_invoker (Gimp     *gimp,
   if (success)
     {
       if (component == GRAY_CHANNEL)
-	success = gimp_image_base_type (gimage) == GRAY;
+	success = gimp_image_base_type (gimage) == GIMP_GRAY;
       else if (component == INDEXED_CHANNEL)
-	success = gimp_image_base_type (gimage) == INDEXED;
+	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
-	success = gimp_image_base_type (gimage) == RGB;
+	success = gimp_image_base_type (gimage) == GIMP_RGB;
     
       if (success)
 	gimp_image_set_component_visible (gimage, component, visible);

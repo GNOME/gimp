@@ -104,12 +104,12 @@ gimp_image_projection_allocate (GimpImage *gimage)
    */
   switch (gimp_image_base_type (gimage))
     {
-    case RGB:
-    case INDEXED:
+    case GIMP_RGB:
+    case GIMP_INDEXED:
       gimage->proj_bytes = 4;
       gimage->proj_type = RGBA_GIMAGE;
       break;
-    case GRAY:
+    case GIMP_GRAY:
       gimage->proj_bytes = 2;
       gimage->proj_type = GRAYA_GIMAGE;
       break;

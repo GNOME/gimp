@@ -1015,9 +1015,9 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Image/Mode", gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("Image/Mode/RGB", (base_type != RGB));
-      SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GRAY));
-      SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != INDEXED));
+      SET_SENSITIVE ("Image/Mode/RGB", (base_type != GIMP_RGB));
+      SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GIMP_GRAY));
+      SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != GIMP_INDEXED));
     }
 
   SET_SENSITIVE ("Layer/Stack", gdisp);
@@ -1058,22 +1058,22 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   if (gdisp)
     {
       SET_SENSITIVE ("Layer/Colors", lp);
-      SET_SENSITIVE ("Layer/Colors/Color Balance...", (base_type == RGB));
-      SET_SENSITIVE ("Layer/Colors/Hue-Saturation...", (base_type == RGB));
-      SET_SENSITIVE ("Layer/Colors/Brightness-Contrast...", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Threshold...", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Levels...", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Curves...", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Desaturate", (base_type == RGB));
-      SET_SENSITIVE ("Layer/Colors/Posterize...", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Invert", (base_type != INDEXED));
-      SET_SENSITIVE ("Layer/Colors/Auto/Equalize", (base_type != INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Color Balance...", (base_type == GIMP_RGB));
+      SET_SENSITIVE ("Layer/Colors/Hue-Saturation...", (base_type == GIMP_RGB));
+      SET_SENSITIVE ("Layer/Colors/Brightness-Contrast...", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Threshold...", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Levels...", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Curves...", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Desaturate", (base_type == GIMP_RGB));
+      SET_SENSITIVE ("Layer/Colors/Posterize...", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Invert", (base_type != GIMP_INDEXED));
+      SET_SENSITIVE ("Layer/Colors/Auto/Equalize", (base_type != GIMP_INDEXED));
 
       SET_SENSITIVE ("Layer/Colors/Histogram...", lp);
     }
 
   SET_SENSITIVE ("Layer/Mask/Add Layer Mask...", 
-		 gdisp && !aux && !lm && lp && alpha && (base_type != INDEXED));
+		 gdisp && !aux && !lm && lp && alpha && (base_type != GIMP_INDEXED));
   SET_SENSITIVE ("Layer/Mask/Apply Layer Mask",
                  gdisp && !aux && lm && lp);
   SET_SENSITIVE ("Layer/Mask/Delete Layer Mask",
@@ -2236,13 +2236,13 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
   switch (gimp_image_base_type (gimage))
     {
-    case RGB:
+    case GIMP_RGB:
       image_type_str = empty ? _("RGB-empty") : _("RGB");
       break;
-    case GRAY:
+    case GIMP_GRAY:
       image_type_str = empty ? _("grayscale-empty") : _("grayscale");
       break;
-    case INDEXED:
+    case GIMP_INDEXED:
       image_type_str = empty ? _("indexed-empty") : _("indexed");
       break;
     default:

@@ -480,13 +480,13 @@ toolbox_drop_drawable (GtkWidget    *widget,
   switch (gimp_drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
-      type = RGB; break;
+      type = GIMP_RGB; break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      type = GRAY; break;
+      type = GIMP_GRAY; break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      type = INDEXED; break;
+      type = GIMP_INDEXED; break;
     default:
-      type = RGB; break;
+      type = GIMP_RGB; break;
     }
 
   new_gimage = gimp_create_image (gimage->gimp,
@@ -495,7 +495,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
 				  FALSE);
   gimp_image_undo_disable (new_gimage);
 
-  if (type == INDEXED) /* copy the colormap */
+  if (type == GIMP_INDEXED) /* copy the colormap */
     {
       new_gimage->num_cols = gimage->num_cols;
       memcpy (new_gimage->cmap, gimage->cmap, COLORMAP_SIZE);

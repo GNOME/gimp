@@ -48,6 +48,33 @@ struct _GimpCoreConfig
   gchar               *pattern_path;
   gchar               *palette_path;
   gchar               *gradient_path;
+
+  gchar               *default_brush;
+  gchar               *default_pattern;
+  gchar               *default_palette;
+  gchar               *default_gradient;
+
+  gchar               *default_comment;
+
+
+  GimpImageBaseType    default_image_type;
+
+  /* the remaining fields are not yet implemented as properties
+
+  gint                 default_width;
+  gint                 default_height;
+
+  GimpUnit             default_units;
+  gdouble              default_xresolution;
+  gdouble              default_yresolution;
+  GimpUnit             default_resolution_units;
+
+  gint                 levels_of_undo;
+  gchar               *pluginrc_path;
+  gchar               *module_db_load_inhibit;
+  gint                 thumbnail_mode;
+
+  */
 };
 
 struct _GimpCoreConfigClass

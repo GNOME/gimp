@@ -240,27 +240,27 @@ gimp_image_mask_extract (GimpImage    *gimage,
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       bytes = add_alpha ? 4 : drawable->bytes;
-      type = RGB;
+      type = GIMP_RGB;
       break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
       bytes = add_alpha ? 2 : drawable->bytes;
-      type = GRAY;
+      type = GIMP_GRAY;
       break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       if (keep_indexed)
 	{
 	  bytes = add_alpha ? 2 : drawable->bytes;
-	  type = GRAY;
+	  type = GIMP_GRAY;
 	}
       else
 	{
 	  bytes = add_alpha ? 4 : drawable->bytes;
-	  type = INDEXED;
+	  type = GIMP_INDEXED;
 	}
       break;
     default:
       bytes = 3;
-      type  = RGB;
+      type  = GIMP_RGB;
       break;
     }
 
@@ -319,7 +319,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   else
     {
       /*  If the layer is indexed...we need to extract pixels  */
-      if (type == INDEXED && !keep_indexed)
+      if (type == GIMP_INDEXED && !keep_indexed)
 	extract_from_region (&srcPR, &destPR, NULL,
 			     gimp_drawable_cmap (drawable),
 			     bg, type,

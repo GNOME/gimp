@@ -114,8 +114,10 @@ gimp_config_serialize_properties (GObject *object,
         }
       else
         {
-          /* FIXME: emit warning but try to continue */
-          g_assert_not_reached ();
+          g_warning ("couldn't serialize property %s::%s of type %s",
+                     g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                     prop_spec->name, 
+                     g_type_name (prop_spec->value_type));
         }
 
       g_value_unset (&value);

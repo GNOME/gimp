@@ -58,7 +58,13 @@ enum
   PROP_BRUSH_PATH,
   PROP_PATTERN_PATH,
   PROP_PALETTE_PATH,
-  PROP_GRADIENT_PATH
+  PROP_GRADIENT_PATH,
+  PROP_DEFAULT_BRUSH,
+  PROP_DEFAULT_PATTERN,
+  PROP_DEFAULT_PALETTE,
+  PROP_DEFAULT_GRADIENT,
+  PROP_DEFAULT_COMMENT,
+  PROP_DEFAULT_IMAGE_TYPE
 };
 
 static GObjectClass *parent_class = NULL;
@@ -122,6 +128,24 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path",
                                   BUILD_DATA_PATH ("gradients"));
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
+                                   "default-brush",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
+                                   "default-pattern",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
+                                   "default-palette",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
+                                   "default-gradient",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
+                                   "default-comment",
+                                   NULL);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
+                                 "default-image-type",
+                                 GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB);
 }
 
 static void
@@ -160,6 +184,29 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->gradient_path);
       core_config->gradient_path = g_value_dup_string (value);
       break;
+    case PROP_DEFAULT_BRUSH:
+      g_free (core_config->default_brush);
+      core_config->default_brush = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_PATTERN:
+      g_free (core_config->default_pattern);
+      core_config->default_pattern = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_PALETTE:
+      g_free (core_config->default_palette);
+      core_config->default_palette = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_GRADIENT:
+      g_free (core_config->default_gradient);
+      core_config->default_gradient = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_COMMENT:
+      g_free (core_config->default_comment);
+      core_config->default_comment = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_IMAGE_TYPE:
+      core_config->default_image_type = g_value_get_enum (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -195,6 +242,24 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_PATH:
       g_value_set_string (value, core_config->gradient_path);
+      break;
+    case PROP_DEFAULT_BRUSH:
+      g_value_set_string (value, core_config->default_brush);
+      break;
+    case PROP_DEFAULT_PATTERN:
+      g_value_set_string (value, core_config->default_pattern);
+      break;
+    case PROP_DEFAULT_PALETTE:
+      g_value_set_string (value, core_config->default_palette);
+      break;
+    case PROP_DEFAULT_GRADIENT:
+      g_value_set_string (value, core_config->default_gradient);
+      break;
+    case PROP_DEFAULT_COMMENT:
+      g_value_set_string (value, core_config->default_comment);
+      break;
+    case PROP_DEFAULT_IMAGE_TYPE:
+      g_value_set_enum (value, core_config->default_image_type);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

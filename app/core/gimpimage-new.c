@@ -49,14 +49,14 @@ gimp_image_new_init (Gimp *gimp)
   /* Available Image Base Types */
 
   new_type = g_new (GimpImageBaseTypeName, 1);
-  new_type->type = RGB;
+  new_type->type = GIMP_RGB;
   new_type->name = _("RGB");
 
   gimp->image_base_type_names = g_list_append (gimp->image_base_type_names,
 					       new_type);
 
   new_type = g_new (GimpImageBaseTypeName, 1);
-  new_type->type = GRAY;
+  new_type->type = GIMP_GRAY;
   new_type->name = _("Grayscale");
 
   gimp->image_base_type_names = g_list_append (gimp->image_base_type_names,
@@ -146,12 +146,13 @@ gimp_image_new_values_new (Gimp      *gimp,
 
       values->type = gimp_image_base_type (gimage);
 
-      if (values->type == INDEXED)
-        values->type = RGB; /* no indexed images */
+      if (values->type == GIMP_INDEXED)
+        values->type = GIMP_RGB; /* no indexed images */
     }
   else
     {
-      memcpy (values, &gimp->image_new_last_values, sizeof (GimpImageNewValues));
+      memcpy (values, &gimp->image_new_last_values, 
+              sizeof (GimpImageNewValues));
     }
 
   if (gimp->global_buffer && gimp->have_current_cut_buffer)
@@ -193,7 +194,7 @@ gimp_image_new_calculate_size (GimpImageNewValues *values)
 
   size = 
     width * height *
-      ((values->type == RGB ? 3 : 1) +                   /* bytes per pixel */
+      ((values->type == GIMP_RGB ? 3 : 1) +              /* bytes per pixel */
        (values->fill_type == TRANSPARENT_FILL ? 1 : 0)); /* alpha channel */
 
   return size;
@@ -240,10 +241,10 @@ gimp_image_new_create_image (Gimp               *gimp,
     case FOREGROUND_FILL:
     case BACKGROUND_FILL:
     case WHITE_FILL:
-      type = (values->type == RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
+      type = (values->type == GIMP_RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
       break;
     case TRANSPARENT_FILL:
-      type = (values->type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
+      type = (values->type == GIMP_RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
       break;
     default:
       type = RGB_GIMAGE;

@@ -1790,8 +1790,8 @@ preferences_dialog_create (Gimp *gimp)
 			   &gimp->config->default_type,
 			   GINT_TO_POINTER (gimp->config->default_type),
 
-			   _("RGB"),       GINT_TO_POINTER (RGB),  NULL,
-			   _("Grayscale"), GINT_TO_POINTER (GRAY), NULL,
+			   _("RGB"),       GINT_TO_POINTER (GIMP_RGB),  NULL,
+			   _("Grayscale"), GINT_TO_POINTER (GIMP_GRAY), NULL,
 
 			   NULL);
 

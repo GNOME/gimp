@@ -304,7 +304,7 @@ gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
 					    image_colormap_changed_cb,
 					    ipal);
 
-      if (! gimage || (gimp_image_base_type (gimage) != INDEXED))
+      if (! gimage || (gimp_image_base_type (gimage) != GIMP_INDEXED))
 	{
 	  if (ipal->color_notebook)
 	    color_notebook_hide (ipal->color_notebook);
@@ -330,7 +330,7 @@ gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
 			G_CALLBACK (image_colormap_changed_cb),
 			ipal);
 
-      if (gimp_image_base_type (gimage) == INDEXED)
+      if (gimp_image_base_type (gimage) == GIMP_INDEXED)
 	{
 	  ipal_draw (ipal);
 
@@ -402,7 +402,7 @@ ipal_drag_color (GtkWidget *widget,
   ipal   = (GimpColormapDialog *) data;
   gimage = ipal->image;
 
-  if (gimage && (gimp_image_base_type (gimage) == INDEXED))
+  if (gimage && (gimp_image_base_type (gimage) == GIMP_INDEXED))
     {
       guint col;
 
@@ -427,7 +427,7 @@ ipal_drop_color (GtkWidget     *widget,
   ipal   = (GimpColormapDialog *) data;
   gimage = ipal->image;
 
-  if (gimage && (gimp_image_base_type (gimage) == INDEXED) &&
+  if (gimage && (gimp_image_base_type (gimage) == GIMP_INDEXED) &&
       gimage->num_cols < 256)
     {
       gimp_rgb_get_uchar (color,
@@ -445,7 +445,7 @@ ipal_area_size_allocate (GtkWidget          *widget,
 			 GtkAllocation      *alloc,
 			 GimpColormapDialog *ipal)
 {
-  if (ipal->image && (gimp_image_base_type (ipal->image) == INDEXED))
+  if (ipal->image && (gimp_image_base_type (ipal->image) == GIMP_INDEXED))
     ipal_draw (ipal);
   else
     ipal_clear (ipal, -1);
@@ -673,7 +673,7 @@ ipal_clear (GimpColormapDialog *ipal,
 static void
 ipal_update_entries (GimpColormapDialog *ipal)
 {
-  if (! ipal->image || (gimp_image_base_type (ipal->image) != INDEXED))
+  if (! ipal->image || (gimp_image_base_type (ipal->image) != GIMP_INDEXED))
     {
       gtk_widget_set_sensitive (ipal->index_spinbutton, FALSE);
       gtk_widget_set_sensitive (ipal->color_entry, FALSE);
@@ -767,7 +767,7 @@ image_colormap_changed_cb (GimpImage          *gimage,
 			   gint                ncol,
 			   GimpColormapDialog *ipal)
 {
-  if (gimp_image_base_type (gimage) == INDEXED)
+  if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
       if (ncol < 0)
 	{
@@ -884,7 +884,7 @@ ipal_area_button_press (GtkWidget          *widget,
 
   gimage = ipal->image;
 
-  if (! (gimage && (gimp_image_base_type (gimage) == INDEXED)))
+  if (! (gimage && (gimp_image_base_type (gimage) == GIMP_INDEXED)))
     return FALSE;
 
   if (bevent->button < 1 || bevent->button > 3)

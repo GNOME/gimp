@@ -97,14 +97,14 @@ static gboolean sreusepal_flag         = FALSE;
 void
 convert_to_rgb (GimpImage *gimage)
 {
-  gimp_image_convert (gimage, RGB, 0, 0, 0, 0, 0, NULL);
+  gimp_image_convert (gimage, GIMP_RGB, 0, 0, 0, 0, 0, NULL);
   gdisplays_flush ();
 }
 
 void
 convert_to_grayscale (GimpImage* gimage)
 {
-  gimp_image_convert (gimage, GRAY, 0, 0, 0, 0, 0, NULL);
+  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, 0, 0, 0, NULL);
   gdisplays_flush ();
 }
 
@@ -406,10 +406,10 @@ convert_to_indexed (GimpImage *gimage)
       gtk_widget_show (vbox);
 
       label = gtk_label_new
-	(_("You are attempting to convert an image with an alpha channel or layers "
-	   "from RGB or GRAY to INDEXED.\nDo not generate a "
-	   "palette of more than 255 colors if you intend to create "
-	   "a transparent or animated GIF file from this image."));
+	(_("You are attempting to convert an image with an alpha channel "
+           "or layers from RGB or GRAY to INDEXED.\nDo not generate a "
+	   "palette of more than 255 colors if you intend to create a "
+	   "transparent or animated GIF file from this image."));
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_container_add (GTK_CONTAINER (vbox), label);
@@ -537,7 +537,7 @@ indexed_ok_callback (GtkWidget *widget,
     tool_manager_control_active (dialog->gimage->gimp, HALT, active_tool->gdisp);
   
   /*  Convert the image to indexed color  */
-  gimp_image_convert (dialog->gimage, INDEXED, dialog->num_cols,
+  gimp_image_convert (dialog->gimage, GIMP_INDEXED, dialog->num_cols,
 		      dither_type, dialog->alphadither,
 		      dialog->remdups, palette_type, theCustomPalette);
   gdisplays_flush ();

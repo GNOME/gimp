@@ -236,11 +236,11 @@ gimp_edit_paste_as_new (Gimp        *gimp,
   GimpImage    *gimage;
   GimpLayer    *layer;
 
-  /*  create a new image  (always of type RGB)  */
+  /*  create a new image  (always of type GIMP_RGB)  */
   gimage = gimp_create_image (gimp,
 			      tile_manager_width (paste), 
 			      tile_manager_height (paste), 
-			      RGB,
+			      GIMP_RGB,
 			      TRUE);
   gimp_image_undo_disable (gimage);
 

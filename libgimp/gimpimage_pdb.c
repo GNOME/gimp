@@ -1072,8 +1072,8 @@ gimp_image_remove_channel (gint32 image_ID,
  * This procedure returns an actual pointer to the image's colormap, as
  * well as the number of bytes contained in the colormap. The actual
  * number of colors in the transmitted colormap will be \"num_bytes\" /
- * 3. If the image is not of base type INDEXED, this pointer will be
- * NULL.
+ * 3. If the image is not of base type GIMP_INDEXED, this pointer will
+ * be NULL.
  *
  * Returns: The image's colormap.
  */

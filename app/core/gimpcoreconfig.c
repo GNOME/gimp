@@ -48,7 +48,7 @@ gimp_core_config_init (Gimp *gimp)
   gimp->config->default_gradient         = NULL;
 
   gimp->config->default_comment          = NULL;
-  gimp->config->default_type             = RGB;
+  gimp->config->default_type             = GIMP_RGB;
   gimp->config->default_width            = 256;
   gimp->config->default_height           = 256;
   gimp->config->default_units            = GIMP_UNIT_INCH;

@@ -176,8 +176,9 @@ gimp_image_duplicate (GimpImage *gimage)
     floating_sel_attach (floating_layer, new_floating_sel_drawable);
 
   /*  Copy the colormap if necessary  */
-  if (new_gimage->base_type == INDEXED)
+  if (new_gimage->base_type == GIMP_INDEXED)
     memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
+
   new_gimage->num_cols = gimage->num_cols;
 
   /*  copy state of all color channels  */

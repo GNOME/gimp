@@ -171,7 +171,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
 
       gimp_rgb_get_uchar (color, &tmp_col[0], &tmp_col[1], &tmp_col[2]);
 
-      gimp_image_transform_color (gimage, drawable, tmp_col, col, RGB);
+      gimp_image_transform_color (gimage, drawable, tmp_col, col, GIMP_RGB);
     }
   else if (fill_mode == PATTERN_BUCKET_FILL)
     {
@@ -200,7 +200,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable   *drawable,
 	  while (size--)
 	    {
 	      gimp_image_transform_color (gimage, drawable, d1, d2,
-					  (pattern->mask->bytes == 3) ? RGB : GRAY);
+					  (pattern->mask->bytes == 3) ? 
+                                          GIMP_RGB : GIMP_GRAY);
 	      d1 += pattern->mask->bytes;
 	      d2 += pat_buf->bytes;
 	    }

@@ -40,13 +40,14 @@ INCLUDES = @STRIP_BEGIN@ 		\
 #
 noinst_PROGRAMS = test-config
 
-test_config_DEPENDENCIES = @STRIP_BEGIN@ 	\
-	libappconfig.a				\
-        ../base/libappbase.a			\
+test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\
+	libappconfig.a							\
+        ../base/libappbase.a						\
+        ../core/libappcore.a						\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 @STRIP_END@
 
-test_config_LDADD = @STRIP_BEGIN@ 					\
-	$(GLIB_LIBS) 							\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(test_config_DEPENDENCIES)					\
+test_config_LDADD = @STRIP_BEGIN@ 	\
+	$(GLIB_LIBS) 			\
+	$(test_config_DEPENDENCIES)	\
 @STRIP_END@

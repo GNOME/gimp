@@ -38,13 +38,13 @@ sub convert_rgb {
 
     $help = <<'HELP';
 This procedure converts the specified image to RGB color. This process requires
-an image of type GRAY or INDEXED. No image content is lost in this process
-aside from the colormap for an indexed image.
+an image of type GIMP_GRAY or GIMP_INDEXED. No image content is lost in this 
+process aside from the colormap for an indexed image.
 HELP
 
     &std_pdb_misc;
     &simple_inargs;
-    &simple_invoke('RGB');
+    &simple_invoke('GIMP_RGB');
 }
 
 sub convert_grayscale {
@@ -52,26 +52,32 @@ sub convert_grayscale {
 
     $help = <<'HELP';
 This procedure converts the specified image to grayscale with 8 bits per pixel
-(256 intensity levels). This process requires an image of type RGB or INDEXED.
+(256 intensity levels). This process requires an image of type GIMP_RGB or 
+GIMP_INDEXED.
 HELP
 
     &std_pdb_misc;
     &simple_inargs;
-    &simple_invoke('GRAY');
+    &simple_invoke('GIMP_GRAY');
 }
 
 sub convert_indexed {
     $blurb = 'Convert specified image to and Indexed image';
 
     $help = <<'HELP';
-This procedure converts the specified image to 'indexed' color. This process
-requires an image of type GRAY or RGB. The 'palette_type' specifies what kind
-of palette to use, A type of '0' means to use an optimal palette of 'num_cols'
-generated from the colors in the image. A type of '1' means to re-use the
-previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type
-'3' means to use only black and white colors. A type of '4' means to use a
-palette from the gimp palettes directories.  The 'dither type' specifies
-what kind of dithering to use.  '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).
+This procedure converts the specified image to 'indexed' color. This
+process requires an image of type GIMP_GRAY or GIMP_RGB. The
+'palette_type' specifies what kind of palette to use, A type of '0'
+means to use an optimal palette of 'num_cols' generated from the
+colors in the image. A type of '1' means to re-use the previous
+palette (not currently implemented). A type of '2' means to use the
+so-called WWW-optimized palette. Type '3' means to use only black and
+white colors. A type of '4' means to use a palette from the gimp
+palettes directories.  The 'dither type' specifies what kind of
+dithering to use.  '0' means no dithering, '1' means standard
+Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error
+diffusion with reduced bleeding, '3' means dithering based on pixel
+location ('Fixed' dithering).
 HELP
 
     &std_pdb_misc;
@@ -101,7 +107,7 @@ HELP
 {
   GimpPalette *palette = NULL;
 
-  if ((success = (gimp_image_base_type (gimage) != INDEXED)))
+  if ((success = (gimp_image_base_type (gimage) != GIMP_INDEXED)))
     {
       switch (dither_type)
         {
@@ -146,7 +152,7 @@ HELP
     }
 
   if (success)
-    gimp_image_convert ((void *) gimage, INDEXED, num_cols, dither_type,
+    gimp_image_convert ((void *) gimage, GIMP_INDEXED, num_cols, dither_type,
 		        alpha_dither, remove_unused, palette_type, palette);
 }
 CODE

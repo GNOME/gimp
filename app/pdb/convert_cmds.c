@@ -60,8 +60,8 @@ convert_rgb_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    if ((success = (gimp_image_base_type (gimage) != RGB)))
-      gimp_image_convert ((void *) gimage, RGB, 0, 0, 0, 1, 0, NULL);
+    if ((success = (gimp_image_base_type (gimage) != GIMP_RGB)))
+      gimp_image_convert ((void *) gimage, GIMP_RGB, 0, 0, 0, 1, 0, NULL);
 
   return procedural_db_return_args (&convert_rgb_proc, success);
 }
@@ -79,7 +79,7 @@ static ProcRecord convert_rgb_proc =
 {
   "gimp_convert_rgb",
   "Convert specified image to RGB color",
-  "This procedure converts the specified image to RGB color. This process requires an image of type GRAY or INDEXED. No image content is lost in this process aside from the colormap for an indexed image.",
+  "This procedure converts the specified image to RGB color. This process requires an image of type GIMP_GRAY or GIMP_INDEXED. No image content is lost in this process aside from the colormap for an indexed image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -103,8 +103,8 @@ convert_grayscale_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    if ((success = (gimp_image_base_type (gimage) != GRAY)))
-      gimp_image_convert ((void *) gimage, GRAY, 0, 0, 0, 1, 0, NULL);
+    if ((success = (gimp_image_base_type (gimage) != GIMP_GRAY)))
+      gimp_image_convert ((void *) gimage, GIMP_GRAY, 0, 0, 0, 1, 0, NULL);
 
   return procedural_db_return_args (&convert_grayscale_proc, success);
 }
@@ -122,7 +122,7 @@ static ProcRecord convert_grayscale_proc =
 {
   "gimp_convert_grayscale",
   "Convert specified image to grayscale (256 intensity levels)",
-  "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels). This process requires an image of type RGB or INDEXED.",
+  "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels). This process requires an image of type GIMP_RGB or GIMP_INDEXED.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -171,7 +171,7 @@ convert_indexed_invoker (Gimp     *gimp,
     {
       GimpPalette *palette = NULL;
     
-      if ((success = (gimp_image_base_type (gimage) != INDEXED)))
+      if ((success = (gimp_image_base_type (gimage) != GIMP_INDEXED)))
 	{
 	  switch (dither_type)
 	    {
@@ -216,7 +216,7 @@ convert_indexed_invoker (Gimp     *gimp,
 	}
     
       if (success)
-	gimp_image_convert ((void *) gimage, INDEXED, num_cols, dither_type,
+	gimp_image_convert ((void *) gimage, GIMP_INDEXED, num_cols, dither_type,
 			    alpha_dither, remove_unused, palette_type, palette);
     }
 
@@ -266,7 +266,7 @@ static ProcRecord convert_indexed_proc =
 {
   "gimp_convert_indexed",
   "Convert specified image to and Indexed image",
-  "This procedure converts the specified image to 'indexed' color. This process requires an image of type GRAY or RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).",
+  "This procedure converts the specified image to 'indexed' color. This process requires an image of type GIMP_GRAY or GIMP_RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

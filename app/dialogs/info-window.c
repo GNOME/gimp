@@ -650,27 +650,29 @@ info_window_update (GimpDisplay *gdisp)
   type = gimp_image_base_type (gdisp->gimage);
 
   /*  color type  */
-  if (type == RGB)
-    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("RGB Color"));
-  else if (type == GRAY)
-    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Grayscale"));
-  else if (type == INDEXED)
-    g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)", 
-		_("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
+  switch (type)
+    {
+    case GIMP_RGB:
+      g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("RGB Color"));
+      break;
+    case GIMP_GRAY:
+      g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Grayscale"));
+      break;
+    case GIMP_INDEXED:
+      g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)", 
+                  _("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
+      break;
+    }
 
-  /*  visual class  */
   {
     GdkVisual *visual;
 
     visual = gdk_rgb_get_visual ();
 
-    if (type == RGB || type == INDEXED)
-      g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
-                  gettext (visual_classes[visual->type]));
-    else if (type == GRAY)
-      g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
-                  gettext (visual_classes[visual->type]));
-
+    /*  visual class  */
+    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
+                gettext (visual_classes[visual->type]));
+  
     /*  visual depth  */
     g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", visual->depth);
   }

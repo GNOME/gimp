@@ -169,7 +169,7 @@ palette_import_gimlist_indexed_cb (gpointer im,
   GimpImage  *gimage = GIMP_IMAGE (im);
   GSList    **l;
 
-  if (gimp_image_base_type (gimage) == INDEXED)
+  if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
       l = (GSList**) data;
       *l = g_slist_prepend (*l, im);
@@ -473,7 +473,8 @@ palette_import_indexed_callback (GtkWidget *widget,
 
   import_dialog = (ImportDialog *) data;
 
-  palette_import_image_menu_activate (import_dialog, FALSE, INDEXED_IMPORT, NULL);
+  palette_import_image_menu_activate (import_dialog, 
+                                      FALSE, INDEXED_IMPORT, NULL);
   gtk_widget_set_sensitive (import_dialog->threshold_scale, FALSE);
   gtk_widget_set_sensitive (import_dialog->threshold_text, FALSE);
 }
@@ -522,7 +523,7 @@ palette_import_image_new (GimpContainer *container,
     }
 
   if (! GTK_WIDGET_IS_SENSITIVE (import_dialog->image_menu_item_indexed) &&
-      gimp_image_base_type(gimage) == INDEXED)
+      gimp_image_base_type(gimage) == GIMP_INDEXED)
     {
       gtk_widget_set_sensitive (import_dialog->image_menu_item_indexed, TRUE);
       return;

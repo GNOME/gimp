@@ -579,9 +579,9 @@ file_save_thumbnail (GimpImage   *gimage,
 	       "P7 332\n#IMGINFO:%dx%d %s (%d %s)\n"
 	       "#END_OF_COMMENTS\n%d %d 255\n",
 	       gimage->width, gimage->height,
-	       (basetype == RGB) ? "RGB" :
-	       (basetype == GRAY) ? "Greyscale" :
-	       (basetype == INDEXED) ? "Indexed" :
+	       (basetype == GIMP_RGB) ? "RGB" :
+	       (basetype == GIMP_GRAY) ? "Greyscale" :
+	       (basetype == GIMP_INDEXED) ? "Indexed" :
 	       "(UNKNOWN COLOUR TYPE)",
 	       (int)statbuf.st_size,
 	       (statbuf.st_size == 1) ? "byte" : "bytes",
@@ -589,8 +589,8 @@ file_save_thumbnail (GimpImage   *gimage,
 
       switch (basetype)
 	{
-	case INDEXED:
-	case RGB:
+	case GIMP_INDEXED:
+	case GIMP_RGB:
 	  for (i=0; i<h; i++)
 	    {
 	      /* Do a cheap unidirectional error-spread to look better */
@@ -629,7 +629,7 @@ file_save_thumbnail (GimpImage   *gimage,
 	    }
 	  break;
 
-	case GRAY:
+	case GIMP_GRAY:
 	  for (i=0; i<h; i++)
 	    {
 	      /* Do a cheap unidirectional error-spread to look better */

@@ -547,7 +547,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 			  &c[RED_PIX],
 			  &c[GREEN_PIX],
 			  &c[BLUE_PIX]);
-      gimp_image_transform_color (gimage, drawable, c, &i, RGB);
+      gimp_image_transform_color (gimage, drawable, c, &i, GIMP_RGB);
       c[INDEXED_PIX] = i;
       if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE)
 	gimp_rgba_get_uchar (color,
@@ -558,7 +558,8 @@ gimp_drawable_fill (GimpDrawable  *drawable,
       break;
 
     default:
-      g_warning ("%s: Cannot fill unknown image type.", G_GNUC_PRETTY_FUNCTION);
+      g_warning ("%s: Cannot fill unknown image type.", 
+                 G_GNUC_PRETTY_FUNCTION);
       break;
     }
 

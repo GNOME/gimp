@@ -101,7 +101,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   gint               subsample;
   TempBuf           *ret_buf;
 
-  type  = RGB;
+  type  = GIMP_RGB;
   bytes = 0;
 
   /*  The easy way  */
@@ -117,15 +117,15 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
       switch (gimp_drawable_type (drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  type  = RGB;
+	  type  = GIMP_RGB;
 	  bytes = gimp_drawable_bytes (drawable);
 	  break;
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  type  = GRAY;
+	  type  = GIMP_GRAY;
 	  bytes = gimp_drawable_bytes (drawable);
 	  break;
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  type  = INDEXED;
+	  type  = GIMP_INDEXED;
 	  bytes = (gimp_drawable_type (drawable) == INDEXED_GIMAGE) ? 3 : 4;
 	  break;
 	}
@@ -297,7 +297,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	  tot_frac = x_frac[frac++] * y_frac;
 
 	  /*  If indexed, transform the color to RGB  */
-	  if (type == INDEXED)
+	  if (type == GIMP_INDEXED)
 	    {
 	      map_to_color (2, cmap, s, rgb);
 

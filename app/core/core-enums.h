@@ -22,12 +22,23 @@
 /* These enums that are registered with the type system. */
 
 
+#define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
+
+GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RGB,
+  GIMP_GRAY,
+  GIMP_INDEXED
+} GimpImageBaseType;
+
+
 #define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
 
 GType gimp_preview_size_get_type (void) G_GNUC_CONST;
 
-
-typedef enum
+typedef enum /*< pdb-skip >*/
 {
   GIMP_PREVIEW_SIZE_NONE        = 0,
   GIMP_PREVIEW_SIZE_TINY        = 16,
@@ -40,6 +51,5 @@ typedef enum
   GIMP_PREVIEW_SIZE_ENORMOUS    = 192,
   GIMP_PREVIEW_SIZE_GIGANTIC    = 256
 } GimpPreviewSize;
-
 
 #endif /* __CORE_TYPES_H__ */

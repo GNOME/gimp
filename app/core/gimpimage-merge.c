@@ -307,9 +307,9 @@ gimp_image_merge_layers (GimpImage *gimage,
     {
       switch (gimp_image_base_type (gimage))
 	{
-	case RGB: type = RGB_GIMAGE; break;
-	case GRAY: type = GRAY_GIMAGE; break;
-	case INDEXED: type = INDEXED_GIMAGE; break;
+	case GIMP_RGB: type = RGB_GIMAGE; break;
+	case GIMP_GRAY: type = GRAY_GIMAGE; break;
+	case GIMP_INDEXED: type = INDEXED_GIMAGE; break;
 	}
 
       merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),

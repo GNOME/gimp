@@ -712,12 +712,13 @@ gimp_image_convert (GimpImage          *gimage,
   gimage->base_type = new_type;
 
   /*  Convert to indexed?  Build histogram if necessary.  */
-  if (new_type == INDEXED)
+  if (new_type == GIMP_INDEXED)
     {
       int i;
 
       /* don't dither if the input is grayscale and we are simply mapping every color */
-      if (old_type == GRAY && num_cols == 256 && palette_type == MAKE_PALETTE)
+      if (old_type == GIMP_GRAY && 
+          num_cols == 256 && palette_type == MAKE_PALETTE)
 	dither = NO_DITHER;
 
       quantobj = initialize_median_cut (old_type, num_cols, dither,
@@ -725,7 +726,7 @@ gimp_image_convert (GimpImage          *gimage,
 
       if (palette_type == MAKE_PALETTE)
 	{
-	  if (old_type == GRAY)
+	  if (old_type == GIMP_GRAY)
 	    zero_histogram_gray (quantobj->histogram);
 	  else
 	    zero_histogram_rgb (quantobj->histogram);
@@ -744,7 +745,7 @@ gimp_image_convert (GimpImage          *gimage,
 	    {
 	      layer = (GimpLayer *) list->data;
 	    
-	      if (old_type == GRAY)
+	      if (old_type == GIMP_GRAY)
 		generate_histogram_gray (quantobj->histogram, layer, alpha_dither);
 	      else
 		generate_histogram_rgb (quantobj->histogram, layer, num_cols, alpha_dither);
@@ -757,7 +758,7 @@ gimp_image_convert (GimpImage          *gimage,
 	}
 
        if (
-	   (old_type == RGB) &&
+	   (old_type == GIMP_RGB) &&
 	   (!needs_quantize) &&
 	   (palette_type == MAKE_PALETTE)
 	   )
@@ -796,7 +797,7 @@ gimp_image_convert (GimpImage          *gimage,
   /* Initialise data which must persist across indexed layer iterations */
   switch (new_type)
     {
-    case INDEXED:
+    case GIMP_INDEXED:
       if (quantobj->second_pass_init)
 	(* quantobj->second_pass_init) (quantobj);
       break;
@@ -814,15 +815,15 @@ gimp_image_convert (GimpImage          *gimage,
       has_alpha = gimp_layer_has_alpha (layer);
       switch (new_type)
 	{
-	case RGB:
+	case GIMP_RGB:
 	  new_layer_type = (has_alpha) ? RGBA_GIMAGE : RGB_GIMAGE;
 	  new_layer_bytes = (has_alpha) ? 4 : 3;
 	  break;
-	case GRAY:
+	case GIMP_GRAY:
 	  new_layer_type = (has_alpha) ? GRAYA_GIMAGE : GRAY_GIMAGE;
 	  new_layer_bytes = (has_alpha) ? 2 : 1;
 	  break;
-	case INDEXED:
+	case GIMP_INDEXED:
 	  new_layer_type = (has_alpha) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
 	  new_layer_bytes = (has_alpha) ? 2 : 1;
 	  break;
@@ -836,13 +837,13 @@ gimp_image_convert (GimpImage          *gimage,
 
       switch (new_type)
 	{
-	case RGB:
+	case GIMP_RGB:
 	  rgb_converter (layer, new_tiles, old_type);
 	  break;
-	case GRAY:
+	case GIMP_GRAY:
 	  grayscale_converter (layer, new_tiles, old_type);
 	  break;
-	case INDEXED:
+	case GIMP_INDEXED:
 	  (* quantobj->second_pass) (quantobj, layer, new_tiles);
 	  break;
 	default:
@@ -859,7 +860,7 @@ gimp_image_convert (GimpImage          *gimage,
     }
 
   /* colourmap stuff */
-  if (new_type == INDEXED)
+  if (new_type == GIMP_INDEXED)
     {
       if (gimage->cmap)
 	g_free (gimage->cmap);
@@ -968,7 +969,7 @@ rgb_converter (GimpLayer   *layer,
 
       switch (old_type)
 	{
-	case GRAY:
+	case GIMP_GRAY:
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -989,7 +990,7 @@ rgb_converter (GimpLayer   *layer,
 	      dest += destPR.rowstride;
 	    }
 	  break;
-	case INDEXED:
+	case GIMP_INDEXED:
 	  cmap = gimp_drawable_cmap (GIMP_DRAWABLE(layer));
 	  for (row = 0; row < srcPR.h; row++)
 	    {
@@ -1042,7 +1043,7 @@ grayscale_converter (GimpLayer   *layer,
 
       switch (old_type)
 	{
-	case RGB:
+	case GIMP_RGB:
 	  for (row = 0; row < srcPR.h; row++)
 	    {
 	      s = src;
@@ -1060,7 +1061,7 @@ grayscale_converter (GimpLayer   *layer,
 	      dest += destPR.rowstride;
 	    }
 	  break;
-	case INDEXED:
+	case GIMP_INDEXED:
 	  cmap = gimp_drawable_cmap (GIMP_DRAWABLE(layer));
 	  for (row = 0; row < srcPR.h; row++)
 	    {
@@ -3439,7 +3440,7 @@ initialize_median_cut (int type,
   /* Initialize the data structures */
   quantobj = g_malloc (sizeof (QuantizeObj));
 
-  if (type == GRAY && palette_type == MAKE_PALETTE)
+  if (type == GIMP_GRAY && palette_type == MAKE_PALETTE)
     quantobj->histogram = g_malloc (sizeof (ColorFreq) * 256);
   else
     quantobj->histogram = g_malloc (sizeof (ColorFreq) *
@@ -3452,7 +3453,7 @@ initialize_median_cut (int type,
 
   switch (type)
     {
-    case GRAY:
+    case GIMP_GRAY:
       switch (palette_type)
 	{
 	case MAKE_PALETTE:
@@ -3521,7 +3522,7 @@ initialize_median_cut (int type,
 	    break;
 	  }
       break;
-    case RGB:
+    case GIMP_RGB:
       switch (palette_type)
 	{
 	case MAKE_PALETTE:

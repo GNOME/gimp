@@ -51,20 +51,20 @@ GParamSpec * gimp_param_spec_path        (const gchar    *name,
 
 /* some convenience macros to install object properties */
 
-#define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, min, max, default)\
+#define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, default)\
   g_object_class_install_property (class, id,\
-                                   g_param_spec_uint (name, NULL, NULL,\
-                                   min, max, default,\
+                                   g_param_spec_boolean (name, NULL, NULL,\
+                                   default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
 #define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, enum_type, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_enum (name, NULL, NULL,\
                                    enum_type, default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
-#define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, default)\
+#define GIMP_CONFIG_INSTALL_PROP_INT(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
-                                   g_param_spec_boolean (name, NULL, NULL,\
-                                   default,\
+                                   g_param_spec_int (name, NULL, NULL,\
+                                   min, max, default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
 #define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
@@ -75,6 +75,16 @@ GParamSpec * gimp_param_spec_path        (const gchar    *name,
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_path (name, NULL, NULL,\
                                    default,\
+                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+#define GIMP_CONFIG_INSTALL_PROP_STRING(class, id, name, default)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_string (name, NULL, NULL,\
+                                   default,\
+                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+#define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, min, max, default)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_uint (name, NULL, NULL,\
+                                   min, max, default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
 
 

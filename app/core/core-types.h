@@ -36,13 +36,6 @@
 
 typedef enum
 {
-  RGB,
-  GRAY,
-  INDEXED
-} GimpImageBaseType;
-
-typedef enum
-{
   RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
   RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
   GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/

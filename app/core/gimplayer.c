@@ -492,7 +492,8 @@ gimp_layer_new_from_tiles (GimpImage            *gimage,
     /*  Transform the contents of the buf to the new_layer  */
     gimp_layer_transform_color (gimage, &layerPR, &bufPR,
 				GIMP_DRAWABLE (new_layer),
-				(tile_manager_bpp (tiles) == 4) ? RGB : GRAY);
+				((tile_manager_bpp (tiles) == 4) ? 
+                                 GIMP_RGB : GIMP_GRAY));
   
   return new_layer;
 }
