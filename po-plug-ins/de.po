@@ -1,5 +1,5 @@
 # This is the German catalog for the standard GIMP Plugins.
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1999-2000 Free Software Foundation, Inc.
 # Felix Natter <fnatter@gmx.net>,
 # Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>,
 # Sven Neumann <sven@gimp.org>,
@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2000-12-09 11:19-0800\n"
-"PO-Revision-Date: 2000-12-03 18:44+01:00\n"
+"Project-Id-Version: GIMP 1.1.30\n"
+"POT-Creation-Date: 2000-12-13 17:27+0100\n"
+"PO-Revision-Date: 2000-12-13 17:29+01:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Über"
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
 #: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:403
-#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:800
+#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:842
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
 #: plug-ins/common/curve_bend.c:1369 plug-ins/common/decompose.c:874
 #: plug-ins/common/deinterlace.c:271 plug-ins/common/depthmerge.c:643
@@ -73,10 +73,10 @@ msgstr "Über"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2208
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
 #: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1586
+#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
 #: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
 #: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
@@ -121,7 +121,7 @@ msgstr "OK"
 #: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:405 plug-ins/common/compose.c:778
-#: plug-ins/common/convmatrix.c:804 plug-ins/common/csource.c:655
+#: plug-ins/common/convmatrix.c:846 plug-ins/common/csource.c:655
 #: plug-ins/common/cubism.c:305 plug-ins/common/curve_bend.c:1371
 #: plug-ins/common/decompose.c:876 plug-ins/common/deinterlace.c:273
 #: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:622
@@ -155,10 +155,10 @@ msgstr "OK"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
+#: plug-ins/common/spheredesigner.c:2212 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1588 plug-ins/common/tile.c:407
+#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
@@ -205,7 +205,7 @@ msgstr "Abbrechen"
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
-#: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
+#: plug-ins/common/spheredesigner.c:2230 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
 #: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
@@ -346,7 +346,7 @@ msgstr ""
 "ausser Mandelbrot und Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
+#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2305
 #: plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Öffnen"
@@ -355,10 +355,10 @@ msgstr "Öffnen"
 msgid "Load a fractal from file"
 msgstr "Fraktal aus Datei laden"
 
-#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:802
+#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:844
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
 #: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
+#: plug-ins/common/spheredesigner.c:2210 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -369,7 +369,7 @@ msgid "Reset parameters to default values"
 msgstr "Auf Standardwerte zurücksetzen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
+#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2312
 #: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
 #: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
@@ -530,7 +530,7 @@ msgstr "Kosinus"
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1607
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1606
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
 msgstr "Kein"
@@ -1115,7 +1115,7 @@ msgid "Options"
 msgstr "Einstellungen"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1575 plug-ins/common/spheredesigner.c:2614
+#: plug-ins/common/spheredesigner.c:1551 plug-ins/common/spheredesigner.c:2590
 msgid "Light"
 msgstr "Licht"
 
@@ -1287,7 +1287,7 @@ msgid "Map Images to Box Faces"
 msgstr "Bild auf Würfelseiten abbilden"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2442
+#: plug-ins/common/spheredesigner.c:2418
 msgid "Scale X:"
 msgstr "Skalierung X:"
 
@@ -1371,7 +1371,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:454
 #: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1416,7 +1416,7 @@ msgstr "%s: fehlerhafte Palette"
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:923
-#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:280
+#: plug-ins/common/tiff.c:680 plug-ins/common/tile.c:280
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
@@ -1444,7 +1444,7 @@ msgstr "Kann %s nicht öffnen"
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1022
-#: plug-ins/common/tiff.c:1338 plug-ins/common/xbm.c:982
+#: plug-ins/common/tiff.c:1337 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2371,11 +2371,11 @@ msgstr "Mache Umgebung transparent"
 msgid "Lens Refraction Index:"
 msgstr "Brechungsindex der Linse:"
 
-#: plug-ins/common/autocrop.c:73
+#: plug-ins/common/autocrop.c:74
 msgid "<Image>/Image/Transforms/Autocrop"
 msgstr "<Image>/Bild/Transformationen/Automatisch Zuschneiden"
 
-#: plug-ins/common/autocrop.c:117
+#: plug-ins/common/autocrop.c:119
 msgid "Cropping..."
 msgstr "Schneide Bild zu..."
 
@@ -2800,40 +2800,48 @@ msgstr "Abschneiden"
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
 msgstr "<Image>/Filter/Generisch/Faltungsmatrix..."
 
-#: plug-ins/common/convmatrix.c:264
+#: plug-ins/common/convmatrix.c:225
+msgid ""
+"Convolution Matrix does not work\n"
+"on layers smaller than 3 pixels."
+msgstr ""
+"Faltungsmatrix arbeitet nicht mit\n"
+"Bildern, die kleiner als 3 Pixel sind."
+
+#: plug-ins/common/convmatrix.c:278
 msgid "Applying convolution"
 msgstr "Wende Faltungsmatrix an"
 
-#: plug-ins/common/convmatrix.c:795
+#: plug-ins/common/convmatrix.c:837
 msgid "Convolution Matrix"
 msgstr "Faltungsmatrix"
 
-#: plug-ins/common/convmatrix.c:821
+#: plug-ins/common/convmatrix.c:863
 msgid "Matrix"
 msgstr "Matrix"
 
-#: plug-ins/common/convmatrix.c:857
+#: plug-ins/common/convmatrix.c:899
 msgid "Divisor:"
 msgstr "Divisor:"
 
-#: plug-ins/common/convmatrix.c:876 plug-ins/common/depthmerge.c:775
+#: plug-ins/common/convmatrix.c:918 plug-ins/common/depthmerge.c:775
 msgid "Offset:"
 msgstr "Versatz:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
+#: plug-ins/common/convmatrix.c:942 plug-ins/common/ps.c:2708
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: plug-ins/common/convmatrix.c:908
+#: plug-ins/common/convmatrix.c:950
 msgid "Alpha-weighting"
 msgstr "Alpha-Gewichtung"
 
-#: plug-ins/common/convmatrix.c:923
+#: plug-ins/common/convmatrix.c:965
 msgid "Border"
 msgstr "Rand"
 
-#: plug-ins/common/convmatrix.c:948
+#: plug-ins/common/convmatrix.c:990
 msgid "Channels"
 msgstr "Kanäle"
 
@@ -2846,7 +2854,7 @@ msgid "Prefixed Name:"
 msgstr "Name mit Prefix:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1622 plug-ins/common/xbm.c:1202
+#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -3362,7 +3370,7 @@ msgstr "Kanten finden..."
 msgid "Edge Detection"
 msgstr "Kanten finden"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
+#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2609
 #: plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "Menge:"
@@ -3380,7 +3388,7 @@ msgstr "Relief"
 msgid "Function"
 msgstr "Funktion"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
+#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1550
 msgid "Bumpmap"
 msgstr "Bumpmap"
 
@@ -3709,12 +3717,12 @@ msgstr "Abstand:"
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: plug-ins/common/gee.c:198
+#: plug-ins/common/gee.c:201
 msgid "GEE!  The GIMP E'er Egg!"
 msgstr "GOE! Das GIMP Osterei!"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:209
+#: plug-ins/common/gee.c:212
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Danke, dass Sie sich für den GIMP entschieden haben **"
 
@@ -4974,7 +4982,7 @@ msgstr "Plasma..."
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2425
+#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2401
 msgid "Turbulence:"
 msgstr "Turbulenz:"
 
@@ -5038,7 +5046,7 @@ msgid "Help:"
 msgstr "Hilfe:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2357
+#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2333
 #: plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Typ:"
@@ -6080,114 +6088,114 @@ msgstr "Spirale"
 msgid "Spots"
 msgstr "Punkte"
 
-#: plug-ins/common/spheredesigner.c:1573 plug-ins/common/spheredesigner.c:2602
+#: plug-ins/common/spheredesigner.c:1549 plug-ins/common/spheredesigner.c:2578
 msgid "Texture"
 msgstr "Textur"
 
-#: plug-ins/common/spheredesigner.c:1576
+#: plug-ins/common/spheredesigner.c:1552
 msgid "(unknown!?)"
 msgstr " (unbekannt!?)"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1826
 msgid "Open file"
 msgstr "Datei öffnen"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1826
 msgid "Save file"
 msgstr "Datei speichern"
 
-#: plug-ins/common/spheredesigner.c:2111 plug-ins/common/spheredesigner.c:2149
+#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/spheredesigner.c:2125
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
 msgstr "Farbauswahl-Dialog"
 
-#: plug-ins/common/spheredesigner.c:2227
+#: plug-ins/common/spheredesigner.c:2203
 msgid "Sphere Designer"
 msgstr "Kugel-Designer"
 
-#: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
+#: plug-ins/common/spheredesigner.c:2244 plug-ins/gimpressionist/preview.c:117
+#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Neu zeichnen"
 
-#: plug-ins/common/spheredesigner.c:2277
+#: plug-ins/common/spheredesigner.c:2253
 msgid "Textures"
 msgstr "Texturen"
 
-#: plug-ins/common/spheredesigner.c:2302 plug-ins/gfig/gfig.c:3137
+#: plug-ins/common/spheredesigner.c:2278 plug-ins/gfig/gfig.c:3137
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: plug-ins/common/spheredesigner.c:2309
+#: plug-ins/common/spheredesigner.c:2285
 msgid "Dup"
 msgstr "Duplizieren"
 
-#: plug-ins/common/spheredesigner.c:2316
+#: plug-ins/common/spheredesigner.c:2292
 msgid "Del"
 msgstr "Löschen"
 
-#: plug-ins/common/spheredesigner.c:2343
+#: plug-ins/common/spheredesigner.c:2319
 msgid "Texture Properties"
 msgstr "Textureigenschaften"
 
-#: plug-ins/common/spheredesigner.c:2364
+#: plug-ins/common/spheredesigner.c:2340
 msgid "Texture:"
 msgstr "Textur:"
 
-#: plug-ins/common/spheredesigner.c:2371
+#: plug-ins/common/spheredesigner.c:2347
 msgid "Colors:"
 msgstr "Farben:"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2408 plug-ins/gimpressionist/paper.c:169
+#: plug-ins/common/spheredesigner.c:2384 plug-ins/gimpressionist/paper.c:169
 #: plug-ins/ifscompose/ifscompose.c:563
 msgid "Scale:"
 msgstr "Skalierung:"
 
-#: plug-ins/common/spheredesigner.c:2459
+#: plug-ins/common/spheredesigner.c:2435
 msgid "Scale Y:"
 msgstr "Skalierung Y:"
 
-#: plug-ins/common/spheredesigner.c:2476
+#: plug-ins/common/spheredesigner.c:2452
 msgid "Scale Z:"
 msgstr "Skalierung Z:"
 
-#: plug-ins/common/spheredesigner.c:2494
+#: plug-ins/common/spheredesigner.c:2470
 msgid "Rotate X:"
 msgstr "Rotation X:"
 
-#: plug-ins/common/spheredesigner.c:2511
+#: plug-ins/common/spheredesigner.c:2487
 msgid "Rotate Y:"
 msgstr "Rotation Y:"
 
-#: plug-ins/common/spheredesigner.c:2528
+#: plug-ins/common/spheredesigner.c:2504
 msgid "Rotate Z:"
 msgstr "Rotation Z:"
 
-#: plug-ins/common/spheredesigner.c:2545
+#: plug-ins/common/spheredesigner.c:2521
 msgid "Pos X:"
 msgstr "Position X:"
 
-#: plug-ins/common/spheredesigner.c:2562
+#: plug-ins/common/spheredesigner.c:2538
 msgid "Pos Y:"
 msgstr "Position Y:"
 
-#: plug-ins/common/spheredesigner.c:2579
+#: plug-ins/common/spheredesigner.c:2555
 msgid "Pos Z:"
 msgstr "Position Z:"
 
-#: plug-ins/common/spheredesigner.c:2608
+#: plug-ins/common/spheredesigner.c:2584
 msgid "Bump"
 msgstr "Bump"
 
-#: plug-ins/common/spheredesigner.c:2650
+#: plug-ins/common/spheredesigner.c:2626
 msgid "Exp:"
 msgstr "Export:"
 
-#: plug-ins/common/spheredesigner.c:2667
+#: plug-ins/common/spheredesigner.c:2643
 msgid ""
 "by Vidar Madsen\n"
 "September 1999"
@@ -6195,11 +6203,11 @@ msgstr ""
 "von Vidar Madsen\n"
 "September 1999"
 
-#: plug-ins/common/spheredesigner.c:2787
+#: plug-ins/common/spheredesigner.c:2763
 msgid "Rendering..."
 msgstr "Rendere..."
 
-#: plug-ins/common/spheredesigner.c:2837
+#: plug-ins/common/spheredesigner.c:2813
 msgid "<Image>/Filters/Render/Sphere Designer..."
 msgstr "<Image>/Filter/Render/Kugel-Designer..."
 
@@ -6361,31 +6369,31 @@ msgstr "Alpha-Schwellwert: Färbe Transparenz..."
 msgid "Threshold Alpha"
 msgstr "Alpha-Schwellwert"
 
-#: plug-ins/common/tiff.c:690
+#: plug-ins/common/tiff.c:689
 msgid "TIFF Channel"
 msgstr "TIFF Kanäle"
 
-#: plug-ins/common/tiff.c:1581
+#: plug-ins/common/tiff.c:1580
 msgid "Save as TIFF"
 msgstr "Als TIFF speichern"
 
-#: plug-ins/common/tiff.c:1603
+#: plug-ins/common/tiff.c:1602
 msgid "Compression"
 msgstr "Kompression"
 
-#: plug-ins/common/tiff.c:1608
+#: plug-ins/common/tiff.c:1607
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1609
+#: plug-ins/common/tiff.c:1608
 msgid "Pack Bits"
 msgstr "Bits packen"
 
-#: plug-ins/common/tiff.c:1610
+#: plug-ins/common/tiff.c:1609
 msgid "Deflate"
 msgstr "Entpacken"
 
-#: plug-ins/common/tiff.c:1611
+#: plug-ins/common/tiff.c:1610
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -8640,27 +8648,27 @@ msgstr "Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
 msgid "Frame Loop"
-msgstr "Schleife"
+msgstr "Framefolge Schleife"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
 msgid "Frame Loop Reverse"
-msgstr "Umgekehrte Schleife"
+msgstr "Framefolge Umgekehrte Schleife"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
 msgid "Frame Once"
-msgstr "Einmal"
+msgstr "Framefolge Einmal"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
 msgid "Frame OnceReverse"
-msgstr "Einmal umgekehrt"
+msgstr "Framefolge Einmal umgekehrt"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
 msgid "Frame PingPong"
-msgstr "Ping-Pong"
+msgstr "Framefolge Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
 msgid "Frame None"
-msgstr "Kein"
+msgstr "Framefolge Keine"
 
 # TODO context ?
 #: plug-ins/gap/gap_mov_dialog.c:480
