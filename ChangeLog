@@ -1,3 +1,8 @@
+2004-01-15  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/nova.c: Somewhat resurrected the SuperNova plugin.
+	Still very buggy, though.
+
 2004-01-15  Michael Natterer  <mitch@gimp.org>
 
 	Fixed bug #78732 (don't paste off screen):

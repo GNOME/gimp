@@ -726,6 +726,7 @@ nova (GimpDrawable *drawable,
 {
    GimpPixelRgn  src_rgn;
    GimpPixelRgn  dest_rgn;
+   gpointer      pr;
    guchar   *src_row, *dest_row;
    guchar   *src, *dest;
    gint      x1, y1, x2, y2;
@@ -740,11 +741,16 @@ nova (GimpDrawable *drawable,
    gdouble   w, w1, c;
    gdouble  *spoke;
    gdouble   nova_alpha;
+   gdouble   src_alpha;
+   gdouble   new_alpha;
+   gdouble   compl_ratio;
+   gdouble   ratio;
    GimpRGB   color;
    GimpRGB   src_color;
    GimpRGB  *spokecolor;
    GimpHSV   hsv;
-   gint      i;
+   gdouble   spokecol;
+   gint      i, j;
    GRand    *gr;
 
    gr = g_rand_new ();
@@ -832,39 +838,64 @@ nova (GimpDrawable *drawable,
 
                nova_alpha = CLAMP (w, 0.0, 1.0);
 
-               /*  blend two neighbored spokecolors  */
-               color = spokecolor[i];
-               gimp_rgb_set_alpha (&color, 1.0);
-               gimp_rgb_set_alpha (spokecolor + ((i + 1) % pvals.nspoke), c);
-               gimp_rgb_composite (&color,
-                                   spokecolor + (i + 1) % pvals.nspoke,
-                                   GIMP_RGB_COMPOSITE_NORMAL);
-
-               if (w > 1.0)
-                 {
-                   gimp_rgb_multiply (&color, w);
-                   gimp_rgb_clamp (&color);
-                 }
+               if (has_alpha)
+               {
+                 src_alpha = (gdouble) src[alpha] / 255.0;
+                 new_alpha = src_alpha + (1.0 - src_alpha) * nova_alpha;
+                 if (new_alpha != 0.0)
+                   ratio = nova_alpha / new_alpha;
+                 else
+                   ratio = 0.0;
+               }
                else
-                 {
-                   gimp_rgba_set_uchar (&src_color,
-                                        src[0], src[1], src[2], 1.0);
-                   gimp_rgb_set_alpha (&color, nova_alpha);
-                   gimp_rgb_composite (&color, &src_color,
-                                       GIMP_RGB_COMPOSITE_BEHIND);
-                 }
+                 ratio = nova_alpha;
 
-/*             c = CLAMP (w1 * w, 0.0, 1.0); */
-/*             gimp_rgb_add (&color, c); */
+               compl_ratio = 1.0 - ratio;
+               /* red */
+               spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
+                          (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
 
-               gimp_rgb_get_uchar (&color,
-                                   dest, dest + 1, dest + 2);
+               if (w>1.0)
+                 color.r = CLAMP (spokecol * w, 0.0, 1.0);
+               else
+                 color.r = src[0]/255.0 * compl_ratio + spokecol * ratio;
+               c = CLAMP (w1 * w, 0.0, 1.0);
+               color.r += c;
+               dest[0] = CLAMP (color.r*255.0, 0, 255);
+
+               /* green */
+               spokecol = (gdouble)spokecolor[i                   ].g * (1.0-c) +
+                          (gdouble)spokecolor[(i+1) % pvals.nspoke].g * c;
+
+               if (w>1.0)
+                 color.g = CLAMP (spokecol * w, 0.0, 1.0);
+               else
+                 color.g = src[1]/255.0 * compl_ratio + spokecol * ratio;
+               c = CLAMP (w1 * w, 0.0, 1.0);
+               color.g += c;
+               dest[1] = CLAMP (color.g*255.0, 0, 255);
+
+               /* blue */
+               spokecol = (gdouble)spokecolor[i                   ].b * (1.0-c) +
+                          (gdouble)spokecolor[(i+1) % pvals.nspoke].b * c;
+
+               if (w>1.0)
+                 color.b = CLAMP (spokecol * w, 0.0, 1.0);
+               else
+                 color.b = src[2]/255.0 * compl_ratio + spokecol * ratio;
+               c = CLAMP (w1 * w, 0.0, 1.0);
+               color.b += c;
+               dest[2] = CLAMP (color.b*255.0, 0, 255);
+
+               /* alpha */
+               if (has_alpha)
+                 dest[alpha] = new_alpha * 255.0;
 
                src  += bpp;
                dest += bpp;
-             }
-
-           src_row  += preview->rowstride;
+             }           
+           
+           src_row   += preview->rowstride;
 
            gimp_old_preview_do_row (preview, row, y2, dest_row);
          }
@@ -873,8 +904,6 @@ nova (GimpDrawable *drawable,
      }
    else
      { /* normal mode */
-
-#ifdef EEEEK
        for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
             pr != NULL; pr = gimp_pixel_rgns_process (pr))
          {
@@ -904,26 +933,6 @@ nova (GimpDrawable *drawable,
 
                    nova_alpha = CLAMP (w, 0.0, 1.0);
 
-                   switch (bpp)
-                     {
-                     case 1:
-                       gimp_rgba_set_uchar (&src_color,
-                                            src[0], src[0], src[0], 1.0);
-                       break;
-                     case 2:
-                       gimp_rgba_set_uchar (&src_color,
-                                            src[0], src[0], src[0], src[1]);
-                       break;
-                     case 3:
-                       gimp_rgba_set_uchar (&src_color,
-                                            src[0], src[1], src[2], 1.0);
-                       break;
-                     case 4:
-                       gimp_rgba_set_uchar (&src_color,
-                                            src[0], src[1], src[2], src[3]);
-                       break;
-                     }
-
                    if (has_alpha)
                      {
                        src_alpha = (gdouble) src[alpha] / 255.0;
@@ -939,22 +948,57 @@ nova (GimpDrawable *drawable,
 
                    compl_ratio = 1.0 - ratio;
 
-                   for (j = 0; j < alpha; j++)
+                   switch (bpp)
                      {
-                       spokecol = (gdouble)spokecolor[3*i+j]*(1.0-c) +
-                                  (gdouble)spokecolor[3*((i + 1) % pvals.nspoke)+j]*c;
-                       if (w > 1.0)
-                         color[j] = CLAMP (spokecol * w, 0, 255);
+                     case 1:
+                     case 2:
+                       /* gray */
+                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
+                       if (w>1.0)
+                         color.r = CLAMP (spokecol * w, 0.0, 1.0);
                        else
-                         color[j] = src[j] * compl_ratio + spokecol * ratio;
-
-                       c = CLAMP (w1 * w, 0, 1);
-                       color[j] = color[j] + 255 * c;
-
-                       dest[j]= CLAMP (color[j], 0, 255);
+                         color.r = src[0]/255.0 * compl_ratio + spokecol * ratio;
+                       c = CLAMP (w1 * w, 0.0, 1.0);
+                       color.r += c;
+                       dest[0] = CLAMP (color.r*255.0, 0, 255);
+                       break;
+                     case 3:
+                     case 4:
+                       /* red */
+                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
+                       if (w>1.0)
+                         color.r = CLAMP (spokecol * w, 0.0, 1.0);
+                       else
+                         color.r = src[0]/255.0 * compl_ratio + spokecol * ratio;
+                       c = CLAMP (w1 * w, 0.0, 1.0);
+                       color.r += c;
+                       dest[0] = CLAMP (color.r*255.0, 0, 255);
+                       /* green */
+                       spokecol = (gdouble)spokecolor[i                   ].g * (1.0-c) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].g * c;
+                       if (w>1.0)
+                         color.g = CLAMP (spokecol * w, 0.0, 1.0);
+                       else
+                         color.g = src[1]/255.0 * compl_ratio + spokecol * ratio;
+                       c = CLAMP (w1 * w, 0.0, 1.0);
+                       color.r += c;
+                       dest[1] = CLAMP (color.g*255.0, 0, 255);
+                       /* blue */
+                       spokecol = (gdouble)spokecolor[i                   ].b * (1.0-c) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].b * c;
+                       if (w>1.0)
+                         color.b = CLAMP (spokecol * w, 0.0, 1.0);
+                       else
+                         color.b = src[2]/255.0 * compl_ratio + spokecol * ratio;
+                       c = CLAMP (w1 * w, 0.0, 1.0);
+                       color.b += c;
+                       dest[2] = CLAMP (color.b*255.0, 0, 255);
+                       break;
                      }
 
-                   if (has_alpha)
+                   if (has_alpha);
                      dest[alpha] = new_alpha * 255.0;
 
                    src += src_rgn.bpp;
@@ -973,11 +1017,6 @@ nova (GimpDrawable *drawable,
        gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
        gimp_drawable_update (drawable->drawable_id,
                              x1, y1, (x2 - x1), (y2 - y1));
-#else
-       gimp_message ("Sorry, the SuperNova effect\n"
-                     "is broken at the moment and\n"
-                     "has been temporarily disabled.");
-#endif
      }
 
    g_free (spoke);
