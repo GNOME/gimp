@@ -1,3 +1,9 @@
+2000-04-20  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/png.c: Revert Sven's changes, I am not that
+	silly Sven, read the code more carefully and THINK about it.
+	We do not want to leak Gimp Images.
+
 2000-04-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/align_layers.c: applied patch provided by
