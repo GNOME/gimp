@@ -92,6 +92,8 @@ libapptools_la_SOURCES = \
 	threshold.h		\
 	tool_options.c		\
 	tool_options.h		\
+	tool_options_dialog.c	\
+	tool_options_dialog.h	\
 	tools.c			\
 	tools.h			\
 	transform_core.c	\

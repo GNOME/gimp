@@ -114,6 +114,7 @@ app/tools/smudge.c
 app/tools/text_tool.c
 app/tools/threshold.c
 app/tools/tool_options.c
+app/tools/tool_options_dialog.c
 app/tools/tools.c
 app/tools/transform_core.c
 app/tools/transform_tool.c

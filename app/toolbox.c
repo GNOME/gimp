@@ -41,6 +41,7 @@
 #include "pixel_region.h"
 #include "tile_manager.h"
 
+#include "tools/tool_options_dialog.h"
 #include "tools/tools.h"
 
 #include "libgimp/gimpintl.h"

@@ -22,7 +22,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "airbrush.h"
 #include "bezier_select.h"
 #include "blend.h"
@@ -32,17 +31,11 @@
 #include "clone.h"
 #include "color_balance.h"
 #include "color_picker.h"
-#include "context_manager.h"
 #include "convolve.h"
 #include "crop.h"
 #include "curves.h"
 #include "dodgeburn.h"
 #include "eraser.h"
-#include "gdisplay.h"
-#include "gimpcontext.h"
-#include "gimpdnd.h"
-#include "gimpimage.h"
-#include "gimpui.h"
 #include "hue_saturation.h"
 #include "ellipse_select.h"
 #include "flip_tool.h"
@@ -60,14 +53,23 @@
 #include "pencil.h"
 #include "posterize.h"
 #include "rect_select.h"
-#include "session.h"
 #include "smudge.h"
 /* #include "xinput_airbrush.h" */
 #include "text_tool.h"
 #include "threshold.h"
 #include "tools.h"
 #include "tool_options.h"
+#include "tool_options_dialog.h"
 #include "transform_tool.h"
+
+#include "appenv.h"
+#include "context_manager.h"
+#include "gdisplay.h"
+#include "gimpcontext.h"
+#include "gimpdnd.h"
+#include "gimpimage.h"
+#include "gimpui.h"
+#include "session.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
@@ -138,14 +140,6 @@
 
 /*  Global Data  */
 Tool * active_tool = NULL;
-
-/*  Local  Data  */
-static GtkWidget * options_shell        = NULL;
-static GtkWidget * options_vbox         = NULL;
-static GtkWidget * options_label        = NULL;
-static GtkWidget * options_pixmap       = NULL;
-static GtkWidget * options_eventbox     = NULL;
-static GtkWidget * options_reset_button = NULL;
 
 static gint global_tool_ID = 0;
 
@@ -1251,23 +1245,6 @@ ToolInfo tool_info[] =
 
 gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 
-/*  dnd stuff  */
-static GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static guint n_tool_targets = (sizeof (tool_target_table) /
-                               sizeof (tool_target_table[0]));
-
-
-/*  Local function declarations  */
-static void      tool_options_show           (ToolType);
-static void      tool_options_hide           (ToolType);
-static ToolType  tool_options_drag_tool      (GtkWidget *, gpointer);
-static void      tool_options_drop_tool      (GtkWidget *, ToolType, gpointer);
-static void      tool_options_reset_callback (GtkWidget *, gpointer);
-static void      tool_options_close_callback (GtkWidget *, gpointer);
-
 
 /*  Function definitions  */
 
@@ -1338,7 +1315,7 @@ active_tool_control (ToolAction  action,
 	{
 	  switch (action)
 	    {
-	    case PAUSE :
+	    case PAUSE:
 	      if (active_tool->state == ACTIVE)
 		{
 		  if (! active_tool->paused_count)
@@ -1350,7 +1327,7 @@ active_tool_control (ToolAction  action,
 	      active_tool->paused_count++;
 	      break;
 
-	    case RESUME :
+	    case RESUME:
 	      active_tool->paused_count--;
 	      if (active_tool->state == PAUSED)
 		{
@@ -1362,15 +1339,10 @@ active_tool_control (ToolAction  action,
 		}
 	      break;
 
-	    case HALT :
+	    case HALT:
 	      active_tool->state = INACTIVE;
 	      (* active_tool->control_func) (active_tool, action, gdisp);
 	      break;
-
-	    case DESTROY :
-              active_tool_free ();
-              gtk_widget_hide (options_shell);
-              break;
 
 	    default:
 	      break;
@@ -1501,207 +1473,9 @@ tools_register (ToolType     tool_type,
 
   tool_info [(gint) tool_type].tool_options = tool_options;
 
-  /*  need to check whether the widget is visible...this can happen
-   *  because some tools share options such as the transformation tools
-   */
-  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
-    {
-      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (tool_options->main_vbox);
-    }
+  tool_options_register (tool_type, tool_options);
 
-  gtk_label_set_text (GTK_LABEL (options_label), tool_options->title);
-
-  gtk_pixmap_set (GTK_PIXMAP (options_pixmap),
-		  tool_get_pixmap (tool_type), tool_get_mask (tool_type));
-
-  gtk_widget_queue_draw (options_pixmap);
-
-  gimp_help_set_help_data (options_eventbox,
-			   gettext (tool_info[(gint) tool_type].tool_desc),
-			   tool_info[(gint) tool_type].private_tip);
-}
-
-/*  Tool options function  */
-
-void
-tool_options_dialog_new (void)
-{
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-
-  /*  The shell and main vbox  */
-  options_shell =
-    gimp_dialog_new (_("Tool Options"), "tool_options",
-		     tools_help_func,
-		     "dialogs/tool_options.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, TRUE, TRUE,
-
-		     _("Reset"), tool_options_reset_callback,
-		     NULL, NULL, &options_reset_button, FALSE, FALSE,
-		     _("Close"), tool_options_close_callback,
-		     NULL, NULL, NULL, TRUE, TRUE,
-
-		     NULL);
-
-  /*  Register dialog  */
-  dialog_register (options_shell);
-  session_set_window_geometry (options_shell, &tool_options_session_info,
-			       FALSE );
-
-  /*  The outer frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options_shell)->vbox), frame);
-  gtk_widget_show (frame);
-
-  /*  The vbox containing the title frame and the options vbox  */
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  /*  The title frame  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  options_eventbox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (frame), options_eventbox);
-  gtk_widget_show (options_eventbox);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (options_eventbox), hbox);
-  gtk_widget_show (hbox);
-
-  options_pixmap = gtk_pixmap_new (tool_get_pixmap (RECT_SELECT), tool_get_mask (RECT_SELECT));
-  gtk_box_pack_start (GTK_BOX (hbox), options_pixmap, FALSE, FALSE, 0);
-  gtk_widget_show (options_pixmap);
-
-  options_label = gtk_label_new ("");
-  gtk_box_pack_start (GTK_BOX (hbox), options_label, FALSE, FALSE, 1);
-  gtk_widget_show (options_label);
-
-  options_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (options_vbox), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), options_vbox, FALSE, FALSE, 0);
-
-  gtk_widget_show (options_vbox);
-
-  /*  hide the separator between the dialog's vbox and the action area  */
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 1)));
-
-  /*  dnd stuff  */
-  gtk_drag_dest_set (options_shell,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     tool_target_table, n_tool_targets,
-		     GDK_ACTION_COPY); 
-  gimp_dnd_tool_dest_set (options_shell, tool_options_drop_tool, NULL);
-
-  gtk_drag_source_set (options_eventbox,
-		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-		       tool_target_table, n_tool_targets,
-		       GDK_ACTION_COPY); 
-  gimp_dnd_tool_source_set (options_eventbox, tool_options_drag_tool, NULL);
-}
-
-void
-tool_options_dialog_free (void)
-{
-  session_get_window_info (options_shell, &tool_options_session_info);
-  gtk_widget_destroy (options_shell);
-}
-
-void
-tool_options_dialog_show (void)
-{
-  if (!GTK_WIDGET_VISIBLE (options_shell)) 
-    {
-      gtk_widget_show (options_shell);
-    } 
-  else 
-    {
-      gdk_window_raise (options_shell->window);
-    }
-}
-
-static void
-tool_options_show (ToolType tool_type)
-{
-  if (tool_info[tool_type].tool_options->main_vbox)
-    gtk_widget_show (tool_info[tool_type].tool_options->main_vbox);
-
-  if (tool_info[tool_type].tool_options->title)
-    gtk_label_set_text (GTK_LABEL (options_label),
-			tool_info[tool_type].tool_options->title);
-
-  gtk_pixmap_set (GTK_PIXMAP (options_pixmap),
-		  tool_get_pixmap (tool_type), tool_get_mask (tool_type));
-
-  gtk_widget_queue_draw (options_pixmap);
-
-  gimp_help_set_help_data (options_label->parent->parent,
-			   gettext (tool_info[(gint) tool_type].tool_desc),
-			   tool_info[(gint) tool_type].private_tip);
-
-  if (tool_info[tool_type].tool_options->reset_func)
-    gtk_widget_set_sensitive (options_reset_button, TRUE);
-  else
-    gtk_widget_set_sensitive (options_reset_button, FALSE);
-}
-
-static void
-tool_options_hide (ToolType tool_type)
-{
-  if (tool_info[tool_type].tool_options)
-    gtk_widget_hide (tool_info[tool_type].tool_options->main_vbox);
-}
-
-/*  Tool options callbacks  */
-
-static void
-tool_options_drop_tool (GtkWidget *widget,
-			ToolType   tool,
-			gpointer   data)
-{
-  gimp_context_set_tool (gimp_context_get_user (), tool);
-}
-
-ToolType
-tool_options_drag_tool (GtkWidget *widget,
-			gpointer   data)
-{
-  return gimp_context_get_tool (gimp_context_get_user ());
-}
-
-static void
-tool_options_close_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  GtkWidget *shell;
-
-  shell = (GtkWidget *) data;
-  gimp_dialog_hide (shell);
-}
-
-static void
-tool_options_reset_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  GtkWidget *shell;
-
-  shell = (GtkWidget *) data;
-
-  if (!active_tool)
-    return;
-
-  if (tool_info[(gint) active_tool->type].tool_options->reset_func)
-    (* tool_info[(gint) active_tool->type].tool_options->reset_func) ();
+  tool_options_show (tool_type);
 }
 
 gchar *

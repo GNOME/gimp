@@ -1,5 +1,18 @@
 2001-01-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/tool_options_dialog.[ch]: new files for the tool
+	options dialog.
+
+	* app/tools/tools.[ch]: removed from here.
+
+	* app/app_procs.c
+	* app/commands.c
+	* app/toolbox.c
+	* po/POTFILES.in: adjusted.
+
+2001-01-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/selection_options.h: removed.
 

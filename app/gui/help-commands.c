@@ -74,6 +74,7 @@
 #include "gdisplay_color_ui.h"
 #endif /* DISPLAY_FILTERS */
 
+#include "tools/tool_options_dialog.h"
 #include "tools/tools.h"
 
 #include "libgimp/gimphelpui.h"

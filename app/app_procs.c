@@ -96,7 +96,7 @@
 #include "tools/curves.h"
 #include "tools/hue_saturation.h"
 #include "tools/levels.h"
-#include "tools/tools.h"
+#include "tools/tool_options_dialog.h"
 
 #include "pdb/internal_procs.h"
 

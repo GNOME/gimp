@@ -139,10 +139,6 @@ void        tools_help_func            (const gchar *help_data);
 void        tools_register             (ToolType     tool_type,
 					ToolOptions *tool_options);
 
-void        tool_options_dialog_new   (void);
-void        tool_options_dialog_show  (void);
-void        tool_options_dialog_free  (void);
-
 gchar     * tool_active_PDB_string    (void);
 
 /*  don't unref these pixmaps, they are static!  */
