@@ -140,11 +140,11 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       action = gtk_action_group_get_action (group,
                                             "color-button-use-foreground");
-      g_object_set (action, "visible", color_panel->context != NULL, NULL);
+      gtk_action_set_visible (action, color_panel->context != NULL);
 
       action = gtk_action_group_get_action (group,
                                             "color-button-use-background");
-      g_object_set (action, "visible", color_panel->context != NULL, NULL);
+      gtk_action_set_visible (action, color_panel->context != NULL);
 
       if (color_panel->context)
         {

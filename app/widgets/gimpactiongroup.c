@@ -676,7 +676,7 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "visible", visible ? TRUE : FALSE, NULL);
+  gtk_action_set_visible (action, visible);
 }
 
 void
@@ -699,7 +699,7 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "sensitive", sensitive ? TRUE : FALSE, NULL);
+  gtk_action_set_sensitive (action, sensitive);
 }
 
 void

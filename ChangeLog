@@ -1,3 +1,10 @@
+2005-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactiongroup.c
+	* app/widgets/gimpcolorpanel.c: use gtk_action_set_sensitive()
+	and gtk_action_set_visible() instead of setting the respective
+	properties.
+
 2005-03-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* configure.in: raise required librsvg version to 2.8.0
