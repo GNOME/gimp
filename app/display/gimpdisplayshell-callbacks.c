@@ -360,32 +360,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   return TRUE;
 }
 
-gboolean
-gimp_display_shell_canvas_focus_in (GtkWidget        *widget,
-                                    GdkEventFocus    *fevent,
-                                    GimpDisplayShell *shell)
-{
-  GTK_WIDGET_SET_FLAGS (widget, GTK_HAS_FOCUS);
-
-  /*  stop the signal because otherwise gtk+ exposes the whole
-   *  canvas to get the non-existant focus indicator drawn
-   */
-  return TRUE;
-}
-
-gboolean
-gimp_display_shell_canvas_focus_out (GtkWidget        *widget,
-                                     GdkEventFocus    *fevent,
-                                     GimpDisplayShell *shell)
-{
-  GTK_WIDGET_UNSET_FLAGS (widget, GTK_HAS_FOCUS);
-
-  /*  stop the signal because otherwise gtk+ exposes the whole
-   *  canvas to get the non-existant focus indicator drawn
-   */
-  return TRUE;
-}
-
 static void
 gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
@@ -419,14 +393,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   static gint             scroll_start_x     = 0;
   static gint             scroll_start_y     = 0;
 
+  static gboolean         button_press_before_focus = FALSE;
+
   if (! canvas->window)
     {
       g_warning ("%s: called unrealized", G_STRLOC);
       return FALSE;
     }
 
-  gdisp = shell->gdisp;
-
+  gdisp  = shell->gdisp;
   gimage = gdisp->gimage;
 
   /*  Find out what device the event occurred upon  */
@@ -460,16 +435,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
-
-        /*  press modifier keys when entering the canvas  */
-        if (state)
-          {
-            gimp_display_shell_update_tool_modifiers (shell, 0, state);
-
-            tool_manager_oper_update_active (gimage->gimp,
-                                             &image_coords, state,
-                                             gdisp);
-          }
       }
       break;
 
@@ -485,16 +450,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         gimp_display_shell_update_cursor (shell, -1, -1);
 
         shell->proximity = FALSE;
-
-        /*  release modifier keys when leaving the canvas  */
-        if (state)
-          {
-            gimp_display_shell_update_tool_modifiers (shell, state, 0);
-
-            tool_manager_oper_update_active (gimage->gimp,
-                                             &image_coords, 0,
-                                             gdisp);
-          }
       }
       break;
 
@@ -505,12 +460,77 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       shell->proximity = FALSE;
       break;
 
+    case GDK_FOCUS_CHANGE:
+      {
+        GdkEventFocus *fevent;
+
+        fevent = (GdkEventFocus *) event;
+
+        if (fevent->in)
+          {
+            GTK_WIDGET_SET_FLAGS (canvas, GTK_HAS_FOCUS);
+
+            /*  press modifier keys when the canvas gets the focus
+             *
+             *  in "click to focus" mode, we did this on BUTTON_PRESS, so
+             *  do it here only if button_press_before_focus is FALSE
+             */
+            if (state && ! button_press_before_focus)
+              {
+                gimp_display_shell_update_tool_modifiers (shell, 0, state);
+
+                tool_manager_oper_update_active (gimage->gimp,
+                                                 &image_coords, state,
+                                                 gdisp);
+              }
+          }
+        else
+          {
+            GTK_WIDGET_UNSET_FLAGS (canvas, GTK_HAS_FOCUS);
+
+            /*  reset it here to be prepared for the next
+             *  FOCUS_IN / BUTTON_PRESS confusion
+             */
+            button_press_before_focus = FALSE;
+
+            /*  release modifier keys when the canvas loses the focus  */
+            if (state)
+              {
+                gimp_display_shell_update_tool_modifiers (shell, state, 0);
+
+                tool_manager_oper_update_active (gimage->gimp,
+                                                 &image_coords, 0,
+                                                 gdisp);
+              }
+          }
+
+        /*  stop the signal because otherwise gtk+ exposes the whole
+         *  canvas to get the non-existant focus indicator drawn
+         */
+        return_val = TRUE;
+      }
+      break;
+
     case GDK_BUTTON_PRESS:
       {
         GdkEventButton *bevent;
         GimpTool       *active_tool;
 
         bevent = (GdkEventButton *) event;
+
+        /*  in "click to focus" mode, the BUTTON_PRESS arrives before
+         *  FOCUS_IN, so we have to update the tool's modifier state here
+         */
+        if (state && ! GTK_WIDGET_HAS_FOCUS (canvas))
+          {
+            gimp_display_shell_update_tool_modifiers (shell, 0, state);
+
+            tool_manager_oper_update_active (gimage->gimp,
+                                             &image_coords, state,
+                                             gdisp);
+
+            button_press_before_focus = TRUE;
+          }
 
         /*  ignore new mouse events  */
         if (gimage->gimp->busy)

@@ -28,6 +28,7 @@
                                               GDK_STRUCTURE_MASK           | \
                                               GDK_ENTER_NOTIFY_MASK        | \
                                               GDK_LEAVE_NOTIFY_MASK        | \
+                                              GDK_FOCUS_CHANGE_MASK        | \
                                               GDK_KEY_PRESS_MASK           | \
                                               GDK_KEY_RELEASE_MASK         | \
                                               GDK_PROXIMITY_OUT_MASK)
@@ -44,12 +45,6 @@ gboolean   gimp_display_shell_canvas_configure     (GtkWidget         *widget,
                                                     GimpDisplayShell  *shell);
 gboolean   gimp_display_shell_canvas_expose        (GtkWidget         *widget,
                                                     GdkEventExpose    *eevent,
-                                                    GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_canvas_focus_in      (GtkWidget         *widget,
-                                                    GdkEventFocus     *fevent,
-                                                    GimpDisplayShell  *shell);
-gboolean   gimp_display_shell_canvas_focus_out     (GtkWidget         *widget,
-                                                    GdkEventFocus     *fevent,
                                                     GimpDisplayShell  *shell);
 gboolean   gimp_display_shell_canvas_tool_events   (GtkWidget         *widget,
                                                     GdkEvent          *event,

@@ -612,12 +612,6 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   g_signal_connect (G_OBJECT (shell->canvas), "configure_event",
 		    G_CALLBACK (gimp_display_shell_canvas_configure),
 		    shell);
-  g_signal_connect (G_OBJECT (shell->canvas), "focus_in_event",
-		    G_CALLBACK (gimp_display_shell_canvas_focus_in),
-		    shell);
-  g_signal_connect (G_OBJECT (shell->canvas), "focus_out_event",
-		    G_CALLBACK (gimp_display_shell_canvas_focus_in),
-		    shell);
   g_signal_connect (G_OBJECT (shell->canvas), "event",
 		    G_CALLBACK (gimp_display_shell_canvas_tool_events),
 		    shell);

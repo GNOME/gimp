@@ -1,3 +1,23 @@
+2002-06-19  Michael Natterer  <mitch@gimp.org>
+
+	Fix for #85202:
+
+	Updating the active tool's modifier state on GTK_ENTER_NOTIFY and
+	GTK_LEAVE_NOTIFY was a bad idea because this only works with
+	focus-follows-mouse.  Instead, update it during the whole time the
+	canvas can receive key events, namely from FOCUS_IN until
+	FOCUS_OUT. As an ugly side condition, click-to-focus leads to
+	GDK_BUTTON_PRESS arriving before GDK_FOCUS_CHANGE(in).
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: removed the
+	separate focus_in and focus_out callbacks and handle them in
+	gimp_display_shell_canvas_tool_events(). Moved tool state updating
+	from the ENTER/LEAVE code to FOCUS_CHANGE. Added an ugly static
+	variable "button_press_before_focus" and take care of the side
+	condition mentioned above.
+
+	* app/display/gimpdisplayshell.c: changed accordingly.
+
 2002-06-19  Maurits Rijk  <maurits@linux.local>
 
 	* plug-ins/imagemap/imap_preview.c (arrow_cb): minor layout changes.
