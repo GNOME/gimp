@@ -1,3 +1,8 @@
+2002-02-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colortoalpha.c: optimization and cleanup based
+	on a patch from Maurits Rijk <lpeek.mrijk@consunet.nl> (#72044).
+
 2002-02-20  Michael Natterer  <mitch@gimp.org>
 
 	Implemented #7100 (initialize layer mask with a copy of the image)

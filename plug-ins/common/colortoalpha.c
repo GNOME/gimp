@@ -26,8 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -47,11 +45,6 @@ typedef struct
   gboolean  run;
 } C2AInterface;
 
-typedef struct
-{
-  GtkWidget *color_button;
-} C2APreview;
-
 /* Declare local functions.
  */
 static void      query  (void);
@@ -61,17 +54,16 @@ static void      run    (gchar       *name,
 			 gint        *nreturn_vals,
 			 GimpParam  **return_vals);
 
-static void      colortoalpha             (GimpRGB       *src,
-					   const GimpRGB *color);
-static void      toalpha                  (GimpDrawable  *drawable);
-static void      toalpha_render_row       (const guchar  *src_row,
-					   guchar        *dest_row,
-					   gint           row_width,
-					   const gint     bytes);
+static void inline colortoalpha             (GimpRGB       *src,
+                                             const GimpRGB *color);
+static void        toalpha                  (GimpDrawable  *drawable);
+static void        toalpha_render_row       (guchar  	   *src,
+                                             guchar        *dest,
+                                             gint           row_width);
 /* UI stuff */
-static gboolean  colortoalpha_dialog      (GimpDrawable  *drawable);
-static void      colortoalpha_ok_callback (GtkWidget     *widget,
-					   gpointer       data);
+static gboolean    colortoalpha_dialog      (GimpDrawable  *drawable);
+static void        colortoalpha_ok_callback (GtkWidget     *widget,
+                                             gpointer       data);
 
 
 static GimpRunMode run_mode;
@@ -92,11 +84,6 @@ static C2AValues pvals =
 static C2AInterface pint = 
 {
   FALSE
-};
-
-static C2APreview ppreview = 
-{
-  NULL
 };
 
 MAIN ()
@@ -212,7 +199,7 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
-static void
+static inline void
 colortoalpha (GimpRGB       *src,
 	      const GimpRGB *color)
 {
@@ -302,52 +289,46 @@ colortoalpha (GimpRGB       *src,
 */
 
 static void
-toalpha_render_row (const guchar *src_data,
-		    guchar       *dest_data,
-		    gint          col,               /* row width in pixels */
-		    const gint    bytes)
+toalpha_render_row (guchar 	*src,
+		    guchar      *dest,
+		    gint         col)               /* row width in pixels */
 {
-  GimpRGB color;
-
   while (col--)
     {
-      gimp_rgba_set_uchar (&color, 
-			   src_data[col * bytes    ],
-			   src_data[col * bytes + 1],
-			   src_data[col * bytes + 2],
-			   src_data[col * bytes + 3]);
+      GimpRGB color;
 
+      gimp_rgba_set_uchar (&color, 
+			   src[0],
+			   src[1],
+			   src[2],
+			   src[3]);
+ 
       colortoalpha (&color, &pvals.color);
 
       gimp_rgba_get_uchar (&color, 
-			   &dest_data[col * bytes],
-			   &dest_data[col * bytes + 1],
-			   &dest_data[col * bytes + 2],
-			   &dest_data[col * bytes + 3]);
+			   dest,
+			   dest + 1,
+			   dest + 2,
+			   dest + 3);
+      src += 4;
+      dest += 4;
     }
 }
 
 static void
-toalpha_render_region (const GimpPixelRgn srcPR,
-		       const GimpPixelRgn destPR)
+toalpha_render_region (const GimpPixelRgn *srcPR,
+		       const GimpPixelRgn *destPR)
 {
   gint    row;
-  guchar *src_ptr  = srcPR.data;
-  guchar *dest_ptr = destPR.data;
+  guchar *src_ptr  = srcPR->data;
+  guchar *dest_ptr = destPR->data;
   
-  for (row = 0; row < srcPR.h ; row++)
+  for (row = 0; row < srcPR->h ; row++)
     {
-      if (srcPR.bpp!=4)
-	{
-	  gimp_message ("Not the proper bpp! \n");
-	  exit(1);
-	} 
-      toalpha_render_row (src_ptr, dest_ptr,
-			  srcPR.w,
-			  srcPR.bpp) ;
+      toalpha_render_row (src_ptr, dest_ptr, srcPR->w);
 
-      src_ptr  += srcPR.rowstride;
-      dest_ptr += destPR.rowstride;
+      src_ptr  += srcPR->rowstride;
+      dest_ptr += destPR->rowstride;
     }
 }
 
@@ -385,13 +366,15 @@ toalpha (GimpDrawable *drawable)
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
-      toalpha_render_region (srcPR, destPR);
+      toalpha_render_region (&srcPR, &destPR);
 
-      if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  area_so_far += srcPR.w * srcPR.h;
+
 	  if (++progress_skip % 10 == 0)
-	    gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
+	    gimp_progress_update ((gdouble) area_so_far / 
+                                  (gdouble) total_area);
 	}
     }
 
@@ -431,7 +414,8 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
   frame = gtk_frame_new (_("Color"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), 
+                      frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 3, FALSE);
@@ -452,7 +436,6 @@ colortoalpha_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
 		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);
-  ppreview.color_button = button;
 
   g_signal_connect (G_OBJECT (button), "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
