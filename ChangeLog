@@ -1,3 +1,14 @@
+Sun Jun 14 23:41:17 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
+
+	* app/plug_in.c: Fixed progress code to account for when
+	a plugin gets two progress inits
+
+	* app/interface.c: Fixed table allocation sickness.  Now use
+	two tables, and a vbox instead of one table so things don't
+	get expanded when they shouldn't.  This (table/table_inner)
+	should be merged back to 1.0 tree.  The other resize bug is a 
+	gtkstatusbar bug.
+
 Sun Jun 14 21:16:42 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/gdisplay.c

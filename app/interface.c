@@ -679,7 +679,9 @@ create_display_shell (int   gdisp_id,
   static GtkWidget *image_popup_menu = NULL;
   static GtkAccelGroup *image_accel_group = NULL;
   GDisplay *gdisp;
+  GtkWidget *vbox;
   GtkWidget *table;
+  GtkWidget *table_inner;
   GtkWidget *hbox;
   GtkWidget *arrow;
   int n_width, n_height;
@@ -738,18 +740,30 @@ create_display_shell (int   gdisp_id,
 		      (GtkSignalFunc) gdisplay_destroy,
 		      gdisp);
 
-  /*  the table containing all widgets  */
-  table = gtk_table_new (4, 3, FALSE);
+  /*  the vbox, table containing all widgets  */
+  vbox = gtk_vbox_new(0,0);
+  gtk_container_add(GTK_CONTAINER (gdisp->shell), vbox);
+
+  /*  the table widget is pretty stupid so we need 2 tables
+      or it treats rulers and canvas with equal weight when 
+      allocating space, ugh. */
+  table = gtk_table_new (2, 2, FALSE);
+  /*
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 2);
   gtk_container_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (gdisp->shell), table);
+  */
+  gtk_box_pack_start(GTK_BOX (vbox), table, TRUE, TRUE, 0); 
+
+  table_inner = gtk_table_new (2, 2, FALSE);
+
 
   /* hbox for statusbar area */
   hbox = gtk_hbox_new(0,2);
+  gtk_container_border_width(GTK_CONTAINER (hbox), 2);
+  gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, TRUE, 0); 
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
@@ -802,22 +816,24 @@ create_display_shell (int   gdisp_id,
 
 
   /*  pack all the widgets  */
-  gtk_table_attach (GTK_TABLE (table), gdisp->origin, 0, 1, 0, 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->hrule, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), table_inner, 0, 1, 0, 1,
+		    GTK_FILL | GTK_EXPAND | GTK_SHRINK,
+		    GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), gdisp->hsb, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->vrule, 0, 1, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), gdisp->vsb, 1, 2, 0, 1,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->canvas, 1, 2, 1, 2,
+
+  gtk_table_attach (GTK_TABLE (table_inner), gdisp->origin, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table_inner), gdisp->hrule, 1, 2, 0, 1,
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table_inner), gdisp->vrule, 0, 1, 1, 2,
+		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table_inner), gdisp->canvas, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->hsb, 0, 2, 2, 3,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gdisp->vsb, 2, 3, 0, 2,
-		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 3, 4,
-		    GTK_FILL, 0, 0, 0);
-
+ 
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
@@ -849,8 +865,10 @@ create_display_shell (int   gdisp_id,
   gtk_widget_show (gdisp->canvas);
   gtk_widget_show (gdisp->statusbar);
   gtk_widget_show (gdisp->progressbar);
-  gtk_widget_show (hbox);
+  gtk_widget_show (table_inner);
   gtk_widget_show (table);
+  gtk_widget_show (hbox);
+  gtk_widget_show (vbox);
   gtk_widget_show (gdisp->shell);
 
   /*  set the focus to the canvas area  */

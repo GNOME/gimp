@@ -2927,7 +2927,7 @@ plug_in_progress_init (PlugIn *plug_in,
 {
   GtkWidget *vbox;
   GtkWidget *button;
-  GDisplay *gdisp;
+  GDisplay *gdisp = NULL;
   guint context_id;
 
   if (!message)
@@ -2936,11 +2936,15 @@ plug_in_progress_init (PlugIn *plug_in,
   if (gdisp_ID > 0) 
       gdisp = gdisplay_get_ID(gdisp_ID);
 
-  if (gdisp_ID > 0 && gdisp->progressid == 0)
+  if (gdisp_ID > 0 && (gdisp->progressid == 0 || 
+		       plug_in->progress_gdisp_ID > 0))
     {
       context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
 						"progress");
   
+      if (plug_in->progress_gdisp_ID > 0)
+	gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), context_id);
+
       gdisp->progressid = gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
 					     context_id, message);
       plug_in->progress_gdisp_ID = gdisp_ID;
