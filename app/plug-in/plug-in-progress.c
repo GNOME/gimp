@@ -45,39 +45,46 @@ plug_in_progress_start (PlugIn      *plug_in,
                         const gchar *message,
                         gint         display_ID)
 {
+  PlugInProcFrame *proc_frame;
+
   g_return_if_fail (plug_in != NULL);
+
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
 
   if (! message)
     message = plug_in->prog;
 
-  if (! plug_in->progress)
+  if (! proc_frame->progress)
     {
-      plug_in->progress = gimp_new_progress (plug_in->gimp, display_ID);
+      proc_frame->progress = gimp_new_progress (plug_in->gimp, display_ID);
 
-      if (plug_in->progress)
+      if (proc_frame->progress)
         {
-          plug_in->progress_created = TRUE;
+          proc_frame->progress_created = TRUE;
 
-          g_object_ref (plug_in->progress);
+          g_object_ref (proc_frame->progress);
         }
     }
 
-  if (plug_in->progress)
+  if (proc_frame->progress)
     {
-      if (! plug_in->progress_cancel_id)
-        plug_in->progress_cancel_id =
-          g_signal_connect (plug_in->progress, "cancel",
+      if (! proc_frame->progress_cancel_id)
+        proc_frame->progress_cancel_id =
+          g_signal_connect (proc_frame->progress, "cancel",
                             G_CALLBACK (plug_in_progress_cancel_callback),
                             plug_in);
 
-      if (gimp_progress_is_active (plug_in->progress))
+      if (gimp_progress_is_active (proc_frame->progress))
         {
-          gimp_progress_set_text (plug_in->progress, message);
-          gimp_progress_set_value (plug_in->progress, 0.0);
+          gimp_progress_set_text (proc_frame->progress, message);
+          gimp_progress_set_value (proc_frame->progress, 0.0);
         }
       else
         {
-          gimp_progress_start (plug_in->progress, message, TRUE);
+          gimp_progress_start (proc_frame->progress, message, TRUE);
         }
     }
 }
@@ -86,41 +93,55 @@ void
 plug_in_progress_update (PlugIn  *plug_in,
 			 gdouble  percentage)
 {
+  PlugInProcFrame *proc_frame;
+
   g_return_if_fail (plug_in != NULL);
 
-  if (! plug_in->progress                           ||
-      ! gimp_progress_is_active (plug_in->progress) ||
-      ! plug_in->progress_cancel_id)
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
+
+  if (! proc_frame->progress                           ||
+      ! gimp_progress_is_active (proc_frame->progress) ||
+      ! proc_frame->progress_cancel_id)
     {
       plug_in_progress_start (plug_in, NULL, -1);
     }
 
-  if (plug_in->progress && gimp_progress_is_active (plug_in->progress))
-    gimp_progress_set_value (plug_in->progress, percentage);
+  if (proc_frame->progress && gimp_progress_is_active (proc_frame->progress))
+    gimp_progress_set_value (proc_frame->progress, percentage);
 }
 
 void
 plug_in_progress_end (PlugIn *plug_in)
 {
+  PlugInProcFrame *proc_frame;
+
   g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->progress)
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
+
+  if (proc_frame->progress)
     {
-      if (plug_in->progress_cancel_id)
+      if (proc_frame->progress_cancel_id)
         {
-          g_signal_handler_disconnect (plug_in->progress,
-                                       plug_in->progress_cancel_id);
-          plug_in->progress_cancel_id = 0;
+          g_signal_handler_disconnect (proc_frame->progress,
+                                       proc_frame->progress_cancel_id);
+          proc_frame->progress_cancel_id = 0;
         }
 
-      if (gimp_progress_is_active (plug_in->progress))
-        gimp_progress_end (plug_in->progress);
+      if (gimp_progress_is_active (proc_frame->progress))
+        gimp_progress_end (proc_frame->progress);
 
-      if (plug_in->progress_created)
+      if (proc_frame->progress_created)
         {
-          gimp_free_progress (plug_in->gimp, plug_in->progress);
-          g_object_unref (plug_in->progress);
-          plug_in->progress = NULL;
+          gimp_free_progress (plug_in->gimp, proc_frame->progress);
+          g_object_unref (proc_frame->progress);
+          proc_frame->progress = NULL;
         }
     }
 }
@@ -153,21 +174,21 @@ plug_in_progress_install (PlugIn      *plug_in,
   else
     proc_frame = &plug_in->main_proc_frame;
 
-  if (plug_in->progress)
+  if (proc_frame->progress)
     {
       plug_in_progress_end (plug_in);
 
-      if (plug_in->progress)
+      if (proc_frame->progress)
         {
-          g_object_unref (plug_in->progress);
-          plug_in->progress = NULL;
+          g_object_unref (proc_frame->progress);
+          proc_frame->progress = NULL;
         }
     }
 
-  plug_in->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
-                                    "context",       proc_frame->context,
-                                    "callback-name", progress_callback,
-                                    NULL);
+  proc_frame->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
+                                       "context",       proc_frame->context,
+                                       "callback-name", progress_callback,
+                                       NULL);
 
   return TRUE;
 }
@@ -176,14 +197,21 @@ gboolean
 plug_in_progress_uninstall (PlugIn      *plug_in,
                             const gchar *progress_callback)
 {
+  PlugInProcFrame *proc_frame;
+
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
 
-  if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
+  if (plug_in->temp_proc_frames)
+    proc_frame = plug_in->temp_proc_frames->data;
+  else
+    proc_frame = &plug_in->main_proc_frame;
+
+  if (GIMP_IS_PDB_PROGRESS (proc_frame->progress))
     {
       plug_in_progress_end (plug_in);
-      g_object_unref (plug_in->progress);
-      plug_in->progress = NULL;
+      g_object_unref (proc_frame->progress);
+      proc_frame->progress = NULL;
 
       return TRUE;
     }

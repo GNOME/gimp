@@ -22,18 +22,11 @@
 
 #include <sys/types.h> /* pid_t  */
 
+#include "plug-in-proc-frame.h"
+
 
 #define WRITE_BUFFER_SIZE  512
 
-
-struct _PlugInProcFrame
-{
-  GimpContext *context;
-  ProcRecord  *proc_rec;
-  GMainLoop   *main_loop;
-  Argument    *return_vals;
-  gint         n_return_vals;
-};
 
 struct _PlugIn
 {
@@ -69,49 +62,47 @@ struct _PlugIn
 
   GList           *temp_proc_frames;
 
-  GimpProgress *progress;         /*  Progress dialog                         */
-  gboolean      progress_created; /*  Was the progress created by the plug-in */
-  gulong        progress_cancel_id;
-
   PlugInDef    *plug_in_def;      /*  Valid only during query() and init()    */
 };
 
 
-void       plug_in_init            (Gimp        *gimp);
-void       plug_in_exit            (Gimp        *gimp);
+void       plug_in_init            (Gimp         *gimp);
+void       plug_in_exit            (Gimp         *gimp);
 
-void       plug_in_call_query      (Gimp        *gimp,
-                                    GimpContext *context,
-                                    PlugInDef   *plug_in_def);
-void       plug_in_call_init       (Gimp        *gimp,
-                                    GimpContext *context,
-                                    PlugInDef   *plug_in_def);
+void       plug_in_call_query      (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    PlugInDef    *plug_in_def);
+void       plug_in_call_init       (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    PlugInDef    *plug_in_def);
 
-PlugIn   * plug_in_new             (Gimp        *gimp,
-                                    GimpContext *context,
-                                    ProcRecord  *proc_rec,
-                                    const gchar *prog);
+PlugIn   * plug_in_new             (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    ProcRecord   *proc_rec,
+                                    const gchar  *prog);
 
-void       plug_in_ref             (PlugIn      *plug_in);
-void       plug_in_unref           (PlugIn      *plug_in);
+void       plug_in_ref             (PlugIn       *plug_in);
+void       plug_in_unref           (PlugIn       *plug_in);
 
-gboolean   plug_in_open            (PlugIn      *plug_in);
-void       plug_in_close           (PlugIn      *plug_in,
-                                    gboolean     kill_it);
+gboolean   plug_in_open            (PlugIn       *plug_in);
+void       plug_in_close           (PlugIn       *plug_in,
+                                    gboolean      kill_it);
 
-void       plug_in_push            (Gimp        *gimp,
-                                    PlugIn      *plug_in);
-void       plug_in_pop             (Gimp        *gimp);
+void       plug_in_push            (Gimp         *gimp,
+                                    PlugIn       *plug_in);
+void       plug_in_pop             (Gimp         *gimp);
 
-void       plug_in_proc_frame_push (PlugIn      *plug_in,
-                                    GimpContext *context,
-                                    ProcRecord  *proc_rec);
-void       plug_in_proc_frame_pop  (PlugIn      *plug_in);
+void       plug_in_proc_frame_push (PlugIn       *plug_in,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    ProcRecord   *proc_rec);
+void       plug_in_proc_frame_pop  (PlugIn       *plug_in);
 
-void       plug_in_main_loop       (PlugIn      *plug_in);
-void       plug_in_main_loop_quit  (PlugIn      *plug_in);
+void       plug_in_main_loop       (PlugIn       *plug_in);
+void       plug_in_main_loop_quit  (PlugIn       *plug_in);
 
-gchar    * plug_in_get_undo_desc   (PlugIn      *plug_in);
+gchar    * plug_in_get_undo_desc   (PlugIn       *plug_in);
 
 
 #endif /* __PLUG_IN_H__ */

@@ -71,6 +71,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
+#include "core/gimpprogress.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -162,7 +163,7 @@ plug_in_call_query (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, context, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, context, NULL, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -203,7 +204,7 @@ plug_in_call_init (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (plug_in_def != NULL);
 
-  plug_in = plug_in_new (gimp, context, NULL, plug_in_def->prog);
+  plug_in = plug_in_new (gimp, context, NULL, NULL, plug_in_def->prog);
 
   if (plug_in)
     {
@@ -234,16 +235,17 @@ plug_in_call_init (Gimp        *gimp,
 }
 
 PlugIn *
-plug_in_new (Gimp        *gimp,
-             GimpContext *context,
-             ProcRecord  *proc_rec,
-             const gchar *prog)
+plug_in_new (Gimp         *gimp,
+             GimpContext  *context,
+             GimpProgress *progress,
+             ProcRecord   *proc_rec,
+             const gchar  *prog)
 {
-  PlugIn          *plug_in;
-  PlugInProcFrame *proc_frame;
+  PlugIn *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (prog != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (prog), NULL);
 
@@ -274,19 +276,10 @@ plug_in_new (Gimp        *gimp,
 
   plug_in->ext_main_loop      = NULL;
 
-  proc_frame = &plug_in->main_proc_frame;
-
-  proc_frame->context         = g_object_ref (context);
-  proc_frame->proc_rec        = proc_rec;
-  proc_frame->main_loop       = NULL;
-  proc_frame->return_vals     = NULL;
-  proc_frame->n_return_vals   = 0;
+  plug_in_proc_frame_init (&plug_in->main_proc_frame,
+                           context, progress, proc_rec);
 
   plug_in->temp_proc_frames   = NULL;
-
-  plug_in->progress           = NULL;
-  plug_in->progress_created   = FALSE;
-  plug_in->progress_cancel_id = 0;
 
   plug_in->plug_in_def        = NULL;
 
@@ -316,13 +309,7 @@ plug_in_unref (PlugIn *plug_in)
       g_free (plug_in->name);
       g_free (plug_in->prog);
 
-      if (plug_in->progress)
-        plug_in_progress_end (plug_in);
-
-      if (plug_in->progress)
-        g_object_unref (plug_in->progress);
-
-      g_object_unref (plug_in->main_proc_frame.context);
+      plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
 
       g_free (plug_in);
     }
@@ -620,15 +607,6 @@ plug_in_close (PlugIn   *plug_in,
 
   wire_clear_error ();
 
-  if (plug_in->progress)
-    plug_in_progress_end (plug_in);
-
-  if (plug_in->progress)
-    {
-      g_object_unref (plug_in->progress);
-      plug_in->progress = NULL;
-    }
-
   while (plug_in->temp_proc_frames)
     {
 #ifdef GIMP_UNSTABLE
@@ -647,6 +625,8 @@ plug_in_close (PlugIn   *plug_in,
 #endif
       g_main_loop_quit (plug_in->main_proc_frame.main_loop);
     }
+
+  plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
 
   if (plug_in->ext_main_loop &&
       g_main_loop_is_running (plug_in->ext_main_loop))
@@ -868,20 +848,19 @@ plug_in_pop (Gimp *gimp)
 }
 
 void
-plug_in_proc_frame_push (PlugIn      *plug_in,
-                         GimpContext *context,
-                         ProcRecord  *proc_rec)
+plug_in_proc_frame_push (PlugIn       *plug_in,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         ProcRecord   *proc_rec)
 {
   PlugInProcFrame *proc_frame;
 
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (proc_rec != NULL);
 
-  proc_frame = g_new0 (PlugInProcFrame, 1);
-
-  proc_frame->context  = g_object_ref (context);
-  proc_frame->proc_rec = proc_rec;
+  proc_frame = plug_in_proc_frame_new (context, progress, proc_rec);
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
                                               proc_frame);
@@ -897,11 +876,10 @@ plug_in_proc_frame_pop (PlugIn *plug_in)
 
   proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
 
+  plug_in_proc_frame_free (proc_frame, plug_in);
+
   plug_in->temp_proc_frames = g_list_remove (plug_in->temp_proc_frames,
                                              proc_frame);
-
-  g_object_unref (proc_frame->context);
-  g_free (proc_frame);
 }
 
 void

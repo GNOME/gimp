@@ -1,5 +1,19 @@
 2004-09-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-proc-frame.[ch]: new files containing
+	utility functions for initializing/freeing PlugInProcFrames.
+	Added the progress stuff to the proc_frame.
+
+	* app/plug-in/plug-in.[ch]: removed the progress stuff from the
+	PlugIn struct and use the new proc_frame utility functions.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.c: changed accordingly.
+
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
 	Prepare for enabling private contexts for plug-ins and scripts:
 
 	* app/plug-in/plug-in.[ch]: removed the "context" member from

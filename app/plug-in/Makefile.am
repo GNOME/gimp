@@ -29,6 +29,8 @@ libappplug_in_a_SOURCES = \
 	plug-in-params.h	\
 	plug-in-proc.c		\
 	plug-in-proc.h		\
+	plug-in-proc-frame.c	\
+	plug-in-proc-frame.h	\
 	plug-in-progress.c	\
 	plug-in-progress.h	\
 	plug-in-rc.c		\

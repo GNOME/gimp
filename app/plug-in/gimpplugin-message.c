@@ -389,7 +389,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
    *  procedural_db_execute() will return appropriate error return_vals.
    */
   return_vals = procedural_db_execute (plug_in->gimp, proc_frame->context,
-                                       plug_in->progress,
+                                       proc_frame->progress,
                                        proc_name, args);
 
   plug_in_pop (plug_in->gimp);

@@ -86,7 +86,7 @@ plug_in_run (Gimp         *gimp,
       goto done;
     }
 
-  plug_in = plug_in_new (gimp, context, proc_rec,
+  plug_in = plug_in_new (gimp, context, progress, proc_rec,
                          proc_rec->exec_method.plug_in.filename);
 
   if (plug_in)
@@ -100,9 +100,6 @@ plug_in_run (Gimp         *gimp,
           plug_in_unref (plug_in);
           goto done;
         }
-
-      if (progress)
-        plug_in->progress = g_object_ref (progress);
 
       config.version         = GIMP_PROTOCOL_VERSION;
       config.tile_width      = TILE_WIDTH;
@@ -250,7 +247,7 @@ plug_in_temp_run (ProcRecord   *proc_rec,
     {
       GPProcRun proc_run;
 
-      plug_in_proc_frame_push (plug_in, context, proc_rec);
+      plug_in_proc_frame_push (plug_in, context, progress, proc_rec);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
