@@ -1,3 +1,8 @@
+2000-07-24  Seth Burgess <sjburges@gimp.org>
+	
+	* plug-ins/common/jpeg.c: fixed various capitalization issues
+	by applying patch from <sgunderson@bigfoot.com>.
+
 2000-07-25  Sven Neumann  <sven@gimp.org>
 
 	* AUTHORS

@@ -335,7 +335,7 @@ query (void)
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1999",
-                          "<Save>/Jpeg",
+                          "<Save>/JPEG",
 			  "RGB*, GRAY*",
                           PROC_PLUG_IN,
                           nsave_args, 0,
@@ -1587,7 +1587,7 @@ save_dialog (void)
   GtkWidget *prv_frame;
   GDrawableType dtype;
 
-  dlg = gimp_dialog_new (_("Save as Jpeg"), "jpeg",
+  dlg = gimp_dialog_new (_("Save as JPEG"), "jpeg",
 			 gimp_standard_help_func, "filters/jpeg.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
@@ -1619,7 +1619,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
   gtk_widget_show (vbox);
 
-  preview = gtk_check_button_new_with_label (_("Preview (in Image Window)"));
+  preview = gtk_check_button_new_with_label (_("Preview (in image window)"));
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (preview), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
@@ -1699,7 +1699,7 @@ save_dialog (void)
 				   1, 64, 1, 1, 0.0);
   restart_markers_scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 
-  restart = gtk_check_button_new_with_label (_("Restart Markers"));
+  restart = gtk_check_button_new_with_label (_("Restart markers"));
   gtk_table_attach (GTK_TABLE (table), restart, 0, 1, 2, 3,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (restart), "toggled",
@@ -1707,7 +1707,7 @@ save_dialog (void)
 		      scale_data);
   gtk_widget_show (restart);
 
-  restart_markers_label = gtk_label_new (_("Restart Frequency (Rows):"));
+  restart_markers_label = gtk_label_new (_("Restart frequency (rows):"));
   gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), restart_markers_label, 0, 1, 3, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
@@ -1765,7 +1765,7 @@ save_dialog (void)
   gtk_widget_set_sensitive (progressive, FALSE);
 #endif
   
-  baseline = gtk_check_button_new_with_label (_("Force Baseline JPEG (Readable by all Decoders)"));
+  baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (Readable by all decoders)"));
   gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
@@ -1806,7 +1806,7 @@ save_dialog (void)
 
   dct_menu = gtk_option_menu_new ();
  
-  label = gtk_label_new (_("DCT Method (Speed/Quality Tradeoff):"));
+  label = gtk_label_new (_("DCT method (Speed/quality tradeoff):"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 2, 8, 9,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
@@ -1823,7 +1823,7 @@ save_dialog (void)
       gtk_widget_set_sensitive (subsmp_menu, FALSE);
     }
 
-  com_frame = gtk_frame_new (_("Image Comments"));
+  com_frame = gtk_frame_new (_("Image comments"));
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), com_frame, TRUE, TRUE, 0);
 
