@@ -26,6 +26,7 @@
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -33,6 +34,13 @@
 #include "gimpvectors-preview.h"
 
 #include "gimp-intl.h"
+
+
+enum
+{
+  CHANGED,
+  LAST_SIGNAL
+};
 
 
 static void       gimp_vectors_class_init  (GimpVectorsClass *klass);
@@ -48,6 +56,8 @@ static GimpItem * gimp_vectors_duplicate   (GimpItem         *item,
 
 
 /*  private variables  */
+
+static guint gimp_vectors_signals[LAST_SIGNAL] = { 0 };
 
 static GimpItemClass *parent_class = NULL;
 
@@ -95,6 +105,15 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  gimp_vectors_signals[CHANGED] =
+    g_signal_new ("changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpVectorsClass, changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_vectors_finalize;
 
@@ -145,14 +164,14 @@ static gsize
 gimp_vectors_get_memsize (GimpObject *object)
 {
   GimpVectors *vectors;
-  GList       *stroke;
+  GList       *list;
   gsize        memsize = 0;
 
   vectors = GIMP_VECTORS (object);
 
-  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (stroke->data))
-               + sizeof (GList);
+  for (list = vectors->strokes; list; list = g_list_next (list))
+    memsize += (gimp_object_get_memsize (GIMP_OBJECT (list->data)) +
+                sizeof (GList));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
@@ -180,7 +199,7 @@ gimp_vectors_duplicate (GimpItem *item,
 
   gimp_vectors_copy_strokes (vectors, new_vectors);
 
-  return new_item;;
+  return new_item;
 }
 
 
@@ -352,7 +371,7 @@ gimp_vectors_stroke_get_next (const GimpVectors *vectors,
     {
       if (!prev)
         {
-          return vectors->strokes->data;
+          return vectors->strokes ? vectors->strokes->data : NULL;
         }
       else
         {

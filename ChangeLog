@@ -1,5 +1,10 @@
 2003-04-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpvectors.[ch]: made "changed" a real signal,
+	don't crash when iterating a NULL stroke list, cleanup.
+
+2003-04-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): check
 	for !GIMP_IS_PREVIEW(widget), not for GTK_WIDGET_NO_WINDOW(widget)
 	when deciding whether to put the tab_widget in a GtkEventBox

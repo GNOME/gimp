@@ -35,13 +35,12 @@
 
 struct _GimpVectors
 {
-  GimpItem          parent_instance;
+  GimpItem  parent_instance;
 
-  gboolean          visible;            /* controls visibility            */
-  gboolean          locked;             /* transformation locking         */
+  gboolean  visible;            /* controls visibility            */
+  gboolean  locked;             /* transformation locking         */
 
-  /* Should the following be a GList of GimpStrokes? */
-  GList           * strokes;            /* The List of GimpStrokes        */
+  GList    *strokes;            /* The List of GimpStrokes        */
 
   /* Stuff missing */
 };
@@ -51,41 +50,33 @@ struct _GimpVectorsClass
 {
   GimpItemClass  parent_class;
 
-  void          (* changed)              (GimpVectors       *vectors);
+  /*  signals  */
+  void          (* changed)           (GimpVectors       *vectors);
 
-  void          (* stroke_add)           (GimpVectors       *vectors,
-                                          const GimpStroke  *stroke);
-              
-  GimpStroke  * (* stroke_get)           (const GimpVectors *vectors,
-		                          const GimpCoords  *coord);
-              
-  GimpStroke  * (* stroke_get_next)      (const GimpVectors *vectors,
-                                          const GimpStroke  *prev);
-              
-  gdouble       (* stroke_get_length)    (const GimpVectors *vectors,
-                                          const GimpStroke  *stroke);
-
-  GimpAnchor  * (* anchor_get)           (const GimpVectors *vectors,
-                                          const GimpCoords  *coord,
-                                          GimpStroke       **ret_stroke);
-              
-  void          (* anchor_delete)        (GimpVectors       *vectors,
-                                          GimpAnchor        *anchor);
-              
-  gdouble       (* get_length)           (const GimpVectors *vectors,
-                                          const GimpAnchor  *start);
-              
-  gdouble       (* get_distance)         (const GimpVectors *vectors,
-                                          const GimpCoords  *coord);
-              
-  gint          (* interpolate)          (const GimpVectors *vectors,
-                                          const GimpStroke  *stroke,
-                                          const gdouble      precision,
-                                          const gint         max_points,
-                                          GimpCoords        *ret_coords);
-              
-  GimpVectors * (* make_bezier)          (const GimpVectors *vectors);
-
+  /*  virtual functions  */
+  void          (* stroke_add)        (GimpVectors       *vectors,
+                                       const GimpStroke  *stroke);
+  GimpStroke  * (* stroke_get)        (const GimpVectors *vectors,
+		                       const GimpCoords  *coord);
+  GimpStroke  * (* stroke_get_next)   (const GimpVectors *vectors,
+                                       const GimpStroke  *prev);
+  gdouble       (* stroke_get_length) (const GimpVectors *vectors,
+                                       const GimpStroke  *stroke);
+  GimpAnchor  * (* anchor_get)        (const GimpVectors *vectors,
+                                       const GimpCoords  *coord,
+                                       GimpStroke       **ret_stroke);
+  void          (* anchor_delete)     (GimpVectors       *vectors,
+                                       GimpAnchor        *anchor);
+  gdouble       (* get_length)        (const GimpVectors *vectors,
+                                       const GimpAnchor  *start);
+  gdouble       (* get_distance)      (const GimpVectors *vectors,
+                                       const GimpCoords  *coord);
+  gint          (* interpolate)       (const GimpVectors *vectors,
+                                       const GimpStroke  *stroke,
+                                       const gdouble      precision,
+                                       const gint         max_points,
+                                       GimpCoords        *ret_coords);
+  GimpVectors * (* make_bezier)       (const GimpVectors *vectors);
 };
 
 
