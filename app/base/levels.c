@@ -99,7 +99,7 @@ levels_channel_auto (Levels               *levels,
   levels->low_output[channel]  = 0;
   levels->high_output[channel] = 255;
 
-  count = gimp_histogram_get_count (hist, 0, 255);
+  count = gimp_histogram_get_count (hist, channel, 0, 255);
 
   if (count == 0.0)
     {

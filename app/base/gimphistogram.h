@@ -25,13 +25,14 @@
 GimpHistogram * gimp_histogram_new         (GimpBaseConfig       *config);
 void            gimp_histogram_free        (GimpHistogram        *histogram);
 
-void            gimp_histogram_calculate   (GimpHistogram        *historgam, 
+void            gimp_histogram_calculate   (GimpHistogram        *historgam,
                                             PixelRegion          *region,
                                             PixelRegion          *mask);
 
 gdouble         gimp_histogram_get_maximum (GimpHistogram        *histogram,
                                             GimpHistogramChannel  channel);
 gdouble         gimp_histogram_get_count   (GimpHistogram        *histogram,
+                                            GimpHistogramChannel  channel,
                                             gint                  start,
                                             gint                  end);
 gdouble         gimp_histogram_get_mean    (GimpHistogram        *histogram,

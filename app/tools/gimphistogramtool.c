@@ -66,13 +66,6 @@ struct _HistogramToolDialog
   GimpHistogram     *hist;
   GtkWidget         *gradient;
 
-  gdouble            mean;
-  gdouble            std_dev;
-  gdouble            median;
-  gdouble            pixels;
-  gdouble            count;
-  gdouble            percentile;
-
   GimpDrawable      *drawable;
 };
 
@@ -99,9 +92,12 @@ static void   histogram_tool_dialog_update    (HistogramToolDialog  *htd,
 					       gint                  start,
 					       gint                  end);
 
-static void   histogram_tool_histogram_range  (GimpHistogramView    *view,
+static void   histogram_tool_range_changed    (GimpHistogramView    *view,
                                                gint                  start,
                                                gint                  end,
+                                               gpointer              data);
+static void   histogram_tool_channel_notify   (GimpHistogramView    *view,
+                                               GParamSpec           *pspec,
                                                gpointer              data);
 
 
@@ -242,40 +238,27 @@ gimp_histogram_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
+static void
+histogram_tool_range_changed (GimpHistogramView *view,
+                              gint               start,
+                              gint               end,
+                              gpointer           data)
+{
+  HistogramToolDialog *htd = (HistogramToolDialog *) data;
 
-/*  histogram_tool machinery  */
+  if (htd && htd->shell)
+    histogram_tool_dialog_update (htd, start, end);
+}
 
 static void
-histogram_tool_histogram_range (GimpHistogramView *widget,
-				gint               start,
-				gint               end,
-				gpointer           data)
+histogram_tool_channel_notify (GimpHistogramView *view,
+                               GParamSpec        *pspec,
+                               gpointer           data)
 {
-  HistogramToolDialog  *htd;
-  GimpHistogramChannel  channel;
-  gdouble               pixels;
-  gdouble               count;
+  HistogramToolDialog *htd = (HistogramToolDialog *) data;
 
-  htd = (HistogramToolDialog *) data;
-
-  if (htd == NULL || htd->hist == NULL ||
-      gimp_histogram_nchannels (htd->hist) <= 0)
-    return;
-
-  channel = gimp_histogram_view_get_channel (htd->histogram_box->histogram);
-
-  pixels = gimp_histogram_get_count (htd->hist, 0, 255);
-  count  = gimp_histogram_get_count (htd->hist, start, end);
-
-  htd->mean       = gimp_histogram_get_mean    (htd->hist, channel, start, end);
-  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, channel, start, end);
-  htd->median     = gimp_histogram_get_median  (htd->hist, channel, start, end);
-  htd->pixels     = pixels;
-  htd->count      = count;
-  htd->percentile = count / pixels;
-
-  if (htd->shell)
-    histogram_tool_dialog_update (htd, start, end);
+  if (htd && htd->shell)
+    histogram_tool_dialog_update (htd, view->start, view->end);
 }
 
 static void
@@ -283,30 +266,46 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
 			      gint                 start,
 			      gint                 end)
 {
-  gchar text[12];
+  GimpHistogramChannel  channel;
+  gdouble               pixels;
+  gdouble               count;
+  gchar                 text[12];
+
+  if (! htd->hist || ! gimp_histogram_nchannels (htd->hist))
+    return;
+
+  channel = gimp_histogram_view_get_channel (htd->histogram_box->histogram);
+
+  pixels = gimp_histogram_get_count (htd->hist, channel, 0, 255);
+  count  = gimp_histogram_get_count (htd->hist, channel, start, end);
 
   /*  mean  */
-  g_snprintf (text, sizeof (text), "%3.1f", htd->mean);
+  g_snprintf (text, sizeof (text), "%3.1f",
+              gimp_histogram_get_mean (htd->hist, channel, start, end));
   gtk_label_set_text (GTK_LABEL (htd->info_labels[0]), text);
 
   /*  std dev  */
-  g_snprintf (text, sizeof (text), "%3.1f", htd->std_dev);
+  g_snprintf (text, sizeof (text), "%3.1f",
+              gimp_histogram_get_std_dev (htd->hist, channel, start, end));
   gtk_label_set_text (GTK_LABEL (htd->info_labels[1]), text);
 
   /*  median  */
-  g_snprintf (text, sizeof (text), "%3.1f", htd->median);
+  g_snprintf (text, sizeof (text), "%3.1f",
+              (gdouble) gimp_histogram_get_median  (htd->hist,
+                                                    channel, start, end));
   gtk_label_set_text (GTK_LABEL (htd->info_labels[2]), text);
 
   /*  pixels  */
-  g_snprintf (text, sizeof (text), "%8.1f", htd->pixels);
+  g_snprintf (text, sizeof (text), "%8.1f", pixels);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[3]), text);
 
   /*  count  */
-  g_snprintf (text, sizeof (text), "%8.1f", htd->count);
+  g_snprintf (text, sizeof (text), "%8.1f", count);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[4]), text);
 
   /*  percentile  */
-  g_snprintf (text, sizeof (text), "%2.2f", htd->percentile * 100);
+  g_snprintf (text, sizeof (text), "%4.1f", (pixels > 0 ?
+                                             (100.0 * count / pixels) : 0.0));
   gtk_label_set_text (GTK_LABEL (htd->info_labels[5]), text);
 }
 
@@ -390,7 +389,11 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   gtk_widget_show (GTK_WIDGET (htd->histogram_box));
 
   g_signal_connect (htd->histogram_box->histogram, "range_changed",
-                    G_CALLBACK (histogram_tool_histogram_range),
+                    G_CALLBACK (histogram_tool_range_changed),
+                    htd);
+
+  g_signal_connect (htd->histogram_box->histogram, "notify::histogram-channel",
+                    G_CALLBACK (histogram_tool_channel_notify),
                     htd);
 
   /*  The table containing histogram information  */
@@ -411,8 +414,8 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 			GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (label);
 
-      htd->info_labels[i] = gtk_label_new ("0");
-      gtk_misc_set_alignment (GTK_MISC (htd->info_labels[i]), 0.0, 0.5);
+      htd->info_labels[i] = gtk_label_new (NULL);
+      gtk_misc_set_alignment (GTK_MISC (htd->info_labels[i]), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), htd->info_labels[i],
 			x + 1, x + 2, y, y + 1,
 			GTK_FILL, GTK_FILL, 2, 2);

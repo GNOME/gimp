@@ -1,3 +1,17 @@
+2003-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/base/gimphistogram.[ch] (gimp_histogram_get_count): added a
+	missing GimpHistogramChannel parameter. Fixes wrong values in the
+	histogram tool.
+
+	* app/base/levels.c
+	* app/base/lut-funcs.c
+	* app/pdb/color_cmds.c
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* app/tools/gimphistogramtool.c: update the histogram statistics
+	on channel changes.
+
 2003-10-29  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c: increased vertical spacing.

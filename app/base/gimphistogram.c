@@ -54,11 +54,11 @@ struct _GimpHistogram
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_alloc_values         (GimpHistogram *histogram, 
+static void   gimp_histogram_alloc_values         (GimpHistogram *histogram,
                                                    gint           bytes);
 static void   gimp_histogram_free_values          (GimpHistogram *histogram);
 static void   gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-                                                   PixelRegion   *region, 
+                                                   PixelRegion   *region,
                                                    PixelRegion   *mask);
 
 
@@ -105,7 +105,7 @@ gimp_histogram_free (GimpHistogram *histogram)
 }
 
 void
-gimp_histogram_calculate (GimpHistogram *histogram, 
+gimp_histogram_calculate (GimpHistogram *histogram,
 			  PixelRegion   *region,
 			  PixelRegion   *mask)
 {
@@ -161,7 +161,7 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 }
 
 gdouble
-gimp_histogram_get_maximum (GimpHistogram        *histogram, 
+gimp_histogram_get_maximum (GimpHistogram        *histogram,
 			    GimpHistogramChannel  channel)
 {
   gdouble max = 0.0;
@@ -177,8 +177,8 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_value (GimpHistogram        *histogram, 
-			  GimpHistogramChannel  channel, 
+gimp_histogram_get_value (GimpHistogram        *histogram,
+			  GimpHistogramChannel  channel,
 			  gint                  bin)
 {
   g_return_val_if_fail (histogram != NULL, 0.0);
@@ -190,8 +190,8 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 }
 
 gdouble
-gimp_histogram_get_channel (GimpHistogram        *histogram, 
-			    GimpHistogramChannel  channel, 
+gimp_histogram_get_channel (GimpHistogram        *histogram,
+			    GimpHistogramChannel  channel,
 			    gint                  bin)
 {
   g_return_val_if_fail (histogram != NULL, 0.0);
@@ -199,7 +199,7 @@ gimp_histogram_get_channel (GimpHistogram        *histogram,
   if (histogram->n_channels > 3)
     return gimp_histogram_get_value (histogram, channel + 1, bin);
   else
-    return gimp_histogram_get_value (histogram, channel    , bin);
+    return gimp_histogram_get_value (histogram, channel,     bin);
 }
 
 gint
@@ -211,9 +211,10 @@ gimp_histogram_nchannels (GimpHistogram *histogram)
 }
 
 gdouble
-gimp_histogram_get_count (GimpHistogram *histogram, 
-			  gint           start, 
-			  gint           end)
+gimp_histogram_get_count (GimpHistogram        *histogram,
+                          GimpHistogramChannel  channel,
+			  gint                  start,
+			  gint                  end)
 {
   gint    i;
   gdouble count = 0.0;
@@ -221,15 +222,15 @@ gimp_histogram_get_count (GimpHistogram *histogram,
   g_return_val_if_fail (histogram != NULL, 0.0);
 
   for (i = start; i <= end; i++)
-    count += histogram->values[0][i];
+    count += histogram->values[channel][i];
 
   return count;
 }
 
 gdouble
-gimp_histogram_get_mean (GimpHistogram        *histogram, 
+gimp_histogram_get_mean (GimpHistogram        *histogram,
 			 GimpHistogramChannel  channel,
-			 gint                  start, 
+			 gint                  start,
 			 gint                  end)
 {
   gint    i;
@@ -241,7 +242,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   for (i = start; i <= end; i++)
     mean += i * histogram->values[channel][i];
 
-  count = gimp_histogram_get_count (histogram, start, end);
+  count = gimp_histogram_get_count (histogram, channel, start, end);
 
   if (count > 0.0)
     return mean / count;
@@ -250,9 +251,9 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
 }
 
 gint
-gimp_histogram_get_median (GimpHistogram         *histogram, 
-			   GimpHistogramChannel   channel, 
-			   gint                   start, 
+gimp_histogram_get_median (GimpHistogram         *histogram,
+			   GimpHistogramChannel   channel,
+			   gint                   start,
 			   gint                   end)
 {
   gint    i;
@@ -261,7 +262,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
 
   g_return_val_if_fail (histogram != NULL, -1);
 
-  count = gimp_histogram_get_count (histogram, start, end);
+  count = gimp_histogram_get_count (histogram, channel, start, end);
 
   for (i = start; i <= end; i++)
     {
@@ -275,9 +276,9 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
 }
 
 gdouble
-gimp_histogram_get_std_dev (GimpHistogram        *histogram, 
+gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 			    GimpHistogramChannel  channel,
-			    gint                  start, 
+			    gint                  start,
 			    gint                  end)
 {
   gint    i;
@@ -288,7 +289,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   g_return_val_if_fail (histogram != NULL, 0.0);
 
   mean  = gimp_histogram_get_mean  (histogram, channel, start, end);
-  count = gimp_histogram_get_count (histogram, start, end);
+  count = gimp_histogram_get_count (histogram, channel, start, end);
 
   if (count == 0.0)
     count = 1.0;
@@ -304,7 +305,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 /*  private functions  */
 
 static void
-gimp_histogram_alloc_values (GimpHistogram *histogram, 
+gimp_histogram_alloc_values (GimpHistogram *histogram,
                              gint           bytes)
 {
   gint i;
@@ -338,7 +339,7 @@ gimp_histogram_free_values (GimpHistogram *histogram)
 
 static void
 gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-				     PixelRegion   *region, 
+				     PixelRegion   *region,
 				     PixelRegion   *mask)
 {
   const guchar *src, *msrc;
@@ -403,7 +404,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 3: /* calculate seperate value values */ 
+	    case 3: /* calculate seperate value values */
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
@@ -422,7 +423,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 4: /* calculate seperate value values */ 
+	    case 4: /* calculate seperate value values */
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
@@ -475,7 +476,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 3: /* calculate seperate value values */ 
+	    case 3: /* calculate seperate value values */
 	      while (w--)
 		{
 		  values[1][s[0]] += 1.0;
@@ -492,7 +493,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 4: /* calculate seperate value values */ 
+	    case 4: /* calculate seperate value values */
 	      while (w--)
 		{
 		  values[1][s[0]] += 1.0;

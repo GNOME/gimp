@@ -343,7 +343,7 @@ typedef struct
 } hist_lut_struct;
 
 static gfloat
-equalize_lut_func (hist_lut_struct *hlut, 
+equalize_lut_func (hist_lut_struct *hlut,
 		   gint             n_channels,
 		   gint             channel,
 		   gfloat           value)
@@ -389,17 +389,19 @@ eq_histogram_lut_setup (GimpLut       *lut,
   g_return_if_fail (hist != NULL);
 
   /* Find partition points */
-  pixels_per_value = gimp_histogram_get_count (hist, 0, 255) / 256.0;
+  pixels_per_value = gimp_histogram_get_count (hist,
+                                               GIMP_HISTOGRAM_VALUE,
+                                               0, 255) / 256.0;
 
   for (k = 0; k < n_channels; k++)
     {
       /* First and last points in partition */
       hlut.part[k][0]   = 0;
       hlut.part[k][256] = 256;
-      
+
       /* Find intermediate points */
       j   = 0;
-      sum = (gimp_histogram_get_channel (hist, k, 0) + 
+      sum = (gimp_histogram_get_channel (hist, k, 0) +
 	     gimp_histogram_get_channel (hist, k, 1));
 
       for (i = 1; i < 256; i++)

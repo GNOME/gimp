@@ -1055,8 +1055,8 @@ histogram_invoker (Gimp     *gimp,
 						   start_range, end_range);
 	  median     = gimp_histogram_get_median (histogram, channel,
 						  start_range, end_range);
-	  pixels     = gimp_histogram_get_count (histogram, 0, 255);
-	  count      = gimp_histogram_get_count (histogram,
+	  pixels     = gimp_histogram_get_count (histogram, channel, 0, 255);
+	  count      = gimp_histogram_get_count (histogram, channel,
 						 start_range, end_range);
 	  percentile = count / pixels;
     
