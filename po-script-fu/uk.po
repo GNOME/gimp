@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
+"POT-Creation-Date: 2000-12-22 20:11+0200\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -145,12 +145,15 @@ msgid "Script-Fu Font Selection"
 msgstr "Виб╕р шрифту Скрипт-Фу"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Виб╕р файлу Скрипт-Фу"
+msgstr ""
+"Помилка Скрипт-Фу п╕д час виконання\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -1189,11 +1192,11 @@ msgstr "Очистити перед малюванням"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
-msgstr ""
+msgstr "Очистити"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Очистити/заповнити"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
@@ -1249,7 +1252,6 @@ msgid "Fill with BG Color"
 msgstr "Заповнити кольором тла"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
 msgid "Fill with BG"
 msgstr "Заповнити кольором тла"
 
@@ -2077,7 +2079,7 @@ msgstr "Пор╕г (б╕льший 1<-->255 менший)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
-msgstr ""
+msgstr "Плитка"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
@@ -2174,10 +2176,3 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Працювати з коп╕╓ю"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Помилка Скрипт-Фу\n"
-#~ "%s"
