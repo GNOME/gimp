@@ -1,3 +1,7 @@
+2001-10-01  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: create build/win32/dirent/Makefile.
+
 2001-09-28  Sven Neumann  <sven@gimp.org>
 
 	* configure.in(ALL_LINGUAS): Removed zh_CN again until all po files

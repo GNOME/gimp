@@ -826,6 +826,7 @@ gimp.spec
 Makefile
 build/Makefile
 build/win32/Makefile
+build/win32/dirent/Makefile
 tools/Makefile
 tools/authorsgen/Makefile
 tools/pdbgen/Makefile
