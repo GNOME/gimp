@@ -1,5 +1,11 @@
 2001-06-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/flame/flame.c: do not use a drawable_ID from the last run
+	since this drawable might have changed or even vanished. The latter
+	case caused a crash (bug #37761).
+
+2001-06-19  Sven Neumann  <sven@gimp.org>
+
 	* app/fileops.c (file_open): do not use the global variable 
 	load_procs used by the file open dialog to store the user setting for 
 	the filetype. This setting is now only used if files are opened thru 
