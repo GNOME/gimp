@@ -77,7 +77,7 @@ AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]]
 		    , enable_ansi=no)
 
 dnl Possibly change default gimpdir from .gimp
-gimpdir=.gimp-1.1
+gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 AC_ARG_ENABLE(gimpdir, [  --enable-gimpdir=DIR    change default gimpdir from .gimp to DIR],
 if eval "test x$enable_gimpdir != x"; then
   if eval "test x$enable_gimpdir != xyes"; then
@@ -481,6 +481,8 @@ fi
 
 gimpdatadir=$datadir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+gimpsysconfdir=$sysconfdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+
 localedir='${prefix}/${DATADIRNAME}/locale'
 
 brushdata=`ls -1 $srcdir/data/brushes | grep -v Makefile`
@@ -708,6 +710,7 @@ AC_SUBST(GLIB_LIBS)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
+AC_SUBST(gimpsysconfdir)
 AC_SUBST(localedir)
 AC_SUBST(brushdata)
 AC_SUBST(gradientdata)

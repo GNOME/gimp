@@ -124,7 +124,7 @@ union GimpParamData
   gint32            d_unit;
   GimpParasite      d_parasite;
   gint32            d_tattoo;
-  gint32            d_status;
+  GimpPDBStatusType d_status;
 };
 </UNION>
 <STRUCT>
@@ -338,7 +338,9 @@ struct GimpChainButton
 <NAME>GimpChainButtonClass</NAME>
 struct GimpChainButtonClass
 {
-  GtkButtonClass parent_class;
+  GtkTableClass parent_class;
+
+  void (* toggled)  (GimpChainButton *gcb);
 };
 </STRUCT>
 <FUNCTION>
@@ -2049,6 +2051,11 @@ gchar     *basename
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_data_directory</NAME>
+<RETURNS>gchar  *</RETURNS>
+void
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_sysconf_directory</NAME>
 <RETURNS>gchar  *</RETURNS>
 void
 </FUNCTION>
@@ -5286,11 +5293,11 @@ GIOChannel      *channel,gchar          **data,gint             count
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(25)
+#define GIMP_MICRO_VERSION				(27)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.25"
+#define GIMP_VERSION					"1.1.27"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>

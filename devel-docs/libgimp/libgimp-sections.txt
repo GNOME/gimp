@@ -319,6 +319,7 @@ gimp_color_display_unregister
 gimp_directory
 gimp_personal_rc_file
 gimp_data_directory
+gimp_sysconf_directory
 gimp_gtkrc
 gimp_path_parse
 gimp_path_free

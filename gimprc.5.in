@@ -31,7 +31,11 @@
 .\" Wed Mar  3 13:09:52 MET 1999 Sven Neumann <sven@gimp.org>
 .\"   * reflect the changes that were made to the resolution stuff
 .\"
-.TH GIMPRC 5 "23 June 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.\" Thu Oct 12 20:14:36 PDT 2000 Ben Gertzfield <che@debian.org>
+.\"   * Move gimprc to gimpsysconfdir, make FILES section reflect this
+.\"   * Removed .gimp-1.1 hard ref, replace with gimpdir
+.\"
+.TH GIMPRC 5 "14 Oct 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimprc \- gimp configuration file
 .SH DESCRIPTION
@@ -39,7 +43,7 @@ The
 .B gimprc
 file is a configuation file read by the gimp when it starts up.  There
 are two of these: one system-wide one stored in
-@prefix@/share/gimp/gimprc and a per-user \fB$HOME\fP/@gimpdir@/gimprc
+@gimpsysconfdir@/gimprc and a per-user \fB$HOME\fP/@gimpdir@/gimprc
 which may override system settings.
 
 Comments are introduced by a hash sign (#), and continue until the
@@ -450,10 +454,10 @@ Base for paths to architecture-specific plugins and modules,
 
 .SH FILES
 .TP
-.I $PREFIX/share/gimp/gimprc
+.I @gimpsysconfdir@/gimprc
 System-wide configuration file
 .TP
-.I $HOME/.gimp-1.1/gimprc
+.I $HOME/@gimpdir@/gimprc
 Per-user configuration file
 .SH "SEE ALSO"
 .BR gimp (1), 

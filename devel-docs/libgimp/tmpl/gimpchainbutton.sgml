@@ -74,3 +74,10 @@ performs the cast if valid.
 @Returns: 
 
 
+<!-- ##### SIGNAL GimpChainButton::toggled ##### -->
+<para>
+
+</para>
+
+@gimpchainbutton: the object which received the signal.
+

@@ -105,19 +105,20 @@ stored in the RESOURCE_MANAGER property.
 .SH FILES
 
 Gimp's data files are stored in @gimpdatadir@, where ${prefix} 
-is set on install, but is typically /usr/local. 
-Most gimp configuration is read in from the users init file,
+is set on install, but is typically /usr/local. Gimp's system-wide
+configuration files are stored in @gimpsysconfdir@.
+Most gimp configuration is read in from the user's init file,
 \fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
-@gimpdatadir@/gimprc. The system wide file is parsed 
-first and the user gimprc can override the sytem settings. 
-@gimpdatadir@/gimprc_user is the default gimprc
-placed in users home directories the first time gimp is ran.
+@sysconfdir@/gimprc. The system wide file is parsed 
+first and the user gimprc can override the system settings. 
+@sysconfdir@/gimprc_user is the default gimprc
+placed in users' home directories the first time gimp is run.
 
 \fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
 config settings. Options such as widget color and fonts sizes 
 can be set here.
 
-@gimpdatadir@/gtkrc - sytem wide default set of gimp-specific 
+@gimpsysconfdir@/gtkrc - sytem wide default set of gimp-specific 
 GTK config settings.
 
 \fB$HOME\fP/@gimpdir@/ideas - lists all images that have been 
@@ -125,7 +126,7 @@ opened or saved using Gimp.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
-@gimpdatadir@/menurc - system wide set of keybindings.
+@gimpsysconfdir@/menurc - system wide set of keybindings.
 
 \fB$HOME\fP/@gimpdir@/parasiterc - Description of all available 
 gimp parasites. This is file is recreated everytime gimp starts up.
@@ -136,7 +137,7 @@ not supposed to edit it manually, but of course you
 can do. This file will be entirely rewritten every time
 you quit the gimp. If this file isn't found, defaults are used.
 
-@gimpdatadir@/unitrc - default user unit database. It
+@gimpsysconfdir@/unitrc - default user unit database. It
 contains the unit definitions for centimeters, meters, feet, yards,
 typographic points and typographic picas and is placed in users home
 directories the first time the gimp is ran.

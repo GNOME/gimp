@@ -5,6 +5,7 @@ gimpincludedir = $(includedir)/libgimp
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
+	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
 	@GIMP_THREAD_FLAGS@
 

@@ -237,6 +237,81 @@ gimp_data_directory (void)
 }
 
 /**
+ * gimp_sysconf_directory:
+ *
+ * Returns the top directory for GIMP config files. If the environment
+ * variable GIMP_SYSCONFDIR exists, that is used.  It should be an
+ * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * directory is used.  On Win32, the installation directory as deduced
+ * from the executable's name is used.
+ *
+ * The returned string is allocated just once, and should *NOT* be
+ * freed with g_free().
+ *
+ * Returns: The top directory for GIMP config files.  */
+gchar*
+gimp_sysconf_directory (void)
+{
+  static gchar *gimp_sysconf_dir = NULL;
+  gchar *env_gimp_sysconf_dir = NULL;
+  
+  if (gimp_sysconf_dir != NULL)
+    return gimp_sysconf_dir;
+
+  env_gimp_sysconf_dir = g_getenv ("GIMP_SYSCONFDIR");
+
+  if (NULL != env_gimp_sysconf_dir)
+    {
+      if (!g_path_is_absolute (env_gimp_sysconf_dir))
+	g_error ("GIMP_SYSCONFDIR environment variable should be an absolute path.");
+#ifndef __EMX__
+      gimp_sysconf_dir = g_strdup (env_gimp_sysconf_dir);
+#else      
+      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot(env_gimp_sysconf_dir));
+#endif      
+    }
+  else
+    {
+#ifndef G_OS_WIN32
+#ifndef __EMX__
+      gimp_sysconf_dir = SYSCONFDIR;
+#else
+      gimp_sysconf_dir = g_strdup(__XOS2RedirRoot(SYSCONFDIR));
+#endif
+#else
+      /* Figure it out from the executable name */
+      gchar filename[MAX_PATH];
+      gchar *sep1, *sep2;
+
+      if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
+	g_error ("GetModuleFilename failed\n");
+      
+      /* If the executable file name is of the format
+       * <foobar>\bin\gimp.exe of <foobar>\plug-ins\filter.exe, * use
+       * <foobar>. Otherwise, use the directory where the executable
+       * is.
+       */
+
+      sep1 = strrchr (filename, G_DIR_SEPARATOR);
+
+      *sep1 = '\0';
+
+      sep2 = strrchr (filename, G_DIR_SEPARATOR);
+
+      if (sep2 != NULL)
+	{
+	  if (g_strcasecmp (sep2 + 1, "bin") == 0
+	      || g_strcasecmp (sep2 + 1, "plug-ins") == 0)
+	    *sep2 = '\0';
+	}
+
+      gimp_sysconf_dir = g_strdup (filename);
+#endif
+    }
+  return gimp_sysconf_dir;
+}
+
+/**
  * gimp_gtkrc:
  *
  * Returns the name of the GIMP's application-specific gtkrc file.
@@ -255,7 +330,7 @@ gimp_gtkrc (void)
     return gimp_gtkrc_filename;
   
 
-  gimp_gtkrc_filename = g_strconcat (gimp_directory (),
+  gimp_gtkrc_filename = g_strconcat (gimp_sysconf_directory (),
 				     G_DIR_SEPARATOR_S,
 				     "gtkrc",
 				     NULL);

@@ -34,6 +34,7 @@ extern "C" {
 gchar * gimp_directory                  (void);
 gchar * gimp_personal_rc_file           (gchar     *basename);
 gchar * gimp_data_directory             (void);
+gchar * gimp_sysconf_directory		(void);
 gchar * gimp_gtkrc                      (void);
 
 GList * gimp_path_parse                 (gchar     *path,

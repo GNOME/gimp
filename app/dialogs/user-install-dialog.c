@@ -968,13 +968,14 @@ user_install_run (void)
   if (executable)
     {
 #ifdef G_OS_WIN32
-      char *quoted_data_dir, *quoted_user_dir;
+      char *quoted_data_dir, *quoted_user_dir, *quoted_sysconf_dir;
 
       /* On Windows, it is common for the GIMP data directory
        * to have spaces in it ("c:\Program Files\GIMP"). Put spaces in quotes.
        */
       quoted_data_dir = quote_spaces (gimp_data_directory ());
       quoted_user_dir = quote_spaces (gimp_directory ());
+      quoted_sysconf_dir = quote_spaces (gimp_sysconf_directory ())
 
       /* The Microsoft _popen doesn't work in Windows applications, sigh.
        * Do the installation by calling system(). The user_install.bat
@@ -984,14 +985,15 @@ user_install_run (void)
        */
 
       AllocConsole ();
-      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
+      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s",
 		  quoted_data_dir, quoted_data_dir,
-		  quoted_user_dir);
+		  quoted_user_dir, quoted_sysconf_dir);
 
       if (system (buffer) == -1)
 	executable = FALSE;
       g_free (quoted_data_dir);
       g_free (quoted_user_dir);
+      g_free (quoted_sysconf_dir);
 
       if (executable)
 	add_label (GTK_BOX (log_page),
@@ -1000,14 +1002,14 @@ user_install_run (void)
 		     "Otherwise, quit and investigate the possible reason..."));
 #else
 #ifndef __EMX__
-      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s",
+      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s %s",
 		  gimp_data_directory (),
 		  "2>&1",
-		  gimp_data_directory(), gimp_directory ());
+		  gimp_data_directory(), gimp_directory (), gimp_sysconf_directory());
 #else
-      g_snprintf (buffer, sizeof(buffer), "cmd.exe /c %s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
+      g_snprintf (buffer, sizeof(buffer), "cmd.exe /c %s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s",
 		  gimp_data_directory (), gimp_data_directory(),
-		  gimp_directory ());
+		  gimp_directory (), gimp_sysconf_directory());
       {
 	char *s = buffer + 10;
 	while (*s)

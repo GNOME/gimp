@@ -1,9 +1,9 @@
 @REM This file is executed by the GIMP. Do NOT run this yourself.
 @echo off
 mkdir %2
-copy %1\gimprc_user %2\gimprc
-copy %1\unitrc %2\unitrc
-copy %1\gtkrc_user %2\gtkrc
+copy %3\gimprc_user %2\gimprc
+copy %3\unitrc %2\unitrc
+copy %3\gtkrc_user %2\gtkrc
 mkdir %2\brushes
 mkdir %2\generated_brushes
 mkdir %2\gradients

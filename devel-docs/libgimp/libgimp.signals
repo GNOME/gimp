@@ -1,4 +1,10 @@
 <SIGNAL>
+<NAME>GimpChainButton::toggled</NAME>
+<RETURNS>void</RETURNS>
+GimpChainButton *gimpchainbutton
+</SIGNAL>
+
+<SIGNAL>
 <NAME>GimpColorButton::color-changed</NAME>
 <RETURNS>void</RETURNS>
 GimpColorButton *gimpcolorbutton

@@ -40,6 +40,14 @@ configuration files.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_sysconf_directory ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gtkrc ##### -->
 <para>
 

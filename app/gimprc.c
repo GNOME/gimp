@@ -372,7 +372,7 @@ gimp_system_rc_file (void)
   if (value != NULL)
     return value;
 
-  value = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S,
+  value = g_strconcat (gimp_sysconf_directory (), G_DIR_SEPARATOR_S,
 		       "gimprc", NULL);
   return value;
 }

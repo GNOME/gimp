@@ -193,12 +193,14 @@ EXTRA_DIST = \
 	gimp.spec
 
 gimpdata_DATA = \
-	gimprc			 \
-	gimprc_user		 \
-	gtkrc			 \
-	unitrc			 \
 	gimp_logo.ppm		 \
-	gimp_splash.ppm		 \
+	gimp_splash.ppm
+
+gimpsysconf_DATA = \
+	gimprc			\
+	gimprc_user		\
+	gtkrc			\
+	unitrc			\
 	ps-menurc
 
 gimpdata_SCRIPTS = user_install

@@ -1,5 +1,22 @@
 2000-10-14  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am
+	* configure.in
+	* gimp.1.in
+	* gimp.spec.in
+	* gimprc.5.in
+	* user_install
+	* user_install.bat
+	* app/gimprc.c
+	* app/user_install.c
+	* libgimp/Makefile.am
+	* libgimp/gimpenv.[ch]: applied a modified version of 
+	gimp-che-20001013-2, a patch from Ben Gertzfield <che@debian.org> 
+	that moves the system-dependant configuration files (gimprc and 
+	friends) into $prefix/etc/gimp/1.1.
+	
+2000-10-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/Makefile.am
 	* plug-ins/print/README
 	* plug-ins/print/gimp_main_window.c
@@ -12,8 +29,8 @@
 
 2000-10-14  Sven Neumann  <sven@gimp.org>
 
-	* app/user_install.c: applied patch from Ben Gertzfield which fixes
-	a misuse of "it's", changing it to "its".
+	* app/user_install.c: applied gimp-che-20001013-2, a patch from Ben 
+	Gertzfield which fixes a misuse of "it's", changing it to "its".
 
 2000-10-14  Daniel Egger  <egger@suse.de>
 

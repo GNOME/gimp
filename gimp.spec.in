@@ -2,6 +2,7 @@
 %define microver @GIMP_MICRO_VERSION@
 %define ver      @VERSION@
 %define prefix	 /usr
+%define sysconfdir	/etc
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
@@ -178,13 +179,14 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/share/gimp/%{subver}/patterns/
 %{prefix}/share/gimp/%{subver}/scripts/
 
-%{prefix}/share/gimp/%{subver}/gimprc
-%{prefix}/share/gimp/%{subver}/gimprc_user
-%{prefix}/share/gimp/%{subver}/gtkrc
-%{prefix}/share/gimp/%{subver}/unitrc
+%{sysconfdir}/gimp-%{subver}/gimprc
+%{sysconfdir}/gimp-%{subver}/gimprc_user
+%{sysconfdir}/gimp-%{subver}/gtkrc
+%{sysconfdir}/gimp-%{subver}/unitrc
+%{sysconfdir}/gimp-%{subver}/ps-menurc
+
 %{prefix}/share/gimp/%{subver}/gimp_logo.ppm
 %{prefix}/share/gimp/%{subver}/gimp_splash.ppm
-%{prefix}/share/gimp/%{subver}/ps-menurc
 
 %defattr (0555, bin, bin)
 %{prefix}/share/gimp/%{subver}/user_install
