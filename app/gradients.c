@@ -81,15 +81,20 @@ gradients_free (void)
 
   while (GIMP_LIST (global_gradient_list)->list)
     {
-      GimpGradient *gradient =
-	GIMP_GRADIENT (GIMP_LIST (global_gradient_list)->list->data);
+      GimpData *data;
 
-      if (gradient->dirty)
-	gimp_gradient_save (gradient);
+      data = GIMP_DATA (GIMP_LIST (global_gradient_list)->list->data);
 
-      gimp_container_remove
-        (global_gradient_list,
-         GIMP_OBJECT (GIMP_LIST (global_gradient_list)->list->data));
+      if (! data->filename)
+	gimp_data_create_filename (data,
+				   GIMP_OBJECT (data)->name,
+				   GIMP_GRADIENT_FILE_EXTENSION,
+				   brush_path);
+
+      if (data->dirty)
+	gimp_data_save (data);
+
+      gimp_container_remove (global_gradient_list, GIMP_OBJECT (data));
     }
 
   gradient_select_thaw_all ();

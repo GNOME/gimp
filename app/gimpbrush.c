@@ -89,7 +89,7 @@ gimp_brush_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-    type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &info);
+    type = gtk_type_unique (GIMP_TYPE_DATA, &info);
   }
   return type;
 }
@@ -103,7 +103,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = gtk_type_class (GIMP_TYPE_DATA);
   
   object_class->destroy = gimp_brush_destroy;
 
@@ -116,16 +116,14 @@ gimp_brush_class_init (GimpBrushClass *klass)
 static void
 gimp_brush_init (GimpBrush *brush)
 {
-  brush->filename  = NULL;
+  brush->mask      = NULL;
+  brush->pixmap    = NULL;
 
   brush->spacing   = 20;
   brush->x_axis.x  = 15.0;
   brush->x_axis.y  =  0.0;
   brush->y_axis.x  =  0.0;
   brush->y_axis.y  = 15.0;
-
-  brush->mask      = NULL;
-  brush->pixmap    = NULL;
 }
 
 static void
@@ -134,8 +132,6 @@ gimp_brush_destroy (GtkObject *object)
   GimpBrush *brush;
 
   brush = GIMP_BRUSH (object);
-
-  g_free (brush->filename);
 
   if (brush->mask)
     temp_buf_free (brush->mask);
@@ -269,12 +265,16 @@ gimp_brush_load (const gchar *filename)
 
   close (fd);
 
-  brush->filename = g_strdup (filename);
+  if (! brush)
+    return NULL;
+
+  gimp_data_set_filename (GIMP_DATA (brush), filename);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     {
       temp_buf_swap (brush->mask);
+
       if (brush->pixmap)
 	temp_buf_swap (brush->pixmap);
     }
@@ -429,7 +429,7 @@ gimp_brush_load_brush (gint         fd,
 	    }
 	}
       break;
-      
+
     default:
       g_message ("Unsupported brush depth: %d\n"
 		 "in file \"%s\"\n"

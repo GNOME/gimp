@@ -58,6 +58,8 @@ typedef         GimpImage           GImage;
 
 /*  data objects  */
 
+typedef struct _GimpData            GimpData;
+
 typedef struct _GimpBrush	    GimpBrush;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
 typedef struct _GimpBrushPipe       GimpBrushPipe;

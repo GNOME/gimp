@@ -1,3 +1,34 @@
+2001-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpdata.[ch]: new abstract base class for everything
+	(except images) which has a filename and can become dirty and must
+	be saved.
+
+	* app/gimpbrush.[ch]
+	* app/gimpgradient.[ch]
+	* app/gimppattern.[ch]: all derived from GimpData now.
+
+	* app/gimpbrushgenerated.[ch]
+	* app/brush_select.c
+	* app/brushes.c
+	* app/gimpbrushpipe.c
+	* app/gradient_editor.c
+	* app/gradients.c
+	* app/patterns.c: removed lots of code duplication due to common
+	file save magic.
+
+	The gradient file format has changed: it now contains the
+	gradient's name (no more ugly underscores). The files have the
+	extension ".ggr".
+
+	* app/gimpgradient.[ch]: save new gradients, load new and old
+	gradients.
+
+	* data/gradients/*: removed all old gradients and added the new
+	ones.
+
 2001-02-10  David Monniaux  <monniaux@genievre.ens.fr>
 
 	MMX code for paint_funcs. Very partial so far.

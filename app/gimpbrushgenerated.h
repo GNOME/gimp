@@ -25,6 +25,9 @@
 #include "gimpbrush.h"
 
 
+#define GIMP_BRUSH_GENERATED_FILE_EXTENSION ".vbr"
+
+
 #define GIMP_TYPE_BRUSH_GENERATED            (gimp_brush_generated_get_type ())
 #define GIMP_BRUSH_GENERATED(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
 #define GIMP_BRUSH_GENERATED_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
@@ -59,10 +62,6 @@ GimpBrush * gimp_brush_generated_new          (gfloat       radius,
 					       gfloat       angle,
 					       gfloat       aspect_ratio);
 GimpBrush * gimp_brush_generated_load         (const gchar *file_name);
-
-void    gimp_brush_generated_save             (GimpBrushGenerated *brush,
-					       const gchar        *directory);
-void    gimp_brush_generated_delete           (GimpBrushGenerated *brush);
 
 void    gimp_brush_generated_freeze           (GimpBrushGenerated *brush);
 void    gimp_brush_generated_thaw             (GimpBrushGenerated *brush);

@@ -47,42 +47,18 @@
 #define OVERSAMPLING 5
 
 
-static void gimp_brush_generated_generate (GimpBrushGenerated *brush);
+/*  local function prototypes  */
+static void     gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
+static void       gimp_brush_generated_init     (GimpBrushGenerated *brush);
+static void       gimp_brush_generated_destroy  (GtkObject          *object);
+static gboolean   gimp_brush_generated_save     (GimpData           *data);
+static void       gimp_brush_generated_dirty    (GimpData           *data);
 
 
 static GimpBrushClass *parent_class = NULL;
 
 
-static void
-gimp_brush_generated_destroy (GtkObject *object)
-{
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
-{
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
-
-  object_class->destroy = gimp_brush_generated_destroy;
-}
-
-static void
-gimp_brush_generated_init (GimpBrushGenerated *brush)
-{
-  brush->radius       = 5.0;
-  brush->hardness     = 0.0;
-  brush->angle        = 0.0;
-  brush->aspect_ratio = 1.0;
-  brush->freeze       = 0;
-}
-
-guint
+GtkType
 gimp_brush_generated_get_type (void)
 {
   static GtkType type = 0;
@@ -107,162 +83,56 @@ gimp_brush_generated_get_type (void)
   return type;
 }
 
-GimpBrush *
-gimp_brush_generated_new (gfloat radius,
-			  gfloat hardness,
-			  gfloat angle,
-			  gfloat aspect_ratio)
+static void
+gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
-  GimpBrushGenerated *brush;
+  GtkObjectClass *object_class;
+  GimpDataClass  *data_class;
 
-  /* set up normal brush data */
-  brush = GIMP_BRUSH_GENERATED (gtk_type_new (GIMP_TYPE_BRUSH_GENERATED));
+  object_class = (GtkObjectClass *) klass;
+  data_class   = (GimpDataClass *) klass;
 
-  gimp_object_set_name (GIMP_OBJECT (brush), "Untitled");
+  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
 
-  GIMP_BRUSH (brush)->spacing = 20;
+  object_class->destroy = gimp_brush_generated_destroy;
 
-  /* set up gimp_brush_generated data */
-  brush->radius       = radius;
-  brush->hardness     = hardness;
-  brush->angle        = angle;
-  brush->aspect_ratio = aspect_ratio;
-
-  /* render brush mask */
-  gimp_brush_generated_generate (brush);
-
-  return GIMP_BRUSH (brush);
+  data_class->save  = gimp_brush_generated_save;
+  data_class->dirty = gimp_brush_generated_dirty;
 }
 
-GimpBrush *
-gimp_brush_generated_load (const gchar *file_name)
+static void
+gimp_brush_generated_init (GimpBrushGenerated *brush)
 {
-  GimpBrushGenerated *brush;
-  FILE   *fp;
-  gchar   string[256];
-  gfloat  fl;
-  gfloat  version;
-
-  if ((fp = fopen (file_name, "rb")) == NULL)
-    return NULL;
-
-  /* make sure the file we are reading is the right type */
-  fgets (string, 255, fp);
-  
-  if (strncmp (string, "GIMP-VBR", 8) != 0)
-    return NULL;
-  
-  /* make sure we are reading a compatible version */
-  fgets (string, 255, fp);
-  sscanf (string, "%f", &version);
-  g_return_val_if_fail (version < 2.0, NULL);
-
-  /* create new brush */
-  brush =
-    GIMP_BRUSH_GENERATED (gtk_type_new (gimp_brush_generated_get_type ()));
-
-  GIMP_BRUSH (brush)->filename = g_strdup (file_name);
-
-  gimp_brush_generated_freeze (brush);
-
-  /* read name */
-  fgets (string, 255, fp);
-  if (string[strlen (string) - 1] == '\n')
-    string[strlen (string) - 1] = 0;
-  gimp_object_set_name (GIMP_OBJECT (brush), string);
-
-  /* read brush spacing */
-  fscanf (fp, "%f", &fl);
-  GIMP_BRUSH (brush)->spacing = fl;
-
-  /* read brush radius */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_radius (brush, fl);
-
-  /* read brush hardness */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_hardness (brush, fl);
-
-  /* read brush aspect_ratio */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_aspect_ratio (brush, fl);
-
-  /* read brush angle */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_angle (brush, fl);
-
-  fclose (fp);
-
-  gimp_brush_generated_thaw (brush);
-
-  if (stingy_memory_use)
-    temp_buf_swap (GIMP_BRUSH (brush)->mask);
-
-  return GIMP_BRUSH (brush);
+  brush->radius       = 5.0;
+  brush->hardness     = 0.0;
+  brush->angle        = 0.0;
+  brush->aspect_ratio = 1.0;
+  brush->freeze       = 0;
 }
 
-void
-gimp_brush_generated_save (GimpBrushGenerated *brush,
-			   const gchar        *directory)
+static void
+gimp_brush_generated_destroy (GtkObject *object)
 {
-  FILE  *fp;
-  gchar *filename = NULL;
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
-  g_return_if_fail (brush != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-  g_return_if_fail (directory != NULL);
+static gboolean
+gimp_brush_generated_save (GimpData *data)
+{
+  GimpBrushGenerated *brush;
+  FILE               *fp;
 
-  if (! GIMP_BRUSH (brush)->filename)
-    {
-      gchar *safe_name;
-      gint   i;
-      gint   unum = 1;
+  g_return_val_if_fail (data != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (data), FALSE);
 
-      /* make sure we don't create a naughty filename */
-      safe_name = g_strdup (GIMP_OBJECT (brush)->name);
-      if (safe_name[0] == '.')
-	safe_name[0] = '_';
-      for (i = 0; safe_name[i]; i++)
-	if (safe_name[i] == G_DIR_SEPARATOR || isspace (safe_name[i]))
-	  safe_name[i] = '_';
-
-      filename = g_strdup_printf ("%s%s.vbr",
-				  directory, safe_name);
-
-      while ((fp = fopen (filename, "r")))
-	{
-	  /* make sure we don't overite an existing brush */
-	  fclose (fp);
-	  g_free (filename);
-	  filename = g_strdup_printf ("%s%s_%d.vbr", 
-				      directory, safe_name, unum);
-	  unum++;
-	}
-      g_free (safe_name);
-    }
-  else
-    {
-      filename = g_strdup (GIMP_BRUSH (brush)->filename);
-
-      if (strlen(filename) < 4 || strcmp (&filename[strlen (filename) - 4],
-					  ".vbr"))
-	{
-	  /* we only want to save .vbr files, so set filename to null
-	   * if this isn't a .vbr file
-	   */
-	  g_free (filename);
-	  filename = NULL;
-	}
-    }
-
-  if (! filename)
-    return;
+  brush = GIMP_BRUSH_GENERATED (data);
 
   /*  we are (finaly) ready to try to save the generated brush file  */
-  if ((fp = fopen (filename, "wb")) == NULL)
+  if ((fp = fopen (data->filename, "wb")) == NULL)
     {
-      g_warning ("Unable to save file %s", filename);
-      return;
+      g_warning ("Unable to save file %s", data->filename);
+      return FALSE;
     }
 
   /* write magic header */
@@ -290,37 +160,8 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
   fprintf (fp, "%f\n", brush->angle);
 
   fclose (fp);
-}
 
-void
-gimp_brush_generated_delete (GimpBrushGenerated *brush)
-{
-  if (GIMP_BRUSH (brush)->filename)
-    {
-      unlink (GIMP_BRUSH (brush)->filename);
-    }
-}
-
-void
-gimp_brush_generated_freeze (GimpBrushGenerated *brush)
-{
-  g_return_if_fail (brush != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-
-  brush->freeze++;
-}
-
-void
-gimp_brush_generated_thaw (GimpBrushGenerated *brush)
-{
-  g_return_if_fail (brush != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-  
-  if (brush->freeze > 0)
-    brush->freeze--;
-
-  if (brush->freeze == 0)
-    gimp_brush_generated_generate (brush);
+  return TRUE;
 }
 
 static double
@@ -340,9 +181,10 @@ gauss (gdouble f)
   return (2.0 * f*f);
 }
 
-void
-gimp_brush_generated_generate (GimpBrushGenerated *brush)
+static void
+gimp_brush_generated_dirty (GimpData *data)
 {
+  GimpBrushGenerated *brush;
   register GimpBrush *gbrush = NULL;
   register gint       x, y;
   register guchar    *centerp;
@@ -355,9 +197,8 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
   gdouble buffer[OVERSAMPLING];
   gint    width, height;
 
-  g_return_if_fail (brush != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-  
+  brush = GIMP_BRUSH_GENERATED (data);
+
   if (brush->freeze) /* if we are frozen defer rerendering till later */
     return;
 
@@ -368,7 +209,7 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 
   if (gbrush->mask)
     {
-      temp_buf_free(gbrush->mask);
+      temp_buf_free (gbrush->mask);
     }
 
   /* compute the range of the brush. should do a better job than this? */
@@ -462,7 +303,127 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 
   g_free (lookup);
 
+  if (GIMP_DATA_CLASS (parent_class)->dirty)
+    GIMP_DATA_CLASS (parent_class)->dirty (data);
+
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (brush));
+}
+
+GimpBrush *
+gimp_brush_generated_new (gfloat radius,
+			  gfloat hardness,
+			  gfloat angle,
+			  gfloat aspect_ratio)
+{
+  GimpBrushGenerated *brush;
+
+  /* set up normal brush data */
+  brush = GIMP_BRUSH_GENERATED (gtk_type_new (GIMP_TYPE_BRUSH_GENERATED));
+
+  gimp_object_set_name (GIMP_OBJECT (brush), "Untitled");
+
+  GIMP_BRUSH (brush)->spacing = 20;
+
+  /* set up gimp_brush_generated data */
+  brush->radius       = radius;
+  brush->hardness     = hardness;
+  brush->angle        = angle;
+  brush->aspect_ratio = aspect_ratio;
+
+  /* render brush mask */
+  gimp_data_dirty (GIMP_DATA (brush));
+
+  return GIMP_BRUSH (brush);
+}
+
+GimpBrush *
+gimp_brush_generated_load (const gchar *filename)
+{
+  GimpBrushGenerated *brush;
+  FILE   *fp;
+  gchar   string[256];
+  gfloat  fl;
+  gfloat  version;
+
+  if ((fp = fopen (filename, "rb")) == NULL)
+    return NULL;
+
+  /* make sure the file we are reading is the right type */
+  fgets (string, 255, fp);
+  
+  if (strncmp (string, "GIMP-VBR", 8) != 0)
+    return NULL;
+  
+  /* make sure we are reading a compatible version */
+  fgets (string, 255, fp);
+  sscanf (string, "%f", &version);
+  g_return_val_if_fail (version < 2.0, NULL);
+
+  /* create new brush */
+  brush = GIMP_BRUSH_GENERATED (gtk_type_new (GIMP_TYPE_BRUSH_GENERATED));
+
+  gimp_data_set_filename (GIMP_DATA (brush), filename);
+
+  gimp_brush_generated_freeze (brush);
+
+  /* read name */
+  fgets (string, 255, fp);
+  if (string[strlen (string) - 1] == '\n')
+    string[strlen (string) - 1] = 0;
+  gimp_object_set_name (GIMP_OBJECT (brush), string);
+
+  /* read brush spacing */
+  fscanf (fp, "%f", &fl);
+  GIMP_BRUSH (brush)->spacing = fl;
+
+  /* read brush radius */
+  fscanf (fp, "%f", &fl);
+  gimp_brush_generated_set_radius (brush, fl);
+
+  /* read brush hardness */
+  fscanf (fp, "%f", &fl);
+  gimp_brush_generated_set_hardness (brush, fl);
+
+  /* read brush aspect_ratio */
+  fscanf (fp, "%f", &fl);
+  gimp_brush_generated_set_aspect_ratio (brush, fl);
+
+  /* read brush angle */
+  fscanf (fp, "%f", &fl);
+  gimp_brush_generated_set_angle (brush, fl);
+
+  fclose (fp);
+
+  gimp_brush_generated_thaw (brush);
+
+  GIMP_DATA (brush)->dirty = FALSE;
+
+  if (stingy_memory_use)
+    temp_buf_swap (GIMP_BRUSH (brush)->mask);
+
+  return GIMP_BRUSH (brush);
+}
+
+void
+gimp_brush_generated_freeze (GimpBrushGenerated *brush)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+
+  brush->freeze++;
+}
+
+void
+gimp_brush_generated_thaw (GimpBrushGenerated *brush)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
+  
+  if (brush->freeze > 0)
+    brush->freeze--;
+
+  if (brush->freeze == 0)
+    gimp_data_dirty (GIMP_DATA (brush));
 }
 
 gfloat
@@ -481,8 +442,8 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
 
   brush->radius = radius;
 
-  if (!brush->freeze)
-    gimp_brush_generated_generate (brush);
+  if (! brush->freeze)
+    gimp_data_dirty (GIMP_DATA (brush));
 
   return brush->radius;
 }
@@ -504,7 +465,7 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
   brush->hardness = hardness;
 
   if (!brush->freeze)
-    gimp_brush_generated_generate (brush);
+    gimp_data_dirty (GIMP_DATA (brush));
 
   return brush->hardness;
 }
@@ -526,7 +487,7 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
   brush->angle = angle;
 
   if (!brush->freeze)
-    gimp_brush_generated_generate (brush);
+    gimp_data_dirty (GIMP_DATA (brush));
 
   return brush->angle;
 }
@@ -548,7 +509,7 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
   brush->aspect_ratio = ratio;
 
   if (!brush->freeze)
-    gimp_brush_generated_generate(brush);
+    gimp_data_dirty (GIMP_DATA (brush));
 
   return brush->aspect_ratio;
 }

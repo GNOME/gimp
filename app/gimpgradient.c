@@ -18,27 +18,11 @@
 
 #include "config.h"
 
+#include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <stdio.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <fcntl.h>
 
 #include <gtk/gtk.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -60,29 +44,28 @@
 #define EPSILON 1e-10
 
 
-static void      gimp_gradient_class_init      (GimpGradientClass *klass);
-static void      gimp_gradient_init            (GimpGradient      *gradient);
-static void      gimp_gradient_destroy         (GtkObject         *object);
-static TempBuf * gimp_gradient_get_new_preview (GimpViewable      *viewable,
-						gint               width,
-						gint               height);
+static void       gimp_gradient_class_init      (GimpGradientClass *klass);
+static void       gimp_gradient_init            (GimpGradient      *gradient);
+static void       gimp_gradient_destroy         (GtkObject         *object);
+static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
+						 gint               width,
+						 gint               height);
+static void       gimp_gradient_dirty           (GimpData          *data);
+static gboolean   gimp_gradient_save            (GimpData          *data);
 
-static void      gimp_gradient_dump            (GimpGradient      *grad,
-						FILE              *file);
-
-static gdouble   gimp_gradient_calc_linear_factor            (gdouble  middle,
-							      gdouble  pos);
-static gdouble   gimp_gradient_calc_curved_factor            (gdouble  middle,
-							      gdouble  pos);
-static gdouble   gimp_gradient_calc_sine_factor              (gdouble  middle,
-							      gdouble  pos);
-static gdouble   gimp_gradient_calc_sphere_increasing_factor (gdouble  middle,
-							      gdouble  pos);
-static gdouble   gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
-							      gdouble  pos);
+static gdouble    gimp_gradient_calc_linear_factor            (gdouble  middle,
+							       gdouble  pos);
+static gdouble    gimp_gradient_calc_curved_factor            (gdouble  middle,
+							       gdouble  pos);
+static gdouble    gimp_gradient_calc_sine_factor              (gdouble  middle,
+							       gdouble  pos);
+static gdouble    gimp_gradient_calc_sphere_increasing_factor (gdouble  middle,
+							       gdouble  pos);
+static gdouble    gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
+							       gdouble  pos);
 
 
-static GimpViewableClass *parent_class = NULL;
+static GimpDataClass *parent_class = NULL;
 
 
 GtkType
@@ -104,7 +87,7 @@ gimp_gradient_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      gradient_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &gradient_info);
+      gradient_type = gtk_type_unique (GIMP_TYPE_DATA, &gradient_info);
   }
 
   return gradient_type;
@@ -115,23 +98,25 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 {
   GtkObjectClass    *object_class;
   GimpViewableClass *viewable_class;
+  GimpDataClass     *data_class;
 
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
+  data_class     = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = gtk_type_class (GIMP_TYPE_DATA);
 
   object_class->destroy = gimp_gradient_destroy;
 
   viewable_class->get_new_preview = gimp_gradient_get_new_preview;
+
+  data_class->dirty = gimp_gradient_dirty;
+  data_class->save  = gimp_gradient_save;
 }
 
 static void
 gimp_gradient_init (GimpGradient *gradient)
 {
-  gradient->filename     = NULL;
-  gradient->dirty        = FALSE;
-
   gradient->segments     = NULL;
 
   gradient->last_visited = NULL;
@@ -144,8 +129,6 @@ gimp_gradient_destroy (GtkObject *object)
   GimpGradient *gradient;
 
   gradient = GIMP_GRADIENT (object);
-
-  g_free (gradient->filename);
 
   if (gradient->segments)
     gimp_gradient_segments_free (gradient->segments);
@@ -232,39 +215,6 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-static void
-gimp_gradient_dump (GimpGradient *gradient,
-		    FILE         *file)
-{
-  GimpGradientSegment *seg;
-
-  g_return_if_fail (gradient != NULL);
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-
-  fprintf (file, "Name: \"%s\"\n", GIMP_OBJECT (gradient)->name);
-  fprintf (file, "Dirty: %d\n", gradient->dirty);
-  fprintf (file, "Filename: \"%s\"\n", gradient->filename);
-
-  for (seg = gradient->segments; seg; seg = seg->next)
-    {
-      fprintf (file, "%c%p | %f %f %f | %f %f %f %f | %f %f %f %f | %d %d | %p %p\n",
-	       (seg == gradient->last_visited) ? '>' : ' ',
-	       seg,
-	       seg->left, seg->middle, seg->right,
-	       seg->left_color.r,
-	       seg->left_color.g,
-	       seg->left_color.b,
-	       seg->left_color.a,
-	       seg->right_color.r,
-	       seg->right_color.g,
-	       seg->right_color.b,
-	       seg->right_color.a,
-	       (int) seg->type,
-	       (int) seg->color,
-	       seg->prev, seg->next);
-    }
-}
-
 GimpGradient *
 gimp_gradient_new (const gchar  *name)
 {
@@ -308,10 +258,20 @@ gimp_gradient_load (const gchar *filename)
 
   gradient = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
 
-  gradient->filename           = g_strdup (filename);
-  GIMP_OBJECT (gradient)->name = g_strdup (g_basename (filename));
+  gimp_data_set_filename (GIMP_DATA (gradient), filename);
 
   fgets (line, 1024, file);
+  if (! strncmp (line, "Name: ", strlen ("Name: ")))
+    {
+      gimp_object_set_name (GIMP_OBJECT (gradient), &line[strlen ("Name: ")]);
+
+      fgets (line, 1024, file);
+    }
+  else /* old gradient format */
+    {
+      gimp_object_set_name (GIMP_OBJECT (gradient), g_basename (filename));
+    }
+
   num_segments = atoi (line);
 
   if (num_segments < 1)
@@ -368,29 +328,35 @@ gimp_gradient_load (const gchar *filename)
   return gradient;
 }
 
-void
-gimp_gradient_save (GimpGradient *gradient)
+static void
+gimp_gradient_dirty (GimpData *data)
 {
-  FILE                *file;
-  gint                 num_segments;
+  GimpGradient *gradient;
+
+  gradient = GIMP_GRADIENT (data);
+
+  gradient->last_visited = NULL;
+
+  if (GIMP_DATA_CLASS (parent_class)->dirty)
+    GIMP_DATA_CLASS (parent_class)->dirty (data);
+}
+
+static gboolean
+gimp_gradient_save (GimpData *data)
+{
+  GimpGradient        *gradient;
   GimpGradientSegment *seg;
+  gint                 num_segments;
+  FILE                *file;
 
-  g_return_if_fail (gradient != NULL);
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  gradient = GIMP_GRADIENT (data);
 
-  if (! gradient->filename)
-    {
-      g_message ("%s(): can't save gradient with NULL filename",
-		 G_GNUC_FUNCTION);
-      return;
-    }
-
-  file = fopen (gradient->filename, "wb");
+  file = fopen (data->filename, "wb");
   if (! file)
     {
       g_message ("%s(): can't open \"%s\"",
-		 G_GNUC_FUNCTION, gradient->filename);
-      return;
+		 G_GNUC_FUNCTION, data->filename);
+      return FALSE;
     }
 
   /* File format is:
@@ -403,6 +369,8 @@ gimp_gradient_save (GimpGradient *gradient)
    */
 
   fprintf (file, "GIMP Gradient\n");
+
+  fprintf (file, "Name: %s\n", GIMP_OBJECT (gradient)->name);
 
   /* Count number of segments */
   num_segments = 0;
@@ -435,7 +403,7 @@ gimp_gradient_save (GimpGradient *gradient)
 
   fclose (file);
 
-  gradient->dirty = FALSE;
+  return TRUE;
 }
 
 void
@@ -503,9 +471,8 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
       break;
 
     default:
-      gimp_gradient_dump (gradient, stderr);
-      gimp_fatal_error ("gradient_get_color_at(): Unknown gradient type %d",
-			(int) seg->type);
+      gimp_fatal_error ("%s(): Unknown gradient type %d",
+			G_GNUC_FUNCTION, (gint) seg->type);
       break;
     }
 
@@ -566,9 +533,8 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 	  break;
 
 	default:
-	  gimp_gradient_dump (gradient, stderr);
-	  gimp_fatal_error ("gradient_get_color_at(): Unknown coloring mode %d",
-			    (int) seg->color);
+	  gimp_fatal_error ("%s(): Unknown coloring mode %d",
+			    G_GNUC_FUNCTION, (gint) seg->color);
 	  break;
 	}
 
@@ -576,6 +542,50 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
     }
 
   *color = rgb;
+}
+
+GimpGradientSegment *
+gimp_gradient_get_segment_at (GimpGradient *gradient,
+			      gdouble       pos)
+{
+  GimpGradientSegment *seg;
+
+  g_return_val_if_fail (gradient != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+
+  /* handle FP imprecision at the edges of the gradient */
+  pos = CLAMP (pos, 0.0, 1.0);
+
+  if (gradient->last_visited)
+    seg = gradient->last_visited;
+  else
+    seg = gradient->segments;
+
+  while (seg)
+    {
+      if (pos >= seg->left)
+	{
+	  if (pos <= seg->right)
+	    {
+	      gradient->last_visited = seg; /* for speed */
+	      return seg;
+	    }
+	  else
+	    {
+	      seg = seg->next;
+	    }
+	}
+      else
+	{
+	  seg = seg->prev;
+	}
+    }
+
+  /* Oops: we should have found a segment, but we didn't */
+  gimp_fatal_error ("%s(): no matching segment for position %0.15f",
+		    G_GNUC_FUNCTION, pos);
+
+  return NULL;
 }
 
 static gdouble
@@ -697,49 +707,4 @@ gimp_gradient_segment_get_last (GimpGradientSegment *seg)
     seg = seg->next;
 
   return seg;
-}
-
-GimpGradientSegment *
-gimp_gradient_get_segment_at (GimpGradient *gradient,
-			      gdouble       pos)
-{
-  GimpGradientSegment *seg;
-
-  g_return_val_if_fail (gradient != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-
-  /* handle FP imprecision at the edges of the gradient */
-  pos = CLAMP (pos, 0.0, 1.0);
-
-  if (gradient->last_visited)
-    seg = gradient->last_visited;
-  else
-    seg = gradient->segments;
-
-  while (seg)
-    {
-      if (pos >= seg->left)
-	{
-	  if (pos <= seg->right)
-	    {
-	      gradient->last_visited = seg; /* for speed */
-	      return seg;
-	    }
-	  else
-	    {
-	      seg = seg->next;
-	    }
-	}
-      else
-	{
-	  seg = seg->prev;
-	}
-    }
-
-  /* Oops: we should have found a segment, but we didn't */
-  gimp_gradient_dump (gradient, stderr);
-  gimp_fatal_error ("%s(): no matching segment for position %0.15f",
-		    G_GNUC_FUNCTION, pos);
-
-  return NULL;
 }

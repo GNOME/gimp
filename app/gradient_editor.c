@@ -524,15 +524,10 @@ static void      cpopup_blend_endpoints           (GimpRGB         *left,
 
 /* Segment functions */
 
-static void             seg_get_closest_handle (GimpGradient           *grad,
-						gdouble               pos,
-						GimpGradientSegment      **seg,
-						control_drag_mode_t  *handle);
-
-/* Files and paths functions */
-
-static gchar   * build_user_filename           (gchar   *name,
-						gchar   *path_str);
+static void      seg_get_closest_handle           (GimpGradient         *grad,
+						   gdouble               pos,
+						   GimpGradientSegment **seg,
+						   control_drag_mode_t  *handle);
 
 
 /***** Local variables *****/
@@ -922,9 +917,6 @@ gradient_editor_create (void)
       gint pos;
 
       curr_gradient = dnd_gradient = gimp_gradient_new (_("Default"));
-
-      curr_gradient->filename =
-	build_user_filename (GIMP_OBJECT (curr_gradient)->name, gradient_path);
 
       gimp_container_add (global_gradient_list, GIMP_OBJECT (curr_gradient));
 
@@ -1365,9 +1357,7 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
   g_free (gradient_name);
 
-  grad->dirty    = TRUE;
-  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name,
-					gradient_path);
+  gimp_data_dirty (GIMP_DATA (grad));
 
   /* Put new gradient in list */
   gimp_container_add (global_gradient_list, GIMP_OBJECT (grad));
@@ -1431,10 +1421,11 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
   grad = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
 
-  GIMP_OBJECT (grad)->name     = gradient_name; /* We don't need to copy since 
-						     this memory is ours */
-  grad->dirty    = TRUE;
-  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name, gradient_path);
+  gimp_object_set_name (GIMP_OBJECT (grad), gradient_name);
+
+  g_free (gradient_name);
+
+  gimp_data_dirty (GIMP_DATA (grad));
 
   prev = NULL;
   orig = curr_gradient->segments;
@@ -1506,27 +1497,18 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpGradient *grad = (GimpGradient *) data;
-  gint        row;
+  gint          row;
 
   g_return_if_fail (grad != NULL);
+  g_return_if_fail (gradient_name != NULL);
 
-  if (!gradient_name)
-    {
-      g_warning ("received NULL in call_data");
-      return;
-    }
+  gimp_object_set_name (GIMP_OBJECT (grad), gradient_name);
 
-  g_free (GIMP_OBJECT (grad)->name);
-  GIMP_OBJECT (grad)->name  = gradient_name; /* We don't need to copy since 
-						this memory is ours */
-  grad->dirty = TRUE;
+  g_free (gradient_name);
 
-  /* Delete file and free gradient */
-  unlink (grad->filename);
+  gimp_data_dirty (GIMP_DATA (grad));
 
-  g_free (grad->filename);
-  grad->filename = build_user_filename (GIMP_OBJECT (grad)->name,
-					gradient_path);
+  gimp_data_set_filename (GIMP_DATA (grad), NULL);
 
   row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), grad);
   if (row > -1)
@@ -1600,7 +1582,7 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
     gtk_clist_remove (GTK_CLIST (g_editor->clist), row);
 
   /* Delete gradient from gradients list */
-  unlink (delete_gradient->filename);
+  gimp_data_delete_from_disk (GIMP_DATA (delete_gradient));
 
   gimp_container_remove (global_gradient_list, GIMP_OBJECT (delete_gradient));
 
@@ -1751,9 +1733,7 @@ ed_refresh_grads_callback (GtkWidget *widget,
     {
       curr_gradient = dnd_gradient = gimp_gradient_new (_("Default"));
 
-      curr_gradient->filename =
-        build_user_filename (GIMP_OBJECT (curr_gradient)->name,
-			     gradient_path);
+      gimp_data_dirty (GIMP_DATA (curr_gradient));
 
       gimp_container_add (global_gradient_list, GIMP_OBJECT (curr_gradient));
 
@@ -2700,7 +2680,7 @@ control_motion (gint x)
   if (str)
     g_free (str);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
 
   if (g_editor->instant_update)
     ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
@@ -3910,7 +3890,8 @@ cpopup_load_left_callback (GtkWidget *widget,
       break;
     }
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -3961,7 +3942,8 @@ cpopup_load_right_callback (GtkWidget *widget,
       break;
     }
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -4054,7 +4036,7 @@ static void
 cpopup_set_left_color_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  g_editor->left_saved_dirty    = curr_gradient->dirty;
+  g_editor->left_saved_dirty    = GIMP_DATA (curr_gradient)->dirty;
   g_editor->left_saved_segments = cpopup_save_selection ();
 
   color_notebook_new (_("Left Endpoint Color"),
@@ -4071,7 +4053,7 @@ static void
 cpopup_set_right_color_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  g_editor->right_saved_dirty    = curr_gradient->dirty;
+  g_editor->right_saved_dirty    = GIMP_DATA (curr_gradient)->dirty;
   g_editor->right_saved_segments = cpopup_save_selection ();
 
   color_notebook_new (_("Right Endpoint Color"),
@@ -4097,7 +4079,7 @@ cpopup_left_color_changed (ColorNotebook      *cnb,
 			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
       gimp_gradient_segments_free (g_editor->left_saved_segments);
-      curr_gradient->dirty = TRUE;
+      gimp_data_dirty (GIMP_DATA (curr_gradient));
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
       break;
@@ -4106,13 +4088,13 @@ cpopup_left_color_changed (ColorNotebook      *cnb,
       cpopup_blend_endpoints ((GimpRGB *) color,
 			      &g_editor->control_sel_r->right_color,
 			      TRUE, TRUE);
-      curr_gradient->dirty = TRUE;
+      gimp_data_dirty (GIMP_DATA (curr_gradient));
       break;
 
     case COLOR_NOTEBOOK_CANCEL:
       cpopup_replace_selection (g_editor->left_saved_segments);
       ed_update_editor (GRAD_UPDATE_GRADIENT);
-      curr_gradient->dirty = g_editor->left_saved_dirty;
+      GIMP_DATA (curr_gradient)->dirty = g_editor->left_saved_dirty;
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
       break;
@@ -4133,7 +4115,7 @@ cpopup_right_color_changed (ColorNotebook      *cnb,
       cpopup_blend_endpoints (&g_editor->control_sel_r->left_color,
 			      (GimpRGB *) color,
 			      TRUE, TRUE);
-      curr_gradient->dirty = TRUE;
+      gimp_data_dirty (GIMP_DATA (curr_gradient));
       break;
 
     case COLOR_NOTEBOOK_OK:
@@ -4141,14 +4123,14 @@ cpopup_right_color_changed (ColorNotebook      *cnb,
 			      (GimpRGB *) color,
 			      TRUE, TRUE);
       gimp_gradient_segments_free (g_editor->right_saved_segments);
-      curr_gradient->dirty = TRUE;
+      gimp_data_dirty (GIMP_DATA (curr_gradient));
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
       break;
 
     case COLOR_NOTEBOOK_CANCEL:
       cpopup_replace_selection (g_editor->right_saved_segments);
-      curr_gradient->dirty = g_editor->right_saved_dirty;
+      GIMP_DATA (curr_gradient)->dirty = g_editor->right_saved_dirty;
       color_notebook_free (cnb);
       gtk_widget_set_sensitive (g_editor->shell, TRUE);
       break;
@@ -4223,7 +4205,8 @@ cpopup_blending_callback (GtkWidget *widget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -4291,7 +4274,8 @@ cpopup_coloring_callback (GtkWidget *widget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -4314,8 +4298,8 @@ cpopup_split_midpoint_callback (GtkWidget *widget,
 
   g_editor->control_sel_r = rseg;
 
-  curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
 
@@ -4475,8 +4459,8 @@ cpopup_split_uniform_split_callback (GtkWidget *widget,
   g_editor->control_sel_l = lsel;
   g_editor->control_sel_r = rseg;
 
-  curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
 
@@ -4490,7 +4474,7 @@ cpopup_split_uniform_cancel_callback (GtkWidget *widget,
 
 static void
 cpopup_split_uniform (GimpGradientSegment  *lseg,
-		      int              parts,
+		      gint                  parts,
 		      GimpGradientSegment **newl,
 		      GimpGradientSegment **newr)
 {
@@ -4641,8 +4625,7 @@ cpopup_delete_callback (GtkWidget *widget,
 
   /* Done */
 
-  curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
 
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
@@ -4666,7 +4649,8 @@ cpopup_recenter_callback (GtkWidget *wiodget,
     }
   while (aseg != g_editor->control_sel_r);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
 
@@ -4720,7 +4704,8 @@ cpopup_redistribute_callback (GtkWidget *widget,
 
   /* Done */
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
 
@@ -4914,8 +4899,7 @@ cpopup_flip_callback (GtkWidget *widget,
 
   /* Done */
 
-  curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
 
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
@@ -5102,8 +5086,7 @@ cpopup_do_replicate_callback (GtkWidget *widget,
 
   /* Done */
 
-  curr_gradient->last_visited = NULL; /* Force re-search */
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
 
   ed_update_editor (GRAD_UPDATE_GRADIENT | GRAD_UPDATE_CONTROL);
 }
@@ -5126,7 +5109,8 @@ cpopup_blend_colors (GtkWidget *widget,
 			  &g_editor->control_sel_r->right_color,
 			  TRUE, FALSE);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -5138,7 +5122,8 @@ cpopup_blend_opacity (GtkWidget *widget,
 			  &g_editor->control_sel_r->right_color,
 			  FALSE, TRUE);
 
-  curr_gradient->dirty = TRUE;
+  gimp_data_dirty (GIMP_DATA (curr_gradient));
+
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
@@ -5227,33 +5212,4 @@ seg_get_closest_handle (GimpGradient           *grad,
 	  *handle = GRAD_DRAG_LEFT;
 	}
     }
-}
-
-/***** Files and paths functions *****/
-
-static gchar *
-build_user_filename (gchar *name,
-		     gchar *path_str)
-{
-  GList *grad_path;
-  gchar *grad_dir;
-  gchar *filename;
-
-  g_assert (name != NULL);
-
-  if (!path_str)
-    return NULL; /* Perhaps this is not a good idea */
-
-  grad_path = gimp_path_parse (path_str, 16, TRUE, NULL);
-  grad_dir  = gimp_path_get_user_writable_dir (grad_path);
-  gimp_path_free (grad_path);
-
-  if (!grad_dir)
-    return NULL; /* Perhaps this is not a good idea */
-
-  filename = g_strdup_printf ("%s%s", grad_dir, name);
-
-  g_free (grad_dir);
-
-  return filename;
 }

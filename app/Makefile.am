@@ -116,6 +116,8 @@ gimp_SOURCES = \
 	gimpcontext.h		\
 	gimpcontextpreview.c	\
 	gimpcontextpreview.h	\
+	gimpdata.c		\
+	gimpdata.h		\
 	gimpdatalist.c		\
 	gimpdatalist.h		\
 	gimpdnd.c		\
@@ -267,6 +269,7 @@ gimp_SOURCES = \
 	\
 	paint_funcs.c		\
 	paint_funcs.h		\
+	paint_funcs_simd.S	\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\
@@ -314,8 +317,7 @@ gimp_SOURCES = \
 	marching_ants.h		\
 	pixmaps.h		\
 	pixmaps2.h		\
-	wilber.h		\
-	paint_funcs_simd.S
+	wilber.h
 
 EXTRA_DIST = \
 	makefile.mingw		\

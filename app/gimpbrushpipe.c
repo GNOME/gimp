@@ -396,8 +396,9 @@ gimp_brush_pipe_load (const gchar *filename)
   /* Current brush is the first one. */
   pipe->current = pipe->brushes[0];
 
+  gimp_data_set_filename (GIMP_DATA (pipe), filename);
+
   /*  just to satisfy the code that relies on this crap  */
-  GIMP_BRUSH (pipe)->filename = g_strdup (filename);
   GIMP_BRUSH (pipe)->spacing  = pipe->current->spacing;
   GIMP_BRUSH (pipe)->x_axis   = pipe->current->x_axis;
   GIMP_BRUSH (pipe)->y_axis   = pipe->current->y_axis;

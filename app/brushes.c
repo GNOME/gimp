@@ -128,29 +128,28 @@ brushes_brush_load (const gchar *filename)
 void
 brushes_free (void)
 {
-  GList *vbr_path;
-  gchar *vbr_dir;
-
   if (! global_brush_list)
     return;
-
-  vbr_path = gimp_path_parse (brush_vbr_path, 16, TRUE, NULL);
-  vbr_dir  = gimp_path_get_user_writable_dir (vbr_path);
-  gimp_path_free (vbr_path);
 
   brush_select_freeze_all ();
 
   while (GIMP_LIST (global_brush_list)->list)
     {
-      GimpBrush *brush = GIMP_BRUSH (GIMP_LIST (global_brush_list)->list->data);
+      GimpData *data;
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && vbr_dir)
-	gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush), vbr_dir);
+      data = GIMP_DATA (GIMP_LIST (global_brush_list)->list->data);
 
-      gimp_container_remove (global_brush_list, GIMP_OBJECT (brush));
+      if (! GIMP_DATA (data)->filename)
+	gimp_data_create_filename (data,
+				   GIMP_OBJECT (data)->name,
+				   GIMP_BRUSH_GENERATED_FILE_EXTENSION,
+				   brush_path);
+
+      if (data->dirty)
+	gimp_data_save (data);
+
+      gimp_container_remove (global_brush_list, GIMP_OBJECT (data));
     }
 
   brush_select_thaw_all ();
-
-  g_free (vbr_dir);
 }

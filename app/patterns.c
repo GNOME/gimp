@@ -101,8 +101,7 @@ patterns_get_standard_pattern (void)
 
       gimp_object_set_name (GIMP_OBJECT (standard_pattern), "Standard");
 
-      standard_pattern->filename = NULL;
-      standard_pattern->mask     = temp_buf_new (32, 32, 3, 0, 0, NULL);
+      standard_pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
 
       data = temp_buf_data (standard_pattern->mask);
 

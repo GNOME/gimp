@@ -20,7 +20,10 @@
 #define __GIMP_GRADIENT_H__
 
 
-#include "gimpviewable.h"
+#include "gimpdata.h"
+
+
+#define GIMP_GRADIENT_FILE_EXTENSION ".ggr"
 
 
 typedef enum
@@ -66,10 +69,7 @@ typedef struct _GimpGradientClass GimpGradientClass;
 
 struct _GimpGradient
 {
-  GimpViewable         parent_instance;
-
-  gchar               *filename;
-  gboolean             dirty;
+  GimpData             parent_instance;
 
   GimpGradientSegment *segments;
 
@@ -80,30 +80,29 @@ struct _GimpGradient
 
 struct _GimpGradientClass
 {
-  GimpViewableClass  parent_class;
+  GimpDataClass  parent_class;
 };
 
 
-GtkType        gimp_gradient_get_type      (void);
-GimpGradient * gimp_gradient_new           (const gchar  *name);
+GtkType               gimp_gradient_get_type         (void);
+GimpGradient        * gimp_gradient_new              (const gchar   *name);
 
-GimpGradient * gimp_gradient_load          (const gchar  *filename);
-void           gimp_gradient_save          (GimpGradient *gradient);
+GimpGradient        * gimp_gradient_load             (const gchar   *filename);
 
-void           gimp_gradient_get_color_at  (GimpGradient *gradient,
-					    gdouble       pos,
-					    GimpRGB      *color);
+void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
+						      gdouble        pos,
+						      GimpRGB       *color);
+GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient  *grad,
+						      gdouble        pos);
 
 
 /*  gradient segment functions  */
 
 GimpGradientSegment * gimp_gradient_segment_new      (void);
-GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient        *grad,
-						      gdouble              pos);
 GimpGradientSegment * gimp_gradient_segment_get_last (GimpGradientSegment *seg);
 
-void           gimp_gradient_segment_free  (GimpGradientSegment *seg);
-void           gimp_gradient_segments_free (GimpGradientSegment *seg);
+void                  gimp_gradient_segment_free     (GimpGradientSegment *seg);
+void                  gimp_gradient_segments_free    (GimpGradientSegment *seg);
 
 
 #endif /* __GIMP_GRADIENT_H__ */

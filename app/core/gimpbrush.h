@@ -20,7 +20,7 @@
 #define __GIMP_BRUSH_H__
 
 
-#include "gimpviewable.h"
+#include "gimpdata.h"
 
 
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
@@ -34,19 +34,19 @@ typedef struct _GimpBrushClass GimpBrushClass;
 
 struct _GimpBrush
 {
-  GimpViewable  parent_instance;
+  GimpData      parent_instance;
 
-  gchar        *filename;   /*  actual filename--brush's location on disk  */
-  gint          spacing;    /*  brush's spacing                            */
-  GimpVector2   x_axis;     /*  for calculating brush spacing              */
-  GimpVector2   y_axis;     /*  for calculating brush spacing              */
-  TempBuf      *mask;       /*  the actual mask                            */
-  TempBuf      *pixmap;     /*  optional pixmap data                       */
+  TempBuf      *mask;       /*  the actual mask                */
+  TempBuf      *pixmap;     /*  optional pixmap data           */
+
+  gint          spacing;    /*  brush's spacing                */
+  GimpVector2   x_axis;     /*  for calculating brush spacing  */
+  GimpVector2   y_axis;     /*  for calculating brush spacing  */
 };
 
 struct _GimpBrushClass
 {
-  GimpViewableClass parent_class;
+  GimpDataClass parent_class;
 
   /* FIXME: these are no virtual function pointers but bad hacks: */
   GimpBrush * (* select_brush)     (PaintCore *paint_core);

@@ -60,7 +60,7 @@ static TempBuf * gimp_pattern_get_new_preview (GimpViewable     *viewable,
 					       gint              height);
 
 
-static GimpViewableClass *parent_class = NULL;
+static GimpDataClass *parent_class = NULL;
 
 
 GtkType
@@ -82,7 +82,7 @@ gimp_pattern_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      pattern_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &pattern_info);
+      pattern_type = gtk_type_unique (GIMP_TYPE_DATA, &pattern_info);
   }
 
   return pattern_type;
@@ -97,7 +97,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = gtk_type_class (GIMP_TYPE_DATA);
 
   object_class->destroy = gimp_pattern_destroy;
 
@@ -107,8 +107,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 static void
 gimp_pattern_init (GimpPattern *pattern)
 {
-  pattern->filename  = NULL;
-  pattern->mask      = NULL;
+  pattern->mask = NULL;
 }
 
 static void
@@ -117,8 +116,6 @@ gimp_pattern_destroy (GtkObject *object)
   GimpPattern *pattern;
 
   pattern = GIMP_PATTERN (object);
-
-  g_free (pattern->filename);
 
   if (pattern->mask)
     temp_buf_free (pattern->mask);
@@ -236,9 +233,11 @@ gimp_pattern_load (const gchar *filename)
 
   close (fd);
 
-  GIMP_OBJECT (pattern)->name = name;
+  gimp_object_set_name (GIMP_OBJECT (pattern), name);
 
-  pattern->filename = g_strdup (filename);
+  g_free (name);
+
+  gimp_data_set_filename (GIMP_DATA (pattern), filename);
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
   if (stingy_memory_use)

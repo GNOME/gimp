@@ -20,7 +20,7 @@
 #define __GIMP_PATTERN_H__
 
 
-#include "gimpviewable.h"
+#include "gimpdata.h"
 
 
 #define GIMP_TYPE_PATTERN            (gimp_pattern_get_type ())
@@ -34,15 +34,14 @@ typedef struct _GimpPatternClass GimpPatternClass;
 
 struct _GimpPattern
 {
-  GimpViewable  parent_instance;
+  GimpData  parent_instance;
 
-  gchar        *filename;   /*  actual filename--pattern's location on disk  */
-  TempBuf      *mask;       /*  the actual mask                            */
+  TempBuf  *mask;
 };
 
 struct _GimpPatternClass
 {
-  GimpViewableClass  parent_class;
+  GimpDataClass  parent_class;
 };
 
 

@@ -35,6 +35,7 @@
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "gimpcontext.h"
+#include "gimpdata.h"
 #include "gimpdnd.h"
 #include "gimplist.h"
 #include "gimprc.h"
@@ -1878,7 +1879,7 @@ brush_select_delete_brush_callback (GtkWidget *widget,
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      gimp_brush_generated_delete (GIMP_BRUSH_GENERATED (brush));
+      gimp_data_delete_from_disk (GIMP_DATA (brush));
 
       brush_select_freeze_all ();
 
