@@ -474,7 +474,7 @@ xcf_save_invoker (Argument *args)
     }
   else
     {
-      g_message (_("open failed on %s: %s\n"), filename, g_strerror(errno));
+      g_message (_("Open failed on '%s':\n%s"), filename, g_strerror(errno));
     }
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
@@ -924,7 +924,7 @@ read_one_path (GImage  *gimage,
     }
   else
     {
-      g_warning (_("Unknown path type. Possibly corrupt XCF file"));
+      g_warning ("Unknown path type. Possibly corrupt XCF file");
     }
   
   bzp = path_new (gimage, ptype, pts_list, closed, (gint)state, locked, tattoo, name);
@@ -1572,10 +1572,10 @@ xcf_save_level (XcfInfo     *info,
 	      xcf_save_tile_rle (info, level->tiles[i], rlebuf, fail); if (*fail) return;
 	      break;
 	    case COMPRESS_ZLIB:
-	      g_error (_("xcf: zlib compression unimplemented"));
+	      g_error ("xcf: zlib compression unimplemented");
 	      break;
 	    case COMPRESS_FRACTAL:
-	      g_error (_("xcf: fractal compression unimplemented"));
+	      g_error ("xcf: fractal compression unimplemented");
 	      break;
 	    }
 
@@ -1723,7 +1723,7 @@ xcf_save_tile_rle (XcfInfo  *info,
 	}
 
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
-	g_message (_("xcf: uh oh! xcf rle tile saving error: %d"), count);
+	g_message ("xcf: uh oh! xcf rle tile saving error: %d", count);
     }
   safe_write_int8(info->fp, rlebuf, len);
   tile_release (tile, FALSE);
@@ -1843,12 +1843,14 @@ xcf_load_image (XcfInfo *info)
   if (num_successful_elements == 0)
     goto hard_error;
   
-  g_message(_("XCF: This file is corrupt!  I have loaded as much\nof it as I can, but it is incomplete."));
+  g_message (_("XCF: This file is corrupt!  I have loaded as much\n"
+               "of it as I can, but it is incomplete."));
   
   return gimage;
   
  hard_error:  
-  g_message(_("XCF: This file is corrupt!  I could not even\nsalvage any partial image data from it."));
+  g_message (_("XCF: This file is corrupt!  I could not even\n"
+               "salvage any partial image data from it."));
   gimage_delete (gimage);
   return NULL;
 }
@@ -1877,7 +1879,8 @@ xcf_load_image_props (XcfInfo *info,
 	      g_message (_("XCF warning: version 0 of XCF file format\n"
 			   "did not save indexed colormaps correctly.\n"
 			   "Substituting grayscale map."));
-	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
+	      info->cp += xcf_read_int32 (info->fp,
+                                          (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);
 	      for (i = 0; i<gimage->num_cols; i++) 
@@ -1889,9 +1892,12 @@ xcf_load_image_props (XcfInfo *info,
 	    }
 	  else 
 	    {
-	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
+	      info->cp += xcf_read_int32 (info->fp,
+                                          (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
-	      info->cp += xcf_read_int8 (info->fp, (guint8*) gimage->cmap, gimage->num_cols*3);
+	      info->cp += xcf_read_int8 (info->fp,
+                                         (guint8*) gimage->cmap,
+                                         gimage->num_cols*3);
 	    }
 	  break;
 
@@ -1906,7 +1912,8 @@ xcf_load_image_props (XcfInfo *info,
 		(compression != COMPRESS_ZLIB) &&
 		(compression != COMPRESS_FRACTAL))
 	      {
-		g_message (_("unknown compression type: %d"), (int) compression);
+		g_message ("unknown compression type: %d",
+                           (int) compression);
 		return FALSE;
 	      }
 
@@ -1949,7 +1956,7 @@ xcf_load_image_props (XcfInfo *info,
 	    if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
 		yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
 	      {
-		g_message (_("Warning, resolution out of range in XCF file"));
+		g_message ("Warning, resolution out of range in XCF file");
 		xres = default_xresolution;
 		yres = default_yresolution;
 	      }
@@ -1975,7 +1982,7 @@ xcf_load_image_props (XcfInfo *info,
 		gimp_parasite_free (p);
 	      }
 	    if (info->cp - base != prop_size)
-	      g_message (_("Error detected while loading an image's parasites"));
+	      g_message ("Error detected while loading an image's parasites");
 	  }
 	  break;
 
@@ -1988,7 +1995,8 @@ xcf_load_image_props (XcfInfo *info,
 	    if ((unit <= GIMP_UNIT_PIXEL) ||
 		(unit >= gimp_unit_get_number_of_built_in_units()))
 	      {
-		g_message (_("Warning, unit out of range in XCF file, falling back to inches"));
+		g_message ("Warning, unit out of range in XCF file, "
+                           "falling back to inches");
 		unit = GIMP_UNIT_INCH;
 	      }
 	    
@@ -2055,7 +2063,8 @@ xcf_load_image_props (XcfInfo *info,
 	 break;
 
 	default:
-	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown image property: %d (skipping)",
+                     prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2143,11 +2152,12 @@ xcf_load_layer_props (XcfInfo *info,
 	     gimp_parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
-	     g_message (_("Error detected while loading a layer's parasites"));
+	     g_message ("Error detected while loading a layer's parasites");
 	 }
 	 break;
 	default:
-	  g_message (_("unexpected/unknown layer property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown layer property: %d (skipping)",
+                    prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2220,11 +2230,12 @@ xcf_load_channel_props (XcfInfo *info,
 	       gimp_parasite_free(p);
 	     }
 	   if (info->cp - base != prop_size)
-	     g_message(_("Error detected while loading a channel's parasites"));
+	     g_message ("Error detected while loading a channel's parasites");
 	 }
 	 break;
 	default:
-	  g_message (_("unexpected/unknown channel property: %d (skipping)"), prop_type);
+	  g_message ("unexpected/unknown channel property: %d (skipping)",
+                     prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -2555,7 +2566,7 @@ xcf_load_level (XcfInfo     *info,
 
       if (offset == 0)
 	{
-	  g_message (_("not enough tiles found in level"));
+	  g_message ("not enough tiles found in level");
 	  return FALSE;
 	}
 
@@ -2592,11 +2603,11 @@ xcf_load_level (XcfInfo     *info,
 	    fail = TRUE;
 	  break;
 	case COMPRESS_ZLIB:
-	  g_error (_("xcf: zlib compression unimplemented"));
+	  g_message ("xcf: zlib compression unimplemented");
 	  fail = TRUE;
 	  break;
 	case COMPRESS_FRACTAL:
-	  g_error (_("xcf: fractal compression unimplemented"));
+	  g_message ("xcf: fractal compression unimplemented");
 	  fail = TRUE;
 	  break;
 	}
@@ -2638,7 +2649,7 @@ xcf_load_level (XcfInfo     *info,
 
   if (offset != 0)
     {
-      g_message (_("encountered garbage after reading level: %d"), offset);
+      g_message ("encountered garbage after reading level: %d", offset);
       return FALSE;
     }
 
@@ -2825,7 +2836,7 @@ xcf_swap_func (gint       fd,
 
 	  if (err <= 0)
 	    {
-	      g_message (_("unable to read tile data from xcf file: %d ( %d ) bytes read"), err, nleft);
+	      g_message ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
 	      return FALSE;
 	    }
 
@@ -2998,7 +3009,7 @@ xcf_write_int8 (FILE     *fp,
 
       if (bytes == 0)
         {
-          g_message (_("Error writing xcf: %s"), g_strerror(errno));
+          g_message (_("Error writing XCF: %s"), g_strerror (errno));
 
           *fail = TRUE;
 

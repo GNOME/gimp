@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.4\n"
-"POT-Creation-Date: 2002-08-24 14:47+0200\n"
-"PO-Revision-Date: 2002-08-24 15:20+0200\n"
+"POT-Creation-Date: 2002-12-19 11:49+0100\n"
+"PO-Revision-Date: 2002-12-19 12:00+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -128,18 +128,18 @@ msgid "Quit"
 msgstr "Beenden"
 
 #. the cancel button
-#: app/app_procs.c:796 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:796 app/brightness_contrast.c:236 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
-#: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
-#: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:201 app/gimpprogress.c:120
+#: app/color_balance.c:292 app/color_notebook.c:128 app/convert.c:517
+#: app/curves.c:586 app/file_new_dialog.c:212 app/file_new_dialog.c:362
+#: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4944
-#: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
+#: app/gradient.c:5505 app/hue_saturation.c:394 app/interface.c:1047
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
-#: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
-#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/layers_dialog.c:4103 app/levels.c:363 app/palette.c:1825
+#: app/posterize.c:218 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
-#: app/threshold.c:285 app/user_install.c:597
+#: app/threshold.c:292 app/user_install.c:605
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -279,7 +279,7 @@ msgstr "Farbverlauf..."
 msgid "Blend: "
 msgstr "Farbverlauf: "
 
-#: app/brightness_contrast.c:132 app/brightness_contrast.c:221
+#: app/brightness_contrast.c:132 app/brightness_contrast.c:227
 #: app/tools.c:1054
 msgid "Brightness-Contrast"
 msgstr "Helligkeit-Kontrast"
@@ -288,40 +288,40 @@ msgstr "Helligkeit-Kontrast"
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 
-#: app/brightness_contrast.c:226 app/channel_ops.c:97
+#: app/brightness_contrast.c:232 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
-#: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
-#: app/curves.c:569 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:379 app/layers_dialog.c:3561
+#: app/color_balance.c:288 app/color_notebook.c:125 app/convert.c:515
+#: app/curves.c:582 app/file_new_dialog.c:212 app/file_new_dialog.c:358
+#: app/gimpui.c:127 app/hue_saturation.c:390 app/layers_dialog.c:3561
 #: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
-#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
+#: app/levels.c:359 app/module_db.c:315 app/posterize.c:214
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:288
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:228 app/by_color_select.c:727
-#: app/color_balance.c:284 app/curves.c:571 app/file_new_dialog.c:360
-#: app/hue_saturation.c:381 app/levels.c:348 app/posterize.c:210
-#: app/resize.c:222 app/threshold.c:283 app/tools.c:1547
+#: app/brightness_contrast.c:234 app/by_color_select.c:727
+#: app/color_balance.c:290 app/curves.c:584 app/file_new_dialog.c:360
+#: app/hue_saturation.c:392 app/levels.c:361 app/posterize.c:216
+#: app/resize.c:222 app/threshold.c:290 app/tools.c:1547
 #: app/transform_core.c:411 modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Standard"
 
 #. Create the brightness scale widget
-#: app/brightness_contrast.c:246
+#: app/brightness_contrast.c:252
 msgid "Brightness:"
 msgstr "Helligkeit:"
 
 #. Create the contrast scale widget
-#: app/brightness_contrast.c:277
+#: app/brightness_contrast.c:283
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693
-#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
-#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
+#: app/brightness_contrast.c:318 app/color_balance.c:458 app/curves.c:706
+#: app/fileops.c:420 app/hue_saturation.c:582 app/levels.c:592
+#: app/palette.c:3229 app/posterize.c:255 app/threshold.c:365
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -333,7 +333,7 @@ msgstr "Pinseleditor"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
+#: app/gdisplay_ops.c:313 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
@@ -510,7 +510,7 @@ msgstr "Versatz X:"
 
 #: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:468 app/resize.c:606 app/rotate_tool.c:111
-#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
+#: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1451
 msgid "Y:"
 msgstr "Y:"
 
@@ -565,18 +565,18 @@ msgstr "Kanal löschen"
 msgid "Empty Channel Copy"
 msgstr "Leerer Kanal Kopie"
 
-#: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:594 app/histogram_tool.c:322 app/levels.c:379
+#: app/channels_dialog.c:1440 app/color_balance.c:360 app/color_select.c:254
+#: app/curves.c:607 app/histogram_tool.c:322 app/levels.c:392
 msgid "Red"
 msgstr "Rot"
 
-#: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:595 app/histogram_tool.c:323 app/levels.c:380
+#: app/channels_dialog.c:1444 app/color_balance.c:385 app/color_select.c:255
+#: app/curves.c:608 app/histogram_tool.c:323 app/levels.c:393
 msgid "Green"
 msgstr "Grün"
 
-#: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:596 app/histogram_tool.c:324 app/levels.c:381
+#: app/channels_dialog.c:1448 app/color_balance.c:410 app/color_select.c:256
+#: app/curves.c:609 app/histogram_tool.c:324 app/levels.c:394
 msgid "Blue"
 msgstr "Blau"
 
@@ -639,7 +639,7 @@ msgid "No patterns available for this operation."
 msgstr "Für diese Funktion sind keine Muster vorhanden."
 
 #. The shell and main vbox
-#: app/color_balance.c:173 app/color_balance.c:277 app/tools.c:1026
+#: app/color_balance.c:173 app/color_balance.c:283 app/tools.c:1026
 msgid "Color Balance"
 msgstr "Farbausgleich"
 
@@ -647,39 +647,39 @@ msgstr "Farbausgleich"
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Farbausgleich funktioniert nur bei RGB Bildern."
 
-#: app/color_balance.c:266 app/dodgeburn.c:186
+#: app/color_balance.c:272 app/dodgeburn.c:186
 msgid "Shadows"
 msgstr "Schatten"
 
-#: app/color_balance.c:267 app/dodgeburn.c:184
+#: app/color_balance.c:273 app/dodgeburn.c:184
 msgid "Midtones"
 msgstr "Mitten"
 
-#: app/color_balance.c:268 app/dodgeburn.c:182
+#: app/color_balance.c:274 app/dodgeburn.c:182
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: app/color_balance.c:299
+#: app/color_balance.c:305
 msgid "Color Levels:"
 msgstr "Farbwerte:"
 
 #. Create the cyan-red scale widget
-#: app/color_balance.c:339
+#: app/color_balance.c:345
 msgid "Cyan"
 msgstr "Cyan"
 
 #. Create the magenta-green scale widget
-#: app/color_balance.c:364
+#: app/color_balance.c:370
 msgid "Magenta"
 msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
-#: app/color_balance.c:389
+#: app/color_balance.c:395
 msgid "Yellow"
 msgstr "Gelb"
 
 #. The preserve luminosity toggle
-#: app/color_balance.c:442
+#: app/color_balance.c:448
 msgid "Preserve Luminosity"
 msgstr "Helligkeit erhalten"
 
@@ -758,15 +758,15 @@ msgstr "S"
 msgid "V"
 msgstr "V"
 
-#: app/color_select.c:245 app/hue_saturation.c:361
+#: app/color_select.c:245 app/hue_saturation.c:372
 msgid "R"
 msgstr "R"
 
-#: app/color_select.c:246 app/hue_saturation.c:363
+#: app/color_select.c:246 app/hue_saturation.c:374
 msgid "G"
 msgstr "G"
 
-#: app/color_select.c:247 app/hue_saturation.c:365
+#: app/color_select.c:247 app/hue_saturation.c:376
 msgid "B"
 msgstr "B"
 
@@ -780,8 +780,8 @@ msgstr "Farbton"
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: app/color_select.c:253 app/curves.c:593 app/histogram_tool.c:321
-#: app/layers_dialog.c:394 app/levels.c:378 app/paint_funcs.c:102
+#: app/color_select.c:253 app/curves.c:606 app/histogram_tool.c:321
+#: app/layers_dialog.c:394 app/levels.c:391 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
 msgstr "Wert"
@@ -1000,7 +1000,7 @@ msgid "Auto Shrink"
 msgstr "Automatisch schrumpfen"
 
 #. The shell and main vbox
-#: app/curves.c:403 app/curves.c:564 app/tools.c:1166
+#: app/curves.c:403 app/curves.c:577 app/tools.c:1166
 msgid "Curves"
 msgstr "Kurven"
 
@@ -1008,49 +1008,49 @@ msgstr "Kurven"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurven können bei indizierten Bildern nicht angepaßt werden."
 
-#: app/curves.c:586
+#: app/curves.c:599
 msgid "Modify Curves for Channel:"
 msgstr "Verändere Kurven für Kanal:"
 
-#: app/curves.c:597 app/levels.c:382
+#: app/curves.c:610 app/levels.c:395
 msgid "Alpha"
 msgstr "Alpha"
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:676
+#: app/curves.c:689
 msgid "Curve Type:"
 msgstr "Kurventyp:"
 
-#: app/curves.c:683
+#: app/curves.c:696
 msgid "Smooth"
 msgstr "Weich"
 
-#: app/curves.c:684
+#: app/curves.c:697
 msgid "Free"
 msgstr "Frei"
 
-#: app/curves.c:710 app/levels.c:607 app/module_db.c:874
+#: app/curves.c:723 app/levels.c:620 app/module_db.c:874
 msgid "Load"
 msgstr "Öffnen"
 
-#: app/curves.c:718 app/devices.c:758 app/levels.c:617 app/palette.c:2054
+#: app/curves.c:731 app/devices.c:758 app/levels.c:630 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Sichern"
 
-#: app/curves.c:1317
+#: app/curves.c:1330
 msgid "Load Curves"
 msgstr "Kurven öffnen"
 
-#: app/curves.c:1332
+#: app/curves.c:1345
 msgid "Save Curves"
 msgstr "Kurven sichern"
 
-#: app/curves.c:1623
+#: app/curves.c:1636
 msgid "Load/Save Curves"
 msgstr "Öffne/Sichere Kurven"
 
-#: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495
+#: app/curves.c:1681 app/curves.c:1699 app/levels.c:1490 app/levels.c:1508
 #: app/paths_dialog.c:1918
 #, c-format
 msgid "Unable to open file %s"
@@ -1215,7 +1215,7 @@ msgid "New Image"
 msgstr "Neues Bild"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
-#: app/preferences_dialog.c:1593 app/user_install.c:1430
+#: app/preferences_dialog.c:1593 app/user_install.c:1438
 msgid "Pixels"
 msgstr "Pixel"
 
@@ -1483,7 +1483,7 @@ msgstr "indiziert leer"
 msgid "indexed"
 msgstr "indiziert"
 
-#: app/gdisplay_ops.c:302
+#: app/gdisplay_ops.c:305
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1627,31 +1627,31 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Benutze stattdessen Netscape"
 
-#: app/gimpimage.c:2328
+#: app/gimpimage.c:2332
 msgid "Layer cannot be raised any further"
 msgstr "Ebene kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:2356
+#: app/gimpimage.c:2360
 msgid "Layer cannot be lowered any further"
 msgstr "Ebene kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:2382
+#: app/gimpimage.c:2386
 msgid "Layer is already on top"
 msgstr "Ebene ist schon ganz oben"
 
-#: app/gimpimage.c:2388
+#: app/gimpimage.c:2392
 msgid "Can't raise Layer without alpha"
 msgstr "Kann Ebene ohne Alphakanal nicht anheben"
 
-#: app/gimpimage.c:2416
+#: app/gimpimage.c:2420
 msgid "Layer is already on bottom"
 msgstr "Ebene ist schon ganz unten"
 
-#: app/gimpimage.c:2471
+#: app/gimpimage.c:2475
 msgid "BG has no alpha, layer was placed above"
 msgstr "HG hat keinen Alphakanal, Ebene ist darüber plaziert worden"
 
-#: app/gimpimage.c:2543
+#: app/gimpimage.c:2547
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1660,13 +1660,13 @@ msgstr ""
 "den Vorgang \"Sichtbare Ebenen vereinen\" auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
-#: app/gimpimage.c:2627
+#: app/gimpimage.c:2631
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
 "markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
-#: app/gimpimage.c:3077
+#: app/gimpimage.c:3095
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1674,7 +1674,7 @@ msgstr ""
 "Kann keine Ebenenenmaske hinzufügen, da\n"
 "diese Ebene bereits eine Maske hat."
 
-#: app/gimpimage.c:3083
+#: app/gimpimage.c:3101
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1682,7 +1682,7 @@ msgstr ""
 "Kann keine Maske zu einer Ebene in\n"
 "einem indizierten Bild hinzufügen."
 
-#: app/gimpimage.c:3089
+#: app/gimpimage.c:3107
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1690,20 +1690,20 @@ msgstr ""
 "Kann keine Maske zu einer Ebene\n"
 "ohne Alphakanal hinzufügen."
 
-#: app/gimpimage.c:3098
+#: app/gimpimage.c:3116
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kann keine Ebenenmaske mit anderen Abmessungen als die Ebene hinzufügen."
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3224
 msgid "Channel cannot be raised any further"
 msgstr "Kanal kann nicht weiter angehoben werden"
 
-#: app/gimpimage.c:3257
+#: app/gimpimage.c:3275
 msgid "Channel cannot be lowered any further"
 msgstr "Kanal kann nicht weiter abgesenkt werden"
 
-#: app/gimpimage.c:3478 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/gimpimage.c:3496 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -2239,7 +2239,7 @@ msgid "Information on Channel:"
 msgstr "Informationen über Kanal:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
+#: app/hue_saturation.c:248 app/hue_saturation.c:385 app/tools.c:1082
 msgid "Hue-Saturation"
 msgstr "Farbton-Sättigung"
 
@@ -2247,38 +2247,38 @@ msgstr "Farbton-Sättigung"
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Farbton-Sättigung funktioniert nur bei RGB Bildern."
 
-#: app/hue_saturation.c:360
+#: app/hue_saturation.c:371
 msgid "Master"
 msgstr "Gesamt"
 
-#: app/hue_saturation.c:362
+#: app/hue_saturation.c:373
 msgid "Y"
 msgstr "Y"
 
-#: app/hue_saturation.c:364
+#: app/hue_saturation.c:375
 msgid "C"
 msgstr "C"
 
-#: app/hue_saturation.c:366
+#: app/hue_saturation.c:377
 msgid "M"
 msgstr "M"
 
-#: app/hue_saturation.c:451
+#: app/hue_saturation.c:462
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Farbton / Helligkeit / Sättigung"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:463
+#: app/hue_saturation.c:474
 msgid "Hue:"
 msgstr "Farbton:"
 
 #. Create the lightness scale widget
-#: app/hue_saturation.c:497
+#: app/hue_saturation.c:508
 msgid "Lightness:"
 msgstr "Helligkeit:"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:531
+#: app/hue_saturation.c:542
 msgid "Saturation:"
 msgstr "Sättigung:"
 
@@ -2811,7 +2811,7 @@ msgid "Layers, Channels & Paths"
 msgstr "Ebenen, Kanäle und Pfade"
 
 #. The Auto-button
-#: app/lc_dialog.c:169 app/levels.c:597
+#: app/lc_dialog.c:169 app/levels.c:610
 msgid "Auto"
 msgstr "Auto"
 
@@ -2824,7 +2824,7 @@ msgid "Channels"
 msgstr "Kanäle"
 
 #. The shell and main vbox
-#: app/levels.c:200 app/levels.c:341 app/tools.c:1194
+#: app/levels.c:200 app/levels.c:354 app/tools.c:1194
 msgid "Levels"
 msgstr "Werte"
 
@@ -2832,27 +2832,27 @@ msgstr "Werte"
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Werte für indizierte Bilder können nicht geändert werden. "
 
-#: app/levels.c:370
+#: app/levels.c:383
 msgid "Modify Levels for Channel:"
 msgstr "Verändere Werte für Kanal:"
 
-#: app/levels.c:394
+#: app/levels.c:407
 msgid "Input Levels:"
 msgstr "Quellwerte:"
 
-#: app/levels.c:503
+#: app/levels.c:516
 msgid "Output Levels:"
 msgstr "Zielwerte:"
 
-#: app/levels.c:1088
+#: app/levels.c:1101
 msgid "Load Levels"
 msgstr "Werte öffnen"
 
-#: app/levels.c:1103
+#: app/levels.c:1116
 msgid "Save Levels"
 msgstr "Werte sichern"
 
-#: app/levels.c:1432
+#: app/levels.c:1445
 msgid "Load/Save Levels"
 msgstr "Werte öffnen/sichern"
 
@@ -2872,7 +2872,7 @@ msgstr "Hineinzoomen"
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: app/main.c:289
+#: app/main.c:295
 msgid ""
 "\n"
 "Invalid option.\n"
@@ -2880,11 +2880,11 @@ msgstr ""
 "\n"
 "Ungültige Option.\n"
 
-#: app/main.c:305
+#: app/main.c:311
 msgid "GIMP version"
 msgstr "GIMP Version"
 
-#: app/main.c:309
+#: app/main.c:315
 #, c-format
 msgid ""
 "\n"
@@ -2895,15 +2895,15 @@ msgstr ""
 "Benutzung: %s [Option ...] [Datei ...]\n"
 "\n"
 
-#: app/main.c:310
+#: app/main.c:316
 msgid "Options:\n"
 msgstr "Optionen:\n"
 
-#: app/main.c:311
+#: app/main.c:317
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <Befehle>    Startet im Stapelmodus.\n"
 
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -2911,7 +2911,7 @@ msgstr ""
 "  -c, --console-messages   Warnungen in einer Konsole statt in einem "
 "Dialog.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -2919,41 +2919,41 @@ msgstr ""
 "  -d, --no-data            Lädt keine Muster, Farbverläufe, Farbpaletten und "
 "Pinsel.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Startet ohne Oberfläche.\n"
 
-#: app/main.c:315
+#: app/main.c:321
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Benutzt ein alternatives Profil.\n"
 
-#: app/main.c:316
+#: app/main.c:322
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Gibt diese Hilfe aus.\n"
 
-#: app/main.c:317
+#: app/main.c:323
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr ""
 "  -r, --restore-session    Versucht eine abgelegte Sitzung "
 "wiederherzustellen.\n"
 
-#: app/main.c:318
+#: app/main.c:324
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Zeigt kein Startfenster.\n"
 
-#: app/main.c:319
+#: app/main.c:325
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Lädt kein Bild ins Startfenster.\n"
 
-#: app/main.c:320
+#: app/main.c:326
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Gibt Versionsinformationen aus.\n"
 
-#: app/main.c:321
+#: app/main.c:327
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zeigt Startmeldungen.\n"
 
-#: app/main.c:322
+#: app/main.c:328
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -2961,26 +2961,26 @@ msgstr ""
 "  --no-shm                 Keine geteilter Speicher zwischen GIMP und "
 "Plugins.\n"
 
-#: app/main.c:323
+#: app/main.c:329
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Benutzt die Xshm Erweiterung nicht.\n"
 
-#: app/main.c:324
+#: app/main.c:330
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Aktiviert Fehlersuchroutinen für nicht-fatale "
 "Signale.\n"
 
-#: app/main.c:325
+#: app/main.c:331
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <Anzeige>      Benutzt die angegebene X Anzeige.\n"
 
-#: app/main.c:326
+#: app/main.c:332
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Benutzt alternatives Systemprofil.\n"
 
-#: app/main.c:328
+#: app/main.c:334
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
@@ -2988,7 +2988,7 @@ msgstr ""
 "                           Fehlersuche bei fatalen Signalen.\n"
 "\n"
 
-#: app/main.c:345
+#: app/main.c:351
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
@@ -4143,7 +4143,7 @@ msgstr "Pfaddatei %s enthält keine Punkte"
 msgid "Failed to read path points from %s"
 msgstr "Konnte keine Pfadpunkte aus %s lesen"
 
-#: app/paths_dialog.c:2039 app/xcf.c:438
+#: app/paths_dialog.c:2039
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Kann %s nicht öffnen: %s\n"
@@ -4227,7 +4227,7 @@ msgstr "Erweiterungen"
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
 
-#: app/plug_in.c:1479
+#: app/plug_in.c:1476
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4244,7 +4244,7 @@ msgstr ""
 "durcheinander gebracht. Am besten speichern Sie\n"
 "Ihre Bilder jetzt ab und starten GIMP neu."
 
-#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+#: app/posterize.c:116 app/posterize.c:209 app/tools.c:1110
 msgid "Posterize"
 msgstr "Posterisieren"
 
@@ -4252,7 +4252,7 @@ msgstr "Posterisieren"
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisieren funktioniert nicht mit indizierten Bildern."
 
-#: app/posterize.c:225
+#: app/posterize.c:231
 msgid "Posterize Levels:"
 msgstr "Posterisieren Werte:"
 
@@ -4640,7 +4640,7 @@ msgstr "Zurückhaltende Speicherausnutzung"
 msgid "Levels of Undo:"
 msgstr "Stufen der Rückgängigmachung:"
 
-#: app/preferences_dialog.c:2218 app/user_install.c:1343
+#: app/preferences_dialog.c:2218 app/user_install.c:1351
 msgid "Tile Cache Size:"
 msgstr "Größe des Datenspeichers:"
 
@@ -4733,7 +4733,7 @@ msgstr "Quelle für Bildschirmauflösung"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Zur Zeit %d x %d dpi)"
 
-#: app/preferences_dialog.c:2431 app/user_install.c:1481
+#: app/preferences_dialog.c:2431 app/user_install.c:1489
 msgid "Calibrate"
 msgstr "Kalibrieren"
 
@@ -4761,7 +4761,7 @@ msgstr "Temporäres Verzeichnis wählen"
 msgid "Swap Dir:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/preferences_dialog.c:2499 app/user_install.c:1363
+#: app/preferences_dialog.c:2499 app/user_install.c:1371
 msgid "Select Swap Dir"
 msgstr "Auslagerverzeichnis wählen"
 
@@ -5060,7 +5060,7 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Textebene"
 
-#: app/threshold.c:175 app/threshold.c:276 app/tools.c:1138
+#: app/threshold.c:175 app/threshold.c:283 app/tools.c:1138
 msgid "Threshold"
 msgstr "Schwellwert"
 
@@ -5068,7 +5068,7 @@ msgstr "Schwellwert"
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Schwellwert funktioniert nicht mit indizierten Bildern"
 
-#: app/threshold.c:298
+#: app/threshold.c:305
 msgid "Threshold Range:"
 msgstr "Schwellwert Bereich:"
 
@@ -5847,11 +5847,11 @@ msgstr "[ Basisbild ]"
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: app/user_install.c:106
+#: app/user_install.c:114
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "GIMP ist für den aktuellen Benutzer nicht richtig installiert\n"
 
-#: app/user_install.c:107
+#: app/user_install.c:115
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
@@ -5859,14 +5859,14 @@ msgstr ""
 "Benutzerinstallation wurde übersprungen, weil '--nointerface' übergeben "
 "wurde\n"
 
-#: app/user_install.c:108
+#: app/user_install.c:116
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Um die Benutzerinstallation auszuführen, starten sie GIMP ohne '--"
 "nointerface'\n"
 
-#: app/user_install.c:167
+#: app/user_install.c:175
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -5879,7 +5879,7 @@ msgstr ""
 "Auch die Suchpfade für Pinsel, Paletten, Farbverläufe,\n"
 "Muster, Plugins und Module können hier konfiguriert werden."
 
-#: app/user_install.c:176
+#: app/user_install.c:184
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -5887,7 +5887,7 @@ msgstr ""
 "GIMP benutzt eine zusätzliche gtkrc\n"
 "für GIMP-spezifische Oberflächen-Einstellungen."
 
-#: app/user_install.c:182
+#: app/user_install.c:190
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -5904,7 +5904,7 @@ msgstr ""
 "Diese Datei sollte nur von GIMP gelesen und nicht\n"
 "bearbeitet werden."
 
-#: app/user_install.c:192
+#: app/user_install.c:200
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -5921,7 +5921,7 @@ msgstr ""
 "Wird diese Datei gelöscht, so wird die Standard\n"
 "Tastaturbelegung wiederhergestellt."
 
-#: app/user_install.c:202
+#: app/user_install.c:210
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -5932,7 +5932,7 @@ msgstr ""
 "GIMP so konfigurieren, daß diese Dialoge beim Start an der\n"
 "gesicherten Position wieder geöffnet werden."
 
-#: app/user_install.c:209
+#: app/user_install.c:217
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5946,7 +5946,7 @@ msgstr ""
 "Millimeter, Punkt und Pica benutzen. Diese Datei wird\n"
 "jedesmal überschrieben, wenn Sie GIMP beenden."
 
-#: app/user_install.c:218
+#: app/user_install.c:226
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -5960,7 +5960,7 @@ msgstr ""
 "zum systemweiten Pinselinstallation durchsucht, wenn nach\n"
 "Pinseln gesucht wird."
 
-#: app/user_install.c:227
+#: app/user_install.c:235
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -5972,7 +5972,7 @@ msgstr ""
 "Entsprechend der Standard gimprc wird dieses Verzeichnis\n"
 "durchsucht, wenn nach erzeugten Pinsel gesucht wird."
 
-#: app/user_install.c:235
+#: app/user_install.c:243
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -5986,7 +5986,7 @@ msgstr ""
 "zusätzlich zur systemweiten Verlaufsinstallation durchsucht,\n"
 "wenn nach Farbverläufen gesucht wird."
 
-#: app/user_install.c:244
+#: app/user_install.c:252
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -6005,7 +6005,7 @@ msgstr ""
 "Systempaletten hierher kopiert, damit Änderungen an den\n"
 "Paletten während der Ausführung von GIMP erhalten bleiben."
 
-#: app/user_install.c:256
+#: app/user_install.c:264
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -6019,7 +6019,7 @@ msgstr ""
 "systemweiten Musterinstallation durchsucht, wenn nach\n"
 "Füllmustern gesucht wird."
 
-#: app/user_install.c:265
+#: app/user_install.c:273
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -6034,7 +6034,7 @@ msgstr ""
 "systemweiten Pluginverzeichnis durchsucht, wenn nach\n"
 "Plugins gesucht wird."
 
-#: app/user_install.c:274
+#: app/user_install.c:282
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -6049,7 +6049,7 @@ msgstr ""
 "zusätzlich zum systemweiten Modulverzeichnis durchsucht,\n"
 "wenn nach Modulen gesucht wird."
 
-#: app/user_install.c:283
+#: app/user_install.c:291
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -6062,7 +6062,7 @@ msgstr ""
 "systemweiten Skriptverzeichnis durchsucht, wenn nach\n"
 "Skripten gesucht wird."
 
-#: app/user_install.c:291
+#: app/user_install.c:299
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -6078,7 +6078,7 @@ msgstr ""
 "andere GIMP-Session nutzlos und können bedenkenlos\n"
 "entfernt werden."
 
-#: app/user_install.c:300
+#: app/user_install.c:308
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
@@ -6086,7 +6086,7 @@ msgstr ""
 "Dieses Unterverzeichnis wird von GIMP verwendet, um\n"
 "Parameter-Dateien für das Kurven-Werkzeug zu speichern."
 
-#: app/user_install.c:306
+#: app/user_install.c:314
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
@@ -6094,7 +6094,7 @@ msgstr ""
 "Dieses Unterverzeichnis wird von GIMP verwendet, um\n"
 "Parameter-Dateien für das Werte-Werkzeug zu speichern."
 
-#: app/user_install.c:312
+#: app/user_install.c:320
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -6109,7 +6109,7 @@ msgstr ""
 "systemweiten Fraktalinstallation durchsucht, wenn nach\n"
 "Fraktalen gesucht wird."
 
-#: app/user_install.c:321
+#: app/user_install.c:329
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -6124,7 +6124,7 @@ msgstr ""
 "Installation durchsucht, wenn nach GFig Figuren gesucht\n"
 "wird."
 
-#: app/user_install.c:330
+#: app/user_install.c:338
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -6138,7 +6138,7 @@ msgstr ""
 "wird dieses Verzeichnis zusätzlich zur systemweiten GFlare\n"
 "Installation durchsucht, wenn nach GFlares gesucht wird."
 
-#: app/user_install.c:339
+#: app/user_install.c:347
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -6152,7 +6152,7 @@ msgstr ""
 "dieses Verzeichnis zusätzlich zur systemweiten Gimpressionst\n"
 "Installation durchsucht, wenn nach Daten gesucht wird."
 
-#: app/user_install.c:412
+#: app/user_install.c:420
 msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
@@ -6160,20 +6160,20 @@ msgstr ""
 "Bitte warten Sie, während Ihr persönliches\n"
 "GIMP-Verzeichnis erstellt wird..."
 
-#: app/user_install.c:590
+#: app/user_install.c:598
 msgid "GIMP User Installation"
 msgstr "GIMP Benutzerinstallation"
 
-#: app/user_install.c:595
+#: app/user_install.c:603
 msgid "Continue"
 msgstr "Weiter"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/user_install.c:636
+#: app/user_install.c:644
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
-#: app/user_install.c:733
+#: app/user_install.c:741
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6181,13 +6181,13 @@ msgstr ""
 "Willkommen zur\n"
 "GIMP Benutzerinstallation"
 
-#: app/user_install.c:735
+#: app/user_install.c:743
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Drücken Sie \"Weiter\" um die\n"
 "GIMP Benutzerinstallation zu starten."
 
-#: app/user_install.c:739
+#: app/user_install.c:747
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
@@ -6197,7 +6197,7 @@ msgstr ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis und das GIMP Entwicklerteam"
 
-#: app/user_install.c:748
+#: app/user_install.c:756
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -6210,7 +6210,7 @@ msgstr ""
 "modifizieren, entweder unter Version 2 der Lizenz oder (wenn\n"
 "Sie es wünschen) jeder späteren Version."
 
-#: app/user_install.c:753
+#: app/user_install.c:761
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -6223,7 +6223,7 @@ msgstr ""
 "der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.\n"
 "Details finden Sie in der GNU General Public License."
 
-#: app/user_install.c:758
+#: app/user_install.c:766
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -6235,17 +6235,17 @@ msgstr ""
 "an die Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
 "Boston, MA 02111-1307, USA."
 
-#: app/user_install.c:784
+#: app/user_install.c:792
 msgid "Personal GIMP Directory"
 msgstr "Persönliches GIMP Verzeichnis"
 
-#: app/user_install.c:785
+#: app/user_install.c:793
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
 "Drücken Sie \"Weiter\" um Ihr\n"
 "persönliches GIMP-Verzeichnis anzulegen."
 
-#: app/user_install.c:804
+#: app/user_install.c:812
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
@@ -6254,7 +6254,7 @@ msgstr ""
 "Für die GIMP Benutzerinstallation muß ein Verzeichnis\n"
 "namens %s erstellt werden."
 
-#: app/user_install.c:810
+#: app/user_install.c:818
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
@@ -6264,33 +6264,33 @@ msgstr ""
 "enthalten. Wählen Sie eine der Dateien oder Verzeichnisse aus\n"
 "der Liste aus, um mehr Informationen zu erhalten."
 
-#: app/user_install.c:897
+#: app/user_install.c:905
 msgid "User Installation Log"
 msgstr "Benutzerinstallation Logbuch"
 
-#: app/user_install.c:903
+#: app/user_install.c:911
 msgid "GIMP Performance Tuning"
 msgstr "Leistungsfähigkeit von GIMP"
 
-#: app/user_install.c:904
+#: app/user_install.c:912
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Drücken Sie \"Weiter\" um die Einstellungen zu übernehmen."
 
-#: app/user_install.c:907
+#: app/user_install.c:915
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
 "Für optimale Arbeitleistung könnte es erforderlich sein, einige\n"
 "Einstellungen vorzunehmen."
 
-#: app/user_install.c:916
+#: app/user_install.c:924
 msgid "Monitor Resolution"
 msgstr "Bildschirmauflösung"
 
-#: app/user_install.c:917
+#: app/user_install.c:925
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Drücken Sie \"Weiter\" um GIMP zu starten."
 
-#: app/user_install.c:920
+#: app/user_install.c:928
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -6298,48 +6298,48 @@ msgstr ""
 "Um Bilder in ihrer natürlichen Größe darzustellen, muß GIMP\n"
 "die Auflösung Ihres Bildschirms kennen."
 
-#: app/user_install.c:929
+#: app/user_install.c:937
 msgid "Aborting Installation..."
 msgstr ""
 "Die Existenz wie Sie sie kennen\n"
 "ist beendet!"
 
-#: app/user_install.c:956
+#: app/user_install.c:964
 #, c-format
 msgid "Cannot open %s for reading"
 msgstr "Kann %s nicht zum Lesen öffnen"
 
-#: app/user_install.c:964
+#: app/user_install.c:972
 #, c-format
 msgid "Cannot open %s for writing"
 msgstr "Kann %s nicht zum Schreiben öffnen"
 
-#: app/user_install.c:974
+#: app/user_install.c:982
 #, c-format
 msgid "Error while writing %s"
 msgstr "Fehler beim Schreiben von %s"
 
-#: app/user_install.c:984
+#: app/user_install.c:992
 #, c-format
 msgid "Error while reading %s"
 msgstr "Fehler beim Lesen von %s"
 
-#: app/user_install.c:1019
+#: app/user_install.c:1027
 #, c-format
 msgid "Cannot open directory %s"
 msgstr "Kann Verzeichnis %s nicht öffnen"
 
-#: app/user_install.c:1026
+#: app/user_install.c:1034
 #, c-format
 msgid "Cannot create directory %s -- %s"
 msgstr "Kann Verzeichnis %s nicht erzeugen -- %s"
 
-#: app/user_install.c:1046
+#: app/user_install.c:1054
 #, c-format
 msgid "Cannot get status of file %s"
 msgstr "Kann den Status der Datei %s nicht ermitteln"
 
-#: app/user_install.c:1094
+#: app/user_install.c:1102
 #, c-format
 msgid ""
 "%s does not exist.\n"
@@ -6348,7 +6348,7 @@ msgstr ""
 "%s existiert nicht.\n"
 "Kann nicht installieren."
 
-#: app/user_install.c:1106
+#: app/user_install.c:1114
 #, c-format
 msgid ""
 "%s has invalid permissions.\n"
@@ -6357,7 +6357,7 @@ msgstr ""
 "%s hat falsche Zugriffsrechte.\n"
 "Kann nicht installieren."
 
-#: app/user_install.c:1169
+#: app/user_install.c:1177
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6368,44 +6368,44 @@ msgstr ""
 "Ansonsten beenden Sie die Installation und suchen \n"
 "Sie nach der möglichen Fehlerursache..."
 
-#: app/user_install.c:1180
+#: app/user_install.c:1188
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Drücken Sie \"Weiter\" um die GIMP-Installation abzuschliessen."
 
-#: app/user_install.c:1185 app/user_install.c:1306
+#: app/user_install.c:1193 app/user_install.c:1314
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installation fehlgeschlagen. Wenden Sie sich an den Systemverwalter."
 
-#: app/user_install.c:1222 app/user_install.c:1243
+#: app/user_install.c:1230 app/user_install.c:1251
 #, c-format
 msgid "Creating directory %s\n"
 msgstr "Erzeuge Verzeichnis %s\n"
 
-#: app/user_install.c:1228 app/user_install.c:1249
+#: app/user_install.c:1236 app/user_install.c:1257
 #, c-format
 msgid "Cannot create directory -- %s"
 msgstr "Kann Verzeichnis nicht erzeugen -- %s"
 
-#: app/user_install.c:1233 app/user_install.c:1294
+#: app/user_install.c:1241 app/user_install.c:1302
 msgid "  Success\n"
 msgstr "  Erfolg\n"
 
-#: app/user_install.c:1270
+#: app/user_install.c:1278
 #, c-format
 msgid "Populating directory %s from %s\n"
 msgstr "Kopiere von %s ins Verzeichnis %s\n"
 
-#: app/user_install.c:1280
+#: app/user_install.c:1288
 #, c-format
 msgid "Copying file %s from %s\n"
 msgstr "Kopiere Datei %s von %s\n"
 
-#: app/user_install.c:1301
+#: app/user_install.c:1309
 #, c-format
 msgid "  Failure -- %s\n"
 msgstr "  Fehler -- %s\n"
 
-#: app/user_install.c:1329
+#: app/user_install.c:1337
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6416,7 +6416,7 @@ msgstr ""
 "in den Arbeitsspeicher passt. Bedenken Sie dabei die Menge an\n"
 "Arbeitsspeicher, die bereits von anderen Programmen benutzt wird."
 
-#: app/user_install.c:1354
+#: app/user_install.c:1362
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6429,11 +6429,11 @@ msgstr ""
 "Unter UNIX ist das systemweite temporäre Verzeichnis eine gute Wahl\n"
 "(meist \"/tmp\" oder \"/var/tmp\")."
 
-#: app/user_install.c:1368
+#: app/user_install.c:1376
 msgid "Swap Directory:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/user_install.c:1403
+#: app/user_install.c:1411
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6441,20 +6441,20 @@ msgstr ""
 "GIMP kann diese Information vom Fenstersystem erfragen.\n"
 "Allerdings liefern die wenigsten Systeme hier vernünftige Werte."
 
-#: app/user_install.c:1410
+#: app/user_install.c:1418
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Auflösung vom Fenstersystem beziehen (zur Zeit %d x %d dpi)"
 
-#: app/user_install.c:1424
+#: app/user_install.c:1432
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativ können Sie die Bildschirmauflösung von Hand einstellen."
 
-#: app/user_install.c:1437
+#: app/user_install.c:1445
 msgid "Monitor Resolution X:"
 msgstr "Bildschirmauflösung X:"
 
-#: app/user_install.c:1474
+#: app/user_install.c:1482
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6463,12 +6463,37 @@ msgstr ""
 "Fenster zu öffnen, in dem Sie Bildschirmauflösung interaktiv\n"
 "bestimmt werden kann."
 
-#: app/xcf.c:384
+#: app/xcf.c:423
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF Fehler: nicht unterstützte XCF Dateiversion %d aufgetreten"
 
-#: app/xcf.c:1817
+#: app/xcf.c:477
+#, c-format
+msgid ""
+"Open failed on '%s':\n"
+"%s"
+msgstr ""
+"Kann '%s' nicht öffnen:\n"
+"%s"
+
+#: app/xcf.c:1846
+msgid ""
+"XCF: This file is corrupt!  I have loaded as much\n"
+"of it as I can, but it is incomplete."
+msgstr ""
+"Die XCF-Datei scheint beschädigt zu sein. Es wurde soviel\n"
+"wie möglich geladen, dennoch ist das Bild unvollständig."
+
+#: app/xcf.c:1852
+msgid ""
+"XCF: This file is corrupt!  I could not even\n"
+"salvage any partial image data from it."
+msgstr ""
+"Die XCF-Datei scheint beschädigt zu sein. Es konnte\n"
+"nicht einmal ein Teil der Daten gelesen werden."
+
+#: app/xcf.c:1879
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6477,6 +6502,11 @@ msgstr ""
 "XCF Warnung: Version 0 des XCF Dateiformats\n"
 "hat indizierte Farbpaletten falsch gesichert.\n"
 "Farben wurden durch Graustufen ersetzt."
+
+#: app/xcf.c:3012
+#, c-format
+msgid "Error writing XCF: %s"
+msgstr "Fehler beim Schreiben der XCF-Datei: %s"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
@@ -6501,82 +6531,3 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farbliste"
-
-#~ msgid "Font '%s' not found."
-#~ msgstr "Schrift '%s' nicht gefunden."
-
-#, fuzzy
-#~ msgid "Cannot create directory '%s': %s"
-#~ msgstr "Kann Verzeichnis %s nicht erstellen -- %s"
-
-#~ msgid ""
-#~ "Did you notice any error messages in the console window?\n"
-#~ "If not, installation was successful!\n"
-#~ "Otherwise, quit and investigate the possible reason..."
-#~ msgstr ""
-#~ "Haben Sie irgendwelche Fehlermeldungen im Konsolefenster bemerkt?\n"
-#~ "Wenn nicht, war die Installation erfolgreich!\n"
-#~ "Ansonsten beenden Sie die Installation und suchen Sie nach der möglichen "
-#~ "Fehlerursache..."
-
-#~ msgid "Remove"
-#~ msgstr "Entfernen"
-
-#~ msgid "Up"
-#~ msgstr "Hoch"
-
-#~ msgid "Down"
-#~ msgstr "Runter"
-
-#~ msgid "Configure"
-#~ msgstr "Konfigurieren"
-
-#~ msgid "Color Display Filters"
-#~ msgstr "Anzeigenfarbfilter"
-
-#~ msgid "Available Filters"
-#~ msgstr "Verfügbare Filter"
-
-#~ msgid "Active Filters"
-#~ msgstr "Aktive Filter"
-
-#~ msgid "Gamma color display filter"
-#~ msgstr "Gamma-Anzeigenfarbfilter"
-
-#~ msgid "Gamma"
-#~ msgstr "Gamma"
-
-#~ msgid "Gamma:"
-#~ msgstr "Gamma:"
-
-#~ msgid "High Contrast color display filter"
-#~ msgstr "Hochkontrast-Anzeigenfarbfilter"
-
-#~ msgid "High Contrast"
-#~ msgstr "Hochkontrast"
-
-#~ msgid "Contrast Cycles:"
-#~ msgstr "Kontrastverstärkung:"
-
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Fehler in GIMP Pinseldatei...breche ab."
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Warnung: Konnte bunten Pinsel\n"
-#~ "\"%s\" nicht laden"
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Warnung: Konnte animierten Pinsel\n"
-#~ "\"%s\" nicht laden"
-
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Konnte keinen bunten Pinsel laden"
-
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Unbekannte GIMP Muster-Version #%d in \"%s\"\n"

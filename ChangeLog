@@ -1,26 +1,36 @@
-2003-12-19  Nathan Summers  <rock@gimp.org>
+2002-12-19  Sven Neumann  <sven@gimp.org>
 
-	* app/xcf.c: actually check to make sure writes are successful, instead
-	of unconditionally assuming that they are.  Fixes bug #101340.
+	* app/xcf.c: unmarked most of the strings that Nathan marked for
+	translation. The messages should only be triggered under very rare
+	circumstances and the strings would need to be reviewed before
+	marking them as translatable. We are too close to a release for
+	major string changes.
+
+2002-12-19  Nathan Summers  <rock@gimp.org>
+
+	* app/xcf.c: actually check to make sure writes are successful,
+	instead of unconditionally assuming that they are.  Fixes bug
+	#101340.
 	
 2002-12-19  Garry R. Osgood <grosgood@rcn.com>
 
-	* MAINTAINERS: Updated my CV
-	* app/gimpimage.c: New GimpImage signal,
-	LAYER_MERGE, to flag pending layer merges.
-	gimp_image_merge_layers() emits prior to start
-	of undo group.
+	* MAINTAINERS: updated my CV.
+
+	* app/gimpimage.c: new GimpImage signal, LAYER_MERGE, to flag
+	pending layer merges.  gimp_image_merge_layers() emits prior to
+	start of undo group.
+
 	* app/brightness_contrast.c
 	* app/color_balance.c
 	* app/curves.c
 	* app/hue_saturation.c
 	* app/levels.c
 	* app/posterize.c
-	* app/threshold.c: cancel callbacks connect to GimpImage LAYER_MERGE
-	signals. 
-	Closes Bug #82671; gimp crash with (1) active image map tools while 
-	(2) user performs a merge operation. See report for bug #82671 at
-	bugzilla.gnome.org for details.
+
+	* app/threshold.c: cancel callbacks connect to GimpImage
+	LAYER_MERGE signals.  Closes Bug #82671; gimp crash with (1)
+	active image map tools while (2) user performs a merge operation.
+	See report for bug #82671 at bugzilla.gnome.org for details.
 
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
