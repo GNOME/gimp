@@ -26,7 +26,9 @@ HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h
 CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
-IGNORE_HFILES = gimpbase.h
+IGNORE_HFILES = \
+	gimpbase.h	\
+	gimpwin32-io.h
 
 # Images to copy into HTML directory
 HTML_IMAGES=

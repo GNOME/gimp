@@ -1,3 +1,7 @@
+2003-07-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am: exclude libgimbase/gimpwin32-io.h.
+
 2003-07-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml: added object hierarchy,
