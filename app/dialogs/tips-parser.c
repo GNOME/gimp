@@ -335,6 +335,8 @@ tips_parser_error (GMarkupParseContext *context,
                    GError              *error,
                    gpointer             user_data)
 {
+  TipsParser *parser = (TipsParser *) user_data;
+
   g_warning ("%s: %s", parser->filename, error->message);
 }
 

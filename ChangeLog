@@ -1,5 +1,15 @@
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/fileops.pdb: changed dot to underscore in
+	implementation of gimp_temp_name(). Fixes bug #72324.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+	* Makefile.am
+	* tips/update.sh: added a script to update po files.
+	
+2002-02-25  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/tips-dialog.c
 	* app/gui/tips-parser.c: added proper error handling. This completes
 	the new XML-based tips system that closes bug #68846.
