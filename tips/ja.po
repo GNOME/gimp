@@ -1,16 +1,17 @@
 # This is the Japanese locale definition for the GIMP tips.
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 1999,2002,2003 Free Software Foundation, Inc.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp, 2003
 #
 # Replaced: & -> ＆
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.4\n"
-"POT-Creation-Date: 2002-11-09 19:45+0100\n"
-"PO-Revision-Date: 2002-03-13 18:34+0900\n"
-"Last-Translator: Takashi Kido <yositaka@yd5.so-net.ne.jp>\n"
+"Project-Id-Version: gimp-tips HEAD\n"
+"POT-Creation-Date: 2003-02-19 03:36+0100\n"
+"PO-Revision-Date: 2003-04-04 18:21+0900\n"
+"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -273,13 +274,10 @@ msgstr ""
 "るんだ。"
 
 #: tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
 "it onto the toolbox. This will create a new image containing only that layer."
-msgstr ""
-"<i>レイヤー, チャンネル＆パス</i> ダイアログから道具箱へレイヤーを持っていく"
-"こともできるんだ。するとそのレイヤーで新しい画像を作るんだ。"
+msgstr "\"レイヤー, チャンネル＆パス\" ダイアログから道具箱へレイヤーをドラッグして持っていくこともできるんだ。するとそのレイヤーで新しい画像を作るんだ。"
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
