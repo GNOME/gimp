@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
@@ -48,6 +49,8 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
 
 #include "gimptoolcontrol.h"
 #include "gimpvectoroptions.h"
@@ -85,6 +88,9 @@ static void   gimp_vector_tool_motion          (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 guint32          time,
                                                 GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
+static void   gimp_vector_tool_arrow_key       (GimpTool        *tool,
+                                                GdkEventKey     *kevent,
                                                 GimpDisplay     *gdisp);
 static void   gimp_vector_tool_modifier_key    (GimpTool        *tool,
                                                 GdkModifierType  key,
@@ -186,6 +192,7 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->button_press   = gimp_vector_tool_button_press;
   tool_class->button_release = gimp_vector_tool_button_release;
   tool_class->motion         = gimp_vector_tool_motion;
+  tool_class->arrow_key      = gimp_vector_tool_arrow_key;
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
@@ -702,6 +709,61 @@ gimp_vector_tool_motion (GimpTool        *tool,
     }
 
   gimp_vectors_thaw (vector_tool->vectors);
+}
+
+static void
+gimp_vector_tool_arrow_key (GimpTool     *tool,
+                            GdkEventKey  *kevent,
+                            GimpDisplay  *gdisp)
+{
+  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDrawTool     *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpDisplayShell *shell;
+  gdouble xdist, ydist;
+  gdouble pixels = 1.0;
+
+  if (!vector_tool->vectors)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
+
+  if (kevent->state & GDK_SHIFT_MASK)
+    pixels = 10.0;
+
+  if (kevent->state & GDK_CONTROL_MASK)
+    pixels = 50.0;
+
+  if (gdisp == draw_tool->gdisp)
+    {
+      xdist = FUNSCALEX (shell, pixels);
+      ydist = FUNSCALEY (shell, pixels);
+
+      gimp_vector_tool_undo_push (vector_tool, _("Move Anchors"));
+
+      gimp_vectors_freeze (vector_tool->vectors);
+
+      switch (kevent->keyval)
+        {
+          case GDK_Left:
+            gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
+            break;
+          case GDK_Right:
+            gimp_vector_tool_move_selected_anchors (vector_tool, xdist, 0);
+            break;
+          case GDK_Up:
+            gimp_vector_tool_move_selected_anchors (vector_tool, 0, -ydist);
+            break;
+          case GDK_Down:
+            gimp_vector_tool_move_selected_anchors (vector_tool, 0, ydist);
+            break;
+          default:
+            break;
+        }
+      gimp_vectors_thaw (vector_tool->vectors);
+      vector_tool->have_undo = FALSE;
+
+      gimp_image_flush (gdisp->gimage);
+    }
 }
 
 static void

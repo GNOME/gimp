@@ -188,3 +188,11 @@ expertise: i18n, French i18n, MMX
 current-work: not enough time to work on Gimp, ported forward my old code for MMX-accelerated paint_funcs
 commit access: yes
 
+Name: Simon Budig
+Email: simon@gimp.org
+url: http://www.home.unix-ag.org/simon/gimp/
+ircnick: nomis
+expertise: Path tool, Vectors stuff, Plug-Ins
+current work: Path tool
+commit access: yes
+

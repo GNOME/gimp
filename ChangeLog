@@ -1,3 +1,10 @@
+2003-09-18  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: Cursor keys now move the currently
+	active anchors, SHIFT and CTRL increase the steps.
+
+	* MAINTAINERS: Added myself in an attack of hubris...
+
 2003-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-export.c: save the vectors (or rather
