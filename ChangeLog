@@ -1,3 +1,13 @@
+Tue Apr 13 00:01:24 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimpfeatures.h.in: added GIMP_CHECK_VERSION macro and
+	a features #define for 1.1.5
+
+	* app/misc_cmds.c: added a gimp_version PDB function that
+	returns the current version (new file)
+
+	* app/internal_procs.c: register gimp_version PDB function
+
 Mon Apr 12 21:54:48 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/boundary.c: code cleanup

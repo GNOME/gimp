@@ -255,6 +255,7 @@ gimp_SOURCES = \
 	marching_ants.h		\
 	menus.c			\
 	menus.h			\
+	misc_cmds.c		\
 	module_db.c		\
 	module_db.h		\
 	move.c			\

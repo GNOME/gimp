@@ -76,6 +76,7 @@ void register_palette_procs      (void);
 void register_unit_procs         (void);
 void register_text_tool_procs    (void);
 void register_color_procs        (void);
+void register_misc_procs         (void);
 
 void
 internal_procs_init ()
@@ -422,4 +423,6 @@ internal_procs_init ()
   procedural_db_register (&procedural_db_get_data_proc); pcount++;
   procedural_db_register (&procedural_db_set_data_proc); pcount++;
   procedural_db_register (&procedural_db_get_data_size_proc); pcount++;
+  
+  register_misc_procs ();
 }

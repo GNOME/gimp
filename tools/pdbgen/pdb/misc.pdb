@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1998-1999 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1999 Manish Singh
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,8 +15,30 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-# Modify this list for the groups to parse in the pdb directory
-@groups = qw(gdisplay edit floating_sel undo palette gradient convert
-	     channel_ops gimprc drawable parasite paths gradient_select
-	     unit procedural_db brushes text_tool brush_select color
-	     misc);
+sub version {
+    $blurb = <<'BLURB';
+Returns the host gimp version.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the version number of the currently running gimp.
+HELP
+
+    $author = $copyright = 'Manish Singh';
+    $date = '1999';
+
+    @outargs = (
+	{ name => 'version', type => 'string',
+	  desc => 'The gimp version',
+	  alias => 'g_strdup (GIMP_VERSION)', no_declare => 1 }
+    );
+
+    %invoke = ( headers => [ qw("libgimp/gimpfeatures.h") ] );
+}
+
+@procs = qw(version);
+%exports = (app => [@procs]);
+
+$desc = 'Miscellaneous procedures';
+
+1;

@@ -29,11 +29,18 @@ extern "C" {
 #define GIMP_MINOR_VERSION				(@GIMP_MINOR_VERSION@)
 #define GIMP_MICRO_VERSION				(@GIMP_MICRO_VERSION@)
 #define GIMP_VERSION					"@GIMP_VERSION@"
+#define GIMP_CHECK_VERSION(major, minor, micro)	\
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
 
 #define GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE		1-1-0
 #define GIMP_HAVE_PARASITES				1-1-0
 #define GIMP_HAVE_RESOLUTION_INFO			1-1-0
 #define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
+
+#define GIMP_HAVE_FEATURES_1_1_5			1-1-5
 
 #ifdef __cplusplus
 }
