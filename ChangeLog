@@ -1,3 +1,13 @@
+2004-02-24  Dave Neary  <bolsh@gimp.org>
+
+	* app/tools/gimpcurvestool.c: Revert to 1.2 behaviour of hiding
+	rather than destroying the curves load/save dialog. This makes 
+	the last selected curve be selected when the dialog is 
+	re-opened, and fixes bug #135059.
+
+	Also append G_DIR_SEPARATOR_S to the end of the filename we 
+	build while creating the dialog, rather than ".".
+
 2004-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpfileentry.[ch]: renamed member

@@ -1232,7 +1232,8 @@ file_dialog_create (GimpCurvesTool *tool)
                     G_CALLBACK (file_dialog_response),
                     tool);
 
-  temp = g_build_filename (gimp_directory (), "curves", ".", NULL);
+  temp = g_build_filename (gimp_directory (), "curves", 
+      G_DIR_SEPARATOR_S, NULL);
   gtk_file_selection_set_filename (file_dlg, temp);
   g_free (temp);
 
@@ -1277,7 +1278,7 @@ file_dialog_response (GtkWidget      *dialog,
       fclose (file);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_widget_hide (dialog);
 }
 
 static gboolean
