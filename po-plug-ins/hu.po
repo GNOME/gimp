@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-02 03:28+0100\n"
-"PO-Revision-Date: 2004-12-02 10:57+0100\n"
+"POT-Creation-Date: 2004-12-05 11:46+0100\n"
+"PO-Revision-Date: 2004-12-05 14:24+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -1185,7 +1185,7 @@ msgstr "Helytelen színtérkép"
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
 #: plug-ins/common/raw.c:640 plug-ins/common/sunras.c:436
 #: plug-ins/common/tga.c:420 plug-ins/common/tiff.c:515
-#: plug-ins/common/wmf.c:921 plug-ins/common/xbm.c:724
+#: plug-ins/common/wmf.c:952 plug-ins/common/xbm.c:724
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:475
 #: plug-ins/faxg3/faxg3.c:203 plug-ins/gfli/gfli.c:465 plug-ins/sgi/sgi.c:323
 #: plug-ins/winicon/icoload.c:505 plug-ins/xjt/xjt.c:3312
@@ -1210,7 +1210,7 @@ msgstr "Hiba a BMP-fájlfejléc innen való beolvasásakor: \"%s\""
 
 #: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Ismeretlen vagy érvénytelen BMP-tömörítési formátum."
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1380,9 +1380,10 @@ msgstr "_RGB színmodell"
 msgid "_HSL color model"
 msgstr "_HSL színmodell"
 
+# KISS CEL: file format
 #: plug-ins/common/CEL.c:112 plug-ins/common/CEL.c:130
 msgid "KISS CEL"
-msgstr ""
+msgstr "KISS CEL"
 
 #: plug-ins/common/CEL.c:191
 msgid "Load KISS Palette"
@@ -1852,9 +1853,8 @@ msgid "Save as Text"
 msgstr "Mentés szövegként"
 
 #: plug-ins/common/aa.c:360
-#, fuzzy
 msgid "_Format:"
-msgstr "_Betűkészlet:"
+msgstr "_Formátum:"
 
 #: plug-ins/common/align_layers.c:135
 msgid "Align _Visible Layers..."
@@ -2062,7 +2062,7 @@ msgstr "Automatikus HSV-feszítés..."
 
 #: plug-ins/common/autostretch_hsv.c:192
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "autostretch_hsv: a cmap NULL. Kilépés...\n"
 
 #: plug-ins/common/blinds.c:124
 msgid "_Blinds..."
@@ -2212,7 +2212,7 @@ msgstr "Kontraszt automatikus nyújtása..."
 
 #: plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "c_astretch: a cmap NULL. Kilépés...\n"
 
 #: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
 #: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
@@ -3170,9 +3170,12 @@ msgstr "_Hisztogram létrehozása"
 msgid "DICOM image"
 msgstr "DICOM-kép"
 
+# DICOM (Digital Imaging and Communications in Medicine) is an
+# application layer network protocol for the transmission of medical
+# images, waveforms, and ancillary information.
 #: plug-ins/common/dicom.c:159
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr ""
+msgstr "Digital Imaging and Communications in Medicine-kép"
 
 #: plug-ins/common/dicom.c:318
 #, c-format
@@ -3271,14 +3274,12 @@ msgid "Smoothing parameters"
 msgstr "Simítási paraméterek"
 
 #: plug-ins/common/dog.c:308
-#, fuzzy
 msgid "_Radius 1:"
-msgstr "Sugá_r:"
+msgstr "Sugá_r 1:"
 
 #: plug-ins/common/dog.c:312
-#, fuzzy
 msgid "R_adius 2:"
-msgstr "Su_gár:"
+msgstr "Su_gár 2:"
 
 #: plug-ins/common/dog.c:324 plug-ins/common/normalize.c:88
 msgid "_Normalize"
@@ -5891,6 +5892,8 @@ msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
 msgstr ""
+"\"%s\" mentése nem lehetséges. A psd fájlformátum nem tud olyan képeket "
+"eltárolni, amelyek szélessége vagy magassága 30000 képpontnál nagyobb."
 
 #: plug-ins/common/psd_save.c:1576
 #, c-format
@@ -5898,6 +5901,9 @@ msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
 msgstr ""
+"\"%s\" mentése nem lehetséges. A psd fájlformátum nem tud olyan képeket "
+"eltárolni, amelyek valamely rétegének szélessége vagy magassága 30000 "
+"képpontnál nagyobb."
 
 #: plug-ins/common/psp.c:362
 msgid "Paint Shop Pro image"
@@ -5978,16 +5984,15 @@ msgstr "Kép"
 
 #: plug-ins/common/raw.c:955
 msgid "Planar RGB"
-msgstr ""
+msgstr "Sík RGB"
 
 #: plug-ins/common/raw.c:956
 msgid "Indexed"
 msgstr "Indexelt"
 
 #: plug-ins/common/raw.c:961
-#, fuzzy
 msgid "Image _Type:"
-msgstr "Képtípus:"
+msgstr "Kép_típus:"
 
 #: plug-ins/common/raw.c:1011
 msgid "Palette"
@@ -5995,55 +6000,47 @@ msgstr "Paletta"
 
 #: plug-ins/common/raw.c:1021 plug-ins/common/raw.c:1109
 msgid "R, G, B (normal)"
-msgstr ""
+msgstr "R, G, B (normál)"
 
 #: plug-ins/common/raw.c:1022 plug-ins/common/raw.c:1111
 msgid "B, G, R, X (bmp style)"
-msgstr ""
+msgstr "B, G, R, X (BMP-stílusú)"
 
 #: plug-ins/common/raw.c:1027
-#, fuzzy
 msgid "_Palette Type:"
-msgstr "RGB minta típusa"
+msgstr "_Palettatípus:"
 
 #: plug-ins/common/raw.c:1038
-#, fuzzy
 msgid "Off_set:"
-msgstr "Eltolás:"
+msgstr "_Eltolás:"
 
 #: plug-ins/common/raw.c:1050
-#, fuzzy
 msgid "Select Palette File to Load"
-msgstr "Képfájl kiválasztása"
+msgstr "Betöltendő palettafájl kiválasztása"
 
 #: plug-ins/common/raw.c:1053
-#, fuzzy
 msgid "Pal_ette File:"
-msgstr "Minta"
+msgstr "P_alettafájl:"
 
 #: plug-ins/common/raw.c:1081
-#, fuzzy
 msgid "Raw Image Save"
-msgstr "Képméret"
+msgstr "Nyers kép mentése"
 
 #: plug-ins/common/raw.c:1095
-#, fuzzy
 msgid "RGB Save Type"
-msgstr "RGB minta típusa"
+msgstr "RGB mentési típusa"
 
 #: plug-ins/common/raw.c:1099
-#, fuzzy
 msgid "Standard (R,G,B)"
-msgstr "Szabványos"
+msgstr "Szabványos (R,G,B)"
 
 #: plug-ins/common/raw.c:1100
 msgid "Planar (RRR,GGG,BBB)"
-msgstr ""
+msgstr "Sík (RRR,GGG,BBB)"
 
 #: plug-ins/common/raw.c:1105
-#, fuzzy
 msgid "Indexed Palette Type"
-msgstr "RGB minta típusa"
+msgstr "Indexelt palettatípus"
 
 #: plug-ins/common/retinex.c:167
 msgid "_Retinex..."
@@ -6055,7 +6052,7 @@ msgstr "Retinex..."
 
 #: plug-ins/common/retinex.c:252
 msgid "Retinex (4/4): updated..."
-msgstr ""
+msgstr "Retinex (4/4): frissítve..."
 
 #: plug-ins/common/retinex.c:289
 msgid "Retinex Image Enhancement"
@@ -6910,7 +6907,7 @@ msgstr "Al_só-jobb"
 
 #: plug-ins/common/sunras.c:217 plug-ins/common/sunras.c:237
 msgid "SUN Rasterfile image"
-msgstr ""
+msgstr "SUN Rasterfile-kép"
 
 #: plug-ins/common/sunras.c:392
 #, c-format
@@ -7004,14 +7001,12 @@ msgid "Height:"
 msgstr "Magasság:"
 
 #: plug-ins/common/svg.c:841 plug-ins/common/wmf.c:628
-#, fuzzy
 msgid "_X ratio:"
-msgstr "_Variáció:"
+msgstr "_X-arány:"
 
 #: plug-ins/common/svg.c:863 plug-ins/common/wmf.c:650
-#, fuzzy
 msgid "_Y ratio:"
-msgstr "_Variáció:"
+msgstr "_Y-arány:"
 
 #: plug-ins/common/svg.c:877 plug-ins/common/wmf.c:664
 msgid "Constrain aspect ratio"
@@ -7923,18 +7918,18 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Windows Metafile megjelenítése"
 
-#: plug-ins/common/wmf.c:916 plug-ins/sgi/sgi.c:318
+#: plug-ins/common/wmf.c:947 plug-ins/sgi/sgi.c:318
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Nem lehet megnyitni olvasásra a(z) \"%s\"-t."
 
-#: plug-ins/common/wmf.c:932
+#: plug-ins/common/wmf.c:963
 msgid "Rendered WMF"
 msgstr "Megrajzolt WMF"
 
 #: plug-ins/common/xbm.c:169 plug-ins/common/xbm.c:187
 msgid "X BitMap image"
-msgstr ""
+msgstr "X-bittérkép"
 
 #: plug-ins/common/xbm.c:241
 msgid "Created with The GIMP"
@@ -8042,7 +8037,7 @@ msgstr "Maszkfájl _kiterjesztése:"
 
 #: plug-ins/common/xpm.c:170 plug-ins/common/xpm.c:195
 msgid "X PixMap image"
-msgstr ""
+msgstr "X PixMap-kép"
 
 #: plug-ins/common/xpm.c:354
 #, c-format
@@ -8063,7 +8058,7 @@ msgstr "_Alfa-küszöb:"
 
 #: plug-ins/common/xwd.c:277 plug-ins/common/xwd.c:297
 msgid "X window dump"
-msgstr ""
+msgstr "X Window, formázatlan"
 
 #: plug-ins/common/xwd.c:430
 #, c-format
@@ -8261,11 +8256,12 @@ msgstr "_Eljárásböngésző"
 
 #: plug-ins/faxg3/faxg3.c:100
 msgid "G3 fax image"
-msgstr ""
+msgstr "G3 faxkép"
 
+# FITS: data format
 #: plug-ins/fits/fits.c:159 plug-ins/fits/fits.c:178
 msgid "Flexible Image Transport System"
-msgstr ""
+msgstr "Flexible Image Transport System"
 
 #: plug-ins/fits/fits.c:346
 msgid "Error during open of FITS file"
@@ -8422,19 +8418,19 @@ msgstr "K_amera"
 msgid "_Zoom:"
 msgstr "_Nagyítás:"
 
-#: plug-ins/gfig/gfig-bezier.c:450
+#: plug-ins/gfig/gfig-bezier.c:452
 msgid "Closed"
 msgstr "Zárt"
 
-#: plug-ins/gfig/gfig-bezier.c:455
+#: plug-ins/gfig/gfig-bezier.c:457
 msgid "Close curve on completion"
 msgstr "Görbe lezárása befejezéskor"
 
-#: plug-ins/gfig/gfig-bezier.c:460
+#: plug-ins/gfig/gfig-bezier.c:462
 msgid "Show Line Frame"
 msgstr "Vonalkeret megjelenítése"
 
-#: plug-ins/gfig/gfig-bezier.c:465
+#: plug-ins/gfig/gfig-bezier.c:467
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Vonalak rajzolása a vezérlőpontok közé. Csak görbe-létrehozás közben."
 
@@ -8496,19 +8492,16 @@ msgid "First Gfig"
 msgstr "Első GFig"
 
 #: plug-ins/gfig/gfig-dialog.c:859
-#, fuzzy
 msgid "_Undo"
-msgstr "Visszavonás"
+msgstr "V_isszavonás"
 
 #: plug-ins/gfig/gfig-dialog.c:863
-#, fuzzy
 msgid "_Clear"
-msgstr "Törlés"
+msgstr "_Törlés"
 
 #: plug-ins/gfig/gfig-dialog.c:867
-#, fuzzy
 msgid "_Grid"
-msgstr "Rács"
+msgstr "Rá_cs"
 
 #: plug-ins/gfig/gfig-dialog.c:875
 msgid "Raise selected object"
@@ -8711,15 +8704,15 @@ msgstr "%d. GFig-réteg"
 msgid "Hey where has the object gone ?"
 msgstr "Hova tűnt az objektum?"
 
-#: plug-ins/gfig/gfig-dobject.c:979
+#: plug-ins/gfig/gfig-dobject.c:941
 msgid "Error reading file"
 msgstr "Fájlbeolvasási hiba"
 
-#: plug-ins/gfig/gfig-dobject.c:1068
+#: plug-ins/gfig/gfig-dobject.c:1030
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Csak olvasható objektum szerkesztése - mentésre nem lesz lehetőség"
 
-#: plug-ins/gfig/gfig-poly.c:54
+#: plug-ins/gfig/gfig-poly.c:56
 msgid "Regular Polygon Number of Sides"
 msgstr "Szabályos sokszög oldalainak száma"
 
@@ -8732,11 +8725,11 @@ msgstr "Részletes objektumtulajdonságok"
 msgid "XY position:"
 msgstr "XY-pozíció:"
 
-#: plug-ins/gfig/gfig-spiral.c:57
+#: plug-ins/gfig/gfig-spiral.c:59
 msgid "Spiral Number of Turns"
 msgstr "Spirál fordulatainak száma"
 
-#: plug-ins/gfig/gfig-star.c:55
+#: plug-ins/gfig/gfig-star.c:57
 msgid "Star Number of Points"
 msgstr "Csillag csúcsainak száma"
 
@@ -8749,11 +8742,15 @@ msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
 msgstr ""
+"Hiba a kép élősködőként való mentésekor: élősködő nem csatolható a "
+"rajzfelülethez.\n"
 
 #: plug-ins/gfig/gfig.c:755
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr ""
+"Hiba a(z) \"%s\" átmeneti fájl élősködő-betöltés számára való "
+"megnyitásakor.\n"
 
 #: plug-ins/gflare/gflare.c:560
 msgid "Addition"
@@ -9704,7 +9701,7 @@ msgstr "A dokumentum nem található"
 
 #: plug-ins/helpbrowser/dialog.c:411
 msgid "The requested URL could not be loaded:"
-msgstr ""
+msgstr "A kért URL nem tölthető be:"
 
 #: plug-ins/ifscompose/ifscompose.c:357
 msgid "_IFS Fractal..."
@@ -9726,9 +9723,8 @@ msgid "Simple"
 msgstr "Egyszerű"
 
 #: plug-ins/ifscompose/ifscompose.c:668
-#, fuzzy
 msgid "IFS Fractal: Target"
-msgstr "Fraktálkövetés"
+msgstr "IFS fraktálkészítő: cél"
 
 #: plug-ins/ifscompose/ifscompose.c:674
 msgid "Scale Hue by:"
@@ -9744,29 +9740,24 @@ msgid "Full"
 msgstr "Teljes"
 
 #: plug-ins/ifscompose/ifscompose.c:713
-#, fuzzy
 msgid "IFS Fractal: Red"
-msgstr "Fraktál típusa"
+msgstr "IFS fraktálkészítő: vörös"
 
 #: plug-ins/ifscompose/ifscompose.c:720
-#, fuzzy
 msgid "IFS Fractal: Green"
-msgstr "Fraktálkövetés"
+msgstr "IFS fraktálkészítő: zöld"
 
 #: plug-ins/ifscompose/ifscompose.c:727
-#, fuzzy
 msgid "IFS Fractal: Blue"
-msgstr "Fraktál típusa"
+msgstr "IFS fraktálkészítő: kék"
 
 #: plug-ins/ifscompose/ifscompose.c:734
-#, fuzzy
 msgid "IFS Fractal: Black"
-msgstr "Fraktálkövetés"
+msgstr "IFS fraktálkészítő: fekete"
 
 #: plug-ins/ifscompose/ifscompose.c:784
-#, fuzzy
 msgid "IFS Fractal"
-msgstr "Új fraktál"
+msgstr "IFS fraktálkészítő"
 
 #: plug-ins/ifscompose/ifscompose.c:872
 msgid "Spatial Transformation"
@@ -9785,14 +9776,12 @@ msgid "Select _All"
 msgstr "M_inden kijelölése"
 
 #: plug-ins/ifscompose/ifscompose.c:1067
-#, fuzzy
 msgid "Re_center"
 msgstr "Kö_zéppont meghatározása"
 
 #: plug-ins/ifscompose/ifscompose.c:1067
-#, fuzzy
 msgid "Recompute Center"
-msgstr "/Középpont meghatározása"
+msgstr "Középpont meghatározása"
 
 #: plug-ins/ifscompose/ifscompose.c:1071
 msgid "Render options"
@@ -9804,23 +9793,20 @@ msgid "Move"
 msgstr "Áthelyezés"
 
 #: plug-ins/ifscompose/ifscompose.c:1080
-#, fuzzy
 msgid "Rotate"
-msgstr "Elforgatott"
+msgstr "Forgatás"
 
 #: plug-ins/ifscompose/ifscompose.c:1080
-#, fuzzy
 msgid "Rotate / Scale"
-msgstr "/Elforgatás\\/Méretezés"
+msgstr "Forgatás / átméretezés"
 
 #: plug-ins/ifscompose/ifscompose.c:1083
 msgid "Stretch"
 msgstr "Nyújtás"
 
 #: plug-ins/ifscompose/ifscompose.c:1180
-#, fuzzy
 msgid "IFS Fractal Render Options"
-msgstr "Megjelenítési beállítások"
+msgstr "IFS fraktálkészítő - megjelenítési beállítások"
 
 #: plug-ins/ifscompose/ifscompose.c:1201
 msgid "Max. Memory:"
@@ -9859,19 +9845,17 @@ msgid "Open failed"
 msgstr "Sikertelen megnyitás"
 
 #: plug-ins/ifscompose/ifscompose.c:2489
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "Úgy tűnik, hogy a(z) \"%s\" fájl nem IFS-fájl."
+msgstr "Úgy tűnik, hogy a(z) \"%s\" fájl nem IFS fraktálkészítő-fájl."
 
 #: plug-ins/ifscompose/ifscompose.c:2529
-#, fuzzy
 msgid "Save as IFS Fraktal file"
-msgstr "Mentés IFS-fájlként"
+msgstr "Mentés IFS fraktálkészítő-fájlként"
 
 #: plug-ins/ifscompose/ifscompose.c:2559
-#, fuzzy
 msgid "Open IFS Fraktal file"
-msgstr "IFS-fájl megnyitása"
+msgstr "IFS fraktálkészítő-fájl megnyitása"
 
 #: plug-ins/imagemap/imap_about.c:43
 msgid "Imagemap plug-in 2.2"
@@ -11533,54 +11517,55 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:313
 msgid "TWAIN (Dump)..."
-msgstr ""
+msgstr "TWAIN (formázatlan kimenet)..."
 
 #: plug-ins/twain/twain.c:332
 msgid "TWAIN (Read)..."
-msgstr ""
+msgstr "TWAIN (olvasás)..."
 
 #: plug-ins/twain/twain.c:352
 msgid "_TWAIN..."
-msgstr ""
+msgstr "T_WAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:489
 msgid "Transferring TWAIN data..."
-msgstr "TWAIN adatátvitel..."
+msgstr "TWAIN-adatátvitel..."
 
 #: plug-ins/winicon/icodialog.c:123
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr ""
+msgstr "1 bit/képpont, 1 bites alfa, 2 elemű paletta"
 
 #: plug-ins/winicon/icodialog.c:124
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr ""
+msgstr "4 bit/képpont, 1 bites alfa, 16 elemű paletta"
 
 #: plug-ins/winicon/icodialog.c:125
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr ""
+msgstr "8 bit/képpont, 1 bites alfa, 256 elemű paletta"
 
 #: plug-ins/winicon/icodialog.c:126
 msgid "32 bpp, 8-bit alpha, no palette"
-msgstr ""
+msgstr "32 bit/képpont, 8 bites alfa, nincs paletta"
 
 #: plug-ins/winicon/icodialog.c:151
 msgid "GIMP Windows Icon Plugin"
-msgstr ""
+msgstr "GIMP Windows-ikon-bővítmény"
 
 #: plug-ins/winicon/icodialog.c:172
-#, fuzzy
 msgid "Icon details"
-msgstr "Részletes gyűjteménytulajdonságok"
+msgstr "Részletes ikontulajdonságok"
 
+# const char     *layer_name = N_("Icon #%i");
 #: plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
-msgstr ""
+msgstr "Ikon #%i"
 
 #: plug-ins/winicon/icosave.c:940
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
+"A windowsos ikonok magassága és szélessége nem lehet nagyobb 255 képpontnál."
 
 #: plug-ins/winicon/main.c:88 plug-ins/winicon/main.c:107
 msgid "Microsoft Windows icon"
