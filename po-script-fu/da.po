@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2000-03-17 05:40+0100\n"
+"POT-Creation-Date: 2000-03-28 01:56-0800\n"
 "PO-Revision-Date: 2000-03-17 16:41+01:00\n"
 "Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -22,34 +22,34 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu konsol"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:206
+#: plug-ins/script-fu/script-fu-console.c:207
 #: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "Luk"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:214
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "SIOD Output"
 msgstr "SIOD uddata"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:291
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Current Command"
 msgstr "Nuværende kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:312
+#: plug-ins/script-fu/script-fu-console.c:315
 msgid "Browse..."
 msgstr "Gennemse..."
 
-#: plug-ins/script-fu/script-fu-console.c:575
+#: plug-ins/script-fu/script-fu-console.c:578
 msgid "Unable to open SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:626
+#: plug-ins/script-fu/script-fu-console.c:629
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
@@ -102,14 +102,13 @@ msgstr "Gendan standarder"
 msgid "About"
 msgstr "Om"
 
-#. Action area
 #: plug-ins/script-fu/script-fu-scripts.c:1386
-#: plug-ins/script-fu/script-fu-server.c:559
+#: plug-ins/script-fu/script-fu-server.c:552
 msgid "OK"
 msgstr "Ok"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1395
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -143,18 +142,18 @@ msgstr "Billedtyper:"
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu skrifttypevælger"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu tjenerindstillinger"
 
-#. The server port
-#: plug-ins/script-fu/script-fu-server.c:582
-msgid "Server Port: "
+#: plug-ins/script-fu/script-fu-server.c:574
+#, fuzzy
+msgid "Server Port:"
 msgstr "Tjenerport: "
 
-#. The server logfile
-#: plug-ins/script-fu/script-fu-server.c:595
-msgid "Server Logfile: "
+#: plug-ins/script-fu/script-fu-server.c:580
+#, fuzzy
+msgid "Server Logfile:"
 msgstr "Tjenerlogfil: "
 
 #: plug-ins/script-fu/script-fu.c:165
@@ -198,6 +197,9 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
@@ -476,3 +478,7 @@ msgstr ""
 
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "Skript-Fu filvalg"

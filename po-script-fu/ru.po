@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-03-26 22:26+0400\n"
+"POT-Creation-Date: 2000-03-28 01:56-0800\n"
 "PO-Revision-Date: 2000-03-29 18:53+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -246,11 +246,11 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Bovination..."
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Камуфляж..."
 
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Carved..."
-
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
 msgstr "<Image>/Скрипт-Фу/Stencil Ops/Carve-It..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Carved..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Мел..."
@@ -414,14 +414,14 @@ msgstr "<Image>/Скрипт-Фу/Аниматоры/Рябь..."
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
 msgstr "<Image>/Скрипт-Фу/Декор/Закругленные уголки..."
 
-msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Круглое..."
-
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "<Image>/Скрипт-Фу/Выделение/В кисть..."
 
 msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
+
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Круглое..."
 
 msgid "<Image>/Script-Fu/Decor/Slide..."
 msgstr "<Image>/Скрипт-Фу/Декор/Слайд..."
@@ -450,6 +450,9 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirl-Tile..."
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirly (tileable)..."
 
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/След частицы..."
+
 msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Тест/Сфера..."
 
@@ -464,9 +467,6 @@ msgstr "<Image>/Фильтры/Размывание/Tileable Blur..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Web Title Header..."
-
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/След частицы..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Trochoid..."

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.18\n"
-"POT-Creation-Date: 2000-03-29 19:56+0400\n"
+"POT-Creation-Date: 2000-03-29 21:14-0800\n"
 "PO-Revision-Date: 2000-03-29 20:03+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Чужая Карта"
 #: plug-ins/FractalExplorer/Dialogs.c:298
 #: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:490
 #: plug-ins/gfig/gfig.c:3362 plug-ins/imagemap/imap_about.c:33
-#: plug-ins/webbrowser/webbrowser.c:273
+#: plug-ins/webbrowser/webbrowser.c:270
 msgid "About"
 msgstr "О программе"
 
@@ -111,7 +111,7 @@ msgstr "О программе"
 #: plug-ins/print/print.c:1253 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/sel2path/sel2path.c:347 plug-ins/sgi/sgi.c:655
 #: plug-ins/sinus/sinus.c:753 plug-ins/struc/struc.c:261
-#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:800
+#: plug-ins/webbrowser/webbrowser.c:272 plug-ins/xjt/xjt.c:800
 msgid "OK"
 msgstr "Да"
 
@@ -196,7 +196,7 @@ msgstr "Да"
 #: plug-ins/print/print.c:774 plug-ins/print/print.c:1255
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
-#: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
+#: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:274
 #: plug-ins/winsnap/winsnap.c:920 plug-ins/xjt/xjt.c:802
 msgid "Cancel"
 msgstr "Отмена"
@@ -9718,10 +9718,9 @@ msgstr ""
 msgid "Original"
 msgstr "Исходная"
 
-#. Window radiobutton
 #: plug-ins/gfig/gfig.c:2787 plug-ins/gfig/gfig.c:3546
 #: plug-ins/gflare/gflare.c:3105 plug-ins/ifscompose/ifscompose.c:799
-#: plug-ins/webbrowser/webbrowser.c:345
+#: plug-ins/webbrowser/webbrowser.c:310
 msgid "New"
 msgstr "Новый"
 
@@ -12574,25 +12573,23 @@ msgstr "<Toolbox>/Файл/Захватить/TWAIN..."
 msgid "Transferring TWAIN data"
 msgstr "Передача TWAIN-данных"
 
-#: plug-ins/webbrowser/webbrowser.c:124
+#: plug-ins/webbrowser/webbrowser.c:130
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
 msgstr "<Toolbox>/Расш./Web-браузер/Открыть URL..."
 
-#: plug-ins/webbrowser/webbrowser.c:260
+#: plug-ins/webbrowser/webbrowser.c:265
 msgid "Open URL"
 msgstr "Открыть URL"
 
-#. URL:  Label
-#: plug-ins/webbrowser/webbrowser.c:313
+#: plug-ins/webbrowser/webbrowser.c:297
 msgid "URL:"
 msgstr "URL:"
 
-#. Window label
-#: plug-ins/webbrowser/webbrowser.c:336
+#: plug-ins/webbrowser/webbrowser.c:307
 msgid "Window:"
 msgstr "Окно:"
 
-#: plug-ins/webbrowser/webbrowser.c:347
+#: plug-ins/webbrowser/webbrowser.c:320
 msgid "Current"
 msgstr "Текущее"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 2000-03-30 01:14+0200\n"
+"POT-Creation-Date: 2000-03-29 01:35-0800\n"
 "PO-Revision-Date: 2000-03-30 01:33+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -2788,7 +2788,9 @@ msgstr "Klikk \"Fortsett\" for å akseptere innstillingene over."
 
 #: app/install.c:831
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr "For optimal ytelse i GIMP, er det nødvendig med justering av noen innstillinger."
+msgstr ""
+"For optimal ytelse i GIMP, er det nødvendig med justering av noen "
+"innstillinger."
 
 #: app/install.c:840
 msgid "Monitor Resolution"
@@ -2802,7 +2804,9 @@ msgstr "Klikk \"Fortsett\" for å starte GIMP."
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
-msgstr "For å vise bilder i sin naturlige størrelse må GIMO vite oppløsningen for din skjerm."
+msgstr ""
+"For å vise bilder i sin naturlige størrelse må GIMO vite oppløsningen for "
+"din skjerm."
 
 #: app/install.c:853
 msgid "Aborting Installation..."

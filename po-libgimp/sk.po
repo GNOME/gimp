@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -230,6 +230,18 @@ msgstr ""
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
 msgstr ""
 
 #~ msgid "Select"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.15\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: 1999-11-05 15:37+0100\n"
 "Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -209,7 +209,10 @@ msgstr "Facteur"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Si le bouton « Heure » n'est pas coché, utiliser cette valeur comme graine du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence aléatoire reproductible en fournissant la même graine."
+msgstr ""
+"Si le bouton « Heure » n'est pas coché, utiliser cette valeur comme graine "
+"du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence "
+"aléatoire reproductible en fournissant la même graine."
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
@@ -219,7 +222,21 @@ msgstr "Heure"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "Prend l'heure actuelle comme graine du générateur de nombres aléatoires. Cela garanti un aléa raisonnable."
+msgstr ""
+"Prend l'heure actuelle comme graine du générateur de nombres aléatoires. "
+"Cela garanti un aléa raisonnable."
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr ""
 
 #~ msgid "Select"
 #~ msgstr "Sélectionner"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-03-15 02:24+0100\n"
+"POT-Creation-Date: 2000-03-29 01:35-0800\n"
 "PO-Revision-Date: 1998 11:32+CET\n"
 "Last-Translator: Balazs Nagy <julian7@kva.hu>\n"
 "Language-Team: Hungarian Gimp List <gimp@kva.hu>\n"
@@ -100,11 +100,11 @@ msgstr "Paletták"
 msgid "Gradients"
 msgstr "Színátmenetek"
 
-#: app/app_procs.c:737
+#: app/app_procs.c:739
 msgid "Really Quit?"
 msgstr "Valóban kilépsz?"
 
-#: app/app_procs.c:741
+#: app/app_procs.c:743
 #, fuzzy
 msgid ""
 "Some files unsaved.\n"
@@ -112,22 +112,22 @@ msgid ""
 "Quit the GIMP?"
 msgstr "Néhány fájl nincs mentve.  Mégis kilépsz?"
 
-#: app/app_procs.c:742
+#: app/app_procs.c:744
 msgid "Quit"
 msgstr ""
 
-#: app/app_procs.c:742 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:744 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2463 app/channels_dialog.c:2637
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
-#: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:532
-#: app/interface.c:984 app/layers_dialog.c:3326 app/layers_dialog.c:3517
-#: app/layers_dialog.c:3617 app/layers_dialog.c:3889 app/levels.c:341
-#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1434
-#: app/qmask.c:281 app/resize.c:195 app/resize.c:1345 app/threshold.c:275
-#: modules/cdisplay_gamma.c:358
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:345 app/gimpprogress.c:112
+#: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:533
+#: app/install.c:1167 app/interface.c:984 app/layers_dialog.c:3326
+#: app/layers_dialog.c:3517 app/layers_dialog.c:3617 app/layers_dialog.c:3889
+#: app/levels.c:341 app/palette.c:1826 app/posterize.c:201
+#: app/preferences_dialog.c:1434 app/qmask.c:281 app/resize.c:195
+#: app/resize.c:1345 app/threshold.c:275 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Mégsem"
 
@@ -140,11 +140,11 @@ msgstr ""
 msgid "Corrupt curve"
 msgstr "Korrektív"
 
-#: app/bezier_select.c:2878
+#: app/bezier_select.c:2880
 msgid "Curve not closed!"
 msgstr ""
 
-#: app/bezier_select.c:3165 app/gimage_mask.c:605
+#: app/bezier_select.c:3167 app/gimage_mask.c:618
 #, fuzzy
 msgid "Paintbrush operation failed."
 msgstr "Színátmenet végrehajtása sikertelen."
@@ -254,7 +254,7 @@ msgstr "Illesztési túlmintavételezés"
 msgid "Max Depth:"
 msgstr "Max. mélység:"
 
-#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:661
+#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:660
 msgid "Threshold:"
 msgstr "Küszöbszint:"
 
@@ -293,18 +293,18 @@ msgstr "A Fényerõ-kontraszt beállítás nem mûködik indexelt rajzfelületen."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
-#: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
-#: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
-#: app/resize.c:193 app/resize.c:1345 app/threshold.c:271
+#: app/install.c:1165 app/layers_dialog.c:3324 app/layers_dialog.c:3515
+#: app/layers_dialog.c:3615 app/layers_dialog.c:3887 app/levels.c:337
+#: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1430
+#: app/qmask.c:279 app/resize.c:193 app/resize.c:1345 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr ""
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:687
+#: app/brightness_contrast.c:216 app/by_color_select.c:688
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:355
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
-#: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:412
+#: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:409
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Újra"
@@ -331,10 +331,10 @@ msgid "Brush Editor"
 msgstr "Ecset szerkesztõ"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:689
+#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:345 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
@@ -394,7 +394,7 @@ msgstr "Új"
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: app/brush_select.c:476 app/global_edit.c:737 app/gradient.c:1769
+#: app/brush_select.c:476 app/global_edit.c:770 app/gradient.c:1769
 #: app/palette.c:1193 app/palette.c:1826 app/palette.c:2250
 msgid "Delete"
 msgstr "Töröl"
@@ -445,32 +445,32 @@ msgid "No available patterns for this operation."
 msgstr "Nincs elérhetõ minta a mûvelethez."
 
 #. The shell and main vbox
-#: app/by_color_select.c:682
+#: app/by_color_select.c:683
 msgid "By Color Selection"
 msgstr "Szín szerinti kijelölés"
 
-#: app/by_color_select.c:738
+#: app/by_color_select.c:739
 msgid "Inactive"
 msgstr "Inaktív"
 
-#: app/by_color_select.c:746
+#: app/by_color_select.c:747
 msgid "Selection Mode"
 msgstr "Kiválasztás módja"
 
-#: app/by_color_select.c:748 app/paint_funcs.c:100
+#: app/by_color_select.c:752 app/paint_funcs.c:100
 msgid "Replace"
 msgstr "Cserél"
 
-#: app/by_color_select.c:750 app/colormap_dialog.i.c:127
+#: app/by_color_select.c:753 app/colormap_dialog.i.c:127
 #: app/gdisplay_color_ui.c:114
 msgid "Add"
 msgstr "Hozzáad"
 
-#: app/by_color_select.c:752 app/layers_dialog.c:340 app/tool_options.c:904
+#: app/by_color_select.c:754 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "Kivonás"
 
-#: app/by_color_select.c:754
+#: app/by_color_select.c:755
 msgid "Intersect"
 msgstr "Metszés"
 
@@ -503,7 +503,7 @@ msgid "Offset X:"
 msgstr "X eltolás:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/install.c:1130 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/install.c:1368 app/resize.c:332 app/resize.c:417 app/resize.c:575
 #: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr ""
@@ -764,47 +764,47 @@ msgstr "Kép:"
 msgid "none"
 msgstr "---"
 
-#: app/commands.c:330
+#: app/commands.c:333
 msgid "Feather Selection"
 msgstr ""
 
-#: app/commands.c:333
+#: app/commands.c:336
 #, fuzzy
 msgid "Feather Selection by:"
 msgstr "Lebegõ kijelölés"
 
-#: app/commands.c:366
+#: app/commands.c:369
 msgid "Shrink Selection"
 msgstr "Kijelölés szûkítése"
 
-#: app/commands.c:369
+#: app/commands.c:372
 #, fuzzy
 msgid "Shrink Selection by:"
 msgstr "Kijelölés szûkítése"
 
-#: app/commands.c:378
+#: app/commands.c:381
 msgid "Shrink from image border"
 msgstr ""
 
-#: app/commands.c:400
+#: app/commands.c:403
 msgid "Grow Selection"
 msgstr "Kijelölés növelése"
 
-#: app/commands.c:403
+#: app/commands.c:406
 #, fuzzy
 msgid "Grow Selection by:"
 msgstr "Kijelölés növelése"
 
-#: app/commands.c:423
+#: app/commands.c:426
 msgid "Border Selection"
 msgstr "Háttér kiválasztás"
 
-#: app/commands.c:426
+#: app/commands.c:429
 #, fuzzy
 msgid "Border Selection by:"
 msgstr "Háttér kiválasztás"
 
-#: app/commands.c:1301
+#: app/commands.c:1304
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 
@@ -924,7 +924,7 @@ msgid "Allow Enlarging"
 msgstr ""
 
 #. tool toggle
-#: app/crop.c:211 app/flip_tool.c:91 app/magnify.c:132
+#: app/crop.c:211 app/flip_tool.c:88 app/magnify.c:132
 msgid "Tool Toggle"
 msgstr ""
 
@@ -1025,23 +1025,23 @@ msgstr "Betölt"
 msgid "Save"
 msgstr "Kiment"
 
-#: app/curves.c:1272
+#: app/curves.c:1270
 #, fuzzy
 msgid "Load Curves"
 msgstr "Bézier görbe betöltése"
 
-#: app/curves.c:1287
+#: app/curves.c:1285
 #, fuzzy
 msgid "Save Curves"
 msgstr "Szintek"
 
-#: app/curves.c:1568
+#: app/curves.c:1566
 #, fuzzy
 msgid "Load/Save Curves"
 msgstr "Bézier görbe betöltése/tárolása"
 
-#: app/curves.c:1609 app/curves.c:1627 app/levels.c:1428 app/levels.c:1446
-#: app/paths_dialog.c:1902
+#: app/curves.c:1611 app/curves.c:1629 app/levels.c:1430 app/levels.c:1448
+#: app/paths_dialog.c:1903
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "nem található meg a(z) \"%s\" külsõ program"
@@ -1054,7 +1054,7 @@ msgstr ""
 msgid "Device Status"
 msgstr "Eszközállapot"
 
-#: app/disp_callbacks.c:760 app/global_edit.c:297 app/global_edit.c:303
+#: app/disp_callbacks.c:810 app/global_edit.c:297 app/global_edit.c:303
 #: app/global_edit.c:375
 #, fuzzy
 msgid "Pasted Layer"
@@ -1237,7 +1237,7 @@ msgstr "Átméretezés"
 msgid "New Image"
 msgstr "Új kép"
 
-#: app/file_new_dialog.c:453 app/install.c:1115 app/preferences_dialog.c:1505
+#: app/file_new_dialog.c:453 app/install.c:1355 app/preferences_dialog.c:1505
 #: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr "Pixel"
@@ -1364,17 +1364,17 @@ msgstr "Igen"
 msgid "No"
 msgstr "Nem"
 
-#: app/flip_tool.c:82
+#: app/flip_tool.c:79
 #, fuzzy
 msgid "Flip Tool"
 msgstr "Tükrözés"
 
-#: app/flip_tool.c:95 app/preferences_dialog.c:1556
+#: app/flip_tool.c:92 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:2284
 msgid "Horizontal"
 msgstr "Vízszintes"
 
-#: app/flip_tool.c:97 app/preferences_dialog.c:1558
+#: app/flip_tool.c:94 app/preferences_dialog.c:1558
 #: app/preferences_dialog.c:2286
 msgid "Vertical"
 msgstr "Függõleges"
@@ -1433,41 +1433,41 @@ msgstr ""
 msgid "Active Filters"
 msgstr "Kitöltés típusa"
 
-#: app/gdisplay_ops.c:338
+#: app/gdisplay_ops.c:337
 #, fuzzy, c-format
 msgid ""
 "Changes were made to %s.\n"
 "Close anyway?"
 msgstr "%s megváltozott. Mégis bezárod?"
 
-#: app/gimage_mask.c:207
+#: app/gimage_mask.c:211
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr ""
 
-#: app/gimage_mask.c:337
+#: app/gimage_mask.c:349
 msgid "Float Selection: No selection to float."
 msgstr ""
 
-#: app/gimage_mask.c:349
+#: app/gimage_mask.c:361
 #, fuzzy
 msgid "Floated Layer"
 msgstr "Réteg törlése"
 
-#: app/gimage_mask.c:485
+#: app/gimage_mask.c:497
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:504
+#: app/gimage_mask.c:516
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:555
+#: app/gimage_mask.c:568
 #, fuzzy
 msgid "No selection to stroke!"
 msgstr "Kijelölés fájlba mentése..."
@@ -1756,40 +1756,40 @@ msgstr ""
 msgid "percent"
 msgstr "Perspektíva"
 
-#: app/global_edit.c:715
+#: app/global_edit.c:748
 msgid "Paste"
 msgstr "Beilleszt"
 
-#: app/global_edit.c:716
+#: app/global_edit.c:749
 #, fuzzy
 msgid "Paste Into"
 msgstr "/Szerkeszt/Helyben beilleszt"
 
-#: app/global_edit.c:717
+#: app/global_edit.c:750
 #, fuzzy
 msgid "Paste as New"
 msgstr "/Szerkeszt/Beilleszt (név szerint)"
 
-#: app/global_edit.c:731
+#: app/global_edit.c:764
 #, fuzzy
 msgid "Paste Named Buffer"
 msgstr "Nevesített Bézier tároló beillesztése"
 
-#: app/global_edit.c:749
+#: app/global_edit.c:782
 #, fuzzy
 msgid "Select a buffer to paste:"
 msgstr "Válaszd ki a használandó tárolót:"
 
-#: app/global_edit.c:830
+#: app/global_edit.c:863
 #, fuzzy
 msgid "Cut Named"
 msgstr "/Szerkeszt/Kivág (név szerint)"
 
-#: app/global_edit.c:833 app/global_edit.c:865
+#: app/global_edit.c:866 app/global_edit.c:898
 msgid "Enter a name for this buffer"
 msgstr "Írd be a tároló nevét"
 
-#: app/global_edit.c:862
+#: app/global_edit.c:895
 #, fuzzy
 msgid "Copy Named"
 msgstr "/Szerkeszt/Másol (név szerint)"
@@ -2299,7 +2299,7 @@ msgid ""
 "Click to open the Gradients Dialog."
 msgstr ""
 
-#: app/info_dialog.c:181 app/preferences_dialog.c:1743
+#: app/info_dialog.c:184 app/preferences_dialog.c:1743
 #: app/preferences_dialog.c:1849
 msgid "General"
 msgstr ""
@@ -2444,22 +2444,22 @@ msgstr "Dõlésszög:"
 msgid "Shape"
 msgstr "Élesítés"
 
-#: app/install.c:97
+#: app/install.c:100
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr ""
 
-#: app/install.c:98
+#: app/install.c:101
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
 
-#: app/install.c:99
+#: app/install.c:102
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 
-#: app/install.c:144
+#: app/install.c:151
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2468,13 +2468,13 @@ msgid ""
 "here."
 msgstr ""
 
-#: app/install.c:152
+#: app/install.c:159
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
 
-#: app/install.c:157
+#: app/install.c:164
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2484,7 +2484,7 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 
-#: app/install.c:166
+#: app/install.c:173
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -2494,14 +2494,14 @@ msgid ""
 "restore the default shortcuts."
 msgstr ""
 
-#: app/install.c:175
+#: app/install.c:182
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 
-#: app/install.c:181
+#: app/install.c:188
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -2510,7 +2510,7 @@ msgid ""
 "you quit the GIMP."
 msgstr ""
 
-#: app/install.c:189
+#: app/install.c:196
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -2519,7 +2519,7 @@ msgid ""
 "brushes."
 msgstr ""
 
-#: app/install.c:197
+#: app/install.c:204
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -2527,7 +2527,7 @@ msgid ""
 "for generated brushes."
 msgstr ""
 
-#: app/install.c:204
+#: app/install.c:211
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -2536,7 +2536,7 @@ msgid ""
 "for gradients."
 msgstr ""
 
-#: app/install.c:212
+#: app/install.c:219
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -2548,7 +2548,7 @@ msgid ""
 "sessions."
 msgstr ""
 
-#: app/install.c:223
+#: app/install.c:230
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -2557,7 +2557,7 @@ msgid ""
 "patterns."
 msgstr ""
 
-#: app/install.c:231
+#: app/install.c:238
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -2566,7 +2566,7 @@ msgid ""
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
 
-#: app/install.c:239
+#: app/install.c:246
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -2575,7 +2575,7 @@ msgid ""
 "when searching for modules to load when initializing."
 msgstr ""
 
-#: app/install.c:247
+#: app/install.c:254
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -2583,7 +2583,7 @@ msgid ""
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
 
-#: app/install.c:254
+#: app/install.c:261
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2592,19 +2592,19 @@ msgid ""
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
 
-#: app/install.c:262
+#: app/install.c:269
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
 
-#: app/install.c:267
+#: app/install.c:274
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
 
-#: app/install.c:272
+#: app/install.c:279
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -2613,7 +2613,7 @@ msgid ""
 "installation when searching for fractals."
 msgstr ""
 
-#: app/install.c:280
+#: app/install.c:287
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -2622,7 +2622,7 @@ msgid ""
 "when searching for gfig figures."
 msgstr ""
 
-#: app/install.c:288
+#: app/install.c:295
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -2631,7 +2631,7 @@ msgid ""
 "when searching for gflares."
 msgstr ""
 
-#: app/install.c:296
+#: app/install.c:303
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -2640,34 +2640,38 @@ msgid ""
 "installation when searching for data."
 msgstr ""
 
-#: app/install.c:525
+#: app/install.c:526
 #, fuzzy
 msgid "GIMP User Installation"
 msgstr "GIMP verzió: "
 
-#: app/install.c:530
+#: app/install.c:531
 msgid "Continue"
 msgstr ""
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:562
+#: app/install.c:571
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr ""
 
-#: app/install.c:580
+#: app/install.c:663
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
 msgstr ""
 
-#: app/install.c:584
+#: app/install.c:665
+msgid "Click \"Continue\" to enter the GIMP user installation."
+msgstr ""
+
+#: app/install.c:668
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 
-#: app/install.c:593
+#: app/install.c:677
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -2675,7 +2679,7 @@ msgid ""
 "(at your option) any later version."
 msgstr ""
 
-#: app/install.c:598
+#: app/install.c:682
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2683,7 +2687,7 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 
-#: app/install.c:603
+#: app/install.c:687
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2691,112 +2695,108 @@ msgid ""
 "MA 02111-1307, USA."
 msgstr ""
 
-#: app/install.c:609
-msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
-
-#: app/install.c:636
+#: app/install.c:713
 #, fuzzy
 msgid "Personal GIMP Directory"
 msgstr "Interfész beállítások"
 
-#: app/install.c:652
+#: app/install.c:714
+msgid "Click \"Continue\" to create your personal GIMP directory."
+msgstr ""
+
+#: app/install.c:731
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
 msgstr ""
 
-#: app/install.c:658
+#: app/install.c:737
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
 
-#: app/install.c:662
-msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
-
-#: app/install.c:742
+#: app/install.c:821
 msgid "User Installation Log"
 msgstr ""
 
-#: app/install.c:747
+#: app/install.c:827
 msgid "GIMP Performance Tuning"
 msgstr ""
 
-#: app/install.c:750
-msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
-
-#: app/install.c:757
+#: app/install.c:828
 msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
 
-#: app/install.c:766
+#: app/install.c:831
+msgid "For optimal GIMP performance, some settings may have to be adjusted."
+msgstr ""
+
+#: app/install.c:840
 #, fuzzy
 msgid "Monitor Resolution"
 msgstr "Felbontás"
 
-#: app/install.c:769
+#: app/install.c:841
+msgid "Click \"Continue\" to start The GIMP."
+msgstr ""
+
+#: app/install.c:844
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
 
-#: app/install.c:777
-msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
-
-#: app/install.c:785
+#: app/install.c:853
 #, fuzzy
 msgid "Aborting Installation..."
 msgstr "GIMP verzió: "
 
-#: app/install.c:859
+#: app/install.c:923
 msgid "does not exist.  Cannot install."
 msgstr ""
 
-#: app/install.c:871
+#: app/install.c:935
 msgid "has invalid permissions.  Cannot install."
 msgstr ""
 
-#: app/install.c:909
+#: app/install.c:973
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 
-#: app/install.c:969
+#: app/install.c:1029
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 
-#: app/install.c:983
+#: app/install.c:1041
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr ""
 
-#: app/install.c:992
+#: app/install.c:1046
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
 
-#: app/install.c:1017
+#: app/install.c:1067
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 
-#: app/install.c:1033 app/preferences_dialog.c:2102
+#: app/install.c:1081 app/preferences_dialog.c:2102
 #, fuzzy
 msgid "Tile Cache Size:"
 msgstr "Négyzet mérete"
 
-#: app/install.c:1043
+#: app/install.c:1092
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -2804,35 +2804,64 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 
-#: app/install.c:1053 app/preferences_dialog.c:2361
+#: app/install.c:1101 app/preferences_dialog.c:2361
 #, fuzzy
 msgid "Select Swap Dir"
 msgstr "/Kijelölés/Élesít"
 
-#: app/install.c:1059
+#: app/install.c:1106
 #, fuzzy
 msgid "Swap Directory:"
 msgstr "Cseretár könyvtár:"
 
-#: app/install.c:1085
+#: app/install.c:1159
+#, fuzzy
+msgid "Calibrate Monitor Resolution"
+msgstr "Felbontás"
+
+#: app/install.c:1267
+msgid "Measure the rulers and enter their lengths below."
+msgstr ""
+
+#: app/install.c:1282
+#, fuzzy
+msgid "Horizontal:"
+msgstr "Vízszintes"
+
+#: app/install.c:1287
+#, fuzzy
+msgid "Vertical:"
+msgstr "Függõleges"
+
+#: app/install.c:1328
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
 
-#: app/install.c:1092
+#: app/install.c:1335
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
 msgstr ""
 
-#: app/install.c:1109
+#: app/install.c:1349
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr ""
 
-#: app/install.c:1124
+#: app/install.c:1362
 #, fuzzy
 msgid "Monitor Resolution X:"
 msgstr "Felbontás"
+
+#: app/install.c:1398
+msgid ""
+"You can also press the \"Calibrate\" button to open a window\n"
+"which lets you determine your monitor resolution interactively."
+msgstr ""
+
+#: app/install.c:1405
+msgid "Calibrate"
+msgstr ""
 
 #: app/interface.c:312
 msgid ""
@@ -3214,17 +3243,17 @@ msgstr "Szín szintek: "
 msgid "Output Levels:"
 msgstr "Szín szintek: "
 
-#: app/levels.c:1053
+#: app/levels.c:1051
 #, fuzzy
 msgid "Load Levels"
 msgstr "Szintek"
 
-#: app/levels.c:1068
+#: app/levels.c:1066
 #, fuzzy
 msgid "Save Levels"
 msgstr "Szintek"
 
-#: app/levels.c:1387
+#: app/levels.c:1385
 #, fuzzy
 msgid "Load/Save Levels"
 msgstr "Bézier görbe betöltése/tárolása"
@@ -3332,9 +3361,8 @@ msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         A hibajavító szignálkezelõk engedélyezése\n"
 
 #: app/main.c:291
-msgid ""
-"  --display <display>      Use the designated X display.\n"
-"\n"
+#, fuzzy
+msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      A megadott X képernyõt használja\n"
 
 #: app/main.c:292
@@ -3574,703 +3602,708 @@ msgstr "/Szerkeszt/Töröl"
 
 #: app/menus.c:247
 #, fuzzy
-msgid "/Edit/Fill"
-msgstr "/Szerkeszt/Kifest"
+msgid "/Edit/Fill with FG Color"
+msgstr "Színátmenettel feltöltés"
 
 #: app/menus.c:249
+#, fuzzy
+msgid "/Edit/Fill with BG Color"
+msgstr "Színátmenettel feltöltés"
+
+#: app/menus.c:251
 #, fuzzy
 msgid "/Edit/Stroke"
 msgstr "/Szerkeszt/Körberajzol"
 
 #. <Image>/Select
-#: app/menus.c:257
+#: app/menus.c:259
 #, fuzzy
 msgid "/Select/Invert"
 msgstr "/Kijelölés/Invertál"
 
-#: app/menus.c:259
+#: app/menus.c:261
 #, fuzzy
 msgid "/Select/All"
 msgstr "/Kijelölés/Teljes kép"
 
-#: app/menus.c:261
+#: app/menus.c:263
 #, fuzzy
 msgid "/Select/None"
 msgstr "/Kijelölés/Megszûntet"
 
-#: app/menus.c:263
+#: app/menus.c:265
 #, fuzzy
 msgid "/Select/Float"
 msgstr "/Kijelölés/Lebegõ"
 
-#: app/menus.c:268
+#: app/menus.c:270
 #, fuzzy
 msgid "/Select/Feather..."
 msgstr "/Kijelölés/Elmos"
 
-#: app/menus.c:270
+#: app/menus.c:272
 #, fuzzy
 msgid "/Select/Sharpen"
 msgstr "/Kijelölés/Élesít"
 
-#: app/menus.c:272
+#: app/menus.c:274
 #, fuzzy
 msgid "/Select/Shrink..."
 msgstr "/Kijelölés/Csökkent"
 
-#: app/menus.c:274
+#: app/menus.c:276
 #, fuzzy
 msgid "/Select/Grow..."
 msgstr "/Kijelölés/Növel"
 
-#: app/menus.c:276
+#: app/menus.c:278
 #, fuzzy
 msgid "/Select/Border..."
 msgstr "/Kijelölés/Keret"
 
-#: app/menus.c:281
+#: app/menus.c:283
 #, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "/Kijelölés/Mentés csatornába"
 
 #. <Image>/View
-#: app/menus.c:286
+#: app/menus.c:288
 #, fuzzy
 msgid "/View/Zoom In"
 msgstr "/Nézet/Nagyít"
 
-#: app/menus.c:288
+#: app/menus.c:290
 #, fuzzy
 msgid "/View/Zoom Out"
 msgstr "/Nézet/Kicsinyít"
 
 #. <Image>/View/Zoom
-#: app/menus.c:293
+#: app/menus.c:295
 #, fuzzy
 msgid "/View/Zoom/16:1"
 msgstr "/Nézet/Nagyítás/16:1"
 
-#: app/menus.c:295
+#: app/menus.c:297
 #, fuzzy
 msgid "/View/Zoom/8:1"
 msgstr "/Nézet/Nagyítás/8:1"
 
-#: app/menus.c:297
+#: app/menus.c:299
 #, fuzzy
 msgid "/View/Zoom/4:1"
 msgstr "/Nézet/Nagyítás/4:1"
 
-#: app/menus.c:299
+#: app/menus.c:301
 #, fuzzy
 msgid "/View/Zoom/2:1"
 msgstr "/Nézet/Nagyítás/2:1"
 
-#: app/menus.c:301
+#: app/menus.c:303
 #, fuzzy
 msgid "/View/Zoom/1:1"
 msgstr "/Nézet/Nagyítás/1:1"
 
-#: app/menus.c:303
+#: app/menus.c:305
 msgid "/View/Zoom/1:2"
 msgstr "/Nézet/Nagyítás/1:2"
 
-#: app/menus.c:305
+#: app/menus.c:307
 msgid "/View/Zoom/1:4"
 msgstr "/Nézet/Nagyítás/1:4"
 
-#: app/menus.c:307
+#: app/menus.c:309
 msgid "/View/Zoom/1:8"
 msgstr "/Nézet/Nagyítás/1:8"
 
-#: app/menus.c:309
+#: app/menus.c:311
 msgid "/View/Zoom/1:16"
 msgstr "/Nézet/Nagyítás/1:16"
 
-#: app/menus.c:312
+#: app/menus.c:314
 #, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "/Nézet/Pontról pontra"
 
-#: app/menus.c:317
+#: app/menus.c:319
 #, fuzzy
 msgid "/View/Info Window..."
 msgstr "/Nézet/Ablak infó..."
 
-#: app/menus.c:319
+#: app/menus.c:321
 #, fuzzy
 msgid "/View/Nav. Window..."
 msgstr "/Nézet/Ablak infó..."
 
-#: app/menus.c:324
+#: app/menus.c:326
 #, fuzzy
 msgid "/View/Toggle Selection"
 msgstr "/Nézet/Vonalzó be-ki"
 
-#: app/menus.c:326
+#: app/menus.c:328
 #, fuzzy
 msgid "/View/Toggle Rulers"
 msgstr "/Nézet/Vonalzó be-ki"
 
-#: app/menus.c:328
+#: app/menus.c:330
 #, fuzzy
 msgid "/View/Toggle Statusbar"
 msgstr "/Nézet/Státuszsor be-ki"
 
-#: app/menus.c:330
+#: app/menus.c:332
 #, fuzzy
 msgid "/View/Toggle Guides"
 msgstr "/Nézet/Segédvonalak be-ki"
 
-#: app/menus.c:332
+#: app/menus.c:334
 #, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "/Nézet/Segédvonalhoz igazít"
 
-#: app/menus.c:337
+#: app/menus.c:339
 #, fuzzy
 msgid "/View/New View"
 msgstr "/Nézet/Új nézet"
 
-#: app/menus.c:339
+#: app/menus.c:341
 #, fuzzy
 msgid "/View/Shrink Wrap"
 msgstr "/Nézet/Teljes nézet"
 
 #. <Image>/Image/Mode
-#: app/menus.c:344
+#: app/menus.c:346
 #, fuzzy
 msgid "/Image/Mode/RGB"
 msgstr "/Kép/RGB"
 
-#: app/menus.c:346
+#: app/menus.c:348
 #, fuzzy
 msgid "/Image/Mode/Grayscale"
 msgstr "/Kép/Fekete-fehér"
 
-#: app/menus.c:348
+#: app/menus.c:350
 #, fuzzy
 msgid "/Image/Mode/Indexed..."
 msgstr "/Kép/Indexelt"
 
 #. <Image>/Image/Colors
-#: app/menus.c:356
+#: app/menus.c:358
 #, fuzzy
 msgid "/Image/Colors/Desaturate"
 msgstr "/Kép/Színek/Fekete-fehér"
 
-#: app/menus.c:358
+#: app/menus.c:360
 #, fuzzy
 msgid "/Image/Colors/Invert"
 msgstr "/Kép/Színek/Invertálás"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:366
+#: app/menus.c:368
 #, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Kép/Színek/Színek kiegyenlítése"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:374
+#: app/menus.c:376
 #, fuzzy
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Kép/Alfa/Alfa csatorna létrehozás"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:379
+#: app/menus.c:381
 #, fuzzy
 msgid "/Image/Transforms/Offset..."
 msgstr "Átalakítás"
 
-#: app/menus.c:381
+#: app/menus.c:383
 #, fuzzy
 msgid "/Image/Transforms/Rotate"
 msgstr "/Kép/Színek/Invertálás"
 
-#: app/menus.c:388
+#: app/menus.c:390
 #, fuzzy
 msgid "/Image/Canvas Size..."
 msgstr "/Kép/Átméretezés"
 
-#: app/menus.c:390
+#: app/menus.c:392
 #, fuzzy
 msgid "/Image/Scale Image..."
 msgstr "/Kép/Skálázás"
 
-#: app/menus.c:392
+#: app/menus.c:394
 #, fuzzy
 msgid "/Image/Duplicate"
 msgstr "/Kép/Csatornák/Duplikálás"
 
 #. <Image>/Layers
-#: app/menus.c:400
+#: app/menus.c:402
 #, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Rétegek/Rétegek és csatornák..."
 
-#: app/menus.c:404
+#: app/menus.c:406
 #, fuzzy
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Rétegek/Egy réteggé"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:409
+#: app/menus.c:411
 #, fuzzy
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Rétegek/Feljebb"
 
-#: app/menus.c:411
+#: app/menus.c:413
 #, fuzzy
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Rétegek/Feljebb"
 
-#: app/menus.c:413
+#: app/menus.c:415
 #, fuzzy
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Rétegek/Feljebb"
 
-#: app/menus.c:415
+#: app/menus.c:417
 #, fuzzy
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Rétegek/Lejjebb"
 
-#: app/menus.c:417
+#: app/menus.c:419
 #, fuzzy
 msgid "/Layers/Stack/Layer to Top"
 msgstr "Legfelülre"
 
-#: app/menus.c:419
+#: app/menus.c:421
 #, fuzzy
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "Legalulra"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:426
+#: app/menus.c:428
 #, fuzzy
 msgid "/Layers/Rotate"
 msgstr "/Rétegek/Feljebb"
 
-#: app/menus.c:431
+#: app/menus.c:433
 #, fuzzy
 msgid "/Layers/Anchor Layer"
 msgstr "/Rétegek/Réteg rögzítése"
 
-#: app/menus.c:433
+#: app/menus.c:435
 #, fuzzy
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Rétegek/Látható rétegek összefésülése"
 
-#: app/menus.c:435
+#: app/menus.c:437
 #, fuzzy
 msgid "/Layers/Flatten Image"
 msgstr "/Rétegek/Egy réteggé"
 
-#: app/menus.c:440
+#: app/menus.c:442
 #, fuzzy
 msgid "/Layers/Mask to Selection"
 msgstr "/Rétegek/Maszk kijelöléssé"
 
-#: app/menus.c:445
+#: app/menus.c:447
 #, fuzzy
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Rétegek/Alfa csatorna létrehozás"
 
-#: app/menus.c:447
+#: app/menus.c:449
 #, fuzzy
 msgid "/Layers/Alpha to Selection"
 msgstr "/Rétegek/Alfa csatorna kijelöléssé"
 
 #. <Image>/Tools
-#: app/menus.c:455
+#: app/menus.c:457
 #, fuzzy
 msgid "/Tools/Toolbox"
 msgstr "/Eszközök/Eszköztár"
 
-#: app/menus.c:457
+#: app/menus.c:459
 #, fuzzy
 msgid "/Tools/Default Colors"
 msgstr "/Eszközök/Alapértelmezett színek"
 
-#: app/menus.c:459
+#: app/menus.c:461
 #, fuzzy
 msgid "/Tools/Swap Colors"
 msgstr "/Eszközök/Színek felcserélése"
 
 #. <Image>/Dialogs
-#: app/menus.c:466
+#: app/menus.c:468
 #, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Beállítások/Rétegek és csatornák..."
 
-#: app/menus.c:468
+#: app/menus.c:470
 #, fuzzy
 msgid "/Dialogs/Tool Options..."
 msgstr "/Beállítások/Eszközbeállítások..."
 
-#: app/menus.c:473
+#: app/menus.c:475
 #, fuzzy
 msgid "/Dialogs/Brushes..."
 msgstr "/Beállítások/Ecsetek..."
 
-#: app/menus.c:475
+#: app/menus.c:477
 #, fuzzy
 msgid "/Dialogs/Patterns..."
 msgstr "/Beállítások/Minták..."
 
-#: app/menus.c:477
+#: app/menus.c:479
 #, fuzzy
 msgid "/Dialogs/Gradients..."
 msgstr "/Beállítások/Színátmenetek..."
 
-#: app/menus.c:479
+#: app/menus.c:481
 #, fuzzy
 msgid "/Dialogs/Palette..."
 msgstr "/Beállítások/Paletta..."
 
-#: app/menus.c:481
+#: app/menus.c:483
 #, fuzzy
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Beállítások/Indexelt paletta..."
 
-#: app/menus.c:486
+#: app/menus.c:488
 #, fuzzy
 msgid "/Dialogs/Input Devices..."
 msgstr "/Beállítások/Beviteli eszközök..."
 
-#: app/menus.c:488
+#: app/menus.c:490
 #, fuzzy
 msgid "/Dialogs/Device Status..."
 msgstr "/Beállítások/Eszközállapot..."
 
-#: app/menus.c:493
+#: app/menus.c:495
 #, fuzzy
 msgid "/Dialogs/Document Index..."
 msgstr "/Fájl/Beállítások/Dokumentum index..."
 
-#: app/menus.c:495
+#: app/menus.c:497
 #, fuzzy
 msgid "/Dialogs/Error Console..."
 msgstr "/Fájl/Beállítások/Hibakonzol..."
 
-#: app/menus.c:497
+#: app/menus.c:499
 #, fuzzy
 msgid "/Dialogs/Display Filters..."
 msgstr "/Beállítások/Minták..."
 
-#: app/menus.c:499
+#: app/menus.c:501
 #, fuzzy
 msgid "/Dialogs/Undo History..."
 msgstr "/Szerkeszt/Visszavon"
 
 #. <Image>/Filters
-#: app/menus.c:508
+#: app/menus.c:510
 #, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "/Filters/Ismét végrehajt"
 
-#: app/menus.c:510
+#: app/menus.c:512
 #, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "/Filters/Ismét beállít"
 
-#: app/menus.c:515
+#: app/menus.c:517
 #, fuzzy
 msgid "/Filters/Blur"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:517
+#: app/menus.c:519
 #, fuzzy
 msgid "/Filters/Colors"
 msgstr "/Fájl/Bezár"
 
-#: app/menus.c:519
+#: app/menus.c:521
 #, fuzzy
 msgid "/Filters/Noise"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:521
+#: app/menus.c:523
 #, fuzzy
 msgid "/Filters/Edge-Detect"
 msgstr "/Filters/Ismét végrehajt"
 
-#: app/menus.c:523
+#: app/menus.c:525
 #, fuzzy
 msgid "/Filters/Enhance"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:525
+#: app/menus.c:527
 #, fuzzy
 msgid "/Filters/Generic"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:530
+#: app/menus.c:532
 #, fuzzy
 msgid "/Filters/Glass Effects"
 msgstr "/Filters/Ismét végrehajt"
 
-#: app/menus.c:532
+#: app/menus.c:534
 #, fuzzy
 msgid "/Filters/Light Effects"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:534
+#: app/menus.c:536
 #, fuzzy
 msgid "/Filters/Distorts"
 msgstr "/Fájl/Bezár"
 
-#: app/menus.c:536
+#: app/menus.c:538
 #, fuzzy
 msgid "/Filters/Artistic"
 msgstr "/Filters/Ismét végrehajt"
 
-#: app/menus.c:538
+#: app/menus.c:540
 #, fuzzy
 msgid "/Filters/Map"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:540
+#: app/menus.c:542
 #, fuzzy
 msgid "/Filters/Render"
 msgstr "/Fájl/Mentés"
 
-#: app/menus.c:542
+#: app/menus.c:544
 #, fuzzy
 msgid "/Filters/Web"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:547
+#: app/menus.c:549
 #, fuzzy
 msgid "/Filters/Animation"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:549
+#: app/menus.c:551
 #, fuzzy
 msgid "/Filters/Combine"
 msgstr "/Fájl/Bezár"
 
-#: app/menus.c:554
+#: app/menus.c:556
 #, fuzzy
 msgid "/Filters/Toys"
 msgstr "Kitöltés típusa"
 
-#: app/menus.c:567
+#: app/menus.c:569
 msgid "/Automatic"
 msgstr "/Automatikus"
 
-#: app/menus.c:581
+#: app/menus.c:583
 #, fuzzy
 msgid "/By Extension"
 msgstr "/Kiterjesztés szerint"
 
-#: app/menus.c:595
+#: app/menus.c:597
 #, fuzzy
 msgid "/New Layer..."
 msgstr "Új réteg"
 
 #. <Layers>/Stack
-#: app/menus.c:600
+#: app/menus.c:602
 #, fuzzy
 msgid "/Stack/Raise Layer"
 msgstr "/Rétegek/Feljebb"
 
-#: app/menus.c:602
+#: app/menus.c:604
 #, fuzzy
 msgid "/Stack/Lower Layer"
 msgstr "/Rétegek/Lejjebb"
 
-#: app/menus.c:604
+#: app/menus.c:606
 #, fuzzy
 msgid "/Stack/Layer to Top"
 msgstr "Legfelülre"
 
-#: app/menus.c:606
+#: app/menus.c:608
 #, fuzzy
 msgid "/Stack/Layer to Bottom"
 msgstr "Legalulra"
 
-#: app/menus.c:609
+#: app/menus.c:611
 #, fuzzy
 msgid "/Duplicate Layer"
 msgstr "Réteg másolása"
 
-#: app/menus.c:611
+#: app/menus.c:613
 #, fuzzy
 msgid "/Anchor Layer"
 msgstr "Réteg rögzítése"
 
-#: app/menus.c:613
+#: app/menus.c:615
 #, fuzzy
 msgid "/Delete Layer"
 msgstr "Réteg törlése"
 
-#: app/menus.c:618
+#: app/menus.c:620
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/menus.c:620
+#: app/menus.c:622
 #, fuzzy
 msgid "/Layer to Imagesize"
 msgstr "/Rétegek/Egy réteggé"
 
-#: app/menus.c:622
+#: app/menus.c:624
 #, fuzzy
 msgid "/Scale Layer..."
 msgstr "Réteg skálázása"
 
-#: app/menus.c:627
+#: app/menus.c:629
 #, fuzzy
 msgid "/Merge Visible Layers..."
 msgstr "Látható rétegek összefésülése"
 
-#: app/menus.c:629
+#: app/menus.c:631
 #, fuzzy
 msgid "/Merge Down"
 msgstr "Összefésülés lefelé"
 
-#: app/menus.c:631
+#: app/menus.c:633
 #, fuzzy
 msgid "/Flatten Image"
 msgstr "Egy réteggé"
 
-#: app/menus.c:636
+#: app/menus.c:638
 #, fuzzy
 msgid "/Add Layer Mask..."
 msgstr "Rétegmaszk létrehozása"
 
-#: app/menus.c:638
+#: app/menus.c:640
 #, fuzzy
 msgid "/Apply Layer Mask"
 msgstr "Rétegmaszk érvényesítése"
 
-#: app/menus.c:640
+#: app/menus.c:642
 #, fuzzy
 msgid "/Delete Layer Mask"
 msgstr "Réteg törlése"
 
-#: app/menus.c:642
+#: app/menus.c:644
 #, fuzzy
 msgid "/Mask to Selection"
 msgstr "Maszk kijelöléssé"
 
-#: app/menus.c:647
+#: app/menus.c:649
 #, fuzzy
 msgid "/Add Alpha Channel"
 msgstr "Alfa csatorna létrehozás"
 
-#: app/menus.c:649
+#: app/menus.c:651
 #, fuzzy
 msgid "/Alpha to Selection"
 msgstr "Átlátszatlanság kijelöléssé"
 
-#: app/menus.c:654
+#: app/menus.c:656
 #, fuzzy
 msgid "/Edit Layer Attributes..."
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: app/menus.c:665
+#: app/menus.c:667
 #, fuzzy
 msgid "/New Channel..."
 msgstr "Új csatorna"
 
-#: app/menus.c:667
+#: app/menus.c:669
 #, fuzzy
 msgid "/Raise Channel"
 msgstr "Feljebb"
 
-#: app/menus.c:669
+#: app/menus.c:671
 #, fuzzy
 msgid "/Lower Channel"
 msgstr "Lejjebb"
 
-#: app/menus.c:671
+#: app/menus.c:673
 #, fuzzy
 msgid "/Duplicate Channel"
 msgstr "Csatorna másolása"
 
-#: app/menus.c:676
+#: app/menus.c:678
 #, fuzzy
 msgid "/Channel to Selection"
 msgstr "Csatornából kijelölés"
 
-#: app/menus.c:678
+#: app/menus.c:680
 #, fuzzy
 msgid "/Add to Selection"
 msgstr "Átlátszatlanság kijelöléssé"
 
-#: app/menus.c:680
+#: app/menus.c:682
 #, fuzzy
 msgid "/Subtract from Selection"
 msgstr "Csatornából kijelölés"
 
-#: app/menus.c:682
+#: app/menus.c:684
 #, fuzzy
 msgid "/Intersect with Selection"
 msgstr "Ecset választás"
 
-#: app/menus.c:687
+#: app/menus.c:689
 #, fuzzy
 msgid "/Delete Channel"
 msgstr "Csatorna törlése"
 
-#: app/menus.c:692
+#: app/menus.c:694
 #, fuzzy
 msgid "/Edit Channel Attributes..."
 msgstr "Csatorna tulajdonságok szerkesztése"
 
-#: app/menus.c:703
+#: app/menus.c:705
 #, fuzzy
 msgid "/New Path"
 msgstr "Új paletta"
 
-#: app/menus.c:705
+#: app/menus.c:707
 #, fuzzy
 msgid "/Duplicate Path"
 msgstr "Réteg másolása"
 
-#: app/menus.c:707
+#: app/menus.c:709
 #, fuzzy
 msgid "/Path to Selection"
 msgstr "Paletta beállítások"
 
-#: app/menus.c:709
+#: app/menus.c:711
 #, fuzzy
 msgid "/Selection to Path"
 msgstr "Kijelölés"
 
-#: app/menus.c:711
+#: app/menus.c:713
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/menus.c:713
+#: app/menus.c:715
 #, fuzzy
 msgid "/Delete Path"
 msgstr "Töröl"
 
-#: app/menus.c:718
+#: app/menus.c:720
 #, fuzzy
 msgid "/Copy Path"
 msgstr "Színátmenet másolása"
 
-#: app/menus.c:720
+#: app/menus.c:722
 #, fuzzy
 msgid "/Paste Path"
 msgstr "Beilleszt"
 
-#: app/menus.c:722
+#: app/menus.c:724
 #, fuzzy
 msgid "/Import Path..."
 msgstr "Színpaletta"
 
-#: app/menus.c:724
+#: app/menus.c:726
 #, fuzzy
 msgid "/Export Path..."
 msgstr "Színpaletta"
 
-#: app/menus.c:729
+#: app/menus.c:731
 #, fuzzy
 msgid "/Edit Path Attributes..."
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: app/menus.c:1260
+#: app/menus.c:1262
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr ""
@@ -4379,7 +4412,7 @@ msgstr "Forgat"
 msgid "Autoload during startup"
 msgstr ""
 
-#: app/move.c:458
+#: app/move.c:473
 #, fuzzy
 msgid "Move Tool"
 msgstr "Másoló beállítások"
@@ -4605,105 +4638,105 @@ msgstr ""
 msgid "Palette Selection"
 msgstr "Paletta beállítások"
 
-#: app/paths_dialog.c:163
+#: app/paths_dialog.c:164
 #, fuzzy
 msgid "New Path"
 msgstr "Új paletta"
 
-#: app/paths_dialog.c:167
+#: app/paths_dialog.c:168
 #, fuzzy
 msgid "Duplicate Path"
 msgstr "Réteg másolása"
 
-#: app/paths_dialog.c:171
+#: app/paths_dialog.c:172
 #, fuzzy
 msgid "Path to Selection"
 msgstr "Paletta beállítások"
 
-#: app/paths_dialog.c:175
+#: app/paths_dialog.c:176
 #, fuzzy
 msgid "Selection to Path"
 msgstr "Kijelölés"
 
-#: app/paths_dialog.c:179
+#: app/paths_dialog.c:180
 #, fuzzy
 msgid "Stroke Path"
 msgstr "Beilleszt"
 
-#: app/paths_dialog.c:183
+#: app/paths_dialog.c:184
 #, fuzzy
 msgid "Delete Path"
 msgstr "Töröl"
 
-#: app/paths_dialog.c:192
+#: app/paths_dialog.c:193
 #, fuzzy
 msgid "New Point"
 msgstr "Új színátmenet"
 
-#: app/paths_dialog.c:196
+#: app/paths_dialog.c:197
 msgid "Add Point"
 msgstr "Pont hozzáadása"
 
-#: app/paths_dialog.c:200
+#: app/paths_dialog.c:201
 #, fuzzy
 msgid "Delete Point"
 msgstr "Töröl"
 
-#: app/paths_dialog.c:204
+#: app/paths_dialog.c:205
 #, fuzzy
 msgid "Edit Point"
 msgstr "Pont hozzáadása"
 
-#: app/paths_dialog.c:432
+#: app/paths_dialog.c:433
 #, fuzzy, c-format
 msgid "Path %d"
 msgstr "Minták"
 
-#: app/paths_dialog.c:985
+#: app/paths_dialog.c:986
 #, fuzzy
 msgid "Edit Path Attributes"
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: app/paths_dialog.c:988
+#: app/paths_dialog.c:989
 #, fuzzy
 msgid "Enter a new name for the path"
 msgstr "Írd be a színátmenet új nevét"
 
-#: app/paths_dialog.c:1916
+#: app/paths_dialog.c:1917
 #, c-format
 msgid "Failed to read from %s"
 msgstr ""
 
-#: app/paths_dialog.c:1931
+#: app/paths_dialog.c:1932
 #, c-format
 msgid "Failed to read path from %s"
 msgstr ""
 
-#: app/paths_dialog.c:1938
+#: app/paths_dialog.c:1939
 #, c-format
 msgid "No points specified in path file %s"
 msgstr ""
 
-#: app/paths_dialog.c:1949
+#: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr ""
 
-#: app/paths_dialog.c:2022 app/xcf.c:437
+#: app/paths_dialog.c:2023 app/xcf.c:437
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr ""
 
-#: app/paths_dialog.c:2044
+#: app/paths_dialog.c:2045
 msgid "Load/Store Bezier Curves"
 msgstr "Bézier görbe betöltése/tárolása"
 
-#: app/paths_dialog.c:2084
+#: app/paths_dialog.c:2085
 #, fuzzy
 msgid "Load Path"
 msgstr "Kép betöltése"
 
-#: app/paths_dialog.c:2106
+#: app/paths_dialog.c:2107
 #, fuzzy
 msgid "Store Path"
 msgstr "Beilleszt"
@@ -4861,7 +4894,7 @@ msgstr "A változások érvénybe lépéséhez újra kell indítanod a GIMPet."
 
 #: app/preferences_dialog.c:1002
 #, c-format
-msgid "The default comments is limited to %d characters."
+msgid "The default comment is limited to %d characters."
 msgstr ""
 
 #: app/preferences_dialog.c:1424
@@ -5421,23 +5454,23 @@ msgstr "Réteg tulajdonságainak szerkesztése"
 msgid "Mask Opacity:"
 msgstr "Láthatóság:"
 
-#: app/rect_select.c:186
+#: app/rect_select.c:195
 msgid "Selection: ADD"
 msgstr ""
 
-#: app/rect_select.c:189
+#: app/rect_select.c:198
 msgid "Selection: SUBTRACT"
 msgstr ""
 
-#: app/rect_select.c:192
+#: app/rect_select.c:201
 msgid "Selection: INTERSECT"
 msgstr ""
 
-#: app/rect_select.c:195
+#: app/rect_select.c:204
 msgid "Selection: REPLACE"
 msgstr ""
 
-#: app/rect_select.c:421 app/rect_select.c:428
+#: app/rect_select.c:432 app/rect_select.c:439
 #, fuzzy
 msgid "Selection: "
 msgstr "Kijelölés"
@@ -5575,17 +5608,17 @@ msgstr "Keret: "
 msgid "Use Dynamic Text"
 msgstr ""
 
-#: app/text_tool.c:603
+#: app/text_tool.c:601
 #, fuzzy, c-format
 msgid "Font '%s' not found."
 msgstr "A(z) '%s' betûtípus nem található.%s"
 
-#: app/text_tool.c:622
+#: app/text_tool.c:620
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "A(z) '%s' betûtípus nem található.%s"
 
-#: app/text_tool.c:625
+#: app/text_tool.c:623
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5595,7 +5628,7 @@ msgstr ""
 "Ha nincsenek skálázható betûkészletek, próbáld meg kikapcsolni az árnyalást "
 "a beállításokban."
 
-#: app/text_tool.c:736
+#: app/text_tool.c:734
 msgid "Text Layer"
 msgstr "Szöveg réteg"
 
@@ -5882,7 +5915,7 @@ msgstr "Kivágás a képbõl"
 
 #. the transform type radio buttons
 #: app/tools.c:250 app/tools.c:268 app/tools.c:286 app/tools.c:304
-#: app/transform_core.c:259 app/transform_tool.c:211
+#: app/transform_core.c:255 app/transform_tool.c:211
 msgid "Transform"
 msgstr "Átalakítás"
 
@@ -6142,19 +6175,19 @@ msgstr "/Kép/Hisztogram"
 msgid "View image histogram"
 msgstr "/Kép/Hisztogram"
 
-#: app/transform_core.c:256
+#: app/transform_core.c:252
 msgid "Rotate"
 msgstr "Forgat"
 
-#: app/transform_core.c:257
+#: app/transform_core.c:253
 msgid "Scale"
 msgstr "Skálázás"
 
-#: app/transform_core.c:258
+#: app/transform_core.c:254
 msgid "Shear"
 msgstr "Csavar"
 
-#: app/transform_core.c:367
+#: app/transform_core.c:363
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -6162,7 +6195,7 @@ msgstr ""
 "Az átalakítások nem mûködnek\n"
 "maszkot tartalmazó rétegeken."
 
-#: app/transform_core.c:1581
+#: app/transform_core.c:1612
 #, fuzzy
 msgid "Transformation"
 msgstr "Átalakítás"
@@ -6510,6 +6543,10 @@ msgstr "a visszatérési szín"
 #, fuzzy
 msgid "Color History"
 msgstr "Színpipetta"
+
+#, fuzzy
+#~ msgid "/Edit/Fill"
+#~ msgstr "/Szerkeszt/Kifest"
 
 #, fuzzy
 #~ msgid "Custom from Editor"

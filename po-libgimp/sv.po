@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.10\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: 1999-10-17 22:36+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -229,6 +229,18 @@ msgstr ""
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
 msgstr ""
 
 #~ msgid "Select"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -209,9 +209,9 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Se non è selezionato il pulsante del \"Tempo\", utilizza questo valore"
-"per la generazione del seme di casualità - questo vi permette di ripetere"
-"una data operazione in modalità \"casuale\"."
+"Se non è selezionato il pulsante del \"Tempo\", utilizza questo valoreper la "
+"generazione del seme di casualità - questo vi permette di ripetereuna data "
+"operazione in modalità \"casuale\"."
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
@@ -222,8 +222,20 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Generazione del seme di casualità dall'ora corrente - questo garantisce"
-"una casualità ragionevole"
+"Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
+"casualità ragionevole"
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr ""
 
 #~ msgid "Select"
 #~ msgstr "Seleziona"

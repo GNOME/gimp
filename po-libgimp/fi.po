@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: 2000-02-11 23:15+0200\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -206,9 +206,9 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Jos \"Aika\"-n‰pp‰in ei ole valittu, k‰ytet‰‰n t‰t‰ arvoa "
-"satunnaislukujen siemenen‰. T‰m‰ mahdollistaa n‰enn‰isesti satunnaisen "
-"toiminnon toiston samanlaisena"
+"Jos \"Aika\"-n‰pp‰in ei ole valittu, k‰ytet‰‰n t‰t‰ arvoa satunnaislukujen "
+"siemenen‰. T‰m‰ mahdollistaa n‰enn‰isesti satunnaisen toiminnon toiston "
+"samanlaisena"
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
@@ -224,6 +224,11 @@ msgstr ""
 
 #: libgimp/gimpwidgets.c:1030
 msgid "Bytes"
+msgstr "tavuja"
+
+#: libgimp/gimpwidgets.c:1031
+#, fuzzy
+msgid "KiloBytes"
 msgstr "tavuja"
 
 #: libgimp/gimpwidgets.c:1032

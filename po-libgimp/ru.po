@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
+"POT-Creation-Date: 2000-03-15 12:35-0800\n"
 "PO-Revision-Date: 2000-01-22 18:43+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -216,6 +216,18 @@ msgstr ""
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
 msgstr ""
 
 #~ msgid "Select"

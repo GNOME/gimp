@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
-"POT-Creation-Date: 2000-03-26 18:21+0200\n"
+"POT-Creation-Date: 2000-03-29 21:14-0800\n"
 "PO-Revision-Date: 2000-03-26 18:30+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Cizí mapování"
 #: plug-ins/FractalExplorer/Dialogs.c:298
 #: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:490
 #: plug-ins/gfig/gfig.c:3362 plug-ins/imagemap/imap_about.c:33
-#: plug-ins/webbrowser/webbrowser.c:273
+#: plug-ins/webbrowser/webbrowser.c:270
 msgid "About"
 msgstr "O programu"
 
@@ -90,18 +90,19 @@ msgstr "O programu"
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:719 plug-ins/common/wmf.c:938
-#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:799
+#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:801
 #: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
 #: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
-#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1008
-#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_mod_layer.c:145
-#: plug-ins/gap/gap_mov_dialog.c:452 plug-ins/gap/gap_mpege.c:191
-#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:188
-#: plug-ins/gdyntext/gdyntext_ui.c:503 plug-ins/gfig/gfig.c:4085
-#: plug-ins/gfig/gfig.c:4430 plug-ins/gfig/gfig.c:4513
-#: plug-ins/gfig/gfig.c:4859 plug-ins/gflare/gflare.c:2472
-#: plug-ins/gflare/gflare.c:3482 plug-ins/gfli/gfli.c:857
-#: plug-ins/gfli/gfli.c:926 plug-ins/gimpressionist/gimpressionist.c:360
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
+#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:215
+#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
+#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
+#: plug-ins/gdyntext/gdyntext_ui.c:188 plug-ins/gdyntext/gdyntext_ui.c:503
+#: plug-ins/gfig/gfig.c:4085 plug-ins/gfig/gfig.c:4430
+#: plug-ins/gfig/gfig.c:4513 plug-ins/gfig/gfig.c:4859
+#: plug-ins/gflare/gflare.c:2473 plug-ins/gflare/gflare.c:3483
+#: plug-ins/gfli/gfli.c:857 plug-ins/gfli/gfli.c:926
+#: plug-ins/gimpressionist/gimpressionist.c:360
 #: plug-ins/gimpressionist/gimpressionist.c:482
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
@@ -111,7 +112,7 @@ msgstr "O programu"
 #: plug-ins/print/print.c:1253 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/sel2path/sel2path.c:347 plug-ins/sgi/sgi.c:655
 #: plug-ins/sinus/sinus.c:753 plug-ins/struc/struc.c:261
-#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:800
+#: plug-ins/webbrowser/webbrowser.c:272 plug-ins/xjt/xjt.c:800
 msgid "OK"
 msgstr "OK"
 
@@ -172,19 +173,22 @@ msgstr "OK"
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:721 plug-ins/common/wmf.c:940
 #: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
-#: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
+#: plug-ins/common/xpm.c:803 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
-#: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
+#: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1012
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
-#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:147
+#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
+#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
+#: plug-ins/gap/gap_lib.c:1012 plug-ins/gap/gap_mod_layer.c:147
 #: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:472
 #: plug-ins/gap/gap_mpege.c:189 plug-ins/gap/gap_mpege.c:240
-#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3938
-#: plug-ins/gfig/gfig.c:4085 plug-ins/gfig/gfig.c:4432
-#: plug-ins/gfig/gfig.c:4515 plug-ins/gfig/gfig.c:5067
-#: plug-ins/gflare/gflare.c:2474 plug-ins/gflare/gflare.c:3383
-#: plug-ins/gflare/gflare.c:3484 plug-ins/gfli/gfli.c:859
-#: plug-ins/gfli/gfli.c:928 plug-ins/gimpressionist/gimpressionist.c:491
+#: plug-ins/gap/gap_range_ops.c:1204 plug-ins/gap/gap_resi_dialog.c:158
+#: plug-ins/gfig/gfig.c:3938 plug-ins/gfig/gfig.c:4085
+#: plug-ins/gfig/gfig.c:4432 plug-ins/gfig/gfig.c:4515
+#: plug-ins/gfig/gfig.c:5067 plug-ins/gflare/gflare.c:2475
+#: plug-ins/gflare/gflare.c:3384 plug-ins/gflare/gflare.c:3485
+#: plug-ins/gfli/gfli.c:859 plug-ins/gfli/gfli.c:928
+#: plug-ins/gimpressionist/gimpressionist.c:491
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:805
@@ -193,7 +197,7 @@ msgstr "OK"
 #: plug-ins/print/print.c:774 plug-ins/print/print.c:1255
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
-#: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
+#: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:274
 #: plug-ins/winsnap/winsnap.c:920 plug-ins/xjt/xjt.c:802
 msgid "Cancel"
 msgstr "Zru¹it"
@@ -444,7 +448,7 @@ msgstr "O cizím mapování 2"
 #: plug-ins/common/spheredesigner.c:2258 plug-ins/common/tileit.c:426
 #: plug-ins/common/waves.c:593 plug-ins/common/whirlpinch.c:847
 #: plug-ins/flame/flame.c:1060 plug-ins/gfig/gfig.c:3961
-#: plug-ins/gflare/gflare.c:2499 plug-ins/gflare/gflare.c:3507
+#: plug-ins/gflare/gflare.c:2500 plug-ins/gflare/gflare.c:3508
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:912
@@ -503,9 +507,9 @@ msgstr "Krok dál"
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:437 plug-ins/gflare/gflare.c:2902
-#: plug-ins/gflare/gflare.c:3743 plug-ins/gflare/gflare.c:3853
-#: plug-ins/gflare/gflare.c:3995
+#: plug-ins/FractalExplorer/Dialogs.c:437 plug-ins/gflare/gflare.c:2903
+#: plug-ins/gflare/gflare.c:3744 plug-ins/gflare/gflare.c:3854
+#: plug-ins/gflare/gflare.c:3996
 msgid "Parameters"
 msgstr "Parametry"
 
@@ -843,7 +847,7 @@ msgid "Rendering Fractal..."
 msgstr "Poèítá se fraktál..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5058
-#: plug-ins/gflare/gflare.c:3374
+#: plug-ins/gflare/gflare.c:3375
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -858,8 +862,8 @@ msgstr "Smazat fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:1403 plug-ins/gfig/gfig.c:3556
-#: plug-ins/gfig/gfig.c:5067 plug-ins/gflare/gflare.c:3107
-#: plug-ins/gflare/gflare.c:3383 plug-ins/gimpressionist/presets.c:648
+#: plug-ins/gfig/gfig.c:5067 plug-ins/gflare/gflare.c:3108
+#: plug-ins/gflare/gflare.c:3384 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:801 plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
 msgid "Delete"
@@ -878,12 +882,13 @@ msgid "New Fractal"
 msgstr "Nový fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
+#, fuzzy, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
 "(fractalexplorer-path "
 "\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
-"to your ~/.gimp-1.1/gimprc file\n"
+"to your %s/gimprc file."
 msgstr ""
 "V gimprc chybí fractalexplorer-path:\n"
 "Je nutné pøidat následující údaj\n"
@@ -1078,7 +1083,7 @@ msgstr "Poloha"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:745
 #: plug-ins/common/nova.c:494 plug-ins/common/papertile.c:283
-#: plug-ins/gap/gap_mov_dialog.c:1554 plug-ins/gflare/gflare.c:2881
+#: plug-ins/gap/gap_mov_dialog.c:1557 plug-ins/gflare/gflare.c:2882
 #: plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
 msgstr "X:"
@@ -1095,8 +1100,8 @@ msgstr "Poloha X svìtelného zdroje v prostoru XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1572
-#: plug-ins/gflare/gflare.c:2885 plug-ins/ifscompose/ifscompose.c:526
+#: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1575
+#: plug-ins/gflare/gflare.c:2886 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
 
@@ -1396,7 +1401,7 @@ msgstr "Velikost"
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:763
 #: plug-ins/common/nlfilt.c:421 plug-ins/common/nova.c:399
 #: plug-ins/common/unsharp.c:819 plug-ins/common/whirlpinch.c:898
-#: plug-ins/gfig/gfig.c:3165 plug-ins/gflare/gflare.c:2916
+#: plug-ins/gfig/gfig.c:3165 plug-ins/gflare/gflare.c:2917
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
 msgstr "Polomìr:"
@@ -1441,7 +1446,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:328
 #: plug-ins/common/xwd.c:448 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3253
@@ -1517,7 +1522,7 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:955
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:552
+#: plug-ins/common/xpm.c:645 plug-ins/common/xwd.c:552
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
 #, c-format
@@ -2128,7 +2133,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
 #: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:733
-#: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
+#: plug-ins/common/xpm.c:813 plug-ins/mosaic/mosaic.c:660
 #: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:812
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
@@ -2159,7 +2164,7 @@ msgid "Left Edge"
 msgstr "Levá hrana"
 
 #: plug-ins/common/align_layers.c:468 plug-ins/common/align_layers.c:501
-#: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2869
+#: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2870
 msgid "Center"
 msgstr "Støed"
 
@@ -2211,11 +2216,11 @@ msgstr "<Image>/Filtry/Animace/Pøehrát animaci..."
 msgid "Animation Playback: "
 msgstr "Pøehrátí animace: "
 
-#. The close button
+#. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:1002
 #: plug-ins/common/sample_colorize.c:1389 plug-ins/common/uniteditor.c:531
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:2852
 #: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
 #: plug-ins/gfig/gfig.c:1966 plug-ins/gfig/gfig.c:2026
@@ -2359,7 +2364,7 @@ msgstr "<Image>/Filtry/Rozostøení/Rozostøení..."
 
 #: plug-ins/common/blur.c:657 plug-ins/common/plasma.c:324
 #: plug-ins/common/randomize.c:745 plug-ins/common/snoise.c:556
-#: plug-ins/gflare/gflare.c:4107 plug-ins/sinus/sinus.c:862
+#: plug-ins/gflare/gflare.c:4108 plug-ins/sinus/sinus.c:862
 msgid "Random Seed:"
 msgstr "Hnízdo náhodných èísel:"
 
@@ -2494,7 +2499,7 @@ msgid "Colorify"
 msgstr "Kolorování"
 
 #: plug-ins/common/colorify.c:344 plug-ins/common/colortoalpha.c:434
-#: plug-ins/common/ps.c:2587 plug-ins/common/xpm.c:431
+#: plug-ins/common/ps.c:2587 plug-ins/common/xpm.c:433
 #: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/print.c:978
@@ -2518,7 +2523,10 @@ msgid "Color to Alpha"
 msgstr "Barva do alfy"
 
 #: plug-ins/common/colortoalpha.c:445 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:669 plug-ins/gfli/gfli.c:883
+#: plug-ins/common/mapcolor.c:669 plug-ins/gap/gap_decode_mpeg_main.c:652
+#: plug-ins/gap/gap_decode_xanim.c:223 plug-ins/gap/gap_lib.c:2092
+#: plug-ins/gap/gap_lib.c:2271 plug-ins/gap/gap_range_ops.c:251
+#: plug-ins/gap/gap_range_ops.c:600 plug-ins/gfli/gfli.c:883
 #: plug-ins/gfli/gfli.c:952
 msgid "From:"
 msgstr "Z:"
@@ -2570,6 +2578,7 @@ msgid "Saturation:"
 msgstr "Sytost:"
 
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:485
+#: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
 msgstr "Jas:"
 
@@ -2770,9 +2779,9 @@ msgstr "Zapsat alfa kanál (RGBA/RGB)"
 #. Opacity
 #. table col, row
 #: plug-ins/common/csource.c:774 plug-ins/common/sparkle.c:450
-#: plug-ins/common/tileit.c:606 plug-ins/gap/gap_mov_dialog.c:1624
-#: plug-ins/gflare/gflare.c:3609 plug-ins/gflare/gflare.c:3639
-#: plug-ins/gflare/gflare.c:3669
+#: plug-ins/common/tileit.c:606 plug-ins/gap/gap_mov_dialog.c:1627
+#: plug-ins/gflare/gflare.c:3610 plug-ins/gflare/gflare.c:3640
+#: plug-ins/gflare/gflare.c:3670
 msgid "Opacity:"
 msgstr "Krytí:"
 
@@ -2831,7 +2840,7 @@ msgid "Curve Bend"
 msgstr "Zkøivení"
 
 #: plug-ins/common/curve_bend.c:1383 plug-ins/gfig/gfig.c:2849
-#: plug-ins/gfig/gfig.c:5328 plug-ins/gflare/gflare.c:3106
+#: plug-ins/gfig/gfig.c:5328 plug-ins/gflare/gflare.c:3107
 #: plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
@@ -3142,7 +3151,7 @@ msgstr "Vytvoøit histogram"
 #: plug-ins/common/destripe.c:692 plug-ins/common/gtm.c:559
 #: plug-ins/common/ps.c:2544 plug-ins/common/ps.c:2719
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:420
-#: plug-ins/gap/gap_mov_dialog.c:1590 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:1593 plug-ins/imagemap/imap_rectangle.c:387
 msgid "Width:"
 msgstr "©íøka:"
 
@@ -3293,7 +3302,7 @@ msgstr "Omezení ¹íøky øádku"
 #: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1263
 #: plug-ins/common/gtm.c:573 plug-ins/common/ps.c:2553
 #: plug-ins/common/ps.c:2728 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:424 plug-ins/gap/gap_mov_dialog.c:1607
+#: plug-ins/common/tile.c:424 plug-ins/gap/gap_mov_dialog.c:1610
 #: plug-ins/imagemap/imap_rectangle.c:393
 msgid "Height:"
 msgstr "Vý¹ka:"
@@ -4135,7 +4144,7 @@ msgstr "Práh"
 #. parameter settings
 #: plug-ins/common/iwarp.c:1044 plug-ins/common/sample_colorize.c:1399
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:3972
-#: plug-ins/gflare/gflare.c:3046 plug-ins/sinus/sinus.c:898
+#: plug-ins/gflare/gflare.c:3047 plug-ins/sinus/sinus.c:898
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -4393,6 +4402,9 @@ msgid "Send to Mail"
 msgstr "Poslat do po¹ty"
 
 #: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:669
+#: plug-ins/gap/gap_decode_mpeg_main.c:662 plug-ins/gap/gap_decode_xanim.c:233
+#: plug-ins/gap/gap_lib.c:2100 plug-ins/gap/gap_lib.c:2279
+#: plug-ins/gap/gap_range_ops.c:258 plug-ins/gap/gap_range_ops.c:608
 #: plug-ins/gfli/gfli.c:892 plug-ins/gfli/gfli.c:961
 msgid "To:"
 msgstr "Do:"
@@ -6003,7 +6015,7 @@ msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
 #: plug-ins/common/threshold_alpha.c:297 plug-ins/common/unsharp.c:837
-#: plug-ins/common/wind.c:818 plug-ins/gflare/gflare.c:3029
+#: plug-ins/common/wind.c:818 plug-ins/gflare/gflare.c:3030
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -6815,11 +6827,11 @@ msgstr "Zapsat hodnoty øídícího bodu"
 msgid "Hot Spot X:"
 msgstr "Øídíci bod X:"
 
-#: plug-ins/common/xpm.c:794
+#: plug-ins/common/xpm.c:796
 msgid "Save as XPM"
 msgstr "Zapsat jako XPM"
 
-#: plug-ins/common/xpm.c:824
+#: plug-ins/common/xpm.c:826
 msgid "Alpha Threshold:"
 msgstr "Práh alfy:"
 
@@ -7246,25 +7258,20 @@ msgstr "Velikost náhledu"
 msgid "File-Browser"
 msgstr "Prohlí¾eè souborù"
 
-#. if no buttons are specified use one CLOSE button per default
-#: plug-ins/gap/gap_arr_dialog.c:783
-msgid "CLOSE"
-msgstr "ZAVØÍT"
-
 #. parameter settings
 #: plug-ins/gap/gap_arr_dialog.c:794
 msgid "Enter Values"
 msgstr "Zadání hodnot"
 
-#: plug-ins/gap/gap_arr_dialog.c:811 plug-ins/gap/gap_arr_dialog.c:877
+#: plug-ins/gap/gap_arr_dialog.c:879
 msgid "Value: "
 msgstr "Hodnota: "
 
-#: plug-ins/gap/gap_arr_dialog.c:1039
+#: plug-ins/gap/gap_arr_dialog.c:1041
 msgid "Press Button"
 msgstr "Tlak na tlaèítko"
 
-#: plug-ins/gap/gap_arr_dialog.c:1040 plug-ins/gfig/gfig.c:4010
+#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4010
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr "Výbìr"
@@ -7315,68 +7322,56 @@ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr "<Toolbox>/Roz¹./Rozdìlit obrázek do políèek/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
-#: plug-ins/gap/gap_range_ops.c:1195
-msgid "OVERWRITE frame"
-msgstr "PØEPSAT políèko"
+#: plug-ins/gap/gap_range_ops.c:1200
+#, fuzzy
+msgid "Overwrite Frame"
+msgstr "Náhledové políèko:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
-#: plug-ins/gap/gap_range_ops.c:1197
-msgid "OVERWRITE all"
-msgstr "PØEPSAT v¹e"
-
-#. the  Action Button
-#: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
-#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_lib.c:1006
-#: plug-ins/gap/gap_range_ops.c:1199
-msgid "CANCEL"
-msgstr "ZRU©IT"
+#: plug-ins/gap/gap_range_ops.c:1202
+msgid "Overwrite All"
+msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
-#: plug-ins/gap/gap_lib.c:1014 plug-ins/gap/gap_range_ops.c:1202
+#: plug-ins/gap/gap_lib.c:1020 plug-ins/gap/gap_range_ops.c:1207
 msgid "GAP Question"
 msgstr "GAP: Otázka"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-msgid "File already exists:"
+#, fuzzy
+msgid "File already exists"
 msgstr "Soubor ji¾ existuje:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:437
-msgid "Decoding MPEG movie..."
+#, fuzzy
+msgid "Decoding MPEG Movie..."
 msgstr "Dekóduje se MPEG animace..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:643
+#, fuzzy
 msgid ""
-"Name of the MPEG1 videofile to READ\n"
-"frames are extracted from the videofile\n"
-"and written to seprate diskfiles\n"
-"Audiotracks in the videofile are ignored"
+"Name of the MPEG1 videofile to READ.\n"
+"Frames are extracted from the videofile\n"
+"and written to seperate diskfiles.\n"
+"Audiotracks in the videofile are ignored."
 msgstr ""
 "Jméno MPEG1 videosouboru  ke ÈTENÍ\n"
 "políèka z videosouboru jsou získaná\n"
 "a zapsaná do samostatných diskových souborù\n"
 "Zvukové stopy ve videosouboru jsou ignorovány"
 
-#. spinbutton 1
-#: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/rcm/rcm_dialog.c:285
-#: plug-ins/rcm/rcm_dialog.c:356
-msgid "From"
-msgstr "Z"
-
 #: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-msgid "Framenumber of 1.st frame to extract"
+#, fuzzy
+msgid "Framenumber of 1st frame to extract"
 msgstr "Èíslo prvního získávaného políèka"
-
-#: plug-ins/gap/gap_decode_mpeg_main.c:662 plug-ins/rcm/rcm_dialog.c:357
-msgid "To"
-msgstr "Do"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:663 plug-ins/gap/gap_decode_xanim.c:234
 msgid "Framenumber of last frame to extract"
 msgstr "Èíslo posledního získávaného políèka"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:672
-msgid "Framenames"
-msgstr "Jména políèek"
+#: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:243
+msgid "Framenames:"
+msgstr "Jména políèek:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673
 msgid ""
@@ -7392,18 +7387,30 @@ msgid "Open"
 msgstr "Otevøít"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-msgid "Open the 1.st one of the extracted frames"
+#, fuzzy
+msgid "Open the 1st one of the extracted frames"
 msgstr "Otevøít první ze získávaných políèek"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:685
+#, fuzzy
 msgid ""
 "\n"
-"WARNING: do not attempt to split other files than MPEG1 videos\n"
-"before you proceed, you should save all open images"
+"WARNING: Do not attempt to split other files than MPEG1 videos.\n"
+"Before you proceed, you should save all open images."
 msgstr ""
 "\n"
 "VAROVÁNÍ: nepokou¹ejte se rozdìlit jiné soubory ne¾ MPEG1 videa,\n"
 "ne¾ budete pokraèovat, je vhodné zapsat v¹echny otevøené obrázky"
+
+#: plug-ins/gap/gap_decode_mpeg_main.c:688
+#, fuzzy
+msgid "Split MPEG1 Video to Frames"
+msgstr "Rozdìlit obrázek do políèek"
+
+#: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
+#: plug-ins/gap/gap_range_ops.c:1422
+msgid "Select Frame Range"
+msgstr "Výbìr rozsahu políèek"
 
 #: plug-ins/gap/gap_decode_xanim.c:113
 msgid "Conditions to run the xanim based video split"
@@ -7442,49 +7449,22 @@ msgstr "Pøi pokusu o volání xanim do¹lo k CHYBÌ:"
 msgid "XANIM Information"
 msgstr "Informace o XANIM"
 
-#: plug-ins/gap/gap_decode_xanim.c:210
-msgid "XCF"
-msgstr "XCF"
-
-#: plug-ins/gap/gap_decode_xanim.c:210
-msgid "PPM"
-msgstr "PPM"
-
-#: plug-ins/gap/gap_decode_xanim.c:210
-msgid "JPEG"
-msgstr "JPEG"
-
 #: plug-ins/gap/gap_decode_xanim.c:213
 msgid "Video:"
 msgstr "Video:"
 
 #: plug-ins/gap/gap_decode_xanim.c:214
+#, fuzzy
 msgid ""
-"Name of a videofile to READ by xanim\n"
-"frames are extracted from the videofile\n"
-"and written to seprate diskfiles\n"
-"xanim exporting edition is required"
+"Name of a videofile to READ by xanim.\n"
+"Frames are extracted from the videofile\n"
+"and written to seprate diskfiles.\n"
+"xanim exporting edition is required."
 msgstr ""
 "Jméno videosouboru ke ÈTENÍ programem xanim\n"
 "políèka z videosouboru jsou získaná\n"
 "a zapsaná do samostatných diskových souborù\n"
 "vy¾aduje exportující vydání xanim"
-
-#: plug-ins/gap/gap_decode_xanim.c:223 plug-ins/gap/gap_lib.c:2087
-#: plug-ins/gap/gap_lib.c:2264 plug-ins/gap/gap_range_ops.c:251
-#: plug-ins/gap/gap_range_ops.c:595
-msgid "From :"
-msgstr "Z:"
-
-#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2095
-#: plug-ins/gap/gap_lib.c:2272 plug-ins/gap/gap_range_ops.c:258
-#: plug-ins/gap/gap_range_ops.c:603
-msgid "To :"
-msgstr "Do:"
-
-#: plug-ins/gap/gap_decode_xanim.c:243
-msgid "Framenames:"
-msgstr "Jména políèek:"
 
 #: plug-ins/gap/gap_decode_xanim.c:244
 msgid ""
@@ -7531,8 +7511,9 @@ msgid "Jpeg Quality:"
 msgstr "Kvalita jpeg:"
 
 #: plug-ins/gap/gap_decode_xanim.c:271
+#, fuzzy
 msgid ""
-"Quality for resulting jpeg frames\n"
+"Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
 "Kvalita výsledných jpeg políèek\n"
@@ -7551,10 +7532,11 @@ msgstr ""
 "(mimo urèený rozsah) za bìhu xanim"
 
 #: plug-ins/gap/gap_decode_xanim.c:293
+#, fuzzy
 msgid ""
 "\n"
-"Warning: xanim 2.80 has just limited MPEG support\n"
-"most of the frames (type P and B) will be skipped"
+"Warning: xanim 2.80 has only limited MPEG support.\n"
+"Most of the frames (type P and B) will be skipped."
 msgstr ""
 "\n"
 "Varování: xanim 2.80 má pouze omezenou podporu MPEG\n"
@@ -7563,10 +7545,6 @@ msgstr ""
 #: plug-ins/gap/gap_decode_xanim.c:296
 msgid "Split any Xanim readable Video to Frames"
 msgstr "Rozdìlit video èitelné Xanim do políèek"
-
-#: plug-ins/gap/gap_decode_xanim.c:297
-msgid "Select Frame range"
-msgstr "Výbìr rozsahu políèek"
 
 #: plug-ins/gap/gap_decode_xanim.c:539
 #, c-format
@@ -7679,19 +7657,19 @@ msgid "Continue"
 msgstr "Pokraèovat"
 
 #: plug-ins/gap/gap_filter_foreach.c:153 plug-ins/gap/gap_mod_layer.c:278
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"2.nd call of %s\n"
+"2nd call of %s\n"
 "(define end-settings)"
 msgstr ""
 "2. volání %s\n"
 "(definuje koncová nastavení)"
 
 #: plug-ins/gap/gap_filter_foreach.c:157
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Non-Interactive call of %s\n"
-"(for all layers inbetween)"
+"(for all layers in between)"
 msgstr ""
 "Neinteraktivní volání %s\n"
 "(na v¹echny vrstvy rozsahu)"
@@ -7732,83 +7710,108 @@ msgstr "<Image>/Video/Kódování/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Video/Kódování/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:994
+#: plug-ins/gap/gap_lib.c:226
+msgid "GAP Message"
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:889
+msgid ""
+"OPERATION CANCELLED.\n"
+"Current frame changed while dialog was open."
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:911
+msgid ""
+"OPERATION CANCELLED.\n"
+"GAP-plugins works only with filenames\n"
+"that end with _0001.xcf.\n"
+"==> Rename your image, then try again."
+msgstr ""
+
+#: plug-ins/gap/gap_lib.c:998
+#, fuzzy
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
-"in loss of layer information"
+"in loss of layer information."
 msgstr ""
 "U¾íváte formátu souboru != xcf\n"
 "Operace zápisu mohou mít za výsledek\n"
 "ztrátu informace o vrstvách"
 
-#: plug-ins/gap/gap_lib.c:1008
-msgid "SAVE Flattened"
+#: plug-ins/gap/gap_lib.c:1014
+#, fuzzy
+msgid "Save Flattened"
 msgstr "ZAPSAT slouèené"
 
-#: plug-ins/gap/gap_lib.c:1010
-msgid "SAVE As Is"
-msgstr "ZAPSAT stávající"
+#: plug-ins/gap/gap_lib.c:1016
+#, fuzzy
+msgid "Save As Is"
+msgstr "Zapsat jako GIF"
 
-#: plug-ins/gap/gap_lib.c:1480 plug-ins/gap/gap_lib.c:1598
-#: plug-ins/gap/gap_lib.c:1677 plug-ins/gap/gap_lib.c:1684
-#: plug-ins/gap/gap_lib.c:1691 plug-ins/gap/gap_lib.c:1774
-#: plug-ins/gap/gap_lib.c:1796
-#, c-format
-msgid "Error: could not rename frame %ld to %ld\n"
+#: plug-ins/gap/gap_lib.c:1486 plug-ins/gap/gap_lib.c:1603
+#: plug-ins/gap/gap_lib.c:1682 plug-ins/gap/gap_lib.c:1689
+#: plug-ins/gap/gap_lib.c:1696 plug-ins/gap/gap_lib.c:1779
+#: plug-ins/gap/gap_lib.c:1801
+#, fuzzy, c-format
+msgid "Error: could not rename frame %ld to %ld"
 msgstr "Chyba: nelze pøejmenovat políèko %ld na %ld\n"
 
-#: plug-ins/gap/gap_lib.c:1586
-msgid "Duplicating frames .."
+#: plug-ins/gap/gap_lib.c:1591
+#, fuzzy
+msgid "Duplicating frames..."
 msgstr "Duplikují se políèka..."
 
-#: plug-ins/gap/gap_lib.c:1762
-msgid "Renumber Framesequence .."
+#: plug-ins/gap/gap_lib.c:1767
+#, fuzzy
+msgid "Renumber Framesequence..."
 msgstr "Pøeèíslovat sled políèek..."
 
-#: plug-ins/gap/gap_lib.c:1948
+#: plug-ins/gap/gap_lib.c:1953
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Jít na políèko (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1951
+#: plug-ins/gap/gap_lib.c:1956
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Èíslo cílového políèka (%ld  - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1955 plug-ins/gap/gap_lib.c:2032
-#: plug-ins/gap/gap_lib.c:2218
-msgid "Number :"
+#: plug-ins/gap/gap_lib.c:1960 plug-ins/gap/gap_lib.c:2037
+#: plug-ins/gap/gap_lib.c:2225
+#, fuzzy
+msgid "Number:"
 msgstr "Poèet:"
 
-#: plug-ins/gap/gap_lib.c:2016
+#: plug-ins/gap/gap_lib.c:2021
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Smazat políèka (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2019
-#, c-format
-msgid "Delete Frames from %ld to (Number)"
+#: plug-ins/gap/gap_lib.c:2024
+#, fuzzy, c-format
+msgid "Delete Frames from %ld to (number)"
 msgstr "Smazání políèek od %ld do (èíslo)"
 
-#: plug-ins/gap/gap_lib.c:2082
+#: plug-ins/gap/gap_lib.c:2087
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Duplikovat políèka (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2092
+#: plug-ins/gap/gap_lib.c:2097
 msgid "Source Range starts at this framenumber"
 msgstr "Na tomto políèku je zaèátek zdrojového rozsahu"
 
-#: plug-ins/gap/gap_lib.c:2100
+#: plug-ins/gap/gap_lib.c:2105
 msgid "Source Range ends at this framenumber"
 msgstr "Na tomto políèku je konec zdrojového rozsahu"
 
-#: plug-ins/gap/gap_lib.c:2103
-msgid "N-Times :"
+#: plug-ins/gap/gap_lib.c:2108
+#, fuzzy
+msgid "N times:"
 msgstr "Nkrát:"
 
-#: plug-ins/gap/gap_lib.c:2110
+#: plug-ins/gap/gap_lib.c:2115
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -7816,37 +7819,40 @@ msgstr ""
 "Kopíruje zvolený rozsah nkrát  \n"
 "(vypsat lze hodnoty > 99)"
 
-#: plug-ins/gap/gap_lib.c:2112
-msgid "Duplicate Framerange"
+#: plug-ins/gap/gap_lib.c:2117
+#, fuzzy
+msgid "Duplicate Frame Range"
 msgstr "Duplikovat skupinu políèek"
 
-#: plug-ins/gap/gap_lib.c:2215
+#: plug-ins/gap/gap_lib.c:2220
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "Zamìnit aktuální políèko (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2218
-msgid "With Frame (Number)"
+#: plug-ins/gap/gap_lib.c:2224
+#, fuzzy
+msgid "With Frame (number)"
 msgstr "S políèkem (èíslo)"
 
-#: plug-ins/gap/gap_lib.c:2259
+#: plug-ins/gap/gap_lib.c:2266
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Posun sekvence políèek (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2269
+#: plug-ins/gap/gap_lib.c:2276
 msgid "Affected Range starts at this framenumber"
 msgstr "Dotèený rozsah zaèíná na tomto políèku"
 
-#: plug-ins/gap/gap_lib.c:2277
+#: plug-ins/gap/gap_lib.c:2284
 msgid "Affected Range ends at this framenumber"
 msgstr "Dotèený rozsah konèí na tomto políèku"
 
-#: plug-ins/gap/gap_lib.c:2280
-msgid "N-Shift :"
+#: plug-ins/gap/gap_lib.c:2287
+#, fuzzy
+msgid "N-Shift:"
 msgstr "N-posun:"
 
-#: plug-ins/gap/gap_lib.c:2285
+#: plug-ins/gap/gap_lib.c:2292
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -7854,7 +7860,7 @@ msgstr ""
 "Pøeèíslování sekvence políèek     \n"
 "(èísla jsou posunuta cyklicky o N)"
 
-#: plug-ins/gap/gap_lib.c:2287
+#: plug-ins/gap/gap_lib.c:2294
 msgid "Framesequence shift"
 msgstr "Posunout sekvenci políèek"
 
@@ -7935,53 +7941,58 @@ msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Video/Zmìna políèek..."
 
 #. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:567
+#: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:572
 msgid "Pattern is equal to LayerName"
 msgstr "Vzorek je shodný se jménem vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:568
+#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:573
 msgid "Pattern is Start of LayerName"
 msgstr "Vzorek je poèátek jména vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:569
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is End of Layername"
 msgstr "Vzorek je konec jména vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:570
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is a Part of LayerName"
 msgstr "Vzorek je èást jména vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:571
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is LayerstackNumber List"
 msgstr "Vzorek je seznam èísel zásobníku vrstev"
 
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:572
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is REVERSE-stack List"
 msgstr "Vzorek je seznam OBRÁCENÉHO zásobníku"
 
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:573
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
 msgid "All Visible (ignore Pattern)"
 msgstr "V¹echny viditelné (ignorovat vzorek)"
 
-#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:575
-msgid "select all Layers where Layername is equal to Pattern"
+#: plug-ins/gap/gap_mod_layer.c:90
+#, fuzzy
+msgid "Select all Layers where Layername is equal to Pattern"
 msgstr "zvolí v¹echny vrstvy, pro které je vzorek shodný se jménem vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:91 plug-ins/gap/gap_range_ops.c:576
-msgid "select all Layers where Layername starts with Pattern"
+#: plug-ins/gap/gap_mod_layer.c:91
+#, fuzzy
+msgid "Select all Layers where Layername starts with Pattern"
 msgstr "zvolí v¹echny vrstvy, pro které je vzorek poèátkem jména vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:92 plug-ins/gap/gap_range_ops.c:577
-msgid "select all Layers where Layername ends up with Pattern"
+#: plug-ins/gap/gap_mod_layer.c:92
+#, fuzzy
+msgid "Select all Layers where Layername ends up with Pattern"
 msgstr "zvolí v¹echny vrstvy, pro které je vzorek koncem jména vrstvy"
 
-#: plug-ins/gap/gap_mod_layer.c:93 plug-ins/gap/gap_range_ops.c:578
-msgid "select all Layers where Layername contains Pattern"
+#: plug-ins/gap/gap_mod_layer.c:93
+#, fuzzy
+msgid "Select all Layers where Layername contains Pattern"
 msgstr "zvolí v¹echny vrstvy, jejich¾ jméno obsahuje vzorek"
 
-#: plug-ins/gap/gap_mod_layer.c:94 plug-ins/gap/gap_range_ops.c:579
+#: plug-ins/gap/gap_mod_layer.c:94
+#, fuzzy
 msgid ""
-"select Layerstack positions.\n"
+"Select Layerstack positions.\n"
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
@@ -7989,9 +8000,10 @@ msgstr ""
 "0, 4-5, 8\n"
 "kde 0 == vrchní vrstva"
 
-#: plug-ins/gap/gap_mod_layer.c:95 plug-ins/gap/gap_range_ops.c:580
+#: plug-ins/gap/gap_mod_layer.c:95
+#, fuzzy
 msgid ""
-"select Layerstack positions.\n"
+"Select Layerstack positions.\n"
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
@@ -7999,73 +8011,88 @@ msgstr ""
 "0, 4-5, 8\n"
 "kde 0 == spodní vrstva"
 
-#: plug-ins/gap/gap_mod_layer.c:96 plug-ins/gap/gap_range_ops.c:581
-msgid "select all visible Layers"
+#: plug-ins/gap/gap_mod_layer.c:96
+#, fuzzy
+msgid "Select all visible Layers"
 msgstr "vybrat v¹echny viditelné vrstvy"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:100
-msgid "set Layer(s) visible"
+#, fuzzy
+msgid "Set Layer(s) visible"
 msgstr "nastavit vrstvy viditelné"
 
 #: plug-ins/gap/gap_mod_layer.c:101
-msgid "set Layer(s) invisible"
+#, fuzzy
+msgid "Set Layer(s) invisible"
 msgstr "nastavit vrstvy neviditelné"
 
 #: plug-ins/gap/gap_mod_layer.c:102
-msgid "set Layer(s) linked"
+#, fuzzy
+msgid "Set Layer(s) linked"
 msgstr "nastavit vrstvy spojené"
 
 #: plug-ins/gap/gap_mod_layer.c:103
-msgid "set Layer(s) unlinked"
+#, fuzzy
+msgid "Set Layer(s) unlinked"
 msgstr "nastavit vrstvy rozpojené"
 
 #: plug-ins/gap/gap_mod_layer.c:104
-msgid "raise Layer(s)"
+#, fuzzy
+msgid "Raise Layer(s)"
 msgstr "vrstvy vý¹"
 
 #: plug-ins/gap/gap_mod_layer.c:105
-msgid "lower Layer(s)"
+#, fuzzy
+msgid "Lower Layer(s)"
 msgstr "vrstvy ní¾"
 
 #: plug-ins/gap/gap_mod_layer.c:106
-msgid "merge Layer(s) expand as necessary"
+#, fuzzy
+msgid "Merge Layer(s) expand as necessary"
 msgstr "spojení vrstev roz¹íøených dle potøeby"
 
 #: plug-ins/gap/gap_mod_layer.c:107
-msgid "merge Layer(s) clipped to image"
+#, fuzzy
+msgid "Merge Layer(s) clipped to image"
 msgstr "spojení vrstev oøíznutých dle potøeby"
 
 #: plug-ins/gap/gap_mod_layer.c:108
-msgid "merge Layer(s) clipped to bg-layer"
+#, fuzzy
+msgid "Merge Layer(s) clipped to bg-layer"
 msgstr "spojení vrstev oøíznutých dle spodní vrstvy"
 
 #: plug-ins/gap/gap_mod_layer.c:109
-msgid "apply filter on Layer(s)"
+#, fuzzy
+msgid "Apply filter on Layer(s)"
 msgstr "pou¾ití filtru na vrstvy"
 
 #: plug-ins/gap/gap_mod_layer.c:110
-msgid "duplicate Layer(s)"
+#, fuzzy
+msgid "Duplicate Layer(s)"
 msgstr "duplikovat vrstvy"
 
 #: plug-ins/gap/gap_mod_layer.c:111
-msgid "delete Layer(s)"
+#, fuzzy
+msgid "Delete Layer(s)"
 msgstr "smazat vrstvy"
 
 #: plug-ins/gap/gap_mod_layer.c:112
-msgid "rename Layer(s)"
+#, fuzzy
+msgid "Rename Layer(s)"
 msgstr "pøejmenovat vrstvy"
 
 #: plug-ins/gap/gap_mod_layer.c:151
+#, fuzzy
 msgid ""
 "Perform function on one or more Layer(s)\n"
-"in all frames of the selected framerange\n"
+"in all frames of the selected frame range\n"
 msgstr ""
 "Provádí funkci na více vrstvách\n"
 "na v¹ech políèkách ze zvoleného rozsahu\n"
 
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:436
+#: plug-ins/gap/gap_range_ops.c:441
 msgid "From Frame:"
 msgstr "Výchozí políèko:"
 
@@ -8077,15 +8104,15 @@ msgstr "Výchozí políèko:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:519
-#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:437
-#: plug-ins/gap/gap_range_ops.c:596
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:521
+#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:442
+#: plug-ins/gap/gap_range_ops.c:601
 msgid "first handled frame"
 msgstr "první zpracované políèko"
 
-#: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_mpege.c:266
-#: plug-ins/gap/gap_range_ops.c:444
-msgid "To   Frame:"
+#: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:449
+#, fuzzy
+msgid "To Frame:"
 msgstr "Koncové políèko:"
 
 #. label text
@@ -8096,22 +8123,22 @@ msgstr "Koncové políèko:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:534
-#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:445
-#: plug-ins/gap/gap_range_ops.c:604
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:536
+#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:450
+#: plug-ins/gap/gap_range_ops.c:609
 msgid "last handled frame"
 msgstr "poslední zpracované políèko"
 
-#: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:643
+#: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:648
 msgid "Select Layer(s):"
 msgstr "Výbìr vrstev:"
 
-#: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:652
+#: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:657
 msgid "Select Pattern:"
 msgstr "Výbìr vzorku:"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:654
+#: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:659
 msgid ""
 "String to identify layer names    \n"
 "or layerstack position numbers\n"
@@ -8121,15 +8148,15 @@ msgstr ""
 "nebo pozièních èísel v zásobníku vrstev\n"
 "0,3-5"
 
-#: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:660
+#: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:665
 msgid "Case sensitive"
 msgstr "Citlivost velikost písmen"
 
-#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:661
+#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:666
 msgid "Lowercase and UPPERCASE letters are considered as different"
 msgstr "Malá a VELKÁ písmena jsou rozli¹ována"
 
-#: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:666
+#: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:671
 msgid "Invert Selection"
 msgstr "Invertovat výbìr"
 
@@ -8138,7 +8165,8 @@ msgid "Perform actions on all unselected Layers"
 msgstr "Provedení akcí na v¹ech nevybraných vrstvách"
 
 #: plug-ins/gap/gap_mod_layer.c:201
-msgid "Function :"
+#, fuzzy
+msgid "Function:"
 msgstr "Funkce:"
 
 #. argv[7].radio_help_argv = action_help
@@ -8181,16 +8209,19 @@ msgid "Select Filter for Animated frames-apply"
 msgstr "Volba filtru pro pou¾ití na animovaná políèka"
 
 #: plug-ins/gap/gap_mod_layer.c:802
-msgid "GAP Modify: No layer selected in last handled frame\n"
+#, fuzzy
+msgid "GAP Modify: No layer selected in last handled frame"
 msgstr ""
 "Modifikace GAP: V posledním zpracovaném políèku nejsou zvoleny ¾ádné vrstvy\n"
 
 #: plug-ins/gap/gap_mod_layer.c:888
-msgid "Modifying Frames/Layer(s) .."
+#, fuzzy
+msgid "Modifying Frames/Layer(s)..."
 msgstr "Modifikují se políèka/vrstvy..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
-msgid "No selected Layer in start frame\n"
+#, fuzzy
+msgid "No selected Layer in start frame"
 msgstr "Není vybrána vrstva v poèáteèním políèku\n"
 
 #: plug-ins/gap/gap_mov_dialog.c:239 plug-ins/gfig/gfig.c:3307
@@ -8272,8 +8303,9 @@ msgid "Move Path"
 msgstr "Cesta pøesunu"
 
 #: plug-ins/gap/gap_mov_dialog.c:461
-msgid "UpdPreview"
-msgstr "Zakt. Náhled"
+#, fuzzy
+msgid "Update Preview"
+msgstr "Automatická aktualizace náhledu"
 
 #: plug-ins/gap/gap_mov_dialog.c:468
 msgid ""
@@ -8290,19 +8322,19 @@ msgstr "Pøená¹ejí se zdrojové vrstvy do políèek"
 
 #. the start frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:511
+#: plug-ins/gap/gap_mov_dialog.c:513
 msgid "Start Frame:"
 msgstr "Poèáteèní políèko:"
 
 #. the end frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:526
+#: plug-ins/gap/gap_mov_dialog.c:528
 msgid "End Frame:"
 msgstr "Koncové políèko:"
 
 #. the Preview Frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:541
+#: plug-ins/gap/gap_mov_dialog.c:543
 msgid "Preview Frame:"
 msgstr "Náhledové políèko:"
 
@@ -8314,7 +8346,7 @@ msgstr "Náhledové políèko:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:549
+#: plug-ins/gap/gap_mov_dialog.c:551
 msgid ""
 "frame to show when UpdPreview\n"
 "button is pressed"
@@ -8324,7 +8356,7 @@ msgstr ""
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:557
+#: plug-ins/gap/gap_mov_dialog.c:559 plug-ins/gap/gap_range_ops.c:265
 msgid "Layerstack:"
 msgstr "Zásobník vrstev:"
 
@@ -8336,7 +8368,7 @@ msgstr "Zásobník vrstev:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:565
+#: plug-ins/gap/gap_mov_dialog.c:567
 msgid ""
 "How to insert SrcLayer into the\n"
 "Dst. Frame's Layerstack\n"
@@ -8347,11 +8379,11 @@ msgstr ""
 "0 znamená navrch, tj. dopøedu"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:572
+#: plug-ins/gap/gap_mov_dialog.c:574
 msgid "Clip To Frame"
 msgstr "Oøíznout dle políèka"
 
-#: plug-ins/gap/gap_mov_dialog.c:578
+#: plug-ins/gap/gap_mov_dialog.c:580
 msgid ""
 "Clip all copied Src-Layers\n"
 "at Frame Boundaries"
@@ -8359,57 +8391,59 @@ msgstr ""
 "Oøíznout v¹echny kopírované zdrojové vrstvy\n"
 "na hranicích políèek"
 
-#: plug-ins/gap/gap_mov_dialog.c:624
+#: plug-ins/gap/gap_mov_dialog.c:626
 msgid ""
 "No Source Image was selected\n"
-"(Please open a 2nd Image of the same type before opening Move Path)\n"
+"(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 "Nebyl zvolen ¾ádný zdrojový obrázek\n"
-"(Otevøete 2. obrázek stejného typu pøed otevøením Cesty pøesunu)\n"
+"(Otevøete 2. obrázek stejného typu pøed otevøením Cesty pøesunu)"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:894
+#: plug-ins/gap/gap_mov_dialog.c:897
 msgid "Load Path Points from file"
 msgstr "Ètení bodù cesty ze souboru"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:930
+#: plug-ins/gap/gap_mov_dialog.c:933
 msgid "Save Path Points to file"
 msgstr "Zápis bodù cesty do souboru"
 
-#: plug-ins/gap/gap_mov_dialog.c:1207
+#: plug-ins/gap/gap_mov_dialog.c:1210
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
 msgstr "Aktuální bod: [%3d] z [%3d]"
 
-#: plug-ins/gap/gap_mov_dialog.c:1370
+#: plug-ins/gap/gap_mov_dialog.c:1373
 msgid "Source Select"
 msgstr "Výbìr zdroje"
 
 #. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1387
-msgid "SourceImage/Layer:"
+#: plug-ins/gap/gap_mov_dialog.c:1390
+#, fuzzy
+msgid "Source Image/Layer:"
 msgstr "Zdrojový obrázek/vrstvy:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1397
-msgid "Source Object to insert into Framerange"
+#: plug-ins/gap/gap_mov_dialog.c:1400
+#, fuzzy
+msgid "Source Object to insert into Frame Range"
 msgstr "Zdrojový objekt ke vlo¾ení do rozsahu políèek"
 
 #. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1412
+#: plug-ins/gap/gap_mov_dialog.c:1415
 msgid "Mode:"
 msgstr "Re¾im:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1421
+#: plug-ins/gap/gap_mov_dialog.c:1424
 msgid "Paintmode"
 msgstr "Re¾im kreslení"
 
 #. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1436
+#: plug-ins/gap/gap_mov_dialog.c:1439
 msgid "Stepmode:"
 msgstr "Re¾im krokování:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1454
+#: plug-ins/gap/gap_mov_dialog.c:1457
 msgid ""
 "How to fetch the next SrcLayer   \n"
 "at the next handled frame"
@@ -8418,11 +8452,11 @@ msgstr ""
 "na následujícím zpracovaném políèku"
 
 #. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1460
+#: plug-ins/gap/gap_mov_dialog.c:1463
 msgid "Handle:"
 msgstr "Ovládání:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1478
+#: plug-ins/gap/gap_mov_dialog.c:1481
 msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Coordinates"
@@ -8432,17 +8466,17 @@ msgstr ""
 
 #. to avoid side effects while initialization
 #. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1531
+#: plug-ins/gap/gap_mov_dialog.c:1534
 msgid "Move Path Preview"
 msgstr "Náhled cesty pøesunu"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1563
+#: plug-ins/gap/gap_mov_dialog.c:1566
 msgid "X Coordinate"
 msgstr "Souøadnice X"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1581
+#: plug-ins/gap/gap_mov_dialog.c:1584
 msgid "Y Coordinate"
 msgstr "Souøadnice Y"
 
@@ -8454,10 +8488,9 @@ msgstr "Souøadnice Y"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1598
-msgid ""
-"Scale SrcLayer's Width\n"
-"in percent"
+#: plug-ins/gap/gap_mov_dialog.c:1601
+#, fuzzy
+msgid "Scale Source Layer's Width in percent"
 msgstr ""
 "©íøka zdrojové vrstvy\n"
 "v procentech"
@@ -8470,7 +8503,7 @@ msgstr ""
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1615
+#: plug-ins/gap/gap_mov_dialog.c:1618
 msgid ""
 "Scale SrcLayer's Height\n"
 "in percent"
@@ -8486,7 +8519,7 @@ msgstr ""
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1632
+#: plug-ins/gap/gap_mov_dialog.c:1635
 msgid ""
 "SrcLayer's Opacity\n"
 "in percent"
@@ -8496,7 +8529,7 @@ msgstr ""
 
 #. Rotation
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1641
+#: plug-ins/gap/gap_mov_dialog.c:1644
 msgid "Rotate:"
 msgstr "Rotace:"
 
@@ -8508,15 +8541,15 @@ msgstr "Rotace:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1649
+#: plug-ins/gap/gap_mov_dialog.c:1652
 msgid "Rotate SrcLayer (in degree)"
 msgstr "Rotace zdrojové vrstvy (ve stupních)"
 
-#: plug-ins/gap/gap_mov_dialog.c:1722
+#: plug-ins/gap/gap_mov_dialog.c:1725
 msgid "Add Point"
 msgstr "Pøidat bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1730
+#: plug-ins/gap/gap_mov_dialog.c:1733
 msgid ""
 "Add Controlpoint at end        \n"
 "(the last Point is duplicated)"
@@ -8525,11 +8558,11 @@ msgstr ""
 "(poslední bod je zduplikován)"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:1735
+#: plug-ins/gap/gap_mov_dialog.c:1738
 msgid "Show Path"
 msgstr "Zobrazit cestu"
 
-#: plug-ins/gap/gap_mov_dialog.c:1741
+#: plug-ins/gap/gap_mov_dialog.c:1744
 msgid ""
 "Show Path Lines and enable\n"
 "pick/drag with left button\n"
@@ -8539,13 +8572,13 @@ msgstr ""
 "chycení/potáhnutí levým tlaèítkem\n"
 "nebo pøesun pravým tlaèítkem"
 
-#: plug-ins/gap/gap_mov_dialog.c:1751
+#: plug-ins/gap/gap_mov_dialog.c:1754
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
 msgstr "Vlo¾it bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1759
+#: plug-ins/gap/gap_mov_dialog.c:1762
 msgid ""
 "Insert Controlpoint          \n"
 "(the current Point is duplicated)"
@@ -8553,53 +8586,53 @@ msgstr ""
 "Vlo¾it øídící bod\n"
 "(aktuální bod je zduplikován)"
 
-#: plug-ins/gap/gap_mov_dialog.c:1763
+#: plug-ins/gap/gap_mov_dialog.c:1766
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
 msgstr "Smazat bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1771
+#: plug-ins/gap/gap_mov_dialog.c:1774
 msgid "Delete current Controlpoint"
 msgstr "Smazat souèasný øídící bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1777
+#: plug-ins/gap/gap_mov_dialog.c:1780
 msgid "Prev Point"
 msgstr "Pøedchozí bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1785
+#: plug-ins/gap/gap_mov_dialog.c:1788
 msgid "Show Previous Controlpoint"
 msgstr "Zobrazí pøedchozí bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1789
+#: plug-ins/gap/gap_mov_dialog.c:1792
 msgid "Next Point"
 msgstr "Dal¹í bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1797
+#: plug-ins/gap/gap_mov_dialog.c:1800
 msgid "Show Next Controlpoint"
 msgstr "Zobrazí následující bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1803
+#: plug-ins/gap/gap_mov_dialog.c:1806
 msgid "First Point"
 msgstr "První bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1811
+#: plug-ins/gap/gap_mov_dialog.c:1814
 msgid "Show First Controlpoint"
 msgstr "Zobrazí první bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1815
+#: plug-ins/gap/gap_mov_dialog.c:1818
 msgid "Last Point"
 msgstr "Poslední bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1823
+#: plug-ins/gap/gap_mov_dialog.c:1826
 msgid "Show Last Controlpoint"
 msgstr "Zobrazí poslední bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1829
+#: plug-ins/gap/gap_mov_dialog.c:1832
 msgid "Clear Point"
 msgstr "Smazat bod"
 
-#: plug-ins/gap/gap_mov_dialog.c:1837
+#: plug-ins/gap/gap_mov_dialog.c:1840
 msgid ""
 "Reset the current Controlpoint\n"
 "to default Values"
@@ -8607,11 +8640,11 @@ msgstr ""
 "Nastaví aktuální øídící bod\n"
 "na implicitní hodnody"
 
-#: plug-ins/gap/gap_mov_dialog.c:1841
+#: plug-ins/gap/gap_mov_dialog.c:1844
 msgid "Reset Points"
 msgstr "Smazat body"
 
-#: plug-ins/gap/gap_mov_dialog.c:1849
+#: plug-ins/gap/gap_mov_dialog.c:1852
 msgid ""
 "Reset Controlpoints  \n"
 "to one Defaultpoint"
@@ -8619,32 +8652,34 @@ msgstr ""
 "Vymazat øídící body  \n"
 "do jednoho implicitního bodu"
 
-#: plug-ins/gap/gap_mov_dialog.c:1855
+#: plug-ins/gap/gap_mov_dialog.c:1858
 msgid "Load Points"
 msgstr "Naèíst body"
 
-#: plug-ins/gap/gap_mov_dialog.c:1863
+#: plug-ins/gap/gap_mov_dialog.c:1866
 msgid "Load Controlpoints from file"
 msgstr "Ètení øídících bodù ze souboru"
 
-#: plug-ins/gap/gap_mov_dialog.c:1867
+#: plug-ins/gap/gap_mov_dialog.c:1870
 msgid "Save Points"
 msgstr "Zapsat body"
 
-#: plug-ins/gap/gap_mov_dialog.c:1875
+#: plug-ins/gap/gap_mov_dialog.c:1878
 msgid "Save Controlpoints to file"
 msgstr "Zápis øídících bodù do souboru"
 
 #: plug-ins/gap/gap_mov_exec.c:220
+#, fuzzy
 msgid ""
-"No Source Image was selected\n"
-"(Please open a 2nd Image of the same type before opening Move Path)"
+"No Source Image was selected.\n"
+"Please open a 2nd Image of the same type before opening Move Path."
 msgstr ""
 "Nebyl zvolen ¾ádný zdrojový obrázek\n"
 "(Otevøete 2. obrázek stejného typu pøed otevøením Cesty pøesunu)"
 
-#: plug-ins/gap/gap_mov_exec.c:228
-msgid "Copying Layers into Frames .."
+#: plug-ins/gap/gap_mov_exec.c:229
+#, fuzzy
+msgid "Copying Layers into Frames..."
 msgstr "Kopírují se vrstvy do políèek..."
 
 #: plug-ins/gap/gap_mpege.c:111
@@ -8731,6 +8766,10 @@ msgstr "Parametry generování"
 #: plug-ins/gap/gap_mpege.c:244
 msgid "Gen + Encode"
 msgstr "Generování + kódování"
+
+#: plug-ins/gap/gap_mpege.c:266
+msgid "To   Frame:"
+msgstr "Koncové políèko:"
 
 #: plug-ins/gap/gap_mpege.c:273
 msgid "Framerate :"
@@ -8963,7 +9002,8 @@ msgid "Delete selected Frames"
 msgstr "Smazat vybraná políèka"
 
 #: plug-ins/gap/gap_navigator_dialog.c:376
-msgid "Goto 1.st Frame"
+#, fuzzy
+msgid "Goto 1st Frame"
 msgstr "Jít na první políèko"
 
 #: plug-ins/gap/gap_navigator_dialog.c:380
@@ -8990,6 +9030,10 @@ msgstr "Jít na poslední políèko"
 msgid "<Image>/Video/VCR Navigator..."
 msgstr "<Image>/Video/Video navigátor..."
 
+#: plug-ins/gap/gap_navigator_dialog.c:511
+msgid "Cant open two or more Video Navigator Windows."
+msgstr ""
+
 #: plug-ins/gap/gap_navigator_dialog.c:2689
 msgid "Videoframes:"
 msgstr "Video políèka:"
@@ -9008,20 +9052,24 @@ msgid "Video Navigator"
 msgstr "Video navigátor"
 
 #: plug-ins/gap/gap_range_ops.c:118
-msgid "New Width :"
+#, fuzzy
+msgid "New Width:"
 msgstr "Nová ¹íøka:"
 
 #: plug-ins/gap/gap_range_ops.c:127
-msgid "New Height :"
+#, fuzzy
+msgid "New Height:"
 msgstr "Nová vý¹ka:"
 
 #: plug-ins/gap/gap_range_ops.c:136
-msgid "Offest X :"
-msgstr "Posun X:"
+#, fuzzy
+msgid "Offset X:"
+msgstr "Posun:"
 
 #: plug-ins/gap/gap_range_ops.c:145
-msgid "Offest Y :"
-msgstr "Posun Y:"
+#, fuzzy
+msgid "Offset Y:"
+msgstr "Posun:"
 
 #: plug-ins/gap/gap_range_ops.c:156
 msgid "Crop AnimFrames (all)"
@@ -9049,10 +9097,6 @@ msgstr "Velikost animaèních políèek (v¹ech)"
 #, c-format
 msgid "Scale (original %dx%d)"
 msgstr "Velikost (pùvodnì %d×%d)"
-
-#: plug-ins/gap/gap_range_ops.c:265
-msgid "Layerstack :"
-msgstr "Zásobník vrstev:"
 
 #: plug-ins/gap/gap_range_ops.c:306
 msgid "Generate Optimal Palette"
@@ -9139,26 +9183,31 @@ msgid "Convert Frames to Indexed"
 msgstr "Pøevést políèka do indexovaných"
 
 #: plug-ins/gap/gap_range_ops.c:364
-msgid "Palette and Dither Settings :"
+#, fuzzy
+msgid "Palette and Dither Settings"
 msgstr "Nastavení palety a rozprylu:"
 
-#: plug-ins/gap/gap_range_ops.c:428
-msgid "KEEP_TYPE"
-msgstr "ZACHOVAT_TYP"
+#: plug-ins/gap/gap_range_ops.c:429
+#, fuzzy
+msgid "Keep Type"
+msgstr "Druh mapy"
 
-#: plug-ins/gap/gap_range_ops.c:428
-msgid "Conv to RGB"
+#: plug-ins/gap/gap_range_ops.c:430
+#, fuzzy
+msgid "Convert to RGB"
 msgstr "Pøevést do RGB"
 
-#: plug-ins/gap/gap_range_ops.c:428
-msgid "Conv to GRAY"
-msgstr "Pøevést do ©EDÍ"
+#: plug-ins/gap/gap_range_ops.c:431
+#, fuzzy
+msgid "Convert to Gray"
+msgstr "Pøevést do RGB"
 
-#: plug-ins/gap/gap_range_ops.c:428
-msgid "Conv to INDEXED"
-msgstr "Pøevést do INDEXOVANÝCH"
+#: plug-ins/gap/gap_range_ops.c:432
+#, fuzzy
+msgid "Convert to Indexed"
+msgstr "Pøevést políèka do indexovaných"
 
-#: plug-ins/gap/gap_range_ops.c:451
+#: plug-ins/gap/gap_range_ops.c:456
 msgid ""
 "\n"
 "Select destination fileformat by extension\n"
@@ -9168,11 +9217,11 @@ msgstr ""
 "Volba cílového formátu souborù podle pøípony\n"
 "volitelnì konvertuje typ obrázku\n"
 
-#: plug-ins/gap/gap_range_ops.c:454
+#: plug-ins/gap/gap_range_ops.c:459
 msgid "Basename:"
 msgstr "Základ jména:"
 
-#: plug-ins/gap/gap_range_ops.c:455
+#: plug-ins/gap/gap_range_ops.c:460
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
@@ -9180,11 +9229,11 @@ msgstr ""
 "základ jména výsledných políèek        \n"
 "(0001.ext je pøidáno)"
 
-#: plug-ins/gap/gap_range_ops.c:460 plug-ins/gap/gap_split.c:232
+#: plug-ins/gap/gap_range_ops.c:465 plug-ins/gap/gap_split.c:234
 msgid "Extension:"
 msgstr "Roz¹íøení:"
 
-#: plug-ins/gap/gap_range_ops.c:461 plug-ins/gap/gap_split.c:233
+#: plug-ins/gap/gap_range_ops.c:466
 msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
@@ -9192,11 +9241,12 @@ msgstr ""
 "roz¹íøení výsledných políèek       \n"
 "(také pou¾ito k definici formátu souboru)"
 
-#: plug-ins/gap/gap_range_ops.c:467
-msgid "Imagetype :"
+#: plug-ins/gap/gap_range_ops.c:472
+#, fuzzy
+msgid "Imagetype:"
 msgstr "Typ obrázku:"
 
-#: plug-ins/gap/gap_range_ops.c:468
+#: plug-ins/gap/gap_range_ops.c:473
 msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
@@ -9204,11 +9254,12 @@ msgstr ""
 "Konvertovat nebo zachovat typ obrázku           \n"
 "(vìt¹ina formátù souboru neumí v¹echny typy)"
 
-#: plug-ins/gap/gap_range_ops.c:474
-msgid "Flatten  :"
+#: plug-ins/gap/gap_range_ops.c:479 plug-ins/gap/gap_split.c:245
+#, fuzzy
+msgid "Flatten:"
 msgstr "Slouèit:"
 
-#: plug-ins/gap/gap_range_ops.c:475
+#: plug-ins/gap/gap_range_ops.c:480
 msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
@@ -9216,31 +9267,32 @@ msgstr ""
 "Slouèit v¹echna výsledná políèka               \n"
 "(vìt¹ina formátù souboru vy¾aduje slouèená políèka)"
 
-#: plug-ins/gap/gap_range_ops.c:480
+#: plug-ins/gap/gap_range_ops.c:485
 msgid "Convert Frames to other Formats"
 msgstr "Pøevést políèka do jiného formátu"
 
-#: plug-ins/gap/gap_range_ops.c:481
-msgid "Convert Settings :"
+#: plug-ins/gap/gap_range_ops.c:486
+#, fuzzy
+msgid "Convert Settings"
 msgstr "Nastavení pøevodu:"
 
-#: plug-ins/gap/gap_range_ops.c:558
+#: plug-ins/gap/gap_range_ops.c:563
 msgid "Expand as necessary"
 msgstr "Zvìt¹it dle potøeby"
 
-#: plug-ins/gap/gap_range_ops.c:559
+#: plug-ins/gap/gap_range_ops.c:564
 msgid "Clipped to image"
 msgstr "Oøíznout dle obrázku"
 
-#: plug-ins/gap/gap_range_ops.c:560
+#: plug-ins/gap/gap_range_ops.c:565
 msgid "Clipped to bottom layer"
 msgstr "Oøíznout dle spodní vrstvy"
 
-#: plug-ins/gap/gap_range_ops.c:561
+#: plug-ins/gap/gap_range_ops.c:566
 msgid "Flattened image"
 msgstr "Slouèený obraz"
 
-#: plug-ins/gap/gap_range_ops.c:562
+#: plug-ins/gap/gap_range_ops.c:567
 msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
@@ -9248,11 +9300,11 @@ msgstr ""
 "Velikost výsledné vrstvy je vytvoøena z obrysu obdélníku \n"
 "ze v¹ech viditelných vrstev (mù¾e se li¹it políèko od políèka)"
 
-#: plug-ins/gap/gap_range_ops.c:563
+#: plug-ins/gap/gap_range_ops.c:568
 msgid "Resulting Layer Size is the frame size"
 msgstr "Výsledná vrstva je ve velikosti políèka"
 
-#: plug-ins/gap/gap_range_ops.c:564
+#: plug-ins/gap/gap_range_ops.c:569
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
@@ -9260,7 +9312,7 @@ msgstr ""
 "Velikost výsledné vrstvy je velikost spodní vrstvy\n"
 "(mù¾e se li¹it políèko od políèka)"
 
-#: plug-ins/gap/gap_range_ops.c:565
+#: plug-ins/gap/gap_range_ops.c:570
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
@@ -9268,11 +9320,51 @@ msgstr ""
 "Výsledná velikost vrstvy je velikost políèka     \n"
 "prùhledné èásti jsou vyplnìny barvou pozadí"
 
-#: plug-ins/gap/gap_range_ops.c:610
+#: plug-ins/gap/gap_range_ops.c:580
+msgid "select all Layers where Layername is equal to Pattern"
+msgstr "zvolí v¹echny vrstvy, pro které je vzorek shodný se jménem vrstvy"
+
+#: plug-ins/gap/gap_range_ops.c:581
+msgid "select all Layers where Layername starts with Pattern"
+msgstr "zvolí v¹echny vrstvy, pro které je vzorek poèátkem jména vrstvy"
+
+#: plug-ins/gap/gap_range_ops.c:582
+msgid "select all Layers where Layername ends up with Pattern"
+msgstr "zvolí v¹echny vrstvy, pro které je vzorek koncem jména vrstvy"
+
+#: plug-ins/gap/gap_range_ops.c:583
+msgid "select all Layers where Layername contains Pattern"
+msgstr "zvolí v¹echny vrstvy, jejich¾ jméno obsahuje vzorek"
+
+#: plug-ins/gap/gap_range_ops.c:584
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == Top-layer"
+msgstr ""
+"volí pozice v zásobníku vrstev.\n"
+"0, 4-5, 8\n"
+"kde 0 == vrchní vrstva"
+
+#: plug-ins/gap/gap_range_ops.c:585
+msgid ""
+"select Layerstack positions.\n"
+"0, 4-5, 8\n"
+"where 0 == BG-layer"
+msgstr ""
+"volí pozice v zásobníku vrstev.\n"
+"0, 4-5, 8\n"
+"kde 0 == spodní vrstva"
+
+#: plug-ins/gap/gap_range_ops.c:586
+msgid "select all visible Layers"
+msgstr "vybrat v¹echny viditelné vrstvy"
+
+#: plug-ins/gap/gap_range_ops.c:615
 msgid "Layer Basename:"
 msgstr "Základ jména vrstvy:"
 
-#: plug-ins/gap/gap_range_ops.c:611
+#: plug-ins/gap/gap_range_ops.c:616
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
@@ -9280,15 +9372,16 @@ msgstr ""
 "Základ jména v¹ech vrstev    \n"
 "[####] je zamìnìno za èíslo políèka"
 
-#: plug-ins/gap/gap_range_ops.c:629
-msgid "Layer Mergemode :"
+#: plug-ins/gap/gap_range_ops.c:634
+#, fuzzy
+msgid "Layer Mergemode:"
 msgstr "Re¾im slouèení vrstvy:"
 
-#: plug-ins/gap/gap_range_ops.c:636
+#: plug-ins/gap/gap_range_ops.c:641
 msgid "Exclude BG-Layer"
 msgstr "Vylouèit vrstvu pozadí"
 
-#: plug-ins/gap/gap_range_ops.c:637
+#: plug-ins/gap/gap_range_ops.c:642
 msgid ""
 "Exclude the BG-Layers    \n"
 "in all handled frames\n"
@@ -9298,88 +9391,93 @@ msgstr ""
 "ve v¹ech zpracovaných políèkách\n"
 "bez ohledu na výbìr"
 
-#: plug-ins/gap/gap_range_ops.c:667
+#: plug-ins/gap/gap_range_ops.c:672
 msgid "Use all unselected Layers"
 msgstr "Pou¾ít v¹ech nevybraných vrstev"
 
-#: plug-ins/gap/gap_range_ops.c:741
-msgid "Creating Layer-Animated Image .."
+#: plug-ins/gap/gap_range_ops.c:746
+#, fuzzy
+msgid "Creating Layer-Animated Image..."
 msgstr "Vytváøí se vrstvovì animovaný obrázek..."
 
-#: plug-ins/gap/gap_range_ops.c:963
+#: plug-ins/gap/gap_range_ops.c:968
 msgid "Frames to Image"
 msgstr "Políèka do obrázku"
 
-#: plug-ins/gap/gap_range_ops.c:964
+#: plug-ins/gap/gap_range_ops.c:969
 msgid "Create Multilayer-Image from Frames"
 msgstr "Vytvoøit z políèek vícevrstevný obrázek"
 
-#: plug-ins/gap/gap_range_ops.c:1104
-msgid "Flattening Frames .."
+#: plug-ins/gap/gap_range_ops.c:1109
+#, fuzzy
+msgid "Flattening Frames..."
 msgstr "Sluèují se políèka..."
 
-#: plug-ins/gap/gap_range_ops.c:1105
-msgid "Converting Frames .."
+#: plug-ins/gap/gap_range_ops.c:1110
+#, fuzzy
+msgid "Converting Frames..."
 msgstr "Pøevádìjí se políèka..."
 
-#: plug-ins/gap/gap_range_ops.c:1216
+#: plug-ins/gap/gap_range_ops.c:1221
+#, fuzzy
 msgid ""
-"Convert Frames: SAVE operation FAILED\n"
-"- desired save plugin can't handle type\n"
-"- or desired save plugin not available\n"
+"Convert Frames: SAVE operation FAILED.\n"
+"Desired save plugin can't handle type\n"
+"or desired save plugin not available."
 msgstr ""
 "Pøevod políèek: operace ZÁPISU SELHALA\n"
 "- po¾adovaný zápisový modul neumí zpracovat typ\n"
 "- nebo po¾adovaný zápisový modul není k dispozici\n"
 
-#: plug-ins/gap/gap_range_ops.c:1322
-msgid "Cropping all Animation Frames .."
+#: plug-ins/gap/gap_range_ops.c:1329
+#, fuzzy
+msgid "Cropping all Animation Frames..."
 msgstr "Oøezávají se v¹echna animaèní políèka..."
 
-#: plug-ins/gap/gap_range_ops.c:1325
-msgid "Resizing all Animation Frames .."
+#: plug-ins/gap/gap_range_ops.c:1332
+#, fuzzy
+msgid "Resizing all Animation Frames..."
 msgstr "Mìní se velikost plátna v¹ech animaèních políèek..."
 
-#: plug-ins/gap/gap_range_ops.c:1328
-msgid "Scaling all Animation Frames .."
+#: plug-ins/gap/gap_range_ops.c:1335
+#, fuzzy
+msgid "Scaling all Animation Frames..."
 msgstr "Mìní se velikost v¹ech animaèních políèek..."
 
-#: plug-ins/gap/gap_range_ops.c:1414
+#: plug-ins/gap/gap_range_ops.c:1421
 msgid "Flatten Frames"
 msgstr "Slouèit políèka"
 
-#: plug-ins/gap/gap_range_ops.c:1415
-msgid "Select Frame Range"
-msgstr "Výbìr rozsahu políèek"
-
-#: plug-ins/gap/gap_range_ops.c:1470
-#, c-format
-msgid "Removing Layer (pos:%ld) from Frames .."
+#: plug-ins/gap/gap_range_ops.c:1477
+#, fuzzy, c-format
+msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr "Odstraòuje se vrstva (pol:%ld) z políèek..."
 
-#: plug-ins/gap/gap_range_ops.c:1594
+#: plug-ins/gap/gap_range_ops.c:1601
 msgid "Delete Layers in Frames"
 msgstr "Smazat vrstvy v políèkách"
 
-#: plug-ins/gap/gap_range_ops.c:1595
+#: plug-ins/gap/gap_range_ops.c:1602
 msgid "Select Frame Range & Position"
 msgstr "Vybrat rozsah políèek a polohu"
 
 #: plug-ins/gap/gap_split.c:100
-msgid "Splitting into Frames .."
+#, fuzzy
+msgid "Splitting into Frames..."
 msgstr "Rozdìluje se do políèek..."
 
 #: plug-ins/gap/gap_split.c:175
+#, fuzzy
 msgid ""
-"Split Frames: SAVE operation FAILED\n"
-"- desired save plugin can't handle type\n"
-"- or desired save plugin not available\n"
+"Split Frames: SAVE operation FAILED.\n"
+"desired save plugin can't handle type\n"
+"or desired save plugin not available."
 msgstr ""
 "Rozdìlení do políèek: operace ZÁPISU SELHALA\n"
 "- po¾adovaný zápisový modul neumí zpracovat typ\n"
 "- nebo po¾adovaný zápisový modul není k dispozici\n"
 
-#: plug-ins/gap/gap_split.c:223
+#: plug-ins/gap/gap_split.c:225
 #, c-format
 msgid ""
 "%s\n"
@@ -9390,48 +9488,54 @@ msgstr ""
 "%s\n"
 "(%s_0001.%s)\n"
 
-#: plug-ins/gap/gap_split.c:224
+#: plug-ins/gap/gap_split.c:226
 msgid "Make a frame (diskfile) from each Layer"
 msgstr "Vytvoøit políèko (diskový soubor) z ka¾dé vrstvy"
 
-#: plug-ins/gap/gap_split.c:225
+#: plug-ins/gap/gap_split.c:227
 msgid "frames are named: base_nr.extension"
 msgstr "políèka jsou pojmenovaná: základ_è.pøípona"
 
-#: plug-ins/gap/gap_split.c:238
-msgid "Inverse Order :"
+#: plug-ins/gap/gap_split.c:235
+#, fuzzy
+msgid "extension of resulting frames (is also used to define Fileformat)"
+msgstr ""
+"roz¹íøení výsledných políèek       \n"
+"(také pou¾ito k definici formátu souboru)"
+
+#: plug-ins/gap/gap_split.c:240
+#, fuzzy
+msgid "Inverse Order:"
 msgstr "Obrácené poøadí:"
 
-#: plug-ins/gap/gap_split.c:239
+#: plug-ins/gap/gap_split.c:241
 msgid "Start frame 0001 at Top Layer"
 msgstr "Poèáteèní políèko 0001 na svrchní vrstvì"
 
-#: plug-ins/gap/gap_split.c:243
-msgid "Flatten :"
-msgstr "Slouèit:"
-
-#: plug-ins/gap/gap_split.c:244
+#: plug-ins/gap/gap_split.c:246
+#, fuzzy
 msgid ""
-"Remove Alpha Channel in resulting Frames,    \n"
-"transparent parts are filled with BG color"
+"Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
+"BG color."
 msgstr ""
 "Odstraní ve výsledných políèkách alfa kanál,    \n"
 "prùhledné èásti jsou vyplnìny barvou pozadí"
 
-#: plug-ins/gap/gap_split.c:247
+#: plug-ins/gap/gap_split.c:249
 msgid "Split Image into Frames"
 msgstr "Rozdìlit obrázek do políèek"
 
-#: plug-ins/gap/gap_split.c:248
-msgid "Split Settings :"
+#: plug-ins/gap/gap_split.c:250
+#, fuzzy
+msgid "Split Settings"
 msgstr "Nastavení rozdìlení:"
 
-#: plug-ins/gap/gap_split.c:295
+#: plug-ins/gap/gap_split.c:297
+#, fuzzy
 msgid ""
-"OPERATION CANCELLED\n"
-"This image is already an AnimFrame\n"
-"Try again on a Duplicate\n"
-"(image/duplicate)"
+"OPERATION CANCELLED.\n"
+"This image is already an AnimFrame.\n"
+"Try again on a Duplicate (Image/Duplicate)."
 msgstr ""
 "OPERACE ZRU©ENA\n"
 "Tento obrázek je ji¾ políèkem animace\n"
@@ -9668,7 +9772,7 @@ msgstr "Pøedchozí"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1928 plug-ins/gfig/gfig.c:5341
-#: plug-ins/gflare/gflare.c:3105 plug-ins/imagemap/imap_menu.c:277
+#: plug-ins/gflare/gflare.c:3106 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
 msgstr "Úpravy"
@@ -9816,10 +9920,9 @@ msgstr ""
 msgid "Original"
 msgstr "Pùvodní"
 
-#. Window radiobutton
 #: plug-ins/gfig/gfig.c:2787 plug-ins/gfig/gfig.c:3546
-#: plug-ins/gflare/gflare.c:3104 plug-ins/ifscompose/ifscompose.c:799
-#: plug-ins/webbrowser/webbrowser.c:345
+#: plug-ins/gflare/gflare.c:3105 plug-ins/ifscompose/ifscompose.c:799
+#: plug-ins/webbrowser/webbrowser.c:310
 msgid "New"
 msgstr "Nový"
 
@@ -10206,157 +10309,177 @@ msgstr "Záøe z pøechodu..."
 msgid "GFlare: cannot operate on indexed color images"
 msgstr "P-záøe: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/gflare/gflare.c:1009
+#: plug-ins/gflare/gflare.c:992
+#, fuzzy, c-format
+msgid ""
+"No gflare-path in gimprc:\n"
+"\n"
+"You need to add an entry like\n"
+"(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
+"to your %s/gimprc file."
+msgstr ""
+"V gimprc chybí fractalexplorer-path:\n"
+"Je nutné pøidat následující údaj\n"
+"(fractalexplorer-path "
+"\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
+"do souboru ~/.gimp-1.1/gimprc\n"
+
+#: plug-ins/gflare/gflare.c:1010
 msgid "gflare-path misconfigured - the following directories were not found"
 msgstr "gflare-path ¹patnì nastavena - následující adresáøe nebyly nalezeny"
 
-#: plug-ins/gflare/gflare.c:1361
+#: plug-ins/gflare/gflare.c:1362
 #, c-format
 msgid "not valid GFlare file: %s"
 msgstr "neplatný soubor P-záøe: %s"
 
-#: plug-ins/gflare/gflare.c:1421
+#: plug-ins/gflare/gflare.c:1422
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "neplatnì formátovaný soubor P-záøe: %s\n"
 
-#: plug-ins/gflare/gflare.c:1523
-#, c-format
+#: plug-ins/gflare/gflare.c:1529
+#, fuzzy, c-format
 msgid ""
-"GFlare `%s' is not saved.\tIf you add a new entry in gimprc, like:\n"
+"GFlare `%s' is not saved.\n"
+"If you add a new entry in gimprc, like:\n"
 "(gflare-path \"${gimp_dir}/gflare\")\n"
-"and make a directory ~/.gimp-1.1/gflare, then you can save your own "
-"GFlare's\n"
-"into that directory."
+"and make a directory %s/gflare,\n"
+"then you can save your own GFlare's into that directory."
 msgstr ""
 "P-záøe ,%s' není zapsaná.\tPøidejte novou polo¾ku do gimprc, napø.:\n"
 "(gflare-path \"${gimp_dir}/gflare\")\n"
 "a vytvoøte adresáø ~/.gimp-1.1/gflare, a zapi¹tì svou vlastní P-záøi\n"
 "do tohoto adresáøe."
 
-#: plug-ins/gflare/gflare.c:1551
+#: plug-ins/gflare/gflare.c:1552
 #, c-format
 msgid "could not open \"%s\""
 msgstr "nelze otevøít \"%s\""
 
-#: plug-ins/gflare/gflare.c:1741
+#: plug-ins/gflare/gflare.c:1742
 #, c-format
 msgid "error reading GFlare directory \"%s\""
 msgstr "chyba pøi ètení adresáøe P-záøí \"%s\""
 
-#: plug-ins/gflare/gflare.c:2467
+#: plug-ins/gflare/gflare.c:2468
 msgid "GFlare"
 msgstr "Záøe z pøechodu"
 
-#: plug-ins/gflare/gflare.c:2582
+#: plug-ins/gflare/gflare.c:2583
 msgid "`Default' is created."
 msgstr "Byl vytvoøen ,Implicitní'."
 
-#: plug-ins/gflare/gflare.c:2583
+#: plug-ins/gflare/gflare.c:2584
 msgid "Default"
 msgstr "Implicitní"
 
-#: plug-ins/gflare/gflare.c:2929 plug-ins/gflare/gflare.c:3768
-#: plug-ins/gflare/gflare.c:3878 plug-ins/gflare/gflare.c:4020
+#: plug-ins/gflare/gflare.c:2930 plug-ins/gflare/gflare.c:3769
+#: plug-ins/gflare/gflare.c:3879 plug-ins/gflare/gflare.c:4021
 msgid "Rotation:"
 msgstr "Rotace:"
 
-#: plug-ins/gflare/gflare.c:2941 plug-ins/gflare/gflare.c:3780
-#: plug-ins/gflare/gflare.c:3891 plug-ins/gflare/gflare.c:4033
+#: plug-ins/gflare/gflare.c:2942 plug-ins/gflare/gflare.c:3781
+#: plug-ins/gflare/gflare.c:3892 plug-ins/gflare/gflare.c:4034
 msgid "Hue Rotation:"
 msgstr "Rotace odstínu:"
 
-#: plug-ins/gflare/gflare.c:2953
+#: plug-ins/gflare/gflare.c:2954
 msgid "Vector Angle:"
 msgstr "Úhel vektoru:"
 
-#: plug-ins/gflare/gflare.c:2965
+#: plug-ins/gflare/gflare.c:2966
 msgid "Vector Length:"
 msgstr "Délka vektoru:"
 
-#: plug-ins/gflare/gflare.c:2991
+#: plug-ins/gflare/gflare.c:2992
 msgid "Adaptive Supersampling"
 msgstr "Adaptivní pøevzorkování"
 
-#: plug-ins/gflare/gflare.c:3017
+#: plug-ins/gflare/gflare.c:3018
 msgid "Max Depth:"
 msgstr "Nejvìt¹í hloubka:"
 
-#: plug-ins/gflare/gflare.c:3034
+#: plug-ins/gflare/gflare.c:3035
 msgid "Auto Update Preview"
 msgstr "Automatická aktualizace náhledu"
 
-#: plug-ins/gflare/gflare.c:3158
+#: plug-ins/gflare/gflare.c:3159
 msgid "Selector"
 msgstr "Selektor"
 
-#: plug-ins/gflare/gflare.c:3247
+#: plug-ins/gflare/gflare.c:3248
 msgid "New GFlare"
 msgstr "Nová P-záøe"
 
-#: plug-ins/gflare/gflare.c:3250
+#: plug-ins/gflare/gflare.c:3251
 msgid "Enter a Name for the New GFlare:"
 msgstr "Zadejte jméno pro novou P-záøi:"
 
-#: plug-ins/gflare/gflare.c:3251
+#: plug-ins/gflare/gflare.c:3252
 msgid "untitled"
 msgstr "bez názvu"
 
-#: plug-ins/gflare/gflare.c:3269 plug-ins/gflare/gflare.c:3342
+#: plug-ins/gflare/gflare.c:3270
+#, fuzzy, c-format
+msgid "The name '%s' is used already!"
+msgstr "Jméno ,%s' je ji¾ pou¾ito!"
+
+#: plug-ins/gflare/gflare.c:3319
+msgid "Copy GFlare"
+msgstr "Kopírovat P-záøi"
+
+#: plug-ins/gflare/gflare.c:3322
+msgid "Enter a Name for the Copied GFlare:"
+msgstr "Zadejte jméno pro zkopírovanou P-záøi:"
+
+#: plug-ins/gflare/gflare.c:3343
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Jméno ,%s' je ji¾ pou¾ito!"
 
-#: plug-ins/gflare/gflare.c:3318
-msgid "Copy GFlare"
-msgstr "Kopírovat P-záøi"
-
-#: plug-ins/gflare/gflare.c:3321
-msgid "Enter a Name for the Copied GFlare:"
-msgstr "Zadejte jméno pro zkopírovanou P-záøi:"
-
-#: plug-ins/gflare/gflare.c:3368
+#: plug-ins/gflare/gflare.c:3369
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Nelze smazat. Musí zde být alespoò jedna P-záøe."
 
-#: plug-ins/gflare/gflare.c:3378
+#: plug-ins/gflare/gflare.c:3379
 msgid "Delete GFlare"
 msgstr "Smazat P-záøi"
 
-#: plug-ins/gflare/gflare.c:3435
+#: plug-ins/gflare/gflare.c:3436
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s nebylo nalezeno v seznam_p_záøí"
 
-#: plug-ins/gflare/gflare.c:3475
+#: plug-ins/gflare/gflare.c:3476
 msgid "GFlare Editor"
 msgstr "Editor P-záøí"
 
-#: plug-ins/gflare/gflare.c:3480
+#: plug-ins/gflare/gflare.c:3481
 msgid "Rescan Gradients"
 msgstr "Zaktualizovat pøechody"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3597
+#: plug-ins/gflare/gflare.c:3598
 msgid "Glow Paint Options"
 msgstr "Volby kreslení ¾áru"
 
-#: plug-ins/gflare/gflare.c:3622 plug-ins/gflare/gflare.c:3652
-#: plug-ins/gflare/gflare.c:3682
+#: plug-ins/gflare/gflare.c:3623 plug-ins/gflare/gflare.c:3653
+#: plug-ins/gflare/gflare.c:3683
 msgid "Paint Mode:"
 msgstr "Re¾im kreslení:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3627
+#: plug-ins/gflare/gflare.c:3628
 msgid "Rays Paint Options"
 msgstr "Volby kreslení paprskù"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3657
+#: plug-ins/gflare/gflare.c:3658
 msgid "Second Flares Paint Options"
 msgstr "Volby kreslení druhé záøe"
 
-#: plug-ins/gflare/gflare.c:3689 plug-ins/gimpressionist/general.c:134
+#: plug-ins/gflare/gflare.c:3690 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "General"
@@ -10365,84 +10488,84 @@ msgstr "V¹eobecné"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3715 plug-ins/gflare/gflare.c:3823
-#: plug-ins/gflare/gflare.c:3967
+#: plug-ins/gflare/gflare.c:3716 plug-ins/gflare/gflare.c:3824
+#: plug-ins/gflare/gflare.c:3968
 msgid "Gradients"
 msgstr "Pøechody"
 
-#: plug-ins/gflare/gflare.c:3727 plug-ins/gflare/gflare.c:3837
-#: plug-ins/gflare/gflare.c:3979
+#: plug-ins/gflare/gflare.c:3728 plug-ins/gflare/gflare.c:3838
+#: plug-ins/gflare/gflare.c:3980
 msgid "Radial Gradient:"
 msgstr "Paprskovitý pøechod:"
 
-#: plug-ins/gflare/gflare.c:3731 plug-ins/gflare/gflare.c:3841
+#: plug-ins/gflare/gflare.c:3732 plug-ins/gflare/gflare.c:3842
 msgid "Angular Gradient:"
 msgstr "Úhlový pøechod:"
 
-#: plug-ins/gflare/gflare.c:3735 plug-ins/gflare/gflare.c:3845
+#: plug-ins/gflare/gflare.c:3736 plug-ins/gflare/gflare.c:3846
 msgid "Angular Size Gradient:"
 msgstr "Pøechod úhlové velikosti:"
 
-#: plug-ins/gflare/gflare.c:3756 plug-ins/gflare/gflare.c:3866
-#: plug-ins/gflare/gflare.c:4008
+#: plug-ins/gflare/gflare.c:3757 plug-ins/gflare/gflare.c:3867
+#: plug-ins/gflare/gflare.c:4009
 msgid "Size (%):"
 msgstr "Velikost (%):"
 
-#: plug-ins/gflare/gflare.c:3797
+#: plug-ins/gflare/gflare.c:3798
 msgid "Glow"
 msgstr "®ár"
 
-#: plug-ins/gflare/gflare.c:3903
+#: plug-ins/gflare/gflare.c:3904
 msgid "# of Spikes:"
 msgstr "Poèet hrotù:"
 
-#: plug-ins/gflare/gflare.c:3915
+#: plug-ins/gflare/gflare.c:3916
 msgid "Spike Thickness:"
 msgstr "Tlou¹»ka hrotù:"
 
-#: plug-ins/gflare/gflare.c:3932
+#: plug-ins/gflare/gflare.c:3933
 msgid "Rays"
 msgstr "Paprsky"
 
-#: plug-ins/gflare/gflare.c:3983
+#: plug-ins/gflare/gflare.c:3984
 msgid "Size Factor Gradient:"
 msgstr "Pøechod faktoru velikosti:"
 
-#: plug-ins/gflare/gflare.c:3987
+#: plug-ins/gflare/gflare.c:3988
 msgid "Probability Gradient:"
 msgstr "Pøechod pravdìpodobnosti:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:4050
+#: plug-ins/gflare/gflare.c:4051
 msgid "Shape of Second Flares"
 msgstr "Tvar druhé záøe"
 
-#: plug-ins/gflare/gflare.c:4059 plug-ins/imagemap/imap_circle.c:60
+#: plug-ins/gflare/gflare.c:4060 plug-ins/imagemap/imap_circle.c:60
 #: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
 msgid "Circle"
 msgstr "Kruh"
 
-#: plug-ins/gflare/gflare.c:4075 plug-ins/imagemap/imap_menu.c:389
+#: plug-ins/gflare/gflare.c:4076 plug-ins/imagemap/imap_menu.c:389
 #: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
 msgstr "Polygon"
 
-#: plug-ins/gflare/gflare.c:4134
+#: plug-ins/gflare/gflare.c:4135
 msgid "Second Flares"
 msgstr "Druhá záøe"
 
-#: plug-ins/gflare/gflare.c:4741
+#: plug-ins/gflare/gflare.c:4742
 msgid "none"
 msgstr "nic"
 
-#: plug-ins/gflare/gflare.c:4754
+#: plug-ins/gflare/gflare.c:4755
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" nebylo nalezeno: namísto nìj pou¾ito \"%s\""
 
-#: plug-ins/gflare/gflare.c:4824
+#: plug-ins/gflare/gflare.c:4825
 msgid "More..."
 msgstr "Více..."
 
@@ -12411,10 +12534,19 @@ msgstr "Zmìnit smìr ¹ipek"
 msgid "Select all"
 msgstr "Vybrat v¹e"
 
+#. spinbutton 1
+#: plug-ins/rcm/rcm_dialog.c:285 plug-ins/rcm/rcm_dialog.c:356
+msgid "From"
+msgstr "Z"
+
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:307
 msgid "to"
 msgstr "do"
+
+#: plug-ins/rcm/rcm_dialog.c:357
+msgid "To"
+msgstr "Do"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
@@ -12662,25 +12794,23 @@ msgstr "<Toolbox>/Soubor/Získat/TWAIN..."
 msgid "Transferring TWAIN data"
 msgstr "Pøená¹ejí se TWAIN data"
 
-#: plug-ins/webbrowser/webbrowser.c:124
+#: plug-ins/webbrowser/webbrowser.c:130
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
 msgstr "<Toolbox>/Roz¹./Webový prohlí¾eè/Otevøít URL..."
 
-#: plug-ins/webbrowser/webbrowser.c:260
+#: plug-ins/webbrowser/webbrowser.c:265
 msgid "Open URL"
 msgstr "Otevøít URL"
 
-#. URL:  Label
-#: plug-ins/webbrowser/webbrowser.c:313
+#: plug-ins/webbrowser/webbrowser.c:297
 msgid "URL:"
 msgstr "URL:"
 
-#. Window label
-#: plug-ins/webbrowser/webbrowser.c:336
+#: plug-ins/webbrowser/webbrowser.c:307
 msgid "Window:"
 msgstr "Okno:"
 
-#: plug-ins/webbrowser/webbrowser.c:347
+#: plug-ins/webbrowser/webbrowser.c:320
 msgid "Current"
 msgstr "Aktuální"
 
@@ -12776,3 +12906,70 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor %s XJT vlastností je prázdný"
+
+#~ msgid "CLOSE"
+#~ msgstr "ZAVØÍT"
+
+#~ msgid "OVERWRITE frame"
+#~ msgstr "PØEPSAT políèko"
+
+#~ msgid "OVERWRITE all"
+#~ msgstr "PØEPSAT v¹e"
+
+#~ msgid "CANCEL"
+#~ msgstr "ZRU©IT"
+
+#~ msgid "Framenames"
+#~ msgstr "Jména políèek"
+
+#~ msgid "XCF"
+#~ msgstr "XCF"
+
+#~ msgid "PPM"
+#~ msgstr "PPM"
+
+#~ msgid "JPEG"
+#~ msgstr "JPEG"
+
+#~ msgid "From :"
+#~ msgstr "Z:"
+
+#~ msgid "To :"
+#~ msgstr "Do:"
+
+#~ msgid "Select Frame range"
+#~ msgstr "Výbìr rozsahu políèek"
+
+#~ msgid "SAVE As Is"
+#~ msgstr "ZAPSAT stávající"
+
+#~ msgid "UpdPreview"
+#~ msgstr "Zakt. Náhled"
+
+#~ msgid ""
+#~ "No Source Image was selected\n"
+#~ "(Please open a 2nd Image of the same type before opening Move Path)\n"
+#~ msgstr ""
+#~ "Nebyl zvolen ¾ádný zdrojový obrázek\n"
+#~ "(Otevøete 2. obrázek stejného typu pøed otevøením Cesty pøesunu)\n"
+
+#~ msgid "Offest X :"
+#~ msgstr "Posun X:"
+
+#~ msgid "Offest Y :"
+#~ msgstr "Posun Y:"
+
+#~ msgid "Layerstack :"
+#~ msgstr "Zásobník vrstev:"
+
+#~ msgid "KEEP_TYPE"
+#~ msgstr "ZACHOVAT_TYP"
+
+#~ msgid "Conv to GRAY"
+#~ msgstr "Pøevést do ©EDÍ"
+
+#~ msgid "Conv to INDEXED"
+#~ msgstr "Pøevést do INDEXOVANÝCH"
+
+#~ msgid "Flatten  :"
+#~ msgstr "Slouèit:"
