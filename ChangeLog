@@ -1,5 +1,12 @@
 2004-02-23  Simon Budig  <simon@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: corrected the
+	value ranges and default values for GDK_AXIS_XTILT and
+	GDK_AXIS_YTILT. Now the ink-tool behaves sane with a mouse
+	again  :)
+
+2004-02-23  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpinktool-blob.c: don't access the array before
 	checking if the index is within the valid bounds...
 

@@ -1548,14 +1548,14 @@ gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
         coords->pressure = 1.0;
 
       if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
-        coords->xtilt = CLAMP (coords->xtilt, 0.0, 1.0);
+        coords->xtilt = CLAMP (coords->xtilt, -1.0, 1.0);
       else
-        coords->xtilt = 0.5;
+        coords->xtilt = 0.0;
 
       if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
-        coords->ytilt = CLAMP (coords->ytilt, 0.0, 1.0);
+        coords->ytilt = CLAMP (coords->ytilt, -1.0, 1.0);
       else
-        coords->ytilt = 0.5;
+        coords->ytilt = 0.0;
 
       if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
         coords->wheel = CLAMP (coords->wheel, 0.0, 1.0);
@@ -1593,14 +1593,14 @@ gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
     coords->pressure = 1.0;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_XTILT, &coords->xtilt))
-    coords->xtilt = CLAMP (coords->xtilt, 0.0, 1.0);
+    coords->xtilt = CLAMP (coords->xtilt, -1.0, 1.0);
   else
-    coords->xtilt = 0.5;
+    coords->xtilt = 0.0;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_YTILT, &coords->ytilt))
-    coords->ytilt = CLAMP (coords->ytilt, 0.0, 1.0);
+    coords->ytilt = CLAMP (coords->ytilt, -1.0, 1.0);
   else
-    coords->ytilt = 0.5;
+    coords->ytilt = 0.0;
 
   if (gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL, &coords->wheel))
     coords->wheel = CLAMP (coords->wheel, 0.0, 1.0);
