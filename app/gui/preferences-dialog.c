@@ -391,9 +391,10 @@ prefs_restart_notification (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
-			 _("Save"), prefs_restart_notification_save_callback,
+			 GTK_STOCK_SAVE,
+			 prefs_restart_notification_save_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Close"), gtk_widget_destroy,
+			 GTK_STOCK_CLOSE, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -1526,12 +1527,12 @@ preferences_dialog_create (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), prefs_ok_callback,
+		     GTK_STOCK_OK, prefs_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     GTK_STOCK_SAVE, prefs_save_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Save"), prefs_save_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), prefs_cancel_callback,
-		     NULL, NULL, NULL, TRUE, TRUE,
+		     GTK_STOCK_CANCEL, prefs_cancel_callback,
+		     NULL, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 

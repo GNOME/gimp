@@ -222,10 +222,8 @@ void
 palette_editor_set_palette (PaletteEditor *palette_editor,
 			    GimpPalette   *palette)
 {
-  if (! GTK_WIDGET_VISIBLE (palette_editor->shell))
-    gtk_widget_show (palette_editor->shell);
-  else
-    gdk_window_raise (palette_editor->shell->window);
+  g_return_if_fail (palette_editor != NULL);
+  g_return_if_fail (GIMP_IS_PALETTE (palette));
 
   gimp_context_set_palette (palette_editor->context, palette);
 }

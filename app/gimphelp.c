@@ -197,7 +197,7 @@ gimp_help_internal (const gchar *help_path,
 				      "It probably was not compiled because\n"
 				      "you don't have GtkXmHTML installed."),
 				    _("Use Netscape instead"),
-				    _("Cancel"), 
+				    GTK_STOCK_CANCEL,
 				    NULL, NULL,
 				    gimp_help_internal_not_found_callback,
 				    NULL);

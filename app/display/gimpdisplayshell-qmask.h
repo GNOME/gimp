@@ -20,14 +20,14 @@
 #define __QMASK_H__
 
 
-void   qmask_click_handler  (GtkWidget      *widget,
-			     GdkEventButton *event,
-			     gpointer        data);
-void   qmask_activate       (GtkWidget      *widget,
-			     GDisplay       *gdisp);
-void   qmask_deactivate     (GtkWidget      *widget,
-			     GDisplay       *gdisp);
-void   qmask_buttons_update (GDisplay       *gdisp);
+gboolean   qmask_click_handler  (GtkWidget      *widget,
+				 GdkEventButton *event,
+				 gpointer        data);
+void       qmask_activate       (GtkWidget      *widget,
+				 GDisplay       *gdisp);
+void       qmask_deactivate     (GtkWidget      *widget,
+				 GDisplay       *gdisp);
+void       qmask_buttons_update (GDisplay       *gdisp);
 
 
 #endif  /*  __QMASK_H__ */

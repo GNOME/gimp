@@ -426,7 +426,7 @@ file_overwrite (gchar *filename,
 				      "save/file_exists.html",
 				      FALSE,
 				      overwrite_text,
-				      _("Yes"), _("No"),
+				      GTK_STOCK_YES, GTK_STOCK_NO,
 				      NULL, NULL,
 				      file_overwrite_callback,
 				      overwrite_data);

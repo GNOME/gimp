@@ -123,12 +123,12 @@ gimp_message_box (gchar       *message,
   
   msg_box = g_new0 (MessageBox, 1);
 
-  mbox = gimp_dialog_new (_("GIMP Message"), "gimp_message",
+  mbox = gimp_dialog_new (_("GIMP Message"), "gimp-message",
 			  NULL, NULL,
 			  GTK_WIN_POS_MOUSE,
 			  FALSE, FALSE, FALSE,
 
-			  _("OK"), gimp_message_box_close_callback,
+			  GTK_STOCK_OK, gimp_message_box_close_callback,
 			  msg_box, NULL, NULL, TRUE, TRUE,
 
 			  NULL);

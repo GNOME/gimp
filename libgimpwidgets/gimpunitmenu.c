@@ -513,9 +513,9 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), gimp_unit_menu_selection_ok_callback,
+		     GTK_STOCK_OK, gimp_unit_menu_selection_ok_callback,
 		     gum, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);

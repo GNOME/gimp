@@ -792,17 +792,9 @@ gradient_editor_set_gradient (GradientEditor *gradient_editor,
 			      GimpGradient   *gradient)
 {
   g_return_if_fail (gradient_editor != NULL);
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  if (gimp_container_have (gradient_editor->context->gimp->gradient_factory->container,
-			   GIMP_OBJECT (gradient)))
-    {
-      gimp_context_set_gradient (gradient_editor->context, gradient);
-    }
-
-  if (! GTK_WIDGET_VISIBLE (gradient_editor->shell))
-    gtk_widget_show (gradient_editor->shell);
-  else
-    gdk_window_raise (gradient_editor->shell->window);
+  gimp_context_set_gradient (gradient_editor->context, gradient);
 }
 
 void

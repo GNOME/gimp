@@ -639,7 +639,7 @@ palette_import_dialog_new (void)
 
 		     _("Import"), palette_import_import_callback,
 		     import_dialog, NULL, NULL, FALSE, FALSE,
-		     _("Close"), palette_import_close_callback,
+		     GTK_STOCK_CLOSE, palette_import_close_callback,
 		     import_dialog, NULL, NULL, TRUE, TRUE,
 
 		     NULL);

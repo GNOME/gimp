@@ -110,9 +110,9 @@ resolution_calibrate_dialog (GtkWidget     *resolution_entry,
 			    GTK_WIN_POS_CENTER,
 			    FALSE, FALSE, FALSE,
 
-			    _("OK"), resolution_calibrate_ok,
+			    GTK_STOCK_OK, resolution_calibrate_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);

@@ -757,11 +757,8 @@ dialogs_edit_brush_func (GimpData *data)
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      if (! brush_editor_dialog)
-	{
-	  gimp_dialog_factory_dialog_raise (global_dialog_factory,
-					    "gimp:brush-editor");
-	}
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+					"gimp:brush-editor");
 
       brush_editor_set_brush (brush_editor_dialog, brush);
     }
@@ -778,11 +775,8 @@ dialogs_edit_gradient_func (GimpData *data)
 
   gradient = GIMP_GRADIENT (data);
 
-  if (! gradient_editor_dialog)
-    {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
-					"gimp:gradient-editor");
-    }
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+				    "gimp:gradient-editor");
 
   gradient_editor_set_gradient (gradient_editor_dialog, gradient);
 }
@@ -794,11 +788,8 @@ dialogs_edit_palette_func (GimpData *data)
 
   palette = GIMP_PALETTE (data);
 
-  if (! palette_editor_dialog)
-    {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
-					"gimp:palette-editor");
-    }
+  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+				    "gimp:palette-editor");
 
   palette_editor_set_palette (palette_editor_dialog, palette);
 }

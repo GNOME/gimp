@@ -305,7 +305,7 @@ gdisplay_close_warning_dialog (const gchar *image_name,
 			    "dialogs/really_close.html",
 			    FALSE,
 			    warning_buf,
-			    _("Close"), _("Cancel"),
+			    GTK_STOCK_CLOSE, GTK_STOCK_CANCEL,
 			    NULL, NULL,
 			    gdisplay_close_warning_callback,
 			    gdisp);

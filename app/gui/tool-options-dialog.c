@@ -104,7 +104,7 @@ tool_options_dialog_create (void)
 		     _("Reset"), tool_options_dialog_reset_callback,
 		     NULL, NULL, &options_reset_button, FALSE, FALSE,
 
-		     _("Close"), tool_options_dialog_close_callback,
+		     GTK_STOCK_CLOSE, tool_options_dialog_close_callback,
 		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);

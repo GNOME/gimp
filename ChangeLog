@@ -1,3 +1,47 @@
+2001-07-30  Michael Natterer  <mitch@gimp.org>
+
+	* gtkrc: set the width of the scrollbar slider to the same value
+	as our default font size so the sliders are nicely aligned with
+	their descriptive labels.
+
+	* libgimpwidgets/gimpdialog.[ch]
+	* libgimpwidgets/gimpquerybox.[ch]: use GLib-isms and create the
+	dialogs' action_area buttons with gtk_dialog_add_button() so we
+	can use the GTK_STOCK_FOO buttons and plug in our own icon factory
+	later.
+
+	* app/qmask.[ch]: fixed the qmask buttons by applying proper
+	GdkEvent callback conventions.
+
+	* libgimpwidgets/gimpcolorbutton.c: NULLify all pointers in
+	"destroy".
+
+	* app/gdisplay_ops.c
+	* app/gimphelp.c
+	* app/interface.c
+	* app/gui/brush-editor.c
+	* app/gui/color-notebook.c
+	* app/gui/convert-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/gui/tool-options-dialog.c
+	* app/widgets/gimpwidgets-utils.c
+	* libgimpwidgets/gimpunitmenu.c: g_signal_* and GObject stuff,
+	use lots of GTK_STOCK_OK and friends instead of _("OK") etc.,
+	misc minor cleanups.
+
 2001-07-30  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

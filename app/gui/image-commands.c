@@ -331,8 +331,8 @@ image_scale_callback (GtkWidget *widget,
 				_("The chosen image size will shrink\n"
 				  "some layers completely away.\n"
 				  "Is this what you want?"),
-				_("OK"), _("Cancel"),
-				GTK_OBJECT (image_scale->resize->resize_shell),
+				GTK_STOCK_OK, GTK_STOCK_CANCEL,
+				G_OBJECT (image_scale->resize->resize_shell),
 				"destroy",
 				image_scale_warn_callback,
 				image_scale);

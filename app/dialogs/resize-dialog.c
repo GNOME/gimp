@@ -202,13 +202,13 @@ resize_widget_new (ResizeType    type,
 		       GTK_WIN_POS_MOUSE,
 		       FALSE, FALSE, TRUE,
 
-		       _("OK"), ok_cb,
+		       GTK_STOCK_OK, ok_cb,
 		       user_data, NULL, NULL, TRUE, FALSE,
 
 		       _("Reset"), reset_callback,
 		       resize, NULL, NULL, FALSE, FALSE,
 
-		       _("Cancel"), cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
+		       GTK_STOCK_CANCEL, cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
 		       cancel_cb ? user_data : NULL,
 		       cancel_cb ? NULL : (gpointer) 1,
 		       NULL, FALSE, TRUE,

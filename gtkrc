@@ -14,9 +14,16 @@
 style "gimp-global-style"
 {
   GtkDialog::content_area_border = 0
+  GtkDialog::button_spacing      = 4
   GtkDialog::action_area_border  = 4
+
+  GtkRange::slider_width         = 11
+
 # GtkSpinButton::shadow_type     = none
 
+  # when changing the font size, also change GtkRange::slider_width above
+  # so the labels stay nicely aligned with the horizontzal sliders
+  #
   font_name = "sans 11"
 }
 

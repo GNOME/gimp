@@ -309,7 +309,7 @@ gui_really_quit_dialog (void)
 				   "dialogs/really_quit.html",
 				   TRUE,
 				   _("Some files unsaved.\n\nQuit the GIMP?"),
-				   _("Quit"), _("Cancel"),
+				   GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
 				   NULL, NULL,
 				   gui_really_quit_callback,
 				   NULL);

@@ -225,9 +225,7 @@ brush_editor_set_brush (BrushEditor *brush_editor,
   GimpBrushGenerated *brush = NULL;
 
   g_return_if_fail (brush_editor != NULL);
-
-  if (brush_editor->brush == (GimpBrushGenerated *) gbrush)
-    return;
+  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (gbrush));
 
   if (brush_editor->brush)
     {
@@ -235,14 +233,6 @@ brush_editor_set_brush (BrushEditor *brush_editor,
                                             brush_editor);
       g_object_unref (G_OBJECT (brush_editor->brush));
       brush_editor->brush = NULL;
-    }
-
-  if (!gbrush || !GIMP_IS_BRUSH_GENERATED (gbrush))
-    {
-      if (GTK_WIDGET_VISIBLE (brush_editor->shell))
-	gtk_widget_hide (brush_editor->shell);
-
-      return;
     }
 
   brush = GIMP_BRUSH_GENERATED (gbrush);
@@ -269,11 +259,6 @@ brush_editor_set_brush (BrushEditor *brush_editor,
   g_object_ref (G_OBJECT (brush_editor->brush));
 
   brush_editor_brush_dirty (GIMP_BRUSH (brush), brush_editor);
-
-  if (! GTK_WIDGET_VISIBLE (brush_editor->shell))
-    gtk_widget_show (brush_editor->shell);
-  else
-    gdk_window_raise (brush_editor->shell->window);
 }
 
 

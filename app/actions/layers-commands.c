@@ -587,9 +587,9 @@ layers_new_layer_query (GimpImage *gimage)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), new_layer_query_ok_callback,
+		     GTK_STOCK_OK, new_layer_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -770,9 +770,9 @@ layers_edit_layer_query (GimpLayer *layer)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), edit_layer_query_ok_callback,
+		     GTK_STOCK_OK, edit_layer_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -875,9 +875,9 @@ layers_add_mask_query (GimpLayer *layer)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), add_mask_query_ok_callback,
+		     GTK_STOCK_OK, add_mask_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -1169,9 +1169,9 @@ layers_layer_merge_query (GimpImage   *gimage,
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), layer_merge_query_ok_callback,
+		     GTK_STOCK_OK, layer_merge_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), gtk_widget_destroy,
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
 
 		     NULL);

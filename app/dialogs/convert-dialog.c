@@ -151,9 +151,9 @@ convert_to_indexed (GimpImage *gimage)
 		     GTK_WIN_POS_NONE,
 		     FALSE, FALSE, TRUE,
 
-		     _("OK"), indexed_ok_callback,
+		     GTK_STOCK_OK, indexed_ok_callback,
 		     dialog, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), indexed_cancel_callback,
+		     GTK_STOCK_CANCEL, indexed_cancel_callback,
 		     dialog, NULL, NULL, FALSE, TRUE,
 
 		     NULL);

@@ -119,12 +119,12 @@ qmask_buttons_update (GDisplay *gdisp)
   if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON (gdisp->qmaskon)->active)
     {
       /* Disable toggle from doing anything */
-      gtk_signal_handler_block_by_func (GTK_OBJECT (gdisp->qmaskoff), 
-					GTK_SIGNAL_FUNC (qmask_deactivate),
-					gdisp);
-      gtk_signal_handler_block_by_func (GTK_OBJECT (gdisp->qmaskon), 
-					GTK_SIGNAL_FUNC (qmask_activate),
-					gdisp);
+      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskoff), 
+				       G_CALLBACK (qmask_deactivate),
+				       gdisp);
+      g_signal_handlers_block_by_func (G_OBJECT (gdisp->qmaskon), 
+				       G_CALLBACK (qmask_activate),
+				       gdisp);
    
       /* Change the state of the buttons */
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskon), 
@@ -134,16 +134,16 @@ qmask_buttons_update (GDisplay *gdisp)
 				    ! gdisp->gimage->qmask_state);
    
       /* Enable toggle again */
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (gdisp->qmaskoff), 
-					  GTK_SIGNAL_FUNC (qmask_deactivate),
-					  gdisp);
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (gdisp->qmaskon), 
-					  GTK_SIGNAL_FUNC (qmask_activate),
-					  gdisp);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskoff), 
+					 G_CALLBACK (qmask_deactivate),
+					 gdisp);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gdisp->qmaskon), 
+					 G_CALLBACK (qmask_activate),
+					 gdisp);
     }
 }
 
-void
+gboolean
 qmask_click_handler (GtkWidget      *widget,
 		     GdkEventButton *event,
                      gpointer        data)
@@ -156,7 +156,11 @@ qmask_click_handler (GtkWidget      *widget,
       (event->button == 1))
     {
       edit_qmask_channel_query (gdisp); 
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
 void
@@ -261,9 +265,9 @@ qmask_activate (GtkWidget *widget,
       gdisplays_flush ();
 
       /* connect to the removed signal, so the buttons get updated */
-      gtk_signal_connect (GTK_OBJECT (gmask), "removed", 
-			  GTK_SIGNAL_FUNC (qmask_removed_callback),
-			  gdisp);
+      g_signal_connect (G_OBJECT (gmask), "removed", 
+			G_CALLBACK (qmask_removed_callback),
+			gdisp);
     }
 }
 
@@ -274,7 +278,6 @@ edit_qmask_channel_query (GDisplay * gdisp)
   GtkWidget        *hbox;
   GtkWidget        *vbox;
   GtkWidget        *table;
-  GtkWidget        *label;
   GtkWidget        *opacity_scale;
   GtkObject        *opacity_scale_data;
 
@@ -295,56 +298,56 @@ edit_qmask_channel_query (GDisplay * gdisp)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), edit_qmask_query_ok_callback,
+		     GTK_STOCK_OK, edit_qmask_query_ok_callback,
 		     options, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), edit_qmask_query_cancel_callback,
+		     GTK_STOCK_CANCEL, edit_qmask_query_cancel_callback,
 		     options, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
                      hbox);
+  gtk_widget_show (hbox);
+
   /*  The vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /*  The table  */
-  table = gtk_table_new (2, 3, FALSE);
+  table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The opacity scale  */
-  label = gtk_label_new (_("Mask Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   opacity_scale_data =
     gtk_adjustment_new (options->gimage->qmask_color.a * 100.0, 
 			0.0, 100.0, 1.0, 1.0, 0.0);
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
+  gtk_widget_set_usize (opacity_scale, 100, -1);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_signal_connect (GTK_OBJECT (opacity_scale_data), "value_changed",
-                      GTK_SIGNAL_FUNC (qmask_query_scale_update),
-                      options->color_panel);
-  gtk_widget_show (opacity_scale);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Mask Opacity:"), 1.0, 1.0,
+			     opacity_scale, 1, FALSE);
+
+  g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
+		    G_CALLBACK (qmask_query_scale_update),
+		    options->color_panel);
 
   /*  The color panel  */
-  gtk_signal_connect (GTK_OBJECT (options->color_panel), "color_changed",
-		      GTK_SIGNAL_FUNC (qmask_color_changed),
-		      opacity_scale_data);		      
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
                       TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
-  gtk_widget_show (table);
-  gtk_widget_show (vbox);
-  gtk_widget_show (hbox);
+  g_signal_connect (G_OBJECT (options->color_panel), "color_changed",
+		    G_CALLBACK (qmask_color_changed),
+		    opacity_scale_data);		      
+
   gtk_widget_show (options->query_box);
 }
 

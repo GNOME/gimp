@@ -91,14 +91,24 @@ gimp_color_button_destroy (GtkObject *object)
   GimpColorButton *gcb = GIMP_COLOR_BUTTON (object);
    
   g_return_if_fail (gcb != NULL);
-  
-  g_free (gcb->title);
+
+  if (gcb->title)
+    {
+      g_free (gcb->title);
+      gcb->title = NULL;
+    }
 
   if (gcb->dialog)
-    gtk_widget_destroy (gcb->dialog);
+    {
+      gtk_widget_destroy (gcb->dialog);
+      gcb->dialog = NULL;
+    }
 
   if (gcb->color_area)
-    gtk_widget_destroy (gcb->color_area);
+    {
+      gtk_widget_destroy (gcb->color_area);
+      gcb->color_area = NULL;
+    }
   
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

@@ -172,20 +172,21 @@ create_display_shell (GDisplay *gdisp,
 					GDK_BUTTON_PRESS_MASK        |
 					GDK_KEY_PRESS_MASK           |
 					GDK_KEY_RELEASE_MASK));
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (gdisplay_delete),
-		      gdisp);
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "destroy",
-		      GTK_SIGNAL_FUNC (gdisplay_destroy),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (gdisp->shell), "delete_event",
+		    G_CALLBACK (gdisplay_delete),
+		    gdisp);
+  g_signal_connect (G_OBJECT (gdisp->shell), "destroy",
+		    G_CALLBACK (gdisplay_destroy),
+		    gdisp);
 
   /*  active display callback  */
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "button_press_event",
-		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
-		      gdisp);
-  gtk_signal_connect (GTK_OBJECT (gdisp->shell), "key_press_event",
-		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
-		      gdisp);
+  g_signal_connect (G_OBJECT (gdisp->shell), "button_press_event",
+		    G_CALLBACK (gdisplay_shell_events),
+		    gdisp);
+  g_signal_connect (G_OBJECT (gdisp->shell), "key_press_event",
+		    G_CALLBACK (gdisplay_shell_events),
+		    gdisp);
 
   /*  dnd stuff  */
   gtk_drag_dest_set (gdisp->shell,
@@ -321,9 +322,10 @@ create_display_shell (GDisplay *gdisp,
   GTK_WIDGET_UNSET_FLAGS (gdisp->origin, GTK_CAN_FOCUS);
   gtk_widget_set_events (GTK_WIDGET (gdisp->origin),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
-		      GTK_SIGNAL_FUNC (gdisplay_origin_button_press),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (gdisp->origin), "button_press_event",
+		    G_CALLBACK (gdisplay_origin_button_press),
+		    gdisp);
 
   gimp_help_set_help_data (gdisp->origin, NULL, "#origin_button");
 
@@ -336,12 +338,13 @@ create_display_shell (GDisplay *gdisp,
   gdisp->hrule = gtk_hruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->hrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     GTK_SIGNAL_FUNC (GTK_WIDGET_GET_CLASS (gdisp->hrule)->motion_notify_event),
-			     GTK_OBJECT (gdisp->hrule));
-  gtk_signal_connect (GTK_OBJECT (gdisp->hrule), "button_press_event",
-		      GTK_SIGNAL_FUNC (gdisplay_hruler_button_press),
-		      gdisp);
+
+  g_signal_connect_swapped (G_OBJECT (gdisp->shell), "motion_notify_event",
+			    G_CALLBACK (GTK_WIDGET_GET_CLASS (gdisp->hrule)->motion_notify_event),
+			    gdisp->hrule);
+  g_signal_connect (G_OBJECT (gdisp->hrule), "button_press_event",
+		    G_CALLBACK (gdisplay_hruler_button_press),
+		    gdisp);
 
   gimp_help_set_help_data (gdisp->hrule, NULL, "#ruler");
 
@@ -349,12 +352,13 @@ create_display_shell (GDisplay *gdisp,
   gdisp->vrule = gtk_vruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     GTK_SIGNAL_FUNC (GTK_WIDGET_GET_CLASS (gdisp->vrule)->motion_notify_event),
-			     GTK_OBJECT (gdisp->vrule));
-  gtk_signal_connect (GTK_OBJECT (gdisp->vrule), "button_press_event",
-		      GTK_SIGNAL_FUNC (gdisplay_vruler_button_press),
-		      gdisp);
+
+  g_signal_connect_swapped (G_OBJECT (gdisp->shell), "motion_notify_event",
+			    G_CALLBACK (GTK_WIDGET_GET_CLASS (gdisp->vrule)->motion_notify_event),
+			    gdisp->vrule);
+  g_signal_connect (G_OBJECT (gdisp->vrule), "button_press_event",
+		    G_CALLBACK (gdisplay_vruler_button_press),
+		    gdisp);
 
   gimp_help_set_help_data (gdisp->vrule, NULL, "#ruler");
 
@@ -368,12 +372,12 @@ create_display_shell (GDisplay *gdisp,
   gtk_object_set_user_data (GTK_OBJECT (gdisp->canvas), (gpointer) gdisp);
 
   /*  set the active display before doing any other canvas event processing  */
-  gtk_signal_connect (GTK_OBJECT (gdisp->canvas), "event",
-		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
-		      gdisp);
-  gtk_signal_connect (GTK_OBJECT (gdisp->canvas), "event",
-		      GTK_SIGNAL_FUNC (gdisplay_canvas_events),
-		      gdisp);
+  g_signal_connect (G_OBJECT (gdisp->canvas), "event",
+		    G_CALLBACK (gdisplay_shell_events),
+		    gdisp);
+  g_signal_connect (G_OBJECT (gdisp->canvas), "event",
+		    G_CALLBACK (gdisplay_canvas_events),
+		    gdisp);
 
   /*  create the contents of the lower_hbox  *********************************/
 
@@ -383,12 +387,13 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskoff), 15, 15);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), FALSE);
   GTK_WIDGET_UNSET_FLAGS (gdisp->qmaskoff, GTK_CAN_FOCUS);
-  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "toggled",
-		      GTK_SIGNAL_FUNC (qmask_deactivate),
-		      gdisp);
-  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "button_press_event",
-		      GTK_SIGNAL_FUNC (qmask_click_handler),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (gdisp->qmaskoff), "toggled",
+		    G_CALLBACK (qmask_deactivate),
+		    gdisp);
+  g_signal_connect (G_OBJECT (gdisp->qmaskoff), "button_press_event",
+		    G_CALLBACK (qmask_click_handler),
+		    gdisp);
 
   gimp_help_set_help_data (gdisp->qmaskoff, NULL, "#qmask_off_button");
 
@@ -397,12 +402,13 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskon), FALSE);
   GTK_WIDGET_UNSET_FLAGS (gdisp->qmaskon, GTK_CAN_FOCUS);
-  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "toggled",
-		      GTK_SIGNAL_FUNC (qmask_activate),
-		      gdisp);
-  gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "button_press_event",
-		      GTK_SIGNAL_FUNC (qmask_click_handler),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (gdisp->qmaskon), "toggled",
+		    G_CALLBACK (qmask_activate),
+		    gdisp);
+  g_signal_connect (G_OBJECT (gdisp->qmaskon), "button_press_event",
+		    G_CALLBACK (qmask_click_handler),
+		    gdisp);
 
   gimp_help_set_help_data (gdisp->qmaskon, NULL, "#qmask_on_button");
 
@@ -410,9 +416,10 @@ create_display_shell (GDisplay *gdisp,
 
   /*  the navigation window button  */
   nav_ebox = gtk_event_box_new ();
-  gtk_signal_connect (GTK_OBJECT (nav_ebox), "button_press_event",
-		      GTK_SIGNAL_FUNC (nav_popup_click_handler),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (nav_ebox), "button_press_event",
+		    G_CALLBACK (nav_popup_click_handler),
+		    gdisp);
 
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
 
@@ -452,9 +459,11 @@ create_display_shell (GDisplay *gdisp,
   gdisp->icon_needs_update = 0;
   gdisp->icon_timeout_id = 0;
   gdisp->icon_idle_id = 0;
-  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "invalidate_preview",
-                      GTK_SIGNAL_FUNC (gdisplay_update_icon_scheduler),
-		      gdisp);
+
+  g_signal_connect (G_OBJECT (gdisp->gimage), "invalidate_preview",
+		    G_CALLBACK (gdisplay_update_icon_scheduler),
+		    gdisp);
+
   gdisplay_update_icon_scheduler (gdisp->gimage, gdisp);
 
 

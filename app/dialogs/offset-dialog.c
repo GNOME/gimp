@@ -87,9 +87,9 @@ offset_dialog_create (GimpDrawable *drawable)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("OK"), offset_ok_callback,
+				GTK_STOCK_OK, offset_ok_callback,
 				off_d, NULL, NULL, TRUE, FALSE,
-				_("Cancel"), offset_cancel_callback,
+				GTK_STOCK_CANCEL, offset_cancel_callback,
 				off_d, NULL, NULL, FALSE, TRUE,
 
 				NULL);

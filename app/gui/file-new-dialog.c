@@ -220,7 +220,7 @@ file_new_confirm_dialog (NewImageInfo *info)
 			    "dialogs/file_new.html#confirm_size",
 			    FALSE,
 			    text,
-			    _("OK"), _("Cancel"),
+			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
 			    NULL, NULL,
 			    file_new_confirm_dialog_callback,
 			    info);
@@ -343,11 +343,11 @@ file_new_dialog_create (GimpImage *gimage)
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, FALSE, TRUE,
 
-			       _("OK"), file_new_ok_callback,
+			       GTK_STOCK_OK, file_new_ok_callback,
 			       info, NULL, NULL, TRUE, FALSE,
 			       _("Reset"), file_new_reset_callback,
 			       info, NULL, NULL, FALSE, FALSE,
-			       _("Cancel"), file_new_cancel_callback,
+			       GTK_STOCK_CANCEL, file_new_cancel_callback,
 			       info, NULL, NULL, FALSE, TRUE,
 
 			       NULL);
