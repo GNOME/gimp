@@ -61,7 +61,6 @@ gimp_vectors_export (const GimpImage    *image,
                      GError            **error)
 {
   FILE  *file;
-  gchar *data;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
@@ -109,8 +108,6 @@ gimp_vectors_export (const GimpImage    *image,
       return FALSE;
     }
 
-  g_free (data);
-
   return TRUE;
 }
 
@@ -149,10 +146,8 @@ gimp_vectors_path_data (const GimpVectors *vectors)
       control_points = gimp_stroke_control_points_get (stroke, &closed);
 
       if (! first_stroke)
-        {
-          g_string_append_printf (str, "\n           ");
-        }
-          
+        g_string_append_printf (str, "\n           ");
+
       first_stroke = FALSE;
 
       if (GIMP_IS_BEZIER_STROKE (stroke))

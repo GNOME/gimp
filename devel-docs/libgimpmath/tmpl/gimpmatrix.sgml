@@ -70,18 +70,6 @@ basic matrix manipulations and tests.
 @matrix: 
 
 
-<!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
-<para>
-
-</para>
-
-@matrix: 
-@x: 
-@y: 
-@newx: 
-@newy: 
-
-
 <!-- ##### FUNCTION gimp_matrix3_mult ##### -->
 <para>
 
@@ -136,6 +124,32 @@ basic matrix manipulations and tests.
 
 @matrix: 
 @amount: 
+
+
+<!-- ##### FUNCTION gimp_matrix3_affine ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@a: 
+@b: 
+@c: 
+@d: 
+@e: 
+@f: 
+
+
+<!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
+<para>
+
+</para>
+
+@matrix: 
+@x: 
+@y: 
+@newx: 
+@newy: 
 
 
 <!-- ##### FUNCTION gimp_matrix3_determinant ##### -->

@@ -84,12 +84,14 @@ static void  parser_end_element   (GMarkupParseContext  *context,
 static void  parser_start_unknown (VectorsParser        *parser);
 static void  parser_end_unknown   (VectorsParser        *parser);
 
-static void  parse_svg_viewbox    (VectorsParser        *parser,
-                                   const gchar          *value);
-static void  parse_path_data      (GimpVectors          *vectors,
-                                   const gchar          *data);
-static void  parser_add_vectors   (VectorsParser        *parser,
-                                   GimpVectors          *vectors);
+static gboolean  parse_svg_viewbox   (const gchar       *value,
+                                      Rectangle         *rect);
+static gboolean  parse_svg_transform (const gchar       *value,
+                                      GimpMatrix3       *matrix);
+static void      parse_path_data     (GimpVectors       *vectors,
+                                      const gchar       *data);
+static void      parser_add_vectors  (VectorsParser     *parser,
+                                      GimpVectors       *vectors);
 
 
 static const GMarkupParser markup_parser =
@@ -202,7 +204,12 @@ parser_start_element (GMarkupParseContext *context,
       while (*attribute_names)
         {
           if (strcmp (*attribute_names, "viewBox") == 0)
-            parse_svg_viewbox (parser, *attribute_values);
+            {
+              Rectangle  rect;
+
+              if (parse_svg_viewbox (*attribute_values, &rect))
+                parser->viewbox = rect;
+            }
 
           attribute_names++;
           attribute_values++;
@@ -318,6 +325,173 @@ parser_add_vectors (VectorsParser *parser,
 }
 
 
+static gboolean
+parse_svg_viewbox (const gchar *value,
+                   Rectangle   *rect)
+{
+  gchar    *tok;
+  gchar    *str     = g_strdup (value);
+  gboolean  success = FALSE;
+
+  tok = strtok (str, ", \t");
+  if (tok)
+    {
+      rect->x = g_ascii_strtod (tok, NULL);
+      tok = strtok (NULL, ", \t");
+      if (tok)
+        {
+          rect->y = g_ascii_strtod (tok, NULL);
+          tok = strtok (NULL, ", \t");
+          if (tok != NULL)
+            {
+              rect->w = g_ascii_strtod (tok, NULL);
+              tok = strtok (NULL, ", \t");
+              if (tok)
+                {
+                  rect->h = g_ascii_strtod (tok, NULL);
+                  success = TRUE;
+                }
+            }
+        }
+    }
+
+  g_free (str);
+
+  return success;
+}
+
+gboolean
+parse_svg_transform (const gchar *value,
+                     GimpMatrix3 *matrix)
+{
+  gint    i;
+  gchar   keyword[32];
+  gdouble args[6];
+  gint    n_args;
+  gint    key_len;
+
+  gimp_matrix3_identity (matrix);
+
+  for (i= 0; value[i]; i++)
+    {
+      /* skip initial whitespace */
+      while (g_ascii_isspace (value[i]))
+        i++;
+
+      /* parse keyword */
+      for (key_len = 0; key_len < sizeof (keyword); key_len++)
+        {
+          gchar c = value[i];
+
+          if (g_ascii_isalpha (c) || c == '-')
+            keyword[key_len] = value[i++];
+          else
+            break;
+        }
+
+      if (key_len >= sizeof (keyword))
+        return FALSE;
+
+      keyword[key_len] = '\0';
+
+      /* skip whitespace */
+      while (g_ascii_isspace (value[i]))
+        i++;
+
+      if (value[i] != '(')
+        return FALSE;
+      i++;
+
+      for (n_args = 0; ; n_args++)
+        {
+          gchar  c;
+          gchar *end_ptr;
+
+          /* skip whitespace */
+          while (g_ascii_isspace (value[i]))
+            i++;
+          c = value[i];
+          if (g_ascii_isdigit (c) || c == '+' || c == '-' || c == '.')
+            {
+              if (n_args == G_N_ELEMENTS(args))
+                return FALSE; /* too many args */
+
+              args[n_args] = g_ascii_strtod (value + i, &end_ptr);
+              i = end_ptr - value;
+
+              while (g_ascii_isspace (value[i]))
+                i++;
+
+              /* skip optional comma */
+              if (value[i] == ',')
+                i++;
+            }
+          else if (c == ')')
+            break;
+          else
+            return FALSE;
+        }
+
+      /* ok, have parsed keyword and args, now modify the transform */
+      if (!strcmp (keyword, "matrix"))
+        {
+          if (n_args != 6)
+            return FALSE;
+
+          gimp_matrix3_affine (matrix,
+                               args[0], args[1],
+                               args[2], args[3],
+                               args[4], args[5]);
+        }
+      else if (!strcmp (keyword, "translate"))
+        {
+          if (n_args == 1)
+            args[1] = 0.0;
+          else if (n_args != 2)
+            return FALSE;
+
+          gimp_matrix3_translate (matrix, args[0], args[1]);
+        }
+      else if (!strcmp (keyword, "scale"))
+        {
+          if (n_args == 1)
+            args[1] = args[0];
+          else if (n_args != 2)
+            return FALSE;
+
+          gimp_matrix3_scale (matrix, args[0], args[1]);
+        }
+      else if (!strcmp (keyword, "rotate"))
+        {
+          if (n_args != 1)
+            return FALSE;
+
+          gimp_matrix3_rotate (matrix, gimp_deg_to_rad (args[0]));
+        }
+      else if (!strcmp (keyword, "skewX"))
+        {
+          if (n_args != 1)
+            return FALSE;
+
+          gimp_matrix3_xshear (matrix, tan (gimp_deg_to_rad (args[0])));
+        }
+      else if (!strcmp (keyword, "skewY"))
+        {
+          if (n_args != 1)
+            return FALSE;
+
+          gimp_matrix3_yshear (matrix, tan (gimp_deg_to_rad (args[0])));
+        }
+      else
+        {
+          return FALSE; /* unknown keyword */
+        }
+    }
+
+  return TRUE;
+}
+
+
 /**********************************************************/
 /*  Below is the code that parses the actual path data.   */
 /*                                                        */
@@ -343,50 +517,6 @@ static void  parse_path_default_xy (ParsePathContext *ctx,
 static void  parse_path_do_cmd     (ParsePathContext *ctx,
                                     gboolean          final);
 
-
-static void
-parse_svg_viewbox (VectorsParser *parser,
-                   const gchar   *value)
-{
-  gint      x, y, w, h;
-  gchar    *tok;
-  gchar    *str     = g_strdup (value);
-  gboolean  success = FALSE;
-
-  x = y = w = h = 0;
-
-  tok = strtok (str, ", \t");
-  if (tok)
-    {
-      x = g_ascii_strtod (tok, NULL);
-      tok = strtok (NULL, ", \t");
-      if (tok)
-        {
-          y = g_ascii_strtod (tok, NULL);
-          tok = strtok (NULL, ", \t");
-          if (tok != NULL)
-            {
-              w = g_ascii_strtod (tok, NULL);
-              tok = strtok (NULL, ", \t");
-              if (tok)
-                {
-                  h = g_ascii_strtod (tok, NULL);
-                  success = TRUE;
-                }
-            }
-        }
-    }
-
-  g_free (str);
-
-  if (success)
-    {
-      parser->viewbox.x = x;
-      parser->viewbox.y = y;
-      parser->viewbox.w = w;
-      parser->viewbox.h = h;
-    }
-}
 
 static void
 parse_path_data (GimpVectors *vectors,
@@ -552,7 +682,6 @@ parse_path_data (GimpVectors *vectors,
       /* else c _should_ be whitespace or , */
     }
 }
-
 
 /* supply defaults for missing parameters, assuming relative coordinates
    are to be interpreted as x,y */

@@ -25,13 +25,14 @@ GimpMatrix4
 gimp_matrix2_identity
 gimp_matrix2_mult
 gimp_matrix3_identity
-gimp_matrix3_transform_point
 gimp_matrix3_mult
 gimp_matrix3_translate
 gimp_matrix3_scale
 gimp_matrix3_rotate
 gimp_matrix3_xshear
 gimp_matrix3_yshear
+gimp_matrix3_affine
+gimp_matrix3_transform_point
 gimp_matrix3_determinant
 gimp_matrix3_invert
 gimp_matrix3_is_diagonal

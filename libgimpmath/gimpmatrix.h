@@ -44,29 +44,32 @@ struct _GimpMatrix4
 
 
 void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
-void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1, 
+void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1,
 					    GimpMatrix2       *matrix2);
 
 void          gimp_matrix3_identity        (GimpMatrix3       *matrix);
-void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix, 
-					    gdouble            x, 
-					    gdouble            y,
-					    gdouble           *newx, 
-					    gdouble           *newy);
-void          gimp_matrix3_mult            (const GimpMatrix3 *matrix1, 
+void          gimp_matrix3_mult            (const GimpMatrix3 *matrix1,
 					    GimpMatrix3       *matrix2);
-void          gimp_matrix3_translate       (GimpMatrix3       *matrix, 
-					    gdouble            x, 
+void          gimp_matrix3_translate       (GimpMatrix3       *matrix,
+					    gdouble            x,
 					    gdouble            y);
-void          gimp_matrix3_scale           (GimpMatrix3       *matrix, 
-					    gdouble            x, 
+void          gimp_matrix3_scale           (GimpMatrix3       *matrix,
+					    gdouble            x,
 					    gdouble            y);
-void          gimp_matrix3_rotate          (GimpMatrix3       *matrix, 
+void          gimp_matrix3_rotate          (GimpMatrix3       *matrix,
 					    gdouble            theta);
-void          gimp_matrix3_xshear          (GimpMatrix3       *matrix, 
+void          gimp_matrix3_xshear          (GimpMatrix3       *matrix,
 					    gdouble            amount);
-void          gimp_matrix3_yshear          (GimpMatrix3       *matrix, 
+void          gimp_matrix3_yshear          (GimpMatrix3       *matrix,
 					    gdouble            amount);
+void          gimp_matrix3_affine          (GimpMatrix3       *matrix,
+                                            gdouble            a,
+                                            gdouble            b,
+                                            gdouble            c,
+                                            gdouble            d,
+                                            gdouble            e,
+                                            gdouble            f);
+
 gdouble       gimp_matrix3_determinant     (const GimpMatrix3 *matrix);
 void          gimp_matrix3_invert          (GimpMatrix3       *matrix);
 
@@ -74,6 +77,11 @@ gboolean      gimp_matrix3_is_diagonal     (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_identity     (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_simple       (const GimpMatrix3 *matrix);
 
+void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
+					    gdouble            x,
+					    gdouble            y,
+					    gdouble           *newx,
+					    gdouble           *newy);
 
 void          gimp_matrix4_to_deg          (const GimpMatrix4 *matrix,
 					    gdouble           *a,

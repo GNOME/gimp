@@ -1,3 +1,12 @@
+2003-09-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmath/gimpmatrix.[ch]: added gimp_matrix3_affine().
+
+	* app/vectors/gimpvectors-import.c: added (yet unused) funtion to
+	parse SVG transform attributes.
+
+	* app/vectors/gimpvectors-export.c: fixed a stupid bug.
+
 2003-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask-select.c (gimp_image_mask_select_vectors)

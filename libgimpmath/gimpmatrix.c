@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpmatrix.c
@@ -33,7 +33,7 @@
 /**
  * gimp_matrix2_identity:
  * @matrix: A matrix.
- * 
+ *
  * Sets the matrix to the identity matrix.
  */
 void
@@ -49,11 +49,11 @@ gimp_matrix2_identity (GimpMatrix2 *matrix)
  * gimp_matrix2_mult:
  * @matrix1: The first input matrix.
  * @matrix2: The second input matrix which will be overwritten by the result.
- * 
+ *
  * Multiplies two matrices and puts the result into the second one.
  */
 void
-gimp_matrix2_mult (const GimpMatrix2 *matrix1, 
+gimp_matrix2_mult (const GimpMatrix2 *matrix1,
 		   GimpMatrix2       *matrix2)
 {
   GimpMatrix2  tmp;
@@ -73,7 +73,7 @@ gimp_matrix2_mult (const GimpMatrix2 *matrix1,
 /**
  * gimp_matrix3_identity:
  * @matrix: A matrix.
- * 
+ *
  * Sets the matrix to the identity matrix.
  */
 void
@@ -93,14 +93,14 @@ gimp_matrix3_identity (GimpMatrix3 *matrix)
  * @y: The source Y coordinate.
  * @newx: The transformed X coordinate.
  * @newy: The transformed Y coordinate.
- * 
+ *
  * Transforms a point in 2D as specified by the transformation matrix.
  */
 void
-gimp_matrix3_transform_point (const GimpMatrix3 *matrix, 
-			      gdouble            x, 
+gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
+			      gdouble            x,
 			      gdouble            y,
-			      gdouble           *newx, 
+			      gdouble           *newx,
 			      gdouble           *newy)
 {
   gdouble  w;
@@ -124,11 +124,11 @@ gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
  * gimp_matrix3_mult:
  * @matrix1: The first input matrix.
  * @matrix2: The second input matrix which will be overwritten by the result.
- * 
+ *
  * Multiplies two matrices and puts the result into the second one.
  */
 void
-gimp_matrix3_mult (const GimpMatrix3 *matrix1, 
+gimp_matrix3_mult (const GimpMatrix3 *matrix1,
 		   GimpMatrix3       *matrix2)
 {
   gint         i, j;
@@ -157,12 +157,12 @@ gimp_matrix3_mult (const GimpMatrix3 *matrix1,
  * @matrix: The matrix that is to be translated.
  * @x: Translation in X direction.
  * @y: Translation in Y direction.
- * 
+ *
  * Translates the matrix by x and y.
  */
 void
-gimp_matrix3_translate (GimpMatrix3 *matrix, 
-			gdouble      x, 
+gimp_matrix3_translate (GimpMatrix3 *matrix,
+			gdouble      x,
 			gdouble      y)
 {
   gdouble g, h, i;
@@ -184,12 +184,12 @@ gimp_matrix3_translate (GimpMatrix3 *matrix,
  * @matrix: The matrix that is to be scaled.
  * @x: X scale factor.
  * @y: Y scale factor.
- * 
- * Scales the matrix by x and y 
+ *
+ * Scales the matrix by x and y
  */
 void
-gimp_matrix3_scale (GimpMatrix3 *matrix, 
-		    gdouble      x, 
+gimp_matrix3_scale (GimpMatrix3 *matrix,
+		    gdouble      x,
 		    gdouble      y)
 {
   matrix->coeff[0][0] *= x;
@@ -205,11 +205,11 @@ gimp_matrix3_scale (GimpMatrix3 *matrix,
  * gimp_matrix3_rotate:
  * @matrix: The matrix that is to be rotated.
  * @theta: The angle of rotation (in radians).
- * 
+ *
  * Rotates the matrix by theta degrees.
  */
 void
-gimp_matrix3_rotate (GimpMatrix3 *matrix, 
+gimp_matrix3_rotate (GimpMatrix3 *matrix,
 		     gdouble      theta)
 {
   gdouble t1, t2;
@@ -217,7 +217,7 @@ gimp_matrix3_rotate (GimpMatrix3 *matrix,
 
   cost = cos (theta);
   sint = sin (theta);
-  
+
   t1 = matrix->coeff[0][0];
   t2 = matrix->coeff[1][0];
   matrix->coeff[0][0] = cost * t1 - sint * t2;
@@ -238,11 +238,11 @@ gimp_matrix3_rotate (GimpMatrix3 *matrix,
  * gimp_matrix3_xshear:
  * @matrix: The matrix that is to be sheared.
  * @amount: X shear amount.
- * 
+ *
  * Shears the matrix in the X direction.
  */
 void
-gimp_matrix3_xshear (GimpMatrix3 *matrix, 
+gimp_matrix3_xshear (GimpMatrix3 *matrix,
 		     gdouble      amount)
 {
   matrix->coeff[0][0] += amount * matrix->coeff[1][0];
@@ -254,11 +254,11 @@ gimp_matrix3_xshear (GimpMatrix3 *matrix,
  * gimp_matrix3_yshear:
  * @matrix: The matrix that is to be sheared.
  * @amount: Y shear amount.
- * 
+ *
  * Shears the matrix in the Y direction.
  */
 void
-gimp_matrix3_yshear (GimpMatrix3 *matrix, 
+gimp_matrix3_yshear (GimpMatrix3 *matrix,
 		     gdouble      amount)
 {
   matrix->coeff[1][0] += amount * matrix->coeff[0][0];
@@ -266,12 +266,58 @@ gimp_matrix3_yshear (GimpMatrix3 *matrix,
   matrix->coeff[1][2] += amount * matrix->coeff[0][2];
 }
 
+
+/**
+ * gimp_matrix3_affine:
+ * @matrix: The input matrix.
+ * @a:
+ * @b:
+ * @c:
+ * @d:
+ * @e:
+ * @f:
+ *
+ * Applies the affine transformation given by six values to @matrix.
+ * The six values form define an affine transformation matrix as
+ * illustrated below:
+ *
+ *  ( a c e )
+ *  ( b d f )
+ *  ( 0 0 1 )
+ **/
+void
+gimp_matrix3_affine (GimpMatrix3 *matrix,
+                     gdouble      a,
+                     gdouble      b,
+                     gdouble      c,
+                     gdouble      d,
+                     gdouble      e,
+                     gdouble      f)
+{
+  GimpMatrix3 affine;
+
+  affine.coeff[0][0] = a;
+  affine.coeff[1][0] = b;
+  affine.coeff[2][0] = 0.0;
+
+  affine.coeff[0][1] = c;
+  affine.coeff[1][1] = d;
+  affine.coeff[2][1] = 0.0;
+
+  affine.coeff[0][2] = e;
+  affine.coeff[1][2] = f;
+  affine.coeff[2][2] = 1.0;
+
+  gimp_matrix3_mult (&affine, matrix);
+}
+
+
 /**
  * gimp_matrix3_determinant:
- * @matrix: The input matrix. 
- * 
+ * @matrix: The input matrix.
+ *
  * Calculates the determinant of the given matrix.
- * 
+ *
  * Returns: The determinant.
  */
 gdouble
@@ -295,7 +341,7 @@ gimp_matrix3_determinant (const GimpMatrix3 *matrix)
 /**
  * gimp_matrix3_invert:
  * @matrix: The matrix that is to be inverted.
- * 
+ *
  * Inverts the given matrix.
  */
 void
@@ -313,7 +359,7 @@ gimp_matrix3_invert (GimpMatrix3 *matrix)
 
   inv.coeff[0][0] =   (matrix->coeff[1][1] * matrix->coeff[2][2] -
                        matrix->coeff[1][2] * matrix->coeff[2][1]) * det;
- 
+
   inv.coeff[1][0] = - (matrix->coeff[1][0] * matrix->coeff[2][2] -
                        matrix->coeff[1][2] * matrix->coeff[2][0]) * det;
 
@@ -328,13 +374,13 @@ gimp_matrix3_invert (GimpMatrix3 *matrix)
 
   inv.coeff[2][1] = - (matrix->coeff[0][0] * matrix->coeff[2][1] -
                        matrix->coeff[0][1] * matrix->coeff[2][0]) * det;
-  
+
   inv.coeff[0][2] =   (matrix->coeff[0][1] * matrix->coeff[1][2] -
                        matrix->coeff[0][2] * matrix->coeff[1][1]) * det;
-  
+
   inv.coeff[1][2] = - (matrix->coeff[0][0] * matrix->coeff[1][2] -
                        matrix->coeff[0][2] * matrix->coeff[1][0]) * det;
-  
+
   inv.coeff[2][2] =   (matrix->coeff[0][0] * matrix->coeff[1][1] -
                        matrix->coeff[0][1] * matrix->coeff[1][0]) * det;
 
@@ -348,9 +394,9 @@ gimp_matrix3_invert (GimpMatrix3 *matrix)
 /**
  * gimp_matrix3_is_diagonal:
  * @matrix: The matrix that is to be tested.
- * 
+ *
  * Checks if the given matrix is diagonal.
- * 
+ *
  * Returns: TRUE if the matrix is diagonal.
  */
 gboolean
@@ -373,9 +419,9 @@ gimp_matrix3_is_diagonal (const GimpMatrix3 *matrix)
 /**
  * gimp_matrix3_is_identity:
  * @matrix: The matrix that is to be tested.
- * 
+ *
  * Checks if the given matrix is the identity matrix.
- * 
+ *
  * Returns: TRUE if the matrix is the identity matrix.
  */
 gboolean
@@ -403,20 +449,20 @@ gimp_matrix3_is_identity (const GimpMatrix3 *matrix)
   return TRUE;
 }
 
-/*  Check if we'll need to interpolate when applying this matrix. 
-    This function returns TRUE if all entries of the upper left 
-    2x2 matrix are either 0 or 1 
+/*  Check if we'll need to interpolate when applying this matrix.
+    This function returns TRUE if all entries of the upper left
+    2x2 matrix are either 0 or 1
  */
 
 
 /**
  * gimp_matrix3_is_simple:
  * @matrix: The matrix that is to be tested.
- * 
+ *
  * Checks if we'll need to interpolate when applying this matrix as
  * a transformation.
- * 
- * Returns: TRUE if all entries of the upper left 2x2 matrix are either 
+ *
+ * Returns: TRUE if all entries of the upper left 2x2 matrix are either
  * 0 or 1
  */
 gboolean
