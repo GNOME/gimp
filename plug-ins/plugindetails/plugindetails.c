@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <regex.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 

@@ -108,6 +108,8 @@ static GSList * bezier_insert_in_list      (GSList *, int);
 static int   test_add_point_on_segment     (BezierSelect *, BezierPoint *, int, int, int, int, int);
 static void  bezier_to_sel_internal        (BezierSelect *, Tool *, GDisplay *, gint, gint);
 static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int);
+static gboolean stroke_interpolatable    (int, int, int, int, gdouble);
+static void bezier_stack_points_aux      (GdkPoint *, int, int, gdouble);
 
 static BezierMatrix basis =
 {
@@ -1710,197 +1712,6 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
     }
 }
 
-static GtkWidget *file_dlg = 0;
-static int load_store;
-FILE *f;
-
-
-static void bezier_buffer_save_foreach(GtkWidget *w,
-				       gpointer   client_data)
-		
-{
-  PasteNamedDlg *pn_dlg;
-  BezierNamedBuffer * nb;
-  BezierPoint *pt;
-  int i;
-      
-  pn_dlg = (PasteNamedDlg *) client_data;
-  nb = (BezierNamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
-
-
-  fprintf(f, "Name: %s\n", nb->name);
-  fprintf(f, "#POINTS: %d\n", nb->sel->num_points);
-  fprintf(f, "CLOSED: %d\n", nb->sel->closed==1?1:0);
-  fprintf(f, "DRAW: %d\n", nb->sel->draw);
-  fprintf(f, "STATE: %d\n", nb->sel->state);
-
-
-  pt = nb->sel->points;
-  for(i=0; i< nb->sel->num_points; i++)
-    {
-      fprintf(f,"TYPE: %d X: %d Y: %d\n", pt->type, pt->x, pt->y);
-      pt = pt->next;
-    }
-}
-
-static void file_ok_callback(GtkWidget * widget, gpointer client_data) 
-{
-  GtkFileSelection *fs; 
-  char* filename;
-  fs = GTK_FILE_SELECTION (file_dlg);
-  filename = gtk_file_selection_get_filename (fs);
-  
-  if (load_store) 
-    {
-      PasteNamedDlg *pn_dlg;
-      BezierNamedBuffer * nb;
-      
-      pn_dlg = (PasteNamedDlg *) client_data;
-
-      f = fopen(filename, "rb");
-      printf(_("reading %s\n"), filename);
-      
-      while(!feof(f))
-	{
-	  char txt[30];
-	  int val, x, y, type, closed, i, draw, state;
-
-	  /*
-	    fscanf(f, "%s", txt);
-	    if (strcmp("BEZIER_EXTENDS",txt))
-	    {
-	    GString *s;
-	    
-	    fclose(f);
-	    s = g_string_new (_("Open failed: "));
-	    
-	    g_string_append (s, _("Bezier Load"));
-	    
-	    g_message (s->str);
-	      
-	    g_string_free (s, TRUE);
-	    return;
-	    }
-	    */	  
-	  fscanf(f, "Name: %s\n", txt);
-	  fscanf(f, "#POINTS: %d\n", &val);
- 	  fscanf(f, "CLOSED: %d\n", &closed);
-	  fscanf(f, "DRAW: %d\n", &draw);
-	  fscanf(f, "STATE: %d\n", &state);
-
-	  nb = (BezierNamedBuffer *) g_malloc (sizeof(BezierNamedBuffer));
-	  nb->name = g_strdup ((char *) txt);
-	  nb->sel = (BezierSelect *) g_malloc( sizeof (BezierSelect));
-	  
-	  if (nb->sel == NULL) 
-	    {
-	      return;
-	    }
-	  
-	  nb->sel->closed = 0;
-	  nb->sel->points = NULL;           /* initially there are no points */
-	  nb->sel->cur_anchor = NULL;
-	  nb->sel->cur_control = NULL;
-	  nb->sel->last_point = NULL;
-	  nb->sel->num_points = 0;          /* intially there are no points */
-	  nb->sel->mask = NULL;             /* empty mask */
-	  nb->sel->scanlines = NULL; 
-	  
-	  for(i=0; i< val; i++)
-	    {
-	      fscanf(f,"TYPE: %d X: %d Y: %d\n", &type, &x, &y);
-	      bezier_add_point( nb->sel, type, x, y);
-	    }
-  
-	  if ( closed )
-	    {
-	      nb->sel->last_point->next = nb->sel->points;
-	      nb->sel->points->prev = nb->sel->last_point;
-	      nb->sel->cur_anchor = nb->sel->points;
-	      nb->sel->cur_control = nb->sel-> points->next;
-	      nb->sel->closed = 1;
-
-	    }
-	  
-	  nb->sel->state = state;
-	  nb->sel->draw = draw;
-	  
-	  bezier_named_buffers = g_slist_append (bezier_named_buffers, (void *) nb);
-	}
-      fclose(f);      
-    } 
-  else 
-    {
-      PasteNamedDlg *pn_dlg;
-      f = fopen(filename, "wb");
-      if (NULL == f) 
-	{
-	  perror(filename);
-	  return;
-	}
-      
-      pn_dlg = (PasteNamedDlg *) client_data;
-      /*
-	fprintf(f,"BEZIER_EXTENDS\n");
-	*/
-      gtk_container_foreach ((GtkContainer*) pn_dlg->list,
-			     bezier_buffer_save_foreach, 
-			     client_data);
-      fclose(f);
-    }
-  gtk_widget_hide (file_dlg);  
-}
-
-
-static void file_cancel_callback(GtkWidget * widget, gpointer data) 
-{
-  gtk_widget_hide (file_dlg);
-}
-
-static void make_file_dlg(gpointer data) 
-{
-  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
-  gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
-  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		     "clicked", (GtkSignalFunc) file_ok_callback, data);
-}
-
-
-static void load_callback(GtkWidget * widget, gpointer data) 
-{
-  if (!file_dlg) 
-    {
-      make_file_dlg(data);
-    } 
-  else 
-    {
-      if (GTK_WIDGET_VISIBLE(file_dlg))
-	return;
-    }
-  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Bezier Curves"));
-  load_store = 1;
-  gtk_widget_show (file_dlg);
-}
-
-static void store_callback(GtkWidget * widget, gpointer data) 
-{
-  if (!file_dlg) 
-    {
-      make_file_dlg(data);
-    } 
-  else 
-    {
-      if (GTK_WIDGET_VISIBLE(file_dlg))
-	return;
-    }
-
-  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Store Bezier Curves"));
-  load_store = 0;
-  gtk_widget_show (file_dlg);
-}
-
 static void
 bezier_to_sel_internal(BezierSelect  *bezier_sel,
 		       Tool          *tool,
@@ -2191,6 +2002,25 @@ void bezier_select_mode(gint mode)
   ModeEdit = mode;
 }
 
+/* The curve has to be closed to do a selection. */
+
+void
+bezier_to_selection(BezierSelect *bezier_sel,
+		    GDisplay     *gdisp)
+{
+  /* Call the internal function */
+  if(!bezier_sel->closed)
+    {
+      g_warning("Curve not closed");
+      return;
+    }
+
+  /* force the passed selection to be the current selection..*/
+  /* This loads it into curSel for this image */
+  bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
+  bezier_to_sel_internal(curSel,curTool,gdisp,ADD,1);
+}
+
 void printSel( BezierSelect *sel)
 {
   BezierPoint *pt;
@@ -2212,60 +2042,165 @@ void printSel( BezierSelect *sel)
   printf("state: %d\n", sel->state);
 }
 
-static gdouble *stroke_points = NULL;
-static gint num_stroke_points = 0;
+static gdouble	*stroke_points = NULL;
+static gint	num_stroke_points = 0;	/* num of valid points */
+static gint	len_stroke_points = 0;	/* allocated length */
+
+/* check whether vectors (offx, offy), (l_offx, l_offy) have the same angle. */
+static gboolean
+stroke_interpolatable (int offx, int offy, int l_offx, int l_offy, gdouble error)
+{
+  if      ((offx == l_offx) & (offy == l_offy))
+    return TRUE;
+  else if ((offx == 0) | (l_offx == 0))
+    if (offx == l_offx)
+      return ((0 <= offy) & (0 <= offy)) | ((offy < 0) & (l_offy < 0));
+    else
+      return FALSE;
+  else if ((offy == 0) | (l_offy == 0))
+    if (offy == l_offy)
+      return ((0 < offx) & (0 < l_offx)) | ((offx < 0) & (l_offx < 0));
+    else
+      return FALSE;
+  /* At this point, we can assert: offx, offy, l_offx, l_offy != 0 */
+  else if (((0 < offx) & (0 < l_offx)) | ((offx < 0) & (l_offx < 0)))
+    {
+      gdouble	grad1, grad2;
+
+      if (ABS (offy) < ABS (offx))
+	{
+	  grad1 = (gdouble) offy / (gdouble) offx;
+	  grad2 = (gdouble) l_offy / (gdouble) l_offx;
+	}
+      else
+	{
+	  grad1 = (gdouble) offx / (gdouble) offy;
+	  grad2 = (gdouble) l_offx / (gdouble) l_offy;
+	}
+      /* printf ("error: %f / %f\n", ABS (grad1 - grad2), error); */
+      return (ABS (grad1 - grad2) <= error);
+    }
+  else
+    return FALSE;
+}
+
+static void
+bezier_stack_points_aux (GdkPoint *points,
+			 int      start,
+			 int	  end,
+			 gdouble  error)
+{
+  const gint	expand_size = 32;
+  gint		med;
+  gint		offx, offy, l_offx, l_offy;
+
+  if (stroke_points == NULL)
+    return;
+
+  /* BASE CASE: stack the end point */
+  if (end - start <= 1)
+    {
+      if ((stroke_points[num_stroke_points * 2 - 2] == points[end].x)
+	  && (stroke_points[num_stroke_points * 2 - 1] == points[end].y))
+	return;
+
+      num_stroke_points++;
+      if (len_stroke_points <= num_stroke_points)
+	{
+	  len_stroke_points += expand_size;
+	  stroke_points = g_renew (double, stroke_points, 2 * len_stroke_points);
+	  if (stroke_points == NULL)
+	    {
+	      len_stroke_points = num_stroke_points = 0;
+	      return;
+	    }
+	}
+      stroke_points[num_stroke_points * 2 - 2] = points[end].x;
+      stroke_points[num_stroke_points * 2 - 1] = points[end].y;
+      return;
+    }
+
+  if (end - start <= 32)
+    {
+      gint i;
+
+      for (i = start+ 1; i <= end; i++)
+	bezier_stack_points_aux (points, i, i, 0);
+      return;
+    }
+  /* Otherwise, check whether to divide the segment recursively */
+  offx = points[end].x - points[start].x;
+  offy = points[end].y - points[start].y;
+  med = (end + start) / 2;
+
+  l_offx = points[med].x - points[start].x;
+  l_offy = points[med].y - points[start].y;
+
+  if (! stroke_interpolatable (offx, offy, l_offx, l_offy, error))
+    {
+      bezier_stack_points_aux (points, start, med, error);
+      bezier_stack_points_aux (points, med, end, error);
+      return;
+    }
+
+  l_offx = points[end].x - points[med].x;
+  l_offy = points[end].y - points[med].y;
+
+  if (! stroke_interpolatable (offx, offy, l_offx, l_offy, error))
+    {
+      bezier_stack_points_aux (points, start, med, error);
+      bezier_stack_points_aux (points, med, end, error);
+      return;
+    }
+  /* Now, the curve can be represented by a points pair: (start, end).
+     So, add the last point to stroke_points. */
+  bezier_stack_points_aux (points, end, end, 0);
+}
 
 static void
 bezier_stack_points (BezierSelect *bezier_sel,
 		     GdkPoint     *points,
 		     int           npoints)
 {
-  int i, j;
+  gint	i;
+  gint	expand_size = 32;
+  gint	minx, maxx, miny, maxy;
+  gdouble error;
 
-  if (stroke_points == NULL)
+  if (npoints < 2)		/* Does this happen? */
+    return;
+
+  if (stroke_points == NULL)	/*  initialize it here */
     {
-      j = 0;
-      num_stroke_points = npoints / 2;
-      stroke_points = g_new (double, 2 * num_stroke_points );
-    }
-  else
-    {
-      j = num_stroke_points * 2;
-      num_stroke_points += npoints / 2;
-      stroke_points = g_renew (double, stroke_points, 2 * num_stroke_points);
+      num_stroke_points = 0;
+      len_stroke_points = expand_size;
+      stroke_points = g_new (double, 2 * len_stroke_points);
     }
 
-  /* copy points into stroke_points SPARSELY */
-  for (i = 0; i < npoints / 2 - 1; i++)
+  maxx = minx = points[0].x;
+  maxy = miny = points[0].y;
+  for (i = 1; i < npoints; i++)
     {
-      stroke_points[j++] = points[i * 2].x;
-      stroke_points[j++] = points[i * 2].y;
+      if (points[i].x < minx)
+	minx = points[i].x;
+      else if (maxx < points[i].x)
+	maxx = points[i].x;
+      if (points[i].y < miny)
+	miny = points[i].x;
+      else if (maxy < points[i].y)
+	maxy = points[i].y;
     }
-  /* the last point should be included anyway */
-  stroke_points[num_stroke_points * 2 - 2] = points[npoints - 1].x;
-  stroke_points[num_stroke_points * 2 - 1] = points[npoints - 1].y;
+  /* allow one pixel fluctuation */
+  error = 2.0 / MAX(maxx - minx, maxy - miny);
+
+  /* add the start point */
+  bezier_stack_points_aux (points, 0, 0, 0);
+
+  /* divide segments recursively */
+  bezier_stack_points_aux (points, 0, npoints - 1, error);
+
+  /* printf ("npoints: %d\n", npoints); */
 }
-
-/* The curve has to be closed to do a selection. */
-
-void
-bezier_to_selection(BezierSelect *bezier_sel,
-		    GDisplay     *gdisp)
-{
-  /* Call the internal function */
-  if(!bezier_sel->closed)
-    {
-      g_warning("Curve not closed");
-      return;
-    }
-
-  /* force the passed selection to be the current selection..*/
-  /* This loads it into curSel for this image */
-  bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
-  bezier_to_sel_internal(curSel,curTool,gdisp,ADD,1);
-}
-
-
 
 void
 bezier_stroke (BezierSelect *bezier_sel,
@@ -2277,6 +2212,7 @@ bezier_stroke (BezierSelect *bezier_sel,
   int num_points;
   Argument *return_vals;
   int nreturn_vals;
+  int redraw = FALSE;
 
   /* stack points */
   points = bezier_sel->points;
@@ -2301,8 +2237,10 @@ bezier_stroke (BezierSelect *bezier_sel,
   else
     {
       if (bezier_sel->closed)
-	num_points--;
-      
+	{
+	  redraw = TRUE;
+	  num_points--;
+	}
       while (num_points >= 4)
 	{
 	  bezier_draw_segment (bezier_sel, points,
@@ -2316,18 +2254,33 @@ bezier_stroke (BezierSelect *bezier_sel,
 	}
     }
 
-  return_vals = procedural_db_run_proc ("gimp_paintbrush",
-					&nreturn_vals,
-					PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
-					PDB_FLOAT, (gdouble) 0,
-					PDB_INT32, (gint32) num_stroke_points * 2,
-					PDB_FLOATARRAY, stroke_points,
-					PDB_END);
+  if (stroke_points)
+    {
+      return_vals = procedural_db_run_proc ("gimp_paintbrush",
+					    &nreturn_vals,
+					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
+					    PDB_FLOAT, (gdouble) 0,
+					    PDB_INT32, (gint32) num_stroke_points * 2,
+					    PDB_FLOATARRAY, stroke_points,
+					    PDB_END);
 
-  g_free (stroke_points);
+      if (return_vals[0].value.pdb_int == PDB_SUCCESS)
+	{
+	  if (redraw)
+	    {
+	      /* FIXME: how to update the image? */
+	    }
+	  gdisplays_flush ();
+	}
+      else
+	g_message (_("Paintbrush operation failed."));
+
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+
+      g_free (stroke_points);
+    }
+  /* printf ("num_stroke_points: %d\ndone.\n", num_stroke_points); */
+
   stroke_points = NULL;
-  num_stroke_points = 0;
-
-  gdisplays_flush ();
-  return;
+  len_stroke_points = num_stroke_points = 0;
 }

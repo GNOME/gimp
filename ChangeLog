@@ -1,3 +1,26 @@
+
+Fri Mar 12 21:30:57 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+
+	* app/bezier_select.c
+	* app/paths_dialog.c
+
+	Some code cleanups and bug fixes. Fixed problem with "copy" path
+	producing very long names. 
+
+	Added functionality to import/export paths to files. (It was 
+	there before!)
+
+	Also added some new bezier_stroke code that Shuji Narazaki posted
+	to the gimp-devel list.
+
+	* plug-ins/plugindetails/plugindetails.c
+
+	Removed unwanted <regex.h>. 
+	Thanks to Tan Koan-Sin <freedom@csie.nctu.edu.tw> for pointing 
+	this out.
+
 Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * libgimp/gimp.c: split gimp_quit into two functions, gimp_quit

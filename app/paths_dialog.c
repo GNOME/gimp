@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+#include <math.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "draw_core.h"
@@ -77,6 +79,10 @@ typedef struct {
   int image_width, image_height;
   int gimage_width, gimage_height;
 
+  /* pixmaps for the no preview bitmap */
+  GdkPixmap * pixmap_normal;
+  GdkPixmap * pixmap_selected;
+
   /*  state information  */
   gint        selsigid;
   GimpImage * gimage;
@@ -118,7 +124,8 @@ static void paths_dialog_new_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_add_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_delete_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_edit_point_callback (GtkWidget *, gpointer);
-
+static void paths_dialog_import_path_callback (GtkWidget *, gpointer);
+static void paths_dialog_export_path_callback (GtkWidget *, gpointer);
 
 #define NEW_PATH_BUTTON 1
 #define DUP_PATH_BUTTON 2
@@ -138,6 +145,10 @@ static MenuItem paths_ops[] =
     paths_dialog_stroke_path_callback, NULL, NULL, NULL },
   { N_("Delete Path"), 'D', GDK_CONTROL_MASK,
     paths_dialog_delete_path_callback, NULL, NULL, NULL },
+  { N_("Import Path"), 'I', GDK_CONTROL_MASK,
+    paths_dialog_import_path_callback, NULL, NULL, NULL },
+  { N_("Export Path"), 'E', GDK_CONTROL_MASK,
+    paths_dialog_export_path_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -317,11 +328,11 @@ GtkWidget * paths_dialog_create()
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,FALSE);
-      point_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
     }
   
   return paths_dialog->vbox;
@@ -331,6 +342,10 @@ static void paths_dialog_realized(GtkWidget *widget)
 {
   GdkColormap *colormap;
   gchar dash_list[2]= {3,3};
+
+  /* Help out small displays */
+  if(preview_size < 64)
+    dash_list[1] = 1;
 
   paths_dialog->gc = gdk_gc_new(widget->window);
   gdk_gc_set_dashes(paths_dialog->gc,2,dash_list,2);
@@ -384,15 +399,107 @@ bzpath_dialog_new(gint name_seed, gpointer udata)
   return bzp;
 }
 
+/* Always return a copy that must be freed later */
+
+static gchar *
+strip_off_cnumber(gchar *str)
+{
+  gchar * hashptr;
+  gint    num;
+  gchar * copy;
+
+  if(!str)
+    return str;
+
+  copy = g_strdup(str);
+
+  if((hashptr = strrchr(copy,'#')) && /* have a hash */
+     strlen(hashptr) > 0 &&          /* followed by something */
+     (num = atoi(hashptr+1)) > 0 &&   /* which is a number */
+     ((int)log10(num) + 1) == strlen(hashptr+1)) /* which is at the end */
+    {
+      gchar * tstr;
+      /* Has a #<number> */
+      *hashptr = '\0';
+      tstr = g_strdup(copy);
+      g_free(copy);
+      copy = tstr;
+    }
+
+  return copy;
+}
+
+/* Return NULL is already unique else a unique string */
+
+static gchar *
+unique_name(gchar *cstr)
+{
+  GSList *tlist;
+  PATHIMAGELISTP plp;
+  gboolean unique = TRUE;
+  gchar *copy_cstr;
+  gchar *copy_test;
+  gchar *stripped_copy;
+  gint counter = 1;
+
+  /* Get bzpath structure  */
+  plp = paths_dialog->current_path_list;
+
+  if(!plp)
+    return NULL;
+
+  tlist = plp->bz_paths;
+
+  while(tlist)
+    {
+      gchar *test_str = ((BZPATHP)(tlist->data))->name->str;
+      if(strcmp(cstr,test_str) == 0)
+	{
+	    unique = FALSE;
+	    break;
+	}
+      tlist = g_slist_next(tlist);
+    }
+
+  if(unique)
+    {
+      return NULL;
+    }
+
+  /* OK Clashes with something */
+  /* restart scan to find unique name */
+
+  stripped_copy = strip_off_cnumber(cstr);
+  copy_cstr = g_strdup_printf("%s#%d",stripped_copy,counter++);
+
+  tlist = plp->bz_paths;
+
+  while(tlist)
+    {
+	copy_test = ((BZPATHP)(tlist->data))->name->str;
+	if(strcmp(copy_cstr,copy_test) == 0)
+	    {
+		g_free(copy_cstr);
+		copy_cstr = g_strdup_printf("%s#%d",stripped_copy,counter++);
+		tlist = plp->bz_paths;
+		continue;
+	    }
+	tlist = g_slist_next(tlist);
+    }
+
+  g_free(stripped_copy);
+  return copy_cstr;
+}
+
 static BZPATHP
 bzpath_copy(BZPATHP bzp)
 {
   BZPATHP bzp_copy = g_new0(BZPATH,1);
-  GString *s = g_string_new (NULL);
+  gchar *ext;
 
-  g_string_sprintf (s, "%s copy",bzp->name->str);
-
-  bzp_copy->name = s;
+  ext = unique_name(bzp->name->str);
+  bzp_copy->name = g_string_new(ext);
+  g_free(ext);
   bzp_copy->closed = bzp->closed;
   bzp_copy->state = bzp->state;
   bzp_copy->bezier_details = bzpoints_copy(bzp->bezier_details);
@@ -509,6 +616,8 @@ bz_change_name_row_to(gint row,gchar *text)
 static void 
 paths_set_dash_line(GdkGC *gc,gboolean state)
 {
+  gdk_gc_set_foreground(paths_dialog->gc, &paths_dialog->black);
+
   if(state)
     {
       gdk_gc_set_line_attributes(gc,0,GDK_LINE_ON_OFF_DASH,GDK_CAP_BUTT,GDK_JOIN_ROUND);
@@ -540,8 +649,6 @@ clear_pixmap_preview(PATHWIDGETP pwidget)
 		      GDK_RGB_DITHER_NORMAL,
 		      rgb_buf,
 		      (paths_dialog->image_width + 4)*3);
-
-  gdk_gc_set_foreground(paths_dialog->gc, &paths_dialog->black);
 
   paths_set_dash_line(paths_dialog->gc,FALSE);
 
@@ -582,14 +689,26 @@ void paths_add_path(BZPATHP bzp,gint insrow)
     }
   else
     {
-      pwidget->paths_pixmap =  
-	gdk_pixmap_create_from_data (paths_dialog->vbox->window,
-				     path_bits, 
-				     paths_dialog->image_width,
-				     paths_dialog->image_height,
-				     -1,
-				     &paths_dialog->vbox->style->fg[GTK_STATE_SELECTED],
-				     &paths_dialog->vbox->style->bg[GTK_STATE_SELECTED]);
+      if(!paths_dialog->pixmap_normal)
+	{
+	  paths_dialog->pixmap_normal =
+	    gdk_pixmap_create_from_data (paths_dialog->vbox->window,
+					 path_bits, 
+					 paths_dialog->image_width,
+					 paths_dialog->image_height,
+					 -1,
+					 &paths_dialog->vbox->style->fg[GTK_STATE_SELECTED],
+					 &paths_dialog->vbox->style->bg[GTK_STATE_SELECTED]);
+	  paths_dialog->pixmap_selected =
+	    gdk_pixmap_create_from_data (paths_dialog->vbox->window,
+					 path_bits, 
+					 paths_dialog->image_width,
+					 paths_dialog->image_height,
+					 -1,
+					 &paths_dialog->vbox->style->fg[GTK_STATE_NORMAL],
+					 &paths_dialog->vbox->style->bg[GTK_STATE_SELECTED]);
+	}
+       pwidget->paths_pixmap = paths_dialog->pixmap_normal;
     }
 
   gtk_clist_set_row_height(GTK_CLIST(paths_dialog->paths_list),
@@ -737,20 +856,6 @@ paths_select_row(GtkWidget *widget,
   bezier_paste_bezierselect_to_current(gdisp,bsel);
   paths_update_preview(bsel);
   beziersel_free(bsel);
-
-  /* Draw white as the border */
- /*  gdk_gc_set_foreground(paths_dialog->gc, &paths_dialog->black); */
-
-/*   gdk_draw_rectangle(pwidget->paths_pixmap,  */
-/* 		     paths_dialog->gc, FALSE, 0, 0,  */
-/* 		     paths_dialog->image_width+3, */
-/* 		     paths_dialog->image_height+3); */
-
-/*   gdk_draw_rectangle(pwidget->paths_pixmap,  */
-/* 		     paths_dialog->gc, FALSE, 1, 1,  */
-/* 		     paths_dialog->image_width+1, */
-/* 		     paths_dialog->image_height+1); */
-
 }
 
 static void
@@ -766,19 +871,6 @@ paths_unselect_row(GtkWidget *widget,
 
   if(!pwidget)
     return;
-
-/*   gdk_gc_set_foreground(paths_dialog->gc, &paths_dialog->white); */
-
-/*   gdk_draw_rectangle(pwidget->paths_pixmap,  */
-/* 		     paths_dialog->gc, FALSE, 0, 0,  */
-/* 		     paths_dialog->image_width+3, */
-/* 		     paths_dialog->image_height+3); */
-
-/*   gdk_draw_rectangle(pwidget->paths_pixmap,  */
-/* 		     paths_dialog->gc, FALSE, 1, 1,  */
-/* 		     paths_dialog->image_width+1, */
-/* 		     paths_dialog->image_height+1); */
-
 }
 
 void
@@ -795,6 +887,19 @@ paths_dialog_update (GimpImage* gimage)
   /* The last pointer comparison forces update if something has changed
    * under our feet.
    */
+
+  if(!gimp_image_get_paths(gimage))
+    {
+      /* No paths is this layer */
+      paths_ops_button_set_sensitive(DUP_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
+      point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
+      point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
+      point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
+      point_ops_button_set_sensitive(POINT_EDIT_BUTTON,FALSE);
+    }
 
   if (paths_dialog->gimage == gimage &&
       paths_dialog->current_path_list == (PATHIMAGELISTP)gimp_image_get_paths(gimage))
@@ -827,11 +932,11 @@ paths_dialog_update (GimpImage* gimage)
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,FALSE);
-      point_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
       return;
     }
   else
@@ -839,11 +944,11 @@ paths_dialog_update (GimpImage* gimage)
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
-      point_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
     }
 
   /* update the clist to reflect this images bz list */
@@ -870,6 +975,7 @@ paths_dialog_update (GimpImage* gimage)
   /*   g_slist_foreach(plist,paths_update_paths,NULL); */
 
   /* select last one */
+
   gtk_signal_handler_block(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
   gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 		       paths_dialog->current_path_list->last_selected_row,
@@ -1094,11 +1200,11 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
   paths_ops_button_set_sensitive(DUP_PATH_BUTTON,new_sz);
   paths_ops_button_set_sensitive(DEL_PATH_BUTTON,new_sz);
   paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,new_sz);
+  paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_ADD_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_DEL_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_NEW_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_EDIT_BUTTON,new_sz);
-  point_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,new_sz);
 }
 
 static void 
@@ -1208,7 +1314,7 @@ paths_dialog_map_callback (GtkWidget *w,
 {
   if (!paths_dialog)
     return;
-  
+
   gtk_window_add_accel_group (GTK_WINDOW (gtk_widget_get_toplevel(paths_dialog->paths_list)),
 			      paths_dialog->accel_group);
 
@@ -1325,7 +1431,8 @@ static gboolean
 paths_replaced_current(PATHIMAGELISTP plp,BezierSelect *bezier_sel)
 {
   /* Is there a currently selected path in this image? */
-  if(paths_dialog && plp && 
+  /* ALT if(paths_dialog && plp &&  */
+  if(plp && 
      plp->last_selected_row >= 0)
     {  
       paths_update_bzpath(plp,bezier_sel);
@@ -1408,7 +1515,9 @@ paths_update_preview(BezierSelect *bezier_sel)
 
       /* update .. */
       bezier_draw_curve (bezier_sel,paths_draw_segment_points,IMAGE_COORDS);
+
       /* update the pixmap */
+
       gtk_clist_set_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			    row,
 			    0,
@@ -1464,10 +1573,11 @@ paths_first_button_press(BezierSelect *bezier_sel,GDisplay * gdisp)
   BZPATHP bzp; 
   PATHIMAGELISTP plp;
 
-  if(!paths_dialog)
-    return;
-
-  paths_dialog->been_selected = FALSE;
+  if(paths_dialog)
+    {
+      paths_dialog->been_selected = FALSE;
+      /*ALT return;*/
+    }
 
   /* Button not pressed in this image...
    * find which one it was pressed in if any.
@@ -1482,7 +1592,7 @@ paths_first_button_press(BezierSelect *bezier_sel,GDisplay * gdisp)
       bzp = paths_dialog_new_path(&plp,bzpoints_create(bezier_sel),gdisp->gimage,-1);
       bzp->closed = bezier_sel->closed;
       bzp->state  = bezier_sel->state;
-      if(paths_dialog->gimage == gdisp->gimage)
+      if(paths_dialog && paths_dialog->gimage == gdisp->gimage)
 	{
 	  paths_dialog->current_path_list = plp;
 	  paths_add_path(bzp,-1);
@@ -1501,11 +1611,11 @@ paths_newpoint_current(BezierSelect *bezier_sel,GDisplay * gdisp)
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
-      point_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
       paths_update_preview(bezier_sel);
     }
 
@@ -1580,4 +1690,218 @@ pathsList_new(GimpImage * gimage,
   pip->bz_paths = bz_paths;
 
   return (PathsList *)pip;
+}
+
+
+/**************************************************************/
+/* Code to save/load from filesystem                          */
+/**************************************************************/
+
+static GtkWidget *file_dlg = 0;
+static int load_store;
+
+static void path_write_current_to_file(FILE *f,BZPATHP bzp)
+		
+{
+  GSList *list = bzp->bezier_details;
+  BZPOINTP pdata;
+
+  fprintf(f, "Name: %s\n", bzp->name->str);
+  fprintf(f, "#POINTS: %d\n", g_slist_length(bzp->bezier_details));
+  fprintf(f, "CLOSED: %d\n", bzp->closed==1?1:0);
+  fprintf(f, "DRAW: %d\n", 0);
+  fprintf(f, "STATE: %d\n", bzp->state);
+
+  while(list)
+    {
+      pdata = (BZPOINTP)list->data;
+      fprintf(f,"TYPE: %d X: %d Y: %d\n", pdata->type, pdata->x, pdata->y);
+      list = g_slist_next(list);
+    }
+}
+
+
+static void file_ok_callback(GtkWidget * widget, gpointer client_data) 
+{
+  GtkFileSelection *fs;
+  FILE *f; 
+  char* filename;
+  BZPATHP bzpath;
+  GSList * pts_list = NULL;
+  PATHIMAGELISTP plp;
+  gint row = paths_dialog->selected_row_num;
+
+  fs = GTK_FILE_SELECTION (file_dlg);
+  filename = gtk_file_selection_get_filename (fs);
+
+  if (load_store) 
+    {
+      f = fopen(filename, "rb");
+      
+      while(!feof(f))
+	{
+	  gchar *txt = g_new(gchar,512);
+	  gchar *txtstart = txt;
+	  gint readfields = 0;
+	  int val, x, y, type, closed, i, draw, state;
+
+	  if(!fgets(txt,512,f) || strlen(txt) < 7)
+	    {
+	      g_warning("Failed to read from %s",filename);
+	      gtk_widget_hide (file_dlg);  
+	      return;
+	    }
+
+	  txt += 6; /* Miss out 'Name: ' bit */
+	  txt[strlen(txt)-1] = '\0';
+
+	  readfields += fscanf(f, "#POINTS: %d\n", &val);
+ 	  readfields += fscanf(f, "CLOSED: %d\n", &closed);
+	  readfields += fscanf(f, "DRAW: %d\n", &draw);
+	  readfields += fscanf(f, "STATE: %d\n", &state);
+
+	  if(readfields != 4)
+	    {
+	      g_warning("Failed to read path from %s",filename);
+	      gtk_widget_hide (file_dlg);  
+	      return;
+	    }
+
+	  for(i=0; i< val; i++)
+	    {
+	      BZPOINTP bpt;
+	      readfields = fscanf(f,"TYPE: %d X: %d Y: %d\n", &type, &x, &y);
+	      if(readfields != 3)
+		{
+		  g_warning("Failed to read path points from %s",filename);
+		  gtk_widget_hide (file_dlg);  
+		  return;
+		}
+	      bpt = bzpoint_new(type, x, y);
+	      pts_list = g_slist_append(pts_list,bpt);
+	    }
+
+	  bzpath = bzpath_new(pts_list,
+			      closed,
+			      state,
+			      0, /* Can't be locked */
+			      txt);
+	  
+	  g_free(txtstart);
+
+	  paths_dialog->current_path_list = 
+	    bzpath_add_to_current(paths_dialog->current_path_list,
+				  bzpath,
+				  paths_dialog->gimage,
+				  row);
+	  paths_add_path(bzpath,row);
+
+	  gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
+			       paths_dialog->current_path_list->last_selected_row,
+			       0);
+
+	  paths_ops_button_set_sensitive(DUP_PATH_BUTTON,val);
+	  paths_ops_button_set_sensitive(DEL_PATH_BUTTON,val);
+	  paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,val);
+	  paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,val);
+	  point_ops_button_set_sensitive(POINT_ADD_BUTTON,val);
+	  point_ops_button_set_sensitive(POINT_DEL_BUTTON,val);
+	  point_ops_button_set_sensitive(POINT_NEW_BUTTON,val);
+	  point_ops_button_set_sensitive(POINT_EDIT_BUTTON,val);
+	}
+      fclose(f);      
+    } 
+  else 
+    {
+      BZPATHP bzp;
+
+      /* Get current selection... ignore if none */
+      if(paths_dialog->selected_row_num < 0)
+	return;
+      
+      /* Get bzpath structure  */
+      plp = paths_dialog->current_path_list;
+      bzp = (BZPATHP)g_slist_nth_data(plp->bz_paths,row); 
+
+      f = fopen(filename, "wb");
+      if (NULL == f) 
+	{
+	  g_message (_("open failed on %s: %s\n"), filename, g_strerror(errno));
+	  return;
+	}
+
+      /* Write the current selection out. */
+      
+      path_write_current_to_file(f,bzp);
+      
+      fclose(f);
+    }
+  gtk_widget_hide (file_dlg);  
+}
+
+
+static void file_cancel_callback(GtkWidget * widget, gpointer data) 
+{
+  gtk_widget_hide (file_dlg);
+}
+
+static void make_file_dlg(gpointer data) 
+{
+  file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
+  gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
+		     "clicked", (GtkSignalFunc) file_cancel_callback, data);
+  gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
+		     "clicked", (GtkSignalFunc) file_ok_callback, data);
+}
+
+
+static void 
+path_load_callback()
+{
+  if (!file_dlg) 
+    {
+      make_file_dlg(NULL);
+    } 
+  else 
+    {
+      if (GTK_WIDGET_VISIBLE(file_dlg))
+	return;
+    }
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Load Path"));
+  load_store = 1;
+  gtk_widget_show (file_dlg);
+}
+
+static void 
+path_store_callback()
+{
+  if (!file_dlg) 
+    {
+      make_file_dlg(NULL);
+    } 
+  else 
+    {
+      if (GTK_WIDGET_VISIBLE(file_dlg))
+	return;
+    }
+
+  gtk_window_set_title(GTK_WINDOW (file_dlg), _("Store Path"));
+  load_store = 0;
+  gtk_widget_show (file_dlg);
+}
+
+static void 
+paths_dialog_import_path_callback (GtkWidget * widget, gpointer udata)
+{
+  /* Read and add at current position */
+  path_load_callback();
+
+}
+
+static void 
+paths_dialog_export_path_callback (GtkWidget * widget, gpointer udata)
+{
+  /* Export the path to a file */
+  path_store_callback();
 }
