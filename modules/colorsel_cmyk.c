@@ -44,7 +44,8 @@ struct _ColorselCmyk
   GimpColorSelector  parent_instance;
 
   GimpCMYK           cmyk;
-  GtkAdjustment     *adj[4];
+  gdouble            pullout;
+  GtkAdjustment     *adj[5];
 };
 
 struct _ColorselCmykClass
@@ -57,11 +58,13 @@ static GType  colorsel_cmyk_get_type   (GTypeModule       *module);
 static void   colorsel_cmyk_class_init (ColorselCmykClass *klass);
 static void   colorsel_cmyk_init       (ColorselCmyk      *cmyk);
 
-static void   colorsel_cmyk_set_color  (GimpColorSelector *selector,
-                                        const GimpRGB     *rgb,
-                                        const GimpHSV     *hsv);
-static void   colorsel_cmyk_adj_update (GtkAdjustment     *adj,
-                                        ColorselCmyk      *module);
+static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
+                                            const GimpRGB     *rgb,
+                                            const GimpHSV     *hsv);
+static void   colorsel_cmyk_adj_update     (GtkAdjustment     *adj,
+                                            ColorselCmyk      *module);
+static void   colorsel_cmyk_pullout_update (GtkAdjustment     *adj,
+                                            ColorselCmyk      *module);
 
 
 static const GimpModuleInfo colorsel_cmyk_info =
@@ -136,6 +139,9 @@ static void
 colorsel_cmyk_init (ColorselCmyk *module)
 {
   GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *spinbutton;
+  GtkObject *adj;
   gint       i;
 
   static const gchar *cmyk_labels[] =
@@ -153,17 +159,19 @@ colorsel_cmyk_init (ColorselCmyk *module)
     N_("Black")
   };
 
-  table = gtk_table_new (4, 4, FALSE);
+  module->pullout = 1.0;
+
+  table = gtk_table_new (5, 4, FALSE);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
+
   gtk_box_pack_start (GTK_BOX (module), table, TRUE, FALSE, 0);
 
   for (i = 0; i < 4; i++)
     {
-      GtkObject *adj;
-
       adj = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
 				  gettext (cmyk_labels[i]),
 				  80, -1,
@@ -182,6 +190,30 @@ colorsel_cmyk_init (ColorselCmyk *module)
       module->adj[i] = GTK_ADJUSTMENT (adj);
     }
 
+  label = gtk_label_new_with_mnemonic (_("Black Pullout (%):"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label,
+                    2, 3, i, i + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&adj, module->pullout * 100.0,
+                                     0.0, 100.0, 1.0, 10.0, 0.0,
+                                     1.0, 0);
+
+  gtk_table_attach (GTK_TABLE (table), spinbutton,
+		    3, 4, i, i + 1,
+		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (colorsel_cmyk_pullout_update),
+                    module);
+
+  module->adj[i] = GTK_ADJUSTMENT (adj);
+
   gtk_widget_show (table);
 }
 
@@ -194,7 +226,7 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 
   module = COLORSEL_CMYK (selector);
 
-  gimp_rgb_to_cmyk (rgb, &module->cmyk);
+  gimp_rgb_to_cmyk (rgb, module->pullout, &module->cmyk);
 
   gtk_adjustment_set_value (module->adj[0], module->cmyk.c * 100.0);
   gtk_adjustment_set_value (module->adj[1], module->cmyk.m * 100.0);
@@ -237,4 +269,15 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
   gimp_color_selector_color_changed (selector);
+}
+
+static void
+colorsel_cmyk_pullout_update (GtkAdjustment *adj,
+                              ColorselCmyk  *module)
+{
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
+
+  module->pullout = adj->value / 100.0;
+
+  gimp_color_selector_set_color (selector, &selector->rgb, &selector->hsv);
 }

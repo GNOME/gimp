@@ -1759,7 +1759,6 @@ newsprint (GimpDrawable *drawable)
   gdouble    r;
   gdouble    theta;
   gdouble    rot[4];
-  gint       k_pullout;
   gint       bpp, colour_bpp;
   gint       has_alpha;
   gint       b;
@@ -1787,7 +1786,6 @@ newsprint (GimpDrawable *drawable)
     width = 1;
 
   oversample = pvals.oversample;
-  k_pullout = (255 * pvals.k_pullout) / 100;
 
   width *= oversample;
 
@@ -1931,7 +1929,7 @@ do {								\
                             r = data[0];
                             g = data[1];
                             b = data[2];
-                            k = k_pullout;
+                            k = pvals.k_pullout;
 
                             gimp_rgb_to_cmyk_int (&r, &g, &b, &k);
 

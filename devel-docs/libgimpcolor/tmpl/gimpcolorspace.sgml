@@ -51,6 +51,7 @@ different color spaces.
 </para>
 
 @rgb: 
+@pullout: 
 @cmyk: 
 
 
@@ -141,7 +142,7 @@ different color spaces.
 @red: 
 @green: 
 @blue: 
-@black: 
+@pullout: 
 
 
 <!-- ##### FUNCTION gimp_cmyk_to_rgb_int ##### -->

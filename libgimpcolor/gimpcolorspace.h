@@ -35,6 +35,7 @@ void   gimp_rgb_to_hsv          (const GimpRGB  *rgb,
 void   gimp_rgb_to_hsl          (const GimpRGB  *rgb,
 				 GimpHSL        *hsl);
 void   gimp_rgb_to_cmyk         (const GimpRGB  *rgb,
+                                 gdouble         pullout,
                                  GimpCMYK       *cmyk);
 
 void   gimp_hsv_to_rgb          (const GimpHSV  *hsv,
@@ -66,7 +67,7 @@ void    gimp_hsv_to_rgb_int	(gint    *hue         /* returns red        */,
 void    gimp_rgb_to_cmyk_int    (gint    *red         /* returns cyan       */,
                                  gint    *green       /* returns magenta    */,
                                  gint    *blue        /* returns yellow     */,
-                                 gint    *black       /* ignored as input   */);
+                                 gint    *pullout     /* returns black      */);
 void    gimp_cmyk_to_rgb_int    (gint    *cyan        /* returns red        */,
                                  gint    *magenta     /* returns green      */,
                                  gint    *yellow      /* returns blue       */,

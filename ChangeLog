@@ -1,3 +1,15 @@
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.[ch] (gimp_rgb_to_cmyk_int): made
+	pullout a percentage instead of a maximal value.
+	(gimp_rgb_to_cmyk): added a pullout parameter here as well.
+
+	* app/gui/info-window.c
+	* plug-ins/common/newsprint.c: changed accordingly.
+	
+	* modules/colorsel_cmyk.c: allow to specify the amount of black
+	pulled out when converting to CMYK.
+
 2003-09-03  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Changed slightly - I overestimated/overanticipated 

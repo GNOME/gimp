@@ -274,6 +274,7 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
 
 void
 gimp_rgb_to_cmyk (const GimpRGB  *rgb,
+                  gdouble         pullout,
                   GimpCMYK       *cmyk)
 {
   gdouble c, m, y, k;
@@ -289,6 +290,8 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
   if (c < k)  k = c;
   if (m < k)  k = m;
   if (y < k)  k = y;
+
+  k *= pullout;
 
   if (k < 1.0)
     {
@@ -711,14 +714,14 @@ gimp_hls_to_rgb_int (gint *hue,
  * @red:     the red channel; returns the cyan value (0-255)
  * @green:   the green channel; returns the magenta value (0-255)
  * @blue:    the blue channel; returns the yellow value (0-255)
- * @pullout: the maximum amount of black to pull out; returns
+ * @pullout: the percentage of black to pull out (0-100); returns
  *           the black value (0-255)
  *
  * Does a naive conversion from RGB to CMYK colorspace. A simple
  * formula that doesn't take any color-profiles into account is used.
  * The amount of black pullout how can be controlled via the @pullout
  * parameter. A @pullout value of 0 makes this a conversion to CMY.
- * For most cases, @pullout should be choosen as 255.
+ * A value of 100 causes the maximum amount of black to be pulled out.
  **/
 void
 gimp_rgb_to_cmyk_int (gint *red,
@@ -740,11 +743,13 @@ gimp_rgb_to_cmyk_int (gint *red,
     }
   else
     {
-      gint k = CLAMP (*pullout, 0, 255);
+      gint k = 255;
 
       if (c < k)  k = c;
       if (m < k)  k = m;
       if (y < k)  k = y;
+
+      k = (k * CLAMP (*pullout, 0, 100)) / 100;
 
       *red   = ((c - k) << 8) / (256 - k);
       *green = ((m - k) << 8) / (256 - k);

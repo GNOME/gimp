@@ -625,7 +625,7 @@ info_window_update_extended (GimpDisplay *gdisp,
       g_snprintf (buf, sizeof (buf), "%d", ROUND (hsv.v * 100.0));
       gtk_label_set_text (GTK_LABEL (iwd->hsv_labels[2]), buf);
 
-      gimp_rgb_to_cmyk (&rgb, &cmyk);
+      gimp_rgb_to_cmyk (&rgb, 1.0, &cmyk);
 
       g_snprintf (buf, sizeof (buf), "%d", ROUND (cmyk.c * 100.0));
       gtk_label_set_text (GTK_LABEL (iwd->cmyk_labels[0]), buf);
