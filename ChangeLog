@@ -1,5 +1,11 @@
 2002-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpblendtool.c: set the witdh of the gradient preview
+	to 96 instead of 128 pixels so it is not the widest tool options
+	item with the "small" theme.
+
+2002-06-16  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpstock.[ch]: register the new "invert" and
 	"layer to imagesize" PNGs as stock icons.
 

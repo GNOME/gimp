@@ -491,7 +491,6 @@ blend_options_new (GimpToolInfo *tool_info)
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -512,7 +511,7 @@ blend_options_new (GimpToolInfo *tool_info)
 
   button = gtk_button_new ();
   preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
-                                   128, 16, 0,
+                                   96, 16, 0,
                                    FALSE, FALSE, TRUE);
   gtk_container_add (GTK_CONTAINER (button), preview);
   gtk_widget_show (preview);
