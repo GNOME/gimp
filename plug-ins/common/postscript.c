@@ -58,10 +58,11 @@
  *                          for Mac files.
  *                          Fix problem with loop when reading not all
  *                          images of a multi page file.
+ *         PK, 31-Aug-2000: Load PS: Add checks for space in filename.
  */
 #define VERSIO 1.11
-static char dversio[] = "v1.11  20-Aug-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.11  20-Aug-2000";
+static char dversio[] = "v1.11  31-Aug-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.11  31-Aug-2000";
 
 #include "config.h"
 
@@ -1275,12 +1276,13 @@ ps_open (gchar            *filename,
          gint             *ury,
          gint             *is_epsf)
 {
-  char *cmd, *gs, *gs_opts, *driver;
+  char *cmd, *gs, *gs_opts, *driver, *fnbuf = NULL;
   FILE *fd_popen;
   int width, height, resolution;
   int x0, y0, x1, y1;
   int offx = 0, offy = 0;
   int is_pdf;
+  int blank, anf, apo;
   char TextAlphaBits[64], GraphicsAlphaBits[64], geometry[32];
   char offset[32];
 
@@ -1356,6 +1358,32 @@ ps_open (gchar            *filename,
   gs = getenv ("GS_PROG");
 #ifndef G_OS_WIN32
   if (gs == NULL) gs = "gs";
+
+  /* Escape special characters. Escaping " does not work with call of shell. */
+  /* fnbuf points to memory that should be freed. */
+  filename = fnbuf = gimp_strescape (filename, "\"");
+  blank = (strchr (filename, ' ') != NULL);
+  apo = (strchr (filename, '\'') != NULL);
+  anf = (strchr (filename, '"') != NULL);
+
+  /* Must the filename be enclosed ? */
+  /* If we have " and ' it will not work */
+  if (blank || anf || apo)
+  {
+    if (!anf) /* No " ? Enclose with " */
+    {
+      filename = g_strdup_printf ("\"%s\"", filename);
+      g_free (fnbuf);
+      fnbuf = filename;
+    }
+    else if (!apo) /* No ' ? Enclose with ' */
+    {
+      filename = g_strdup_printf ("'%s'", filename);
+      g_free (fnbuf);
+      fnbuf = filename;
+    }
+  }
+
 #else
   /* We want the console ghostscript application. It should be in the PATH */
   if (gs == NULL)
@@ -1431,6 +1459,7 @@ ps_open (gchar            *filename,
   fd_popen = fopen (pnmfile, "rb");
 #endif
   g_free (cmd);
+  g_free (fnbuf);
 
   return (fd_popen);
 }

@@ -1,3 +1,15 @@
+2000-10-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: applied gimp-kirchgessner-001005-0
+	Check if input filename keeps a space. Then enclose filename 
+	in " or ' before passing to ghostscript. Otherwise it can't be 
+	interpreted.
+
+	* tips/gimp_tips.pl.txt
+	* tools/authorsgen/contributors: applied gimp-art-20000926-0
+	Updates to the polish translation by Artur Polaczynski 
+	<artie@kmfms.com>
+
 2000-10-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/rcm/rcm_dialog.c: fixed typo

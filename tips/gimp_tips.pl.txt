@@ -1,5 +1,5 @@
 # To jest lista tipsów GIMPa. Zawsze kiedy startuje GIMP 
-# jeden tips jest pobierany z tej listy. Wy¶wietlany jest on 
+# jeden tips jest pobierany z tej listy. Jest on wy¶wietlany 
 # w okienku dialogowym "Porada dnia" ("Tip of the day").
 #
 #                 tips - porada dnia - Tip of the day 
@@ -12,148 +12,301 @@
 #   Powstrzymaj siê wiêc od bardzo d³ugich linii. 8-)
 #   Mamy za to kontrolê nad wygl±dem tipsa (mniej wiêcej).
 # - Tipsy nie powinny byæ d³ugie, powiedzmy max 3-4 linie.
+# - Advice for translators to other languages: keep the original tips
+#   as comments before the translated tips.  It will be easier for
+#   other people to check for changes or additions.
 #
-# Tipsy powsta³y dziêki: Zachary Beane, Mo Oishi,
-# Raphael Quinet, Sven Neumann i wielu ludzi z listy dyskusyjnej GIMPa.
+# Tipsy powsta³y dziêki: Zachary Beane, Mo Oishi, Raphael Quinet, 
+# Sven Neumann, Carey Bunks i wielu ludzi z listy dyskusyjnej GIMPa
+# i newsgroup (comp.graphics.apps.gimp).
 #
 # T³umaczy³: Artur Polaczyñski <artie@kmfms.com> ( <- wszystkie uwagi tutaj)
-#            Kris              <psi0873@orca.mila.edu.pl>
-# Je¶li co¶ zmienisz to wysli przynajmniej info do ar't 
+#            Kris              <krishole@cool.com>
+# Je¶li co¶ zmienisz to wy¶lij przynajmniej info do ar't 
 # --------------------------------------------------------------------
-
-# Pierwszy tips powinien byæ powitaniem, poniewa¿ to pierwsza rzecz 
+# Pierwszy tips to powitanie, poniewa¿ to pierwsza rzecz 
 # jak± zobaczy nowy u¿ytkownik.
-#
 
-        	Witam w GIMPie !
+#                            Welcome to the GIMP !
+#      
+#Nearly all image operations are performed by right-clicking
+#on the image.  And don't worry, you can undo most mistakes...    
+    	    		    Witam w GIMPie !
       
-Klikaj±c prawym klawiszem myszy wykonasz prawie 
-wszystkie operacje na obrazku. I nie przejmuj siê, 
-wiêkszo¶æ pomy³ek mo¿esz cofn±æ (Ctrl-Z). 
+Klikaj±c prawym klawiszem myszy wykonasz prawie wszystkie operacje 
+na obrazie. I nie przejmuj siê, wiêkszo¶æ pomy³ek mo¿esz cofn±æ (Ctrl-Z). 
+    Uwagi dotycz±ce polskich t³umaczeñ wy¶lij do artie@kmfms.com
 
-# Tipsy dla pocz±tkuj±cych
+# Tipsy dla pocz±tkuj±cych - Tips for beginners start here
+# (for people who are not familiar yet with layers and image formats)
 #
 
+#%%#You can get context-sensitive help for most of the GIMP's features by
+##pressing the F1 key at any time.  This also works inside the menus.
+Mo¿esz uzyskaæ pomoc kontekstow± dla wiêkszo¶ci narzêdzi (features) GIMPa 
+naciskaj±c klawisz F1. To równie¿ dzia³a wewn±trz menu.
+
+#*The GIMP uses layers to let you organize your image.  Think of them
+#as a stack of slides or filters, such that looking through them you
+#see a composite of their contents.
 Warstwy w GIMPie pomagaj± zorganizowaæ twój obrazek.
 Pomy¶l o nich jak o slajdach i filtrach,
 przez które widzisz ca³o¶æ kompozycji.
 
+#*You can perform many layer operations by right-clicking on the text
+#label of a layer in the "Layers, Channels and Paths" dialog
 Mo¿esz wykonaæ wiele operacji na warstwach klikaj±c 
 prawym klawiszem myszy na nazwê warstwy w oknie 
 "Warstwy i Kana³y" (Dialogi->Warstwy i Kana³y).
 
-Kiedy próbujesz zapisaæ pliki GIF, XPM, lub inne z 
-kolorem indeksowym, musisz przekonwertowaæ obrazek 
-do indeksowego u¿ywaj±c menu Obraz//Indeksowy. 
+#%%#When you save an image to work on it again later, try using XCF,
+##the GIMP's native file format (use the file extension ".xcf").
+##This preserves the layers and every aspect of your work-in-progress.
+##Once a project is completed, you can save it as JPEG, PNG, GIF, ...
+Format GIMP-a XCF (rozszerzenie .xcf) zapisuje wszystkie warstwy, zaznaczenia,
+oraz wiele innych rzeczy nad którymi pracujesz. U¿yj go do zapisania nie 
+skoñczonej pracy. Pó¼niej mo¿esz u¿yæ innych formatów jak JPEG, PNG, GIF, ...
 
-Je¶li chcesz widzieæ wiêcej ustawieñ dla danego 
-narzêdzia kliknij na jego przycisku dwukrotnie.
+#*The layer named "Background" it special because it lacks transparency.
+#This prevents you from adding a layer mask or moving the layer up in
+#the stack.  You may add transparency to it by right-clicking in the
+#"Layers, Channels and Paths" dialog and selecting "Add Alpha Channel".
+Warstwa "t³o" (Background) jest specjalna, nie ma przezroczysto¶ci. Chroni 
+to przed przesuniêciem w górê, oraz dodaniem maski. Mo¿esz dodaæ 
+przezroczysto¶æ, klikaj±c prawym klawiszem myszy w oknie "Warstwy i Kana³y" 
+na tej warstwie i wybierz "Dodaj kana³ alfa" (Add Alpcha Channel).
 
-Mo¿esz zmieniæ nazwê warstwy klikaj±c dwukrotnie 
-na jej nazwie w oknie "Warstwy i Kana³y".
-
-Warstwa "t³o" (Background) jest specjalna, nie mo¿e
-mieæ maski, dopóki nie bêdzie mia³a kana³u alfa. Kliknij 
-prawym klawiszem myszy w oknie "Warstwy i Kana³y" na tej 
-warstwie i wybierz "Dodaj kana³ alfa" (Add Alpcha Channel).
-
-U¿ywaj±c narzêdzi malowania (pêdzle, pióro, aerograf), 
-klikniêcie z shiftem spowoduje namalowanie prostej linii od 
-ostatniego namalowanego punktu do obecnej pozycji kursora.
-
+#*Most plug-ins work on the current layer of the current image.  In
+#some cases, you will have to merge all layers (Layers->Flatten Image)
+#if you want the plug-in to work on the whole image.
 Wiêkszo¶æ wtyczek (plug-ins) pracuje na jednej, aktywnej warstwie.
-Je¶li zale¿y Ci, ¿eby plugin móg³ pracowaæ na ca³ym obrazku -
+Je¶li zale¿y Ci, ¿eby wtyczka móg³a pracowaæ na ca³ym obrazku -
 po³±cz wszystkie warstwy (Warstwy -> Sp³aszcz Obrazek).
 
-Wiêkszo¶æ formatów graficznych nie mo¿e zapisaæ warstw, 
-wtedy zapisywana jest jedna, aktywna warstwa. U¿yj formatu
-(GIMPa) XCF do zapisania warstw, kana³ów, linii i zaznaczeñ.
+#*Not all effects can be applied to all kinds of images.  This is
+#indicated by a grayed-out menu-entry.  You may need to change
+#the image mode to RGB (Image->Mode->RGB), add an alpha-channel
+#(Layers->Add Alpha Channel) or flatten it (Layers->Flatten Image).
+Nie wszystkie efekty mog± byæ wykorzystane do wszystkich rodzajów obrazów. S±
+one zaznaczone szarym kolorem napisu w menu. Potrzebujesz wtedy zmieniæ obraz 
+do RGB (Obraz->Tryb->RGB), dodaæ kana³ alfa (Warstwy->Dodaj kana³ alfa) 
+lub sp³aszczyæ go (Warstwy->Sp³aszcz Obraz).
 
-Nie wszystkie efekty mog± byæ wykorzystane do wszystkich rodzajów
-obrazków. S± zaznaczone szarym kolorem napisu w menu. Potrzebujesz
-wtedy zmieniæ obraz do RGB, dodaæ kana³ alfa lub sp³aszczyæ go.
+#*Tips od t³umacza 
+Podwójne klikniêcie na przycisku z narzêdziówki 
+otworzy okienko ustawieñ dla wybranego narzêdzia.
+Podwójne klikniêcie na nazwie warstwy w oknie 
+"Warstwy i Kana³y" pozwala na jej zmianê.
 
-# Tipsy dla ¶rednio zaawansowanych
+
+# Tipsy dla ¶rednio zaawansowanych - Tips for intermediate users start here
 #
 
-Okno wyboru pliku potrafi koñczyæ nazwy je¶li naci¶niesz TAB,
-tak jak w shell-u. Napisz czê¶æ, naci¶nij TAB, i jest ca³a nazwa.
+#You can drag and drop many things in the GIMP.  For example, dragging
+#a color from the toolbox or from a color palette and dropping it into
+#an image will fill the current image or selection with that color.
+#???????????????????????????????????????????????????
+Mo¿esz przeci±gaæ i upuszczaæ mysz± wiele rzeczy w GIMPie. Np. 
+przeci±gniêcie koloru z narzêdziówki (toolbox) lub z dialogu 
+wyboru koloru i upuszczenie na obrazie spowoduje wype³nienie 
+selekcji lub aktualnej warstwy wybranym kolorem.
 
+
+#%%#When using a drawing tool (Paintbrush, Airbrush, or Pencil),
+##Shift-click will draw a straight line from your last drawing
+##point to your current cursor position.  If you also press Ctrl,
+##the line will be constrained to 15 degree angles.
+U¿ywaj±c narzêdzi malowania (pêdzle, pióro, aerograf), 
+klikniêcie z Shift-em spowoduje namalowanie prostej linii od 
+ostatniego namalowanego punktu do obecnej pozycji kursora.
+Dodatkowo Ctrl wymusi rysowanie ze skokiem co 15 stopni. 
+
+#*The file selection dialog box has command-line completion with
+#Tab, just like the shell.  Type part of a filename, hit tab, and voila!
+#It's completed.
+Okno wyboru pliku potrafi dokoñczaæ nazwy, 
+tak jak w shell-u, je¶li naci¶niesz TAB. 
+Napisz czê¶æ nazwy, naci¶nij TAB, i jest ca³a.
+
+#*You can reassign shortcut keys on any menu by bringing up the menu,
+#selecting a menu item, and pressing the new shortcut key combination.
+#This is dynamic and is saved when you exit GIMP.
 Mo¿esz przypisaæ w³asne skróty klawiszowe do pozycji w menu: 
-wywo³aj menu, zaznacz pozycjê, naci¶nij skrót i gotowe, mo¿emy
-z niego korzystaæ. Ustawienia s± zapisywane przy wyj¶ciu z GIMPa.
+wywo³aj menu, zaznacz pozycjê, naci¶nij skrót i gotowe. Teraz mo¿emy
+z niego korzystaæ. Ustawienia s± zapisywane przy wyj¶ciu z GIMP-a.
 
-Wszystkie stare operacje na kana³ach zosta³y zast±pione bardziej
-wydajnymi warstwami i operacjami na nich. Przyzwyczajenie do 
-nich mo¿e zaj±æ trochê czasu ale ³atwiej siê z nimi pracuje.
 
+#*You can use the middle mouse button to pan around
+#the image, if it's larger than its display window.
 Mo¿esz u¿yæ ¶rodkowego klawisza myszy do poruszania 
 siê po obrazku, je¶li jest wiêkszy od okienka.
 
-Kliknij i poci±gnij na linijce by po³o¿yæ prowadnicê na obrazku.
+#*Click and drag on a ruler to place a Guide on an image.  All
+#dragged selections will snap to the guides.  You can remove
+#guides by dragging them off the image with the Move tool.
+Kliknij i poci±gnij na linijce, by po³o¿yæ prowadnicê na obrazku.
 Wszystkie selekcje mysz± bêd± siê do nich "przykleja³y". Aby je 
-zlikwidowaæ przeci±gnij je z powrotem narzêdziem przesuwania.
+zlikwidowaæ przeci±gnij je z powrotem na linijkê narzêdziem przesuwania.
 
+#*You can drag a layer from the "Layers, Channels and Paths" dialog
+#and drop it onto the toolbox.  This will create a new image
+#containing only that layer.
+Mo¿esz przeci±gn±æ warstwê z okna "Warstwy, Kana³y i ¦cie¿ki" na 
+narzêdziówkê (toolbox). Utwo¿ysz nowy obraz z zawrto¶ci± tej warstwy.
+
+#A Floating Selection must be anchored to a new layer or to the last
+#active layer before doing other operations on the image.  Click on the
+#New Layer or Anchor Layer buttons in the "Layers, Channels and Paths"
+#dialog, or use the menus to do the same.
+#???????????????????????????????????????????????????
+Zaznaczenie p³ywaj±ce (floating) musi byæ przytwierdzone do nowej lub 
+istniej±cej warstwy zanim co¶ z nim bêdziesz móg³ zrobiæ. Aby to uzyskaæ
+kliknij na przycisk nowej warstwy lub kotwicy w dialogu "Warstwy, kana³y
+i ¶cie¿ki". Mo¿esz uzyskaæ to samo w menu (Warstwy-> Zakotwicz warstwê).
+
+
+#*The GIMP supports gzip compression on the fly.  Just add
+#".gz" (or ".bz2", if you have bzip2 installed) to the filename
+#and your image will be saved compressed.  Of course loading
+#compressed images works too.
 GIMP obs³ugujê kompresjê "gzip" w locie. Przy zapisaniu pracy 
 dodaj ".gz" (lub ".bz2" je¶li masz bzip2) do nazwy pliku
 a zostanie on skompresowany. Oczywi¶cie dzia³a to w obie strony.
 
-Wci¶nij i przytrzymaj Shift przed zaznaczaniem obszaru a 
-doda siê on do ju¿ zaznaczonego, Ctrl odejmuje analogicznie.
+#*Pressing and holding the Shift key before making a selection allows
+#you to add to the current selection instead of replacing it.  Using
+#Ctrl before making a selection subtracts from the current one.
+Wci¶nij i przytrzymaj Shift przed zaznaczaniem 
+obszaru, a doda siê on ju¿ do istniej±cego 
+zaznaczenia, natomiast Ctrl je odejmuje.
 
-Shift i Ctrl w czasie zaznaczania spowoduje odpowiednio:
-wykonanie idealnego kwadratu lub ko³a, 
-wycentrowanie zaznaczenia do pocz±tku zaznaczenia.
+#?*You can press or release the Shift and Ctrl keys while you are
+#making a selection in order to constrain it to a perfect square
+#or circle, or to have it centered on its starting point.
+Naci¶niêcie klawisza Shift w czasie zaznaczania spowoduje 
+wykonanie idealnego kwadratu lub ko³a. Klawisz Ctrl wymusi 
+wycentrowanie zaznaczenia do pocz±tkowego punktu zaznaczenia.
 
-# Tipsy dla zaawansowanych
-#
+#*Using Edit->Stroke allows you to draw simple squares or circles by
+#painting the edge of your current selection with the active brush.
+#More complex shapes can be drawn with Filters->Render->Gfig.
+"Edycja -> Stroke" pomaga narysowaæ prostok±ty lub owale po krawêdzi 
+zaznaczenia aktualnym pêdzlem. Natomiast bardziej skomplikowane figury 
+uzyskasz u¿ywaj±c : "Filtry -> Render(uj) -> Gfig".
+
+#If you stroke a path (Edit->Stroke), the current drawing tool and its
+#settings are used.  You can use the Paintbrush in gradient mode, the
+#Clone tool with a pattern or even the Eraser or the Smudge tool.
 #???????????????????????????????????????????????????
-#You can adjust the selection range for fuzzy select 
-#by clicking and dragging left and right.
+Je¶li malujesz z pomoc± Edycja->Stroke to pamiêtaj ¿e u¿ywane jest do tego 
+aktywne narzêdzie oraz jego ustawienia. Mo¿esz u¿ywaæ do tego pêdzla w trybie
+gradientu, narzêdzia klonowania lub nawet gumki oraz narzêdzia Smudge.
 
-Klikniêcie z Shift-em na ikonkê oka w oknie 
-"Warstwy i Kana³y" chowa wszystkie warstwy poza t± jedn±.
+#You can create and edit complex selections using the Bezier tool.
+#The "Paths" tab in the "Layers, Channels and Paths" dialog allows
+#you to work on multiple paths and to convert them to selections.
+#???????????????????????????????????????????????????
+Mo¿esz utworzyæ i edytowaæ skomplikowane zaznaczenia u¿ywaj±c narzêdzia 
+krzywe Beziera. Zak³adka "¦cie¿ki" w dialogu "Warstwy, kana³y i ¶cie¿ki"
+pozwala pracowaæ nad wieloma ¶cie¿kami i konwertowaæ je do zaznaczenia. 
 
-Klikniêcie z Ctrl na podgl±dzie maski w oknie Warstwy i Kana³y
-w³±cza/wy³±cza efekt maski.
+#You can use the paint tools to change the selection.  Click on the
+#Quick Mask button at the bottom left of an image window.  Change your
+#selection by painting in the image and click on the button again to
+#convert it back to a normal selection.
+#???????????????????????????????????????????????????
+Mo¿esz u¿ywaæ narzêdzi do malowania aby zmieniæ zaznaczenie. Kliknij 
+na przycisku Quick Mask w dolnym lewym rogu okna obrazu (ma³y czerwony 
+kwadracik). Zmieñ swoje zanaczenie. I zamieñ je spowrotem w zaznaczenie.
+Tym razem u¿yj drugiego przycisku z "mrówkami" w oknie obrazu.
+ 
+#You can save a selection to a channel (Select->Save to Channel) and
+#then modify this channel with any paint tools.  Using the buttons in
+#the "Channels" tab of the "Layers, Channels and Paths" dialog, you can
+#toggle the visibility of this new channel or convert it to a selection.
+#???????????????????????????????????????????????????
+Mo¿esz zapisaæ selekcje do kana³u (Zaznacenie->Zapisz do kana³u) i 
+modyfikowaæ go ka¿dym malarskim narzêdziem. Przyciskami w zak³adce 
+"Kana³y" w dialogu "Warstwy, kana³y i ¶cie¿ki" mo¿esz ustawiæ widoczno¶æ
+kana³u lub konwertowaæ do zaznaczenia.
 
-Klikniêcie z Alt na podgl±dzie maski w oknie Warstwy i Kana³y
-w³±cza/wy³±cza wy¶wietlanie maski w oknie obrazka.
+# Tipsy dla zaawansowanych - Tips for advanced users start here
+# (this is mostly for learning shortcut keys)
+#
 
+#%%#If your screen is too cluttered, you can press Tab multiple times
+##in an image window to hide or show the toolbox and other dialogs.
+Je¶li masz za du¿o otwartych okien, wci¶nij parê razy Tab w oknie 
+obrazu. Znikn± lub pojawi± siê okna dialogowe, oraz narzêdziówka.
+
+#%%#You can adjust the selection range for fuzzy select
+##by clicking and dragging left and right.
+Mo¿esz ustawiæ (zmniejszyæ lub zwiêkszyæ) obszar dla zaznaczenia 
+rozmytego klikaj±c i przeci±gn±c w lewo lub prawo.
+
+#*Shift-click on the eye icon in the Layers dialog to hide all
+#layers but that one.  Shift-click again to show all layers.
+Klikniêcie z Shift-em na ikonkê oka w oknie "Warstwy i Kana³y" 
+chowa wszystkie warstwy poza jedn±. Drugie klikniêcie poka¿e wszystkie.
+
+#*Ctrl-click on the layer mask's preview in the Layers dialog 
+#toggles the effect of the layer mask.
+Klikniêcie z Ctrl na podgl±dzie maski warstwy w oknie 
+"Warstwy i Kana³y" w³±cza lub wy³±cza efekt maski.
+
+#*Alt-click on the layer mask's preview in the Layers dialog 
+#toggles viewing the mask directly.
+Klikniêcie z Alt na podgl±dzie maski w dialogu 
+"Warstwy, kana³y i ¶cie¿ki" w³±cza lub wy³±cza 
+wy¶wietlanie maski w oknie obrazka.
+
+#*You can use Alt-Tab to cycle through all layers in an image 
+#(if your window manager doesn't trap those keys...).
 Mo¿esz siê prze³±czaæ miêdzy warstwami u¿ywaj±c Alt-Tab
-(je¶li pozwoli ci na to X Menad¿er okien).
+(je¶li pozwoli ci na to twój X Menad¿er okien).
 
+#*Shift-click with the Bucket Fill tool to have it use 
+#the background color instead of the foreground color.
 Wype³nianie z Shift-em powoduje u¿ycie koloru 
 t³a (background) zamiast aktywnego (foreground).
 
+#*Control-drag with the Transform tool in rotation mode 
+#will constrain the rotation to 15 degree angles.
 Ctrl z narzêdziem przekszta³æ w trybie
 obrotu, wymusza obracanie co 15 stopni.
 
-Mo¿esz ustawiæ zaznaczenie a nastêpnie 
-przesun±æ u¿ywaj±c Alt-u.
+#*You can adjust and re-place a selection by using Alt-drag.
+Mo¿esz ustawiæ zaznaczenie a nastêpnie przesun±æ je mysz± u¿ywaj±c Alt-u.
 
-Je¶li Twoje fonty wygl±daj± "pixelowato", to nie s± skalowane
-wiêkszo¶æ X serwerów obs³uguje fonty "Type 1 Postrscript".
-Pobierz je i zainstaluj.
+#*If your fonts turn out blocky, that's because they're not scalable 
+#fonts. Most X servers support scalable Type 1 Postscript fonts.  
+#Download and install them.  Some font servers allow you to use 
+#TrueType (.ttf) fonts, which are also scalable.
+Je¶li Twoje fonty wygl±daj± "pixelowato", to nie s± skalowalne.
+Wiêkszo¶æ X serwerów obs³uguje fonty "Type 1 Postrscript".
+Pobierz je i zainstaluj. Niektóre serwery obs³uguj± 
+fonty TrueType (.ttf), one te¿ s± skalowalne.
 
-# FIXME: The next tip should disappear once we have solved the
-#        problems of stale pluginrc files and plug-in directories.
-#        All other files in ~/.gimp can be kept after an upgrade.
-#        In particular, we should try to preserve gimprc.  --Raphael
-# czy to przypadkiem nie aktualne !!!
-#
-#Kiedy instalujesz now± wersje, 
-#skasuj swój katalog ~/.gimp .
-
-"Edycja -> Stroke" pomaga narysowaæ prostok±ty lub 
-owale po krawêdzi zaznaczenia, aktualnym pêdzlem.
-Ale bardziej skomplikowane figury uzyskasz 
-u¿ywaj±c : "Filtry -> Render(uj) -> Gfig".
-
-Aby narysowaæ idealne ko³o, trzymaj Shift podczas zaznaczania elipsy.
+#*To create a perfect circle, hold Shift while doing an ellipse select. To
+#place a circle precisely, drag horizontal and vertical guides tangent to
+#the circle you want to select, place your cursor at the intersection
+#of the guides, and the resulting selection will just touch the guides.
+Aby narysowaæ idealne ko³o, przytrzymaj Shift podczas wyznaczania elipsy.
 Aby umie¶ciæ je precyzyjnie, przeci±gnij prowadnice stycznie do ko³a,
 które chcesz zaznaczyæ, umie¶æ kursor w miejscu ich przeciêcia.
-Rezultat to ko³o którego krawêdzie stykaj± siê z prowadnicami.
- 
+Rezultat to ko³o, którego krawêdzie stykaj± siê z prowadnicami.
+
+##If some of your scanned photos do not look colorful enough, you can
+##easily improve their tonal range with the "Auto" button in the Levels
+##tool (Image->Colors->Levels).  If there are any color casts, you can
+##correct them with the Curves tool (Image->Colors->Curves).
+#???????????????????????????????????????????????????
+Je¿eli twoja skanowana fotografia nie wygl±da dostatecznie kolorowo, mo¿esz
+w prosty sposób poprawiæ jej rozpiêto¶æ tonaln±: S³u¿y do tego przycisk "Auto" 
+w narzêdziu "Poziomy" (Obraz->Kolory->Levels...). Je¿eli jakiego¶ koloru jest 
+za du¿o, mo¿esz to poprawiæ u¿ywaj±c "Krzywych" (Obraz->Kolory->Krzywe...).
+
 # (end of tips)
+#*****************************************************************************
+
 

@@ -7,9 +7,9 @@
 # Artur Polaczyñski <artie@kmfms.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.23\n"
+"Project-Id-Version: GIMP 1.1.27\n"
 "POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-04-04 22:06+02:00\n"
+"PO-Revision-Date: 2000-10-06 19:15+02:00\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -302,15 +302,13 @@ msgstr "Zresetuj"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:240
-#, fuzzy
 msgid "Brightness:"
-msgstr "Jasno¶æ"
+msgstr "Jasno¶æ:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:271
-#, fuzzy
 msgid "Contrast:"
-msgstr "Kontrast"
+msgstr "Kontrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:306 app/color_balance.c:446 app/curves.c:687
@@ -1068,18 +1066,20 @@ msgid ""
 msgstr ""
 
 #: app/docindex.c:118
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Przesuwa wybran± pozycjê w indeksie w górê"
+msgstr ""
+"Przesuwa wybran± pozycjê w indeksie w górê\n"
+"<Shift> Na wierzch"
 
 #: app/docindex.c:122
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Przesuwa wybran± pozycjê w indeksie w dó³"
+msgstr ""
+"Przesuwa wybran± pozycjê w indeksie w dó³\n"
+"<Shift> Pod spód"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1242,11 +1242,13 @@ msgid "No Selection."
 msgstr "Brak zaznaczenia."
 
 #: app/fileops.c:453 app/fileops.c:1722
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Zapis nie powiód³ siê: %s"
+msgstr ""
+"Zapis nie powiód³ siê: \n"
+"%s"
 
 #: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
@@ -1261,37 +1263,43 @@ msgid "Determine File Type:"
 msgstr "Ustalenie typu pliku:"
 
 #: app/fileops.c:596
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
-msgstr "Nie mo¿na przywróciæ. Obrazowi nie przypisano nazwy pliku."
+msgstr ""
+"Nie mo¿na przywróciæ.\n"
+"Obrazowi nie przypisano nazwy pliku."
 
 #: app/fileops.c:603
-#, fuzzy
 msgid "Revert"
-msgstr "Zresetuj"
+msgstr "Przywróæ"
 
 #: app/fileops.c:614
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Przywrócenie nie powiod³o siê."
+msgstr ""
+"Przywrócenie nie powiod³o siê.\n"
+"%s"
 
 #: app/fileops.c:711
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "Nie mo¿na wype³niæ obrazu nieznanego typu."
+msgstr ""
+"%s nieudany.\n"
+"%s: Nieznany typ pliku."
 
 #: app/fileops.c:728
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s nie jest zwyk³ym plikiem (%s)"
+msgstr ""
+"%s nieudany.\n"
+"%s: nie jest zwyk³ym plikiem."
 
 #: app/fileops.c:749
 #, c-format
@@ -1299,24 +1307,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s nieudany.\n"
+"%s: Brak dostêpu."
 
 #: app/fileops.c:798
 msgid "Open"
 msgstr "Otwórz"
 
 #: app/fileops.c:1105
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "Nie mo¿na wype³niæ obrazu nieznanego typu."
+msgstr ""
+"Zapis nie powiód³ siê.\n"
+"%s: Nieznany typ pliku."
 
 #: app/fileops.c:1120
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s nie jest zwyk³ym plikiem (%s)"
+msgstr ""
+"Zapis nie powiód³ siê.\n"
+"%s nie jest zwyk³ym plikiem."
 
 #: app/fileops.c:1139
 #, c-format
@@ -1324,6 +1338,8 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"Zapis nie powiód³ siê.\n"
+"%s: Brak dostêpu."
 
 #: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
@@ -1354,11 +1370,13 @@ msgid "(could not make preview)"
 msgstr "(nie mo¿na utworzyæ podgl±du)"
 
 #: app/fileops.c:1606 app/fileops.c:1648
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Otwarcie nie powiod³o siê: %s"
+msgstr ""
+"Otwarcie nie powiod³o siê: \n"
+"%s"
 
 #: app/fileops.c:1814
 #, c-format
@@ -1580,7 +1598,7 @@ msgstr "Typ %d warstwy nie jest obs³ugiwany"
 
 #: app/gimphelp.c:190
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "Nie mogê znale¼æ przegl±darki pomocy GIMPa"
 
 #: app/gimphelp.c:192
 msgid ""
@@ -2225,21 +2243,18 @@ msgstr "Ustawienia odcieni / jasno¶ci / nasycenia"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:459
-#, fuzzy
 msgid "Hue:"
-msgstr "Odcieñ"
+msgstr "Odcieñ:"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:493
-#, fuzzy
 msgid "Lightness:"
-msgstr "Jasno¶æ"
+msgstr "Jasno¶æ:"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:527
-#, fuzzy
 msgid "Saturation:"
-msgstr "Nasycenie"
+msgstr "Nasycenie:"
 
 #: app/image_cmds.c:3463
 msgid ""
@@ -2671,9 +2686,8 @@ msgid "Keep Trans."
 msgstr ""
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Prze¼roczysto¶æ"
+msgstr "Nie zmieniaj prze¼roczysto¶ci"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -4176,7 +4190,7 @@ msgid "Extensions"
 msgstr "Rozszerzenia"
 
 #: app/plug_in.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Nie mo¿na odnale¼æ wtyczki: \"%s\""
 
@@ -5015,7 +5029,6 @@ msgid "GIMP Tip of the Day"
 msgstr "Porada dnia GIMP-a"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
 msgstr "Wy¶wietlanie porad"
 
@@ -5232,9 +5245,8 @@ msgid "Magnify"
 msgstr "Powiêksz"
 
 #: app/tools.c:345
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Narzêdzia/Przekszta³canie/Przesuñ"
+msgstr "/Narzêdzia/Przekszta³canie/Powiêksz"
 
 #: app/tools.c:350
 msgid "Zoom in & out"
@@ -5464,15 +5476,15 @@ msgstr "/Obraz/Kolory/Krzywe..."
 
 #: app/tools.c:1167
 msgid "Adjust color curves"
-msgstr ""
+msgstr "Ustaw krzywe kolorów"
 
 #: app/tools.c:1190
 msgid "/Image/Colors/Levels..."
-msgstr ""
+msgstr "/Obraz/Kolory/Poziomy..."
 
 #: app/tools.c:1195
 msgid "Adjust color levels"
-msgstr ""
+msgstr "Ustaw poziomy kolorów"
 
 #: app/tools.c:1218
 msgid "/Image/Histogram..."
@@ -5480,7 +5492,7 @@ msgstr "/Obraz/Histogram..."
 
 #: app/tools.c:1223
 msgid "View image histogram"
-msgstr ""
+msgstr "Histogram obrazu"
 
 #: app/transform_core.c:249
 msgid "Rotate"
@@ -5659,7 +5671,7 @@ msgstr "Prowadnica"
 
 #: app/undo.c:2924
 msgid "text"
-msgstr "Tekst"
+msgstr "tekst"
 
 #: app/undo.c:2925
 msgid "float selection"
@@ -5721,7 +5733,7 @@ msgstr "Zmiana rozmiaru warstwy"
 
 #: app/undo.c:2939
 msgid "quickmask"
-msgstr ""
+msgstr "szybka maska"
 
 #: app/undo.c:2940
 msgid "attach parasite"
@@ -5865,7 +5877,7 @@ msgid ""
 "brushes."
 msgstr ""
 "Ten katalog mo¿e byæ u¿ywany do przechowywania\n"
-"pêdzli uzytkownika. Orginalny plik gimprc sprawdza\n"
+"pêdzli u¿ytkownika. Orginalny plik gimprc sprawdza\n"
 "ten katalog dla dodatkowych pêdzli GIMPa, kiedy GIMP\n"
 " szuka pêdzli w systemie."
 
@@ -5878,7 +5890,8 @@ msgid ""
 msgstr ""
 "Ten katalog jest u¿ywany do przechowywania pêdzli\n"
 "Które s± generowanee przez edytor pêdzli. Orginalny\n"
-"plik gimprc sprawdza ten katalog, kiedy szuka pêdzli/nw systemie"
+"plik gimprc sprawdza ten katalog, kiedy szuka pêdzli\n"
+"w systemie"
 
 #: app/user_install.c:212
 msgid ""
@@ -5888,6 +5901,9 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
+"Ten katalog jest u¿ywany do przechowywania gradientów\n"
+"u¿ytkownika. Orginalny plik gimprc sprawdza ten katalog\n"
+"kiedy szuka gradientów GIMPa"
 
 #: app/user_install.c:220
 msgid ""
@@ -5998,6 +6014,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Poczekaj chwilê a¿ zostanie utworzony\n" 
+"twój osobisty katalog GIMPa..."
 
 #: app/user_install.c:542
 msgid "GIMP User Installation"
@@ -6005,7 +6023,7 @@ msgstr "Instalacja u¿ytkownika GIMP-a"
 
 #: app/user_install.c:547
 msgid "Continue"
-msgstr "Konynuuj"
+msgstr "Kontynuuj"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/user_install.c:588
@@ -6022,7 +6040,7 @@ msgstr ""
 
 #: app/user_install.c:687
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Kliknij \"Kontynuuj\" aby przej¶æ do Instalacji u¿ytkownika GIMP-a."
 
 #: app/user_install.c:691
 msgid ""
@@ -6072,7 +6090,7 @@ msgstr "Indywidualny katalog GIMP-a"
 
 #: app/user_install.c:737
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
+msgstr "Kliknij \"Kontynuuj\" aby utwo¿yæ Twój indywidualny katalog GIMP-a."
 
 #: app/user_install.c:756
 #, c-format
@@ -6089,6 +6107,9 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Ten katalog bêdzie zawiera³ wiele wa¿nych plików.\n"
+"Kliknij na jeden z nich w drzewie katalogów aby dowiedzieæ\n"
+"siê, do czego bêdzie s³u¿y³ w przysz³o¶ci"
 
 #: app/user_install.c:846
 msgid "User Installation Log"
@@ -6104,7 +6125,7 @@ msgstr "Kliknij \"Kontynuuj\", aby zaakceptowaæ powy¿sze ustawienia."
 
 #: app/user_install.c:856
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
+msgstr "Dla optymalnej pracy GIMPa, niektóre zmienne powiny zostaæ ustawione."
 
 #: app/user_install.c:865
 msgid "Monitor Resolution"
@@ -6176,18 +6197,17 @@ msgid "Swap Directory:"
 msgstr "Katalog wymiany:"
 
 #: app/user_install.c:1166
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP mo¿e pobraæ tê informacjê od serwera X, choæ\n"
-"wiêkszo¶æ serwerów nie zwraca przydatnych warto¶ci."
+"GIMP mo¿e pobraæ tê informacjê od systemu okien, jednak\n"
+"wiêkszo¶æ z nich nie zwraca przydatnych warto¶ci."
 
 #: app/user_install.c:1173
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Pobieranie rozdzielczo¶ci od serwera X (Aktualnie %d x %d dpi)"
+msgstr "Pobieranie rozdzielczo¶ci od systemu okien (Aktualnie %d x %d dpi)"
 
 #: app/user_install.c:1187
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6267,9 +6287,3 @@ msgstr ""
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historia kolorów"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "Wczytanie wzoru nie powiod³o siê"
-
-#~ msgid "From X Server"
-#~ msgstr "Od X-serwera"

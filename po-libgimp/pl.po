@@ -1,10 +1,15 @@
-#, fuzzy
+# This is the Polish locale definition for lib-gimp.
+# Copyright (C) 1998-2000 Free Software Foundation, Inc.
+# 
+# Translators:
+# GNOME PL Team <gnomepl@pandora.info.bielsko.pl>
+# Artur Polaczyñski <artie@kmfms.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "POT-Creation-Date: 2000-08-30 00:31-0700\n"
 "PO-Revision-Date: 2000-04-08 13:25+0200\n"
-"Last-Translator: GNOME PL Team <gnomepl@pandora.info.bielsko.pl>\n"
+"Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
@@ -19,7 +24,6 @@ msgid "/Use Background Color"
 msgstr "/Wykorzystaj kolor t³a"
 
 #: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can't handle layers"
 msgstr "nie obs³uguje warstw"
 
@@ -28,7 +32,6 @@ msgid "Merge Visible Layers"
 msgstr "Po³±cz widoczne warstwy"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can only handle layers as animation frames"
 msgstr "obs³uguje warstwy wy³±cznie jako ramki animacji"
 
@@ -41,12 +44,10 @@ msgid "Flatten Image"
 msgstr "Sp³aszcz obraz"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can't handle transparency"
 msgstr "nie obs³uguje prze¼roczysto¶ci"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only handle RGB images"
 msgstr "obs³uguje wy³±cznie obrazy RGB"
 
@@ -55,7 +56,6 @@ msgid "Convert to RGB"
 msgstr "Przekonwertuj na RGB"
 
 #: libgimp/gimpexport.c:212
-#, fuzzy
 msgid "can only handle grayscale images"
 msgstr "obs³uguje wy³±cznie obrazy w odcieniach szaro¶ci"
 
@@ -64,36 +64,30 @@ msgid "Convert to Grayscale"
 msgstr "Przekonwertuj na odcienie szaro¶ci"
 
 #: libgimp/gimpexport.c:221
-#, fuzzy
 msgid "can only handle indexed images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane"
 
 #: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Przekonwertuj na indeksowany z u¿yciem ustawieñ domy¶lnych\n"
-"(rêczna konwersja pozwoli na lepsze dopasowanie ustawieñ)"
+"(Rêczna konwersja pozwoli na lepsze dopasowanie ustawieñ)"
 
 #: libgimp/gimpexport.c:231
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub w odcieniach szaro¶ci"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "can only handle RGB or indexed images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub indeksowane"
 
 #: libgimp/gimpexport.c:250
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane lub w odcieniach szaro¶ci"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "needs an alpha channel"
 msgstr "Wymaga kana³u alfa"
 
@@ -242,6 +236,3 @@ msgstr "Kilobajty"
 #: libgimp/gimpwidgets.c:1037
 msgid "MegaBytes"
 msgstr "Megabajty"
-
-#~ msgid "Flatten"
-#~ msgstr "Sp³aszcz"
