@@ -2,12 +2,20 @@
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000
 # Marco Ciampa <ciampix@libero.it>, 2003
+#
+# Convenzioni adottate per Gimp:
+# pattern = motivo
+# path = tracciato
+# palette = tavolozza
+# gradients = gradiente
+# brush = pennello
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-10-06 00:16+0200\n"
-"PO-Revision-Date: 2003-10-20 13:21+0200\n"
+"PO-Revision-Date: 2003-10-22 18:13+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -87,12 +95,8 @@ msgstr ""
 "che in una finestra di dialogo.\n"
 
 #: app/main.c:422
-msgid ""
-"  -d, --no-data            Do not load brushes, gradients, palettes, "
-"patterns.\n"
-msgstr ""
-"  -d, --no-data            Non caricare pennelli, sfumature, tavolozze, "
-"pattern.\n"
+msgid "  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"
+msgstr "  -d, --no-data            Non caricare pennelli, gradienti, tavolozze, motivi.\n"
 
 #: app/main.c:423
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -681,19 +685,16 @@ msgid "When enabled, menus can be torn off."
 msgstr "Se abilitata i menu possono essere staccati."
 
 #: app/config/gimprc-blurbs.h:309
-msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
-msgstr ""
-"Se abilitata è possibile cambiare le scorciatoie di tastiera per le voci di "
-"menu al volo."
+msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgstr "Se abilitata è possibile cambiare i tasti scorciatoia per le voci di menu al volo."
 
 #: app/config/gimprc-blurbs.h:312
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr "Salva le scorciatoie di tastiera all'uscita da GIMP."
+msgstr "Salva i tasti scorciatoia all'uscita da GIMP."
 
 #: app/config/gimprc-blurbs.h:315
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Ripristina le scorciatoie di tastiera salvate ad ogni avvio di GIMP."
+msgstr "Ripristina i tasti scorciatoia salvati ad ogni avvio di GIMP."
 
 #: app/config/gimprc-blurbs.h:318
 msgid ""
@@ -836,7 +837,7 @@ msgstr "Riempimento colore dello sfondo"
 
 #: app/core/core-enums.c:58
 msgid "Pattern Fill"
-msgstr "Riempimento pattern"
+msgstr "Riempimento a motivo"
 
 #: app/core/core-enums.c:76
 msgid "Add to the current selection"
@@ -960,9 +961,8 @@ msgid "Solid"
 msgstr "Solido"
 
 #: app/core/core-enums.c:260
-#, fuzzy
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "Motivo"
 
 #: app/core/core-enums.c:278
 #, fuzzy
@@ -1399,14 +1399,14 @@ msgstr "Pennelli"
 #: app/gui/dialogs-constructors.c:611 app/gui/preferences-dialog.c:1949
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
-msgstr "Pattern"
+msgstr "Motivi"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:887 app/gui/dialogs-constructors.c:423
 #: app/gui/dialogs-constructors.c:657 app/gui/preferences-dialog.c:1953
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
-msgstr "Palette"
+msgstr "Tavolozze"
 
 #. initialize the list of gimp gradients
 #: app/core/gimp.c:891 app/gui/dialogs-constructors.c:400
@@ -1644,7 +1644,7 @@ msgstr "Sfumatura"
 
 #: app/core/gimpdrawable-bucket-fill.c:88 app/paint/gimpclone.c:211
 msgid "No patterns available for this operation."
-msgstr "Nessun pattern disponibile per questa operazione."
+msgstr "Nessun motivo disponibile per questa operazione."
 
 #: app/core/gimpdrawable-bucket-fill.c:273 app/tools/gimpbucketfilltool.c:89
 msgid "Bucket Fill"
@@ -2206,7 +2206,7 @@ msgstr "Nero"
 #: app/core/gimppattern.c:374
 #, c-format
 msgid "Unknown pattern format version %d in '%s'."
-msgstr "Versione formato pattern %d in '%s' sconosciuta."
+msgstr "Versione formato motivo %d in '%s' sconosciuta."
 
 #: app/core/gimppattern.c:383
 #, c-format
@@ -2215,24 +2215,24 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Profondità di pattern %d non supportata\n"
+"Profondità di bit colore del motivo %d non supportata\n"
 "nel file '%s'.\n"
-"I pattern GIMP possono essere Grigi o RGB."
+"I motivi di GIMP possono essere in toni di grigio o RGB."
 
 #: app/core/gimppattern.c:398
 #, c-format
 msgid "Error in GIMP pattern file '%s'."
-msgstr "Errore nel file pattern di GIMP '%s'."
+msgstr "Errore nel file motivo di GIMP '%s'."
 
 #: app/core/gimppattern.c:405
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Errore nel file pattern di GIMP '%s'."
+msgstr "Stringa UTF-8 non valida nel file motivo di GIMP '%s'."
 
 #: app/core/gimppattern.c:424
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "Errore di elaborazione fatale: il file pattern '%s' sembra troncato."
+msgstr "Errore di elaborazione fatale: il file motivo '%s' sembra troncato."
 
 #: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
 #: app/tools/gimpeditselectiontool.c:1031
@@ -3446,83 +3446,68 @@ msgid "/Load Left Color From/_Right Endpoint"
 msgstr "Da sinistra a destra"
 
 #: app/gui/gradient-editor-menu.c:78
-#, fuzzy
 msgid "/Load Left Color From/_FG Color"
-msgstr "Da sinistra a destra"
+msgstr "/Carica colore sinistro da/Colore di _PP"
 
 #: app/gui/gradient-editor-menu.c:82
-#, fuzzy
 msgid "/Load Left Color From/_BG Color"
-msgstr "Da sinistra a destra"
+msgstr "/Carica colore sinistro da/Colore di _SF"
 
 #: app/gui/gradient-editor-menu.c:100
 msgid "/_Save Left Color To"
 msgstr "/_Salva il colore sinistro su"
 
 #: app/gui/gradient-editor-menu.c:115
-#, fuzzy
 msgid "/R_ight Endpoint's Color..."
-msgstr "/Colore punto finale destro..."
+msgstr "/Colore capo destro..."
 
 #: app/gui/gradient-editor-menu.c:120
-#, fuzzy
 msgid "/Load Right Color Fr_om"
-msgstr "Da destra a sinistra"
+msgstr "/Carica colore destr_o da"
 
 #: app/gui/gradient-editor-menu.c:122
-#, fuzzy
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr "Da destra a sinistra"
+msgstr "/Carica colore destro da/Capo sinistro più vicino a _destra"
 
 #: app/gui/gradient-editor-menu.c:126
-#, fuzzy
 msgid "/Load Right Color From/_Left Endpoint"
-msgstr "Da destra a sinistra"
+msgstr "/Carica colore destro da/Capo _sinistro"
 
 #: app/gui/gradient-editor-menu.c:130
-#, fuzzy
 msgid "/Load Right Color From/_FG Color"
-msgstr "Da destra a sinistra"
+msgstr "/Carica colore destro da/Colore in _PP"
 
 #: app/gui/gradient-editor-menu.c:134
-#, fuzzy
 msgid "/Load Right Color From/_BG Color"
-msgstr "Da destra a sinistra"
+msgstr "/Carica colore destro da/Colore di _SF"
 
 #: app/gui/gradient-editor-menu.c:152
-#, fuzzy
 msgid "/Sa_ve Right Color To"
-msgstr "Tagli di colore:"
+msgstr "/Sal_va il colore destro su"
 
 #: app/gui/gradient-editor-menu.c:167
-#, fuzzy
 msgid "/blendingfunction/_Linear"
-msgstr "Funzione sfumatura per la selezione"
+msgstr "/funzione sfumatura/_Lineare"
 
 #: app/gui/gradient-editor-menu.c:172
-#, fuzzy
 msgid "/blendingfunction/_Curved"
-msgstr "Sfumatura del segmento"
+msgstr "/funzionesfumatura/_Curva"
 
 #: app/gui/gradient-editor-menu.c:177
-#, fuzzy
 msgid "/blendingfunction/_Sinusodial"
-msgstr "Funzione sfumatura per la selezione"
+msgstr "/funzionesfumatura/_Sinusoidale"
 
 #: app/gui/gradient-editor-menu.c:182
-#, fuzzy
 msgid "/blendingfunction/Spherical (i_ncreasing)"
-msgstr "Sferico (incrementale)"
+msgstr "/funzionesfumatura/Sferica (i_ncrementale)"
 
 #: app/gui/gradient-editor-menu.c:187
-#, fuzzy
 msgid "/blendingfunction/Spherical (_decreasing)"
-msgstr "Sferico (decrementale)"
+msgstr "/funzionesfumatura/Sferica (_decrementale)"
 
 #: app/gui/gradient-editor-menu.c:192
-#, fuzzy
 msgid "/blendingfunction/(Varies)"
-msgstr "Sfumatura del segmento"
+msgstr "/funzionesfumatura/(varie)"
 
 #: app/gui/gradient-editor-menu.c:197
 msgid "/coloringtype/_RGB"
@@ -3581,54 +3566,44 @@ msgid "Re-_center Segment's Midpoint"
 msgstr "Ri-_centra la metà del segmento"
 
 #: app/gui/gradient-editor-menu.c:408
-#, fuzzy
 msgid "Re-distribute _Handles in Segment"
-msgstr "Ridistribuzione punti nel segmento"
+msgstr "Ri-distribuzione _punti nel segmento"
 
 #: app/gui/gradient-editor-menu.c:412
-#, fuzzy
 msgid "_Blending Function for Selection"
-msgstr "Tipo di colore per la selezione"
+msgstr "_Sfumatura della selezione"
 
 #: app/gui/gradient-editor-menu.c:413
-#, fuzzy
 msgid "Coloring _Type for Selection"
-msgstr "Tipo di colore per la selezione"
+msgstr "_Tipo di colorazione per la selezione"
 
 #: app/gui/gradient-editor-menu.c:415
-#, fuzzy
 msgid "_Flip Selection"
-msgstr "Rifletti la selezione"
+msgstr "Ri_flessione selezione"
 
 #: app/gui/gradient-editor-menu.c:416
-#, fuzzy
 msgid "_Replicate Selection..."
-msgstr "Replica la selezione"
+msgstr "_Replica della selezione..."
 
 #: app/gui/gradient-editor-menu.c:417
-#, fuzzy
 msgid "Split Segments at _Midpoints"
-msgstr "Dividi il segmento a metà"
+msgstr "Suddivisione seg_menti in metà"
 
 #: app/gui/gradient-editor-menu.c:418
-#, fuzzy
 msgid "Split Segments _Uniformly..."
-msgstr "Dividi il segmento uniformemente"
+msgstr "Divisione del segmento _uniforme..."
 
 #: app/gui/gradient-editor-menu.c:419
-#, fuzzy
 msgid "_Delete Selection"
-msgstr "Elimina la selezione"
+msgstr "_Elimina la selezione"
 
 #: app/gui/gradient-editor-menu.c:420
-#, fuzzy
 msgid "Re-_center Midpoints in Selection"
-msgstr "Ri-centra metà nella selezione"
+msgstr "Ri-_centra le metà nella selezione"
 
 #: app/gui/gradient-editor-menu.c:421
-#, fuzzy
 msgid "Re-distribute _Handles in Selection"
-msgstr "Ridistribuite "
+msgstr "Ri-distribuizione dei _punti nella selezione"
 
 #: app/gui/gradient-select.c:269
 msgid ""
@@ -3639,49 +3614,41 @@ msgstr ""
 "Probabilmente è andato in crash il plug-in corrispondente."
 
 #: app/gui/gradients-commands.c:74
-#, fuzzy, c-format
+#, c-format
 msgid "Save \"%s\" as POV-Ray"
-msgstr "Salva come POV-Ray"
+msgstr "Salva \"%s\" come POV-Ray"
 
 #: app/gui/gradients-menu.c:46
-#, fuzzy
 msgid "/_Edit Gradient..."
-msgstr "/Finestre/Gradienti..."
+msgstr "/_Modifica/Gradiente..."
 
 #: app/gui/gradients-menu.c:54
-#, fuzzy
 msgid "/_New Gradient"
-msgstr "Nuovo gradiente"
+msgstr "/_Nuovo gradiente"
 
 #: app/gui/gradients-menu.c:59
-#, fuzzy
 msgid "/D_uplicate Gradient"
-msgstr "/Duplica tracciato"
+msgstr "/D_uplica gradiente"
 
 #: app/gui/gradients-menu.c:64
-#, fuzzy
 msgid "/Save as _POV-Ray..."
-msgstr "Salva come POV-Ray"
+msgstr "/Salva come _POV-Ray..."
 
 #: app/gui/gradients-menu.c:69
-#, fuzzy
 msgid "/_Delete Gradient..."
-msgstr "Elimina gradiente"
+msgstr "/_Elimina gradiente..."
 
 #: app/gui/gradients-menu.c:77
-#, fuzzy
 msgid "/_Refresh Gradients"
-msgstr "Rinomina gradiente"
+msgstr "/_Rinfresca gradienti"
 
 #: app/gui/grid-dialog.c:115
-#, fuzzy
 msgid "Configure Grid"
-msgstr "Configura"
+msgstr "Configura griglia"
 
 #: app/gui/grid-dialog.c:116
-#, fuzzy
 msgid "Configure Image Grid"
-msgstr "Conferma dimensione immagine"
+msgstr "Configura griglia immagine"
 
 #. the appearance frame
 #: app/gui/grid-dialog.c:144 app/gui/preferences-dialog.c:1453
@@ -3689,35 +3656,29 @@ msgid "Appearance"
 msgstr "Aspetto"
 
 #: app/gui/grid-dialog.c:160
-#, fuzzy
 msgid "Line _Style:"
-msgstr "Stato:"
+msgstr "_Stile linea:"
 
 #: app/gui/grid-dialog.c:164
-#, fuzzy
 msgid "Change Grid Foreground Color"
-msgstr "Primo piano"
+msgstr "Cambia colore di primo piano griglia"
 
 #: app/gui/grid-dialog.c:171
-#, fuzzy
 msgid "_Foreground Color:"
-msgstr "Primo piano"
+msgstr "Colore di _primo piano:"
 
 #: app/gui/grid-dialog.c:175
-#, fuzzy
 msgid "Change Grid Background Color"
-msgstr "Sfondo"
+msgstr "Cambia colore di sfondo griglia"
 
 #: app/gui/grid-dialog.c:182
-#, fuzzy
 msgid "_Background Color:"
-msgstr "Sfondo"
+msgstr "Colore di _sfondo:"
 
 #. the spacing frame
 #: app/gui/grid-dialog.c:188
-#, fuzzy
 msgid "Spacing"
-msgstr "Spaziatura:"
+msgstr "Spaziatura"
 
 #: app/gui/grid-dialog.c:215 app/gui/grid-dialog.c:266
 #: app/gui/preferences-dialog.c:1044
@@ -3739,20 +3700,17 @@ msgstr "Pixel"
 #: app/gui/grid-dialog.c:237 app/gui/offset-dialog.c:103
 #: app/gui/resize-dialog.c:445
 msgid "Offset"
-msgstr "Sposta"
+msgstr "Spostamento"
 
 #: app/gui/grid-dialog.c:381
-#, fuzzy
 msgid "Remove Grid"
-msgstr "Rimuovi"
+msgstr "Rimuovi griglia"
 
 #: app/gui/gui.c:400
-#, fuzzy
 msgid "Quit The GIMP?"
-msgstr "Informazioni su GIMP"
+msgstr "Uscire da GIMP?"
 
 #: app/gui/gui.c:404
-#, fuzzy
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -3772,22 +3730,20 @@ msgid "Rotating..."
 msgstr "Rotazione..."
 
 #: app/gui/image-commands.c:257 app/gui/layers-commands.c:344
-#, fuzzy
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
-"Non è possibile a tagliare/copiare perchè\n"
-"la regione selezionata è vuota."
+msgstr "Impossibile a tagliare, la regione selezionata è vuota."
 
 #: app/gui/image-commands.c:381
-#, fuzzy
 msgid "Layers Merge Options"
-msgstr "Opzioni incolla livello"
+msgstr "Opzioni di fusione livelli"
 
 #: app/gui/image-commands.c:406
+#, fuzzy
 msgid "Final, Merged Layer should be:"
 msgstr "Il livello incollato finale deve essere:"
 
 #: app/gui/image-commands.c:407
+#, fuzzy
 msgid "Final, Anchored Layer should be:"
 msgstr "Il livello ancorato finale deve essere:"
 
@@ -3796,6 +3752,7 @@ msgid "Expanded as necessary"
 msgstr "Espandi se necessario"
 
 #: app/gui/image-commands.c:415
+#, fuzzy
 msgid "Clipped to image"
 msgstr "Ridimensiona all'immagine"
 
@@ -3804,15 +3761,12 @@ msgid "Clipped to bottom layer"
 msgstr "Ridimensiona al livello base"
 
 #: app/gui/image-commands.c:452
-#, fuzzy
 msgid "Resizing..."
-msgstr "Ritagliatura..."
+msgstr "Ridimensionamento..."
 
 #: app/gui/image-commands.c:468
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
-"Errore di ridimensionamento: sia la larghezza che l'altezza devono essere "
-"maggiori di zero."
+msgstr "Errore di ridimensionamento: sia la larghezza che l'altezza devono essere maggiori di zero."
 
 #: app/gui/image-commands.c:501
 msgid "Layer Too Small"
@@ -3843,146 +3797,119 @@ msgid "/_File"
 msgstr "/_File"
 
 #: app/gui/image-menu.c:88 app/gui/toolbox-menu.c:51
-#, fuzzy
 msgid "/File/_New..."
-msgstr "/File/Nuovo..."
+msgstr "/File/_Nuovo..."
 
 #: app/gui/image-menu.c:93 app/gui/toolbox-menu.c:56
-#, fuzzy
 msgid "/File/_Open..."
-msgstr "/File/Apri..."
+msgstr "/File/_Apri..."
 
 #. <Image>/File/Open Recent
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:64
-#, fuzzy
 msgid "/File/Open _Recent"
-msgstr "/File/Apri..."
+msgstr "/File/Apri _recenti..."
 
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:66
 msgid "/File/Open Recent/(None)"
-msgstr "/File/Apri recenti/_Cronologia del documenti..."
+msgstr "/File/Apri recenti/(Nessuno)"
 
 #: app/gui/image-menu.c:108 app/gui/toolbox-menu.c:71
-#, fuzzy
 msgid "/File/Open Recent/Document _History"
-msgstr "/File/Finestre/Indice documenti..."
+msgstr "/File/Apri recenti/Cronolo_gia documenti..."
 
 #: app/gui/image-menu.c:116
-#, fuzzy
 msgid "/File/_Save"
-msgstr "/File/Salva"
+msgstr "/File/_Salva"
 
 #: app/gui/image-menu.c:121
-#, fuzzy
 msgid "/File/Save _as..."
-msgstr "/File/Salva con nome..."
+msgstr "/File/Salva _con nome..."
 
 #: app/gui/image-menu.c:126
-#, fuzzy
 msgid "/File/Save a Cop_y..."
-msgstr "/File/Salva con nome..."
+msgstr "/File/Salva _una copia..."
 
 #: app/gui/image-menu.c:130
-#, fuzzy
 msgid "/File/Save as _Template..."
-msgstr "/File/Salva con nome..."
+msgstr "/File/Salva come _modello..."
 
 #: app/gui/image-menu.c:134
-#, fuzzy
 msgid "/File/Re_vert"
-msgstr "/File/Inverti"
+msgstr "/File/_Ricarica"
 
 #: app/gui/image-menu.c:142
-#, fuzzy
 msgid "/File/_Close"
-msgstr "/File/Chiudi"
+msgstr "/File/_Chiudi"
 
 #: app/gui/image-menu.c:147 app/gui/toolbox-menu.c:231
-#, fuzzy
 msgid "/File/_Quit"
-msgstr "/File/Esci"
+msgstr "/File/_Esci"
 
 #. <Image>/Edit
 #: app/gui/image-menu.c:157
-#, fuzzy
 msgid "/_Edit"
-msgstr "/Modifica"
+msgstr "/_Modifica"
 
 #: app/gui/image-menu.c:159
-#, fuzzy
 msgid "/Edit/_Undo"
-msgstr "/Modifica/Annulla"
+msgstr "/Modifica/Ann_ulla"
 
 #: app/gui/image-menu.c:164
-#, fuzzy
 msgid "/Edit/_Redo"
-msgstr "/Modifica/Ripeti"
+msgstr "/Modifica/_Ripeti"
 
 #: app/gui/image-menu.c:169
-#, fuzzy
 msgid "/Edit/Undo _History"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Finestre/Cronolo_gia operazioni..."
 
 #: app/gui/image-menu.c:177
-#, fuzzy
 msgid "/Edit/Cu_t"
-msgstr "/Modifica/Taglia"
+msgstr "/Modifica/_Taglia"
 
 #: app/gui/image-menu.c:182
-#, fuzzy
 msgid "/Edit/_Copy"
-msgstr "/Modifica/Copia"
+msgstr "/Modifica/_Copia"
 
 #: app/gui/image-menu.c:187
-#, fuzzy
 msgid "/Edit/_Paste"
-msgstr "/Modifica/Incolla"
+msgstr "/Modifica/_Incolla"
 
 #: app/gui/image-menu.c:192
-#, fuzzy
 msgid "/Edit/Paste _Into"
-msgstr "/Modifica/Incolla dentro"
+msgstr "/Modifica/Incolla _dentro"
 
 #: app/gui/image-menu.c:197
-#, fuzzy
 msgid "/Edit/Paste as _New"
-msgstr "/Modifica/Incolla come nuovo"
+msgstr "/Modifica/Incolla come _nuovo"
 
 #. <Image>/Edit/Buffer
 #: app/gui/image-menu.c:205
-#, fuzzy
 msgid "/Edit/_Buffer"
-msgstr "/Modifica/Pulisci"
+msgstr "/Modifica/_Buffer"
 
 #: app/gui/image-menu.c:207
-#, fuzzy
 msgid "/Edit/Buffer/Cu_t Named..."
-msgstr "/Modifica/Buffer/Taglia con nome..."
+msgstr "/Modifica/Buffer/_Taglia per nome..."
 
 #: app/gui/image-menu.c:212
-#, fuzzy
 msgid "/Edit/Buffer/_Copy Named..."
-msgstr "/Modifica/Buffer/Copia con nome..."
+msgstr "/Modifica/Buffer/_Copia per nome..."
 
 #: app/gui/image-menu.c:217
-#, fuzzy
 msgid "/Edit/Buffer/_Paste Named..."
-msgstr "/Modifica/Buffer/Incolla con nome..."
+msgstr "/Modifica/Buffer/_Incolla per nome..."
 
 #: app/gui/image-menu.c:225
-#, fuzzy
 msgid "/Edit/Cl_ear"
-msgstr "/Modifica/Pulisci"
+msgstr "/Modifica/_Pulisci"
 
 #: app/gui/image-menu.c:230
-#, fuzzy
 msgid "/Edit/Fill with _FG Color"
-msgstr "/Modifica/Riempi con colore primo piano"
+msgstr "/Modifica/Riempi con colore di _primo piano"
 
 #: app/gui/image-menu.c:235
-#, fuzzy
 msgid "/Edit/Fill with B_G Color"
-msgstr "/Modifica/Riempi con colore di sfondo"
+msgstr "/Modifica/Riempi con colore di _sfondo"
 
 #: app/gui/image-menu.c:240
 #, fuzzy
@@ -4350,188 +4277,152 @@ msgid "/Layer/Colors/Hue-_Saturation..."
 msgstr "/Immagine/Colori/Tonalità-Saturazione..."
 
 #: app/gui/image-menu.c:677
-#, fuzzy
 msgid "/Layer/Colors/Colori_ze..."
-msgstr "/Immagine/Colori/Posterizzazione..."
+msgstr "/Livelli/Colori/Colori_zzazione..."
 
 #: app/gui/image-menu.c:682
-#, fuzzy
 msgid "/Layer/Colors/B_rightness-Contrast..."
-msgstr "/Immagine/Colori/Luminosità-Contrasto..."
+msgstr "/Livelli/Colori/Luminosità-contrasto..."
 
 #: app/gui/image-menu.c:687
-#, fuzzy
 msgid "/Layer/Colors/_Threshold..."
-msgstr "/Immagine/Colori/Soglia..."
+msgstr "/Livelli/Colori/_Soglia..."
 
 #: app/gui/image-menu.c:692
-#, fuzzy
 msgid "/Layer/Colors/_Levels..."
-msgstr "/Immagine/Colori/Livelli..."
+msgstr "/Livelli/Colori/_Livelli..."
 
 #: app/gui/image-menu.c:697
-#, fuzzy
 msgid "/Layer/Colors/_Curves..."
-msgstr "/Immagine/Colori/Curve..."
+msgstr "/Livelli/Colori/_Curve..."
 
 #: app/gui/image-menu.c:702
-#, fuzzy
 msgid "/Layer/Colors/_Posterize..."
-msgstr "/Immagine/Colori/Posterizzazione..."
+msgstr "/Livelli/Colori/_Posterizzazione..."
 
 #: app/gui/image-menu.c:710
-#, fuzzy
 msgid "/Layer/Colors/_Desaturate"
-msgstr "/Immagine/Colori/Desaturazione"
+msgstr "/Livelli/Colori/_Desaturazione"
 
 #: app/gui/image-menu.c:715
-#, fuzzy
 msgid "/Layer/Colors/In_vert"
-msgstr "/Immagine/Colori/Inverti"
+msgstr "/Livelli/Colori/In_verti"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/image-menu.c:723
-#, fuzzy
 msgid "/Layer/Colors/_Auto"
-msgstr "/Immagine/Colori/Auto"
+msgstr "/Livelli/Colori/_Auto"
 
 #: app/gui/image-menu.c:725
-#, fuzzy
 msgid "/Layer/Colors/Auto/_Equalize"
-msgstr "/Immagine/Colori/Auto/Equalizza"
+msgstr "/Livelli/Colori/Auto/_Equalizza"
 
 #: app/gui/image-menu.c:732
-#, fuzzy
 msgid "/Layer/Colors/_Histogram"
-msgstr "/Immagine/Istogramma..."
+msgstr "/Livelli/Immagine/_Istogramma"
 
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:740
-#, fuzzy
 msgid "/Layer/_Mask"
-msgstr "/Livelli/Pila"
+msgstr "/Livelli/_Maschere"
 
 #: app/gui/image-menu.c:742
-#, fuzzy
 msgid "/Layer/Mask/_Add Layer Mask..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Livelli/Maschere/_Aggiungi livello maschera..."
 
 #: app/gui/image-menu.c:746
-#, fuzzy
 msgid "/Layer/Mask/A_pply Layer Mask"
-msgstr "/Applica livello maschera"
+msgstr "/Livelli/Maschere/A_pplica livello maschera"
 
 #: app/gui/image-menu.c:750
-#, fuzzy
 msgid "/Layer/Mask/_Delete Layer Mask"
-msgstr "/Elimina livello maschera"
+msgstr "/Livelli/Maschere/_Elimina livello maschera"
 
 #: app/gui/image-menu.c:758
-#, fuzzy
 msgid "/Layer/Mask/_Mask to Selection"
-msgstr "/Livelli/Da Maschera a selezione"
+msgstr "/Livelli/Maschere/Da _maschera a selezione"
 
 #: app/gui/image-menu.c:763
-#, fuzzy
 msgid "/Layer/Mask/_Add to Selection"
-msgstr "/Livelli/Da Maschera a selezione"
+msgstr "/Livelli/Maschere/_Aggiungi alla selezione"
 
 #: app/gui/image-menu.c:768
-#, fuzzy
 msgid "/Layer/Mask/_Subtract from Selection"
-msgstr "/Sottrai da selezione"
+msgstr "/Livelli/Maschere/Sottrai dalla selezione"
 
 #: app/gui/image-menu.c:773
-#, fuzzy
 msgid "/Layer/Mask/_Intersect with Selection"
-msgstr "/Interseca con selezione"
+msgstr "/Livelli/Maschere/_Interseca con la selezione"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:781
-#, fuzzy
 msgid "/Layer/Tr_ansparency"
-msgstr "Trasparenza"
+msgstr "/Livelli/Tr_asparenza"
 
 #: app/gui/image-menu.c:783
-#, fuzzy
 msgid "/Layer/Transparency/_Add Alpha Channel"
-msgstr "/Livelli/Aggiungi canale alpha"
+msgstr "/Livelli/Trasparenza/_Aggiunta canale alfa"
 
 #: app/gui/image-menu.c:791
-#, fuzzy
 msgid "/Layer/Transparency/Al_pha to Selection"
-msgstr "/Livelli/Alpha a selezione"
+msgstr "/Livelli/Trasparenza/Al_fa a selezione"
 
 #: app/gui/image-menu.c:796
-#, fuzzy
 msgid "/Layer/Transparency/A_dd to Selection"
-msgstr "/Livelli/Alpha a selezione"
+msgstr "/Livelli/Trasparenza/Ag_giunta alla selezione"
 
 #: app/gui/image-menu.c:801
-#, fuzzy
 msgid "/Layer/Transparency/_Subtract from Selection"
-msgstr "/Livelli/Alpha a selezione"
+msgstr "/Livelli/Trasparenza/_Sottrazione dalla selezione"
 
 #: app/gui/image-menu.c:806
-#, fuzzy
 msgid "/Layer/Transparency/_Intersect with Selection"
-msgstr "/Livelli/Alpha a selezione"
+msgstr "/Livelli/Trasparenza/_Intersezione con la selezione"
 
 #. <Image>/Layer/Transform
 #: app/gui/image-menu.c:816
-#, fuzzy
 msgid "/Layer/_Transform"
-msgstr "/Immagine/Trasforma"
+msgstr "/Livelli/_Trasforma"
 
 #: app/gui/image-menu.c:818
-#, fuzzy
 msgid "/Layer/Transform/Flip _Horizontally"
-msgstr "/Immagine/Trasforma/Offset..."
+msgstr "/Livelli/Trasforma/Rifletti _orizzontalmente"
 
 #: app/gui/image-menu.c:823
-#, fuzzy
 msgid "/Layer/Transform/Flip _Vertically"
-msgstr "/Immagine/Trasforma/Offset..."
+msgstr "/Livelli/Trasforma/Rifletti _verticalmente"
 
 #: app/gui/image-menu.c:831
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
-msgstr "/Immagine/Trasformazioni/Ruota"
+msgstr "/Livelli/Trasforma/Ruota di 90 gradi _orario"
 
 #: app/gui/image-menu.c:836
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
-msgstr "/Immagine/Trasformazioni/Ruota"
+msgstr "/Livelli/Trasforma/Ruota di 90 gradi _antioriario"
 
 #: app/gui/image-menu.c:841
-#, fuzzy
 msgid "/Layer/Transform/Rotate _180 degrees"
-msgstr "/Immagine/Trasformazioni/Ruota"
+msgstr "/Livelli/Trasforma/Ruota di _180 gradi"
 
 #: app/gui/image-menu.c:846
-#, fuzzy
 msgid "/Layer/Transform/_Arbitrary Rotation..."
-msgstr "/Immagine/Trasforma/Offset..."
+msgstr "/Livelli/Trasforma/Rotazione _arbitraria..."
 
 #: app/gui/image-menu.c:854
-#, fuzzy
 msgid "/Layer/Transform/_Offset..."
-msgstr "/Immagine/Trasforma/Offset..."
+msgstr "/Livelli/Trasforma/Sp_ostamento..."
 
 #: app/gui/image-menu.c:861
-#, fuzzy
 msgid "/Layer/Layer _Boundary Size..."
-msgstr "/Dimensione confine del livello..."
+msgstr "/Livelli/Dimensione _ampiezza confine livello..."
 
 #: app/gui/image-menu.c:866
-#, fuzzy
 msgid "/Layer/Layer to _Imagesize"
-msgstr "/Livelli/Livello alla dimensione immagine"
+msgstr "/Livelli/Livello alla dimensione _immagine"
 
 #: app/gui/image-menu.c:871
-#, fuzzy
 msgid "/Layer/_Scale Layer..."
-msgstr "/Scala livello..."
+msgstr "/Livelli/_Scala livello..."
 
 #: app/gui/image-menu.c:876
 #, fuzzy
@@ -4540,9 +4431,8 @@ msgstr "/Livelli/Ancora livello"
 
 #. <Image>/Tools
 #: app/gui/image-menu.c:886
-#, fuzzy
 msgid "/_Tools"
-msgstr "/Strumenti"
+msgstr "/S_trumenti"
 
 #: app/gui/image-menu.c:888
 #, fuzzy
@@ -4550,165 +4440,134 @@ msgid "/Tools/Tool_box"
 msgstr "/Strumenti/Barra degli strumenti"
 
 #: app/gui/image-menu.c:892
-#, fuzzy
 msgid "/Tools/_Default Colors"
-msgstr "/Strumenti/Colori base"
+msgstr "/Strumenti/Colori _predefiniti"
 
 #: app/gui/image-menu.c:897
-#, fuzzy
 msgid "/Tools/S_wap Colors"
-msgstr "/Strumenti/Cambia colori"
+msgstr "/Strumenti/Ca_mbia colori"
 
 #: app/gui/image-menu.c:905
-#, fuzzy
 msgid "/Tools/_Selection Tools"
-msgstr "/Strumenti/Strumenti selezione"
+msgstr "/Strumenti/Strumenti _selezione"
 
 #: app/gui/image-menu.c:906
-#, fuzzy
 msgid "/Tools/_Paint Tools"
-msgstr "/Strumenti/Strumenti disegno"
+msgstr "/Strumenti/Strumenti _disegno"
 
 #: app/gui/image-menu.c:907
-#, fuzzy
 msgid "/Tools/_Transform Tools"
-msgstr "/Strumenti/Strumenti trasformazione"
+msgstr "/Strumenti/Strumenti _trasformazione"
 
 #: app/gui/image-menu.c:908
-#, fuzzy
 msgid "/Tools/_Color Tools"
-msgstr "/Strumenti/Strumenti trasformazione"
+msgstr "/Strumenti/Strumenti di _colore"
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:912
-#, fuzzy
 msgid "/_Dialogs"
-msgstr "/Finestre"
+msgstr "/_Finestre"
 
 #: app/gui/image-menu.c:914
-#, fuzzy
 msgid "/Dialogs/Create New Doc_k"
-msgstr "/Finestre/Finestre/tearoff1"
+msgstr "/Finestre/Crea n_uovo pannello"
 
 #: app/gui/image-menu.c:916
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/Finestre/Livelli, canali e tracciati..."
+msgstr "/Finestre/Crea nuovo pannello/_Livelli, canali e tracciati"
 
 #: app/gui/image-menu.c:920
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/Crea nuovo pannello/_Pennelli, motivi e gradienti"
 
 #: app/gui/image-menu.c:924
-#, fuzzy
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/Crea nuovo pannello/_Varie"
 
 #: app/gui/image-menu.c:929
-#, fuzzy
 msgid "/Dialogs/Tool _Options"
-msgstr "/Finestre/Opzioni strumenti..."
+msgstr "/Finestre/_Opzioni strumenti"
 
 #: app/gui/image-menu.c:934
-#, fuzzy
 msgid "/Dialogs/_Device Status"
-msgstr "/Finestre/Stato dei dispositivi..."
+msgstr "/Finestre/Stato dei _dispositivi"
 
 #: app/gui/image-menu.c:942
-#, fuzzy
 msgid "/Dialogs/_Layers"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Livelli"
 
 #: app/gui/image-menu.c:947
-#, fuzzy
 msgid "/Dialogs/_Channels"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Canali"
 
 #: app/gui/image-menu.c:952
-#, fuzzy
 msgid "/Dialogs/_Paths"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Tracciati"
 
 #: app/gui/image-menu.c:957
-#, fuzzy
 msgid "/Dialogs/_Indexed Palette"
-msgstr "/Finestre/Palette in scala di colore..."
+msgstr "/Finestre/Tavolozze _indicizzate"
 
 #: app/gui/image-menu.c:962
-#, fuzzy
 msgid "/Dialogs/_Selection Editor"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Finestre/_Selezione editor"
 
 #: app/gui/image-menu.c:967
-#, fuzzy
 msgid "/Dialogs/Na_vigation"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/Na_vigazione"
 
 #: app/gui/image-menu.c:972
-#, fuzzy
 msgid "/Dialogs/_Undo History"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Finestre/Cronolo_gia"
 
 #: app/gui/image-menu.c:980
-#, fuzzy
 msgid "/Dialogs/Colo_rs"
-msgstr "/Finestre/Opzioni strumenti..."
+msgstr "/Finestre/Colo_ri"
 
 #: app/gui/image-menu.c:985
-#, fuzzy
 msgid "/Dialogs/Brus_hes"
-msgstr "/Finestre/Pennelli..."
+msgstr "/Finestre/_Pennelli"
 
 #: app/gui/image-menu.c:990
-#, fuzzy
 msgid "/Dialogs/P_atterns"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Motivi"
 
 #: app/gui/image-menu.c:995
 #, fuzzy
 msgid "/Dialogs/_Gradients"
-msgstr "/Finestre/Gradienti..."
+msgstr "/Finestre/_Gradienti"
 
 #: app/gui/image-menu.c:1000
-#, fuzzy
 msgid "/Dialogs/Pal_ettes"
-msgstr "/Finestre/Palette..."
+msgstr "/Finestre/Tavo_lozze"
 
 #: app/gui/image-menu.c:1005
-#, fuzzy
 msgid "/Dialogs/_Fonts"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Caratteri"
 
 #: app/gui/image-menu.c:1010
-#, fuzzy
 msgid "/Dialogs/_Buffers"
-msgstr "/Finestre/Pennelli..."
+msgstr "/Finestre/_Buffer"
 
 #: app/gui/image-menu.c:1018
-#, fuzzy
 msgid "/Dialogs/I_mages"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/I_mmagini"
 
 #: app/gui/image-menu.c:1023
-#, fuzzy
 msgid "/Dialogs/Document Histor_y"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "/Finestre/Cronolo_gia..."
 
 #: app/gui/image-menu.c:1028
-#, fuzzy
 msgid "/Dialogs/_Templates"
-msgstr "/Finestre/Pattern..."
+msgstr "/Finestre/_Modelli"
 
 #: app/gui/image-menu.c:1033
-#, fuzzy
 msgid "/Dialogs/Error Co_nsole"
-msgstr "/File/Finestre/Console degli errori..."
+msgstr "/Finestre/Co_nsole degli errori"
 
 #: app/gui/image-menu.c:1043
-#, fuzzy
 msgid "/Filte_rs"
-msgstr "/Filtri/---"
+msgstr "/Filt_ri"
 
 #: app/gui/image-menu.c:1045
 msgid "/Filters/Repeat Last"
@@ -4719,29 +4578,24 @@ msgid "/Filters/Re-Show Last"
 msgstr "/Filtri/Mostra ultimo"
 
 #: app/gui/image-menu.c:1058
-#, fuzzy
 msgid "/Filters/_Blur"
-msgstr "/Filtri/Sfocatura"
+msgstr "/Filtri/_Sfocatura"
 
 #: app/gui/image-menu.c:1059
-#, fuzzy
 msgid "/Filters/_Colors"
-msgstr "/Filtri/Colori"
+msgstr "/Filtri/_Colori"
 
 #: app/gui/image-menu.c:1060
-#, fuzzy
 msgid "/Filters/Colors/Ma_p"
-msgstr "/Filtri/Colori/Mappa"
+msgstr "/Filtri/Colori/Map_pa"
 
 #: app/gui/image-menu.c:1061
-#, fuzzy
 msgid "/Filters/_Noise"
-msgstr "/Filtri/Disturbo"
+msgstr "/Filtri/_Rumore"
 
 #: app/gui/image-menu.c:1062
-#, fuzzy
 msgid "/Filters/Edge-De_tect"
-msgstr "/Filtri/Effetti Edge"
+msgstr "/Filtri/Rilievo bordi"
 
 #: app/gui/image-menu.c:1063
 #, fuzzy
@@ -4749,94 +4603,82 @@ msgid "/Filters/En_hance"
 msgstr "/Filtri/Avanzati"
 
 #: app/gui/image-menu.c:1064
-#, fuzzy
 msgid "/Filters/_Generic"
-msgstr "/Filtri/Generici"
+msgstr "/Filtri/_Generici"
 
 #: app/gui/image-menu.c:1068
-#, fuzzy
 msgid "/Filters/Gla_ss Effects"
-msgstr "/Filtri/Effetti vetro"
+msgstr "/Filtri/Effetti _vetro"
 
 #: app/gui/image-menu.c:1069
-#, fuzzy
 msgid "/Filters/_Light Effects"
-msgstr "/Filtri/Effetti luce"
+msgstr "/Filtri/Effetti _luce"
 
 #: app/gui/image-menu.c:1070
-#, fuzzy
 msgid "/Filters/_Distorts"
-msgstr "/Filtri/Distorsioni"
+msgstr "/Filtri/_Distorsioni"
 
 #: app/gui/image-menu.c:1071
-#, fuzzy
 msgid "/Filters/_Artistic"
-msgstr "/Filtri/Artistici"
+msgstr "/Filtri/_Artistici"
 
 #: app/gui/image-menu.c:1072
-#, fuzzy
 msgid "/Filters/_Map"
-msgstr "/Filtri/Mappatura"
+msgstr "/Filtri/_Mappatura"
 
 #: app/gui/image-menu.c:1073
 #, fuzzy
 msgid "/Filters/_Render"
-msgstr "/Filtri/Render"
+msgstr "/Filtri/_Render"
 
 #: app/gui/image-menu.c:1074
 #, fuzzy
 msgid "/Filters/Render/_Clouds"
-msgstr "/Filtri/Render/Nuvole"
+msgstr "/Filtri/Render/_Nuvole"
 
 #: app/gui/image-menu.c:1075
 #, fuzzy
 msgid "/Filters/Render/_Nature"
-msgstr "/Filtri/Render/Natura"
+msgstr "/Filtri/Render/Na_tura"
 
 #: app/gui/image-menu.c:1076
 #, fuzzy
 msgid "/Filters/Render/_Pattern"
-msgstr "/Filtri/Render/Pattern"
+msgstr "/Filtri/Render/_Motivi"
 
 #: app/gui/image-menu.c:1077
-#, fuzzy
 msgid "/Filters/_Web"
-msgstr "/Filtri/Web"
+msgstr "/Filtri/_Web"
 
 #: app/gui/image-menu.c:1081
-#, fuzzy
 msgid "/Filters/An_imation"
-msgstr "/Filtri/Animazione"
+msgstr "/Filtri/An_imazione"
 
 #: app/gui/image-menu.c:1082
-#, fuzzy
 msgid "/Filters/C_ombine"
-msgstr "/File/Combina"
+msgstr "/File/C_ombina"
 
 #: app/gui/image-menu.c:1086
-#, fuzzy
 msgid "/Filters/To_ys"
-msgstr "/Filtri/Giocattoli"
+msgstr "/Filtri/_Giocattoli"
 
 #: app/gui/image-menu.c:1411
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Annulla"
+msgstr "Ann_ulla %s"
 
 #: app/gui/image-menu.c:1416
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "Successiva"
+msgstr "_Ripeti %s"
 
 #: app/gui/image-menu.c:1420
-#, fuzzy
 msgid "_Undo"
-msgstr "Annulla"
+msgstr "Ann_ulla"
 
 #: app/gui/image-menu.c:1421
-#, fuzzy
 msgid "_Redo"
-msgstr "Successiva"
+msgstr "_Ripeti"
 
 #: app/gui/image-menu.c:1672
 #, c-format
@@ -4844,24 +4686,21 @@ msgid "Other (%d:%d) ..."
 msgstr "Altro (%d:%d) ..."
 
 #: app/gui/image-menu.c:1681
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%d:%d)"
-msgstr "Zoom avanti"
+msgstr "_Zoom (%d:%d)"
 
 #: app/gui/images-menu.c:42
-#, fuzzy
 msgid "/_Raise Views"
-msgstr "/Pila/Alza livello"
+msgstr "/_Alza le viste"
 
 #: app/gui/images-menu.c:46
-#, fuzzy
 msgid "/_New View"
-msgstr "/Visualizza/Nuova vista"
+msgstr "/_Nuova vista"
 
 #: app/gui/images-menu.c:50
-#, fuzzy
 msgid "/_Delete Image"
-msgstr "/Elimina livello"
+msgstr "/_Elimina immagine"
 
 #. General
 #: app/gui/info-dialog.c:351 app/gui/preferences-dialog.c:1277
@@ -4929,21 +4768,18 @@ msgstr "B:"
 
 #. Hue
 #: app/gui/info-window.c:264
-#, fuzzy
 msgid "H:"
-msgstr "Tonalità:"
+msgstr "H:"
 
 #. Saturation
 #: app/gui/info-window.c:271
-#, fuzzy
 msgid "S:"
-msgstr "S"
+msgstr "S:"
 
 #. Value
 #: app/gui/info-window.c:278
-#, fuzzy
 msgid "V:"
-msgstr "V"
+msgstr "V:"
 
 #. Cyan
 #: app/gui/info-window.c:306
@@ -4969,18 +4805,15 @@ msgid "Extended"
 msgstr "Esteso"
 
 #: app/gui/info-window.c:383
-#, fuzzy
 msgid "Info Window"
-msgstr "Utilizza finestra informazioni"
+msgstr "Finestra informazioni"
 
 #: app/gui/info-window.c:385
-#, fuzzy
 msgid "Image Information"
-msgstr "Informazioni scalatura"
+msgstr "Informazioni immagine"
 
 #. add the information fields
 #: app/gui/info-window.c:401
-#, fuzzy
 msgid "Dimensions (W x H):"
 msgstr "Dimensioni (l x a):"
 
@@ -4990,29 +4823,29 @@ msgstr "Risoluzione:"
 
 #: app/gui/info-window.c:407
 msgid "Scale Ratio:"
-msgstr "Scala:"
+msgstr "Rapporto di scala:"
 
 #: app/gui/info-window.c:409
 msgid "Display Type:"
-msgstr "Tipo di rappresentazione:"
+msgstr "Tipo di visualizzazione:"
 
 #: app/gui/info-window.c:411
 msgid "Visual Class:"
-msgstr "Visualizzazione"
+msgstr "Classe di visualizzazione"
 
 #: app/gui/info-window.c:413
 msgid "Visual Depth:"
 msgstr "Definizione visiva:"
 
 #: app/gui/info-window.c:718
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%s"
-msgstr "pixel/%a"
+msgstr "punti/%s"
 
 #: app/gui/info-window.c:720
-#, fuzzy, c-format
+#, c-format
 msgid "%g x %g %s"
-msgstr "%g x %g dpi"
+msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:723 app/gui/preferences-dialog.c:1080
 #: app/gui/preferences-dialog.c:1738 app/gui/user-install-dialog.c:1369
@@ -5025,16 +4858,15 @@ msgstr "Colore RGB"
 
 #: app/gui/info-window.c:742
 msgid "Indexed Color"
-msgstr "Scala di Colore"
+msgstr "Colore indicizzato"
 
 #: app/gui/info-window.c:742
 msgid "colors"
 msgstr "colori"
 
 #: app/gui/layers-commands.c:354
-#, fuzzy
 msgid "Crop Layer"
-msgstr "/Livelli/Ancora livello"
+msgstr "Ritaglia livello"
 
 #: app/gui/layers-commands.c:432
 msgid "Layer Mask to Selection"
@@ -5070,32 +4902,28 @@ msgid "Layer Fill Type"
 msgstr "Tipo di riempimento livello"
 
 #: app/gui/layers-commands.c:838
-#, fuzzy
 msgid "Layer Attributes"
-msgstr "Modifica attributi livello"
+msgstr "Attributi livello"
 
 #: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:208
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
 #: app/gui/layers-commands.c:875
-#, fuzzy
 msgid "Layer _Name"
-msgstr "Nome livello:"
+msgstr "_Nome livello"
 
 #: app/gui/layers-commands.c:949
-#, fuzzy
 msgid "Add a Mask to the Layer"
-msgstr "Aggiungi testo all'immagine"
+msgstr "Aggiungi una maschera al livello"
 
 #: app/gui/layers-commands.c:965
 msgid "Initialize Layer Mask to:"
 msgstr "Inizializza livello maschera a:"
 
 #: app/gui/layers-commands.c:981
-#, fuzzy
 msgid "In_vert Mask"
-msgstr "Invertita"
+msgstr "In_vertita maschera"
 
 #: app/gui/layers-commands.c:1054 app/gui/layers-commands.c:1148
 msgid ""
@@ -5106,256 +4934,208 @@ msgstr ""
 "Entrambe devono essere positive."
 
 #: app/gui/layers-menu.c:44
-#, fuzzy
 msgid "/_Edit Layer Attributes..."
-msgstr "/Modifica attributi livello..."
+msgstr "/_Modifica attributi di livello..."
 
 #: app/gui/layers-menu.c:52
-#, fuzzy
 msgid "/_New Layer..."
-msgstr "/Nuovo livello..."
+msgstr "/_Nuovo livello..."
 
 #: app/gui/layers-menu.c:58
-#, fuzzy
 msgid "/_Raise Layer"
-msgstr "/Pila/Alza livello"
+msgstr "/_Alza livello"
 
 #: app/gui/layers-menu.c:63
-#, fuzzy
 msgid "/Layer to _Top"
-msgstr "/Pila/Livello in alto"
+msgstr "/Livello in _cima"
 
 #: app/gui/layers-menu.c:68
-#, fuzzy
 msgid "/_Lower Layer"
-msgstr "/Pila/Abbassa livello"
+msgstr "/Abbassa il _livello"
 
 #: app/gui/layers-menu.c:73
-#, fuzzy
 msgid "/Layer to _Bottom"
-msgstr "/Pila/Livello in basso"
+msgstr "/Livello in _fondo"
 
 #: app/gui/layers-menu.c:79
-#, fuzzy
 msgid "/D_uplicate Layer"
-msgstr "/Duplica livello"
+msgstr "/D_uplica livello"
 
 #: app/gui/layers-menu.c:84
-#, fuzzy
 msgid "/_Anchor Layer"
-msgstr "/Ancora livello"
+msgstr "/_Ancora livello"
 
 #: app/gui/layers-menu.c:89
-#, fuzzy
 msgid "/Merge Do_wn"
-msgstr "/Incolla in basso"
+msgstr "/_Fondi in basso"
 
 #: app/gui/layers-menu.c:94
-#, fuzzy
 msgid "/_Delete Layer"
-msgstr "/Elimina livello"
+msgstr "/_Elimina livello"
 
 #: app/gui/layers-menu.c:102
-#, fuzzy
 msgid "/Layer B_oundary Size..."
-msgstr "/Dimensione confine del livello..."
+msgstr "/Dimensione _confine del livello..."
 
 #: app/gui/layers-menu.c:107
-#, fuzzy
 msgid "/Layer to _Imagesize"
-msgstr "/Livello a Dimensione immagine"
+msgstr "/Livello a dimensione _immagine"
 
 #: app/gui/layers-menu.c:112
-#, fuzzy
 msgid "/_Scale Layer..."
-msgstr "/Scala livello..."
+msgstr "/_Scala livello..."
 
 #: app/gui/layers-menu.c:120
-#, fuzzy
 msgid "/Add La_yer Mask..."
-msgstr "/Aggiungi livello maschera..."
+msgstr "/Aggiungi maschera di livello..."
 
 #: app/gui/layers-menu.c:124
-#, fuzzy
 msgid "/Apply Layer _Mask"
-msgstr "/Applica livello maschera"
+msgstr "/Applica maschera di livello"
 
 #: app/gui/layers-menu.c:128
-#, fuzzy
 msgid "/Delete Layer Mas_k"
-msgstr "/Elimina livello maschera"
+msgstr "/Elimina livello masc_hera"
 
 #: app/gui/layers-menu.c:133
-#, fuzzy
 msgid "/Mask to Sele_ction"
-msgstr "/Maschera a selezione"
+msgstr "/Maschera a sele_zione"
 
 #: app/gui/layers-menu.c:141
-#, fuzzy
 msgid "/Add Alpha C_hannel"
-msgstr "/Aggiungi canale alpha"
+msgstr "/Aggiungi _canale alfa"
 
 #: app/gui/layers-menu.c:146
-#, fuzzy
 msgid "/Al_pha to Selection"
-msgstr "/Alpha a selezione"
+msgstr "/Al_fa a selezione"
 
 #: app/gui/layers-menu.c:154
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "Fondi livelli visibili"
+msgstr "/Fondi livelli visibili..."
 
 #: app/gui/layers-menu.c:159
-#, fuzzy
 msgid "/Flatten Image"
-msgstr "Immagine Appiattita"
+msgstr "/Immagine appiattita"
 
 #: app/gui/menus.c:112
 msgid "Toolbox Menu"
 msgstr "Menu strumenti"
 
 #: app/gui/menus.c:119
-#, fuzzy
 msgid "Image Menu"
-msgstr "/Mostra _menu immagine"
+msgstr "Menu immagine"
 
 #: app/gui/menus.c:126
-#, fuzzy
 msgid "Open Menu"
-msgstr "Apri immagine"
+msgstr "Apri menu"
 
 #: app/gui/menus.c:133
-#, fuzzy
 msgid "Save Menu"
-msgstr "Salva immagine"
+msgstr "Salva menu"
 
 #: app/gui/menus.c:141
-#, fuzzy
 msgid "Layers Menu"
-msgstr "Livelli"
+msgstr "Menu livelli"
 
 #: app/gui/menus.c:148
-#, fuzzy
 msgid "Channels Menu"
-msgstr "Canali"
+msgstr "Menu canali"
 
 #: app/gui/menus.c:155
-#, fuzzy
 msgid "Paths Menu"
-msgstr "Tracciati"
+msgstr "Menu tracciati"
 
 #: app/gui/menus.c:162
-#, fuzzy
 msgid "Dialogs Menu"
-msgstr "/Finestre"
+msgstr "Menu finestre"
 
 #: app/gui/menus.c:169
-#, fuzzy
 msgid "Brushes Menu"
-msgstr "Pennelli"
+msgstr "Menu pennelli"
 
 #: app/gui/menus.c:176
-#, fuzzy
 msgid "Patterns Menu"
-msgstr "Pattern"
+msgstr "Menu motivi"
 
 #: app/gui/menus.c:183
-#, fuzzy
 msgid "Gradients Menu"
-msgstr "Gradienti"
+msgstr "Menu gradienti"
 
 #: app/gui/menus.c:190
-#, fuzzy
 msgid "Palettes Menu"
-msgstr "Palette"
+msgstr "Menu tavolozze"
 
 #: app/gui/menus.c:197
-#, fuzzy
 msgid "Buffers Menu"
-msgstr "Buffer"
+msgstr "Menu buffer"
 
 #: app/gui/menus.c:204
-#, fuzzy
 msgid "Documents Menu"
-msgstr "Documenti"
+msgstr "Menu documenti"
 
 #: app/gui/menus.c:211
-#, fuzzy
 msgid "Templaes Menu"
-msgstr "Modelli"
+msgstr "Menu modelli"
 
 #: app/gui/menus.c:218
-#, fuzzy
 msgid "Images Menu"
-msgstr "/Mostra _menu immagine"
+msgstr "Menu immagini"
 
 #: app/gui/menus.c:225
-#, fuzzy
 msgid "Gradient Editor Menu"
-msgstr "Editor dei gradienti"
+msgstr "Menu editor dei gradienti"
 
 #: app/gui/menus.c:232
-#, fuzzy
 msgid "Palette Editor Menu"
-msgstr "Editor palette"
+msgstr "Menu editor tavolozza"
 
 #: app/gui/menus.c:239
-#, fuzzy
 msgid "Indexed Palette Menu"
-msgstr "Palette scala di colore"
+msgstr "Menu tavolozza indicizzata"
 
 #: app/gui/menus.c:246
-#, fuzzy
 msgid "QuickMask Menu"
-msgstr "Maschera veloce"
+msgstr "Menu maschera veloce"
 
 #: app/gui/menus.c:253
-#, fuzzy
 msgid "Error Console Menu"
-msgstr "Console di errore"
+msgstr "Menu console di errore"
 
 #: app/gui/menus.c:260
-#, fuzzy
 msgid "Tool Options Menu"
-msgstr "Opzioni strumenti"
+msgstr "Menu opzioni strumenti"
 
 #: app/gui/module-browser.c:122
-#, fuzzy
 msgid "Module Manager"
-msgstr "Errori dei moduli"
+msgstr "Menu manager dei moduli"
 
 #: app/gui/module-browser.c:124
 msgid "Manage Loadable Modules"
-msgstr "Gestire moduli caricabili"
+msgstr "Gestione moduli caricabili"
 
 #: app/gui/module-browser.c:166
-#, fuzzy
 msgid "Autoload"
-msgstr "Auto"
+msgstr "Autocaricamento"
 
 #: app/gui/module-browser.c:173
-#, fuzzy
 msgid "Module Path"
-msgstr "Apri tracciato"
+msgstr "Percorso moduli"
 
 #: app/gui/module-browser.c:420
 msgid "<No modules>"
 msgstr "<Nessun modulo>"
 
 #: app/gui/module-browser.c:432 app/gui/module-browser.c:441
-#, fuzzy
 msgid "On disk"
-msgstr "sul disco"
+msgstr "Sul disco"
 
 #: app/gui/module-browser.c:432
-#, fuzzy
 msgid "Only in memory"
-msgstr "solo in memoria"
+msgstr "Solo in memoria"
 
 #: app/gui/module-browser.c:441
-#, fuzzy
 msgid "No longer available"
-msgstr "Nessun pattern disponibile"
+msgstr "Non più disponibile"
 
 #: app/gui/module-browser.c:477
 msgid "Load"
@@ -5367,11 +5147,11 @@ msgstr "Interrogazione"
 
 #: app/gui/module-browser.c:486
 msgid "Unload"
-msgstr "Disattiva"
+msgstr "Scarica"
 
 #: app/gui/module-browser.c:501
 msgid "Purpose:"
-msgstr "Scopi:"
+msgstr "Scopo:"
 
 #: app/gui/module-browser.c:502
 msgid "Author:"
@@ -5402,29 +5182,24 @@ msgid "Last Error:"
 msgstr "Ultimo errore:"
 
 #: app/gui/module-browser.c:509
-#, fuzzy
 msgid "Available Types:"
-msgstr "Filtri disponibili"
+msgstr "Tipi disponibili:"
 
 #: app/gui/offset-dialog.c:93
-#, fuzzy
 msgid "Offset Layer"
-msgstr "Livello del testo"
+msgstr "Posizione livello"
 
 #: app/gui/offset-dialog.c:95
-#, fuzzy
 msgid "Offset Layer Mask"
-msgstr "/Elimina livello maschera"
+msgstr "Posizione livello maschera"
 
 #: app/gui/offset-dialog.c:97
-#, fuzzy
 msgid "Offset Channel"
-msgstr "Canale superiore"
+msgstr "Posizione canale"
 
 #: app/gui/offset-dialog.c:148
-#, fuzzy
 msgid "Offset _X:"
-msgstr "Sposta X:"
+msgstr "Posizione _X:"
 
 #: app/gui/offset-dialog.c:150
 msgid "_Y:"
@@ -5432,14 +5207,13 @@ msgstr "_Y:"
 
 #. The by half height and half width option
 #: app/gui/offset-dialog.c:178
-#, fuzzy
 msgid "Offset by (x/_2),(y/2)"
-msgstr "Sposta per (x/2,(y/2)"
+msgstr "Sposta per (x/_2),(y/2)"
 
 #. The wrap around option
 #: app/gui/offset-dialog.c:188
 msgid "_Wrap"
-msgstr "A capo"
+msgstr "_A capo"
 
 #: app/gui/offset-dialog.c:199 app/widgets/gimptemplateeditor.c:377
 msgid "Fill Type"
@@ -5454,14 +5228,12 @@ msgid "_Transparent"
 msgstr "_Trasparente"
 
 #: app/gui/palette-editor-menu.c:48
-#, fuzzy
 msgid "/_New Color from FG"
-msgstr "/_Nuovo colore"
+msgstr "/_Nuovo colore dal primo piano"
 
 #: app/gui/palette-editor-menu.c:53
-#, fuzzy
 msgid "/_New Color from BG"
-msgstr "/_Nuovo colore"
+msgstr "/_Nuovo colore dallo sfondo"
 
 #: app/gui/palette-editor-menu.c:58
 msgid "/_Delete Color"
@@ -5551,39 +5323,32 @@ msgid "Enter a name for merged palette"
 msgstr "Digitate un nome per la palette incollata"
 
 #: app/gui/palettes-menu.c:46
-#, fuzzy
 msgid "/_Edit Palette..."
-msgstr "/Modifica attributi tracciato..."
+msgstr "/_Modifica tavolozza..."
 
 #: app/gui/palettes-menu.c:54
-#, fuzzy
 msgid "/_New Palette"
-msgstr "Nuova palette"
+msgstr "/_Nuova tavolozza"
 
 #: app/gui/palettes-menu.c:59
-#, fuzzy
 msgid "/_Import Palette..."
-msgstr "Importa palette"
+msgstr "/_Importa tavolozza..."
 
 #: app/gui/palettes-menu.c:64
-#, fuzzy
 msgid "/D_uplicate Palette"
-msgstr "/Duplica tracciato"
+msgstr "/D_uplica tavolozza"
 
 #: app/gui/palettes-menu.c:69
-#, fuzzy
 msgid "/_Merge Palettes..."
-msgstr "Incolla palette"
+msgstr "/_Fondi tavolozze..."
 
 #: app/gui/palettes-menu.c:73
-#, fuzzy
 msgid "/_Delete Palette"
-msgstr "Cancella palette"
+msgstr "/_Elimina tavolozza"
 
 #: app/gui/palettes-menu.c:81
-#, fuzzy
 msgid "/_Refresh Palettes"
-msgstr "Incolla palette"
+msgstr "/_Rinfresca tavolozza"
 
 #: app/gui/pattern-select.c:249
 msgid ""
@@ -5594,56 +5359,51 @@ msgstr ""
 "Probabilmente è andato in crash il plug-in corrispondente."
 
 #: app/gui/patterns-menu.c:45
-#, fuzzy
 msgid "/Edit Pattern..."
-msgstr "/Modifica attributi tracciato..."
+msgstr "/Modifica motivo..."
 
 #: app/gui/patterns-menu.c:53
-#, fuzzy
 msgid "/New Pattern"
-msgstr "Nuova palette"
+msgstr "/Nuovo motivo"
 
 #: app/gui/patterns-menu.c:58
-#, fuzzy
 msgid "/Duplicate Pattern"
-msgstr "/Duplica tracciato"
+msgstr "/Duplica motivo"
 
 #: app/gui/patterns-menu.c:63
-#, fuzzy
 msgid "/Delete Pattern..."
-msgstr "Cancella palette"
+msgstr "/Elimina motivo..."
 
 #: app/gui/patterns-menu.c:71
-#, fuzzy
 msgid "/Refresh Patterns"
-msgstr "Pattern"
+msgstr "/Rinfresca motivo"
 
 #: app/gui/plug-in-menus.c:340
-#, fuzzy, c-format
+#, c-format
 msgid "Re_peat \"%s\""
-msgstr "Ripeti"
+msgstr "Ripeti \"%s\""
 
 #: app/gui/plug-in-menus.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "R_e-show \"%s\""
-msgstr "/Filtri/Mostra ultimo"
+msgstr "/Ri-mostra \"%s\""
 
 #: app/gui/plug-in-menus.c:367
-#, fuzzy
 msgid "Repeat Last"
-msgstr "/Filtri/Ripeti ultimo"
+msgstr "Ripeti ultimo"
 
 #: app/gui/plug-in-menus.c:370
-#, fuzzy
 msgid "Re-Show Last"
-msgstr "/Filtri/Mostra ultimo"
+msgstr "Ri-mostra ultimo"
 
 #: app/gui/preferences-dialog.c:325
 #, fuzzy
 msgid ""
 "You will have to restart GIMP for\n"
 "the following changes to take effect:"
-msgstr "E' necessario riavviare GIMP per apportare i cambiamenti effettuati."
+msgstr ""
+"E' necessario riavviare GIMP per\n"
+"apportare i seguenti cambiamenti:"
 
 #: app/gui/preferences-dialog.c:891
 msgid "Preferences"
@@ -5660,9 +5420,8 @@ msgid "Default Image Resolution and Resolution Unit"
 msgstr "Risoluzione dell'immagine e unità di misura"
 
 #: app/gui/preferences-dialog.c:1096
-#, fuzzy
 msgid "Default Image _Type:"
-msgstr "Tipo di immagine base:"
+msgstr "_Tipo di immagine di base:"
 
 #: app/gui/preferences-dialog.c:1099
 msgid "Maximum Image Size:"
@@ -5683,9 +5442,8 @@ msgstr "Interfaccia"
 
 #. Previews
 #: app/gui/preferences-dialog.c:1157
-#, fuzzy
 msgid "Previews"
-msgstr "Anteprima"
+msgstr "Anteprime"
 
 #: app/gui/preferences-dialog.c:1160
 msgid "_Enable Layer & Channel Previews"
@@ -5696,9 +5454,8 @@ msgid "_Layer & Channel Preview Size:"
 msgstr "Dimensione anteprime di _livello e del canale:"
 
 #: app/gui/preferences-dialog.c:1169
-#, fuzzy
 msgid "_Navigation Preview Size:"
-msgstr "Dimensione anteprima:"
+msgstr "Dimensione anteprima di _navigazione:"
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1173
@@ -5706,9 +5463,8 @@ msgid "Dialog Behavior"
 msgstr "Comportamento finestre di dialogo"
 
 #: app/gui/preferences-dialog.c:1176
-#, fuzzy
 msgid "_Info Window Per Display"
-msgstr "Finestra navigatore per display"
+msgstr "Finestra di _informazioni per vista"
 
 #. Menus
 #: app/gui/preferences-dialog.c:1180
@@ -5720,7 +5476,6 @@ msgid "Enable _Tearoff Menus"
 msgstr "Abilita menu staccabili"
 
 #: app/gui/preferences-dialog.c:1189
-#, fuzzy
 msgid "Open _Recent Menu Size:"
 msgstr "Dimensione elenco _recenti:"
 
@@ -5738,9 +5493,8 @@ msgid "Save Keyboard Shortcuts on Exit"
 msgstr "Salva i tasti scorciatoia all'uscita"
 
 #: app/gui/preferences-dialog.c:1202
-#, fuzzy
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
-msgstr "Salva la posizione della finestra all'uscita"
+msgstr "Ripristina i tasti scorciatoia alla partenza"
 
 #: app/gui/preferences-dialog.c:1210
 msgid "Save Keyboard Shortcuts Now"
@@ -6713,12 +6467,12 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
-"I tasti combinazione possono essere dinamicamente definiti\n"
-"in GIMP. Il menurc è una copia delle vostre configurazioni\n"
-"per questo può essere utilizzato la volta successiva. Potete\n"
-"editare questo file se preferite, ma è molto più semplice\n"
-"definire le scorciatoie con GIMP. Cancellare questo file\n"
-"vorrà dire utilizzare le scorciatoie di base."
+"In Gimp i tasti scorciatoia possono essere ridefiniti\n"
+"dinamicamente. Il file menurc è una copia delle vostre \n"
+"configurazioni perciò può essere utilizzato la volta \n"
+"successiva. Potete modificare questo file con un editor\n"
+"ma è molto più semplice usare GIMP. Cancellando questo \n"
+"file verranno ripristinate le scorciatoie predefinite."
 
 #: app/gui/user-install-dialog.c:173
 msgid ""
@@ -6726,10 +6480,10 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
-"Il file sessionrc è utilizzato per memorizzare quali finestre\n"
-"di dialogo erano aperte l'ultima volta prima di uscire da GIMP.\n"
-"Potete configurare GIMP per riaprire queste finestre nella stessa\n"
-"posizione."
+"Il file sessionrc viene utilizzato per memorizzare quali\n"
+"finestre di dialogo erano aperte l'ultima volta appena\n"
+"prima di uscire da GIMP. Potete configurare GIMP per\n"
+"riaprire queste finestre nella stessa posizione."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
@@ -6754,21 +6508,18 @@ msgstr ""
 "da GIMP."
 
 #: app/gui/user-install-dialog.c:195
-#, fuzzy
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Questa è una sottodirectory utile per tenere\n"
-"i pennelli definiti dall'utente. Il file di base\n"
-"gimprc controlla questa directory oltre a quelle\n"
-"di sistema dove sono disposti i pennelli base\n"
-"presenti con la comune installazione di gimp."
+"Questa è una cartella usata per tenere i \n"
+"pennelli definiti dall'utente. Gimp legge questa\n"
+"cartella oltre a quella installata di sistema alla\n"
+"ricerca di pennelli."
 
 #: app/gui/user-install-dialog.c:203
-#, fuzzy
 msgid ""
 "This folder is used to store fonts you only want\n"
 "visible in the GIMP. The GIMP checks this folder in\n"
@@ -6777,11 +6528,13 @@ msgid ""
 "want to have GIMP-only fonts, otherwise put things\n"
 "in your global font directory."
 msgstr ""
-"Questa è una sottodirectory utile per tenere\n"
-"i pattern definiti dall'utente. Il file di base\n"
-"gimprc controlla questa directory oltre a quelle\n"
-"di sistema dove sono disposti i pattern base\n"
-"presenti con la comune installazione di GIMP."
+"Questa cartella viene usata per immagazzinare i\n"
+"caratteri che si vuole siano resi visibili solamente\n"
+"a GIMP. GIMP controlla questa cartella oltre a quella\n"
+"di sistema di GIMP alla ricerca di caratteri. Usare\n"
+"questa cartella solamente se si è assolutamente certi\n"
+"di voler aver caratteri solo per GIMP, altrimenti\n"
+"posizionateli nella cartella di caratteri globale."
 
 #: app/gui/user-install-dialog.c:213
 #, fuzzy
