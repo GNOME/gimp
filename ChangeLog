@@ -1,3 +1,35 @@
+2003-05-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.c: added default implementations for scale()
+	and resize() which just set the resulting width/height and offset
+	values.
+
+	* app/core/gimpdrawable.c: chain up in scale() and resize().
+
+	* app/vectors/gimpvectors.[ch]: buncha vectors changes/features:
+
+	- Removed unused "linked" and "locked" members.
+	- Removed "changed" signal.
+	- Added "freeze" and "thaw" signals and functions to emit them.
+	- Added "freeze_count" member so we emit only one freeze/thaw pair
+	  even when doing nested changes.
+	- Added GimpItem::translate() implementation.
+	- Actually scale and resize the vectors in scale() and resize().
+	- Added undo for scale() and resize().
+	- Added freeze()/thaw() pairs around all modifying functions.
+	- Changed gimp_vectors_copy_strokes() to work as needed.
+
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c: resize and scale all vectors.
+	Fixes bug #36491.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_vectors_mod): added
+	freeze()/thaw() around the vectors-modifying code. Also restore
+	width, height and offsets.
+
+	* app/tools/gimpvectortool.c: connect to "freeze" and "thaw"
+	and pause()/resume() vectors drawing accordingly.
+
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.[ch]: removed "linked" member and API...

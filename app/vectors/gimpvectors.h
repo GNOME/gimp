@@ -37,11 +37,9 @@ struct _GimpVectors
 {
   GimpItem  parent_instance;
 
-  gboolean  visible;            /* controls visibility            */
-  gboolean  locked;             /* transformation locking         */
-
   GList    *strokes;            /* The List of GimpStrokes        */
 
+  gint      freeze_count;
   /* Stuff missing */
 };
 
@@ -51,7 +49,8 @@ struct _GimpVectorsClass
   GimpItemClass  parent_class;
 
   /*  signals  */
-  void          (* changed)           (GimpVectors       *vectors);
+  void          (* freeze)            (GimpVectors       *vectors);
+  void          (* thaw)              (GimpVectors       *vectors);
 
   /*  virtual functions  */
   void          (* stroke_add)        (GimpVectors       *vectors,
@@ -86,6 +85,9 @@ GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
 
 GimpVectors   * gimp_vectors_new                (GimpImage         *gimage,
                                                  const gchar       *name);
+
+void            gimp_vectors_freeze             (GimpVectors       *vectors);
+void            gimp_vectors_thaw               (GimpVectors       *vectors);
 
 void            gimp_vectors_copy_strokes       (const GimpVectors *src_vectors,
                                                  GimpVectors       *dest_vectors);

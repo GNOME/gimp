@@ -80,6 +80,16 @@ gimp_image_resize (GimpImage *gimage,
       gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
     }
 
+  /*  Resize all vectors  */
+  for (list = GIMP_LIST (gimage->vectors)->list; 
+       list; 
+       list = g_list_next (list))
+    {
+      GimpItem *item = list->data;
+
+      gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
+    }
+
   /*  Reposition or remove any guides  */
   list = gimage->guides;
   while (list)

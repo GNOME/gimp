@@ -58,6 +58,7 @@ gimp_image_scale (GimpImage             *gimage,
   gdouble      img_scale_h = 1.0;
   gint         num_channels;
   gint         num_layers;
+  gint         num_vectors;
   gint         progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -67,6 +68,7 @@ gimp_image_scale (GimpImage             *gimage,
 
   num_channels = gimage->channels->num_children;
   num_layers   = gimage->layers->num_children;
+  num_vectors  = gimage->vectors->num_children;
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -101,7 +103,24 @@ gimp_image_scale (GimpImage             *gimage,
 
       if (progress_func)
         {
-          (* progress_func) (0, num_channels + num_layers,
+          (* progress_func) (0, num_vectors + num_channels + num_layers,
+                             progress_current++,
+                             progress_data);
+        }
+    }
+
+  /*  Scale all vectors  */
+  for (list = GIMP_LIST (gimage->vectors)->list; 
+       list; 
+       list = g_list_next (list))
+    {
+      item = (GimpItem *) list->data;
+
+      gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
+
+      if (progress_func)
+        {
+          (* progress_func) (0, num_vectors + num_channels + num_layers,
                              progress_current++,
                              progress_data);
         }
@@ -137,7 +156,7 @@ gimp_image_scale (GimpImage             *gimage,
 
       if (progress_func)
         {
-          (* progress_func) (0, num_channels + num_layers,
+          (* progress_func) (0, num_vectors + num_channels + num_layers,
                              progress_current++,
                              progress_data);
         }

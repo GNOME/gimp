@@ -329,17 +329,15 @@ gimp_drawable_scale (GimpItem              *item,
    *   resampling because that doesn't necessarily make sense for indexed
    *   images.
    */
-  if (gimp_drawable_is_indexed (drawable))
-    interpolation_type = GIMP_INTERPOLATION_NONE;
+  scale_region (&srcPR, &destPR,
+                gimp_drawable_is_indexed (drawable) ?
+                GIMP_INTERPOLATION_NONE : interpolation_type);
 
-  scale_region (&srcPR, &destPR, interpolation_type);
-
-  /*  Configure the new channel  */
   drawable->tiles = new_tiles;
-  item->width     = new_width;
-  item->height    = new_height;
-  item->offset_x  = new_offset_x;
-  item->offset_y  = new_offset_y;
+
+  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interpolation_type);
 
   /*  Update the new position  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
@@ -445,12 +443,10 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
-  /*  Configure the new drawable  */
   drawable->tiles = new_tiles;
-  item->offset_x  = x1 + item->offset_x - x2;
-  item->offset_y  = y1 + item->offset_y - y2;
-  item->width     = new_width;
-  item->height    = new_height;
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+                                          offset_x, offset_y);
 
   /*  update the new area  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);

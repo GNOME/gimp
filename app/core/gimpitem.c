@@ -72,6 +72,17 @@ static void       gimp_item_real_rename    (GimpItem      *item,
 static void       gimp_item_real_translate (GimpItem      *item,
                                             gint           offset_x,
                                             gint           offset_y);
+static void       gimp_item_real_scale     (GimpItem      *item,
+                                            gint           new_width,
+                                            gint           new_height,
+                                            gint           new_offset_x,
+                                            gint           new_offset_y,
+                                            GimpInterpolationType  interp_type);
+static void       gimp_item_real_resize    (GimpItem      *item,
+                                            gint           new_width,
+                                            gint           new_height,
+                                            gint           offset_x,
+                                            gint           offset_y);
 
 
 /*  private variables  */
@@ -148,8 +159,8 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->duplicate                = gimp_item_real_duplicate;
   klass->rename                   = gimp_item_real_rename;
   klass->translate                = gimp_item_real_translate;
-  klass->scale                    = NULL;
-  klass->resize                   = NULL;
+  klass->scale                    = gimp_item_real_scale;
+  klass->resize                   = gimp_item_real_resize;
 }
 
 static void
@@ -298,6 +309,62 @@ gimp_item_real_translate (GimpItem *item,
 {
   item->offset_x += offset_x;
   item->offset_y += offset_y;
+}
+
+static void
+gimp_item_real_scale (GimpItem              *item,
+                      gint                   new_width,
+                      gint                   new_height,
+                      gint                   new_offset_x,
+                      gint                   new_offset_y,
+                      GimpInterpolationType  interp_type)
+{
+  item->width     = new_width;
+  item->height    = new_height;
+  item->offset_x  = new_offset_x;
+  item->offset_y  = new_offset_y;
+}
+
+static void
+gimp_item_real_resize (GimpItem *item,
+                       gint      new_width,
+                       gint      new_height,
+                       gint      offset_x,
+                       gint      offset_y)
+{
+  gint x1, y1, x2, y2;
+
+  x1 = CLAMP (offset_x, 0, new_width);
+  y1 = CLAMP (offset_y, 0, new_height);
+  x2 = CLAMP (offset_x + item->width,  0, new_width);
+  y2 = CLAMP (offset_y + item->height, 0, new_height);
+
+  if (offset_x > 0)
+    {
+      x1 = 0;
+      x2 = offset_x;
+    }
+  else
+    {
+      x1 = -offset_x;
+      x2 = 0;
+    }
+
+  if (offset_y > 0)
+    {
+      y1 = 0;
+      y2 = offset_y;
+    }
+  else
+    {
+      y1 = -offset_y;
+      y2 = 0;
+    }
+
+  item->offset_x = x1 + item->offset_x - x2;
+  item->offset_y = y1 + item->offset_y - y2;
+  item->width    = new_width;
+  item->height   = new_height;
 }
 
 void

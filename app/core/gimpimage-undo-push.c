@@ -2635,9 +2635,18 @@ undo_pop_vectors_mod (GimpUndo            *undo,
                                        G_TYPE_FROM_INSTANCE (vectors),
                                        FALSE));
 
+  gimp_vectors_freeze (vectors);
+
   gimp_vectors_copy_strokes (temp, vectors);
 
+  GIMP_ITEM (vectors)->width    = GIMP_ITEM (temp)->width;
+  GIMP_ITEM (vectors)->height   = GIMP_ITEM (temp)->height;
+  GIMP_ITEM (vectors)->offset_x = GIMP_ITEM (temp)->offset_x;
+  GIMP_ITEM (vectors)->offset_y = GIMP_ITEM (temp)->offset_y;
+
   g_object_unref (temp);
+
+  gimp_vectors_thaw (vectors);
 
   return TRUE;
 }

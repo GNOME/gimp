@@ -90,7 +90,10 @@ static gboolean   gimp_vector_tool_on_handle   (GimpTool        *tool,
 static void   gimp_vector_tool_draw            (GimpDrawTool    *draw_tool);
 
 static void   gimp_vector_tool_clear_vectors   (GimpVectorTool  *vector_tool);
-static void   gimp_vector_tool_vectors_changed (GimpVectors     *vectors,
+
+static void   gimp_vector_tool_vectors_freeze  (GimpVectors     *vectors,
+                                                GimpVectorTool  *vector_tool);
+static void   gimp_vector_tool_vectors_thaw    (GimpVectors     *vectors,
                                                 GimpVectorTool  *vector_tool);
 
 
@@ -214,7 +217,6 @@ gimp_vector_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
-
 static void
 gimp_vector_tool_button_press (GimpTool        *tool,
                                GimpCoords      *coords,
@@ -296,7 +298,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         }
     }
 
-  if (!vector_tool->vectors || vector_tool->function == VECTORS_CREATING)
+  if (! vector_tool->vectors || vector_tool->function == VECTORS_CREATING)
     {
       if (gimp_tool_control_is_active (tool->control))
 	{
@@ -318,8 +320,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                    G_CALLBACK (gimp_vector_tool_clear_vectors),
                                    vector_tool,
                                    G_CONNECT_SWAPPED);
-          g_signal_connect_object (vectors, "changed",
-                                   G_CALLBACK (gimp_vector_tool_vectors_changed),
+          g_signal_connect_object (vectors, "freeze",
+                                   G_CALLBACK (gimp_vector_tool_vectors_freeze),
+                                   vector_tool,
+                                   0);
+          g_signal_connect_object (vectors, "thaw",
+                                   G_CALLBACK (gimp_vector_tool_vectors_thaw),
                                    vector_tool,
                                    0);
         }
@@ -371,7 +377,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
 }
 
-
 static void
 gimp_vector_tool_button_release (GimpTool        *tool,
                                  GimpCoords      *coords,
@@ -394,7 +399,6 @@ gimp_vector_tool_button_release (GimpTool        *tool,
     }
 }
 
-
 static void
 gimp_vector_tool_motion (GimpTool        *tool,
                          GimpCoords      *coords,
@@ -409,7 +413,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+  gimp_vectors_freeze (vector_tool->vectors);
 
   switch (vector_tool->function)
     {
@@ -425,9 +429,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
       break;
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
+  gimp_vectors_thaw (vector_tool->vectors);
 }
-
 
 static gboolean
 gimp_vector_tool_on_handle (GimpTool        *tool,
@@ -493,7 +496,6 @@ gimp_vector_tool_on_handle (GimpTool        *tool,
   return (anchor != NULL);
 }
 
-
 static void
 gimp_vector_tool_cursor_update (GimpTool        *tool,
                                 GimpCoords      *coords,
@@ -534,7 +536,6 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
-
 
 static void
 gimp_vector_tool_draw (GimpDrawTool *draw_tool)
@@ -630,7 +631,6 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-
 static void
 gimp_vector_tool_clear_vectors (GimpVectorTool *vector_tool)
 {
@@ -639,14 +639,33 @@ gimp_vector_tool_clear_vectors (GimpVectorTool *vector_tool)
   gimp_vector_tool_set_vectors (vector_tool, NULL);
 }
 
-
 static void
-gimp_vector_tool_vectors_changed (GimpVectors    *vectors,
-                                  GimpVectorTool *vector_tool)
+gimp_vector_tool_vectors_freeze (GimpVectors    *vectors,
+                                 GimpVectorTool *vector_tool)
 {
-  g_print ("vectors changed\n");
+  GimpDrawTool *draw_tool;
+
+  draw_tool = GIMP_DRAW_TOOL (vector_tool);
+
+  g_print ("vectors freeze\n");
+
+  if (draw_tool->gdisp)
+    gimp_draw_tool_pause (draw_tool);
 }
 
+static void
+gimp_vector_tool_vectors_thaw (GimpVectors    *vectors,
+                               GimpVectorTool *vector_tool)
+{
+  GimpDrawTool *draw_tool;
+
+  draw_tool = GIMP_DRAW_TOOL (vector_tool);
+
+  g_print ("vectors thaw\n");
+
+  if (draw_tool->gdisp)
+    gimp_draw_tool_resume (draw_tool);
+}
 
 void
 gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
@@ -682,7 +701,10 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                             gimp_vector_tool_clear_vectors,
                                             vector_tool);
       g_signal_handlers_disconnect_by_func (vector_tool->vectors,
-                                            gimp_vector_tool_vectors_changed,
+                                            gimp_vector_tool_vectors_freeze,
+                                            vector_tool);
+      g_signal_handlers_disconnect_by_func (vector_tool->vectors,
+                                            gimp_vector_tool_vectors_thaw,
                                             vector_tool);
       g_object_unref (vector_tool->vectors);
     }
@@ -707,8 +729,12 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                            G_CALLBACK (gimp_vector_tool_clear_vectors),
                            vector_tool,
                            G_CONNECT_SWAPPED);
-  g_signal_connect_object (vectors, "changed",
-                           G_CALLBACK (gimp_vector_tool_vectors_changed),
+  g_signal_connect_object (vectors, "freeze",
+                           G_CALLBACK (gimp_vector_tool_vectors_freeze),
+                           vector_tool,
+                           0);
+  g_signal_connect_object (vectors, "thaw",
+                           G_CALLBACK (gimp_vector_tool_vectors_thaw),
                            vector_tool,
                            0);
 
