@@ -1,0 +1,76 @@
+<!-- ##### SECTION Title ##### -->
+GimpColorNotebook
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpColorNotebook ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_color_notebook_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_notebook_set_color ##### -->
+<para>
+
+</para>
+
+@notebook: 
+@rgb: 
+@hsv: 
+
+
+<!-- ##### FUNCTION gimp_color_notebook_get_color ##### -->
+<para>
+
+</para>
+
+@notebook: 
+@rgb: 
+@hsv: 
+
+
+<!-- ##### FUNCTION gimp_color_notebook_color_changed ##### -->
+<para>
+
+</para>
+
+@notebook: 
+
+
+<!-- ##### FUNCTION gimp_color_notebook_set_channel ##### -->
+<para>
+
+</para>
+
+@notebook: 
+@channel: 
+
+
+<!-- ##### SIGNAL GimpColorNotebook::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolornotebook: the object which received the signal.
+@arg1: 
+@arg2: 
+

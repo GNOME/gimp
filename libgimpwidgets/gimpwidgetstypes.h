@@ -38,6 +38,17 @@ typedef enum
 
 typedef enum
 {
+  GIMP_COLOR_SELECTOR_HUE,
+  GIMP_COLOR_SELECTOR_SATURATION,
+  GIMP_COLOR_SELECTOR_VALUE,
+  GIMP_COLOR_SELECTOR_RED,
+  GIMP_COLOR_SELECTOR_GREEN,
+  GIMP_COLOR_SELECTOR_BLUE,
+  GIMP_COLOR_SELECTOR_ALPHA
+} GimpColorSelectorChannel;
+
+typedef enum
+{
   GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
   GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
   GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
@@ -49,6 +60,7 @@ typedef struct _GimpChainButton   GimpChainButton;
 typedef struct _GimpColorArea     GimpColorArea;
 typedef struct _GimpColorButton   GimpColorButton;
 typedef struct _GimpColorDisplay  GimpColorDisplay;
+typedef struct _GimpColorNotebook GimpColorNotebook;
 typedef struct _GimpColorSelector GimpColorSelector;
 typedef struct _GimpColorSelect   GimpColorSelect;
 typedef struct _GimpDialog        GimpDialog;

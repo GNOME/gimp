@@ -1,20 +1,22 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!entity GimpButton SYSTEM "sgml/gimpbutton.sgml">
 <!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
+<!entity GimpColorArea SYSTEM "sgml/gimpcolorarea.sgml">
 <!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
+<!entity GimpColorDisplay SYSTEM "sgml/gimpcolordisplay.sgml">
+<!entity GimpColorNotebook SYSTEM "sgml/gimpcolornotebook.sgml">
+<!entity GimpColorSelect SYSTEM "sgml/gimpcolorselect.sgml">
+<!entity GimpColorSelector SYSTEM "sgml/gimpcolorselector.sgml">
+<!entity GimpDialog SYSTEM "sgml/gimpdialog.sgml">
 <!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
+<!entity GimpHelpUI SYSTEM "sgml/gimphelpui.sgml">
 <!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
 <!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
-<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
-<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
-<!entity GimpDialog SYSTEM "sgml/gimpdialog.sgml">
-<!entity GimpHelpUI SYSTEM "sgml/gimphelpui.sgml">
 <!entity GimpQueryBox SYSTEM "sgml/gimpquerybox.sgml">
+<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
 <!entity GimpStock SYSTEM "sgml/gimpstock.sgml">
+<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
 <!entity GimpWidgets SYSTEM "sgml/gimpwidgets.sgml">
-<!entity GimpColorDisplay SYSTEM "sgml/gimpcolordisplay.sgml">
-<!entity GimpColorSelector SYSTEM "sgml/gimpcolorselector.sgml">
-<!entity GimpColorSelect SYSTEM "sgml/gimpcolorselect.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -25,7 +27,9 @@
     <title>GIMP Widgets Library</title>
     &GimpButton;
     &GimpChainButton;
-    &GimpColorButton; 
+    &GimpColorArea;
+    &GimpColorButton;
+    &GimpColorNotebook;
     &GimpFileSelection;
     &GimpPathEditor;
     &GimpPixmap;

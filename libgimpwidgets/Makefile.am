@@ -27,6 +27,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpcolorbutton.h	\
 	gimpcolordisplay.c	\
 	gimpcolordisplay.h	\
+	gimpcolornotebook.c	\
+	gimpcolornotebook.h	\
 	gimpcolorselector.c	\
 	gimpcolorselector.h	\
 	gimpcolorselect.c	\
@@ -77,6 +79,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorarea.h		\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
+	gimpcolornotebook.h	\
 	gimpcolorselector.h	\
 	gimpcolorselect.h	\
 	gimpdialog.h		\

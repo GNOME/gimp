@@ -91,6 +91,22 @@ display color correction module.
 @cancel_data: 
 
 
+<!-- ##### FUNCTION gimp_color_display_configure_reset ##### -->
+<para>
+
+</para>
+
+@display: 
+
+
+<!-- ##### FUNCTION gimp_color_display_changed ##### -->
+<para>
+
+</para>
+
+@display: 
+
+
 <!-- ##### SIGNAL GimpColorDisplay::changed ##### -->
 <para>
 
