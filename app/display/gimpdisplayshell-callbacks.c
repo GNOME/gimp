@@ -62,6 +62,8 @@ redraw (GDisplay *gdisp,
     }
 }
 
+static int scrolled = 0;
+
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
@@ -163,6 +165,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 
 	case 2:
+	  scrolled = 1;
 	  gtk_grab_add (canvas);
 	  start_grab_and_scroll (gdisp, bevent);
 	  break;
@@ -203,6 +206,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 
 	case 2:
+	  scrolled = 0;
 	  gtk_grab_remove (canvas);
 	  end_grab_and_scroll (gdisp, bevent);
 	  break;
@@ -253,7 +257,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	      (* active_tool->motion_func) (active_tool, mevent, gdisp);
 	    }
 	}
-      else if (mevent->state & GDK_BUTTON2_MASK)
+      else if ((mevent->state & GDK_BUTTON2_MASK) && scrolled)
 	{
 	  grab_and_scroll (gdisp, mevent);
 	}

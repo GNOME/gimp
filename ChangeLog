@@ -1,3 +1,14 @@
+Wed Apr  8 21:12:01 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: redid libjpeg check to make sure old versions
+	aren't used. Also #undef PACKAGE and VERSION since some
+	jconfig.h's define it
+
+	* updated included regex.[ch] to the one in GNU grep
+
+	* plug-ins/script-fu/interp_regex.c: we don't need to kludge
+	around OSF1 anymore, since we use our own regex stuff
+
 Wed Apr  8 17:55:38 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*plugins/script-fu/scripts/grid-system.scm

@@ -136,11 +136,6 @@ regex_prin1 (LISP ptr, struct gen_printio *f)
   sprintf (buffer, "#<REGEX %p nsub=%d",
 	   p, p->re_nsub);
   gput_st (f, buffer);
-#if defined(__osf__)
-  sprintf (buffer, ", len=%d flags=%X",
-	   p->re_len, p->re_cflags);
-  gput_st (f, buffer);
-#endif
   gput_st (f, ">");
 }
 

@@ -128,11 +128,25 @@ dnl Test for libtiff
 
 dnl Test for libjpeg
   if test -z "$LIBJPEG_LIB"; then
-    AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
-      AC_CHECK_HEADER(jpeglib.h,
-	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
-	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)),
+    AC_CHECK_LIB(jpeg, jpeg_create_decompress,
+      jpeg_ok=yes,
+      jpeg_ok=no
       AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
+    if test "$jpeg_ok" = yes; then
+      AC_MSG_CHECKING([for jpeg.h])
+      AC_TRY_CPP(
+[#undef PACKAGE
+#undef VERSION
+#include <jpeglib.h>],
+	jpeg_ok=yes,
+	jpeg_ok=no)
+      AC_MSG_RESULT($jpeg_ok)
+      if test "$jpeg_ok" = yes; then
+	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
+      else
+	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
+      fi
+    fi
   fi
 
 dnl Test for libpng
