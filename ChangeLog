@@ -1,3 +1,7 @@
+Sat Jan  1 21:05:38 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* INSTALL: "strip" doc patch by Daniel Egger.
+
 Sat Jan  1 18:54:13 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/disp_callbacks.c
@@ -85,7 +89,7 @@ Thu Dec 30 21:14:05 CET 1999  Sven Neumann <sven@gimp.org>
 	* app/gradient.c
 	* app/levels.c
 	* app/paths_dialog.c
-	* libgimp/gimpfileselection.c: use our new (sligtly compressed) layout
+	* libgimp/gimpfileselection.c: use our new (slightly compressed) layout
 	of gtk_file_selection all over the place
 
 Thu Dec 30 19:45:13 CET 1999  Sven Neumann <sven@gimp.org>

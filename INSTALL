@@ -1,13 +1,14 @@
-There are three basic steps to building and installing the
-GIMP on unix:
+There are six basic steps to building and installing the
+GIMP:
 
-  1. You need to have installed GTK version 1.1.10 or better
+  1. You need to have installed GTK version 1.2.1 or better
   2. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
   3. Configure the GIMP by running the `configure' script.
+     You may want to pass some options to it, see below.
   4. Build the GIMP by running `make'.
-  5. Install the GIMP by running `make install'.
+  5. Install the GIMP by running `make install' or `make install-strip'.
   6. Optionally install the separate gimp-data-extras package.
 
 Please make sure you don't have any old GTK, jpeg, etc. libraries lying
@@ -19,8 +20,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-1.1.0.tar.gz   # unpack the sources
-  % cd gimp-1.1.0                # change to the toplevel directory
+  % tar xvfz gimp-1.2.0.tar.gz   # unpack the sources
+  % cd gimp-1.2.0                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -45,7 +46,7 @@ recognizes. These are:
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
-  3. --enable-ansi and --disable-ansi. This options causes stricter
+  3. --enable-ansi and --disable-ansi. This option causes stricter
      ANSI C checking to be performed when compiling with GCC. The
      default is for strict checking to be disabled. NOTE: This option
      is intended primarily as a convenience for developers.
@@ -65,6 +66,29 @@ recognizes. These are:
      get many errors on startup. See README.perl for even finer grained
      control about installation paths (and distribution making).
 
+  6. --enable-nls and --disable-nls. This option changes whether to build
+     GIMP with or without localisation support. This option is enabled by
+     default. If you'd like to enjoy GIMP in your native language, assuming 
+     the necessary catalogs are available, then leave this option on. If
+     you'd like to have an English GIMP in every case then turn this option
+     off; this will also decrease the binary size by a few bits.
+  
+  7. --with-threads and --with-mp. This options control whether to build
+     GIMP with or without support for multiple processors. This options are
+     off by default. If you do have multiply processors and run GIMP with
+     an OS supporting them you will like to enable this features to use
+     all of your horsepower. Enabling it on singleprocessor systems won't
+     harm but cause a bit processing overhead.
+
+  8. --with-sendmail=[], --with-lp=[], --with-lpc=[], --with-lpr=[] and
+     --with-lpstat=[]. This options are used to tell GIMP where to find
+     this commands. Normally this options don't have to be used because
+     configure tries to find them in the usual places.
+  
+  9. --enable-python and --disable-python. This options control whether to
+     build the python scripting language plygin or not. This options
+     defaults to off.   
+
 The `make' command builds several things:
  - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
    `libgimp/libgimpui.la'. The `.la' suffix is used by libtool, the
@@ -78,6 +102,10 @@ files and libraries, the gimp header files associated with libgimp and
 the libgimp library, the plug-ins, and the GIMP executable. After
 running `make install' and assuming the build process was successful
 you should be able to run `gimp'.
+
+Using `make install-strip' will remove unneeded debugging cruft and 
+unused functions from the binaries which will reduce the size of the
+GIMP and its plug-ins. 
 
 When ./configure fails
 ======================
