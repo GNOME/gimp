@@ -24,6 +24,8 @@ libappdialogs_a_SOURCES = \
 	file-save-dialog.h		\
 	grid-dialog.h                   \
 	grid-dialog.c                   \
+	image-merge-layers-dialog.c	\
+	image-merge-layers-dialog.h	\
 	image-new-dialog.c		\
 	image-new-dialog.h		\
 	info-dialog.c			\

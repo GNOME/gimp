@@ -48,7 +48,6 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -56,6 +55,7 @@
 #include "dialogs/convert-dialog.h"
 #include "dialogs/dialogs.h"
 #include "dialogs/grid-dialog.h"
+#include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
 #include "dialogs/resize-dialog.h"
 
@@ -77,33 +77,23 @@ struct _ImageResizeOptions
 };
 
 
-typedef struct _LayerMergeOptions LayerMergeOptions;
-
-struct _LayerMergeOptions
-{
-  GimpContext   *context;
-  GimpImage     *gimage;
-  GimpMergeType  merge_type;
-};
-
-
 /*  local function prototypes  */
 
-static void   image_resize_callback        (GtkWidget          *widget,
-                                            gpointer            data);
-static void   image_scale_callback         (GtkWidget          *widget,
-                                            gpointer            data);
-static void   image_scale_confirm_large    (ImageResizeOptions *options,
-                                            gint64              new_memsize,
-                                            gint64              max_memsize);
-static void   image_scale_confirm_small    (ImageResizeOptions *options);
-static void   image_scale_confirm_response (GtkWidget          *widget,
-                                            gint                response_id,
-                                            ImageResizeOptions *options);
-static void   image_scale_implement        (ImageResizeOptions *options);
-static void   image_merge_layers_response  (GtkWidget          *dialog,
-                                            gint                response_id,
-                                            LayerMergeOptions  *options);
+static void   image_resize_callback        (GtkWidget              *widget,
+                                            gpointer                data);
+static void   image_scale_callback         (GtkWidget              *widget,
+                                            gpointer                data);
+static void   image_scale_confirm_large    (ImageResizeOptions     *options,
+                                            gint64                  new_memsize,
+                                            gint64                  max_memsize);
+static void   image_scale_confirm_small    (ImageResizeOptions     *options);
+static void   image_scale_confirm_response (GtkWidget              *widget,
+                                            gint                    response_id,
+                                            ImageResizeOptions     *options);
+static void   image_scale_implement        (ImageResizeOptions     *options);
+static void   image_merge_layers_response  (GtkWidget              *widget,
+                                            gint                    response_id,
+                                            ImageMergeLayersDialog *dialog);
 
 
 /*  public functions  */
@@ -367,58 +357,22 @@ void
 image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  LayerMergeOptions *options;
-  GimpImage         *gimage;
-  GtkWidget         *dialog;
-  GtkWidget         *widget;
-  GtkWidget         *frame;
+  ImageMergeLayersDialog *dialog;
+  GimpImage              *gimage;
+  GtkWidget              *widget;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  options = g_new0 (LayerMergeOptions, 1);
+  dialog = image_merge_layers_dialog_new (gimage,
+                                          action_data_get_context (data),
+                                          widget,
+                                          GIMP_EXPAND_AS_NECESSARY);
 
-  options->context    = action_data_get_context (data);
-  options->gimage     = gimage;
-  options->merge_type = GIMP_EXPAND_AS_NECESSARY;
-
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                                     _("Merge Layers"),
-                                     "gimp-image-merge-layers",
-                                     GIMP_STOCK_MERGE_DOWN,
-                                     _("Layers Merge Options"),
-                                     widget,
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_IMAGE_MERGE_LAYERS,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-  g_signal_connect (dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (image_merge_layers_response),
-                    options);
+                    dialog);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Final, Merged Layer should be:"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &options->merge_type, options->merge_type,
-
-                                    _("Expanded as necessary"),
-                                    GIMP_EXPAND_AS_NECESSARY, NULL,
-
-                                    _("Clipped to image"),
-                                    GIMP_CLIP_TO_IMAGE, NULL,
-
-                                    _("Clipped to bottom layer"),
-                                    GIMP_CLIP_TO_BOTTOM_LAYER, NULL,
-
-                                    NULL);
-
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), frame);
-  gtk_widget_show (frame);
-
-  gtk_widget_show (dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -674,19 +628,17 @@ image_scale_implement (ImageResizeOptions *options)
 }
 
 static void
-image_merge_layers_response (GtkWidget         *dialog,
-                             gint               response_id,
-                             LayerMergeOptions *options)
+image_merge_layers_response (GtkWidget              *widget,
+                             gint                    response_id,
+                             ImageMergeLayersDialog *dialog)
 {
-  gtk_widget_destroy (dialog);
-
   if (response_id == GTK_RESPONSE_OK)
     {
-      gimp_image_merge_visible_layers (options->gimage,
-                                       options->context,
-                                       options->merge_type);
-      gimp_image_flush (options->gimage);
+      gimp_image_merge_visible_layers (dialog->gimage,
+                                       dialog->context,
+                                       dialog->merge_type);
+      gimp_image_flush (dialog->gimage);
     }
 
-  g_free (options);
+  gtk_widget_destroy (dialog->dialog);
 }
