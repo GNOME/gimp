@@ -207,7 +207,7 @@ static SV *new_gdrawable (gint32 id)
    if (!gdrawable_cache)
      gdrawable_cache = g_hash_table_new (g_int_hash, g_int_equal);
 
-   if (0 && (sv = (SV*)g_hash_table_lookup (gdrawable_cache, &id)))
+   if (sv = (SV*)g_hash_table_lookup (gdrawable_cache, &id))
      SvREFCNT_inc (sv);
    else
      {

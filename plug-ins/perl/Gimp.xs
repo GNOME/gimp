@@ -55,82 +55,36 @@ _exit()
 #endif
 	abort();
 
-#ifdef ENABLE_NLS
 
 BOOT:
+#ifdef ENABLE_NLS
 	setlocale (LC_MESSAGES, ""); /* calling twice doesn't hurt, no? */
         bindtextdomain ("gimp-perl", datadir "/locale");
         textdomain ("gimp-perl");
-
-char *
-bindtextdomain(d,dir)
-	char *	d
-	char *	dir
-
-char *
-textdomain(d)
-	char *	d
-
-char *
-gettext(s)
-	char *	s
-
-char *
-dgettext(d,s)
-	char *	d
-	char *	s
-
-char *
-__(s)
-	char *	s
-        PROTOTYPE: $
-
-#else
-
-char *
-bindtextdomain(d,dir)
-	char *	d
-	char *	dir
-        CODE:
-        RETVAL = "";
-	OUTPUT:
-        RETVAL
-
-char *
-textdomain(d)
-	char *	d
-        CODE:
-        RETVAL = "";
-	OUTPUT:
-        RETVAL
-
-char *
-gettext(s)
-	char *	s
-        CODE:
-        RETVAL = s;
-	OUTPUT:
-        RETVAL
-
-char *
-dgettext(d,s)
-	char *	d
-	char *	s
-        CODE:
-        RETVAL = s;
-	OUTPUT:
-        RETVAL
-
-char *
-__(s)
-	char *	s
-        PROTOTYPE: $
-        CODE:
-        RETVAL = s;
-	OUTPUT:
-        RETVAL
-
 #endif
+
+char *
+bindtextdomain(d,dir)
+	char *	d
+	char *	dir
+
+char *
+textdomain(d)
+	char *	d
+
+char *
+gettext(s)
+	char *	s
+
+char *
+dgettext(d,s)
+	char *	d
+	char *	s
+
+char *
+__(s)
+	char *	s
+        PROTOTYPE: $
 
 void
 xs_exit(status)
