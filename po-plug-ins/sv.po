@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-15 11:03+0900\n"
-"PO-Revision-Date: 2004-03-15 11:01+0900\n"
+"POT-Creation-Date: 2004-03-18 16:48+0900\n"
+"PO-Revision-Date: 2004-03-18 16:48+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -310,7 +310,7 @@ msgstr "Cosinus"
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
 #: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
 #: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
-#: plug-ins/fits/fits.c:1012
+#: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Ingen"
 
@@ -462,7 +462,7 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:140 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunde inte öppna \"%s\" för att läsa: %s"
@@ -1201,17 +1201,17 @@ msgstr "Fel vid läsning av BMP-filhuvud från \"%s\""
 #: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
 #: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
-#: plug-ins/common/compose.c:615 plug-ins/common/decompose.c:579
-#: plug-ins/common/dicom.c:441 plug-ins/common/film.c:974
+#: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
+#: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:925 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:252
+#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
-#: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
+#: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
@@ -1971,7 +1971,7 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
-#: plug-ins/common/smooth_palette.c:417 plug-ins/common/snoise.c:513
+#: plug-ins/common/smooth_palette.c:418 plug-ins/common/snoise.c:513
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
@@ -2682,12 +2682,12 @@ msgstr "Fel vid hämtande av lager-IDn"
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Bilden är inte en gråskalebild (bpp=%d)"
 
-#: plug-ins/common/compose.c:1089
+#: plug-ins/common/compose.c:1090
 msgid "Compose"
 msgstr "Komponera"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1105
+#: plug-ins/common/compose.c:1106
 msgid "Compose Channels"
 msgstr "Komponera kanaler"
 
@@ -2695,7 +2695,7 @@ msgstr "Komponera kanaler"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1117
+#: plug-ins/common/compose.c:1118
 msgid "Channel Representations"
 msgstr "Kanalrepresentationer"
 
@@ -3128,16 +3128,16 @@ msgstr "<Image>/Filter/Färger/_Separera..."
 msgid "Decomposing..."
 msgstr "Separerar..."
 
-#: plug-ins/common/decompose.c:1182
+#: plug-ins/common/decompose.c:1183
 msgid "Decompose"
 msgstr "Separera"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1192
+#: plug-ins/common/decompose.c:1193
 msgid "Extract Channels:"
 msgstr "Extrahera kanaler:"
 
-#: plug-ins/common/decompose.c:1222
+#: plug-ins/common/decompose.c:1223
 msgid "Decompose to _Layers"
 msgstr "Separera till _lager"
 
@@ -3288,7 +3288,7 @@ msgstr "Skapa _Histogram"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:408
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3473,10 +3473,10 @@ msgstr "Gravera"
 msgid "_Limit Line Width"
 msgstr "_Begränsa linjebredd"
 
-#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1228
+#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
-#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:435
-#: plug-ins/common/tile.c:412 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Höjd:"
@@ -3547,102 +3547,102 @@ msgstr "Namnlös"
 msgid "Temporary"
 msgstr "Tillfällig"
 
-#: plug-ins/common/film.c:1107
+#: plug-ins/common/film.c:1108
 msgid "Available Images:"
 msgstr "Tillgängliga bilder:"
 
-#: plug-ins/common/film.c:1108
+#: plug-ins/common/film.c:1109
 msgid "On Film:"
 msgstr "På film:"
 
-#: plug-ins/common/film.c:1192
+#: plug-ins/common/film.c:1193
 msgid "_Selection"
 msgstr "_Markering"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1200 plug-ins/common/film.c:1484
+#: plug-ins/common/film.c:1201 plug-ins/common/film.c:1485
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1210
+#: plug-ins/common/film.c:1211
 msgid "_Fit Height to Images"
 msgstr "_Anpassa höjden till bilderna"
 
 #. Film color
-#: plug-ins/common/film.c:1244
+#: plug-ins/common/film.c:1245
 msgid "Select Film Color"
 msgstr "Välj filmfärg"
 
-#: plug-ins/common/film.c:1249 plug-ins/common/film.c:1298
+#: plug-ins/common/film.c:1250 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:351
 msgid "Co_lor:"
 msgstr "F_ärg:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1257
+#: plug-ins/common/film.c:1258
 msgid "Numbering"
 msgstr "Numrering"
 
-#: plug-ins/common/film.c:1276
+#: plug-ins/common/film.c:1277
 msgid "Start _Index:"
 msgstr "S_tartindex:"
 
-#: plug-ins/common/film.c:1289
+#: plug-ins/common/film.c:1290
 msgid "_Font:"
 msgstr "_Typsnitt:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1293
+#: plug-ins/common/film.c:1294
 msgid "Select Number Color"
 msgstr "Välj färgnummer"
 
-#: plug-ins/common/film.c:1307
+#: plug-ins/common/film.c:1308
 msgid "At _Bottom"
 msgstr "I _botten"
 
-#: plug-ins/common/film.c:1308
+#: plug-ins/common/film.c:1309
 msgid "At _Top"
 msgstr "På _topp"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1321
+#: plug-ins/common/film.c:1322
 msgid "Image Selection"
 msgstr "Bildval"
 
-#: plug-ins/common/film.c:1351
+#: plug-ins/common/film.c:1352
 msgid "All Values are Fractions of the Film Heigh"
 msgstr "Alla värden är i delar av filmhöjden"
 
-#: plug-ins/common/film.c:1354
+#: plug-ins/common/film.c:1355
 msgid "Ad_vanced"
 msgstr "A_vancerat"
 
-#: plug-ins/common/film.c:1372
+#: plug-ins/common/film.c:1373
 msgid "Image _Height:"
 msgstr "Bild_höjd:"
 
-#: plug-ins/common/film.c:1383
+#: plug-ins/common/film.c:1384
 msgid "Image Spac_ing:"
 msgstr "Bild_mellanrum:"
 
-#: plug-ins/common/film.c:1401
+#: plug-ins/common/film.c:1402
 msgid "_Hole Offset:"
 msgstr "_Håloffset:"
 
-#: plug-ins/common/film.c:1412
+#: plug-ins/common/film.c:1413
 msgid "Ho_le Width:"
 msgstr "H_ålbredd:"
 
-#: plug-ins/common/film.c:1423
+#: plug-ins/common/film.c:1424
 msgid "Hol_e Height:"
 msgstr "Hå_lhöjd:"
 
-#: plug-ins/common/film.c:1434
+#: plug-ins/common/film.c:1435
 msgid "Hole Sp_acing:"
 msgstr "Hål_avstånd:"
 
-#: plug-ins/common/film.c:1452
+#: plug-ins/common/film.c:1453
 msgid "_Number Height:"
 msgstr "_Sifferhöjd:"
 
@@ -5747,7 +5747,7 @@ msgstr "S/V"
 msgid "Gray"
 msgstr "Grått"
 
-#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1000
+#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -6065,41 +6065,41 @@ msgstr "Fel vid fångande av pekare"
 msgid "Loading Screen Shot..."
 msgstr "Läser skärmdump..."
 
-#: plug-ins/common/screenshot.c:349 plug-ins/common/screenshot.c:508
+#: plug-ins/common/screenshot.c:350 plug-ins/common/screenshot.c:509
 msgid "Screen Shot"
 msgstr "Skärmdump"
 
-#: plug-ins/common/screenshot.c:457
+#: plug-ins/common/screenshot.c:458
 msgid "Specified window not found"
 msgstr "Angett fönster kan inte hittas"
 
-#: plug-ins/common/screenshot.c:480
+#: plug-ins/common/screenshot.c:481
 msgid "Error obtaining Screen Shot"
 msgstr "Fel vid fångande av skärmdump"
 
 #. single window
-#: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
+#: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Fånga"
 
-#: plug-ins/common/screenshot.c:532
+#: plug-ins/common/screenshot.c:533
 msgid "a _Single Window"
 msgstr "Ett _ensamt fönster"
 
-#: plug-ins/common/screenshot.c:548
+#: plug-ins/common/screenshot.c:549
 msgid "S_elect Window After"
 msgstr "V_älj fönster efter"
 
-#: plug-ins/common/screenshot.c:561 plug-ins/common/screenshot.c:601
+#: plug-ins/common/screenshot.c:562 plug-ins/common/screenshot.c:602
 #: plug-ins/winsnap/winsnap.c:1019
 msgid "Seconds Delay"
 msgstr "sekunders fördröjning"
 
-#: plug-ins/common/screenshot.c:569
+#: plug-ins/common/screenshot.c:570
 msgid "the _Whole Screen"
 msgstr "_Hela skärmen"
 
-#: plug-ins/common/screenshot.c:588
+#: plug-ins/common/screenshot.c:589
 msgid "Grab _After"
 msgstr "Fånga _efter"
 
@@ -6302,11 +6302,11 @@ msgstr "<Image>/Filter/Färger/_Utjämnad palett..."
 msgid "Deriving Smooth Palette..."
 msgstr "Beräknar utjämnad palett..."
 
-#: plug-ins/common/smooth_palette.c:408
+#: plug-ins/common/smooth_palette.c:409
 msgid "Smooth Palette"
 msgstr "Utjämnad palett"
 
-#: plug-ins/common/smooth_palette.c:445
+#: plug-ins/common/smooth_palette.c:446
 msgid "_Search Depth:"
 msgstr "_Sökdjup:"
 
@@ -6731,12 +6731,12 @@ msgstr "Kan inte arbeta med okända bildtyper"
 #: plug-ins/common/sunras.c:1203 plug-ins/common/sunras.c:1298
 #: plug-ins/common/xwd.c:1335 plug-ins/common/xwd.c:1497
 #: plug-ins/common/xwd.c:1694 plug-ins/common/xwd.c:1944
-#: plug-ins/fits/fits.c:674
+#: plug-ins/fits/fits.c:675
 msgid "EOF encountered on reading"
 msgstr "Fick EOF under inläsning"
 
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:826 plug-ins/fits/fits.c:950
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occured"
 msgstr "Skrivfel har inträffat"
 
@@ -6942,16 +6942,16 @@ msgid "Tiling..."
 msgstr "Plattlägger..."
 
 # Osäker!
-#: plug-ins/common/tile.c:388
+#: plug-ins/common/tile.c:389
 msgid "Tile"
 msgstr "Plattlägg"
 
 #. parameter settings
-#: plug-ins/common/tile.c:398
+#: plug-ins/common/tile.c:399
 msgid "Tile to New Size"
 msgstr "Plattlägg till ny storlek"
 
-#: plug-ins/common/tile.c:422
+#: plug-ins/common/tile.c:423
 msgid "C_reate New Image"
 msgstr "S_kapa ny bild"
 
@@ -7355,7 +7355,7 @@ msgstr "Slå runt"
 msgid "Smear"
 msgstr "Smeta ut"
 
-#: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:988
+#: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:1098 plug-ins/gfig/gfig.c:2572
 msgid "Black"
 msgstr "Svart"
@@ -7935,28 +7935,28 @@ msgstr "FITS-filen har inga visningsbara bilder"
 msgid "FITS save cannot handle images with alpha channels"
 msgstr "FITS kan inte spara bilder med alfakanal"
 
-#: plug-ins/fits/fits.c:969
+#: plug-ins/fits/fits.c:970
 msgid "Load FITS File"
 msgstr "Läs in FITS-fil"
 
-#: plug-ins/fits/fits.c:984
+#: plug-ins/fits/fits.c:985
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "Ersätt BLANK/NaN bildpunkter"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig.c:2077
+#: plug-ins/fits/fits.c:990 plug-ins/gfig/gfig.c:2077
 #: plug-ins/gfig/gfig.c:2573
 msgid "White"
 msgstr "Vitt"
 
-#: plug-ins/fits/fits.c:996
+#: plug-ins/fits/fits.c:997
 msgid "Pixel Value Scaling"
 msgstr "Skala bildpunktsvärden"
 
-#: plug-ins/fits/fits.c:1001
+#: plug-ins/fits/fits.c:1002
 msgid "By DATAMIN/DATAMAX"
 msgstr "Med DATAMIN/DATAMAX"
 
-#: plug-ins/fits/fits.c:1008
+#: plug-ins/fits/fits.c:1009
 msgid "Image Composing"
 msgstr "Komponerar bild"
 
@@ -9740,7 +9740,19 @@ msgstr ""
 "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt "
 "har någon påverkan"
 
-#: plug-ins/help/domain.c:112
+#: plug-ins/help/domain.c:136
+msgid "The GIMP help files are not installed."
+msgstr "GIMPs hjälpfiler är inte installerade."
+
+#: plug-ins/help/domain.c:138
+msgid "The requested help files are not installed."
+msgstr "De efterfrågade hjälpfilerna är inte installerade."
+
+#: plug-ins/help/domain.c:147
+msgid "Please check your installation."
+msgstr "Kontrollera din installation."
+
+#: plug-ins/help/domain.c:150
 #, c-format
 msgid ""
 "Failed to open help files:\n"
@@ -9749,35 +9761,23 @@ msgstr ""
 "Misslyckades med att öppna hjälpfiler:\n"
 "%s"
 
-#: plug-ins/help/domain.c:114
+#: plug-ins/help/domain.c:152
 #, c-format
 msgid ""
 "Parse error in help domain:\n"
 "%s\n"
 "\n"
-"(Added entires before error anyway)"
+"(entries appearing before the error have been added anyway)"
 msgstr ""
 "Tolkningsfel i hjälpdomänen:\n"
 "%s\n"
 "\n"
 "(lade till enheter före fel i alla fall)"
 
-#: plug-ins/help/domain.c:129
+#: plug-ins/help/domain.c:159
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hjälp-ID \"%s\" är okänt"
-
-#: plug-ins/help/domain.c:251
-msgid "The GIMP help files are not installed."
-msgstr "GIMPs hjälpfiler är inte installerade."
-
-#: plug-ins/help/domain.c:253
-msgid "The requested help files are not installed."
-msgstr "De efterfrågade hjälpfilerna är inte installerade."
-
-#: plug-ins/help/domain.c:260
-msgid "Please check your installation."
-msgstr "Kontrollera din installation."
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
