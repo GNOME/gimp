@@ -1,3 +1,36 @@
+2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* gimp/app/widgets/gimpsizebox.c: fix incorrect Update
+	Policy for size entry as pointed out by mitch.
+	
+2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/dog.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/whirlpinch.c: make sure tile cache is allocated
+	before preview is shown -- significant speedup in some cases,
+	minimal in others.
+
+	* plug-ins/common/sel_gauss.c: give it a tile cache (didn't
+	have one).  Still very slow but a little better.
+	
 2004-12-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/despeckle.c (despeckle_median): don't call

@@ -272,7 +272,7 @@ gimp_size_box_constructor (GType                  type,
 
       entry = gimp_coordinates_new (box->resolution_unit, _("pixels/%a"),
                                     FALSE, FALSE, SB_WIDTH,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
                                     TRUE, FALSE,
                                     _("_X resolution:"),
                                     box->xresolution, 1.0,
