@@ -1462,34 +1462,11 @@ cubic (double dx,
        int    jp1,
        int    jp2)
 {
-  double dx1, dx2, dx3;
-  double h1, h2, h3, h4;
   double result;
 
-  /*  constraint parameter = -1  */
-  dx1 = fabs (dx);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h1 = dx3 - 2 * dx2 + 1;
-  result = h1 * j;
-
-  dx1 = fabs (dx - 1.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h2 = dx3 - 2 * dx2 + 1;
-  result += h2 * jp1;
-
-  dx1 = fabs (dx - 2.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h3 = -dx3 + 5 * dx2 - 8 * dx1 + 4;
-  result += h3 * jp2;
-
-  dx1 = fabs (dx + 1.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h4 = -dx3 + 5 * dx2 - 8 * dx1 + 4;
-  result += h4 * jm1;
+  result = ((( ( - jm1 + j - jp1 + jp2 ) * dx +
+               ( jm1 + jm1 - j - j + jp1 - jp2 ) ) * dx +
+               ( - jm1 + jp1 ) ) * dx + j );
 
   if (result < 0.0)
     result = 0.0;

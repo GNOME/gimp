@@ -1,3 +1,15 @@
+Thu Jul 29 03:20:36 1999  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_funcs.c, app/transform_core.c:  replace the cubic 
+	functions with a better/faster version supplied by
+	David Hodson <hodsond@acm.org>
+
+	* app/brush_select.c: double clicking on a brush preview now opens up
+	the brush editor.  Update the text displayed when the active brush
+	changes size.
+
+	* app/paint_funcs.c: slight modification to overlay_pixels.
+
 Thu Jul 29 02:42:17 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* tools/pdbgen/pdb/channel.pdb: Remove a call to
@@ -118,7 +130,7 @@ Wed Jul 28 19:41:08 MEST 1999  Sven Neumann <sven@gimp.org>
 	arbitrarily misplaced layers now.
 	Fixed some strange dnd special cases and cleaned up the dnd code.
 
-Wed Jul 28 03:42:34 1999  Jay Cox  (jay@elan)
+Wed Jul 28 03:42:34 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/pixel_regionP.h: new file that shold have gone with my last
 	commit.

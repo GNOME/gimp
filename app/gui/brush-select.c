@@ -62,6 +62,7 @@ static void display_setup                (BrushSelectP);
 static void preview_calc_scrollbar       (BrushSelectP);
 static void brush_select_show_selected   (BrushSelectP, int, int);
 static void update_active_brush_field    (BrushSelectP);
+static void edit_active_brush            ();
 static gint edit_brush_callback		(GtkWidget *w, GdkEvent *e,
 					 gpointer data);
 static gint new_brush_callback		(GtkWidget *w, GdkEvent *e,
@@ -622,6 +623,7 @@ brush_select_brush_dirty_callback (GimpBrushP   brush,
 				   BrushSelectP bsp)
 {
   brush_select_brush_changed (bsp, brush);
+  update_active_brush_field (bsp);
   return TRUE;
 }
 
@@ -630,6 +632,9 @@ connect_signals_to_brush (GimpBrushP   brush,
 			  BrushSelectP bsp)
 {
   gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
+		      bsp);
+  gtk_signal_connect (GTK_OBJECT (brush), "rename",
 		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
 		      bsp);
 }
@@ -1074,6 +1079,32 @@ update_active_brush_field (BrushSelectP bsp)
 }
 
 
+static void
+edit_active_brush()
+{
+  if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
+  {
+    if (!brush_edit_generated_dialog)
+    {
+      /*  Create the dialog...  */
+      brush_edit_generated_dialog = brush_edit_generated_new ();
+      brush_edit_generated_set_brush (brush_edit_generated_dialog,
+				      get_active_brush ());
+    }
+    else
+    {
+      /*  Popup the dialog  */
+      if (!GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
+	gtk_widget_show (brush_edit_generated_dialog->shell);
+      else
+	gdk_window_raise (brush_edit_generated_dialog->shell->window);
+    }
+  }
+  else
+    g_message (_("We are all fresh out of brush editors today,\n"
+		 "please write your own or try back tomorrow\n"));
+}
+
 static gint
 brush_select_events (GtkWidget    *widget,
 		     GdkEvent     *event,
@@ -1088,6 +1119,9 @@ brush_select_events (GtkWidget    *widget,
     case GDK_EXPOSE:
       break;
 
+    case GDK_2BUTTON_PRESS:
+      edit_active_brush();
+      break;
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
@@ -1191,27 +1225,7 @@ edit_brush_callback (GtkWidget *w,
 		     GdkEvent  *e,
 		     gpointer   data)
 {
-  if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
-  {
-    if (!brush_edit_generated_dialog)
-    {
-      /*  Create the dialog...  */
-      brush_edit_generated_dialog = brush_edit_generated_new ();
-      brush_edit_generated_set_brush (brush_edit_generated_dialog,
-				      get_active_brush ());
-    }
-    else
-    {
-      /*  Popup the dialog  */
-      if (!GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
-	gtk_widget_show (brush_edit_generated_dialog->shell);
-      else
-	gdk_window_raise (brush_edit_generated_dialog->shell->window);
-    }
-  }
-  else
-    g_message (_("We are all fresh out of brush editors today,\n"
-		 "please write your own or try back tomorrow\n"));
+  edit_active_brush();
   return TRUE;
 }
 

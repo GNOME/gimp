@@ -56,7 +56,7 @@
   This version of INT_MULT3 always gives the correct result, but runs at
   approximatly one third the speed. */
 /*  #define INT_MULT3(a,b,c,t) (((a) * (b) * (c)+ 32512) / 65025.0)
-*/
+ */
 
 #define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a)-(b), alpha, tmp) + (b))
 
@@ -481,34 +481,11 @@ cubic (double dx,
        int    jp1,
        int    jp2)
 {
-  double dx1, dx2, dx3;
-  double h1, h2, h3, h4;
   double result;
 
-  /*  constraint parameter = -1  */
-  dx1 = fabs (dx);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h1 = dx3 - 2 * dx2 + 1;
-  result = h1 * j;
-
-  dx1 = fabs (dx - 1.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h2 = dx3 - 2 * dx2 + 1;
-  result += h2 * jp1;
-
-  dx1 = fabs (dx - 2.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h3 = -dx3 + 5 * dx2 - 8 * dx1 + 4;
-  result += h3 * jp2;
-
-  dx1 = fabs (dx + 1.0);
-  dx2 = dx1 * dx1;
-  dx3 = dx2 * dx1;
-  h4 = -dx3 + 5 * dx2 - 8 * dx1 + 4;
-  result += h4 * jm1;
+  result = ((( ( - jm1 + j - jp1 + jp2 ) * dx +
+               ( jm1 + jm1 - j - j + jp1 - jp2 ) ) * dx +
+               ( - jm1 + jp1 ) ) * dx + j );
 
   if (result < 0.0)
     result = 0.0;
@@ -1033,18 +1010,24 @@ overlay_pixels (const unsigned char *src1,
 		int            has_alpha2)
 {
   int alpha, b;
-  int screen, mult;
   int tmp;
 
   alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
-      for (b = 0; b < alpha; b++)
+/*      for (b = 0; b < alpha; b++)
 	{
 	  screen = 255 - INT_MULT((255 - src1[b]), (255 - src2[b]), tmp);
 	  mult = INT_MULT(src1[b] ,src2[b], tmp);
 	  dest[b] = INT_BLEND(screen , mult, src1[b], tmp);
+	}
+	*/
+      for (b = 0; b < alpha; b++)
+	{
+	  dest[b] = INT_MULT(src1[b], src1[b] + INT_MULT(2 * src2[b],
+							 255 - src1[b],
+							 tmp), tmp);
 	}
 
       if (has_alpha1 && has_alpha2)
