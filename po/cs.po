@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.23\n"
-"POT-Creation-Date: 2000-06-19 01:04+0200\n"
+"POT-Creation-Date: 2000-06-18 19:40-0700\n"
 "PO-Revision-Date: 2000-06-19 01:11+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -121,8 +121,8 @@ msgstr "Konec"
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3758
-#: app/layers_dialog.c:4018 app/levels.c:341 app/palette.c:1826
+#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
+#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
 #: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
@@ -280,8 +280,8 @@ msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 #: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3756
-#: app/layers_dialog.c:4016 app/levels.c:337 app/module_db.c:314
+#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
+#: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
 #: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
 #: app/user_install.c:1189 modules/cdisplay_gamma.c:330
@@ -2738,28 +2738,28 @@ msgstr "Úpravy vlastností vrstvy"
 msgid "Layer name:"
 msgstr "Jméno vrstvy:"
 
-#: app/layers_dialog.c:3750
+#: app/layers_dialog.c:3753
 msgid "Add Mask Options"
 msgstr "Volby pøidání masky"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3768
+#: app/layers_dialog.c:3771
 msgid "Initialize Layer Mask to:"
 msgstr "Výchozí stav masky vrstvy:"
 
-#: app/layers_dialog.c:3773
+#: app/layers_dialog.c:3776
 msgid "White (Full Opacity)"
 msgstr "Bílá (úplné krytí)"
 
-#: app/layers_dialog.c:3775
+#: app/layers_dialog.c:3778
 msgid "Black (Full Transparency)"
 msgstr "Èerná (úplná prùhlednost)"
 
-#: app/layers_dialog.c:3777
+#: app/layers_dialog.c:3780
 msgid "Layer's Alpha Channel"
 msgstr "Alfa kanál vrstvy"
 
-#: app/layers_dialog.c:3838 app/layers_dialog.c:3924
+#: app/layers_dialog.c:3841 app/layers_dialog.c:3927
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2767,27 +2767,27 @@ msgstr ""
 "Neplatný ¹íøka nebo vý¹ka.\n"
 "Obì musí být kladné."
 
-#: app/layers_dialog.c:4010
+#: app/layers_dialog.c:4013
 msgid "Layer Merge Options"
 msgstr "Volby slouèení vrstvy"
 
-#: app/layers_dialog.c:4035
+#: app/layers_dialog.c:4038
 msgid "Final, Merged Layer should be:"
 msgstr "Koneèná, slouèená vrstva:"
 
-#: app/layers_dialog.c:4036
+#: app/layers_dialog.c:4039
 msgid "Final, Anchored Layer should be:"
 msgstr "Koneèná, pohlcená vrstva:"
 
-#: app/layers_dialog.c:4041
+#: app/layers_dialog.c:4044
 msgid "Expanded as necessary"
 msgstr "Zvìt¹it dle potøeby"
 
-#: app/layers_dialog.c:4043
+#: app/layers_dialog.c:4046
 msgid "Clipped to image"
 msgstr "Oøíznout dle obrázku"
 
-#: app/layers_dialog.c:4045
+#: app/layers_dialog.c:4048
 msgid "Clipped to bottom layer"
 msgstr "Oøíznout dle spodní vrstvy"
 

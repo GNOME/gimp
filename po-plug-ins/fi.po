@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-06-07 12:43+0300\n"
+"POT-Creation-Date: 2000-06-18 19:40-0700\n"
 "PO-Revision-Date: 2000-02-12 05:50+0200\n"
 "Last-Translator: Tor Lillqvist tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -61,8 +61,8 @@ msgstr "Tietoja"
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:360
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
-#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1141
-#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:259
+#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1144
+#: plug-ins/common/gif.c:1215 plug-ins/common/glasstile.c:259
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:658 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:560
@@ -85,7 +85,7 @@ msgstr "Tietoja"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
@@ -111,7 +111,7 @@ msgstr "Tietoja"
 #: plug-ins/imagemap/imap_default_dialog.c:114 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:597 plug-ins/rcm/rcm_dialog.c:727
-#: plug-ins/sel2path/sel2path.c:345 plug-ins/sgi/sgi.c:640
+#: plug-ins/sel2path/sel2path.c:338 plug-ins/sgi/sgi.c:640
 #: plug-ins/sinus/sinus.c:746 plug-ins/struc/struc.c:255
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
@@ -143,7 +143,7 @@ msgstr "OK"
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
-#: plug-ins/common/gif.c:1143 plug-ins/common/gif.c:1214
+#: plug-ins/common/gif.c:1146 plug-ins/common/gif.c:1217
 #: plug-ins/common/glasstile.c:261 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:660
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
@@ -167,7 +167,7 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1489 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
@@ -195,7 +195,7 @@ msgstr "OK"
 #: plug-ins/imagemap/imap_default_dialog.c:129 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:212 plug-ins/print/gimp_main_window.c:599
-#: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:354
+#: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:344
 #: plug-ins/sgi/sgi.c:642 plug-ins/sinus/sinus.c:748
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
@@ -271,7 +271,7 @@ msgstr "kosini"
 #: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1508
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
 msgstr "ei mik‰‰n"
@@ -603,7 +603,7 @@ msgstr "Lataa fraktaali tiedostosta"
 #: plug-ins/common/sample_colorize.c:1371
 #: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:897 plug-ins/gimpressionist/preview.c:124
-#: plug-ins/ifscompose/ifscompose.c:787
+#: plug-ins/ifscompose/ifscompose.c:787 plug-ins/sel2path/sel2path.c:341
 msgid "Reset"
 msgstr "Palauta"
 
@@ -1443,7 +1443,7 @@ msgstr "N‰yt‰/piilosta esikatselu rautalankamallissa"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:415
 #: plug-ins/common/png.c:417 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1713 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:443
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:450
 #: plug-ins/common/xbm.c:735 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1488,7 +1488,7 @@ msgstr "%s: virheellinen v‰rikartta"
 #: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
-#: plug-ins/common/tiff.c:654 plug-ins/common/tile.c:269
+#: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:269
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2867
@@ -1508,7 +1508,7 @@ msgstr "Ei voi avata %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
-#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:937
+#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:940
 #: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
@@ -1516,7 +1516,7 @@ msgstr "Ei voi avata %s"
 #: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:983
+#: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2733,7 +2733,7 @@ msgid "Prefixed Name:"
 msgstr ""
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1203
+#: plug-ins/common/tiff.c:1566 plug-ins/common/xbm.c:1203
 msgid "Comment:"
 msgstr ""
 
@@ -3607,28 +3607,28 @@ msgstr ""
 msgid "Icon Name:"
 msgstr ""
 
-#: plug-ins/common/gif.c:672
+#: plug-ins/common/gif.c:674
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:929
+#: plug-ins/common/gif.c:932
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:947
+#: plug-ins/common/gif.c:950
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:1136
+#: plug-ins/common/gif.c:1139
 msgid "GIF Warning"
 msgstr ""
 
-#: plug-ins/common/gif.c:1162
+#: plug-ins/common/gif.c:1165
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3639,61 +3639,61 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 
-#: plug-ins/common/gif.c:1207
+#: plug-ins/common/gif.c:1210
 msgid "Save as GIF"
 msgstr ""
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1232
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1237
+#: plug-ins/common/gif.c:1240
 msgid "Interlace"
 msgstr ""
 
-#: plug-ins/common/gif.c:1248
+#: plug-ins/common/gif.c:1251
 msgid "GIF Comment:"
 msgstr ""
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1307
+#: plug-ins/common/gif.c:1311
 msgid "Animated GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1315
+#: plug-ins/common/gif.c:1319
 msgid "Loop forever"
 msgstr ""
 
-#: plug-ins/common/gif.c:1327
+#: plug-ins/common/gif.c:1331
 msgid "Delay between Frames where Unspecified:"
 msgstr ""
 
-#: plug-ins/common/gif.c:1339
+#: plug-ins/common/gif.c:1343
 msgid "Milliseconds"
 msgstr ""
 
-#: plug-ins/common/gif.c:1349
+#: plug-ins/common/gif.c:1353
 msgid "Frame Disposal where Unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1358
+#: plug-ins/common/gif.c:1362
 msgid "I don't Care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1360
+#: plug-ins/common/gif.c:1364
 msgid "Cumulative Layers (Combine)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1362
+#: plug-ins/common/gif.c:1366
 msgid "One Frame per Layer (Replace)"
 msgstr ""
 
-#: plug-ins/common/gif.c:2346
+#: plug-ins/common/gif.c:2350
 msgid "GIF: error writing output file\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:2437
+#: plug-ins/common/gif.c:2441
 msgid "GIF save: Your comment string is too long.\n"
 msgstr ""
 
@@ -5308,43 +5308,43 @@ msgstr ""
 msgid "Amplitude:"
 msgstr ""
 
-#: plug-ins/common/rotate.c:168
+#: plug-ins/common/rotate.c:160
 msgid "<Image>/Layers/Rotate/90 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:179
+#: plug-ins/common/rotate.c:171
 msgid "<Image>/Layers/Rotate/180 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:190
+#: plug-ins/common/rotate.c:182
 msgid "<Image>/Layers/Rotate/270 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:202
+#: plug-ins/common/rotate.c:194
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:213
+#: plug-ins/common/rotate.c:205
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:224
+#: plug-ins/common/rotate.c:216
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
 msgstr ""
 
-#: plug-ins/common/rotate.c:531
+#: plug-ins/common/rotate.c:525
 msgid "You can not rotate the whole image if there's a selection."
 msgstr ""
 
-#: plug-ins/common/rotate.c:537
+#: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr ""
 
-#: plug-ins/common/rotate.c:547
+#: plug-ins/common/rotate.c:541
 msgid "Sorry, channels and masks can not be rotated."
 msgstr ""
 
-#: plug-ins/common/rotate.c:553
+#: plug-ins/common/rotate.c:547
 msgid "Rotating..."
 msgstr ""
 
@@ -5812,7 +5812,7 @@ msgid "Sphere Designer"
 msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:873 plug-ins/gimpressionist/repaint.c:875
+#: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr ""
@@ -6011,31 +6011,31 @@ msgstr ""
 msgid "Threshold Alpha"
 msgstr ""
 
-#: plug-ins/common/tiff.c:663
+#: plug-ins/common/tiff.c:685
 msgid "TIFF Channel"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1482
+#: plug-ins/common/tiff.c:1525
 msgid "Save as TIFF"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1547
 msgid "Compression"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1509
+#: plug-ins/common/tiff.c:1552
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1510
+#: plug-ins/common/tiff.c:1553
 msgid "Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1511
+#: plug-ins/common/tiff.c:1554
 msgid "Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1512
+#: plug-ins/common/tiff.c:1555
 msgid "JPEG"
 msgstr ""
 
@@ -11935,12 +11935,12 @@ msgid ""
 msgstr ""
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:588
+#: plug-ins/maze/maze_face.c:596
 #, c-format
 msgid "Opening %s"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:599
+#: plug-ins/maze/maze_face.c:607
 #, c-format
 msgid "See %s"
 msgstr ""
@@ -12434,32 +12434,33 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:160
+#: plug-ins/sel2path/sel2path.c:162
 msgid "<Image>/Select/To Path"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:205
+#: plug-ins/sel2path/sel2path.c:209
 msgid "No selection to convert"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:362
-msgid "Default Values"
-msgstr ""
+#: plug-ins/sel2path/sel2path.c:333
+#, fuzzy
+msgid "Sel2Path Advanced Settings"
+msgstr "Saturaatio asetukset"
 
-#: plug-ins/sel2path/sel2path.c:551
+#: plug-ins/sel2path/sel2path.c:542
 #, c-format
 msgid "print_spline: strange degree (%d)"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:559
+#: plug-ins/sel2path/sel2path.c:551
 msgid "selection_to_path"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:585
+#: plug-ins/sel2path/sel2path.c:579
 msgid "gimp_image_get_selection failed"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:593
+#: plug-ins/sel2path/sel2path.c:587
 msgid "Internal error. Selection bpp > 1"
 msgstr ""
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2000-06-16 19:40+0300\n"
+"POT-Creation-Date: 2000-06-06 12:41-0700\n"
 "PO-Revision-Date: 2000-06-16 19:40+0300\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"

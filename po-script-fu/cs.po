@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.23\n"
-"POT-Creation-Date: 2000-06-09 11:03+0200\n"
+"POT-Creation-Date: 2000-06-06 12:41-0700\n"
 "PO-Revision-Date: 2000-06-09 11:35+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"

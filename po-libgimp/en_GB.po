@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
-"POT-Creation-Date: 2000-05-27 21:19-0700\n"
+"POT-Creation-Date: 2000-06-06 12:41-0700\n"
 "PO-Revision-Date: 2000-02-02 14:02+0000\n"
 "Last-Translator: Robert Brady <robert@susu.org.uk>\n"
 "Language-Team: \n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:116
+#: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
 msgstr "/Use Foreground Colour"
 
-#: libgimp/gimpcolorbutton.c:117
+#: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
 msgstr "/Use Background Colour"
 
@@ -108,9 +108,9 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:180
-#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
-#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
+#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
+#: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr ""
 
@@ -125,103 +125,103 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:391
 msgid "Select File"
 msgstr ""
 
-#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
-#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
-#: libgimp/gimpunitmenu.c:495
+#: libgimp/gimpquerybox.c:183 libgimp/gimpquerybox.c:237
+#: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
+#: libgimp/gimpunitmenu.c:499
 msgid "OK"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:234
+#: libgimp/gimpunitmenu.c:238
 msgid "More..."
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:490
+#: libgimp/gimpunitmenu.c:494
 msgid "Unit Selection"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:527
+#: libgimp/gimpunitmenu.c:531
 msgid "Unit"
 msgstr ""
 
-#: libgimp/gimpunitmenu.c:528
+#: libgimp/gimpunitmenu.c:532
 msgid "Factor"
 msgstr ""
 
 #. pseudo unit
-#: libgimp/gimpunit_pdb.c:47
+#: libgimp/gimpunit.c:49
 msgid "pixel"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:47
+#: libgimp/gimpunit.c:49
 msgid "pixels"
 msgstr ""
 
 #. standard units
-#: libgimp/gimpunit_pdb.c:50
+#: libgimp/gimpunit.c:52
 msgid "inch"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:50
+#: libgimp/gimpunit.c:52
 msgid "inches"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:51
+#: libgimp/gimpunit.c:53
 msgid "millimeter"
 msgstr "millimetre"
 
-#: libgimp/gimpunit_pdb.c:51
+#: libgimp/gimpunit.c:53
 msgid "millimeters"
 msgstr "millimetres"
 
 #. professional units
-#: libgimp/gimpunit_pdb.c:54
+#: libgimp/gimpunit.c:56
 msgid "point"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:54
+#: libgimp/gimpunit.c:56
 msgid "points"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:55
+#: libgimp/gimpunit.c:57
 msgid "pica"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:55
+#: libgimp/gimpunit.c:57
 msgid "picas"
 msgstr ""
 
-#: libgimp/gimpunit_pdb.c:62
+#: libgimp/gimpunit.c:64
 msgid "percent"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:706
+#: libgimp/gimpwidgets.c:709
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:711
+#: libgimp/gimpwidgets.c:714
 msgid "Time"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:720
+#: libgimp/gimpwidgets.c:723
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1035
 msgid "Bytes"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:1033
+#: libgimp/gimpwidgets.c:1036
 msgid "KiloBytes"
 msgstr ""
 
-#: libgimp/gimpwidgets.c:1034
+#: libgimp/gimpwidgets.c:1037
 msgid "MegaBytes"
 msgstr ""

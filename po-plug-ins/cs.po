@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.23\n"
-"POT-Creation-Date: 2000-06-09 11:03+0200\n"
+"POT-Creation-Date: 2000-06-18 19:40-0700\n"
 "PO-Revision-Date: 2000-06-09 11:17+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -84,15 +84,15 @@ msgstr "O programu"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1007 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1151 plug-ins/common/xpm.c:800
-#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:638
-#: plug-ins/flame/flame.c:927 plug-ins/fp/fp_gtk.c:895
+#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
+#: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:895
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:221
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:487
@@ -166,15 +166,15 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1489 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
 #: plug-ins/common/wind.c:1009 plug-ins/common/wmf.c:933
 #: plug-ins/common/xbm.c:1153 plug-ins/common/xpm.c:802
-#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:640
-#: plug-ins/flame/flame.c:929 plug-ins/fp/fp_gtk.c:899
+#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
+#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
 #: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
 #: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
@@ -270,7 +270,7 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1508
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
 msgstr "Nic"
@@ -452,7 +452,7 @@ msgstr "O cizím mapování 2"
 #: plug-ins/common/sharpen.c:550 plug-ins/common/spheredesigner.c:2254
 #: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
 #: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1026
-#: plug-ins/flame/flame.c:947 plug-ins/gfig/gfig.c:3964
+#: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3964
 #: plug-ins/gflare/gflare.c:2492 plug-ins/gflare/gflare.c:3500
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
@@ -1090,7 +1090,7 @@ msgstr "Poloha"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:785
 #: plug-ins/common/nova.c:609 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1196 plug-ins/flame/flame.c:1209
+#: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
 #: plug-ins/gap/gap_mov_dialog.c:2100 plug-ins/gflare/gflare.c:2874
 #: plug-ins/ifscompose/ifscompose.c:513
 msgid "X:"
@@ -1201,7 +1201,7 @@ msgid "Bumpmap Image:"
 msgstr "Obrázek vyvý¹ení:"
 
 #: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:784
-#: plug-ins/flame/flame.c:728 plug-ins/sinus/sinus.c:1032
+#: plug-ins/flame/flame.c:721 plug-ins/sinus/sinus.c:1032
 msgid "Linear"
 msgstr "Lineární"
 
@@ -1209,11 +1209,11 @@ msgstr "Lineární"
 msgid "Logarithmic"
 msgstr "Logaritmický"
 
-#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:729
+#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:722
 msgid "Sinusoidal"
 msgstr "Sinusoidní"
 
-#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:730
+#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:723
 msgid "Spherical"
 msgstr "Kulový"
 
@@ -1457,7 +1457,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:415
 #: plug-ins/common/png.c:417 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1713 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:443
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:450
 #: plug-ins/common/xbm.c:735 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1502,11 +1502,11 @@ msgstr "%s: ¹patná barevná mapa"
 #: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
-#: plug-ins/common/tiff.c:654 plug-ins/common/tile.c:269
+#: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:269
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2867
-#: plug-ins/gfig/gfig.c:3195 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:745
+#: plug-ins/gfig/gfig.c:3195 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
 #: plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
 msgstr "Pozadí"
@@ -1530,7 +1530,7 @@ msgstr "Nelze otevøít %s"
 #: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:983
+#: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2756,7 +2756,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s pøedponou:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1203
+#: plug-ins/common/tiff.c:1566 plug-ins/common/xbm.c:1203
 msgid "Comment:"
 msgstr "Komentáø:"
 
@@ -3194,7 +3194,7 @@ msgstr "Obrysy"
 msgid "Sharp edges"
 msgstr "Ostré hrany"
 
-#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1018
+#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
 #: plug-ins/print/gimp_color_window.c:100
 msgid "Brightness:"
 msgstr "Jas:"
@@ -3253,7 +3253,7 @@ msgstr "©mouha"
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
 #: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
-#: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1114
+#: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3328
 msgid "Black"
 msgstr "Èerná"
@@ -5188,7 +5188,7 @@ msgid "Load PostScript"
 msgstr "Èíst PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:1001
+#: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "Vyobrazení"
 
@@ -5372,43 +5372,43 @@ msgstr "Perioda:"
 msgid "Amplitude:"
 msgstr "Amplituda:"
 
-#: plug-ins/common/rotate.c:168
+#: plug-ins/common/rotate.c:160
 msgid "<Image>/Layers/Rotate/90 degrees"
 msgstr "<Image>/Vrstvy/Rotace/90 stupòù"
 
-#: plug-ins/common/rotate.c:179
+#: plug-ins/common/rotate.c:171
 msgid "<Image>/Layers/Rotate/180 degrees"
 msgstr "<Image>/Vrstvy/Rotace/180 stupòù"
 
-#: plug-ins/common/rotate.c:190
+#: plug-ins/common/rotate.c:182
 msgid "<Image>/Layers/Rotate/270 degrees"
 msgstr "<Image>/Vrstvy/Rotace/270 stupòù"
 
-#: plug-ins/common/rotate.c:202
+#: plug-ins/common/rotate.c:194
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
 msgstr "<Image>/Obrázek/Transformace/Rotace/90 stupòù"
 
-#: plug-ins/common/rotate.c:213
+#: plug-ins/common/rotate.c:205
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
 msgstr "<Image>/Obrázek/Transformace/Rotace/180 stupòù"
 
-#: plug-ins/common/rotate.c:224
+#: plug-ins/common/rotate.c:216
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
 msgstr "<Image>/Obrázek/Transformace/Rotace/270 stupòù"
 
-#: plug-ins/common/rotate.c:531
+#: plug-ins/common/rotate.c:525
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "Nelze rotovat celý obrázek, existuje-li výbìr."
 
-#: plug-ins/common/rotate.c:537
+#: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr "Nelze rotovat celý obrázek, existuje-li plovoucí výbìr."
 
-#: plug-ins/common/rotate.c:547
+#: plug-ins/common/rotate.c:541
 msgid "Sorry, channels and masks can not be rotated."
 msgstr "Bohu¾el, kanály a masky nelze rotovat."
 
-#: plug-ins/common/rotate.c:553
+#: plug-ins/common/rotate.c:547
 msgid "Rotating..."
 msgstr "Rotuje se..."
 
@@ -5876,7 +5876,7 @@ msgid "Sphere Designer"
 msgstr "Tvorba koulí"
 
 #: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:873 plug-ins/gimpressionist/repaint.c:875
+#: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Zaktualizovat"
@@ -6077,31 +6077,31 @@ msgstr "Práh alfy: Barvení prùhlednosti..."
 msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
-#: plug-ins/common/tiff.c:663
+#: plug-ins/common/tiff.c:685
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: plug-ins/common/tiff.c:1482
+#: plug-ins/common/tiff.c:1525
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1547
 msgid "Compression"
 msgstr "Komprese"
 
-#: plug-ins/common/tiff.c:1509
+#: plug-ins/common/tiff.c:1552
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1510
+#: plug-ins/common/tiff.c:1553
 msgid "Pack Bits"
 msgstr "Pakování bitù"
 
-#: plug-ins/common/tiff.c:1511
+#: plug-ins/common/tiff.c:1554
 msgid "Deflate"
 msgstr "Deflaèní"
 
-#: plug-ins/common/tiff.c:1512
+#: plug-ins/common/tiff.c:1555
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7075,118 +7075,118 @@ msgstr "Z DATAMIN/DATAMAX"
 msgid "Image Composing"
 msgstr "Kompozice obrázku"
 
-#: plug-ins/flame/flame.c:151
+#: plug-ins/flame/flame.c:144
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/Filtry/Vyobrazení/Pøíroda/Plamen..."
 
-#: plug-ins/flame/flame.c:232
+#: plug-ins/flame/flame.c:225
 msgid "Drawing Flame..."
 msgstr "Kreslí se plamen..."
 
-#: plug-ins/flame/flame.c:313
+#: plug-ins/flame/flame.c:306
 msgid "Flame works only on RGB drawables."
 msgstr "Plamen pracuje pouze s RGB obrazovkami."
 
-#: plug-ins/flame/flame.c:429
+#: plug-ins/flame/flame.c:422
 #, c-format
 msgid "%s: Is not a regular file"
 msgstr "%s: Není bì¾ný soubor"
 
-#: plug-ins/flame/flame.c:633 plug-ins/flame/flame.c:979
+#: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:972
 msgid "Edit Flame"
 msgstr "Úprava plamenu"
 
-#: plug-ins/flame/flame.c:652
+#: plug-ins/flame/flame.c:645
 msgid "Directions"
 msgstr "Smìry"
 
-#: plug-ins/flame/flame.c:682
+#: plug-ins/flame/flame.c:675
 msgid "Controls"
 msgstr "Øízení"
 
-#: plug-ins/flame/flame.c:697
+#: plug-ins/flame/flame.c:690
 msgid "Speed:"
 msgstr "Rychlost:"
 
-#: plug-ins/flame/flame.c:713
+#: plug-ins/flame/flame.c:706
 msgid "Randomize"
 msgstr "Náhodnost"
 
-#: plug-ins/flame/flame.c:726
+#: plug-ins/flame/flame.c:719
 msgid "Same"
 msgstr "Toté¾"
 
-#: plug-ins/flame/flame.c:727 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:720 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr "Náhodný"
 
-#: plug-ins/flame/flame.c:731
+#: plug-ins/flame/flame.c:724
 msgid "Swirl"
 msgstr "Vír"
 
-#: plug-ins/flame/flame.c:732
+#: plug-ins/flame/flame.c:725
 msgid "Horseshoe"
 msgstr "Koòská kopyta"
 
-#: plug-ins/flame/flame.c:733 plug-ins/gfig/gfig.c:3315
+#: plug-ins/flame/flame.c:726 plug-ins/gfig/gfig.c:3315
 msgid "Polar"
 msgstr "Polární zá¾e"
 
-#: plug-ins/flame/flame.c:734
+#: plug-ins/flame/flame.c:727
 msgid "Bent"
 msgstr "Louka"
 
-#: plug-ins/flame/flame.c:740
+#: plug-ins/flame/flame.c:733
 msgid "Variation:"
 msgstr "Variace:"
 
-#: plug-ins/flame/flame.c:773 plug-ins/flame/flame.c:986
+#: plug-ins/flame/flame.c:766 plug-ins/flame/flame.c:979
 msgid "Load Flame"
 msgstr "Naèíst plamen"
 
-#: plug-ins/flame/flame.c:795 plug-ins/flame/flame.c:993
+#: plug-ins/flame/flame.c:788 plug-ins/flame/flame.c:986
 msgid "Save Flame"
 msgstr "Zapsat plamen"
 
-#: plug-ins/flame/flame.c:922 plug-ins/flame/flame.c:961
+#: plug-ins/flame/flame.c:915 plug-ins/flame/flame.c:954
 msgid "Flame"
 msgstr "Plamen"
 
-#: plug-ins/flame/flame.c:1031 plug-ins/print/gimp_color_window.c:114
+#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:114
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: plug-ins/flame/flame.c:1044 plug-ins/gimpressionist/brush.c:401
+#: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:401
 #: plug-ins/print/gimp_color_window.c:198
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: plug-ins/flame/flame.c:1057
+#: plug-ins/flame/flame.c:1050
 msgid "Sample Density:"
 msgstr "Hustota vzorku:"
 
-#: plug-ins/flame/flame.c:1067
+#: plug-ins/flame/flame.c:1060
 msgid "Spatial Oversample:"
 msgstr "Prostorové pøevzorkování:"
 
-#: plug-ins/flame/flame.c:1077
+#: plug-ins/flame/flame.c:1070
 msgid "Spatial Filter Radius:"
 msgstr "Polomìr prostorového filtru:"
 
-#: plug-ins/flame/flame.c:1103
+#: plug-ins/flame/flame.c:1096
 msgid "Colormap:"
 msgstr "Barevná mapa:"
 
-#: plug-ins/flame/flame.c:1151
+#: plug-ins/flame/flame.c:1144
 msgid "Custom Gradient"
 msgstr "Vlastní pøechod"
 
-#: plug-ins/flame/flame.c:1171
+#: plug-ins/flame/flame.c:1164
 msgid "Camera"
 msgstr "Kamera"
 
-#: plug-ins/flame/flame.c:1183
+#: plug-ins/flame/flame.c:1176
 msgid "Zoom:"
 msgstr "Pøiblí¾ení:"
 
@@ -12317,12 +12317,12 @@ msgstr ""
 "Dla¾dicovatelné bludi¹tì nebude dokonalé."
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:588
+#: plug-ins/maze/maze_face.c:596
 #, c-format
 msgid "Opening %s"
 msgstr "Otvírá se %s"
 
-#: plug-ins/maze/maze_face.c:599
+#: plug-ins/maze/maze_face.c:607
 #, c-format
 msgid "See %s"
 msgstr "Viz %s"
@@ -13002,12 +13002,12 @@ msgstr "Dolù doleva"
 msgid "Bottom-Right"
 msgstr "Dolù doprava"
 
-#: plug-ins/twain/twain.c:536
+#: plug-ins/twain/twain.c:513
 msgid "<Toolbox>/File/Acquire/TWAIN..."
 msgstr "<Toolbox>/Soubor/Získat/TWAIN..."
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:668
+#: plug-ins/twain/twain.c:645
 msgid "Transferring TWAIN data"
 msgstr "Pøená¹ejí se TWAIN data"
 

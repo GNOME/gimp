@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-06-20 17:43+0300\n"
+"POT-Creation-Date: 2000-06-18 19:40-0700\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1495,7 +1495,9 @@ msgstr "Тло"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr "BMP: неможливо використовувати на зображеннях нев╕домого типу чи альфа-зображеннях"
+msgstr ""
+"BMP: неможливо використовувати на зображеннях нев╕домого типу чи "
+"альфа-зображеннях"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format

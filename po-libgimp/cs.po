@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.21\n"
-"POT-Creation-Date: 2000-04-08 23:18+0200\n"
+"POT-Creation-Date: 2000-06-06 12:41-0700\n"
 "PO-Revision-Date: 2000-05-09 00:07+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -13,11 +13,11 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:116
+#: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
 msgstr "/Pou¾ít barvy popøedí"
 
-#: libgimp/gimpcolorbutton.c:117
+#: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
 msgstr "/Pou¾ít barvy pozadí"
 
@@ -37,17 +37,13 @@ msgstr "umí zpracovat vrstvy pouze jako políèka animace"
 msgid "Save as Animation"
 msgstr "Zapsat jako animaci"
 
-#: libgimp/gimpexport.c:177
-msgid "Flatten"
-msgstr "Slouèit"
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+msgid "Flatten Image"
+msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:185
 msgid "can't Handle Transparency"
 msgstr "neumí zpracovat prùhlednost"
-
-#: libgimp/gimpexport.c:186
-msgid "Flatten Image"
-msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
@@ -114,9 +110,9 @@ msgstr "Exportovat"
 msgid "Ignore"
 msgstr "Ignorovat"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:180
-#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
-#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
+#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
+#: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -131,80 +127,80 @@ msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:391
 msgid "Select File"
 msgstr "Výbìr souboru"
 
-#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
-#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
-#: libgimp/gimpunitmenu.c:495
+#: libgimp/gimpquerybox.c:183 libgimp/gimpquerybox.c:237
+#: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
+#: libgimp/gimpunitmenu.c:499
 msgid "OK"
 msgstr "OK"
 
+#: libgimp/gimpunitmenu.c:238
+msgid "More..."
+msgstr "Více..."
+
+#: libgimp/gimpunitmenu.c:494
+msgid "Unit Selection"
+msgstr "Výbìr jednotek"
+
+#: libgimp/gimpunitmenu.c:531
+msgid "Unit"
+msgstr "Jednotka"
+
+#: libgimp/gimpunitmenu.c:532
+msgid "Factor"
+msgstr "Faktor"
+
 #. pseudo unit
-#: libgimp/gimpunit.c:47
+#: libgimp/gimpunit.c:49
 msgid "pixel"
 msgstr "pixel"
 
-#: libgimp/gimpunit.c:47
+#: libgimp/gimpunit.c:49
 msgid "pixels"
 msgstr "pixelù"
 
 #. standard units
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:52
 msgid "inch"
 msgstr "palec"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:52
 msgid "inches"
 msgstr "palcù"
 
-#: libgimp/gimpunit.c:51
+#: libgimp/gimpunit.c:53
 msgid "millimeter"
 msgstr "milimetr"
 
-#: libgimp/gimpunit.c:51
+#: libgimp/gimpunit.c:53
 msgid "millimeters"
 msgstr "milimetrù"
 
 #. professional units
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:56
 msgid "point"
 msgstr "bod"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:56
 msgid "points"
 msgstr "bodù"
 
-#: libgimp/gimpunit.c:55
+#: libgimp/gimpunit.c:57
 msgid "pica"
 msgstr "pika"
 
-#: libgimp/gimpunit.c:55
+#: libgimp/gimpunit.c:57
 msgid "picas"
 msgstr "pik"
 
-#: libgimp/gimpunit.c:62
+#: libgimp/gimpunit.c:64
 msgid "percent"
 msgstr "procenta"
 
-#: libgimp/gimpunitmenu.c:234
-msgid "More..."
-msgstr "Více..."
-
-#: libgimp/gimpunitmenu.c:490
-msgid "Unit Selection"
-msgstr "Výbìr jednotek"
-
-#: libgimp/gimpunitmenu.c:527
-msgid "Unit"
-msgstr "Jednotka"
-
-#: libgimp/gimpunitmenu.c:528
-msgid "Factor"
-msgstr "Faktor"
-
-#: libgimp/gimpwidgets.c:706
+#: libgimp/gimpwidgets.c:709
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -212,25 +208,28 @@ msgstr ""
 "Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo "
 "náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimp/gimpwidgets.c:711
+#: libgimp/gimpwidgets.c:714
 msgid "Time"
 msgstr "Èas"
 
-#: libgimp/gimpwidgets.c:720
+#: libgimp/gimpwidgets.c:723
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 "Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1035
 msgid "Bytes"
 msgstr "bajtù"
 
-#: libgimp/gimpwidgets.c:1033
+#: libgimp/gimpwidgets.c:1036
 msgid "KiloBytes"
 msgstr "kilobajtù"
 
-#: libgimp/gimpwidgets.c:1034
+#: libgimp/gimpwidgets.c:1037
 msgid "MegaBytes"
 msgstr "megabajtù"
+
+#~ msgid "Flatten"
+#~ msgstr "Slouèit"

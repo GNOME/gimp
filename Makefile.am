@@ -88,8 +88,8 @@ EXTRA_DIST = \
 	cursors/dropper_small_mask.xbm		\
 	cursors/bucket_fill_small.xbm		\
 	cursors/bucket_fill_small_mask.xbm	\
-	cursors/blend.xbm			\
 	cursors/blend_small.xbm			\
+	cursors/blend_small_mask.xbm		\
 	cursors/pencil_small.xbm		\
 	cursors/pencil_small_mask.xbm		\
 	cursors/paintbrush_small.xbm		\
@@ -112,15 +112,13 @@ EXTRA_DIST = \
 	cursors/smudge_small_mask.xbm		\
 	cursors/measure_small.xbm		\
 	cursors/measure_small_mask.xbm		\
-	\
 	docs/Wilber.xcf.gz			\
 	docs/Wilber.xcf.gz.README		\
 	docs/cheat_sheet.txt			\
 	docs/gimp.txt				\
 	docs/keybindings.txt 			\
-	docs/gimp_quick_reference.ps 		\
-	docs/gimp_quick_reference.tar.gz	\
-	\
+	docs/quick_reference.ps 		\
+	docs/quick_reference.tar.gz		\
 	pixmaps/anchor.xpm			\
 	pixmaps/chain.xpm			\
 	pixmaps/channel.xbm			\

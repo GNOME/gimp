@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-06-10 18:11+0200\n"
+"POT-Creation-Date: 2000-06-18 19:40-0700\n"
 "PO-Revision-Date: mar  7 22:00:33 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -88,7 +88,7 @@ msgstr "Informazioni"
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1577
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:268
-#: plug-ins/common/tiff.c:1487 plug-ins/common/tile.c:398
+#: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:398
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
@@ -170,7 +170,7 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:351 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:384 plug-ins/common/sunras.c:1579
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:270
-#: plug-ins/common/tiff.c:1489 plug-ins/common/tile.c:400
+#: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:400
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:174
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
@@ -274,7 +274,7 @@ msgstr "Coseno"
 #: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1508
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
 msgstr "Nessuna"
@@ -1468,7 +1468,7 @@ msgstr "Mostra/nascondi anteprima wireframe"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:415
 #: plug-ins/common/png.c:417 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1713 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:443
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:450
 #: plug-ins/common/xbm.c:735 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1513,7 +1513,7 @@ msgstr "%s: mappa colore non valida"
 #: plug-ins/common/png.c:576 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2094 plug-ins/common/smooth_palette.c:240
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
-#: plug-ins/common/tiff.c:654 plug-ins/common/tile.c:269
+#: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:269
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2867
@@ -1542,7 +1542,7 @@ msgstr "Impossibile aprire %s"
 #: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:983
+#: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2768,7 +2768,7 @@ msgid "Prefixed Name:"
 msgstr "Nome Prefissato:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1203
+#: plug-ins/common/tiff.c:1566 plug-ins/common/xbm.c:1203
 msgid "Comment:"
 msgstr "Commento:"
 
@@ -5373,44 +5373,44 @@ msgstr "Periodo:"
 msgid "Amplitude:"
 msgstr "Ampiezza:"
 
-#: plug-ins/common/rotate.c:168
+#: plug-ins/common/rotate.c:160
 msgid "<Image>/Layers/Rotate/90 degrees"
 msgstr "<Image>/Livelli/Rotazioni/90°"
 
-#: plug-ins/common/rotate.c:179
+#: plug-ins/common/rotate.c:171
 msgid "<Image>/Layers/Rotate/180 degrees"
 msgstr "<Image>/Livelli/Rotazioni/180°"
 
-#: plug-ins/common/rotate.c:190
+#: plug-ins/common/rotate.c:182
 msgid "<Image>/Layers/Rotate/270 degrees"
 msgstr "<Image>/Livelli/Rotazioni/270°"
 
-#: plug-ins/common/rotate.c:202
+#: plug-ins/common/rotate.c:194
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
 msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/90°"
 
-#: plug-ins/common/rotate.c:213
+#: plug-ins/common/rotate.c:205
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
 msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/180°"
 
-#: plug-ins/common/rotate.c:224
+#: plug-ins/common/rotate.c:216
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
 msgstr "<Image>/Immagine/Trasformazioni/Rotazioni/270°"
 
-#: plug-ins/common/rotate.c:531
+#: plug-ins/common/rotate.c:525
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "Non è possibile ruotare l'intera immagine se vi è una selezione."
 
-#: plug-ins/common/rotate.c:537
+#: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr ""
 "Non è possibile ruotare l'intera immagine se vi è una selezione fluttuante."
 
-#: plug-ins/common/rotate.c:547
+#: plug-ins/common/rotate.c:541
 msgid "Sorry, channels and masks can not be rotated."
 msgstr "I canali e le maschere non possono essere rotate."
 
-#: plug-ins/common/rotate.c:553
+#: plug-ins/common/rotate.c:547
 msgid "Rotating..."
 msgstr "Rotazione..."
 
@@ -6079,31 +6079,31 @@ msgstr "threshold_alpha: colorazione trasparente..."
 msgid "Threshold Alpha"
 msgstr "Soglia alpha"
 
-#: plug-ins/common/tiff.c:663
+#: plug-ins/common/tiff.c:685
 msgid "TIFF Channel"
 msgstr "Canali TIFF"
 
-#: plug-ins/common/tiff.c:1482
+#: plug-ins/common/tiff.c:1525
 msgid "Save as TIFF"
 msgstr "Salva come TIFF"
 
-#: plug-ins/common/tiff.c:1504
+#: plug-ins/common/tiff.c:1547
 msgid "Compression"
 msgstr "Compressione"
 
-#: plug-ins/common/tiff.c:1509
+#: plug-ins/common/tiff.c:1552
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1510
+#: plug-ins/common/tiff.c:1553
 msgid "Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1511
+#: plug-ins/common/tiff.c:1554
 msgid "Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1512
+#: plug-ins/common/tiff.c:1555
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -12605,12 +12605,12 @@ msgid ""
 msgstr ""
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:588
+#: plug-ins/maze/maze_face.c:596
 #, fuzzy, c-format
 msgid "Opening %s"
 msgstr "Salvamento di %s:"
 
-#: plug-ins/maze/maze_face.c:599
+#: plug-ins/maze/maze_face.c:607
 #, fuzzy, c-format
 msgid "See %s"
 msgstr "Seme"
