@@ -105,8 +105,10 @@ gimp_color_scale_init (GimpColorScale *scale)
   range->slider_size_fixed = TRUE;
   range->orientation       = GTK_ORIENTATION_HORIZONTAL;
   range->flippable         = TRUE;
+  /* range->update_policy     = GTK_UPDATE_DELAYED; */
 
-  scale->channel = GIMP_COLOR_SELECTOR_VALUE;
+  scale->channel      = GIMP_COLOR_SELECTOR_VALUE;
+  scale->needs_render = TRUE;
 
   gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
@@ -188,7 +190,7 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
       g_free (scale->buf);
       scale->buf = g_new (guchar, scale->rowstride * scale->height);
 
-      gimp_color_scale_render (scale);
+      scale->needs_render = TRUE;
     }
 }
 
@@ -249,6 +251,12 @@ gimp_color_scale_expose (GtkWidget      *widget,
   if (gdk_rectangle_intersect (&expose_area, &range->range_rect, &area))
     {
       gboolean sensitive;
+
+      if (scale->needs_render)
+        {
+          gimp_color_scale_render (scale);
+          scale->needs_render = FALSE;
+        }
 
       area.x += widget->allocation.x;
       area.y += widget->allocation.y;
@@ -390,7 +398,7 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
     {
       scale->channel = channel;
 
-      gimp_color_scale_render (scale);
+      scale->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (scale));
     }
 }
@@ -407,7 +415,7 @@ gimp_color_scale_set_color (GimpColorScale *scale,
   scale->rgb = *rgb;
   scale->hsv = *hsv;
 
-  gimp_color_scale_render (scale);
+  scale->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (scale));
 }
 

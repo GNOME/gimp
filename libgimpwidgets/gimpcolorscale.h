@@ -57,6 +57,8 @@ struct _GimpColorScale
   guint                     width;
   guint                     height;
   guint                     rowstride;
+
+  gboolean                  needs_render;
 };
 
 struct _GimpColorScaleClass
