@@ -45,6 +45,13 @@ capabilities.
 
 
 
+<!-- ##### MACRO GIMP_API_VERSION ##### -->
+<para>
+Since: GIMP 2.2
+</para>
+
+
+
 <!-- ##### MACRO GIMP_CHECK_VERSION ##### -->
 <para>
 

@@ -1,3 +1,8 @@
+2004-12-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpversion.sgml: updated.
+
 2004-12-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt: updated.
