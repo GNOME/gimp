@@ -1,5 +1,16 @@
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimptool/Makefile.am
+	* libgimpwidgets/Makefile.am: removed unneeded CPPFLAGS.
+
+	* libgimpproxy/Makefile.am: ditto. Changed rules for generated files
+	so that they work for parallel builds.
+
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig.c: fixed error messages.
 
 	* plug-ins/common/ps.c: applied a patch from Raphael Quinet that

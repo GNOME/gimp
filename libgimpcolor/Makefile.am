@@ -43,11 +43,8 @@ endif
 libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
-	-DG_LOG_DOMAIN=\"LibGimpColor\"		\
-	@GIMP_THREAD_FLAGS@			\
+	-DG_LOG_DOMAIN=\"LibGimpColor\"	\
+	@GIMP_THREAD_FLAGS@		\
 @STRIP_END@
 
 INCLUDES = @STRIP_BEGIN@ \

@@ -43,11 +43,8 @@ endif
 libgimpmathincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmath
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
-	-DG_LOG_DOMAIN=\"LibGimpMath\"		\
-	@GIMP_THREAD_FLAGS@			\
+	-DG_LOG_DOMAIN=\"LibGimpMath\"	\
+	@GIMP_THREAD_FLAGS@		\
 @STRIP_END@
 
 INCLUDES = @STRIP_BEGIN@ \

@@ -3,11 +3,8 @@
 libgimptoolincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimptool
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpTool\"	\
-	@GIMP_THREAD_FLAGS@			\
+	@GIMP_THREAD_FLAGS@		\
 @STRIP_END@
 
 INCLUDES = @STRIP_BEGIN@ \
@@ -65,6 +62,3 @@ $(srcdir)/gimptoolenums.c: $(srcdir)/gimptoolenums.h $(GIMP_MKENUMS)
 		$(srcdir)/gimptoolenums.h > xgen-tec \
 	&& cp xgen-tec $(@F) \
 	&& rm -f xgen-tec
-
-
-

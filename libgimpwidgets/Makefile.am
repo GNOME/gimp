@@ -3,9 +3,6 @@
 libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DGIMPDIR=\""$(gimpdir)"\"		\
-	-DDATADIR=\""$(gimpdatadir)"\"		\
-	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	@GIMP_THREAD_FLAGS@			\
 @STRIP_END@
