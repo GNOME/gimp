@@ -1,5 +1,10 @@
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/Makefile.am (PDB_WRAPPERS_H, PDB_WRAPPERS_C): added new
+	files gimpdrawabletranform_pdb.[ch].
+
+2004-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* app/dialogs/image-scale-dialog.[ch]: a wrapper around the scale
 	dialog that takes care verifying the user input and optionally
