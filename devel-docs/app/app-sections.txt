@@ -6321,7 +6321,6 @@ GIMP_TYPE_UNDO_TYPE
 GimpUndoType
 GimpContextPropType
 GimpContextPropMask
-GimpConvertPaletteType
 GimpGradientSegmentType
 GimpGradientSegmentColor
 GimpImageScaleCheckType
