@@ -1,3 +1,21 @@
+2004-08-25  DindinX  <david@dindinx.org>
+
+	* app/display/gimpnavigationview.c
+	* app/display/gimpnavigationview.h: renamed these files to...
+
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpnavigationeditor.h: ... these files, and of course
+	changed GimpNavigationView to GimpNavigationEditor since it is really
+	inherited from GimpEditor anyway.
+
+	This will leave the gimp_navigation_view namespace for the renaming
+	from gimp_navigation_preview.
+
+	* app/display/Makefile.am
+	* app/display/display-types.h
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/dialogs-constructors.c: Changed accordlingly.
+
 2004-08-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-title.c

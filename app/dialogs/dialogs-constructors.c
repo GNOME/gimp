@@ -68,7 +68,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpnavigationview.h"
+#include "display/gimpnavigationeditor.h"
 
 #include "actions/channels-commands.h"
 #include "actions/edit-commands.h"
@@ -829,8 +829,8 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
   if (gdisp)
     shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  view = gimp_navigation_view_new (shell,
-                                   GIMP_DISPLAY_CONFIG (context->gimp->config));
+  view = gimp_navigation_editor_new (shell,
+                                     GIMP_DISPLAY_CONFIG (context->gimp->config));
 
   return dialogs_dockable_new (view,
                                _("Navigation"), _("Display Navigation"),

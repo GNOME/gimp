@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpnavigationview.h
+ * gimpnavigationeditor.h
  * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
  *
  * partly based on app/nav_window
@@ -22,24 +22,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_NAVIGATION_VIEW_H__
-#define __GIMP_NAVIGATION_VIEW_H__
+#ifndef __GIMP_NAVIGATION_EDITOR_H__
+#define __GIMP_NAVIGATION_EDITOR_H__
 
 
 #include "widgets/gimpeditor.h"
 
 
-#define GIMP_TYPE_NAVIGATION_VIEW            (gimp_navigation_view_get_type ())
-#define GIMP_NAVIGATION_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NAVIGATION_VIEW, GimpNavigationView))
-#define GIMP_NAVIGATION_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NAVIGATION_VIEW, GimpNavigationViewClass))
-#define GIMP_IS_NAVIGATION_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NAVIGATION_VIEW))
-#define GIMP_IS_NAVIGATION_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NAVIGATION_VIEW))
-#define GIMP_NAVIGATION_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NAVIGATION_VIEW, GimpNavigationViewClass))
+#define GIMP_TYPE_NAVIGATION_EDITOR            (gimp_navigation_editor_get_type ())
+#define GIMP_NAVIGATION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditor))
+#define GIMP_NAVIGATION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditorClass))
+#define GIMP_IS_NAVIGATION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_NAVIGATION_EDITOR))
+#define GIMP_IS_NAVIGATION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_NAVIGATION_EDITOR))
+#define GIMP_NAVIGATION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NAVIGATION_EDITOR, GimpNavigationEditorClass))
 
 
-typedef struct _GimpNavigationViewClass  GimpNavigationViewClass;
+typedef struct _GimpNavigationEditorClass  GimpNavigationEditorClass;
 
-struct _GimpNavigationView
+struct _GimpNavigationEditor
 {
   GimpEditor        parent_instance;
 
@@ -58,23 +58,23 @@ struct _GimpNavigationView
   GtkWidget        *shrink_wrap_button;
 };
 
-struct _GimpNavigationViewClass
+struct _GimpNavigationEditorClass
 {
   GimpEditorClass  parent_class;
 };
 
 
-GType       gimp_navigation_view_get_type  (void) G_GNUC_CONST;
+GType       gimp_navigation_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_navigation_view_new       (GimpDisplayShell   *shell,
-                                            GimpDisplayConfig  *config);
-void        gimp_navigation_view_set_shell (GimpNavigationView *view,
-                                            GimpDisplayShell   *shell);
+GtkWidget * gimp_navigation_editor_new       (GimpDisplayShell     *shell,
+                                              GimpDisplayConfig    *config);
+void        gimp_navigation_editor_set_shell (GimpNavigationEditor *view,
+                                              GimpDisplayShell     *shell);
 
-void        gimp_navigation_view_popup     (GimpDisplayShell   *shell,
-                                            GtkWidget          *widget,
-                                            gint                click_x,
-                                            gint                click_y);
+void        gimp_navigation_editor_popup     (GimpDisplayShell     *shell,
+                                              GtkWidget            *widget,
+                                              gint                  click_x,
+                                              gint                  click_y);
 
 
-#endif  /*  __GIMP_NAVIGATION_VIEW_H__  */
+#endif  /*  __GIMP_NAVIGATION_EDITOR_H__  */

@@ -71,7 +71,7 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
-#include "gimpnavigationview.h"
+#include "gimpnavigationeditor.h"
 
 #include "gimp-intl.h"
 
@@ -1555,7 +1555,7 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
     {
-      gimp_navigation_view_popup (shell, widget, bevent->x, bevent->y);
+      gimp_navigation_editor_popup (shell, widget, bevent->x, bevent->y);
     }
 
   return TRUE;
