@@ -5148,14 +5148,19 @@ combine_sub_region(struct combine_regions_struct *st,
 
 
   /* cheap and easy when the row of src2 is completely opaque/transparent */
-  opacity_quickskip_possible = ((!m) && (opacity==255));
-  transparency_quickskip_possible = ((src2->tiles) && (mode != REPLACE_MODE));
+  opacity_quickskip_possible = ((!m) && (opacity==255) &&
+				     (mode_affect &&
+				      has_alpha1 &&
+				      affect[src1->bytes-1]));
+  transparency_quickskip_possible = ((src2->tiles) &&
+				     (mode != REPLACE_MODE));
 
 
   if (src1->w > 128)
     g_error("combine_sub_region::src1->w = %d\n", src1->w);
 
-  if (src2->tiles)
+  if ((transparency_quickskip_possible || opacity_quickskip_possible) &&
+      src2->tiles)
     {
 #ifdef HINTS_SANITY
       if (src1->h != src2->h)
@@ -5172,13 +5177,23 @@ combine_sub_region(struct combine_regions_struct *st,
     {
       hint = TILEROWHINT_UNDEFINED;
 
-      if (transparency_quickskip_possible &&
-	  ((hint = tile_get_rowhint (src2->curtile, (src2->offy + h))) ==
-	   TILEROWHINT_TRANSPARENT))
+      if (transparency_quickskip_possible)
 	{
-	  goto next_row;
+	  hint = tile_get_rowhint (src2->curtile, (src2->offy + h));
+
+	  if (hint == TILEROWHINT_TRANSPARENT)
+	    {
+	      goto next_row;
+	    }
 	}
-    
+      else
+	{
+	  if (opacity_quickskip_possible)
+	    {
+	      hint = tile_get_rowhint (src2->curtile, (src2->offy + h));
+	    }
+	}
+      
       s = buf;
 
       /*  apply the paint mode based on the combination type & mode  */
@@ -5210,7 +5225,6 @@ combine_sub_region(struct combine_regions_struct *st,
 	  g_warning ("combine_sub_region: unhandled combine-type.");
 	  break;
 	}
-
 
       /*  based on the type of the initial image...  */
       switch (combine)
