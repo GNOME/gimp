@@ -1,3 +1,8 @@
+2004-04-20  Takeshi AIHANA <aihana@gnome.gr.jp>
+
+	* ja.po: Updated Japanese translation by
+		Ryoichi INAGAKI <inagaki@ryo1.net>
+
 2004-04-16  Maxim Dziumanenko <mvd@mylinux.com.ua>
 
 	* Makefile.am (tips_POFILES): added uk.po (Ukraininan).
