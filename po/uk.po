@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -2427,12 +2427,12 @@ msgstr "Зберегти як POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "анал╕з \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Про GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2443,7 +2443,7 @@ msgstr ""
 "\n"
 "Вийти з GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7653,6 +7653,11 @@ msgstr ""
 "Попередження XCF: формат файлу XCF верс╕╖ 0\n"
 "нев╕рно збер╕га╓ ╕ндексован╕ мапи кольор╕в.\n"
 "Зам╕щення на мапу градац╕й с╕рого."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Помилка у файл╕ пензля GIMP \"%s\"."
 
 #: app/xcf/xcf.c:261
 #, c-format

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.23\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-08-27 12:00-0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -2248,19 +2248,19 @@ msgstr ""
 msgid "Parsing '%s'\n"
 msgstr ""
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Faoi an GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
 "Really quit The GIMP?"
 msgstr ""
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7107,6 +7107,10 @@ msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
+msgstr ""
+
+#: app/xcf/xcf-read.c:115
+msgid "(invalid UTF-8 string)"
 msgstr ""
 
 #: app/xcf/xcf.c:261

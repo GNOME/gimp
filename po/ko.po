@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -2440,12 +2440,12 @@ msgstr "POV-Ray로 저장"
 msgid "Parsing '%s'\n"
 msgstr "\"%s\" 해석중\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "GIMP에 대하여"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2456,7 +2456,7 @@ msgstr ""
 "\n"
 "GIMP를 종료할까요?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7709,6 +7709,11 @@ msgstr ""
 "XCF 경고: XCF파일 형식중 버젼 0은 정확하게\n"
 "인덱스된 컬러맵을 저장하지 못합니다.\n"
 "그레이스케일 맵으로 대신하세요."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "GIMP 패턴 파일에서 에러...중지."
 
 #: app/xcf/xcf.c:261
 #, c-format

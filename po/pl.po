@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-05-26 15:56+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -2344,11 +2344,11 @@ msgstr "Zapis \"%s\" w formacie POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "Analiza \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Czy zakończyć program GIMP?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2358,7 +2358,7 @@ msgstr ""
 "\n"
 "Czy na pewno zakończyć program GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Dodawanie motywu \"%s\" (%s)\n"
@@ -7269,6 +7269,11 @@ msgstr ""
 "Ostrzeżenie dotyczące XCF: wersja 0 formatu pliku\n"
 "XCF nie przechowywała poprawnie indeksowanych palet\n"
 "kolorów. Nastąpi zastąpienie odcieniami szarości."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Niepoprawny napis UTF-8"
 
 #: app/xcf/xcf.c:261
 #, c-format

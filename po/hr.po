@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-11-03 08:48+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: CROATIAN <lokalizacija@linux.hr>\n"
@@ -2495,12 +2495,12 @@ msgstr "Spremi kao POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "parsam \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "O GIMP-u"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2511,7 +2511,7 @@ msgstr ""
 "nisu spremljene.\n"
 "Ipak ¾elite Zavr¹iti?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7735,6 +7735,12 @@ msgstr ""
 "XCF upozorenje: verzija 0 XCF datoteke\n"
 "nije spremila indeksirane mape boja dobro.\n"
 "Zamjenjujem mapu skale sive"
+
+# ##, cformat
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Gre¹ka u GIMP uzorku \"%s\""
 
 #: app/xcf/xcf.c:261
 #, c-format

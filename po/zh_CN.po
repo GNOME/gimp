@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-02-12 13:10+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -2392,11 +2392,11 @@ msgstr "将“%s”保存为 POV-Ray..."
 msgid "Parsing '%s'\n"
 msgstr "正在解析“%s”\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "退出 The GIMP 吗？"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2406,7 +2406,7 @@ msgstr ""
 "\n"
 "真的退出 The GIMP 吗？"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "添加主题“%s”(%s)\n"
@@ -7400,6 +7400,11 @@ msgstr ""
 "XCF 警告：版本 0 的 XCF 文件格式\n"
 "不能正确的保存索引颜色表。\n"
 "用灰度颜色表取代。"
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "无效的 UTF-8 字符串"
 
 #: app/xcf/xcf.c:261
 #, c-format

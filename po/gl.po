@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -2445,12 +2445,12 @@ msgstr "Gardar coma POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "procesando \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Sobre o GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2461,7 +2461,7 @@ msgstr ""
 "\n"
 "¿Sair do GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7683,6 +7683,11 @@ msgstr ""
 "Advertencia XCF: a versión 0 do formato de ficheiros XCF\n"
 "non garda mapas de cores indexadas correctamente.\n"
 "Substituindo mapa en escala de grises."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Erro en ficheiro de patrón \"%s\" do GIMP"
 
 #: app/xcf/xcf.c:261
 #, c-format

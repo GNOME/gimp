@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.3+\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-03-05 18:07+0300\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -2375,11 +2375,11 @@ msgstr "Сохранить \"%s\" как POV-Ray файл"
 msgid "Parsing '%s'\n"
 msgstr "Синтаксический анализ \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Выйти из GIMP?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2389,7 +2389,7 @@ msgstr ""
 "\n"
 "Выйти из GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Добавление темы \"%s\" (%s)\n"
@@ -7330,6 +7330,11 @@ msgstr ""
 "XCF внимание: формат файла XCF версии 0\n"
 "не сохраняет правильно индексированные цветовые карты.\n"
 "Замещение на карту в градациях серого."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "недопустимая строка UTF-8"
 
 #: app/xcf/xcf.c:261
 #, c-format

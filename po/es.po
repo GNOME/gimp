@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-12-27 16:27+01:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -2456,12 +2456,12 @@ msgstr "Guardar como POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "analizando \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Acerca de GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2472,7 +2472,7 @@ msgstr ""
 "\n"
 "¿Salir de GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7710,6 +7710,11 @@ msgstr ""
 "Aviso XCF: La versión 0 del formato de fichero\n"
 "XCF no guardaba mapas de colores indexados \n"
 "correctamente. Sustituyendo mapa de grises."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Error en fichero de brochas GIMP \"%s\"."
 
 #: app/xcf/xcf.c:261
 #, c-format

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-03-13 18:17+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -2439,12 +2439,12 @@ msgstr "POV-Ray 形式で保存"
 msgid "Parsing '%s'\n"
 msgstr "読み込み中 \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "The GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2455,7 +2455,7 @@ msgstr ""
 "\n"
 "GIMP を終了しますか?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7668,6 +7668,11 @@ msgstr ""
 "XCF 警告: バージョン 0 の XCF ファイル形式では\n"
 "インデックスカラーマップが正常に保存されていません.\n"
 "グレースケールマップを仮定します."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "GIMP パターンファイル \"%s\" 中に問題がある"
 
 #: app/xcf/xcf.c:261
 #, c-format

@@ -16,7 +16,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-01-29 00:50+0200\n"
 "Last-Translator: Jarkko Ranta <jjranta@cc.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
@@ -2420,11 +2420,11 @@ msgstr "Tallenna POV-Ray-muodossa"
 msgid "Parsing '%s'\n"
 msgstr "J‰sennet‰‰n tiedostoa '%s'\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Poistutaanko GIMPist‰?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2434,7 +2434,7 @@ msgstr ""
 "\n"
 "Haluatko silti poistua GIMPist‰?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7591,6 +7591,11 @@ msgstr ""
 "XCF varoitus: XCF tiedosto formaatin 0 versio\n"
 "ei tallettanut indeksoituja v‰ripaletteja oikein.\n"
 "Korvataan harmaas‰vy v‰ripaletteja."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "ep‰kelpo UTF-8-merkkijono"
 
 #: app/xcf/xcf.c:261
 #, c-format

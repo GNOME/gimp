@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.4\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-03-28 13:53+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -2364,11 +2364,11 @@ msgstr "Ulo¾i» \"%s\" ako POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "Analyzuje sa '%s'\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Ukonèi» GIMP?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2378,7 +2378,7 @@ msgstr ""
 "\n"
 "Naozaj ukonèi» GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Pridanie témy '%s' (%s)\n"
@@ -7291,6 +7291,11 @@ msgstr ""
 "Varovanie XCF: súbor formátu XCF verzie 0\n"
 "nezapísal korektne indexovanú farebnú mapu.\n"
 "Bude nahradená farebnou mapou s odtieòmi ¹edej."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "nesprávny UTF-8 re»azec"
 
 #: app/xcf/xcf.c:261
 #, c-format

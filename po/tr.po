@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2001-12-25 13:35+0100\n"
 "Last-Translator: Ömer Fadýl USTA <omer_fad@hotmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -2394,12 +2394,12 @@ msgstr "POV-Ray olarak kaydet"
 msgid "Parsing '%s'\n"
 msgstr "\"%s\" ayrýþtýrýlýyor\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2410,7 +2410,7 @@ msgstr ""
 "\n"
 "GIMP'ten çýkacak mýsýnýz?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7612,6 +7612,11 @@ msgstr ""
 "XCF uyarýsý: XCF dosya biçiminin 0. sürümü\n"
 "dizinli renkli resimleri düzgün saklamaz.\n"
 "Griölçekli paletle deðiþtiriliyor."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "%s anahtarýna verilen deðer geçerli bir UTF-8 dizgesi deðil"
 
 #: app/xcf/xcf.c:261
 #, c-format

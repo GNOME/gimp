@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2000-11-06 13:16+01:00\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -2443,12 +2443,12 @@ msgstr "Salva come POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "analisi di \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Informazioni su GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2459,7 +2459,7 @@ msgstr ""
 "\n"
 "Uscire da GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7689,6 +7689,11 @@ msgstr ""
 "Avviso XCF: la versione 0 del formato file XCF\n"
 "non salva le mappe dei colori di immagini in scala di colore.\n"
 "Sostituzione mappa in scala di grigio."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Errore nel file pattern di GIMP \"%s\""
 
 #: app/xcf/xcf.c:261
 #, c-format

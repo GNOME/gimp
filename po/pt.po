@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-04-30 01:20+0000\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -2335,11 +2335,11 @@ msgstr "Gravar \"%s\" como POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "A parsear '%s'\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Sair do GIMP?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2349,7 +2349,7 @@ msgstr ""
 "\n"
 "Sair mesmo do GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "A adicionar tema '%s' (%s)\n"
@@ -7257,6 +7257,11 @@ msgstr ""
 "Aviso XCF: versão 0 do formato de ficheiro XCF\n"
 "não guardou correctamente mapas de cores indexadas.\n"
 "A substituir mapa de tons de cinza."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "expressão UTF-8 inválida"
 
 #: app/xcf/xcf.c:261
 #, c-format

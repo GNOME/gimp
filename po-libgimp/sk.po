@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-05-27 18:34+0200\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: 2002-05-29 18:12+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -137,7 +137,8 @@ msgstr "Ignorova»"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
+msgstr ""
+"Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
@@ -258,24 +259,30 @@ msgstr ""
 "náhodného generátoru - umo¾òuje to zopakova» zadanú \"náhodnú\" operáciu"
 
 #: libgimpwidgets/gimpwidgets.c:850
-msgid "Time"
+#, fuzzy
+msgid "_Time"
 msgstr "Èas"
 
 #: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje primeranú náhodnos»"
+msgstr ""
+"Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje primeranú náhodnos»"
 
-#: libgimpwidgets/gimpwidgets.c:1173
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "v bytoch"
 
-#: libgimpwidgets/gimpwidgets.c:1174
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "v kilobytoch"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
 msgstr "v megabytoch"
 
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
+msgstr "v megabytoch"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-03-07 15:33+0100\n"
 "Last-Translator:  <>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -2510,12 +2510,12 @@ msgstr "Bewaar als POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "bezig met parsen van \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "De GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2526,7 +2526,7 @@ msgstr ""
 "\n"
 "Weet u zeker dat u de GIMP wilt afsluiten?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
@@ -7850,6 +7850,10 @@ msgstr ""
 "XCF-waarschuwing: versie 0 van het XCF-\n"
 "bestandsformaat slaat geïndexeerde colormaps\n"
 "niet correct op. Vervangen door grijswaardenmap. "
+
+#: app/xcf/xcf-read.c:115
+msgid "(invalid UTF-8 string)"
+msgstr ""
 
 # What is XCF?
 #: app/xcf/xcf.c:261

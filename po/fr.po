@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.5\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-04-15 13:19+0200\n"
 "Last-Translator: raymond ostertag <r.ostertag@laposte.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -2377,11 +2377,11 @@ msgstr "Enregistrer «%s» en POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "Lecture de «%s»\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Quitter GIMP ?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2391,7 +2391,7 @@ msgstr ""
 "\n"
 "Vraiment quitter GIMP ?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Ajout du thème «%s» (%s)\n"
@@ -7345,6 +7345,11 @@ msgstr ""
 "Avertissement XCF : la version 0 du format de\n"
 "fichier XCF n'enregistrait pas correctement\n"
 "les palettes des images indexées."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Chaîne de caractères UTF-8 invalide dans le fichier de brosse «%s»"
 
 #: app/xcf/xcf.c:261
 #, c-format

@@ -80,7 +80,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-05-29 12:56+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -2412,11 +2412,11 @@ msgstr "Gem \"%s\" som POV-Ray"
 msgid "Parsing '%s'\n"
 msgstr "fortolker '%s'\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Afslut Gimp'en?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2426,7 +2426,7 @@ msgstr ""
 "\n"
 "Vil du virkelig afslutte Gimp'en?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Tilføjer temaet '%s' (%s)\n"
@@ -7409,6 +7409,11 @@ msgstr ""
 "XCF-advarsel: version 0 af XCF-filformatet\n"
 "gemte ikke indekserede farvekort rigtigt.\n"
 "Erstatter gråtonekort."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "ugyldig UTF-8-streng"
 
 #: app/xcf/xcf.c:261
 #, c-format

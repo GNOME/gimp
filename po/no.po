@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2002-04-01 22:44+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -2342,11 +2342,11 @@ msgstr "Lagre «%s» som POV-ray"
 msgid "Parsing '%s'\n"
 msgstr "Tolker «%s»\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 msgid "Quit The GIMP?"
 msgstr "Avslutt GIMP?"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2356,7 +2356,7 @@ msgstr ""
 "\n"
 "Vil du virkelig avslutte GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Legger til tema «%s» (%s)\n"
@@ -7385,6 +7385,11 @@ msgstr ""
 "XCF-advarsel: versjon 0 av XCF filformatet\n"
 "lagret ikke indekserte fargekart riktig.\n"
 "Erstatter gråtonekart."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "Ugyldig UTF-8-streng i palettfil «%s»"
 
 #: app/xcf/xcf.c:261
 #, c-format

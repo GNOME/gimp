@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.0\n"
-"POT-Creation-Date: 2002-05-29 12:28+0200\n"
+"POT-Creation-Date: 2002-05-30 16:51+0200\n"
 "PO-Revision-Date: 2001-08-21 20:53+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -2448,12 +2448,12 @@ msgstr "/Desa com a POV-Ray..."
 msgid "Parsing '%s'\n"
 msgstr "anàlisi \"%s\"\n"
 
-#: app/gui/gui.c:355
+#: app/gui/gui.c:373
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Quant al GIMP"
 
-#: app/gui/gui.c:359
+#: app/gui/gui.c:377
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -2464,7 +2464,7 @@ msgstr ""
 "\n"
 "Voleu sortir del GIMP?"
 
-#: app/gui/gui.c:461
+#: app/gui/gui.c:479
 #, fuzzy, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "s'està afegint el tema \"%s\" (%s)\n"
@@ -7628,6 +7628,11 @@ msgstr ""
 "fitxer XCF no ha desat correctament els\n"
 "mapes de color indexats. S'està substituint\n"
 "el mapa d'escala de grisos."
+
+#: app/xcf/xcf-read.c:115
+#, fuzzy
+msgid "(invalid UTF-8 string)"
+msgstr "S'ha produit un error en el fitxer de pinzells del GIMP \"%s\"."
 
 #: app/xcf/xcf.c:261
 #, c-format
