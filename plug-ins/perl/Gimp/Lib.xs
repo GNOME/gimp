@@ -1539,7 +1539,7 @@ gimp_pixel_rgn_resize(sv, x, y, width, height)
 	}
 
 SV *
-gimp_pixel_rgn_get_pixel(pr, x, y)
+_gimp_pixel_rgn_get_pixel(pr, x, y)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1552,7 +1552,7 @@ gimp_pixel_rgn_get_pixel(pr, x, y)
 	RETVAL
 
 SV *
-gimp_pixel_rgn_get_row(pr, x, y, width)
+_gimp_pixel_rgn_get_row(pr, x, y, width)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1566,7 +1566,7 @@ gimp_pixel_rgn_get_row(pr, x, y, width)
 	RETVAL
 
 SV *
-gimp_pixel_rgn_get_col(pr, x, y, height)
+_gimp_pixel_rgn_get_col(pr, x, y, height)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1580,7 +1580,7 @@ gimp_pixel_rgn_get_col(pr, x, y, height)
 	RETVAL
 
 SV *
-gimp_pixel_rgn_get_rect(pr, x, y, width, height)
+_gimp_pixel_rgn_get_rect(pr, x, y, width, height)
 	GPixelRgn *	pr
 	int	x
 	int	y
@@ -1595,7 +1595,7 @@ gimp_pixel_rgn_get_rect(pr, x, y, width, height)
 	RETVAL
 
 void
-gimp_pixel_rgn_set_pixel(pr, data, x, y)
+_gimp_pixel_rgn_set_pixel(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *	data
 	int	x
@@ -1608,7 +1608,7 @@ gimp_pixel_rgn_set_pixel(pr, data, x, y)
 	gimp_pixel_rgn_set_pixel (pr, SvPV(data, dc), x, y);
 
 void
-gimp_pixel_rgn_set_row(pr, data, x, y)
+_gimp_pixel_rgn_set_row(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1621,7 +1621,7 @@ gimp_pixel_rgn_set_row(pr, data, x, y)
 	gimp_pixel_rgn_set_row (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
-gimp_pixel_rgn_set_col(pr, data, x, y)
+_gimp_pixel_rgn_set_col(pr, data, x, y)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1634,7 +1634,7 @@ gimp_pixel_rgn_set_col(pr, data, x, y)
 	gimp_pixel_rgn_set_col (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
-gimp_pixel_rgn_set_rect(pr, data, x, y, width)
+_gimp_pixel_rgn_set_rect(pr, data, x, y, width)
 	GPixelRgn *	pr
 	SV *		data
 	int	x
@@ -1663,7 +1663,7 @@ PROTOTYPES: DISABLE
 # construction/destruction.
 
 SV *
-get_data(tile)
+_get_data(tile)
 	GTile *	tile
 	CODE:
 	gimp_tile_ref (tile);
@@ -1673,7 +1673,7 @@ get_data(tile)
 	RETVAL
 
 void
-set_data(tile, data)
+_set_data(tile, data)
 	GTile *	tile
 	SV *	data
 	CODE:

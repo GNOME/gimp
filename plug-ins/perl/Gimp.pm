@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.055;
+$VERSION = 1.06;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -312,6 +312,16 @@ sub AUTOLOAD {
       if (exists $ignore_function{$sub}) {
         *{$AUTOLOAD} = sub { () };
         goto &$AUTOLOAD;
+      } elsif (UNIVERSAL::can(Gimp::Util,$sub)) {
+         my $ref = \&{"Gimp::Util::$sub"};
+         *{$AUTOLOAD} = sub {
+            shift unless ref $_[0];
+#               goto &$ref # does not always work, PERLBUG! #FIXME
+            my @r = eval { &$ref };
+            _croak $@ if $@;
+            wantarray ? @r : $r[0];
+         };
+         goto &$AUTOLOAD;
       } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
          my $ref = \&{"${interface_pkg}::$sub"};
          *{$AUTOLOAD} = sub {
@@ -333,16 +343,6 @@ sub AUTOLOAD {
          goto &$AUTOLOAD;
       } elsif (defined(*{"${interface_pkg}::$sub"}{CODE})) {
          die "safety net $interface_pkg :: $sub (REPORT THIS!!)";#d#
-      } elsif (UNIVERSAL::can(Gimp::Util,$sub)) {
-         my $ref = \&{"Gimp::Util::$sub"};
-         *{$AUTOLOAD} = sub {
-            shift unless ref $_[0];
-#               goto &$ref # does not always work, PERLBUG! #FIXME
-            my @r = eval { &$ref };
-            _croak $@ if $@;
-            wantarray ? @r : $r[0];
-         };
-         goto &$AUTOLOAD;
       }
    }
    # for performance reasons: supply a DESTROY method

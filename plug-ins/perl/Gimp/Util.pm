@@ -222,7 +222,7 @@ sub layer_add_layer_as_mask {
 1;
 
 ##############################################################################
-# all functions below are originally for the chart module
+# all functions below are by Marc Lehmann
 =pod
 
 =item C<gimp_text_wh $text,$fontname>
@@ -232,6 +232,22 @@ returns the width and height of the "$text" of the given font (XLFD format)
 =cut
 sub gimp_text_wh {
    (Gimp->text_get_extents_fontname($_[0],xlfd_size $_[1],$_[1]))[0,1];
+}
+
+=pod
+
+=item C<gimp_image_layertype $alpha>
+
+returns the corresponding layer type for an image, alpha controls wether the layer type
+is with alpha or not. Example: imagetype: RGB -> RGB_IMAGE (or RGBA_IMAGE).
+
+=cut
+sub gimp_image_layertype {
+   my $type = $_[0]->base_type;
+   $type == RGB     ? $alpha ? RGBA_IMAGE     : RGB_IMAGE :
+   $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE :
+   $type == INDEXED ? $alpha ? INDEXEDA_IMAGE : INDEXED_IMAGE :
+   die;
 }
 
 =pod

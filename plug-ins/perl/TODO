@@ -10,14 +10,13 @@ make test TEST_VERBOSE=1
 
 bugs
 
-[DONE]  * auto-edit shebang
-[XXXX]  * only install plug-ins that really work
   * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
-[DONE]  * Gimp::import should croak on importing "garbage".
   
 important issues
 
+  * fix auto-edit shebang for check-ins
+  * gimp-tiles are not accessible in any way..
   * register dummy function to calm gimp down
   * paths in module(!)
   * gimp->object_id, drawable_object_id remove!
@@ -44,7 +43,7 @@ important issues
   * create working progress when Net and $verbose
   * require Storable soon(!)
   * Gimp::Fu::command(?)
-  * Untitled/0 Untitled/1 etc..
+[DONE]  * Untitled/0 Untitled/1 etc..
   * default parameters at end(!)
   * try to deduce default parameters
 

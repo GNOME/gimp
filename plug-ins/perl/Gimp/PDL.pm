@@ -11,86 +11,70 @@ require AutoLoader;
 
 @EXPORT = ();
 
-$old_w = $^W; $^W = 0;
-
-*old_set_data = \&Gimp::Tile::set_data;
-*Gimp::Tile::set_data = sub {
+sub Gimp::Tile::set_data($) {
    (my $p = byte $_[1])->make_physical;
-   old_set_data($_[0],${$p->get_dataref});
+   Gimp::Tile::_set_data($_[0],${$p->get_dataref});
 };
 
-*old_get_data = \&Gimp::Tile::get_data;
-*Gimp::Tile::get_data = sub {
+sub Gimp::Tile::get_data($) {
    my($tile)=@_;
    my($pdl)=new_from_specification PDL (byte,width(),height(),
                                         $tile->bpp > 1 ? $tile->bpp : ());
-   ${$pdl->get_dataref} = old_get_data($tile);
+   ${$pdl->get_dataref} = &Gimp::Tile::_get_data;
    $pdl->upd_data;
    return $pdl;
 };
 
-# this tries to overwrite a function with another one. this is quite tricky
-# (almost impossible in general), we only overwrite Gimp::<iface>::function
-# and hope no other references are around.
-sub rep ($&) {
-   my($name,$sub)=@_;
-   *{"old_$name"}=\&{"${Gimp::interface_pkg}::gimp_pixel_rgn_$name"};
-   undef *{"${Gimp::interface_pkg}::gimp_pixel_rgn_$name"};
-   *{"${Gimp::interface_pkg}::gimp_pixel_rgn_$name"}=$sub;
-}
-
-rep "get_pixel", sub($$$) {
+sub Gimp::PixelRgn::get_pixel {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp);
-   ${$pdl->get_dataref} = &old_get_pixel;
+   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_pixel;
    $pdl->upd_data;
    return $pdl;
 };
 
-rep "get_col", sub($$$$) {
+sub Gimp::PixelRgn::get_col {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = &old_get_col;
+   ${$pdl->get_dataref} = &Gimp::PixelRgn::__get_col;
    $pdl->upd_data;
    return $pdl;
 };
 
-rep "get_row", sub($$$$) {
+sub Gimp::PixelRgn::get_row {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = &old_get_row;
+   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_row;
    $pdl->upd_data;
    return $pdl;
 };
 
-rep "get_rect", sub($$$$$) {
+sub Gimp::PixelRgn::get_rect {
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3],$_[4]);
-   ${$pdl->get_dataref} = &old_get_rect;
+   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_rect;
    $pdl->upd_data;
    return $pdl;
 };
 
-rep "set_pixel", sub($$$$) {
+sub Gimp::PixelRgn::set_pixel {
    (my $p = byte $_[1])->make_physical;
-   old_set_pixel($_[0],${$p->get_dataref},$_[2],$_[3]);
+   Gimp::PixelRgn::_set_pixel($_[0],${$p->get_dataref},$_[2],$_[3]);
 };
 
-rep "set_col", sub($$$$) {
+sub Gimp::PixelRgn::set_col {
    (my $p = byte $_[1])->make_physical;
-   old_set_col($_[0],${$p->get_dataref},$_[2],$_[3]);
+   Gimp::PixelRgn::_set_col($_[0],${$p->get_dataref},$_[2],$_[3]);
 };
 
-rep "set_row", sub($$$$) {
+sub Gimp::PixelRgn::set_row {
    (my $p = byte $_[1])->make_physical;
-   old_set_row($_[0],${$p->get_dataref},$_[2],$_[3]);
+   Gimp::PixelRgn::_set_row($_[0],${$p->get_dataref},$_[2],$_[3]);
 };
 
-rep "set_rect", sub($$$$) {
+sub Gimp::PixelRgn::set_rect {
    (my $p = byte $_[1])->make_physical;
-   old_set_rect($_[0],${$p->get_dataref},$_[2],$_[3],($_[1]->dims)[1]);
+   Gimp::PixelRgn::_set_rect($_[0],${$p->get_dataref},$_[2],$_[3],($_[1]->dims)[1]);
 };
-
-$^W = $old_w; undef $old_w;
 
 1;
 __END__
@@ -102,15 +86,15 @@ Gimp::PDL - Overwrite Tile/Region functions to work with piddles.
 =head1 SYNOPSIS
 
   use Gimp;
-  use Gimp::PDL;	# must be use'd _after_ Gimp!
+  use Gimp::PDL;
   use PDL;
 
 =head1 DESCRIPTION
 
-This module overwrites all methods of Gimp::Tile and Gimp::PixelRgn. The new
-functions return and accept piddles instead of strings for pixel values. The
-last argument (height) of C<gimp_pixel_rgn_set_rect> is calculated from the
-piddle.
+This module overwrites some methods of Gimp::Tile and Gimp::PixelRgn. The
+new functions return and accept piddles. The last argument (height) of
+C<gimp_pixel_rgn_set_rect> is calculated from the piddle. There is no
+other way to access the raw pixeldata in Gimp.
 
 Some exmaples:
 

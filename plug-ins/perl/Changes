@@ -1,5 +1,13 @@
 Revision history for Gimp-Perl extension.
 
+	- Gimp::Fu does no longer display the returned image when it
+          is the same as the one passed in.
+        - append imagenumber to "Untitled"-images in widget.
+        - removed publicly-visible non-PDB pixelfunctions.
+          "uuuuuse peedee-ell or dieieie".
+        - implemented Gimp::Fu::PF_RADIO.
+        - added blowinout.pl.
+        
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.
         - gimp11ified some plug-ins.

@@ -4,7 +4,9 @@ Gimp::Pixel - how to operate on raw pixels
 
 =head1 SYNOPSIS
 
-  use Gimp;	# all you need is in Gimp.
+  use Gimp;
+  use Gimp::PDL;	# you need Gimp::PDL for pixel access
+  use PDL;		# to make sensible things with the pixels
 
   # Gimp::GDrawable	- The GDrawable structure
   # Gimp::Tile		- The Tile family of functions.
@@ -57,8 +59,8 @@ expects pixel coordinates and will return the tile that pixel is in:
 
 The C<data> method returns and sets the raw pixel data.
 
- $packed_data = $tile->data;	# you don't want this, use Gimp::PDL
- $tile->data($packed_data);	# and modify the tile
+ $piddle = $tile->data;	# get the tile data as a piddle
+ $tile->data($piddle);	# and modify the tile
 
 =head1 PIXELREGIONS
 
@@ -83,20 +85,20 @@ which method you choose is purely a question of style...
 The following functions return packed pixel data (see L<Gimp::PDL> for an
 easier way to manipulate on image data):
 
- $packed_data = $region->get_pixel(45,60);	# return the pixel at (45|60)
- $packed_data = $region->get_row(45,60,10);	# return ten horizontal pixels
- $packed_data = $region->get_col(45,60,10);	# same but vertically
- $packed_data = $region->get_rect(45,60,10,12);	# a 10x12 rectangle
+ $piddle = $region->get_pixel(45,60);		# return the pixel at (45|60)
+ $piddle = $region->get_row(45,60,10);		# return ten horizontal pixels
+ $piddle = $region->get_col(45,60,10);		# same but vertically
+ $piddle = $region->get_rect(45,60,10,12);	# a 10x12 rectangle
 
 To modify pixels, the dirty bit of the region must be set (I believe, but I
 don't see the reason what the dirty bit in a region is for so I might be
 wrong), and you can write pixel data to the region with the following
 functions, each one corresponding to a get-function:
 
- $region->set_pixel($packed_data,45,60);	# set pixel at (45|60)
- $region->set_row($packed_data,45,60);		# set a row
- $region->set_col($packed_data,45,60);		# set a column
- $region->set_rect($packed_data,45,60,10);	# a 10 pixel wide rectangle
+ $region->set_pixel($piddle,45,60);		# set pixel at (45|60)
+ $region->set_row($piddle,45,60);		# set a row
+ $region->set_col($piddle,45,60);		# set a column
+ $region->set_rect($piddle,45,60,10);		# a 10 pixel wide rectangle
 
 Please note that (different to the C functions they call), the last
 parameter (width or height) is missing, it can be calculcated from the perl
@@ -112,3 +114,4 @@ Marc Lehmann <pcg@goof.com>
 perl(1), Gimp(1).
 
 =cut
+

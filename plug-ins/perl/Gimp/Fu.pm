@@ -79,6 +79,7 @@ sub PF_ADJUSTMENT(){ PARAM_END+5	}; # compatibility fix for script-fu _ONLY_
 sub PF_BRUSH	() { PARAM_END+6	};
 sub PF_PATTERN	() { PARAM_END+7	};
 sub PF_GRADIENT	() { PARAM_END+8	};
+sub PF_RADIO	() { PARAM_END+9	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
@@ -101,6 +102,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_SLIDER	=> 'integer',
          &PF_SPINNER	=> 'integer',
          &PF_ADJUSTMENT	=> 'integer',
+         &PF_RADIO	=> 'string',
          &PF_IMAGE	=> 'NYI',
          &PF_LAYER	=> 'NYI',
          &PF_CHANNEL	=> 'NYI',
@@ -111,7 +113,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
             PF_STRING PF_COLOR PF_COLOUR PF_TOGGLE PF_IMAGE
             PF_DRAWABLE PF_FONT PF_LAYER PF_CHANNEL PF_BOOL
             PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
-            PF_BRUSH PF_PATTERN PF_GRADIENT);
+            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO);
 
 @EXPORT = (qw(register main),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
@@ -280,6 +282,25 @@ sub interact($$$@) {
            push(@setvals,sub{set_state $a ($_[0] ? 1 : 0)});
            push(@getvals,sub{state $a eq "active"});
            
+        } elsif($type == PF_RADIO) {
+           my $b = new Gtk::HBox 0,5;
+           my($r,$prev);
+           my $prev_sub = sub { $r = $_[0] };
+           for (@$extra) {
+              my ($label,$value)=@$_;
+              my $radio = new Gtk::RadioButton $label;
+              $radio->set_group ($prev) if $prev;
+              $b->pack_start ($radio,1,0,5);
+              $radio->signal_connect(clicked => sub { $r = $value });
+              my $prev_sub_my = $prev_sub;
+              $prev_sub = sub { $radio->set_active ($_[0] == $value); &$prev_sub_my };
+              $prev = $radio;
+           }
+           $a = new Gtk::Frame;
+           $a->add($b);
+           push(@setvals,$prev_sub);
+           push(@getvals,sub{$r});
+           
         } elsif($type == PF_IMAGE) {
            my $res;
            $a=new Gtk::HBox (0,5);
@@ -443,6 +464,7 @@ sub string2pf($$) {
       || $type==PF_FONT
       || $type==PF_PATTERN
       || $type==PF_BRUSH
+      || $type==PF_RADIO	# for now! #d#
       || $type==PF_GRADIENT) {
       $s;
    } elsif($type==PF_INT8
@@ -553,6 +575,7 @@ sub query {
                                       $_->[0]=PARAM_INT32	if $_->[0] == PF_SLIDER;
                                       $_->[0]=PARAM_INT32	if $_->[0] == PF_SPINNER;
                                       $_->[0]=PARAM_INT32	if $_->[0] == PF_ADJUSTMENT;
+                                      $_->[0]=PARAM_INT32	if $_->[0] == PF_RADIO;
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_FONT;
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_BRUSH;
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_PATTERN;
@@ -703,6 +726,19 @@ Default values will be substitued for missing entries, like in:
 
 The same as PF_SLIDER, except that this one uses a spinbutton instead of a scale.
 
+=item PF_RADIO
+
+In addition to a default value, an extra argument describing the various
+options I<must> be provided. That extra argument must be a reference
+to an array filled with ["Option-Name", integer-value] pairs. Gimp::Fu
+will then generate a horizontal frame with radio buttons, one for each
+alternative. For example:
+
+ [PF_RADIO, "direction", "the direction to move to", 5, [["Left",5],["Right",7]]]
+
+draws two buttons, when the first (the default, "Left") is activated, 5
+will be returned. If the second is activated, 7 is returned.
+
 =item PF_FONT
 
 Lets the user select a font and returns a X Logical Font Descriptor (XLFD).
@@ -737,7 +773,7 @@ sub register($$$$$$$$$;@) {
    
    *$function = sub {
       $run_mode=shift;	# global!
-      my(@pre,@defaults,@lastvals);
+      my(@pre,@defaults,@lastvals,$input_image);
       if ($menupath=~/^<Image>\//) {
          @_ >= 2 or die "<Image> plug-in called without an image and drawable!\n";
          @pre = (shift,shift);
@@ -779,6 +815,8 @@ sub register($$$$$$$$$;@) {
       } else {
          die "run_mode must be INTERACTIVE, NONINTERACTIVE or WITH_LAST_VALS\n";
       }
+      $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
+      $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
       
       $Gimp::Data{"$function/_fu_data"}=Dumper([@_]);
       
@@ -802,7 +840,7 @@ sub register($$$$$$$$$;@) {
                   save_image($img,$path);
                   $img->delete;
                } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
-                  $img->display_new;
+                  $img->display_new unless $input_image && $$img == $$input_image;
                }
             } elsif (!@$results) {
                warn "WARNING: $function returned something that is not an image: \"$img\"\n";

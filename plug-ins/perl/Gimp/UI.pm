@@ -41,22 +41,28 @@ reimplement all of it in perl.
 @Gimp::UI::ChannelMenu::ISA =qw(Gimp::UI);
 @Gimp::UI::DrawableMenu::ISA=qw(Gimp::UI);
 
+sub image_name {
+   my $name = $_[0]->get_filename;
+   $name.="-".${$_[0]} if $name eq "Untitled";
+   $name;
+}
+
 sub Gimp::UI::ImageMenu::_items {
-  map [[$_],$_,$_->get_filename],
+  map [[$_],$_,image_name($_)],
       Gimp->list_images ();
 }
 sub Gimp::UI::LayerMenu::_items {
-  map { my $i = $_; map [[$i,$_],$_,$i->get_filename."/".$_->get_name],$i->get_layers }
+  map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],$i->get_layers }
       Gimp->list_images ();
 }
 
 sub Gimp::UI::ChannelMenu::_items {
-  map { my $i = $_; map [[$i,$_],$_,$i->get_filename."/".$_->get_name],$i->get_channels }
+  map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],$i->get_channels }
       Gimp->list_images ();
 }
 
 sub Gimp::UI::DrawableMenu::_items {
-  map { my $i = $_; map [[$i,$_],$_,$i->get_filename."/".$_->get_name],($i->get_layers, $i->get_channels) }
+  map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],($i->get_layers, $i->get_channels) }
       Gimp->list_images ();
 }
 
