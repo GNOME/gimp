@@ -1,5 +1,10 @@
 2002-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/color-notebook.c: removed the white and black color
+	buttons since white and black are trivial to select anyway.
+
+2002-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.[ch]: removed rgb and hsv parameters
 	from gimp_color_scale_new().
 

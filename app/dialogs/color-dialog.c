@@ -102,8 +102,6 @@ static void   color_notebook_cancel_callback   (GtkWidget             *widget,
 static void   color_notebook_update            (ColorNotebook         *cnp,
                                                 ColorNotebookUpdateType update);
 
-static void   color_notebook_white_clicked     (ColorNotebook         *cnp);
-static void   color_notebook_black_clicked     (ColorNotebook         *cnp);
 static void   color_notebook_reset_clicked     (ColorNotebook         *cnp);
 static void   color_notebook_new_color_changed (GtkWidget             *widget,
                                                 ColorNotebook         *cnp);
@@ -280,8 +278,6 @@ color_notebook_new_internal (GimpViewable          *viewable,
   GtkWidget     *button;
   GtkWidget     *image;
   GtkWidget     *arrow;
-  GtkWidget     *color_area;
-  GimpRGB        bw;
   gint           i;
 
   g_return_val_if_fail (color != NULL, NULL);
@@ -382,7 +378,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
                     cnp);
 
   /*  The table for the color_areas  */
-  table = gtk_table_new (2, 4, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_table_set_col_spacings (GTK_TABLE (table), 1);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 3);
@@ -429,7 +425,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_widget_show (cnp->orig_color);
 
   button = gtk_button_new ();
-  gtk_table_attach (GTK_TABLE (table), button, 2, 4, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
@@ -437,51 +433,11 @@ color_notebook_new_internal (GimpViewable          *viewable,
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (button,
-			   _("Revert to old color"),
-			   NULL);
+  gimp_help_set_help_data (button, _("Revert to old color"), NULL);
 
   g_signal_connect_swapped (G_OBJECT (button), "clicked",
                             G_CALLBACK (color_notebook_reset_clicked),
                             cnp);
-
-  /*  The white color button  */
-  button = gtk_button_new ();
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (button);
-
-  gimp_rgba_set (&bw, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-  color_area = gimp_color_area_new (&bw, 
-				    GIMP_COLOR_AREA_FLAT,
-				    GDK_BUTTON2_MASK);
-  gtk_drag_dest_unset (color_area);
-  gtk_widget_set_size_request (button, 16, COLOR_AREA_SIZE);
-  gtk_container_add (GTK_CONTAINER (button), color_area);
-  gtk_widget_show (color_area);
-
-  g_signal_connect_swapped (G_OBJECT (button), "clicked", 
-			    G_CALLBACK (color_notebook_white_clicked),
-			    cnp);
-
-  /*  The black color button  */
-  button = gtk_button_new ();
-  gtk_table_attach (GTK_TABLE (table), button, 3, 4, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (button);
-
-  gimp_rgba_set (&bw, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  color_area = gimp_color_area_new (&bw, 
-				    GIMP_COLOR_AREA_FLAT,
-				    GDK_BUTTON2_MASK);
-  gtk_drag_dest_unset (color_area);
-  gtk_widget_set_size_request (button, 16, COLOR_AREA_SIZE);
-  gtk_container_add (GTK_CONTAINER (button), color_area);
-  gtk_widget_show (color_area);
-
-  g_signal_connect_swapped (G_OBJECT (button), "clicked", 
-			    G_CALLBACK (color_notebook_black_clicked),
-			    cnp);
 
   /*  The color space sliders, toggle buttons and entries  */
   cnp->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
@@ -650,35 +606,6 @@ color_notebook_update (ColorNotebook           *cnp,
                        COLOR_NOTEBOOK_UPDATE,
                        cnp->client_data);
     }
-}
-
-
-/*  "new color" button and black & white callbacks  */
-
-static void
-color_notebook_white_clicked (ColorNotebook *cnp)
-{
-  gimp_rgb_set (&cnp->rgb, 1.0, 1.0, 1.0);
-  gimp_rgb_to_hsv (&cnp->rgb, &cnp->hsv);
-
-  color_notebook_update (cnp,
-			 UPDATE_NOTEBOOK  |
-                         UPDATE_SCALES    |
-			 UPDATE_NEW_COLOR |
-			 UPDATE_CALLER);
-}
-
-static void
-color_notebook_black_clicked (ColorNotebook *cnp)
-{
-  gimp_rgb_set (&cnp->rgb, 0.0, 0.0, 0.0);
-  gimp_rgb_to_hsv (&cnp->rgb, &cnp->hsv);
-
-  color_notebook_update (cnp,
-			 UPDATE_NOTEBOOK  |
-                         UPDATE_SCALES    |
-			 UPDATE_NEW_COLOR |
-			 UPDATE_CALLER);
 }
 
 static void
