@@ -77,7 +77,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <time.h>		/* for seed of random number */
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -102,7 +101,6 @@
 #define PREVIEW_WIDTH               64
 #define PREVIEW_HEIGHT             220
 
-#define	RANDOM               ((gdouble) ((gdouble) rand ()/((gdouble) G_MAXRAND)))
 #define CANNONIZE(p, x)      (255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define HCANNONIZE(p, x)     (254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define POS_IN_TORUS(i,size) ((i < 0) ? size + i : ((size <= i) ? i - size : i))
@@ -559,6 +557,7 @@ CML_main_function (gint preview_p)
   gdouble   *hues, *sats, *vals;
   gdouble   *newh, *news, *newv;
   gdouble   *haux, *saux, *vaux;
+  GRand     *gr;
 
   /* open THE drawable */
   drawable = gimp_drawable_get (drawable_id);
@@ -630,23 +629,16 @@ CML_main_function (gint preview_p)
 		       width_by_pixel, height_by_pixel,
 		       FALSE, FALSE);
   
-  /* Note: Why seed is modulo of (1 << 15)? I use iscale_entry to control
-     the value. Adjustment widget in Scale uses gdouble(?). But it is not
-     precise to hold a long integer! Thus, in updating scale, the value will
-     be rounded. Since I can't imagine another solution, I use short (16bit)
-     integer as the seed of random number sequence. This approach works on
-     my i386-based Linux.
-  */
-  if (VALS.initial_value < CML_INITIAL_RANDOM_FROM_SEED)
-    VALS.seed = time (NULL) % (1 << 15);
-  srand (VALS.seed);
+  gr = g_rand_new ();
+  if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
+    g_rand_set_seed (gr, VALS.seed);
 
   for (index = 0; index < cell_num; index++)
     {
       switch (VALS.hue.arrange)
 	{
 	case RAND_POWER0:
-	  haux [index] = RANDOM * 10;
+	  haux [index] = g_rand_double_range (gr, 0, 10);
 	  break;
 	case RAND_POWER2:
 	case MULTIPLY_GRADIENT:
@@ -654,13 +646,13 @@ CML_main_function (gint preview_p)
 	  break;
 	case RAND_POWER1:
 	case MULTIPLY_RANDOM0:
-	  haux [index] = RANDOM;
+	  haux [index] = g_rand_double (gr);
 	  break;
 	case MULTIPLY_RANDOM1:
-	  haux [index] = RANDOM * 2;
+	  haux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  haux [index] = (index % (2 * VALS.hue.diffusion_dist) == 0) ? (RANDOM) : VALS.hue.power;
+	  haux [index] = (index % (2 * VALS.hue.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.hue.power;
 	  break;
 	default:
 	  haux [index] = VALS.hue.power;
@@ -669,7 +661,7 @@ CML_main_function (gint preview_p)
       switch (VALS.sat.arrange)
 	{
 	case RAND_POWER0:
-	  saux [index] = RANDOM * 10;
+	  saux [index] = g_rand_double_range (gr, 0, 10);
 	  break;
 	case RAND_POWER2:
 	case MULTIPLY_GRADIENT:
@@ -677,13 +669,13 @@ CML_main_function (gint preview_p)
 	  break;
 	case RAND_POWER1:
 	case MULTIPLY_RANDOM0:
-	  saux [index] = RANDOM;
+	  saux [index] = g_rand_double (gr);
 	  break;
 	case MULTIPLY_RANDOM1:
-	  saux [index] = RANDOM * 2;
+	  saux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  saux [index] = (index % (2 * VALS.sat.diffusion_dist) == 0) ? (RANDOM) : VALS.sat.power;
+	  saux [index] = (index % (2 * VALS.sat.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.sat.power;
 	  break;
 	default:
 	  saux [index] = VALS.sat.power;
@@ -692,7 +684,7 @@ CML_main_function (gint preview_p)
       switch (VALS.val.arrange)
 	{
 	case RAND_POWER0:
-	  vaux [index] = RANDOM * 10;
+	  vaux [index] = g_rand_double_range (gr, 0, 10);
 	  break;
 	case RAND_POWER2:
 	case MULTIPLY_GRADIENT:
@@ -700,13 +692,13 @@ CML_main_function (gint preview_p)
 	  break;
 	case RAND_POWER1:
 	case MULTIPLY_RANDOM0:
-	  vaux [index] = RANDOM;
+	  vaux [index] = g_rand_double (gr);
 	  break;
 	case MULTIPLY_RANDOM1:
-	  vaux [index] = RANDOM * 2;
+	  vaux [index] = g_rand_double_range (gr, 0, 2);
 	  break;
 	case RAND_AND_P:
-	  vaux [index] = (index % (2 * VALS.val.diffusion_dist) == 0) ? (RANDOM) : VALS.val.power;
+	  vaux [index] = (index % (2 * VALS.val.diffusion_dist) == 0) ? g_rand_double (gr) : VALS.val.power;
 	  break;
 	default:
 	  vaux [index] = VALS.val.power;
@@ -731,13 +723,13 @@ CML_main_function (gint preview_p)
 	  break;
 	case CML_INITIAL_RANDOM_INDEPENDENT:
 	case CML_INITIAL_RANDOM_FROM_SEED:
-	  hues[index] = RANDOM;
-	  sats[index] = RANDOM;
-	  vals[index] = RANDOM;
+	  hues[index] = g_rand_double (gr);
+	  sats[index] = g_rand_double (gr);
+	  vals[index] = g_rand_double (gr);
 	  break;
 	case CML_INITIAL_RANDOM_SHARED:
 	case CML_INITIAL_RANDOM_FROM_SEED_SHARED:
-	  hues[index] = sats[index] = vals[index] = RANDOM;
+	  hues[index] = sats[index] = vals[index] = g_rand_double (gr);
 	  break;
 	}
     }
@@ -863,6 +855,8 @@ CML_main_function (gint preview_p)
       gimp_drawable_detach (drawable);
     }
 
+  g_rand_free (gr);
+
   return GIMP_PDB_SUCCESS;
 }
 
@@ -930,7 +924,9 @@ CML_next_value (gdouble   *vec,
   gdouble hold_rate = 1 - param->mod_rate;
   gdouble env_factor = 0;
   gint    index;
+  GRand  *gr;
 
+  gr = g_rand_new();
   self_mod_rate = (1 - param->env_sensitivity - param->ch_sensitivity);
 
   switch (param->arrange)
@@ -1001,9 +997,9 @@ CML_next_value (gdouble   *vec,
       break;
     }
   /* finalize */
-  if (RANDOM < param->mutation_rate)
+  if (g_rand_double (gr) < param->mutation_rate)
     {
-      val += ((RANDOM < 0.5) ? -1.0 : 1.0) * param->mutation_dist * RANDOM;
+      val += ((g_rand_double (gr) < 0.5) ? -1.0 : 1.0) * param->mutation_dist * g_rand_double (gr);
     }
   if (param->cyclic_range)
     {
@@ -1016,6 +1012,9 @@ CML_next_value (gdouble   *vec,
     /* The range of val should be [0,1], not [0,1).
       Cannonization shuold be done in color mapping phase. */
     val = CLAMP (val, 0.0, 1);
+
+  g_rand_free (gr);
+
   return val;
 }
 #undef AVE_DIST
@@ -1387,7 +1386,7 @@ CML_explorer_dialog (void)
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				  _("Seed:"), SCALE_WIDTH, 0,
-				  VALS.seed, 0, G_MAXRAND, 1, 10, 0,
+				  VALS.seed, 0, (guint32) -1, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
       CML_explorer_int_entry_init (&widget_pointers[3][3],

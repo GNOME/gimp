@@ -46,12 +46,6 @@ G_BEGIN_DECLS
  * Include this instead of just <math.h>.
  */
 
-#ifndef RAND_MAX
-#define G_MAXRAND G_MAXINT
-#else
-#define G_MAXRAND RAND_MAX
-#endif
-
 /* Use RINT() instead of rint() */
 #ifdef HAVE_RINT
 #define RINT(x) rint(x)

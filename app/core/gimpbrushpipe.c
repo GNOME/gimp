@@ -211,6 +211,10 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
   GimpBrushPipe *pipe;
   gint           i, brushix, ix;
   gdouble        angle;
+  GRand         *gr;
+
+  /* Initialise random number generator */
+  gr = g_rand_new();
 
   pipe = GIMP_BRUSH_PIPE (brush);
 
@@ -239,7 +243,7 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 	  break;
 	case PIPE_SELECT_RANDOM:
 	  /* This probably isn't the right way */
-	  ix = rand () % pipe->rank[i];
+	  ix = g_rand_int_range (gr, 0, pipe->rank[i]);
 	  break;
 	case PIPE_SELECT_PRESSURE:
 	  ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
@@ -263,6 +267,8 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
   brushix = CLAMP (brushix, 0, pipe->nbrushes-1);
 
   pipe->current = pipe->brushes[brushix];
+
+  g_rand_free (gr);
 
   return GIMP_BRUSH (pipe->current);
 }

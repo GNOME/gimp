@@ -1225,10 +1225,7 @@ make_curve_d (gint    *curve,
 static gdouble
 fp_rand (gdouble val)
 {
-  gdouble rand_val;
-
-  rand_val = (gdouble) rand () / (gdouble) (G_MAXRAND - 1);
-  return rand_val * val;
+  return g_random_double () * val;
 }
 
 
@@ -1485,7 +1482,7 @@ grid_render (GimpDrawable *drawable)
   for (i = -grid_row_pad; i < grid_rows; i++)
     for (j = -grid_col_pad; j < grid_cols; j++)
       {
-	vary = ((rand () % size) < frac_size) ? 1 : 0;
+	vary = ((g_random_int_range (0, size)) < frac_size) ? 1 : 0;
 
 	index = i * grid_rowstride + j * grid_multiple;
 
@@ -1653,7 +1650,7 @@ process_poly (Polygon      *poly,
 
   /*  determine the variation of tile color based on tile number  */
   color_vary = (vary) ? fp_rand (mvals.color_variation) : 0;
-  color_vary = (rand () % 2) ? color_vary * 127 : -color_vary * 127;
+  color_vary = (g_random_int_range (0, 2)) ? color_vary * 127 : -color_vary * 127;
 
   /*  Determine direction of edges inside polygon, if any  */
   find_poly_dir (poly, m_grad, h_grad, v_grad, dir, loc, x1, y1, x2, y2);
@@ -2443,7 +2440,7 @@ calc_spec_contrib (SpecVec *vecs,
       if (mvals.tile_surface == ROUGH)
 	{
 	  /*  If the surface is rough, randomly perturb the distance  */
-	  dist -= dist * ((gdouble) rand () / (gdouble) G_MAXRAND);
+	  dist -= dist * g_random_double ();
 	}
 
       /*  If the distance to an edge is less than the tile_spacing, there

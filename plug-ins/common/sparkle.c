@@ -106,7 +106,8 @@ static void      fspike                (GimpPixelRgn *src_rgn,
 					gint          tile_height,
 					gdouble       inten,
 					gdouble       length,
-					gdouble       angle);
+					gdouble       angle,
+                                        GRand        *gr);
 static GimpTile * rpnt                 (GimpDrawable *drawable,
 					GimpTile     *tile,
 					gint          x1,
@@ -672,7 +673,9 @@ sparkle (GimpDrawable *drawable,
   gpointer  pr;
   guchar   *tmp1;
   gint      tile_width, tile_height;
+  GRand    *gr;
 
+  gr = g_rand_new ();
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gray = gimp_drawable_is_gray (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
@@ -757,21 +760,21 @@ sparkle (GimpDrawable *drawable,
 		  {
 		    /* major spikes */
 		    if (svals.spike_angle == -1)
-		   	spike_angle = 360.0 * rand () / G_MAXRAND;
+		   	spike_angle = g_rand_double_range (gr, 0, 360.0);
 		    else
 			spike_angle = svals.spike_angle;
-		    if (rand() <= G_MAXRAND * svals.density)
+		    if (g_rand_double (gr) <= svals.density)
 		      {
 			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
 			    tile_width, tile_height,
-			    inten, length, spike_angle);
+			    inten, length, spike_angle, gr);
 		        /* minor spikes */
 			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
 			    tile_width, tile_height,
 			    inten * 0.7, length * 0.7,
-			    ((gdouble) spike_angle + 180.0 / svals.spike_pts));
+			    ((gdouble) spike_angle + 180.0 / svals.spike_pts), gr);
 		      }
 		  }
 		cur_progress ++;
@@ -789,6 +792,7 @@ sparkle (GimpDrawable *drawable,
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  g_rand_free (gr);
 }
 
 static inline GimpTile *
@@ -888,7 +892,8 @@ fspike (GimpPixelRgn *src_rgn,
 	gint       tile_height,
 	gdouble    inten,
 	gdouble    length,
-	gdouble    angle)
+	gdouble    angle,
+        GRand     *gr)
 {
   const gdouble efac = 2.0;
   gdouble xrt, yrt, dx, dy;
@@ -949,13 +954,12 @@ fspike (GimpPixelRgn *src_rgn,
 	  g = 255 - color[1];
 	  b = 255 - color[2];             
 	  gimp_rgb_to_hsv_int (&r, &g, &b);  
-	  r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
+	  r+= svals.random_hue * g_rand_double_range (gr, -.5, .5) * 255;
 	  if (r >= 255)
 	    r -= 255;
 	  else if (r < 0) 
 	    r += 255;
-	  b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
-					  (gdouble) RAND_MAX - 1.0))*255;
+	  b+= (svals.random_saturation * g_rand_double_range (gr, -.5, .5))*255;
 	  if (b > 255) b = 255;
 	  gimp_hsv_to_rgb_int (&r, &g, &b);
 	  color[0] = 255 - r;

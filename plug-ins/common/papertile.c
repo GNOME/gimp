@@ -444,8 +444,7 @@ tile_compare (const void *x,
 static inline gdouble
 drand (void)
 {
-  static gdouble R = 2.0 / (gdouble) G_MAXRAND;
-  return (gdouble) rand () * R - 1.0;
+  return g_random_double_range (-1, 1);
 }
 
 static inline void
@@ -533,6 +532,9 @@ filter (void)
   gint       dindex;
   gint       sindex;
   gint       px, py;
+  GRand     *gr;
+
+  gr = g_rand_new ();
 
   /* INITIALIZE */
   gimp_pixel_rgn_init (&src, p.drawable, 0, 0,
@@ -557,7 +559,6 @@ filter (void)
   gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
 
   /* TILES */
-  srand (0);
   division_x = p.params.division_x;
   division_y = p.params.division_y;
   if (p.params.fractional_type == FRACTIONAL_TYPE_FORCE)
@@ -647,7 +648,7 @@ filter (void)
 	      t->y      = srcy;
 	      t->height = p.drawable->height - srcy;
 	    }
-	  t->z = rand ();
+	  t->z = g_rand_int (gr);
 	  random_move (&t->move_x, &t->move_y, move_max_pixels);
 	}
     }
@@ -799,6 +800,7 @@ filter (void)
                         p.selection.x0, p.selection.y0,
 			p.selection.width, p.selection.height);
 
+  g_rand_free (gr);
   g_free (buffer);
   g_free (pixels);
   g_free (tiles);

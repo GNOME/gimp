@@ -2855,7 +2855,7 @@ p_rnd_remap(gint32 lum, guchar *mapped_color)
 
   if(g_lum_tab[lum].all_samples > 1)
   {
-    l_rnd = rand() % g_lum_tab[lum].all_samples;
+    l_rnd = g_random_int_range (0, g_lum_tab[lum].all_samples);
     l_ct  = 0;
     l_idx = 0;
 
@@ -3181,7 +3181,6 @@ p_main_colorize(gint mc_flags)
    g_tol_col_err = (((float)l_max  * (g_values.tol_col_err * g_values.tol_col_err)) / (100.0 *100.0));
    g_max_col_err = l_max;
    
-   srand(time(NULL));
    l_rc = 0;
    
    if(mc_flags & MC_GET_SAMPLE_COLORS)

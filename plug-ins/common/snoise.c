@@ -93,7 +93,7 @@ typedef struct
   gdouble xsize;
   gdouble ysize;
   /*  Interface only  */
-  gint    timeseed;
+  gint    defaultseed;
 } SolidNoiseValues;
 
 typedef struct
@@ -142,7 +142,7 @@ static SolidNoiseValues snvals =
   1,   /* detail        */
   4.0, /* xsize         */
   4.0, /* ysize         */
-  0    /* use time seed */ 
+  0    /* use default seed */ 
 };
 
 static SolidNoiseInterface snint =
@@ -363,6 +363,9 @@ solid_noise_init (void)
 {
   gint    i, j, k, t;
   gdouble m;
+  GRand  *gr;
+
+  gr = g_rand_new ();
 
   /*  Force sane parameters  */
   if (snvals.detail < 0)
@@ -373,9 +376,8 @@ solid_noise_init (void)
     snvals.seed = 0;
   
   /*  Define the pseudo-random number generator seed  */
-  if (snvals.timeseed)
-    snvals.seed = time(NULL);
-  srand (snvals.seed);
+  if (!snvals.defaultseed)
+    g_rand_set_seed (gr, snvals.seed);
 
   /*  Set scaling factors  */
   if (snvals.tilable)
@@ -408,8 +410,8 @@ solid_noise_init (void)
     perm_tab[i] = i;
   for (i = 0; i < (TABLE_SIZE >> 1); i++)
     {
-      j = rand () % TABLE_SIZE;
-      k = rand () % TABLE_SIZE;
+      j = g_rand_int_range (gr, 0, TABLE_SIZE);
+      k = g_rand_int_range (gr, 0, TABLE_SIZE);
       t = perm_tab[j];
       perm_tab[j] = perm_tab[k];
       perm_tab[k] = t;
@@ -420,10 +422,8 @@ solid_noise_init (void)
     {
       do
 	{
-	  grad_tab[i].x =
-	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
-	  grad_tab[i].y =
-	    (double)(rand () - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1);
+	  grad_tab[i].x = g_rand_double_range (gr, -1, 1);
+	  grad_tab[i].y = g_rand_double_range (gr, -1, 1);
 	  m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
 	}
       while (m == 0.0 || m > 1.0);
@@ -539,7 +539,7 @@ solid_noise_dialog (void)
 
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&snvals.seed,
-				    &snvals.timeseed,
+				    &snvals.defaultseed,
 				    TRUE, FALSE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,

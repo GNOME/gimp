@@ -499,8 +499,6 @@ jigsaw (gboolean preview_mode)
   gint bytes;
   gint buffer_size;
 
-  srand((gint)NULL);
-
   if (preview_mode) 
     {
       width  = GTK_PREVIEW (preview)->buffer_width;
@@ -693,10 +691,10 @@ draw_vertical_border (guchar  *buffer,
   gdouble sigma = blend_amount / blend_lines;
   gint right;
   bump_t style_index;
-
+  
   for (i = 0; i < ytiles; i++)
     {
-      right = rand() & 1;
+      right = g_random_int_range (0, 2);
       if (right)
 	{
 	  style_index = RIGHT;
@@ -817,7 +815,7 @@ draw_horizontal_border (guchar   *buffer,
 
   for (i = 0; i < xtiles; i++)
     {
-      up = rand() & 1;
+      up = g_random_int_range (0, 2);
       /* first horizontal line across */
       px[0] = x_offset; px[1] = x_offset + curve_start_offset - 1;
       py[0] = py[1] = y_offset;
@@ -2183,7 +2181,7 @@ draw_bezier_vertical_border (guchar   *buffer,
   
   for (i = 0; i < ytiles; i++)
     {
-      right = rand() & 1;
+      right = g_random_int_range (0, 2);
       if (right)
 	{
 	  style_index = RIGHT;
@@ -2319,7 +2317,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
 
   for (i = 0; i < xtiles; i++)
     {
-      up = rand() & 1;
+      up = g_random_int_range(0, 2);
       if (up)
 	{
 	  style_index = UP;

@@ -487,26 +487,6 @@ if test $gimp_ok = no; then
 fi
 
 
-##############################################################
-# Check for random number functions (FIXME: should use g_rand)
-##############################################################
-
-dnl Check for random number functions
-LIBUCB=""
-AC_CHECK_FUNC(random, [
-  AC_DEFINE(RAND_FUNC, random, [Define a random function. FIXME!])
-  AC_DEFINE(SRAND_FUNC, srandom, [Define a srandom function. FIXME!])],
-  [AC_CHECK_LIB(ucb, random, [
-    AC_DEFINE(RAND_FUNC, random)
-    AC_DEFINE(SRAND_FUNC, srandom)
-    LIBUCB='-lucb'],
-    [AC_CHECK_FUNC(lrand48,
-      [AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48)],
-      [AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)])])])
-
-AC_SUBST(LIBUCB)
-
-
 #############################
 # Threads and multi processor 
 #############################

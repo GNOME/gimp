@@ -862,14 +862,14 @@ ifs_render (AffElement     **elements,
 	    guchar          *nhits,
 	    gint             preview)
 {
-  gint i,k;
-  gdouble x,y;
-  gdouble r,g,b;
-  gint ri,gi,bi;
-  gint p0,psum;
+  gint i, k;
+  gdouble x, y;
+  gdouble r, g, b;
+  gint ri, gi, bi;
+  guint32 p0, psum;
   gdouble pt;
   guchar *ptr;
-  gint *prob;
+  guint32 *prob;
   gdouble *fprob;
   gint subdivide;
 
@@ -883,8 +883,8 @@ ifs_render (AffElement     **elements,
     subdivide = vals->subdivide;
   
   /* compute the probabilities and transforms */
-  fprob = g_new(gdouble,num_elements);
-  prob = g_new(gint,num_elements);
+  fprob = g_new(gdouble, num_elements);
+  prob = g_new(gint, num_elements);
   pt = 0.0;
   for (i=0;i<num_elements;i++)
     {
@@ -897,20 +897,21 @@ ifs_render (AffElement     **elements,
 	 probably a line element, so increase the probability so
 	 it gets rendered */
       /* FIXME: figure out what 0.01 really should be */
-      if (fprob[i] < 0.01) fprob[i] = 0.01;
+      if (fprob[i] < 0.01) 
+        fprob[i] = 0.01;
       fprob[i] *= elements[i]->v.prob;
       
       pt += fprob[i];
     }
 
   psum = 0;
-  for (i=0;i<num_elements;i++)
+  for (i = 0; i < num_elements; i++)
     {
-      psum += G_MAXRAND * (fprob[i]/pt);
+      psum += (guint32) -1 * (fprob[i]/pt);
       prob[i] = psum;
     }
-  prob[i-1] = G_MAXRAND;	/* make sure we don't get bitten
-				   by roundoff*/
+  prob[i-1] = (guint32) -1;      /* make sure we don't get bitten
+			           by roundoff*/
   /* create the brush */
   if (!preview)
     brush = create_brush(vals,&brush_size,&brush_offset);
@@ -923,7 +924,7 @@ ifs_render (AffElement     **elements,
     {
       if (!preview && !(i % 5000))
 	gimp_progress_update ((gdouble) i / (gdouble) nsteps);
-      p0 = rand();
+      p0 = g_random_int ();
       k=0;
       while (p0 > prob[k])
 	k++;

@@ -259,10 +259,9 @@ spread (GimpDrawable *drawable)
   gint xi, yi;
 
   gint k;
-  gint x_mod_value, x_sub_value;
-  gint y_mod_value, y_sub_value;
-  gint angle_mod_value, angle_sub_value;
+  GRand *gr;
 
+  gr = g_rand_new ();
   /* Get selection area */
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -276,15 +275,6 @@ spread (GimpDrawable *drawable)
 
   x_amount = spvals.spread_amount_x;
   y_amount = spvals.spread_amount_y;
-
-  /* Initialize random stuff */
-  srand (time (NULL));
-  angle_mod_value = G_PI*2;
-  angle_sub_value = angle_mod_value / 2;
-  x_mod_value = x_amount + 1;
-  x_sub_value = x_mod_value / 2;
-  y_mod_value = y_amount + 1;
-  y_sub_value = y_mod_value / 2;
 
   /* Spread the image.  This is done by going through every pixel
      in the source image and swapping it with some other random
@@ -318,9 +308,9 @@ spread (GimpDrawable *drawable)
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
               /* get random angle, x distance, and y distance */
-              xdist = (rand () % x_mod_value) - x_sub_value;
-              ydist = (rand () % y_mod_value) - y_sub_value;
-              angle = (rand () % angle_mod_value) - angle_sub_value;
+              xdist = g_rand_int_range (gr, -(x_amount + 1)/2, (x_amount + 1)/2);
+              ydist = g_rand_int_range (gr, -(y_amount + 1)/2, (y_amount + 1)/2);
+              angle = g_rand_double_range (gr, -G_PI, G_PI);
 
               xi = x + floor(sin(angle)*xdist);
               yi = y + floor(cos(angle)*ydist);

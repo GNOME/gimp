@@ -122,6 +122,9 @@ about_dialog_create (void)
   gint       height;
   gint       i;
   gchar     *label_text;
+  GRand     *gr;
+
+  gr = g_rand_new();
 
   if (! about_dialog)
     {
@@ -273,7 +276,7 @@ about_dialog_create (void)
 	    {
 	      gint j;
 
-	      j = rand() % nscroll_texts;
+	      j = g_rand_int_range (gr, 0, nscroll_texts);
 	      if (i != j) 
 		{
 		  gint t;
@@ -283,7 +286,7 @@ about_dialog_create (void)
 		  shuffle_array[i] = t;
 		}
 	    }
-	  cur_scroll_text = rand() % nscroll_texts;          
+	  cur_scroll_text = g_rand_int_range(gr, 0, nscroll_texts);          
           pango_layout_set_text (scroll_layout, 
                                  scroll_text[cur_scroll_text], -1);
 
@@ -291,6 +294,8 @@ about_dialog_create (void)
     }
 
   gtk_window_present (GTK_WINDOW (about_dialog));
+
+  g_rand_free (gr);
 
   return about_dialog;
 }
@@ -302,6 +307,9 @@ about_dialog_load_logo (GtkWidget *window)
   GdkPixbuf *pixbuf;
   GdkGC     *gc;
   gint       i, j, k;
+  GRand     *gr;
+
+  gr = g_rand_new();
 
   if (logo_pixmap)
     return TRUE;
@@ -350,11 +358,11 @@ about_dialog_load_logo (GtkWidget *window)
 
   dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
 
-  srand (time (NULL));
-
   for (i = 0, k = 0; i < dissolve_height; i++)
     for (j = 0; j < dissolve_width; j++, k++)
-      dissolve_map[k] = rand () % ANIMATION_STEPS;
+      dissolve_map[k] = g_rand_int_range (gr, 0, ANIMATION_STEPS);
+
+  g_rand_free (gr);
 
   return TRUE;
 }

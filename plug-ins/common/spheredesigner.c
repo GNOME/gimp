@@ -45,13 +45,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifndef SRAND_FUNC
-#define SRAND_FUNC srand
-#endif
-#ifndef RAND_FUNC
-#define RAND_FUNC rand
-#endif
-
 #define PREVIEWSIZE 150
 
 /* These must be adjusted as more functionality is added */
@@ -291,6 +284,7 @@ GtkWidget *texturemenu;
 static int p[B + B + 2];
 static double g[B + B + 2][3];
 static int start = 1;
+static GRand *gr;
 
 void init(void)
 {
@@ -299,11 +293,13 @@ void init(void)
 
 /* Create an array of random gradient vectors uniformly on the unit sphere */
 
-  SRAND_FUNC(1); /* Use static seed, to get reproducable results */
+  gr = g_rand_new ();
+  g_rand_set_seed (gr, 1); /* Use static seed, to get reproducable results */
+
   for (i = 0 ; i < B ; i++) {
     do {                            /* Choose uniformly in a cube */
       for (j=0 ; j<3 ; j++)
-	v[j] = (double)((RAND_FUNC() % (B + B)) - B) / B;
+	v[j] = g_rand_double_range (gr, -1, 1);
       s = DOT(v,v);
     } while (s > 1.0);              /* If not in sphere try again */
     s = sqrt(s);
@@ -317,7 +313,7 @@ void init(void)
     p[i] = i;
   for (i = B ; i > 0 ; i -= 2) {
     k = p[i];
-    p[i] = p[j = RAND_FUNC() % B];
+    p[i] = p[j = g_rand_int_range (gr, 0, B) ];
     p[j] = k;
   }
 
@@ -985,7 +981,7 @@ void imagepixel(vector *q, vector *col, texture *t)
 
 double frand(double v)
 {
-  return (RAND_FUNC() / (double) G_MAXRAND - 0.5) * v;
+  return g_rand_double_range (gr, -v/2.0, v/2.0);
 }
 
 int traceray(ray *r, vector *col, int level, double imp);

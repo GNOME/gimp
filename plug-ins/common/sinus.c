@@ -31,7 +31,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>   /* For random seeding. */
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1039,7 +1038,7 @@ typedef struct
   glong     colors;
   GimpRGB   col1;
   GimpRGB   col2;
-  gint      seed_is_time;
+  gint      seed_is_default;
 } SinusVals;
 
 static SinusVals svals = 
@@ -1149,7 +1148,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "alpha2", "alpha for the second color (used if the drawable has an alpha chanel)" },
     { GIMP_PDB_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
     { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" },
-    { GIMP_PDB_INT32,    "seed_is_time", "If set, random number generator is seeded with current time" }
+    { GIMP_PDB_INT32,    "seed_is_default", "If set, random number generator is seeded with random seed" }
   };
 
   INIT_I18N ();
@@ -1228,7 +1227,7 @@ run (gchar      *name,
 	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
 	  svals.blend_power  = param[15].data.d_float;
-          svals.seed_is_time = param[16].data.d_int32;
+          svals.seed_is_default = param[16].data.d_int32;
 	}
       break;
 
@@ -1281,8 +1280,12 @@ prepare_coef (params *p)
   GimpRGB color2;
   gdouble scalex = svals.scalex;
   gdouble scaley = svals.scaley;
+  GRand *gr;
 
-  srand(svals.seed);
+  gr = g_rand_new ();
+  if(!svals.seed_is_default)
+    g_rand_set_seed (gr, svals.seed);
+
   switch (svals.colorization)
     {
     case BILINEAR:
@@ -1298,27 +1301,29 @@ prepare_coef (params *p)
 
   if (svals.perturbation==IDEAL)
     {
-      p->c11= 0*rand();
-      p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley; /*rand+rand is used to keep */
-      p->c13= (2*G_PI*rand())/G_MAXRAND;
-      p->c21= 0*rand();
-      p->c22= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley; /*correspondance beetween Ideal*/
-      p->c23= (2*G_PI*rand())/G_MAXRAND;
-      p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
-      p->c32= 0*rand();
-      p->c33= (2*G_PI*rand())/G_MAXRAND;
+      /* Presumably the 0 * g_rand_int ()s are to pop random 
+       * values off the prng, I don't see why though. */
+      p->c11= 0 * g_rand_int (gr);
+      p->c12= g_rand_double_range (gr, -1, 1) * scaley;
+      p->c13= g_rand_double_range (gr, 0, 2 * G_PI);
+      p->c21= 0 * g_rand_int (gr);
+      p->c22= g_rand_double_range (gr, -1, 1)  * scaley;
+      p->c23= g_rand_double_range (gr, 0, 2 * G_PI);
+      p->c31= g_rand_double_range (gr, -1, 1) * scalex;
+      p->c32= 0 * g_rand_int (gr);
+      p->c33= g_rand_double_range (gr, 0, 2 * G_PI);
     }
   else
     {
-      p->c11= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
-      p->c12= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
-      p->c13= (2*G_PI*rand())/G_MAXRAND;
-      p->c21= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
-      p->c22= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
-      p->c23= (2*G_PI*rand())/G_MAXRAND;
-      p->c31= (2.0*rand()/(G_MAXRAND+1.0)-1)*scalex;
-      p->c32= (2.0*rand()/(G_MAXRAND+1.0)-1)*scaley;
-      p->c33= (2*G_PI*rand())/G_MAXRAND;
+      p->c11= g_rand_double_range (gr, -1, 1) * scalex;
+      p->c12= g_rand_double_range (gr, -1, 1) * scaley;
+      p->c13= g_rand_double_range (gr, 0, 2 * G_PI);
+      p->c21= g_rand_double_range (gr, -1, 1) * scalex;
+      p->c22= g_rand_double_range (gr, -1, 1) * scaley;
+      p->c23= g_rand_double_range (gr, 0, 2 * G_PI);
+      p->c31= g_rand_double_range (gr, -1, 1) * scalex;
+      p->c32= g_rand_double_range (gr, -1, 1) * scaley;
+      p->c33= g_rand_double_range (gr, 0, 2 * G_PI);
     }
 
   if (svals.tiling)
@@ -1807,7 +1812,7 @@ sinus_dialog (void)
   table = gtk_table_new(3, 1, FALSE);
   gtk_table_set_col_spacings(GTK_TABLE(table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  hbox = gimp_random_seed_new (&svals.seed, &svals.seed_is_time,
+  hbox = gimp_random_seed_new (&svals.seed, &svals.seed_is_default,
 			       TRUE, FALSE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
@@ -2048,9 +2053,6 @@ sinus_do_preview (GtkWidget *widget)
 
   p.height = thePreview->height;
   p.width = thePreview->width;
-
-  if (svals.seed_is_time)
-    svals.seed = time(NULL);
 
   prepare_coef (&p);
 

@@ -913,13 +913,13 @@ nova_center_preview_events (GtkWidget *widget,
 */
 
 static gdouble
-gauss (void)
+gauss (GRand *gr)
 {
   gdouble sum = 0;
   gint i;
 
   for (i = 0; i < 6; i++)
-    sum += (gdouble) rand () / G_MAXRAND;
+    sum += (gdouble) g_rand_double (gr);
 
   return sum / 6;
 }
@@ -949,11 +949,13 @@ nova (GimpDrawable *drawable,
    GimpRGB  *spokecolor;
    GimpHSV   hsv;
    gint      i;
+   GRand    *gr;
   
+   gr = g_rand_new ();
+
    /* initialize */
    has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
  
-   srand (time (NULL));
    spoke = g_new (gdouble, pvals.nspoke);
    spokecolor = g_new (GimpRGB, pvals.nspoke);
 
@@ -962,10 +964,10 @@ nova (GimpDrawable *drawable,
 
    for (i = 0; i < pvals.nspoke; i++)
      {
-       spoke[i] = gauss();
+       spoke[i] = gauss (gr);
 
        hsv.h += ((gdouble) pvals.randomhue / 360.0) *
-	 ((gdouble) rand() / (gdouble) G_MAXRAND - 0.5);
+	 g_rand_double_range (gr, -0.5, 0.5);
        if (hsv.h < 0)
 	 hsv.h += 1.0;
        else if (hsv.h >= 1.0)

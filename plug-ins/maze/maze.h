@@ -33,7 +33,7 @@ typedef struct {
      gint offset;
      MazeAlgoType algorithm;
      /* Interface options. */
-     gboolean timeseed;
+     gboolean defaultseed;
 } MazeValues;
 
 enum CellTypes {

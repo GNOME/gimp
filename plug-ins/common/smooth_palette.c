@@ -239,8 +239,9 @@ doit (GimpDrawable *drawable,
   gint 	     sel_x1, sel_x2, sel_y1, sel_y2;
   gint       width, height;
   GimpPixelRgn  pr;
-
-  srand(time(0));
+  GRand *gr;
+  
+  gr = g_rand_new ();
 
   new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
@@ -265,8 +266,8 @@ doit (GimpDrawable *drawable,
   /* get initial palette */
   for (i = 0; i < psize; i++)
     {
-      gint x = sel_x1 + rand() % width;
-      gint y = sel_y1 + rand() % height;
+      gint x = sel_x1 + g_rand_int_range (gr, 0, width);
+      gint y = sel_y1 + g_rand_int_range (gr, 0, height);
 
       gimp_pixel_rgn_get_pixel (&pr, pal + bpp * i, x, y);
     }
@@ -292,7 +293,7 @@ doit (GimpDrawable *drawable,
 
 	  /* scramble */
 	  for (i = 1; i < psize; i++)
-	    pix_swap (pal, bpp, i, rand() % psize);
+	    pix_swap (pal, bpp, i, g_rand_int_range (gr, 0, psize));
 
 	  /* measure */
 	  len = 0.0;
@@ -302,8 +303,8 @@ doit (GimpDrawable *drawable,
 	  /* improve */
 	  for (i = 0; i < config.try_size; i++)
 	    {
-	      gint  i0 = 1 + (rand() % (psize-2));
-	      gint  i1 = 1 + (rand() % (psize-2));
+	      gint  i0 = 1 + g_rand_int_range (gr, 0, psize-2);
+	      gint  i1 = 1 + g_rand_int_range (gr, 0, psize-2);
 	      glong as_is, swapd;
 
 	      if (1 == (i0 - i1))
@@ -351,7 +352,7 @@ doit (GimpDrawable *drawable,
       for (i = 1; i < 4 * psize; i++)
 	{
 	  glong as_is, swapd;
-	  gint i0 = 1 + rand() % (psize - 2);
+	  gint i0 = 1 + g_rand_int_range (gr, 0, psize - 2);
 	  gint i1 = i0 + 1;
 
 	  as_is = (pix_diff (pal, bpp, i0 - 1, i0) +
@@ -375,6 +376,7 @@ doit (GimpDrawable *drawable,
       gimp_pixel_rgn_set_pixel (&pr, pal + bpp * i, i, j);
   g_free (pal);
 
+  g_rand_free (gr);
   gimp_drawable_flush (new_layer);
   gimp_drawable_merge_shadow (new_layer->drawable_id, TRUE);
   gimp_drawable_update(new_layer->drawable_id, 0, 0,

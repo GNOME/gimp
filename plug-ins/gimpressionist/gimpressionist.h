@@ -2,13 +2,6 @@
 #include "config.h"
 #endif
 
-#ifndef SRAND_FUNC
-#define SRAND_FUNC srand
-#endif
-#ifndef RAND_FUNC
-#define RAND_FUNC rand
-#endif
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimpui.h>
@@ -23,14 +16,6 @@
 #define PREVIEWSIZE 150
 #define MAXORIENTVECT 50
 #define MAXSIZEVECT 50
-
-#ifndef G_PI
-#define G_PI    3.14159265358979323846
-#endif
-
-#ifndef G_PI_2
-#define G_PI_2  (G_PI / 2.0)
-#endif
 
 /* Type declaration and definitions */
 
@@ -163,6 +148,8 @@ extern GtkWidget *previewbutton;
 extern GtkWidget *presetsavebutton;
 
 extern gboolean img_has_alpha;
+
+extern GRand *gr;
 
 /* Prototypes */
 

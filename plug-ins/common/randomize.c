@@ -113,7 +113,7 @@ gchar *RNDM_VERSION[] =
 #define RNDM_PICK 2
 #define RNDM_SLUR 3
 
-#define SEED_TIME 10
+#define SEED_DEFAULT 10
 #define SEED_USER 11
 
 #define SCALE_WIDTH 100
@@ -131,14 +131,14 @@ typedef struct
   gdouble rndm_pct;     /* likelihood of randomization (as %age) */
   gdouble rndm_rcount;  /* repeat count */
   gint    seed_type;    /* seed init. type - current time or user value */
-  gint    rndm_seed;    /* seed value for rand() function */
+  gint    rndm_seed;    /* seed value for g_rand_set_seed() function */
 } RandomizeVals;
 
 static RandomizeVals pivals =
 {
   50.0,
   1.0,
-  SEED_TIME,
+  SEED_DEFAULT,
   0,
 };
 
@@ -166,7 +166,8 @@ static void run   (gchar      *name,
 		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static void randomize                    (GimpDrawable *drawable);
+static void randomize                    (GimpDrawable *drawable,
+                                          GRand        *gr);
 
 static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  guchar       *data,
@@ -289,6 +290,8 @@ run (gchar      *name,
   gchar             *rndm_type_str = '\0';
   gchar              prog_label[32];
   static GimpParam   values[1];
+  GRand             *gr; /* The GRand object which generates the 
+                          * random numbers */
 
   /*
    *  Get the specified drawable, do standard initialization.
@@ -308,6 +311,8 @@ run (gchar      *name,
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+
+  gr = g_rand_new ();
   /*
    *  Make sure the drawable type is appropriate.
    */
@@ -382,14 +387,12 @@ run (gchar      *name,
 	  gimp_progress_init(prog_label);
 	  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 	  /*
-	   *  Initialize the rand() function seed
+	   *  Initialize the g_rand() function seed
 	   */
-	  if (pivals.seed_type == SEED_TIME)
-	    pivals.rndm_seed = time(NULL);
+	  if (pivals.seed_type != SEED_DEFAULT)
+	    g_rand_set_seed (gr, pivals.rndm_seed);
 
-	  srand (pivals.rndm_seed);
-
-	  randomize (drawable);
+	  randomize (drawable, gr);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
 	   */
@@ -419,6 +422,7 @@ run (gchar      *name,
    *  Set the status where the GIMP can see it, and let go
    *  of the drawable.
    */
+  g_rand_free (gr);
   values[0].data.d_status = status;
   gimp_drawable_detach(drawable);
 }
@@ -472,7 +476,8 @@ randomize_prepare_row (GimpPixelRgn *pixel_rgn,
  ********************************/
 
 static void
-randomize (GimpDrawable *drawable)
+randomize (GimpDrawable *drawable,
+           GRand        *gr)
 {
   GimpPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
   gint width, height;
@@ -544,7 +549,7 @@ randomize (GimpDrawable *drawable)
 	  ind = 0;
 	  for (col = 0; col < (x2 - x1) * bytes; col++)
 	    {
-	      if (((rand() % 100)) <= (gint) pivals.rndm_pct)
+	      if (g_rand_int_range (gr, 0, 100) <= (gint) pivals.rndm_pct)
 		{
 		  switch (rndm_type)
 		    {
@@ -553,14 +558,14 @@ randomize (GimpDrawable *drawable)
 		       *      Just assign a random value.
 		       */
 		    case RNDM_HURL:
-		      *d++ = rand() % 256;
+		      *d++ = g_rand_int_range (gr, 0, 256);
                       break;
 		      /*
 		       *  PICK
 		       *      pick at random from a neighboring pixel.
 		       */
 		    case RNDM_PICK:
-		      switch (rand() % 9)
+		      switch (g_rand_int_range (gr, 0, 9))
 			{
 			case 0:
 			  *d++ = (gint) pr[col - bytes];
@@ -598,7 +603,7 @@ randomize (GimpDrawable *drawable)
 		       *      10% from above right.
 		       */
 		    case RNDM_SLUR:
-		      switch (rand() % 10)
+		      switch (g_rand_int_range (gr, 0, 10) )
 			{
 			case 0:
 			  *d++ = (gint) pr[col - bytes];
@@ -734,7 +739,7 @@ randomize_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.rndm_seed,
 				    &pivals.seed_type,
-				    SEED_TIME, SEED_USER);
+				    SEED_DEFAULT, SEED_USER);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

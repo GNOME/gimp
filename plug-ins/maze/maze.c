@@ -49,8 +49,6 @@
 #endif
 #endif
 
-#include <time.h>  /* For random seeding */
-
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
@@ -83,12 +81,10 @@ extern void      mazegen_tileable(gint     pos,
 extern void      prim(guint pos,
 		      guchar *maz, 
 		      guint x, 
-		      guint y, 
-		      gint rnd);
+		      guint y);
 extern void      prim_tileable(guchar *maz, 
 			       guint x, 
-			       guint y, 
-			       gint rnd);
+			       guint y);
 
 /* In handy.c */
 extern void      get_colors (GimpDrawable * drawable,
@@ -121,8 +117,10 @@ MazeValues mvals =
     1,     /* offset   * in the maz.c source, so, lets expiriment.  :) */
     DEPTH_FIRST, /* Algorithm */
     /* Interface options */
-    TRUE /* Time seed? */
+    TRUE /* Default seed? */
 };
+
+GRand *gr;
 
 guint sel_w, sel_h;
 
@@ -188,6 +186,8 @@ run    (gchar    *name,
 
   INIT_I18N_UI(); 
 
+  gr = g_rand_new ();
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -246,7 +246,7 @@ run    (gchar    *name,
 	gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE || 
-	  (mvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
+	  (mvals.defaultseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
 	gimp_set_data ("plug_in_maze", &mvals, sizeof (MazeValues));
     }
   else
@@ -256,6 +256,7 @@ run    (gchar    *name,
 
   values[0].data.d_status = status;
 
+  g_rand_free (gr);
   gimp_drawable_detach (drawable);
 }
 
@@ -333,9 +334,6 @@ maze( GimpDrawable * drawable)
 	 (x2-x1),(y2-y1),mw,mh,deadx,deady,mvals.width, mvals.height);
 #endif
 
-  if (mvals.timeseed)
-       mvals.seed = time(NULL);
-
   /* Sanity check: */
   switch (mvals.algorithm) {
   case DEPTH_FIRST:
@@ -352,7 +350,7 @@ maze( GimpDrawable * drawable)
 	    mazegen_tileable(0, maz, mw, mh, mvals.seed);
 	    break;
        case PRIMS_ALGORITHM:
-	    prim_tileable(maz, mw, mh, mvals.seed);
+	    prim_tileable(maz, mw, mh);
 	    break;
        default:
 	    ;
@@ -370,7 +368,7 @@ maze( GimpDrawable * drawable)
 				mazegen(maz_yy+maz_xx, maz, mw, mh, mvals.seed);
 				break;
 			   case PRIMS_ALGORITHM:
-				prim(maz_yy+maz_xx, maz, mw, mh, mvals.seed);
+				prim(maz_yy+maz_xx, maz, mw, mh);
 				break;
 			   default:
 				;
@@ -385,7 +383,7 @@ maze( GimpDrawable * drawable)
 		 mazegen(pos, maz, mw, mh, mvals.seed);
 		 break;
 	    case PRIMS_ALGORITHM:
-		 prim(pos, maz, mw, mh, mvals.seed);
+		 prim(pos, maz, mw, mh);
 		 break;
 	    default:
 		 ;

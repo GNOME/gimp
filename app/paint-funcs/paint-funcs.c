@@ -435,12 +435,13 @@ void
 paint_funcs_setup (void)
 {
   guint i;
+  GRand *gr;
 
   /*  generate a table of random seeds  */
-  srand (RANDOM_SEED);
+  gr = g_rand_new_with_seed (RANDOM_SEED);
 
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
-    random_table[i] = rand ();
+    random_table[i] = g_rand_int (gr);
 
   for (i = 0; i < 256; i++)
     add_lut[i] = i; 
@@ -468,6 +469,7 @@ paint_funcs_setup (void)
 #endif /* GIMP_ENABLE_MMX */
 #endif /* HAVE_ASM_MMX */
 
+  g_rand_free(gr);
 }
 
 void

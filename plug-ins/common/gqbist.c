@@ -144,14 +144,19 @@ static void
 create_info (ExpInfo *info)
 {
   gint k;
+  GRand *gr;
+
+  gr = g_rand_new();
 
   for (k = 0; k < MAX_TRANSFORMS; k++)
     {
-      info->transformSequence[k] = rand () % NUM_TRANSFORMS;
-      info->source[k] = rand () % NUM_REGISTERS;
-      info->control[k] = rand () % NUM_REGISTERS;
-      info->dest[k] = rand () % NUM_REGISTERS;
+      info->transformSequence[k] = g_rand_int_range (gr, 0, NUM_TRANSFORMS);
+      info->source[k] = g_rand_int_range (gr, 0, NUM_REGISTERS);
+      info->control[k] = g_rand_int_range (gr, 0, NUM_REGISTERS);
+      info->dest[k] = g_rand_int_range (gr, 0, NUM_REGISTERS);
     }
+
+  g_rand_free(gr);
 }
 
 static void
@@ -159,31 +164,37 @@ modify_info (ExpInfo *o_info,
 	     ExpInfo *n_info)
 {
   gint k, n;
+  GRand *gr;
 
+  gr = g_rand_new ();
   *n_info = *o_info;
-  n = rand () % MAX_TRANSFORMS;
+  n = g_rand_int_range (gr, 0, MAX_TRANSFORMS);
   for (k = 0; k < n; k++)
     {
-      switch (rand () % 4)
+      switch (g_rand_int_range (gr, 0, 4))
 	{
 	case 0:
-	  n_info->transformSequence[rand () % MAX_TRANSFORMS] = 
-	    rand () % NUM_TRANSFORMS;
+	  n_info->transformSequence[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+	    g_rand_int_range (gr, 0, NUM_TRANSFORMS);
 	  break;
 
 	case 1:
-	  n_info->source[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  n_info->source[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+            g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 
 	case 2:
-	  n_info->control[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  n_info->control[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+            g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 
 	case 3:
-	  n_info->dest[rand () % MAX_TRANSFORMS] = rand () % NUM_REGISTERS;
+	  n_info->dest[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+            g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 	}
     }
+  g_rand_free (gr);
 }
 
 /*
@@ -800,8 +811,6 @@ dialog_create (void)
   GtkWidget *button;
   GtkWidget *table;
   gint       i;
-
-  srand (time (NULL));
 
   gimp_ui_init ("gqbist", TRUE);
 

@@ -1,3 +1,59 @@
+2002-11-20  Dave Neary  <bolsh@gimp.org>
+
+	* configure.in
+	* app/core/gimpbrushpipe.c
+	* app/gui/about-dialog.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c
+	* libgimpmath/gimpmath.h
+	* libgimpwidgets/gimpwidgets.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/wind.c
+	* plug-ins/flame/cmap.c
+	* plug-ins/flame/flame.c
+	* plug-ins/flame/libifs.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/gimpressionist/gimpressionist.h
+	* plug-ins/gimpressionist/plasma.c
+	* plug-ins/gimpressionist/repaint.c
+	* plug-ins/ifscompose/ifscompose_utils.c
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze.h
+	* plug-ins/mosaic/mosaic.c: Change all occurrences of RAND_MAX,
+	G_MAXRAND, rand(), srand(), lrand48(), srand48(), random(),
+	srandom(), RAND_FUNC and SRAND_FUNC to the appropriate g_rand*
+	equivalent. Programs which require seed setting for reproducible
+	results, and anything in the core, gets a dedicated GRand * for
+	the lifetime required. Programs which only ever used random
+	numbers for tossing a coin, rolling a dice, etc use g_random
+	functions. For the rest, judgement was used. Where it was easy, a
+	GRand * object was used and g_rand_* functions were
+	preferred. This fixes bug #67386 in HEAD.
+
 2002-11-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gimpressionist/brush.c

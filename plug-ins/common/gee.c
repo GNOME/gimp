@@ -385,6 +385,7 @@ iterate (void)
   guchar *basebump;
   unsigned int basesx;
   unsigned int basesy;
+  GRand *gr;
   /*  signed int bycxmcybx;
   signed int bx2,by2;
   signed int cx2,cy2;
@@ -402,6 +403,7 @@ iterate (void)
 #define cx2 (((cx)<<19)/bycxmcybx)
 #define cy2 (((cy)<<19)/bycxmcybx)
 
+  gr = g_rand_new ();
   frame++;
 
   environment = (guint32*) env;
@@ -430,8 +432,9 @@ iterate (void)
   */
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC()%(29<<19)))/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC()%(29<<19)))/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
+  basesx = (g_rand_int_range (gr, 0, 29<<19)/bycxmcybx) + 
+            ((-128-((128*256)/(cx+bx)))<<11);
+  basesy = (g_rand_int_range (gr, 0, 29<<19)/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
   
   basebump = srcbump;
 
@@ -582,12 +585,14 @@ iterate (void)
 
     for (i = 0; i < BOBS_PER_FRAME; i++)
       {
-	size = 1 + RAND_FUNC()%BOBSIZE;
+	size = g_rand_int_range (gr, 1, BOBSIZE);
 
 	posx = rxp + BOBSPREAD/2 -
-	  RINT(sqrt((RAND_FUNC()%BOBSPREAD)*(RAND_FUNC()%BOBSPREAD)));
+	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) * 
+               g_rand_int_range (gr, 0, BOBSPREAD));
 	posy = ryp + BOBSPREAD/2 -
-	  RINT(sqrt((RAND_FUNC()%BOBSPREAD)*(RAND_FUNC()%BOBSPREAD)));
+	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) * 
+               g_rand_int_range (gr, 0, BOBSPREAD));
 
 	if (! ((posx>IWIDTH-size) ||
 	       (posy>IHEIGHT-size) ||

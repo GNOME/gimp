@@ -82,8 +82,6 @@ static void      convert_segment      (gint       x1,
 				       gint      *max);
 static void      randomize_indices    (gint       count,
 				       gint      *indices);
-static gdouble   fp_rand              (gdouble    val);
-static gint      int_rand             (gint       val);
 static gdouble   calc_alpha_blend     (gdouble   *vec,
 				       gdouble    one_over_dist,
 				       gdouble    x,
@@ -412,7 +410,9 @@ render_cubism (GimpDrawable *drawable)
   gint has_alpha;
   gint *random_indices;
   gpointer pr;
+  GRand *gr;
 
+  gr = g_rand_new();
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   bytes = drawable->bpp;
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -453,14 +453,14 @@ render_cubism (GimpDrawable *drawable)
       i = random_indices[count] / (cols + 1);
       j = random_indices[count] % (cols + 1);
       x = j * cvals.tile_size + (cvals.tile_size / 4.0) 
-	- fp_rand (cvals.tile_size/2.0) + x1;
+	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + x1;
       y = i * cvals.tile_size + (cvals.tile_size / 4.0) 
-	- fp_rand (cvals.tile_size/2.0) + y1;
-      width = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) 
+	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + y1;
+      width = (cvals.tile_size + g_rand_double_range (gr, 0, cvals.tile_size / 4.0) 
 	       - cvals.tile_size / 8.0) * cvals.tile_saturation;
-      height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) 
+      height = (cvals.tile_size + g_rand_double_range (gr, 0, cvals.tile_size / 4.0) 
 		- cvals.tile_size / 8.0) * cvals.tile_saturation;
-      theta = fp_rand (2 * G_PI);
+      theta = g_rand_double_range (gr, 0, 2 * G_PI);
       polygon_reset (&poly);
       polygon_add_point (&poly, -width / 2.0, -height / 2.0);
       polygon_add_point (&poly, width / 2.0, -height / 2.0);
@@ -493,6 +493,7 @@ render_cubism (GimpDrawable *drawable)
 
   gimp_progress_update (1.0);
   g_free (random_indices);
+  g_rand_free (gr);
 }
 
 static inline gdouble
@@ -732,33 +733,20 @@ randomize_indices (gint  count,
   gint i;
   gint index1, index2;
   gint tmp;
+  GRand *gr;
+
+  gr = g_rand_new();
 
   for (i = 0; i < count * RANDOMNESS; i++)
     {
-      index1 = int_rand (count);
-      index2 = int_rand (count);
+      index1 = g_rand_int_range (gr, 0, count);
+      index2 = g_rand_int_range (gr, 0, count);
       tmp = indices[index1];
       indices[index1] = indices[index2];
       indices[index2] = tmp;
     }
-}
 
-static gdouble
-fp_rand (gdouble val)
-{
-  gdouble rand_val;
-
-  rand_val = (gdouble) rand () / (gdouble) (G_MAXRAND - 1);
-  return rand_val * val;
-}
-
-static gint
-int_rand (gint val)
-{
-  gint rand_val;
-
-  rand_val = rand () % val;
-  return rand_val;
+  g_rand_free (gr);
 }
 
 static void

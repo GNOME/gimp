@@ -80,7 +80,7 @@ static void       run    (gchar      *name,
 
 static void       noisify (GimpDrawable *drawable,
                            gboolean      preview_mode);
-static gdouble    gauss   (void);
+static gdouble    gauss   (GRand *gr);
 
 static void       fill_preview   (GtkWidget    *preview_widget, 
 				  GimpDrawable *drawable);
@@ -222,9 +222,6 @@ run (gchar      *name,
       gimp_progress_init (_("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-      /*  seed the random number generator  */
-      srand (time (NULL));
-
       /*  compute the luminosity which exceeds the luminosity threshold  */
       noisify (drawable, FALSE);
 
@@ -335,9 +332,12 @@ noisify (GimpDrawable *drawable,
   gint row_stride = 0;
   guchar *odd = NULL;
   guchar *even = NULL;
+  GRand *gr;
   /* initialize */
 
   noise = 0;
+
+  gr = g_rand_new ();
 
   if (preview_mode) 
     {
@@ -373,12 +373,12 @@ noisify (GimpDrawable *drawable,
 	  for (col = 0; col < x2; col++)
 	    {
 	      if (nvals.independent == FALSE)
-		noise = (gint) (nvals.noise[0] * gauss() * 127);
+		noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
 
 	      for (b = 0; b < bpp; b++)
 		{
 		  if (nvals.independent == TRUE)
-		    noise = (gint) (nvals.noise[b] * gauss() * 127);
+		    noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
 
 		  if (nvals.noise[b] > 0.0)
 		    {
@@ -426,12 +426,12 @@ noisify (GimpDrawable *drawable,
 	      for (col = 0; col < src_rgn.w; col++)
 		{
 		  if (nvals.independent == FALSE)
-		    noise = (gint) (nvals.noise[0] * gauss() * 127);
+		    noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
 		  
 		  for (b = 0; b < src_rgn.bpp; b++)
 		    {
 		      if (nvals.independent == TRUE)
-			noise = (gint) (nvals.noise[b] * gauss() * 127);
+			noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
 		      
 		      if (nvals.noise[b] > 0.0)
 			{
@@ -465,6 +465,9 @@ noisify (GimpDrawable *drawable,
       gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
     } /* endif normal mode */
+
+  g_rand_free (gr);
+
 }
 
 static gint
@@ -738,15 +741,18 @@ noisify_dialog (GimpDrawable *drawable,
  * The algorithm comes from:
  * 'The Science Of Fractal Images'. Peitgen, H.-O., and Saupe, D. eds.
  * Springer Verlag, New York, 1988.
+ *
+ * It would probably be better to use another algorithm, such as that 
+ * in Knuth
  */
 static gdouble
-gauss (void)
+gauss (GRand *gr)
 {
   gint i;
   gdouble sum = 0.0;
 
   for (i = 0; i < 4; i++)
-    sum += rand () & 0x7FFF;
+    sum += g_rand_int_range (gr, 0, 0x7FFF);
 
   return sum * 5.28596089837e-5 - 3.46410161514;
 }

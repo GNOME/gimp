@@ -170,7 +170,7 @@ typedef struct
   GFlareShape   sflare_shape;
   gint          sflare_nverts;
   gint          sflare_seed;
-  gint          sflare_seed_time;
+  gint          sflare_seed_default;
 } GFlare;
 
 typedef struct
@@ -565,7 +565,7 @@ GFlare default_gflare =
   GF_CIRCLE,	/* sflare_shape */
   6,		/* sflare_nverts */
   1,		/* sflare_seed */
-  FALSE,        /* sflare_seed_time */
+  FALSE,        /* sflare_seed_default */
 };
 
 /* These are keywords to be written to disk files specifying flares. */
@@ -808,7 +808,7 @@ static void gradient_get_values_internal    (gchar *gradient_name,
 					     guchar *values, gint nvalues);
 static void gradient_get_blend              (guchar *fg, guchar *bg,
 					     guchar *values, gint nvalues);
-static void gradient_get_random             (gint seed, guchar *values,
+static void gradient_get_random             (guchar *values,
 					     gint nvalues);
 static void gradient_get_default            (gchar *name, guchar *values,
 					     gint nvalues);
@@ -1465,11 +1465,11 @@ gflare_load (const gchar *filename, const gchar *name)
   if (gflare->sflare_seed == -1)
     {
       gflare->sflare_seed = 1;
-      gflare->sflare_seed_time = TRUE;
+      gflare->sflare_seed_default = TRUE;
     }
   else
     {
-      gflare->sflare_seed_time = FALSE;
+      gflare->sflare_seed_default = FALSE;
     }
 
   fclose (gf->fp);
@@ -1663,7 +1663,7 @@ gflare_save (GFlare *gflare)
   g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_rotation);
   g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_hue);
   fprintf (fp, "%s %s %s\n", buf[0], buf[1], buf[2]);
-  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed_time ? -1 : gflare->sflare_seed);
+  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed_default ? -1 : gflare->sflare_seed);
 
   fclose (fp);
   DEBUG_PRINT (("Saved %s\n", gflare->filename));
@@ -2060,7 +2060,9 @@ calc_place_sflare ()
   gdouble	rnd, sizefac;
   int		n;
   int		i;
+  GRand        *gr;
 
+  gr = g_rand_new ();
   if ((calc.type & CALC_SFLARE) == 0)
     return;
 
@@ -2090,15 +2092,13 @@ calc_place_sflare ()
       prob[i] = sum2 / sum;
     }
 
-  if (gflare->sflare_seed_time)
-    srand (time (NULL));
-  else
-    srand (gflare->sflare_seed);
+  if (!gflare->sflare_seed_default)
+    g_rand_set_seed (gr, gflare->sflare_seed);
 
   for (n = 0; n < SFLARE_NUM; n++)
     {
       sflare = g_new (CalcSFlare, 1);
-      rnd = (double) rand () / G_MAXRAND;
+      rnd = g_rand_double (gr);
       for (i = 0; i < GRADIENT_RESOLUTION; i++)
 	if (prob[i] >= rnd)
 	  break;
@@ -2119,6 +2119,8 @@ calc_place_sflare ()
       sflare->bounds.y1 = sflare->ycenter + sflare->radius + 1;
       calc.sflare_list = g_list_append (calc.sflare_list, sflare);
     }
+
+  g_rand_free (gr);
 }
 
 
@@ -4185,7 +4187,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (label);
 
   seed = gimp_random_seed_new (&gflare->sflare_seed,
-			       &gflare->sflare_seed_time,
+			       &gflare->sflare_seed_default,
 			       TRUE, FALSE);
 
   entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
@@ -5145,7 +5147,7 @@ gradient_get_values_internal (gchar  *gradient_name,
     }
   else if (!strcmp (gradient_name, "%random"))
     {
-      gradient_get_random (1, values, nvalues);
+      gradient_get_random (values, nvalues);
     }
   else
     {
@@ -5173,8 +5175,7 @@ gradient_get_blend (guchar *fg,
 }
 
 static void
-gradient_get_random (gint    seed,
-		     guchar *values,
+gradient_get_random (guchar *values,
 		     gint    nvalues)
 {
   gint    i;
@@ -5185,10 +5186,9 @@ gradient_get_random (gint    seed,
   /*
     This is really simple  -- gaussian noise might be better
    */
-  srand (seed);
   for (i = 0; i < nvalues; i++)
     {
-      inten = rand () % 256;
+      inten = g_random_int_range (0, 256);
       for (j = 0; j < 3; j++)
 	*v++ = inten;
       *v++ = 255;

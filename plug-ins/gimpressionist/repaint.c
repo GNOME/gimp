@@ -11,7 +11,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -148,7 +147,7 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
     return 0;
   }
 
-  i = RAND_FUNC() % g_list_length(brlist);
+  i = g_rand_int_range (gr, 0, g_list_length(brlist));
   best = (long)((g_list_nth(brlist,i))->data);
   g_list_free(brlist);
 
@@ -281,8 +280,6 @@ void repaint(ppm_t *p, ppm_t *a)
       fprintf(stderr, "Huh? Image size != alpha size?\n");
       return;
     }
-
-  SRAND_FUNC(time(NULL));
 
   numbrush = runningvals.orientnum * runningvals.sizenum;
   startangle = runningvals.orientfirst;
@@ -592,7 +589,7 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     for(j = 0; j < i; j++) {
       int a, b;
-      a = RAND_FUNC() % i;
+      a = g_rand_int_range (gr, 0, i);
       b = xpos[j]; xpos[j] = xpos[a]; xpos[a] = b;
       b = ypos[j]; ypos[j] = ypos[a]; ypos[a] = b;
     }
@@ -616,14 +613,16 @@ void repaint(ppm_t *p, ppm_t *a)
     }
 
     if(runningvals.placetype == 0) {
-      tx = RAND_FUNC() % (tmp.width - maxbrushwidth) + maxbrushwidth/2;
-      ty = RAND_FUNC() % (tmp.height - maxbrushheight) + maxbrushheight/2;
+      tx = g_rand_int_range (gr, maxbrushwidth/2, 
+                             tmp.width - maxbrushwidth/2);
+      ty = g_rand_int_range (gr, maxbrushheight/2, 
+                             tmp.height - maxbrushheight/2);
     } else if(runningvals.placetype == 1) {
       tx = xpos[i-1];
       ty = ypos[i-1];
     }
     if(runningvals.placecenter) {
-      double z = RAND_FUNC() * 0.75 / G_MAXRAND;
+      double z = g_rand_double_range (gr, 0, 0.75);
       tx = tx * (1.0-z) + tmp.width/2 * z;
       ty = ty * (1.0-z) + tmp.height/2 * z;
     }
@@ -646,7 +645,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
     switch(runningvals.orienttype) {
     case 2: /* Random */
-      on = RAND_FUNC() % runningvals.orientnum;
+      on = g_rand_int_range (gr, 0, runningvals.orientnum);
       break;
     case 0: /* Value */
     case 1: /* Radius */
@@ -666,7 +665,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
     switch(runningvals.sizetype) {
     case 2: /* Random */
-      sn = RAND_FUNC() % runningvals.sizenum;
+      sn = g_rand_int_range (gr, 0, runningvals.sizenum);
       break;
     case 0: /* Value */
     case 1: /* Radius */
@@ -744,9 +743,9 @@ void repaint(ppm_t *p, ppm_t *a)
     }
     if(runningvals.colornoise > 0.0) {
       double v = runningvals.colornoise;
-      r = r + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
-      g = g + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
-      b = b + RAND_FUNC() / (float)G_MAXRAND * v - v/2;
+      r = r + g_rand_double_range (gr, -v/2.0, v/2.0);
+      g = g + g_rand_double_range (gr, -v/2.0, v/2.0);
+      b = b + g_rand_double_range (gr, -v/2.0, v/2.0);
       if(r < 0) r = 0; else if(r > 255) r = 255;
       if(g < 0) g = 0; else if(g > 255) g = 255;
       if(b < 0) b = 0; else if(b > 255) b = 255;

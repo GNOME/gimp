@@ -59,7 +59,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>  /* For random seeding */
 #include <string.h> /* memcpy */
 
 #ifdef __GNUC__
@@ -116,16 +115,20 @@ static void     plasma_seed_changed_callback (GimpDrawable *drawable,
 
 static void	plasma	     (GimpDrawable *drawable, 
 			      gboolean   preview_mode);
-static void     random_rgb   (guchar    *d);
-static void     add_random   (guchar    *d,
+static void     random_rgb   (GRand *gr, 
+                              guchar    *d);
+static void     add_random   (GRand *gr, 
+                              guchar    *d,
 			      gint       amnt);
 static void     init_plasma  (GimpDrawable *drawable, 
-			      gboolean   preview_mode);
+			      gboolean   preview_mode,
+                              GRand *gr);
 static void     provide_tile (GimpDrawable *drawable,
 			      gint       col,
 			      gint       row);
 static void     end_plasma   (GimpDrawable *drawable,
-			      gboolean   preview_mode);
+			      gboolean   preview_mode,
+                              GRand *gr);
 static void     get_pixel    (GimpDrawable *drawable,
 			      gint       x,
 			      gint       y,
@@ -143,7 +146,8 @@ static gint     do_plasma    (GimpDrawable *drawable,
 			      gint       y2,
 			      gint       depth,
 			      gint       scale_depth,
-			      gboolean   preview_mode);
+			      gboolean   preview_mode,
+                              GRand     *gr);
 
 /***** Local vars *****/
 
@@ -264,8 +268,6 @@ run (gchar      *name,
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
       /* If we're using a time seed, set it at the start */
-      if (pvals.timeseed)
-        pvals.seed = time (NULL);
       break;
 
     default:
@@ -357,8 +359,6 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   preview = preview_widget (drawable_type); /* we are here */
   gtk_container_add (GTK_CONTAINER (frame), preview);
 
-  if (pvals.timeseed)
-    pvals.seed = time (NULL);
   plasma (drawable, TRUE); /* preview image */
 
   gtk_widget_show (preview);
@@ -428,9 +428,6 @@ static void
 plasma_seed_changed_callback (GimpDrawable *drawable,
                               gboolean    preview_mode)
 {
-  if (pvals.timeseed)
-    pvals.seed = time (NULL);
-  
   plasma(drawable, preview_mode);
 }
 
@@ -460,8 +457,11 @@ plasma (GimpDrawable *drawable,
 	gboolean    preview_mode)
 {
   gint  depth;
+  GRand *gr;
+  
+  gr = g_rand_new ();
 
-  init_plasma (drawable, preview_mode);
+  init_plasma (drawable, preview_mode, gr);
 
   /*
    * This first time only puts in the seed pixels - one in each
@@ -469,25 +469,28 @@ plasma (GimpDrawable *drawable,
    * center of the image.
    */
 
-  do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0, preview_mode);
+  do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, -1, 0, preview_mode, gr);
 
   /*
    * Now we recurse through the images, going further each time.
    */
   depth = 1;
-  while (!do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, preview_mode))
+  while (!do_plasma (drawable, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, preview_mode, gr))
     {
       depth ++;
     }
-  end_plasma (drawable, preview_mode);
+  end_plasma (drawable, preview_mode, gr);
 }
 
 static void
 init_plasma (GimpDrawable *drawable,
-	     gboolean   preview_mode)
+	     gboolean   preview_mode,
+             GRand *gr)
 {
 
-  srand (pvals.seed);
+  if (!pvals.timeseed)
+    g_rand_set_seed (gr, pvals.seed);
+
   turbulence = pvals.turbulence;
 
   if (preview_mode) 
@@ -542,7 +545,8 @@ provide_tile (GimpDrawable *drawable,
 
 static void
 end_plasma (GimpDrawable *drawable,
-	    gboolean   preview_mode)
+	    gboolean   preview_mode,
+            GRand     *gr)
 {
   if (preview_mode) 
     {
@@ -561,6 +565,8 @@ end_plasma (GimpDrawable *drawable,
       gimp_drawable_update (drawable->drawable_id,
 			    ix1, iy1, (ix2 - ix1), (iy2 - iy1));
     }
+
+  g_rand_free (gr);
 }
 
 static void
@@ -638,18 +644,20 @@ put_pixel (GimpDrawable *drawable,
 }
 
 static void
-random_rgb (guchar *d)
+random_rgb (GRand *gr, 
+            guchar *d)
 {
   gint i;
 
   for(i = 0; i < alpha; i++)
     {
-      d[i] = rand() % 256;
+      d[i] = g_rand_int_range (gr, 0, 256);
     }
 }
 
 static void
-add_random (guchar *d,
+add_random (GRand *gr,
+            guchar *d,
 	    gint    amnt)
 {
   gint i, tmp;
@@ -660,7 +668,7 @@ add_random (guchar *d,
 	{
 	  amnt = 1;
 	}
-      tmp = amnt/2 - rand() % amnt;
+      tmp = amnt/2 - g_rand_int_range(gr, 0, amnt);
 
       if ((gint)d[i] + tmp < 0)
 	{
@@ -685,7 +693,8 @@ do_plasma (GimpDrawable *drawable,
 	   gint       y2,
 	   gint       depth,
 	   gint       scale_depth,
-	   gboolean   preview_mode)
+	   gboolean   preview_mode,
+           GRand     *gr)
 {
   guchar  tl[3], ml[3], bl[3], mt[3], mm[3], mb[3], tr[3], mr[3], br[3];
   guchar  tmp[3];
@@ -698,23 +707,23 @@ do_plasma (GimpDrawable *drawable,
 
   if (depth == -1)
     {
-      random_rgb (tl);
+      random_rgb (gr, tl);
       put_pixel (drawable, x1, y1, tl, preview_mode);
-      random_rgb (tr);
+      random_rgb (gr, tr);
       put_pixel (drawable, x2, y1, tr, preview_mode);
-      random_rgb (bl);
+      random_rgb (gr, bl);
       put_pixel (drawable, x1, y2, bl, preview_mode);
-      random_rgb (br);
+      random_rgb (gr, br);
       put_pixel (drawable, x2, y2, br, preview_mode);
-      random_rgb (mm);
+      random_rgb (gr, mm);
       put_pixel (drawable, (x1 + x2) / 2, (y1 + y2) / 2, mm, preview_mode);
-      random_rgb (ml);
+      random_rgb (gr, ml);
       put_pixel (drawable, x1, (y1 + y2) / 2, ml, preview_mode);
-      random_rgb (mr);
+      random_rgb (gr, mr);
       put_pixel (drawable, x2, (y1 + y2) / 2, mr, preview_mode);
-      random_rgb (mt);
+      random_rgb (gr, mt);
       put_pixel (drawable, (x1 + x2) / 2, y1, mt, preview_mode);
-      random_rgb (ml);
+      random_rgb (gr, ml);
       put_pixel (drawable, (x1 + x2) / 2, y2, ml, preview_mode);
 
       return 0;
@@ -749,14 +758,14 @@ do_plasma (GimpDrawable *drawable,
 	{
 	  /* Left. */
 	  AVE (ml, tl, bl);
-	  add_random (ml, ran);
+	  add_random (gr, ml, ran);
 	  put_pixel (drawable, x1, yave, ml, preview_mode);
 
 	  if (x1 != x2)
 	    {
 				/* Right. */
 	      AVE (mr, tr, br);
-	      add_random (mr, ran);
+	      add_random (gr, mr, ran);
 	      put_pixel (drawable, x2, yave, mr, preview_mode);
 	    }
 	}
@@ -767,7 +776,7 @@ do_plasma (GimpDrawable *drawable,
 	    {
 	      /* Bottom. */
 	      AVE (mb, bl, br);
-	      add_random (mb, ran);
+	      add_random (gr, mb, ran);
 	      put_pixel (drawable, xave, y2, mb, preview_mode);
 	    }
 
@@ -775,7 +784,7 @@ do_plasma (GimpDrawable *drawable,
 	    {
 	      /* Top. */
 	      AVE (mt, tl, tr);
-	      add_random (mt, ran);
+	      add_random (gr, mt, ran);
 	      put_pixel (drawable, xave, y1, mt, preview_mode);
 	    }
 	}
@@ -787,7 +796,7 @@ do_plasma (GimpDrawable *drawable,
 	  AVE (tmp, bl, tr);
 	  AVE (mm, mm, tmp);
 
-	  add_random (mm, ran);
+	  add_random (gr, mm, ran);
 	  put_pixel (drawable, xave, yave, mm, preview_mode);
 	}
 
@@ -809,13 +818,13 @@ do_plasma (GimpDrawable *drawable,
   ym = (y1 + y2) >> 1;
 
   /* Top left. */
-  do_plasma (drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1, preview_mode);
+  do_plasma (drawable, x1, y1, xm, ym, depth - 1, scale_depth + 1, preview_mode, gr);
   /* Bottom left. */
-  do_plasma (drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1, preview_mode);
+  do_plasma (drawable, x1, ym, xm ,y2, depth - 1, scale_depth + 1, preview_mode, gr);
   /* Top right. */
-  do_plasma (drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1, preview_mode);
+  do_plasma (drawable, xm, y1, x2 , ym, depth - 1, scale_depth + 1, preview_mode, gr);
   /* Bottom right. */
-  return do_plasma (drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1, preview_mode);
+  return do_plasma (drawable, xm, ym, x2, y2, depth - 1, scale_depth + 1, preview_mode, gr);
 }
 
 

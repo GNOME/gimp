@@ -66,7 +66,7 @@ struct apply_layer_mode_struct
 
 static const guchar	no_mask = OPAQUE_OPACITY;
 static guchar		add_lut[511];
-static gint		random_table[RANDOM_TABLE_SIZE];
+static gint32		random_table[RANDOM_TABLE_SIZE];
 
 void
 color_pixels (guchar       *dest,
@@ -957,33 +957,16 @@ dissolve_pixels (const guchar *src,
 		 guint	       has_alpha)
 {
   gint alpha, b;
-  gint rand_val;
+  gint32 rand_val;
+  GRand *gr;
   
-#if defined(ENABLE_MP) && defined(__GLIBC__)
-  /* The glibc 2.1 documentation recommends using the SVID random functions
-   * instead of rand_r
-   */
-  struct drand48_data seed;
-  glong               temp_val;
-
-  srand48_r (random_table[y % RANDOM_TABLE_SIZE], &seed);
-  for (b = 0; b < x; b++)
-    lrand48_r (&seed, &temp_val);
-#elif defined(ENABLE_MP) && !defined(__GLIBC__)
-  /* If we are running with multiple threads rand_r give _much_ better
-   * performance than rand
-   */
-  guint seed;
-  seed = random_table[y % RANDOM_TABLE_SIZE];
-  for (b = 0; b < x; b++)
-    rand_r (&seed);
-#else
-  /* Set up the random number generator */
-  srand (random_table[y % RANDOM_TABLE_SIZE]);
-  for (b = 0; b < x; b++)
-    rand ();
-#endif
-
+  gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
+  
+  /* Ignore a few random values (this probably isn't necessary 
+   * when using g_rand_*) */
+  for (b = 0; b < x; b ++)
+    g_rand_int(gr);
+  
   alpha = db - 1;
 
   while (length--)
@@ -993,14 +976,8 @@ dissolve_pixels (const guchar *src,
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
-#if defined(ENABLE_MP) && defined(__GLIBC__)
-      lrand48_r (&seed, &temp_val);
-      rand_val = temp_val & 0xff;
-#elif defined(ENABLE_MP) && !defined(__GLIBC__)
-      rand_val = (rand_r (&seed) & 0xff);
-#else
-      rand_val = (rand () & 0xff);
-#endif
+      rand_val = g_rand_int_range (gr, 0, 256);       
+
       if (has_alpha)
 	dest[alpha] = (rand_val > src[alpha]) ? 0 : src[alpha];
       else
@@ -1009,6 +986,9 @@ dissolve_pixels (const guchar *src,
       dest += db;
       src  += sb;
     }
+
+  g_rand_free (gr);
+
 }
 
 static inline void

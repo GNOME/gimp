@@ -249,7 +249,6 @@ shift (GimpDrawable *drawable)
   gint    x1, y1, x2, y2;
   gint    x, y;
   gint    progress, max_progress;
-  gint    seed;
 
   gint amount;
 
@@ -257,10 +256,11 @@ shift (GimpDrawable *drawable)
   gint xi, yi;
 
   gint k;
-  gint mod_value, sub_value;
+  GRand *gr; /* The random number generator we're using */
+
+  gr = g_rand_new ();
 
   /* Get selection area */
-
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   width  = drawable->width;
@@ -272,12 +272,7 @@ shift (GimpDrawable *drawable)
 
   amount = shvals.shift_amount;
 
-  /* Initialize random stuff */
-  mod_value = amount + 1;
-  sub_value = mod_value / 2;
-  seed = time(NULL);
-
-/* Shift the image.  It's a pretty simple algorithm.  If horizontal
+  /* Shift the image.  It's a pretty simple algorithm.  If horizontal
      is selected, then every row is shifted a random number of pixels
      in the range of -shift_amount/2 to shift_amount/2.  The effect is
      just reproduced with columns if vertical is selected.  Vertical
@@ -294,12 +289,11 @@ shift (GimpDrawable *drawable)
       if (shvals.orientation == VERTICAL)
         {
 	  destline = dest_rgn.data;
-	  srand(seed+dest_rgn.x);
 
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
             {
 	      dest = destline;
-	      ydist = (rand() % mod_value) - sub_value;
+	      ydist = g_rand_int_range (gr, -(amount + 1)/2.0, (amount + 1)/2.0 );
 	      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
                 {
 		  otherdest = dest;
@@ -322,12 +316,11 @@ shift (GimpDrawable *drawable)
       else
         {
 	  destline = dest_rgn.data;
-	  srand (seed+dest_rgn.y);
 
 	  for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
             {
 	      dest = destline;
-	      xdist = (rand() % mod_value) - sub_value;
+	      xdist = g_rand_int_range (gr, -(amount + 1)/2.0, (amount + 1)/2.0);
 	      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
                 {
 		  xi = (x + xdist + width)%width; /*  add width before % because % isn't a true modulo */

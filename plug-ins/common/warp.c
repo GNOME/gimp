@@ -69,7 +69,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
-#include <time.h>                  /* time(NULL) for random # seed */
 
 #include <gtk/gtk.h>
 
@@ -1339,8 +1338,9 @@ warp_one (GimpDrawable *draw,
   gint    ym_bytes = 1;
   gint    mmag_bytes = 1;
 
+  GRand  *gr;
 
-  srand(time(NULL));                   /* seed random # generator */
+  gr = g_rand_new (); /* Seed Pseudo Random Number Generator */
 
   /* ================ Outer Loop calculation ================================ */
 
@@ -1428,8 +1428,8 @@ warp_one (GimpDrawable *draw,
 	      }
 	      
 	      if (dvals.dither != 0.0) {       /* random dither is +/- dvals.dither pixels */
-		dx += dvals.dither*((gdouble)(rand() - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
-		dy += dvals.dither*((gdouble)(rand() - (G_MAXRAND >> 1)) / (G_MAXRAND >> 1));
+		dx += g_rand_double_range (gr, -dvals.dither, dvals.dither);
+		dy += g_rand_double_range (gr, -dvals.dither, dvals.dither);
 	      }
 	      
 	      if (dvals.substeps != 1) {   /* trace (substeps) iterations of displacement vector */
@@ -1547,6 +1547,8 @@ warp_one (GimpDrawable *draw,
    gimp_drawable_flush (new);
 
    gimp_drawable_merge_shadow(draw->drawable_id, (first_time == TRUE));
+
+   g_rand_free (gr);
   
 } /* warp_one */
 

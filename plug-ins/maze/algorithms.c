@@ -48,6 +48,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 extern MazeValues mvals;
+extern GRand     *gr;
 
 void      mazegen(gint     pos,
 		  gchar   *maz,
@@ -62,12 +63,10 @@ void      mazegen_tileable(gint     pos,
 void      prim(gint pos,
 	       gchar *maz, 
 	       guint x, 
-	       guint y, 
-	       gint rnd);
+	       guint y);
 void      prim_tileable(gchar *maz, 
 			guint x, 
-			guint y, 
-			gint rnd);
+			guint y);
 
 #define ABSMOD(A,B) ( ((A) < 0) ? (((B) + (A)) % (B)) : ((A) % (B)) )
 
@@ -273,7 +272,7 @@ print_glist(gpointer data, gpointer user_data)
    does break, let me know, and I'll go cry in a corner for a while
    before I get up the strength to re-code it. */
 void
-prim(gint pos, gchar *maz, guint x, guint y, gint rnd)
+prim(gint pos, gchar *maz, guint x, guint y)
 {
      GSList *front_cells=NULL;
      guint current;
@@ -281,6 +280,7 @@ prim(gint pos, gchar *maz, guint x, guint y, gint rnd)
      guint progress=0, max_progress;
      char d, i;
      guint c=0;
+     gint rnd = mvals.seed;
 
      gimp_progress_init (_("Constructing maze using Prim's Algorithm..."));
 
@@ -322,7 +322,7 @@ prim(gint pos, gchar *maz, guint x, guint y, gint rnd)
      while(g_slist_length(front_cells) > 0) {
 
 	  /* Remove one cell at random from frontier and place it in IN. */
-	  current = rand() % g_slist_length(front_cells);
+	  current = g_rand_int_range (gr, 0, g_slist_length(front_cells));
 	  pos = GPOINTER_TO_INT(g_slist_nth(front_cells,current)->data);
 
 	  front_cells=g_slist_remove(front_cells,GINT_TO_POINTER(pos));
@@ -446,7 +446,7 @@ prim(gint pos, gchar *maz, guint x, guint y, gint rnd)
 } /* prim */
 
 void
-prim_tileable(gchar *maz, guint x, guint y, gint rnd)
+prim_tileable(gchar *maz, guint x, guint y)
 {
      GSList *front_cells=NULL;
      guint current, pos;
@@ -454,6 +454,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
      guint progress=0, max_progress;
      char d, i;
      guint c=0;
+     gint rnd = mvals.seed;
 
      gimp_progress_init (_("Constructing tileable maze using Prim's Algorithm..."));
 
@@ -462,8 +463,10 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
      max_progress=x*y/4;
 
      /* Pick someplace to start. */
-     srand(rnd);
-     pos = x * 2 * (rand() % y / 2) + 2 * (rand() % x / 2);
+     if (!mvals.defaultseed)
+       g_rand_set_seed (gr, rnd);
+
+     pos = x * 2 * g_rand_int_range (gr, 0, y/2) + 2 * g_rand_int_range(gr, 0, x/2);
 
      maz[pos]=IN;
 
@@ -484,7 +487,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
      while(g_slist_length(front_cells) > 0) {
 
 	  /* Remove one cell at random from frontier and place it in IN. */
-	  current = rand() % g_slist_length(front_cells);
+	  current = g_rand_int_range (gr, 0, g_slist_length(front_cells));
 	  pos = (guint)g_slist_nth(front_cells,current)->data;
 
 	  front_cells=g_slist_remove(front_cells,(gpointer)pos);

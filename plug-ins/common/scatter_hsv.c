@@ -233,7 +233,6 @@ scatter_hsv (gint32 drawable_id)
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
   gimp_progress_init (_("Scatter HSV: Scattering..."));
-  srand (time (NULL));
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   
   for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
@@ -278,7 +277,7 @@ scatter_hsv (gint32 drawable_id)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
-
+ 
   return GIMP_PDB_SUCCESS;
 }
 
@@ -293,15 +292,19 @@ randomize_value (gint now,
   gdouble rand_val;
   
   steps = max - min + 1;
-  rand_val = ((double) rand () / (double) G_MAXRAND);
+  rand_val = g_random_double ();
   for (index = 1; index < VALS.holdness; index++)
     {
-      double tmp = ((double) rand () / (double) G_MAXRAND);
+      double tmp = g_random_double ();
       if (tmp < rand_val)
 	rand_val = tmp;
     }
   
-  flag = ((G_MAXRAND / 2) < rand()) ? 1 : -1;
+  if (g_random_double () < 0.5)
+    flag = -1;
+  else
+    flag = 1;
+
   new = now + flag * ((int) (rand_max * rand_val) % steps);
   
   if (new < min)

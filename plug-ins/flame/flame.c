@@ -195,8 +195,6 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  SRAND_FUNC (time (NULL));
-
   run_mode = param[0].data.d_int32;
   
   if (run_mode == GIMP_RUN_NONINTERACTIVE)

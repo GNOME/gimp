@@ -84,6 +84,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static const guint  width = 256;
 static const guint height = 256;
+static GRand *gr;
 
 
 #define LUTSIZE 512
@@ -153,6 +154,8 @@ run (gchar      *name,
   GimpRunMode   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
+  gr = g_rand_new();
+  
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -179,6 +182,7 @@ run (gchar      *name,
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+  g_rand_free (gr);
 }
 
 
@@ -363,8 +367,10 @@ domap1 (unsigned char *src, unsigned char *dest,
     bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cy+by)))<<11);
+  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+    ((-128-((128*256)/(cx+bx)))<<11);
+  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+    ((-128-((128*256)/(cy+by)))<<11);
 
   bx2 = ((bx)<<19)/bycxmcybx;
   cx2 = ((cx)<<19)/bycxmcybx;
@@ -437,8 +443,10 @@ domap3(unsigned char *src, unsigned char *dest,
     bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cy+by)))<<11);
+  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+    ((-128-((128*256)/(cx+bx)))<<11);
+  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+    ((-128-((128*256)/(cy+by)))<<11);
 
   bx2 = ((bx)<<19)/bycxmcybx;
   cx2 = ((cx)<<19)/bycxmcybx;
@@ -765,13 +773,13 @@ init_preview_misc (void)
 	    {
 	      seed_data[3*(i-1)+2] =
 		((palette[3*(seed_data[(i-1)*2])+2]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
 	      seed_data[3*(i-1)+1] =
 		((palette[3*(seed_data[(i-1)*2])+1]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
 	      seed_data[3*(i-1)+0] =
 		((palette[3*(seed_data[(i-1)*2])+0]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[(i-1)*2+1]) * g_rand_int_range (gr, 0, 256))/255;
 	    }
 	}
       else
@@ -792,7 +800,7 @@ init_preview_misc (void)
 	    {
 	      seed_data[i] =
 		(seed_data[i*2]*seed_data[i*2+1])/255
-		+ ((255-seed_data[i*2+1])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[i*2+1]) * g_rand_int_range (gr, 0, 256))/255;
 	    }
 	}
       break;
@@ -804,13 +812,13 @@ init_preview_misc (void)
 	    {
 	      seed_data[i*3+2] =
 		(seed_data[i*4+2]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
 	      seed_data[i*3+1] =
 		(seed_data[i*4+1]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
 	      seed_data[i*3+0] =
 		(seed_data[i*4+0]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
+		+ ((255-seed_data[i*4+3]) * g_rand_int_range (gr, 0, 256))/255;
 	    }
 	}
       break;

@@ -333,16 +333,21 @@ generatevectors (void)
 {
   gdouble alpha;
   gint i, j;
+  GRand *gr;
+
+  gr = g_rand_new();
 
   for (i = 0; i < numx; i++)
     {
       for (j = 0; j < numy; j++)
         {
-          alpha = (gdouble) (rand () % 1000) * (G_PI / 500.0);
+          alpha = g_rand_double_range (gr, 0, 2) * G_PI;
           G[i][j][0] = cos (alpha);
           G[i][j][1] = sin (alpha);
         }
     }
+
+  g_rand_free (gr);
 }
 
 /* A simple triangle filter */

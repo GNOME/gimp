@@ -5620,9 +5620,8 @@ int get_cmap(int n, clrmap c, int cmap_len)
 {
    int i, j;
    if (cmap_random == n)
-      n = RAND_FUNC ();
+      n = g_random_int_range (0, vlen(the_cmaps));
    if (n < 0) n = 0;
-   n = n % vlen(the_cmaps);
    for (i = 0; i < cmap_len; i++) {
       int ii = (i * 256) / cmap_len;
       for (j = 0; j < 3; j++)

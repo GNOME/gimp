@@ -965,7 +965,7 @@ gimp_random_seed_new (gint       *seed,
   hbox = gtk_hbox_new (FALSE, 4);
 
   spinbutton = gimp_spin_button_new (&adj, *seed,
-                                     0, G_MAXRAND, 1, 10, 0, 1, 0);
+                                     0, (guint32) -1 , 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

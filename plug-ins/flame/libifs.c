@@ -71,7 +71,7 @@ void iterate(cp, n, fuse, points)
    }
 
    for (i = -fuse; i < n; i++) {
-      int fn = xform_distrib[RAND_FUNC () % CHOOSE_XFORM_GRAIN];
+      int fn = xform_distrib[g_random_int_range (0, CHOOSE_XFORM_GRAIN) ];
       double tx, ty, v;
 
       if (p[0] > 100.0 || p[0] < -100.0 ||
@@ -870,11 +870,11 @@ void print_control_point(f, cp, quote)
 
 /* returns a uniform variable from 0 to 1 */
 double random_uniform01() {
-   return (RAND_FUNC () & 0xfffffff) / (double) 0xfffffff;
+   return g_random_double ();
 }
 
 double random_uniform11() {
-   return ((RAND_FUNC () & 0xfffffff) - 0x7ffffff) / (double) 0x7ffffff;
+   return g_random_double_range (-1, 1);
 }
 
 /* returns a mean 0 variance 1 random variable
@@ -911,7 +911,7 @@ copy_variation(control_point *cp0, control_point *cp1) {
 
      
 
-#define random_distrib(v) ((v)[RAND_FUNC ()%vlen(v)])
+#define random_distrib(v) ((v)[g_random_int_range (0, vlen(v))])
 
 void random_control_point(cp, ivar) 
    control_point *cp;
@@ -1044,8 +1044,8 @@ void sort_control_points(cps, ncps, metric)
    double same, swap;
    for (i = 0; i < niter; i++) {
       /* consider switching points with indexes n and m */
-      n = RAND_FUNC () % ncps;
-      m = RAND_FUNC () % ncps;
+      n = g_random_int_range (0, ncps);
+      m = g_random_int_range (0, ncps);
 
       same = (metric(cps + n, cps + (n - 1) % ncps) +
 	      metric(cps + n, cps + (n + 1) % ncps) +
