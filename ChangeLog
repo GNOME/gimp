@@ -1,3 +1,8 @@
+2004-12-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/script-fu/scripts/circuit.scm: don't try to
+	desaturate a grayscale layer, fixes bug #161470.
+
 2004-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c
