@@ -137,6 +137,9 @@ void dialogs_test_image_container_grid_view_cmd_callback   (GtkWidget *, gpointe
 void dialogs_test_pattern_container_grid_view_cmd_callback (GtkWidget *, gpointer);
 void dialogs_test_brush_container_grid_view_cmd_callback   (GtkWidget *, gpointer);
 
+void dialogs_test_multi_container_list_view_cmd_callback (GtkWidget *, gpointer);
+void dialogs_test_multi_container_grid_view_cmd_callback   (GtkWidget *, gpointer);
+
 void help_help_cmd_callback         (GtkWidget *, gpointer);
 void help_context_help_cmd_callback (GtkWidget *, gpointer);
 void help_tips_cmd_callback         (GtkWidget *, gpointer);

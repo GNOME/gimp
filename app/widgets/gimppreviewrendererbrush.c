@@ -291,7 +291,7 @@ gimp_brush_preview_create_popup (GimpPreview *preview)
   popup_width  = GIMP_BRUSH (preview->viewable)->mask->width;
   popup_height = GIMP_BRUSH (preview->viewable)->mask->height;
 
-  return gimp_preview_new (preview->viewable,
+  return gimp_preview_new (preview->viewable, NULL,
 			   TRUE,
 			   popup_width,
 			   popup_height,

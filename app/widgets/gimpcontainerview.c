@@ -44,7 +44,8 @@ static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
 static void   gimp_container_view_init        (GimpContainerView      *panel);
 static void   gimp_container_view_destroy     (GtkObject              *object);
 
-static void   gimp_container_view_clear       (GimpContainerView      *view);
+static void   gimp_container_view_clear_items (GimpContainerView      *view);
+static void   gimp_container_view_real_clear_items (GimpContainerView *view);
 
 static void   gimp_container_view_add_foreach (GimpViewable           *viewable,
 					       GimpContainerView      *view);
@@ -157,7 +158,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->insert_item      = NULL;
   klass->remove_item      = NULL;
   klass->select_item      = NULL;
-  klass->clear_items      = NULL;
+  klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
 }
 
@@ -167,7 +168,7 @@ gimp_container_view_init (GimpContainerView *view)
   view->container      = NULL;
   view->context        = NULL;
 
-  view->hash_table     = NULL;
+  view->hash_table     = g_hash_table_new (g_direct_hash, g_direct_equal);
 
   view->preview_width  = 0;
   view->preview_height = 0;
@@ -179,6 +180,14 @@ gimp_container_view_destroy (GtkObject *object)
   GimpContainerView *view;
 
   view = GIMP_CONTAINER_VIEW (object);
+
+  gimp_container_view_set_container (view, NULL);
+
+  gimp_container_view_set_context (view, NULL);
+
+  g_hash_table_destroy (view->hash_table);
+
+  view->hash_table = NULL;
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -197,16 +206,18 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   if (view->container)
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (container),
+      gimp_container_view_clear_items (view);
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->container),
 				     gimp_container_view_add,
 				     view);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (container),
+      gtk_signal_disconnect_by_func (GTK_OBJECT (view->container),
 				     gimp_container_view_remove,
 				     view);
 
       g_hash_table_destroy (view->hash_table);
 
-      gimp_container_view_clear (view);
+      view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
 
       if (view->context)
 	{
@@ -220,35 +231,36 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   if (view->container)
     {
-      view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
-
-      gimp_container_foreach (container,
+      gimp_container_foreach (view->container,
 			      (GFunc) gimp_container_view_add_foreach,
 			      view);
 
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (container), "add",
-	 GTK_SIGNAL_FUNC (gimp_container_view_add),
-	 GTK_OBJECT (view));
+      gtk_signal_connect_object (GTK_OBJECT (view->container), "add",
+				 GTK_SIGNAL_FUNC (gimp_container_view_add),
+				 GTK_OBJECT (view));
 
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (container), "remove",
-	 GTK_SIGNAL_FUNC (gimp_container_view_remove),
-	 GTK_OBJECT (view));
+      gtk_signal_connect_object (GTK_OBJECT (view->container), "remove",
+				 GTK_SIGNAL_FUNC (gimp_container_view_remove),
+				 GTK_OBJECT (view));
 
       if (view->context)
 	{
+	  GimpObject  *object;
+	  const gchar *signal_name;
+
+	  signal_name =
+	    gimp_context_type_to_signal_name (view->container->children_type);
+
 	  gtk_signal_connect
-	    (GTK_OBJECT (view->context),
-	     gimp_context_type_to_signal_name (view->container->children_type),
+	    (GTK_OBJECT (view->context), signal_name,
 	     GTK_SIGNAL_FUNC (gimp_container_view_context_changed),
 	     view);
 
-	  gimp_container_view_select_item
-	    (view,
-	     GIMP_VIEWABLE
-	     (gimp_context_get_by_type (view->context,
-					view->container->children_type)));
+	  object = gimp_context_get_by_type (view->context,
+					     view->container->children_type);
+
+	  gimp_container_view_select_item (view,
+					   object ? GIMP_VIEWABLE (object): NULL);
 	}
     }
 }
@@ -264,7 +276,7 @@ gimp_container_view_set_context (GimpContainerView *view,
   if (context == view->context)
     return;
 
-  if (view->context)
+  if (view->context && view->container)
     {
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->context),
 				     gimp_container_view_context_changed,
@@ -288,8 +300,8 @@ gimp_container_view_set_context (GimpContainerView *view,
       object = gimp_context_get_by_type (view->context,
 					 view->container->children_type);
 
-      if (object)
-	gimp_container_view_select_item (view, GIMP_VIEWABLE (object));
+      gimp_container_view_select_item (view,
+				       object ? GIMP_VIEWABLE (object) : NULL);
     }
 }
 
@@ -317,16 +329,12 @@ gimp_container_view_select_item (GimpContainerView *view,
 
   g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (viewable != NULL);
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  if (insert_data)
-    {
-      gtk_signal_emit (GTK_OBJECT (view), view_signals[SELECT_ITEM],
-		       viewable, insert_data);
-    }
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[SELECT_ITEM],
+		   viewable, insert_data);
 }
 
 void
@@ -347,9 +355,17 @@ gimp_container_view_item_selected (GimpContainerView *view,
 }
 
 static void
-gimp_container_view_clear (GimpContainerView *view)
+gimp_container_view_clear_items (GimpContainerView *view)
 {
   gtk_signal_emit (GTK_OBJECT (view), view_signals[CLEAR_ITEMS]);
+}
+
+static void
+gimp_container_view_real_clear_items (GimpContainerView *view)
+{
+  g_hash_table_destroy (view->hash_table);
+
+  view->hash_table = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
 
 static void
@@ -408,9 +424,6 @@ gimp_container_view_context_changed (GimpContext       *context,
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  if (insert_data)
-    {
-      gtk_signal_emit (GTK_OBJECT (view), view_signals[SELECT_ITEM],
-		       viewable, insert_data);
-    }
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[SELECT_ITEM],
+		   viewable, insert_data);
 }

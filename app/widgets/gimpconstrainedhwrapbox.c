@@ -20,6 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <gtk/gtk.h>
+
 #include "gimpconstrainedhwrapbox.h"
 
 
@@ -97,29 +99,45 @@ gimp_constrained_hwrap_box_size_request (GtkWidget      *widget,
   
   g_return_if_fail (requisition != NULL);
   
-  if (GTK_WIDGET_CLASS (parent_class)->size_request)
-    GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
-
-  if (widget->parent                                 &&
-      widget->allocation.width >= requisition->width &&
-      wbox->children                                 &&
+  if (widget->parent                                  &&
+      GTK_IS_VIEWPORT (widget->parent)                &&
+      widget->parent->parent                          &&
+      GTK_IS_SCROLLED_WINDOW (widget->parent->parent) &&
+      wbox->children                                  &&
       wbox->children->widget)
     {
-      gint child_width;
-      gint child_height;
+      GtkWidget *scrolled_win;
+      gint       child_width;
+      gint       child_height;
+      gint       viewport_width;
+      gint       columns;
+      gint       rows;
+
+      scrolled_win = widget->parent->parent;
 
       child_width  = wbox->children->widget->requisition.width;
       child_height = wbox->children->widget->requisition.height;
 
-      requisition->width = 
-        ((child_width + wbox->hspacing) *
-         MAX (1, (gint) ((widget->parent->allocation.width + wbox->hspacing) /
-                         (child_width + wbox->hspacing))));
+      viewport_width =
+	(scrolled_win->allocation.width -
+	 GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar->allocation.width -
+	 GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (scrolled_win)->klass)->scrollbar_spacing -
+	 scrolled_win->style->klass->xthickness * 2);
 
-      requisition->height =
-        (child_height + wbox->vspacing) *
-        (1 + (wbox->n_children /
-	      MAX (1, (gint) ((widget->parent->allocation.width + wbox->hspacing) /
-			      (child_width + wbox->hspacing)))));
+      columns = 
+	(viewport_width + wbox->hspacing) / (child_width + wbox->hspacing);
+
+      columns = MAX (1, columns);
+
+      requisition->width = (child_width + wbox->hspacing) * columns;
+
+      rows = wbox->n_children / columns;
+
+      if (rows * columns < wbox->n_children)
+	rows++;
+
+      requisition->height = (child_height + wbox->vspacing) * rows;
     }
+  else if (GTK_WIDGET_CLASS (parent_class)->size_request)
+    GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 }

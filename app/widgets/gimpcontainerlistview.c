@@ -129,9 +129,11 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  gtk_signal_connect (GTK_OBJECT (list_view->gtk_list), "select_child",
-		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_selected),
-		      list_view);
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (list_view->gtk_list), "select_child",
+     GTK_SIGNAL_FUNC (gimp_container_list_view_item_selected),
+     list_view,
+     GTK_OBJECT (list_view));
 
   gtk_widget_show (list_view->gtk_list);
   gtk_widget_show (scrolled_win);
@@ -201,16 +203,18 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 
   list_item = gtk_list_item_new ();
 
+  /*
   gtk_signal_connect_object_while_alive
     (GTK_OBJECT (viewable), "name_changed",
      GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
      GTK_OBJECT (list_view));
+  */
 
   hbox = gtk_hbox_new (FALSE, 8);
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
-  preview = gimp_preview_new (viewable,
+  preview = gimp_preview_new (viewable, NULL,
 			      FALSE,
 			      view->preview_width,
 			      view->preview_height,
@@ -249,7 +253,11 @@ gimp_container_list_view_remove_item (GimpContainerView *view,
   GtkWidget             *list_item;
 
   list_view = GIMP_CONTAINER_LIST_VIEW (view);
-  list_item = GTK_WIDGET (insert_data);
+
+  if (insert_data)
+    list_item = GTK_WIDGET (insert_data);
+  else
+    list_item = NULL;
 
   if (list_item)
     {
@@ -270,7 +278,11 @@ gimp_container_list_view_select_item (GimpContainerView *view,
   GtkWidget             *list_item;
 
   list_view = GIMP_CONTAINER_LIST_VIEW (view);
-  list_item = GTK_WIDGET (insert_data);
+
+  if (insert_data)
+    list_item = GTK_WIDGET (insert_data);
+  else
+    list_item = NULL;
 
   if (list_item)
     {
@@ -294,6 +306,9 @@ gimp_container_list_view_clear_items (GimpContainerView *view)
   list_view = GIMP_CONTAINER_LIST_VIEW (view);
 
   gtk_list_clear_items (GTK_LIST (list_view->gtk_list), 0, -1);
+
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items)
+    GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
 }
 
 static void

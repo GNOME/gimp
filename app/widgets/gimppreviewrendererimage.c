@@ -194,7 +194,7 @@ gimp_image_preview_create_popup (GimpPreview *preview)
 
   if (scaling_up)
     {
-      return gimp_preview_new (preview->viewable,
+      return gimp_preview_new (preview->viewable, NULL,
 			       TRUE,
 			       gimage->width,
 			       gimage->height,
@@ -204,7 +204,7 @@ gimp_image_preview_create_popup (GimpPreview *preview)
     }
   else
     {
-      return gimp_preview_new (preview->viewable,
+      return gimp_preview_new (preview->viewable, NULL,
 			       TRUE,
 			       popup_width,
 			       popup_height,

@@ -121,8 +121,13 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 				  GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (grid_view), scrolled_win, TRUE, TRUE, 0);
 
-  grid_view->wrap_box = gtk_hwrap_box_new (FALSE); /*gimp_constrained_hwrap_box_new (FALSE);*/
-  /*gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box), 256);*/
+  /*grid_view->wrap_box = gtk_hwrap_box_new (FALSE);*/
+
+  grid_view->wrap_box = gimp_constrained_hwrap_box_new (FALSE);
+
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box),
+				 1.0 / 256.0);
+
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
                                          grid_view->wrap_box);
 
@@ -199,7 +204,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  preview = gimp_preview_new (viewable,
+  preview = gimp_preview_new (viewable, NULL,
 			      FALSE,
 			      view->preview_width,
 			      view->preview_height,
@@ -239,6 +244,12 @@ gimp_container_grid_view_remove_item (GimpContainerView *view,
 
   if (preview)
     {
+      if (gtk_object_get_data (GTK_OBJECT (view),
+			       "last_selected_item") == preview)
+	{
+	  gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", NULL);
+	}
+
       gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
     }
 }
@@ -258,9 +269,14 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
+  gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", NULL);
+
   while (GTK_WRAP_BOX (grid_view->wrap_box)->children)
     gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
 			  GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
+
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items)
+    GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
 }
 
 static void
@@ -320,7 +336,10 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gtk_signal_emit_by_name (GTK_OBJECT (preview), "render");
     }
 
-  preview = GIMP_PREVIEW (insert_data);
+  if (insert_data)
+    preview = GIMP_PREVIEW (insert_data);
+  else
+    preview = NULL;
 
   if (preview)
     {

@@ -31,6 +31,7 @@
 
 #include "gimpbrush.h"
 #include "gimpbrushpreview.h"
+#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimpimage.h"
@@ -189,6 +190,8 @@ static void
 gimp_preview_init (GimpPreview *preview)
 {
   preview->viewable   = NULL;
+  preview->context    = NULL;
+
   preview->is_popup   = FALSE;
 
   preview->width      = 8;
@@ -229,12 +232,15 @@ gimp_preview_destroy (GtkObject *object)
 
   gimp_preview_popup_hide (preview);
 
+  gimp_preview_set_viewable (preview, NULL);
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
+		  GimpContext  *context,
 		  gboolean      is_popup,
 		  gint          width,
 		  gint          height,
@@ -246,6 +252,7 @@ gimp_preview_new (GimpViewable *viewable,
 
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0 && width  <= 256, NULL);
   g_return_val_if_fail (height > 0 && height <= 256, NULL);
   g_return_val_if_fail (border >= 0 && border <= 16, NULL);
@@ -271,7 +278,6 @@ gimp_preview_new (GimpViewable *viewable,
       preview = gtk_type_new (GIMP_TYPE_PREVIEW);
     }
 
-  preview->viewable   = viewable;
   preview->is_popup   = is_popup;
 
   preview->width      = width;
@@ -281,21 +287,61 @@ gimp_preview_new (GimpViewable *viewable,
   preview->clickable  = clickable;
   preview->show_popup = show_popup;
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (viewable),
-					 "invalidate_preview",
-					 GTK_SIGNAL_FUNC (gimp_preview_paint),
-					 GTK_OBJECT (preview));
-
-  gtk_signal_connect_while_alive (GTK_OBJECT (viewable), "destroy",
-				  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-				  &preview->viewable,
-				  GTK_OBJECT (preview));
+  gimp_preview_set_viewable (preview, viewable);
 
   gtk_preview_size (GTK_PREVIEW (preview),
 		    width  + 2 * border,
 		    height + 2 * border);
 
+  if (context)
+    gimp_preview_set_context (preview, context);
+
   return GTK_WIDGET (preview);
+}
+
+void
+gimp_preview_set_viewable (GimpPreview  *preview,
+			   GimpViewable *viewable)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+
+  if (preview->viewable)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
+				     gimp_preview_paint,
+				     preview);
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
+				     gtk_widget_destroyed,
+				     &preview->viewable);
+    }
+
+  preview->viewable = viewable;
+
+  if (preview->viewable)
+    {
+      gtk_signal_connect_object (GTK_OBJECT (preview->viewable),
+				 "invalidate_preview",
+				 GTK_SIGNAL_FUNC (gimp_preview_paint),
+				 GTK_OBJECT (preview));
+
+      gtk_signal_connect (GTK_OBJECT (preview->viewable), "destroy",
+			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			  &preview->viewable);
+
+      gimp_preview_render (preview);
+    }
+}
+
+void
+gimp_preview_set_context (GimpPreview *preview,
+			  GimpContext *context)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 }
 
 void
@@ -458,7 +504,7 @@ gimp_preview_real_create_popup (GimpPreview *preview)
   popup_width  = MIN (preview->width  * 2, 256);
   popup_height = MIN (preview->height * 2, 256);
 
-  return gimp_preview_new (preview->viewable,
+  return gimp_preview_new (preview->viewable, NULL,
 			   TRUE,
 			   popup_width,
 			   popup_height,

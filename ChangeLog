@@ -1,5 +1,22 @@
 2001-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimppreview.[ch]: added an (unused) "context" argument
+	and a "set_viewable" function.
+
+	* app/gimpconstrainedhwrapbox.c: even more evil than before.
+
+	* app/gimpbrushpreview.c
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontainerview.c
+	* app/gimpimagepreview.c
+	* app/gimppatternpreview.c: fixed lots of forgotten signal handlers
+
+	* app/commands.[ch]
+	* app/menus.c: added "Multi View" dialogs.
+
+2001-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimppreview.[ch]: added a "border" attribute. The border can
 	have any color (which has no sane API yet...). Added "width" and
 	"height" attributes and provide a "set_size" function.

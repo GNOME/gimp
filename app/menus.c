@@ -171,6 +171,14 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { "/File/Test Dialogs/Grid of all Patterns...", NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
 
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/Multi List...", NULL, dialogs_test_multi_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Multi Grid...", NULL, dialogs_test_multi_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
