@@ -1,5 +1,12 @@
 2002-11-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): changed order of
+	calls to gimp_dnd_data_dest_add() so that "text/uri-list" is
+	preferred over "text/plain" and "_NETSCAPE_URL". Fixes dropping
+	multiple files from nautilus.
+
+2002-11-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig-utils.[ch]: added gimp_config_diff()
 	which returns the difference beween two GimpConfig objects
 	as a GList of GParamSpecs.

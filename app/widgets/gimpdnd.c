@@ -774,13 +774,13 @@ gimp_dnd_file_dest_add (GtkWidget           *widget,
 			GimpDndDropFileFunc  set_file_func,
 			gpointer             data)
 {
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
 }
