@@ -1256,6 +1256,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_FRAME ##### -->
+<para>
+<inlinegraphic fileref="stock-frame-64.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_ERROR ##### -->
 <para>
 <inlinegraphic fileref="stock-error-64.png" format="png"></inlinegraphic>
