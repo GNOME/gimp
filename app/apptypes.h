@@ -88,6 +88,9 @@ typedef enum
   COLOR_MODE,
   VALUE_MODE,
   DIVIDE_MODE,
+  DODGE_MODE,          
+  BURN_MODE,           
+  HARDLIGHT_MODE,     
   ERASE_MODE,         /*< skip >*/
   REPLACE_MODE,       /*< skip >*/
   ANTI_ERASE_MODE     /*< skip >*/

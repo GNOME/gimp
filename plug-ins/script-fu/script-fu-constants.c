@@ -154,6 +154,9 @@ init_generated_constants (void)
   setvar (cintern ("COLOR-MODE"), flocons (13), NIL);
   setvar (cintern ("VALUE-MODE"), flocons (14), NIL);
   setvar (cintern ("DIVIDE-MODE"), flocons (15), NIL);
+  setvar (cintern ("DODGE-MODE"), flocons (16), NIL);
+  setvar (cintern ("BURN-MODE"), flocons (17), NIL);
+  setvar (cintern ("HARDLIGHT-MODE"), flocons (18), NIL);
 
   setvar (cintern ("APPLY"), flocons (0), NIL);
   setvar (cintern ("DISCARD"), flocons (1), NIL);

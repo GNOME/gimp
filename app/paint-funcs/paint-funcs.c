@@ -106,7 +106,10 @@ LayerMode layer_modes[] =	/* This must obviously be in the same
   { 0, 0, 0, N_("Divide (Dodge)") },
   { 1, 0, 1, N_("Erase") },
   { 1, 1, 1, N_("Replace") },
-  { 1, 0, 1, N_("Anti Erase") }
+  { 1, 0, 1, N_("Anti Erase") },
+  { 0, 0, 0, N_("Dodge") },
+  { 0, 0, 0, N_("Burn") },
+  { 0, 0, 0, N_("Hard Light") }
 };
 
 /*  ColorHash structure  */
@@ -1022,6 +1025,118 @@ overlay_pixels (const guchar *src1,
       src1 += bytes1;
       src2 += bytes2;
       dest += bytes2;
+    }
+}
+
+
+
+void
+dodge_pixels (const guchar *src1,
+		const guchar *src2,
+		guchar *dest,
+		gint            length,
+		gint            b1,
+		gint            b2,
+		gint            ha1,
+		gint            ha2)
+{
+  gint alpha, b;
+  int tmp1;
+
+  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	{
+	  tmp1 = src1[b] << 8;
+	  tmp1 /= 256 - src2[b];
+	  dest[b] = (guchar) CLAMP (tmp1, 0, 255);
+	}
+
+      if (ha1 && ha2)
+	dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (ha2)
+	dest[alpha] = src2[alpha];
+
+      src1 += b1;
+      src2 += b2;
+      dest += b2;
+    }
+}
+
+
+void
+burn_pixels (const guchar *src1,
+		const guchar  *src2,
+		guchar         *dest,
+		gint            length,
+		gint            b1,
+		gint            b2,
+		gint            ha1,
+		gint            ha2)
+{
+  gint alpha, b;
+  gint tmp1;
+
+  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	{
+	    tmp1 = (255 - src1[b]) << 8;
+	    tmp1 /= src2[b] + 1;
+	    dest[b] = (guchar) CLAMP (255 - tmp1, 0, 255);
+	}
+
+      if (ha1 && ha2)
+	dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (ha2)
+	dest[alpha] = src2[alpha];
+
+      src1 += b1;
+      src2 += b2;
+      dest += b2;
+    }
+}
+
+void
+hardlight_pixels (const guchar *src1,
+		  const guchar *src2,
+		  guchar       *dest,
+		  gint            length,
+		  gint            b1,
+		  gint            b2,
+		  gint            ha1,
+		  gint            ha2)
+{
+  gint alpha, b;
+  gint tmp1;
+
+  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+	{
+	  if (src2[b] > 128) {
+	    tmp1 = ((gint)255 - src1[b]) * ((gint)255 - ((src2[b] - 128) << 1));
+	    dest[b] = (guchar)CLAMP(255 - (tmp1 >> 8), 0, 255);
+	  } else {
+	    tmp1 = (gint)src1[b] * ((gint)src2[b] << 1);
+	    dest[b] = (guchar)CLAMP(tmp1 >> 8, 0, 255);
+	  }
+	}
+
+      if (ha1 && ha2)
+	dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (ha2)
+	dest[alpha] = src2[alpha];
+
+      src1 += b1;
+      src2 += b2;
+      dest += b2;
     }
 }
 
@@ -5955,6 +6070,18 @@ apply_layer_mode (guchar            *src1,
     case ANTI_ERASE_MODE:
       *dest = src2;
       combine = (has_alpha1 && has_alpha2) ? ANTI_ERASE_INTEN : combine;
+      break;
+
+    case DODGE_MODE:
+      dodge_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
+      break;
+
+    case BURN_MODE:
+      burn_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
+      break;
+
+    case HARDLIGHT_MODE:
+      hardlight_pixels (src1, src2, *dest, length, bytes1, bytes2, has_alpha1, has_alpha2);
       break;
 
     default :
