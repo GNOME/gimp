@@ -880,7 +880,7 @@ file_open_ok_callback (GtkWidget *w,
 
   /*
    * FIXME: cope with cwd != fileselcwd != dirname(filename)
-   *
+   */
 
   /*
   {
@@ -944,7 +944,7 @@ file_open_ok_callback (GtkWidget *w,
 			g_free (mfilename);
 			mfilename = g_strconcat (filedirname, "/", temp, NULL);
 
-			/*printf(">>> %s\n", mfilename);/*
+			/*printf(">>> %s\n", mfilename);*/
 			/*fflush (stdout);*/
 		      }
 		    

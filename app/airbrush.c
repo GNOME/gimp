@@ -85,7 +85,7 @@ create_airbrush_options (void)
 
   /*  the new options structure  */
   options = (AirbrushOptions *) g_malloc (sizeof (AirbrushOptions));
-  options->rate = 25.0;
+  options->rate = 80.0;
   options->pressure = 10.0;
 
   /*  the main vbox  */
@@ -105,7 +105,7 @@ create_airbrush_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  rate_scale_data = gtk_adjustment_new (25.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+  rate_scale_data = gtk_adjustment_new (80.0, 0.0, 150.0, 1.0, 1.0, 0.0);
   rate_scale = gtk_hscale_new (GTK_ADJUSTMENT (rate_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), rate_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (rate_scale), GTK_POS_TOP);
