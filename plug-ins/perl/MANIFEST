@@ -36,10 +36,12 @@ Gimp/Makefile.PL
 Gimp/Lib.xs
 Gimp/Lib.pm
 Gimp/OO.pod
+Gimp/Net.pm
 Gimp/Data.pm
 Gimp/Fu.pm
 Gimp/PDL.pm
 Gimp/Pixel.pod
+Gimp/UI.pm
 Gimp/Util.pm
 Gimp/Feature.pm
 Gimp/Pod.pm
@@ -52,10 +54,6 @@ Module/Makefile.PL
 Module/Module.xs
 Net/Makefile.PL
 Net/Net.xs
-Net/Net.pm
-UI/Makefile.PL
-UI/UI.pm
-UI/UI.xs
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float
