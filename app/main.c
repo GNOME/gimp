@@ -49,6 +49,7 @@
 
 #include "app_procs.h"
 #include "errors.h"
+#include "units.h"
 
 #include "gimp-intl.h"
 
@@ -175,8 +176,13 @@ main (int    argc,
 
           if (format)
             {
+              Gimp *gimp;
+
               g_type_init ();
-              g_object_new (GIMP_TYPE_GIMP, NULL);
+
+              gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+
+              units_init (gimp);
 
               gimp_text_console_exit (gimp_config_dump (format) ?
                                       EXIT_SUCCESS : EXIT_FAILURE);

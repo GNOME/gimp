@@ -1,3 +1,7 @@
+2003-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c (main): call units_init() before gimp_config_dump().
+
 2003-11-16  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-ins.c: disabled debugging output.
