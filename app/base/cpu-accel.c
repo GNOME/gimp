@@ -186,7 +186,9 @@ arch_accel_intel (void)
 static guint32
 arch_accel_amd (void)
 {
-  guint32 caps = 0;
+  guint32 caps;
+
+  caps = arch_accel_intel ();
 
 #ifdef USE_MMX
   {
@@ -195,7 +197,7 @@ arch_accel_amd (void)
     cpuid (0x80000000, eax, ebx, ecx, edx);
 
     if (eax < 0x80000001)
-      return arch_accel_intel ();
+      return caps;
 
 #ifdef USE_SSE
     cpuid (0x80000001, eax, ebx, ecx, edx);
@@ -215,7 +217,9 @@ arch_accel_amd (void)
 static guint32
 arch_accel_centaur (void)
 {
-  guint32 caps = 0;
+  guint32 caps;
+
+  caps = arch_accel_intel ();
 
 #ifdef USE_MMX
   {
@@ -224,7 +228,7 @@ arch_accel_centaur (void)
     cpuid (0x80000000, eax, ebx, ecx, edx);
 
     if (eax < 0x80000001)
-      return arch_accel_intel ();
+      return caps;
 
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
@@ -247,7 +251,9 @@ arch_accel_centaur (void)
 static guint32
 arch_accel_cyrix (void)
 {
-  guint32 caps = 0;
+  guint32 caps;
+
+  caps = arch_accel_intel ();
 
 #ifdef USE_MMX
   {
@@ -256,7 +262,7 @@ arch_accel_cyrix (void)
     cpuid (0, eax, ebx, ecx, edx);
 
     if (eax != 2)
-      return arch_accel_intel ();
+      return caps;
 
     cpuid (0x80000001, eax, ebx, ecx, edx);
 
