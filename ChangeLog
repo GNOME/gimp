@@ -1,5 +1,15 @@
 2002-02-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.[ch]: moved all global variables into
+	the GimpPaintTool structure so they have a proper lifecycle and
+	it's easier to move them to the upcoming GimpPaintCore (??)
+	object.
+
+	* app/tools/gimppainttool_kernels.h
+	* tools/kernelgen.c: s/SUBSAMPLE/KERNEL_SUBSAMPLE/
+
+2002-02-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/menus.c: moved "Merge Layers" and "Flatten Image" from
 	"Layer/" to "Image/", removed them from the "<Layers>" menu
 	entirely, moved "Merge Down" after "Anchor Layer" in both menus.

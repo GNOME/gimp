@@ -4,9 +4,9 @@
  *   (threshold = 0.25)
  */
 
-#define KERNEL_WIDTH   3
-#define KERNEL_HEIGHT  3
-#define SUBSAMPLE      4
+#define KERNEL_WIDTH     3
+#define KERNEL_HEIGHT    3
+#define KERNEL_SUBSAMPLE 4
 
 
 /*  Brush pixel subsampling kernels  */

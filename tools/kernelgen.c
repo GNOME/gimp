@@ -89,9 +89,9 @@ main (int    argc,
 	  " *   This file was generated using kernelgen as found in the tools dir.\n");
   printf (" *   (threshold = %g)\n", THRESHOLD);
   printf (" */\n\n");
-  printf ("#define KERNEL_WIDTH   %d\n", KERNEL_WIDTH);
-  printf ("#define KERNEL_HEIGHT  %d\n", KERNEL_HEIGHT);
-  printf ("#define SUBSAMPLE      %d\n", SUBSAMPLE);
+  printf ("#define KERNEL_WIDTH     %d\n", KERNEL_WIDTH);
+  printf ("#define KERNEL_HEIGHT    %d\n", KERNEL_HEIGHT);
+  printf ("#define KERNEL_SUBSAMPLE %d\n", SUBSAMPLE);
   printf ("\n\n");
   printf ("/*  Brush pixel subsampling kernels  */\n");
   printf ("static const int subsample[%d][%d][%d] = {\n",

@@ -77,6 +77,8 @@
 static void   gimp_paint_tool_class_init      (GimpPaintToolClass  *klass);
 static void   gimp_paint_tool_init            (GimpPaintTool       *paint_tool);
 
+static void   gimp_paint_tool_finalize        (GObject             *object);
+
 static void   gimp_paint_tool_control         (GimpTool	           *tool,
 					       ToolAction           action,
 					       GimpDisplay         *gdisp);
@@ -103,63 +105,70 @@ static void   gimp_paint_tool_cursor_update   (GimpTool            *tool,
 static void   gimp_paint_tool_draw            (GimpDrawTool        *draw_tool);
 
 
-static void      gimp_paint_tool_sample_color         (GimpDrawable *drawable,
-						       gint          x,
-						       gint          y,
-						       gint          state);
-static void      gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
-						       gdouble  scale,
-						       gint    *width,
-						       gint    *height);
-static MaskBuf * gimp_paint_tool_subsample_mask       (MaskBuf *mask,
-						       gdouble  x,
-						       gdouble  y);
-static MaskBuf * gimp_paint_tool_pressurize_mask      (MaskBuf *brush_mask,
-						       gdouble  x,
-						       gdouble  y,
-						       gdouble  pressure);
-static MaskBuf * gimp_paint_tool_solidify_mask        (MaskBuf *brush_mask);
-static MaskBuf * gimp_paint_tool_scale_mask           (MaskBuf *brush_mask,
-						       gdouble  scale);
-static MaskBuf * gimp_paint_tool_scale_pixmap         (MaskBuf *brush_mask,
-						       gdouble  scale);
+static void      gimp_paint_tool_sample_color     (GimpDrawable    *drawable,
+                                                   gint             x,
+                                                   gint             y,
+                                                   gint             state);
+static void  gimp_paint_tool_calculate_brush_size (MaskBuf         *mask,
+                                                   gdouble          scale,
+                                                   gint            *width,
+                                                   gint            *height);
+static MaskBuf * gimp_paint_tool_subsample_mask   (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *mask,
+                                                   gdouble           x,
+                                                   gdouble           y);
+static MaskBuf * gimp_paint_tool_pressurize_mask  (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   gdouble           x,
+                                                   gdouble           y,
+                                                   gdouble           pressure);
+static MaskBuf * gimp_paint_tool_solidify_mask    (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask);
+static MaskBuf * gimp_paint_tool_scale_mask       (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   gdouble           scale);
+static MaskBuf * gimp_paint_tool_scale_pixmap     (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   gdouble           scale);
 
-static MaskBuf * gimp_paint_tool_get_brush_mask       (GimpPaintTool            *gimp_paint_tool,
-						       BrushApplicationMode  brush_hardness,
-						       gdouble               scale);
-static void      gimp_paint_tool_paste                (GimpPaintTool	       *gimp_paint_tool,
-						       MaskBuf	       *brush_mask,
-						       GimpDrawable	       *drawable,
-						       gint		        brush_opacity,
-						       gint		        image_opacity,
-						       GimpLayerModeEffects     paint_mode,
-						       PaintApplicationMode  mode);
-static void      gimp_paint_tool_replace              (GimpPaintTool            *gimp_paint_tool,
-						       MaskBuf              *brush_mask,
-						       GimpDrawable	       *drawable,
-						       gint		        brush_opacity,
-						       gint                  image_opacity,
-						       PaintApplicationMode  mode);
+static MaskBuf * gimp_paint_tool_get_brush_mask   (GimpPaintTool    *paint_tool,
+                                                   BrushApplicationMode  brush_hardness,
+                                                   gdouble           scale);
+static void      gimp_paint_tool_paste            (GimpPaintTool    *paint_tool,
+                                                   MaskBuf	    *brush_mask,
+                                                   GimpDrawable	    *drawable,
+                                                   gint		     brush_opacity,
+                                                   gint		     image_opacity,
+                                                   GimpLayerModeEffects  paint_mode,
+                                                   PaintApplicationMode  mode);
+static void      gimp_paint_tool_replace          (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   GimpDrawable	    *drawable,
+                                                   gint		     brush_opacity,
+                                                   gint              image_opacity,
+                                                   PaintApplicationMode  mode);
 
-static void      brush_to_canvas_tiles           (GimpPaintTool    *gimp_paint_tool,
-						  MaskBuf      *brush_mask,
-						  gint          brush_opacity);
-static void      brush_to_canvas_buf             (GimpPaintTool    *gimp_paint_tool,
-						  MaskBuf      *brush_mask,
-						  gint          brush_opacity);
-static void      canvas_tiles_to_canvas_buf      (GimpPaintTool    *gimp_paint_tool);
+static void      brush_to_canvas_tiles            (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   gint              brush_opacity);
+static void      brush_to_canvas_buf              (GimpPaintTool    *paint_tool,
+                                                   MaskBuf          *brush_mask,
+                                                   gint              brush_opacity);
+static void      canvas_tiles_to_canvas_buf       (GimpPaintTool    *paint_tool);
 
-static void      set_undo_tiles                  (GimpDrawable *drawable,
-						  gint          x,
-						  gint          y,
-						  gint          w,
-						  gint          h);
-static void      set_canvas_tiles                (gint          x,
-						  gint          y,
-						  gint          w,
-						  gint          h);
-static void      gimp_paint_tool_invalidate_cache     (GimpBrush    *brush,
-						       gpointer      data);
+static void      set_undo_tiles                   (GimpPaintTool    *paint_tool,
+                                                   GimpDrawable     *drawable,
+                                                   gint              x,
+                                                   gint              y,
+                                                   gint              w,
+                                                   gint              h);
+static void      set_canvas_tiles                 (GimpPaintTool    *paint_tool,
+                                                   gint              x,
+                                                   gint              y,
+                                                   gint              w,
+                                                   gint              h);
+static void      gimp_paint_tool_invalidate_cache (GimpBrush        *brush,
+                                                   GimpPaintTool    *paint_tool);
 
 
 /*  paint buffers utility functions  */
@@ -177,31 +186,6 @@ static void        paint_line_pixmap_mask  (GimpImage            *dest,
 					    gint                  width,
 					    BrushApplicationMode  mode);
 
-/***********************************************************************/
-
-
-/*  undo blocks variables  */
-static TileManager  *undo_tiles   = NULL;
-static TileManager  *canvas_tiles = NULL;
-
-
-/***********************************************************************/
-
-
-/*  paint buffers variables  */
-static TempBuf  *orig_buf   = NULL;
-static TempBuf  *canvas_buf = NULL;
-
-
-/*  brush buffers  */
-static MaskBuf  *pressure_brush;
-static MaskBuf  *solid_brush;
-static MaskBuf  *scale_brush     = NULL;
-static MaskBuf  *scale_pixmap    = NULL;
-static MaskBuf  *kernel_brushes[SUBSAMPLE + 1][SUBSAMPLE + 1];
-
-static MaskBuf  *last_brush_mask = NULL;
-static gboolean  cache_invalid   = FALSE;
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -237,13 +221,17 @@ gimp_paint_tool_get_type (void)
 static void
 gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 {
+  GObjectClass      *object_class;
   GimpToolClass     *tool_class;
   GimpDrawToolClass *draw_tool_class;
 
+  object_class    = G_OBJECT_CLASS (klass);
   tool_class      = GIMP_TOOL_CLASS (klass);
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize     = gimp_paint_tool_finalize;
 
   tool_class->control        = gimp_paint_tool_control;
   tool_class->button_press   = gimp_paint_tool_button_press;
@@ -260,13 +248,101 @@ static void
 gimp_paint_tool_init (GimpPaintTool *paint_tool)
 {
   GimpTool *tool;
+  gint      i, j;
 
   tool = GIMP_TOOL (paint_tool);
 
   tool->perfectmouse = TRUE;
 
-  paint_tool->pick_colors = FALSE;
-  paint_tool->flags       = 0;
+  paint_tool->state          = 0;
+  paint_tool->distance       = 0.0;
+  paint_tool->spacing        = 0.0;
+  paint_tool->x1             = 0;
+  paint_tool->y1             = 0;
+  paint_tool->x2             = 0;
+  paint_tool->y2             = 0;
+
+  paint_tool->brush          = NULL;
+
+  paint_tool->pick_colors    = FALSE;
+  paint_tool->pick_state     = FALSE;
+  paint_tool->flags          = 0;
+
+  paint_tool->undo_tiles     = NULL;
+  paint_tool->canvas_tiles   = NULL;
+
+  paint_tool->orig_buf       = NULL;
+  paint_tool->canvas_buf     = NULL;
+
+  paint_tool->pressure_brush = NULL;
+  paint_tool->solid_brush    = NULL;
+  paint_tool->scale_brush    = NULL;
+  paint_tool->scale_pixmap   = NULL;
+
+  for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
+    for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
+      paint_tool->kernel_brushes[i][j] = NULL;
+
+  paint_tool->last_brush_mask = NULL;
+  paint_tool->cache_invalid   = FALSE;
+
+  paint_tool->grr_brush       = NULL;
+}
+
+static void
+gimp_paint_tool_finalize (GObject *object)
+{
+  GimpPaintTool *paint_tool;
+  gint           i, j;
+
+  paint_tool = GIMP_PAINT_TOOL (object);
+
+  gimp_paint_tool_cleanup (paint_tool);
+
+  if (paint_tool->pressure_brush)
+    {
+      temp_buf_free (paint_tool->pressure_brush);
+      paint_tool->pressure_brush = NULL;
+    }
+
+  if (paint_tool->solid_brush)
+    {
+      temp_buf_free (paint_tool->solid_brush);
+      paint_tool->solid_brush = NULL;
+    }
+
+  if (paint_tool->scale_brush)
+    {
+      temp_buf_free (paint_tool->scale_brush);
+      paint_tool->scale_brush = NULL;
+    }
+
+  if (paint_tool->scale_pixmap)
+    {
+      temp_buf_free (paint_tool->scale_pixmap);
+      paint_tool->scale_pixmap = NULL;
+    }
+
+  g_assert (PAINT_TOOL_SUBSAMPLE == KERNEL_SUBSAMPLE);
+
+  for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
+    for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
+      if (paint_tool->kernel_brushes[i][j])
+        {
+          temp_buf_free (paint_tool->kernel_brushes[i][j]);
+          paint_tool->kernel_brushes[i][j] = NULL;
+        }
+
+  if (paint_tool->grr_brush)
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (paint_tool->grr_brush),
+                                            gimp_paint_tool_invalidate_cache,
+                                            paint_tool);
+      g_object_unref (G_OBJECT (paint_tool->grr_brush));
+      paint_tool->grr_brush = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -755,8 +831,6 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 		       gdouble        x,
 		       gdouble        y)
 {
-  static GimpBrush *brush = NULL;
-
   GimpContext *context;
 
   context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
@@ -781,43 +855,52 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
     }
 #endif
 
-  /*  Each buffer is the same size as the maximum bounds of the active brush... */
-  if (brush && brush != gimp_context_get_brush (context))
+  /*  Each buffer is the same size as
+   *  the maximum bounds of the active brush...
+   */
+
+  if (paint_tool->grr_brush &&
+      paint_tool->grr_brush != gimp_context_get_brush (context))
     {
-      g_signal_handlers_disconnect_by_func (G_OBJECT (brush),
-                                            G_CALLBACK (gimp_paint_tool_invalidate_cache),
-                                            NULL);
-      g_object_unref (G_OBJECT (brush));
+      g_signal_handlers_disconnect_by_func (G_OBJECT (paint_tool->grr_brush),
+                                            gimp_paint_tool_invalidate_cache,
+                                            paint_tool);
+      g_object_unref (G_OBJECT (paint_tool->grr_brush));
     }
-  if (!(brush = gimp_context_get_brush (context)))
+
+  paint_tool->grr_brush = gimp_context_get_brush (context);
+
+  if (! paint_tool->grr_brush)
     {
       g_message (_("No brushes available for use with this tool."));
       return FALSE;
     }
 
-  g_object_ref (G_OBJECT (brush));
-  g_signal_connect (G_OBJECT (brush), "invalidate_preview",
+  g_object_ref (G_OBJECT (paint_tool->grr_brush));
+  g_signal_connect (G_OBJECT (paint_tool->grr_brush), "invalidate_preview",
                     G_CALLBACK (gimp_paint_tool_invalidate_cache),
-                    NULL);
+                    paint_tool);
 
-  paint_tool->spacing = (gdouble) gimp_brush_get_spacing (brush) / 100.0;
+  paint_tool->spacing =
+    (gdouble) gimp_brush_get_spacing (paint_tool->grr_brush) / 100.0;
 
-  paint_tool->brush = brush;
+  paint_tool->brush = paint_tool->grr_brush;
 
   /*  Allocate the undo structure  */
-  if (undo_tiles)
-    tile_manager_destroy (undo_tiles);
+  if (paint_tool->undo_tiles)
+    tile_manager_destroy (paint_tool->undo_tiles);
 
-  undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
-				 gimp_drawable_height (drawable),
-				 gimp_drawable_bytes (drawable));
+  paint_tool->undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
+                                             gimp_drawable_height (drawable),
+                                             gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
-  if (canvas_tiles)
-    tile_manager_destroy (canvas_tiles);
+  if (paint_tool->canvas_tiles)
+    tile_manager_destroy (paint_tool->canvas_tiles);
 
-  canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
-				   gimp_drawable_height (drawable), 1);
+  paint_tool->canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
+                                               gimp_drawable_height (drawable),
+                                               1);
 
   /*  Get the initial undo extents  */
   paint_tool->x1         = paint_tool->x2 = paint_tool->cur_coords.x;
@@ -974,9 +1057,12 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
   undo_push_paint (gimage, pu);
 
   /*  push an undo  */
-  gimp_drawable_apply_image (drawable, paint_tool->x1, paint_tool->y1,
-			     paint_tool->x2, paint_tool->y2, undo_tiles, TRUE);
-  undo_tiles = NULL;
+  gimp_drawable_apply_image (drawable,
+                             paint_tool->x1, paint_tool->y1,
+			     paint_tool->x2, paint_tool->y2,
+                             paint_tool->undo_tiles,
+                             TRUE);
+  paint_tool->undo_tiles = NULL;
 
   /*  push the group end  */
   undo_push_group_end (gimage);
@@ -990,19 +1076,16 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
 void
 gimp_paint_tool_cleanup (GimpPaintTool *paint_tool)
 {
-  /*  CLEANUP  */
-  /*  If the undo tiles exist, nuke them  */
-  if (undo_tiles)
+  if (paint_tool->undo_tiles)
     {
-      tile_manager_destroy (undo_tiles);
-      undo_tiles = NULL;
+      tile_manager_destroy (paint_tool->undo_tiles);
+      paint_tool->undo_tiles = NULL;
     }
 
-  /*  If the canvas blocks exist, nuke them  */
-  if (canvas_tiles)
+  if (paint_tool->canvas_tiles)
     {
-      tile_manager_destroy (canvas_tiles);
-      canvas_tiles = NULL;
+      tile_manager_destroy (paint_tool->canvas_tiles);
+      paint_tool->canvas_tiles = NULL;
     }
 
   /*  Free the temporary buffers if they exist  */
@@ -1070,12 +1153,13 @@ gimp_paint_tool_get_paint_area (GimpPaintTool *paint_tool,
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
-    canvas_buf = temp_buf_resize (canvas_buf, bytes, x1, y1,
-				  (x2 - x1), (y2 - y1));
+    paint_tool->canvas_buf = temp_buf_resize (paint_tool->canvas_buf, bytes,
+                                              x1, y1,
+                                              (x2 - x1), (y2 - y1));
   else
     return NULL;
 
-  return canvas_buf;
+  return paint_tool->canvas_buf;
 }
 
 TempBuf *
@@ -1098,8 +1182,10 @@ gimp_paint_tool_get_orig_image (GimpPaintTool *paint_tool,
   guchar      *d;
   gpointer     pr;
 
-  orig_buf = temp_buf_resize (orig_buf, gimp_drawable_bytes (drawable),
-			      x1, y1, (x2 - x1), (y2 - y1));
+  paint_tool->orig_buf = temp_buf_resize (paint_tool->orig_buf,
+                                          gimp_drawable_bytes (drawable),
+                                          x1, y1,
+                                          (x2 - x1), (y2 - y1));
 
   dwidth  = gimp_drawable_width  (drawable);
   dheight = gimp_drawable_height (drawable);
@@ -1110,26 +1196,34 @@ gimp_paint_tool_get_orig_image (GimpPaintTool *paint_tool,
   y2 = CLAMP (y2, 0, dheight);
 
   /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_data (drawable), x1, y1,
-		     (x2 - x1), (y2 - y1), FALSE);
-  destPR.bytes = orig_buf->bytes;
-  destPR.x = 0; destPR.y = 0;
-  destPR.w = (x2 - x1); destPR.h = (y2 - y1);
-  destPR.rowstride = orig_buf->bytes * orig_buf->width;
-  destPR.data = temp_buf_data (orig_buf) +
-    (y1 - orig_buf->y) * destPR.rowstride + (x1 - orig_buf->x) * destPR.bytes;
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                     x1, y1,
+		     (x2 - x1), (y2 - y1),
+                     FALSE);
+
+  destPR.bytes     = paint_tool->orig_buf->bytes;
+  destPR.x         = 0;
+  destPR.y         = 0;
+  destPR.w         = (x2 - x1);
+  destPR.h         = (y2 - y1);
+  destPR.rowstride = paint_tool->orig_buf->bytes * paint_tool->orig_buf->width;
+  destPR.data      = (temp_buf_data (paint_tool->orig_buf) +
+                      (y1 - paint_tool->orig_buf->y) * destPR.rowstride +
+                      (x1 - paint_tool->orig_buf->x) * destPR.bytes);
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
+      undo_tile = tile_manager_get_tile (paint_tool->undo_tiles,
+                                         srcPR.x, srcPR.y,
 					 FALSE, FALSE);
       if (tile_is_valid (undo_tile) == TRUE)
 	{
 	  refd = 1;
-	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
+	  undo_tile = tile_manager_get_tile (paint_tool->undo_tiles,
+                                             srcPR.x, srcPR.y,
 					     TRUE, FALSE);
 	  s = (unsigned char*)tile_data_pointer (undo_tile, 0, 0) +
 	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
@@ -1155,7 +1249,7 @@ gimp_paint_tool_get_orig_image (GimpPaintTool *paint_tool,
 	tile_release (undo_tile, FALSE);
     }
 
-  return orig_buf;
+  return paint_tool->orig_buf;
 }
 
 void
@@ -1194,8 +1288,9 @@ gimp_paint_tool_replace_canvas (GimpPaintTool        *paint_tool,
   MaskBuf *brush_mask;
 
   /*  get the brush mask  */
-  brush_mask =
-    gimp_paint_tool_get_brush_mask (paint_tool, brush_hardness, brush_scale);
+  brush_mask = gimp_paint_tool_get_brush_mask (paint_tool,
+                                               brush_hardness,
+                                               brush_scale);
 
   /*  paste the canvas buf  */
   gimp_paint_tool_replace (paint_tool, brush_mask, drawable,
@@ -1204,12 +1299,13 @@ gimp_paint_tool_replace_canvas (GimpPaintTool        *paint_tool,
 
 
 static void
-gimp_paint_tool_invalidate_cache (GimpBrush *brush,
-				  gpointer   data)
+gimp_paint_tool_invalidate_cache (GimpBrush     *brush,
+				  GimpPaintTool *paint_tool)
 {
   /* Make sure we don't cache data for a brush that has changed */
-  if (last_brush_mask == brush->mask)
-    cache_invalid = TRUE;
+
+  if (paint_tool->last_brush_mask == brush->mask)
+    paint_tool->cache_invalid = TRUE;
 }
 
 /************************************************************
@@ -1244,9 +1340,10 @@ gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
 }
 
 static MaskBuf *
-gimp_paint_tool_subsample_mask (MaskBuf *mask,
-				gdouble  x,
-				gdouble  y)
+gimp_paint_tool_subsample_mask (GimpPaintTool *paint_tool,
+                                MaskBuf       *mask,
+				gdouble        x,
+				gdouble        y)
 {
   MaskBuf    *dest;
   gdouble     left;
@@ -1262,36 +1359,39 @@ gimp_paint_tool_subsample_mask (MaskBuf *mask,
 
   x += (x < 0) ? mask->width : 0;
   left = x - floor (x);
-  index1 = (gint) (left * (gdouble) (SUBSAMPLE + 1));
+  index1 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
 
   y += (y < 0) ? mask->height : 0;
   left = y - floor (y);
-  index2 = (gint) (left * (gdouble) (SUBSAMPLE + 1));
+  index2 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
 
   kernel = subsample[index2][index1];
 
-  if (mask == last_brush_mask && !cache_invalid)
+  if (mask == paint_tool->last_brush_mask && ! paint_tool->cache_invalid)
     {
-      if (kernel_brushes[index2][index1])
-	return kernel_brushes[index2][index1];
+      if (paint_tool->kernel_brushes[index2][index1])
+	return paint_tool->kernel_brushes[index2][index1];
     }
   else
     {
-      for (i = 0; i <= SUBSAMPLE; i++)
-	for (j = 0; j <= SUBSAMPLE; j++)
+      for (i = 0; i <= KERNEL_SUBSAMPLE; i++)
+	for (j = 0; j <= KERNEL_SUBSAMPLE; j++)
 	  {
-	    if (kernel_brushes[i][j])
-	      mask_buf_free (kernel_brushes[i][j]);
-
-	    kernel_brushes[i][j] = NULL;
+	    if (paint_tool->kernel_brushes[i][j])
+              {
+                mask_buf_free (paint_tool->kernel_brushes[i][j]);
+                paint_tool->kernel_brushes[i][j] = NULL;
+              }
 	  }
 
-      last_brush_mask = mask;
-      cache_invalid = FALSE;
+      paint_tool->last_brush_mask = mask;
+      paint_tool->cache_invalid   = FALSE;
     }
 
-  dest = kernel_brushes[index2][index1] = mask_buf_new (mask->width  + 2,
-							mask->height + 2);
+  dest = mask_buf_new (mask->width  + 2,
+                       mask->height + 2);
+
+  paint_tool->kernel_brushes[index2][index1] = dest;
 
   m = mask_buf_data (mask);
   for (i = 0; i < mask->height; i++)
@@ -1319,10 +1419,11 @@ gimp_paint_tool_subsample_mask (MaskBuf *mask,
 /* #define FANCY_PRESSURE */
 
 static MaskBuf *
-gimp_paint_tool_pressurize_mask (MaskBuf *brush_mask,
-				 gdouble  x,
-				 gdouble  y,
-				 gdouble  pressure)
+gimp_paint_tool_pressurize_mask (GimpPaintTool *paint_tool,
+                                 MaskBuf       *brush_mask,
+				 gdouble        x,
+				 gdouble        y,
+				 gdouble        pressure)
 {
   static MaskBuf *last_brush = NULL;
   static guchar   mapi[256];
@@ -1336,7 +1437,9 @@ gimp_paint_tool_pressurize_mask (MaskBuf *brush_mask,
 #endif
 
   /* Get the raw subsampled mask */
-  subsample_mask = gimp_paint_tool_subsample_mask (brush_mask, x, y);
+  subsample_mask = gimp_paint_tool_subsample_mask (paint_tool,
+                                                   brush_mask,
+                                                   x, y);
 
   /* Special case pressure = 0.5 */
   if ((int)(pressure * 100 + 0.5) == 50)
@@ -1345,11 +1448,11 @@ gimp_paint_tool_pressurize_mask (MaskBuf *brush_mask,
   /* Make sure we have the right sized buffer */
   if (brush_mask != last_brush)
     {
-      if (pressure_brush)
-	mask_buf_free (pressure_brush);
+      if (paint_tool->pressure_brush)
+	mask_buf_free (paint_tool->pressure_brush);
 
-      pressure_brush = mask_buf_new (brush_mask->width  + 2,
-				     brush_mask->height + 2);
+      paint_tool->pressure_brush = mask_buf_new (brush_mask->width  + 2,
+                                                 brush_mask->height + 2);
     }
 
 #ifdef FANCY_PRESSURE
@@ -1413,7 +1516,7 @@ gimp_paint_tool_pressurize_mask (MaskBuf *brush_mask,
   /* Now convert the brush */
 
   source = mask_buf_data (subsample_mask);
-  dest   = mask_buf_data (pressure_brush);
+  dest   = mask_buf_data (paint_tool->pressure_brush);
 
   i = subsample_mask->width * subsample_mask->height;
   while (i--)
@@ -1421,11 +1524,12 @@ gimp_paint_tool_pressurize_mask (MaskBuf *brush_mask,
       *dest++ = mapi[(*source++)];
     }
 
-  return pressure_brush;
+  return paint_tool->pressure_brush;
 }
 
 static MaskBuf *
-gimp_paint_tool_solidify_mask (MaskBuf *brush_mask)
+gimp_paint_tool_solidify_mask (GimpPaintTool *paint_tool,
+                               MaskBuf       *brush_mask)
 {
   static MaskBuf *last_brush = NULL;
 
@@ -1434,19 +1538,21 @@ gimp_paint_tool_solidify_mask (MaskBuf *brush_mask)
   guchar *data;
   guchar *src;
 
-  if (brush_mask == last_brush && !cache_invalid)
-    return solid_brush;
+  if (brush_mask == last_brush && ! paint_tool->cache_invalid)
+    return paint_tool->solid_brush;
 
   last_brush = brush_mask;
 
-  if (solid_brush)
-    mask_buf_free (solid_brush);
+  if (paint_tool->solid_brush)
+    mask_buf_free (paint_tool->solid_brush);
 
-  solid_brush = mask_buf_new (brush_mask->width + 2, brush_mask->height + 2);
+  paint_tool->solid_brush = mask_buf_new (brush_mask->width  + 2,
+                                          brush_mask->height + 2);
 
   /*  get the data and advance one line into it  */
-  data = mask_buf_data (solid_brush) + solid_brush->width;
-  src  = mask_buf_data (brush_mask);
+  data = (mask_buf_data (paint_tool->solid_brush) +
+          paint_tool->solid_brush->width);
+  src   = mask_buf_data (brush_mask);
 
   for (i = 0; i < brush_mask->height; i++)
     {
@@ -1458,12 +1564,13 @@ gimp_paint_tool_solidify_mask (MaskBuf *brush_mask)
       data++;
     }
 
-  return solid_brush;
+  return paint_tool->solid_brush;
 }
 
 static MaskBuf *
-gimp_paint_tool_scale_mask (MaskBuf *brush_mask,
-			    gdouble  scale)
+gimp_paint_tool_scale_mask (GimpPaintTool *paint_tool,
+                            MaskBuf       *brush_mask,
+			    gdouble        scale)
 {
   static MaskBuf *last_brush  = NULL;
   static gint     last_width  = 0.0;
@@ -1482,26 +1589,32 @@ gimp_paint_tool_scale_mask (MaskBuf *brush_mask,
   gimp_paint_tool_calculate_brush_size (brush_mask, scale,
                                         &dest_width, &dest_height);
 
-  if (brush_mask == last_brush && !cache_invalid &&
-      dest_width == last_width && dest_height == last_height)
-    return scale_brush;
+  if (brush_mask == last_brush    &&
+      ! paint_tool->cache_invalid &&
+      dest_width  == last_width   &&
+      dest_height == last_height)
+    {
+      return paint_tool->scale_brush;
+    }
 
-  if (scale_brush)
-    mask_buf_free (scale_brush);
+  if (paint_tool->scale_brush)
+    mask_buf_free (paint_tool->scale_brush);
 
   last_brush  = brush_mask;
   last_width  = dest_width;
   last_height = dest_height;
 
-  scale_brush = brush_scale_mask (brush_mask, dest_width, dest_height);
-  cache_invalid = TRUE;
+  paint_tool->scale_brush = brush_scale_mask (brush_mask,
+                                              dest_width, dest_height);
+  paint_tool->cache_invalid = TRUE;
 
-  return scale_brush;
+  return paint_tool->scale_brush;
 }
 
 static MaskBuf *
-gimp_paint_tool_scale_pixmap (MaskBuf *brush_mask,
-			      gdouble  scale)
+gimp_paint_tool_scale_pixmap (GimpPaintTool *paint_tool,
+                              MaskBuf       *brush_mask,
+			      gdouble        scale)
 {
   static MaskBuf *last_brush  = NULL;
   static gint     last_width  = 0.0;
@@ -1520,21 +1633,26 @@ gimp_paint_tool_scale_pixmap (MaskBuf *brush_mask,
   gimp_paint_tool_calculate_brush_size (brush_mask, scale,
                                         &dest_width, &dest_height);
 
-  if (brush_mask == last_brush && !cache_invalid &&
-      dest_width == last_width && dest_height == last_height)
-    return scale_pixmap;
+  if (brush_mask == last_brush    &&
+      ! paint_tool->cache_invalid &&
+      dest_width  == last_width   &&
+      dest_height == last_height)
+    {
+      return paint_tool->scale_pixmap;
+    }
 
-  if (scale_pixmap)
-    mask_buf_free (scale_pixmap);
+  if (paint_tool->scale_pixmap)
+    mask_buf_free (paint_tool->scale_pixmap);
 
   last_brush  = brush_mask;
   last_width  = dest_width;
   last_height = dest_height;
 
-  scale_pixmap = brush_scale_pixmap (brush_mask, dest_width, dest_height);
-  cache_invalid = TRUE;
+  paint_tool->scale_pixmap = brush_scale_pixmap (brush_mask,
+                                                 dest_width, dest_height);
+  paint_tool->cache_invalid = TRUE;
 
-  return scale_pixmap;
+  return paint_tool->scale_pixmap;
 }
 
 static MaskBuf *
@@ -1554,21 +1672,26 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
     }
   else
     {
-      mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);
+      mask = gimp_paint_tool_scale_mask (paint_tool,
+                                         paint_tool->brush->mask,
+                                         scale);
     }
 
   switch (brush_hardness)
     {
     case SOFT:
-      mask = gimp_paint_tool_subsample_mask (mask,
+      mask = gimp_paint_tool_subsample_mask (paint_tool,
+                                             mask,
 					     paint_tool->cur_coords.x,
                                              paint_tool->cur_coords.y);
       break;
     case HARD:
-      mask = gimp_paint_tool_solidify_mask (mask);
+      mask = gimp_paint_tool_solidify_mask (paint_tool,
+                                            mask);
       break;
     case PRESSURE:
-      mask = gimp_paint_tool_pressurize_mask (mask,
+      mask = gimp_paint_tool_pressurize_mask (paint_tool,
+                                              mask,
 					      paint_tool->cur_coords.x,
                                               paint_tool->cur_coords.y,
 					      paint_tool->cur_coords.pressure);
@@ -1599,9 +1722,10 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
     return;
 
   /*  set undo blocks  */
-  set_undo_tiles (drawable,
-		  canvas_buf->x, canvas_buf->y,
-		  canvas_buf->width, canvas_buf->height);
+  set_undo_tiles (paint_tool,
+                  drawable,
+		  paint_tool->canvas_buf->x, paint_tool->canvas_buf->y,
+		  paint_tool->canvas_buf->width, paint_tool->canvas_buf->height);
 
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the brush mask to the canvas tiles
@@ -1609,12 +1733,15 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
   if (mode == CONSTANT)
     {
       /*  initialize any invalid canvas tiles  */
-      set_canvas_tiles (canvas_buf->x, canvas_buf->y,
-			canvas_buf->width, canvas_buf->height);
+      set_canvas_tiles (paint_tool,
+                        paint_tool->canvas_buf->x,
+                        paint_tool->canvas_buf->y,
+			paint_tool->canvas_buf->width,
+                        paint_tool->canvas_buf->height);
 
       brush_to_canvas_tiles (paint_tool, brush_mask, brush_opacity);
       canvas_tiles_to_canvas_buf (paint_tool);
-      alt = undo_tiles;
+      alt = paint_tool->undo_tiles;
     }
   /*  Otherwise:
    *   combine the canvas buf and the brush mask to the canvas buf
@@ -1625,24 +1752,28 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
     }
 
   /*  intialize canvas buf source pixel regions  */
-  srcPR.bytes = canvas_buf->bytes;
-  srcPR.x = 0; srcPR.y = 0;
-  srcPR.w = canvas_buf->width;
-  srcPR.h = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data = temp_buf_data (canvas_buf);
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
+  srcPR.x         = 0;
+  srcPR.y         = 0;
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * paint_tool->canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
 			  FALSE, image_opacity, paint_mode,
 			  alt,  /*  specify an alternative src1  */
-			  canvas_buf->x, canvas_buf->y);
+			  paint_tool->canvas_buf->x,
+                          paint_tool->canvas_buf->y);
 
   /*  Update the undo extents  */
-  paint_tool->x1 = MIN (paint_tool->x1, canvas_buf->x);
-  paint_tool->y1 = MIN (paint_tool->y1, canvas_buf->y);
-  paint_tool->x2 = MAX (paint_tool->x2, (canvas_buf->x + canvas_buf->width));
-  paint_tool->y2 = MAX (paint_tool->y2, (canvas_buf->y + canvas_buf->height));
+  paint_tool->x1 = MIN (paint_tool->x1, paint_tool->canvas_buf->x);
+  paint_tool->y1 = MIN (paint_tool->y1, paint_tool->canvas_buf->y);
+  paint_tool->x2 = MAX (paint_tool->x2, (paint_tool->canvas_buf->x +
+                                         paint_tool->canvas_buf->width));
+  paint_tool->y2 = MAX (paint_tool->y2, (paint_tool->canvas_buf->y +
+                                         paint_tool->canvas_buf->height));
 
   /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
@@ -1650,10 +1781,10 @@ gimp_paint_tool_paste (GimpPaintTool        *paint_tool,
    */
   gimp_drawable_offsets (drawable, &offx, &offy);
   gimp_image_update (gimage,
-                     canvas_buf->x + offx,
-                     canvas_buf->y + offy,
-                     canvas_buf->width,
-                     canvas_buf->height);
+                     paint_tool->canvas_buf->x + offx,
+                     paint_tool->canvas_buf->y + offy,
+                     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height);
 }
 
 /* This works similarly to gimp_paint_tool_paste. However, instead of combining
@@ -1691,26 +1822,35 @@ gimp_paint_tool_replace (GimpPaintTool        *paint_tool,
     return;
 
   /*  set undo blocks  */
-  set_undo_tiles (drawable,
-		  canvas_buf->x, canvas_buf->y,
-		  canvas_buf->width, canvas_buf->height);
+  set_undo_tiles (paint_tool,
+                  drawable,
+		  paint_tool->canvas_buf->x,
+                  paint_tool->canvas_buf->y,
+		  paint_tool->canvas_buf->width,
+                  paint_tool->canvas_buf->height);
 
   if (mode == CONSTANT)
     {
       /*  initialize any invalid canvas tiles  */
-      set_canvas_tiles (canvas_buf->x, canvas_buf->y,
-			canvas_buf->width, canvas_buf->height);
+      set_canvas_tiles (paint_tool,
+                        paint_tool->canvas_buf->x,
+                        paint_tool->canvas_buf->y,
+			paint_tool->canvas_buf->width,
+                        paint_tool->canvas_buf->height);
 
       /* combine the brush mask and the canvas tiles */
       brush_to_canvas_tiles (paint_tool, brush_mask, brush_opacity);
 
       /* set the alt source as the unaltered undo_tiles */
-      alt = undo_tiles;
+      alt = paint_tool->undo_tiles;
 
       /* initialize the maskPR from the canvas tiles */
-      pixel_region_init (&maskPR, canvas_tiles,
-			 canvas_buf->x, canvas_buf->y,
-			 canvas_buf->width, canvas_buf->height, FALSE);
+      pixel_region_init (&maskPR, paint_tool->canvas_tiles,
+			 paint_tool->canvas_buf->x,
+                         paint_tool->canvas_buf->y,
+			 paint_tool->canvas_buf->width,
+                         paint_tool->canvas_buf->height,
+                         FALSE);
     }
   else
     {
@@ -1718,32 +1858,35 @@ gimp_paint_tool_replace (GimpPaintTool        *paint_tool,
       maskPR.bytes     = 1;
       maskPR.x         = 0;
       maskPR.y         = 0;
-      maskPR.w         = canvas_buf->width;
-      maskPR.h         = canvas_buf->height;
+      maskPR.w         = paint_tool->canvas_buf->width;
+      maskPR.h         = paint_tool->canvas_buf->height;
       maskPR.rowstride = maskPR.bytes * brush_mask->width;
       maskPR.data      = mask_buf_data (brush_mask);
     }
 
   /*  intialize canvas buf source pixel regions  */
-  srcPR.bytes     = canvas_buf->bytes;
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
   srcPR.x         = 0;
   srcPR.y         = 0;
-  srcPR.w         = canvas_buf->width;
-  srcPR.h         = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (canvas_buf);
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * paint_tool->canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
   /*  apply the paint area to the gimage  */
   gimp_image_replace_image (gimage, drawable, &srcPR,
 			    FALSE, image_opacity,
 			    &maskPR,
-			    canvas_buf->x, canvas_buf->y);
+			    paint_tool->canvas_buf->x,
+                            paint_tool->canvas_buf->y);
 
   /*  Update the undo extents  */
-  paint_tool->x1 = MIN (paint_tool->x1, canvas_buf->x);
-  paint_tool->y1 = MIN (paint_tool->y1, canvas_buf->y);
-  paint_tool->x2 = MAX (paint_tool->x2, (canvas_buf->x + canvas_buf->width));
-  paint_tool->y2 = MAX (paint_tool->y2, (canvas_buf->y + canvas_buf->height));
+  paint_tool->x1 = MIN (paint_tool->x1, paint_tool->canvas_buf->x);
+  paint_tool->y1 = MIN (paint_tool->y1, paint_tool->canvas_buf->y);
+  paint_tool->x2 = MAX (paint_tool->x2, (paint_tool->canvas_buf->x +
+                                         paint_tool->canvas_buf->width));
+  paint_tool->y2 = MAX (paint_tool->y2, (paint_tool->canvas_buf->y +
+                                         paint_tool->canvas_buf->height));
 
   /*  Update the gimage--it is important to call gimp_image_update
    *  instead of drawable_update because we don't want the drawable
@@ -1751,30 +1894,33 @@ gimp_paint_tool_replace (GimpPaintTool        *paint_tool,
    */
   gimp_drawable_offsets (drawable, &offx, &offy);
   gimp_image_update (gimage,
-                     canvas_buf->x + offx,
-                     canvas_buf->y + offy,
-                     canvas_buf->width,
-                     canvas_buf->height);
+                     paint_tool->canvas_buf->x + offx,
+                     paint_tool->canvas_buf->y + offy,
+                     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height);
 }
 
 static void
-canvas_tiles_to_canvas_buf (GimpPaintTool *gimp_paint_tool)
+canvas_tiles_to_canvas_buf (GimpPaintTool *paint_tool)
 {
   PixelRegion srcPR;
   PixelRegion maskPR;
 
   /*  combine the canvas tiles and the canvas buf  */
-  srcPR.bytes     = canvas_buf->bytes;
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
   srcPR.x         = 0;
   srcPR.y         = 0;
-  srcPR.w         = canvas_buf->width;
-  srcPR.h         = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (canvas_buf);
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * paint_tool->canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
-  pixel_region_init (&maskPR, canvas_tiles,
-		     canvas_buf->x, canvas_buf->y,
-		     canvas_buf->width, canvas_buf->height, FALSE);
+  pixel_region_init (&maskPR, paint_tool->canvas_tiles,
+		     paint_tool->canvas_buf->x,
+                     paint_tool->canvas_buf->y,
+		     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height,
+                     FALSE);
 
   /*  apply the canvas tiles to the canvas buf  */
   apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
@@ -1783,7 +1929,7 @@ canvas_tiles_to_canvas_buf (GimpPaintTool *gimp_paint_tool)
 static void
 brush_to_canvas_tiles (GimpPaintTool *paint_tool,
 		       MaskBuf       *brush_mask,
-		       gint          brush_opacity)
+		       gint           brush_opacity)
 {
   PixelRegion srcPR;
   PixelRegion maskPR;
@@ -1793,9 +1939,12 @@ brush_to_canvas_tiles (GimpPaintTool *paint_tool,
   gint        yoff;
 
   /*   combine the brush mask and the canvas tiles  */
-  pixel_region_init (&srcPR, canvas_tiles,
-		     canvas_buf->x, canvas_buf->y,
-		     canvas_buf->width, canvas_buf->height, TRUE);
+  pixel_region_init (&srcPR, paint_tool->canvas_tiles,
+		     paint_tool->canvas_buf->x,
+                     paint_tool->canvas_buf->y,
+		     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height,
+                     TRUE);
 
   x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
   y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
@@ -1808,7 +1957,8 @@ brush_to_canvas_tiles (GimpPaintTool *paint_tool,
   maskPR.w         = srcPR.w;
   maskPR.h         = srcPR.h;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
-  maskPR.data      = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
+  maskPR.data      = mask_buf_data (brush_mask) + (yoff * maskPR.rowstride +
+                                                   xoff * maskPR.bytes);
 
   /*  combine the mask to the canvas tiles  */
   combine_mask_and_region (&srcPR, &maskPR, brush_opacity);
@@ -1832,13 +1982,13 @@ brush_to_canvas_buf (GimpPaintTool *paint_tool,
   yoff = (y < 0) ? -y : 0;
 
   /*  combine the canvas buf and the brush mask to the canvas buf  */
-  srcPR.bytes     = canvas_buf->bytes;
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
   srcPR.x         = 0;
   srcPR.y         = 0;
-  srcPR.w         = canvas_buf->width;
-  srcPR.h         = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (canvas_buf);
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * paint_tool->canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
   maskPR.bytes     = 1;
   maskPR.x         = 0;
@@ -1866,9 +2016,12 @@ paint_to_canvas_tiles (GimpPaintTool *paint_tool,
   gint yoff;
 
   /*   combine the brush mask and the canvas tiles  */
-  pixel_region_init (&srcPR, canvas_tiles,
-		     canvas_buf->x, canvas_buf->y,
-		     canvas_buf->width, canvas_buf->height, TRUE);
+  pixel_region_init (&srcPR, paint_tool->canvas_tiles,
+		     paint_tool->canvas_buf->x,
+                     paint_tool->canvas_buf->y,
+		     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height,
+                     TRUE);
 
   x = (gint) floor (paint_tool->cur_coords.x) - (brush_mask->width  >> 1);
   y = (gint) floor (paint_tool->cur_coords.y) - (brush_mask->height >> 1);
@@ -1881,23 +2034,27 @@ paint_to_canvas_tiles (GimpPaintTool *paint_tool,
   maskPR.w         = srcPR.w;
   maskPR.h         = srcPR.h;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
-  maskPR.data      = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
+  maskPR.data      = mask_buf_data (brush_mask) + (yoff * maskPR.rowstride +
+                                                   xoff * maskPR.bytes);
 
   /*  combine the mask and canvas tiles  */
   combine_mask_and_region (&srcPR, &maskPR, brush_opacity);
 
   /*  combine the canvas tiles and the canvas buf  */
-  srcPR.bytes     = canvas_buf->bytes;
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
   srcPR.x         = 0;
   srcPR.y         = 0;
-  srcPR.w         = canvas_buf->width;
-  srcPR.h         = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (canvas_buf);
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * paint_tool->canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
-  pixel_region_init (&maskPR, canvas_tiles,
-		     canvas_buf->x, canvas_buf->y,
-		     canvas_buf->width, canvas_buf->height, FALSE);
+  pixel_region_init (&maskPR, paint_tool->canvas_tiles,
+		     paint_tool->canvas_buf->x,
+                     paint_tool->canvas_buf->y,
+		     paint_tool->canvas_buf->width,
+                     paint_tool->canvas_buf->height,
+                     FALSE);
 
   /*  apply the canvas tiles to the canvas buf  */
   apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
@@ -1922,13 +2079,13 @@ paint_to_canvas_buf (GimpPaintTool *paint_tool,
 
 
   /*  combine the canvas buf and the brush mask to the canvas buf  */
-  srcPR.bytes     = canvas_buf->bytes;
+  srcPR.bytes     = paint_tool->canvas_buf->bytes;
   srcPR.x         = 0;
   srcPR.y         = 0;
-  srcPR.w         = canvas_buf->width;
-  srcPR.h         = canvas_buf->height;
-  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
-  srcPR.data      = temp_buf_data (canvas_buf);
+  srcPR.w         = paint_tool->canvas_buf->width;
+  srcPR.h         = paint_tool->canvas_buf->height;
+  srcPR.rowstride = paint_tool->canvas_buf->width * canvas_buf->bytes;
+  srcPR.data      = temp_buf_data (paint_tool->canvas_buf);
 
   maskPR.bytes     = 1;
   maskPR.x         = 0;
@@ -1944,18 +2101,19 @@ paint_to_canvas_buf (GimpPaintTool *paint_tool,
 #endif
 
 static void
-set_undo_tiles (GimpDrawable *drawable,
-		gint          x,
-		gint          y,
-		gint          w,
-		gint          h)
+set_undo_tiles (GimpPaintTool *paint_tool,
+                GimpDrawable  *drawable,
+		gint           x,
+		gint           y,
+		gint           w,
+		gint           h)
 {
   gint  i;
   gint  j;
   Tile *src_tile;
   Tile *dest_tile;
 
-  if (undo_tiles == NULL)
+  if (! paint_tool->undo_tiles)
     {
       g_warning ("set_undo_tiles: undo_tiles is null");
       return;
@@ -1965,12 +2123,14 @@ set_undo_tiles (GimpDrawable *drawable,
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
+	  dest_tile = tile_manager_get_tile (paint_tool->undo_tiles, j, i,
+                                             FALSE, FALSE);
+
 	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
 	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
 						j, i, TRUE, FALSE);
-	      tile_manager_map_tile (undo_tiles, j, i, src_tile);
+	      tile_manager_map_tile (paint_tool->undo_tiles, j, i, src_tile);
 	      tile_release (src_tile, FALSE);
 	    }
 	}
@@ -1978,10 +2138,11 @@ set_undo_tiles (GimpDrawable *drawable,
 }
 
 static void
-set_canvas_tiles (gint x,
-		  gint y,
-		  gint w,
-		  gint h)
+set_canvas_tiles (GimpPaintTool *paint_tool,
+                  gint           x,
+		  gint           y,
+		  gint           w,
+		  gint           h)
 {
   gint  i;
   gint  j;
@@ -1991,10 +2152,13 @@ set_canvas_tiles (gint x,
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
+	  tile = tile_manager_get_tile (paint_tool->canvas_tiles, j, i,
+                                        FALSE, FALSE);
+
 	  if (tile_is_valid (tile) == FALSE)
 	    {
-	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
+	      tile = tile_manager_get_tile (paint_tool->canvas_tiles, j, i,
+                                            TRUE, TRUE);
 	      memset (tile_data_pointer (tile, 0, 0), 0, tile_size (tile));
 	      tile_release (tile, TRUE);
 	    }
@@ -2011,13 +2175,17 @@ set_canvas_tiles (gint x,
 static void
 gimp_paint_tool_free_buffers (GimpPaintTool *paint_tool)
 {
-  if (orig_buf)
-    temp_buf_free (orig_buf);
-  orig_buf = NULL;
+  if (paint_tool->orig_buf)
+    {
+      temp_buf_free (paint_tool->orig_buf);
+      paint_tool->orig_buf = NULL;
+    }
 
-  if (canvas_buf)
-    temp_buf_free (canvas_buf);
-  canvas_buf = NULL;
+  if (paint_tool->canvas_buf)
+    {
+      temp_buf_free (paint_tool->canvas_buf);
+      paint_tool->canvas_buf = NULL;
+    }
 }
 
 
@@ -2048,10 +2216,14 @@ gimp_paint_tool_color_area_with_pixmap (GimpPaintTool        *paint_tool,
   g_return_if_fail (paint_tool->brush->pixmap != NULL);
 
   /*  scale the brushes  */
-  pixmap_mask = gimp_paint_tool_scale_pixmap (paint_tool->brush->pixmap, scale);
+  pixmap_mask = gimp_paint_tool_scale_pixmap (paint_tool,
+                                              paint_tool->brush->pixmap,
+                                              scale);
 
   if (mode == SOFT)
-    brush_mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);
+    brush_mask = gimp_paint_tool_scale_mask (paint_tool,
+                                             paint_tool->brush->mask,
+                                             scale);
   else
     brush_mask = NULL;
 

@@ -23,6 +23,9 @@
 #include "gimpdrawtool.h"
 
 
+#define PAINT_TOOL_SUBSAMPLE 4
+
+
 /* the different states that the painting function can be called with  */
 
 typedef enum /*< pdb-skip >*/
@@ -83,6 +86,27 @@ struct _GimpPaintTool
   gboolean      pick_colors;   /*  pick color if ctrl or alt is pressed  */
   gboolean      pick_state;    /*  was ctrl or alt pressed when clicked? */
   ToolFlags     flags;         /*  tool flags, see ToolFlags above       */
+
+  /*  undo blocks variables  */
+  TileManager  *undo_tiles;
+  TileManager  *canvas_tiles;
+
+  /*  paint buffers variables  */
+  TempBuf      *orig_buf;
+  TempBuf      *canvas_buf;
+
+  /*  brush buffers  */
+  MaskBuf      *pressure_brush;
+  MaskBuf      *solid_brush;
+  MaskBuf      *scale_brush;
+  MaskBuf      *scale_pixmap;
+  MaskBuf      *kernel_brushes[PAINT_TOOL_SUBSAMPLE + 1][PAINT_TOOL_SUBSAMPLE + 1];
+
+  MaskBuf      *last_brush_mask;
+  gboolean      cache_invalid;
+
+  /*  don't use this one...  */
+  GimpBrush    *grr_brush;
 };
 
 struct _GimpPaintToolClass
