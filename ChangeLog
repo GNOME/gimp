@@ -1,3 +1,8 @@
+Wed May  5 18:18:16 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+        * configure.in: enabled _NOUI versions of GIMP_CFLAGS and
+        GIMP_LIBS.
+
 Wed May  5 14:29:51 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/datafiles.c: Add <sys/types.h>.
@@ -150,6 +155,7 @@ Mon May  3 15:34:37 PDT 1999 Manish Singh <yosh@gimp.org>
 	* tools/pdbgen/pdb/plug_in.pdb: progress_init takes an int32, not
 	a display...
 
+>>>>>>> 1.1075
 Mon May  3 14:03:35 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimage_cmds.c
