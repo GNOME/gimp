@@ -424,7 +424,7 @@ perl_paramdef_count (GimpParamDef *arg, int count)
   if (args[index].data.datatype || !args[index-1].data.d_int32) \
     { \
       for (j = 0; j < args[index-1].data.d_int32; j++) \
-	trace_printf (frmt ## "%s", (ctype) args[index].data.datatype[j], \
+	trace_printf (frmt "%s", (ctype) args[index].data.datatype[j], \
 	              j < args[index-1].data.d_int32 - 1 ? ", " : ""); \
     } \
   else \

@@ -803,7 +803,7 @@ IMAGETYPE is one of GIF, JPG, JPEG, PNM or PNG, options include
  -F	do not flatten the image
 
  options for GIF and PNG images
- +I	do save as interlaced (GIF only)
+ +I	do save as interlaced
  -I	do not save as interlaced (default)
 
  options for GIF animations (use with -F)
@@ -825,10 +825,10 @@ IMAGETYPE is one of GIF, JPG, JPEG, PNM or PNG, options include
 some examples:
 
  test.jpg		save the image as a simple jpeg
- JPG:test.jpg		same
+ JPG:test.jpg		the same
  JPG-Q70:test.jpg	the same but force a quality of 70
  GIF-I-F:test.jpg	save a gif image(!) named test.jpg
- 			non-inerlaced and without flattening
+ 			non-interlaced and without flattening
 
 =back
 

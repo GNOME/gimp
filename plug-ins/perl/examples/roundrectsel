@@ -1,10 +1,6 @@
 #!/usr/app/bin/perl
 
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 # <sjburges@gimp.org>
-# This is adrian's idea - take random blends and difference them.  You're
-# bound to come up w/ something cool eventually.
 
 use Gimp;
 use Gimp::Fu;
@@ -42,7 +38,6 @@ register "round_rect_sel",
 	$img->ellipse_select($bounds[3]-$x_round, $bounds[2], $x_round, $y_round, 0, 1, 0, 0.5); 
 	$img->ellipse_select($bounds[3]-$x_round, $bounds[4]-$y_round, $x_round, $y_round, 0, 1, 0, 0.5); 
 	$img->ellipse_select($bounds[1], $bounds[4]-$y_round, $x_round, $y_round, 0, 1, 0, 0.5); 
-
 
 	eval { $img->undo_push_group_end };
     return();
