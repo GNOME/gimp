@@ -20,7 +20,6 @@
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
-#include "canvas.h"
 #include "colormaps.h"
 #include "info_dialog.h"
 #include "info_window.h"
@@ -28,7 +27,6 @@
 #include "general.h"
 #include "gximage.h"
 #include "interface.h"
-#include "tag.h"
 
 #define MAX_BUF 256
 
@@ -41,10 +39,6 @@ struct _InfoWinData
   char visual_class_str[MAX_BUF];
   char visual_depth_str[MAX_BUF];
   char shades_str[MAX_BUF];
-  char xy_str[MAX_BUF];
-  char color_str[MAX_BUF];
-  char color_str2[MAX_BUF];
-  char color_str3[MAX_BUF];
 };
 
 /*  The different classes of visuals  */
@@ -152,10 +146,6 @@ info_window_create (void *gdisp_ptr)
   iwd->visual_class_str[0] = '\0';
   iwd->visual_depth_str[0] = '\0';
   iwd->shades_str[0] = '\0';
-  iwd->xy_str[0] = '\0';
-  iwd->color_str[0] = '\0';
-  iwd->color_str2[0] = '\0';
-  iwd->color_str2[0] = '\0';
 
   /*  add the information fields  */
   info_dialog_add_field (info_win, "Dimensions (w x h): ", iwd->dimensions_str);
@@ -170,12 +160,6 @@ info_window_create (void *gdisp_ptr)
   else if (type == GRAY)
     info_dialog_add_field (info_win, "Shades of Gray: ", iwd->shades_str);
 
-  /* color and position fields */ 
-  info_dialog_add_field (info_win, "XY: ", iwd->xy_str);
-  info_dialog_add_field (info_win, "Color: ", iwd->color_str);
-  info_dialog_add_field (info_win, "Color: ", iwd->color_str2);
-  info_dialog_add_field (info_win, "Color: ", iwd->color_str3);
-  
   /*  update the fields  */
   info_window_update (info_win, gdisp_ptr);
 
@@ -243,351 +227,5 @@ info_window_update (InfoDialog *info_win,
   /*  pure color shades  */
   get_shades (gdisp, iwd->shades_str);
 
-  info_dialog_update (info_win);
-}
-
-static gint u8_to_u16( guint8 code )
-{
-  return ( (code/255.0) * 65535 + .5 );
-}
-
-static gfloat u8_to_float( guint8 code )
-{
-  return code/255.0;
-}
-
-static gint u16_to_u8( guint16 code )
-{
-  return ( (code/65535.0) * 255 + .5 );
-}
-
-static gfloat u16_to_float( guint16 code )
-{
-  return code/65535.0;
-}
-
-static gint float_to_u8( gfloat code )
-{
-  return (255 * code + .5);
-}
-
-static gint float_to_u16( gfloat code )
-{
-  return (65535 * code + .5);
-}
-
-static void setnull( char *c)
-{
-  int i;
-  for( i = 0; i <= 30; i++)
-	c[i] = '\0';
-} 
-
-
-void 
-info_window_update_xy(
-			InfoDialog *info_win,
-		        void       *gdisp_ptr,
-			int x,
-			int y
-			)
-{
-  GDisplay *gdisp;
-  InfoWinData *iwd;
-  int imagetype;
-  int flat;
-  int layertype;
-  
-  gdisp = (GDisplay *) gdisp_ptr;
-  iwd = (InfoWinData *) info_win->user_data;
-
-  /* color field */
-  {
-    Canvas *c = gimage_projection_canvas (gdisp->gimage) ;
-    if (c)
-    { 
-      guchar * data;
-      Tag t = canvas_tag (c);
-      Alpha a = tag_alpha (t);
-      Format f = tag_format (t);
-      Precision p = tag_precision (t);
-
-      canvas_portion_ref (c, x, y);
-      data = canvas_portion_data (c, x, y); 
-      canvas_portion_unref (c, x, y);
-      setnull (iwd->color_str);
-      setnull (iwd->color_str2);
-      setnull (iwd->color_str3);
-	 
-      if (data) 
-      {
-      switch (p)
-	{
-	
-	case PRECISION_U8:
-	  {
-	    guint8 *d = (guint8 *)data;
-	    switch (f)
-	      {
-	      case FORMAT_RGB:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-		      sprintf (iwd->color_str, "%d, %d, %d, %d", 
-				(int)d[0], 
-				(int)d[1], 
-				(int)d[2], 
-				(int)d[3]);
-		      sprintf (iwd->color_str2, "%d, %d, %d, %d", 
-				u8_to_u16(d[0]), 
-				u8_to_u16(d[1]),
-				u8_to_u16(d[2]),
-				u8_to_u16(d[3]));
-		      sprintf (iwd->color_str3, " %f, %f, %f, %f", 
-				u8_to_float(d[0]), 
-				u8_to_float(d[1]),
-				u8_to_float(d[2]),
-				u8_to_float(d[3]));
-		      break;
-		    case ALPHA_NO:
-		      sprintf (iwd->color_str, "%d, %d, %d", 
-				(int)d[0], 
-				(int)d[1], 
-				(int)d[2]);
-		      sprintf (iwd->color_str2, "%d, %d, %d", 
-				u8_to_u16(d[0]), 
-				u8_to_u16(d[1]),
-				u8_to_u16(d[2]));
-		      sprintf (iwd->color_str3, "%f, %f, %f", 
-				u8_to_float(d[0]), 
-				u8_to_float(d[1]),
-				u8_to_float(d[2]));
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      case FORMAT_GRAY:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-	              sprintf (iwd->color_str, "%d, %d", 
-				(int)d[0], 
-				(int)d[1]); 
-		      sprintf (iwd->color_str2, "%d, %d", 
-				u8_to_u16(d[0]), 
-				u8_to_u16(d[1]));
-		      sprintf (iwd->color_str2, "%f, %f", 
-				u8_to_float(d[0]), 
-				u8_to_float(d[1]));
-		      break;
-		    case ALPHA_NO:
-	              sprintf (iwd->color_str, "%d", 
-				(int)d[0]); 
-		      sprintf (iwd->color_str2, "%d", 
-				u8_to_u16(d[0])); 
-		      sprintf (iwd->color_str2, "%f", 
-				u8_to_float(d[1]));
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      case FORMAT_INDEXED:      
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-	              sprintf (iwd->color_str, "%d, %d", 
-				(int)d[0], 
-				(int)d[1]); 
-		      break;
-		    case ALPHA_NO:
-	              sprintf (iwd->color_str, "%d", 
-				(int)d[0]); 
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      default:
-		break; 
-	      } 
-	  }
-	  break;
-	
-	case PRECISION_U16:
-	  {
-	    guint16 *d = (guint16 *)data;
-	    switch (f)
-	      {
-	      case FORMAT_RGB:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-		      sprintf (iwd->color_str, "%d, %d, %d, %d", 
-				(int)d[0], 
-				(int)d[1], 
-				(int)d[2], 
-				(int)d[3]);
-		      sprintf (iwd->color_str2, "%d, %d, %d, %d", 
-				u16_to_u8(d[0]), 
-				u16_to_u8(d[1]),
-				u16_to_u8(d[2]),
-				u16_to_u8(d[3]));
-		      sprintf (iwd->color_str3, "%f, %f, %f, %f", 
-				u16_to_float(d[0]), 
-				u16_to_float(d[1]),
-				u16_to_float(d[2]),
-				u16_to_float(d[3]));
-		      break;
-		    case ALPHA_NO:
-		      sprintf (iwd->color_str, "%d, %d, %d", 
-				(int)d[0], 
-				(int)d[1], 
-				(int)d[2]);
-		      sprintf (iwd->color_str2, "%d, %d, %d", 
-				u16_to_u8(d[0]), 
-				u16_to_u8(d[1]),
-				u16_to_u8(d[2]));
-		      sprintf (iwd->color_str3, "%f, %f, %f", 
-				u16_to_float(d[0]), 
-				u16_to_float(d[1]),
-				u16_to_float(d[2]));
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      case FORMAT_GRAY:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-	              sprintf (iwd->color_str, "%d, %d", 
-				(int)d[0], 
-				(int)d[1]); 
-		      sprintf (iwd->color_str2, "%d, %d", 
-				u16_to_u8(d[0]), 
-				u16_to_u8(d[1]));
-		      sprintf (iwd->color_str3, "%f, %f", 
-				u16_to_float(d[0]), 
-				u16_to_float(d[1]));
-		      break;
-		    case ALPHA_NO:
-	              sprintf (iwd->color_str, "%d", 
-				(int)d[0]); 
-		      sprintf (iwd->color_str2, "%d", 
-				u16_to_u8(d[0])); 
-		      sprintf (iwd->color_str3, "%f", 
-				u16_to_float(d[0])); 
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      case FORMAT_INDEXED:      
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-	              sprintf (iwd->color_str, "%d, %d", 
-				(int)d[0], 
-				(int)d[1]); 
-		      break;
-		    case ALPHA_NO:
-	              sprintf (iwd->color_str, "%d", 
-				(int)d[0]); 
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      default:
-		break; 
-	      } 
-	  }
-	  break;
-	
-	case PRECISION_FLOAT:
-	  {
-	    gfloat *d = (gfloat *)data;
-	    switch (f)
-	      {
-	      case FORMAT_RGB:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-		      sprintf (iwd->color_str, "%f, %f, %f, %f", 
-				(gfloat)d[0], 
-				(gfloat)d[1], 
-				(gfloat)d[2], 
-				(gfloat)d[3]);
-		      sprintf (iwd->color_str2, "%d, %d, %d, %d", 
-				float_to_u8(d[0]), 
-				float_to_u8(d[1]),
-				float_to_u8(d[2]),
-				float_to_u8(d[3]));
-		      sprintf (iwd->color_str3, "%d, %d, %d, %d", 
-				float_to_u16(d[0]), 
-				float_to_u16(d[1]),
-				float_to_u16(d[2]),
-				float_to_u16(d[3]));
-		      break;
-		    case ALPHA_NO:
-		      sprintf (iwd->color_str, "%f, %f, %f", 
-				(gfloat)d[0], 
-				(gfloat)d[1], 
-				(gfloat)d[2]);
-		      sprintf (iwd->color_str2, "%d, %d, %d", 
-				float_to_u8(d[0]), 
-				float_to_u8(d[1]),
-				float_to_u8(d[2]));
-		      sprintf (iwd->color_str3, "%d, %d, %d", 
-				float_to_u16(d[0]), 
-				float_to_u16(d[1]),
-				float_to_u16(d[2]));
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      case FORMAT_GRAY:
-		  switch (a)
-		    {
-		    case ALPHA_YES:
-	              sprintf (iwd->color_str, "%f, %f", 
-				(gfloat)d[0], 
-				(gfloat)d[1]); 
-		      sprintf (iwd->color_str2, "%d, %d", 
-				float_to_u8(d[0]), 
-				float_to_u8(d[1]));
-		      sprintf (iwd->color_str3, "%d, %d", 
-				float_to_u16(d[0]), 
-				float_to_u16(d[1]));
-		      break;
-		    case ALPHA_NO:
-	              sprintf (iwd->color_str, "%f", 
-				(gfloat)d[0]); 
-		      sprintf (iwd->color_str2, "%d", 
-				float_to_u8(d[0])); 
-		      sprintf (iwd->color_str3, "%d", 
-				float_to_u16(d[0])); 
-		      break;
-		    default:
-		      break;
-		    }
-		  break;
-	      default:
-		break; 
-	      } 
-	  }
-	  break;
-	default:
-	  break;
-	}
-      }
-    }
-  }    
- 
-  /* x, y field */
-  sprintf( iwd->xy_str, "%d,%d", x, y);
   info_dialog_update (info_win);
 }
