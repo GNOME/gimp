@@ -1,3 +1,17 @@
+2004-06-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.[ch]: added "gint freeze_count" and
+	gimp_data_freeze()/thaw() functions. Emit "dirty" only if
+	freeze_count either is 0 or drops to 0.
+
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpgradient.[ch]: removed freeze/thaw stuff that
+	was duplicated in these two subclasses and use the new
+	GimpData API instead.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpgradienteditor.c: changed accordingly.
+
 2004-06-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorbar.c (gimp_color_bar_expose): don't copy

@@ -145,7 +145,6 @@ gimp_gradient_init (GimpGradient *gradient)
 {
   gradient->segments     = NULL;
   gradient->last_visited = NULL;
-  gradient->freeze_count = 0;
 }
 
 static void
@@ -823,26 +822,6 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
   return NULL;
 }
 
-void
-gimp_gradient_freeze (GimpGradient *gradient)
-{
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-
-  gradient->freeze_count++;
-}
-
-void
-gimp_gradient_thaw (GimpGradient *gradient)
-{
-  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
-  g_return_if_fail (gradient->freeze_count > 0);
-
-  gradient->freeze_count--;
-
-  if (gradient->freeze_count == 0)
-    gimp_data_dirty (GIMP_DATA (gradient));
-}
-
 static gdouble
 gimp_gradient_calc_linear_factor (gdouble middle,
 				  gdouble pos)
@@ -1013,7 +992,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   /* Get color at original segment's midpoint */
   gimp_gradient_get_color_at (gradient, lseg->middle, FALSE, &color);
@@ -1060,7 +1039,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   *newl = lseg;
   *newr = newseg;
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1079,7 +1058,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   seg_len = (lseg->right - lseg->left) / parts; /* Length of divisions */
 
@@ -1146,7 +1125,7 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
 
   gimp_gradient_segment_free (lseg);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1170,13 +1149,13 @@ gimp_gradient_segment_set_left_color (GimpGradient        *gradient,
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   gimp_gradient_segment_range_blend (gradient, seg, seg,
                                      color, &seg->right_color,
                                      TRUE, TRUE);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1200,13 +1179,13 @@ gimp_gradient_segment_set_right_color (GimpGradient        *gradient,
   g_return_if_fail (seg != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   gimp_gradient_segment_range_blend (gradient, seg, seg,
                                      &seg->left_color, color,
                                      TRUE, TRUE);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 gdouble
@@ -1235,14 +1214,14 @@ gimp_gradient_segment_set_left_pos (GimpGradient        *gradient,
     }
   else
     {
-      gimp_gradient_freeze (gradient);
+      gimp_data_freeze (GIMP_DATA (gradient));
 
       final_pos = seg->prev->right = seg->left =
           CLAMP (pos,
                  seg->prev->middle + EPSILON,
                  seg->middle - EPSILON);
 
-      gimp_gradient_thaw (gradient);
+      gimp_data_thaw (GIMP_DATA (gradient));
     }
 
   return final_pos;
@@ -1274,14 +1253,14 @@ gimp_gradient_segment_set_right_pos (GimpGradient        *gradient,
     }
   else
     {
-      gimp_gradient_freeze (gradient);
+      gimp_data_freeze (GIMP_DATA (gradient));
 
       final_pos = seg->next->left = seg->right =
           CLAMP (pos,
                  seg->middle + EPSILON,
                  seg->next->middle - EPSILON);
 
-      gimp_gradient_thaw (gradient);
+      gimp_data_thaw (GIMP_DATA (gradient));
     }
 
   return final_pos;
@@ -1307,14 +1286,14 @@ gimp_gradient_segment_set_middle_pos (GimpGradient        *gradient,
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
   g_return_val_if_fail (seg != NULL, 0.0);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   final_pos = seg->middle =
       CLAMP (pos,
              seg->left + EPSILON,
              seg->right - EPSILON);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 
   return final_pos;
 }
@@ -1351,7 +1330,7 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (range_l != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! range_r)
     range_r = gimp_gradient_segment_get_last (range_l);
@@ -1378,7 +1357,7 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
     }
   while (aseg != range_r);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1398,7 +1377,7 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (lseg != NULL);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! rseg)
     rseg = gimp_gradient_segment_get_last (lseg);
@@ -1436,7 +1415,7 @@ gimp_gradient_segment_range_blend (GimpGradient        *gradient,
       seg = seg->next;
     }
   while (aseg != rseg);
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 
 }
 
@@ -1451,7 +1430,7 @@ gimp_gradient_segment_range_set_blending_function (GimpGradient            *grad
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   seg = start_seg;
   while (seg && ! reached_last_segment)
@@ -1463,7 +1442,7 @@ gimp_gradient_segment_range_set_blending_function (GimpGradient            *grad
       seg = seg->next;
     }
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1477,7 +1456,7 @@ gimp_gradient_segment_range_set_coloring_type (GimpGradient             *gradien
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   seg = start_seg;
   while (seg && ! reached_last_segment)
@@ -1489,7 +1468,7 @@ gimp_gradient_segment_range_set_coloring_type (GimpGradient             *gradien
       seg = seg->next;
     }
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1506,7 +1485,7 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);
@@ -1621,7 +1600,7 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
   /* Done */
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1652,7 +1631,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
       return;
     }
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   /* Remember original parameters */
   sel_left  = start_seg->left;
@@ -1753,7 +1732,7 @@ gimp_gradient_segment_range_replicate (GimpGradient         *gradient,
 
   /* Done */
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1767,7 +1746,7 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);
@@ -1787,7 +1766,7 @@ gimp_gradient_segment_range_split_midpoint (GimpGradient         *gradient,
   if (final_end_seg)
     *final_end_seg = rseg;
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1812,7 +1791,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
       return;
     }
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   seg = start_seg;
   lsel = NULL;
@@ -1838,7 +1817,7 @@ gimp_gradient_segment_range_split_uniform (GimpGradient         *gradient,
   if (final_end_seg)
     *final_end_seg = rseg;
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1866,7 +1845,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   if ((lseg == NULL) && (rseg == NULL))
     goto premature_return;
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   /* Calculate join point */
 
@@ -1933,7 +1912,7 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
   if (lseg == NULL)
     gradient->segments = rseg;
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 
   return;
 
@@ -1951,7 +1930,7 @@ gimp_gradient_segment_range_recenter_handles (GimpGradient        *gradient,
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);
@@ -1967,7 +1946,7 @@ gimp_gradient_segment_range_recenter_handles (GimpGradient        *gradient,
     }
   while (aseg != end_seg);
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 void
@@ -1982,7 +1961,7 @@ gimp_gradient_segment_range_redistribute_handles (GimpGradient        *gradient,
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! end_seg)
     end_seg = gimp_gradient_segment_get_last (start_seg);
@@ -2024,7 +2003,7 @@ gimp_gradient_segment_range_redistribute_handles (GimpGradient        *gradient,
   start_seg->left  = left;
   end_seg->right = right;
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 gdouble
@@ -2040,7 +2019,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0.0);
 
-  gimp_gradient_freeze (gradient);
+  gimp_data_freeze (GIMP_DATA (gradient));
 
   if (! range_l)
     range_r = gimp_gradient_segment_get_last (range_l);
@@ -2145,7 +2124,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
                                               range_r->right, range_r->next->right);
     }
 
-  gimp_gradient_thaw (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 
   return delta;
 }

@@ -111,7 +111,6 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
   brush->hardness     = 0.0;
   brush->angle        = 0.0;
   brush->aspect_ratio = 1.0;
-  brush->freeze       = 0;
 }
 
 static gboolean
@@ -226,9 +225,6 @@ gimp_brush_generated_dirty (GimpData *data)
   gdouble             c, s;
   gdouble             short_radius;
   gdouble             buffer[OVERSAMPLING];
-
-  if (brush->freeze) /* if we are frozen defer rerendering till later */
-    return;
 
   if (gbrush->mask)
     temp_buf_free (gbrush->mask);
@@ -413,7 +409,7 @@ gimp_brush_generated_load (const gchar  *filename,
                         "name", string,
                         NULL);
 
-  gimp_brush_generated_freeze (brush);
+  gimp_data_freeze (GIMP_DATA (brush));
 
   /* read brush spacing */
   fgets (string, 255, file);
@@ -437,32 +433,12 @@ gimp_brush_generated_load (const gchar  *filename,
 
   fclose (file);
 
-  gimp_brush_generated_thaw (brush);
+  gimp_data_thaw (GIMP_DATA (brush));
 
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
   return GIMP_DATA (brush);
-}
-
-void
-gimp_brush_generated_freeze (GimpBrushGenerated *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-
-  brush->freeze++;
-}
-
-void
-gimp_brush_generated_thaw (GimpBrushGenerated *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
-
-  if (brush->freeze > 0)
-    brush->freeze--;
-
-  if (! brush->freeze)
-    gimp_data_dirty (GIMP_DATA (brush));
 }
 
 gfloat
@@ -477,8 +453,7 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
     {
       brush->radius = radius;
 
-      if (! brush->freeze)
-        gimp_data_dirty (GIMP_DATA (brush));
+      gimp_data_dirty (GIMP_DATA (brush));
     }
 
   return brush->radius;
@@ -496,8 +471,7 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
     {
       brush->hardness = hardness;
 
-      if (! brush->freeze)
-        gimp_data_dirty (GIMP_DATA (brush));
+      gimp_data_dirty (GIMP_DATA (brush));
     }
 
   return brush->hardness;
@@ -518,8 +492,7 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
     {
       brush->angle = angle;
 
-      if (! brush->freeze)
-        gimp_data_dirty (GIMP_DATA (brush));
+      gimp_data_dirty (GIMP_DATA (brush));
     }
 
   return brush->angle;
@@ -537,8 +510,7 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
     {
       brush->aspect_ratio = ratio;
 
-      if (! brush->freeze)
-        gimp_data_dirty (GIMP_DATA (brush));
+      gimp_data_dirty (GIMP_DATA (brush));
     }
 
   return brush->aspect_ratio;

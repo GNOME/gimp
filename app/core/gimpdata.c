@@ -138,11 +138,12 @@ static void
 gimp_data_init (GimpData      *data,
                 GimpDataClass *data_class)
 {
-  data->filename  = NULL;
-  data->writable  = TRUE;
-  data->deletable = TRUE;
-  data->dirty     = TRUE;
-  data->internal  = FALSE;
+  data->filename     = NULL;
+  data->writable     = TRUE;
+  data->deletable    = TRUE;
+  data->dirty        = TRUE;
+  data->internal     = FALSE;
+  data->freeze_count = 0;
 
   /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
    *  here, because the latter is always GimpDataClass itself
@@ -188,6 +189,14 @@ gimp_data_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static void
+gimp_data_real_dirty (GimpData *data)
+{
+  data->dirty = TRUE;
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
+}
+
 gboolean
 gimp_data_save (GimpData  *data,
                 GError   **error)
@@ -220,15 +229,28 @@ gimp_data_dirty (GimpData *data)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
 
-  g_signal_emit (data, data_signals[DIRTY], 0);
+  if (data->freeze_count == 0)
+    g_signal_emit (data, data_signals[DIRTY], 0);
 }
 
-static void
-gimp_data_real_dirty (GimpData *data)
+void
+gimp_data_freeze (GimpData *data)
 {
-  data->dirty = TRUE;
+  g_return_if_fail (GIMP_IS_DATA (data));
 
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
+  data->freeze_count++;
+}
+
+void
+gimp_data_thaw (GimpData *data)
+{
+  g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (data->freeze_count > 0);
+
+  data->freeze_count--;
+
+  if (data->freeze_count == 0)
+    gimp_data_dirty (data);
 }
 
 gboolean

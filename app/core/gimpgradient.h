@@ -59,7 +59,6 @@ struct _GimpGradient
 
   /*< private >*/
   GimpGradientSegment *last_visited;
-  gint                 freeze_count;
 };
 
 struct _GimpGradientClass
@@ -87,10 +86,6 @@ void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
 						      GimpRGB       *color);
 GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient  *grad,
 						      gdouble        pos);
-
-void                  gimp_gradient_freeze           (GimpGradient  *gradient);
-void                  gimp_gradient_thaw             (GimpGradient  *gradient);
-
 
 
 /*  gradient segment functions  */

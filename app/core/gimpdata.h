@@ -54,6 +54,7 @@ struct _GimpData
   guint         deletable : 1;
   guint         dirty     : 1;
   guint         internal  : 1;
+  gint          freeze_count;
 };
 
 struct _GimpDataClass
@@ -78,6 +79,9 @@ gboolean      gimp_data_save             (GimpData     *data,
                                           GError      **error);
 
 void          gimp_data_dirty            (GimpData     *data);
+void          gimp_data_freeze           (GimpData     *data);
+void          gimp_data_thaw             (GimpData     *data);
+
 gboolean      gimp_data_delete_from_disk (GimpData     *data,
                                           GError      **error);
 

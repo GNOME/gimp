@@ -984,7 +984,7 @@ control_events (GtkWidget          *widget,
                                                editor);
 
               if (! editor->instant_update)
-                gimp_gradient_freeze (gradient);
+                gimp_data_freeze (GIMP_DATA (gradient));
             }
 
 	}
@@ -1020,7 +1020,7 @@ control_events (GtkWidget          *widget,
       if (editor->control_drag_mode != GRAD_DRAG_NONE)
 	{
           if (! editor->instant_update)
-            gimp_gradient_thaw (gradient);
+            gimp_data_thaw (GIMP_DATA (gradient));
 
           g_signal_handlers_unblock_by_func (gradient,
                                              gimp_gradient_editor_gradient_dirty,

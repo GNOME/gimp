@@ -46,9 +46,6 @@ struct _GimpBrushGenerated
   gfloat     hardness;     /* 0.0 - 1.0  */
   gfloat     angle;        /* in degrees */
   gfloat     aspect_ratio; /* y/x        */
-
-  /* private */
-  gint      freeze;
 };
 
 struct _GimpBrushGeneratedClass
@@ -68,9 +65,6 @@ GimpData  * gimp_brush_generated_new          (const gchar *name,
 GimpData  * gimp_brush_generated_load         (const gchar *file_name,
                                                gboolean     stingy_memory_use,
                                                GError     **error);
-
-void    gimp_brush_generated_freeze           (GimpBrushGenerated *brush);
-void    gimp_brush_generated_thaw             (GimpBrushGenerated *brush);
 
 gfloat  gimp_brush_generated_set_radius       (GimpBrushGenerated *brush,
 					       gfloat              radius);

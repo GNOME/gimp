@@ -258,18 +258,18 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
   ratio    = editor->aspect_ratio_data->value;
   angle    = editor->angle_data->value;
 
-  if (angle    != gimp_brush_generated_get_radius (brush)       ||
-      hardness != gimp_brush_generated_get_hardness (brush)     ||
+  if (angle    != gimp_brush_generated_get_radius       (brush) ||
+      hardness != gimp_brush_generated_get_hardness     (brush) ||
       ratio    != gimp_brush_generated_get_aspect_ratio (brush) ||
-      angle    != gimp_brush_generated_get_angle (brush))
+      angle    != gimp_brush_generated_get_angle        (brush))
     {
-      gimp_brush_generated_freeze (brush);
+      gimp_data_freeze (GIMP_DATA (brush));
 
-      gimp_brush_generated_set_radius (brush, radius);
-      gimp_brush_generated_set_hardness (brush, hardness);
+      gimp_brush_generated_set_radius       (brush, radius);
+      gimp_brush_generated_set_hardness     (brush, hardness);
       gimp_brush_generated_set_aspect_ratio (brush, ratio);
-      gimp_brush_generated_set_angle (brush, angle);
+      gimp_brush_generated_set_angle        (brush, angle);
 
-      gimp_brush_generated_thaw (brush);
+      gimp_data_thaw (GIMP_DATA (brush));
     }
 }
