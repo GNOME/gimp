@@ -758,7 +758,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 
   tearoff_path = g_string_new ("");
 
-  p              = strchr (entry->entry.path, '/');
+  p = strchr (entry->entry.path, '/');
   factory_length = p - entry->entry.path;
 
   /*  skip the first slash  */
@@ -933,9 +933,8 @@ static gchar *
 gimp_item_factory_translate_func (const gchar *path,
                                   gpointer     data)
 {
-  static gchar   *menupath = NULL;
-
   GtkItemFactory *item_factory;
+  gchar          *menupath;
   gchar          *retval;
   gchar          *translation;
   gchar          *domain   = NULL;
@@ -944,22 +943,16 @@ gimp_item_factory_translate_func (const gchar *path,
 
   item_factory = GTK_ITEM_FACTORY (data);
 
-  if (menupath)
-    g_free (menupath);
-
-  retval = menupath = g_strdup (path);
-
   if (strstr (path, "tearoff") ||
       strstr (path, "/---")    ||
       strstr (path, "/MRU"))
-    return retval;
+    return g_strdup (path);
 
   domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
   complete = g_object_get_data (G_OBJECT (item_factory), "complete");
 
   if (domain)  /*  use the plugin textdomain  */
     {
-      g_free (menupath);
       menupath = g_strconcat (item_factory->path, path, NULL);
 
       if (complete)
@@ -997,11 +990,6 @@ gimp_item_factory_translate_func (const gchar *path,
                    strlen (item_factory->path)) == 0)
 	{
 	  retval = translation + strlen (item_factory->path);
-	  if (complete)
-	    {
-	      g_free (menupath);
-	      menupath = translation;
-	    }
 	}
       else
 	{
@@ -1015,6 +1003,8 @@ gimp_item_factory_translate_func (const gchar *path,
     }
   else  /*  use the gimp textdomain  */
     {
+      menupath = retval = g_strdup (path);
+
       if (complete)
 	{
           /*  This is a branch, use the complete path for translation, 
@@ -1044,11 +1034,6 @@ gimp_item_factory_translate_func (const gchar *path,
       if (*translation == '/')
 	{
 	  retval = translation;
-	  if (complete)
-	    {
-	      g_free (menupath);
-	      menupath = translation;
-	    }
 	}
       else
 	{

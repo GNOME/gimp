@@ -290,6 +290,10 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "view/new_view.html", NULL },
+  { { N_("/View/Dot for Dot"), NULL,
+      view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/dot_for_dot.html", NULL },
 
   /*  <Image>/View/Zoom  */
 
@@ -351,12 +355,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       NULL,                   0,   "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
-
-
-  { { N_("/View/Dot for Dot"), NULL,
-      view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/dot_for_dot.html", NULL },
 
   MENU_SEPARATOR ("/View/---"),
 
@@ -491,6 +489,32 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/_Layer")),
 
+  { { N_("/Layer/New Layer..."), "",
+      layers_new_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    "layers/dialogs/new_layer.html", NULL },
+  { { N_("/Layer/Duplicate Layer"), NULL,
+      layers_duplicate_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
+    NULL,
+    "layers/duplicate_layer.html", NULL },
+  { { N_("/Layer/Anchor Layer"), "<control>H",
+      layers_anchor_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_ANCHOR },
+    NULL,
+    "layers/anchor_layer.html", NULL },
+  { { N_("/Layer/Merge Down"), "<control><shift>M",
+      layers_merge_down_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_MERGE_DOWN },
+    NULL,
+    "layers/merge_visible_layers.html", NULL },
+  { { N_("/Layer/Delete Layer"), NULL,
+      layers_delete_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    "layers/delete_layer.html", NULL },
+
   /*  <Image>/Layer/Stack  */
 
   { { N_("/Layer/Stack/Previous Layer"), "Prior",
@@ -521,34 +545,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_GOTO_BOTTOM },
     NULL,
     "layers/stack/stack.html#layer_to_bottom", NULL },
-
-  MENU_SEPARATOR ("/Layer/Stack/---"),
-
-  { { N_("/Layer/New Layer..."), "",
-      layers_new_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    "layers/dialogs/new_layer.html", NULL },
-  { { N_("/Layer/Duplicate Layer"), NULL,
-      layers_duplicate_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    "layers/duplicate_layer.html", NULL },
-  { { N_("/Layer/Anchor Layer"), "<control>H",
-      layers_anchor_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_ANCHOR },
-    NULL,
-    "layers/anchor_layer.html", NULL },
-  { { N_("/Layer/Merge Down"), "<control><shift>M",
-      layers_merge_down_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_MERGE_DOWN },
-    NULL,
-    "layers/merge_visible_layers.html", NULL },
-  { { N_("/Layer/Delete Layer"), NULL,
-      layers_delete_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_DELETE },
-    NULL,
-    "layers/delete_layer.html", NULL },
 
   MENU_SEPARATOR ("/Layer/---"),
 
@@ -598,8 +594,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_INVERT },
     NULL,
     "layers/colors/invert.html", NULL },
-
-  MENU_SEPARATOR ("/Layer/Colors/---"),
 
   /*  <Image>/Layer/Colors/Auto  */
 
@@ -853,7 +847,8 @@ image_menu_setup (GimpItemFactory *factory)
                                           "gimp-brightness-contrast-tool",
                                           "gimp-threshold-tool",
                                           "gimp-levels-tool",
-                                          "gimp-curves-tool" };
+                                          "gimp-curves-tool",
+					  "gimp-posterize-tool" };
     GtkWidget    *menu_item;
     GimpToolInfo *tool_info;
     GList        *list;
@@ -890,16 +885,7 @@ image_menu_setup (GimpItemFactory *factory)
           }
       }
 
-    /*  reorder <Image>/Image/Colors  */
-    tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (factory->gimp->tool_info_list,
-                                        "gimp-posterize-tool");
-
-    menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                             tool_info->menu_path);
-    if (menu_item && menu_item->parent)
-      gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 4);
-
+    /*  reorder color tools to the top of the Layers/Colors menu  */
     for (i = 0; i < G_N_ELEMENTS (color_tools); i++)
       {
         tool_info = (GimpToolInfo *)
@@ -1361,8 +1347,8 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Colors/Threshold...",           lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Levels...",              lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Curves...",              lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Desaturate",             lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Posterize...",           lp && ! is_indexed);
+  SET_SENSITIVE ("/Layer/Colors/Desaturate",             lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Invert",                 lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Histogram...",           lp);
@@ -1410,6 +1396,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
   const gchar *menu = NULL;
   guint        scalesrc;
   guint        scaledest;
+  gchar       *label;
 
   scalesrc  = SCALESRC (shell);
   scaledest = SCALEDEST (shell);
@@ -1443,8 +1430,6 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
     }
   else
     {
-      gchar *label;
-
       menu = "/View/Zoom/Other";
 
       label = g_strdup_printf (_("Other (%d:%d)"), scaledest, scalesrc);
@@ -1456,4 +1441,8 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
     }
 
   gimp_item_factory_set_active (item_factory, menu, TRUE);
+
+  label = g_strdup_printf (_("Zoom (%d:%d)"), scaledest, scalesrc);
+  gimp_item_factory_set_label (item_factory, "/View/Zoom", label);
+  g_free (label);
 }
