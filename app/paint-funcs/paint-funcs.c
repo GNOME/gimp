@@ -2839,8 +2839,8 @@ get_premultiplied_double_row (PixelRegion *srcPR,
 static void
 expand_line (gdouble               *dest,
 	     gdouble               *src,
-	     guint                  bytes,
-	     guint                  old_width,
+	     gint                   bytes,
+	     gint                   old_width,
 	     gint                   width,
 	     GimpInterpolationType  interp)
 {
@@ -2866,10 +2866,7 @@ expand_line (gdouble               *dest,
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
-
-          /* cast bytes to signed int to make sure the result is signed */
-          s = &src[src_col * (int) bytes];
-
+          s = &src[src_col * bytes];
           for (b = 0; b < bytes; b++)
             dest[b] = cubic (frac, s[b - bytes], s[b], s[b + bytes],
                              s[b + bytes * 2]);
@@ -2885,10 +2882,7 @@ expand_line (gdouble               *dest,
           /* +2, -2 is there because (int) rounds towards 0 and we need
              to round down */
           frac = (x * ratio - 0.5) - src_col;
-
-          /* cast bytes to signed int to make sure the result is signed */
-          s = &src[src_col * (int) bytes];
-
+          s = &src[src_col * bytes];
           for (b = 0; b < bytes; b++)
             dest[b] = ((s[b + bytes] - s[b]) * frac + s[b]);
           dest += bytes;

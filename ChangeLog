@@ -1,5 +1,11 @@
 2004-01-05  Manish Singh  <yosh@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (expand_line): on second thought, just
+	make everything signed. There is no reason for any of it to be
+	unsigned.
+
+2004-01-05  Manish Singh  <yosh@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c (expand_line): cast usage of unsigned
 	bytes variable in array subscripting to signed, so we really do get
 	a negative value when we need it. Fixes #130398.
