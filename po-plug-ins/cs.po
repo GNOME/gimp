@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.0\n"
-"POT-Creation-Date: 2000-12-28 11:03+0100\n"
+"POT-Creation-Date: 2001-01-15 14:06-0800\n"
 "PO-Revision-Date: 2001-01-06 23:53+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "O programu"
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
-#: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
+#: plug-ins/common/sharpen.c:525 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
@@ -76,7 +76,7 @@ msgstr "O programu"
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
-#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
@@ -97,7 +97,7 @@ msgstr "O programu"
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:803
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:191
-#: plug-ins/mosaic/mosaic.c:535 plug-ins/pagecurl/pagecurl.c:518
+#: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:829 plug-ins/rcm/rcm_dialog.c:731
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
@@ -148,7 +148,7 @@ msgstr "OK"
 #: plug-ins/common/ps.c:2797 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
-#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
+#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:527
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
@@ -158,7 +158,7 @@ msgstr "OK"
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
-#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
 #: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
@@ -181,7 +181,7 @@ msgstr "OK"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:811
 #: plug-ins/imagemap/imap_default_dialog.c:132 plug-ins/maze/maze_face.c:195
-#: plug-ins/mosaic/mosaic.c:537 plug-ins/pagecurl/pagecurl.c:520
+#: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:270 plug-ins/print/gimp_main_window.c:831
 #: plug-ins/rcm/rcm_dialog.c:733 plug-ins/sel2path/sel2path.c:342
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
@@ -200,7 +200,7 @@ msgstr "Zru¹it"
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
-#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
+#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:552
 #: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
@@ -836,8 +836,8 @@ msgstr "Volby vyhlazování"
 msgid "Enable Antialiasing"
 msgstr "Povolit vyhlazování"
 
-#: plug-ins/Lighting/lighting_ui.c:488
-msgid "Enable/disable jagged edges removal(antialiasing)"
+#: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:634
+msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
@@ -850,9 +850,10 @@ msgstr "Hloubka:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalita vyhlazování. Vy¹¹í je lep¹í, ale pomalej¹í"
 
-#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
-#: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:830
-#: plug-ins/common/wind.c:1138 plug-ins/gflare/gflare.c:3024
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:662
+#: plug-ins/common/iwarp.c:1107 plug-ins/common/threshold_alpha.c:294
+#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1138
+#: plug-ins/gflare/gflare.c:3024
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -1177,14 +1178,6 @@ msgstr "Povolit tipy"
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
 msgstr "Povolení/zákaz zpráv v tipech"
-
-#: plug-ins/MapObject/mapobject_ui.c:634
-msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
-
-#: plug-ins/MapObject/mapobject_ui.c:662
-msgid "Treshold:"
-msgstr "Práh:"
 
 #: plug-ins/MapObject/mapobject_ui.c:706
 msgid "Point Light"
@@ -2170,7 +2163,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
-#: plug-ins/common/sharpen.c:610 plug-ins/common/shift.c:389
+#: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
 #: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
@@ -2178,7 +2171,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/vpropagate.c:977 plug-ins/common/waves.c:399
 #: plug-ins/common/whirlpinch.c:847 plug-ins/common/wind.c:1048
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
-#: plug-ins/mosaic/mosaic.c:656 plug-ins/xjt/xjt.c:805
+#: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
 
@@ -2765,7 +2758,7 @@ msgstr "Roz¹íøit"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
-#: plug-ins/common/warp.c:512
+#: plug-ins/common/warp.c:501
 msgid "Wrap"
 msgstr "Ohýbání"
 
@@ -2890,7 +2883,7 @@ msgstr "Kubismus"
 msgid "Use Background Color"
 msgstr "Pou¾ít barvu pozadí"
 
-#: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:667
+#: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:654
 msgid "Tile Size:"
 msgstr "Velikost dla¾dice:"
 
@@ -2982,7 +2975,7 @@ msgstr "Plynulost"
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
 #: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3148
-#: plug-ins/mosaic/mosaic.c:589
+#: plug-ins/mosaic/mosaic.c:585
 msgid "Antialiasing"
 msgstr "Vyhlazování"
 
@@ -3316,19 +3309,19 @@ msgstr "Y vytlaèení:"
 
 #. =======================================================================
 #. Displacement Type
-#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:502
+#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:491
 msgid "On Edges:"
 msgstr "Na hranách:"
 
 #: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
-#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:523
+#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:512
 #: plug-ins/common/waves.c:378
 msgid "Smear"
 msgstr "©mouha"
 
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
-#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
+#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:523
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3320
 msgid "Black"
@@ -3604,7 +3597,7 @@ msgstr "Fraktální trasování"
 msgid "Outside Type"
 msgstr "Typ okolí"
 
-#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
+#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:421
 msgid "Warp"
 msgstr "Ohnutí"
 
@@ -3949,7 +3942,7 @@ msgstr "Sklenìná dla¾dice"
 msgid "Tile Width:"
 msgstr "©íøka dla¾dice:"
 
-#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:676
+#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
 msgid "Tile Height:"
 msgstr "Vý¹ka dla¾dice:"
 
@@ -4697,7 +4690,7 @@ msgstr "Parametry rozostøení"
 
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
-#: plug-ins/common/warp.c:687 plug-ins/gimpressionist/orientmap.c:551
+#: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
 msgstr "Úhel:"
@@ -5728,12 +5721,12 @@ msgstr "<Image>/Filtry/Vylep¹ení/Doostøit..."
 msgid "Sharpening..."
 msgstr "Doostøuje se..."
 
-#: plug-ins/common/sharpen.c:516
+#: plug-ins/common/sharpen.c:518
 #, c-format
 msgid "Sharpen - %s"
 msgstr "Doostøení - %s"
 
-#: plug-ins/common/sharpen.c:621
+#: plug-ins/common/sharpen.c:623
 msgid "Sharpness:"
 msgstr "Ostrost:"
 
@@ -6633,73 +6626,73 @@ msgstr "Roz¹íøení v kanálu hodnot"
 msgid "<Image>/Filters/Map/Warp..."
 msgstr "<Image>/Filtry/Mapování/Ohnout..."
 
-#: plug-ins/common/warp.c:455
+#: plug-ins/common/warp.c:444
 msgid "Main Options"
 msgstr "Hlavní volby"
 
-#: plug-ins/common/warp.c:470
+#: plug-ins/common/warp.c:459
 msgid "Step Size:"
 msgstr "Velikost kroku:"
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1283
+#: plug-ins/common/warp.c:468 plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
 msgstr "Iterace:"
 
 #. Displacement map menu
-#: plug-ins/common/warp.c:486
+#: plug-ins/common/warp.c:475
 msgid "Displacement Map:"
 msgstr "Mapa vytlaèování:"
 
-#: plug-ins/common/warp.c:545
+#: plug-ins/common/warp.c:534
 msgid "FG Color"
 msgstr "Barva popøedí"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: plug-ins/common/warp.c:564
+#: plug-ins/common/warp.c:553
 msgid "Secondary Options"
 msgstr "Druhotné volby"
 
-#: plug-ins/common/warp.c:577
+#: plug-ins/common/warp.c:566
 msgid "Dither Size:"
 msgstr "Velikost rozptylu:"
 
-#: plug-ins/common/warp.c:586
+#: plug-ins/common/warp.c:575
 msgid "Rotation Angle:"
 msgstr "Úhel rotace:"
 
-#: plug-ins/common/warp.c:595
+#: plug-ins/common/warp.c:584
 msgid "Substeps:"
 msgstr "Podkroky:"
 
 #. Magnitude map menu
-#: plug-ins/common/warp.c:602
+#: plug-ins/common/warp.c:591
 msgid "Magnitude Map:"
 msgstr "Mapa zvìt¹ení:"
 
-#: plug-ins/common/warp.c:621
+#: plug-ins/common/warp.c:610
 msgid "Use Mag Map"
 msgstr "U¾ití mapy zvìt¹ení"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: plug-ins/common/warp.c:637
+#: plug-ins/common/warp.c:626
 msgid "Other Options"
 msgstr "Dal¹í rozptylu"
 
-#: plug-ins/common/warp.c:651
+#: plug-ins/common/warp.c:640
 msgid "Gradient Scale:"
 msgstr "Rozsah pøechodu:"
 
-#: plug-ins/common/warp.c:666
+#: plug-ins/common/warp.c:655
 msgid "Gradient map selection menu"
 msgstr "Menu výbìru mapy pøechodu"
 
-#: plug-ins/common/warp.c:676
+#: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
 msgstr "Vektor zvìt¹ení:"
 
-#: plug-ins/common/warp.c:702
+#: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Menu mapy pevného smìrového vektoru"
 
@@ -6709,20 +6702,20 @@ msgstr "Menu mapy pevného smìrového vektoru"
 #. }
 #.
 #. make sure layer is visible
-#: plug-ins/common/warp.c:1163
+#: plug-ins/common/warp.c:1152
 msgid "Smoothing X gradient..."
 msgstr "Vyhlazuje se X pøechod..."
 
-#: plug-ins/common/warp.c:1165
+#: plug-ins/common/warp.c:1154
 msgid "Smoothing Y gradient..."
 msgstr "Vyhlazuje se Y pøechod..."
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1220
+#: plug-ins/common/warp.c:1209
 msgid "Finding XY gradient..."
 msgstr "Hledá se XY pøechod..."
 
-#: plug-ins/common/warp.c:1244
+#: plug-ins/common/warp.c:1233
 #, c-format
 msgid "Flow Step %d..."
 msgstr "Krok toku %d..."
@@ -9812,11 +9805,11 @@ msgstr "Slouèit políèka"
 msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr "Odstraòuje se vrstva (pol:%ld) z políèek..."
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
 msgstr "Smazat vrstvy v políèkách"
 
-#: plug-ins/gap/gap_range_ops.c:1642
+#: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
 msgstr "Vybrat rozsah políèek a polohu"
 
@@ -12531,74 +12524,70 @@ msgstr "Otvírá se %s"
 msgid "See %s"
 msgstr "Viz %s"
 
-#: plug-ins/mosaic/mosaic.c:328
+#: plug-ins/mosaic/mosaic.c:325
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Mozaika..."
 
 #. progress bar for gradient finding
-#: plug-ins/mosaic/mosaic.c:451
+#: plug-ins/mosaic/mosaic.c:447
 msgid "Finding Edges..."
 msgstr "Hledají se hrany..."
 
 #. Progress bar for rendering tiles
-#: plug-ins/mosaic/mosaic.c:501
+#: plug-ins/mosaic/mosaic.c:497
 msgid "Rendering Tiles..."
 msgstr "Poèítají se dla¾dice..."
 
-#: plug-ins/mosaic/mosaic.c:530
+#: plug-ins/mosaic/mosaic.c:526
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: plug-ins/mosaic/mosaic.c:597
+#: plug-ins/mosaic/mosaic.c:593
 msgid "Color Averaging"
 msgstr "Prùmìrování barvy"
 
-#: plug-ins/mosaic/mosaic.c:606
-msgid "Allow Tile splitting"
-msgstr "Povolit rozdìlìní dla¾dic"
-
-#: plug-ins/mosaic/mosaic.c:615
+#: plug-ins/mosaic/mosaic.c:602
 msgid "Pitted Surfaces"
 msgstr "Nerovný povrch"
 
-#: plug-ins/mosaic/mosaic.c:624
+#: plug-ins/mosaic/mosaic.c:611
 msgid "FG/BG Lighting"
 msgstr "Osvìtlení popøedí/pozadí"
 
 #. tiling primitive
-#: plug-ins/mosaic/mosaic.c:638
+#: plug-ins/mosaic/mosaic.c:625
 msgid "Tiling Primitives"
 msgstr "Základní dla¾dice"
 
-#: plug-ins/mosaic/mosaic.c:642
+#: plug-ins/mosaic/mosaic.c:629
 msgid "Squares"
 msgstr "Ètverce"
 
-#: plug-ins/mosaic/mosaic.c:644
+#: plug-ins/mosaic/mosaic.c:631
 msgid "Hexagons"
 msgstr "©estiúhelníky"
 
-#: plug-ins/mosaic/mosaic.c:646
+#: plug-ins/mosaic/mosaic.c:633
 msgid "Octagons & Squares"
 msgstr "Osmiúhelníky a ètverce"
 
-#: plug-ins/mosaic/mosaic.c:685
+#: plug-ins/mosaic/mosaic.c:672
 msgid "Tile Spacing:"
 msgstr "Rozestup dla¾dic:"
 
-#: plug-ins/mosaic/mosaic.c:694
+#: plug-ins/mosaic/mosaic.c:681
 msgid "Tile Neatness:"
 msgstr "Úpravnost dla¾dic:"
 
-#: plug-ins/mosaic/mosaic.c:704
+#: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
 msgstr "Smìr svìtla:"
 
-#: plug-ins/mosaic/mosaic.c:713
+#: plug-ins/mosaic/mosaic.c:700
 msgid "Color Variation:"
 msgstr "Barevná variace:"
 
-#: plug-ins/mosaic/mosaic.c:2482
+#: plug-ins/mosaic/mosaic.c:2469
 msgid "Unable to add additional point.\n"
 msgstr "Nepodaøilo se pøidat dal¹í bod.\n"
 
@@ -13146,3 +13135,12 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
+
+#~ msgid "Enable/disable jagged edges removal(antialiasing)"
+#~ msgstr "Povolení/zákaz odstraòování zubatých hran (vyhlazování)"
+
+#~ msgid "Treshold:"
+#~ msgstr "Práh:"
+
+#~ msgid "Allow Tile splitting"
+#~ msgstr "Povolit rozdìlìní dla¾dic"

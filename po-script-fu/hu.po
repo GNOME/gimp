@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2001-01-09 10:20+0000\n"
+"POT-Creation-Date: 2001-01-05 17:11-0800\n"
 "PO-Revision-Date: 2001-01-09 11:00+0001\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -51,7 +51,8 @@ msgstr "A folyam megnyitása a SIOD kimeneti csõvezetéken sikertelen"
 
 #: plug-ins/script-fu/script-fu-console.c:628
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "A Script-Fu kiértékelõ módja csak nem-interaktív meghívást tesz lehetõvé"
+msgstr ""
+"A Script-Fu kiértékelõ módja csak nem-interaktív meghívást tesz lehetõvé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1206
@@ -155,7 +156,6 @@ msgstr ""
 "Script-Fu hiba végrehajtás közben\n"
 " %s\n"
 "%s"
-
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"

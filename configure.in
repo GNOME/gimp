@@ -4,9 +4,9 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=2
-GIMP_MICRO_VERSION=0
-GIMP_INTERFACE_AGE=0
-GIMP_BINARY_AGE=0
+GIMP_MICRO_VERSION=1
+GIMP_INTERFACE_AGE=1
+GIMP_BINARY_AGE=1
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
 dnl libtool versioning
@@ -98,6 +98,14 @@ AM_GNU_GETTEXT
 dnl Check for GTK+
 AM_PATH_GTK(1.2.8,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+
+dnl Quick hack to deny non GTK 1.2
+if (expr $gtk_config_major_version \> 1) > /dev/null; then
+  AC_MSG_ERROR(GIMP does not work with versions of GTK > 1.2)
+fi
+if (expr $gtk_config_minor_version \> 2) > /dev/null; then
+  AC_MSG_ERROR(GIMP does not work with versions of GTK > 1.2)
+fi
 
 changequote(,)dnl
 

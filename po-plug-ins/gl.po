@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-12-23 11:40-0800\n"
+"POT-Creation-Date: 2001-01-15 14:06-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr ""
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
-#: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
+#: plug-ins/common/sharpen.c:525 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
@@ -77,7 +77,7 @@ msgstr ""
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
-#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:426
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
 #: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
@@ -149,7 +149,7 @@ msgstr ""
 #: plug-ins/common/ps.c:2797 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
-#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
+#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:527
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
@@ -159,7 +159,7 @@ msgstr ""
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
 #: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
-#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/warp.c:428 plug-ins/common/waves.c:351
 #: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
 #: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
 #: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
@@ -201,7 +201,7 @@ msgstr ""
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
-#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
+#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:552
 #: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
@@ -816,8 +816,8 @@ msgstr ""
 msgid "Enable Antialiasing"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:488
-msgid "Enable/disable jagged edges removal(antialiasing)"
+#: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:634
+msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
@@ -830,9 +830,10 @@ msgstr ""
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
-#: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:830
-#: plug-ins/common/wind.c:1138 plug-ins/gflare/gflare.c:3024
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:662
+#: plug-ins/common/iwarp.c:1107 plug-ins/common/threshold_alpha.c:294
+#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1138
+#: plug-ins/gflare/gflare.c:3024
 msgid "Threshold:"
 msgstr ""
 
@@ -1156,14 +1157,6 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
-msgstr ""
-
-#: plug-ins/MapObject/mapobject_ui.c:634
-msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
-
-#: plug-ins/MapObject/mapobject_ui.c:662
-msgid "Treshold:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:706
@@ -2134,7 +2127,7 @@ msgstr ""
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
-#: plug-ins/common/sharpen.c:610 plug-ins/common/shift.c:389
+#: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
 #: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
@@ -2729,7 +2722,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
-#: plug-ins/common/warp.c:512
+#: plug-ins/common/warp.c:501
 msgid "Wrap"
 msgstr ""
 
@@ -3277,19 +3270,19 @@ msgstr ""
 
 #. =======================================================================
 #. Displacement Type
-#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:502
+#: plug-ins/common/displace.c:400 plug-ins/common/warp.c:491
 msgid "On Edges:"
 msgstr ""
 
 #: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
-#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:523
+#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:512
 #: plug-ins/common/waves.c:378
 msgid "Smear"
 msgstr ""
 
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
-#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
+#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:523
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3320
 msgid "Black"
@@ -3565,7 +3558,7 @@ msgstr ""
 msgid "Outside Type"
 msgstr ""
 
-#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
+#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:421
 msgid "Warp"
 msgstr ""
 
@@ -4628,7 +4621,7 @@ msgstr ""
 
 #. Angle
 #: plug-ins/common/mblur.c:813 plug-ins/common/newsprint.c:1028
-#: plug-ins/common/warp.c:687 plug-ins/gimpressionist/orientmap.c:551
+#: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
 msgstr ""
@@ -5645,12 +5638,12 @@ msgstr ""
 msgid "Sharpening..."
 msgstr ""
 
-#: plug-ins/common/sharpen.c:516
+#: plug-ins/common/sharpen.c:518
 #, c-format
 msgid "Sharpen - %s"
 msgstr ""
 
-#: plug-ins/common/sharpen.c:621
+#: plug-ins/common/sharpen.c:623
 msgid "Sharpness:"
 msgstr ""
 
@@ -6541,73 +6534,73 @@ msgstr ""
 msgid "<Image>/Filters/Map/Warp..."
 msgstr ""
 
-#: plug-ins/common/warp.c:455
+#: plug-ins/common/warp.c:444
 msgid "Main Options"
 msgstr ""
 
-#: plug-ins/common/warp.c:470
+#: plug-ins/common/warp.c:459
 msgid "Step Size:"
 msgstr ""
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1283
+#: plug-ins/common/warp.c:468 plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
 msgstr ""
 
 #. Displacement map menu
-#: plug-ins/common/warp.c:486
+#: plug-ins/common/warp.c:475
 msgid "Displacement Map:"
 msgstr ""
 
-#: plug-ins/common/warp.c:545
+#: plug-ins/common/warp.c:534
 msgid "FG Color"
 msgstr ""
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
-#: plug-ins/common/warp.c:564
+#: plug-ins/common/warp.c:553
 msgid "Secondary Options"
 msgstr ""
 
-#: plug-ins/common/warp.c:577
+#: plug-ins/common/warp.c:566
 msgid "Dither Size:"
 msgstr ""
 
-#: plug-ins/common/warp.c:586
+#: plug-ins/common/warp.c:575
 msgid "Rotation Angle:"
 msgstr ""
 
-#: plug-ins/common/warp.c:595
+#: plug-ins/common/warp.c:584
 msgid "Substeps:"
 msgstr ""
 
 #. Magnitude map menu
-#: plug-ins/common/warp.c:602
+#: plug-ins/common/warp.c:591
 msgid "Magnitude Map:"
 msgstr ""
 
-#: plug-ins/common/warp.c:621
+#: plug-ins/common/warp.c:610
 msgid "Use Mag Map"
 msgstr ""
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
-#: plug-ins/common/warp.c:637
+#: plug-ins/common/warp.c:626
 msgid "Other Options"
 msgstr ""
 
-#: plug-ins/common/warp.c:651
+#: plug-ins/common/warp.c:640
 msgid "Gradient Scale:"
 msgstr ""
 
-#: plug-ins/common/warp.c:666
+#: plug-ins/common/warp.c:655
 msgid "Gradient map selection menu"
 msgstr ""
 
-#: plug-ins/common/warp.c:676
+#: plug-ins/common/warp.c:665
 msgid "Vector Mag:"
 msgstr ""
 
-#: plug-ins/common/warp.c:702
+#: plug-ins/common/warp.c:691
 msgid "Fixed-direction-vector map selection menu"
 msgstr ""
 
@@ -6617,20 +6610,20 @@ msgstr ""
 #. }
 #.
 #. make sure layer is visible
-#: plug-ins/common/warp.c:1163
+#: plug-ins/common/warp.c:1152
 msgid "Smoothing X gradient..."
 msgstr ""
 
-#: plug-ins/common/warp.c:1165
+#: plug-ins/common/warp.c:1154
 msgid "Smoothing Y gradient..."
 msgstr ""
 
 #. calculate new X,Y Displacement image maps
-#: plug-ins/common/warp.c:1220
+#: plug-ins/common/warp.c:1209
 msgid "Finding XY gradient..."
 msgstr ""
 
-#: plug-ins/common/warp.c:1244
+#: plug-ins/common/warp.c:1233
 #, c-format
 msgid "Flow Step %d..."
 msgstr ""
@@ -9519,11 +9512,11 @@ msgstr ""
 msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr ""
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
 msgstr ""
 
-#: plug-ins/gap/gap_range_ops.c:1642
+#: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
 msgstr ""
 

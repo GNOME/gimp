@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2001-01-12 15:52+0000\n"
+"POT-Creation-Date: 2001-01-21 19:10-0800\n"
 "PO-Revision-Date: 2001-01-12 15:11+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -119,7 +119,7 @@ msgstr "Kilépés"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
 #: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
@@ -308,7 +308,7 @@ msgstr "Kontraszt:"
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
-#: app/palette.c:3223 app/posterize.c:249 app/threshold.c:358
+#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Bemutatókép"
 
@@ -323,7 +323,7 @@ msgstr "Ecset szerkesztõ"
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
-#: app/palette.c:2074 app/palette.c:3105 app/palette_select.c:70
+#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
@@ -1575,18 +1575,18 @@ msgstr "névtelen"
 msgid "Layer type %d not supported."
 msgstr "%d rétegtípus nem támogatott."
 
-#: app/gimphelp.c:190
+#: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
 msgstr "A GIMP Súgóböngészõ nem található"
 
-#: app/gimphelp.c:192
+#: app/gimphelp.c:193
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/gimphelp.c:195
+#: app/gimphelp.c:196
 msgid "Use Netscape instead"
 msgstr "Netscape használata"
 
@@ -1657,7 +1657,7 @@ msgid "Channel cannot be lowered any further"
 msgstr ""
 
 #: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
-#: app/palette.c:2014 app/palette.c:2736 app/palette.c:2868
+#: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Névtelen"
 
@@ -1843,7 +1843,7 @@ msgid "Gradient Editor"
 msgstr "Színátmenet szerkesztõ"
 
 #: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
-#: app/palette.c:3161
+#: app/palette.c:3167
 msgid "Gradient"
 msgstr "Színátmenet"
 
@@ -2499,7 +2499,7 @@ msgstr "Segédvonal eljárások"
 msgid "Help procedures"
 msgstr "Görbe javítása"
 
-#: app/internal_procs.c:116 app/palette.c:3169
+#: app/internal_procs.c:116 app/palette.c:3175
 msgid "Image"
 msgstr "Kép"
 
@@ -3718,7 +3718,7 @@ msgstr "/Útvonal exportálása..."
 msgid "/Edit Path Attributes..."
 msgstr "/Útvonal tulajdonságainak szerkesztése..."
 
-#: app/menus.c:1302
+#: app/menus.c:1314
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Hiba fájlmegnyitás közben: %s\n"
@@ -3973,7 +3973,7 @@ msgstr "Színpaletta szerkesztése"
 msgid "Color Palette"
 msgstr "Színpaletta"
 
-#: app/palette.c:2186 app/palette.c:3240
+#: app/palette.c:2186 app/palette.c:3246
 msgid "Select"
 msgstr "Kijelölés"
 
@@ -3986,7 +3986,7 @@ msgid "Palette Ops"
 msgstr "Palettabeállítások"
 
 #. The "Import" frame
-#: app/palette.c:2248 app/palette.c:3103 app/palette.c:3117
+#: app/palette.c:2248 app/palette.c:3109 app/palette.c:3123
 msgid "Import"
 msgstr "Importálás"
 
@@ -3994,35 +3994,35 @@ msgstr "Importálás"
 msgid "Merge"
 msgstr "Összefésülés"
 
-#: app/palette.c:3097
+#: app/palette.c:3103
 msgid "Import Palette"
 msgstr "Paletta importálása"
 
 #. The source's name
-#: app/palette.c:3133
+#: app/palette.c:3139
 msgid "Name:"
 msgstr "Név:"
 
-#: app/palette.c:3146
+#: app/palette.c:3152
 msgid "new_import"
 msgstr ""
 
 #. The source type
-#: app/palette.c:3151
+#: app/palette.c:3157
 msgid "Source:"
 msgstr "Forrás:"
 
-#: app/palette.c:3179
+#: app/palette.c:3185
 msgid "Indexed Palette"
 msgstr "Indexelt paletta"
 
 #. The sample size
-#: app/palette.c:3192
+#: app/palette.c:3198
 msgid "Sample Size:"
 msgstr "Mintaméret:"
 
 #. The interval
-#: app/palette.c:3205
+#: app/palette.c:3211
 msgid "Interval:"
 msgstr "Intervallum:"
 
@@ -4188,12 +4188,12 @@ msgstr "Kiegészítõk indítása: "
 msgid "Extensions"
 msgstr "Kiegészítõk"
 
-#: app/plug_in.c:842
+#: app/plug_in.c:850
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Nem található meg ez a bõvítmény: \"%s\""
 
-#: app/plug_in.c:1469
+#: app/plug_in.c:1477
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"

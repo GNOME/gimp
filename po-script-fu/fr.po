@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.0\n"
-"POT-Creation-Date: 2001-01-04 17:00+0100\n"
+"POT-Creation-Date: 2001-01-05 17:11-0800\n"
 "PO-Revision-Date: 2001-01-04 15:59+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"

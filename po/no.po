@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-01-02 11:55+0100\n"
+"POT-Creation-Date: 2001-01-21 19:10-0800\n"
 "PO-Revision-Date: 2001-01-02 11:57+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "brakt til deg av"
 msgid "GIMP Startup"
 msgstr "GIMP oppstart"
 
-#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:455
+#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "fortolker \"%s\"\n"
@@ -118,11 +118,11 @@ msgstr "Avslutt"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
-#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
-#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
+#: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
-#: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1824
+#: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1825
 #: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
 #: app/threshold.c:285 app/user_install.c:552
@@ -307,7 +307,7 @@ msgstr "Kontrast:"
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
-#: app/palette.c:3222 app/posterize.c:249 app/threshold.c:358
+#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Forhåndsvis"
 
@@ -319,10 +319,10 @@ msgstr "Penseleditor"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:915 app/gradient_select.c:161
+#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
-#: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
+#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
+#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
@@ -350,8 +350,8 @@ msgstr "Vinkel:"
 msgid "Brush Selection"
 msgstr "Valg av pensel"
 
-#: app/brush_select.c:285 app/gradient.c:913 app/module_db.c:359
-#: app/palette.c:2055 app/pattern_select.c:176
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Oppdatér"
 
@@ -367,19 +367,19 @@ msgstr "Ugjennomsiktighet:"
 msgid "Mode:"
 msgstr "Modus:"
 
-#: app/brush_select.c:473 app/palette.c:1170 app/palette.c:2225
+#: app/brush_select.c:473 app/palette.c:1171 app/palette.c:2226
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Ny"
 
 #: app/brush_select.c:479 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:159 app/palette.c:1177 app/palette.c:2071
+#: app/gradient_select.c:159 app/palette.c:1178 app/palette.c:2072
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Rediger"
 
-#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1881
-#: app/palette.c:1187 app/palette.c:1824 app/palette.c:2236
+#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1884
+#: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "Slett"
 
@@ -476,7 +476,7 @@ msgid "copy"
 msgstr "kopier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1807
+#: app/channel.c:205 app/gradient.c:1723 app/layer.c:345 app/layer.c:1807
 #, c-format
 msgid "%s copy"
 msgstr "%s kopier"
@@ -1017,7 +1017,7 @@ msgstr "Fritt"
 msgid "Load"
 msgstr "Last"
 
-#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2053
+#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Lagre"
@@ -1034,7 +1034,7 @@ msgstr "Lagre kurver"
 msgid "Load/Save Curves"
 msgstr "Laste/Lagre kurver"
 
-#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1485 app/levels.c:1503
+#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1477 app/levels.c:1495
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
@@ -1522,7 +1522,7 @@ msgstr "Ukjent penselformat versjon #%d i \"%s\"."
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Feil i GIMP penselfil \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:232
+#: app/gimpbrush.c:321 app/patterns.c:235
 msgid "Unnamed"
 msgstr "Uten navn"
 
@@ -1593,11 +1593,11 @@ msgstr "uten navn"
 msgid "Layer type %d not supported."
 msgstr "Lagtype %d ikke støttet."
 
-#: app/gimphelp.c:190
+#: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunne ikke finne hjelpleser for GIMP"
 
-#: app/gimphelp.c:192
+#: app/gimphelp.c:193
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1607,7 +1607,7 @@ msgstr ""
 "Den ble sannsynligvis ikke kompilert fordi\n"
 "du ikke har GtkXmHTML installert."
 
-#: app/gimphelp.c:195
+#: app/gimphelp.c:196
 msgid "Use Netscape instead"
 msgstr "Bruk Netscape istedet"
 
@@ -1685,8 +1685,8 @@ msgstr "Kanalen kan ikke heves mer"
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan ikke senkes mer"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:935 app/palette.c:1071
-#: app/palette.c:2013 app/palette.c:2735 app/palette.c:2867
+#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Uten navn"
 
@@ -1698,41 +1698,41 @@ msgstr "Fremgang"
 msgid "Please wait..."
 msgstr "Vennligst vent..."
 
-#: app/gimprc.c:474
+#: app/gimprc.c:475
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "feil under tolking: \"%s\"\n"
 
-#: app/gimprc.c:475
+#: app/gimprc.c:476
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  ved linje %d kolonne %d\n"
 
-#: app/gimprc.c:476
+#: app/gimprc.c:477
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  uventet tegn: %s\n"
 
-#: app/gimprc.c:1451
+#: app/gimprc.c:1452
 msgid "error parsing pluginrc"
 msgstr "feil under tolking av pluginrc"
 
-#: app/gimprc.c:2926
+#: app/gimprc.c:2927
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kan ikke åpne %s; %s"
 
-#: app/gimprc.c:2945
+#: app/gimprc.c:2946
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kan ikke endre navn på %s til %s.old; %s"
 
-#: app/gimprc.c:2951
+#: app/gimprc.c:2952
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Kan ikke gjenåpne %s\n"
 
-#: app/gimprc.c:2963
+#: app/gimprc.c:2964
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kan ikke skrive til %s; %s"
@@ -1867,88 +1867,88 @@ msgstr "HSV (glød mot klokken)"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (glød med klokken)"
 
-#: app/gradient.c:907
+#: app/gradient.c:910
 msgid "Gradient Editor"
 msgstr "Gradientredigering"
 
-#: app/gradient.c:938 app/gradient_select.c:215 app/paintbrush.c:270
-#: app/palette.c:3160
+#: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
+#: app/palette.c:3167
 msgid "Gradient"
 msgstr "Gradient"
 
-#: app/gradient.c:939 app/gradient_select.c:216 app/palette.c:2197
+#: app/gradient.c:942 app/gradient_select.c:216 app/palette.c:2198
 #: app/palette_select.c:93
 msgid "Name"
 msgstr "Navn"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:984
+#: app/gradient.c:987
 msgid "Gradient Ops"
 msgstr "Gradientoperasjoner"
 
 #. Buttons for gradient functions
-#: app/gradient.c:992
+#: app/gradient.c:995
 msgid "New Gradient"
 msgstr "Ny gradient"
 
-#: app/gradient.c:1000
+#: app/gradient.c:1003
 msgid "Copy Gradient"
 msgstr "Kopier gradient"
 
-#: app/gradient.c:1008 app/gradient.c:1876
+#: app/gradient.c:1011 app/gradient.c:1879
 msgid "Delete Gradient"
 msgstr "Slett gradient"
 
-#: app/gradient.c:1016
+#: app/gradient.c:1019
 msgid "Rename Gradient"
 msgstr "Omdøp gradient"
 
-#: app/gradient.c:1024 app/gradient.c:1937
+#: app/gradient.c:1027 app/gradient.c:1940
 msgid "Save as POV-Ray"
 msgstr "Lagre som POV-ray"
 
 #. Zoom all button
-#: app/gradient.c:1042
+#: app/gradient.c:1045
 msgid "Zoom all"
 msgstr "Zoom alt"
 
-#: app/gradient.c:1093
+#: app/gradient.c:1096
 msgid "Instant update"
 msgstr "Øyeblikkelig oppdatering"
 
-#: app/gradient.c:1228 app/gradient.c:2062
+#: app/gradient.c:1231 app/gradient.c:2065
 msgid "Default"
 msgstr "Standard"
 
-#: app/gradient.c:1661
+#: app/gradient.c:1664
 msgid "New gradient"
 msgstr "Ny gradient"
 
-#: app/gradient.c:1664
+#: app/gradient.c:1667
 msgid "Enter a name for the new gradient"
 msgstr "Skriv inn et navn for den nye gradienten"
 
-#: app/gradient.c:1665
+#: app/gradient.c:1668
 msgid "untitled"
 msgstr "uten navn"
 
-#: app/gradient.c:1722
+#: app/gradient.c:1725
 msgid "Copy gradient"
 msgstr "Kopier gradient"
 
-#: app/gradient.c:1725
+#: app/gradient.c:1728
 msgid "Enter a name for the copied gradient"
 msgstr "Skriv inn et navn for den kopierte gradienten"
 
-#: app/gradient.c:1808
+#: app/gradient.c:1811
 msgid "Rename gradient"
 msgstr "Omdøp gradient"
 
-#: app/gradient.c:1811
+#: app/gradient.c:1814
 msgid "Enter a new name for the gradient"
 msgstr "Skriv inn et nytt navn for gradienten"
 
-#: app/gradient.c:1871 app/palette.c:1815
+#: app/gradient.c:1874 app/palette.c:1816
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -1957,12 +1957,12 @@ msgstr ""
 "Er du sikker på at du vil slette\n"
 "\"%s\" fra listen og fra disk?"
 
-#: app/gradient.c:2099
+#: app/gradient.c:2102
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zoom-faktor: %d:1    Viser [%0.6f, %0.6f]"
 
-#: app/gradient.c:2355
+#: app/gradient.c:2358
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1971,29 +1971,29 @@ msgstr ""
 "Posisjon: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Ugjennomsiktighet: %0.3f"
 
-#: app/gradient.c:2380
+#: app/gradient.c:2383
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Forgrunnsfarge satt til RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2404
+#: app/gradient.c:2407
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Bakgrunnsfarge satt til RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2695
+#: app/gradient.c:2698
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Dra: flytt    Shif+dra: flytt og komprimer"
 
-#: app/gradient.c:2697 app/gradient.c:2701
+#: app/gradient.c:2700 app/gradient.c:2704
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klikk: velg    Shift+klikk: utvid utvalg"
 
-#: app/gradient.c:2707
+#: app/gradient.c:2710
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Klikk: velg    Shift+klikk: utvid utvalg    Dra: flytt"
 
-#: app/gradient.c:2719
+#: app/gradient.c:2722
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -2001,176 +2001,176 @@ msgstr ""
 "Klikk: velg    Shift+klikk: utvid utvalg    Dra: flytt    Shift+dra: flytt "
 "og komprimer"
 
-#: app/gradient.c:2968 app/gradient.c:2977
+#: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Posisjon for håndtak: %0.6f"
 
-#: app/gradient.c:2995
+#: app/gradient.c:2998
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Avstand: %0.6f"
 
-#: app/gradient.c:3487 app/gradient.c:4550
+#: app/gradient.c:3490 app/gradient.c:4553
 msgid "Left endpoint's color"
 msgstr "Farge på venstre endepunkt"
 
-#: app/gradient.c:3498 app/gradient.c:3540
+#: app/gradient.c:3501 app/gradient.c:3543
 msgid "Load from"
 msgstr "Last fra"
 
-#: app/gradient.c:3502
+#: app/gradient.c:3505
 msgid "Left neighbor's right endpoint"
 msgstr "Venstre nabos høyre endepunkt"
 
-#: app/gradient.c:3503
+#: app/gradient.c:3506
 msgid "Right endpoint"
 msgstr "Høyre endepunkt"
 
-#: app/gradient.c:3513 app/gradient.c:3555
+#: app/gradient.c:3516 app/gradient.c:3558
 msgid "Save to"
 msgstr "Lagre til"
 
-#: app/gradient.c:3529 app/gradient.c:4628
+#: app/gradient.c:3532 app/gradient.c:4631
 msgid "Right endpoint's color"
 msgstr "Farge på høyre endepunkt"
 
-#: app/gradient.c:3544
+#: app/gradient.c:3547
 msgid "Right neighbor's left endpoint"
 msgstr "Høyre nabos venstre endepunkt"
 
-#: app/gradient.c:3545
+#: app/gradient.c:3548
 msgid "Left endpoint"
 msgstr "Venstre endepunkt"
 
-#: app/gradient.c:3656
+#: app/gradient.c:3659
 msgid "Selection operations"
 msgstr "Utvalgsoperasjoner"
 
-#: app/gradient.c:3828
+#: app/gradient.c:3831
 msgid "Blending function for segment"
 msgstr "Blandingsfunksjon for segmentet"
 
-#: app/gradient.c:3830
+#: app/gradient.c:3833
 msgid "Coloring type for segment"
 msgstr "Fargetype for segmentet"
 
-#: app/gradient.c:3832
+#: app/gradient.c:3835
 msgid "Split segment at midpoint"
 msgstr "Splitt segmentet ved midtpunktet"
 
-#: app/gradient.c:3834 app/gradient.c:4931
+#: app/gradient.c:3837 app/gradient.c:4934
 msgid "Split segment uniformly"
 msgstr "Splitt segmentet likt"
 
-#: app/gradient.c:3836
+#: app/gradient.c:3839
 msgid "Delete segment"
 msgstr "Slett segment"
 
-#: app/gradient.c:3838
+#: app/gradient.c:3841
 msgid "Re-center segment's midpoint"
 msgstr "Resentrer segmentets midtpunkt"
 
-#: app/gradient.c:3840
+#: app/gradient.c:3843
 msgid "Re-distribute handles in segment"
 msgstr "Redistribuer håndtaker i segmentet"
 
-#: app/gradient.c:3842
+#: app/gradient.c:3845
 msgid "Flip segment"
 msgstr "Vend segment"
 
-#: app/gradient.c:3844 app/gradient.c:5492
+#: app/gradient.c:3847 app/gradient.c:5495
 msgid "Replicate segment"
 msgstr "Repliker segment"
 
-#: app/gradient.c:3849
+#: app/gradient.c:3852
 msgid "Blending function for selection"
 msgstr "Blandingsfunksjon for utvalg"
 
-#: app/gradient.c:3851
+#: app/gradient.c:3854
 msgid "Coloring type for selection"
 msgstr "Fargetype for utvalget"
 
-#: app/gradient.c:3853
+#: app/gradient.c:3856
 msgid "Split segments at midpoints"
 msgstr "Splitt segmentene ved midtpunktet"
 
-#: app/gradient.c:3855 app/gradient.c:4932
+#: app/gradient.c:3858 app/gradient.c:4935
 msgid "Split segments uniformly"
 msgstr "Splitt segmenter enhetlig"
 
-#: app/gradient.c:3857
+#: app/gradient.c:3860
 msgid "Delete selection"
 msgstr "Slett utvalg"
 
-#: app/gradient.c:3859
+#: app/gradient.c:3862
 msgid "Re-center midpoints in selection"
 msgstr "Resentrer midtpunkter i utvalget"
 
-#: app/gradient.c:3861
+#: app/gradient.c:3864
 msgid "Re-distribute handles in selection"
 msgstr "Redistribuer håndtak i utvalget"
 
-#: app/gradient.c:3863
+#: app/gradient.c:3866
 msgid "Flip selection"
 msgstr "Vend utvalg"
 
-#: app/gradient.c:3865 app/gradient.c:5493
+#: app/gradient.c:3868 app/gradient.c:5496
 msgid "Replicate selection"
 msgstr "Repliker utvalg"
 
-#: app/gradient.c:4149
+#: app/gradient.c:4152
 msgid "FG color"
 msgstr "FG-farge"
 
-#: app/gradient.c:4197
+#: app/gradient.c:4200
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4717 app/gradient.c:4787
+#: app/gradient.c:4720 app/gradient.c:4790
 msgid "(Varies)"
 msgstr "(Varierer)"
 
-#: app/gradient.c:4939
+#: app/gradient.c:4942
 msgid "Split"
 msgstr "Splitt"
 
 #. Instructions
-#: app/gradient.c:4953
+#: app/gradient.c:4956
 msgid "Please select the number of uniform parts"
 msgstr "Vennligst velg antall uniforme deler"
 
-#: app/gradient.c:4959
+#: app/gradient.c:4962
 msgid "in which you want to split the selected segment"
 msgstr "som du vil splitte det valgte segmentet i"
 
-#: app/gradient.c:4960
+#: app/gradient.c:4963
 msgid "in which you want to split the segments in the selection"
 msgstr "som du vil splitte segmentene i utvalget i"
 
-#: app/gradient.c:5320
+#: app/gradient.c:5323
 msgid "Blend endpoints' colors"
 msgstr "Fortynn endepunktenes farger"
 
-#: app/gradient.c:5332
+#: app/gradient.c:5335
 msgid "Blend endpoints' opacity"
 msgstr "Fortynn endepunktenes ugjennomsiktighet"
 
-#: app/gradient.c:5500
+#: app/gradient.c:5503
 msgid "Replicate"
 msgstr "Repliser"
 
 #. Instructions
-#: app/gradient.c:5513
+#: app/gradient.c:5516
 msgid "Please select the number of times"
 msgstr "Vennligst velg antall ganger"
 
-#: app/gradient.c:5518
+#: app/gradient.c:5521
 msgid "you want to replicate the selected segment"
 msgstr "du ønsker å replisere det valgte segmentet"
 
-#: app/gradient.c:5519
+#: app/gradient.c:5522
 msgid "you want to replicate the selection"
 msgstr "du ønsker å replisere utvalget"
 
@@ -2530,7 +2530,7 @@ msgstr "Prosedyrer for guide"
 msgid "Help procedures"
 msgstr "Hjelpeprosedyrer"
 
-#: app/internal_procs.c:116 app/palette.c:3168
+#: app/internal_procs.c:116 app/palette.c:3175
 msgid "Image"
 msgstr "Bilde"
 
@@ -2548,7 +2548,7 @@ msgstr "Grensesnitt"
 msgid "Miscellaneous"
 msgstr "Forskjellig"
 
-#: app/internal_procs.c:128 app/palette.c:2183 app/palette.c:2195
+#: app/internal_procs.c:128 app/palette.c:2184 app/palette.c:2196
 #: app/palette_select.c:91
 msgid "Palette"
 msgstr "Palett"
@@ -2819,15 +2819,15 @@ msgstr "Nivåer inn:"
 msgid "Output Levels:"
 msgstr "Nivåer ut:"
 
-#: app/levels.c:1096
+#: app/levels.c:1088
 msgid "Load Levels"
 msgstr "Laste nivåer"
 
-#: app/levels.c:1111
+#: app/levels.c:1103
 msgid "Save Levels"
 msgstr "Lagre nivåer"
 
-#: app/levels.c:1440
+#: app/levels.c:1432
 msgid "Load/Save Levels"
 msgstr "Laste/Lagre nivåer"
 
@@ -3724,7 +3724,7 @@ msgstr "/Eksportsti..."
 msgid "/Edit Path Attributes..."
 msgstr "/Rediger attributter for sti..."
 
-#: app/menus.c:1302
+#: app/menus.c:1314
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Feil under åpning av fil: %s\n"
@@ -3943,97 +3943,97 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "RGB-verdi utenfor gyldig område"
 
-#: app/palette.c:513
+#: app/palette.c:514
 #, c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "Kan ikke lagre palett \"%s\"\n"
 
-#: app/palette.c:1156
+#: app/palette.c:1157
 msgid "Black"
 msgstr "Sort"
 
-#: app/palette.c:1676 app/palette.c:2152
+#: app/palette.c:1677 app/palette.c:2153
 msgid "Undefined"
 msgstr "Udefinert"
 
-#: app/palette.c:1762
+#: app/palette.c:1763
 msgid "New Palette"
 msgstr "Ny palett"
 
-#: app/palette.c:1765
+#: app/palette.c:1766
 msgid "Enter a name for new palette"
 msgstr "Skriv inn et navn for den nye paletten"
 
-#: app/palette.c:1819
+#: app/palette.c:1820
 msgid "Delete Palette"
 msgstr "Slett palett"
 
-#: app/palette.c:1898
+#: app/palette.c:1899
 msgid "Merge Palette"
 msgstr "Flett sammen palett"
 
-#: app/palette.c:1901
+#: app/palette.c:1902
 msgid "Enter a name for merged palette"
 msgstr "Skriv inn navn for flettet palett"
 
-#: app/palette.c:2047
+#: app/palette.c:2048
 msgid "Color Palette Edit"
 msgstr "Rediger fargepalett"
 
-#: app/palette.c:2065
+#: app/palette.c:2066
 msgid "Color Palette"
 msgstr "Fargepalett"
 
-#: app/palette.c:2185 app/palette.c:3239
+#: app/palette.c:2186 app/palette.c:3246
 msgid "Select"
 msgstr "Velg"
 
-#: app/palette.c:2196 app/palette_select.c:92
+#: app/palette.c:2197 app/palette_select.c:92
 msgid "Ncols"
 msgstr "Ingen farger"
 
-#: app/palette.c:2216
+#: app/palette.c:2217
 msgid "Palette Ops"
 msgstr "Palettoperasjoner"
 
 #. The "Import" frame
-#: app/palette.c:2247 app/palette.c:3102 app/palette.c:3116
+#: app/palette.c:2248 app/palette.c:3109 app/palette.c:3123
 msgid "Import"
 msgstr "Importer"
 
-#: app/palette.c:2258
+#: app/palette.c:2259
 msgid "Merge"
 msgstr "Flett sammen"
 
-#: app/palette.c:3096
+#: app/palette.c:3103
 msgid "Import Palette"
 msgstr "Importer palett"
 
 #. The source's name
-#: app/palette.c:3132
+#: app/palette.c:3139
 msgid "Name:"
 msgstr "Navn:"
 
-#: app/palette.c:3145
+#: app/palette.c:3152
 msgid "new_import"
 msgstr "new_import"
 
 #. The source type
-#: app/palette.c:3150
+#: app/palette.c:3157
 msgid "Source:"
 msgstr "Kilde:"
 
-#: app/palette.c:3178
+#: app/palette.c:3185
 msgid "Indexed Palette"
 msgstr "Indeksért palett"
 
 #. The sample size
-#: app/palette.c:3191
+#: app/palette.c:3198
 msgid "Sample Size:"
 msgstr "Eksempelstørrelse:"
 
 #. The interval
-#: app/palette.c:3204
+#: app/palette.c:3211
 msgid "Interval:"
 msgstr "Intervall:"
 
@@ -4141,17 +4141,17 @@ msgstr "Mønsterutvalg"
 msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
-#: app/patterns.c:206
+#: app/patterns.c:209
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Ukjent versjon av mønsterformat #%d i \"%s\"."
 
-#: app/patterns.c:225
+#: app/patterns.c:228
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Feil i GIMP mønsterfil \"%s\"."
 
-#: app/patterns.c:241
+#: app/patterns.c:244
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "GIMP mønsterfil ser ut til å være avkuttet: \"%s\"."
@@ -4194,12 +4194,12 @@ msgstr "Starter utvidelser: "
 msgid "Extensions"
 msgstr "Utvidelser"
 
-#: app/plug_in.c:842
+#: app/plug_in.c:850
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kunne ikke finne tillegg: \"%s\""
 
-#: app/plug_in.c:1469
+#: app/plug_in.c:1477
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"

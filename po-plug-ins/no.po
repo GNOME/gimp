@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2001-01-02 12:34+0100\n"
+"POT-Creation-Date: 2001-01-15 14:06-0800\n"
 "PO-Revision-Date: 2001-01-02 12:48+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Om"
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
-#: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
+#: plug-ins/common/sharpen.c:525 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
@@ -148,7 +148,7 @@ msgstr "OK"
 #: plug-ins/common/ps.c:2797 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
-#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
+#: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:527
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
@@ -200,7 +200,7 @@ msgstr "Avbryt"
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
-#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
+#: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:552
 #: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
@@ -819,8 +819,8 @@ msgstr "Alternativer for antialiasing"
 msgid "Enable Antialiasing"
 msgstr "Slå på antialiasing"
 
-#: plug-ins/Lighting/lighting_ui.c:488
-msgid "Enable/disable jagged edges removal(antialiasing)"
+#: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:634
+msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
@@ -833,9 +833,10 @@ msgstr "Dybde:"
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalitet for antialiasing. Høyere er bedre, men tregere"
 
-#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
-#: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:830
-#: plug-ins/common/wind.c:1138 plug-ins/gflare/gflare.c:3024
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:662
+#: plug-ins/common/iwarp.c:1107 plug-ins/common/threshold_alpha.c:294
+#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1138
+#: plug-ins/gflare/gflare.c:3024
 msgid "Threshold:"
 msgstr "Terskel:"
 
@@ -1162,14 +1163,6 @@ msgstr "Slå på verktøytips"
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
 msgstr "Slå på/av verktøytips meldinger"
-
-#: plug-ins/MapObject/mapobject_ui.c:634
-msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
-
-#: plug-ins/MapObject/mapobject_ui.c:662
-msgid "Treshold:"
-msgstr "Terskel:"
 
 #: plug-ins/MapObject/mapobject_ui.c:706
 msgid "Point Light"
@@ -2154,7 +2147,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
-#: plug-ins/common/sharpen.c:610 plug-ins/common/shift.c:389
+#: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
 #: plug-ins/common/smooth_palette.c:414 plug-ins/common/snoise.c:525
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:363
 #: plug-ins/common/struc.c:1293 plug-ins/common/threshold_alpha.c:282
@@ -5688,12 +5681,12 @@ msgstr "<Image>/Filtre/Forbedre/Gjør skarpere..."
 msgid "Sharpening..."
 msgstr "Gjør skarpere..."
 
-#: plug-ins/common/sharpen.c:516
+#: plug-ins/common/sharpen.c:518
 #, c-format
 msgid "Sharpen - %s"
 msgstr "Gjør skarpere - %s"
 
-#: plug-ins/common/sharpen.c:621
+#: plug-ins/common/sharpen.c:623
 msgid "Sharpness:"
 msgstr "Skarphet:"
 
@@ -13009,6 +13002,12 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil: fil %s med egenskaper for XJT er tom"
+
+#~ msgid "Enable/disable jagged edges removal(antialiasing)"
+#~ msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
+
+#~ msgid "Treshold:"
+#~ msgstr "Terskel:"
 
 #~ msgid "Checker"
 #~ msgstr "Sjakkbrett"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.28\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
+"POT-Creation-Date: 2001-01-21 19:10-0800\n"
 "PO-Revision-Date: 2000-10-21 21:14+0200\n"
 "Last-Translator: Quico Llach <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -61,7 +61,7 @@ msgstr "que us porta"
 msgid "GIMP Startup"
 msgstr "Inici del GIMP"
 
-#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:455
+#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "anàlisi \"%s\"\n"
@@ -118,15 +118,14 @@ msgstr "Surt"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
+#: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
+#: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1825
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -279,13 +278,11 @@ msgstr "L'opció Brillantor-contrast no funciona en imatges indexades."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
+#: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "D'acord"
 
@@ -310,7 +307,7 @@ msgstr "Contrast:"
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
 #: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
-#: app/palette.c:3222 app/posterize.c:249 app/threshold.c:358
+#: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Vista prèvia"
 
@@ -322,10 +319,10 @@ msgstr "Editor del pinzell"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:915 app/gradient_select.c:161
+#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
-#: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
+#: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
+#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
 #: app/tools.c:1549 app/undo_history.c:759
 msgid "Close"
@@ -353,8 +350,8 @@ msgstr "Angle:"
 msgid "Brush Selection"
 msgstr "Selecció del pinzell"
 
-#: app/brush_select.c:285 app/gradient.c:913 app/module_db.c:359
-#: app/palette.c:2055 app/pattern_select.c:176
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Refresca"
 
@@ -370,19 +367,19 @@ msgstr "Opacitat:"
 msgid "Mode:"
 msgstr "Mode:"
 
-#: app/brush_select.c:473 app/palette.c:1170 app/palette.c:2225
+#: app/brush_select.c:473 app/palette.c:1171 app/palette.c:2226
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Nou"
 
 #: app/brush_select.c:479 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:159 app/palette.c:1177 app/palette.c:2071
+#: app/gradient_select.c:159 app/palette.c:1178 app/palette.c:2072
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Edita"
 
-#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1881
-#: app/palette.c:1187 app/palette.c:1824 app/palette.c:2236
+#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1884
+#: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "Suprimeix"
 
@@ -447,7 +444,6 @@ msgid "Replace"
 msgstr "Substitueix"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Afegeix"
 
@@ -480,12 +476,12 @@ msgid "copy"
 msgstr "còpia"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1723 app/layer.c:345 app/layer.c:1807
 #, c-format
 msgid "%s copy"
 msgstr "%s còpia"
 
-#: app/channel.c:632
+#: app/channel.c:637
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
@@ -510,11 +506,11 @@ msgid "Wrap Around"
 msgstr "Ajusta al voltant"
 
 #: app/channel_ops.c:180 app/image_new.c:80 app/image_new.c:294
-#: app/layers_dialog.c:3657
+#: app/layers_dialog.c:3663
 msgid "Background"
 msgstr "Fons"
 
-#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3659
+#: app/channel_ops.c:181 app/image_new.c:90 app/layers_dialog.c:3665
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -974,7 +970,7 @@ msgid "Width:"
 msgstr "Amplada:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3597 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Alçada:"
@@ -1021,7 +1017,7 @@ msgstr "Lliure"
 msgid "Load"
 msgstr "Carrega"
 
-#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2053
+#: app/curves.c:716 app/devices.c:758 app/levels.c:617 app/palette.c:2054
 #: app/preferences_dialog.c:384 app/preferences_dialog.c:1483
 msgid "Save"
 msgstr "Desa"
@@ -1038,7 +1034,7 @@ msgstr "Desa les corbes"
 msgid "Load/Save Curves"
 msgstr "Carrega/Desa les corbes"
 
-#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1485 app/levels.c:1503
+#: app/curves.c:1666 app/curves.c:1684 app/levels.c:1477 app/levels.c:1495
 #: app/paths_dialog.c:1908
 #, c-format
 msgid "Unable to open file %s"
@@ -1451,34 +1447,6 @@ msgstr "indexat-buit"
 msgid "indexed"
 msgstr "indexat"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Elimina"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Amunt"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Avall"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Configura"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Filtres de visualització de colors"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Filtres disponibles"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Filtres actius"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1534,7 +1502,7 @@ msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Error en el fitxer model del GIMP... avortant"
 
-#: app/gimpbrush.c:321 app/patterns.c:232
+#: app/gimpbrush.c:321 app/patterns.c:235
 msgid "Unnamed"
 msgstr "Sense nom"
 
@@ -1603,11 +1571,11 @@ msgstr "sense nom"
 msgid "Layer type %d not supported."
 msgstr "Tipus de capa %d no suportat."
 
-#: app/gimphelp.c:190
+#: app/gimphelp.c:191
 msgid "Could not find GIMP Help Browser"
 msgstr ""
 
-#: app/gimphelp.c:192
+#: app/gimphelp.c:193
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1617,7 +1585,7 @@ msgstr ""
 "l'ajuda del GIMP. És probable que no fos compilat\n"
 "per què no heu instal·lat el GtkXmHTML."
 
-#: app/gimphelp.c:195
+#: app/gimphelp.c:196
 msgid "Use Netscape instead"
 msgstr ""
 
@@ -1695,8 +1663,8 @@ msgstr "El canal no es pot apujar més"
 msgid "Channel cannot be lowered any further"
 msgstr "El canal no es pot abaixar més"
 
-#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:935 app/palette.c:1071
-#: app/palette.c:2013 app/palette.c:2735 app/palette.c:2867
+#: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
+#: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
 msgid "Untitled"
 msgstr "Sense títol"
 
@@ -1708,43 +1676,43 @@ msgstr "En procés"
 msgid "Please wait..."
 msgstr "Espereu..."
 
-#: app/gimprc.c:474
+#: app/gimprc.c:475
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "anàlisi d'errors: \"%s\"\n"
 
-#: app/gimprc.c:475
+#: app/gimprc.c:476
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  a la línia %d columna %d\n"
 
-#: app/gimprc.c:476
+#: app/gimprc.c:477
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  testimoni inesperat: %s\n"
 
-#: app/gimprc.c:1451
+#: app/gimprc.c:1452
 msgid "error parsing pluginrc"
 msgstr "error analitzant el pluginrc"
 
-#: app/gimprc.c:2926
+#: app/gimprc.c:2927
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "No es pot obrir %s; %s"
 
-#: app/gimprc.c:2945
+#: app/gimprc.c:2946
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "No es pot canviar el nom %s per %s.old; %s"
 
-#: app/gimprc.c:2951
+#: app/gimprc.c:2952
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr ""
 "No es pot tornar a\n"
 "obrir %s\n"
 
-#: app/gimprc.c:2963
+#: app/gimprc.c:2964
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "No es pot escriure a %s; %s"
@@ -1880,88 +1848,88 @@ msgstr "HSV (comptador de tint ensentit horari)"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (tint horari)"
 
-#: app/gradient.c:907
+#: app/gradient.c:910
 msgid "Gradient Editor"
 msgstr "Editor de degradats"
 
-#: app/gradient.c:938 app/gradient_select.c:215 app/paintbrush.c:270
-#: app/palette.c:3160
+#: app/gradient.c:941 app/gradient_select.c:215 app/paintbrush.c:270
+#: app/palette.c:3167
 msgid "Gradient"
 msgstr "Degradat"
 
-#: app/gradient.c:939 app/gradient_select.c:216 app/palette.c:2197
+#: app/gradient.c:942 app/gradient_select.c:216 app/palette.c:2198
 #: app/palette_select.c:93
 msgid "Name"
 msgstr "Nom"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:984
+#: app/gradient.c:987
 msgid "Gradient Ops"
 msgstr "Opcions del degradat"
 
 #. Buttons for gradient functions
-#: app/gradient.c:992
+#: app/gradient.c:995
 msgid "New Gradient"
 msgstr "Nou degradat"
 
-#: app/gradient.c:1000
+#: app/gradient.c:1003
 msgid "Copy Gradient"
 msgstr "Copia el degradat"
 
-#: app/gradient.c:1008 app/gradient.c:1876
+#: app/gradient.c:1011 app/gradient.c:1879
 msgid "Delete Gradient"
 msgstr "Suprimeix el degradat"
 
-#: app/gradient.c:1016
+#: app/gradient.c:1019
 msgid "Rename Gradient"
 msgstr "Canvia el nom del degradat"
 
-#: app/gradient.c:1024 app/gradient.c:1937
+#: app/gradient.c:1027 app/gradient.c:1940
 msgid "Save as POV-Ray"
 msgstr "Desa com a POV-Ray"
 
 #. Zoom all button
-#: app/gradient.c:1042
+#: app/gradient.c:1045
 msgid "Zoom all"
 msgstr "Zoom total"
 
-#: app/gradient.c:1093
+#: app/gradient.c:1096
 msgid "Instant update"
 msgstr "Actualització immediata"
 
-#: app/gradient.c:1228 app/gradient.c:2062
+#: app/gradient.c:1231 app/gradient.c:2065
 msgid "Default"
 msgstr "Per defecte"
 
-#: app/gradient.c:1661
+#: app/gradient.c:1664
 msgid "New gradient"
 msgstr "Nou degradat"
 
-#: app/gradient.c:1664
+#: app/gradient.c:1667
 msgid "Enter a name for the new gradient"
 msgstr "Entreu un nom per al nou degradat"
 
-#: app/gradient.c:1665
+#: app/gradient.c:1668
 msgid "untitled"
 msgstr "sense nom"
 
-#: app/gradient.c:1722
+#: app/gradient.c:1725
 msgid "Copy gradient"
 msgstr "Copia el degradat"
 
-#: app/gradient.c:1725
+#: app/gradient.c:1728
 msgid "Enter a name for the copied gradient"
 msgstr "Entreu un nom per al degradat copiat"
 
-#: app/gradient.c:1808
+#: app/gradient.c:1811
 msgid "Rename gradient"
 msgstr "Canvia el nom del degradat"
 
-#: app/gradient.c:1811
+#: app/gradient.c:1814
 msgid "Enter a new name for the gradient"
 msgstr "Entreu un nou nom per al degradat"
 
-#: app/gradient.c:1871 app/palette.c:1815
+#: app/gradient.c:1874 app/palette.c:1816
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -1970,12 +1938,12 @@ msgstr ""
 "Esteu segurs que voleu suprimir\n"
 "\"%s\" de la llista i del disc?"
 
-#: app/gradient.c:2099
+#: app/gradient.c:2102
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Factor de zoom:: %d:1  Visualitzant [%0.6f, %0.6f]"
 
-#: app/gradient.c:2355
+#: app/gradient.c:2358
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1984,30 +1952,30 @@ msgstr ""
 "Posició: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)   "
 "Opacitat: %0.3f"
 
-#: app/gradient.c:2380
+#: app/gradient.c:2383
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Color de fons ajustat a RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2404
+#: app/gradient.c:2407
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Color de fons a RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2695
+#: app/gradient.c:2698
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Arrossegar: moure   Majúscules+arrossegar: moure i comprimir"
 
-#: app/gradient.c:2697 app/gradient.c:2701
+#: app/gradient.c:2700 app/gradient.c:2704
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Clic: seleccionar   Majúscules+clic: estendre la selecció"
 
-#: app/gradient.c:2707
+#: app/gradient.c:2710
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 "Clic: seleccionar   Majúscules+clic: estendre la selecció   Arrossegar: moure"
 
-#: app/gradient.c:2719
+#: app/gradient.c:2722
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -2015,176 +1983,176 @@ msgstr ""
 "Clic: seleccionar   Majúscules+clic: estendre la selecció   Arrossegar: "
 "moure Majúscules+arrossegar: moure i comprimir"
 
-#: app/gradient.c:2968 app/gradient.c:2977
+#: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Posició de la nansa: %0.6f"
 
-#: app/gradient.c:2995
+#: app/gradient.c:2998
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distància: %0.6f"
 
-#: app/gradient.c:3487 app/gradient.c:4550
+#: app/gradient.c:3490 app/gradient.c:4553
 msgid "Left endpoint's color"
 msgstr "Color del límit esquerre"
 
-#: app/gradient.c:3498 app/gradient.c:3540
+#: app/gradient.c:3501 app/gradient.c:3543
 msgid "Load from"
 msgstr "Carregar de"
 
-#: app/gradient.c:3502
+#: app/gradient.c:3505
 msgid "Left neighbor's right endpoint"
 msgstr "L'esquerra és a prop del límit dret"
 
-#: app/gradient.c:3503
+#: app/gradient.c:3506
 msgid "Right endpoint"
 msgstr "Límit dret"
 
-#: app/gradient.c:3513 app/gradient.c:3555
+#: app/gradient.c:3516 app/gradient.c:3558
 msgid "Save to"
 msgstr "Desar a"
 
-#: app/gradient.c:3529 app/gradient.c:4628
+#: app/gradient.c:3532 app/gradient.c:4631
 msgid "Right endpoint's color"
 msgstr "Color del límit dret"
 
-#: app/gradient.c:3544
+#: app/gradient.c:3547
 msgid "Right neighbor's left endpoint"
 msgstr "La dreta és a prop del límit esquerre"
 
-#: app/gradient.c:3545
+#: app/gradient.c:3548
 msgid "Left endpoint"
 msgstr "Límit esquerre"
 
-#: app/gradient.c:3656
+#: app/gradient.c:3659
 msgid "Selection operations"
 msgstr "Operacions de selecció"
 
-#: app/gradient.c:3828
+#: app/gradient.c:3831
 msgid "Blending function for segment"
 msgstr "S'està mesclant la funció per al segment"
 
-#: app/gradient.c:3830
+#: app/gradient.c:3833
 msgid "Coloring type for segment"
 msgstr "Tipus d'acolorit del segment"
 
-#: app/gradient.c:3832
+#: app/gradient.c:3835
 msgid "Split segment at midpoint"
 msgstr "Partir el segment pel mig"
 
-#: app/gradient.c:3834 app/gradient.c:4931
+#: app/gradient.c:3837 app/gradient.c:4934
 msgid "Split segment uniformly"
 msgstr "Partir el segment uniformement"
 
-#: app/gradient.c:3836
+#: app/gradient.c:3839
 msgid "Delete segment"
 msgstr "Suprimir el segment"
 
-#: app/gradient.c:3838
+#: app/gradient.c:3841
 msgid "Re-center segment's midpoint"
 msgstr "Centrar el punt central del segment"
 
-#: app/gradient.c:3840
+#: app/gradient.c:3843
 msgid "Re-distribute handles in segment"
 msgstr "Distribuir els cursors al segment"
 
-#: app/gradient.c:3842
+#: app/gradient.c:3845
 msgid "Flip segment"
 msgstr "Girar el segment"
 
-#: app/gradient.c:3844 app/gradient.c:5492
+#: app/gradient.c:3847 app/gradient.c:5495
 msgid "Replicate segment"
 msgstr "Replicar el segment"
 
-#: app/gradient.c:3849
+#: app/gradient.c:3852
 msgid "Blending function for selection"
 msgstr "S'està mesclant la funció per a la selecció"
 
-#: app/gradient.c:3851
+#: app/gradient.c:3854
 msgid "Coloring type for selection"
 msgstr "Tipus d'acolorit per la selecció"
 
-#: app/gradient.c:3853
+#: app/gradient.c:3856
 msgid "Split segments at midpoints"
 msgstr "Partir el segment pel mig"
 
-#: app/gradient.c:3855 app/gradient.c:4932
+#: app/gradient.c:3858 app/gradient.c:4935
 msgid "Split segments uniformly"
 msgstr "Partir el segment uniformement"
 
-#: app/gradient.c:3857
+#: app/gradient.c:3860
 msgid "Delete selection"
 msgstr "Suprimir la selecció"
 
-#: app/gradient.c:3859
+#: app/gradient.c:3862
 msgid "Re-center midpoints in selection"
 msgstr "Centrar el punt mig a la selecció"
 
-#: app/gradient.c:3861
+#: app/gradient.c:3864
 msgid "Re-distribute handles in selection"
 msgstr "Distribuir les nanses en la selecció"
 
-#: app/gradient.c:3863
+#: app/gradient.c:3866
 msgid "Flip selection"
 msgstr "Girar la selecció"
 
-#: app/gradient.c:3865 app/gradient.c:5493
+#: app/gradient.c:3868 app/gradient.c:5496
 msgid "Replicate selection"
 msgstr "Replicar la selecció"
 
-#: app/gradient.c:4149
+#: app/gradient.c:4152
 msgid "FG color"
 msgstr "Color de fons"
 
-#: app/gradient.c:4197
+#: app/gradient.c:4200
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4717 app/gradient.c:4787
+#: app/gradient.c:4720 app/gradient.c:4790
 msgid "(Varies)"
 msgstr "(Varies)"
 
-#: app/gradient.c:4939
+#: app/gradient.c:4942
 msgid "Split"
 msgstr "Partir"
 
 #. Instructions
-#: app/gradient.c:4953
+#: app/gradient.c:4956
 msgid "Please select the number of uniform parts"
 msgstr "Seleccioneu el nombre de parts uniformes"
 
-#: app/gradient.c:4959
+#: app/gradient.c:4962
 msgid "in which you want to split the selected segment"
 msgstr "en què vulgueu partir el segment seleccionat"
 
-#: app/gradient.c:4960
+#: app/gradient.c:4963
 msgid "in which you want to split the segments in the selection"
 msgstr "en què vulgueu partir els segments de la selecció"
 
-#: app/gradient.c:5320
+#: app/gradient.c:5323
 msgid "Blend endpoints' colors"
 msgstr "Combinar els colors dels extrems"
 
-#: app/gradient.c:5332
+#: app/gradient.c:5335
 msgid "Blend endpoints' opacity"
 msgstr "Combinar l'opacitat dels extrems"
 
-#: app/gradient.c:5500
+#: app/gradient.c:5503
 msgid "Replicate"
 msgstr "Replicar"
 
 #. Instructions
-#: app/gradient.c:5513
+#: app/gradient.c:5516
 msgid "Please select the number of times"
 msgstr "Seleccioneu el nombre de vegades que"
 
-#: app/gradient.c:5518
+#: app/gradient.c:5521
 msgid "you want to replicate the selected segment"
 msgstr "voleu replicar el segment seleccionat"
 
-#: app/gradient.c:5519
+#: app/gradient.c:5522
 msgid "you want to replicate the selection"
 msgstr "voleu replicar la selecció"
 
@@ -2289,11 +2257,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Escala de grisos"
 
-#: app/image_new.c:75 app/layers_dialog.c:3656
+#: app/image_new.c:75 app/layers_dialog.c:3662
 msgid "Foreground"
 msgstr "Primer terme"
 
-#: app/image_new.c:85 app/layers_dialog.c:3658
+#: app/image_new.c:85 app/layers_dialog.c:3664
 msgid "White"
 msgstr "Blanc"
 
@@ -2547,7 +2515,7 @@ msgstr "Procediments de guia"
 msgid "Help procedures"
 msgstr "Procediments d'ajuda"
 
-#: app/internal_procs.c:116 app/palette.c:3168
+#: app/internal_procs.c:116 app/palette.c:3175
 msgid "Image"
 msgstr "Imatge"
 
@@ -2565,7 +2533,7 @@ msgstr "Interfície"
 msgid "Miscellaneous"
 msgstr "Miscel·lània"
 
-#: app/internal_procs.c:128 app/palette.c:2183 app/palette.c:2195
+#: app/internal_procs.c:128 app/palette.c:2184 app/palette.c:2196
 #: app/palette_select.c:91
 msgid "Palette"
 msgstr "Paleta"
@@ -2631,7 +2599,7 @@ msgstr "màscara %s"
 msgid "Layer Select"
 msgstr "Selecció de capa"
 
-#: app/layers_dialog.c:270 app/layers_dialog.c:3587
+#: app/layers_dialog.c:270 app/layers_dialog.c:3593
 msgid "New Layer"
 msgstr "Capa nova"
 
@@ -2712,62 +2680,62 @@ msgstr "Deixa trans."
 msgid "Keep Transparency"
 msgstr "Transparència"
 
-#: app/layers_dialog.c:1949
+#: app/layers_dialog.c:1955
 msgid "Empty Layer Copy"
 msgstr "Buida la còpia de la capa"
 
-#: app/layers_dialog.c:2213 app/layers_dialog.c:3396 app/layers_dialog.c:3766
+#: app/layers_dialog.c:2219 app/layers_dialog.c:3402 app/layers_dialog.c:3772
 msgid "Floating Selection"
 msgstr "Selecció movible"
 
-#: app/layers_dialog.c:3547
+#: app/layers_dialog.c:3553
 msgid "New Layer Options"
 msgstr "Opcions per a una nova capa"
 
 #. The name label and entry
-#: app/layers_dialog.c:3576
+#: app/layers_dialog.c:3582
 msgid "Layer Name:"
 msgstr "Nom de la capa:"
 
 #. The size labels
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3597
 msgid "Layer Width:"
 msgstr "Amplada de la capa:"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3658
 msgid "Layer Fill Type"
 msgstr "Tipus de pintat"
 
-#: app/layers_dialog.c:3731
+#: app/layers_dialog.c:3737
 msgid "Edit Layer Attributes"
 msgstr "Edició dels atributs de la capa"
 
-#: app/layers_dialog.c:3758
+#: app/layers_dialog.c:3764
 msgid "Layer name:"
 msgstr "Nom de la capa:"
 
-#: app/layers_dialog.c:3826
+#: app/layers_dialog.c:3832
 msgid "Add Mask Options"
 msgstr "Afegeix opcions de màscara"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3844
+#: app/layers_dialog.c:3850
 msgid "Initialize Layer Mask to:"
 msgstr "Inicialitza la màscara de capa a:"
 
-#: app/layers_dialog.c:3849
+#: app/layers_dialog.c:3855
 msgid "White (Full Opacity)"
 msgstr "Blanc (opac del tot)"
 
-#: app/layers_dialog.c:3851
+#: app/layers_dialog.c:3857
 msgid "Black (Full Transparency)"
 msgstr "Negre (transparent del tot)"
 
-#: app/layers_dialog.c:3853
+#: app/layers_dialog.c:3859
 msgid "Layer's Alpha Channel"
 msgstr "Canal alfa de la capa"
 
-#: app/layers_dialog.c:3915 app/layers_dialog.c:4001
+#: app/layers_dialog.c:3921 app/layers_dialog.c:4007
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2776,27 +2744,27 @@ msgstr ""
 "són vàlides. Totes dues han\n"
 "de ser positives."
 
-#: app/layers_dialog.c:4087
+#: app/layers_dialog.c:4093
 msgid "Layer Merge Options"
 msgstr "Opcions per combinar capes"
 
-#: app/layers_dialog.c:4112
+#: app/layers_dialog.c:4118
 msgid "Final, Merged Layer should be:"
 msgstr "La capa combinada resultant hauria de ser:"
 
-#: app/layers_dialog.c:4113
+#: app/layers_dialog.c:4119
 msgid "Final, Anchored Layer should be:"
 msgstr "La capa fixada resultant hauria de ser:"
 
-#: app/layers_dialog.c:4118
+#: app/layers_dialog.c:4124
 msgid "Expanded as necessary"
 msgstr "Ampliat tant com calgui"
 
-#: app/layers_dialog.c:4120
+#: app/layers_dialog.c:4126
 msgid "Clipped to image"
 msgstr "Tallat a mida de la imatge"
 
-#: app/layers_dialog.c:4122
+#: app/layers_dialog.c:4128
 msgid "Clipped to bottom layer"
 msgstr "Tallat a la mida de la capa de darrere"
 
@@ -2838,15 +2806,15 @@ msgstr "Nivells d'entrada:"
 msgid "Output Levels:"
 msgstr "Nivells de sortida:"
 
-#: app/levels.c:1096
+#: app/levels.c:1088
 msgid "Load Levels"
 msgstr "Carrega nivells"
 
-#: app/levels.c:1111
+#: app/levels.c:1103
 msgid "Save Levels"
 msgstr "Desa nivells"
 
-#: app/levels.c:1440
+#: app/levels.c:1432
 msgid "Load/Save Levels"
 msgstr "Carrega/desa nivells"
 
@@ -3745,7 +3713,7 @@ msgstr "/Exporta el camí..."
 msgid "/Edit Path Attributes..."
 msgstr "/Edita els atributs del camí..."
 
-#: app/menus.c:1302
+#: app/menus.c:1314
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Error en obrir el fitxer: %s\n"
@@ -3964,97 +3932,97 @@ msgstr ""
 "Carregant la paleta %s (line %d):\n"
 "Valor RGB fora de límits"
 
-#: app/palette.c:513
+#: app/palette.c:514
 #, c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "No es pot desar la paleta \"%s\"\n"
 
-#: app/palette.c:1156
+#: app/palette.c:1157
 msgid "Black"
 msgstr "Negre"
 
-#: app/palette.c:1676 app/palette.c:2152
+#: app/palette.c:1677 app/palette.c:2153
 msgid "Undefined"
 msgstr "No definit"
 
-#: app/palette.c:1762
+#: app/palette.c:1763
 msgid "New Palette"
 msgstr "Paleta nova"
 
-#: app/palette.c:1765
+#: app/palette.c:1766
 msgid "Enter a name for new palette"
 msgstr "Introdueix un nom per a una nova paleta"
 
-#: app/palette.c:1819
+#: app/palette.c:1820
 msgid "Delete Palette"
 msgstr "Suprimeix la paleta"
 
-#: app/palette.c:1898
+#: app/palette.c:1899
 msgid "Merge Palette"
 msgstr "Paleta de fusió"
 
-#: app/palette.c:1901
+#: app/palette.c:1902
 msgid "Enter a name for merged palette"
 msgstr "Introdueix un nom per a la paleta fusionada"
 
-#: app/palette.c:2047
+#: app/palette.c:2048
 msgid "Color Palette Edit"
 msgstr "Edició de la paleta de color"
 
-#: app/palette.c:2065
+#: app/palette.c:2066
 msgid "Color Palette"
 msgstr "Paleta de color"
 
-#: app/palette.c:2185 app/palette.c:3239
+#: app/palette.c:2186 app/palette.c:3246
 msgid "Select"
 msgstr "Selecciona"
 
-#: app/palette.c:2196 app/palette_select.c:92
+#: app/palette.c:2197 app/palette_select.c:92
 msgid "Ncols"
 msgstr "Nombre de colors"
 
-#: app/palette.c:2216
+#: app/palette.c:2217
 msgid "Palette Ops"
 msgstr "Opcions de la paleta"
 
 #. The "Import" frame
-#: app/palette.c:2247 app/palette.c:3102 app/palette.c:3116
+#: app/palette.c:2248 app/palette.c:3109 app/palette.c:3123
 msgid "Import"
 msgstr "Importació"
 
-#: app/palette.c:2258
+#: app/palette.c:2259
 msgid "Merge"
 msgstr "Fusió"
 
-#: app/palette.c:3096
+#: app/palette.c:3103
 msgid "Import Palette"
 msgstr "Importar una paleta"
 
 #. The source's name
-#: app/palette.c:3132
+#: app/palette.c:3139
 msgid "Name:"
 msgstr "Nom:"
 
-#: app/palette.c:3145
+#: app/palette.c:3152
 msgid "new_import"
 msgstr "_Importació nova"
 
 #. The source type
-#: app/palette.c:3150
+#: app/palette.c:3157
 msgid "Source:"
 msgstr "Origen:"
 
-#: app/palette.c:3178
+#: app/palette.c:3185
 msgid "Indexed Palette"
 msgstr "Paleta indexada"
 
 #. The sample size
-#: app/palette.c:3191
+#: app/palette.c:3198
 msgid "Sample Size:"
 msgstr "Mida de mostra:"
 
 #. The interval
-#: app/palette.c:3204
+#: app/palette.c:3211
 msgid "Interval:"
 msgstr "Interval:"
 
@@ -4162,17 +4130,17 @@ msgstr "Selecció de model"
 msgid "No Patterns available"
 msgstr "No hi ha patrons disponibles"
 
-#: app/patterns.c:206
+#: app/patterns.c:209
 #, fuzzy, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
 
-#: app/patterns.c:225
+#: app/patterns.c:228
 #, fuzzy, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Error en el fitxer model del GIMP... avortant"
 
-#: app/patterns.c:241
+#: app/patterns.c:244
 #, fuzzy, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "Sembla que el fitxer model del GIMP és truncat"
@@ -4215,12 +4183,12 @@ msgstr "S'estan iniciant les extensions: "
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/plug_in.c:842
+#: app/plug_in.c:850
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "No es pot localitzar l'extensió: \"%s\""
 
-#: app/plug_in.c:1469
+#: app/plug_in.c:1477
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -6376,33 +6344,6 @@ msgstr ""
 "mapes de color indexats. S'està substituint\n"
 "el mapa d'escala de grisos."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Filtre de visualització de color gamma"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gamma"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:96
-#, fuzzy
-msgid "High Contrast color display filter"
-msgstr "Filtre de visualització de color gamma"
-
-#: modules/cdisplay_highcontrast.c:318
-#, fuzzy
-msgid "High Contrast"
-msgstr "Contrast"
-
-#: modules/cdisplay_highcontrast.c:337
-#, fuzzy
-msgid "Contrast Cycles:"
-msgstr "Contrast"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "Selector de color GTK com a selector de color addicional"
@@ -6427,6 +6368,48 @@ msgstr "Aquarel·la"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historial del color"
+
+#~ msgid "Remove"
+#~ msgstr "Elimina"
+
+#~ msgid "Up"
+#~ msgstr "Amunt"
+
+#~ msgid "Down"
+#~ msgstr "Avall"
+
+#~ msgid "Configure"
+#~ msgstr "Configura"
+
+#~ msgid "Color Display Filters"
+#~ msgstr "Filtres de visualització de colors"
+
+#~ msgid "Available Filters"
+#~ msgstr "Filtres disponibles"
+
+#~ msgid "Active Filters"
+#~ msgstr "Filtres actius"
+
+#~ msgid "Gamma color display filter"
+#~ msgstr "Filtre de visualització de color gamma"
+
+#~ msgid "Gamma"
+#~ msgstr "Gamma"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
+
+#, fuzzy
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Filtre de visualització de color gamma"
+
+#, fuzzy
+#~ msgid "High Contrast"
+#~ msgstr "Contrast"
+
+#, fuzzy
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Contrast"
 
 #~ msgid "Error in GIMP brush file...aborting."
 #~ msgstr "Error al fitxer de pinzell GIMP... s'està avortant."
