@@ -1,3 +1,7 @@
+2003-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* autogen.sh: removed "--copy" from the call to libtoolize.
+
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpsessioninfo.c: only save the screen number to

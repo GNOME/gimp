@@ -180,7 +180,7 @@ if test $RC -ne 0; then
    exit 1
 fi
 
-libtoolize --copy --force
+libtoolize --force
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
