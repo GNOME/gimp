@@ -725,23 +725,31 @@ void repaint(ppm_t *p, ppm_t *a)
     }
 
     /* Handle Adaptive selections */
-    /* TODO : Nest the ifs here. */
-    if((runningvals.orienttype == ORIENTATION_ADAPTIVE) &&
-       (runningvals.sizetype == SIZE_TYPE_ADAPTIVE))
-    {
-      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, num_brushes, brushes_sum, 0, 1);
-    } else if(runningvals.orienttype == ORIENTATION_ADAPTIVE) {
-      int st = sn * runningvals.orientnum;
-      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, st+runningvals.orientnum, brushes_sum, st, 1);
-    } else if(runningvals.sizetype == SIZE_TYPE_ADAPTIVE) {
-      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, num_brushes, brushes_sum, on, runningvals.orientnum);
-    } else {
-      n = sn * runningvals.orientnum + on;
-    }
-
+    if (runningvals.orienttype == ORIENTATION_ADAPTIVE)
+      {
+        if (runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
+          n = choose_best_brush (p, a, tx-maxbrushwidth/2,
+                                 ty-maxbrushheight/2, brushes,
+                                 num_brushes, brushes_sum, 0, 1);
+        else
+          {
+            int st = sn * runningvals.orientnum;
+            n = choose_best_brush (p, a, tx-maxbrushwidth/2,
+                                   ty-maxbrushheight/2, brushes,
+                                   st+runningvals.orientnum, brushes_sum,
+                                   st, 1);
+          }
+      }
+    else
+      {
+         if (runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
+           n = choose_best_brush (p, a, tx-maxbrushwidth/2,
+                                  ty-maxbrushheight/2, brushes,
+                                  num_brushes, brushes_sum,
+                                  on, runningvals.orientnum);
+         else
+           n = sn * runningvals.orientnum + on;
+      }
     /* Should never happen, but hey... */
     if(n < 0) n = 0;
     else if(n >= num_brushes) n = num_brushes - 1;

@@ -1,3 +1,8 @@
+2004-07-29  Shlomi Fish <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/repaint.c: converted a multiple if into
+	a nested one.
+
 2004-07-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h: removed enums GimpImageType and
