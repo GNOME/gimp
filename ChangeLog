@@ -1,3 +1,20 @@
+Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adraiN@gimp.org>
+
+	 *AlienMap/AlienMap.c CEL/CEL.c CML_explorer/CML_explorer.c
+        align_layers/align_layers.c animationplay/animationplay.c
+        bmp/bmpwrite.c dbbrowser/dbbrowser.c emboss/emboss.c
+        exchange/exchange.c faxg3/faxg3.c faxg3/g3.c gbr/gbr.c
+        gif/gif.c gqbist/gqbist.c hot/hot.c ifscompose/ifscompose.c
+        iwarp/iwarp.c max_rgb/max_rgb.c maze/maze_face.c
+        megawidget/megawidget.c mpeg/mpeg.c nlfilt/nlfilt.c pcx/pcx.c
+        plasma/plasma.c pnm/pnm.c print/print-escp2.c
+        print/print-pcl.c print/print.c scatter_hsv/scatter_hsv.c
+        script-fu/script-fu-scripts.c script-fu/script-fu.c
+        sinus/sinus.c tga/tga.c tileit/tileit.c
+        vpropagate/vpropagate.c xpm/xpm.c: 
+		 More picky picky ansi type
+        	stuff from gimp-hpux-980316.patch.        
+
 Wed Mar 18 15:06:13 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* define M_PI if it's not already defined in lots of
