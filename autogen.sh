@@ -80,12 +80,13 @@ fi
 
 echo -n "checking for gtkdocize ... "
 if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
-    echo "found"
+    echo "yes"
 else
     echo
-    echo "You must have gtk-doc installed to compile $PROJECT."
-    echo "Install the appropriate package for your distribution,"
-    echo "or get the source tarball at http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
+    echo "  You must have gtk-doc installed to compile $PROJECT."
+    echo "  Install the appropriate package for your distribution,"
+    echo "  or get the source tarball at"
+    echo "  http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
     DIE=1
 fi
 
