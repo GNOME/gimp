@@ -1,5 +1,6 @@
-For pre-built binary packages, see
-http://www.gimp.org/win32/downloads.html .
+For pre-built binary packages of GLib, GTK etc, see
+http://www.gimp.org/win32/downloads.html . No pre-built GIMP 1.3
+packages, though.
 
 Building GIMP on Win32
 ======================
