@@ -21,6 +21,10 @@
 
 #include "config.h"
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -113,6 +117,9 @@ gimp_rc_serialize (GObject *object,
   else
     success = gimp_config_serialize_properties (object, fd, indent_level);
 
+  if (success)
+    success = (write (fd, "\n", 1) != -1);
+      
   if (success)
     success = gimp_config_serialize_unknown_tokens (object, fd, indent_level);
 

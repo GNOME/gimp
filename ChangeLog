@@ -1,3 +1,11 @@
+2002-05-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.c (gimp_rc_serialize): write newline after
+	serializing the properties.
+
+	* app/config/gimpconfig.c (gimp_config_string_indent): tiny
+	optimization.
+
 2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/iwarp.c (iwarp_dialog): fix for #82494 (strange 

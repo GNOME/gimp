@@ -339,13 +339,13 @@ void
 gimp_config_string_indent (GString *string,
                            gint     indent_level)
 {
-  gint indent;
+  gint i;
 
   g_return_if_fail (string != NULL);
   g_return_if_fail (indent_level >= 0);
 
-  for (indent = 0; indent < indent_level; indent++)
-    g_string_append (string, "    ");
+  for (i = 0; i < indent_level; i++)
+    g_string_append_len (string, "    ", 4);
 }
 
 static void
