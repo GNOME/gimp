@@ -25,8 +25,8 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 
 #include "appenv.h"
 #include "actionarea.h"
