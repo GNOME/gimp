@@ -10,18 +10,25 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.22
 ==================================
+- Histogram scale configurable for all tools and defaults to linear [Sven]
+- Better default settings
+- Complete configurability of normal and fullscreen view [Sven, Bolsh]
+- GimpConfig cleanups and improvements [Mitch, Sven]
 - Allow to configure the default grid in your gimprc [Brix]
-- Store the position of dock panes in your sessionrc [Mitch]
+- Improved session handling; store more settings like the position of
+  dock panes and the selected page in the dockbook [Mitch]
 - Auto-scrolling for DND in list views [Mitch]
 - Refresh rendering of paint strokes more often [Mitch]
 - Refactored handling of modifier keys for tools [Mitch]
 - Changed the redo shortcut to Ctrl-Y [Sven]
+- Numerous plug-in cleanups [Maurits, Bolsh] 
+- Code documentation [Bolsh, Helvetix, Sven, Mitch]
 - Lots of bug fixes
 
 Other contributors:
-  Manish Singh, Ville Pätsi, Simon Budig, Tor Lillqvist, Dave
-  Neary, Helvetix Victorinox, Pedro Gimeno, Seth Burgess, Jakub
-  Steiner, Maurits Rijk
+  Manish Singh, Ville Pätsi, Simon Budig, Tor Lillqvist, Pedro Gimeno,
+  Seth Burgess, Jakub Steiner, David Odin, Ed Halley, Wolfgang Hofer,
+  Vesa Halttunen
 
 
 Overview of Changes in GIMP 1.3.21
