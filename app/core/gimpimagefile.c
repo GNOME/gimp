@@ -257,7 +257,7 @@ gimp_imagefile_new (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  imagefile = GIMP_IMAGEFILE (g_object_new (GIMP_TYPE_IMAGEFILE, NULL));
+  imagefile = g_object_new (GIMP_TYPE_IMAGEFILE, NULL);
 
   if (uri)
     gimp_object_set_name (GIMP_OBJECT (imagefile), uri);
@@ -350,6 +350,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
   g_return_if_fail (thumb_size <= 256);
+
+  if (! imagefile->gimp->config->layer_previews)
+    return;
 
   if (thumb_size < 1)
     return;
@@ -492,6 +495,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
   thumb_size = imagefile->gimp->config->thumbnail_size;
 
   g_return_val_if_fail (thumb_size <= 256, FALSE);
+
+  if (! imagefile->gimp->config->layer_previews)
+    return TRUE;
 
   if (thumb_size < 1)
     return TRUE;

@@ -182,24 +182,21 @@ file_save_as (GimpImage      *gimage,
           gimp_image_set_save_proc (gimage, file_proc);
 	}
 
-      /* Write a thumbnail for the saved image, where appropriate */
-      if (gimage->gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE)
-	{
-          if (set_uri_and_proc)
-            {
-              gimp_imagefile_save_thumbnail (imagefile, gimage);
-            }
-          else
-            {
-              gchar *saved_uri;
+      /* Write a thumbnail for the saved image */
+      if (set_uri_and_proc)
+        {
+          gimp_imagefile_save_thumbnail (imagefile, gimage);
+        }
+      else
+        {
+          gchar *saved_uri;
 
-              saved_uri = GIMP_OBJECT (gimage)->name;
-              GIMP_OBJECT (gimage)->name = (gchar *) uri;
+          saved_uri = GIMP_OBJECT (gimage)->name;
+          GIMP_OBJECT (gimage)->name = (gchar *) uri;
 
-              gimp_imagefile_save_thumbnail (imagefile, gimage);
+          gimp_imagefile_save_thumbnail (imagefile, gimage);
 
-              GIMP_OBJECT (gimage)->name = saved_uri;
-            }
+          GIMP_OBJECT (gimage)->name = saved_uri;
 	}
     }
   else if (status != GIMP_PDB_CANCEL)

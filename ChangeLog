@@ -1,3 +1,15 @@
+2003-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_create_thumbnail),
+	(gimp_imagefile_save_thumbnail)
+	* app/gui/file-open-dialog.c (file_open_create_thumbnails): don't
+	create thumbnails if core_config->layer_previews is FALSE
+	(bug #107242).
+
+	* app/file/file-save.c (file_save_as): call
+	gimp_imagefile_save_thumbnail() unconditionally since it does all
+	the needed checks itself.
+
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpairbrush.c (gimp_airbrush_paint): removed a

@@ -465,7 +465,8 @@ file_open_create_thumbnails (GtkWidget *open_dialog,
 
   gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
 
-  if (gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE)
+  if (gimp->config->thumbnail_size != GIMP_THUMBNAIL_SIZE_NONE &&
+      gimp->config->layer_previews)
     {
       gchar **selections;
       gint    n_selections;
