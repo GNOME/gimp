@@ -135,7 +135,6 @@ msgid "FG to Transparent"
 msgstr "AV vers Transparent"
 
 #: app/blend.c:265
-#, fuzzy
 msgid "Custom from Editor"
 msgstr "Personnalisé à partir de l'éditeur"
 
@@ -188,14 +187,12 @@ msgid "None"
 msgstr "Aucun"
 
 #: app/blend.c:299
-#, fuzzy
 msgid "Sawtooth Wave"
-msgstr "Dents de scie"
+msgstr "Onde en dents de scie"
 
 #: app/blend.c:301
-#, fuzzy
 msgid "Triangular Wave"
-msgstr "Triangulaire"
+msgstr "Onde triangulaire"
 
 #: app/blend.c:335
 msgid "Offset:"
@@ -214,7 +211,6 @@ msgid "Repeat:"
 msgstr "Répétition :"
 
 #: app/blend.c:381
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Super-échantillonnage adaptatif"
 
@@ -883,7 +879,6 @@ msgid "Crop & Resize Options"
 msgstr "Options de Rognage et de Redimensionnement"
 
 #: app/crop.c:188
-#, fuzzy
 msgid "Current Layer Only"
 msgstr "Calque courant seulement"
 
@@ -1088,7 +1083,6 @@ msgstr "L'égalisation ne peux opérer sur des images indexées."
 
 #. the hard toggle
 #: app/eraser.c:107
-#, fuzzy
 msgid "Hard Edge"
 msgstr "Contour dur"
 
@@ -1669,7 +1663,6 @@ msgid "Paste Into"
 msgstr "Coller dans"
 
 #: app/global_edit.c:698
-#, fuzzy
 msgid "Paste as New"
 msgstr "Coller dans un nouveau"
 
@@ -3415,19 +3408,19 @@ msgid "/Xtns/Perl"
 msgstr "/Xtns/Perl"
 
 #: app/menus.c:87
-#, fuzzy
+#, XXX
 msgid "/Xtns/Render"
-msgstr "/Fichier/Revenir au fichier"
+msgstr "/Xtns/Render"
 
 #: app/menus.c:88
-#, fuzzy
+#, XXX
 msgid "/Xtns/Render/Logos"
-msgstr "/Filtres/Répéter le dernier"
+msgstr "/Xtns/Render/Logos"
 
 #: app/menus.c:89
-#, fuzzy
+#, XXX
 msgid "/Xtns/Render/Povray"
-msgstr "/Filtres/Répéter le dernier"
+msgstr "/Xtns/Render/Povray"
 
 #: app/menus.c:90
 msgid "/Xtns/Script-Fu"
@@ -3442,9 +3435,8 @@ msgid "/Xtns/Script-Fu/Patterns"
 msgstr "/Xtns/Script-Fu/Motifs"
 
 #: app/menus.c:93
-#, fuzzy
 msgid "/Xtns/Script-Fu/Web Page Themes"
-msgstr "/Xtns/Script-Fu/Thèmes Web"
+msgstr "/Xtns/Script-Fu/Thèmes pages web"
 
 #: app/menus.c:94
 msgid "/Xtns/Script-Fu/Utils"
@@ -3476,19 +3468,19 @@ msgid "/Filters/Colors/Map"
 msgstr "/Filtres/Couleurs/Carte"
 
 #: app/menus.c:103
-#, fuzzy
+#, XXX
 msgid "/Filters/Render/Clouds"
-msgstr "/Filtres/Répéter le dernier"
+msgstr "/Filtres/Render/Nuages"
 
 #: app/menus.c:104
-#, fuzzy
+#, XXX
 msgid "/Filters/Render/Nature"
-msgstr "/Filtres/Répéter le dernier"
+msgstr "/Filtres/Render/Nature"
 
 #: app/menus.c:105
-#, fuzzy
+#, XXX
 msgid "/Filters/Render/Pattern"
-msgstr "/Filtres/Répéter le dernier"
+msgstr "/Filtres/Render/Motif"
 
 #: app/menus.c:106
 msgid "/Filters/Misc"
@@ -3528,23 +3520,21 @@ msgid "/Script-Fu/Shadow"
 msgstr "/Script-Fu/Ombre"
 
 #: app/menus.c:115
-#, fuzzy
+#, XXX
 msgid "/Script-Fu/Render"
-msgstr "/Script-Fu/tearoff1"
+msgstr "/Script-Fu/Render"
 
 #: app/menus.c:116
 msgid "/Guides"
 msgstr "/Guides"
 
 #: app/menus.c:117
-#, fuzzy
 msgid "/Video"
-msgstr "Vidéo"
+msgstr "/Vidéo"
 
 #: app/menus.c:118
-#, fuzzy
 msgid "/Video/Encode"
-msgstr "Vidéo/Encoder"
+msgstr "/Vidéo/Encoder"
 
 #. <Toolbox>/File
 #: app/menus.c:131 app/menus.c:238
@@ -3646,7 +3636,6 @@ msgid "/Help/Context Help..."
 msgstr "/Aide/Aide contextuelle..."
 
 #: app/menus.c:218
-#, fuzzy
 msgid "/Help/Tip of the Day..."
 msgstr "/Aide/Conseil du jour..."
 
@@ -3663,7 +3652,6 @@ msgid "/File/Save"
 msgstr "/Fichier/Enregistrer"
 
 #: app/menus.c:246
-#, fuzzy
 msgid "/File/Save As..."
 msgstr "/Fichier/Enregistrer sous..."
 
@@ -3705,7 +3693,6 @@ msgid "/Edit/Paste Into"
 msgstr "/Édition/Coller dans"
 
 #: app/menus.c:280
-#, fuzzy
 msgid "/Edit/Paste as New"
 msgstr "/Édition/Coller dans un nouveau"
 
@@ -3780,9 +3767,8 @@ msgid "/Select/Border..."
 msgstr "/Sélection/Bordure..."
 
 #: app/menus.c:334
-#, fuzzy
 msgid "/Select/Save to Channel"
-msgstr "/Sélection/Enregistrer dans Canal"
+msgstr "/Sélection/Enregistrer dans un canal"
 
 #. <Image>/View
 #: app/menus.c:339
@@ -3839,7 +3825,6 @@ msgid "/View/Zoom/1:16"
 msgstr "/Vue/Zoom/1:16"
 
 #: app/menus.c:369
-#, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "/Vue/Point pour point"
 
@@ -3852,7 +3837,6 @@ msgid "/View/Nav. Window..."
 msgstr "/Vue/Nav. entre fenêtres..."
 
 #: app/menus.c:378
-#, fuzzy
 msgid "/View/Undo History..."
 msgstr "/Vue/Historique d'annulation..."
 
@@ -3873,7 +3857,6 @@ msgid "/View/Toggle Guides"
 msgstr "/Vue/(Dés)activer les Guides"
 
 #: app/menus.c:391
-#, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "/Vue/Aligner sur les Guides"
 
@@ -4007,7 +3990,6 @@ msgid "/Layers/Rotate"
 msgstr "/Calques/Rotation"
 
 #: app/menus.c:509
-#, fuzzy
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Calques/Aplatir Image"
 
@@ -4024,7 +4006,6 @@ msgid "/Layers/Flatten Image"
 msgstr "/Calques/Aplatir Image"
 
 #: app/menus.c:523
-#, fuzzy
 msgid "/Layers/Mask to Selection"
 msgstr "/Calques/Masque vers Sélection"
 
@@ -4033,7 +4014,6 @@ msgid "/Layers/Add Alpha Channel"
 msgstr "/Calques/Ajouter Canal Alpha"
 
 #: app/menus.c:530
-#, fuzzy
 msgid "/Layers/Alpha to Selection"
 msgstr "/Calques/Alpha vers Sélection"
 
@@ -4060,12 +4040,10 @@ msgid "/Filters"
 msgstr "/Filtres"
 
 #: app/menus.c:554
-#, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "/Filtres/Répéter le dernier"
 
 #: app/menus.c:556
-#, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "/Filtres/Remontrer le dernier"
 
@@ -4314,14 +4292,12 @@ msgid "/Add to Selection"
 msgstr "/Ajouter à la Sélection"
 
 #: app/menus.c:771
-#, fuzzy
 msgid "/Subtract from Selection"
-msgstr "/Soustraire de la Sélection"
+msgstr "/Soustraire de la sélection"
 
 #: app/menus.c:773
-#, fuzzy
 msgid "/Intersect with Selection"
-msgstr "/Intersection avec la Sélection"
+msgstr "/Intersection avec la sélection"
 
 #: app/menus.c:778
 msgid "/Delete Channel"
@@ -4469,13 +4445,13 @@ msgstr "Options de l'Outil Déplacement"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, fuzzy, c-format
+#, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr "Navigation parmis les fenêtres : %s-%d.%d"
+msgstr "Navigation  : %s-%d.%d"
 
 #: app/nav_window.c:1552
 msgid "Navigation: No Image"
-msgstr ""
+msgstr "Navigation : pas d'image"
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4662,7 +4638,6 @@ msgid "Source:"
 msgstr "Source :"
 
 #: app/palette.c:3178
-#, fuzzy
 msgid "Indexed Palette"
 msgstr "Palette des couleurs indexées"
 
