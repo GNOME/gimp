@@ -129,6 +129,11 @@ create_query_box (const gchar   *title,
 
 				     NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   query_box->response_handler =
     g_signal_connect (query_box->qbox, "response",
                       G_CALLBACK (response_callback),

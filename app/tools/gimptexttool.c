@@ -849,6 +849,12 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      GIMP_STOCK_EDIT,  GTK_RESPONSE_OK,
                                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+					    RESPONSE_NEW,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   g_signal_connect (dialog, "response",

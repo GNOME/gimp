@@ -1,3 +1,30 @@
+2005-02-10  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/data-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/error-console-commands.c
+	* app/actions/file-commands.c
+	* app/actions/gradient-editor-commands.c
+	* app/actions/gradients-commands.c
+	* app/actions/plug-in-commands.c
+	* app/actions/templates-commands.c
+	* app/actions/text-editor-commands.c
+	* app/actions/tool-options-commands.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/display/gimpdisplayshell-close.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimptexttool.c
+	* libgimp/gimpexport.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpfileentry.c
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpunitmenu.c: applied another patch by Patrice
+	Tremblay to make more dialogs obey the alternative button order
+	setting (bug #166678).
+
 2005-02-09  Manish Singh  <yosh@gimp.org>
 
 	* app/text/gimpfont-utils.[ch]: new function to workaround pango
@@ -26,7 +53,7 @@
 
 	* plug-ins/common/pixelize.c: added a preview.
 
-2005-02-09  Sven Neumann  <neumann@jpk.com>
+2005-02-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c: marked strings for translation.
 

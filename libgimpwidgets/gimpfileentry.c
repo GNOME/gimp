@@ -364,6 +364,11 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
                                      NULL);
 
+	gtk_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
+
       chooser = GTK_FILE_CHOOSER (entry->file_dialog);
 
       gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);

@@ -83,6 +83,11 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
                                           NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (cdd->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_window_set_destroy_with_parent (GTK_WINDOW (cdd->dialog), TRUE);
 
   g_object_weak_ref (G_OBJECT (cdd->dialog), (GWeakNotify) g_free, cdd);

@@ -68,6 +68,11 @@ text_editor_load_cmd_callback (GtkAction *action,
 
   chooser = GTK_FILE_CHOOSER (editor->file_dialog);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (editor->file_dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_add_weak_pointer (G_OBJECT (chooser),
                              (gpointer) &editor->file_dialog);
 

@@ -144,10 +144,10 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-					      RESPONSE_RESET,
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+					    RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   private = g_new0 (ResizeDialog, 1);
 

@@ -219,6 +219,11 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
 
                                     NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect_object (editor, "unmap",
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);

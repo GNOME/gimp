@@ -74,6 +74,11 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
 
                                   NULL));
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (chooser),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_free (title);
 
   gtk_window_set_screen (GTK_WINDOW (chooser),

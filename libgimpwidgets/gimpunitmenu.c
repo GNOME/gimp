@@ -619,6 +619,11 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
 
                                      NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (menu->selection),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_add_weak_pointer (G_OBJECT (menu->selection),
                              (gpointer) &menu->selection);
 

@@ -546,6 +546,11 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
                               NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell->scale_dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_weak_ref (G_OBJECT (shell->scale_dialog),
                      (GWeakNotify) g_free, data);
   g_object_add_weak_pointer (G_OBJECT (shell->scale_dialog),

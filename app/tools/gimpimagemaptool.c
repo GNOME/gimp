@@ -244,6 +244,13 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
                               NULL);
 
+	gtk_dialog_set_alternative_button_order (GTK_DIALOG (image_map_tool->shell),
+						 RESPONSE_RESET,
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
+
+
       g_signal_connect_object (shell, "response",
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);

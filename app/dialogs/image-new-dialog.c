@@ -283,6 +283,11 @@ image_new_confirm_dialog (ImageNewDialog *data)
 
                                       NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (data->confirm_dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (image_new_confirm_response),
                     data);
