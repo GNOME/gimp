@@ -1,3 +1,12 @@
+1999-10-03 Olof S Kylander <olof@frozenriver.com>
+	
+	* app/airbrush_blob.c
+	* app/xinput_airbrush.c
+
+	A bit better airbrush. It is still ugly but it now
+	looks like airbrush. This is a tool for Wacom 
+	tables it is no use to use it with a mouse.
+
 1999-10-03  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-Hmm a little
  */
 #include "config.h"
 
@@ -567,7 +566,6 @@ xinput_airbrush_button_press (Tool           *tool,
     /*Prepare for next stroke*/
 
   xinput_airbrush_tool->last_airblob = airblob;
-    
 
   time_smoother_init (xinput_airbrush_tool, bevent->time);
   xinput_airbrush_tool->last_time = bevent->time;
@@ -937,7 +935,7 @@ make_stroke(AirBlob *airblob,
 {
 
   int steps;
-  int j;
+  int i, j, k;
 
 
   int dx, dy;
@@ -948,7 +946,8 @@ make_stroke(AirBlob *airblob,
 
   double x0d, x1d, y0d, y1d;
 
-  int x_min, y_min, width, height; 
+  int x_min, x_max, y_min, y_max, width, height; 
+  int number, ystart, xstart;
  
   guint ivalue;
   double lv, pv, mv;
@@ -961,7 +960,15 @@ make_stroke(AirBlob *airblob,
   AirBlob *trans_blob;
   AirLine *air_line;
   MaskBuf *brush_mask;
-    
+  MaskBuf **bufs;
+  guchar *source;
+  guchar *dest;
+  int *xpoints;
+  int *ypoints;
+
+  gboolean something;
+
+  something = FALSE;
 
   x0 = xinput_airbrush_tool->lastx;
   x1 = xinput_airbrush_tool->xcenter;
@@ -976,8 +983,12 @@ make_stroke(AirBlob *airblob,
   last_airblob = xinput_airbrush_tool->last_airblob;
 
   steps = number_of_steps(x0, y0, x1, y1);
-
-
+  
+  ypoints = g_new(int, steps);
+  xpoints = g_new(int, steps);
+  
+  bufs = g_new (MaskBuf*, steps);
+  
   dx = abs(x0 - x1);
   dy = abs(y0 - y1);
       
@@ -996,6 +1007,14 @@ make_stroke(AirBlob *airblob,
     look for the three special cases.
   */
 
+
+  /*
+    There is also a possiblity of a bug in the
+    scanline function that will explain the 
+    "jumping lines".
+  */
+
+    
   
   if (dy > dx)
     {
@@ -1010,9 +1029,10 @@ make_stroke(AirBlob *airblob,
 	      /*
 		We have to x--
 	      */
-	      
 	      x = x0;
 	      y = y0;
+
+	      number = 0;
 		
 	      j = 1;
 
@@ -1045,17 +1065,12 @@ make_stroke(AirBlob *airblob,
 		  width = air_line->width;
 		  height = air_line->height;
 		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
-
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-		  
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 
 	    }
@@ -1064,10 +1079,11 @@ make_stroke(AirBlob *airblob,
 	      /* 
 		 We have to x++
 	      */
-
 	      x = x0;
 	      y = y0;
-
+	      
+	      number = 0;
+	
 	      slopeterm = dx;
 	      
 	      j = 1;
@@ -1097,18 +1113,13 @@ make_stroke(AirBlob *airblob,
 		  y_min = air_line->min_y;
 		  width = air_line->width;
 		  height = air_line->height;
-		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
 
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+ 		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 	    }
 	}
@@ -1119,10 +1130,11 @@ make_stroke(AirBlob *airblob,
 	    {
 	      /*
 		We have to x--
-	      */
-
+ 	      */
 	      x = x0;
 	      y = y0;
+
+	      number = 0;
 
 	      slopeterm = dx;
 		  
@@ -1153,18 +1165,14 @@ make_stroke(AirBlob *airblob,
 		  y_min = air_line->min_y;
 		  width = air_line->width;
 		  height = air_line->height;
-		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
 
-		  /*Paint the mask on the drawable*/
 
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 	    }
 	  else
@@ -1174,6 +1182,8 @@ make_stroke(AirBlob *airblob,
 	      */
 	      x = x0;
 	      y = y0;
+
+	      number = 0;
 
 	      slopeterm = dx;
 	      
@@ -1205,17 +1215,12 @@ make_stroke(AirBlob *airblob,
 		  width = air_line->width;
 		  height = air_line->height;
 		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
-
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable,  brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 	    }
 	}
@@ -1235,6 +1240,8 @@ make_stroke(AirBlob *airblob,
 	      x = x0;
 	      y = y0;
 
+	      number = 0;
+
 	      slopeterm = dy;
 	      
 	      j = 1;
@@ -1264,20 +1271,15 @@ make_stroke(AirBlob *airblob,
 		  y_min = air_line->min_y;
 		  width = air_line->width;
 		  height = air_line->height;
-		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
 
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
-	      
+	    
 	    }
 	  else
 	    {
@@ -1287,6 +1289,8 @@ make_stroke(AirBlob *airblob,
 	      x = x0;
 	      y = y0;
 	      
+	      number = 0;
+
 	      slopeterm = dy;
 	      
 	      j = 1;
@@ -1317,17 +1321,12 @@ make_stroke(AirBlob *airblob,
 		  width = air_line->width;
 		  height = air_line->height;
 		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
-
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 	    }
 	}
@@ -1342,12 +1341,14 @@ make_stroke(AirBlob *airblob,
 	      x = x0;
 	      y = y0;
 
+	      number = 0;
+
 	      slopeterm = dy;
 		  
 	      j = 1;
 		  
 	      while(x > x1)
-		{
+		{ 
 		  if (slopeterm > dx)
 		    {
 		      slopeterm -= dx;
@@ -1372,17 +1373,12 @@ make_stroke(AirBlob *airblob,
 		  width = air_line->width;
 		  height = air_line->height;
 		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
-
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
-
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
 	    }
 	  else
@@ -1392,6 +1388,8 @@ make_stroke(AirBlob *airblob,
 	      */
 	      x = x0;
 	      y = y0;
+
+	      number = 0;
 
 	      slopeterm = dy;
 	      
@@ -1424,21 +1422,106 @@ make_stroke(AirBlob *airblob,
 		  width = air_line->width;
 		  height = air_line->height;
 		  
-		  brush_mask =  mask_buf_new(width, height);
-  
-		  make_mask(air_line, brush_mask, ivalue);
-
-		  /*Paint the mask on the drawable*/
-
-		  xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
-		  mask_buf_free(brush_mask);
-		  g_free(air_line);
-		  g_free(trans_blob);
+		  bufs[number] =  mask_buf_new(width, height);
+		  ypoints[number] = y_min;
+		  xpoints[number] = x_min;
+		  make_mask(air_line, bufs[number], ivalue);
+		  number++;
+		  something = TRUE;
 		}
-
 	    }
 	}
     } 
+
+  if(something)
+    {
+
+      y_min = y_max = ypoints[0];
+      height = bufs[0]->height;
+  
+      x_min = x_max= xpoints[0];
+      width = bufs[0]->width;
+
+      /*printf("xmin %d, ymin %d, width %d, weight %d\n", x_min, y_min, width, height);*/
+      
+
+      for (i = 1; i < steps -1; i++)
+	{
+	  /*printf("xmin %d, ymin %d, width %d, weight %d\n", xpoints[i], ypoints[i], bufs[i]->width, bufs[i]->height);*/
+
+     
+	  x_min = MIN(xpoints[i], x_min);
+	  y_min = MIN(ypoints[i], y_min);
+	  if ((x_max + width) < (xpoints[i] + bufs[i]->width))
+	    {
+	      x_max = xpoints[i];
+	      width = bufs[i]->width;
+	    }
+	  if ((y_max + height) < (ypoints[i] + bufs[i]->height))
+	    {
+	      y_max = ypoints[i];
+	      height = bufs[i]->height;
+	    }
+	}
+  
+ 
+      width = x_max - x_min + width;
+      height = y_max - y_min + height;
+ 
+      /*printf("Xmin %d, Ymin %d, Width %d, Height %d\n", x_min, y_min, width, height);
+	printf("\n");*/
+
+ 
+      brush_mask = mask_buf_new(width, height);
+
+
+      dest = brush_mask->data;
+
+      for (i = 0; i < steps - 1; i++)
+	{
+      
+      
+	  ystart = ypoints[i] - y_min;
+	  xstart = xpoints[i] - x_min;
+	  /*printf("xstart %d, ystart %d\n", xstart, ystart);*/
+
+	  y = width * ystart;
+
+	  source = bufs[i]->data;
+
+	  for(k = 0; k < bufs[i]->height; k++)
+	    {	   
+	      for(j = 0; j < bufs[i]->width; j++ )
+		{
+		  if((dest[y + k * width + xstart + j] + source[k * bufs[i]->width + j]) > 255)
+		    {
+		      dest[y + k * width + xstart + j] = 255;
+		    }
+		  else
+		    {
+		      dest[y + k * width + xstart + j] += source[k * bufs[i]->width + j];
+		    }
+		}
+	    }      
+	}
+
+      /*printf("\n\n");*/
+
+      for (i = steps - 2; i >= 0; i--)
+	{
+	  mask_buf_free(bufs[i]);
+	}
+ 
+      g_free(bufs);
+      xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
+      mask_buf_free(brush_mask);
+
+    }
+  else
+    {
+      printf("Hmm somthing was FALSE\n");
+    }
+
 }
 
 
@@ -1449,9 +1532,9 @@ make_stroke(AirBlob *airblob,
 
 
 static void
-make_mask(AirLine *airline,
-	  MaskBuf *dest,	  
-	  guint value)
+make_mask (AirLine *airline,
+	   MaskBuf *dest,	  
+	   guint value)
 {
 
   int steps;
@@ -1472,8 +1555,14 @@ make_mask(AirLine *airline,
   int rowlength; 
   int slopeterm;
 
+  gboolean nothing;
 
-  rowlength = dest->width * dest->bytes; 
+
+  rowlength = dest->width  * dest->bytes; 
+
+
+  nothing = TRUE;
+
 
   for (i=0; i < airline->nlines ; i++)
     {
@@ -1481,11 +1570,11 @@ make_mask(AirLine *airline,
       steps = number_of_steps(airline->xcenter, airline->ycenter,
 			      airline->line[i].x, airline->line[i].y);
 
-      x0 = airline->xcenter - airline->min_x;
-      x1 = airline->line[i].x - airline->min_x;
+      x0 = airline->xcenter - airline->min_x ;
+      x1 = airline->line[i].x - airline->min_x ;
 
-      y0 = airline->ycenter - airline->min_y;
-      y1 = airline->line[i].y -airline->min_y;
+      y0 = airline->ycenter - airline->min_y ;
+      y1 = airline->line[i].y -airline->min_y ;
 
 
       dx = abs(x0 - x1);
@@ -1564,6 +1653,7 @@ make_mask(AirLine *airline,
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 
 		}
@@ -1607,6 +1697,7 @@ make_mask(AirLine *airline,
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 		}
 	    }
@@ -1653,6 +1744,8 @@ make_mask(AirLine *airline,
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
+
 		    }
 		}
 	      else
@@ -1695,6 +1788,7 @@ make_mask(AirLine *airline,
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 		}
 	    }
@@ -1746,6 +1840,7 @@ make_mask(AirLine *airline,
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 
 		}
@@ -1789,6 +1884,7 @@ make_mask(AirLine *airline,
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 		}
 	    }
@@ -1835,6 +1931,7 @@ make_mask(AirLine *airline,
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 		}
 	      else
@@ -1877,13 +1974,18 @@ make_mask(AirLine *airline,
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
 		      *s = ivalue;
+		      nothing = FALSE;
 		    }
 
 		}
 	    }
 	}
     }
-
+  
+  if (nothing)
+    {
+      printf("Hmm I retured a nothing brush\n");
+    }
  
 }
 
@@ -2189,13 +2291,273 @@ print_mask(MaskBuf *dest)
     }
    printf("\n");
 }
+/*
+static inline MaskBuf * 
+blur_mask(MaskBuf *mask)
+{
+  MaskBuf *retur;
+  int y, x;
+  unsigned char *source;
+  unsigned char *dest;
+  int height, width;  
+
+  retur = mask_buf_new(mask->width, mask->height);
+
+  source = mask->data;
+  dest = retur->data;
+  
+  width = mask->width;
+  height = mask->height;
+
+  for (y = 1; y < (height -1); y++)
+    {
+      for(x = 1; x < (width -1); x++)
+	{
+	
+	  dest[(y * retur->width + x)] = (
+					  2 * source[((y-1) * width) + x - 1] +
+					  2 * source[((y-1) * width) + x] +
+					  2 * source[((y-1) * width) + x + 1] +
+					  2 * source[(y * width) + x - 1] +
+					  source[(y * width) + x] +
+					  2 * source[(y * width) + x + 1] +
+					  2 * source[((y+1) * width) + x - 1] +
+					  2 * source[((y+1) * width) + x] +
+					  source[((y+1) * width) + x + 1])/16;
+	}
+    }
+  
+  mask_buf_free(mask);
+  return retur;
+}
+*/
+/*
+static inline MaskBuf * 
+blur_mask(MaskBuf *mask)
+{
+  MaskBuf *retur;
+  int y, x;
+  unsigned char *source;
+  unsigned char *dest;
+  int height, width;  
+
+  retur = mask_buf_new(mask->width, mask->height);
+
+  source = mask->data;
+  dest = retur->data;
+  
+  width = mask->width;
+  height = mask->height;
+
+  for (y = 2; y < (height -2); y++)
+    {
+      for(x = 2; x < (width -2); x++)
+	{
+	
+	  dest[(y * retur->width + x)] = (
+
+					  
+
+					  2 * source[((y-2) * width) + x - 2] +
+					  2 * source[((y-2) * width) + x - 1] +
+					  2 * source[((y-2) * width) + x] +
+					  2 * source[((y-2) * width) + x + 1] +
+					  2 * source[((y-2) * width) + x + 2] +
+					  
+ 					  2 * source[((y-1) * width) + x - 2] +
+					  4 * source[((y-1) * width) + x - 1] +
+					  4 * source[((y-1) * width) + x] +
+					  4 * source[((y-1) * width) + x + 1] +
+					  2 * source[((y-1) * width) + x + 2] +
+
+					  2 * source[(y * width) + x - 2] +
+					  4 * source[(y * width) + x - 1] +
+					  1 * source[(y * width) + x] +
+					  4 * source[(y * width) + x + 1] +
+					  1 * source[(y * width) + x + 2] +
+
+ 					  2 * source[((y+1) * width) + x - 2] +
+					  4 * source[((y+1) * width) + x - 1] +
+					  4 * source[((y+1) * width) + x] +
+					  4 * source[((y+1) * width) + x + 1] +
+					  2 * source[((y+1) * width) + x + 2] +
+
+					  2 * source[((y+2) * width) + x - 2] +
+					  2 * source[((y+2) * width) + x - 1] +
+					  2 * source[((y+2) * width) + x] +
+					  2 * source[((y+2) * width) + x + 1] +
+					  2 * source[((y+2) * width) + x + 2]
+					  
+					  )/64;
+
+	}
+    }
+  
+  mask_buf_free(mask);
+  return retur;
+  }
+
+  */
+
+static inline MaskBuf * 
+blur_mask(MaskBuf *mask)
+{
+  MaskBuf *retur;
+  int y, x, y_3, y_2, y_1, y1, y2, y3, x_3, x_2,x_1, x1, x2,  x3;
+  unsigned char *source;
+  unsigned char *dest;
+  int height, width, max_height, max_width;  
+
+  retur = mask_buf_new(mask->width, mask->height);
+
+  source = mask->data;
+  dest = retur->data;
+  
+  width = mask->width;
+  height = mask->height;
+
+  max_height = width * height - 3 * width;
+  max_width = width  - 3;
 
 
+  y_3 = 0;
+  y_2 = width;
+  y_1 = 2 * width;
+  y  = 3 * width;
+  y1 = 4 * width;
+  y2 = 5 * width;
+  y3 = 6 * width;
+
+
+  for (; y < max_height; y_3 += width, y_2 += width, y_1 += width, y += width, y1 += width, y2 += width, y3 += width)
+    {
+      for( x_3 = 0, x_2 = 1, x_1 = 2, x = 3, x1 = 4, x2 = 5 , x3 = 6; x < max_width; x_3++, x_2++, x_1++, x++, x1++, x2++, x3++)
+	{
+	  
+	  dest[y + x] = (
+			
+					  1 * source[y_3 + x_3] +
+					  1 * source[y_3 + x_2] +
+					  1 * source[y_3 + x_1] +
+					  1 * source[y_3 + x]  +
+					  1 * source[y_3 + x1] +
+					  1 * source[y_3 + x2] +
+					  1 * source[y_3 + x3] +
+					  					 
+					  2 * source[y_2 + x_3] +
+					  2 * source[y_2 + x_2] +
+					  2 * source[y_2 + x_1] +
+					  2 * source[y_2 + x]  +
+					  2 * source[y_2 + x1] +
+					  2 * source[y_2 + x2] +
+					  2 * source[y_2 + x3] +
+
+					  2 * source[y_1 + x_3] +
+ 					  2 * source[y_1 + x_2] +
+					  8 * source[y_1 + x_1] +
+					  8 * source[y_1 + x]  +
+					  8 * source[y_1 + x1] +
+					  2 * source[y_1 + x2] +
+					  2 * source[y_1 + x3] +
+
+					  1 * source[y + x_3] +
+					  2 * source[y + x_2] +
+					  8 * source[y + x_1] +
+					  1 * source[y + x]  +
+					  8 * source[y + x1] +
+					  2 * source[y + x2] +
+					  1 * source[y + x3] +
+
+					  2 * source[y1 + x_3] +
+ 					  2 * source[y1 + x_2] +
+					  8 * source[y1 + x_1] +
+					  8 * source[y1 + x]  +
+					  8 * source[y1 + x1] +
+					  2 * source[y1 + x2] +
+					  2 * source[y1 + x3] +
+
+					  2 * source[y2 + x_3] +
+					  2 * source[y2 + x_2] +
+					  2 * source[y2 + x_1] +
+					  1 * source[y2 + x]  +
+					  2 * source[y2 + x1] +
+					  2 * source[y2 + x2] +
+					  2 * source[y2 + x3] +
+					  
+					  1 * source[y3 + x_3] +
+					  1 * source[y3 + x_2] +
+					  1 * source[y3 + x_1] +
+					  1 * source[y3 + x]  +
+					  1 * source[y3 + x1] +
+					  1 * source[y3 + x2] +
+					  1 * source[y3 + x3] 
+
+					  )/128;
+
+	}
+    }
+  
+  mask_buf_free(mask);
+  return retur;
+}
+
+/*
+MaskBuf *
+blur_mask(MaskBuf *mask)
+{
+  MaskBuf *retur;
+  int y, x, x_4, x_3, x_2,x_1, x1, x2, x3, x4,x5;
+  unsigned char *source;
+  unsigned char *dest;
+  int height, width, max_height, max_width;  
+
+  retur = mask_buf_new(mask->width, mask->height);
+
+  source = mask->data;
+  dest = retur->data;
+  
+  width = mask->width;
+  height = mask->height;
+
+  max_height = width * height - 3 * width;
+  max_width = width  - 5;
+
+
+  y  = width;
+
+
+  for (y=0 ; y < max_height; y += width)
+    {
+      for( x_4 = 0, x_3 = 1, x_2 = 2, x_1 = 3, x = 4, x1 = 5, x2 = 6 , x3 = 7, x4 = 8, x5 = 9;  x < max_width; x_3++, x_2++, x_1++, x++, x1++, x2++, x3++)
+	{
+	  
+	  dest[y + x] = (
+			
+			 4  * source[y + x_4] +
+			 4 * source[y + x_3] +
+			 8 * source[y + x_2] +
+			 16 * source[y + x_1] +
+			 1 * source[y + x]  +
+			 16 * source[y + x1] +
+			 8 * source[y + x2] +
+			 4 * source[y + x3] +
+			 2 * source[y + x4] +
+			 1 * source[y + x5] 
+			 
+
+			 )/64;
+
+	}
+    }
+  
+  mask_buf_free(mask);
+  return retur;
+}*/
 
 static void
 xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
 		       GimpDrawable *drawable,
-		       MaskBuf *brush_mask,
+		       MaskBuf *brush_mask_in,
 		       int x,
 		       int y,
 		       int width,
@@ -2205,6 +2567,11 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   PixelRegion srcPR;
   int offx, offy;
   unsigned char col[MAX_CHANNELS];
+  MaskBuf *brush_mask1;
+  MaskBuf *brush_mask3; 
+  MaskBuf *brush_mask2;
+  MaskBuf *brush_mask;
+  int i;
 
  
   /*print_mask(brush_mask);*/
@@ -2213,9 +2580,33 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
+  /*print_mask(brush_mask_in);*/
+
+  
+
+  brush_mask1 =  mask_buf_new(brush_mask_in->width, brush_mask_in->height);
+
+  brush_mask1 = temp_buf_copy(brush_mask_in, brush_mask1);
+
+  for(i = 0 ; i < 2; i++)
+    {
+       brush_mask2 = blur_mask(brush_mask1);
+       brush_mask3 = blur_mask(brush_mask2);
+       brush_mask1 = blur_mask(brush_mask3);
+    }
+  
+  
+  brush_mask = brush_mask1;
+
+  /*mask_buf_free(brush_mask2);
+    mask_buf_free(brush_mask3);*/
+
+  /*print_mask(brush_mask);*/
+
+  
 
   /* Get the the buffer */
-  xinput_airbrush_set_paint_area (xinput_airbrush_tool, drawable, x, y, width, height);
+  xinput_airbrush_set_paint_area (xinput_airbrush_tool, drawable, x - 1, y - 1, width, height);
 
   /* check to make sure there is actually a canvas to draw on */
   if (!canvas_buf)
@@ -2241,7 +2632,7 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
 
   /*DON'T FORGETT THE 100 VALUE, I.E. THE BRUSH OPACITY WHICH SHOULD BE 255*/
 
-  xinput_airbrush_to_canvas_tiles (xinput_airbrush_tool, brush_mask, 100);
+  xinput_airbrush_to_canvas_tiles (xinput_airbrush_tool, brush_mask, 255);
   
   xinput_airbrush_canvas_tiles_to_canvas_buf(xinput_airbrush_tool);
 
@@ -2277,6 +2668,8 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   drawable_offsets (drawable, &offx, &offy);
   gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
                            canvas_buf->width, canvas_buf->height);
+
+  mask_buf_free(brush_mask);
 
 }
 

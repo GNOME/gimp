@@ -41,7 +41,7 @@
 #endif
 
 #define SUBSAMPLE 8.0
-
+#define SU 8.0
 
 
 static AirBrushBlob *
@@ -960,9 +960,6 @@ create_air_blob (double xc,
   air_blob->ycenter = yc;
   air_blob->xcenter = xc;
 
-
-
-
   if ((yt == yb) && (xr == xl) && (yt == xr))
 	{
 	/*Zero*/
@@ -1423,15 +1420,24 @@ create_air_line(AirBlob *airblob)
 	airline->line[5].x = (xcenter + sin(iang - mi_angsupport) * misupport)/SUBSAMPLE;
 	airline->line[5].y = (ycenter + cos(iang - mi_angsupport) * misupport)/SUBSAMPLE;
 
-	airline->line[6].x = (xcenter - sin(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	/*airline->line[6].x = (xcenter - sin(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[6].y = (ycenter - cos(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[7].x = (xcenter - sin(iang - ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[7].y = (ycenter - cos(iang - ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 
+	airline->line[8].x = (xcenter - sin(iang + ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[8].y = (ycenter - cos(iang + ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[9].x = (xcenter - sin(iang - ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[9].y = (ycenter - cos(iang - ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+
+	airline->line[10].x = (xcenter - sin(iang + ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[10].y = (ycenter - cos(iang + ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[11].x = (xcenter - sin(iang - ma_angsupport/2. - ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[11].y = (ycenter - cos(iang - ma_angsupport/2. - ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;*/
 	
 	
-	airline->nlines = 8;	
-       
+	airline->nlines = 6;	
+
     }
 
   else if ((direction < M_PI_H) && (direction > 0.0))
@@ -1463,15 +1469,31 @@ create_air_line(AirBlob *airblob)
 	airline->line[5].y = (ycenter + sin(iang - mi_angsupport) * misupport)/SUBSAMPLE;
 	
 
-	airline->line[6].x = (xcenter + cos(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	/*airline->line[6].x = (xcenter + cos(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[6].y = (ycenter - sin(iang + ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[7].x = (xcenter + cos(iang - ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 	airline->line[7].y = (ycenter - sin(iang - ma_angsupport/2.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
 
+	airline->line[8].x = (xcenter + cos(iang + ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[8].y = (ycenter - sin(iang + ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[9].x = (xcenter + cos(iang - ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[9].y = (ycenter - sin(iang - ma_angsupport/4.) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+
+	airline->line[10].x = (xcenter + cos(iang + ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[10].y = (ycenter - sin(iang + ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[11].x = (xcenter + cos(iang - ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+	airline->line[11].y = (ycenter - sin(iang - ma_angsupport/2. + ma_angsupport) * (masupport + (airblob->main_line.size - masupport)/2.0))/SUBSAMPLE;
+
+	airline->line[12].x = airline->line[2].x + (airline->line[4].x - airline->line[2].x)/4;
+	airline->line[12].y = airline->line[2].y + (airline->line[4].y - airline->line[2].y)/4;
+	airline->line[13].x = airline->line[2].x + 3 * (airline->line[4].x - airline->line[2].x)/4;
+	airline->line[13].y = airline->line[2].y + 3 * (airline->line[4].y - airline->line[2].y)/4;
+	*/
 
 
 
-	airline->nlines = 8;
+	airline->nlines = 6;
+
        
     }
 
@@ -1546,9 +1568,22 @@ create_air_line(AirBlob *airblob)
    }
 
 
+
+
+
   min_x = max_x = airline->xcenter;
   min_y = max_y = airline->ycenter;
 
+  /*
+    for (i=0; i < airline->nlines ; i++)
+    {
+    printf("x%d, value %d\n", i, airline->line[i].x);
+    printf("y%d, value %d\n", i, airline->line[i].y);
+    }
+
+    printf("The xcenter %d\n",airline->xcenter);  
+    printf("The ycenter %d\n",airline->ycenter);
+  */
 
 
   for (i=0; i < airline->nlines ; i++)
@@ -1754,7 +1789,6 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
   trans_airblob->xcenter = xcen * SUBSAMPLE;
   trans_airblob->ycenter = ycen * SUBSAMPLE;
-
 
   return trans_airblob;
 
