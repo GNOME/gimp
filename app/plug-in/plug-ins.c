@@ -253,9 +253,11 @@ plug_ins_init (Gimp               *gimp,
 	  gimp->plug_in_locale_domains =
             g_slist_prepend (gimp->plug_in_locale_domains, def);
 
+#ifdef VERBOSE
           g_print ("added locale domain \"%s\" for path \"%s\"\n",
                    def->domain_name ? def->domain_name : "(null)",
                    def->domain_path ? def->domain_path : "(null)");
+#endif
 	}
 
       if (plug_in_def->help_domain_name)
@@ -271,9 +273,11 @@ plug_ins_init (Gimp               *gimp,
 	  gimp->plug_in_help_domains =
             g_slist_prepend (gimp->plug_in_help_domains, def);
 
+#ifdef VERBOSE
           g_print ("added help domain \"%s\" for base uri \"%s\"\n",
-                   def->domain_name ? def->domain_name : "(null)", 
-                   def->domain_uri ? def->domain_uri : "(null)");
+                   def->domain_name ? def->domain_name : "(null)",
+                   def->domain_uri  ? def->domain_uri  : "(null)");
+#endif
 	}
     }
 
@@ -552,7 +556,7 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
   g_free (basename1);
 
   gimp->write_pluginrc = TRUE;
-  g_print ("executable not found: '%s'\n", plug_in_def->prog);
+  g_printerr ("executable not found: '%s'\n", plug_in_def->prog);
   plug_in_def_free (plug_in_def, FALSE);
 }
 
@@ -861,8 +865,8 @@ plug_ins_init_file (const GimpDatafileData *file_data,
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
 	{
-	  g_print ("skipping duplicate plug-in: '%s'\n",
-                   file_data->filename);
+	  g_printerr ("skipping duplicate plug-in: '%s'\n",
+                      file_data->filename);
 
           g_free (plug_in_name);
 

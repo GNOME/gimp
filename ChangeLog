@@ -1,5 +1,9 @@
 2003-11-16  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-ins.c: disabled debugging output.
+
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/themes.c (themes_apply_theme): removed an unused
 	variable and trailing whitespace.
 
