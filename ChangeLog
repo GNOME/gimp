@@ -1,9 +1,18 @@
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/selection_options.h
+	* app/tool_options.c: made a correct tool toption out of
+	"Interactive" (added a default value and the "Reset" function,
+	set unused pointers to NULL).
+
+	* app/iscissors.c: fixed indentation and spacing.
+
 2001-01-02  Daniel Egger  <egger@suse.de>
 
 	* app/iscissors.c:
 	* app/selection_options.h:
-	* app/tool_options.c: Applied patch by laramieleavitt@onetel.net.uk to add
-	an interactive update to the iscissors tool.
+	* app/tool_options.c: Applied patch by laramieleavitt@onetel.net.uk
+	to add an interactive update to the iscissors tool.
 
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 

@@ -503,7 +503,7 @@ iscissors_button_press (Tool           *tool,
 	  iscissors->state = SEED_ADJUSTMENT;
 	  iscissors->draw = DRAW_ACTIVE_CURVE;
 
-          if ( ((SelectionOptions *) iscissors_options)->interactive )
+          if (((SelectionOptions *) iscissors_options)->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  draw_core_resume (iscissors->core, tool);
@@ -542,7 +542,8 @@ iscissors_button_press (Tool           *tool,
 	{
 	  iscissors->state = SEED_PLACEMENT;
 	  iscissors->draw = DRAW_CURRENT_SEED;
-          if ( ((SelectionOptions *) iscissors_options)->interactive )
+
+          if (((SelectionOptions *) iscissors_options)->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  grab_pointer = TRUE;
@@ -633,13 +634,13 @@ iscissors_button_release (Tool           *tool,
     {
     case SEED_PLACEMENT:
       iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
-          if ( ((SelectionOptions *) iscissors_options)->interactive )
-            iscissors->draw |= DRAW_LIVEWIRE;
+      if (((SelectionOptions *) iscissors_options)->interactive)
+	iscissors->draw |= DRAW_LIVEWIRE;
       break;
     case SEED_ADJUSTMENT:
       iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
-          if ( ((SelectionOptions *) iscissors_options)->interactive )
-            iscissors->draw |= DRAW_LIVEWIRE;
+      if (((SelectionOptions *) iscissors_options)->interactive)
+	iscissors->draw |= DRAW_LIVEWIRE;
       break;
     default:
       break;
@@ -741,14 +742,15 @@ iscissors_motion (Tool           *tool,
 
   if (iscissors->state == SEED_PLACEMENT)
     {
-    iscissors->draw = DRAW_CURRENT_SEED;
+      iscissors->draw = DRAW_CURRENT_SEED;
 
-    if (((SelectionOptions *) iscissors_options)->interactive )
-      iscissors->draw = DRAW_CURRENT_SEED | DRAW_LIVEWIRE;
-
+      if (((SelectionOptions *) iscissors_options)->interactive)
+	iscissors->draw = DRAW_CURRENT_SEED | DRAW_LIVEWIRE;
     }
   else if (iscissors->state == SEED_ADJUSTMENT)
-    iscissors->draw = DRAW_ACTIVE_CURVE;
+    {
+      iscissors->draw = DRAW_ACTIVE_CURVE;
+    }
 
   draw_core_pause (iscissors->core, tool);
 
@@ -826,25 +828,23 @@ iscissors_draw (Tool *tool)
 		     tx2, ty2 + (TARGET_HEIGHT >> 1));
 
       /* Draw a line boundary */
-      if (!iscissors->first_point && !(iscissors->draw & DRAW_LIVEWIRE) )
-      {
-	gdk_draw_line (iscissors->core->win, iscissors->core->gc, 
-		       tx1, ty1, tx2, ty2);
-      }
+      if (!iscissors->first_point && !(iscissors->draw & DRAW_LIVEWIRE))
+	{
+	  gdk_draw_line (iscissors->core->win, iscissors->core->gc, 
+			 tx1, ty1, tx2, ty2);
+	}
     }
 
   /* Draw the livewire boundary */
-  if ( (iscissors->draw & DRAW_LIVEWIRE) && !iscissors->first_point )
+  if ((iscissors->draw & DRAW_LIVEWIRE) && !iscissors->first_point)
     {
       /* See if the mouse has moved.  If so, create a new segment... */
-      if ( !iscissors->livewire ||
-            (iscissors->livewire
-             && ( iscissors->ix != iscissors->livewire->x1
-               || iscissors->x != iscissors->livewire->x2
-               || iscissors->iy != iscissors->livewire->y1
-               || iscissors->y != iscissors->livewire->y2 )
-            )
-         )
+      if (! iscissors->livewire ||
+	  (iscissors->livewire &&
+	   (iscissors->ix != iscissors->livewire->x1 ||
+	    iscissors->x != iscissors->livewire->x2  ||
+	    iscissors->iy != iscissors->livewire->y1 ||
+	    iscissors->y != iscissors->livewire->y2)))
         {
           curve = g_new (ICurve, 1);
 
@@ -855,7 +855,7 @@ iscissors_draw (Tool *tool)
           curve->points = NULL;
 
           TRC (("create new livewire segment\n"));
-          if ( iscissors->livewire )
+          if (iscissors->livewire)
             {
               if (iscissors->livewire->points)
                 {
@@ -867,7 +867,7 @@ iscissors_draw (Tool *tool)
               g_free (iscissors->livewire);
 
               iscissors->livewire = NULL;
-             }
+	    }
 
           iscissors->livewire = curve;
           TRC (("calculate curve\n"));
@@ -875,7 +875,7 @@ iscissors_draw (Tool *tool)
           curve = NULL;
         }
       /*  plot the curve  */
-      iscissors_draw_curve (gdisp, iscissors, iscissors->livewire );
+      iscissors_draw_curve (gdisp, iscissors, iscissors->livewire);
     }
 
   if ((iscissors->draw & DRAW_CURVE) && !iscissors->first_point)

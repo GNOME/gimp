@@ -74,8 +74,8 @@ struct _SelectionOptions
 
   /*  used by iscissors */
   gboolean     interactive;
+  gboolean     interactive_d;
   GtkWidget   *interactive_w;
-
 };
 
 

@@ -177,6 +177,7 @@ selection_options_init (SelectionOptions     *options,
   options->fixed_height   = options->fixed_height_d   = 1;
   options->fixed_width    = options->fixed_width_d    = 1;
   options->fixed_unit     = options->fixed_unit_d     = GIMP_UNIT_PIXEL;
+  options->interactive    = options->interactive_d    = FALSE;
 
   options->feather_w        = NULL;
   options->feather_radius_w = NULL;
@@ -187,8 +188,7 @@ selection_options_init (SelectionOptions     *options,
   options->fixed_height_w   = NULL;
   options->fixed_width_w    = NULL;
   options->fixed_unit_w     = NULL;
-
-  options->interactive      = FALSE;
+  options->interactive_w    = NULL;
 
   /*  the feather toggle button  */
   table = gtk_table_new (2, 2, FALSE);
@@ -255,6 +255,7 @@ selection_options_init (SelectionOptions     *options,
     case FREE_SELECT:
     case BEZIER_SELECT:
       break;
+
     case ISCISSORS:
     case RECT_SELECT:
     case ELLIPSE_SELECT:
@@ -276,6 +277,8 @@ selection_options_init (SelectionOptions     *options,
 
       gtk_box_pack_start (GTK_BOX (vbox), options->interactive_w,
 			  FALSE, FALSE, 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
+				    options->interactive_d);
       gtk_signal_connect (GTK_OBJECT (options->interactive_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &options->interactive);
@@ -467,6 +470,12 @@ selection_options_reset (SelectionOptions *options)
 	  spinbutton =
 	    gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
 	}
+    }
+
+  if (options->interactive_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
+				    options->interactive_d);
     }
 }
 
