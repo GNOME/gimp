@@ -3,7 +3,7 @@ Fri Jul  9 20:12:12 MEST 1999  Sven Neumann <sven@gimp.org>
 	* app/app_procs.c: applied a (modified) patch from  
 	Shuji Narazaki <narazaki@gimp.org> 
 
-	* app/gimpimage.c: applied a modified) patch from 
+	* app/gimpimage.c: applied a (modified) patch from 
 	Tom Rathborne <tomr@aceldama.com> that aligns guides on layer_resize
 
 Fri Jul  9 18:39:03 MEST 1999  Sven Neumann <sven@gimp.org>
