@@ -161,7 +161,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GTK_STOCK_UNDO },
     NULL,
     GIMP_HELP_EDIT_UNDO, NULL },
-  { { N_("/Edit/_Redo"), "<control>R",
+  { { N_("/Edit/_Redo"), "<control><shift>Z",
       edit_redo_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REDO },
     NULL,
