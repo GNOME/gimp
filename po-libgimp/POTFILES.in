@@ -4,7 +4,11 @@
 libgimp/gimpexport.c
 libgimp/gimpmenu.c
 libgimp/gimpunit.c
+
+libgimpbase/gimputils.c
+
 libgimpmodule/gimpmodule.c
+
 libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c

@@ -1,20 +1,25 @@
+2003-04-14  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in
+	* de.po: updated.
+
 2003-03-27  Christian Rose  <menthos@menthos.com>
 
 	* yi.po: Added Yiddish translation by
 	Raphael Finkel <raphael@cs.uky.edu>.
 
 2003-03-02  Evandro Fernandes Giovanini <evandrofg@ig.com.br>
- 
-        * pt_BR.po: Updated Brazilian Portuguese translation
+
+	* pt_BR.po: Updated Brazilian Portuguese translation
         from Alexandre Folle de Menezes <afmenez@terra.com.br>.
 
 2003-03-02  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-02-25  Jan Morén  <jan.moren@lucs.lu.se>
 
-        * sv.po: Updated Swedish translation.
+	* sv.po: Updated Swedish translation.
 
 2003-02-21  Zbigniew Chyla  <cyba@gnome.pl>
 
@@ -27,11 +32,11 @@
 
 2003-02-07  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-    * es.po: Fixed some strings.
+	* es.po: Fixed some strings.
 
 2003-02-06  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-    * es.po: Updated Spanish translation by Francisco J. Fernandez
+	* es.po: Updated Spanish translation by Francisco J. Fernandez
 
 2003-02-05  Abel Cheung  <maddog@linux.org.hk>
 

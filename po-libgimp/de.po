@@ -1,15 +1,16 @@
 # This is the German catalog for the libgimp.
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
 #
-# Daniel Egger <Daniel.Egger@suse.de>, 2000.
-# Sven Neumann <sven@gimp.org>, 2000 - 2002.
+# Daniel Egger <Daniel.Egger@suse.de>
+# Sven Neumann <sven@gimp.org>
+# Christian Neumair <christian-neumair@web.de>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
-"PO-Revision-Date: 2002-12-19 18:47+0100\n"
-"Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
+"Project-Id-Version: GIMP 1.3.14\n"
+"POT-Creation-Date: 2003-04-14 13:24+0200\n"
+"PO-Revision-Date: 2003-04-14 13:28+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -165,14 +166,44 @@ msgstr ""
 "Sie sichern einen Kanal (gesicherte Selektion) als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "Keine"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "Prozent"
+
+#: libgimpbase/gimputils.c:118
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Byte"
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KB"
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr "%1.f KB"
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr "%2.f MB"
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr "%1.f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -323,69 +354,67 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "Verankern"
 
-#: libgimpwidgets/gimpstock.c:101
-#, fuzzy
-msgid "_Duplicate"
-msgstr "Duplizieren"
-
 #: libgimpwidgets/gimpstock.c:102
-#, fuzzy
-msgid "_Edit"
-msgstr "Bearbeiten"
+msgid "_Duplicate"
+msgstr "_Duplizieren"
 
 #: libgimpwidgets/gimpstock.c:103
+msgid "_Edit"
+msgstr "_Bearbeiten"
+
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr "Verknüpft"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "Einfügen als Neu"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr "Einfügen in Auswahl"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr "_Rücksetzen"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr "L_aufweite"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr "Z_eilenabstand"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -435,12 +464,11 @@ msgstr "Art der Sehschwäche:"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Keine (Normale Sicht)"
 
 #: modules/cdisplay_colorblind.c:487
-#, fuzzy
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protonopia (Rotschwäche)"
+msgstr "Protanopia (Rotschwäche)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
