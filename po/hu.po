@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
 "POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-25 19:03+0200\n"
-"Last-Translator: Gabor Suveg <gsuveg@sgsystem.com>\n"
+"Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
@@ -5053,7 +5053,7 @@ msgstr "Küszöbtartomány:"
 # Majd ezt kell gimp_tips_hu.txt-re átnevezni valószínûleg (András)
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr "gimp_tips.hu.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
