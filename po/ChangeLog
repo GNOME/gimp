@@ -1,3 +1,9 @@
+2002-12-29  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/config/gimpconfig-path.c.
+
+	* de.po: updated german translation.
+
 2002-12-27  Daniel Yacob  <locales@geez.org>
 
 	* am.po: Updated Amharic translation.

@@ -109,12 +109,12 @@ static GdkColor    white_color;
 static GdkColor    title_color;
 
 typedef enum
-  {
-    TREE_ITEM_DONT,		/* Don't pre-create */
-    TREE_ITEM_MKDIR_ONLY,	/* Just mkdir */
-    TREE_ITEM_FROM_SYSCONF_DIR,	/* Copy from sysconf directory */
-    TREE_ITEM_FROM_DATA_DIR	/* ... from data directory */
-  } TreeItemType;
+{
+  TREE_ITEM_DONT,		 /*  Don't pre-create             */
+  TREE_ITEM_MKDIR_ONLY,	 /*  Just mkdir                   */
+  TREE_ITEM_FROM_SYSCONF_DIR,	 /*  Copy from sysconf directory  */
+  TREE_ITEM_FROM_DATA_DIR	 /*  ... from data directory      */
+} TreeItemType;
 
 static struct
 {
@@ -1147,12 +1147,12 @@ user_install_run (void)
     {
       if (i == 0)
 	{
-	  g_snprintf (log_line, sizeof (log_line), _("Creating directory %s\n"),
+	  g_snprintf (log_line, sizeof (log_line), _("Creating folder %s\n"),
 		      gimp_directory ());
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 	  if (mkdir (gimp_directory (), 0666) == -1)
 	    {
-	      install_error_message = g_strdup_printf (_("Cannot create directory -- %s"),
+	      install_error_message = g_strdup_printf (_("Cannot create folder: %s"),
 						       g_strerror (errno));
 	      goto break_out_of_loop;
 	    }
@@ -1166,12 +1166,12 @@ user_install_run (void)
 	  break;
 
 	case TREE_ITEM_MKDIR_ONLY:
-	  g_snprintf (log_line, sizeof (log_line), _("Creating directory %s\n"),
+	  g_snprintf (log_line, sizeof (log_line), _("Creating folder %s\n"),
 		      dest);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 	  if (mkdir (dest, 0666) == -1)
 	    {
-	      install_error_message = g_strdup_printf (_("Cannot create directory -- %s"),
+	      install_error_message = g_strdup_printf (_("Cannot create folder: %s"),
 						       g_strerror (errno));
 	      goto break_out_of_loop;
 	    }
@@ -1210,7 +1210,7 @@ user_install_run (void)
 
   if (i < num_tree_items)
     {
-      g_snprintf (log_line, sizeof (log_line), _("  Failure -- %s\n"),
+      g_snprintf (log_line, sizeof (log_line), _("  Failure: %s\n"),
 		  install_error_message);
       gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
       add_label (GTK_BOX (log_page),

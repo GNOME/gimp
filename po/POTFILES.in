@@ -9,6 +9,7 @@ app/undo_history.c
 app/base/base-enums.c
 
 app/config/gimpconfig-deserialize.c
+app/config/gimpconfig-path.c
 app/config/gimpconfig.c
 app/config/gimprc.c
 app/config/gimpscanner.c

@@ -120,7 +120,7 @@ static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
                                                         const gchar      *format);
 
 static void    gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
-                                                        const gchar      *image_name);
+                                                        GimpImage        *gimage);
 static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
                                                         gboolean          close,
                                                         gpointer          data);
@@ -814,11 +814,9 @@ void
 gimp_display_shell_close (GimpDisplayShell *shell,
                           gboolean          kill_it)
 {
-  GimpDisplayConfig *config;
-  GimpImage         *gimage;
+  GimpImage *gimage;
 
   gimage = shell->gdisp->gimage;
-  config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
 
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
@@ -833,15 +831,9 @@ gimp_display_shell_close (GimpDisplayShell *shell,
   if (! kill_it               &&
       gimage->disp_count == 1 &&
       gimage->dirty           &&
-      config->confirm_on_close)
+      GIMP_DISPLAY_CONFIG (gimage->gimp->config)->confirm_on_close)
     {
-      gchar *basename;
-
-      basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
-
-      gimp_display_shell_close_warning_dialog (shell, basename);
-
-      g_free (basename);
+      gimp_display_shell_close_warning_dialog (shell, gimage);
     }
   else
     {
@@ -2676,11 +2668,11 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
 static void
 gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
-                                         const gchar      *image_name)
+                                         GimpImage        *gimage)
 {
-  GtkWidget *mbox;
-  gchar     *title;
-  gchar     *warning;
+  gchar *name;
+  gchar *title;
+  gchar *warning;
 
   if (shell->warning_dialog)
     {
@@ -2688,12 +2680,19 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  title = g_strdup_printf (_("Close %s?"), image_name);
+  name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
+
+  title = g_strdup_printf (_("Close %s?"), name);
 
   warning = g_strdup_printf (_("Changes were made to %s.\n"
-                               "Close anyway?"), image_name);
+                               "Close anyway?"), name);
+#if 0
+  shell->warning_dialog = gtk_message_dialog_new (shell->window,
+						  0,
+						  GTK_MESSAGE_QUESTION,);
+#endif
 
-  shell->warning_dialog = mbox =
+  shell->warning_dialog =
     gimp_query_boolean_box (title,
 			    gimp_standard_help_func,
 			    "dialogs/really_close.html",
@@ -2704,10 +2703,11 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 			    gimp_display_shell_close_warning_callback,
 			    shell);
 
+  g_free (name);
   g_free (title);
   g_free (warning);
 
-  gtk_widget_show (mbox);
+  gtk_widget_show (shell->warning_dialog);
 }
 
 static void

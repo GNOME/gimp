@@ -7,7 +7,7 @@ dnl Process this file with autoconf to produce a configure script.
 # require autoconf 2.52
 AC_PREREQ(2.52)
 
-AC_INIT(etc/gimprc.in)
+AC_INIT(app/core/gimp.c)
 
 
 ############

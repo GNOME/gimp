@@ -1,3 +1,11 @@
+2002-12-29  Sven Neumann  <neo@wintermute>
+
+	* configure.in: check for app/core/gimp.c instead of etc/gimprc.in
+	which no longer exists.
+	
+	* app/gui/user-install-dialog.c: use the term Folder instead of
+	Directory (fixes bug #102016).
+
 2002-12-29  Sven Neumann  <sven@gimp.org>
 
 	* configure.in
