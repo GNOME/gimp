@@ -1,3 +1,9 @@
+2003-07-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdevicestatus.c (gimp_device_status_init): 
+	disconnect the GimpDeviceInfo::changed() signal handlers when
+	the dialog goes away. Fixes bug #117609.
+
 2003-07-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/gimpvectors.c (gimp_vectors_transform): invert the

@@ -160,15 +160,17 @@ gimp_device_status_init (GimpDeviceStatus *status)
       GimpDeviceStatusEntry *entry = &status->entries[i];
       gint                   row    = i * 3;
       gchar                 *markup;
+      GClosure              *closure;
 
       entry->device = GDK_DEVICE (list->data);
 
       device_info = gimp_device_info_get_by_device (entry->device);
       context     = GIMP_CONTEXT (device_info);
 
-      g_signal_connect (device_info, "changed",
-                        G_CALLBACK (gimp_device_status_update_entry),
-                        entry);
+      closure = g_cclosure_new (G_CALLBACK (gimp_device_status_update_entry),
+                                entry, NULL);
+      g_object_watch_closure (G_OBJECT (status), closure);
+      g_signal_connect_closure (device_info, "changed", closure, FALSE);
 
       /*  the separator  */
 
