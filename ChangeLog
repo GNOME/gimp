@@ -1,3 +1,7 @@
+2005-01-14  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpink-undo.c: doesn't need to include "gimp-intl.h".
+
 2005-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch] (enum GimpUndoType): added GIMP_UNDO_INK.

@@ -32,8 +32,6 @@
 #include "gimpink-blob.h"
 #include "gimpink-undo.h"
 
-#include "gimp-intl.h"
-
 
 /**************/
 /*  Ink Undo  */
@@ -58,11 +56,13 @@ struct _InkUndo
   gboolean init_velocity;
 };
 
-static gboolean undo_pop_ink  (GimpUndo            *undo,
-                               GimpUndoMode         undo_mode,
-                               GimpUndoAccumulator *accum);
-static void     undo_free_ink (GimpUndo            *undo,
-                               GimpUndoMode         undo_mode);
+
+static gboolean  undo_pop_ink  (GimpUndo            *undo,
+                                GimpUndoMode         undo_mode,
+                                GimpUndoAccumulator *accum);
+static void      undo_free_ink (GimpUndo            *undo,
+                                GimpUndoMode         undo_mode);
+
 
 gboolean
 gimp_ink_push_undo (GimpPaintCore *core,
