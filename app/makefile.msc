@@ -2,15 +2,19 @@
 ## Use: nmake -f makefile.msc
 
 # Change this to wherever you want to install gimp.exe.
-BIN = D:\gimp\bin
+BIN = C:\gimp\bin
+
+# Full optimization:
+#OPTIMIZE = -Ox
+# Debugging:
+OPTIMIZE = -Zi
 
 ################################################################
 
 # Nothing much configurable below
 
 # cl -? describes the options
-#CC = cl -GA -G5 -GF -Ox -W3 -MD -nologo
-CC = cl -GA -G5 -GF -Zi -W3 -MD -nologo
+CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -MD -nologo
 
 # Change to /subsystem:console when debugging
 LDFLAGS = /link /subsystem:windows /machine:ix86 /debug
@@ -236,7 +240,7 @@ gimp_OBJECTS = \
 gimp.res : gimp.rc wilber.ico
 	rc -r -fo gimp.res gimp.rc
 
-gimp.exe : ../config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res 
+gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
 	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)

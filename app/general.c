@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <glib.h>
+
 #include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,7 +24,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <glib.h>
 
 #ifdef NATIVE_WIN32
 #ifndef S_ISREG

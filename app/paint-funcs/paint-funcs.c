@@ -3557,8 +3557,6 @@ gaussian_blur_region (PixelRegion *srcR,
 
   buf = g_malloc (sizeof (int) * MAXIMUM (width, height) * 2);
 
-  total = sum[length] - sum[-length];
-
   if (radius_y != 0.0)
     {
       std_dev = sqrt (-(radius_y * radius_y) / (2 * log (1.0 / 255.0)));

@@ -17,6 +17,8 @@
  * Some of this code is based on the layers_dialog box code.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,6 +67,10 @@
 #include "pixmaps/toselection.xpm"
 #include "pixmaps/path.xbm"
 #include "pixmaps/locked.xpm"
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 

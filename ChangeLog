@@ -1,3 +1,36 @@
+1999-05-28  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in: Check for mmap.
+
+	* app/makefile.msc: Depend on gimpi.lib.
+	
+	* app/app_procs.c (app_init): Fix gccism: Allocate filenames (an
+ 	array with non-constant size) dynamically.
+
+	* app/{datafiles,fileops,general,install,module_db,temp_buf}.c:
+ 	Include glib.h before standard headers, because of certain obscure
+ 	details related to compiling with gcc on Win32.
+
+	(If you really want to know: glib.h defines he names of POSIXish
+	(but non-ANSI) functions as prefixed with underscore, because
+ 	that's how they are named in the msvcrt runtime C library we want
+ 	to use. However, defining stat as _stat causes some problems if
+ 	done after including the mingw32 <sys/stat.h>. So, it's easiest to
+ 	include <glib.h> early.)
+
+	* app/main.c: Use _stdcall and __argc, __argv with MSC, but
+ 	__attribute__((stdcall)) and _argc, _argv with gcc. Don't print
+ 	the "Passed serialization test" message on Win32. (It would open
+ 	up an otherwise unnecessary console window.)
+
+	* app/paint_funcs.c (gaussian_blur_region): Don't use variable sum
+ 	until initialized.
+
+	* app/{bezier_select,paths_dialog}.c: Include config.h and define
+ 	rint() if necessary.
+
+	* app/plug_in.c: Use _spawnv, not spawnv, on Win32 and OS/2.
+	
 Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/channel.c: applied fix for the channel_bounds bug from

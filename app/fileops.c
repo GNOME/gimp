@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <glib.h>
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>

@@ -398,6 +398,8 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT), [
   AC_CHECK_LIB(m, rint, [
     AC_DEFINE(HAVE_RINT)])])
 
+AC_CHECK_FUNCS(mmap)
+
 dnl check for inline
 AC_MSG_CHECKING([for inline definition in glibconfig.h])
 AC_EGREP_CPP(glib_defines_inline,

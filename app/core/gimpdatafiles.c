@@ -20,6 +20,8 @@
  */
 #include "config.h"
 
+#include <glib.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -42,7 +44,6 @@
 #endif
 #endif
 
-#include <glib.h>
 #include "datafiles.h"
 #include "errors.h"
 #include "general.h"

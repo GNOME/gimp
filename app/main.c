@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -363,6 +364,12 @@ main (int argc, char **argv)
 
 /* In case we build this as a windowed application */
 
+#ifdef __GNUC__
+#define _stdcall  __attribute__((stdcall))
+#define __argc _argc
+#define __argv _argv
+#endif
+
 int _stdcall
 WinMain (int hInstance, int hPrevInstance, char *lpszCmdLine, int nCmdShow)
 {
@@ -531,6 +538,8 @@ static void test_gserialize()
   if (to->test_array[1] != ts->test_array[1])
     g_message("int16array value 1 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[1]);
   /*  really should free the memory... */
+#ifndef NATIVE_WIN32
   g_message("Passed serialization test\n");
+#endif
 }/* 
     67108864 */

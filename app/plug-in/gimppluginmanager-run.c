@@ -887,7 +887,7 @@ plug_in_open (PlugIn *plug_in)
       fcntl(my_write[1], F_SETFD, 1);
 #endif
 #if defined (__CYGWIN32__) || defined (NATIVE_WIN32) || defined(__EMX__)
-      plug_in->pid = spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
+      plug_in->pid = _spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
       if (plug_in->pid == -1)
 #else
       plug_in->pid = fork ();

@@ -562,7 +562,7 @@ app_init (void)
        */
       {
 	FILE *fp;
-	gchar *filenames[last_opened_size];
+	gchar **filenames = g_malloc (sizeof (gchar *) * last_opened_size);
 	int dummy, i;
 
 	if ((fp = idea_manager_parse_init (&dummy, &dummy, &dummy, &dummy)))
@@ -581,6 +581,7 @@ app_init (void)
 
 	    fclose (fp);
 	  }
+	g_free (filenames);
       }
 
       gximage_init ();
