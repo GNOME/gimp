@@ -461,3 +461,21 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 
   return FALSE;
 }
+
+gint
+gdisplay_origin_button_press (GtkWidget      *widget,
+			      GdkEventButton *event,
+			      gpointer        data)
+{
+  GDisplay *gdisp;
+
+  if (event->button == 1)
+    {
+      gdisp = data;
+      popup_shell = gdisp->shell;
+      gdisplay_set_menu_sensitivity (gdisp);
+      gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 1, event->time);
+    }
+
+  return FALSE;
+}

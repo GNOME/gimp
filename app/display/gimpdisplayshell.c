@@ -676,6 +676,7 @@ create_display_shell (int   gdisp_id,
   static GtkAccelGroup *image_accel_group = NULL;
   GDisplay *gdisp;
   GtkWidget *table;
+  GtkWidget *arrow;
   int n_width, n_height;
   int s_width, s_height;
   int scalesrc, scaledest;
@@ -741,8 +742,16 @@ create_display_shell (int   gdisp_id,
   gtk_container_add (GTK_CONTAINER (gdisp->shell), table);
 
   /*  scrollbars, rulers, canvas, menu popup button  */
-  gdisp->origin = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (gdisp->origin), GTK_SHADOW_OUT);
+  gdisp->origin = gtk_button_new ();
+  gtk_widget_set_events (GTK_WIDGET (gdisp->origin),
+			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+  gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
+		      (GtkSignalFunc) gdisplay_origin_button_press,
+		      gdisp);
+  
+  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+  gtk_container_border_width (GTK_CONTAINER (gdisp->origin), 0);
+  gtk_container_add (GTK_CONTAINER (gdisp->origin), arrow);
 
   gdisp->hrule = gtk_hruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->hrule),
@@ -806,6 +815,7 @@ create_display_shell (int   gdisp_id,
   /*  the accelerator table for images  */
   gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
 
+  gtk_widget_show (arrow);
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
   gtk_widget_show (gdisp->origin);
