@@ -1,3 +1,13 @@
+2005-03-08  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/tools/gimppaintoptions-gui.c (fade_options_gui)
+	(gradient_options_gui)
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
+	call gimp_unit_menu_set_pixel_digits() after connecting up the
+	spinbuttons and the unitmenu. Fixes initial display (bug #169066).
+
 2005-03-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpdisplayshell-callbacks.c: applied patch from 

@@ -298,7 +298,7 @@ fade_options_gui (GimpFadeOptions  *fade,
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkWidget *button;
-  GtkWidget *unitmenu;
+  GtkWidget *menu;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
@@ -334,12 +334,13 @@ fade_options_gui (GimpFadeOptions  *fade,
                                  spinbutton, 1, FALSE);
 
       /*  the fade-out unitmenu  */
-      unitmenu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
-      gtk_table_attach (GTK_TABLE (table), unitmenu, 2, 3, 0, 1,
+      menu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
+      gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (unitmenu);
+      gtk_widget_show (menu);
 
-      g_object_set_data (G_OBJECT (unitmenu), "set_digits", spinbutton);
+      g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
     }
 
   return frame;
@@ -356,7 +357,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkWidget *button;
-  GtkWidget *unitmenu;
+  GtkWidget *menu;
   GtkWidget *combo;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
@@ -404,12 +405,13 @@ gradient_options_gui (GimpGradientOptions *gradient,
                                  spinbutton, 1, FALSE);
 
       /*  the gradient unitmenu  */
-      unitmenu = gimp_prop_unit_menu_new (config, "gradient-unit", "%a");
-      gtk_table_attach (GTK_TABLE (table), unitmenu, 2, 3, 1, 2,
+      menu = gimp_prop_unit_menu_new (config, "gradient-unit", "%a");
+      gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (unitmenu);
+      gtk_widget_show (menu);
 
-      g_object_set_data (G_OBJECT (unitmenu), "set_digits", spinbutton);
+      g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
 
       /*  the repeat type  */
       combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);

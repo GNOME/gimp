@@ -545,6 +545,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       g_object_set_data (G_OBJECT (menu), "set_digits", width_spinbutton);
       g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
                          height_spinbutton);
+      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
 
       gtk_widget_show (table);
     }
