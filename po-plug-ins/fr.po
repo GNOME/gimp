@@ -530,58 +530,55 @@ msgstr "Options"
 
 #: plug-ins/FractalExplorer/Dialogs.c:428
 msgid "Undo zoom"
-msgstr ""
+msgstr "Annuler le zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:438
 msgid "Undo last zoom"
-msgstr ""
+msgstr "Annuler le dernier zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:441
 msgid "Redo zoom"
-msgstr ""
+msgstr "Refaire le zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:451
 msgid "Redo last zoom"
-msgstr ""
+msgstr "Refaire le dernier zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:454
 #: plug-ins/FractalExplorer/Dialogs.c:464
-#, fuzzy
 msgid "Step In"
-msgstr "Pas"
+msgstr "Pas en avant"
 
 #: plug-ins/FractalExplorer/Dialogs.c:467
 #: plug-ins/FractalExplorer/Dialogs.c:477
-#, fuzzy
 msgid "Step Out"
-msgstr "Pas"
+msgstr "Pas en arrière"
 
 #: plug-ins/FractalExplorer/Dialogs.c:487 plug-ins/sinus/sinus.c:735
 #: plug-ins/sinus/sinus.c:831
 msgid "Colors"
-msgstr ""
+msgstr "Couleurs"
 
 #: plug-ins/FractalExplorer/Dialogs.c:500
 #: plug-ins/FractalExplorer/Dialogs.c:515 plug-ins/gap/gap_range_ops.c:333
 msgid "Number of Colors"
-msgstr ""
+msgstr "Nombre de couleurs"
 
 #: plug-ins/FractalExplorer/Dialogs.c:516
 msgid "Change the number of colors in the mapping"
-msgstr ""
+msgstr "Change le nombre de couleurs dans la palette"
 
 #: plug-ins/FractalExplorer/Dialogs.c:518
 msgid "Use loglog smoothing"
-msgstr ""
+msgstr "Adoucissement log log"
 
 #: plug-ins/FractalExplorer/Dialogs.c:525
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Utilise un adoucissement en log log pour éviter les bandes dans le résultat."
 
 #: plug-ins/FractalExplorer/Dialogs.c:530
-#, fuzzy
 msgid "Color density"
-msgstr "Coloriser"
+msgstr "Densité de couleur"
 
 #: plug-ins/FractalExplorer/Dialogs.c:545
 #: plug-ins/FractalExplorer/Dialogs.c:570 plug-ins/common/convmatrix.c:79
@@ -659,7 +656,7 @@ msgstr "Composante rouge : fonction linéaire (et non pas trigonométrique)"
 #: plug-ins/FractalExplorer/Dialogs.c:663
 #: plug-ins/FractalExplorer/Dialogs.c:716
 msgid "Inversion"
-msgstr ""
+msgstr "Inversion"
 
 #: plug-ins/FractalExplorer/Dialogs.c:617
 #: plug-ins/FractalExplorer/Dialogs.c:670
@@ -667,7 +664,7 @@ msgstr ""
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
+msgstr "Si vous cochez cette option, les valeurs de couleurs élevées seront remplacées par des valeurs faibles, et vice-versa."
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:732
@@ -677,13 +674,13 @@ msgstr "Couleur"
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 msgid "As specified above"
-msgstr ""
+msgstr "Comme spécifié ci-dessus"
 
 #: plug-ins/FractalExplorer/Dialogs.c:749
 msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
-msgstr ""
+msgstr "Crée une palette de couleurs avec les options spécifiées au dessus (densité de couleur, fonction). Le résultat est visible dans l'aperçu."
 
 #: plug-ins/FractalExplorer/Dialogs.c:752
 #, fuzzy
@@ -692,28 +689,26 @@ msgstr "Appliquer divers jeux d'éclairage à l'image."
 
 #: plug-ins/FractalExplorer/Dialogs.c:760
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
+msgstr "Crée une palette de couleur en utilisant un dégradé provenant de l'éditeur de dégradés"
 
 #: plug-ins/FractalExplorer/Dialogs.c:776
 msgid "Fractals"
-msgstr ""
+msgstr "Fractales"
 
 #: plug-ins/FractalExplorer/Dialogs.c:783
 msgid "Gradients"
-msgstr ""
+msgstr "Dégradés"
 
 #: plug-ins/FractalExplorer/Dialogs.c:798
 msgid "Accept settings and start the calculation of the fractal"
-msgstr ""
+msgstr "Accepte les réglages et commence le calcul de la fractale."
 
 #: plug-ins/FractalExplorer/Dialogs.c:807
-#, fuzzy
 msgid "Discard any changes and close dialog box"
-msgstr "Annuler les changements et fermer l'appendice"
+msgstr "Annule les changements et fermer l'appendice."
 
 #: plug-ins/FractalExplorer/Dialogs.c:816
 #: plug-ins/FractalExplorer/Dialogs.c:1376
-#, fuzzy
 msgid "Show information about the plug-in and the author"
 msgstr "Montrer des informations sur cet appendice et son auteur"
 
@@ -725,30 +720,29 @@ msgstr "Rotation..."
 #: plug-ins/FractalExplorer/Dialogs.c:1808
 #, c-format
 msgid "Error opening '%.100s' could not save"
-msgstr ""
+msgstr "Erreur d'ouverture de \"%.100s\", je n'ai pu enregistrer les données."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1821
 msgid "Failed to write file\n"
-msgstr ""
+msgstr "Je n'ai pu écrire le fichier."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
 msgid "Save: No filename given"
-msgstr ""
+msgstr "Enregistrer : vous n'avez pas donné de nom de fichier."
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1849
 msgid "Save: Can't save to a directory"
-msgstr ""
+msgstr "Enregistrer : je ne peux enregistrer dans un répertoire."
 
 #. Load a single object
 #: plug-ins/FractalExplorer/Dialogs.c:1906
-#, fuzzy
 msgid "Load fractal parameters"
-msgstr "Charger les paramètres à partir de"
+msgstr "Charger les paramètres de la fractale"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1916
 msgid "Click here to load your file"
-msgstr ""
+msgstr "Cliquez ici pour charger votre fichier."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1921
 msgid "Click here to cancel load procedure"

@@ -2479,6 +2479,10 @@ msgstr ""
 "\t\tle répertoire de pinceaux global à tous les\n"
 "\t\tutilisateurs lorsqu'il recherche des pinceaux.\n"
 
+#: app/install.c:168
+msgid "generated_brushes\n"
+msgstr "generated_brushes\n"
+
 #: app/install.c:182
 msgid ""
 "\t\tThis is a subdirectory which is used to store brushes\n"
@@ -2535,6 +2539,10 @@ msgstr ""
 "\t\tdans ce répertoire et dans le répertoire de dégradés\n"
 "\t\tglobal à tous les utilisateurs lorsqu'il recherche des\n"
 "\t\tparamètres pour l'extension gflare.\n"
+
+#: app/install.c:195
+msgid "fractalexplorer\n"
+msgstr "fractalexplorer\n"
 
 #: app/install.c:209
 msgid ""
@@ -4011,6 +4019,11 @@ msgstr "/Filtres/Jouets"
 #: app/menus.c:650
 msgid "/Script-Fu"
 msgstr "/Script-Fu"
+
+#. <Image>/Dialogs
+#: app/menus.c:615
+msgid "/Dialogs"
+msgstr "/Dialogues"
 
 #: app/menus.c:661
 msgid "/Automatic"
