@@ -239,6 +239,8 @@ static GimpRadioActionEntry view_zoom_actions[] =
 void
 view_actions_setup (GimpActionGroup *group)
 {
+  GtkAction *action;
+
   gimp_action_group_add_actions (group,
                                  view_actions,
                                  G_N_ELEMENTS (view_actions));
@@ -252,6 +254,15 @@ view_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (view_zoom_actions),
                                        10000,
                                        G_CALLBACK (view_zoom_cmd_callback));
+
+  /*  connect "activate" of view-zoom-other manually so it can be
+   *  selected even if it's the active item of the radio group
+   */
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "view-zoom-other");
+  g_signal_connect (action, "activate",
+                    G_CALLBACK (view_zoom_other_cmd_callback),
+                    group->user_data);
 }
 
 void

@@ -1,3 +1,11 @@
+2004-06-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: added separate callback for
+	"view-zoom-other" and connect GtkAction::activate manually so
+	"Other..." can be selected even if it's the active item in the
+	zoom radio group. Fixes bug #143850.
+
 2004-06-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tileit.c (tileit_dialog): fixed a typo.

@@ -133,18 +133,30 @@ view_zoom_cmd_callback (GtkAction *action,
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value == 0 /* Other... */)
-    {
-      /* check if we are activated by the user
-       * or from view_actions_set_zoom()
-       */
-      if (shell->scale != shell->other_scale)
-        gimp_display_shell_scale_dialog (shell);
-    }
-  else
+  if (value != 0 /* not Other... */)
     {
       if (fabs (value - shell->scale) > 0.0001)
         gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) value / 10000);
+    }
+}
+
+void
+view_zoom_other_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  /* check if we are activated by the user or from
+   * view_actions_set_zoom()
+   */
+  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)) &&
+      shell->scale != shell->other_scale)
+    {
+      gimp_display_shell_scale_dialog (shell);
     }
 }
 

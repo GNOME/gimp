@@ -34,6 +34,8 @@ void   view_zoom_fit_cmd_callback              (GtkAction *action,
 void   view_zoom_cmd_callback                  (GtkAction *action,
                                                 GtkAction *current,
                                                 gpointer   data);
+void   view_zoom_other_cmd_callback            (GtkAction *action,
+                                                gpointer   data);
 void   view_dot_for_dot_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_info_window_cmd_callback           (GtkAction *action,
