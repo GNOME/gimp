@@ -61,7 +61,16 @@ Functions operating on a single palette.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_palette_set_num_columns ##### -->
+<!-- ##### FUNCTION gimp_palette_get_columns ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_set_columns ##### -->
 <para>
 
 </para>

@@ -692,8 +692,8 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 }
 
 void
-gimp_palette_set_num_columns (GimpPalette *palette,
-                              gint         columns)
+gimp_palette_set_columns (GimpPalette *palette,
+                          gint         columns)
 {
   g_return_if_fail (GIMP_IS_PALETTE (palette));
 
@@ -708,7 +708,7 @@ gimp_palette_set_num_columns (GimpPalette *palette,
 }
 
 gint
-gimp_palette_get_num_columns  (GimpPalette *palette)
+gimp_palette_get_columns  (GimpPalette *palette)
 {
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
 

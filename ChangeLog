@@ -1,3 +1,20 @@
+2005-03-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette.[ch]: renamed again, to
+	gimp_palette_[gs]et_columns this time.
+
+	* app/dialogs/palette-import-dialog.c
+	* app/widgets/gimppaletteeditor.c: changed accordingly.
+
+	* tools/pdbgen/pdb/palette.pdb: renamed newly added PDB function.
+	Also added a getter for the columns.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/palette_cmds.c
+	* libgimp/gimppalette_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
 2005-03-09  Michael Natterer  <mitch@gimp.org>
 
 	More sample point stuff. Addresses bug #137776.

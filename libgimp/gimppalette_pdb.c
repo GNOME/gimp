@@ -227,7 +227,40 @@ gimp_palette_get_info (const gchar *name,
 }
 
 /**
- * gimp_palette_set_num_columns:
+ * gimp_palette_get_columns:
+ * @name: The palette name.
+ *
+ * Retrieves the number of columns to use to display this palette
+ *
+ * This procedures retrieves the prefered number of columns to use when
+ * the palette is being displayed.
+ *
+ * Returns: The number of columns used to display this palette.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_palette_get_columns (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint num_columns = 0;
+
+  return_vals = gimp_run_procedure ("gimp_palette_get_columns",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    num_columns = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return num_columns;
+}
+
+/**
+ * gimp_palette_set_columns:
  * @name: The palette name.
  * @columns: The new number of columns.
  *
@@ -242,14 +275,14 @@ gimp_palette_get_info (const gchar *name,
  * Since: GIMP 2.4
  */
 gboolean
-gimp_palette_set_num_columns (const gchar *name,
-			      gint         columns)
+gimp_palette_set_columns (const gchar *name,
+			  gint         columns)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_palette_set_num_columns",
+  return_vals = gimp_run_procedure ("gimp_palette_set_columns",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_INT32, columns,

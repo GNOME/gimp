@@ -641,12 +641,11 @@ palette_import_file_callback (GtkWidget    *widget,
 }
 
 static void
-palette_import_columns_changed (GtkAdjustment *adjustment,
+palette_import_columns_changed (GtkAdjustment *adj,
                                 ImportDialog  *import_dialog)
 {
   if (import_dialog->palette)
-    gimp_palette_set_num_columns (import_dialog->palette,
-                                  ROUND (adjustment->value));
+    gimp_palette_set_columns (import_dialog->palette, ROUND (adj->value));
 }
 
 /*  functions & callbacks to keep the import dialog uptodate  ****************/

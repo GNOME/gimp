@@ -41,7 +41,8 @@ static ProcRecord palette_rename_proc;
 static ProcRecord palette_delete_proc;
 static ProcRecord palette_is_editable_proc;
 static ProcRecord palette_get_info_proc;
-static ProcRecord palette_set_num_columns_proc;
+static ProcRecord palette_get_columns_proc;
+static ProcRecord palette_set_columns_proc;
 static ProcRecord palette_add_entry_proc;
 static ProcRecord palette_delete_entry_proc;
 static ProcRecord palette_entry_get_color_proc;
@@ -58,7 +59,8 @@ register_palette_procs (Gimp *gimp)
   procedural_db_register (gimp, &palette_delete_proc);
   procedural_db_register (gimp, &palette_is_editable_proc);
   procedural_db_register (gimp, &palette_get_info_proc);
-  procedural_db_register (gimp, &palette_set_num_columns_proc);
+  procedural_db_register (gimp, &palette_get_columns_proc);
+  procedural_db_register (gimp, &palette_set_columns_proc);
   procedural_db_register (gimp, &palette_add_entry_proc);
   procedural_db_register (gimp, &palette_delete_entry_proc);
   procedural_db_register (gimp, &palette_entry_get_color_proc);
@@ -490,10 +492,76 @@ static ProcRecord palette_get_info_proc =
 };
 
 static Argument *
-palette_set_num_columns_invoker (Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+palette_get_columns_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpPalette *palette = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+      success = (palette != NULL);
+    }
+
+  return_args = procedural_db_return_args (&palette_get_columns_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = palette->n_columns;
+
+  return return_args;
+}
+
+static ProcArg palette_get_columns_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The palette name."
+  }
+};
+
+static ProcArg palette_get_columns_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_columns",
+    "The number of columns used to display this palette"
+  }
+};
+
+static ProcRecord palette_get_columns_proc =
+{
+  "gimp_palette_get_columns",
+  "Retrieves the number of columns to use to display this palette",
+  "This procedures retrieves the prefered number of columns to use when the palette is being displayed.",
+  "Sven Neumann <sven@gimp.org>",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  palette_get_columns_inargs,
+  1,
+  palette_get_columns_outargs,
+  { { palette_get_columns_invoker } }
+};
+
+static Argument *
+palette_set_columns_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -514,15 +582,15 @@ palette_set_num_columns_invoker (Gimp         *gimp,
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
-        gimp_palette_set_num_columns (palette, columns);
+        gimp_palette_set_columns (palette, columns);
       else
         success = FALSE;
     }
 
-  return procedural_db_return_args (&palette_set_num_columns_proc, success);
+  return procedural_db_return_args (&palette_set_columns_proc, success);
 }
 
-static ProcArg palette_set_num_columns_inargs[] =
+static ProcArg palette_set_columns_inargs[] =
 {
   {
     GIMP_PDB_STRING,
@@ -536,9 +604,9 @@ static ProcArg palette_set_num_columns_inargs[] =
   }
 };
 
-static ProcRecord palette_set_num_columns_proc =
+static ProcRecord palette_set_columns_proc =
 {
-  "gimp_palette_set_num_columns",
+  "gimp_palette_set_columns",
   "Sets the number of columns to use when displaying the palette",
   "This procedures allows to control how many colors are shown per row when the palette is being displayed. This value can only be changed if the palette is writable. The maximum allowed value is 64.",
   "Sven Neumann <sven@gimp.org>",
@@ -547,10 +615,10 @@ static ProcRecord palette_set_num_columns_proc =
   NULL,
   GIMP_INTERNAL,
   2,
-  palette_set_num_columns_inargs,
+  palette_set_columns_inargs,
   0,
   NULL,
-  { { palette_set_num_columns_invoker } }
+  { { palette_set_columns_invoker } }
 };
 
 static Argument *

@@ -268,7 +268,39 @@ CODE
     );
 }
 
-sub palette_set_num_columns {
+sub palette_get_columns {
+    $blurb = "Retrieves the number of columns to use to display this palette";
+    $help = <<'HELP';
+This procedures retrieves the prefered number of columns to use when the
+palette is being displayed.
+HELP
+
+    &neo_misc;
+
+    @inargs = (
+	&palette_arg
+    );
+
+    @outargs = (
+        { name => 'num_columns', type => 'int32', no_declare => '0',
+          alias => 'palette->n_columns',
+          desc => "The number of columns used to display this palette" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPalette *palette = NULL' ],
+	code => <<'CODE'
+{
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+  success = (palette != NULL);
+}
+CODE
+    );
+}
+
+sub palette_set_columns {
     $blurb = "Sets the number of columns to use when displaying the palette";
     $help = <<'HELP';
 This procedures allows to control how many colors are shown per row when the
@@ -292,7 +324,7 @@ HELP
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
-    gimp_palette_set_num_columns (palette, columns);
+    gimp_palette_set_columns (palette, columns);
   else
     success = FALSE;
 }
@@ -572,7 +604,8 @@ CODE
               "core/gimpdatafactory.h" "core/gimppalette.h");
 
 @procs = qw(palette_new palette_duplicate palette_rename palette_delete
-            palette_is_editable palette_get_info palette_set_num_columns
+            palette_is_editable palette_get_info
+            palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name);
