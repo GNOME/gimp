@@ -193,8 +193,9 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
 
   frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
                                              str,
-                                             _("Move Current Layer / Path"),
-                                             _("Pick a Layer / Path to Move"));
+                                             _("Move Current Layer or Path"),
+                                             _("Pick a Layer, Path\n"
+                                               "or Guide to Move"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
