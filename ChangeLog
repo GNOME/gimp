@@ -1,5 +1,12 @@
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_deserialize_property)
+	* app/core/gimpcontainer.c (gimp_container_deserialize): g_free()
+	the string returned by gimp_scanner_parse_string(). Replace
+	NULL object names by "".
+
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c (init_edit_selection):
 	g_memdup() the segments returned by gimp_image_mask_boundary().
 	Just caching the pointers leads to bug #22375 because the image's

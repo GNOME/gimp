@@ -468,7 +468,7 @@ gimp_container_deserialize (GObject  *object,
           {
             GimpObject *child;
             GType       type;
-            gchar      *name;
+            gchar      *name = NULL;
 
             type = g_type_from_name (scanner->value.v_identifier);
 
@@ -503,6 +503,9 @@ gimp_container_deserialize (GObject  *object,
                 break;
               }
 
+            if (! name)
+              name = g_strdup ("");
+
             child = gimp_container_get_child_by_name (container, name);
 
             if (! child)
@@ -524,6 +527,8 @@ gimp_container_deserialize (GObject  *object,
                 if (container->policy == GIMP_CONTAINER_POLICY_STRONG)
                   g_object_unref (child);
               }
+
+            g_free (name);
 
             {
               GimpConfigInterface *config_iface;

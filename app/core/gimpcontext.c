@@ -1142,13 +1142,9 @@ gimp_context_serialize_property (GObject          *object,
   gimp_config_writer_open (writer, pspec->name);
 
   if (serialize_obj)
-    {
-      gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
-    }
+    gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
   else
-    {
-      gimp_config_writer_print (writer, "NULL", 4);
-    }
+    gimp_config_writer_print (writer, "NULL", 4);
 
   gimp_config_writer_close (writer);
 
@@ -1226,6 +1222,9 @@ gimp_context_deserialize_property (GObject    *object,
     {
       GimpObject *deserialize_obj;
 
+      if (! object_name)
+        object_name = g_strdup ("");
+
       deserialize_obj = gimp_container_get_child_by_name (container,
                                                           object_name);
 
@@ -1243,6 +1242,8 @@ gimp_context_deserialize_property (GObject    *object,
         }
 
       g_value_set_object (value, deserialize_obj);
+
+      g_free (object_name);
     }
   else
     {
