@@ -56,6 +56,7 @@ SUBDIRS = 			\
 	flarefx			\
 	fp			\
 	fractaltrace		\
+	gap			\
 	gauss_iir		\
 	gauss_rle		\
 	gbr			\

@@ -1,3 +1,13 @@
+Thu Mar 18 02:12:26 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/gap/* (new files)
+	Added the GAP (GIMP Animation Plugin) created by Wolfgang
+	Hofer. Eventually we'll think about making this a 
+	seperate package, but now it's here for testing and your
+	pleasure.
+
 Wed Mar 17 21:46:08 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/plug-ins/exchange/exchange.c: fixed NON_INTERACTIVE
