@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
-"PO-Revision-Date: 2002-01-28 02:47+0100\n"
+"POT-Creation-Date: 2002-06-19 18:47+0200\n"
+"PO-Revision-Date: 2002-06-19 18:51+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -157,7 +157,7 @@ msgstr "en kanal (sparad markering)"
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -180,63 +180,60 @@ msgid "/White"
 msgstr "/Vit"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Välj fil"
+msgstr "Välj mapp"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Välj fil"
 
 #: libgimpwidgets/gimpstock.c:88
-#, fuzzy
 msgid "Anchor"
-msgstr "tum"
+msgstr "Ankare"
 
 #: libgimpwidgets/gimpstock.c:89
-#, fuzzy
 msgid "Duplicate"
-msgstr "pica"
+msgstr "Duplicera"
 
 #: libgimpwidgets/gimpstock.c:90
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
-msgstr ""
+msgstr "Länkad"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "Paste as New"
-msgstr ""
+msgstr "Klistra in som ny"
 
 #: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
-msgstr ""
+msgstr "Klistra in i"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
-msgstr ""
+msgstr "_Återställ"
 
 #: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:160
-msgid "Transform"
-msgstr ""
+msgstr "Synlig"
 
 #: libgimpwidgets/gimpstock.c:163
+msgid "Transform"
+msgstr "Transformera"
+
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
-msgstr ""
+msgstr "Rotera"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
-msgstr ""
+msgstr "Skala"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
-msgstr ""
+msgstr "Luta"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -248,7 +245,7 @@ msgstr "Enhetsval"
 
 #: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
-msgstr "Enhet "
+msgstr "Enhet"
 
 #: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
@@ -260,12 +257,11 @@ msgid ""
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 "Om du inte trycker \"Tid\"-knappen kan du här ange ett värde för generering "
-"av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
+"av ett slumptalsfrö - det låter dig upprepa en given \"slumpfunktion\""
 
 #: libgimpwidgets/gimpwidgets.c:850
-#, fuzzy
 msgid "_Time"
-msgstr "Tid"
+msgstr "_Tid"
 
 #: libgimpwidgets/gimpwidgets.c:859
 msgid ""
@@ -288,9 +284,8 @@ msgid "MegaBytes"
 msgstr "megabyte"
 
 #: libgimpwidgets/gimpwidgets.c:1178
-#, fuzzy
 msgid "GigaBytes"
-msgstr "megabyte"
+msgstr "gigabyte"
 
 #~ msgid "Select Directory"
 #~ msgstr "Välj katalog"
