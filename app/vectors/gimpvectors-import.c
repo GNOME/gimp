@@ -192,7 +192,7 @@ gimp_vectors_import (GimpImage    *image,
               for (list = paths->data; list; list = list->next)
                 gimp_vectors_stroke_add (vectors, GIMP_STROKE (list->data));
 
-              if (!merge)
+              if (!merge && paths->next)
                 {
                   gimp_image_add_vectors (image, vectors, -1);
                   vectors = gimp_vectors_new (image, _("Imported Path"));

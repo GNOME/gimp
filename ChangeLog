@@ -1,3 +1,8 @@
+2003-09-15  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.c (gimp_vectors_import): stop
+	creating an extranous vectors object.
+
 2003-09-14  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/gui.c: changed to a runtime check for gtk version.
