@@ -49,10 +49,18 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
+#include "gimpmarshal.h"
 #include "gimppaintinfo.h"
 #include "gimpstrokeoptions.h"
 
 #include "gimp-intl.h"
+
+
+enum
+{
+  COLOR_CHANGED,
+  LAST_SIGNAL
+};
 
 
 static void       gimp_channel_class_init    (GimpChannelClass *klass);
@@ -197,7 +205,11 @@ static void       gimp_channel_validate      (TileManager      *tm,
                                               Tile             *tile);
 
 
-static GimpDrawableClass * parent_class = NULL;
+/*  private variables  */
+
+static guint channel_signals[LAST_SIGNAL] = { 0 };
+
+static GimpDrawableClass *parent_class = NULL;
 
 
 GType
@@ -238,6 +250,15 @@ gimp_channel_class_init (GimpChannelClass *klass)
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  channel_signals[COLOR_CHANGED] =
+    g_signal_new ("color-changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpChannelClass, color_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->finalize           = gimp_channel_finalize;
 
@@ -1517,6 +1538,8 @@ gimp_channel_set_color (GimpChannel   *channel,
                             0, 0,
                             GIMP_ITEM (channel)->width,
                             GIMP_ITEM (channel)->height);
+
+      g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
 }
 
@@ -1564,6 +1587,8 @@ gimp_channel_set_opacity (GimpChannel *channel,
                             0, 0,
                             GIMP_ITEM (channel)->width,
                             GIMP_ITEM (channel)->height);
+
+      g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
 }
 

@@ -60,51 +60,55 @@ struct _GimpChannelClass
 {
   GimpDrawableClass  parent_class;
 
-  gboolean (* boundary) (GimpChannel     *channel,
-                         const BoundSeg **segs_in,
-                         const BoundSeg **segs_out,
-                         gint            *num_segs_in,
-                         gint            *num_segs_out,
-                         gint             x1,
-                         gint             y1,
-                         gint             x2,
-                         gint             y2);
-  gboolean (* bounds)   (GimpChannel     *channel,
-                         gint            *x1,
-                         gint            *y1,
-                         gint            *x2,
-                         gint            *y2);
-  gboolean (* is_empty) (GimpChannel     *channel);
-  gint     (* value)    (GimpChannel     *channel,
-                         gint             x,
-                         gint             y);
+  /*  signals  */
+  void     (* color_changed) (GimpChannel     *channel);
 
-  void     (* feather)  (GimpChannel     *channel,
-                         gdouble          radius_x,
-                         gdouble          radius_y,
-                         gboolean         push_undo);
-  void     (* sharpen)  (GimpChannel     *channel,
-                         gboolean         push_undo);
-  void     (* clear)    (GimpChannel     *channel,
-                         const gchar     *undo_desc,
-                         gboolean         push_undo);
-  void     (* all)      (GimpChannel     *channel,
-                         gboolean         push_undo);
-  void     (* invert)   (GimpChannel     *channel,
-                         gboolean         push_undo);
-  void     (* border)   (GimpChannel     *channel,
-                         gint             radius_x,
-                         gint             radius_y,
-                         gboolean         push_undo);
-  void     (* grow)     (GimpChannel     *channel,
-                         gint             radius_x,
-                         gint             radius_y,
-                         gboolean         push_undo);
-  void     (* shrink)   (GimpChannel     *channel,
-                         gint             radius_x,
-                         gint             radius_y,
-                         gboolean         edge_lock,
-                         gboolean         push_undo);
+  /*  virtual functions  */
+  gboolean (* boundary)      (GimpChannel     *channel,
+                              const BoundSeg **segs_in,
+                              const BoundSeg **segs_out,
+                              gint            *num_segs_in,
+                              gint            *num_segs_out,
+                              gint             x1,
+                              gint             y1,
+                              gint             x2,
+                              gint             y2);
+  gboolean (* bounds)        (GimpChannel     *channel,
+                              gint            *x1,
+                              gint            *y1,
+                              gint            *x2,
+                              gint            *y2);
+  gboolean (* is_empty)      (GimpChannel     *channel);
+  gint     (* value)         (GimpChannel     *channel,
+                              gint             x,
+                              gint             y);
+
+  void     (* feather)       (GimpChannel     *channel,
+                              gdouble          radius_x,
+                              gdouble          radius_y,
+                              gboolean         push_undo);
+  void     (* sharpen)       (GimpChannel     *channel,
+                              gboolean         push_undo);
+  void     (* clear)         (GimpChannel     *channel,
+                              const gchar     *undo_desc,
+                              gboolean         push_undo);
+  void     (* all)           (GimpChannel     *channel,
+                              gboolean         push_undo);
+  void     (* invert)        (GimpChannel     *channel,
+                              gboolean         push_undo);
+  void     (* border)        (GimpChannel     *channel,
+                              gint             radius_x,
+                              gint             radius_y,
+                              gboolean         push_undo);
+  void     (* grow)          (GimpChannel     *channel,
+                              gint             radius_x,
+                              gint             radius_y,
+                              gboolean         push_undo);
+  void     (* shrink)        (GimpChannel     *channel,
+                              gint             radius_x,
+                              gint             radius_y,
+                              gboolean         edge_lock,
+                              gboolean         push_undo);
 
   const gchar *feather_desc;
   const gchar *sharpen_desc;

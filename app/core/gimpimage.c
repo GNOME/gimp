@@ -151,6 +151,8 @@ static void     gimp_image_channel_remove        (GimpContainer  *container,
                                                   GimpImage      *gimage);
 static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
                                                   GimpImage      *gimage);
+static void     gimp_image_channel_color_changed (GimpChannel    *channel,
+                                                  GimpImage      *gimage);
 
 
 static gint valid_combinations[][MAX_CHANNELS + 1] =
@@ -522,6 +524,10 @@ gimp_image_init (GimpImage *gimage)
     gimp_container_add_handler (gimage->channels, "name_changed",
                                 G_CALLBACK (gimp_image_channel_name_changed),
                                 gimage);
+  gimage->channel_color_changed_handler =
+    gimp_container_add_handler (gimage->channels, "color_changed",
+                                G_CALLBACK (gimp_image_channel_color_changed),
+                                gimage);
 
   g_signal_connect (gimage->layers, "add",
                     G_CALLBACK (gimp_image_layer_add),
@@ -588,6 +594,8 @@ gimp_image_dispose (GObject *object)
                                  gimage->channel_visible_handler);
   gimp_container_remove_handler (gimage->channels,
                                  gimage->channel_name_changed_handler);
+  gimp_container_remove_handler (gimage->channels,
+                                 gimage->channel_color_changed_handler);
 
   g_signal_handlers_disconnect_by_func (gimage->layers,
                                         gimp_image_layer_add,
@@ -1003,6 +1011,17 @@ gimp_image_channel_name_changed (GimpChannel *channel,
            ! gimp_image_get_qmask (gimage))
     {
       gimp_image_set_qmask_state (gimage, FALSE);
+    }
+}
+
+static void
+gimp_image_channel_color_changed (GimpChannel *channel,
+                                  GimpImage   *gimage)
+{
+  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+                gimp_object_get_name (GIMP_OBJECT (channel))))
+    {
+      gimage->qmask_color = channel->color;
     }
 }
 

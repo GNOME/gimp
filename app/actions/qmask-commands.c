@@ -128,14 +128,17 @@ qmask_channel_query (GimpDisplayShell *shell)
   GtkWidget        *table;
   GtkWidget        *opacity_scale;
   GtkObject        *opacity_scale_data;
+  GimpRGB           color;
+
+  gimp_image_get_qmask_color (shell->gdisp->gimage, &color);
 
   /*  the new options structure  */
   options = g_new0 (EditQmaskOptions, 1);
 
   options->gimage      = shell->gdisp->gimage;
   options->color_panel = gimp_color_panel_new (_("Edit QuickMask Color"),
-					       &options->gimage->qmask_color,
-					       GIMP_COLOR_AREA_LARGE_CHECKS,
+                                               &color,
+                                               GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
                                 gimp_get_user_context (options->gimage->gimp));
@@ -181,9 +184,8 @@ qmask_channel_query (GimpDisplayShell *shell)
   gtk_widget_show (table);
 
   /*  The opacity scale  */
-  opacity_scale_data =
-    gtk_adjustment_new (options->gimage->qmask_color.a * 100.0,
-			0.0, 100.0, 1.0, 1.0, 0.0);
+  opacity_scale_data = gtk_adjustment_new (color.a * 100.0,
+                                           0.0, 100.0, 1.0, 1.0, 0.0);
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
   gtk_widget_set_size_request (opacity_scale, 100, -1);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
@@ -215,24 +217,19 @@ qmask_query_response (GtkWidget        *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpChannel *channel = gimp_image_get_qmask (options->gimage);
-      GimpRGB      color;
+      GimpRGB old_color;
+      GimpRGB new_color;
 
-      if (options->gimage && channel)
+      gimp_image_get_qmask_color (options->gimage, &old_color);
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+                                   &new_color);
+
+      if (gimp_rgba_distance (&old_color, &new_color) > 0.0001)
         {
-          gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-                                       &color);
+          gimp_image_set_qmask_color (options->gimage, &new_color);
 
-          if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
-            {
-              gimp_channel_set_color (channel, &color, TRUE);
-
-              gimp_image_flush (options->gimage);
-            }
+          gimp_image_flush (options->gimage);
         }
-
-      /* update the qmask color no matter what */
-      options->gimage->qmask_color = color;
     }
 
   gtk_widget_destroy (options->query_box);

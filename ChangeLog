@@ -1,3 +1,17 @@
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.[ch]: added signal "color-changed" and emit
+	it in gimp_channel_set_color() and gimp_channel_set_opacity().
+
+	* app/core/gimpimage-qmask.[ch]: added new functions
+	gimp_image_set,get_qmask_color().
+
+	* app/core/gimpimage.[ch]: install a "color-changed" handler on
+	gimage->channels and update gimage->qmask_color when the qmask's
+	color changes. Fixes bug #145361.
+
+	* app/actions/qmask-commands.c: use the new qmask color API.
+
 2004-07-04  Simon Budig  <simon@gimp.org>
 
 	* app/actions/dialogs-commands.c

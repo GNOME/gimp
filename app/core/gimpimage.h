@@ -146,6 +146,7 @@ struct _GimpImage
   GQuark             channel_update_handler;
   GQuark             channel_visible_handler;
   GQuark             channel_name_changed_handler;
+  GQuark             channel_color_changed_handler;
 
   GimpLayer         *active_layer;          /*  the active layer             */
   GimpChannel       *active_channel;        /*  the active channel           */

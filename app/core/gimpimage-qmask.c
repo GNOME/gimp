@@ -140,6 +140,33 @@ gimp_image_get_qmask_state (const GimpImage *gimage)
   return gimage->qmask_state;
 }
 
+void
+gimp_image_set_qmask_color (GimpImage     *gimage,
+                            const GimpRGB *color)
+{
+  GimpChannel *qmask;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (color != NULL);
+
+  qmask = gimp_image_get_qmask (gimage);
+
+  if (qmask)
+    gimp_channel_set_color (qmask, color, TRUE);
+  else
+    gimage->qmask_color = *color;
+}
+
+void
+gimp_image_get_qmask_color (const GimpImage *gimage,
+                            GimpRGB         *color)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (color != NULL);
+
+  *color = gimage->qmask_color;
+}
+
 GimpChannel *
 gimp_image_get_qmask (const GimpImage *gimage)
 {
@@ -158,14 +185,7 @@ gimp_image_qmask_invert (GimpImage *gimage)
       GimpChannel *qmask = gimp_image_get_qmask (gimage);
 
       if (qmask)
-        {
-          gimp_channel_invert (qmask, TRUE);
-
-          gimp_drawable_update (GIMP_DRAWABLE (qmask),
-                                0, 0,
-                                GIMP_ITEM (qmask)->width,
-                                GIMP_ITEM (qmask)->height);
-        }
+        gimp_channel_invert (qmask, TRUE);
     }
 
   gimage->qmask_inverted = ! gimage->qmask_inverted;
