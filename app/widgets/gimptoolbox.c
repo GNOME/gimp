@@ -421,7 +421,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 			G_CALLBACK (toolbox_check_device),
 			gimp);
 
-      gtk_widget_set_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
+      gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
                                        GDK_EXTENSION_EVENTS_CURSOR);
     }

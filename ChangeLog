@@ -1,3 +1,8 @@
+2002-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptoolbox.c: use gtk_widget_add_events() instead
+	of gtk_widget_set_events().
+
 2002-03-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-deserialize.[ch]
