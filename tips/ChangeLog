@@ -1,3 +1,11 @@
+2002-02-27  Sven Neumann  <sven@gimp.org>
+
+	* de.po: merged all existant translations from gimp_tips.de.txt.
+	Sorry, you need the very latest intltool from CVS to be correctly
+	extract and merge messages.
+
+	* gimp_tips.de.txt: removed.
+
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: fixed dependencies.
