@@ -117,7 +117,7 @@ tool_options_rename_saved_cmd_callback (GtkWidget *widget,
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
   GtkWidget       *qbox;
 
-  qbox = gimp_query_string_box (_("Rename Save Tool Options"),
+  qbox = gimp_query_string_box (_("Rename Saved Tool Options"),
 				gimp_standard_help_func,
 				GIMP_HELP_TOOL_OPTIONS_DIALOG,
 				_("Enter a new name for the saved options"),

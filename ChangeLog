@@ -1,3 +1,8 @@
+2003-11-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/tool-options-commands.c
+	(tool_options_rename_saved_cmd_callback): fixed typo in dialog title.
+
 2003-11-06  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/session.png: use somthing
