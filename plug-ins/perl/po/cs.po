@@ -1,4 +1,4 @@
-# Czech translation of GIMP perl 1.1.13.
+# Czech translation of GIMP perl 1.1.14.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
 #
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 1999-12-06 11:44+01:00\n"
+"PO-Revision-Date: 1999-12-29 11:35+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,11 +15,10 @@ msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Filtry/Barvy/Prùmìr okraje..."
+msgstr "<Image>/Filtry/Logulátor/Prùmìr okraje..."
 
-#, fuzzy
 msgid "<Image>/Guides/Center Guide"
-msgstr "<Image>/Video/Smazat políèka"
+msgstr "<Image>/Vodítka/Vodítko na støed"
 
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filtry/Logulátor/Rozostøeno"
@@ -33,15 +32,16 @@ msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-msgstr "/Roz¹./Výpoèty/Loga"
+msgstr "<Toolbox>/Roz¹./Výpoèty/Loga"
 
 msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
 msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Noise/Feedback"
-msgstr "<Image>/Filtry/Kombinace/Film..."
+msgstr "<Image>/Filtry/©um/Zpìtná vazba"
 
 msgid ""
 "       interface-arguments are\n"
@@ -56,9 +56,8 @@ msgstr ""
 msgid "argument type %s expected (not %s)"
 msgstr ""
 
-#, fuzzy
 msgid "Browse"
-msgstr "©tìtce"
+msgstr "Procházet"
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Glowing Hot"
@@ -78,11 +77,10 @@ msgstr ""
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "/Roz¹./Výpoèty/Loga"
+msgstr "<Toolbox>/Roz¹./Výpoèty/Loga"
 
-#, fuzzy
 msgid "Brush Selection Dialog"
-msgstr "Výbìr barvy"
+msgstr "Dialog výbìru ¹tìtce"
 
 #, fuzzy
 msgid "gimp procedure '%s' not found"
@@ -99,7 +97,8 @@ msgstr "<Image>/Soubor/Tisk..."
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
-msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
 msgid "Load"
@@ -111,13 +110,11 @@ msgstr "<Image>/Filtry/Logulátor/Základní II"
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
-#, fuzzy
 msgid "Date/Version"
-msgstr "Verzi "
+msgstr "Datum/Verze"
 
-#, fuzzy
 msgid "Status"
-msgstr "Stav zaøízení"
+msgstr "Stav"
 
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Vrstvy/Vycentrovat vrstvu"
@@ -125,9 +122,8 @@ msgstr "<Image>/Vrstvy/Vycentrovat vrstvu"
 msgid "wrong authorization, aborting connection"
 msgstr ""
 
-#, fuzzy
 msgid "BG"
-msgstr "G"
+msgstr "Pozadí"
 
 msgid "internal error (please report): too many main arguments"
 msgstr ""
@@ -141,9 +137,8 @@ msgstr "<Image>/Filtry/Barvy/Oheò"
 msgid "illegal type for colour specification"
 msgstr ""
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"
-msgstr "/Roz¹./Výpoèty/Loga"
+msgstr "<Toolbox>/Roz¹./Výpoèty/Cihly"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
@@ -166,7 +161,7 @@ msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize"
-msgstr "<Image>/Filtry/Kombinace/Film..."
+msgstr "<Image>/Filtry/©um/Film..."
 
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
@@ -199,7 +194,8 @@ msgid ""
 "           -gimp <anything>           used internally only\n"
 "           -h | -help | --help | -?   print some help\n"
 "           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 "U¾ití: $0 [gimp-argumenty..] [argumenty-rozhraní..] [argumenty-skriptu..]\n"
@@ -207,7 +203,8 @@ msgstr ""
 "           -gimp <cokoli>             pouze pro vnitøní pou¾ití\n"
 "           -h | -help | --help | -?   vypí¹e nejakou nápovìdu\n"
 "           -v | --verbose             vypisuje bli¾¹í informace o èinnosti\n"
-"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾ítý PORT)\n"
+"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾itý "
+"PORT)\n"
 "                                      (více informací viz Gimp::Net(3))\n"
 
 #, fuzzy
@@ -228,9 +225,8 @@ msgstr "Procedurální databáze"
 msgid "authorization required for tcp connections"
 msgstr ""
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "/Script-Fu"
+msgstr "<Toolbox>/Roz¹./Perl/Server"
 
 msgid "function name contains dashes instead of underscores"
 msgstr ""
@@ -249,9 +245,8 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Generátor pixelù"
 
-#, fuzzy
 msgid "<Image>/Filters/Web/Prepare for GIF"
-msgstr "<Image>/Filtry/Web/Mapa obrázku..."
+msgstr "<Image>/Filtry/Web/Pøíprava pro GIF"
 
 msgid "$_: unknown/illegal file-save option"
 msgstr ""
@@ -263,9 +258,8 @@ msgstr "TYP"
 msgid "Gradient Selection Dialog"
 msgstr "Výbìr barvy"
 
-#, fuzzy
 msgid "Function Info"
-msgstr "Rozli¹ení X:"
+msgstr "Informace o funkci"
 
 #, fuzzy
 msgid "unable to open $rgb_db_path"
@@ -275,13 +269,11 @@ msgstr "nepodaøilo se otevøít rouru"
 msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr "<Image>/Filtry/Logulátor/Kolorování..."
 
-#, fuzzy
 msgid "<Image>/Select/Round Rectangular Selection"
-msgstr "Výbìr obdélníkové oblasti"
+msgstr "<Image>/Výbìr/Zaoblený obdélníkový výbìr"
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap"
-msgstr "<Image>/Filtry/Mapování/Rozmáznutí..."
+msgstr "<Image>/Filtry/Mapování/Pixelová mapa"
 
 msgid "no additional information available, use --help\n"
 msgstr ""
@@ -293,16 +285,14 @@ msgstr "<Image>/Filtry/Výpoèty/Sinus..."
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr ""
 
-#, fuzzy
 msgid "Visual Scriptor"
-msgstr "Vizuální hloubka:"
+msgstr "Vizuální skriptor"
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile"
-msgstr "<Image>/Filtry/Mapování/Povrch papíru..."
+msgstr "<Image>/Filtry/Mapování/Povrch obrazu"
 
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
@@ -310,9 +300,8 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Filtry/Logulátor/Komická kniha"
 
-#, fuzzy
 msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Video/Smazat políèka"
+msgstr "<Image>/Vodítka/Smazat vodítka"
 
 msgid "Internal error: Gimp::Net #101, please report!"
 msgstr ""
@@ -332,13 +321,11 @@ msgstr ""
 msgid "unable to read '$fn': $!"
 msgstr "nepodaøilo se èíst '$fn': $!"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "/Script-Fu"
+msgstr "<Toolbox>/Roz¹./Perl/Øídící centrum"
 
-#, fuzzy
 msgid "[undefined]"
-msgstr "Nedefinováno"
+msgstr "[nedefinováno]"
 
 msgid "function/macro \"$name\" not found in $class"
 msgstr ""
@@ -389,16 +376,16 @@ msgstr ""
 msgid "accepting connections on port $port"
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average"
-msgstr "<Image>/Filtry/Barvy/Prùmìr okraje..."
+msgstr "<Image>/Filtry/Rùzné/Prùmìr okraje"
 
 msgid ""
-"$function: function name contains unusual characters, good style is to use only "
-"0-9, a-z and _"
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
 msgstr ""
 
-msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 #, fuzzy
@@ -540,7 +527,8 @@ msgstr ""
 msgid "Internal error: unable to handle argtype '%c' in net2sv, please report!"
 msgstr ""
 
-msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
 #, fuzzy
@@ -579,7 +567,7 @@ msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtry/Výpoèty/Burst..."
+msgstr "<Image>/Filtry/Výpoèty/Sinus..."
 
 #, fuzzy
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
@@ -671,8 +659,8 @@ msgid "<Toolbox>/Xtns/Render/Stamps"
 msgstr "/Roz¹./Výpoèty/Loga"
 
 msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
-"strict'"
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
 msgstr ""
 
 #, fuzzy
@@ -680,7 +668,8 @@ msgid "<Image>/Filters/Misc/Magick"
 msgstr "<Image>/Filtry/Umìní/Mozaika..."
 
 msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
 msgstr ""
 
 #, fuzzy
@@ -716,8 +705,8 @@ msgid "<Image>/Filters/Map/Xach Shadows"
 msgstr "<Image>/Filtry/Mapování/Rozmáznutí..."
 
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
-"and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
+"gimp-1.1 and report this error"
 msgstr ""
 
 msgid "Saving '$filename' as COLORHTML..."
@@ -765,7 +754,7 @@ msgstr "<Toolbox>/Roz¹./Vizuální skriptor"
 
 #, fuzzy
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtry/Kombinace/Film..."
+msgstr "<Image>/Filtry/©um/Film..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -822,7 +811,8 @@ msgid "<Image>/Filters/Render/Random Blends"
 msgstr "<Image>/Filtry/Výpoèty/Sinus..."
 
 msgid ""
-"Internal error: asked to deobjectify an object not in the cache, please report!"
+"Internal error: asked to deobjectify an object not in the cache, please "
+"report!"
 msgstr ""
 
 msgid "too many arguments"
@@ -856,7 +846,8 @@ msgstr "©tìtec selhal."
 msgid "unable to create listening unix socket: $!\n"
 msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
 
-msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
 msgid "Last Modified"
@@ -999,7 +990,7 @@ msgid "plug-in returned %d more values than expected"
 msgstr ""
 
 msgid "FG"
-msgstr "Pozadí"
+msgstr "Popøedí"
 
 msgid "url size is too large ($max > 1024)\n"
 msgstr ""
@@ -1020,8 +1011,8 @@ msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Filtry/Vylep¹ení/Odstranìní pruhù..."
 
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
-"and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
+"a-z and _ allowed"
 msgstr ""
 
 msgid "OK"
@@ -1038,6 +1029,3 @@ msgstr "<Image>/Vrstvy/Rotace/90 stupòù"
 msgid "(none)"
 msgstr "Není"
 
-#, fuzzy
-#~ msgid "<Image>/Script-Fu/Decor/Stampify"
-#~ msgstr "/Skript-fu/Dekorace"
