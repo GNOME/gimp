@@ -10,6 +10,7 @@ libappconfig_a_SOURCES = \
 	gimpconfig-deserialize.h	\
 	gimpconfig-params.c		\
 	gimpconfig-params.h		\
+	gimpconfig-params-blurbs.h	\
 	gimpconfig-serialize.c		\
 	gimpconfig-serialize.h		\
 	gimpconfig-substitute.c		\

@@ -1,3 +1,9 @@
+2002-11-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-params-blurbs.h: new file defining
+	blurbs for config param specs. Not used yet.
+
 2002-11-28  Sven Neumann  <sven@gimp.org>
 	
 	* app/config/Makefile.am
