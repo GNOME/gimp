@@ -3103,14 +3103,13 @@ bezier_stroke (BezierSelect *bezier_sel,
 {
   Argument *return_vals;
   int nreturn_vals;
-  int redraw;
   BezierRenderPnts *next_rpnts;
   BezierRenderPnts *rpnts = g_new0(BezierRenderPnts,1);
 
   /*  Start an undo group  */
   undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
 
-  redraw = bezier_gen_points(bezier_sel,open_path,rpnts);
+  bezier_gen_points(bezier_sel,open_path,rpnts);
   do
     {
   if (rpnts->stroke_points)
@@ -3139,15 +3138,7 @@ bezier_stroke (BezierSelect *bezier_sel,
 					    PDB_FLOATARRAY, rpnts->stroke_points,
 					    PDB_END);
 
-      if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
-	{
-	  if (redraw)
-	    {
-	      /* FIXME: how to update the image? */
-	    }
-	  gdisplays_flush ();
-	}
-      else
+      if (return_vals && return_vals[0].value.pdb_int != PDB_SUCCESS)
 	g_message (_("Paintbrush operation failed."));
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
@@ -3162,6 +3153,7 @@ bezier_stroke (BezierSelect *bezier_sel,
     } while (rpnts);
   /*  End an undo group  */
   undo_push_group_end (gdisp->gimage);
+  gdisplays_flush ();
 }
 
 static void
