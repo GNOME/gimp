@@ -1,3 +1,7 @@
+2005-01-13  Sven Neumann  <neumann@jpk.com>
+
+	* configure.in (ALL_LINGUAS): added mk (Macedonian).
+
 2005-01-11  Sven Neumann  <neumann@jpk.com>
 
 	* app/pdb/drawable_transform_cmds.c
