@@ -1,3 +1,7 @@
+2001-10-08  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: some new Makefiles in help/.
+
 2001-10-03  Sven Neumann  <sven@gimp.org>
 
 	* app/drawable_cmds.c

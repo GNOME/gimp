@@ -845,15 +845,18 @@ help/C/image/image/transforms/Makefile
 help/C/image/select/Makefile
 help/C/image/view/Makefile
 help/C/images/Makefile
+help/C/images/examples/Makefile
+help/C/images/glossary/Makefile
+help/C/images/tools/Makefile
 help/C/layers/Makefile
 help/C/layers/stack/Makefile
 help/C/open/Makefile
 help/C/paths/Makefile
 help/C/save/Makefile
+help/C/stylesheet-images/Makefile
 help/C/toolbox/Makefile
 help/C/toolbox/help/Makefile
-help/C/tools/Makefile
-help/images/Makefile],
+help/C/tools/Makefile],
 [
    chmod +x gimptool
    sed -e "s/^     ..\/..\/..\//     ..\//" plug-ins/perl/po/Makefile > plug-ins/perl/po/Makefile.eek && mv plug-ins/perl/po/Makefile.eek plug-ins/perl/po/Makefile
