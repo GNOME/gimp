@@ -40,10 +40,7 @@
 static void
 set_buttons(Selection_t *data)
 {
-  GtkTreeIter iter;
-  GtkTreeModel *model;
-
-  if (gtk_tree_selection_get_selected (data->selection, &model, &iter)) {
+  if (gtk_tree_selection_count_selected_rows (data->selection)) {
 #ifdef _OLD_
     gtk_widget_set_sensitive(data->arrow_up,
 			     (data->selected_row) ? TRUE : FALSE);
@@ -70,42 +67,37 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
   if (data->select_lock) {
     data->select_lock = FALSE;
   } else {
-    gint count = gtk_tree_selection_count_selected_rows (selection);
-    Object_t *obj;
-    GtkTreeIter iter;
+    Command_t *command, *sub_command;
     GtkTreeModel *model;
-    Command_t *command;
+    GList *list = gtk_tree_selection_get_selected_rows (selection, &model);
 
-    if (count == 0)
-      return;
+    command = subcommand_start (NULL);
+    sub_command = unselect_all_command_new (data->object_list, NULL);
+    command_add_subcommand (command, sub_command);
 
-    if (count == 1) {
-      gtk_tree_selection_get_selected (selection, &model, &iter);
-      gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
+    for (; list; list = list->next)
+      {
+	Object_t *obj;
+	GtkTreeIter iter;
+	GtkTreePath *path = (GtkTreePath*) list->data;
 
-      if (obj->selected) {
-	gtk_tree_selection_unselect_iter (selection, &iter);
-	command = unselect_command_new (obj);
-      } else {
-	Command_t *sub_command;
+	gtk_tree_model_get_iter (model, &iter, path);
+	gtk_tree_model_get (model, &iter, 0, &obj, -1);
 
-	gtk_tree_selection_get_selected (selection, &model, &iter);
-	gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
-
-	command = subcommand_start (NULL);
-	sub_command = unselect_all_command_new (data->object_list, NULL);
-	command_add_subcommand (command, sub_command);
 	sub_command = select_command_new (obj);
 	command_add_subcommand (command, sub_command);
-	command_set_name (command, sub_command->name);
-	subcommand_end ();
       }
-    } else {
-      command = select_command_new (obj);
-    }
+
+    command_set_name (command, sub_command->name);
+    subcommand_end ();
+
     command_execute (command);
+
+    g_list_foreach (list, (GFunc) gtk_tree_path_free, NULL);
+    g_list_free (list);
+
+    set_buttons (data);
   }
-  set_buttons (data);
 }
 
 static gboolean
@@ -275,6 +267,7 @@ object_selected_cb(Object_t *obj, gpointer data)
   Selection_t *selection = (Selection_t*) data;
   gint position = object_get_position_in_list (obj);
   selection_set_selected (selection, position);
+  set_buttons(selection);
 }
 
 static void
