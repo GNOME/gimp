@@ -991,7 +991,7 @@ plug_in_parse_gflare_path (void)
     {
       g_message (_("No gflare-path in gimprc:\n\n"
 		   "You need to add an entry like\n"
-		   "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
+		   "(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
 		   "to your %s/gimprc file."), 
 		 gimp_directory ());
       gimp_destroy_params (return_vals, nreturn_vals);

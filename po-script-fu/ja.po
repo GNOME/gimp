@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-03-16 05:44+0900\n"
-"PO-Revision-Date: 2000-03-17 04:45+09:00\n"
+"Project-Id-Version: gimp 1.1.19\n"
+"POT-Creation-Date: 2000-03-28 16:01+0900\n"
+"PO-Revision-Date: 2000-03-28 16:29+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -22,34 +22,34 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:206
+#: plug-ins/script-fu/script-fu-console.c:207
 #: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "閉じる"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:214
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "SIOD Output"
 msgstr "SIOD 出力"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:291
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Current Command"
 msgstr "現在実行しているコマンド"
 
-#: plug-ins/script-fu/script-fu-console.c:312
+#: plug-ins/script-fu/script-fu-console.c:315
 msgid "Browse..."
 msgstr "場所を指定..."
 
-#: plug-ins/script-fu/script-fu-console.c:575
+#: plug-ins/script-fu/script-fu-console.c:578
 msgid "Unable to open SIOD output pipe"
 msgstr "SIOD 出力パイプが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 出力パイプ上のストリームが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:626
+#: plug-ins/script-fu/script-fu-console.c:629
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
@@ -102,14 +102,13 @@ msgstr "初期値に戻す"
 msgid "About"
 msgstr "このプラグインについて"
 
-#. Action area
 #: plug-ins/script-fu/script-fu-scripts.c:1386
-#: plug-ins/script-fu/script-fu-server.c:559
+#: plug-ins/script-fu/script-fu-server.c:552
 msgid "OK"
 msgstr "了解"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1395
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "Cancel"
 msgstr "取消"
 
@@ -145,19 +144,17 @@ msgstr "画像種:"
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu サーバオプション"
 
-#. The server port
-#: plug-ins/script-fu/script-fu-server.c:582
-msgid "Server Port: "
-msgstr "サーバポート: "
+#: plug-ins/script-fu/script-fu-server.c:574
+msgid "Server Port:"
+msgstr "サーバポート:"
 
-#. The server logfile
-#: plug-ins/script-fu/script-fu-server.c:595
-msgid "Server Logfile: "
-msgstr "サーバログファイル: "
+#: plug-ins/script-fu/script-fu-server.c:580
+msgid "Server Logfile:"
+msgstr "サーバログファイル:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -201,6 +198,9 @@ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/ボタン..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアン発光..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアンネオン..."
 
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
 msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/ASCII を画像に..."
@@ -326,7 +326,8 @@ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル..."
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル..."
+msgstr ""
+"<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル..."
 
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."

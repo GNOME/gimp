@@ -1,3 +1,7 @@
+2000-03-28  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/gflare/gflare.c: gflare never use gfig-path.
+
 2000-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/curves.c: 
