@@ -186,7 +186,8 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                                             NULL,
                                             -1, 1, 1, 10, 1, 1, 2,
                                             NULL, NULL);
-  rotate->sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog, _("Y:"),
+  rotate->sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
+                                                 _("Center Y:"),
                                                  rotate->center_vals, 1,
                                                  GIMP_UNIT_PIXEL, "%a",
                                                  TRUE, TRUE, FALSE,
