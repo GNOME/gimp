@@ -1,5 +1,10 @@
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/retinex.c: applied patch by Geert Jordaens that
+	lets Retinex deal with RGBA drawables. Closes bug #135594 again.
+
+2004-10-26  Sven Neumann  <sven@gimp.org>
+
 	Added new drawable transform API to the PDB. Largely based on
 	patches from Joao S. O. Bueno. Fixes bug #137053.
 

@@ -93,7 +93,8 @@ static void     retinex_scales_distribution (gfloat       *scales,
 static void     compute_mean_var            (gfloat       *src,
                                              gfloat       *mean,
                                              gfloat       *var,
-                                             gint          s);
+                                             gint          size,
+                                             gint          bytes);
 /*
  * Gauss
  */
@@ -164,7 +165,7 @@ query (void)
                           "Fabien Pelisson",
                           "2003",
                           N_("_Retinex..."),
-                          "RGB",
+                          "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -621,7 +622,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
 {
 
   gint          scale,row,col;
-  gint          i;
+  gint          i,j;
   gint          size;
   gint          pos;
   gint          channel;
@@ -634,7 +635,6 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gauss3_coefs  coef;
   gfloat        mean, var;
   gfloat        mini, range, maxi;
-  gfloat        c;
   gfloat        alpha;
   gfloat        gain;
   gfloat        offset;
@@ -695,7 +695,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   pos = 0;
   for (channel = 0; channel < 3; channel++)
     {
-      for (i = 0, pos=channel; i < channelsize ; i++, pos += 3)
+      for (i = 0, pos = channel; i < channelsize ; i++, pos += bytes)
          {
             /* 0-255 => 1-256 */
             in[i] = (gfloat)(src[pos] + 1.0);
@@ -732,7 +732,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
              Summarize the filtered values.
              In fact one calculates a ratio between the original values and the filtered values.
            */
-          for (i = 0, pos = channel; i < channelsize; i++, pos += 3)
+          for (i = 0, pos = channel; i < channelsize; i++, pos += bytes)
             {
               dst[pos] += weight * (log (src[pos] + 1.) - log (out[i]));
             }
@@ -755,7 +755,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gain   = 1.;
   offset = 0.;
 
-  for (i = 0; i < size; i += 3)
+  for (i = 0; i < size; i += bytes)
     {
       gfloat logl;
 
@@ -779,7 +779,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   */
   pdst = dst;
 
-  compute_mean_var (pdst, &mean, &var, size);
+  compute_mean_var (pdst, &mean, &var, size, bytes);
   mini = mean - rvals.cvar*var;
   maxi = mean + rvals.cvar*var;
   range = maxi - mini;
@@ -787,15 +787,17 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   if (!range)
     range = 1.0;
 
-  pdst = dst;
-  psrc = src;
-
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; i+= bytes)
     {
-      c= 255 * ( pdst[i] - mini ) / range;
-      c = c > 0   ? c : 0;
-      c = c < 255 ? c : 255;
-      psrc[i] = (guchar) c;
+      psrc = src + i;
+      pdst = dst + i;
+
+      for (j = 0 ; j < 3 ; j++)
+        {
+          gfloat c = 255 * ( pdst[j] - mini ) / range;
+
+          psrc[j] = (guchar) CLAMP (c, 0, 255);
+        }
     }
 
   g_free (dst);
@@ -805,24 +807,26 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
  * Calculate the average and variance in one go.
  */
 static void
-compute_mean_var (gfloat *src, gfloat *mean, gfloat *var, gint s)
+compute_mean_var (gfloat *src, gfloat *mean, gfloat *var, gint size, gint bytes)
 {
   gfloat vsquared;
-  gint count;
+  gint i,j;
+  gfloat *psrc;
 
   vsquared = 0;
-  count = s;
   *mean = 0;
-
-  do
+  for (i = 0; i < size; i+= bytes)
     {
-      *mean += *src;
-      vsquared += *src * *src;
-      ++src;
-    } while (--count);
+       psrc = src+i;
+       for (j = 0 ; j < 3 ; j++)
+         {
+            *mean += psrc[j];
+            vsquared += psrc[j] * psrc[j];
+         }
+    }
 
-  *mean /= (gfloat) s; /* mean */
-  vsquared /= (gfloat) s; /* mean (x^2) */
+  *mean /= (gfloat) size; /* mean */
+  vsquared /= (gfloat) size; /* mean (x^2) */
   *var = ( vsquared - (*mean * *mean) );
   *var = sqrt(*var); /* var */
 }
