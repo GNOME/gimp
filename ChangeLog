@@ -1,3 +1,8 @@
+2004-06-29  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/unsharp.c: The preview's row buffer was
+	accidentally made way too large.
+
 2004-06-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: added new function

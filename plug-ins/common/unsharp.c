@@ -914,9 +914,9 @@ preview_update (void)
 
   if (gimp_drawable_type (drawable->drawable_id) == GIMP_GRAY_IMAGE ||
       gimp_drawable_type (drawable->drawable_id) == GIMP_GRAYA_IMAGE)
-    row_buffer = g_new (guchar, preview_width * preview_height);
+    row_buffer = g_new (guchar, preview_width);
   else
-    row_buffer = g_new (guchar, preview_width * preview_height * 3);
+    row_buffer = g_new (guchar, preview_width * 3);
 
   for ( ; y < buf_y ; y++ )
     {
