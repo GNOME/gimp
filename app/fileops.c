@@ -535,6 +535,7 @@ file_revert_callback (GtkWidget *w,
 	{
 	  undo_free (gimage);
 	  gdisplay_reconnect (gdisplay, gimage);
+	  gimp_image_clean_all (gimage);
 	}
       else
         g_message (_("Revert failed."));

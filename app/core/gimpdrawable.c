@@ -490,7 +490,7 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable,
 	   !parasite_compare( parasite,
 			      gimp_drawable_find_parasite
 			      (drawable, parasite_name (parasite))))
-    gimp_image_dirty (drawable->gimage);
+    undo_push_cantundo (drawable->gimage, _("parasite attach to drawable"));
 
   parasite_list_add (drawable->parasites, parasite);
   if (parasite_has_flag (parasite, PARASITE_ATTACH_PARENT))
@@ -523,7 +523,7 @@ gimp_drawable_detach_parasite (GimpDrawable *drawable,
     undo_push_drawable_parasite_remove (drawable->gimage, drawable,
 					parasite_name (p));
   else if (parasite_is_persistent (p))
-    gimp_image_dirty (drawable->gimage);
+    undo_push_cantundo (drawable->gimage, _("detach parasite from drawable"));
 
   parasite_list_remove (drawable->parasites, parasite);
 }

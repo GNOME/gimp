@@ -86,6 +86,8 @@ int      undo_push_image_parasite_remove    (GImage *, const char *);
 int      undo_push_drawable_parasite_remove (GImage *, GimpDrawable *,
 					     const char *);
 int      undo_push_qmask	     (GImage *, int);
+int      undo_push_layer_rename      (GImage *, Layer *);
+int      undo_push_cantundo          (GImage *, const char *);
 
 int      undo_pop                    (GImage *);
 int      undo_redo                   (GImage *);

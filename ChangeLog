@@ -1,3 +1,41 @@
+Mon Aug 23 10:15:32 EDT 1999  Austin Donnelly  <austin@gimp.org>
+
+	Dirty flag now correct in all cases.  Can be displayed in image
+	window title too.  See NOTE near gimp_image_dirty() for details.
+
+	* app/fileops.c: gimp_image_clean_all() after reverting an image.
+	* app/gdisplay.c: register handlers for gimage dirty and clean
+	    signals to update image title.  New image-title-format
+	    expansion: %Dx expands to x if the image is dirty.
+	* app/gdisplay_ops.c: gimage->dirty flags != 0 is the correct
+	    condition to test to see if an image is dirty.
+	* app/gimpdrawable.c: gimp_image_dirty() should never be called
+	    except from an undo_push_* function.  Call
+	    undo_push_cantundo() if you want to dirty the image but can't
+	    be bothered writing an undo handler (be ashamed of yourself!).
+	* app/gimpimage.c: new gimage signal: clean.  Emitted when an undo
+	    operation takes place.  Gimage changes when either dirty or
+	    clean is emitted, so if you need to update previews etc, look
+	    for both!  Move group_count into gimage structure, since
+	    leaving it as a static in undo.c is bad if two undo groups are
+	    started on different images at the same time.  More changes
+	    of gimp_image_dirty() to undo_push_cantundo()
+	    (parasite-related, plus layer moves).  See the NOTE on dirty
+	    counter near gimp_image_dirty() for the full story.
+	    gimp_image_dirty() and gimp_image_clean() simplified - counter
+	    can go negative.
+	* app/gimpimageP.h: group_count moved from undo.c
+	* app/layers_dialog.c: push undo for layer name change, rather
+	    than dirtying the image.
+	* app/undo.c: layer rename undo functions
+	    added. undo_push_cantundo() convenience functions added.
+	    group_count made per-gimage since everything else is.  When
+	    blowing away redo stack, make image infinitely dirty if redo
+	    info contained file save point.
+	* app/undo.h: added undo_push_layer_rename() and
+	    undo_push_cantundo().
+	* TODO: added idea for undo history window.
+
 1999-08-23  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/bucket_fill.[ch]: export bucket_fill_region().

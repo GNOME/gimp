@@ -91,6 +91,7 @@ guint32 next_guide_id = 1;  /* For generating guide_ID handles for PDB stuff */
  */
 
 enum {
+  CLEAN,
   DIRTY,
   REPAINT,
   RENAME,
@@ -118,6 +119,9 @@ gimp_image_class_init (GimpImageClass *klass)
 
   object_class->destroy =  gimp_image_destroy;
 
+  gimp_image_signals[CLEAN] =
+	  gimp_signal_new ("clean", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   gimp_image_signals[DIRTY] =
 	  gimp_signal_new ("dirty", GTK_RUN_FIRST, type, 0,
 			   gimp_sigtype_void);
@@ -165,6 +169,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->redo_stack            = NULL;
   gimage->undo_bytes            = 0;
   gimage->undo_levels           = 0;
+  gimage->group_count           = 0;
   gimage->pushing_undo_group    = 0;
   gimage->comp_preview_valid[0] = FALSE;
   gimage->comp_preview_valid[1] = FALSE;
@@ -1068,8 +1073,8 @@ gimp_image_attach_parasite (GimpImage *gimage,
   if (parasite_is_persistent (parasite)
       && !parasite_compare (parasite,
 			    gimp_image_find_parasite(gimage,
-						     parasite_name (parasite))))
-    gimp_image_dirty (gimage);
+						     parasite_name(parasite))))
+    undo_push_cantundo (gimage, _("attach parasite to image"));
 
   parasite_list_add (gimage->parasites, parasite);
 
@@ -1092,7 +1097,7 @@ gimp_image_detach_parasite (GimpImage   *gimage,
   if (parasite_is_undoable (p))
     undo_push_image_parasite_remove (gimage, parasite_name (p));
   else if (parasite_is_persistent (p))
-    gimp_image_dirty (gimage);
+    undo_push_cantundo (gimage, _("detach parasite from image"));
 
   parasite_list_remove (gimage->parasites, parasite);
 }
@@ -2089,7 +2094,9 @@ gimp_image_raise_layer (GimpImage *gimage,
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
 
-	      gimp_image_dirty (gimage);
+ 	      /* Dirty the image, but we're too lazy to provide a
+	       * proper undo. */
+ 	      undo_push_cantundo (gimage, _("raise layer"));
 
 	      return prev_layer;
 	    }
@@ -2163,7 +2170,7 @@ gimp_image_lower_layer (GimpImage *gimage,
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
 
-	      gimp_image_dirty (gimage);
+	      undo_push_cantundo (gimage, _("lower layer"));
 
 	      return next_layer;
 	    }
@@ -2246,7 +2253,7 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
 
-  gimp_image_dirty (gimage);
+  undo_push_cantundo (gimage, _("raise layer to top"));
   
   return layer;
 }
@@ -2341,7 +2348,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
 
-  gimp_image_dirty (gimage);
+  undo_push_cantundo (gimage, _("lower layer to bottom"));
 
   return layer_arg;
 }
@@ -2420,7 +2427,7 @@ gimp_image_position_layer (GimpImage *gimage,
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
 
-  gimp_image_dirty (gimage);
+  undo_push_cantundo (gimage, _("re-position layer"));
 
   return layer_arg;
 }
@@ -3340,32 +3347,61 @@ gimp_image_enable_undo (GimpImage *gimage)
   return gimp_image_thaw_undo (gimage);
 }
 
+
+/* NOTE about the gimage->dirty counter:
+ *   If 0, then the image is clean (ie, copy on disk is the same as the one 
+ *      in memory).
+ *   If positive, then that's the number of dirtying operations done
+ *       on the image since the last save.
+ *   If negative, then user has hit undo and gone back in time prior
+ *       to the saved copy.  Hitting redo will eventually come back to
+ *       the saved copy.
+ *
+ *   The image is dirty (ie, needs saving) if counter is non-zero.
+ *
+ *   If the counter is around 10000, this is due to undo-ing back
+ *   before a saved version, then mutating the image (thus destroying
+ *   the redo stack).  Once this has happened, it's impossible to get
+ *   the image back to the state on disk, since the redo info has been
+ *   freed.  See undo.c for the gorey details.
+ */
+
+
+/*
+ * NEVER CALL gimp_image_dirty() directly!
+ *
+ * If your code has just dirtied the image, push an undo instead.
+ * Failing that, push the trivial undo which tells the user the
+ * command is not undoable: undo_push_cantundo() (But really, it would
+ * be best to push a proper undo).  If you just dirty the image
+ * without pushing an undo then the dirty count is increased, but
+ * popping that many undo actions won't lead to a clean image.
+ */
+
 gint
 gimp_image_dirty (GimpImage *gimage)
 {
-/*  if (gimage->dirty < 0)
-    gimage->dirty = 2;
-  else */
-    gimage->dirty ++;
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[DIRTY]);
+    gimage->dirty++;
+    gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[DIRTY]);
 
-  return gimage->dirty;
+    return gimage->dirty;
 }
 
 gint
 gimp_image_clean (GimpImage *gimage)
 {
-/*  if (gimage->dirty <= 0)
-    gimage->dirty = 0;
-  else */
-    gimage->dirty --;
-  return gimage->dirty;
+    gimage->dirty--;
+    gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[CLEAN]);
+
+    return gimage->dirty;
 }
 
 void
 gimp_image_clean_all (GimpImage *gimage)
 {
   gimage->dirty = 0;
+
+  gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[CLEAN]);
 }
 
 Layer *

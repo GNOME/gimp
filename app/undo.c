@@ -42,6 +42,7 @@
 #include "tile.h"			/* ick. */
 
 #include "libgimp/parasite.h"
+#include "libgimp/gimpintl.h"
 #include "gimpparasite.h"
 
 
@@ -80,6 +81,9 @@ int      undo_pop_gimage_mod       (GImage *, int, int, void *);
 int      undo_pop_guide            (GImage *, int, int, void *);
 int      undo_pop_parasite         (GImage *, int, int, void *);
 int      undo_pop_qmask		   (GImage *, int, int, void *);
+static int undo_pop_layer_rename   (GImage *, int, int, void *);
+static int undo_pop_cantundo       (GImage *, int, int, void *);
+
 
 /*  Free functions  */
 
@@ -100,13 +104,14 @@ void     undo_free_gimage_mod      (int, void *);
 void     undo_free_guide           (int, void *);
 void     undo_free_parasite        (int, void *);
 void     undo_free_qmask           (int, void *);
+static void undo_free_layer_rename (int, void *);
+static void undo_free_cantundo     (int, void *);
 
 
 /*  Sizing functions  */
 static int   layer_size            (Layer *);
 static int   channel_size          (Channel *);
 
-static int   group_count = 0;
 static int   shrink_wrap = FALSE;
 
 #define UNDO          0
@@ -249,6 +254,14 @@ undo_push (GImage *gimage,
     {
       undo_free_list (gimage, REDO, gimage->redo_stack);
       gimage->redo_stack = NULL;
+
+      /* If the image was dirty, but could become clean by redo-ing
+       * some actions, then it should now become 'infinitely' dirty.
+       * This is because we've just nuked the actions that would allow
+       * the image to become clean again.  The only hope for salvation
+       * is to save the image now!  -- austin */
+      if (gimage->dirty < 0)
+	  gimage->dirty = 10000;
     }
 
   if (!gimage->pushing_undo_group)
@@ -384,6 +397,18 @@ undo_free (GImage *gimage)
   gimage->redo_stack = NULL;
   gimage->undo_bytes = 0;
   gimage->undo_levels = 0;
+
+  /* If the image was dirty, but could become clean by redo-ing
+   * some actions, then it should now become 'infinitely' dirty.
+   * This is because we've just nuked the actions that would allow
+   * the image to become clean again.  The only hope for salvation
+   * is to save the image now!  -- austin */
+  if (gimage->dirty < 0)
+      gimage->dirty = 10000;
+
+  /* The same applies to the case where the image would become clean
+   * due to undo actions, but since user can't undo without an undo
+   * stack, that's not so much a problem. */
 }
 
 
@@ -397,16 +422,23 @@ undo_push_group_start (GImage *gimage,
   if (! gimage->undo_on)
     return FALSE;
 
-  group_count ++;
+  gimage->group_count ++;
 
   /*  If we're already in a group...ignore  */
-  if (group_count > 1)
+  if (gimage->group_count > 1)
     return TRUE;
 
   if (gimage->redo_stack)
     {
       undo_free_list (gimage, REDO, gimage->redo_stack);
       gimage->redo_stack = NULL;
+      /* If the image was dirty, but could become clean by redo-ing
+       * some actions, then it should now become 'infinitely' dirty.
+       * This is because we've just nuked the actions that would allow
+       * the image to become clean again.  The only hope for salvation
+       * is to save the image now!  -- austin  */
+      if (gimage->dirty < 0)
+	  gimage->dirty = 10000;
     }
 
   if (! undo_free_up_space (gimage))
@@ -426,9 +458,9 @@ undo_push_group_end (GImage *gimage)
   if (! gimage->undo_on)
     return FALSE;
 
-  group_count --;
+  gimage->group_count --;
 
-  if (group_count == 0)
+  if (gimage->group_count == 0)
     {
       gimage->pushing_undo_group = 0;
       gimage->undo_stack = g_slist_prepend (gimage->undo_stack, NULL);
@@ -2423,3 +2455,134 @@ undo_free_parasite (int   state,
   g_free (data_ptr);
 }
 
+
+
+
+/*************/
+/* Layer name change */
+
+typedef struct {
+    Layer *layer;
+    gchar *old_name;
+} LayerRenameUndo;
+
+int
+undo_push_layer_rename (GImage *gimage, Layer *layer)
+{
+  Undo *new;
+  LayerRenameUndo *data;
+  long size;
+
+  /*  increment the dirty flag for this gimage  */
+  gimage_dirty (gimage);
+
+  size = sizeof (LayerRenameUndo);
+
+  if ((new = undo_push (gimage, size, LAYER_CHANGE)))
+  {
+      data               = g_new (LayerRenameUndo, 1);
+      new->data          = data;
+      new->pop_func      = undo_pop_layer_rename;
+      new->free_func     = undo_free_layer_rename;
+
+      data->layer    = layer;
+      data->old_name = g_strdup (layer_get_name (layer));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static int
+undo_pop_layer_rename (GImage *gimage,
+		       int     state,
+		       int     type,
+		       void   *data_ptr)
+{
+    LayerRenameUndo *data = data_ptr;
+    gchar *tmp;
+
+    tmp = g_strdup (layer_get_name (data->layer));
+    layer_set_name (data->layer, data->old_name);
+    g_free (data->old_name);
+    data->old_name = tmp;
+
+    switch (state) {
+    case UNDO:
+	gimp_image_clean (gimage);
+	break;
+
+    case REDO:
+	gimp_image_dirty (gimage);
+	break;
+    }
+
+    return TRUE;
+}
+
+static void
+undo_free_layer_rename (int   state,
+			void *data_ptr)
+{
+    LayerRenameUndo *data = data_ptr;
+
+    g_free (data->old_name);
+    g_free (data);
+}
+
+
+
+/*************/
+/* Something for which programmer is too lazy to write an undo 
+ * function for.
+ */
+
+int
+undo_push_cantundo (GImage     *gimage,
+		    const char *action)
+{
+    Undo *new;
+
+    /* This is the sole purpose of this type of undo: the ability to
+     * mark an image as having been mutated, without really providing
+     * any adequate undo facility. */
+    gimp_image_dirty (gimage);
+
+    new = undo_push (gimage, 0, GIMAGE_MOD);
+    if (!new)
+	return FALSE;
+
+    new->data      = (void*)action;
+    new->pop_func  = undo_pop_cantundo;
+    new->free_func = undo_free_cantundo;
+
+    return TRUE;
+}
+
+static int
+undo_pop_cantundo (GImage *gimage,
+		   int     state,
+		   int     type,
+		   void   *data_ptr)
+{
+    char *action = data_ptr;
+
+    switch (state) {
+    case UNDO:
+	g_message (_("Can't undo %s"), action);
+	gimp_image_clean (gimage);
+	break;
+
+    case REDO:
+	gimp_image_dirty (gimage);
+	break;
+    }
+
+    return TRUE;
+}
+
+static void
+undo_free_cantundo (int state, void *data_ptr)
+{
+}

@@ -406,6 +406,13 @@ named undo
 	meaningful undo history display, so you can undo multiple
 	levels in one go.
 
+undo history
+	The "type" argument to the undo_push_* functions isn't really
+	used for anything.  We could use it to do the named undos
+	described above, and allow a "history" window to list the
+	undo-able actions.  Clicking on the relevant line would
+	roll-back to that point.  -- austin.
+
 gradient map layer
 
 	map values from current gradient to value/intensity
@@ -431,5 +438,3 @@ Grid
 	bitmap. limited utility for char's, but a couple of nice sets
 	of winding fonts could make it interestings. And you could
 	use words or strings.
-
-

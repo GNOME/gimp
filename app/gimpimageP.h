@@ -97,6 +97,7 @@ struct _GimpImage
   GSList *redo_stack;                 /*  stack for redo operations    */
   gint    undo_bytes;                 /*  bytes in undo stack          */
   gint    undo_levels;                /*  levels in undo stack         */
+  gint    group_count;		      /*  nested undo groups           */
   gint    pushing_undo_group;         /*  undo group status flag       */
 
                                       /*  Composite preview  */

@@ -70,6 +70,7 @@ static void       gdisplay_paint_area       (GDisplay *, int, int, int, int);
 static void	  gdisplay_draw_cursor	    (GDisplay *);
 static void       gdisplay_display_area     (GDisplay *, int, int, int, int);
 static guint      gdisplay_hash             (GDisplay *);
+static void       gdisplay_cleandirty_handler (GimpImage *, void *);
 
 
 static GHashTable *display_ht = NULL;
@@ -154,6 +155,13 @@ gdisplay_new (GimpImage    *gimage,
   gimage->ref_count++;
 
   lc_dialog_preview_update(gimage);
+
+  /* We're interested in clean and dirty signals so we can update the
+   * title if need be. */
+  gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
+		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+  gtk_signal_connect (GTK_OBJECT (gimage), "clean",
+		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
 
   return gdisp;
 }
@@ -259,7 +267,18 @@ gdisplay_format_title (GDisplay *gdisp,
 		      "%d", 100 * SCALEDEST (gdisp) / SCALESRC (gdisp));
 	  break;
 
-	  /* other cool things to be added:
+      case 'D': /* dirty flag */
+	  if (format[1] == 0)
+	  {
+	      g_warning("image-title-format string ended within %%D-sequence");
+	      break;
+	  }
+	  if (gimage->dirty)
+	      title[i++] = format[1];
+	  format++;
+	  break;
+
+	  /* Other cool things to be added:
 	   * %m = memory used by picture
 	   * some kind of resolution / image size thing
 	   * people seem to want to know the active layer name
@@ -312,6 +331,9 @@ gdisplay_delete (GDisplay *gdisp)
       gtk_idle_remove (gdisp->idle_render.idleid);
       gdisp->idle_render.active = FALSE;
     }
+
+  /* get rid of signals handled by this display */
+  gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
   
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
@@ -2042,7 +2064,7 @@ gdisplays_dirty ()
   /*  traverse the linked list of displays  */
   while (list)
     {
-      if (((GDisplay *) list->data)->gimage->dirty > 0)
+      if (((GDisplay *) list->data)->gimage->dirty != 0)
 	dirty = 1;
       list = g_slist_next (list);
     }
@@ -2158,6 +2180,7 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
       gdisp->idle_render.active = FALSE;
     }
 
+  gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
   gimage_delete (gdisp->gimage);
 
   instance = gimage->instance_count;
@@ -2167,8 +2190,24 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
   gdisp->gimage = gimage;
   gdisp->instance = instance;
 
+  /* reconnect our clean / dirty signals */
+  gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
+		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+  gtk_signal_connect (GTK_OBJECT (gimage), "clean",
+		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+
   gdisplays_update_title (gimage);
 
   gdisplay_expose_full (gdisp);
   gdisplay_flush (gdisp);
+}
+
+
+/* Called whenever the underlying gimage is dirtied or cleaned */
+static void
+gdisplay_cleandirty_handler (GimpImage *gimage, void *data)
+{
+    GDisplay *gdisp = data;
+
+    gdisplay_update_title (gdisp);
 }
