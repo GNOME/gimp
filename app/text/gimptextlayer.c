@@ -40,6 +40,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpparasitelist.h"
 
@@ -479,8 +480,9 @@ gimp_text_layer_set (GimpTextLayer *layer,
                      const gchar   *first_property_name,
                      ...)
 {
-  GimpText *text;
-  va_list   var_args;
+  GimpImage *image;
+  GimpText  *text;
+  va_list    var_args;
 
   g_return_if_fail (gimp_drawable_is_text_layer ((GimpDrawable *) layer));
 
@@ -488,14 +490,24 @@ gimp_text_layer_set (GimpTextLayer *layer,
   if (! text)
     return;
 
-  gimp_image_undo_push_text_layer (gimp_item_get_image (GIMP_ITEM (layer)),
-                                   undo_desc, layer);
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  /*  If the layer contains a mask,
+   *  gimp_text_layer_render() might have to resize it.
+   */
+  if (GIMP_LAYER (layer)->mask)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
+  gimp_image_undo_push_text_layer (image, undo_desc, layer);
 
   va_start (var_args, first_property_name);
 
   g_object_set_valist (G_OBJECT (text), first_property_name, var_args);
 
   va_end (var_args);
+
+  if (GIMP_LAYER (layer)->mask)
+    gimp_image_undo_group_end (image);
 }
 
 /**

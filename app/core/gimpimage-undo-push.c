@@ -1801,7 +1801,10 @@ undo_pop_text_layer (GimpUndo            *undo,
   text = (layer->text ?
           gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
 
-  gimp_text_layer_set_text (layer, tu->text);
+  if (layer->text)
+    gimp_config_sync (GIMP_CONFIG (tu->text), GIMP_CONFIG (layer->text), 0);
+  else
+    gimp_text_layer_set_text (layer, tu->text);
 
   if (tu->text)
     g_object_unref (tu->text);

@@ -34,6 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
@@ -452,9 +453,11 @@ gimp_text_tool_idle_apply (GimpTextTool *text_tool)
 static void
 gimp_text_tool_apply (GimpTextTool *text_tool)
 {
-  GObject *src;
-  GObject *dest;
-  GList   *list;
+  GimpImage     *image;
+  GimpTextLayer *text_layer;
+  GObject       *src;
+  GObject       *dest;
+  GList         *list;
 
   if (text_tool->idle_id)
     {
@@ -464,6 +467,21 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_return_if_fail (text_tool->text != NULL);
   g_return_if_fail (text_tool->layer != NULL);
+
+  image      = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+  text_layer = GIMP_TEXT_LAYER (text_tool->layer);
+
+  g_return_if_fail (text_layer->text == text_tool->text);
+
+  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
+
+  /*  If the layer contains a mask,
+   *  gimp_text_layer_render() might have to resize it.
+   */
+  if (text_tool->layer->mask)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
+  gimp_image_undo_push_text_layer (image, NULL, text_layer);
 
   src  = G_OBJECT (text_tool->proxy);
   dest = G_OBJECT (text_tool->text);
@@ -490,13 +508,18 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
       g_value_unset (&value);
     }
 
+  g_list_free (text_tool->pending);
+  text_tool->pending = NULL;
+
   g_object_thaw_notify (dest);
 
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify, text_tool);
 
-  g_list_free (text_tool->pending);
-  text_tool->pending = NULL;
+  if (text_tool->layer->mask)
+    gimp_image_undo_group_end (image);
+
+  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (text_tool->layer)));
 }
