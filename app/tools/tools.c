@@ -65,9 +65,8 @@
 
 /* Global Data */
 
-Tool     * active_tool = NULL;
-Layer    * active_tool_layer = NULL;
-ToolType   active_tool_type = -1;
+Tool  * active_tool = NULL;
+Layer * active_tool_layer = NULL;
 
 /* Local Data */
 
@@ -649,10 +648,8 @@ tools_select (ToolType type)
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
   active_tool->ID = global_tool_ID++;
-  active_tool_type = active_tool->type;
 
-  /* Update the device-information dialog */
-
+  /*  Update the device-information dialog  */
   device_status_update (current_device);
 }
 
@@ -700,7 +697,6 @@ tools_initialize (ToolType type, GDisplay *gdisp)
     active_tool->drawable = NULL;
   active_tool->gdisp_ptr = NULL;
   active_tool->ID = global_tool_ID++;
-  active_tool_type = active_tool->type;
 }
 
 void
@@ -916,9 +912,9 @@ tools_options_reset_callback (GtkWidget *w,
 
   shell = (GtkWidget *) client_data;
 
-  if (active_tool_type == -1)
+  if (! active_tool)
     return;
 
-  if (tool_info[(int) active_tool_type].tool_options->reset_func)
-    (* tool_info[(int) active_tool_type].tool_options->reset_func) ();
+  if (tool_info[(int) active_tool->type].tool_options->reset_func)
+    (* tool_info[(int) active_tool->type].tool_options->reset_func) ();
 }

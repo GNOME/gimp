@@ -1,3 +1,12 @@
+1999-06-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gimpcontext.[ch]: added some functions. Still does nothing.
+
+	* app/bezier_select.c
+	* app/devices.c
+	* app/tools.[ch]: removed global variable active_tool_type
+	because it was always equal to active_tool->type.
+
 Thu Jun 17 22:32:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 
 	* app/flip_tool.c : Fixed flip tool bug - use FLIP_INFO rather than

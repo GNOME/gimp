@@ -2434,7 +2434,8 @@ bezier_insert_in_list (GSList * list,
 gboolean 
 bezier_tool_selected()
 {
-  return(active_tool_type == BEZIER_SELECT &&
+  return(active_tool &&
+	 active_tool->type == BEZIER_SELECT &&
 	 active_tool->state == ACTIVE);
 }
 
@@ -2451,7 +2452,8 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 /*   printSel(bsel); */
 
   /*  If the tool was being used before clear it */
-  if (active_tool_type == BEZIER_SELECT &&
+  if (active_tool &&
+      active_tool->type == BEZIER_SELECT &&
       active_tool->state == ACTIVE)
     {
       BezierSelect *bezier_sel = (BezierSelect*)active_tool->private;

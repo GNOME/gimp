@@ -76,7 +76,6 @@ GimpContext * gimp_context_new            (gchar       *name,
 /*  TODO: - gimp_context_set_parent ()
  *        - gimp_context_get_parent ()
  *        - gimp_context_find ()
- *        - gimp_context_get_name ()
  *
  *        probably interacting with the context manager:
  *        - gimp_context_push () which will call gimp_context_set_parent()
@@ -108,6 +107,12 @@ GimpContext * gimp_context_get_standard   (void);
  *  FIXME: this interface may be ok but the implementation is
  *         ugly code duplication. There needs to be a generic way.
  */
+gchar       * gimp_context_get_name           (GimpContext *context);
+
+GimpContext * gimp_context_get_parent         (GimpContext *context);
+void          gimp_context_set_parent         (GimpContext *context,
+					       GimpContext *parent);
+
 gdouble       gimp_context_get_opacity        (GimpContext *context);
 void          gimp_context_set_opacity        (GimpContext *context,
 					       gdouble      opacity);

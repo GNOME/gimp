@@ -502,8 +502,8 @@ devices_save_current_info (void)
   device_info->device = current_device;
   device_info->brush = get_active_brush ();
   device_info->pattern = get_active_pattern();
-  if (active_tool_type >= 0)
-    device_info->tool = active_tool_type;
+  if (active_tool)
+    device_info->tool = active_tool->type;
   else
     device_info->tool = RECT_SELECT;
   palette_get_foreground (&device_info->foreground[0], 

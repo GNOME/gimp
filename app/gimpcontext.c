@@ -166,8 +166,8 @@ gimp_context_get_type (void)
       GtkTypeInfo context_info =
       {
 	"GimpContext",
-	sizeof(GimpContext),
-	sizeof(GimpContextClass),
+	sizeof (GimpContext),
+	sizeof (GimpContextClass),
 	(GtkClassInitFunc) gimp_context_class_init,
 	(GtkObjectInitFunc) gimp_context_init,
 	/* reserved_1 */ NULL,
@@ -209,14 +209,6 @@ gimp_context_new (gchar       *name,
       context->paint_mode_defined = template->paint_mode_defined;
       context->image_defined      = template->image_defined;
       context->display_defined    = template->display_defined;
-    }
-
-  if (!parent)
-    {
-      context->opacity_defined    = TRUE;
-      context->paint_mode_defined = TRUE;
-      context->image_defined      = TRUE;
-      context->display_defined    = TRUE;
     }
 
   return context;
@@ -274,6 +266,36 @@ gimp_context_get_standard (void)
 }
 
 /*  functions manipulating a single context  ********************************/
+
+gchar *
+gimp_context_get_name (GimpContext *context)
+{
+  context_check_current (context);
+  context_return_val_if_fail (context, NULL);
+
+  return context->name;
+}
+
+GimpContext *
+gimp_context_get_parent (GimpContext *context)
+{
+  context_return_val_if_fail (context, NULL);
+
+  return context->parent;
+}
+
+void
+gimp_context_set_parent (GimpContext *context,
+			 GimpContext *parent)
+{
+  context_return_if_fail (context);
+  g_return_if_fail (!parent || GIMP_IS_CONTEXT (parent));
+
+  context->parent = parent;
+}
+
+
+/*  attribute access functions  */
 
 /* FIXME: - this is UGLY code duplication
  *        - gimp_context_*_defined and _define_* sounds very ugly, too
