@@ -1,3 +1,25 @@
+2004-03-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpundo.[ch]: added gimp_undo_type_to_name() a similar
+	function used to live in gimpimage-undo.[ch].
+
+	* app/core/gimpitemundo.c (gimp_item_undo_new): allow NULL as name
+	and generate it from the undo_type then.
+
+	* app/core/gimpimage-undo.[ch]: added gimp_image_undo_push_undu(),
+	new function that allows to push an undo on the image.
+
+	* app/text/Makefile.am
+	* app/text/text-types.h
+	* app/text/gimptextundo.[ch]: added GimpTextUndo, derived from
+	GimpItemUndo.
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_text_layer):
+	use the new code and simply push a text undo here.
+
+	* app/tools/gimptexttool.c: compress text undos by peeking at the
+	undo stack. Fixes bug #137766.
+
 2004-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/makefile.msc: 

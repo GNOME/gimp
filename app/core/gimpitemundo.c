@@ -117,8 +117,10 @@ gimp_item_undo_new (GimpImage        *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (size == 0 || data != NULL, NULL);
+
+  if (! name)
+    name = gimp_undo_type_to_name (undo_type);
 
   undo = g_object_new (GIMP_TYPE_ITEM_UNDO,
                        "name", name,

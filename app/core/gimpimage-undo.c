@@ -35,13 +35,12 @@
 
 /*  local function prototypes  */
 
-static void          gimp_image_undo_pop_stack    (GimpImage     *gimage,
-                                                   GimpUndoStack *undo_stack,
-                                                   GimpUndoStack *redo_stack,
-                                                   GimpUndoMode   undo_mode);
-static void          gimp_image_undo_free_space   (GimpImage     *gimage);
-static void          gimp_image_undo_free_redo    (GimpImage     *gimage);
-static const gchar * gimp_image_undo_type_to_name (GimpUndoType   type);
+static void    gimp_image_undo_pop_stack    (GimpImage     *gimage,
+                                             GimpUndoStack *undo_stack,
+                                             GimpUndoStack *redo_stack,
+                                             GimpUndoMode   undo_mode);
+static void    gimp_image_undo_free_space   (GimpImage     *gimage);
+static void    gimp_image_undo_free_redo    (GimpImage     *gimage);
 
 
 /*  public functions  */
@@ -116,7 +115,7 @@ gimp_image_undo_group_start (GimpImage    *gimage,
                         type <= GIMP_UNDO_GROUP_LAST, FALSE);
 
   if (! name)
-    name = gimp_image_undo_type_to_name (type);
+    name = gimp_undo_type_to_name (type);
 
   /* Notify listeners that the image will be modified */
   gimp_image_undo_start (gimage);
@@ -210,15 +209,12 @@ gimp_image_undo_push_item (GimpImage        *gimage,
                            GimpUndoPopFunc   pop_func,
                            GimpUndoFreeFunc  free_func)
 {
-  GimpUndo *new;
+  GimpUndo *undo;
   gpointer  undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (item == NULL || GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (type > GIMP_UNDO_GROUP_LAST, NULL);
-
-  if (! name)
-    name = gimp_image_undo_type_to_name (type);
 
   /* Does this undo dirty the image?  If so, we always want to mark
    * image dirty, even if we can't actually push the undo.
@@ -228,6 +224,40 @@ gimp_image_undo_push_item (GimpImage        *gimage,
 
   if (gimage->undo_freeze_count > 0)
     return NULL;
+
+  if (struct_size > 0)
+    undo_struct = g_malloc0 (struct_size);
+
+  if (item)
+    {
+      undo = gimp_item_undo_new (gimage, item,
+                                 type, name,
+                                 undo_struct, size,
+                                 dirties_image,
+                                 pop_func, free_func);
+    }
+  else
+    {
+      undo = gimp_undo_new (gimage,
+                            type, name,
+                            undo_struct, size,
+                            dirties_image,
+                            pop_func, free_func);
+    }
+
+  gimp_image_undo_push_undo (gimage, undo);
+
+  return undo;
+}
+
+void
+gimp_image_undo_push_undo (GimpImage *gimage,
+                           GimpUndo  *undo)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (undo->gimage == gimage);
+  g_return_if_fail (gimage->undo_freeze_count == 0);
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (gimage);
@@ -241,33 +271,13 @@ gimp_image_undo_push_item (GimpImage        *gimage,
   if (gimage->dirty < 0)
     gimage->dirty = 10000;
 
-  if (struct_size > 0)
-    undo_struct = g_malloc0 (struct_size);
-
-  if (item)
-    {
-      new = gimp_item_undo_new (gimage, item,
-                                type, name,
-                                undo_struct, size,
-                                dirties_image,
-                                pop_func, free_func);
-    }
-  else
-    {
-      new = gimp_undo_new (gimage,
-                           type, name,
-                           undo_struct, size,
-                           dirties_image,
-                           pop_func, free_func);
-    }
-
   if (gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
     {
-      gimp_undo_stack_push_undo (gimage->undo_stack, new);
+      gimp_undo_stack_push_undo (gimage->undo_stack, undo);
 
       gimp_image_undo_free_space (gimage);
 
-      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED, new);
+      gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_PUSHED, undo);
     }
   else
     {
@@ -275,10 +285,8 @@ gimp_image_undo_push_item (GimpImage        *gimage,
 
       undo_group = GIMP_UNDO_STACK (gimp_undo_stack_peek (gimage->undo_stack));
 
-      gimp_undo_stack_push_undo (undo_group, new);
+      gimp_undo_stack_push_undo (undo_group, undo);
     }
-
-  return new;
 }
 
 
@@ -405,21 +413,4 @@ gimp_image_undo_free_redo (GimpImage *gimage)
 
       g_object_unref (freed);
     }
-}
-
-static const gchar *
-gimp_image_undo_type_to_name (GimpUndoType type)
-{
-  static GEnumClass *enum_class = NULL;
-  GEnumValue        *value;
-
-  if (! enum_class)
-    enum_class = g_type_class_ref (GIMP_TYPE_UNDO_TYPE);
-
-  value = g_enum_get_value (enum_class, type);
-
-  if (value)
-    return value->value_name;
-
-  return "";
 }

@@ -45,7 +45,9 @@ libapptext_a_sources = \
 	gimptextlayout.c		\
 	gimptextlayout.h		\
 	gimptextlayout-render.c		\
-	gimptextlayout-render.h
+	gimptextlayout-render.h		\
+	gimptextundo.c			\
+	gimptextundo.h
 
 libapptext_a_built_sources = text-enums.c
 

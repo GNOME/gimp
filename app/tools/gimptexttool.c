@@ -37,6 +37,8 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundo.h"
+#include "core/gimpundostack.h"
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
@@ -44,6 +46,7 @@
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
+#include "text/gimptextundo.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
@@ -57,6 +60,9 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+
+
+#define TEXT_UNDO_TIMEOUT 3
 
 
 /*  local function prototypes  */
@@ -261,9 +267,6 @@ gimp_text_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      if (text_tool->editor)
-        gtk_widget_destroy (text_tool->editor);
-
       gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
       break;
     }
@@ -485,7 +488,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   GObject          *src;
   GObject          *dest;
   GList            *list;
-  gboolean          undo_group;
+  gboolean          push_undo  = TRUE;
+  gboolean          undo_group = FALSE;
 
   if (text_tool->idle_id)
     {
@@ -512,20 +516,55 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   if (g_list_length (list) == 1)
     pspec = list->data;
 
-  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
+  if (pspec)
+    {
+      GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
 
-  /*  If the layer contains a mask,
-   *  gimp_text_layer_render() might have to resize it.
-   */
-  undo_group = ((text_tool->layer->mask != NULL) || text_layer->modified);
-  if (undo_group)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+      /*  If we are changing a single property, we don't need to push
+       *  an undo if all of the following is true:
+       *   - the last item on the undo stack is a text undo
+       *   - the redo stack is empty
+       *   - the last undo changed the same text property on the same layer
+       *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
+       */
+      if (undo && GIMP_IS_TEXT_UNDO (undo) &&
+          ! gimp_undo_stack_peek (image->redo_stack))
+        {
+          GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
 
-  if (text_layer->modified)
-    gimp_image_undo_push_drawable_mod (image, NULL,
-                                       GIMP_DRAWABLE (text_layer));
+          if (text_undo->pspec == pspec &&
+              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (text_layer))
+            {
+              guint now = time (NULL);
 
-  gimp_image_undo_push_text_layer (image, NULL, text_layer, pspec);
+              if (now >= text_undo->time &&
+                  now - text_undo->time < TEXT_UNDO_TIMEOUT)
+                {
+                  push_undo = FALSE;
+                  text_undo->time = now;
+                  gimp_undo_refresh_preview (undo);
+                }
+            }
+        }
+    }
+
+  if (push_undo)
+    {
+      gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, TRUE);
+
+      /*  If the layer contains a mask,
+       *  gimp_text_layer_render() might have to resize it.
+       */
+      undo_group = ((text_tool->layer->mask != NULL) || text_layer->modified);
+      if (undo_group)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
+      if (text_layer->modified)
+        gimp_image_undo_push_drawable_mod (image, NULL,
+                                           GIMP_DRAWABLE (text_layer));
+
+      gimp_image_undo_push_text_layer (image, NULL, text_layer, pspec);
+    }
 
   src  = G_OBJECT (text_tool->proxy);
   dest = G_OBJECT (text_tool->text);
@@ -561,12 +600,15 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify, text_tool);
 
-  if (undo_group)
-    gimp_image_undo_group_end (image);
+  if (push_undo)
+    {
+      if (undo_group)
+        gimp_image_undo_group_end (image);
 
-  gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
+      gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
+    }
 
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (text_tool->layer)));
+  gimp_image_flush (image);
 }
 
 static void

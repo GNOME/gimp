@@ -49,8 +49,7 @@
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 
-#include "text/gimptext.h"
-#include "text/gimptextlayer.h"
+#include "text/gimptextundo.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -1737,22 +1736,6 @@ undo_free_layer_properties (GimpUndo     *undo,
 /*  Text Layer Undo  */
 /*********************/
 
-typedef struct _TextUndo TextUndo;
-
-struct _TextUndo
-{
-  GimpText         *text;
-  const GParamSpec *pspec;
-  GValue           *value;
-};
-
-static gboolean undo_pop_text_layer  (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode,
-                                      GimpUndoAccumulator *accum);
-static void     undo_free_text_layer (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode);
-
-
 gboolean
 gimp_image_undo_push_text_layer (GimpImage        *gimage,
                                  const gchar      *undo_desc,
@@ -1760,129 +1743,19 @@ gimp_image_undo_push_text_layer (GimpImage        *gimage,
                                  const GParamSpec *pspec)
 {
   GimpUndo *undo;
-  gssize    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), FALSE);
-  g_return_val_if_fail (pspec == NULL || pspec->owner_type == GIMP_TYPE_TEXT,
-                        FALSE);
-  g_return_val_if_fail (pspec == NULL || layer->text != NULL, FALSE);
 
-  size = sizeof (TextUndo);
+  gimp_image_dirty (gimage);
 
-  if (pspec)
-    {
-      /*  this is incorrect, but how can it be done better?  */
-      size += sizeof (GValue);
-    }
-  else if (layer->text)
-    {
-      size += gimp_object_get_memsize (GIMP_OBJECT (layer->text), NULL);
-    }
+  if (gimage->undo_freeze_count > 0)
+    return FALSE;
 
-  undo = gimp_image_undo_push_item (gimage, GIMP_ITEM (layer),
-                                    size, sizeof (TextUndo),
-                                    GIMP_UNDO_TEXT_LAYER, undo_desc,
-                                    TRUE,
-                                    undo_pop_text_layer,
-                                    undo_free_text_layer);
+  undo = gimp_text_undo_new (layer, pspec, undo_desc);
 
-  if (undo)
-    {
-      TextUndo *tu = undo->data;
-
-      if (pspec)
-        {
-          tu->pspec = pspec;
-          tu->value = g_new0 (GValue, 1);
-
-          g_value_init (tu->value, pspec->value_type);
-          g_object_get_property (G_OBJECT (layer->text),
-                                 pspec->name, tu->value);
-        }
-      else if (layer->text)
-        {
-          tu->text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
-        }
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_text_layer (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
-{
-  TextUndo      *tu    = undo->data;
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (undo)->item);
-
-  if (tu->pspec)
-    {
-      GValue *value;
-
-      g_return_val_if_fail (layer->text != NULL, FALSE);
-
-      value = g_new0 (GValue, 1);
-      g_value_init (value, tu->pspec->value_type);
-
-      g_object_get_property (G_OBJECT (layer->text),
-                             tu->pspec->name, value);
-
-      g_object_set_property (G_OBJECT (layer->text),
-                             tu->pspec->name, tu->value);
-
-      g_value_unset (tu->value);
-      g_free (tu->value);
-
-      tu->value = value;
-    }
-  else
-    {
-      GimpText *text;
-
-      if (tu->text)
-        undo->size -= gimp_object_get_memsize (GIMP_OBJECT (tu->text), NULL);
-
-      text = (layer->text ?
-              gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
-
-      if (layer->text && tu->text)
-        gimp_config_sync (GIMP_CONFIG (tu->text),
-                          GIMP_CONFIG (layer->text), 0);
-      else
-        gimp_text_layer_set_text (layer, tu->text);
-
-      if (tu->text)
-        g_object_unref (tu->text);
-
-      tu->text = text;
-
-      if (tu->text)
-        undo->size += gimp_object_get_memsize (GIMP_OBJECT (tu->text), NULL);
-    }
+  gimp_image_undo_push_undo (gimage, undo);
 
   return TRUE;
-}
-
-static void
-undo_free_text_layer (GimpUndo     *undo,
-                      GimpUndoMode  undo_mode)
-{
-  TextUndo *tu = undo->data;
-
-  if (tu->text)
-    g_object_unref (tu->text);
-
-  if (tu->pspec)
-    {
-      g_value_unset (tu->value);
-      g_free (tu->value);
-    }
-
-  g_free (tu);
 }
 
 

@@ -279,8 +279,10 @@ gimp_undo_new (GimpImage        *gimage,
   GimpUndo *undo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (size == 0 || data != NULL, NULL);
+
+  if (! name)
+    name = gimp_undo_type_to_name (undo_type);
 
   undo = g_object_new (GIMP_TYPE_UNDO,
                        "name", name,
@@ -424,4 +426,21 @@ gimp_undo_refresh_preview (GimpUndo *undo)
       undo->preview = NULL;
       gimp_undo_create_preview (undo, FALSE);
     }
+}
+
+const gchar *
+gimp_undo_type_to_name (GimpUndoType type)
+{
+  static GEnumClass *enum_class = NULL;
+  GEnumValue        *value;
+
+  if (! enum_class)
+    enum_class = g_type_class_ref (GIMP_TYPE_UNDO_TYPE);
+
+  value = g_enum_get_value (enum_class, type);
+
+  if (value)
+    return value->value_name;
+
+  return "";
 }

@@ -74,26 +74,28 @@ struct _GimpUndoClass
 };
 
 
-GType      gimp_undo_get_type       (void) G_GNUC_CONST;
+GType         gimp_undo_get_type        (void) G_GNUC_CONST;
 
-GimpUndo * gimp_undo_new            (GimpImage           *gimage,
-                                     GimpUndoType         undo_type,
-                                     const gchar         *name,
-                                     gpointer             data,
-                                     gint64               size,
-                                     gboolean             dirties_image,
-                                     GimpUndoPopFunc      pop_func,
-                                     GimpUndoFreeFunc     free_func);
+GimpUndo    * gimp_undo_new             (GimpImage           *gimage,
+                                         GimpUndoType         undo_type,
+                                         const gchar         *name,
+                                         gpointer             data,
+                                         gint64               size,
+                                         gboolean             dirties_image,
+                                         GimpUndoPopFunc      pop_func,
+                                         GimpUndoFreeFunc     free_func);
 
-void       gimp_undo_pop            (GimpUndo            *undo,
-                                     GimpUndoMode         undo_mode,
-                                     GimpUndoAccumulator *accum);
-void       gimp_undo_free           (GimpUndo            *undo,
-                                     GimpUndoMode         undo_mode);
+void          gimp_undo_pop             (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode,
+                                         GimpUndoAccumulator *accum);
+void          gimp_undo_free            (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode);
 
-void       gimp_undo_create_preview (GimpUndo            *undo,
-                                     gboolean             create_now);
-void       gimp_undo_refresh_preview (GimpUndo           *undo);
+void          gimp_undo_create_preview  (GimpUndo            *undo,
+                                         gboolean             create_now);
+void          gimp_undo_refresh_preview (GimpUndo            *undo);
+
+const gchar * gimp_undo_type_to_name    (GimpUndoType         type);
 
 
 
