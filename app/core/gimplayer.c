@@ -32,6 +32,8 @@
 #include "temp_buf.h"
 #include "undo.h"
 
+#include "libgimp/parasite.h"
+
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */

@@ -348,14 +348,14 @@ paint_funcs_setup ()
     }
 
   for (j = 0; j < 256; j++)
-    {    //rows
+    {    /* rows */
       for (k = 0; k < 256; k++)
-	{   //column
+	{   /* column */
 	  tmp_sum = j + k;
-	  //	  printf("tmp_sum: %d", tmp_sum);
+	  /* printf("tmp_sum: %d", tmp_sum); */
 	  if(tmp_sum > 255)
 	    tmp_sum = 255;
-	  //	  printf("  max: %d  \n", add_lut[j][k]);
+	  /* printf("  max: %d  \n", add_lut[j][k]); */
 	  add_lut[j][k] = tmp_sum; 
 	}
     }
@@ -847,7 +847,7 @@ add_pixels (const unsigned char *src1,
 	    int            has_alpha2)
 {
   int alpha, b;
-  int sum;
+  /* int sum; */
 
   alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
 
@@ -855,9 +855,9 @@ add_pixels (const unsigned char *src1,
     {
       for (b = 0; b < alpha; b++)
 	{
-	  //	  sum = src1[b] + src2[b];
+	  /* sum = src1[b] + src2[b]; */
 	  dest[b] = add_lut[ (src1[b])] [(src2[b])];
-	  //	  dest[b] = MAX255 (sum);
+	  /* dest[b] = MAX255 (sum); */
 	  /* dest[b] = sum | ((sum&256) - ((sum&256) >> 8)); */
 	  /* dest[b] = (sum > 255) ? 255 : sum; */ /* older, little slower */
 	}

@@ -2963,7 +2963,7 @@ gulong gck_adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_dep
 	  /* Copy samples from top row to block */
 	  /* ================================== */
 
-	  for (xtt = 0, xt = x * sub_pixel_size; xtt < (sub_pixel_size + 1); xtt++, xt++)
+	  for (xtt = 0, xt = (x - x1) * sub_pixel_size; xtt < (sub_pixel_size + 1); xtt++, xt++)
 	    block[0][xtt] = top_row[xt];
 
 	  /* Render pixel on (x, y) */
@@ -2977,9 +2977,9 @@ gulong gck_adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_dep
 	  /* Copy block information to rows */
 	  /* ============================== */
 
-	  top_row[(x + 1) * sub_pixel_size] = block[0][sub_pixel_size];
+	  top_row[(x - x1 + 1) * sub_pixel_size] = block[0][sub_pixel_size];
 
-	  for (xtt = 0, xt = x * sub_pixel_size; xtt < (sub_pixel_size + 1); xtt++, xt++)
+	  for (xtt = 0, xt = (x - x1) * sub_pixel_size; xtt < (sub_pixel_size + 1); xtt++, xt++)
 	    bot_row[xt] = block[sub_pixel_size][xtt];
 
 	  /* Swap first and last columns */

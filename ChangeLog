@@ -1,3 +1,21 @@
+Thu Oct 22 02:30:38 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/Makefile.am
+	* configure.in: fix --disable-static compilation
+
+	* gimptool.in: use the right dir for scripts. Strip out path
+	from the compiled bin
+
+	* app/colormaps.c: comment out unused gamma_correct function
+
+	* app/layer.c: #include "libgimp/parasite.h"
+
+	* app/paint_funcs.c: convert icky C++ comments
+
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/cubism/cubism.c: cleanups
+
+	* plug-ins/libgck/gck/gckcolor.c: fix adaptive supersampling bug
 
 Wed Oct 21 23:37:01 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 

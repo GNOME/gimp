@@ -21,8 +21,10 @@ libgimpi_a_SOURCES = \
 	parasiteF.h	\
 	parasiteP.h
 
+if STATICLIBS
 ## Evil hack to insure all deps are satisfied on first-run make
 libgimpi_a_DEPENDENCIES = libgimp.la
+endif
 
 libgimp_la_SOURCES = \
 	gimp.c		\

@@ -827,7 +827,6 @@ find_gradients (GDrawable *drawable,
   gint bytes;
   gint width, height;
   gint i, j;
-  gdouble gradient;
   guchar *gr, * dh, * dv;
   gint hmax, vmax;
   gint row, rows;
@@ -912,7 +911,6 @@ find_max_gradient (GPixelRgn *src_rgn,
   guchar *s, *d, *s_iter, *s_end;
   gpointer pr;
   gint i, j;
-  gint b;
   gint val;
   gint max;
 

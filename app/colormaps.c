@@ -91,7 +91,7 @@ set_app_colors ()
 }
 
 /* This probably doesn't belong here - RLL*/
-static unsigned int
+/* static unsigned int
 gamma_correct (int intensity, double gamma)
 {
   unsigned int val;
@@ -107,7 +107,7 @@ gamma_correct (int intensity, double gamma)
   val = (int) (256 * pow (ind, one_over_gamma));
 
   return val;
-}
+} */
 
 
 /*************************************************************************/

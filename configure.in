@@ -456,6 +456,8 @@ if test $ac_cv_path_LPC_COMMAND != ":"; then
   LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
 fi
 
+AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
+
 AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
 AC_SUBST(GIMP_MICRO_VERSION)

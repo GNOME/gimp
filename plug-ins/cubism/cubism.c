@@ -27,6 +27,8 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#include "config.h"
+
 /* Some useful macros */
 #define SQR(a) ((a) * (a))
 
@@ -502,7 +504,7 @@ render_cubism (GDrawable *drawable)
   free (random_indices);
 }
 
-G_INLINE_FUNC gdouble
+static inline gdouble
 calc_alpha_blend (gdouble *vec,
 		  gdouble  one_over_dist,
 		  gdouble  x,
@@ -536,8 +538,8 @@ fill_poly_color (Polygon   *poly,
   gint min_x, min_y;
   gint max_x, max_y;
   gint size_x, size_y;
-  gint * max_scanlines, *max_scanlines_iter, *max_scanlines_end;
-  gint * min_scanlines, *min_scanlines_iter, *min_scanlines_end;
+  gint * max_scanlines, *max_scanlines_iter;
+  gint * min_scanlines, *min_scanlines_iter;
   gint val;
   gint alpha;
   gint bytes;
@@ -552,7 +554,6 @@ fill_poly_color (Polygon   *poly,
   gint supersample2;
   gint x1, y1, x2, y2;
   gint *vals, *vals_iter, *vals_end;
-  gint pixel_gen_on_next_pass = -1;
 
   sx = poly->pts[0].x;
   sy = poly->pts[0].y;
