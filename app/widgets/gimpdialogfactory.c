@@ -1362,12 +1362,10 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
 
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {
-      if (GTK_IS_WIDGET (list->data)       &&
-	  GTK_WIDGET_TOPLEVEL (list->data) &&
-	  GTK_WIDGET_VISIBLE (list->data))
-	{
-          GtkWidget *widget = GTK_WIDGET (list->data);
+      GtkWidget *widget = list->data;
 
+      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
+	{
           if (!display || display != gtk_widget_get_display (widget))
             {
               display = gtk_widget_get_display (widget);
@@ -1382,7 +1380,8 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
                                         GIMP_CURSOR_MODIFIER_NONE);
             }
 
-	  gdk_window_set_cursor (widget->window, cursor);
+          if (widget->window)
+            gdk_window_set_cursor (widget->window, cursor);
 	}
     }
 
@@ -1399,11 +1398,12 @@ gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
 
   for (list = factory->open_dialogs; list; list = g_list_next (list))
     {
-      if (GTK_IS_WIDGET (list->data)       &&
-	  GTK_WIDGET_TOPLEVEL (list->data) &&
-	  GTK_WIDGET_VISIBLE (list->data))
+      GtkWidget *widget = list->data;
+
+      if (GTK_IS_WIDGET (widget) && GTK_WIDGET_TOPLEVEL (widget))
 	{
-	  gdk_window_set_cursor (GTK_WIDGET (list->data)->window, NULL);
+          if (widget->window)
+            gdk_window_set_cursor (widget->window, NULL);
 	}
     }
 }

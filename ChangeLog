@@ -1,5 +1,15 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_set_busy_foreach)
+	(gimp_dialog_factories_unset_busy_foreach): set/unset the busy
+	cursor on all windows which have widget->window, not only for
+	those which are GTK_WIDGET_VISIBLE. Fixes stale busy cursors when
+	dialogs are hidden while the busy cursor is active and later shown
+	again.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplay.c: added an "id" CONSTRUCT_ONLY
 	property. Some minor cleanup.
 
