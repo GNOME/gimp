@@ -1,3 +1,10 @@
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.c
+	* app/widgets/gimppreviewrenderervectors.c: simplified drawing
+	code to a point where it becomes readable again. Draw centered
+	into the draw_area, using the size of the renderer.
+
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore-stroke.c: cleanup.

@@ -519,8 +519,6 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                             const GdkRectangle  *draw_area,
                             const GdkRectangle  *expose_area)
 {
-  GdkRectangle border_rect;
-
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
   g_return_if_fail (GDK_IS_WINDOW (window));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -534,20 +532,15 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                                                     window, widget,
                                                     draw_area, expose_area);
 
-  border_rect.x      = draw_area->x;
-  border_rect.y      = draw_area->y;
-  border_rect.width  = renderer->width  + 2 * renderer->border_width;
-  border_rect.height = renderer->height + 2 * renderer->border_width;
-
-  if (draw_area->width > border_rect.width)
-    border_rect.x += (draw_area->width - border_rect.width) / 2;
-
-  if (draw_area->height > border_rect.height)
-    border_rect.y += (draw_area->height - border_rect.height) / 2;
-
   if (renderer->border_width > 0)
     {
-      gint i;
+      GdkRectangle rect;
+      gint         i;
+
+      rect.width  = renderer->width  + 2 * renderer->border_width;
+      rect.height = renderer->height + 2 * renderer->border_width;
+      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
+      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
 
       if (! renderer->gc)
         renderer->gc = gimp_preview_renderer_create_gc (renderer,
@@ -557,10 +550,10 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
         gdk_draw_rectangle (window,
                             renderer->gc,
                             FALSE,
-                            border_rect.x + i,
-                            border_rect.y + i,
-                            border_rect.width  - 2 * i - 1,
-                            border_rect.height - 2 * i - 1);
+                            rect.x + i,
+                            rect.y + i,
+                            rect.width  - 2 * i - 1,
+                            rect.height - 2 * i - 1);
     }
 }
 
@@ -585,7 +578,7 @@ gimp_preview_renderer_real_draw (GimpPreviewRenderer *renderer,
                                  const GdkRectangle  *draw_area,
                                  const GdkRectangle  *expose_area)
 {
-  GdkRectangle buf_rect;
+  GdkRectangle rect;
   GdkRectangle render_rect;
 
   if (renderer->needs_render)
@@ -610,22 +603,19 @@ gimp_preview_renderer_real_draw (GimpPreviewRenderer *renderer,
             }
         }
 
-      buf_rect.width  = gdk_pixbuf_get_width  (renderer->no_preview_pixbuf);
-      buf_rect.height = gdk_pixbuf_get_height (renderer->no_preview_pixbuf);
-      buf_rect.x      = (draw_area->width  - buf_rect.width)  / 2;
-      buf_rect.y      = (draw_area->height - buf_rect.height) / 2;
+      rect.width  = gdk_pixbuf_get_width  (renderer->no_preview_pixbuf);
+      rect.height = gdk_pixbuf_get_height (renderer->no_preview_pixbuf);
+      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
+      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
 
-      buf_rect.x += draw_area->x;
-      buf_rect.y += draw_area->y;
-
-      if (gdk_rectangle_intersect (&buf_rect, (GdkRectangle *) expose_area,
+      if (gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area,
                                    &render_rect))
         {
           gdk_draw_pixbuf (GDK_DRAWABLE (window),
                            widget->style->bg_gc[widget->state],
                            renderer->no_preview_pixbuf,
-                           render_rect.x - buf_rect.x,
-                           render_rect.y - buf_rect.y,
+                           render_rect.x - rect.x,
+                           render_rect.y - rect.y,
                            render_rect.x,
                            render_rect.y,
                            render_rect.width,
@@ -636,28 +626,19 @@ gimp_preview_renderer_real_draw (GimpPreviewRenderer *renderer,
     }
   else if (renderer->buffer)
     {
-      buf_rect.x      = draw_area->x + renderer->border_width;
-      buf_rect.y      = draw_area->y + renderer->border_width;
-      buf_rect.width  = renderer->width  + 2 * renderer->border_width;
-      buf_rect.height = renderer->height + 2 * renderer->border_width;
+      rect.width  = renderer->width;
+      rect.height = renderer->height;
+      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
+      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
 
-      if (draw_area->width > buf_rect.width)
-        buf_rect.x += (draw_area->width - buf_rect.width) / 2;
-
-      if (draw_area->height > buf_rect.height)
-        buf_rect.y += (draw_area->height - buf_rect.height) / 2;
-
-      buf_rect.width  -= 2 * renderer->border_width;
-      buf_rect.height -= 2 * renderer->border_width;
-
-      if (gdk_rectangle_intersect (&buf_rect, (GdkRectangle *) expose_area,
+      if (gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area,
                                    &render_rect))
         {
           guchar *buf;
 
           buf = (renderer->buffer +
-                 (render_rect.y - buf_rect.y) * renderer->rowstride +
-                 (render_rect.x - buf_rect.x) * renderer->bytes);
+                 (render_rect.y - rect.y) * renderer->rowstride +
+                 (render_rect.x - rect.x) * renderer->bytes);
 
           gdk_draw_rgb_image_dithalign (window,
                                         widget->style->black_gc,

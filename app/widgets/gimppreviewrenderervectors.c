@@ -102,21 +102,10 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
   gboolean      closed;
   gdouble       xscale, yscale;
 
-  rect.x      = draw_area->x + renderer->border_width;
-  rect.y      = draw_area->y + renderer->border_width;
-  rect.width  = draw_area->width  - 2 * renderer->border_width;
-  rect.height = draw_area->height - 2 * renderer->border_width;
-
-  if (rect.width > renderer->width)
-    {
-      rect.x += (rect.width - renderer->width) / 2;
-      rect.width  = renderer->width;
-    }
-  if (rect.height > renderer->height)
-    {
-      rect.y += (rect.height - renderer->height) / 2;
-      rect.height  = renderer->height;
-    }
+  rect.width  = renderer->width;
+  rect.height = renderer->height;
+  rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
+  rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
 
   if (! gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area, &area))
     return;
