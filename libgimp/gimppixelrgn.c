@@ -460,13 +460,11 @@ gimp_pixel_rgn_set_rect (GPixelRgn *pr,
 }
 
 gpointer
-gimp_pixel_rgns_register (int nrgns,
-			  ...)
+gimp_pixel_rgns_register2 (int nrgns, GPixelRgn **prs)
 {
   GPixelRgn *pr;
   GPixelRgnHolder *prh;
   GPixelRgnIterator *pri;
-  va_list ap;
   int found;
 
   pri = g_new (GPixelRgnIterator, 1);
@@ -476,12 +474,10 @@ gimp_pixel_rgns_register (int nrgns,
   if (nrgns < 1)
     return NULL;
 
-  va_start (ap, nrgns);
-
   found = FALSE;
   while (nrgns --)
     {
-      pr = va_arg (ap, GPixelRgn *);
+      pr = prs[nrgns];
       prh = g_new (GPixelRgnHolder, 1);
       prh->pr = pr;
 
@@ -507,9 +503,32 @@ gimp_pixel_rgns_register (int nrgns,
       pri->pixel_regions = g_slist_prepend (pri->pixel_regions, prh);
     }
 
+  return gimp_pixel_rgns_configure (pri);
+}
+
+gpointer
+gimp_pixel_rgns_register (int nrgns,
+			  ...)
+{
+  GPixelRgn **prs;
+  gpointer pri;
+  int n;
+  va_list ap;
+
+  prs = g_new (GPixelRgn *,nrgns);
+
+  va_start (ap, nrgns);
+
+  for (n = nrgns; n--; )
+    prs[n] = va_arg (ap, GPixelRgn *);
+
   va_end (ap);
 
-  return gimp_pixel_rgns_configure (pri);
+  pri = gimp_pixel_rgns_register2 (nrgns, prs);
+  
+  g_free (prs);
+
+  return pri;
 }
 
 gpointer

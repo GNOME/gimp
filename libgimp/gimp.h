@@ -784,6 +784,8 @@ void     gimp_pixel_rgn_set_rect  (GPixelRgn *pr,
 				   int        height);
 gpointer gimp_pixel_rgns_register (int        nrgns,
 				   ...);
+gpointer gimp_pixel_rgns_register2(int        nrgns,
+                                   GPixelRgn **prs);
 gpointer gimp_pixel_rgns_process  (gpointer   pri_ptr);
 
 

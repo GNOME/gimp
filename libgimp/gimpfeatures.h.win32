@@ -43,6 +43,7 @@ extern "C" {
 #define GIMP_HAVE_FEATURES_1_1_5			1-1-5
 
 #define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
+#define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
 
 #ifdef __cplusplus
 }
