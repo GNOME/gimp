@@ -64,16 +64,18 @@ text_render (GimpImage    *gimage,
   if (border < 0)
     border = 0;
 
-  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
+  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
+                               &color);
 
   gtext = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
                                    "text",   text,
                                    "font",   fontname,
                                    "border", border,
-                                   "unit",   GIMP_UNIT_PIXEL,
 				   "color",  &color,
                                    NULL));
-  gtext->size = -1;
+
+  /*  if font-size is < 0, it is taken from the font name */
+  gtext->font_size = -1.0;
 
   layer = gimp_text_layer_new (gimage, gtext);
 
@@ -120,7 +122,7 @@ text_get_extents (const gchar *fontname,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
-  PangoRectangle        rect;
+  PangoRectangle        ink_rect;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
@@ -133,24 +135,26 @@ text_get_extents (const gchar *fontname,
   context = pango_ft2_get_context (72.0, 72.0);
 
   layout = pango_layout_new (context);
+
+  g_object_unref (context);  
+
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (layout, text, -1);
 
-  pango_layout_get_pixel_extents (layout, &rect, NULL);
+  pango_layout_get_pixel_extents (layout, &ink_rect, NULL);
 
   if (width)
-    *width = rect.width;
+    *width = ink_rect.width;
   if (height)
-    *height = rect.height;
+    *height = ink_rect.height;
   if (ascent)
-    *ascent = -rect.y;
+    *ascent = -ink_rect.y;
   if (descent)
-    *descent = rect.height + rect.y;
+    *descent = ink_rect.height + ink_rect.y;
 
   g_object_unref (layout);
-  g_object_unref (context);  
 
   return TRUE;
 }

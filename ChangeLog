@@ -1,3 +1,14 @@
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: added new enum GimpGravityType.
+
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayer.[ch]: added support for specifying a
+	fixed layer size and how to position the text inside the layer.
+
+	* app/text/gimptext-compat.c
+	* app/tools/gimptexttool.c: changed accordingly.
+
 2003-01-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/file-dialog-utils.[ch] (file_dialog_update_menus): removed.

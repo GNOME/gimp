@@ -41,7 +41,6 @@ struct _GimpTextLayer
   GimpLayer     layer;
 
   GimpText     *text;
-  PangoContext *context;  /* should move to GimpImage ? */
 };
 
 struct _GimpTextLayerClass
@@ -54,7 +53,7 @@ struct _GimpTextLayerClass
 
 GType       gimp_text_layer_get_type (void) G_GNUC_CONST;
 
-GimpLayer * gimp_text_layer_new      (GimpImage *gimage,
+GimpLayer * gimp_text_layer_new      (GimpImage *image,
 				      GimpText  *text);
 
 

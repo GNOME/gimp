@@ -94,6 +94,24 @@ typedef enum
 } GimpConvertDitherType;
 
 
+#define GIMP_TYPE_GRAVITY_TYPE (gimp_gravity_type_get_type ())
+
+GType gimp_gravity_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_GRAVITY_CENTER,
+  GIMP_GRAVITY_NORTH,
+  GIMP_GRAVITY_NORTH_WEST,
+  GIMP_GRAVITY_NORTH_EAST,
+  GIMP_GRAVITY_SOUTH,
+  GIMP_GRAVITY_SOUTH_WEST,
+  GIMP_GRAVITY_SOUTH_EAST,
+  GIMP_GRAVITY_WEST,
+  GIMP_GRAVITY_EAST
+} GimpGravityType;
+
+
 #define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
 
 GType gimp_fill_type_get_type (void) G_GNUC_CONST;

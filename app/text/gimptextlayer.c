@@ -50,16 +50,24 @@ static TempBuf * gimp_text_layer_get_preview   (GimpViewable       *viewable,
 						gint                width,
 						gint                height);
 
-static void          gimp_text_layer_ensure_context (GimpTextLayer *layer);
-static PangoLayout * gimp_text_layer_layout_new     (GimpTextLayer *layer,
-						     gint          *border);
-static void          gimp_text_layer_render_layout  (GimpTextLayer *layer,
-						     PangoLayout   *layout,
-						     gint           x,
-						     gint           y);
+static PangoLayout  * gimp_text_layer_layout_new      (GimpTextLayer *layer);
+static gboolean       gimp_text_layer_render          (GimpTextLayer *layer);
+static gboolean       gimp_text_layer_position_layout (GimpTextLayer *layer,
+                                                       PangoLayout   *layout,
+                                                       gint          *x,
+                                                       gint          *y,
+                                                       gint          *width,
+                                                       gint          *height);
+static void           gimp_text_layer_render_layout   (GimpTextLayer *layer,
+                                                       PangoLayout   *layout,
+                                                       gint           x,
+                                                       gint           y);
+
+static PangoContext * gimp_image_get_pango_context    (GimpImage     *image);
 
 
 static GimpLayerClass *parent_class = NULL;
+static GQuark          gimp_text_layer_context_quark;
 
 
 GType
@@ -108,13 +116,14 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   gimp_object_class->get_memsize = gimp_text_layer_get_memsize;
 
   viewable_class->get_preview = gimp_text_layer_get_preview;
+
+  gimp_text_layer_context_quark = g_quark_from_static_string ("pango-context");
 }
 
 static void
 gimp_text_layer_init (GimpTextLayer *layer)
 {
-  layer->text    = NULL;
-  layer->context = NULL;
+  layer->text = NULL;
 }
 
 static void
@@ -129,26 +138,17 @@ gimp_text_layer_finalize (GObject *object)
       g_object_unref (layer->text);
       layer->text = NULL;
     }
-  if (layer->context)
-    {
-      g_object_unref (layer->context);
-      layer->context = NULL;
-    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpLayer *
-gimp_text_layer_new (GimpImage *gimage,
+gimp_text_layer_new (GimpImage *image,
 		     GimpText  *text)
 {
   GimpTextLayer  *layer;
-  PangoLayout    *layout;
-  PangoRectangle  ink;
-  PangoRectangle  logical;
-  gint            border;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
   if (!text->text)
@@ -157,38 +157,13 @@ gimp_text_layer_new (GimpImage *gimage,
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
 
   layer->text = g_object_ref (text);
-  gimp_item_set_image (GIMP_ITEM (layer), gimage);
+  gimp_item_set_image (GIMP_ITEM (layer), image);
 
-  layout = gimp_text_layer_layout_new (layer, &border);
-
-  pango_layout_get_pixel_extents (layout, &ink, &logical);
-
-  g_print ("ink rect: %d x %d @ %d, %d\n", 
-           ink.width, ink.height, ink.x, ink.y);
-  g_print ("logical rect: %d x %d @ %d, %d\n", 
-           logical.width, logical.height, logical.x, logical.y);
-
-  if (ink.width < 1 || ink.height < 1)
+  if (!gimp_text_layer_render (layer))
     {
-      g_object_unref (layout);
       g_object_unref (layer);
-
       return NULL;
     }
-
-  if (ink.width  > 8192)  ink.width  = 8192;
-  if (ink.height > 8192)  ink.height = 8192;
-
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
-			   gimage,
-                           ink.width  + 2 * border,
-			   ink.height + 2 * border,
-                           gimp_image_base_type_with_alpha (gimage),
-                           text->text  /* name */);
-  
-  gimp_text_layer_render_layout (layer, layout,
-				 border - ink.x, border - ink.y);
-  g_object_unref (layout);
 
   return GIMP_LAYER (layer);
 }
@@ -221,33 +196,54 @@ gimp_text_layer_get_preview (GimpViewable *viewable,
 							  width, height);
 }
 
-static void
-gimp_text_layer_ensure_context (GimpTextLayer *layer)
+
+static gboolean
+gimp_text_layer_render (GimpTextLayer *layer)
 {
-  GimpImage *image;
-  gdouble    xres, yres;
+  GimpDrawable   *drawable;
+  PangoLayout    *layout;
+  gint            x, y;
+  gint            width, height;
 
-  if (layer->context)
-    return;
+  layout = gimp_text_layer_layout_new (layer);
 
-  image = gimp_item_get_image (GIMP_ITEM (layer));
-  gimp_image_get_resolution (image, &xres, &yres);
+  if (!gimp_text_layer_position_layout (layer, layout,
+                                        &x, &y, &width, &height))
+    {
+      g_object_unref (layout);
+      return FALSE;
+    }
 
-  layer->context = pango_ft2_get_context (xres, yres);
+  drawable = GIMP_DRAWABLE (layer);
 
-  g_signal_connect_object (image, "resolution_changed",
-			   G_CALLBACK (g_object_unref),
-			   layer->context, G_CONNECT_SWAPPED);
+  if (width  != gimp_drawable_width (drawable) ||
+      height != gimp_drawable_height (drawable))
+    {
+      GimpImage * image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_object_add_weak_pointer (G_OBJECT (layer->context),
-			     (gpointer *) &layer->context);
+      gimp_drawable_configure (drawable,
+                               image,
+                               width, height,
+                               gimp_image_base_type_with_alpha (image),
+                               layer->text->text  /* name */);
+    }
+  else
+    {
+      gimp_object_set_name (GIMP_OBJECT (layer), layer->text->text);
+    }
+
+  gimp_text_layer_render_layout (layer, layout, x, y);
+  g_object_unref (layout);
+
+  return TRUE;
 }
 
 static PangoLayout *
-gimp_text_layer_layout_new (GimpTextLayer *layer,
-			    gint          *border)
+gimp_text_layer_layout_new (GimpTextLayer *layer)
 {
   GimpText             *text = layer->text;
+  GimpImage            *image;
+  PangoContext         *context;
   PangoLayout          *layout;
   PangoFontDescription *font_desc;
   gint                  size;
@@ -257,27 +253,25 @@ gimp_text_layer_layout_new (GimpTextLayer *layer,
   if (!font_desc)
     return NULL;
 
-  switch (text->unit)
+  image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  switch (text->font_size_unit)
     {
     case GIMP_UNIT_PIXEL:
-      size    = PANGO_SCALE * text->size;
-      *border = text->border;
+      size = PANGO_SCALE * text->font_size;
       break;
 
     default:
       {
-	GimpImage *image;
-	gdouble    xres, yres;
-	gdouble    factor;
+	gdouble xres, yres;
+	gdouble factor;
 
-	factor = gimp_unit_get_factor (text->unit);
+	factor = gimp_unit_get_factor (text->font_size_unit);
 	g_return_val_if_fail (factor > 0.0, NULL);
 
-	image = gimp_item_get_image (GIMP_ITEM (layer));
 	gimp_image_get_resolution (image, &xres, &yres);
 
-	size    = (gdouble) PANGO_SCALE * text->size * yres / factor;
-	*border = text->border * yres / factor;
+	size = (gdouble) PANGO_SCALE * text->font_size * yres / factor;
       }
       break;
     }
@@ -285,9 +279,10 @@ gimp_text_layer_layout_new (GimpTextLayer *layer,
   if (size > 1)
     pango_font_description_set_size (font_desc, size);
 
-  gimp_text_layer_ensure_context (layer);
+  context = gimp_image_get_pango_context (image);
 
-  layout = pango_layout_new (layer->context);
+  layout = pango_layout_new (context);
+  g_object_unref (context);
 
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
@@ -295,6 +290,102 @@ gimp_text_layer_layout_new (GimpTextLayer *layer,
   pango_layout_set_text (layout, text->text, -1);
 
   return layout;
+}
+
+static gboolean
+gimp_text_layer_position_layout (GimpTextLayer *layer,
+                                 PangoLayout   *layout,
+                                 gint          *x,
+                                 gint          *y,
+                                 gint          *width,
+                                 gint          *height)
+{
+  GimpText       *text;
+  PangoRectangle  ink;
+  PangoRectangle  logical;
+  gboolean        fixed;
+
+  text = layer->text;
+  fixed = (text->fixed_width > 1 && text->fixed_height > 1);
+
+  pango_layout_get_pixel_extents (layout, &ink, &logical);
+
+  g_print ("ink rect: %d x %d @ %d, %d\n", 
+           ink.width, ink.height, ink.x, ink.y);
+  g_print ("logical rect: %d x %d @ %d, %d\n", 
+           logical.width, logical.height, logical.x, logical.y);
+
+  if (!fixed)
+    {
+      if (ink.width < 1 || ink.height < 1)
+        return FALSE;
+
+      /* sanity checks for insane font sizes */
+      if (ink.width  > 8192)  ink.width  = 8192;
+      if (ink.height > 8192)  ink.height = 8192;
+    }
+
+  *width  = fixed ? text->fixed_width  : ink.width;
+  *height = fixed ? text->fixed_height : ink.height;
+
+  /* border should only be used by the compatibility API;
+     we assume that gravity is CENTER
+   */
+  if (text->border)
+    {
+      fixed = TRUE;
+
+      *width  = ink.width  + 2 * text->border;
+      *height = ink.height + 2 * text->border;
+    }
+
+  *x = - ink.x;
+  *y = - ink.y;
+
+  if (!fixed)
+    return TRUE;
+
+  switch (text->gravity)
+    {
+    case GIMP_GRAVITY_NORTH_WEST:
+    case GIMP_GRAVITY_SOUTH_WEST:
+    case GIMP_GRAVITY_WEST:
+      break;
+      
+    case GIMP_GRAVITY_CENTER:
+    case GIMP_GRAVITY_NORTH:
+    case GIMP_GRAVITY_SOUTH:
+      *x += (*width - ink.width)  / 2;
+      break;
+      
+    case GIMP_GRAVITY_NORTH_EAST:
+    case GIMP_GRAVITY_SOUTH_EAST:
+    case GIMP_GRAVITY_EAST:
+      *x += (*width - ink.width);
+      break;
+    }
+
+  switch (text->gravity)
+    {
+    case GIMP_GRAVITY_NORTH:
+    case GIMP_GRAVITY_NORTH_WEST:
+    case GIMP_GRAVITY_NORTH_EAST:
+      break;
+
+    case GIMP_GRAVITY_CENTER:
+    case GIMP_GRAVITY_WEST:
+    case GIMP_GRAVITY_EAST:
+      *y += (*height - ink.height)  / 2;
+      break;
+
+    case GIMP_GRAVITY_SOUTH:
+    case GIMP_GRAVITY_SOUTH_WEST:
+    case GIMP_GRAVITY_SOUTH_EAST:
+      *y += (*height - ink.height);
+      break;
+    }
+
+  return TRUE;
 }
 
 static void
@@ -328,3 +419,36 @@ gimp_text_layer_render_layout (GimpTextLayer *layer,
 }
 
 
+static void
+detach_pango_context (GObject *image)
+{
+  g_object_set_qdata (image, gimp_text_layer_context_quark, NULL);
+}
+
+static PangoContext *
+gimp_image_get_pango_context (GimpImage *image)
+{
+  PangoContext *context;
+
+  context = (PangoContext *) g_object_get_qdata (G_OBJECT (image),
+                                                 gimp_text_layer_context_quark);
+
+  if (!context)
+    {
+      gdouble xres, yres;
+      
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      context = pango_ft2_get_context (xres, yres);
+
+      g_signal_connect_object (image, "resolution_changed",
+                               G_CALLBACK (detach_pango_context),
+                               context, 0);
+
+      g_object_set_qdata_full (G_OBJECT (image),
+                               gimp_text_layer_context_quark, context,
+                               (GDestroyNotify) g_object_unref);
+    }
+
+  return g_object_ref (context);
+}

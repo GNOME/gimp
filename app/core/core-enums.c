@@ -93,6 +93,32 @@ gimp_convert_dither_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_gravity_type_enum_values[] =
+{
+  { GIMP_GRAVITY_CENTER, "GIMP_GRAVITY_CENTER", "center" },
+  { GIMP_GRAVITY_NORTH, "GIMP_GRAVITY_NORTH", "north" },
+  { GIMP_GRAVITY_NORTH_WEST, "GIMP_GRAVITY_NORTH_WEST", "north-west" },
+  { GIMP_GRAVITY_NORTH_EAST, "GIMP_GRAVITY_NORTH_EAST", "north-east" },
+  { GIMP_GRAVITY_SOUTH, "GIMP_GRAVITY_SOUTH", "south" },
+  { GIMP_GRAVITY_SOUTH_WEST, "GIMP_GRAVITY_SOUTH_WEST", "south-west" },
+  { GIMP_GRAVITY_SOUTH_EAST, "GIMP_GRAVITY_SOUTH_EAST", "south-east" },
+  { GIMP_GRAVITY_WEST, "GIMP_GRAVITY_WEST", "west" },
+  { GIMP_GRAVITY_EAST, "GIMP_GRAVITY_EAST", "east" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_gravity_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpGravityType", gimp_gravity_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_fill_type_enum_values[] =
 {
   { GIMP_FOREGROUND_FILL, N_("Foreground"), "foreground-fill" },

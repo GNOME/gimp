@@ -34,16 +34,21 @@ typedef struct _GimpTextClass  GimpTextClass;
 
 struct _GimpText
 {
-  GObject       parent_instance;
+  GObject          parent_instance;
 
-  gchar        *text;
-  gchar        *font;
-  gdouble       size;
-  gdouble       border;
-  GimpUnit      unit;
-  GimpRGB       color;
-  gdouble       letter_spacing;
-  gdouble       line_spacing;
+  gchar           *text;
+  gchar           *font;
+  gdouble          font_size;
+  GimpUnit         font_size_unit;
+  GimpRGB          color;
+  gdouble          letter_spacing;
+  gdouble          line_spacing;
+  gint             fixed_width;
+  gint             fixed_height;
+  GimpGravityType  gravity;
+
+  /* for historical reasons, don't use */
+  gint             border;
 };
 
 struct _GimpTextClass
@@ -52,7 +57,7 @@ struct _GimpTextClass
 };
 
 
-GType      gimp_text_get_type (void) G_GNUC_CONST;
+GType  gimp_text_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_TEXT_H__ */

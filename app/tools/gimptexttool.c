@@ -58,7 +58,7 @@
 
 
 #define DEFAULT_FONT       "sans Normal"
-#define DEFAULT_FONT_SIZE  18
+#define DEFAULT_FONT_SIZE  18.0
 
 
 /*  the text tool structures  */
@@ -75,10 +75,6 @@ struct _TextOptions
   gdouble          size;
   gdouble          size_d;
   GtkObject       *size_w;
-
-  gdouble          border;
-  gdouble          border_d;
-  GtkObject       *border_w;
 
   GimpUnit         unit;
   GimpUnit         unit_d;
@@ -357,9 +353,8 @@ text_tool_render (GimpTextTool *text_tool)
   text = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
                                   "text",           str,
                                   "font",           font,
-                                  "size",           options->size,
-                                  "border",         options->border,
-                                  "unit",           options->unit,
+                                  "font-size",      options->size,
+                                  "font-size-unit", options->unit,
 				  "color",          &color,
                                   "letter-spacing", options->letter_spacing,
                                   "line-spacing",   options->line_spacing,
@@ -403,7 +398,6 @@ text_tool_options_new (GimpToolInfo *tool_info)
   GtkWidget         *vbox;
   GtkWidget         *table;
   GtkWidget         *size_spinbutton;
-  GtkWidget         *border_spinbutton;
   GtkWidget         *spin_button;
 
   options = g_new0 (TextOptions, 1);
@@ -413,7 +407,6 @@ text_tool_options_new (GimpToolInfo *tool_info)
   ((GimpToolOptions *) options)->reset_func = text_tool_options_reset;
 
   options->fontname_d                                 = DEFAULT_FONT;
-  options->border         = options->border_d         = 0;
   options->size           = options->size_d           = DEFAULT_FONT_SIZE;
   options->unit           = options->unit_d           = GIMP_UNIT_PIXEL;
   options->line_spacing   = options->line_spacing_d   = 1.0;
@@ -431,7 +424,8 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   config = GIMP_DISPLAY_CONFIG (tool_info->gimp->config);
 
-  pango_context = pango_ft2_get_context (config->monitor_xres, config->monitor_yres);
+  pango_context = pango_ft2_get_context (config->monitor_xres,
+                                         config->monitor_yres);
 
   options->font_selection = gimp_font_selection_new (pango_context);
 
@@ -457,19 +451,6 @@ text_tool_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->size);
 
-  options->border_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                                            _("_Border:"), -1, 5,
-                                            options->border,
-                                            0.0, 100.0, 1.0, 50.0, 1,
-                                            FALSE, 0.0, 32767.0,
-                                            NULL, NULL);
-
-  border_spinbutton = GIMP_SCALE_ENTRY_SPINBUTTON (options->border_w);
-
-  g_signal_connect (options->border_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->border);
-
   options->unit_w = gimp_unit_menu_new ("%a", options->unit, 
                                         TRUE, FALSE, TRUE);
 
@@ -479,8 +460,6 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
                      size_spinbutton);
-  g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
-                     border_spinbutton);
 
   g_signal_connect (options->unit_w, "unit_changed",
                     G_CALLBACK (gimp_unit_menu_update),
@@ -523,8 +502,6 @@ text_tool_options_reset (GimpToolOptions *tool_options)
     (GIMP_FONT_SELECTION (options->font_selection), options->fontname_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
 			    options->size_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
-			    options->border_d);
   
   /* resetting the unit menu is a bit tricky ... */
   options->unit = options->unit_d;

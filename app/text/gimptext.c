@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimplimits.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "text/text-types.h"
@@ -36,12 +37,15 @@ enum
   PROP_0,
   PROP_TEXT,
   PROP_FONT,
-  PROP_SIZE,
-  PROP_BORDER,
-  PROP_UNIT,
+  PROP_FONT_SIZE,
+  PROP_FONT_SIZE_UNIT,
   PROP_COLOR,
   PROP_LETTER_SPACING,
-  PROP_LINE_SPACING
+  PROP_LINE_SPACING,
+  PROP_FIXED_WIDTH,
+  PROP_FIXED_HEIGHT,
+  PROP_GRAVITY,
+  PROP_BORDER
 };
 
 static void  gimp_text_class_init   (GimpTextClass *klass);
@@ -110,12 +114,12 @@ gimp_text_class_init (GimpTextClass *klass)
 				   "font", NULL,
 				   "Sans",
 				   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE,
-				   "size", NULL,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
+				   "font-size", NULL,
 				   0.0, G_MAXFLOAT, 18.0,
 				   0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-				 "unit", NULL,
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FONT_SIZE_UNIT,
+				 "font-size-unit", NULL,
 				 TRUE, GIMP_UNIT_PIXEL,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
@@ -128,12 +132,25 @@ gimp_text_class_init (GimpTextClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing", NULL,
-                                    0.0, 64.0, 1.0,
-                                    0);
-  /* border is supposed to die */
-  param_spec = g_param_spec_double ("border", NULL, NULL,
-                                    0.0, G_MAXFLOAT, 0.0,
-                                    G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+                                   0.0, 64.0, 1.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
+                                "fixed-width", NULL,
+                                0, GIMP_MAX_IMAGE_SIZE, 0,
+                                0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_HEIGHT,
+                                "fixed-height", NULL,
+                                0, GIMP_MAX_IMAGE_SIZE, 0,
+                                0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRAVITY,
+                                "gravity", NULL,
+                                 GIMP_TYPE_GRAVITY_TYPE, GIMP_GRAVITY_CENTER,
+                                 0);
+
+  /*  border does only exist to implement the old text API  */
+  param_spec = g_param_spec_int ("border", NULL, NULL,
+                                 0, GIMP_MAX_IMAGE_SIZE, 0,
+                                 G_PARAM_CONSTRUCT | G_PARAM_WRITABLE);
   g_object_class_install_property (object_class, PROP_BORDER, param_spec);
 
 }
@@ -173,14 +190,11 @@ gimp_text_get_property (GObject      *object,
     case PROP_FONT:
       g_value_set_string (value, text->font);
       break;
-    case PROP_SIZE:
-      g_value_set_double (value, text->size);
+    case PROP_FONT_SIZE:
+      g_value_set_double (value, text->font_size);
       break;
-    case PROP_BORDER:
-      g_value_set_double (value, text->border);
-      break;
-    case PROP_UNIT:
-      g_value_set_int (value, text->unit);
+    case PROP_FONT_SIZE_UNIT:
+      g_value_set_int (value, text->font_size_unit);
       break;
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
@@ -190,6 +204,15 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_LINE_SPACING:
       g_value_set_double (value, text->line_spacing);
+      break;
+    case PROP_FIXED_WIDTH:
+      g_value_set_int (value, text->fixed_width);
+      break;
+    case PROP_FIXED_HEIGHT:
+      g_value_set_int (value, text->fixed_height);
+      break;
+    case PROP_GRAVITY:
+      g_value_set_enum (value, text->gravity);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -216,14 +239,11 @@ gimp_text_set_property (GObject      *object,
       g_free (text->font);
       text->font = g_value_dup_string (value);
       break;
-    case PROP_SIZE:
-      text->size = g_value_get_double (value);
+    case PROP_FONT_SIZE:
+      text->font_size = g_value_get_double (value);
       break;
-    case PROP_BORDER:
-      text->border = g_value_get_double (value);
-      break;
-    case PROP_UNIT:
-      text->unit = g_value_get_int (value);
+    case PROP_FONT_SIZE_UNIT:
+      text->font_size_unit = g_value_get_int (value);
       break;
     case PROP_COLOR:
       color = g_value_get_boxed (value);
@@ -234,6 +254,20 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_LINE_SPACING:
       text->line_spacing = g_value_get_double (value);
+      break;
+    case PROP_FIXED_WIDTH:
+      text->fixed_width = g_value_get_int (value);
+      break;
+    case PROP_FIXED_HEIGHT:
+      text->fixed_height = g_value_get_int (value);
+      break;
+    case PROP_GRAVITY:
+      text->gravity = g_value_get_enum (value);
+      break;
+    case PROP_BORDER:
+      text->border = g_value_get_int (value);
+      if (text->border > 0)
+        text->gravity = GIMP_GRAVITY_CENTER;
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
