@@ -838,7 +838,7 @@ file_prefs_toggle_callback (GtkWidget *widget,
   else if (data==&confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&edit_stingy_memory_use)
-    stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
+    edit_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&edit_install_cmap)
     edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&edit_cycled_marching_ants)

@@ -1,3 +1,7 @@
+Mon Apr 13 13:09:32 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/commands.c: Fixed prefs to save stingy memory
+
 Mon Apr 13 16:22:38 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/convert.c: converting an empty image from grayscale to
