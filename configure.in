@@ -396,7 +396,6 @@ plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
-plug-ins/fs/Makefile
 plug-ins/flarefx/Makefile
 plug-ins/webbrowser/Makefile
 app/Makefile
