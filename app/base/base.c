@@ -55,6 +55,7 @@ static void   toast_old_temp_files (void);
 void
 base_init (void)
 {
+  gchar *swapfile;
   gchar *path;
 
 #ifdef HAVE_ASM_MMX
@@ -68,10 +69,14 @@ base_init (void)
   if (base_config->swap_path == NULL)
     base_config->swap_path = g_strdup (g_get_tmp_dir ());
 
-  path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
-			  base_config->swap_path,
-			  (unsigned long) getpid ());
+  swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
+
+  path = g_build_filename (base_config->swap_path, swapfile, NULL);
+
+  g_free (swapfile);
+
   tile_swap_add (path, NULL, NULL);
+
   g_free (path);
 
   paint_funcs_setup ();
@@ -93,7 +98,6 @@ toast_old_temp_files (void)
 {
   DIR           *dir;
   struct dirent *entry;
-  GString       *filename = g_string_new ("");
 
   dir = opendir (base_config->swap_path);
 
@@ -101,7 +105,7 @@ toast_old_temp_files (void)
     return;
 
   while ((entry = readdir (dir)) != NULL)
-    if (!strncmp (entry->d_name, "gimpswap.", 9))
+    if (! strncmp (entry->d_name, "gimpswap.", 9))
       {
         /* don't try to kill swap files of running processes
          * yes, I know they might not all be gimp processes, and when you
@@ -112,20 +116,24 @@ toast_old_temp_files (void)
          */
 
 	gint pid = atoi (entry->d_name + 9);
+
+        /*  On Windows, you can't remove open files anyhow,
+         *  so no harm trying.
+         */
 #ifndef G_OS_WIN32
 	if (kill (pid, 0))
 #endif
 	  {
-	    /*  On Windows, you can't remove open files anyhow,
-	     *  so no harm trying.
-	     */
-	    g_string_printf (filename, "%s" G_DIR_SEPARATOR_S "%s",
-                             base_config->swap_path, entry->d_name);
-	    unlink (filename->str);
+            gchar *filename;
+
+	    filename = g_build_filename (base_config->swap_path, entry->d_name,
+                                         NULL);
+
+	    unlink (filename);
+
+            g_free (filename);
 	  }
       }
 
   closedir (dir);
-  
-  g_string_free (filename, TRUE);
 }

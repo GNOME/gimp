@@ -341,9 +341,9 @@ plug_in_init (Gimp               *gimp,
       if (g_path_is_absolute (the_gimp->config->pluginrc_path))
         filename = g_strdup (the_gimp->config->pluginrc_path);
       else
-        filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-				    gimp_directory (),
-				    the_gimp->config->pluginrc_path);
+        filename = g_build_filename (gimp_directory (),
+                                     the_gimp->config->pluginrc_path,
+                                     NULL);
     }
   else
     filename = gimp_personal_rc_file ("pluginrc");
@@ -3638,12 +3638,12 @@ static gchar *
 plug_in_search_in_path (gchar *search_path,
 			gchar *filename)
 {
-  static gchar  path[256];
-  gchar        *local_path;
-  gchar        *token;
-  gchar        *next_token;
-  struct stat   buf;
-  gint          err;
+  gchar       *local_path;
+  gchar       *token;
+  gchar       *next_token;
+  gchar       *path;
+  struct stat  buf;
+  gint         err;
 
   local_path = g_strdup (search_path);
   next_token = local_path;
@@ -3651,11 +3651,7 @@ plug_in_search_in_path (gchar *search_path,
 
   while (token)
     {
-      sprintf (path, "%s", token);
-
-      if (token[strlen (token) - 1] != G_DIR_SEPARATOR)
-	strcat (path, G_DIR_SEPARATOR_S);
-      strcat (path, filename);
+      path = g_build_filename (token, filename, NULL);
 
       err = stat (path, &buf);
       if (!err && S_ISREG (buf.st_mode))
@@ -3663,6 +3659,8 @@ plug_in_search_in_path (gchar *search_path,
 	  token = path;
 	  break;
 	}
+
+      g_free (path);
 
       token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
     }

@@ -316,10 +316,7 @@ about_dialog_load_logo (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  filename = g_strconcat (gimp_data_directory (),
-			  G_DIR_SEPARATOR_S,
-			  "gimp_logo.ppm",
-			  NULL);
+  filename = g_build_filename (gimp_data_directory (), "gimp_logo.ppm", NULL);
   fp = fopen (filename, "rb");
   g_free (filename);
 

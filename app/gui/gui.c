@@ -179,10 +179,7 @@ gui_libs_init (Gimp    *gimp,
 
   if (theme_dir)
     {
-      gtkrc = g_strconcat (theme_dir,
-			   G_DIR_SEPARATOR_S,
-			   "gtkrc",
-			   NULL);
+      gtkrc = g_build_filename (theme_dir, "gtkrc", NULL);
     }
   else
     {

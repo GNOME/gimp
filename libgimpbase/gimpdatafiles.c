@@ -171,9 +171,8 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 		  continue;
 		}
 
-	      filename = g_strdup_printf ("%s%s",
-					  (gchar *) list->data,
-					  dir_ent->d_name);
+	      filename = g_build_filename ((gchar *) list->data,
+                                           dir_ent->d_name, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);

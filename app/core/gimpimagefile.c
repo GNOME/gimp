@@ -160,9 +160,7 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
   dirname  = g_path_get_dirname (GIMP_OBJECT (imagefile)->name);
   basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
 
-  thumbname = g_strconcat (dirname, G_DIR_SEPARATOR_S,
-                           ".xvpics", G_DIR_SEPARATOR_S,
-                           basename, NULL);
+  thumbname = g_build_filename (dirname, ".xvpics", basename, NULL);
 
   g_free (dirname);
   g_free (basename);

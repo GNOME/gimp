@@ -234,9 +234,7 @@ file_load_thumbnail_invoker (Gimp     *gimp,
     {
       pname = g_path_get_dirname (filename);
       fname = g_path_get_basename (filename);
-      tname = g_strconcat (pname, G_DIR_SEPARATOR_S, ".xvpics", G_DIR_SEPARATOR_S,
-			   fname,
-			   NULL);
+      tname = g_build_filename (pname, ".xvpics", fname, NULL);
       g_free (pname);
       g_free (fname);
       raw_thumb = readXVThumb (tname, &width, &height, &imginfo);
@@ -389,6 +387,7 @@ temp_name_invoker (Gimp     *gimp,
   gchar *name = NULL;
   static gint id = 0;
   static gint pid;
+  gchar *filename;
 
   extension = (gchar *) args[0].value.pdb_pointer;
   if (extension == NULL)
@@ -399,8 +398,12 @@ temp_name_invoker (Gimp     *gimp,
       if (id == 0)
 	pid = getpid();
     
-      name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
-			      base_config->temp_path, pid, id++, extension);
+      filename = g_strdup_printf ("gimp_temp.%d%d.%s",
+				  pid, id++, extension);
+    
+      name = g_build_filename (base_config->temp_path, filename, NULL);
+    
+      g_free (filename);
     }
 
   return_args = procedural_db_return_args (&temp_name_proc, success);

@@ -551,12 +551,8 @@ file_save_thumbnail (GimpImage   *gimage,
   pathname = g_path_get_dirname (full_source_filename);
   filename = g_path_get_basename (full_source_filename);
 
-  xvpathname = g_strconcat (pathname, G_DIR_SEPARATOR_S, ".xvpics",
-			    NULL);
-
-  thumbnailname = g_strconcat (xvpathname, G_DIR_SEPARATOR_S,
-			       filename,
-			       NULL);
+  xvpathname    = g_build_filename (pathname, ".xvpics", NULL);
+  thumbnailname = g_build_filename (xvpathname, filename, NULL);
 
   tbd = temp_buf_data (tempbuf);
 

@@ -1772,8 +1772,7 @@ file_dialog_create (GtkWidget *parent)
 		    G_CALLBACK (file_dialog_cancel_callback),
 		    NULL);
 
-  temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "curves" G_DIR_SEPARATOR_S,
-      			  gimp_directory ());
+  temp = g_build_filename (gimp_directory (), "curves", NULL);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
   g_free (temp);
 

@@ -1611,7 +1611,7 @@ gflare_save (GFlare *gflare)
       if (!path)
 	path = g_strdup (gimp_directory ());
 
-      gflare->filename = g_strdup_printf ("%s%s", path, gflare->name);
+      gflare->filename = g_build_filename ("%s%s", path, gflare->name, NULL);
 
       g_free (path);
     }
@@ -1814,7 +1814,7 @@ gflares_list_load_all (void)
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
+	      filename = g_build_filename (path, dir_ent->d_name, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);

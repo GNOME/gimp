@@ -98,6 +98,7 @@ file_save_dialog_menu_init (void)
   for (list = save_procs; list; list = g_slist_next (list))
     {
       gchar *basename;
+      gchar *filename;
       gchar *page;
       gchar *lowercase_page;
 
@@ -105,11 +106,13 @@ file_save_dialog_menu_init (void)
 
       basename = g_path_get_basename (file_proc->prog);
 
-      page = g_strconcat ("filters", G_DIR_SEPARATOR_S,
-			  basename, ".html",
-			  NULL);
+      filename = g_strconcat (basename, ".html", NULL);
 
       g_free (basename);
+
+      page = g_build_filename ("filters", filename, NULL);
+
+      g_free (filename);
 
       lowercase_page = g_ascii_strdown (page, -1);
 
@@ -393,7 +396,9 @@ file_save_ok_callback (GtkWidget *widget,
 	      g_free (s);
 	    }
 	  else
-	    gtk_file_selection_set_filename (fs, filename);
+            {
+              gtk_file_selection_set_filename (fs, filename);
+            }
 	}
       else
 	{

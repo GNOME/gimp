@@ -906,19 +906,19 @@ static gboolean
 user_install_run (void)
 {
   FILE        *pfp;
-  gchar        buffer[2048];
+  gchar       *filename = NULL;
+  gchar       *command  = NULL;
   struct stat  stat_buf;
   gint         err;
   gboolean     executable = TRUE;
 
-  /*  Generate output  */
-  g_snprintf (buffer, sizeof (buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
-	      gimp_data_directory ());
-  if ((err = stat (buffer, &stat_buf)) != 0)
+  filename = g_build_filename (gimp_data_directory (), USER_INSTALL, NULL);
+
+  if ((err = stat (filename, &stat_buf)) != 0)
     {
       gchar *str;
-      
-      str = g_strdup_printf ("%s\n%s", buffer,
+
+      str = g_strdup_printf ("%s\n%s", filename,
 			     _("does not exist.  Cannot install."));
       add_label (GTK_BOX (log_page), str);
       g_free (str);
@@ -929,8 +929,8 @@ user_install_run (void)
   else if (! (S_IXUSR & stat_buf.st_mode) || ! (S_IRUSR & stat_buf.st_mode))
     {
       gchar *str;
-      
-      str = g_strdup_printf ("%s\n%s", buffer,
+
+      str = g_strdup_printf ("%s\n%s", filename,
 			     _("has invalid permissions.  Cannot install."));
       add_label (GTK_BOX (log_page), str);
       g_free (str);
@@ -942,13 +942,13 @@ user_install_run (void)
   if (executable)
     {
 #ifdef G_OS_WIN32
-      char *quoted_data_dir, *quoted_user_dir, *quoted_sysconf_dir;
+      gchar *quoted_data_dir, *quoted_user_dir, *quoted_sysconf_dir;
 
       /* On Windows, it is common for the GIMP data directory
        * to have spaces in it ("c:\Program Files\GIMP"). Put spaces in quotes.
        */
-      quoted_data_dir = quote_spaces (gimp_data_directory ());
-      quoted_user_dir = quote_spaces (gimp_directory ());
+      quoted_data_dir    = quote_spaces (gimp_data_directory ());
+      quoted_user_dir    = quote_spaces (gimp_directory ());
       quoted_sysconf_dir = quote_spaces (gimp_sysconf_directory ());
 
       /* The Microsoft _popen doesn't work in Windows applications, sigh.
@@ -959,15 +959,23 @@ user_install_run (void)
        */
 
       AllocConsole ();
-      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s",
-		  quoted_data_dir, quoted_data_dir,
-		  quoted_user_dir, quoted_sysconf_dir);
 
-      if (system (buffer) == -1)
-	executable = FALSE;
+      g_free (filename);
+
+      filename = g_build_filename (quoted_data_dir, USER_INSTALL, NULL);
+
+      command = g_strdup_printf ("%s %s %s %s",
+                                 fn,
+                                 quoted_data_dir,
+                                 quoted_user_dir,
+                                 quoted_sysconf_dir);
+
       g_free (quoted_data_dir);
       g_free (quoted_user_dir);
       g_free (quoted_sysconf_dir);
+
+      if (system (command) == -1)
+	executable = FALSE;
 
       if (executable)
 	add_label (GTK_BOX (log_page),
@@ -975,33 +983,40 @@ user_install_run (void)
 		     "If not, installation was successful!\n"
 		     "Otherwise, quit and investigate the possible reason..."));
 #else
-#ifndef __EMX__
-      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s %s",
-		  gimp_data_directory (),
-		  "2>&1",
-		  gimp_data_directory(), gimp_directory (), gimp_sysconf_directory());
-#else
-      g_snprintf (buffer, sizeof(buffer), "cmd.exe /c %s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s %s",
-		  gimp_data_directory (), gimp_data_directory(),
-		  gimp_directory (), gimp_sysconf_directory());
+#ifdef __EMX__
+      command = g_strdup_printf ("cmd.exe /c %s %s %s %s",
+                                 filename,
+                                 gimp_data_directory (),
+                                 gimp_directory (),
+                                 gimp_sysconf_directory());
       {
-	char *s = buffer + 10;
+	gchar *s = buffer + 11;
+
 	while (*s)
 	  {
 	    if (*s == '/') *s = '\\';
 	    s++;
 	  }
       }
+#else
+      command = g_strdup_printf ("%s 2>&1 %s %s %s",
+                                 filename,
+                                 gimp_data_directory (),
+                                 gimp_directory (),
+                                 gimp_sysconf_directory ());
 #endif
+
+      g_free (filename);
 
       /*  urk - should really use something better than popen(), since
        *  we can't tell if the installation script failed --austin
        */
-      if ((pfp = popen (buffer, "r")) != NULL)
+      if ((pfp = popen (command, "r")) != NULL)
 	{
 	  GtkWidget     *scrolled_window;
 	  GtkWidget     *log_view;
 	  GtkTextBuffer *log_buffer;
+          static gchar   buffer[2048];
 
 	  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 	  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -1031,9 +1046,13 @@ user_install_run (void)
 		       "Otherwise, quit and investigate the possible reason..."));
 	}
       else
-	executable = FALSE;
+        {
+          executable = FALSE;
+        }
 #endif /* !G_OS_WIN32 */
     }
+
+  g_free (command);
 
   if (executable)
     {

@@ -75,10 +75,8 @@ tips_dialog_create (void)
     {
       gchar *temp;
 
-      temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S TIPS_DIR_NAME
-                              G_DIR_SEPARATOR_S "%s",
-			      gimp_data_directory (),
-                              _("gimp_tips.txt"));
+      temp = g_build_filename (gimp_data_directory (), TIPS_DIR_NAME,
+                               _("gimp_tips.txt"), NULL);
       read_tips_file (temp);
       g_free (temp);
     }

@@ -2996,32 +2996,33 @@ menus_debug_recurse_menu (GtkWidget *menu,
 	    }
 
 	  item_factory = gtk_item_factory_from_path (path);
+          help_page    = (gchar *) g_object_get_data (G_OBJECT (menu_item), 
+                                                      "help_page");
+
 	  if (item_factory)
 	    {
 	      factory_path = 
                 (gchar *) g_object_get_data (G_OBJECT (item_factory),
                                              "factory_path");
-	      help_page = 
-                g_strconcat (factory_path ? factory_path : "",
-                             factory_path ? G_DIR_SEPARATOR_S : "",
-                             (gchar*) g_object_get_data (G_OBJECT (menu_item), 
-                                                         "help_page"),
-                             NULL);
+
+              if (factory_path)
+                {
+                  help_page = g_build_filename (factory_path, help_page, NULL);
+                }
+              else
+                {
+                  help_page = g_strdup (help_page);
+                }
 	    }
 	  else
 	    {
-	      help_page = 
-                g_strdup ((gchar *) g_object_get_data (G_OBJECT (menu_item), 
-                                                                 "help_page"));
-	    } 
+	      help_page = g_strdup (help_page);
+	    }
 
 	  if (help_page)
 	    {
-	      help_path = 
-                g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
-                             "help", G_DIR_SEPARATOR_S, 
-                             "C", G_DIR_SEPARATOR_S,
-                             help_page, NULL);
+	      help_path = g_build_filename (gimp_data_directory (),
+                                            "help", "C", help_page, NULL);
 
 	      if ((hash = strchr (help_path, '#')) != NULL)
 		*hash = '\0';

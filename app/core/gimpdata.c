@@ -267,6 +267,7 @@ gimp_data_create_filename (GimpData    *data,
   GList *path;
   gchar *dir;
   gchar *filename;
+  gchar *fullpath;
   gchar *safe_name;
   gint   i;
   gint   unum = 1;
@@ -290,27 +291,38 @@ gimp_data_create_filename (GimpData    *data,
     if (safe_name[i] == G_DIR_SEPARATOR || isspace (safe_name[i]))
       safe_name[i] = '_';
 
-  filename = g_strdup_printf ("%s%s%s",
-			      dir, safe_name,
+  filename = g_strdup_printf ("%s%s",
+			      safe_name,
 			      gimp_data_get_extension (data));
 
-  while ((file = fopen (filename, "r")))
+  fullpath = g_build_filename (dir, filename, NULL);
+
+  g_free (filename);
+
+  while ((file = fopen (fullpath, "r")))
     {
       fclose (file);
 
-      g_free (filename);
-      filename = g_strdup_printf ("%s%s_%d%s",
-				  dir, safe_name, unum,
+      g_free (fullpath);
+
+      filename = g_strdup_printf ("%s_%d%s",
+				  safe_name,
+                                  unum,
 				  gimp_data_get_extension (data));
+
+      fullpath = g_build_filename (dir, filename, NULL);
+
+      g_free (filename);
+
       unum++;
     }
 
   g_free (dir);
   g_free (safe_name);
 
-  gimp_data_set_filename (data, filename);
+  gimp_data_set_filename (data, fullpath);
 
-  g_free (filename);
+  g_free (fullpath);
 }
 
 GimpData *

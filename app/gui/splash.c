@@ -212,16 +212,19 @@ static gboolean
 splash_logo_load_size (GtkWidget *window)
 {
   gchar  buf[1024];
+  gchar *filename;
   FILE  *fp;
 
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
-	      gimp_data_directory ());
+  filename = g_build_filename (gimp_data_directory (), "gimp_splash.ppm", NULL);
 
-  fp = fopen (buf, "rb");
-  if (!fp)
+  fp = fopen (filename, "rb");
+
+  g_free (filename);
+
+  if (! fp)
     return FALSE;
 
   fgets (buf, sizeof (buf), fp);
@@ -246,6 +249,7 @@ splash_logo_load (void)
   GtkWidget *preview;
   GdkGC     *gc;
   gchar      buf[1024];
+  gchar     *filename;
   guchar    *pixelrow;
   FILE      *fp;
   gint       count;
@@ -254,11 +258,13 @@ splash_logo_load (void)
   if (! win_initstatus || logo_pixmap || ! splash_show_logo)
     return;
 
-  g_snprintf (buf, sizeof (buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
-	      gimp_data_directory ());
+  filename = g_build_filename (gimp_data_directory (), "gimp_splash.ppm", NULL);
 
-  fp = fopen (buf, "rb");
-  if (!fp)
+  fp = fopen (filename, "rb");
+
+  g_free (filename);
+
+  if (! fp)
     return;
 
   fgets (buf, sizeof (buf), fp);
@@ -285,7 +291,7 @@ splash_logo_load (void)
 
   for (i = 0; i < logo_height; i++)
     {
-      count = fread (pixelrow, sizeof (unsigned char), logo_width * 3, fp);
+      count = fread (pixelrow, sizeof (guchar), logo_width * 3, fp);
       if (count != (logo_width * 3))
 	{
 	  gtk_widget_destroy (preview);

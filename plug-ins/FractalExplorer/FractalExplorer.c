@@ -878,7 +878,7 @@ new_fractalexplorer_obj (gchar *name)
   if (!name)
     name = _("New Fractal");
 
-  fractalexplorer->draw_name = g_strdup(name);
+  fractalexplorer->draw_name = g_strdup (name);
 
   /* Leave options as before */
   pic_obj = current_obj = fractalexplorer;
@@ -1279,15 +1279,14 @@ fractalexplorer_load (gchar *filename,
 static void
 fractalexplorer_list_load_all (GList *plist)
 {
-  fractalexplorerOBJ  * fractalexplorer;
-  GList    * list;
-  gchar	   * path;
-  gchar	   * filename;
-  DIR	   * dir;
-  struct dirent *dir_ent;
-  struct stat	filestat;
-  gint		err;
-  gchar       pathlast;
+  fractalexplorerOBJ *fractalexplorer;
+  GList              *list;
+  gchar	             *path;
+  gchar	             *filename;
+  DIR	             *dir;
+  struct dirent      *dir_ent;
+  struct stat	      filestat;
+  gint		      err;
 
   /*  Make sure to clear any existing fractalexplorers  */
   current_obj = pic_obj = NULL;
@@ -1297,21 +1296,19 @@ fractalexplorer_list_load_all (GList *plist)
     {
       path = list->data;
       list = list->next;
-      pathlast = path[strlen (path) - 1];
 
       /* Open directory */
       dir = opendir (path);
 
       if (!dir)
-	g_warning ("error reading fractalexplorer directory \"%s\"", path);
+        {
+          g_warning ("error reading fractalexplorer directory \"%s\"", path);
+        }
       else
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_strdup_printf
-		("%s%s%s", path,
-		 (pathlast == G_DIR_SEPARATOR ? "" : G_DIR_SEPARATOR_S),
-		 dir_ent->d_name);
+	      filename = g_build_filename (path, dir_ent->d_name, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -1332,17 +1329,17 @@ fractalexplorer_list_load_all (GList *plist)
 		}
 
 	      g_free (filename);
-	    } /* while */
+	    }
 	  closedir (dir);
-	} /* else */
+	}
     }
 
   if(!fractalexplorer_list)
     {
       /* lets have at least one! */
-      fractalexplorer = fractalexplorer_new();
-      fractalexplorer->draw_name = g_strdup(_("My first fractal"));
-      fractalexplorer_list_insert(fractalexplorer);
+      fractalexplorer = fractalexplorer_new ();
+      fractalexplorer->draw_name = g_strdup (_("My first fractal"));
+      fractalexplorer_list_insert (fractalexplorer);
     }
   pic_obj = current_obj = fractalexplorer_list->data;  /* set to first entry */
 

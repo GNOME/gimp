@@ -86,38 +86,31 @@ gimp_directory (void)
 
   const gchar  *env_gimp_dir;
   const gchar  *home_dir;
-  gchar        *home_dir_sep;
 
   if (gimp_dir != NULL)
     return gimp_dir;
 
   env_gimp_dir = g_getenv ("GIMP_DIRECTORY");
-  home_dir = g_get_home_dir ();
+  home_dir     = g_get_home_dir ();
 
-  if (home_dir != NULL && home_dir[strlen (home_dir)-1] != G_DIR_SEPARATOR)
-    home_dir_sep = G_DIR_SEPARATOR_S;
-  else
-    home_dir_sep = "";
-
-  if (NULL != env_gimp_dir)
+  if (env_gimp_dir)
     {
       if (g_path_is_absolute (env_gimp_dir))
-	gimp_dir = g_strdup (env_gimp_dir);
+        {
+          gimp_dir = g_strdup (env_gimp_dir);
+        }
       else
 	{
-	  if (NULL != home_dir)
+	  if (home_dir)
 	    {
-	      gimp_dir = g_strconcat (home_dir,
-				      home_dir_sep,
-				      env_gimp_dir,
-				      NULL);
+	      gimp_dir = g_build_filename (home_dir,
+                                           env_gimp_dir,
+                                           NULL);
 	    }
 	  else
 	    {
-	      gimp_dir = g_strconcat (gimp_data_directory (),
-				      G_DIR_SEPARATOR_S,
-				      env_gimp_dir,
-				      NULL);
+	      gimp_dir = g_build_filename (gimp_data_directory (),
+                                           env_gimp_dir, NULL);
 	    }
 	}
     }
@@ -129,22 +122,17 @@ gimp_directory (void)
 #endif      
 	if (NULL != home_dir)
 	{
-	  gimp_dir = g_strconcat (home_dir,
-				  home_dir_sep,
-				  GIMPDIR,
-				  NULL);
+	  gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
 	}
       else
 	{
 #ifndef G_OS_WIN32
 	  g_message ("warning: no home directory.");
 #endif
-	  gimp_dir = g_strconcat (gimp_data_directory (),
-				  G_DIR_SEPARATOR_S,
-				  GIMPDIR,
-				  ".",
-				  g_get_user_name (),
-				  NULL);
+	  gimp_dir = g_build_filename (gimp_data_directory (),
+                                       GIMPDIR ".",
+                                       g_get_user_name (),
+                                       NULL);
 	}
     }
 
@@ -276,12 +264,12 @@ gimp_sysconf_directory (void)
 
   if (NULL != env_gimp_sysconf_dir)
     {
-      if (!g_path_is_absolute (env_gimp_sysconf_dir))
+      if (! g_path_is_absolute (env_gimp_sysconf_dir))
 	g_error ("GIMP_SYSCONFDIR environment variable should be an absolute path.");
 #ifndef __EMX__
       gimp_sysconf_dir = g_strdup (env_gimp_sysconf_dir);
 #else
-      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot(env_gimp_sysconf_dir));
+      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot (env_gimp_sysconf_dir));
 #endif
     }
   else
@@ -290,7 +278,7 @@ gimp_sysconf_directory (void)
 #ifndef __EMX__
       gimp_sysconf_dir = SYSCONFDIR;
 #else
-      gimp_sysconf_dir = g_strdup(__XOS2RedirRoot(SYSCONFDIR));
+      gimp_sysconf_dir = g_strdup (__XOS2RedirRoot(SYSCONFDIR));
 #endif
 #else
       /* Figure it out from the executable name */
@@ -340,32 +328,25 @@ gimp_gtkrc (void)
 {
   static gchar *gimp_gtkrc_filename = NULL;
 
-  if (gimp_gtkrc_filename != NULL)
-    return gimp_gtkrc_filename;
-  
-  gimp_gtkrc_filename = g_strconcat (gimp_data_directory (),
-				     G_DIR_SEPARATOR_S,
-				     "themes",
-				     G_DIR_SEPARATOR_S,
-				     "Default",
-				     G_DIR_SEPARATOR_S,
-				     "gtkrc",
-				     NULL);
+  if (! gimp_gtkrc_filename)
+    {
+      gimp_gtkrc_filename = g_build_filename (gimp_data_directory (),
+                                              "themes", "Default", "gtkrc",
+                                              NULL);
+    }
 
   return gimp_gtkrc_filename;
 }
 
 /**
  * gimp_path_parse:
- * @path: A list of directories separated by #G_SEARCHPATH_SEPARATOR.
- * @max_paths: The maximum number of directories to return.
- * @check: #TRUE if you want the directories to be checked.
+ * @path:         A list of directories separated by #G_SEARCHPATH_SEPARATOR.
+ * @max_paths:    The maximum number of directories to return.
+ * @check:        #TRUE if you want the directories to be checked.
  * @check_failed: Returns a #GList of path elements for which the
- *                check failed. Each list element is guaranteed
- *		  to end with a #G_PATH_SEPARATOR.
+ *                check failed.
  *
- * Returns: A #GList of all directories in @path. Each list element
- *	    is guaranteed to end with a #G_PATH_SEPARATOR.
+ * Returns: A #GList of all directories in @path.
  **/
 GList *
 gimp_path_parse (const gchar  *path,
@@ -375,7 +356,7 @@ gimp_path_parse (const gchar  *path,
 {
   const gchar  *home;
   gchar       **patharray;
-  GList        *list = NULL;
+  GList        *list      = NULL;
   GList        *fail_list = NULL;
   gint          i;
 
@@ -412,17 +393,9 @@ gimp_path_parse (const gchar  *path,
       _fnslashify (dir);
 #endif
 
+      /*  check if directory exists  */
       if (check)
-	{
-	  /*  check if directory exists  */
-	  err = stat (dir->str, &filestat);
-
-	  if (!err && S_ISDIR (filestat.st_mode))
-	    {
-	      if (dir->str[dir->len - 1] != G_DIR_SEPARATOR)
-		g_string_append_c (dir, G_DIR_SEPARATOR);
-	    }
-	}
+        err = stat (dir->str, &filestat);
 
       if (!err)
 	list = g_list_prepend (list, g_strdup (dir->str));
@@ -491,15 +464,12 @@ gimp_path_free (GList *path)
 {
   GList *list;
 
-  if (path)
+  for (list = path; list; list = g_list_next (list))
     {
-      for (list = path; list; list = g_list_next (list))
-	{
-	  g_free (list->data);
-	}
-
-      g_list_free (path);
+      g_free (list->data);
     }
+
+  g_list_free (path);
 }
 
 /**
@@ -521,30 +491,19 @@ gimp_path_get_user_writable_dir (GList *path)
   struct stat filestat;
   gint        err;
 
+  g_return_val_if_fail (path != NULL, NULL);
+
   euid = geteuid ();
   egid = getegid ();
 
   for (list = path; list; list = g_list_next (list))
     {
-      /*  check if directory exists  */
-
-      /* ugly hack to handle paths with an extra G_DIR_SEPARATOR
-       * attached. The stat() in MSVCRT doesn't like that.
-       */
       gchar *dir;
-      gchar *p;
-      gint   pl;
 
-      p = dir = g_strdup ((gchar *) list->data);
+      dir = (gchar *) list->data;
 
-      if (g_path_is_absolute (dir))
-	p = (gchar *) g_path_skip_root (dir);
-
-      pl = strlen (p);
-      if (pl > 0 && p[pl-1] == G_DIR_SEPARATOR)
-	p[pl-1] = '\0';
+      /*  check if directory exists  */
       err = stat (dir, &filestat);
-      g_free (dir);
 
       /*  this is tricky:
        *  if a file is e.g. owned by the current user but not user-writable,
@@ -562,7 +521,7 @@ gimp_path_get_user_writable_dir (GList *path)
 	    (euid != filestat.st_uid) &&
 	    (egid != filestat.st_gid))))
 	{
-	  return g_strdup ((gchar *) list->data);
+	  return g_strdup (dir);
 	}
     }
 

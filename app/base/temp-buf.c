@@ -568,13 +568,21 @@ static TempBuf * cached_in_memory = NULL;
 static gchar *
 generate_unique_filename (void)
 {
-  pid_t pid;
+  pid_t  pid;
+  gchar *swapfile;
+  gchar *path;
 
   pid = getpid ();
-  return g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp%d.%d",
-			  base_config->temp_path,
-			  (gint) pid,
-			  swap_index++);
+
+  swapfile = g_strdup_printf ("gimp%d.%d",
+                              (gint) pid,
+                              swap_index++);
+
+  path = g_build_filename (base_config->temp_path, swapfile, NULL);
+
+  g_free (swapfile);
+
+  return path;
 }
 
 void
@@ -593,7 +601,9 @@ temp_buf_swap (TempBuf *buf)
   buf->swapped = TRUE;
 
   if (base_config->stingy_memory_use)
-    swap = buf;
+    {
+      swap = buf;
+    }
   else
     {
       swap = cached_in_memory;

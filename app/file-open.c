@@ -203,7 +203,7 @@ file_open_absolute_filename (const gchar *name)
     return g_strdup (name);
 
   current = g_get_current_dir ();
-  absolute = g_strconcat (current, G_DIR_SEPARATOR_S, name, NULL);
+  absolute = g_build_filename (current, name, NULL);
   g_free (current);
 
   return absolute;

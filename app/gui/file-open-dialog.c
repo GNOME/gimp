@@ -464,12 +464,10 @@ set_preview (const gchar *fullfname,
   gboolean     thumb_may_be_outdated = FALSE;
   gboolean     show_generate_label   = TRUE;
 
-  dirname = g_path_get_dirname (fullfname);
+  dirname  = g_path_get_dirname (fullfname);
   basename = g_path_get_basename (fullfname);
 
-  tname = g_strconcat (dirname, G_DIR_SEPARATOR_S,
-		       ".xvpics", G_DIR_SEPARATOR_S,
-		       basename, NULL);
+  tname = g_build_filename (dirname, ".xvpics", basename, NULL);
 
   /*  If the file is newer than its thumbnail, the thumbnail may
    *  be out of date.
@@ -644,13 +642,11 @@ file_open_genbutton_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (fs, "");
     filedirname = g_strdup (gtk_file_selection_get_filename (fs));
 
-    if (filedirname[strlen (filedirname) - 1] == G_DIR_SEPARATOR)
-      filedirname[strlen (filedirname) - 1] = '\0';
-
     while (list)
       {
-        full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-				     (gchar *) list->data, NULL);
+        full_filename = g_build_filename (filedirname,
+                                          (gchar *) list->data,
+                                          NULL);
 
 	err = stat (full_filename, &buf);
 
@@ -700,8 +696,8 @@ file_open_genbutton_callback (GtkWidget *widget,
       {
 	if (! g_slist_next (list))
 	  {
-	    full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-					 (gchar *) list->data, NULL);
+	    full_filename = g_build_filename (filedirname,
+                                              (gchar *) list->data, NULL);
             gtk_file_selection_set_filename (fs, full_filename);
 	    g_free (full_filename);
 	  }
@@ -752,7 +748,9 @@ file_open_ok_callback (GtkWidget *widget,
 	  g_free (s);
 	}
       else
-	gtk_file_selection_set_filename (fs, full_filename);
+        {
+          gtk_file_selection_set_filename (fs, full_filename);
+        }
 
       return;
     }
@@ -798,8 +796,8 @@ file_open_ok_callback (GtkWidget *widget,
       {
 	g_free (full_filename);
 
-        full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-				     (gchar *) list->data, NULL);
+        full_filename = g_build_filename (filedirname,
+                                          (gchar *) list->data, NULL);
 
         if (strcmp (list->data, raw_filename))
           { /* don't load current selection twice */

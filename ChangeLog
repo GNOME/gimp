@@ -1,5 +1,38 @@
 2001-10-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/file-open.c
+	* app/file-utils.c
+	* app/gimprc.c
+	* app/plug_in.c
+	* app/user_install.c
+	* app/base/base.c
+	* app/base/temp-buf.c
+	* app/core/gimpdata.c
+	* app/core/gimpdatafiles.c
+	* app/core/gimpimagefile.c
+	* app/gui/about-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/splash.c
+	* app/gui/tips-dialog.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* libgimpbase/gimpenv.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* tools/pdbgen/pdb/fileops.pdb: use g_build_filename() all over
+	the place instead of g_strconcat() and friends together with
+	G_DIR_SEPARATOR_S. Also removed all attempts to manually detect
+	double dir separators. LibGimpBase's searchpath utility functions
+	don't append a G_DIR_SEPARATOR_S to all paths any more.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2001-10-24  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpbutton.[ch]: added
 	gimp_button_extended_clicked() which emits the resp. signal.
 

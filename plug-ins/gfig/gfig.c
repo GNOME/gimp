@@ -998,14 +998,14 @@ gfig_list_free_all (void)
 static void
 gfig_list_load_all (GList *plist)
 {
-  GFigObj *gfig;
-  GList   *list;
-  gchar	  *path;
-  gchar	  *filename;
-  DIR	  *dir;
+  GFigObj       *gfig;
+  GList         *list;
+  gchar	        *path;
+  gchar	        *filename;
+  DIR	        *dir;
   struct dirent *dir_ent;
   struct stat    filestat;
-  gint err;
+  gint           err;
 
   /*  Make sure to clear any existing gfigs  */
   current_obj = pic_obj = NULL;
@@ -1026,9 +1026,7 @@ gfig_list_load_all (GList *plist)
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_malloc (strlen (path) + strlen (dir_ent->d_name) + 1);
-
-	      sprintf (filename, "%s%s", path, dir_ent->d_name);
+	      filename = g_build_filename (path, dir_ent->d_name, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -1048,9 +1046,9 @@ gfig_list_load_all (GList *plist)
 		}
 
 	      g_free (filename);
-	    } /* while */
+	    }
 	  closedir (dir);
-	} /* else */
+	}
     }
 
   if (!gfig_list)

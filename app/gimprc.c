@@ -330,8 +330,7 @@ gimp_system_rc_file (void)
 
   if (! value)
     {
-      value = g_strconcat (gimp_sysconf_directory (), G_DIR_SEPARATOR_S,
-			   "gimprc", NULL);
+      value = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
     }
 
   return value;
@@ -533,16 +532,10 @@ gimprc_parse_file (const gchar *filename)
   if (! g_path_is_absolute (filename))
     {
       const gchar *home_dir = g_get_home_dir ();
-      gchar       *home_dir_sep;
 
       if (home_dir != NULL)
 	{
-	  if (home_dir[strlen (home_dir) -1] != G_DIR_SEPARATOR)
-	    home_dir_sep = G_DIR_SEPARATOR_S;
-	  else
-	    home_dir_sep = "";
-	  rfilename = g_strdup_printf ("%s%s%s", home_dir, home_dir_sep,
-				       filename);
+	  rfilename = g_build_filename (home_dir, filename, NULL);
 	  parsed = parse_absolute_gimprc_file (rfilename);
 	  g_free (rfilename);
 	  return parsed;
