@@ -343,7 +343,12 @@ midi_set_device (ControllerMidi *midi,
     {
       gint fd;
 
+#ifdef G_OS_WIN32
+      fd = open (midi->device, O_RDONLY);
+#else
       fd = open (midi->device, O_RDONLY | O_NONBLOCK);
+#endif
+
       if (fd >= 0)
         {
           g_object_set (midi, "name", device, NULL);

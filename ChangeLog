@@ -1,3 +1,7 @@
+2004-06-19 Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* modules/controller_midi.c: #ifdef G_OS_WIN32 for an O_NONBLOCK
+
 2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/jpeg.c: more changes to save dialog.  Moved
