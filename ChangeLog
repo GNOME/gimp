@@ -1,3 +1,17 @@
+2000-02-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* po-plug-ins/POTFILES.in
+	* help/C/filters/Makefile.am
+	* help/C/filters/index.html
+	* plug-ins/common/uniteditor.c
+	* help/C/filters/uniteditor.html: new plugin.
+
+	After one year of announcing it, I finally hacked the GIMP unit
+	editor. Have fun with lightyears, parsec, ... :-)
+
 Mon Feb 28 23:52:56 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: fixed off-by-one error for the x coordinate

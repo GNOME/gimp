@@ -877,6 +877,12 @@ MAINTAINER :
 SIZE       :  70.6 kB  in  5 files (only C files counted)
 COMMENT    : 
 -----------
+NAME       : uniteditor
+AUTHOR     : Michael Natterer <mitch@gimp.org>
+MAINTAINER : Michael Natterer <mitch@gimp.org>
+SIZE       :  16.5 kB  in  1 file  (only C files counted)
+COMMENT    : 
+-----------
 NAME       : unsharp
 AUTHOR     : Winston Chang <wchang3@students.wisc.edu>
 MAINTAINER : Winston Chang <wchang3@students.wisc.edu>

@@ -120,6 +120,7 @@ plug-ins/common/tiff.c
 plug-ins/common/tile.c
 plug-ins/common/tileit.c
 plug-ins/common/tiler.c
+plug-ins/common/uniteditor.c
 plug-ins/common/unsharp.c
 plug-ins/common/video.c
 plug-ins/common/vinvert.c

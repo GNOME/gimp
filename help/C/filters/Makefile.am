@@ -145,6 +145,7 @@ helpdata_DATA = \
         tile.html \
         tileit.html \
         tiler.html \
+	uniteditor.html \
         unsharp.html \
         url.html \
         video.html \
