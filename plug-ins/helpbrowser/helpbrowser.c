@@ -1077,9 +1077,6 @@ install_temp_proc (void)
   /* Tie into the gdk input function */
   g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, input_callback, NULL);
 
-  /* This needed on Win32 */
-  gimp_request_wakeups ();
-
   temp_proc_installed = TRUE;
 }
 

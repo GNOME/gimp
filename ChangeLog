@@ -1,3 +1,26 @@
+2000-07-30  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.c
+	* libgimp/gimp.h
+	* libgimp/gimpmenu.c
+	* libgimp/gimpprotocol.c
+	* libgimp/gimpprotocol.h
+	* libgimp/gimp.def
+	* app/plug_in.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/script-fu/script-fu.c: As the GLib main loop and IO
+	channel implementation on Win32 now provides the same interface as
+	that on Unix, much of the Win32-only crap could be
+	removed. Especially, no need for "wakeup" out-of-band messages to
+	wake up pipe readers. No need for plug-ins to tell GIMP their
+	thread id.
+
+	* libgimp/gimp.c (gimp_extension_process): On Win32, use the new
+	g_io_channel_win32_wait_for_condition() function.
+
+	* plug-ins/makefile.cygwin: Add the homogenizer plug-in to the
+	unofficial part.
+	
 2000-07-29  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: no need to mark this string for translation

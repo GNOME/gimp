@@ -98,12 +98,6 @@ static void _gp_extension_ack_write      (GIOChannel   *channel,
 					  WireMessage  *msg);
 static void _gp_extension_ack_destroy    (WireMessage  *msg);
 
-static void _gp_request_wakeups_read     (GIOChannel   *channel,
-					  WireMessage  *msg);
-static void _gp_request_wakeups_write    (GIOChannel   *channel,
-					  WireMessage  *msg);
-static void _gp_request_wakeups_destroy  (WireMessage  *msg);
-
 static void _gp_params_read              (GIOChannel   *channel,
 					  GPParam     **params,
 					  guint        *nparams);
@@ -167,10 +161,6 @@ gp_init (void)
 		 _gp_extension_ack_read,
 		 _gp_extension_ack_write,
 		 _gp_extension_ack_destroy);
-  wire_register (GP_REQUEST_WAKEUPS,
-		 _gp_request_wakeups_read,
-		 _gp_request_wakeups_write,
-		 _gp_request_wakeups_destroy);
 }
 
 gboolean
@@ -353,21 +343,6 @@ gp_extension_ack_write (GIOChannel *channel)
   WireMessage msg;
 
   msg.type = GP_EXTENSION_ACK;
-  msg.data = NULL;
-
-  if (!wire_write_msg (channel, &msg))
-    return FALSE;
-  if (!wire_flush (channel))
-    return FALSE;
-  return TRUE;
-}
-
-gboolean
-gp_request_wakeups_write (GIOChannel *channel)
-{
-  WireMessage msg;
-
-  msg.type = GP_REQUEST_WAKEUPS;
   msg.data = NULL;
 
   if (!wire_write_msg (channel, &msg))
@@ -1002,25 +977,6 @@ _gp_extension_ack_write (GIOChannel  *channel,
 
 static void
 _gp_extension_ack_destroy (WireMessage *msg)
-{
-}
-
-/*  request_wakeups  */
-
-static void
-_gp_request_wakeups_read (GIOChannel  *channel,
-			  WireMessage *msg)
-{
-}
-
-static void
-_gp_request_wakeups_write (GIOChannel  *channel,
-			   WireMessage *msg)
-{
-}
-
-static void
-_gp_request_wakeups_destroy (WireMessage *msg)
 {
 }
 

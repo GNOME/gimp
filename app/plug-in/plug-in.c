@@ -946,8 +946,6 @@ xspawnv (gint                mode,
     }
   return pid;
 }
-#undef _spawnv
-#define _spawnv xspawnv
 
 #endif /* G_OS_WIN32 */
 
@@ -976,35 +974,17 @@ plug_in_open (PlugIn *plug_in)
       setmode (my_write[1], _O_BINARY);
 #endif
 
-#ifndef G_OS_WIN32
       plug_in->my_read   = g_io_channel_unix_new (my_read[0]);
       plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
       plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
       plug_in->his_write = g_io_channel_unix_new (my_read[1]);
-#else
-      plug_in->my_read     = g_io_channel_win32_new_pipe (my_read[0]);
-      plug_in->his_read    = g_io_channel_win32_new_pipe (my_write[0]);
-      plug_in->his_read_fd = my_write[0];
-      plug_in->my_write    = g_io_channel_win32_new_pipe (my_write[1]);
-      plug_in->his_write   = g_io_channel_win32_new_pipe (my_read[1]);
-#endif
 
       /* Remember the file descriptors for the pipes.
        */
-#ifndef G_OS_WIN32
       plug_in->args[2] =
 	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
       plug_in->args[3] =
 	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
-#else
-      plug_in->args[2] =
-	g_strdup_printf ("%d", g_io_channel_win32_get_fd (plug_in->his_read));
-      plug_in->args[3] =
-	g_strdup_printf ("%d:%u:%d",
-			 g_io_channel_win32_get_fd (plug_in->his_write),
-			 GetCurrentThreadId (),
-			 g_io_channel_win32_get_fd (plug_in->my_read));
-#endif
 
       /* Set the rest of the command line arguments.
        */
@@ -1028,7 +1008,7 @@ plug_in_open (PlugIn *plug_in)
       fcntl (my_write[1], F_SETFD, 1);
 #endif
 #if defined(G_OS_WIN32) || defined (G_WITH_CYGWIN) || defined(__EMX__)
-      plug_in->pid = _spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
+      plug_in->pid = xspawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
       if (plug_in->pid == -1)
 #else
       plug_in->pid = fork ();
@@ -1064,19 +1044,6 @@ plug_in_open (PlugIn *plug_in)
       g_io_channel_close (plug_in->his_write);
       g_io_channel_unref (plug_in->his_write);
       plug_in->his_write = NULL;
-
-#ifdef G_OS_WIN32
-      /* The plug-in tells us its thread id */
-      if (!plug_in->query)
-	{
-	  if (!wire_read_int32 (plug_in->my_read, &plug_in->his_thread_id, 1))
-	    {
-	      g_message ("Unable to read Plug-In's thread id");
-	      plug_in_destroy (plug_in);
-	      return FALSE;
-	    }
-	}
-#endif
 
       if (!plug_in->synchronous)
 	{
@@ -1553,13 +1520,6 @@ plug_in_handle_message (WireMessage *msg)
       break;
     case GP_EXTENSION_ACK:
       gtk_main_quit ();
-      break;
-    case GP_REQUEST_WAKEUPS:
-#ifdef G_OS_WIN32
-      g_io_channel_win32_pipe_request_wakeups (current_plug_in->my_write,
-					       current_plug_in->his_thread_id,
-					       current_plug_in->his_read_fd);
-#endif
       break;
     }
 }

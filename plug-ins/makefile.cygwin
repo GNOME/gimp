@@ -45,7 +45,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser f
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze fixer gdyntext gimp_ace guash kaleidoscope logconv sel_gauss magiceye mathmap psd_save resynthesizer user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze fixer gdyntext gimp_ace guash homogenizer kaleidoscope logconv sel_gauss magiceye mathmap psd_save resynthesizer user_filter
 
 # The main target
 
@@ -299,6 +299,15 @@ ifdef EXTRA_helpbrowser
 OBJECTS = \
 	helpbrowser.o \
 	queue.o
+endif
+
+ifdef EXTRA_homogenizer
+CXX = c++ -mno-cygwin -mpentium -fnative-struct
+OBJECTS = \
+	homogenize.o
+EXTRALIBS = -lstdc++
+.cc.o:
+	$(CXX) $(CFLAGS) -c $< -o $@
 endif
 
 ifdef EXTRA_ifscompose

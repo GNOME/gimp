@@ -937,9 +937,6 @@ gimp_setup_callbacks (void)
       /* Tie into the gdk input function only once */
       g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, input_callback, NULL);
 
-      /* This needed on Win32 */
-      gimp_request_wakeups ();
-
       first_time = FALSE;
     }
 }

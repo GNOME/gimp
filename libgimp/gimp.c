@@ -169,14 +169,14 @@ gimp_main (int   argc,
 	   char *argv[])
 {
 #ifdef G_OS_WIN32
-  char *peer, *peer_fd;
-  guint32 thread;
   int i, j, k;
 #endif
 
   setlocale (LC_NUMERIC, "C");
 
 #ifdef G_OS_WIN32
+  g_assert (PLUG_IN_INFO_PTR != NULL);
+
   /* Check for exe file name with spaces in the path having been split up
    * by buggy NT C runtime, or something. I don't know why this happens
    * on NT (including w2k), but not on w95/98.
@@ -241,21 +241,11 @@ gimp_main (int   argc,
   gimp_signal_private (SIGCHLD, gimp_plugin_sigchld_handler, SA_RESTART);
 #endif
 
-#ifndef G_OS_WIN32
   _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
 #ifdef __EMX__
   setmode (g_io_channel_unix_get_fd (_readchannel), O_BINARY);
   setmode (g_io_channel_unix_get_fd (_writechannel), O_BINARY);
-#endif
-#else
-  g_assert (PLUG_IN_INFO_PTR != NULL);
-  _readchannel = g_io_channel_win32_new_pipe (atoi (argv[2]));
-  peer = strchr (argv[3], ':') + 1;
-  peer_fd = strchr (peer, ':') + 1;
-  _writechannel = g_io_channel_win32_new_pipe_with_wakeups (atoi (argv[3]),
-							    atoi (peer),
-							    atoi (peer_fd));
 #endif
 
   gp_init ();
@@ -273,13 +263,6 @@ gimp_main (int   argc,
   stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
 						 GIMP_STACK_TRACE_NEVER,
 						 GIMP_STACK_TRACE_ALWAYS);
-
-#ifdef G_OS_WIN32
-  /* Tell the GIMP our thread id */
-  thread = GetCurrentThreadId ();
-  wire_write_int32 (_writechannel, &thread, 1);
-  wire_flush (_writechannel);
-#endif
 
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
@@ -823,20 +806,7 @@ gimp_extension_process (guint timeout)
       gimp_quit ();
     }
 #else
-  /* ??? */
-  MSG msg;
-  UINT timer;
-  static UINT message = 0;
-
-  if (message == 0)
-    message = RegisterWindowMessage ("g-pipe-readable");
-  if (timeout > 0)
-    timer = SetTimer (NULL, 0, timeout, NULL);
-  WaitMessage ();
-  if (timeout > 0)
-    KillTimer (NULL, timer);
-
-  if (PeekMessage (&msg, (HWND) -1, message, message, PM_NOREMOVE))
+  if (g_io_channel_win32_wait_for_condition (_readchannel, G_IO_IN, timeout) == 1)
     gimp_single_message ();
 #endif
 }
@@ -853,13 +823,6 @@ void
 gimp_run_temp (void)
 {
   gimp_single_message ();
-}
-
-void
-gimp_request_wakeups (void)
-{
-  if (!gp_request_wakeups_write (_writechannel))
-    gimp_quit ();
 }
 
 gchar *

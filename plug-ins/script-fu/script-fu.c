@@ -234,9 +234,6 @@ run (gchar   *name,
       /*  Acknowledge that the extension is properly initialized  */
       gimp_extension_ack ();
 
-      /* We need wakeups (on Win32) when getting callbacks from the GIMP */
-      gimp_request_wakeups ();
-
       while (1)
 	gimp_extension_process (0);
 

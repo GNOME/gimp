@@ -286,7 +286,6 @@ EXPORTS
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
-	gimp_request_wakeups
 	gimp_rgb_to_hls
 	gimp_rgb_to_hsv
 	gimp_rgb_to_hsv4

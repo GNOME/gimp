@@ -45,8 +45,7 @@ enum
   GP_TEMP_PROC_RETURN,
   GP_PROC_INSTALL,
   GP_PROC_UNINSTALL,
-  GP_EXTENSION_ACK,
-  GP_REQUEST_WAKEUPS
+  GP_EXTENSION_ACK
 };
 
 
@@ -209,7 +208,6 @@ gboolean  gp_proc_install_write     (GIOChannel      *channel,
 gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
 				     GPProcUninstall *proc_uninstall);
 gboolean  gp_extension_ack_write    (GIOChannel      *channel);
-gboolean  gp_request_wakeups_write  (GIOChannel      *channel);
 
 
 #ifdef __cplusplus
