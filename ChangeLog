@@ -1,5 +1,10 @@
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: rewrote clipping code using
+	gdk_rectangle_intersect().
+
+2003-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/widgets-types.h: removed GimpFontSelection and
 	GimpFontSelectionDialog typedefs.
 

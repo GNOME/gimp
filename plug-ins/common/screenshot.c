@@ -413,18 +413,18 @@ shoot (void)
 {
   GdkWindow    *window;
   GdkPixbuf    *screenshot;
-  GdkRectangle  clip;
-  GdkPoint      origin;
-  gint          screen_w, screen_h;
+  GdkRectangle  rect;
+  GdkRectangle  screen_rect;
+  gint          x, y;
 
   /* use default screen if we are running non-interactively */
   if (cur_screen == NULL)
     cur_screen = gdk_screen_get_default ();
 
-  screen_w = gdk_screen_get_width (cur_screen);
-  screen_h = gdk_screen_get_height (cur_screen);
-  clip.x   = 0;
-  clip.y   = 0;
+  screen_rect.x      = 0;
+  screen_rect.y      = 0;
+  screen_rect.width  = gdk_screen_get_width (cur_screen);
+  screen_rect.height = gdk_screen_get_height (cur_screen);
 
   if (shootvals.root)
     {
@@ -456,28 +456,19 @@ shoot (void)
       return;
     }
 
-  gdk_drawable_get_size (GDK_DRAWABLE (window), &clip.width, &clip.height);
-  gdk_window_get_origin (window, &origin.x, &origin.y);
+  gdk_window_get_origin (window, &x, &y);
 
-  /* do clipping */
-  if (origin.x < 0)
-    {
-      clip.x = -origin.x;
-      clip.width += origin.x;
-    }
-  if (origin.y < 0)
-    {
-      clip.y = -origin.y;
-      clip.height += origin.y;
-    }
-  if (origin.x + clip.width > screen_w)
-    clip.width -= origin.x + clip.width - screen_w;
-  if (origin.y + clip.height > screen_h)
-    clip.height -= origin.y + clip.height - screen_h;
+  rect.x = x;
+  rect.y = y;
+  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+
+  if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
+    return;
 
   screenshot = gdk_pixbuf_get_from_drawable (NULL, window,
-                                             NULL, clip.x, clip.y, 0, 0,
-                                             clip.width, clip.height);
+                                             NULL,
+                                             rect.x - x, rect.y - y, 0, 0,
+                                             rect.width, rect.height);
 
   gdk_display_beep (gdk_screen_get_display (cur_screen));
   gdk_flush ();
