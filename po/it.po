@@ -52,7 +52,7 @@ msgstr "  -v --version             Mostra la versione del programma.\n"
 
 #: app/main.c:273
 msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <comandi>     Esegue comandi in modalità batch"
+msgstr "  -b --batch <comandi>     Esegue comandi in modalità batch.\n"
 
 #: app/main.c:274
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
