@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <strings.h>
 #include "gimpdrawableP.h"
 #include "gimpsignal.h"
 #include "gimage.h"
@@ -276,9 +280,82 @@ gimp_drawable_visible (GimpDrawable *drawable)
 }
 
 char *
-gimp_drawable_name (GimpDrawable *drawable)
+gimp_drawable_get_name (GimpDrawable *drawable)
 {
   return drawable->name;
+}
+
+void
+gimp_drawable_set_name (GimpDrawable *drawable, char *name)
+{
+  GSList *list, *listb, *base_list;
+  GimpDrawable *drawableb;
+  int number = 1;
+  char *newname;
+  char *ext;
+
+  g_return_if_fail(GIMP_IS_DRAWABLE(drawable));
+  if (drawable->name)
+    g_free(drawable->name);
+  drawable->name = NULL;
+  if (drawable->gimage == 0 || drawable->gimage->layers == 0)
+  {
+    /* no other layers to check name against */
+    drawable->name = g_strdup(name);
+    return;
+  }
+  if (GIMP_IS_LAYER(drawable))
+    base_list = drawable->gimage->layers;
+  else if (GIMP_IS_CHANNEL(drawable))
+    base_list = drawable->gimage->channels;
+  else
+    base_list = NULL;
+
+  list = base_list;
+  while (list)
+  {
+    drawableb = GIMP_DRAWABLE(list->data);
+    if (drawable != drawableb &&
+	strcmp(name, gimp_drawable_get_name(drawableb)) == 0)
+    { /* names conflict */
+      newname = g_malloc(strlen(name)+10); /* if this aint enough 
+						 yer screwed */
+      strcpy (newname, name);
+      if ((ext = strrchr(newname, '#')))
+      {
+	number = atoi(ext+1);
+	if (&ext[(int)(log10(number) + 1)] != &newname[strlen(newname) - 1])
+	{
+	  number = 1;
+	  ext = &newname[strlen(newname)];
+	}
+      }
+      else
+      {
+	number = 1;
+	ext = &newname[strlen(newname)];
+      }
+      sprintf(ext, "#%d", number+1);
+      listb = base_list;
+      while (listb) /* make sure the new name is unique */
+      {
+	drawableb = GIMP_DRAWABLE(listb->data);
+	if (drawable != drawableb && strcmp(newname,
+				      gimp_drawable_get_name(drawableb)) == 0)
+	{
+	  number++;
+	  sprintf(ext, "#%d", number+1);
+	  listb = base_list;
+	}
+	listb = listb->next;
+      }
+      drawable->name = g_strdup(newname);
+      g_free(newname);
+      return;
+    }
+    list = list->next;
+  }
+  drawable->name = g_strdup(name);
 }
 
 int
@@ -500,9 +577,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
       return;
     }
 
-  if (drawable->name) 
-    g_free (drawable->name);
-  drawable->name = g_strdup(name);
+  drawable->name = NULL;
   drawable->width = width;
   drawable->height = height;
   drawable->bytes = bpp;
@@ -518,6 +593,8 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->visible = TRUE;
 
   drawable->gimage = gimage;
+
+  gimp_drawable_set_name(drawable, name);
 
   /*  preview variables  */
   drawable->preview = NULL;

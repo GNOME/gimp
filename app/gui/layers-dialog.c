@@ -2070,7 +2070,7 @@ create_layer_widget (GImage *gimage,
   if (layer_is_floating_sel (layer))
     layer_widget->label = gtk_label_new ("Floating Selection");
   else
-    layer_widget->label = gtk_label_new (GIMP_DRAWABLE(layer)->name);
+    layer_widget->label = gtk_label_new (layer_get_name(layer));
   gtk_box_pack_start (GTK_BOX (hbox), layer_widget->label, FALSE, FALSE, 2);
   gtk_widget_show (layer_widget->label);
 
@@ -2891,7 +2891,7 @@ layer_widget_layer_flush (GtkWidget *widget,
   if (layer_is_floating_sel (layer_widget->layer))
     name = "Floating Selection";
   else
-    name = GIMP_DRAWABLE(layer_widget->layer)->name;
+    name = layer_get_name(layer_widget->layer);
 
   /*  we need to set the name label if necessary  */
   gtk_label_get (GTK_LABEL (layer_widget->label), &label_name);
@@ -3239,15 +3239,13 @@ edit_layer_query_ok_callback (GtkWidget *w,
       /*  Set the new layer name  */
       if (GIMP_DRAWABLE(layer)->name)
 	{
-	  /*  If the layer is a floating selection, make it a channel  */
+	  /*  If the layer is a floating selection, make it a layer  */
 	  if (layer_is_floating_sel (layer))
 	    {
 	      floating_sel_to_layer (layer);
 	    }
-	  
-	  g_free (GIMP_DRAWABLE(layer)->name);
 	}
-      GIMP_DRAWABLE(layer)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      layer_set_name(layer, gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
     }
 
   gdisplays_flush ();
@@ -3320,7 +3318,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      ((layer_is_floating_sel (layer_widget->layer) ?
-			"Floating Selection" : GIMP_DRAWABLE(layer_widget->layer)->name)));
+			"Floating Selection" : layer_get_name(layer_widget->layer))));
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 

@@ -756,7 +756,7 @@ layer_get_name_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)))
-	name = GIMP_DRAWABLE(layer)->name;
+	name = layer_get_name(layer);
       else
 	success = FALSE;
     }
@@ -828,11 +828,7 @@ layer_set_name_invoker (Argument *args)
   if (success)
     {
       name = (char *) args[1].value.pdb_pointer;
-      if (GIMP_DRAWABLE(layer)->name)
-	{
-	  g_free (GIMP_DRAWABLE(layer)->name);
-	  GIMP_DRAWABLE(layer)->name = (name) ? g_strdup (name) : NULL;
-	}
+      layer_set_name(layer, name);
     }
 
   return procedural_db_return_args (&layer_set_name_proc, success);

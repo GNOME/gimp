@@ -80,6 +80,9 @@ Channel *       channel_copy (Channel *);
 Channel *	channel_ref (Channel *);
 void   		channel_unref (Channel *);
 
+char *          channel_get_name (Channel *);
+void            channel_set_name (Channel *, char *);
+
 Channel *       channel_get_ID (int);
 void            channel_delete (Channel *);
 void            channel_scale (Channel *, int, int);

@@ -1,3 +1,18 @@
+Wed Sep 23 18:07:54 1998  Jay Cox  (jaycox@earthlink.net)
+
+	* app/channel.[ch]
+	* app/channel_cmds.c
+	* app/drawable.h
+	* app/channels_dialog.c
+	* app/gimage_cmds.c
+	* app/gimpdrawable.[ch]
+	* app/gimpimage.c
+	* app/layer.[ch]
+	* app/layer_cmds.c
+	* app/layer_select.c
+	* app/layers_dialog.c: enforce unique names for layers and
+	channels.  New functions {channel,gimp_drawable,layer}_{get,set}_name
+
 Mon Sep 21 02:05:50 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: correct test for restoring old foundry in

@@ -1894,7 +1894,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
       merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
-			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
+			       type, drawable_get_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
 	g_message ("gimp_image_merge_layers: could not allocate merge layer");
@@ -1924,7 +1924,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
        */
       merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
-			       drawable_name (GIMP_DRAWABLE(layer)),
+			       drawable_get_name (GIMP_DRAWABLE(layer)),
 			       OPAQUE_OPACITY, NORMAL_MODE);
 	
 

@@ -294,7 +294,7 @@ channel_get_name_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)))
-	name = GIMP_DRAWABLE(channel)->name;
+	name = channel_get_name(channel);
       else
 	success = FALSE;
     }
@@ -366,11 +366,7 @@ channel_set_name_invoker (Argument *args)
   if (success)
     {
       name = (char *) args[1].value.pdb_pointer;
-      if (GIMP_DRAWABLE(channel)->name)
-	{
-	  g_free (GIMP_DRAWABLE(channel)->name);
-	  GIMP_DRAWABLE(channel)->name = (name) ? g_strdup (name) : NULL;
-	}
+      channel_set_name(channel, name);
     }
 
   return procedural_db_return_args (&channel_set_name_proc, success);

@@ -19,6 +19,8 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+#include <stdlib.h>
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -292,12 +294,22 @@ layer_copy (layer, add_alpha)
   char * layer_name;
   Layer * new_layer;
   int new_type;
+  char *ext;
+  int number;
+  char *name;
   PixelRegion srcPR, destPR;
 
   /*  formulate the new layer name  */
-  layer_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + 6);
-  sprintf (layer_name, "%s copy", GIMP_DRAWABLE(layer)->name);
-
+  name = layer_get_name(layer);
+  ext = strrchr(name, '#');
+  layer_name = (char *) g_malloc (strlen (name) + 6);
+  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], "copy") == 0) ||
+      (ext && (number = atoi(ext+1)) > 0 && 
+       ((int)(log10(number) + 1)) == strlen(ext+1)))
+    /* don't have rudundant "copy"s */
+    sprintf (layer_name, "%s", name);
+  else
+    sprintf (layer_name, "%s copy", name);
   /*  when copying a layer, the copy ALWAYS has an alpha channel  */
   if (add_alpha)
     {
@@ -321,7 +333,9 @@ layer_copy (layer, add_alpha)
     new_type = GIMP_DRAWABLE(layer)->type;
 
   /*  allocate a new layer object  */
-  new_layer = layer_new (GIMP_DRAWABLE(layer)->gimage, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
+  new_layer = layer_new (GIMP_DRAWABLE(layer)->gimage,
+			 GIMP_DRAWABLE(layer)->width,
+			 GIMP_DRAWABLE(layer)->height,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer) {
     g_message ("layer_copy: could not allocate new layer");
@@ -968,6 +982,19 @@ layer_pick_correlate (layer, x, y)
 
 /********************/
 /* access functions */
+
+void
+layer_set_name (Layer *layer, char *name)
+{
+  gimp_drawable_set_name(GIMP_DRAWABLE(layer), name);
+}
+
+char *
+layer_get_name (Layer *layer)
+{
+  return gimp_drawable_get_name(GIMP_DRAWABLE(layer));
+}
+
 
 unsigned char *
 layer_data (layer)

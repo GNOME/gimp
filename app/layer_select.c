@@ -301,7 +301,7 @@ layer_select_set_layer (LayerSelect *layer_select)
     return;
 
   /*  Set the layer label  */
-  gtk_label_set (GTK_LABEL (layer_select->label), drawable_name (GIMP_DRAWABLE(layer)));
+  gtk_label_set (GTK_LABEL (layer_select->label), drawable_get_name (GIMP_DRAWABLE(layer)));
 }
 
 

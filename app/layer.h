@@ -97,7 +97,6 @@ void            layer_resize (Layer *, int, int, int, int);
 BoundSeg *      layer_boundary (Layer *, int *);
 void            layer_invalidate_boundary (Layer *);
 int             layer_pick_correlate (Layer *, int, int);
-
 LayerMask *     layer_mask_new	(GimpImage*, int, int, char *, 
 				 int, unsigned char *);
 LayerMask *	layer_mask_copy	(LayerMask *);
@@ -108,6 +107,9 @@ void   		layer_mask_unref (LayerMask *);
 
 /* access functions */
 
+
+void            layer_set_name (Layer *, char *);
+char *          layer_get_name (Layer *);
 unsigned char * layer_data (Layer *);
 LayerMask *     layer_mask (Layer *);
 int             layer_has_alpha (Layer *);

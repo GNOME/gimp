@@ -1069,7 +1069,7 @@ create_channel_widget (GImage      *gimage,
     case Blue:      channel_widget->label = gtk_label_new ("Blue"); break;
     case Gray:      channel_widget->label = gtk_label_new ("Gray"); break;
     case Indexed:   channel_widget->label = gtk_label_new ("Indexed"); break;
-    case Auxillary: channel_widget->label = gtk_label_new (GIMP_DRAWABLE(channel)->name); break;
+    case Auxillary: channel_widget->label = gtk_label_new (channel_get_name(channel)); break;
     }
 
   gtk_box_pack_start (GTK_BOX (hbox), channel_widget->label, FALSE, FALSE, 2);
@@ -1888,10 +1888,10 @@ edit_channel_query_ok_callback (GtkWidget *w,
   if (options->gimage) {
     
     /*  Set the new channel name  */
-    if (GIMP_DRAWABLE(channel)->name)
-      g_free (GIMP_DRAWABLE(channel)->name);
-    GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-    gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
+    channel_set_name(channel,
+		     gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+    gtk_label_set (GTK_LABEL (options->channel_widget->label),
+		   channel_get_name(channel));
     
     if (channel->opacity != opacity)
       {
@@ -1994,7 +1994,8 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_widget_show (label);
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry), GIMP_DRAWABLE(channel_widget->channel)->name);
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+		      channel_get_name(channel_widget->channel));
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 

@@ -173,10 +173,21 @@ channel_copy (Channel *channel)
   char * channel_name;
   Channel * new_channel;
   PixelRegion srcPR, destPR;
+  char *ext;
+  int number;
+  char *name;
 
   /*  formulate the new channel name  */
-  channel_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(channel)->name) + 6);
-  sprintf (channel_name, "%s copy", GIMP_DRAWABLE(channel)->name);
+  name = channel_get_name(channel);
+  ext = strrchr(name, '#');
+  channel_name = (char *) g_malloc (strlen (name) + 6);
+  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], "copy") == 0) ||
+      (ext && (number = atoi(ext+1)) > 0 && 
+       ((int)(log10(number) + 1)) == strlen(ext+1)))
+    /* don't have rudundant "copy"s */
+    sprintf (channel_name, "%s", name);
+  else
+    sprintf (channel_name, "%s copy", name);
 
   /*  allocate a new channel object  */
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage, 
@@ -199,6 +210,18 @@ channel_copy (Channel *channel)
   return new_channel;
 }
 
+
+void
+channel_set_name (Channel *channel, char *name)
+{
+  gimp_drawable_set_name(GIMP_DRAWABLE(channel), name);
+}
+
+char *
+channel_get_name (Channel *channel)
+{
+  return gimp_drawable_get_name(GIMP_DRAWABLE(channel));
+}
 
 Channel *
 channel_get_ID (int ID)

@@ -69,7 +69,8 @@ void             gimp_drawable_offsets            (GimpDrawable *,
 						   int *, int *);
 
 unsigned char *  gimp_drawable_cmap               (GimpDrawable *);
-char *		 gimp_drawable_name	          (GimpDrawable *);
+char *		 gimp_drawable_get_name	          (GimpDrawable *);
+void 		 gimp_drawable_set_name	          (GimpDrawable *, char *);
 
 GimpDrawable *   gimp_drawable_get_ID             (int);
 void		 gimp_drawable_deallocate         (GimpDrawable *);
