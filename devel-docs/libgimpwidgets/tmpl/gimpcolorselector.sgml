@@ -22,6 +22,12 @@ color selector module.
 #libgimp-gimpmodule
 </para>
 
+<!-- ##### STRUCT GimpColorSelector ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
 <para>
 

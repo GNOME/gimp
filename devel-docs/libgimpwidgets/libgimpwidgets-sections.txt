@@ -386,10 +386,11 @@ gimp_table_attach_aligned
 
 <SECTION>
 <FILE>gimpcolorselector</FILE>
+<TITLE>GimpColorSelector</TITLE>
+GimpColorSelector
 GIMP_COLOR_SELECTOR_SIZE
 GIMP_COLOR_SELECTOR_BAR_SIZE
 GimpColorSelectorChannel
-<TITLE>GimpColorSelector</TITLE>
 gimp_color_selector_new
 gimp_color_selector_set_color
 gimp_color_selector_set_channel
@@ -406,6 +407,8 @@ GIMP_COLOR_SELECTOR_GET_CLASS
 
 <SECTION>
 <FILE>gimpcolorselect</FILE>
+<TITLE>GimpColorSelect</TITLE>
+GimpColorSelect
 GimpColorSelectClass
 <SUBSECTION Standard>
 GIMP_COLOR_SELECT
@@ -420,6 +423,7 @@ GIMP_COLOR_SELECT_GET_CLASS
 <SECTION>
 <FILE>gimpcolordisplay</FILE>
 <TITLE>GimpColorDisplay</TITLE>
+GimpColorDisplay
 gimp_color_display_new
 gimp_color_display_clone
 gimp_color_display_convert

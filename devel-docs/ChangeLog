@@ -1,3 +1,10 @@
+2002-10-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: updated.
+
 2002-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am
