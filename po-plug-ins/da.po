@@ -1,9 +1,9 @@
-# Translation of the GIMP plug-ins.
-# Copyright (C) 1999, 2000, 01, 02 Free Software Foundation, Inc.
+# Danish translation of the GIMP plug-ins.
+# Copyright (C) 1999, 2000, 01, 02, 03 Free Software Foundation, Inc.
 # Kenneth Christiansen <kenneth@gnome.dk>, 1999-2000
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
-# Ole Laursen <olau@hardworking.dk>, 2001, 02.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02, 03.
 #
 # Se ../po/da.po for en konventionsliste til hele Gimp'en.
 #
@@ -30,8 +30,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
-"PO-Revision-Date: 2002-12-27 16:50+0100\n"
+"POT-Creation-Date: 2003-01-04 22:44+0100\n"
+"PO-Revision-Date: 2003-01-04 22:44+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -897,7 +897,7 @@ msgid "Lighting Effects"
 msgstr "Lyseffekter"
 
 #: plug-ins/Lighting/lighting_ui.c:1189 plug-ins/gimpressionist/preview.c:121
-#: plug-ins/imagemap/imap_polygon.c:456
+#: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "_Opdatér"
 
@@ -1183,8 +1183,8 @@ msgstr "Vis/skjul en gitterramme i eksemplet"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:729 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
@@ -2474,7 +2474,7 @@ msgstr "Farvelæg"
 #: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
 #: plug-ins/common/ps.c:2727 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:47 plug-ins/gimpressionist/general.c:106
-#: plug-ins/imagemap/imap_menu.c:304 plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Farve"
 
@@ -3253,7 +3253,7 @@ msgid "Create _Histogram"
 msgstr "Opret _histogram"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:448
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:159
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
 msgstr "_Bredde:"
@@ -4013,7 +4013,7 @@ msgid "Drawing Grid..."
 msgstr "Tegner gitter..."
 
 #: plug-ins/common/grid.c:638 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "Gitter"
@@ -6074,7 +6074,7 @@ msgid "Smooth Palette"
 msgstr "Jævn palet"
 
 #: plug-ins/common/smooth_palette.c:453 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:169
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Højde:"
@@ -7821,7 +7821,7 @@ msgstr "Forrige"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1908 plug-ins/gfig/gfig.c:5298
-#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:167
+#: plug-ins/imagemap/imap_selection.c:174 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Redigér"
 
@@ -7988,7 +7988,7 @@ msgid "Draw on:"
 msgstr "Tegn på:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:367
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:364
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr "Markering"
@@ -8018,7 +8018,7 @@ msgid "Foreground"
 msgstr "Forgrund"
 
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5285
-#: plug-ins/imagemap/imap_cmd_copy.c:59
+#: plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
@@ -8159,7 +8159,7 @@ msgstr "Vis billede"
 msgid "Reload Image"
 msgstr "Genindlæs billede"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:365
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rektangel"
@@ -8288,7 +8288,7 @@ msgstr "Tegn"
 msgid "Done"
 msgstr "Færdig"
 
-#: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:54
+#: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Markering"
@@ -8668,12 +8668,12 @@ msgstr "Sandsynlighedsovergang:"
 msgid "Shape of Second Flares"
 msgstr "Form på det andet blus"
 
-#: plug-ins/gflare/gflare.c:4124 plug-ins/imagemap/imap_menu.c:368
+#: plug-ins/gflare/gflare.c:4124 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Cirkel"
 
-#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:370
+#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polygon"
@@ -9417,7 +9417,7 @@ msgstr ""
 "din installation ikke er komplet. Sikr dig at din installation er komplet "
 "før du rapporterer dette som en fejl.</small></div></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:603
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:582
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<unavngiven>"
@@ -9504,8 +9504,8 @@ msgid "IfsCompose"
 msgstr "Geometrisk fraktal"
 
 #: plug-ins/ifscompose/ifscompose.c:862 plug-ins/ifscompose/ifscompose.c:1128
-#: plug-ins/imagemap/imap_cmd_move.c:87
-#: plug-ins/imagemap/imap_cmd_object_move.c:58
+#: plug-ins/imagemap/imap_cmd_move.c:86
+#: plug-ins/imagemap/imap_cmd_object_move.c:57
 msgid "Move"
 msgstr "Flyt"
 
@@ -9538,7 +9538,7 @@ msgid "Relative Probability:"
 msgstr "Relativ sandsynlighed:"
 
 #: plug-ins/ifscompose/ifscompose.c:1169
-#: plug-ins/imagemap/imap_cmd_select_all.c:55
+#: plug-ins/imagemap/imap_cmd_select_all.c:51
 msgid "Select All"
 msgstr "Vælg alt"
 
@@ -9586,8 +9586,8 @@ msgid "Imagemap plug-in 2.0"
 msgstr "Billedkortmodul 2.0"
 
 #: plug-ins/imagemap/imap_about.c:44
-msgid "Copyright(c) 1999-2002 by Maurits Rijk"
-msgstr "Copyright © 1999-2002 Maurits Rijk"
+msgid "Copyright(c) 1999-2003 by Maurits Rijk"
+msgstr "Copyright © 1999-2003 Maurits Rijk"
 
 #: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
@@ -9607,8 +9607,8 @@ msgstr "Centrum-_x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
-#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
-#: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:506
+#: plug-ins/imagemap/imap_polygon.c:514 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
 #: plug-ins/imagemap/imap_rectangle.c:413
@@ -9619,7 +9619,7 @@ msgstr "skærmpunkter"
 msgid "Center _y:"
 msgstr "Centrum-_y:"
 
-#: plug-ins/imagemap/imap_cmd_clear.c:55
+#: plug-ins/imagemap/imap_cmd_clear.c:51
 msgid "Clear"
 msgstr "Ryd"
 
@@ -9627,39 +9627,39 @@ msgstr "Ryd"
 msgid "Create"
 msgstr "Opret"
 
-#: plug-ins/imagemap/imap_cmd_cut.c:58
-#: plug-ins/imagemap/imap_cmd_cut_object.c:56
+#: plug-ins/imagemap/imap_cmd_cut.c:55
+#: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_toolbar.c:123
 msgid "Cut"
 msgstr "Klip"
 
-#: plug-ins/imagemap/imap_cmd_delete.c:58
-#: plug-ins/imagemap/imap_selection.c:181 plug-ins/imagemap/imap_tools.c:172
+#: plug-ins/imagemap/imap_cmd_delete.c:57
+#: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
 msgstr "Slet"
 
-#: plug-ins/imagemap/imap_cmd_delete_point.c:62
-#: plug-ins/imagemap/imap_polygon.c:679
+#: plug-ins/imagemap/imap_cmd_delete_point.c:61
+#: plug-ins/imagemap/imap_polygon.c:725
 msgid "Delete Point"
 msgstr "Slet punkt"
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:55
+#: plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
 msgstr "Redigér objekt"
 
 # her oversættes "guide" med "rektangel" fordi det i dette modul
 # drejer sig om rektangler, se nedenstående tekst
-#: plug-ins/imagemap/imap_cmd_guides.c:75
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:72
+#: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
 msgstr "Opret rektangler"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:115
+#: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr "Resulterende rektangelgrænser: (%d,%d) til (%d,%d) (%d områder)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:140
+#: plug-ins/imagemap/imap_cmd_guides.c:136
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -9671,200 +9671,200 @@ msgstr ""
 "hjælper dig med hurtigt at oprette den mest almindelige billedkorttype\n"
 "- en samling af miniaturer til en navigationslinje. "
 
-#: plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/imagemap/imap_cmd_guides.c:164
 msgid "_Left Start at:"
 msgstr "V_enstre start ved:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:174
 msgid "_Top Start at:"
 msgstr "Begynd _foroven ved:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "_Horz. Spacing:"
 msgstr "_Vandret mellemrum:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:185
 msgid "_No. Across:"
 msgstr "_Antal vandret:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:195
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_Vert. Spacing:"
 msgstr "_Lodret mellemrum:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:201
+#: plug-ins/imagemap/imap_cmd_guides.c:197
 msgid "No. _Down:"
 msgstr "Antal l_odret:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:209
+#: plug-ins/imagemap/imap_cmd_guides.c:205
 msgid "Base _URL:"
 msgstr "Basis-_URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:226
+#: plug-ins/imagemap/imap_cmd_guides.c:222
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Billedstørrelse: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:227
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Resulterende rektangelgrænser: (0,0) til (0,0) (0 områder)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:266
+#: plug-ins/imagemap/imap_cmd_guides.c:262
 msgid "Guides"
 msgstr "Rektangler"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:62
-#: plug-ins/imagemap/imap_polygon.c:693
+#: plug-ins/imagemap/imap_polygon.c:739
 msgid "Insert Point"
 msgstr "Indsæt punkt"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:57
-#: plug-ins/imagemap/imap_cmd_object_down.c:56
-#: plug-ins/imagemap/imap_selection.c:172
+#: plug-ins/imagemap/imap_cmd_move_down.c:53
+#: plug-ins/imagemap/imap_cmd_object_down.c:55
+#: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
 msgstr "Flyt ned"
 
-#: plug-ins/imagemap/imap_cmd_move_sash.c:69
+#: plug-ins/imagemap/imap_cmd_move_sash.c:68
 msgid "Move Sash"
 msgstr "Flyt billeder"
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:57
+#: plug-ins/imagemap/imap_cmd_move_selected.c:56
 msgid "Move Selected Objects"
 msgstr "Flyt markerede objekter"
 
-#: plug-ins/imagemap/imap_cmd_move_to_front.c:56
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:51
 #: plug-ins/imagemap/imap_toolbar.c:151
 msgid "Move To Front"
 msgstr "Flyt til forrest"
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:57
-#: plug-ins/imagemap/imap_cmd_object_up.c:56
-#: plug-ins/imagemap/imap_selection.c:168
+#: plug-ins/imagemap/imap_cmd_move_up.c:53
+#: plug-ins/imagemap/imap_cmd_object_up.c:55
+#: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Flyt op"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:53 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:129
 msgid "Paste"
 msgstr "Indsæt"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:57
+#: plug-ins/imagemap/imap_cmd_select_next.c:51
 msgid "Select Next"
 msgstr "Vælg næste"
 
-#: plug-ins/imagemap/imap_cmd_select_prev.c:56
+#: plug-ins/imagemap/imap_cmd_select_prev.c:51
 msgid "Select Previous"
 msgstr "Vælg forrige"
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:68
+#: plug-ins/imagemap/imap_cmd_select_region.c:64
 msgid "Select Region"
 msgstr "Vælg område"
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:56
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:157
 msgid "Send To Back"
 msgstr "Send til bagerst"
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:54
+#: plug-ins/imagemap/imap_cmd_unselect.c:53
 msgid "Unselect"
 msgstr "Fravælg"
 
-#: plug-ins/imagemap/imap_cmd_unselect_all.c:55
+#: plug-ins/imagemap/imap_cmd_unselect_all.c:53
 msgid "Unselect All"
 msgstr "Fravælg alt"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:177
+#: plug-ins/imagemap/imap_edit_area_info.c:174
 msgid "Link Type"
 msgstr "Henvisningstype"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:186
+#: plug-ins/imagemap/imap_edit_area_info.c:183
 msgid "_Web Site"
 msgstr "_Netsted"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:192
+#: plug-ins/imagemap/imap_edit_area_info.c:189
 msgid "_Ftp Site"
 msgstr "_Ftp-sted"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:198
+#: plug-ins/imagemap/imap_edit_area_info.c:195
 msgid "_Gopher"
 msgstr "_Gopher"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:204
+#: plug-ins/imagemap/imap_edit_area_info.c:201
 msgid "Ot_her"
 msgstr "_Andre"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:210
+#: plug-ins/imagemap/imap_edit_area_info.c:207
 msgid "F_ile"
 msgstr "F_il"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:216
+#: plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "WAI_S"
 msgstr "WAI_S"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:222
+#: plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "Tel_net"
 msgstr "Tel_net"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:228
+#: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "e-_mail"
 msgstr "E-_post"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:234
+#: plug-ins/imagemap/imap_edit_area_info.c:231
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr "_URL som aktiveres når der klikkes på dette område: (påkrævet)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:236
+#: plug-ins/imagemap/imap_edit_area_info.c:233
 msgid "Select HTML file"
 msgstr "Vælg HTML-fil"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:245
+#: plug-ins/imagemap/imap_edit_area_info.c:242
 msgid "Relati_ve link"
 msgstr "Relati_v henvisning"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:251
+#: plug-ins/imagemap/imap_edit_area_info.c:248
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr "_Målrammes navn/id: (valgfrit - kun til sider med rammer)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:254
+#: plug-ins/imagemap/imap_edit_area_info.c:251
 msgid "ALT te_xt: (optional)"
 msgstr "ALT-te_kst: (valgfri)"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:257
+#: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "_Link"
 msgstr "_Henvisning"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:292
+#: plug-ins/imagemap/imap_edit_area_info.c:289
 msgid "Dimensions"
 msgstr "Dimensioner"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:296
+#: plug-ins/imagemap/imap_edit_area_info.c:293
 msgid "Pre_view"
 msgstr "_Eksempel"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:334
+#: plug-ins/imagemap/imap_edit_area_info.c:331
 msgid "_JavaScript"
 msgstr "_Javascript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:434
+#: plug-ins/imagemap/imap_edit_area_info.c:431
 msgid "Area Settings"
 msgstr "Områdeindstillinger"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:478
+#: plug-ins/imagemap/imap_edit_area_info.c:475
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Indstillinger for område nr. %d"
 
-#: plug-ins/imagemap/imap_file.c:46 plug-ins/imagemap/imap_menu.c:64
+#: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:64
 msgid "Error opening file"
 msgstr "Fejl ved åbning af fil"
 
-#: plug-ins/imagemap/imap_file.c:55
+#: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
 msgstr "Indlæs billedkort"
 
-#: plug-ins/imagemap/imap_file.c:80
+#: plug-ins/imagemap/imap_file.c:81
 msgid "File exists!"
 msgstr "Fil eksisterer!"
 
-#: plug-ins/imagemap/imap_file.c:85
+#: plug-ins/imagemap/imap_file.c:86
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
@@ -9872,7 +9872,7 @@ msgstr ""
 "Fil eksisterer allerede.\n"
 "  Ønsker du virkelig at overskrive den?  "
 
-#: plug-ins/imagemap/imap_file.c:110
+#: plug-ins/imagemap/imap_file.c:111
 msgid "Save Imagemap"
 msgstr "Gem billedkort"
 
@@ -9928,48 +9928,40 @@ msgstr "punkter fra _top"
 msgid "_Preview"
 msgstr "E_ksempel"
 
-#: plug-ins/imagemap/imap_main.c:148
+#: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtre/Internet/Billedkort..."
 
-#: plug-ins/imagemap/imap_main.c:754
-msgid "Data changed"
-msgstr "Data ændret"
+#: plug-ins/imagemap/imap_main.c:734
+msgid "Some data has been changed!"
+msgstr "Nogle data er blevet ændret!"
 
-#: plug-ins/imagemap/imap_main.c:758
-msgid ""
-"Some data has been changed.\n"
-"Do you really want to discard your changes?"
-msgstr ""
-"Nogle data er blevet ændret.\n"
-"Ønsker du virkelig at droppe dine ændringer?"
+#: plug-ins/imagemap/imap_main.c:735
+msgid "Do you really want to discard your changes?"
+msgstr "Ønsker du virkelig at droppe dine ændringer?"
 
-#: plug-ins/imagemap/imap_main.c:967
+#: plug-ins/imagemap/imap_main.c:943
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Filen \"%s\" gemt."
 
-#: plug-ins/imagemap/imap_main.c:971
+#: plug-ins/imagemap/imap_main.c:947
 msgid "Couldn't save file:"
 msgstr "Kunne ikke gemme fil:"
 
-#: plug-ins/imagemap/imap_main.c:996
-msgid "Image size changed"
-msgstr "Billedstørrelse ændret"
+#: plug-ins/imagemap/imap_main.c:973
+msgid "Image size has changed."
+msgstr "Billedstørrelsen er ændret."
 
-#: plug-ins/imagemap/imap_main.c:1000
-msgid ""
-"Image size has changed.\n"
-"Resize Area's?"
-msgstr ""
-"Billedstørrelsen er ændret.\n"
-"Tilpas områder?"
+#: plug-ins/imagemap/imap_main.c:974
+msgid "Resize area's?"
+msgstr "Ændr størrelser?"
 
-#: plug-ins/imagemap/imap_main.c:1031
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Couldn't read file:"
 msgstr "Kunne ikke læse fil:"
 
-#: plug-ins/imagemap/imap_main.c:1077
+#: plug-ins/imagemap/imap_main.c:1049
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -9978,109 +9970,113 @@ msgstr "URL: %s"
 msgid "_File"
 msgstr "_Fil"
 
-#: plug-ins/imagemap/imap_menu.c:207
+#: plug-ins/imagemap/imap_menu.c:186
+msgid "Open Recent"
+msgstr "Åbn seneste"
+
+#: plug-ins/imagemap/imap_menu.c:208
 #, c-format
 msgid "_Undo %s"
 msgstr "_Fortryd '%s'"
 
-#: plug-ins/imagemap/imap_menu.c:223
+#: plug-ins/imagemap/imap_menu.c:224
 #, c-format
 msgid "_Redo %s"
 msgstr "_Omgør '%s'"
 
-#: plug-ins/imagemap/imap_menu.c:251
+#: plug-ins/imagemap/imap_menu.c:252
 msgid "_Edit"
 msgstr "_Redigér"
 
-#: plug-ins/imagemap/imap_menu.c:269
+#: plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
 msgstr "Vælg _alt"
 
-#: plug-ins/imagemap/imap_menu.c:272
+#: plug-ins/imagemap/imap_menu.c:273
 msgid "Deselect _All"
 msgstr "Fravælg _alt"
 
-#: plug-ins/imagemap/imap_menu.c:277
+#: plug-ins/imagemap/imap_menu.c:278
 msgid "Edit Area Info..."
 msgstr "Redigér områdeinfo..."
 
-#: plug-ins/imagemap/imap_menu.c:292
+#: plug-ins/imagemap/imap_menu.c:293
 msgid "_View"
 msgstr "_Vis"
 
-#: plug-ins/imagemap/imap_menu.c:296
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
 msgstr "Områdeliste"
 
-#: plug-ins/imagemap/imap_menu.c:300
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Source..."
 msgstr "Kilde..."
 
-#: plug-ins/imagemap/imap_menu.c:308 plug-ins/print/gimp_main_window.c:1423
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: plug-ins/imagemap/imap_menu.c:326
+#: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
 msgstr "Zoom til"
 
-#: plug-ins/imagemap/imap_menu.c:356
+#: plug-ins/imagemap/imap_menu.c:357
 msgid "_Mapping"
 msgstr "Af_bildning"
 
-#: plug-ins/imagemap/imap_menu.c:359 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/imagemap/imap_menu.c:360 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_menu.c:362
+#: plug-ins/imagemap/imap_menu.c:363
 msgid "Select Contiguous Region"
 msgstr "Vælg sammenhængende område"
 
-#: plug-ins/imagemap/imap_menu.c:380
+#: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
 msgstr "_Værktøjer"
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:154
+#: plug-ins/imagemap/imap_menu.c:383 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
 msgstr "Gitterindstillinger..."
 
-#: plug-ins/imagemap/imap_menu.c:385
+#: plug-ins/imagemap/imap_menu.c:386
 msgid "Use GIMP Guides..."
 msgstr "Benyt Gimp-rektangler..."
 
-#: plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/imagemap/imap_menu.c:388
 msgid "Create Guides..."
 msgstr "Opret rektangler..."
 
-#: plug-ins/imagemap/imap_menu.c:394
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: plug-ins/imagemap/imap_menu.c:397
+#: plug-ins/imagemap/imap_menu.c:398
 msgid "About ImageMap..."
 msgstr "Om billedkort..."
 
-#: plug-ins/imagemap/imap_polygon.c:77
+#: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
 msgstr "_Polygon"
 
-#: plug-ins/imagemap/imap_polygon.c:399
+#: plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
 msgstr "x (punkter)"
 
-#: plug-ins/imagemap/imap_polygon.c:399
+#: plug-ins/imagemap/imap_polygon.c:483
 msgid "y (pixels)"
 msgstr "y (punkter)"
 
-#: plug-ins/imagemap/imap_polygon.c:462
+#: plug-ins/imagemap/imap_polygon.c:522
 msgid "_Insert"
 msgstr "_Indsæt"
 
-#: plug-ins/imagemap/imap_polygon.c:468
+#: plug-ins/imagemap/imap_polygon.c:528
 msgid "A_ppend"
 msgstr "_Tilføj"
 
-#: plug-ins/imagemap/imap_polygon.c:474
+#: plug-ins/imagemap/imap_polygon.c:534
 msgid "_Remove"
 msgstr "_Fjern"
 
@@ -10177,15 +10173,15 @@ msgstr "Øverste venstre _x:"
 msgid "Upper left _y:"
 msgstr "Øverste venstre _y:"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "Target"
 msgstr "Destination"
 
-#: plug-ins/imagemap/imap_selection.c:345
+#: plug-ins/imagemap/imap_selection.c:342
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -11349,6 +11345,13 @@ msgstr "Fejl: Kan ikke læse XJT-egenskabsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fejl: XJT-egenskabsfilen %s er tom"
+
+#~ msgid ""
+#~ "Image size has changed.\n"
+#~ "Resize Area's?"
+#~ msgstr ""
+#~ "Billedstørrelsen er ændret.\n"
+#~ "Tilpas områder?"
 
 #~ msgid "_Apply"
 #~ msgstr "_Anvend"
@@ -13449,9 +13452,6 @@ msgstr "Fejl: XJT-egenskabsfilen %s er tom"
 
 #~ msgid "Scale"
 #~ msgstr "Skalér"
-
-#~ msgid "Resize"
-#~ msgstr "Ændr størrelse"
 
 #~ msgid "New width:"
 #~ msgstr "Ny bredde:"
