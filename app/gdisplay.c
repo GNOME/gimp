@@ -1581,105 +1581,105 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
     }
 
 #define SET_SENSITIVE(menu,condition) \
-        menus_set_sensitive_locale ("<Image>", N_(menu), (condition) != 0)
+        menus_set_sensitive_locale ("<Image>", (menu), (condition) != 0)
 #define SET_STATE(menu,condition) \
-        menus_set_state_locale ("<Image>", N_(menu), (condition) != 0)
+        menus_set_state_locale ("<Image>", (menu), (condition) != 0)
 
-  SET_SENSITIVE ("/File/Save", gdisp);
-  SET_SENSITIVE ("/File/Save as", gdisp);
-  SET_SENSITIVE ("/File/Revert", gdisp);
-  SET_SENSITIVE ("/File/Close", gdisp);
+  SET_SENSITIVE (_("/File/Save"), gdisp);
+  SET_SENSITIVE (_("/File/Save as"), gdisp);
+  SET_SENSITIVE (_("/File/Revert"), gdisp);
+  SET_SENSITIVE (_("/File/Close"), gdisp);
 
-  SET_SENSITIVE ("/Edit", gdisp);
+  SET_SENSITIVE (_("/Edit"), gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("/Edit/Cut", lp);
-      SET_SENSITIVE ("/Edit/Copy", lp);
-      SET_SENSITIVE ("/Edit/Paste", lp);
-      SET_SENSITIVE ("/Edit/Paste Into", lp);
-      SET_SENSITIVE ("/Edit/Paste As New", lp);
-      SET_SENSITIVE ("/Edit/Clear", lp);
-      SET_SENSITIVE ("/Edit/Fill", lp);
-      SET_SENSITIVE ("/Edit/Stroke", lp);
-      SET_SENSITIVE ("/Edit/Cut Named", lp);
-      SET_SENSITIVE ("/Edit/Copy Named", lp);
-      SET_SENSITIVE ("/Edit/Paste Named", lp);
+      SET_SENSITIVE (_("/Edit/Cut"), lp);
+      SET_SENSITIVE (_("/Edit/Copy"), lp);
+      SET_SENSITIVE (_("/Edit/Paste"), lp);
+      SET_SENSITIVE (_("/Edit/Paste Into"), lp);
+      SET_SENSITIVE (_("/Edit/Paste As New"), lp);
+      SET_SENSITIVE (_("/Edit/Clear"), lp);
+      SET_SENSITIVE (_("/Edit/Fill"), lp);
+      SET_SENSITIVE (_("/Edit/Stroke"), lp);
+      SET_SENSITIVE (_("/Edit/Cut Named"), lp);
+      SET_SENSITIVE (_("/Edit/Copy Named"), lp);
+      SET_SENSITIVE (_("/Edit/Paste Named"), lp);
     }
 
-  SET_SENSITIVE ("/Select", gdisp && lp);
-  SET_SENSITIVE ("/Select/Save To Channel", !fs);
+  SET_SENSITIVE (_("/Select"), gdisp && lp);
+  SET_SENSITIVE (_("/Select/Save To Channel"), !fs);
 
-  SET_SENSITIVE ("/View", gdisp);
+  SET_SENSITIVE (_("/View"), gdisp);
   if (gdisp)
     {
-      SET_STATE ("/View/Toggle Selection", !gdisp->select->hidden);
-      SET_STATE ("/View/Toggle Rulers",
+      SET_STATE (_("/View/Toggle Selection"), !gdisp->select->hidden);
+      SET_STATE (_("/View/Toggle Rulers"),
 		 GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
-      SET_STATE ("/View/Toggle Guides", gdisp->draw_guides);
-      SET_STATE ("/View/Snap To Guides", gdisp->snap_to_guides);
-      SET_STATE ("/View/Toggle Statusbar",
+      SET_STATE (_("/View/Toggle Guides"), gdisp->draw_guides);
+      SET_STATE (_("/View/Snap To Guides"), gdisp->snap_to_guides);
+      SET_STATE (_("/View/Toggle Statusbar"),
 		 GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
-      SET_STATE ("/View/Dot for dot", gdisp->dot_for_dot);
+      SET_STATE (_("/View/Dot for dot"), gdisp->dot_for_dot);
     }
 
-  SET_SENSITIVE ("/Image", gdisp);
-  SET_SENSITIVE ("/Image/Colors", gdisp);
-  SET_SENSITIVE ("/Image/Channel Ops", gdisp);
-  SET_SENSITIVE ("/Image/Alpha", gdisp);
+  SET_SENSITIVE (_("/Image"), gdisp);
+  SET_SENSITIVE (_("/Image/Colors"), gdisp);
+  SET_SENSITIVE (_("/Image/Channel Ops"), gdisp);
+  SET_SENSITIVE (_("/Image/Alpha"), gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("/Image/RGB", (base_type != RGB));
-      SET_SENSITIVE ("/Image/Grayscale", (base_type != GRAY));
-      SET_SENSITIVE ("/Image/Indexed", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Histogram", lp);
+      SET_SENSITIVE (_("/Image/RGB"), (base_type != RGB));
+      SET_SENSITIVE (_("/Image/Grayscale"), (base_type != GRAY));
+      SET_SENSITIVE (_("/Image/Indexed"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Histogram"), lp);
 
-      SET_SENSITIVE ("/Image/Colors", lp);
-      SET_SENSITIVE ("/Image/Colors/Threshold", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Posterize" , (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Equalize", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Invert", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Color Balance", (base_type == RGB));
-      SET_SENSITIVE ("/Image/Colors/Brightness-Contrast",
+      SET_SENSITIVE (_("/Image/Colors"), lp);
+      SET_SENSITIVE (_("/Image/Colors/Threshold"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Posterize"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Equalize"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Invert"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Color Balance"), (base_type == RGB));
+      SET_SENSITIVE (_("/Image/Colors/Brightness-Contrast"),
 		     (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Hue-Saturation", (base_type == RGB));
-      SET_SENSITIVE ("/Image/Colors/Curves", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Levels", (base_type != INDEXED));
-      SET_SENSITIVE ("/Image/Colors/Desaturate", (base_type == RGB));
+      SET_SENSITIVE (_("/Image/Colors/Hue-Saturation"), (base_type == RGB));
+      SET_SENSITIVE (_("/Image/Colors/Curves"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Levels"), (base_type != INDEXED));
+      SET_SENSITIVE (_("/Image/Colors/Desaturate"), (base_type == RGB));
 
-      SET_SENSITIVE ("/Image/Alpha/Add Alpha Channel",
+      SET_SENSITIVE (_("/Image/Alpha/Add Alpha Channel"),
 		     !fs && !aux && lp && !lm && !alpha);
 
-      SET_SENSITIVE ("/Image/Channel Ops/Offset", lp);
+      SET_SENSITIVE (_("/Image/Channel Ops/Offset"), lp);
     }
 
-  SET_SENSITIVE ("/Layers/Stack", gdisp);
+  SET_SENSITIVE (_("/Layers/Stack"), gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("/Layers/Stack/Previous Layer",
+      SET_SENSITIVE (_("/Layers/Stack/Previous Layer"),
 		     !fs && !aux && lp && lind > 0);
-      SET_SENSITIVE ("/Layers/Stack/Next Layer",
+      SET_SENSITIVE (_("/Layers/Stack/Next Layer"),
 		     !fs && !aux && lp && lind < (lnum - 1));
-      SET_SENSITIVE ("/Layers/Stack/Raise Layer",
+      SET_SENSITIVE (_("/Layers/Stack/Raise Layer"),
 		     !fs && !aux && lp && alpha && lind > 0);
-      SET_SENSITIVE ("/Layers/Stack/Lower Layer",
+      SET_SENSITIVE (_("/Layers/Stack/Lower Layer"),
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
-      SET_SENSITIVE ("/Layers/Stack/Layer to Top",
+      SET_SENSITIVE (_("/Layers/Stack/Layer to Top"),
 		     !fs && !aux && lp && alpha && lind > 0);
-      SET_SENSITIVE ("/Layers/Stack/Layer to Bottom",
+      SET_SENSITIVE (_("/Layers/Stack/Layer to Bottom"),
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
     }
 
-  SET_SENSITIVE ("/Layers/Anchor Layer", gdisp && fs && !aux && lp);
-  SET_SENSITIVE ("/Layers/Merge Visible Layers", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Layers/Flatten Image", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Layers/Alpha To Selection", gdisp && !aux && lp && alpha);
-  SET_SENSITIVE ("/Layers/Mask To Selection", gdisp && !aux && lm && lp);
-  SET_SENSITIVE ("/Layers/Add Alpha Channel",
+  SET_SENSITIVE (_("/Layers/Anchor Layer"), gdisp && fs && !aux && lp);
+  SET_SENSITIVE (_("/Layers/Merge Visible Layers"), gdisp && !fs && !aux && lp);
+  SET_SENSITIVE (_("/Layers/Flatten Image"), gdisp && !fs && !aux && lp);
+  SET_SENSITIVE (_("/Layers/Alpha To Selection"), gdisp && !aux && lp && alpha);
+  SET_SENSITIVE (_("/Layers/Mask To Selection"), gdisp && !aux && lm && lp);
+  SET_SENSITIVE (_("/Layers/Add Alpha Channel"),
 		 gdisp && !fs && !aux && lp && !lm && !alpha);
 
-  SET_SENSITIVE ("/Filters", gdisp && lp);
+  SET_SENSITIVE (_("/Filters"), gdisp && lp);
 
-  SET_SENSITIVE ("/Script-Fu", gdisp && lp);
+  SET_SENSITIVE (_("/Script-Fu"), gdisp && lp);
 
 #undef SET_STATE
 #undef SET_SENSITIVE

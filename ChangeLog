@@ -1,3 +1,9 @@
+1999-07-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gdisplay.c (gdisplay_set_menu_sensitivity): moved the _()
+	wrappers out of the macro again, so they actually get
+	processed. Reported by <Daniel.Egger@t-online.de>.
+
 Sat Jul 17 13:31:40 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.7 release
