@@ -919,7 +919,7 @@ gimp_image_set_filename (GimpImage   *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (filename)
+  if (filename && strlen (filename))
     {
       gchar *uri;
 
