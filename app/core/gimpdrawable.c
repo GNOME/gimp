@@ -471,14 +471,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  /*  if not already configured by gimp_item_copy()  */
-  if (! GIMP_ITEM (drawable)->ID)
-    gimp_item_configure (GIMP_ITEM (drawable), gimage, name);
-
-  GIMP_ITEM (drawable)->width    = width;
-  GIMP_ITEM (drawable)->height   = height;
-  GIMP_ITEM (drawable)->offset_x = offset_x;
-  GIMP_ITEM (drawable)->offset_y = offset_y;
+  gimp_item_configure (GIMP_ITEM (drawable), gimage,
+                       offset_x, offset_y, width, height, name);
 
   drawable->type      = type;
   drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);

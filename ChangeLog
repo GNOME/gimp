@@ -1,5 +1,15 @@
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.[ch] (gimp_item_configure): added width,
+	height, offset_x and offset_y parameters.
+
+	* app/core/gimpdrawable.c
+	* app/vectors/gimpvectors.c: changed accordingly.
+
+	* app/tools/gimpfliptool.c: removed unused variable.
+
+2003-05-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: removed gimp_drawable_offsets().
 
 	* app/core/gimpitem.[ch]: added gimp_item_offsets().

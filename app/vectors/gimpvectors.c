@@ -247,7 +247,9 @@ gimp_vectors_new (GimpImage   *gimage,
 
   vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
 
-  gimp_item_configure (GIMP_ITEM (vectors), gimage, name);
+  gimp_item_configure (GIMP_ITEM (vectors), gimage,
+                       0, 0, gimage->width, gimage->height,
+                       name);
 
   return vectors;
 }

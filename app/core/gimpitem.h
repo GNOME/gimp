@@ -86,6 +86,10 @@ void            gimp_item_removed         (GimpItem       *item);
 
 void            gimp_item_configure       (GimpItem       *item,
                                            GimpImage      *gimage,
+                                           gint            offset_x,
+                                           gint            offset_y,
+                                           gint            width,
+                                           gint            height,
                                            const gchar    *name);
 GimpItem      * gimp_item_duplicate       (GimpItem       *item,
                                            GType           new_type,

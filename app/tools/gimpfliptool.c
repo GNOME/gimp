@@ -196,7 +196,6 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDrawable    *drawable;
   GimpFlipOptions *options;
   gboolean         bad_cursor = TRUE;
 

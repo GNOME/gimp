@@ -249,7 +249,10 @@ gimp_item_real_duplicate (GimpItem *item,
 
   new_item = g_object_new (new_type, NULL);
 
-  gimp_item_configure (new_item, gimp_item_get_image (item), new_name);
+  gimp_item_configure (new_item, gimp_item_get_image (item),
+                       item->offset_x, item->offset_y,
+                       item->width, item->height,
+                       new_name);
 
   g_free (new_name);
 
@@ -281,20 +284,30 @@ gimp_item_removed (GimpItem *item)
 void
 gimp_item_configure (GimpItem    *item,
                      GimpImage   *gimage,
+                     gint         offset_x,
+                     gint         offset_y,
+                     gint         width,
+                     gint         height,
                      const gchar *name)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (item->ID == 0);
-  g_return_if_fail (item->gimage == 0);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  item->ID = gimage->gimp->next_item_ID++;
+  if (item->ID == 0)
+    {
+      item->ID = gimage->gimp->next_item_ID++;
 
-  g_hash_table_insert (gimage->gimp->item_table,
-		       GINT_TO_POINTER (item->ID),
-		       item);
+      g_hash_table_insert (gimage->gimp->item_table,
+                           GINT_TO_POINTER (item->ID),
+                           item);
 
-  gimp_item_set_image (item, gimage);
+      gimp_item_set_image (item, gimage);
+    }
+
+  item->width    = width;
+  item->height   = height;
+  item->offset_x = offset_x;
+  item->offset_y = offset_y;
 
   gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
 }
