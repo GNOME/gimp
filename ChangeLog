@@ -1,3 +1,9 @@
+Sat Oct  9 02:59:04 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/undo_history.c: use the preview_size set for the layers dialog
+	in preferences -- the size is set at dialog creation time and will
+	not be changed
+
 Sat Oct  9 02:04:49 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/undo_history.c: catch another case where a new preview should
