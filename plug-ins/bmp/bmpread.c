@@ -494,7 +494,10 @@ ReadImage (FILE     *fd,
   gimp_image_add_layer (image, layer, 0);
   drawable = gimp_drawable_get (layer);
 
-  dest      = g_malloc (drawable->width * drawable->height * channels);
+  /* use g_malloc0 to initialize the dest buffer so that unspecified
+     pixels in RLE bitmaps show up as the zeroth element in the palette.
+  */
+  dest      = g_malloc0 (drawable->width * drawable->height * channels);
   buffer    = g_malloc (rowbytes);
   rowstride = drawable->width * channels;
 
