@@ -73,6 +73,10 @@ unsigned char *  gimp_drawable_cmap               (GimpDrawable *);
 char *		 gimp_drawable_get_name	          (GimpDrawable *);
 void 		 gimp_drawable_set_name	          (GimpDrawable *, char *);
 
+unsigned char *  gimp_drawable_get_color_at       (GimpDrawable *,
+						   int x, int y);
+
+
 Parasite *       gimp_drawable_find_parasite      (const GimpDrawable *,
 						   const char *name);
 void             gimp_drawable_attach_parasite    (GimpDrawable *, Parasite *);

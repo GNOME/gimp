@@ -773,6 +773,31 @@ gimp_image_get_background (GimpImage *gimage, GimpDrawable *drawable, unsigned c
   gimp_image_transform_color (gimage, drawable, pbg, bg, RGB);
 }
 
+unsigned char *
+gimp_image_get_color_at (GimpImage *gimage, int x, int y)
+{
+  Tile *tile;
+  unsigned char *src;
+  unsigned char *dest;
+
+  if (x < 0 || y < 0 || x >= gimage->width || y >= gimage->height)
+  {
+    return NULL;
+  }
+  dest = g_new(unsigned char, 5);
+  tile = tile_manager_get_tile (gimp_image_composite (gimage), x, y,
+				TRUE, FALSE);
+  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  gimp_image_get_color (gimage, gimp_image_composite_type (gimage), dest, src);
+  if(TYPE_HAS_ALPHA(gimp_image_composite_type (gimage)))
+    dest[3] = src[gimp_image_composite_bytes (gimage) - 1];
+  else
+    dest[3] = 255;
+  dest[4] = 0;
+  tile_release (tile, FALSE);
+  return dest;
+}
+
 void
 gimp_image_get_color (GimpImage *gimage, int d_type,
 		  unsigned char *rgb, unsigned char *src)
@@ -945,9 +970,13 @@ gimp_image_parasite_list (GimpImage *image, gint *count)
 void
 gimp_image_attach_parasite (GimpImage *gimage, Parasite *parasite)
 {
-  parasite_list_add(gimage->parasites, parasite);
-  if (parasite_is_persistent(parasite)) /* make sure we can be saved */
+  /* only set the dirty bit if we can be saved and the new parasite differs 
+     from the current one */
+  if (parasite_is_persistent(parasite)
+      && !parasite_compare(parasite, gimp_image_find_parasite(gimage,
+						 parasite_name(parasite))))
     gimp_image_dirty(gimage);
+  parasite_list_add(gimage->parasites, parasite);
   if (parasite_has_flag(parasite, PARASITE_ATTACH_PARENT))
   {
     parasite_shift_parent(parasite);

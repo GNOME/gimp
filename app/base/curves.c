@@ -30,6 +30,7 @@
 #include "image_map.h"
 #include "interface.h"
 #include "curves.h"
+#include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -96,6 +97,8 @@ struct _CurvesDialog
   int            curve_type;
   int            points[5][17][2];
   unsigned char  curve[5][256];
+
+  GimpLut       *lut;
 };
 
 typedef double CRMatrix[4][4];
@@ -141,65 +144,49 @@ static CRMatrix CR_basis =
 };
 
 
-static void       curves (PixelRegion *, PixelRegion *, void *);
 static Argument * curves_spline_invoker (Argument *);
 static Argument * curves_explicit_invoker (Argument *);
 
 /*  curves machinery  */
 
-static void
-curves (PixelRegion *srcPR,
-	PixelRegion *destPR,
-	void        *user_data)
+static float
+curves_lut_func(CurvesDialog *cd,
+		int nchannels, int channel, float value)
 {
-  CurvesDialog *cd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int has_alpha, alpha;
-  int w, h;
+  float f;
+  int index;
+  double inten;
+  int j;
 
-  cd = (CurvesDialog *) user_data;
+  if (nchannels == 1)
+    j = 0;
+  else
+    j = channel + 1;
+  inten = value;
+  /* For color  images this runs through the loop with j = channel +1
+     the first time and j = 0 the second time */
+  /* For bw images this runs through the loop with j = 0 the first and
+     only time  */
+  for (; j >= 0; j -= (channel + 1))
+  {
+    /* don't apply the overall curve to the alpha channel */
+    if (j == 0 && (nchannels == 2 || nchannels == 4)
+	&& channel == nchannels -1)
+      return inten;
 
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
-
-  while (h--)
+    if (inten < 0.0)
+      inten = cd->curve[j][0]/255.0;
+    else if (inten >= 1.0)
+      inten = cd->curve[j][255]/255.0;
+    else /* interpolate the curve */
     {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  if (cd->color)
-	    {
-	      /*  The contributions from the individual channel level settings  */
-	      d[RED_PIX] = cd->curve[HISTOGRAM_RED][s[RED_PIX]];
-	      d[GREEN_PIX] = cd->curve[HISTOGRAM_GREEN][s[GREEN_PIX]];
-	      d[BLUE_PIX] = cd->curve[HISTOGRAM_BLUE][s[BLUE_PIX]];
-
-	      /*  The overall changes  */
-	      d[RED_PIX] = cd->curve[HISTOGRAM_VALUE][d[RED_PIX]];
-	      d[GREEN_PIX] = cd->curve[HISTOGRAM_VALUE][d[GREEN_PIX]];
-	      d[BLUE_PIX] = cd->curve[HISTOGRAM_VALUE][d[BLUE_PIX]];
-	    }
-	  else
-	    d[GRAY_PIX] = cd->curve[HISTOGRAM_VALUE][s[GRAY_PIX]];
-
-	  if (has_alpha) {
-	    d[alpha] = cd->curve[HISTOGRAM_ALPHA][s[alpha]];
-	    /* d[alpha] = s[alpha]; */
-	  }
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
+      index = floor(inten * 255.0);
+      f = inten*255.0 - index;
+      inten = ((1.0 - f) * cd->curve[j][index    ] + 
+	       (      f) * cd->curve[j][index + 1] ) / 255.0;
     }
+  }
+  return inten;
 }
 
 /*  curves action functions  */
@@ -446,6 +433,7 @@ curves_new_dialog ()
   for (i = 0; i < 5; i++)
     for (j = 0; j < 256; j++)
       cd->curve[i][j] = j;
+  cd->lut = gimp_lut_new();
 
   for (i = 0; i < 5; i++)
     channel_items [i].user_data = (gpointer) cd;
@@ -810,6 +798,9 @@ curves_calculate_curve (CurvesDialog *cd)
 	}
       break;
     }
+  gimp_lut_setup(cd->lut, (GimpLutFunc) curves_lut_func,
+		 (void *) cd, gimp_drawable_bytes(cd->drawable));
+
 }
 
 static void
@@ -820,7 +811,8 @@ curves_preview (CurvesDialog *cd)
 
   active_tool->preserve = TRUE;  /* Going to dirty the display... */
 
-  image_map_apply (cd->image_map, curves, (void *) cd);
+  image_map_apply (cd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
+		   (void *) cd->lut);
 
   active_tool->preserve = FALSE;  /* All done */
 }
@@ -988,7 +980,8 @@ curves_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;  /* We're about to dirty... */
 
   if (!cd->preview)
-    image_map_apply (cd->image_map, curves, (void *) cd);
+    image_map_apply (cd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+		     (void *) cd->lut);
 
   if (cd->image_map)
     image_map_commit (cd->image_map);
@@ -1361,6 +1354,7 @@ curves_spline_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable =  drawable_get_ID (int_value);
+      cd.drawable = drawable;
       if (drawable == NULL)                                        
         success = FALSE;
       else
@@ -1407,6 +1401,7 @@ curves_spline_invoker (Argument *args)
   /*  arrange to modify the curves  */
   if (success)
     {
+      cd.lut = gimp_lut_new();
       for (i = 0; i < 5; i++)
 	for (j = 0; j < 256; j++)
 	  cd.curve[i][j] = j;
@@ -1435,9 +1430,10 @@ curves_spline_invoker (Argument *args)
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	curves (&srcPR, &destPR, (void *) &cd);
+      pixel_regions_process_parallel((p_func)gimp_lut_process, cd.lut, 
+				     2, &srcPR, &destPR);
 
+      gimp_lut_free(cd.lut);
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
@@ -1509,6 +1505,7 @@ curves_explicit_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable =  drawable_get_ID (int_value);
+      cd.drawable = drawable;
       if (drawable == NULL)                                        
         success = FALSE;
       else
@@ -1564,15 +1561,18 @@ curves_explicit_invoker (Argument *args)
 
       for (j = 0; j < 256; j++)
 	cd.curve[cd.channel][j] = curve[j];
-
+      cd.lut = gimp_lut_new();
+      gimp_lut_setup(cd.lut, (GimpLutFunc) curves_lut_func,
+		     (void *) &cd, gimp_drawable_bytes(drawable));
+      
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	curves (&srcPR, &destPR, (void *) &cd);
+      pixel_regions_process_parallel((p_func)gimp_lut_process, cd.lut, 
+				     2, &srcPR, &destPR);
 
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

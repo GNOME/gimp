@@ -628,27 +628,36 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       data = maskPR.data;
       ex = maskPR.x + maskPR.w;
       ey = maskPR.y + maskPR.h;
-
-      for (y = maskPR.y; y < ey; y++)
-	{
-	  found = FALSE;
-	  for (x = maskPR.x; x < ex; x++, data++)
-	    if (*data)
-	      {
-		if (x < *x1)
-		  *x1 = x;
-		if (x > *x2)
-		  *x2 = x;
-		found = TRUE;
-	      }
-	  if (found)
+      /* only check the pixels if this tile is not fully within the currently
+	 computed bounds */
+      if (maskPR.x < *x1 || ex > *x2 ||
+	  maskPR.y < *y1 || ey > *y2)
+        {
+	  for (y = maskPR.y; y < ey; y++)
 	    {
-	      if (y < *y1)
-		*y1 = y;
-	      if (y > *y2)
-		*y2 = y;
+	      found = FALSE;
+	      for (x = maskPR.x; x < ex; x++, data++)
+		if (*data)
+	          {
+		    if (x < *x1)
+		      *x1 = x;
+		    else if (x > *x2)
+		      *x2 = x;
+		    found = TRUE;
+		  }
+	      if (found)
+	        {
+		  if (y < *y1)
+		    *y1 = y;
+		  else if (y > *y2)
+		    *y2 = y;
+		}
 	    }
 	}
+      if (x1 > x2)
+	x2 = x1;
+      if (y1 > y2)
+	y2 = y1;
     }
 
   *x2 = BOUNDS (*x2 + 1, 0, GIMP_DRAWABLE(mask)->width);

@@ -35,17 +35,21 @@ extern "C" {
 #define PARASITE_ATTACH_GRANDPARENT (0x80 << 16)
 #define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
 
-Parasite *parasite_new      (const char *name, guint32 flags,
+Parasite   *parasite_new      (const char *name, guint32 flags,
 			     guint32 size, const void *data);
-void      parasite_free     (Parasite *parasite);
+void        parasite_free     (Parasite *parasite);
 
-Parasite *parasite_copy     (const Parasite *parasite);
+Parasite   *parasite_copy     (const Parasite *parasite);
 
-int       parasite_is_type       (const Parasite *parasite, const char *name);
-int       parasite_is_persistent (const Parasite *p);
-int       parasite_has_flag      (const Parasite *p, gulong flag);
-void     *parasite_data          (const Parasite *p);
-long      parasite_data_size     (const Parasite *p);
+int         parasite_compare  (const Parasite *a, const Parasite *b);
+
+int         parasite_is_type       (const Parasite *parasite,
+				    const char *name);
+int         parasite_is_persistent (const Parasite *p);
+int         parasite_has_flag      (const Parasite *p, gulong flag);
+const char *parasite_name          (const Parasite *p);
+void       *parasite_data          (const Parasite *p);
+long        parasite_data_size     (const Parasite *p);
 
 
 

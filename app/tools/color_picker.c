@@ -28,8 +28,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "tile.h"			/* ick. */
-
 /* maximum information buffer size */
 
 #define MAX_INFO_BUF    8
@@ -289,15 +287,14 @@ get_color (GImage *gimage,
 	   int     sample_merged,
 	   int     final)
 {
+  unsigned char *color;
   unsigned char *src, *cmap, alpha;
-  TileManager *tiles;
-  Tile *tile;
   int offx, offy;
   int width, height;
   int bytes;
   int index;
   int has_alpha;
-
+  int is_indexed;
   if (!drawable && !sample_merged) 
     return FALSE;
 
@@ -306,73 +303,33 @@ get_color (GImage *gimage,
       drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
-      width = drawable_width (drawable);
-      height = drawable_height (drawable);
-      tiles = drawable_data (drawable);
-      bytes = drawable_bytes (drawable);
-      has_alpha = drawable_has_alpha (drawable);
-      sample_type = drawable_type (drawable);
-      cmap = drawable_cmap (drawable);
+      if (!(color = gimp_drawable_get_color_at(drawable, x, y)))
+	return FALSE;
+      sample_type = gimp_drawable_type(drawable);
+      is_indexed = gimp_drawable_indexed (drawable);
     }
   else
     {
-      width = gimage->width;
-      height = gimage->height;
-      tiles = gimage_composite (gimage);
-      bytes = gimage_composite_bytes (gimage);
-      sample_type = gimage_composite_type (gimage);
-      has_alpha = (sample_type == RGBA_GIMAGE ||
-		   sample_type == GRAYA_GIMAGE ||
-		   sample_type == INDEXEDA_GIMAGE);
-      cmap = gimage_cmap (gimage);
+      if (!(color = gimp_image_get_color_at(gimage, x, y)))
+	return FALSE;
+      sample_type = gimp_image_composite_type(gimage);
+      is_indexed = FALSE;
     }
 
-  if (x >= 0 && y >= 0 && x < width && y < height)
-    {
-      tile = tile_manager_get_tile (tiles, x, y, TRUE, FALSE);
-      src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-    }
-  else
-    return FALSE;
+  has_alpha = TYPE_HAS_ALPHA(sample_type);
 
-	  /*  if the alpha channel (if one exists) is 0, out of bounds  */
+  col_value[RED_PIX] = color[RED_PIX];
+  col_value[GREEN_PIX] = color[GREEN_PIX];
+  col_value[BLUE_PIX] = color[BLUE_PIX];
   if (has_alpha)
     {
-      alpha = src[bytes - 1];
-      col_value [ALPHA_PIX] = alpha;
+      col_value [ALPHA_PIX] = color[3];
     }
-
-  /*  If the image is color, get RGB  */
-  switch (sample_type)
-    {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
-      col_value [RED_PIX] = src [RED_PIX];
-      col_value [GREEN_PIX] = src [GREEN_PIX];
-      col_value [BLUE_PIX] = src [BLUE_PIX];
-      break;
-
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      col_value [4] = src [0];
-      index = src [0] * 3;
-      col_value [RED_PIX] = cmap [index + 0];
-      col_value [GREEN_PIX] = cmap [index + 1];
-      col_value [BLUE_PIX] = cmap [index + 2];
-      break;
-
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      col_value [RED_PIX] = src [GRAY_PIX];
-      col_value [GREEN_PIX] = src [GRAY_PIX];
-      col_value [BLUE_PIX] = src [GRAY_PIX];
-      break;
-
-    default :
-      break;
-    }
-
-  tile_release (tile, FALSE);
-
+  if (is_indexed)
+    col_value [4] = color[4];
   palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
 			    col_value [BLUE_PIX], final);
+  g_free(color);
   return TRUE;
 }
 

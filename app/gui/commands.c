@@ -1133,7 +1133,9 @@ image_scale_callback (GtkWidget *w,
 
   image_scale = (ImageResize *) client_data;
 
-  if ((gimage = image_scale->gimage) != NULL)
+  if ((gimage = image_scale->gimage) != NULL &&
+      (image_scale->resize->width != gimage->width ||
+       image_scale->resize->height != gimage->height))
     {
       if (image_scale->resize->width > 0 &&
 	  image_scale->resize->height > 0) 

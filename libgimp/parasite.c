@@ -97,6 +97,18 @@ parasite_copy (const Parasite *parasite)
 }
 
 int
+parasite_compare (const Parasite *a, const Parasite *b)
+{
+  if (a && b && a->name && b->name && strcmp(a->name, b->name) == 0 &&
+      a->flags == b->flags && a->size == b->size )
+    if (a->data == NULL && b->data == NULL)  
+      return TRUE;
+    else if (a->data && b->data && memcmp(a->data, b->data, a->size) == 0)
+      return TRUE;
+  return FALSE;
+}
+
+int
 parasite_is_persistent(const Parasite *p)
 {
   if (p == NULL)
@@ -110,6 +122,14 @@ parasite_has_flag(const Parasite *p, gulong flag)
   if (p == NULL)
     return FALSE;
   return (p->flags & flag);
+}
+
+const char *
+parasite_name(const Parasite *p)
+{
+  if (p)
+    return p->name;
+  return NULL;
 }
 
 void *parasite_data(const Parasite *p)

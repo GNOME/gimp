@@ -25,6 +25,7 @@
 #include "image_map.h"
 #include "interface.h"
 #include "posterize.h"
+#include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -49,6 +50,8 @@ struct _PosterizeDialog
   int          levels;
 
   gint         preview;
+
+  GimpLut       *lut;
 };
 
 /*  posterize action functions  */
@@ -70,61 +73,28 @@ static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *
 static void *posterize_options = NULL;
 static PosterizeDialog *posterize_dialog = NULL;
 
-static void       posterize (PixelRegion *, PixelRegion *, void *);
 static Argument * posterize_invoker (Argument *);
 
 /*  posterize machinery  */
 
-static void
-posterize (PixelRegion *srcPR,
-	   PixelRegion *destPR,
-	   void        *user_data)
+static float
+posterize_lut_func(PosterizeDialog *pd,
+		   int nchannels, int channel, float value)
 {
-  PosterizeDialog *pd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int has_alpha, alpha;
-  int w, h, b, i;
-  double interval, half_interval;
-  unsigned char transfer[256];
+  int levels;
+  /* don't posterize the alpha channel */
+  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+    return value;
 
-  pd = (PosterizeDialog *) user_data;
+  if (pd->levels < 2)
+    levels = 2;
+  else
+    levels = pd->levels;
 
-  /*  Set the transfer array  */
-  interval = 255.0 / (double) (pd->levels - 1);
-  half_interval = interval / 2.0;
+  value = rint(value * (pd->levels - 1.0)) / (pd->levels - 1.0);
 
-  for (i = 0; i < 256; i++)
-    transfer[i] = (unsigned char) ((int) (((double) i + half_interval) / interval) * interval);
-
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  for (b = 0; b < alpha; b++)
-	    d[b] = transfer[s[b]];
-
-	  if (has_alpha)
-	    d[alpha] = s[alpha];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
+  return value;
 }
-
 
 /*  by_color select action functions  */
 
@@ -289,6 +259,7 @@ posterize_new_dialog ()
   pd = g_malloc (sizeof (PosterizeDialog));
   pd->preview = TRUE;
   pd->levels = 3;
+  pd->lut = gimp_lut_new();
 
   /*  The shell and main vbox  */
   pd->shell = gtk_dialog_new ();
@@ -356,7 +327,10 @@ posterize_preview (PosterizeDialog *pd)
   if (!pd->image_map)
     g_message (_("posterize_preview(): No image map"));
   active_tool->preserve = TRUE;
-  image_map_apply (pd->image_map, posterize, (void *) pd);
+  gimp_lut_setup_exact(pd->lut, (GimpLutFunc) posterize_lut_func,
+		       (void *) pd, gimp_drawable_bytes(pd->drawable));
+  image_map_apply (pd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
+		   (void *) pd->lut);
   active_tool->preserve = FALSE;
 }
 
@@ -374,8 +348,12 @@ posterize_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!pd->preview)
-    image_map_apply (pd->image_map, posterize, (void *) pd);
-
+  {
+    gimp_lut_setup_exact(pd->lut, (GimpLutFunc) posterize_lut_func,
+			 (void *) pd, gimp_drawable_bytes(pd->drawable));
+    image_map_apply (pd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+		     (void *) pd->lut);
+  }
   if (pd->image_map)
     image_map_commit (pd->image_map);
 
@@ -531,16 +509,17 @@ posterize_invoker (Argument *args)
   if (success)
     {
       pd.levels = levels;
-
+      pd.lut = gimp_lut_new();
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	posterize (&srcPR, &destPR, (void *) &pd);
+      pixel_regions_process_parallel((p_func)gimp_lut_process, pd.lut, 
+				     2, &srcPR, &destPR);
 
+      gimp_lut_free(pd.lut);
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }

@@ -55,7 +55,7 @@ static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
 static void gimp_layer_mask_destroy    (GtkObject          *object);
 
-static gint layer_signals[LAST_SIGNAL] = { 0 };
+static guint layer_signals[LAST_SIGNAL] = { 0 };
 /*
 static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
 */

@@ -340,9 +340,7 @@ by_color_select_button_release (Tool           *tool,
   GDisplay * gdisp;
   int x, y;
   GimpDrawable *drawable;
-  Tile *tile;
-  unsigned char col[MAX_CHANNELS];
-  unsigned char *data;
+  unsigned char *color;
   int use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -360,31 +358,25 @@ by_color_select_button_release (Tool           *tool,
       /*  Get the start color  */
       if (by_color_options->sample_merged)
 	{
-	  if (x < 0 || y < 0 || x >= gdisp->gimage->width || y >= gdisp->gimage->height)
+	  if (!(color = gimp_image_get_color_at(gdisp->gimage, x, y)))
 	    return;
-	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, TRUE, FALSE);
-	  data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-          gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
-          tile_release (tile, FALSE);
 	}
       else
 	{
-	  if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
+	  if (!(color = gimp_drawable_get_color_at(drawable, x, y)))
 	    return;
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
-	  data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-          gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
-          tile_release (tile, FALSE);
 	}
 
       /*  select the area  */
-      by_color_select (gdisp->gimage, drawable, col,
+      by_color_select (gdisp->gimage, drawable, color,
 		       by_color_dialog->threshold,
 		       by_color_sel->operation,
 		       by_color_options->antialias,
 		       by_color_options->feather,
 		       by_color_options->feather_radius,
 		       by_color_options->sample_merged);
+
+      g_free(color);
 
       /*  show selection on all views  */
       gdisplays_flush ();

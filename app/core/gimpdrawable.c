@@ -383,6 +383,39 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
   drawable->name = g_strdup(name);
 }
 
+unsigned char *
+gimp_drawable_get_color_at (GimpDrawable *drawable, int x, int y)
+{
+  Tile *tile;
+  unsigned char *src;
+  unsigned char *dest;
+
+  if (!drawable ||
+      (!gimp_drawable_gimage(drawable) && gimp_drawable_indexed(drawable)) 
+      || x < 0 || y < 0 ||
+      x >= drawable->width || y >= drawable->height)
+  {
+    return NULL;
+  }
+  dest = g_new(unsigned char, 5);
+  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
+				TRUE, FALSE);
+  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  gimp_image_get_color (gimp_drawable_gimage(drawable),
+			gimp_drawable_type (drawable), dest, src);
+  if(TYPE_HAS_ALPHA(gimp_drawable_type (drawable)))
+    dest[3] = src[gimp_drawable_bytes (drawable) - 1];
+  else
+    dest[3] = 255;
+  if (gimp_drawable_indexed(drawable))
+    dest[4] = src[0];
+  else
+    dest[4] = 0;
+  tile_release (tile, FALSE);
+  return dest;
+}
+
+
 
 Parasite *
 gimp_drawable_find_parasite (const GimpDrawable *drawable, const char *name)
@@ -411,9 +444,13 @@ gimp_drawable_parasite_list (GimpDrawable *drawable, gint *count)
 void
 gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
 {
-  parasite_list_add(drawable->parasites, parasite);
-  if (parasite_is_persistent(parasite)) /* make sure we can be saved */
+  /* only set the dirty bit if we can be saved and the new parasite differs 
+     from the current one */
+  if (parasite_is_persistent(parasite) &&
+      !parasite_compare(parasite, gimp_drawable_find_parasite(drawable,
+						parasite_name(parasite))))
     gimp_image_dirty(drawable->gimage);
+  parasite_list_add(drawable->parasites, parasite);
   if (parasite_has_flag(parasite, PARASITE_ATTACH_PARENT))
   {
     parasite_shift_parent(parasite);

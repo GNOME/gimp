@@ -186,6 +186,8 @@ gimp_SOURCES = \
 	gimplist.h		\
 	gimplistF.h		\
 	gimplistP.h		\
+	gimplut.c		\
+	gimplut.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpprogress.c		\

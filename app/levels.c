@@ -29,6 +29,7 @@
 #include "image_map.h"
 #include "interface.h"
 #include "levels.h"
+#include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -95,9 +96,9 @@ struct _LevelsDialog
   int            active_slider;
   int            slider_pos[5];  /*  positions for the five sliders  */
 
-  unsigned char  input[5][256];
-  unsigned char  output[5][256];
+  unsigned char  input[5][256]; /* this is used only by the gui */
 
+  GimpLut       *lut;
 };
 
 /*  levels action functions  */
@@ -133,65 +134,61 @@ static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, 
 static void *levels_options = NULL;
 static LevelsDialog *levels_dialog = NULL;
 
-static void       levels (PixelRegion *, PixelRegion *, void *);
 static void       levels_histogram_info (PixelRegion *, PixelRegion *, HistogramValues, void *);
 static void       levels_histogram_range (int, int, HistogramValues, void *);
 static Argument * levels_invoker (Argument *);
 
 /*  levels machinery  */
 
-static void
-levels (PixelRegion *srcPR,
-	PixelRegion *destPR,
-	void        *user_data)
+static float
+levels_lut_func(LevelsDialog *ld,
+		int nchannels, int channel, float value)
 {
-  LevelsDialog *ld;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int has_alpha, alpha;
-  int w, h;
+  double inten;
+  int j;
+  double input, output;
 
-  ld = (LevelsDialog *) user_data;
 
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
+  if (nchannels == 1)
+    j = 0;
+  else
+    j = channel + 1;
+  inten = value;
+  /* For color  images this runs through the loop with j = channel +1
+     the first time and j = 0 the second time */
+  /* For bw images this runs through the loop with j = 0 the first and
+     only time  */
+  for (; j >= 0; j -= (channel + 1))
+  {
+    /* don't apply the overall curve to the alpha channel */
+    if (j == 0 && (nchannels == 2 || nchannels == 4)
+	&& channel == nchannels -1)
+      return inten;
 
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  if (ld->color)
-	    {
-	      /*  The contributions from the individual channel level settings  */
-	      d[RED_PIX] = ld->output[HISTOGRAM_RED][ld->input[HISTOGRAM_RED][s[RED_PIX]]];
-	      d[GREEN_PIX] = ld->output[HISTOGRAM_GREEN][ld->input[HISTOGRAM_GREEN][s[GREEN_PIX]]];
-	      d[BLUE_PIX] = ld->output[HISTOGRAM_BLUE][ld->input[HISTOGRAM_BLUE][s[BLUE_PIX]]];
+    /*  determine input intensity  */
+    if (ld->high_input[j] != ld->low_input[j])
+      inten = (double) (255.0*inten - ld->low_input[j]) /
+	(double) (ld->high_input[j] - ld->low_input[j]);
+    else
+      inten = (double) (255.0*inten - ld->low_input[j]);
 
-	      /*  The overall changes  */
-	      d[RED_PIX] = ld->output[HISTOGRAM_VALUE][ld->input[HISTOGRAM_VALUE][d[RED_PIX]]];
-	      d[GREEN_PIX] = ld->output[HISTOGRAM_VALUE][ld->input[HISTOGRAM_VALUE][d[GREEN_PIX]]];
-	      d[BLUE_PIX] = ld->output[HISTOGRAM_VALUE][ld->input[HISTOGRAM_VALUE][d[BLUE_PIX]]];
-	    }
-	  else
-	    d[GRAY_PIX] = ld->output[HISTOGRAM_VALUE][ld->input[HISTOGRAM_VALUE][s[GRAY_PIX]]];;
+    if (ld->gamma[j] != 0.0)
+      if (inten >= 0.0)
+	inten =  pow ( inten, (1.0 / ld->gamma[j]));
+      else
+	inten = -pow (-inten, (1.0 / ld->gamma[j]));
 
-	  if (has_alpha)
-	      d[alpha] = ld->output[HISTOGRAM_ALPHA][ld->input[HISTOGRAM_ALPHA][s[alpha]]];
-	  /*d[alpha] = s[alpha];*/
+  /*  determine the output intensity  */
+    if (ld->high_output[j] >= ld->low_output[j])
+      inten = (double) (inten * (ld->high_output[j] - ld->low_output[j]) +
+			ld->low_output[j]);
+    else if (ld->high_output[j] < ld->low_output[j])
+      inten = (double) (ld->low_output[j] - inten *
+			(ld->low_output[j] - ld->high_output[j]));
 
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
+    inten /= 255.0;
+  }
+  return inten;
 }
 
 static void
@@ -523,6 +520,8 @@ levels_new_dialog ()
   ld = g_malloc (sizeof (LevelsDialog));
   ld->preview = TRUE;
 
+  ld->lut = gimp_lut_new();
+
   for (i = 0; i < 5; i++)
     color_option_items [i].user_data = (gpointer) ld;
 
@@ -778,18 +777,6 @@ levels_calculate_transfers (LevelsDialog *ld)
 	  if (ld->gamma[j] != 0.0)
 	    inten = pow (inten, (1.0 / ld->gamma[j]));
 	  ld->input[j][i] = (unsigned char) (inten * 255.0 + 0.5);
-
-	  /*  determine the output intensity  */
-	  inten = (double) i / 255.0;
-	  if (ld->high_output[j] >= ld->low_output[j])
-	    inten = (double) (inten * (ld->high_output[j] - ld->low_output[j]) +
-			      ld->low_output[j]);
-	  else if (ld->high_output[j] < ld->low_output[j])
-	    inten = (double) (ld->low_output[j] - inten *
-			      (ld->low_output[j] - ld->high_output[j]));
-
-	  inten = BOUNDS (inten, 0.0, 255.0);
-	  ld->output[j][i] = (unsigned char) (inten + 0.5);
 	}
     }
 }
@@ -803,6 +790,9 @@ levels_update (LevelsDialog *ld,
 
   /*  Recalculate the transfer arrays  */
   levels_calculate_transfers (ld);
+  /* set up the lut */
+  gimp_lut_setup(ld->lut, (GimpLutFunc) levels_lut_func,
+		 (void *) ld, gimp_drawable_bytes(ld->drawable));
 
   if (update & LOW_INPUT)
     {
@@ -906,7 +896,8 @@ levels_preview (LevelsDialog *ld)
   if (!ld->image_map)
     g_warning (_("No image map"));
   active_tool->preserve = TRUE;
-  image_map_apply (ld->image_map, levels, (void *) ld);
+  image_map_apply (ld->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
+		   (void *) ld->lut);
   active_tool->preserve = FALSE;
 }
 
@@ -1089,7 +1080,12 @@ levels_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!ld->preview)
-    image_map_apply (ld->image_map, levels, (void *) ld);
+  {
+    gimp_lut_setup(ld->lut, (GimpLutFunc) levels_lut_func,
+		   (void *) ld, gimp_drawable_bytes(ld->drawable));
+    image_map_apply (ld->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+		     (void *) ld->lut);
+  }
 
   if (ld->image_map)
     image_map_commit (ld->image_map);
@@ -1615,6 +1611,7 @@ levels_invoker (Argument *args)
 	  ld.high_output[i] = 255;
 	}
 
+      ld.lut = gimp_lut_new();
       ld.channel = channel;
       ld.color = drawable_color (drawable);
       ld.low_input[channel] = low_input;
@@ -1623,8 +1620,9 @@ levels_invoker (Argument *args)
       ld.low_output[channel] = low_output;
       ld.high_output[channel] = high_output;
 
-      /*  calculate the transfer arrays  */
-      levels_calculate_transfers (&ld);
+      /*  setup the lut  */
+      gimp_lut_setup(ld.lut, (GimpLutFunc) levels_lut_func,
+		     (void *) &ld, gimp_drawable_bytes(drawable));
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -1632,9 +1630,10 @@ levels_invoker (Argument *args)
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	levels (&srcPR, &destPR, (void *) &ld);
+      pixel_regions_process_parallel((p_func)gimp_lut_process, ld.lut, 
+				     2, &srcPR, &destPR);
 
+      gimp_lut_free(ld.lut);
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }

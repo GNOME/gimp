@@ -127,6 +127,8 @@ void            gimp_image_get_foreground         (GimpImage *, GimpDrawable *,
 						   unsigned char *);
 void            gimp_image_get_background         (GimpImage *, GimpDrawable *,
 						   unsigned char *);
+unsigned char * gimp_image_get_color_at           (GimpImage *, int x, int y);
+						   
 void            gimp_image_get_color              (GimpImage *, int,
 						   unsigned char *,
 						   unsigned char *);

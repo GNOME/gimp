@@ -23,6 +23,7 @@
 #include "interface.h"
 #include "invert.h"
 #include "gimage.h"
+#include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -57,54 +58,41 @@ image_invert (GImage *gimage)
 }
 
 
+static float
+invert_lut_func(void *unused,
+		int nchannels, int channel, float value)
+{
+  /* don't invert the alpha channel */
+  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+    return value;
+
+  return 1.0 - value;
+}
+
+
 /*  Inverter  */
 
 static void
 invert (GimpDrawable *drawable)
 {
   PixelRegion srcPR, destPR;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int h, j, b;
-  int has_alpha;
-  int alpha, bytes;
   void *pr;
   int x1, y1, x2, y2;
+  GimpLut *lut;
 
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
-  alpha = has_alpha ? (bytes - 1) : bytes;
+  lut = gimp_lut_new();
+
+  gimp_lut_setup_exact(lut, (GimpLutFunc) invert_lut_func,
+		       (void *) NULL, gimp_drawable_bytes(drawable));
+
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
   pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-      h = srcPR.h;
+  pixel_regions_process_parallel((p_func)gimp_lut_process, lut, 
+				 2, &srcPR, &destPR);
 
-      while (h--)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (j = 0; j < srcPR.w; j++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		d[b] = 255 - s[b];
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      d += bytes;
-	      s += bytes;
-	    }
-
-	  src += srcPR.rowstride;
-	  dest += destPR.rowstride;
-	}
-    }
+  gimp_lut_free(lut);
 
   drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));

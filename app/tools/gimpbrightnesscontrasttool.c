@@ -27,6 +27,7 @@
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
+#include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -66,6 +67,8 @@ struct _BrightnessContrastDialog
   double       contrast;
 
   gint         preview;
+
+  GimpLut      *lut;
 };
 
 /*  brightness contrast action functions  */
@@ -91,83 +94,58 @@ static void   brightness_contrast_contrast_text_update    (GtkWidget *, gpointer
 static void *brightness_contrast_options = NULL;
 static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
-static void       brightness_contrast          (PixelRegion *, PixelRegion *, void *);
 static Argument * brightness_contrast_invoker  (Argument *);
 
 /*  brightness contrast machinery  */
 
-static void
-brightness_contrast (PixelRegion *srcPR,
-		     PixelRegion *destPR,
-		     void        *user_data)
+static float
+brightness_contrast_lut_func(BrightnessContrastDialog *bcd,
+			     int nchannels, int channel, float value)
 {
-  BrightnessContrastDialog *bcd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char brightness[256];
-  unsigned char contrast[256];
+  float nvalue;
   double power;
-  int has_alpha;
-  int alpha;
-  int w, h, b;
-  gint32 value;
-  int i;
 
-  bcd = (BrightnessContrastDialog *) user_data;
+  /* return the original value for the alpha channel */
+  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
+    return value;
 
-  /*  Set the transfer arrays  (for speed)  */
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
-  alpha = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
-
+  /* apply brightness */
   if (bcd->brightness < 0)
-    for (i = 0; i < 256; i++)
-      brightness[i] = (unsigned char) ((i * (255 + bcd->brightness)) / 255);
+    value = value * (1.0 + bcd->brightness/255.0);
   else
-    for (i = 0; i < 256; i++)
-      brightness[i] = (unsigned char) (i + ((255 - i) * bcd->brightness) / 255);
+    value = value + ((1.0 - value) * bcd->brightness/255.0);
 
+  /* apply contrast */
   if (bcd->contrast < 0)
-    for (i = 0; i < 256; i++)
-      {
-	value = (i > 127) ? (255 - i) : i;
-	value = (int) (127.0 * pow ((double) (value ? value : 1) / 127.0,
-				    (double) (127 + bcd->contrast) / 127.0));
-	value = CLAMP0255 (value);
-	contrast[i] = (i > 127) ? (255 - value) : value;
-      }
+  {
+    if (value > 0.5)
+      nvalue = 1.0 - value;
+    else
+      nvalue = value;
+    if (nvalue < 0.0)
+      nvalue = 0.0;
+    nvalue = 0.5 * pow (nvalue * 2.0 , (double) (127 + bcd->contrast) / 127.0);
+    if (value > 0.5)
+      value = 1.0 - nvalue;
+    else
+      value = nvalue;
+  }
   else
-    for (i = 0; i < 256; i++)
-      {
-	value = (i > 127) ? (255 - i) : i;
-	power = (bcd->contrast == 127) ? 127 : 127.0 / (127 - bcd->contrast);
-	value = (int) (127.0 * pow ((double) value / 127.0, power));
-	value = CLAMP0255 (value);
-	contrast[i] = (i > 127) ? (255 - value) : value;
-      }
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  for (b = 0; b < alpha; b++)
-	    d[b] = contrast[brightness[s[b]]];
-
-	  if (has_alpha)
-	    d[alpha] = s[alpha];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
+  {
+    if (value > 0.5)
+      nvalue = 1.0 - value;
+    else
+      nvalue = value;
+    if (nvalue < 0.0)
+      nvalue = 0.0;
+    power = (bcd->contrast == 127) ? 127 : 127.0 / (127 - bcd->contrast);
+    nvalue = 0.5 * pow (2.0 * nvalue, power);
+    if (value > 0.5)
+      value = 1.0 - nvalue;
+    else
+      value = nvalue;
+  }
+  return value;
 }
 
 
@@ -334,6 +312,8 @@ brightness_contrast_new_dialog ()
   bcd = g_malloc (sizeof (BrightnessContrastDialog));
   bcd->preview = TRUE;
 
+  bcd->lut = gimp_lut_new();
+
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
@@ -483,7 +463,10 @@ brightness_contrast_preview (BrightnessContrastDialog *bcd)
   if (!bcd->image_map)
     g_message (_("brightness_contrast_preview(): No image map"));
   active_tool->preserve = TRUE;
-  image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
+  gimp_lut_setup(bcd->lut, (GimpLutFunc) brightness_contrast_lut_func,
+		 (void *) bcd, gimp_drawable_bytes(bcd->drawable));
+  image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+		   (void *) bcd->lut);
   active_tool->preserve = FALSE;
 }
 
@@ -501,7 +484,12 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!bcd->preview)
-    image_map_apply (bcd->image_map, brightness_contrast, (void *) bcd);
+  {
+    gimp_lut_setup(bcd->lut, (GimpLutFunc) brightness_contrast_lut_func,
+		   (void *) bcd, gimp_drawable_bytes(bcd->drawable));
+    image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
+		     (void *) bcd->lut);
+  }
 
   if (bcd->image_map)
     image_map_commit (bcd->image_map);
@@ -736,6 +724,7 @@ brightness_contrast_invoker (Argument *args)
     {
       bcd.brightness = brightness;
       bcd.contrast = contrast;
+      bcd.lut = gimp_lut_new();
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -743,9 +732,13 @@ brightness_contrast_invoker (Argument *args)
       pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-	brightness_contrast (&srcPR, &destPR, (void *) &bcd);
+      gimp_lut_setup(bcd.lut, (GimpLutFunc) brightness_contrast_lut_func,
+		     (void *) &bcd, gimp_drawable_bytes(drawable));
 
+      pixel_regions_process_parallel((p_func)gimp_lut_process, bcd.lut, 
+				     2, &srcPR, &destPR);
+
+      gimp_lut_free(bcd.lut);
       drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
