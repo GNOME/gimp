@@ -147,6 +147,7 @@ file_open_image (Gimp               *gimp,
 
           gimp_image_invalidate_layer_previews (gimage);
           gimp_image_invalidate_channel_previews (gimage);
+          gimp_viewable_invalidate_preview (gimage);
 
           return gimage;
         }

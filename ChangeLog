@@ -1,3 +1,9 @@
+2004-02-26  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/file/file-open.c (file_open_image): Applied a fix by
+	Michael Natterer addressing a problem with the preview in the
+	open images list when loading a file.
+
 2004-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.[ch]: renamed some members, cleanup.
