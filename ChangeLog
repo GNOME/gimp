@@ -1,3 +1,8 @@
+2004-08-25  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/gifload.c: Guard against bogus logical screen
+	dimensions. Fixes bug #151053.
+
 2004-08-22  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c (parse_svg_transform): merged
