@@ -1241,7 +1241,8 @@ path_set_flags_helper (Path *path, PathCurve *curve, PathSegment *segment, gpoin
 {
    Path_set_flags_type *tmp = (Path_set_flags_type *) ptr;
    guint32 oldflags;
-   
+   guint tmp_uint;
+
    if (segment) {
       oldflags = segment->flags;
       segment->flags &= ~(tmp->bits_clear);
@@ -1264,7 +1265,9 @@ path_set_flags_helper (Path *path, PathCurve *curve, PathSegment *segment, gpoin
 
 	 /* Does this work on all (16|32|64)-bit Machines? */
 
-	 GPOINTER_TO_UINT(tmp->path_tool->single_active_segment) ^= GPOINTER_TO_UINT(segment);
+	 tmp_uint = GPOINTER_TO_UINT(tmp->path_tool->single_active_segment);
+         tmp_uint ^= GPOINTER_TO_UINT(segment);
+	 tmp->path_tool->single_active_segment = GUINT_TO_POINTER(tmp_uint);
       }
    }
 }

@@ -1,4 +1,8 @@
-1999-09-15    <xach@mint.net>
+Wed Sep 15 11:11:08 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/path_tool.c: use a temp var for xoring the pointers
+
+1999-09-15 Zachary Beane <xach@mint.net>
 
 	* plug-ins/script-fu/scripts/truchet.scm,coolmetal-logo.scm:
 	Changed gimp-flip parameters to match new OrientationType enum
