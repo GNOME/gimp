@@ -103,9 +103,9 @@ gimp_color_display_unregister (const gchar *name)
 	{
 	  shell = GIMP_DISPLAY_SHELL (refs->data);
 
-	  node = g_list_find_custom (shell->cd_list, (gpointer) name,
+	  node = g_list_find_custom (shell->filters, (gpointer) name,
 	      			     (GCompareFunc) node_name_compare);
-	  shell->cd_list = g_list_remove_link (shell->cd_list, node);
+	  shell->filters = g_list_remove_link (shell->filters, node);
 
 	  gimp_display_shell_filter_detach_real (shell, node->data, FALSE);
 
@@ -181,7 +181,7 @@ gimp_display_shell_filter_attach (GimpDisplayShell *shell,
 
       node->cd_convert = info->methods.convert;
 
-      shell->cd_list = g_list_append (shell->cd_list, node);
+      shell->filters = g_list_append (shell->filters, node);
 
       return node;
     }
@@ -215,7 +215,7 @@ gimp_display_shell_filter_attach_clone (GimpDisplayShell *shell,
 
       node->cd_convert = info->methods.convert;
 
-      shell->cd_list = g_list_append (shell->cd_list, node);
+      shell->filters = g_list_append (shell->filters, node);
 
       return node;
     }
@@ -231,7 +231,7 @@ gimp_display_shell_filter_detach (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  shell->cd_list = g_list_remove (shell->cd_list, node);
+  shell->filters = g_list_remove (shell->filters, node);
 }
 
 void
@@ -242,7 +242,7 @@ gimp_display_shell_filter_detach_destroy (GimpDisplayShell *shell,
 
   gimp_display_shell_filter_detach_real (shell, node, TRUE);
 
-  shell->cd_list = g_list_remove (shell->cd_list, node);
+  shell->filters = g_list_remove (shell->filters, node);
 }
 
 void
@@ -252,13 +252,13 @@ gimp_display_shell_filter_detach_all (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  for (list = shell->cd_list; list; list = g_list_next (list))
+  for (list = shell->filters; list; list = g_list_next (list))
     {
       gimp_display_shell_filter_detach_real (shell, list->data, TRUE);
     }
 
-  g_list_free (shell->cd_list);
-  shell->cd_list = NULL;
+  g_list_free (shell->filters);
+  shell->filters = NULL;
 }
 
 static void
@@ -296,7 +296,7 @@ gimp_display_shell_filter_reorder_up (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (node  != NULL);
 
-  node_list = g_list_find (shell->cd_list, node);
+  node_list = g_list_find (shell->filters, node);
 
   if (node_list->prev)
     {
@@ -314,7 +314,7 @@ gimp_display_shell_filter_reorder_down (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (node  != NULL);
 
-  node_list = g_list_find (shell->cd_list, node);
+  node_list = g_list_find (shell->filters, node);
 
   if (node_list->next)
     {

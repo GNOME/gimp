@@ -17,7 +17,7 @@
 
 # Do override some GTK stock icons however.
 
-style "gimp-gtk-icons"
+style "gimp-default-style"
 {
   stock["gtk-delete"] =
     {
@@ -66,9 +66,15 @@ style "gimp-gtk-icons"
     {
       { "images/gimp-dialog-warning.png", *, *, "gtk-dialog" }
     }
+
+  GimpDock::separator_height   = 6
+  GimpDockbook::tab_border     = 0
+  GimpDockable::content_border = 2
+  GimpEditor::content_spacing  = 2
+  GimpEditor::button_spacing   = 2
 }
 
-class "GtkWidget" style "gimp-gtk-icons"
+class "GtkWidget" style "gimp-default-style"
 
 
 style "gimp-tiny-font-style"
@@ -95,19 +101,6 @@ style "gimp-hscale-style"
 }
 
 class "GtkHScale" style "gimp-hscale-style"
-
-
-style "gimp-dock-style"
-{
-  GimpDock::separator_height   = 6
-  GimpDockbook::tab_border     = 0
-  GimpDockable::content_border = 2
-  GimpEditor::content_spacing  = 2
-  GimpEditor::button_spacing   = 2
-}
-
-widget "*Gimp*Dock*"   style "gimp-dock-style"
-widget "*GimpToolbox*" style "gimp-dock-style"
 
 
 style "gimp-grid-view-style" = "gimp-dock-style"

@@ -51,6 +51,8 @@ struct _GimpEditorClass
 
 GType       gimp_editor_get_type   (void) G_GNUC_CONST;
 
+GtkWidget * gimp_editor_new        (void);
+
 GtkWidget * gimp_editor_add_button (GimpEditor  *editor,
                                     const gchar *stock_id,
                                     const gchar *tooltip,

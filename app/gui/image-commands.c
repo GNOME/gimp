@@ -27,7 +27,9 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-scale.h"
@@ -180,6 +182,23 @@ image_scale_cmd_callback (GtkWidget *widget,
 		     image_scale);
 
   gtk_widget_show (image_scale->resize->resize_shell);
+}
+
+void
+image_crop_cmd_callback (GtkWidget *widget,
+                         gpointer   data)
+{
+  GimpDisplay *gdisp;
+  gint         x1, y1, x2, y2;
+  return_if_no_display (gdisp, data);
+
+  if (! gimp_image_mask_bounds (gdisp->gimage, &x1, &y1, &x2, &y2))
+    {
+      g_message (_("Cannot crop because the current selection is empty."));
+      return;
+    }
+
+  gimp_image_crop (gdisp->gimage, x1, y1, x2, y2, FALSE, TRUE);
 }
 
 void

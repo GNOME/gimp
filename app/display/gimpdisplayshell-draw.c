@@ -233,8 +233,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->nav_dialog            = NULL;
   shell->nav_popup             = NULL;
 
-  shell->cd_list               = NULL;
-  shell->cd_ui                 = NULL;
+  shell->filters               = NULL;
+  shell->filters_dialog        = NULL;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -839,6 +839,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   gboolean           aux       = FALSE;
   gboolean           lm        = FALSE;
   gboolean           lp        = FALSE;
+  gboolean           sel       = FALSE;
   gboolean           alpha     = FALSE;
   gint               lind      = -1;
   gint               lnum      = -1;
@@ -857,6 +858,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
       fs  = (gimp_image_floating_sel (gimage) != NULL);
       aux = (gimp_image_get_active_channel (gimage) != NULL);
       lp  = ! gimp_image_is_empty (gimage);
+      sel = ! gimp_image_mask_is_empty (gimage);
 
       drawable = gimp_image_active_drawable (gimage);
       if (drawable)
@@ -941,7 +943,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("View/Zoom", gdisp);
   if (gdisp)
     {
-      SET_ACTIVE ("View/Toggle Selection", ! shell->select->hidden);
+      SET_ACTIVE ("View/Toggle Selection",      ! shell->select->hidden);
       SET_ACTIVE ("View/Toggle Layer Boundary", ! shell->select->layer_hidden);
       SET_ACTIVE ("View/Toggle Rulers",
                   GTK_WIDGET_VISIBLE (shell->origin) ? 1 : 0);
@@ -957,13 +959,14 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Image/Mode", gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("Image/Mode/RGB", (base_type != GIMP_RGB));
-      SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GIMP_GRAY));
+      SET_SENSITIVE ("Image/Mode/RGB",        (base_type != GIMP_RGB));
+      SET_SENSITIVE ("Image/Mode/Grayscale",  (base_type != GIMP_GRAY));
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != GIMP_INDEXED));
     }
 
+  SET_SENSITIVE ("Image/Crop Image",              gdisp && sel);
   SET_SENSITIVE ("Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Image/Flatten Image", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Image/Flatten Image",           gdisp && !fs && !aux && lp);
 
   SET_SENSITIVE ("Layer/Stack", gdisp);
   if (gdisp)
@@ -982,19 +985,19 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
     }
 
-  SET_SENSITIVE ("Layer/New Layer...", gdisp);
+  SET_SENSITIVE ("Layer/New Layer...",    gdisp);
   SET_SENSITIVE ("Layer/Duplicate Layer", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layer/Anchor Layer", gdisp && fs && !aux && lp);
-  SET_SENSITIVE ("Layer/Merge Down", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layer/Delete Layer", gdisp && !aux && lp);
+  SET_SENSITIVE ("Layer/Anchor Layer",    gdisp && fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Merge Down",      gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Delete Layer",    gdisp && !aux && lp);
 
   SET_SENSITIVE ("Layer/Layer Boundary Size...", gdisp && !aux && lp);
-  SET_SENSITIVE ("Layer/Layer to Imagesize", gdisp && !aux && lp);
-  SET_SENSITIVE ("Layer/Scale Layer...", gdisp && !aux && lp);
+  SET_SENSITIVE ("Layer/Layer to Imagesize",     gdisp && !aux && lp);
+  SET_SENSITIVE ("Layer/Scale Layer...",         gdisp && !aux && lp);
 
   SET_SENSITIVE ("Layer/Transform/Offset...", lp);
 
-  SET_SENSITIVE ("Layer/Colors", gdisp);
+  SET_SENSITIVE ("Layer/Colors",      gdisp);
   SET_SENSITIVE ("Layer/Colors/Auto", gdisp);
 
   if (gdisp)

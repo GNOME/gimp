@@ -1,3 +1,26 @@
+2002-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: renamed shell->cd_list to
+	shell->filters and shell->cd_ui to shell->filters_dialog.
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-filter.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* app/display/gimpdisplayshell-filter-dialog.c: cleaned up the GUI.
+	Still deprecated GtkCLists around...
+
+	* app/widgets/gimpeditor.[ch]: added gimp_editor_new().
+
+	* app/gui/image-commands.[ch]
+	* app/gui/menus.c: added "<Image>/Image/Crop Image" because i was
+	sick of clicking 20 times just to crop to the current selection.
+
+	* themes/Default/gtkrc: removed "gimp-dock-style" and changed
+	"gimp-gtk-icons" to "gimp-default-style". Set our widget class
+	style property defaults there.
+
 2002-03-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/colorify.c: applied a patch from Maurits Rijk 

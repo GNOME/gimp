@@ -31,6 +31,8 @@ void   image_resize_cmd_callback            (GtkWidget *widget,
 					     gpointer   data);
 void   image_scale_cmd_callback             (GtkWidget *widget,
 					     gpointer   data);
+void   image_crop_cmd_callback              (GtkWidget *widget,
+					     gpointer   data);
 
 void   image_duplicate_cmd_callback         (GtkWidget *widget,
 					     gpointer   data);

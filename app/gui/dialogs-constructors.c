@@ -212,10 +212,10 @@ dialogs_display_filters_get (GimpDialogFactory *factory,
 
       shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-      if (! shell->cd_ui)
+      if (! shell->filters_dialog)
         gimp_display_shell_filter_dialog_new (shell);
 
-      return shell->cd_ui;
+      return shell->filters_dialog;
     }
 
   return NULL;

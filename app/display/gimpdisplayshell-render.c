@@ -262,9 +262,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   (* render_funcs[image_type]) (&info);
 
   /*  apply filters to the rendered projection  */
-  for (list = shell->cd_list; list; list = g_list_next (list))
+  for (list = shell->filters; list; list = g_list_next (list))
     {
-      ColorDisplayNode *node = (ColorDisplayNode *) list->data;
+      ColorDisplayNode *node;
+
+      node = (ColorDisplayNode *) list->data;
 
       node->cd_convert (node->cd_ID,
                         shell->render_buf,

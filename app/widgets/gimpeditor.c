@@ -129,6 +129,16 @@ gimp_editor_style_set (GtkWidget *widget,
 }
 
 GtkWidget *
+gimp_editor_new (void)
+{
+  GimpEditor *editor;
+
+  editor = g_object_new (GIMP_TYPE_EDITOR, NULL);
+
+  return GTK_WIDGET (editor);
+}
+
+GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *stock_id,
                         const gchar *tooltip,
