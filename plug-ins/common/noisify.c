@@ -286,7 +286,7 @@ noisify (GimpDrawable *drawable,
     guchar       *preview_src, *preview_dst;
     GimpPixelRgn  src_rgn;
     gint          i;
-    
+
     preview_src = g_new (guchar, preview_width * preview_height * preview_bpp);
     preview_dst = g_new (guchar, preview_width * preview_height * preview_bpp);
 
@@ -303,7 +303,7 @@ noisify (GimpDrawable *drawable,
                     preview_dst + i * preview_bpp,
                     preview_bpp,
                     gr);
-    
+
     gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                             0, 0, preview_width, preview_height,
                             gimp_drawable_type (drawable->drawable_id),
@@ -378,7 +378,7 @@ noisify_dialog (GimpDrawable *drawable,
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
-  GtkWidget *alignment;
+  GtkWidget *hbox;
   GtkWidget *ptable;
   GtkWidget *frame;
   GtkWidget *scrollbar;
@@ -401,14 +401,14 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
-  
+
   /* preview */
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   ptable = gtk_table_new (2, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (alignment), ptable);
+  gtk_box_pack_start (GTK_BOX (hbox), ptable, FALSE, FALSE, 0);
   gtk_widget_show (ptable);
 
   frame = gtk_frame_new (NULL);
@@ -464,7 +464,7 @@ noisify_dialog (GimpDrawable *drawable,
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
       gtk_widget_show (toggle);
-      
+
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &nvals.independent);

@@ -508,37 +508,64 @@ find_contiguous_region_helper (GimpImage     *gimage,
 			       gint           y,
 			       guchar        *col)
 {
-  gint start, end, i;
-  gint val;
+  gint   start, end;
+  gint   new_start, new_end;
+  gint   val;
+  Tile   *tile;
+  GQueue *coord_stack;
 
-  Tile *tile;
+  coord_stack = g_queue_new();
 
-  if (x < 0 || x >= src->w) return;
-  if (y < 0 || y >= src->h) return;
+  /* To avoid excessive memory allocation (y, start, end) tuples are
+   * stored in interleaved format:
+   *
+   * [y1] [start1] [end1] [y2] [start2] [end2]
+   */
+  g_queue_push_tail (coord_stack, GINT_TO_POINTER (y));
+  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x - 1));
+  g_queue_push_tail (coord_stack, GINT_TO_POINTER (x + 1));
 
-  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-  val = *(guchar *)(tile_data_pointer (tile,
-				       x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
-  if (val != 0)
-    return;
-
-  src->x = x;
-  src->y = y;
-
-  if (! find_contiguous_segment (gimage, col, src, mask, src->w, src->bytes,
-                                 src_type, has_alpha, select_transparent,
-                                 antialias, threshold,
-                                 x, &start, &end))
-    return;
-
-  for (i = start + 1; i < end; i++)
+  do
     {
-      find_contiguous_region_helper (gimage, mask, src, src_type, has_alpha,
-                                     select_transparent, antialias, threshold,
-                                     i, y - 1, col);
-      find_contiguous_region_helper (gimage, mask, src, src_type, has_alpha,
-                                     select_transparent, antialias, threshold,
-                                     i, y + 1, col);
+      y     = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
+      start = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
+      end   = GPOINTER_TO_INT (g_queue_pop_head (coord_stack));
+
+      for (x = start + 1; x < end; x++)
+        {
+	  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
+	  val = *(guchar *) (tile_data_pointer (tile,
+                                                x % TILE_WIDTH,
+                                                y % TILE_HEIGHT));
+	  tile_release (tile, FALSE);
+	  if (val != 0)
+            continue;
+
+	  src->x = x;
+	  src->y = y;
+
+	  if (! find_contiguous_segment (gimage, col, src, mask, src->w,
+                                         src->bytes, src_type, has_alpha,
+                                         select_transparent, antialias,
+					 threshold, x, &new_start, &new_end))
+	    continue;
+
+	  if (y + 1 < src->h)
+            {
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y + 1));
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+            }
+
+	  if (y - 1 >= 0)
+            {
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (y - 1));
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
+              g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_end));
+            }
+        }
     }
+  while (!g_queue_is_empty (coord_stack));
+
+  g_queue_free (coord_stack);
 }
