@@ -328,7 +328,7 @@ query ()
 			  "Spencer Kimball",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996",
-			  N_("<Image>/Filters/Artistic/Mosaic..."),
+			  N_("<Image>/Filters/Render/Pattern/Mosaic..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

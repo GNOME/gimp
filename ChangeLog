@@ -1,3 +1,11 @@
+Tue Dec 28 23:18:25 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/mosaic/mosaic.c: corrected some typos and moved Jigsaw
+	and Mosaic into Filter/Render/Pattern
+
 1999-12-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/hrz.c

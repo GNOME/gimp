@@ -331,7 +331,7 @@ query(void)
 			 "Nigel Wetten",
 			 "Nigel Wetten",
 			 "1998",
-			 N_("<Image>/Filters/Render/Jigsaw..."),
+			 N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -2293,7 +2293,7 @@ dialog_box(void)
   /* Create the dialog box */
   
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), _("jigsaw"));
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Jigsaw"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) dialog_close_callback, NULL);

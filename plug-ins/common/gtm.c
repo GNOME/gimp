@@ -355,7 +355,7 @@ static gint save_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("GIMP HTML Magic"));
+  gtk_window_set_title (GTK_WINDOW (dlg), _("GIMP Table Magic"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) save_close_callback,

@@ -812,7 +812,7 @@ GtkWidget *create_material_page(void)
   
   label1=gck_label_aligned_new(_("Diffuse:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED); 
   label2=gck_label_aligned_new(_("Specular:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
-  label3=gck_label_aligned_new(_("Hightlight:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label3=gck_label_aligned_new(_("Highlight:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
 
   gtk_table_attach(GTK_TABLE(table),label1,0,1,0,1, 0,0,0,0);
   gtk_table_attach(GTK_TABLE(table),label2,0,1,1,2, 0,0,0,0);
