@@ -1,3 +1,10 @@
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD:
+
+	* tools/gimp-remote.c (main): correctly convert relative paths to
+	URIs. Append the resulting URI only if it's not NULL.
+
 2004-07-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.0.4, interface_age 4,
