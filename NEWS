@@ -38,16 +38,20 @@ Overview of Changes in GIMP 2.1.1
 
 - Added an interface that allows to add controller modules. Such a module
   can dispatch events to The GIMP which are mapped to actions by a
-  user-configurable mapping table.  Added a mouse wheel controller and a
-  generic linux input event controller module.
+  user-configurable mapping table.  Added controller modules for mouse
+  wheel, midi and linux_input devices.
+
+- Applied HIG capitalization style to all plug-in and script dialogs.
+
+- Lots of bug fizes and other goodies. Check the ChangeLog for details.
 
 
 Contributors:
 
-   Michael Natterer, Sven Neumann, Manish Singh, Philip Lafleur, Yeti,
-   Dave Neary, Jakub Steiner, David Gowers, Geert Jordaens, William Skaggs,
-   Henrik Brix Andersen, Simon Budig, lots of translators and the
-   contributors that I accidentally missed...
+   Michael Natterer, Sven Neumann, Manish Singh, Philip Lafleur,
+   William Skaggs, Geert Jordaens, Yeti, Dave Neary, Jakub Steiner,
+   David Gowers, , Henrik Brix Andersen, Simon Budig, Pedro Gimeno,
+   lots of translators and the contributors that I accidentally missed...
 
 
 
