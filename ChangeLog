@@ -1,3 +1,8 @@
+Sat Jun  6 04:00:04 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/interface.c: changed GDK_IMAGE_NORMAL to GDK_IMAGE_SHARED
+	to workaround gtk bug
+
 Fri Jun  5 22:37:40 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/Makefile.am app/app_procs.c app/brushes.c app/commands.[ch]
