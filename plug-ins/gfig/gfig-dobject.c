@@ -446,7 +446,7 @@ object_operation_end (GdkPoint *pnt,
       d_draw_bezier (operation_obj);
     }
 
-  if (operation_obj)
+  if (operation_obj && selvals.otype != DEL_OBJ)
     gfig_style_set_context_from_style (&operation_obj->style);
 
   operation_obj = NULL;

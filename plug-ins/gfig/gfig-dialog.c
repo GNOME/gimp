@@ -334,7 +334,7 @@ gfig_dialog (void)
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
   gtk_widget_show (menu);
 
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Open");
+  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_OPEN, NULL);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   g_signal_connect (menuitem, "activate",
                     G_CALLBACK (load_button_callback),
@@ -348,7 +348,7 @@ gfig_dialog (void)
                     NULL);
   gtk_widget_show (menuitem);
 
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Save");
+  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_SAVE, NULL);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   g_signal_connect (menuitem, "activate",
                     G_CALLBACK (gfig_save_menu_callback),
@@ -371,7 +371,7 @@ gfig_dialog (void)
                     NULL);
   gtk_widget_show (menuitem);
 
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Options");
+  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_PREFERENCES, NULL);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   g_signal_connect (menuitem, "activate",
                     G_CALLBACK (options_dialog_callback),
@@ -870,6 +870,16 @@ tool_option_no_option (GtkWidget *notebook,
   gtk_widget_show (button);\
   gimp_help_set_help_data (button, (text), NULL);
 
+#define SKIP_ROW                                                           \
+        do                                                                 \
+        {                                                                  \
+          GtkWidget *separator;                                            \
+          separator = gtk_vseparator_new ();                               \
+          gtk_box_pack_start (GTK_BOX (hbox), separator, FALSE, FALSE, 0); \
+          gtk_widget_show (separator);                                     \
+        }                                                                  \
+        while (0)
+
 static GtkWidget *
 draw_buttons (GtkWidget *notebook)
 {
@@ -915,7 +925,7 @@ draw_buttons (GtkWidget *notebook)
                           "Shift + Button ends object creation."));
   tool_options_bezier (notebook, button);
 
-  //SKIP_ROW;
+  SKIP_ROW;
 
   button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
   BOX_APPEND (button, _("Move an object"));
@@ -937,7 +947,7 @@ draw_buttons (GtkWidget *notebook)
   BOX_APPEND (button, _("Select an object"));
   tool_option_no_option (notebook, button);
 
-  //SKIP_ROW;
+  SKIP_ROW;
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -1261,6 +1271,7 @@ options_dialog_callback (GtkWidget *widget,
   /* Put buttons in */
   toggle = gtk_check_button_new_with_label (_("Show position"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.showpos);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.showpos);
@@ -1269,8 +1280,9 @@ options_dialog_callback (GtkWidget *widget,
                           NULL);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Hide control points"));
+  toggle = gtk_check_button_new_with_label (_("Show control points"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selvals.opts.showcontrol);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.showcontrol);

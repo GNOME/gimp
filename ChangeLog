@@ -1,3 +1,8 @@
+2004-10-31  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c: some more UI improvements.
+
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpsizebox.c: added a size entry to edit the
