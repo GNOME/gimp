@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimputils.h"
+
 #include "core-types.h"
 
 #include "gimpobject.h"
@@ -240,63 +242,21 @@ gimp_object_set_name (GimpObject  *object,
 /*  A safe version of gimp_object_set_name() that takes care
  *  of newlines and overly long names.
  */
-#define MAX_NAME_LEN 30
-
 void
 gimp_object_set_name_safe (GimpObject  *object,
                            const gchar *name)
 {
-  /* FIXME: should to make this translatable */
-  static const gchar *ellipsis = "...";
-  static const gint   e_len    = 3;
-
   g_return_if_fail (GIMP_IS_OBJECT (object));
-  
-  if (name)
-    {
-      const gchar *p;
-      const gchar *newline = NULL;
-      gint         chars   = 0;
-      gunichar     unichar;
 
-      for (p = name; p && !newline; p = g_utf8_next_char (p))
-        {
-          if (++chars > MAX_NAME_LEN)
-            break;
+  if ((!object->name && !name) ||
+      (object->name && name && !strcmp (object->name, name)))
+    return;
 
-          unichar = g_utf8_get_char (p);
+  g_free (object->name);
 
-          switch (g_unichar_break_type (unichar))
-            {
-            case G_UNICODE_BREAK_MANDATORY:
-            case G_UNICODE_BREAK_LINE_FEED:
-              newline = p;
-              break;
-            default:
-              break;
-            }
-        }
+  object->name = gimp_utf8_strtrim (name, 30);
 
-      if (p)
-        {
-          gchar safe_name[MAX_NAME_LEN * 6 + e_len + 1];
-          gsize len;
-
-          len = p - name;
-
-          memcpy (safe_name, name, len);
-          if (newline)
-            safe_name[len-1] = ' ';
-
-          g_strlcpy (safe_name + len, ellipsis, e_len + 1);
-
-          gimp_object_set_name (object, safe_name);
-
-          return;
-        }
-    }
-  
-  gimp_object_set_name (object, name);
+  gimp_object_name_changed (object);
 }
 
 const gchar *

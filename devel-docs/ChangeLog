@@ -1,3 +1,9 @@
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
+	* devel-docs/libgimpbase/libgimpbase-docs.sgml
+	* devel-docs/libgimpbase/libgimpbase-sections.txt
+	* devel-docs/libgimpbase/tmpl/gimputils.sgml: added new file.
+
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am (HTML_IMAGES)

@@ -123,6 +123,11 @@ gimp_unit_get_plural
 </SECTION>
 
 <SECTION>
+<FILE>gimputils</FILE>
+gimp_utf8_strtrim
+</SECTION>
+
+<SECTION>
 <FILE>gimpwire</FILE>
 WireMessage
 WireReadFunc

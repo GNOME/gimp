@@ -242,49 +242,46 @@ gimp_menu_position (GtkMenu *menu,
 
 void
 gimp_table_attach_stock (GtkTable    *table,
-                         gint         column,
                          gint         row,
-                         const gchar *stock_id,
-                         GtkWidget   *widget)
+			 const gchar *label_text,
+			 gdouble      yalign,
+                         GtkWidget   *widget,
+                         const gchar *stock_id)
 {
-  GtkStockItem  item;
-  GtkWidget    *label;
-  GtkWidget    *image;
+  GtkWidget *image;
+  GtkWidget *label;
 
   g_return_if_fail (GTK_IS_TABLE (table));
-  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (label_text != NULL);
 
-  if (gtk_stock_lookup (stock_id, &item))
-    {
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-      label = gtk_label_new_with_mnemonic (item.label);
-    }
-  else
-    {
-      image = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE,
-                                        GTK_ICON_SIZE_BUTTON);
-      label = gtk_label_new_with_mnemonic (stock_id);
-    }
+  label = gtk_label_new_with_mnemonic (label_text);
 
-  gtk_table_attach (table, image, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (image);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (table, label, column + 1, column + 2, row, row + 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, yalign);
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+  gtk_table_attach (table, label, 0, 1, row, row + 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
  
-  if (!widget)
-    return;
+  if (widget)
+    {
+      g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+      gtk_table_attach (table, widget, 1, 3, row, row + 1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_widget_show (widget);
 
-  gtk_table_attach (table, widget, column + 2, column + 3, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (widget);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
+    }
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  
+  if (image)
+    {
+      gtk_misc_set_alignment (GTK_MISC (image), 0.0, 0.5);
+      gtk_table_attach (table, image, 3, 4, row, row + 1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_widget_show (image);
+    }
 }
 
 

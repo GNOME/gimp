@@ -37,10 +37,11 @@ void          gimp_menu_position        (GtkMenu     *menu,
                                          guint32     *activate_time);
 
 void          gimp_table_attach_stock   (GtkTable    *table,
-                                         gint         column,
-                                         gint         row,
-                                         const gchar *stock_id,
-                                         GtkWidget   *widget);
+					 gint         row,
+					 const gchar *label_text,
+					 gdouble      yalign,
+					 GtkWidget   *widget,
+					 const gchar *stock_id);
 
 const gchar * gimp_get_mod_name_shift   (void);
 const gchar * gimp_get_mod_name_control (void);

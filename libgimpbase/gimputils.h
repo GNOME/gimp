@@ -17,23 +17,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_BASE_H__
-#define __GIMP_BASE_H__
+#ifndef __GIMP_UTILS_H__
+#define __GIMP_UTILS_H__
 
 
-#include <libgimpbase/gimpbasetypes.h>
-
-#include <libgimpbase/gimpdatafiles.h>
-#include <libgimpbase/gimpenv.h>
-#include <libgimpbase/gimplimits.h>
-#include <libgimpbase/gimpparasite.h>
-#include <libgimpbase/gimpunit.h>
-#include <libgimpbase/gimputils.h>
-#include <libgimpbase/gimpversion.h>
-
-#ifndef G_OS_WIN32
-#include <libgimpbase/gimpsignal.h>
-#endif
+gchar * gimp_utf8_strtrim (const gchar *str,
+			   gint         max_chars);
 
 
-#endif  /* __GIMP_BASE_H__ */
+#endif  /* __GIMP_UTILS_H__ */

@@ -7,6 +7,7 @@
 <!entity GimpParasiteIO SYSTEM "sgml/gimpparasiteio.sgml">
 <!entity GimpSignal SYSTEM "sgml/gimpsignal.sgml">
 <!entity GimpUnit SYSTEM "sgml/gimpunit.sgml">
+<!entity GimpUtils SYSTEM "sgml/gimputils.sgml">
 <!entity GimpVersion SYSTEM "sgml/gimpversion.sgml">
 <!entity GimpProtocol SYSTEM "sgml/gimpprotocol.sgml">
 <!entity GimpWire SYSTEM "sgml/gimpwire.sgml">
@@ -27,6 +28,7 @@
     &GimpParasiteIO;
     &GimpSignal;
     &GimpUnit;
+    &GimpUtils;
     &GimpProtocol;
     &GimpWire;
   </chapter>

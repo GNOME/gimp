@@ -83,6 +83,8 @@ libgimpbase_1_3_la_SOURCES = \
 	gimpprotocol.h		\
 	gimpsignal.c            \
 	gimpsignal.h            \
+	gimputils.c            	\
+	gimputils.h            	\
 	gimpwire.c		\
 	gimpwire.h
 
@@ -91,6 +93,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpbasetypes.h		\
 	gimplimits.h		\
 	gimpunit.h		\
+	gimputils.h		\
 	gimpversion.h		\
 	\
 	gimpdatafiles.h		\

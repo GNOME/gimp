@@ -30,6 +30,8 @@
 #include <gtk/gtk.h>
 #include <pango/pangoft2.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpmarshal.h"
@@ -164,6 +166,10 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (fontsel), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  gimp_help_set_help_data (button,
+			   _("Click to open the Font Selection Dialog"),
+			   "dialogs/font_selection.html");
 
   image = gtk_image_new_from_stock (GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);

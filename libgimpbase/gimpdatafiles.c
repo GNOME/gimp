@@ -151,12 +151,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
     {
       dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
-      if (! dir)
-	{
-	  g_message ("error reading datafiles directory \"%s\"",
-		     (gchar *) list->data);
-	}
-      else
+      if (dir)
 	{
 	  while ((dir_ent = g_dir_read_name (dir)))
 	    {

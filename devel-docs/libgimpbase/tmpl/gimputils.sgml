@@ -1,0 +1,28 @@
+<!-- ##### SECTION Title ##### -->
+gimputils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_utf8_strtrim ##### -->
+<para>
+
+</para>
+
+@str: 
+@max_chars: 
+@Returns: 
+
+

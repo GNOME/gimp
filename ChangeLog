@@ -1,3 +1,22 @@
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimputils.[ch]: added new files that hold the new
+	gimp_utf8_strtrim() routine; it might be useful in more places.
+
+	* libgimpbase/gimpdatafiles.c (gimp_datafiles_read_directories):
+	silently ignore directories in the path that can't be opened.
+
+	* app/core/gimpobject.c (gimp_object_set_name_safe): use
+	gimp_utf8_strtrim().
+
+	* app/widgets/gimpwidgets-utils.[ch]
+	* app/tools/gimptextoptions.c: try to make the text tool options
+	look more like all other tool options. Still needs work; I'll
+	leave this up to Mitch ...
+
+        This byte --> <-- is the millionth in this file!
+
 2003-02-05  Manish Singh  <yosh@gimp.org>
                                                                                 
 	* plug-ins/common/jpeg.c (run): if the quality level is close to zero

@@ -27,6 +27,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimputils.h"
+
 #include "core-types.h"
 
 #include "gimpobject.h"
@@ -245,51 +247,21 @@ gimp_object_set_name (GimpObject  *object,
 /*  A safe version of gimp_object_set_name() that takes care
  *  of newlines and overly long names.
  */
-#define MAX_NAME_LEN 32
 void
 gimp_object_set_name_safe (GimpObject  *object,
                            const gchar *name)
 {
-  gchar *newline;
-  gsize  len;
-
   g_return_if_fail (GIMP_IS_OBJECT (object));
-  
-  if (name)
-    {
-      newline = strchr (name, '\n');
 
-      if (newline)
-        len = newline - name + 1;
-      else
-        len = strlen (name);
+  if ((!object->name && !name) ||
+      (object->name && name && !strcmp (object->name, name)))
+    return;
 
-      if (len > MAX_NAME_LEN)
-        newline = NULL;
+  g_free (object->name);
 
-      if (newline || len > MAX_NAME_LEN)
-        {
-          gchar *safe_name;
-          
-          len = MIN (len, MAX_NAME_LEN);
+  object->name = gimp_utf8_strtrim (name, 30);
 
-          safe_name = g_new (gchar, len + 4);
-
-          memcpy (safe_name, name, len);
-          if (newline)
-            safe_name[len-1] = ' ';
-
-          g_strlcpy (safe_name + len, "...", 4);
-
-          gimp_object_set_name (object, safe_name);
-
-          g_free (safe_name);
-
-          return;
-        }
-    }
-  
-  gimp_object_set_name (object, name);
+  gimp_object_name_changed (object);
 }
 
 const gchar *
