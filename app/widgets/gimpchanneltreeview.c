@@ -155,44 +155,27 @@ gimp_channel_tree_view_constructor (GType                  type,
   GObject             *object;
   GimpEditor          *editor;
   GimpChannelTreeView *view;
-  gchar               *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   editor = GIMP_EDITOR (object);
   view   = GIMP_CHANNEL_TREE_VIEW (object);
 
-  str = g_strdup_printf (_("Channel to selection\n"
-                           "%s  Add\n"
-                           "%s  Subtract\n"
-                           "%s  Intersect"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                         gimp_get_mod_string (GDK_CONTROL_MASK),
-                         gimp_get_mod_string (GDK_SHIFT_MASK |
-                                              GDK_CONTROL_MASK));
-
   view->toselection_button =
     gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",
                                    "channels-selection-replace",
-                                   "channels-selection-intersect",
-                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
-                                   "channels-selection-subtract",
-                                   GDK_CONTROL_MASK,
                                    "channels-selection-add",
                                    GDK_SHIFT_MASK,
+                                   "channels-selection-subtract",
+                                   GDK_CONTROL_MASK,
+                                   "channels-selection-intersect",
+                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
                                    NULL);
-
-  gimp_help_set_help_data (view->toselection_button, str,
-                           GIMP_HELP_CHANNEL_SELECTION_REPLACE);
-
-  g_free (str);
-
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
-			 view->toselection_button, 5);
-
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
 				  GTK_BUTTON (view->toselection_button),
 				  GIMP_TYPE_CHANNEL);
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
+			 view->toselection_button, 5);
 
   return object;
 }

@@ -41,7 +41,6 @@
 #include "gimpcontainerview.h"
 #include "gimpvectorstreeview.h"
 #include "gimpdnd.h"
-#include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -136,7 +135,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->new_item        = gimp_vectors_tree_view_item_new;
 
   item_view_class->action_group        = "vectors";
-  item_view_class->activate_action     = "vectors-vectors-tool";
+  item_view_class->activate_action     = "vectors-path-tool";
   item_view_class->edit_action         = "vectors-edit-attributes";
   item_view_class->new_action          = "vectors-new";
   item_view_class->new_default_action  = "vectors-new-default";
@@ -171,7 +170,6 @@ gimp_vectors_tree_view_constructor (GType                  type,
   GimpEditor            *editor;
   GimpContainerTreeView *tree_view;
   GimpVectorsTreeView   *view;
-  gchar                 *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -179,38 +177,24 @@ gimp_vectors_tree_view_constructor (GType                  type,
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   view      = GIMP_VECTORS_TREE_VIEW (object);
 
-  /*  Hide basically useless Edit button  */
-
+  /*  hide basically useless edit button  */
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
-
-  str = g_strdup_printf (_("Path to Selection\n"
-                           "%s  Add\n"
-                           "%s  Subtract\n"
-                           "%s  Intersect"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                         gimp_get_mod_string (GDK_CONTROL_MASK),
-                         gimp_get_mod_string (GDK_SHIFT_MASK |
-                                              GDK_CONTROL_MASK));
 
   view->toselection_button =
     gimp_editor_add_action_button (editor, "vectors",
                                    "vectors-selection-replace",
-                                   "vectors-selection-intersect",
-                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
-                                   "vectors-selection-subtract",
-                                   GDK_CONTROL_MASK,
                                    "vectors-selection-add",
                                    GDK_SHIFT_MASK,
+                                   "vectors-selection-subtract",
+                                   GDK_CONTROL_MASK,
+                                   "vectors-selection-intersect",
+                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
                                    NULL);
-
-  gimp_help_set_help_data (view->toselection_button, str,
-                           GIMP_HELP_PATH_SELECTION_REPLACE);
-
-  g_free (str);
-
-  str = g_strdup_printf (_("Selection to Path\n"
-                           "%s  Advanced Options"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
+				  GTK_BUTTON (view->toselection_button),
+				  GIMP_TYPE_VECTORS);
+  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+			 view->toselection_button, 5);
 
   view->tovectors_button =
     gimp_editor_add_action_button (editor, "vectors",
@@ -218,31 +202,19 @@ gimp_vectors_tree_view_constructor (GType                  type,
                                    "vectors-selection-to-vectors-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
-
-  gimp_help_set_help_data (view->tovectors_button, str,
-                           GIMP_HELP_SELECTION_TO_PATH);
-
-  g_free (str);
+  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+			 view->tovectors_button, 6);
 
   view->stroke_button =
     gimp_editor_add_action_button (editor, "vectors",
                                    "vectors-stroke", NULL);
-
-  gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->toselection_button, 5);
-  gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->tovectors_button, 6);
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
+				  GTK_BUTTON (view->stroke_button),
+				  GIMP_TYPE_VECTORS);
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->stroke_button, 7);
 
   gimp_dnd_svg_dest_add (GTK_WIDGET (tree_view->view), NULL, view);
-
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
-				  GTK_BUTTON (view->toselection_button),
-				  GIMP_TYPE_VECTORS);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
-				  GTK_BUTTON (view->stroke_button),
-				  GIMP_TYPE_VECTORS);
 
   return object;
 }

@@ -1,5 +1,29 @@
 2004-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/channels-actions.c
+	* app/actions/colormap-editor-actions.c
+	* app/actions/documents-actions.c
+	* app/actions/tool-options-actions.c
+	* app/actions/vectors-actions.c: added more tooltips for actions
+	which are used as extended dialog button callbacks.
+
+	* app/widgets/gimpeditor.c (gimp_editor_add_action_button): keep
+	the list of extended actions in reverse order.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpvectorstreeview.c: don't set the tooltips
+	manually. Removes another bunch of insane translatable multiline
+	format strings. Pass the extended actions in the right order
+	to gimp_editor_add_action_button().
+
+2004-10-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/vectors-commands.c (vectors_linked_cmd_callback):
 	call gimp_item_set_linked(), not gimp_item_set_visible().
 	Fixes bug #155578

@@ -101,22 +101,26 @@ static GimpActionEntry channels_actions[] =
 static GimpEnumActionEntry channels_to_selection_actions[] =
 {
   { "channels-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    N_("Channel to Sele_ction"), NULL, NULL,
+    N_("Channel to Sele_ction"), NULL,
+    N_("Channel to selection"),
     GIMP_CHANNEL_OP_REPLACE,
     GIMP_HELP_CHANNEL_SELECTION_REPLACE },
 
   { "channels-selection-add", GIMP_STOCK_SELECTION_ADD,
-    N_("_Add to Selection"), NULL, NULL,
+    N_("_Add to Selection"), NULL,
+    N_("Add"),
     GIMP_CHANNEL_OP_ADD,
     GIMP_HELP_CHANNEL_SELECTION_ADD },
 
   { "channels-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    N_("_Subtract from Selection"), NULL, NULL,
+    N_("_Subtract from Selection"), NULL,
+    N_("Subtract"),
     GIMP_CHANNEL_OP_SUBTRACT,
     GIMP_HELP_CHANNEL_SELECTION_SUBTRACT },
 
   { "channels-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    N_("_Intersect with Selection"), NULL, NULL,
+    N_("_Intersect with Selection"), NULL,
+    N_("Intersect"),
     GIMP_CHANNEL_OP_INTERSECT,
     GIMP_HELP_CHANNEL_SELECTION_INTERSECT }
 };

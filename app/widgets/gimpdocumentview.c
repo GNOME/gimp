@@ -35,7 +35,6 @@
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
-#include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -110,7 +109,6 @@ gimp_document_view_new (GimpViewType     view_type,
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
-  gchar               *str;
 
   document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
 
@@ -127,12 +125,6 @@ gimp_document_view_new (GimpViewType     view_type,
 
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
-  str = g_strdup_printf (_("Open the selected entry\n"
-                           "%s  Raise window if already open\n"
-                           "%s  Open image dialog"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
-
   document_view->open_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
                                    "documents-open",
@@ -141,13 +133,9 @@ gimp_document_view_new (GimpViewType     view_type,
                                    "documents-file-open-dialog",
                                    GDK_CONTROL_MASK,
                                    NULL);
-  gimp_help_set_help_data (document_view->open_button, str,
-                           GIMP_HELP_DOCUMENT_OPEN);
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (document_view->open_button),
 				  GIMP_TYPE_IMAGEFILE);
-
-  g_free (str);
 
   document_view->remove_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
@@ -155,12 +143,6 @@ gimp_document_view_new (GimpViewType     view_type,
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (document_view->remove_button),
 				  GIMP_TYPE_IMAGEFILE);
-
-  str = g_strdup_printf (_("Recreate preview\n"
-                           "%s  Reload all previews\n"
-                           "%s  Remove Dangling Entries"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
 
   document_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
@@ -170,10 +152,6 @@ gimp_document_view_new (GimpViewType     view_type,
                                    "documents-remove-dangling",
                                    GDK_CONTROL_MASK,
                                    NULL);
-  gimp_help_set_help_data (document_view->refresh_button, str,
-                           GIMP_HELP_DOCUMENT_REFRESH);
-
-  g_free (str);
 
   if (view_type == GIMP_VIEW_TYPE_LIST)
     {

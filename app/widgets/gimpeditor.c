@@ -619,7 +619,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
           ext->mod_mask = mod_mask;
           ext->action   = action;
 
-          extended = g_list_append (extended, ext);
+          extended = g_list_prepend (extended, ext);
 
           if (tooltip)
             {
@@ -637,8 +637,6 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
                   g_free (tooltip);
                   tooltip = tmp;
-
-                  g_print ("created extended tooltip:\n%s\n\n", tooltip);
                 }
             }
         }

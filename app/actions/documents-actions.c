@@ -48,12 +48,14 @@ static GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-raise-or-open", GTK_STOCK_OPEN,
-    N_("_Raise or Open Image"), "", NULL,
+    N_("_Raise or Open Image"), "",
+    N_("Raise window if already open"),
     G_CALLBACK (documents_raise_or_open_document_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-file-open-dialog", GTK_STOCK_OPEN,
-    N_("File Open _Dialog"), "", NULL,
+    N_("File Open _Dialog"), "",
+    N_("Open image dialog"),
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
@@ -70,12 +72,14 @@ static GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-reload-previews", GTK_STOCK_REFRESH,
-    N_("Reload _all Previews"), "", NULL,
+    N_("Reload _all Previews"), "",
+    N_("Reload all previews"),
     G_CALLBACK (documents_reload_previews_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-remove-dangling", GTK_STOCK_REFRESH,
-    N_("Remove Dangling E_ntries"), "", NULL,
+    N_("Remove Dangling E_ntries"), "",
+    N_("Remove dangling entries"),
     G_CALLBACK (documents_delete_dangling_documents_cmd_callback),
     GIMP_HELP_DOCUMENT_REFRESH }
 };

@@ -175,7 +175,6 @@ gimp_tool_options_editor_constructor (GType                  type,
 {
   GObject               *object;
   GimpToolOptionsEditor *editor;
-  gchar                 *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -205,18 +204,12 @@ gimp_tool_options_editor_constructor (GType                  type,
                             NULL,
                             editor);
 
-  str = g_strdup_printf (_("Reset to default values\n"
-                           "%s  Reset all Tool Options"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
   editor->reset_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "tool-options",
                                    "tool-options-reset",
                                    "tool-options-reset-all",
                                    GDK_SHIFT_MASK,
                                    NULL);
-  gimp_help_set_help_data (editor->reset_button, str,
-                           GIMP_HELP_TOOL_OPTIONS_RESET);
-  g_free (str);
 
   return object;
 }

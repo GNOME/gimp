@@ -408,19 +408,18 @@ gimp_layer_tree_view_constructor (GType                  type,
   gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
                               NULL, tree_view);
 
-  /*  Hide basically useless Edit button  */
+  /*  hide basically useless edit button  */
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
 
   layer_view->anchor_button =
     gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                    "layers-anchor", NULL);
-
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
-                         layer_view->anchor_button, 5);
-
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (layer_view->anchor_button),
                                   GIMP_TYPE_LAYER);
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+                         layer_view->anchor_button, 5);
+
 
   return object;
 }

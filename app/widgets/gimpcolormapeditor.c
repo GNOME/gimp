@@ -280,7 +280,6 @@ gimp_colormap_editor_constructor (GType                  type,
 {
   GObject            *object;
   GimpColormapEditor *editor;
-  gchar              *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -294,17 +293,12 @@ gimp_colormap_editor_constructor (GType                  type,
                             NULL,
                             editor);
 
-  str = g_strdup_printf (_("Add color from FG\n%s  from BG"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
   editor->add_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
                                    "colormap-editor-add-color-from-fg",
                                    "colormap-editor-add-color-from-bg",
                                    GDK_CONTROL_MASK,
                                    NULL);
-  gimp_help_set_help_data (editor->add_button, str,
-                           GIMP_HELP_INDEXED_PALETTE_ADD);
-  g_free (str);
 
   return object;
 }

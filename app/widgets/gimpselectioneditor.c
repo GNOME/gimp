@@ -44,7 +44,6 @@
 
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
-#include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
@@ -158,7 +157,6 @@ gimp_selection_editor_constructor (GType                  type,
 {
   GObject             *object;
   GimpSelectionEditor *editor;
-  gchar               *str;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -180,20 +178,12 @@ gimp_selection_editor_constructor (GType                  type,
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",
                                    "select-save", NULL);
 
-  str = g_strdup_printf (_("Selection to path\n"
-                           "%s  Advanced options"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
-
   editor->path_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "vectors",
                                    "vectors-selection-to-vectors",
                                    "vectors-selection-to-vectors-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
-  gimp_help_set_help_data (editor->path_button, str,
-                           GIMP_HELP_SELECTION_TO_PATH);
-
-  g_free (str);
 
   editor->stroke_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "select",

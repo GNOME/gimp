@@ -152,7 +152,8 @@ static GimpToggleActionEntry vectors_toggle_actions[] =
 static GimpEnumActionEntry vectors_to_selection_actions[] =
 {
   { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    N_("Path to Sele_ction"), NULL, NULL,
+    N_("Path to Sele_ction"), NULL,
+    N_("Path to selection"),
     GIMP_CHANNEL_OP_REPLACE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
@@ -162,17 +163,20 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
   { "vectors-selection-add", GIMP_STOCK_SELECTION_ADD,
-    N_("_Add to Selection"), NULL, NULL,
+    N_("_Add to Selection"), NULL,
+    N_("Add"),
     GIMP_CHANNEL_OP_ADD,
     GIMP_HELP_PATH_SELECTION_ADD },
 
   { "vectors-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    N_("_Subtract from Selection"), NULL, NULL,
+    N_("_Subtract from Selection"), NULL,
+    N_("Subtract"),
     GIMP_CHANNEL_OP_SUBTRACT,
     GIMP_HELP_PATH_SELECTION_SUBTRACT },
 
   { "vectors-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    N_("_Intersect with Selection"), NULL, NULL,
+    N_("_Intersect with Selection"), NULL,
+    N_("Intersect"),
     GIMP_CHANNEL_OP_INTERSECT,
     GIMP_HELP_PATH_SELECTION_INTERSECT }
 };
@@ -180,7 +184,8 @@ static GimpEnumActionEntry vectors_to_selection_actions[] =
 static GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
   { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
-    N_("Selecti_on to Path"), NULL, NULL,
+    N_("Selecti_on to Path"), NULL,
+    N_("Selection to path"),
     FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
 
@@ -190,7 +195,8 @@ static GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
     GIMP_HELP_SELECTION_TO_PATH },
 
   { "vectors-selection-to-vectors-advanced", GIMP_STOCK_SELECTION_TO_PATH,
-    N_("Selection to Path (_Advanced)"), NULL, NULL,
+    N_("Selection to Path (_Advanced)"), NULL,
+    N_("Advanced options"),
     TRUE,
     GIMP_HELP_SELECTION_TO_PATH }
 };
