@@ -1,5 +1,10 @@
 2002-09-18  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/dbbrowser/dbbrowser_utils.c: Allow activation of the
+	search from the entry field.
+
+2002-09-18  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: use X_CFLAGS when checking for Xmu headers too
 
 	* tools/pdbgen/pdb/channel.pdb

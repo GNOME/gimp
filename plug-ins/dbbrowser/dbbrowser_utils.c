@@ -210,6 +210,9 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   gtk_widget_show (label);
 
   dbbrowser->search_entry = gtk_entry_new ();
+  g_signal_connect_swapped (dbbrowser->search_entry, "activate",
+			    G_CALLBACK (gtk_window_activate_default),
+			    dbbrowser->dialog);
   gtk_box_pack_start (GTK_BOX (searchhbox), dbbrowser->search_entry,
 		      TRUE, TRUE, 0);
   gtk_widget_show (dbbrowser->search_entry);
