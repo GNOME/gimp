@@ -21,6 +21,8 @@
 #include "procedural_db.h"
 #include "tools.h"
 
+#include "libgimp/gimpunit.h"
+
 typedef struct _SelectionOptions SelectionOptions;
 struct _SelectionOptions
 {
@@ -32,6 +34,7 @@ struct _SelectionOptions
   int fixed_size;
   int fixed_width;
   int fixed_height;
+  GUnit fixed_unit;
 };
 
 SelectionOptions *create_selection_options  (ToolType);
