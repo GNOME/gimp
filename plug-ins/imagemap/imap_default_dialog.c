@@ -28,8 +28,6 @@
 
 #include "imap_default_dialog.h"
 
-#include "libgimp/stdplugins-intl.h"
-
 
 static void
 dialog_response (GtkWidget       *widget,

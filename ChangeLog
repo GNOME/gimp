@@ -1,3 +1,8 @@
+2004-07-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_default_dialog.c: no need to include
+	"libgimp/stdplugins-intl.h" here.
+
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/preferences-dialog.c (prefs_dialog_new): reordered
