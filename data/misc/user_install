@@ -24,6 +24,8 @@ cp $1/gtkrc $2/gtkrc
 
 echo "mkdir $2/brushes"
 mkdir $2/brushes
+echo "mkdir $2/generated_brushes"
+mkdir $2/generated_brushes
 echo "mkdir $2/gradients"
 mkdir $2/gradients
 echo "mkdir $2/palettes"
@@ -38,6 +40,10 @@ echo "mkdir $2/scripts"
 mkdir $2/scripts
 echo "mkdir $2/tmp"
 mkdir $2/tmp
+echo "mkdir $2/levels"
+mkdir $2/levels
+echo "mkdir $2/curves"
+mkdir $2/curves
 echo "mkdir $2/gfig"
 mkdir $2/gfig
 echo "mkdir $2/gflares"
@@ -52,10 +58,5 @@ echo "mkdir $2/gimpressionist/Paper"
 mkdir $2/gimpressionist/Paper
 echo "mkdir $2/gimpressionist/Presets"
 mkdir $2/gimpressionist/Presets
-echo "mkdir $2/levels"
-mkdir $2/levels
-echo "mkdir $2/curves"
-mkdir $2/curves
-
 echo "cp $1/palettes/* $2/palettes"
 cp $1/palettes/* $2/palettes

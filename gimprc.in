@@ -36,6 +36,10 @@
 #  brushes at startup.
 (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
 
+# Set the generated brush search path...this path will be searched for valid
+#  generated brushes at startup.
+(brush-vbr-path "${gimp_dir}/generated_brushes")
+
 # Specify a default brush. If none is specified it defaults to the
 #  "1circle.gbr" brush which is just a single pixel sized brush.
 #  The brush is searched for in the brush path.
@@ -197,13 +201,15 @@
 #  use the GIMP. To disable this behaviour, uncomment the line below...
 # (dont-save-session-info)
 
-# To let GIMP try to restore your last saved session, 
-#  uncomment the line below...
+# Session managment 
+#  To let GIMP try to restore your last saved session, 
+#  just uncomment the line below...
 # (always-restore-session)
 
 # Setting the level of interpolation
 #  Uncommenting this line will enable cubic interpolation.
-#  By default, GIMP uses linear interpolation, which is faster, but has poorer quality
+#  By default, GIMP uses linear interpolation, which is faster, but 
+#  has poorer quality
 # (cubic-interpolation)
 
 # Set the gamma correction values for the display
@@ -220,7 +226,7 @@
 #  by removing this line, or setting the values to 1.0.
 #  gamma-correction 1.0
 #  gamma-correction 2.0
-#                 ___
+#
 (gamma-correction 1.0)
 
 # Set the manner in which transparency is displayed in images
@@ -248,13 +254,42 @@
 #   %t  image type (RGB, indexed, greyscale)
 #   %z  zoom factor as a percentage
 #   %s  source scale factor
-#   %d  destination scale factor
+#   %Dx expands to x if the image is dirty
 (image-title-format "%f-%p.%i (%t) %z%%")
 
-# gfig pattern directory
+# Global paint options
+#  By default options for the paint tools are global, e.g. all paint tools
+#  use the options you specify in the brushes dialog. You can change this
+#  so each tool has its own settings by uncommenting the next line.
+# (no-global-paint-options)
+
+# Maximal new image size
+#  To prevent mistakes Gimp will warn you if you try to create a very large
+#  image. The default maximum memory consumption of the new image that 
+#  triggers the warning is 32MB.  
+(max-new-image-size 32M)
+
+# Trust dirty flag
+#  Gimp tries to keep track of changes to an image. If you trust this
+#  behaviour, nothing will happen if you save an unchanged image. By default
+#  this is turned off.
+#  Just uncomment the following line if you trust the dirty flag.
+# (trust-dirty-flag)
+
+# Gfig search path
+#  This path will be searched for Gfig figures when you use the Gfig plug-in.
 (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
 
-# fractalexplorer path
+# Fractalexplorer path
+#  This path will be searched for fractals when you use the Fractalexplorer  
+#  plug-in.
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
+# GFlare path
+#  This path will be searched for gflares when you use the GFlare plug-in.
+(gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
+
 # [end of file]
+
+
+

@@ -172,6 +172,12 @@ install_help (InstallCallback callback)
 	    "\t\twide gimp brushes installation when searching for\n"
 	    "\t\tbrushes.\n") },
 
+    { 1, N_("generated_brushes\n") },
+    { 0, N_("\t\tThis is a subdirectory which is used to store brushes\n"
+	    "\t\tthat are created with the brush editor.  The default\n"
+	    "\t\gimprc file checks this subdirectory when searching for\n"
+	    "\t\tgenerated brushes.\n") },
+
     { 1, N_("gradients\n") },
     { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
 	    "\t\tuser defined gradients.  The default gimprc file\n"

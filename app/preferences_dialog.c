@@ -527,8 +527,11 @@ file_prefs_save_callback (GtkWidget *widget,
   if (thumbnail_mode != old_thumbnail_mode)
     update = g_list_append (update, "thumbnail-mode");
   if (trust_dirty_flag != old_trust_dirty_flag)
-    update = g_list_append (update, "trust-dirty-flag");
-
+    {
+      update = g_list_append (update, "trust-dirty-flag");
+      remove = g_list_append (update, "dont-trust-dirty-flag");
+    }
+  
   save_gimprc (&update, &remove);
 
   if (using_xserver_resolution)

@@ -1,3 +1,15 @@
+Fri Sep 24 20:25:14 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* gimprc.in
+	* user_install
+	* user_install.bat
+	* app/gimprc.c
+	* app/install.c
+	* app/preferences_dialog.c: Updated the installed gimprc to reflect
+	most (still not all) of the new options. Create a directory for
+	the generated brushes in the users gimpdir. Appearantly, the brushes
+	still aren't loaded ?!?
+
 Fri Sep 24 17:09:30 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/common/jpeg.c: 

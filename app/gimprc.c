@@ -112,8 +112,8 @@ char *    gradient_path = NULL;
 char *    default_gradient = NULL;
 char *    pluginrc_path = NULL;
 char *    module_path = NULL;
-int       tile_cache_size = 4194304;  /* 4 MB */
-int       marching_speed = 150;   /* 150 ms */
+int       tile_cache_size = 10485760;  /* 10 MB */
+int       marching_speed = 300;   /* 300 ms */
 double    gamma_val = 1.0;
 int       transparency_type = 1;  /* Mid-Tone Checks */
 int       perfectmouse = 0;       /* off (fast and sloppy) */
@@ -156,7 +156,7 @@ int       global_paint_options = TRUE;
 int       show_indicators = TRUE;
 int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
-int	  trust_dirty_flag = 0;
+int	  trust_dirty_flag = FALSE;
 
 extern char * module_db_load_inhibit;
 
@@ -306,7 +306,8 @@ static ParseFunc funcs[] =
   { "module-load-inhibit",       TT_PATH,       &module_db_load_inhibit, NULL },
   { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL },
   { "thumbnail-mode",            TT_INT,        &thumbnail_mode, NULL },
-  { "trust-dirty-flag",		 TT_INT,	&trust_dirty_flag, NULL }
+  { "trust-dirty-flag",		 TT_BOOLEAN,	&trust_dirty_flag, NULL },
+  { "dont-trust-dirty-flag",     TT_BOOLEAN,	NULL, &trust_dirty_flag }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
