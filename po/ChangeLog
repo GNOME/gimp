@@ -1,3 +1,8 @@
+2005-02-21  Takeshi AIHANA <aihana@jcom.home.ne.jp>
+
+	* ja.po: Updated Japanese translation by
+		Tadashi Jokagi <elf2000@users.sourceforge.net>.
+
 2005-02-20  Manish Singh  <yosh@gimp.org>
 
 	* POTFILES.in: add app/core/gimpinterpreterdb.c
