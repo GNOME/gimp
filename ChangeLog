@@ -167,7 +167,6 @@ Wed May 12 12:13:57 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/*: minor cleanups (no functional changes)
 
->>>>>>> 1.1106
 Wed May 12 15:14:25 EEST 1999 Lauri Alanko <nether@gimp.org>
 
 	* plug-ins/gfig/gfig.c: Updated calls to gimp_paintbrush to its
