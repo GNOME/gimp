@@ -106,7 +106,8 @@ style "gimp-dock-style"
   GimpEditor::button_spacing   = 2
 }
 
-widget "*Gimp*Dock*" style "gimp-dock-style"
+widget "*Gimp*Dock*"   style "gimp-dock-style"
+widget "*GimpToolbox*" style "gimp-dock-style"
 
 
 style "gimp-grid-view-style" = "gimp-dock-style"

@@ -16,11 +16,46 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOLBOX_H__
-#define __TOOLBOX_H__
+#ifndef __GIMP_TOOLBOX_H__
+#define __GIMP_TOOLBOX_H__
 
 
-GtkWidget * toolbox_create (Gimp *gimp);
+#include "gimpdock.h"
 
 
-#endif /* __TOOLBOX_H__ */
+#define GIMP_TYPE_TOOLBOX            (gimp_toolbox_get_type ())
+#define GIMP_TOOLBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOLBOX, GimpToolbox))
+#define GIMP_TOOLBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOLBOX, GimpToolboxClass))
+#define GIMP_IS_TOOLBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOLBOX))
+#define GIMP_IS_TOOLBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOLBOX))
+#define GIMP_TOOLBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOLBOX, GimpToolboxClass))
+
+
+typedef struct _GimpToolboxClass GimpToolboxClass;
+
+struct _GimpToolbox
+{
+  GimpDock   parent_instance;
+
+  GtkWidget *menu_bar;
+  GtkWidget *wbox;
+  GtkWidget *color_area;
+  GtkWidget *indicator_area;
+
+  gint       tool_rows;
+  gint       tool_columns;
+};
+
+struct _GimpToolboxClass
+{
+  GimpDockClass  parent_class;
+};
+
+
+GType       gimp_toolbox_get_type (void) G_GNUC_CONST;
+
+GtkWidget * gimp_toolbox_new      (GimpDialogFactory *factory,
+                                   Gimp              *gimp);
+
+
+#endif /* __GIMP_TOOLBOX_H__ */

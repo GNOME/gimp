@@ -39,7 +39,6 @@
 #include "widgets/gimpdnd.h"
 
 #include "color-select.h"
-#include "color-area.h"
 
 #include "gimprc.h"
 

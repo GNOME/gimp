@@ -43,6 +43,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define GIMP_IMAGE_DOCK_MINIMAL_WIDTH 250
+
+
 static void   gimp_image_dock_class_init            (GimpImageDockClass *klass);
 static void   gimp_image_dock_init                  (GimpImageDock      *dock);
 
@@ -107,14 +110,19 @@ gimp_image_dock_init (GimpImageDock *dock)
   GtkWidget *hbox;
 
   dock->image_container    = NULL;
-  dock->show_image_menu    = TRUE;
+  dock->show_image_menu    = FALSE;
   dock->auto_follow_active = TRUE;
 
+  gtk_widget_set_size_request (GTK_WIDGET (dock),
+                               GIMP_IMAGE_DOCK_MINIMAL_WIDTH, -1);
+ 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (GIMP_DOCK (dock)->main_vbox), hbox,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (GIMP_DOCK (dock)->main_vbox), hbox, 0);
-  gtk_widget_show (hbox);
+
+  if (dock->show_image_menu)
+    gtk_widget_show (hbox);
 
   dock->option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (hbox), dock->option_menu, TRUE, TRUE, 0);
@@ -158,16 +166,16 @@ gimp_image_dock_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_image_dock_new (GimpDialogFactory *factory,
+gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 		     GimpContainer     *image_container)
 {
   GimpImageDock *image_dock;
-  GimpDock      *dock;
+  GimpContext   *context;
   gchar         *title;
 
   static gint dock_counter = 1;
 
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
 
   image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK, NULL);
@@ -176,40 +184,40 @@ gimp_image_dock_new (GimpDialogFactory *factory,
   gtk_window_set_title (GTK_WINDOW (image_dock), title);
   g_free (title);
 
-  dock = GIMP_DOCK (image_dock);
-
   image_dock->image_container = image_container;
 
-  dock->factory = factory;
+  context = gimp_context_new (dialog_factory->context->gimp,
+                              "Dock Context", NULL);
 
-  dock->context = gimp_context_new (factory->context->gimp,
-                                    "Dock Context", NULL);
-  gimp_context_define_properties (dock->context,
+  gimp_dock_construct (GIMP_DOCK (image_dock), dialog_factory, context, TRUE);
+
+  gimp_context_define_properties (context,
 				  GIMP_CONTEXT_ALL_PROPS_MASK &
 				  ~(GIMP_CONTEXT_IMAGE_MASK |
 				    GIMP_CONTEXT_DISPLAY_MASK),
 				  FALSE);
-  gimp_context_set_parent (dock->context, factory->context);
+  gimp_context_set_parent (context, dialog_factory->context);
 
   if (image_dock->auto_follow_active)
-    gimp_context_copy_property (factory->context, dock->context,
+    gimp_context_copy_property (dialog_factory->context, context,
 				GIMP_CONTEXT_PROP_IMAGE);
 
-  g_signal_connect_object (G_OBJECT (factory->context), "image_changed",
+  g_signal_connect_object (G_OBJECT (dialog_factory->context), "image_changed",
 			   G_CALLBACK (gimp_image_dock_factory_image_changed),
-			   G_OBJECT (dock),
+			   G_OBJECT (image_dock),
 			   0);
 
-  g_signal_connect_object (G_OBJECT (dock->context), "image_changed",
+  g_signal_connect_object (G_OBJECT (context), "image_changed",
 			   G_CALLBACK (gimp_image_dock_image_changed),
-			   G_OBJECT (dock),
+			   G_OBJECT (image_dock),
 			   0);
 
-  image_dock->menu = gimp_container_menu_new (image_container,
-					      dock->context, 24);
+  image_dock->menu = gimp_container_menu_new (image_container, context, 24);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);
+
+  g_object_unref (G_OBJECT (context));
 
   return GTK_WIDGET (image_dock);
 }
@@ -299,7 +307,7 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
     {
       GimpImage *gimage;
 
-      gimage = gimp_context_get_image (dock->factory->context);
+      gimage = gimp_context_get_image (dock->dialog_factory->context);
 
       if (gimage)
 	gimp_context_set_image (dock->context, gimage);

@@ -20,6 +20,9 @@
 #define __DIALOGS_COMMANDS_H__
 
 
+void   dialogs_show_toolbox_cmd_callback      (GtkWidget *widget,
+                                               gpointer   data,
+                                               guint      action);
 void   dialogs_create_toplevel_cmd_callback   (GtkWidget *widget,
 					       gpointer   data,
 					       guint      action);
@@ -54,6 +57,8 @@ void   dialogs_create_lc_cmd_callback         (GtkWidget *widget,
 void   dialogs_create_stuff_cmd_callback      (GtkWidget *widget,
 					       gpointer   data,
 					       guint      action);
+
+void   dialogs_show_toolbox                   (void);
 
 void   dialogs_menu_update                    (GtkItemFactory *factory,
                                                gpointer        data);

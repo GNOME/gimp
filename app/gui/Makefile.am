@@ -14,8 +14,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	buffers-commands.h		\
 	channels-commands.c		\
 	channels-commands.h		\
-	color-area.c			\
-	color-area.h			\
 	color-notebook.c		\
 	color-notebook.h		\
 	color-select.c			\
@@ -65,8 +63,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	gui-types.h			\
 	image-commands.c		\
 	image-commands.h		\
-	indicator-area.c		\
-	indicator-area.h		\
 	info-dialog.c			\
 	info-dialog.h			\
 	info-window.c			\
@@ -115,8 +111,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	tips-parser.h			\
 	tool-options-dialog.c		\
 	tool-options-dialog.h		\
-	toolbox.c			\
-	toolbox.h			\
 	tools-commands.c		\
 	tools-commands.h		\
 	user-install-dialog.c		\

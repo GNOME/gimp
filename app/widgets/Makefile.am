@@ -123,6 +123,12 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gimppatternpreview.h		\
 	gimppreview.c			\
 	gimppreview.h			\
+	gimptoolbox.c			\
+	gimptoolbox.h			\
+	gimptoolbox-color-area.c	\
+	gimptoolbox-color-area.h	\
+	gimptoolbox-indicator-area.c	\
+	gimptoolbox-indicator-area.h	\
 	gimptoolinfopreview.c		\
 	gimptoolinfopreview.h		\
 	gimpvectorslistview.c		\

@@ -31,8 +31,8 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimptoolbox-color-area.h"
 
-#include "color-area.h"
 #include "color-notebook.h"
 #include "palette-editor-commands.h"
 

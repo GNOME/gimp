@@ -47,6 +47,7 @@
 #include "color-select.h"
 #include "device-status-dialog.h"
 #include "dialogs.h"
+#include "dialogs-commands.h"
 #include "error-console-dialog.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
@@ -249,15 +250,14 @@ gui_restore (Gimp     *gimp,
 
   menus_restore (gimp);
 
-  gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                  "gimp:toolbox", -1);
-
   color_select_init ();
 
   gimp_devices_restore (gimp);
 
   if (gimprc.always_restore_session || restore_session)
     session_restore (gimp);
+
+  dialogs_show_toolbox ();
 }
 
 void
@@ -559,7 +559,6 @@ gui_image_disconnect (GimpImage *gimage,
   /*  check if this is the last image  */
   if (gimp_container_num_children (gimp->images) == 1)
     {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
-                                        "gimp:toolbox", -1);
+      dialogs_show_toolbox ();
     }
 }

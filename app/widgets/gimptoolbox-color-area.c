@@ -29,15 +29,18 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "gui-types.h"
+#include "widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
-#include "widgets/gimpdnd.h"
+#include "gimpdnd.h"
+#include "gimptoolbox.h"
+#include "gimptoolbox-color-area.h"
 
-#include "color-area.h"
-#include "color-notebook.h"
+#include "gui/gui-types.h" /* temp hack */
+
+#include "gui/color-notebook.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
@@ -124,15 +127,19 @@ static GtkTargetEntry color_area_target_table[] =
 /*  public functions  */
 
 GtkWidget *
-color_area_create (GimpContext *context,
-                   gint         width,
-		   gint         height,
-		   GdkPixmap   *default_pmap,
-		   GdkBitmap   *default_msk,
-		   GdkPixmap   *swap_pmap,
-		   GdkBitmap   *swap_msk)
+gimp_toolbox_color_area_create (GimpToolbox *toolbox,
+                                gint         width,
+                                gint         height,
+                                GdkPixmap   *default_pmap,
+                                GdkBitmap   *default_msk,
+                                GdkPixmap   *swap_pmap,
+                                GdkBitmap   *swap_msk)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  GimpContext *context;
+
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+
+  context = GIMP_DOCK (toolbox)->context;
 
   color_area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (color_area, width, height);

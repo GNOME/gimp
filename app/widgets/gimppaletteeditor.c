@@ -41,8 +41,8 @@
 #include "gimpitemfactory.h"
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
+#include "gimptoolbox-color-area.h"
 
-#include "gui/color-area.h"
 #include "gui/color-notebook.h"
 
 #include "libgimp/gimpintl.h"

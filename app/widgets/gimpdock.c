@@ -27,14 +27,13 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
-
-
-#define GIMP_DOCK_MINIMAL_WIDTH 250
 
 
 static void        gimp_dock_class_init               (GimpDockClass  *klass);
@@ -135,13 +134,12 @@ gimp_dock_init (GimpDock *dock)
 {
   GtkWidget *separator;
 
-  dock->context = NULL;
+  dock->context          = NULL;
+  dock->destroy_if_empty = FALSE;
 
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
 
-  gtk_widget_set_size_request (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
- 
   dock->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->main_vbox);
   gtk_widget_show (dock->main_vbox);
@@ -239,6 +237,25 @@ gimp_dock_separator_new (GimpDock *dock)
   return event_box;
 }
 
+gboolean
+gimp_dock_construct (GimpDock          *dock,
+                     GimpDialogFactory *dialog_factory,
+                     GimpContext       *context,
+                     gboolean           destroy_if_empty)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), FALSE);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+
+  dock->dialog_factory   = dialog_factory;
+  dock->context          = context;
+  dock->destroy_if_empty = destroy_if_empty ? TRUE : FALSE;
+
+  g_object_ref (G_OBJECT (dock->context));
+
+  return TRUE;
+}
+
 void
 gimp_dock_add (GimpDock     *dock,
 	       GimpDockable *dockable,
@@ -309,10 +326,11 @@ void
 gimp_dock_remove_book (GimpDock     *dock,
 		       GimpDockbook *dockbook)
 {
-  GList *children;
-  gint   length;
-  gint   index;
-  gint   book_index;
+  GtkWidget *separator;
+  GList     *children;
+  gint       length;
+  gint       index;
+  gint       book_index;
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
@@ -328,27 +346,22 @@ gimp_dock_remove_book (GimpDock     *dock,
   children   = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
   book_index = g_list_index (children, dockbook);
 
-  if (length != 1)
+  if (index == length -1)
     {
-      GtkWidget *separator;
-
-      if (index == length -1)
-	{
-	  separator = g_list_nth_data (children, book_index - 1);
-	}
-      else
-	{
-	  separator = g_list_nth_data (children, book_index + 1);
-	}
-
-      gtk_container_remove (GTK_CONTAINER (dock->vbox), separator);
+      separator = g_list_nth_data (children, book_index - 1);
     }
+  else
+    {
+      separator = g_list_nth_data (children, book_index + 1);
+    }
+
+  gtk_container_remove (GTK_CONTAINER (dock->vbox), separator);
 
   g_list_free (children);
 
   gtk_container_remove (GTK_CONTAINER (dock->vbox), GTK_WIDGET (dockbook));
 
-  if (length == 1)
+  if ((length == 1) && (dock->destroy_if_empty))
     {
       gtk_widget_destroy (GTK_WIDGET (dock));
     }

@@ -46,7 +46,6 @@
 
 #include "color-notebook.h"
 #include "colormap-dialog.h"
-#include "color-area.h"
 
 #include "libgimp/gimpintl.h"
 

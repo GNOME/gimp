@@ -58,7 +58,7 @@ struct _GimpImageDockClass
 
 GType       gimp_image_dock_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_image_dock_new      (GimpDialogFactory *factory,
+GtkWidget * gimp_image_dock_new      (GimpDialogFactory *dialog_factory,
 				      GimpContainer     *image_container);
 
 void        gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,

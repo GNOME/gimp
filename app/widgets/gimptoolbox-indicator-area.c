@@ -25,19 +25,18 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "widgets-types.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
 #include "core/gimppattern.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdnd.h"
-#include "widgets/gimppreview.h"
-
-#include "dialogs.h"
-#include "indicator-area.h"
+#include "gimpdialogfactory.h"
+#include "gimpdnd.h"
+#include "gimppreview.h"
+#include "gimptoolbox.h"
+#include "gimptoolbox-indicator-area.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -48,17 +47,11 @@
 #define CELL_PADDING      2  /*  How much between brush and pattern cells  */
 
 
-/*  Static variables  */
-static GtkWidget *brush_preview;
-static GtkWidget *pattern_preview;
-static GtkWidget *gradient_preview;
-
-
 static void
-brush_preview_clicked (GtkWidget *widget, 
-		       gpointer   data)
+brush_preview_clicked (GtkWidget   *widget, 
+		       GimpToolbox *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (global_dock_factory,
+  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp:brush-grid", -1);
 }
 
@@ -75,10 +68,10 @@ brush_preview_drop_brush (GtkWidget    *widget,
 }
 
 static void
-pattern_preview_clicked (GtkWidget *widget, 
-			 gpointer   data)
+pattern_preview_clicked (GtkWidget   *widget, 
+			 GimpToolbox *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (global_dock_factory,
+  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp:pattern-grid", -1);
 }
 
@@ -95,10 +88,10 @@ pattern_preview_drop_pattern (GtkWidget    *widget,
 }
 
 static void
-gradient_preview_clicked (GtkWidget *widget, 
-			  gpointer   data)
+gradient_preview_clicked (GtkWidget   *widget, 
+			  GimpToolbox *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (global_dock_factory,
+  gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp:gradient-list", -1);
 }
 
@@ -114,12 +107,21 @@ gradient_preview_drop_gradient (GtkWidget    *widget,
   gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
 }
 
-GtkWidget *
-indicator_area_create (GimpContext *context)
-{
-  GtkWidget *indicator_table;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+/*  public functions  */
+
+GtkWidget *
+gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
+{
+  GimpContext *context;
+  GtkWidget   *indicator_table;
+  GtkWidget   *brush_preview;
+  GtkWidget   *pattern_preview;
+  GtkWidget   *gradient_preview;
+
+  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+
+  context = GIMP_DOCK (toolbox)->context;
 
   indicator_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_PADDING);
@@ -146,7 +148,7 @@ indicator_area_create (GimpContext *context)
 
   g_signal_connect (G_OBJECT (brush_preview), "clicked",
 		    G_CALLBACK (brush_preview_clicked),
-		    NULL);
+		    toolbox);
 
   gimp_gtk_drag_dest_set_by_type (brush_preview,
                                   GTK_DEST_DEFAULT_ALL,
@@ -178,7 +180,7 @@ indicator_area_create (GimpContext *context)
 
   g_signal_connect (G_OBJECT (pattern_preview), "clicked",
 		    G_CALLBACK (pattern_preview_clicked),
-		    NULL);
+		    toolbox);
 
   gimp_gtk_drag_dest_set_by_type (pattern_preview,
                                   GTK_DEST_DEFAULT_ALL,
@@ -210,7 +212,7 @@ indicator_area_create (GimpContext *context)
 
   g_signal_connect (G_OBJECT (gradient_preview), "clicked",
 		    G_CALLBACK (gradient_preview_clicked),
-		    NULL);
+		    toolbox);
 
   gimp_gtk_drag_dest_set_by_type (gradient_preview,
                                   GTK_DEST_DEFAULT_ALL,

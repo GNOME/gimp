@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __INDICATOR_AREA_H__
-#define __INDICATOR_AREA_H__
+#ifndef __GIMP_TOOLBOX_INDICATOR_AREA_H__
+#define __GIMP_TOOLBOX_INDICATOR_AREA_H__
 
 
-GtkWidget * indicator_area_create (GimpContext *context);
+GtkWidget * gimp_toolbox_indicator_area_create (GimpToolbox *toolbox);
 
 
-#endif  /*  __INDICATOR_AREA_H__  */
+#endif  /*  __GIMP_TOOLBOX_INDICATOR_AREA_H__  */

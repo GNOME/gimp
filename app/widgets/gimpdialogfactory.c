@@ -409,8 +409,6 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 	{
 	  dock = gimp_dialog_factory_dock_new (factory);
 
-	  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), FALSE);
-
 	  gimp_dock_add_book (GIMP_DOCK (dock),
 			      GIMP_DOCKBOOK (gimp_dockbook_new ()), 0);
 	}
@@ -901,8 +899,7 @@ gimp_dialog_factories_session_restore (void)
 }
 
 void
-gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
-			      const gchar       *toolbox_identifier)
+gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory)
 {
   static GimpDialogShowState toggle_state = GIMP_DIALOG_SHOW_ALL;
   static gboolean            doing_update = FALSE;
@@ -929,7 +926,9 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
     case GIMP_DIALOG_HIDE_ALL:
       toggle_state = GIMP_DIALOG_SHOW_TOOLBOX;
 
-      gimp_dialog_factory_dialog_raise (toolbox_factory, toolbox_identifier, -1);
+      gimp_dialog_factories_show_foreach (GIMP_OBJECT (toolbox_factory)->name,
+                                          toolbox_factory,
+                                          NULL);
       break;
 
     case GIMP_DIALOG_SHOW_TOOLBOX:
@@ -982,6 +981,7 @@ gimp_dialog_factories_save_foreach (gchar             *name,
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
       GimpSessionInfo *info;
+      const gchar     *dialog_name;
 
       info = (GimpSessionInfo *) list->data;
 
@@ -996,10 +996,17 @@ gimp_dialog_factories_save_foreach (gchar             *name,
       if (info->widget)
 	gimp_dialog_factory_get_window_info (info->widget, info);
 
-      fprintf (fp, "(session-info \"%s\" \"%s\"\n",
-	       name,
-	       info->toplevel_entry ? info->toplevel_entry->identifier : "dock");
-      fprintf (fp, "    (position %d %d)", info->x, info->y);
+      if (info->toplevel_entry)
+        {
+          dialog_name = info->toplevel_entry->identifier;
+        }
+      else
+        {
+          dialog_name = "dock";
+        }
+
+      fprintf (fp, "(session-info \"%s\" \"%s\"\n", name, dialog_name);
+      fprintf (fp, "    (position %d %d)",          info->x, info->y);
 
       if (info->width > 0 && info->height > 0)
 	fprintf (fp, "\n    (size %d %d)", info->width, info->height);
@@ -1178,10 +1185,15 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
                         preview_size = -1;
                     }
 
-		  dockable = gimp_dialog_factory_dockable_new (factory,
-							       dock,
-							       identifier,
-                                                               preview_size);
+                  /*  use the new dock's dialog factory to create dockables
+                   *  because it may be different from the dialog factory
+                   *  the dock was created from.
+                   */
+		  dockable =
+                    gimp_dialog_factory_dockable_new (dock->dialog_factory,
+                                                      dock,
+                                                      identifier,
+                                                      preview_size);
 
 		  if (dockable)
 		    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);

@@ -85,6 +85,7 @@ typedef struct _GimpLayerListItem       GimpLayerListItem;
 typedef struct _GimpComponentListItem   GimpComponentListItem;
 
 typedef struct _GimpDock                GimpDock;
+typedef struct _GimpToolbox             GimpToolbox;
 typedef struct _GimpImageDock           GimpImageDock;
 typedef struct _GimpDockable            GimpDockable;
 typedef struct _GimpDockbook            GimpDockbook;

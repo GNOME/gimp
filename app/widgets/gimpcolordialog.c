@@ -34,7 +34,6 @@
 
 #include "gui-types.h"
 
-#include "color-area.h"
 #include "color-notebook.h"
 
 #include "libgimp/gimpintl.h"

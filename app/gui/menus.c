@@ -796,8 +796,8 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/Tools  */
 
   { { N_("/Tools/Toolbox"), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:toolbox",
+      dialogs_show_toolbox_cmd_callback, 0 },
+    NULL,
     "toolbox/toolbox.html", NULL },
   { { N_("/Tools/Default Colors"), "D",
       tools_default_colors_cmd_callback, 0 },
@@ -1379,7 +1379,7 @@ static GimpItemFactoryEntry dialogs_entries[] =
     NULL,
     NULL, NULL },
 
-  SEPARATOR ("/---"),
+  SEPARATOR ("/image-menu-separator"),
 
   { { N_("/Show Image Menu"), NULL,
       dialogs_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },

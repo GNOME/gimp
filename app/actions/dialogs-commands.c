@@ -37,6 +37,14 @@
 
 
 void
+dialogs_show_toolbox_cmd_callback (GtkWidget *widget,
+                                   gpointer   data,
+                                   guint      action)
+{
+  dialogs_show_toolbox ();
+}
+
+void
 dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
 				      gpointer   data,
 				      guint      action)
@@ -86,10 +94,11 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 
       if (identifier)
 	{
-	  dockable = gimp_dialog_factory_dockable_new (dockbook->dock->factory,
-						       dockbook->dock,
-						       identifier,
-                                                       -1);
+	  dockable =
+            gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
+                                              dockbook->dock,
+                                              identifier,
+                                              -1);
 
 	  /*  Maybe gimp_dialog_factory_dockable_new() returned an already
 	   *  existing singleton dockable, so check if it already is
@@ -187,7 +196,7 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                     preview_size = old_view->preview_size;
 
                   new_dockable =
-                    gimp_dialog_factory_dockable_new (dockbook->dock->factory,
+                    gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
                                                       dockbook->dock,
                                                       identifier,
                                                       preview_size);
@@ -262,7 +271,7 @@ dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
 
   dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
 
-  if (dockbook)
+  if (dockbook && GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
 					   GTK_CHECK_MENU_ITEM (widget)->active);
@@ -278,7 +287,7 @@ dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
 
   dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
 
-  if (dockbook)
+  if (dockbook && GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
       gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
 					      GTK_CHECK_MENU_ITEM (widget)->active);
@@ -304,6 +313,8 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
   gint i;
 
   dock = gimp_dialog_factory_dock_new (global_dock_factory);
+
+  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), TRUE);
 
   dockbook = gimp_dockbook_new ();
 
@@ -361,6 +372,38 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
 }
 
 void
+dialogs_show_toolbox (void)
+{
+  if (! global_toolbox_factory->open_dialogs)
+    {
+      GtkWidget *toolbox;
+
+      toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory);
+
+      gtk_widget_show (toolbox);
+    }
+  else
+    {
+      GList *list;
+
+      for (list = global_toolbox_factory->open_dialogs;
+           list;
+           list = g_list_next (list))
+        {
+          if (GTK_WIDGET_TOPLEVEL (list->data))
+            {
+              if (GTK_WIDGET_VISIBLE (list->data))
+                gtk_widget_show (GTK_WIDGET (list->data));
+              else
+                gdk_window_raise (GTK_WIDGET (list->data)->window);
+
+              break;
+            }
+        }
+    }
+}
+
+void
 dialogs_menu_update (GtkItemFactory *factory,
                      gpointer        data)
 {
@@ -400,6 +443,8 @@ dialogs_menu_update (GtkItemFactory *factory,
 
 #define SET_ACTIVE(path,active) \
         gimp_item_factory_set_active (factory, (path), (active))
+#define SET_VISIBLE(path,active) \
+        gimp_item_factory_set_visible (factory, (path), (active))
 
       if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
         {
@@ -447,11 +492,25 @@ dialogs_menu_update (GtkItemFactory *factory,
           SET_ACTIVE ("/View as List", TRUE);
         }
 
-      SET_ACTIVE ("/Show Image Menu",
-                  GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
-      SET_ACTIVE ("/Auto Follow Active Image",
-                  GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+      if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
+        {
+          SET_VISIBLE ("/image-menu-separator",     TRUE);
+          SET_VISIBLE ("/Show Image Menu",          TRUE);
+          SET_VISIBLE ("/Auto Follow Active Image", TRUE);
+
+          SET_ACTIVE ("/Show Image Menu",
+                      GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+          SET_ACTIVE ("/Auto Follow Active Image",
+                      GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+        }
+      else
+        {
+          SET_VISIBLE ("/image-menu-separator",     FALSE);
+          SET_VISIBLE ("/Show Image Menu",          FALSE);
+          SET_VISIBLE ("/Auto Follow Active Image", FALSE);
+        }
 
 #undef SET_ACTIVE
+#undef SET_VISIBLE
     }
 }

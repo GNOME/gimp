@@ -150,6 +150,11 @@ gimp_tool_info_finalize (GObject *object)
       tool_info->help_data = NULL;
     }
 
+  if (tool_info->stock_id)
+    {
+      g_object_unref (G_OBJECT (tool_info->stock_id));
+      tool_info->stock_id = NULL;
+    }
   if (tool_info->stock_pixbuf)
     {
       g_object_unref (G_OBJECT (tool_info->stock_pixbuf));
@@ -284,7 +289,7 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->help_domain     = g_strdup (help_domain);
   tool_info->help_data       = g_strdup (help_data);
 
-  tool_info->stock_id        = stock_id;
+  tool_info->stock_id        = g_strdup (stock_id);
   tool_info->stock_pixbuf    = stock_pixbuf;
 
   if (stock_pixbuf)

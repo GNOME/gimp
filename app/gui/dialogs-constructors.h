@@ -22,9 +22,6 @@
 
 /*  toplevel dialogs  */
 
-GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_device_status_get      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
@@ -48,11 +45,17 @@ GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
                                             gint               preview_size);
 
 
-/*  docks & dockables  */
+/*  docks  */
 
+GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+
+
+/*  dockables  */
 
 GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory,
 					    GimpContext       *context,

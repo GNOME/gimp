@@ -34,14 +34,15 @@
 #define GIMP_DOCK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCK, GimpDockClass))
 
 
-typedef struct _GimpDockClass   GimpDockClass;
+typedef struct _GimpDockClass GimpDockClass;
 
 struct _GimpDock
 {
   GtkWindow          parent_instance;
 
-  GimpDialogFactory *factory;
+  GimpDialogFactory *dialog_factory;
   GimpContext       *context;
+  gboolean           destroy_if_empty;
 
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
@@ -56,6 +57,11 @@ struct _GimpDockClass
 
 
 GType       gimp_dock_get_type    (void) G_GNUC_CONST;
+
+gboolean    gimp_dock_construct   (GimpDock          *dock,
+                                   GimpDialogFactory *dialog_factory,
+                                   GimpContext       *context,
+                                   gboolean           destroy_if_empty);
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

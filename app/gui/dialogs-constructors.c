@@ -56,13 +56,14 @@
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimptoolbox.h"
+#include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpvectorslistview.h"
 
 #include "about-dialog.h"
 #include "brushes-commands.h"
 #include "buffers-commands.h"
 #include "channels-commands.h"
-#include "color-area.h"
 #include "colormap-dialog.h"
 #include "device-status-dialog.h"
 #include "dialogs.h"
@@ -79,7 +80,6 @@
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
-#include "toolbox.h"
 #include "vectors-commands.h"
 
 #include "gimprc.h"
@@ -147,14 +147,6 @@ static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 /**********************/
 /*  toplevel dialogs  */
 /**********************/
-
-GtkWidget *
-dialogs_toolbox_get (GimpDialogFactory *factory,
-		     GimpContext       *context,
-                     gint               preview_size)
-{
-  return toolbox_create (context->gimp);
-}
 
 GtkWidget *
 dialogs_device_status_get (GimpDialogFactory *factory,
@@ -247,6 +239,18 @@ dialogs_about_get (GimpDialogFactory *factory,
 /***********/
 /*  docks  */
 /***********/
+
+GtkWidget *
+dialogs_toolbox_get (GimpDialogFactory *factory,
+		     GimpContext       *context,
+                     gint               preview_size)
+{
+  /*  we pass "global_dock_factory", _not_ "global_toolbox_factory" to
+   *  the toolbox constructor, because the toolbox_factory has no
+   *  dockables registered
+   */
+  return gimp_toolbox_new (global_dock_factory, context->gimp);
+}
 
 GtkWidget *
 dialogs_dock_new (GimpDialogFactory *factory,

@@ -32,13 +32,13 @@
 #include "dialogs-constructors.h"
 
 
-GimpDialogFactory *global_dialog_factory = NULL;
-GimpDialogFactory *global_dock_factory   = NULL;
+GimpDialogFactory *global_dialog_factory  = NULL;
+GimpDialogFactory *global_dock_factory    = NULL;
+GimpDialogFactory *global_toolbox_factory = NULL;
 
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
-  { "gimp:toolbox",                dialogs_toolbox_get,         32, TRUE,  TRUE,  TRUE,  TRUE  },
   { "gimp:device-status-dialog",   dialogs_device_status_get,   32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     32, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:module-browser-dialog",  dialogs_module_browser_get,  32, TRUE,  FALSE, FALSE, TRUE  },
@@ -95,6 +95,11 @@ dialogs_init (Gimp *gimp)
 						   NULL,
 						   NULL);
 
+  global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
+                                                    gimp_get_user_context (gimp),
+                                                    NULL,
+                                                    dialogs_toolbox_get);
+
   global_dock_factory = gimp_dialog_factory_new ("dock",
 						 gimp_get_user_context (gimp),
 						 gimp_item_factory_from_path ("<Dialogs>"),
@@ -128,6 +133,18 @@ dialogs_exit (Gimp *gimp)
     {
       g_object_unref (G_OBJECT (global_dialog_factory));
       global_dialog_factory = NULL;
+    }
+
+  /*  destroy the "global_toolbox_factory" _before_ destroying the
+   *  "global_dock_factory" because the "global_toolbox_factory" owns
+   *  dockables which were created by the "global_dock_factory".  This
+   *  way they are properly removed from the "global_dock_factory", which
+   *  would complain about stale entries otherwise.
+   */
+  if (global_toolbox_factory)
+    {
+      g_object_unref (G_OBJECT (global_toolbox_factory));
+      global_toolbox_factory = NULL;
     }
 
   if (global_dock_factory)

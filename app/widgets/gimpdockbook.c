@@ -468,7 +468,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
       GimpItemFactory *item_factory;
       GtkWidget       *add_widget;
 
-      item_factory = dockbook->dock->factory->item_factory;
+      item_factory = dockbook->dock->dialog_factory->item_factory;
 
       add_widget = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
                                                 "/Select Tab");
@@ -525,7 +525,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook,
 					  TAB_WIDGET_SIZE);
 
-  if (! GTK_IS_LABEL (preview))
+  if (GIMP_IS_PREVIEW (preview))
     {
       GtkWidget *hbox;
       GtkWidget *label;
@@ -542,7 +542,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
       preview = hbox;
     }
-  else
+  else if (GTK_IS_LABEL (preview))
     {
       gtk_widget_destroy (preview);
 
@@ -581,24 +581,29 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
    */
   if (drag_widget)
     {
+      GimpDock  *src_dock;
       GtkWidget *dock;
       GtkWidget *dockbook;
-      gboolean   auto_follow_active;
-      gboolean   show_image_menu;
 
       g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
 
-      dock = gimp_dialog_factory_dock_new (dockable->dockbook->dock->factory);
+      src_dock = dockable->dockbook->dock;
 
-      auto_follow_active =
-	GIMP_IMAGE_DOCK (dockable->dockbook->dock)->auto_follow_active;
-      show_image_menu =
-	GIMP_IMAGE_DOCK (dockable->dockbook->dock)->show_image_menu;
+      dock = gimp_dialog_factory_dock_new (src_dock->dialog_factory);
 
-      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
-					      auto_follow_active);
-      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
-					   show_image_menu);
+      if (GIMP_IS_IMAGE_DOCK (dock) && GIMP_IS_IMAGE_DOCK (src_dock))
+        {
+          gboolean auto_follow_active;
+          gboolean show_image_menu;
+
+          auto_follow_active = GIMP_IMAGE_DOCK (src_dock)->auto_follow_active;
+          show_image_menu    = GIMP_IMAGE_DOCK (src_dock)->show_image_menu;
+
+          gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
+                                                  auto_follow_active);
+          gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
+                                               show_image_menu);
+        }
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLOR_AREA_H__
-#define __COLOR_AREA_H__
+#ifndef __GIMP_TOOLBOX_COLOR_AREA_H__
+#define __GIMP_TOOLBOX_COLOR_AREA_H__
 
 
 #define FOREGROUND 0
@@ -35,13 +35,13 @@ extern GimpDisplay *color_area_gdisp; /* hack for color displays */
 /*
  *  Functions
  */
-GtkWidget * color_area_create (GimpContext *context,
-                               gint         width,
-                               gint         height,
-                               GdkPixmap   *default_pixmap,
-                               GdkBitmap   *default_mask,
-                               GdkPixmap   *swap_pixmap,
-                               GdkBitmap   *swap_mask);
+GtkWidget * gimp_toolbox_color_area_create (GimpToolbox *toolbox,
+                                            gint         width,
+                                            gint         height,
+                                            GdkPixmap   *default_pixmap,
+                                            GdkBitmap   *default_mask,
+                                            GdkPixmap   *swap_pixmap,
+                                            GdkBitmap   *swap_mask);
 
 
-#endif  /*  __COLOR_AREA_H__  */
+#endif  /*  __GIMP_TOOLBOX_COLOR_AREA_H__  */
