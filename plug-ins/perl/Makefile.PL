@@ -27,7 +27,9 @@ success stories (and of course any bug-reports ;)
 
 Do you want me to make these tests [y]? ";
       
-      $EXTENSIVE_TESTS = (<STDIN> !~ /^[nN]/) ? 1 : 0;
+      print "y\n";
+      $EXTENSIVE_TESTS = 1;
+      #$EXTENSIVE_TESTS = (<STDIN> !~ /^[nN]/) ? 1 : 0;
    }
    
    print "\n";
@@ -117,7 +119,7 @@ EOF
 @examples =
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl);
+      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick);
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server scm2perl scm2scm examples/example-net.pl examples/homepage-logo.pl
       examples/example-fu.pl));

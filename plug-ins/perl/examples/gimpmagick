@@ -1,0 +1,625 @@
+#!/usr/bin/perl
+
+BEGIN { $] >= 5.005 or exit main }
+use Gimp 1.06;
+use Gimp::Fu;
+use POSIX;
+BEGIN { eval "use Gtk; use Image::Magick 1.45"; $@ and exit main };
+
+$VERSION = '0.1';
+
+$preview_size = 160; # max. size for image preview
+
+# this funny little function parses the Magick.xs file
+sub reparse {
+   my $res;
+   $res.="%MagickTypes = (\n";
+   $xs = do { local(*XS,$/); open XS,"<$_[0]" or die; <XS> };
+   while($xs =~ /(\w+Types)\[\]\s=\s+\{([^}]+)\}/g) {
+      my $name=$1;
+      my @vals=$2=~/"([^"]+)"/g;
+      shift @vals if $vals[0] eq "Undefined";
+      $res.="   $name => sub {\n      my \$m = new Gtk::Menu;\n".
+            join("",map "      \$m->append(new Gtk::MenuItem '$_');\n",@vals).
+            "      my \$o = new Gtk::OptionMenu;\n".
+            "      \$o->set_menu(\$m);\n".
+            "      optionmenu_settext(\$o,\@_);\n".
+            "      \$o;\n".
+            "   },\n";
+   }
+   $res.=");\n\n";
+
+   $res.="%MagickMethods = (\n";
+   $xs =~ /Methods\[\]\s=\s+\{\n(.+?)\s*\};/s or die;
+   $methods=$1;
+   while($methods =~ /(?:^|\n)(\s+)\{ "([^"]+)",(?: \{ (.*?))?\s*\},(?=\n\1\{|$)/gs) {
+      my $method=$2;
+      my @args=$3=~/\{"([^"]+)", (\w+)},?/gs;
+      $res.="   $method => [".join(",",map "'$_'",@args)."],\n";
+   }
+   $res.=");\n";
+
+   require IO::AtomicFile;
+
+   {
+      local $/;
+      open X,"<$0" or die;
+      $data=<X>;
+      $data=~s/(?<=\n#MAGICK#\n).*/sub magick {\n$res\n}\n/s;
+      my $file=IO::AtomicFile->open($0,"w");
+      $file->print($data);
+      $file->close;
+   }
+}
+
+sub optionmenu_settext {
+   my ($o,$ref) = @_;
+   $o->signal_connect (clicked => sub {
+      $arg{$ref} = $_[0]->get_menu->get_active->get;
+   });
+}
+
+sub new_entry {
+   my ($re,$ref)=@_;
+   my $e = new Gtk::Entry;
+   $e->signal_connect(changed => sub {
+      $arg{$ref}=$e->get_text;
+   });
+   $e;
+}
+
+if ($ARGV[0] eq "--reparse") {
+   reparse("/root/cvt/ImageMagick-4.2.0/PerlMagick/Magick.xs");
+   exit;
+}
+
+&magick;
+
+%MagickTypes = (%MagickTypes,
+   'StringReference' => sub { new_entry "",@_ },
+   'DoubleReference' => sub { new_entry '^[0-9.E+-]+$',@_ },
+   'IntegerReference' => sub { new_entry '^[0-9+-]+$',@_ },
+   'ImageReference' => sub { new Gtk::Label "not yet supported" },
+);
+
+%MagickMethods = (%MagickMethods,
+);
+
+sub check {
+   for(values(%MagickMethods)) {
+      my @a=@$_;
+      while(@a) {
+         shift @a;
+         my $x = shift @a;
+         print($x," <- does not exist\n") unless $MagickTypes{$x};
+      }
+   }
+}
+#check;
+
+# read the image pixels into an imagemagick-image
+sub read_pixels {
+   my($drawable,$im)=@_;
+   my $th = Gimp->tile_height;
+   
+   Gimp->tile_cache_ntiles (1 + $drawable->width / Gimp->tile_width);
+   
+   my $type = $drawable->type;
+   my $format;
+   $format = "RGB"  if $type == RGB_IMAGE;
+   $format = "RGBA" if $type == RGBA_IMAGE;
+   $format = "GRAY" if $type == GRAY_IMAGE;
+   die "Indexed format and GRAYA not yet supported in GimpMagick!\n" unless $format;
+   
+   my $temp = Gimp->temp_name('raw');
+   open TEMP,">$temp\0" or die "unable to open temporary file '$temp' for writing\n";
+   my ($empty,$x1,$y1,$x2,$y2) = $drawable->mask_bounds;
+   $x2-=$x1; $y2-=$y1;
+   my $region = $drawable->get->pixel_rgn ($x1, $y1, $x2, $y2, 0, 0);
+
+   Gimp->progress_init ("transferring image data");
+   for(my $y=0; $y<$y2; $y+=$th) {
+      # calling internal function, sorry folks!
+      Gimp->progress_update ($y/$y2*100);
+      print TEMP Gimp::PixelRgn::_get_rect($region,0,$y,$x2,$y2-$y > $th ? $th : $y2-$y);
+   }
+   close TEMP;
+   $im->Set(size => $x2.'x'.$y2);
+   $im->Read("$format:$temp");
+   unlink $temp;
+
+   $format;
+}
+
+# read the image pixels back
+sub write_pixels {
+   my($drawable,$im,$format)=@_;
+   my $th = Gimp->tile_height;
+   my $buf;
+   
+   my $temp = Gimp->temp_name('raw');
+
+   $im->Write("$format:$temp");
+   
+   open TEMP,"<$temp\0" or die "unable to open temporary file '$temp' for writing\n";
+   unlink $temp;
+   my ($empty,$x1,$y1,$x2,$y2) = $drawable->mask_bounds;
+   $x2-=$x1; $y2-=$y1;
+
+   if ($x2 ne $im->get('width') or $y2 ne $im->get('height')) {
+      $drawable->resize ($im->get('width','height'),0,0);
+      $drawable->image->selection_none;
+      ($x1,$y1,$x2,$y2)=(0,0,$im->get('width','height'));
+   }
+   
+   my $region = $drawable->get->pixel_rgn ($x1, $y1, $x2, $y2, 1, 1);
+
+   Gimp->progress_init ("transferring image data");
+   my $stride = $x2*$region->bpp;
+   for(my $y=0; $y<$y2; $y+=$th) {
+      # calling internal function, sorry folks!
+      Gimp->progress_update ($y/$y2*100);
+      read TEMP,$buf,$stride*$th;
+      Gimp::PixelRgn::_set_rect($region,$buf,0,$y,$x2);
+   }
+   close TEMP;
+
+   undef $region;
+   $drawable->merge_shadow (1);
+   Gimp->displays_flush;
+}
+
+sub update_preview {
+   my ($im,$pre)=@_;
+   $im=$im->clone;
+
+   while($im->get('width') > $preview_size or $im->get('height') > $preview_size) {
+      $im->Minify;
+   }
+   if(0==open BLOB,"-|") {
+      $im->Write('RGB:-');
+      POSIX::_exit(0);
+   }
+
+   my($w,$h)=$im->get('width','height');
+   $pre->size($w,$h);
+   for (0..$h-1) {
+      read BLOB,$im,$w*3;
+      $pre->draw_row($im,0,$_,$w);
+   }
+   close BLOB;
+   $pre->draw(undef);
+}
+
+# Interactively apply Image::Magick
+sub gimp_magick {
+   my ($drawable)=@_;
+
+   # generate main window
+   my $im = new Image::Magick;
+
+   my $format = read_pixels ($drawable, $im);
+
+   my $w = new Gtk::Dialog;
+
+   $w->set_title ("GimpMagick! $VERSION");
+   
+   my $b = new Gtk::Button "Apply";
+   $b->signal_connect (clicked => sub { write_pixels ($drawable, $im, $format); main_quit Gtk });
+   $w->action_area->add ($b);
+   $b = new Gtk::Button "Cancel";
+   $b->signal_connect (clicked => sub { main_quit Gtk });
+   $w->action_area->add ($b);
+
+   $preview = new Gtk::Preview "color";
+   $w->vbox->add ($preview);
+
+   my $frame = new Gtk::Frame "Arguments";
+   my $cbox = new Gtk::VBox 0,0;
+   $frame->add($cbox);
+
+   my $command = new Gtk::Combo;
+   my %args;
+
+   $command->set_popdown_strings (sort keys %MagickMethods);
+   $command->set_case_sensitive (0);
+
+   my $changed_command = sub {
+      $method = $command->entry->get_text;
+      return unless $MagickMethods{$method};
+      $frame->remove ($cbox);
+      $cbox = new Gtk::VBox 0,5;
+      my @args = @{$MagickMethods{$method}};
+      while(@args) {
+         %arg=();
+         my($name,$type)=(shift @args,shift @args);
+         my($hbox)=new Gtk::HBox 0,5;
+         $hbox->add(new Gtk::Label "$name: ");
+         my $widget = $MagickTypes{$type}->($name);
+         $hbox->add($widget);
+         $cbox->add($hbox);
+      }
+      $cbox->show_all;
+      $frame->add($cbox);
+   };
+
+   $command->entry->signal_connect(changed => $changed_command);
+
+   my $execute = new Gtk::Button "Execute!";
+
+   $execute->signal_connect(clicked => sub {
+      $im->$method(%arg);
+      update_preview ($im, $preview);
+   });
+
+   $w->vbox->add($command);
+   $w->vbox->add($frame);
+   $w->vbox->add($execute);
+
+   update_preview ($im, $preview);
+   
+   $w->show_all;
+   &$changed_command;
+   main Gtk;
+   ();
+}
+
+register "gimp_magick",
+         "access to the Image::Magick-package",
+         "Gimp::Magick gives you access to all methods in the Image::Magick-package. These methods often offer ".
+            "higher quality than equivalent Gimp methods, as well as offering more methods than Gimp itself",
+         "Marc Lehmann",
+         "Marc Lehmann",
+         $VERSION,
+         "<Image>/Filters/Misc/Magick",
+         "*",
+         [
+         ],
+         sub {
+   my($image,$drawable)=@_;
+
+   gimp_magick ($drawable);
+   
+   $image;
+};
+
+exit main;
+
+#MAGICK#
+sub magick {
+%MagickTypes = (
+   BooleanTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'False');
+      $m->append(new Gtk::MenuItem 'True');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   ClassTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'DirectClass');
+      $m->append(new Gtk::MenuItem 'PseudoClass');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   ColorspaceTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'RGB');
+      $m->append(new Gtk::MenuItem 'Gray');
+      $m->append(new Gtk::MenuItem 'Transparent');
+      $m->append(new Gtk::MenuItem 'OHTA');
+      $m->append(new Gtk::MenuItem 'XYZ');
+      $m->append(new Gtk::MenuItem 'YCbCr');
+      $m->append(new Gtk::MenuItem 'YCC');
+      $m->append(new Gtk::MenuItem 'YIQ');
+      $m->append(new Gtk::MenuItem 'YPbPr');
+      $m->append(new Gtk::MenuItem 'YUV');
+      $m->append(new Gtk::MenuItem 'CMYK');
+      $m->append(new Gtk::MenuItem 'sRGB');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   CompositeTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Over');
+      $m->append(new Gtk::MenuItem 'In');
+      $m->append(new Gtk::MenuItem 'Out');
+      $m->append(new Gtk::MenuItem 'Atop');
+      $m->append(new Gtk::MenuItem 'Xor');
+      $m->append(new Gtk::MenuItem 'Plus');
+      $m->append(new Gtk::MenuItem 'Minus');
+      $m->append(new Gtk::MenuItem 'Add');
+      $m->append(new Gtk::MenuItem 'Subtract');
+      $m->append(new Gtk::MenuItem 'Difference');
+      $m->append(new Gtk::MenuItem 'Bumpmap');
+      $m->append(new Gtk::MenuItem 'Replace');
+      $m->append(new Gtk::MenuItem 'ReplaceRed');
+      $m->append(new Gtk::MenuItem 'ReplaceGreen');
+      $m->append(new Gtk::MenuItem 'ReplaceBlue');
+      $m->append(new Gtk::MenuItem 'ReplaceMatte');
+      $m->append(new Gtk::MenuItem 'Blend');
+      $m->append(new Gtk::MenuItem 'Displace');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   CompressionTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'None');
+      $m->append(new Gtk::MenuItem 'BZip');
+      $m->append(new Gtk::MenuItem 'Fax');
+      $m->append(new Gtk::MenuItem 'Group4');
+      $m->append(new Gtk::MenuItem 'JPEG');
+      $m->append(new Gtk::MenuItem 'LZW');
+      $m->append(new Gtk::MenuItem 'Runlength');
+      $m->append(new Gtk::MenuItem 'Zip');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   FilterTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Point');
+      $m->append(new Gtk::MenuItem 'Box');
+      $m->append(new Gtk::MenuItem 'Triangle');
+      $m->append(new Gtk::MenuItem 'Hermite');
+      $m->append(new Gtk::MenuItem 'Hanning');
+      $m->append(new Gtk::MenuItem 'Hamming');
+      $m->append(new Gtk::MenuItem 'Blackman');
+      $m->append(new Gtk::MenuItem 'Gaussian');
+      $m->append(new Gtk::MenuItem 'Quadratic');
+      $m->append(new Gtk::MenuItem 'Cubic');
+      $m->append(new Gtk::MenuItem 'Catrom');
+      $m->append(new Gtk::MenuItem 'Mitchell');
+      $m->append(new Gtk::MenuItem 'Lanczos');
+      $m->append(new Gtk::MenuItem 'Bessel');
+      $m->append(new Gtk::MenuItem 'Sinc');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   GravityTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Forget');
+      $m->append(new Gtk::MenuItem 'NorthWest');
+      $m->append(new Gtk::MenuItem 'North');
+      $m->append(new Gtk::MenuItem 'NorthEast');
+      $m->append(new Gtk::MenuItem 'West');
+      $m->append(new Gtk::MenuItem 'Center');
+      $m->append(new Gtk::MenuItem 'East');
+      $m->append(new Gtk::MenuItem 'SouthWest');
+      $m->append(new Gtk::MenuItem 'South');
+      $m->append(new Gtk::MenuItem 'SouthEast');
+      $m->append(new Gtk::MenuItem 'Static');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   ImageTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Bilevel');
+      $m->append(new Gtk::MenuItem 'Grayscale');
+      $m->append(new Gtk::MenuItem 'Palette');
+      $m->append(new Gtk::MenuItem 'TrueColor');
+      $m->append(new Gtk::MenuItem 'Matte');
+      $m->append(new Gtk::MenuItem 'ColorSeparation');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   IntentTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Saturation');
+      $m->append(new Gtk::MenuItem 'Perceptual');
+      $m->append(new Gtk::MenuItem 'Absolute');
+      $m->append(new Gtk::MenuItem 'Relative');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   InterlaceTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'None');
+      $m->append(new Gtk::MenuItem 'Line');
+      $m->append(new Gtk::MenuItem 'Plane');
+      $m->append(new Gtk::MenuItem 'Partition');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   LayerTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Red');
+      $m->append(new Gtk::MenuItem 'Green');
+      $m->append(new Gtk::MenuItem 'Blue');
+      $m->append(new Gtk::MenuItem 'Matte');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   MethodTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Point');
+      $m->append(new Gtk::MenuItem 'Replace');
+      $m->append(new Gtk::MenuItem 'Floodfill');
+      $m->append(new Gtk::MenuItem 'FillToBorder');
+      $m->append(new Gtk::MenuItem 'Reset');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   ModeTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Frame');
+      $m->append(new Gtk::MenuItem 'Unframe');
+      $m->append(new Gtk::MenuItem 'Concatenate');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   NoiseTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Uniform');
+      $m->append(new Gtk::MenuItem 'Gaussian');
+      $m->append(new Gtk::MenuItem 'Multiplicative');
+      $m->append(new Gtk::MenuItem 'Impulse');
+      $m->append(new Gtk::MenuItem 'Laplacian');
+      $m->append(new Gtk::MenuItem 'Poisson');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   PreviewTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Rotate');
+      $m->append(new Gtk::MenuItem 'Shear');
+      $m->append(new Gtk::MenuItem 'Roll');
+      $m->append(new Gtk::MenuItem 'Hue');
+      $m->append(new Gtk::MenuItem 'Saturation');
+      $m->append(new Gtk::MenuItem 'Brightness');
+      $m->append(new Gtk::MenuItem 'Gamma');
+      $m->append(new Gtk::MenuItem 'Spiff');
+      $m->append(new Gtk::MenuItem 'Dull');
+      $m->append(new Gtk::MenuItem 'Grayscale');
+      $m->append(new Gtk::MenuItem 'Quantize');
+      $m->append(new Gtk::MenuItem 'Despeckle');
+      $m->append(new Gtk::MenuItem 'ReduceNoise');
+      $m->append(new Gtk::MenuItem 'AddNoise');
+      $m->append(new Gtk::MenuItem 'Sharpen');
+      $m->append(new Gtk::MenuItem 'Blur');
+      $m->append(new Gtk::MenuItem 'Threshold');
+      $m->append(new Gtk::MenuItem 'EdgeDetect');
+      $m->append(new Gtk::MenuItem 'Spread');
+      $m->append(new Gtk::MenuItem 'Solarize');
+      $m->append(new Gtk::MenuItem 'Shade');
+      $m->append(new Gtk::MenuItem 'Raise');
+      $m->append(new Gtk::MenuItem 'Segment');
+      $m->append(new Gtk::MenuItem 'Swirl');
+      $m->append(new Gtk::MenuItem 'Implode');
+      $m->append(new Gtk::MenuItem 'Wave');
+      $m->append(new Gtk::MenuItem 'OilPaint');
+      $m->append(new Gtk::MenuItem 'Charcoal');
+      $m->append(new Gtk::MenuItem 'JPEG');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   PrimitiveTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'Point');
+      $m->append(new Gtk::MenuItem 'Line');
+      $m->append(new Gtk::MenuItem 'Rectangle');
+      $m->append(new Gtk::MenuItem 'FillRectangle');
+      $m->append(new Gtk::MenuItem 'Circle');
+      $m->append(new Gtk::MenuItem 'FillCircle');
+      $m->append(new Gtk::MenuItem 'Ellipse');
+      $m->append(new Gtk::MenuItem 'FillEllipse');
+      $m->append(new Gtk::MenuItem 'Polygon');
+      $m->append(new Gtk::MenuItem 'FillPolygon');
+      $m->append(new Gtk::MenuItem 'Color');
+      $m->append(new Gtk::MenuItem 'Matte');
+      $m->append(new Gtk::MenuItem 'Text');
+      $m->append(new Gtk::MenuItem 'Image');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+   ResolutionTypes => sub {
+      my $m = new Gtk::Menu;
+      $m->append(new Gtk::MenuItem 'PixelsPerInch');
+      $m->append(new Gtk::MenuItem 'PixelsPerCentimeter');
+      my $o = new Gtk::OptionMenu;
+      $o->set_menu($m);
+      optionmenu_settext($o,@_);
+      $o;
+   },
+);
+
+%MagickMethods = (
+   Comment => ['comment','StringReference'],
+   Label => ['label','StringReference'],
+   AddNoise => ['noise','NoiseTypes'],
+   Colorize => ['color','StringReference','pen','StringReference'],
+   Border => ['geom','StringReference','width','IntegerReference','height','IntegerReference','color','StringReference'],
+   Blur => ['factor','DoubleReference'],
+   Chop => ['geom','StringReference','width','IntegerReference','height','IntegerReference','x','IntegerReference','y','IntegerReference'],
+   Crop => ['geom','StringReference','width','IntegerReference','height','IntegerReference','x','IntegerReference','y','IntegerReference'],
+   Despeckle => [],
+   Edge => ['factor','DoubleReference'],
+   Emboss => [],
+   Enhance => [],
+   Flip => [],
+   Flop => [],
+   Frame => ['geom','StringReference','width','IntegerReference','height','IntegerReference','inner','IntegerReference','outer','IntegerReference','color','StringReference'],
+   Implode => ['factor','DoubleReference'],
+   Magnify => [],
+   MedianFilter => [],
+   Minify => [],
+   OilPaint => ['radius','IntegerReference'],
+   ReduceNoise => [],
+   Roll => ['geom','StringReference','x','IntegerReference','y','IntegerReference'],
+   Rotate => ['degree','DoubleReference','crop','BooleanTypes','sharpen','BooleanTypes'],
+   Sample => ['geom','StringReference','width','IntegerReference','height','IntegerReference'],
+   Scale => ['geom','StringReference','width','IntegerReference','height','IntegerReference'],
+   Shade => ['geom','StringReference','azimuth','DoubleReference','elevat','DoubleReference','color','BooleanTypes'],
+   Sharpen => ['factor','DoubleReference'],
+   Shear => ['geom','StringReference','x','DoubleReference','y','DoubleReference','crop','BooleanTypes'],
+   Spread => ['amount','IntegerReference'],
+   Swirl => ['degree','DoubleReference'],
+   Zoom => ['geom','StringReference','width','IntegerReference','height','IntegerReference','filter','FilterTypes'],
+   IsGrayImage => [],
+   Annotate => ['text','StringReference','font','StringReference','point','IntegerReference','density','StringReference','box','StringReference','pen','StringReference','geom','StringReference','server','StringReference','x','IntegerReference','y','IntegerReference','grav','GravityTypes'],
+   ColorFloodfill => ['geom','StringReference','x','IntegerReference','y','IntegerReference','pen','StringReference','bordercolor','StringReference'],
+   Composite => ['compos','CompositeTypes','image','ImageReference','geom','StringReference','x','IntegerReference','y','IntegerReference','grav','GravityTypes'],
+   Contrast => ['sharp','BooleanTypes'],
+   CycleColormap => ['amount','IntegerReference'],
+   Draw => ['prim','PrimitiveTypes','points','StringReference','meth','MethodTypes','pen','StringReference','linew','IntegerReference','server','StringReference','borderc','StringReference'],
+   Equalize => [],
+   Gamma => ['gamma','StringReference','red','DoubleReference','green','DoubleReference','blue','DoubleReference'],
+   Map => ['image','ImageReference','dither','BooleanTypes'],
+   MatteFloodfill => ['geom','StringReference','x','IntegerReference','y','IntegerReference','matte','IntegerReference','bordercolor','StringReference'],
+   Modulate => ['factor','StringReference','bright','DoubleReference','satur','DoubleReference','hue','DoubleReference'],
+   Negate => ['gray','BooleanTypes'],
+   Normalize => [],
+   NumberColors => [],
+   Opaque => ['color','StringReference','pen','StringReference'],
+   Quantize => ['colors','IntegerReference','tree','IntegerReference','colorsp','ColorspaceTypes','dither','BooleanTypes','measure','BooleanTypes','global','BooleanTypes'],
+   Raise => ['geom','StringReference','width','IntegerReference','height','IntegerReference','x','IntegerReference','y','IntegerReference','raise','BooleanTypes'],
+   Segment => ['colorsp','ColorspaceTypes','verbose','BooleanTypes','clust','DoubleReference','smooth','DoubleReference'],
+   Signature => [],
+   Solarize => ['factor','DoubleReference'],
+   Sync => [],
+   Texture => ['texture','ImageReference'],
+   Transform => ['crop','StringReference','geom','StringReference','filter','FilterTypes'],
+   Transparent => ['color','StringReference'],
+   Threshold => ['threshold','DoubleReference'],
+   Charcoal => ['factor','StringReference'],
+   Trim => [],
+   Wave => ['geom','StringReference','ampli','DoubleReference','wave','DoubleReference'],
+   Layer => ['layer','LayerTypes'],
+   Condense => [],
+   Stereo => ['image','ImageReference'],
+   Stegano => ['image','ImageReference','offset','IntegerReference'],
+   Coalesce => [],
+);
+
+}

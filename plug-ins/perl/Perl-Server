@@ -163,15 +163,14 @@ sub handle_request($) {
    } else {
       if($req eq "AUTH") {
          my($ok,$msg);
-         ($req)=Gimp::Net::net2args($data);
-         if($req eq $auth) {
+         if($data eq $auth) {
             $ok=1;
             $authorized[fileno($fh)]=1;
          } else {
             $ok=0;
             $msg="wrong authorization, aborting connection";
             slog $msg;
-            sleep 10; # safety measure
+            sleep 5; # safety measure
          }
          $data=Gimp::Net::args2net($ok,$msg);
          print $fh pack("N",length($data)).$data;

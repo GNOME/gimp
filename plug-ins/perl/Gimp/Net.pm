@@ -23,7 +23,7 @@ $trace_res = *STDERR;
 $trace_level = 0;
 
 sub import {
-   return if @_;
+   return if @_>1;
    *Gimp::Tile::DESTROY=
    *Gimp::PixelRgn::DESTROY=
    *Gimp::GDrawable::DESTROY=sub {
@@ -52,7 +52,7 @@ sub args2net {
          $res.="undef,";
       }
    }
-   $res;
+   substr($res,0,-1); # may not be worth the effort
 }
 
 sub _gimp_procedure_available {
@@ -147,8 +147,10 @@ sub start_server {
       my $args = &Gimp::RUN_NONINTERACTIVE." ".
                  (&Gimp::_PS_FLAG_BATCH | &Gimp::_PS_FLAG_QUIET)." ".
                  fileno(GIMP_FH);
-      exec "gimp","-n","-b","(extension-perl-server $args)",
-                            "(extension_perl_server $args)";
+      { # block to suppress warning with broken perls (e.g. 5.004)
+         exec "gimp","-n","-b","(extension-perl-server $args)",
+                               "(extension_perl_server $args)"
+      }
       exit(255);
    } else {
       croak "unable to fork: $!";
@@ -204,7 +206,8 @@ sub gimp_init {
       if($_ eq "AUTH") {
          die "server requests authorization, but no authorization available\n"
             unless $auth;
-         command "AUTH",$auth;
+         my $req = "AUTH".$auth;
+         print $server_fh pack("N",length($req)).$req;
          my @r = response;
          die "authorization failed: $r[1]\n" unless $r[0];
          print "authorization ok, but: $r[1]\n" if $Gimp::verbose and $r[1];

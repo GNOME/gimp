@@ -5,7 +5,15 @@ Revision history for Gimp-Perl extension.
           if it can't be found.
         - Uh, ah, debugging code in the repository, again!
         - PF_FONT should now display a string widget in gtk+ 1.0.
-        - PixelRgn/Tile data sould now be accessible again-
+        - PixelRgn/Tile data sould now be accessible again.
+        - updated PDB.
+        - extensive tests is now always on.
+        - added examples/gimpmagick.
+        - closed big, BIG security hole on password authenticitation
+          (basically one could do anything includung killing your
+          system without authorization. argh). This required a
+          protocol change, so old clients are unable to connect using
+          password-authenticitation.
 
 1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it

@@ -12,7 +12,7 @@ use base qw(DynaLoader);
 
 require DynaLoader;
 
-$VERSION = 1.06;
+$VERSION = 1.061;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -145,7 +145,7 @@ sub VERTICAL		(){ 1 };
 sub _PS_FLAG_QUIET	{ 0000000001 };	# do not output messages
 sub _PS_FLAG_BATCH	{ 0000000002 }; # started via Gimp::Net, extra = filehandle
 
-$_PROT_VERSION	= "1";			# protocol version
+$_PROT_VERSION	= "2";			# protocol version
 
 # we really abuse the import facility..
 sub import($;@) {
@@ -411,12 +411,6 @@ sub new($$$$$$$$) {
    shift;
    init Gimp::PixelRgn(@_);
 }
-
-sub DESTROY {
-   my $self = shift;
-   $self->{_drawable}->{_id}->update($self->{_x},$self->{_y},$self->{_w},$self->{_h})
-     if $self->{_dirty};
-};
 
 package Gimp::Parasite;
 

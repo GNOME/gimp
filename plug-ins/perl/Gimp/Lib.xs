@@ -145,7 +145,7 @@ GPixelRgn *old_pixelrgn (SV *sv)
   STRLEN dc;
   dTHR;
   
-  if (!sv_derived_from (sv, PKG_PIXELRGN))
+  if (!sv_derived_from (sv, PKG_PIXELRGN) && !SvTYPE (sv) != SVt_PVHV)
     croak ("argument is not of type " PKG_PIXELRGN);
   
   /* the next line lacks any type of checking.  */
@@ -1503,7 +1503,6 @@ gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
 		hv_store (hv, "_h"	, 2, newSViv (pr->h)		, 0);
 		hv_store (hv, "_rowstride",10, newSViv (pr->rowstride)	, 0);
 		hv_store (hv, "_bpp"	, 4, newSViv (pr->bpp)		, 0);
-		hv_store (hv, "_dirty"	, 6, newSViv (pr->dirty)	, 0);
 		hv_store (hv, "_shadow"	, 7, newSViv (pr->shadow)	, 0);
 		hv_store (hv, "_drawable",9, newSVsv (gdrawable)	, 0);
 		
@@ -1512,6 +1511,14 @@ gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
 		
 		RETVAL = sv_bless (newRV_noinc ((SV*)hv), stash);
 	}
+	OUTPUT:
+	RETVAL
+
+guint
+gimp_pixel_rgn_dirty(pr)
+	GPixelRgn *	pr
+        CODE:
+        RETVAL = pr->dirty;
 	OUTPUT:
 	RETVAL
 
