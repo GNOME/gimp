@@ -1,3 +1,7 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawable.c: fixed gtk-doc comments.
+
 2004-07-29  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/gimpdrawable-transform.c: Stop signed ints overflowing 

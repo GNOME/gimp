@@ -30,23 +30,24 @@
 
 /**
  * gimp_drawable_get:
- * @drawable_ID: the ID (in the core) of the drawable
+ * @drawable_ID: the ID of the drawable
  *
- * This function creates a #GimpDrawable structure, and sets its values to
- * the correct ones for @drawable_id.  The returned structure contains some
- * basic information about the drawable, and also provides a list to hold
- * tile data for transfer to and from the core.  The tile list is
- * initially empty.
+ * This function creates a #GimpDrawable structure for the core
+ * drawable identified by @drawable_ID. The returned structure
+ * contains some basic information about the drawable and can also
+ * hold tile data for transfer to and from the core.
  *
- * Note that the name of this function is somewhat misleading, because it
- * suggests that it simply returns a handle.  This is not the case:  if the
- * function is called multiple times, it creates separate tile lists each
- * time, which will usually produce undesired results.
+ * Note that the name of this function is somewhat misleading, because
+ * it suggests that it simply returns a handle.  This is not the case:
+ * if the function is called multiple times, it creates separate tile
+ * lists each time, which will usually produce undesired results.
  *
  * When a plug-in has finished working with a drawable, before exiting
  * it should call gimp_drawable_detach() to make sure that all tile data is
  * transferred back to the core.
- */
+ *
+ * Return value: a new #GimpDrawable wrapper
+ **/
 GimpDrawable *
 gimp_drawable_get (gint32 drawable_ID)
 {
@@ -73,7 +74,7 @@ gimp_drawable_get (gint32 drawable_ID)
   return drawable;
 }
 
-/*
+/**
  * gimp_drawable_detach:
  * @drawable: The #GimpDrawable to detach from the core
  *
@@ -82,7 +83,7 @@ gimp_drawable_get (gint32 drawable_ID)
  * list of the #GimpDrawable to be transferred to the core, and
  * then frees all associated memory. You must not access the
  * @drawable after having called gimp_drawable_detach().
- */
+ **/
 void
 gimp_drawable_detach (GimpDrawable *drawable)
 {
@@ -98,7 +99,7 @@ gimp_drawable_detach (GimpDrawable *drawable)
   g_free (drawable);
 }
 
-/*
+/**
  * gimp_drawable_flush:
  * @drawable: The #GimpDrawable whose tile data is to be transferred
  * to the core.
@@ -108,7 +109,7 @@ gimp_drawable_detach (GimpDrawable *drawable)
  * plug-in acts on a drawable, and then needs to read the results of its
  * actions.  Data transferred back from the core will not generally be valid
  * unless gimp_drawable_flush() has been called beforehand.
- */
+ **/
 void
 gimp_drawable_flush (GimpDrawable *drawable)
 {
