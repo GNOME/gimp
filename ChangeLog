@@ -1,3 +1,16 @@
+2001-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimpimage-undo.[ch]
+	* app/gimpundo.[ch]
+	* app/gimpundostack.[ch]: added new GimpUndo and GimpUndoStack objects 
+	which will be used for the upcoming new undo system. Actually my 
+	current plan for the undo system is to keep it pretty much as it is...
+	
+	* app/gimpimage.[ch]: added new GimpUndoStacks but temporarily kept
+	old GSLists around, so I don't break everything now.
+
 2001-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpbrushpreview.c

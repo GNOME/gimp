@@ -34,12 +34,14 @@
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
+#include "gimpundostack.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"
@@ -293,7 +295,7 @@ gimp_image_class_init (GimpImageClass *klass)
                     gtk_marshal_NONE__INT,
                     GTK_TYPE_NONE, 1,
 		    GTK_TYPE_INT);
-  
+
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_image_destroy;
@@ -311,6 +313,8 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->restructure      = NULL;
   klass->colormap_changed = NULL;
   klass->undo_event       = NULL;
+  klass->undo             = gimp_image_undo;
+  klass->redo             = gimp_image_redo;
 }
 
 
@@ -378,6 +382,9 @@ gimp_image_init (GimpImage *gimage)
   gimage->pushing_undo_group    = UNDO_NULL;
   gimage->undo_history          = NULL;
 
+  gimage->new_undo_stack        = gimp_undo_stack_new (gimage);
+  gimage->new_redo_stack        = gimp_undo_stack_new (gimage);
+
   gimage->comp_preview          = NULL;
   gimage->comp_preview_valid    = FALSE;
 }
@@ -404,6 +411,9 @@ gimp_image_destroy (GtkObject *object)
 
   if (gimage->parasites)
     gtk_object_unref (GTK_OBJECT (gimage->parasites));
+
+  gtk_object_unref (GTK_OBJECT (gimage->new_undo_stack));
+  gtk_object_unref (GTK_OBJECT (gimage->new_redo_stack));
 }
 
 static void

@@ -124,7 +124,7 @@ struct _GimpImage
   gboolean           qmask_state;           /*  TRUE if qmask is on          */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
-  /*  Undo apparatus  */
+  /*  Old undo apparatus  */
   GSList            *undo_stack;            /*  stack for undo operations    */
   GSList            *redo_stack;            /*  stack for redo operations    */
   gint               undo_bytes;            /*  bytes in undo stack          */
@@ -132,6 +132,10 @@ struct _GimpImage
   gint               group_count;           /*  nested undo groups           */
   UndoType           pushing_undo_group;    /*  undo group status flag       */
   GtkWidget         *undo_history;	    /*  history viewer, or NULL      */
+
+  /*  New undo apparatus  */
+  GimpUndoStack     *new_undo_stack;        /*  stack for undo operations    */
+  GimpUndoStack     *new_redo_stack;        /*  stack for redo operations    */
 
   /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
@@ -157,6 +161,9 @@ struct _GimpImageClass
 				   gint       color_index);
   void (* undo_event)             (GimpImage *gimage,
 				   gint       event);
+
+  void (* undo)                   (GimpImage *gimage);
+  void (* redo)                   (GimpImage *gimage);
 };
 
 

@@ -130,6 +130,8 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpimage-undo.c	\
+	gimpimage-undo.h	\
 	gimplayer.c		\
 	gimplayer.h		\
 	gimplayermask.c		\
@@ -158,6 +160,10 @@ gimp_SOURCES = \
 	gimprc.h		\
 	gimpui.c		\
 	gimpui.h		\
+	gimpundo.c		\
+	gimpundo.h		\
+	gimpundostack.c		\
+	gimpundostack.h		\
 	gimpunit.c		\
 	gimpviewable.c		\
 	gimpviewable.h		\

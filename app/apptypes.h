@@ -82,6 +82,12 @@ typedef struct _GimpPaintTool       GimpPaintTool;
 typedef struct _GimpDrawTool        GimpDrawTool;
 
 
+/*  undo objects  */
+
+typedef struct _GimpUndo            GimpUndo;
+typedef struct _GimpUndoStack       GimpUndoStack;
+
+
 /*  widgets  */
 
 typedef struct _GimpPreview           GimpPreview;
