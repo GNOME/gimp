@@ -320,5 +320,5 @@ gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
   if (item && view->stroke_item_func)
-    view->stroke_item_func (item);
+    view->stroke_item_func (item, GTK_WIDGET (view));
 }

@@ -1275,6 +1275,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                           GIMP_OBJECT (tool_info)->name,
                                           stock_id,
                                           tr_tool->shell_desc,
+                                          GIMP_TOOL (tr_tool)->gdisp->shell,
                                           gimp_standard_help_func,
                                           tool_info->help_id);
 

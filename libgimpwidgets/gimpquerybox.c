@@ -55,6 +55,7 @@ struct _QueryBox
 
 
 static QueryBox * create_query_box             (const gchar   *title,
+                                                GtkWidget     *parent,
 						GimpHelpFunc   help_func,
 						const gchar   *help_data,
 						GCallback      response_callback,
@@ -93,6 +94,7 @@ static void       query_box_cancel_callback    (QueryBox      *query_box);
  */
 static QueryBox *
 create_query_box (const gchar   *title,
+                  GtkWidget     *parent,
 		  GimpHelpFunc   help_func,
 		  const gchar   *help_data,
 		  GCallback      response_callback,
@@ -111,13 +113,14 @@ create_query_box (const gchar   *title,
 
   /*  make sure the object / signal passed are valid
    */
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (object == NULL || G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (object == NULL || signal != NULL, NULL);
 
   query_box = g_new0 (QueryBox, 1);
 
   query_box->qbox = gimp_dialog_new (title, "gimp-query-box",
-                                     NULL, 0,
+                                     parent, 0,
 				     help_func, help_data,
 
 				     cancel_button, GTK_RESPONSE_CANCEL,
@@ -201,6 +204,7 @@ create_query_box (const gchar   *title,
 /**
  * gimp_query_string_box:
  * @title:     The query box dialog's title.
+ * @parent:    The dialog's parent widget.
  * @help_func: The help function to show this dialog's help page.
  * @help_data: A string pointing to this dialog's html help page.
  * @message:   A string which will be shown above the dialog's entry widget.
@@ -216,6 +220,7 @@ create_query_box (const gchar   *title,
  **/
 GtkWidget *
 gimp_query_string_box (const gchar             *title,
+                       GtkWidget               *parent,
 		       GimpHelpFunc             help_func,
 		       const gchar             *help_data,
 		       const gchar             *message,
@@ -228,7 +233,7 @@ gimp_query_string_box (const gchar             *title,
   QueryBox  *query_box;
   GtkWidget *entry;
 
-  query_box = create_query_box (title, help_func, help_data,
+  query_box = create_query_box (title, parent, help_func, help_data,
 				G_CALLBACK (string_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
 				message,
@@ -254,6 +259,7 @@ gimp_query_string_box (const gchar             *title,
 /**
  * gimp_query_int_box:
  * @title:     The query box dialog's title.
+ * @parent:    The dialog's parent widget.
  * @help_func: The help function to show this dialog's help page.
  * @help_data: A string pointing to this dialog's html help page.
  * @message:   A string which will be shown above the dialog's entry widget.
@@ -271,6 +277,7 @@ gimp_query_string_box (const gchar             *title,
  **/
 GtkWidget *
 gimp_query_int_box (const gchar          *title,
+                    GtkWidget            *parent,
 		    GimpHelpFunc          help_func,
 		    const gchar          *help_data,
 		    const gchar          *message,
@@ -286,7 +293,7 @@ gimp_query_int_box (const gchar          *title,
   GtkWidget *spinbutton;
   GtkObject *adjustment;
 
-  query_box = create_query_box (title, help_func, help_data,
+  query_box = create_query_box (title, parent, help_func, help_data,
 				G_CALLBACK (int_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
 				message,
@@ -312,6 +319,7 @@ gimp_query_int_box (const gchar          *title,
 /**
  * gimp_query_double_box:
  * @title:     The query box dialog's title.
+ * @parent:    The dialog's parent widget.
  * @help_func: The help function to show this dialog's help page.
  * @help_data: A string pointing to this dialog's html help page.
  * @message:   A string which will be shown above the dialog's entry widget.
@@ -330,6 +338,7 @@ gimp_query_int_box (const gchar          *title,
  **/
 GtkWidget *
 gimp_query_double_box (const gchar             *title,
+                       GtkWidget               *parent,
 		       GimpHelpFunc             help_func,
 		       const gchar             *help_data,
 		       const gchar             *message,
@@ -346,7 +355,7 @@ gimp_query_double_box (const gchar             *title,
   GtkWidget *spinbutton;
   GtkObject *adjustment;
 
-  query_box = create_query_box (title, help_func, help_data,
+  query_box = create_query_box (title, parent, help_func, help_data,
 				G_CALLBACK (double_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
 				message,
@@ -372,6 +381,7 @@ gimp_query_double_box (const gchar             *title,
 /**
  * gimp_query_size_box:
  * @title:       The query box dialog's title.
+ * @parent:      The dialog's parent widget.
  * @help_func:   The help function to show this dialog's help page.
  * @help_data:   A string pointing to this dialog's html help page.
  * @message:     A string which will be shown above the dialog's entry widget.
@@ -397,6 +407,7 @@ gimp_query_double_box (const gchar             *title,
  **/
 GtkWidget *
 gimp_query_size_box (const gchar           *title,
+                     GtkWidget             *parent,
 		     GimpHelpFunc           help_func,
 		     const gchar           *help_data,
 		     const gchar           *message,
@@ -415,7 +426,7 @@ gimp_query_size_box (const gchar           *title,
   QueryBox  *query_box;
   GtkWidget *sizeentry;
 
-  query_box = create_query_box (title, help_func, help_data,
+  query_box = create_query_box (title, parent, help_func, help_data,
 				G_CALLBACK (size_query_box_response),
                                 GTK_STOCK_DIALOG_QUESTION,
 				message,
@@ -449,6 +460,7 @@ gimp_query_size_box (const gchar           *title,
 /**
  * gimp_query_boolean_box:
  * @title:        The query box dialog's title.
+ * @parent:       The dialog's parent widget.
  * @help_func:    The help function to show this dialog's help page.
  * @help_data:    A string pointing to this dialog's html help page.
  * @stock_id:     A stock_id to specify an icon to appear on the left
@@ -469,6 +481,7 @@ gimp_query_size_box (const gchar           *title,
  **/
 GtkWidget *
 gimp_query_boolean_box (const gchar              *title,
+                        GtkWidget                *parent,
 			GimpHelpFunc              help_func,
 			const gchar              *help_data,
 			const gchar              *stock_id,
@@ -482,7 +495,7 @@ gimp_query_boolean_box (const gchar              *title,
 {
   QueryBox  *query_box;
 
-  query_box = create_query_box (title, help_func, help_data,
+  query_box = create_query_box (title, parent, help_func, help_data,
 				G_CALLBACK (boolean_query_box_response),
                                 stock_id,
 				message,

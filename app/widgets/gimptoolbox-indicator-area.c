@@ -53,6 +53,7 @@ brush_preview_clicked (GtkWidget       *widget,
 		       GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+                                    gtk_widget_get_screen (widget),
 				    "gimp-brush-grid", -1);
 }
 
@@ -74,6 +75,7 @@ pattern_preview_clicked (GtkWidget       *widget,
 			 GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+                                    gtk_widget_get_screen (widget),
 				    "gimp-pattern-grid", -1);
 }
 
@@ -95,6 +97,7 @@ gradient_preview_clicked (GtkWidget       *widget,
 			  GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+                                    gtk_widget_get_screen (widget),
 				    "gimp-gradient-list", -1);
 }
 

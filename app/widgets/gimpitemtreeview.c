@@ -776,7 +776,7 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
 							     item,
 							     insert_data);
 
-  item_view->activate_item_func (GIMP_ITEM (item));
+  item_view->activate_item_func (GIMP_ITEM (item), GTK_WIDGET (view));
 }
 
 static void
@@ -796,6 +796,7 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
   if (editor->item_factory)
     gimp_item_factory_popup_with_data (editor->item_factory,
                                        editor->item_factory_data,
+                                       GTK_WIDGET (editor),
                                        NULL, NULL, NULL);
 }
 
@@ -902,7 +903,7 @@ gimp_item_tree_view_edit_clicked (GtkWidget        *widget,
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
 
   if (item)
-    view->edit_item_func (item);
+    view->edit_item_func (item, GTK_WIDGET (view));
 }
 
 
@@ -912,7 +913,7 @@ static void
 gimp_item_tree_view_new_clicked (GtkWidget        *widget,
                                  GimpItemTreeView *view)
 {
-  view->new_item_func (view->gimage, NULL, TRUE);
+  view->new_item_func (view->gimage, NULL, TRUE, GTK_WIDGET (view));
 }
 
 static void
@@ -927,7 +928,8 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
 				       GIMP_OBJECT (viewable)))
     {
-      view->new_item_func (view->gimage, GIMP_ITEM (viewable), FALSE);
+      view->new_item_func (view->gimage, GIMP_ITEM (viewable), FALSE,
+                           GTK_WIDGET (view));
 
       gimp_image_flush (view->gimage);
     }

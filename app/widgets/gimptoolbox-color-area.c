@@ -78,7 +78,8 @@ static void     color_area_select_callback (ColorNotebook      *color_notebook,
                                             const GimpRGB      *color,
                                             ColorNotebookState  state,
                                             gpointer            data);
-static void     color_area_edit            (GimpContext        *context);
+static void     color_area_edit            (GimpContext        *context,
+                                            GtkWidget          *widget);
 static void     color_area_drop_color      (GtkWidget          *widget,
                                             const GimpRGB      *color,
                                             gpointer            data);
@@ -349,7 +350,8 @@ color_area_select_callback (ColorNotebook      *color_notebook,
 }
 
 static void
-color_area_edit (GimpContext *context)
+color_area_edit (GimpContext *context,
+                 GtkWidget   *widget)
 {
   GimpRGB      color;
   const gchar *title;
@@ -379,6 +381,7 @@ color_area_edit (GimpContext *context)
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
       color_notebook = color_notebook_new (title,
+                                           widget,
                                            toplevel_factory,
                                            "gimp-toolbox-color-dialog",
 					   (const GimpRGB *) &color,
@@ -461,7 +464,7 @@ color_area_events (GtkWidget *widget,
 		{
 		case FORE_AREA:
 		case BACK_AREA:
-		  color_area_edit (context);
+		  color_area_edit (context, widget);
 		  break;
 
 		default:

@@ -3472,6 +3472,7 @@ gfig_response (GtkWidget *widget,
                                  "Continue with exiting?"), count);
 
             dialog = gimp_query_boolean_box (_("Warning"),
+                                             widget,
                                              gimp_standard_help_func,
                                              "filters/gfig.html",
                                              GTK_STOCK_DIALOG_WARNING,
@@ -4374,6 +4375,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
 			 sel_obj->draw_name);
 
   delete_dialog = gimp_query_boolean_box (_("Delete Gfig Drawing"),
+                                          gtk_widget_get_toplevel (list),
 					  gimp_standard_help_func,
 					  "filters/gfig.html",
 					  FALSE,

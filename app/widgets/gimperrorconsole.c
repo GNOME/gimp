@@ -303,6 +303,7 @@ gimp_error_console_button_press (GtkWidget        *widget,
 
       gimp_item_factory_popup_with_data (editor->item_factory,
                                          editor->item_factory_data,
+                                         GTK_WIDGET (editor),
                                          NULL, NULL, NULL);
       return TRUE;
     }

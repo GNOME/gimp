@@ -354,7 +354,8 @@ gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
       GimpSelectionEditor *sel_editor = GIMP_SELECTION_EDITOR (editor);
 
       if (sel_editor->stroke_item_func)
-        sel_editor->stroke_item_func (GIMP_ITEM (gimp_image_get_mask (editor->gimage)));
+        sel_editor->stroke_item_func (GIMP_ITEM (gimp_image_get_mask (editor->gimage)),
+                                      GTK_WIDGET (editor));
     }
 }
 

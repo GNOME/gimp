@@ -765,6 +765,7 @@ delete_fractal_callback (GtkWidget *widget,
 			 sel_obj->draw_name);
 
   delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
+                                          gtk_widget_get_toplevel (list),
 					  gimp_standard_help_func,
 					  "filters/fractalexplorer.html",
 					  GTK_STOCK_DIALOG_QUESTION,

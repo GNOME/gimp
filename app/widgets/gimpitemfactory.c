@@ -417,6 +417,7 @@ gimp_item_factory_update (GimpItemFactory *item_factory,
 void
 gimp_item_factory_popup_with_data (GimpItemFactory      *item_factory,
 				   gpointer              popup_data,
+                                   GtkWidget            *parent,
                                    GimpMenuPositionFunc  position_func,
                                    gpointer              position_data,
                                    GtkDestroyNotify      popdown_func)
@@ -427,6 +428,7 @@ gimp_item_factory_popup_with_data (GimpItemFactory      *item_factory,
   guint32   activate_time;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
+  g_return_if_fail (GTK_IS_WIDGET (parent));
 
   if (item_factory->update_on_popup)
     gimp_item_factory_update (item_factory, popup_data);
@@ -434,7 +436,7 @@ gimp_item_factory_popup_with_data (GimpItemFactory      *item_factory,
   if (! position_func)
     {
       position_func = gimp_menu_position;
-      position_data = NULL;
+      position_data = parent;
     }
 
   (* position_func) (GTK_MENU (GTK_ITEM_FACTORY (item_factory)->widget),

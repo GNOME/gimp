@@ -41,11 +41,14 @@ typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
 typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
                                                   GimpItem        *item);
 
-typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
+typedef void            (* GimpEditItemFunc)     (GimpItem        *item,
+                                                  GtkWidget       *parent);
 typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
                                                   GimpItem        *template,
-                                                  gboolean         interactive);
-typedef void            (* GimpActivateItemFunc) (GimpItem        *item);
+                                                  gboolean         interactive,
+                                                  GtkWidget       *parent);
+typedef void            (* GimpActivateItemFunc) (GimpItem        *item,
+                                                  GtkWidget       *parent);
 
 
 #define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())

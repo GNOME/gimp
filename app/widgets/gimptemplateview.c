@@ -254,7 +254,8 @@ gimp_template_view_create_clicked (GtkWidget        *widget,
                                         GIMP_OBJECT (template)))
     {
       if (view->create_image_func)
-        view->create_image_func (editor->view->context->gimp, template);
+        view->create_image_func (editor->view->context->gimp, template,
+                                 GTK_WIDGET (view));
     }
 }
 
@@ -275,7 +276,8 @@ gimp_template_view_new_clicked (GtkWidget        *widget,
     }
 
   if (view->new_template_func)
-    view->new_template_func (editor->view->context->gimp, NULL);
+    view->new_template_func (editor->view->context->gimp, NULL,
+                             GTK_WIDGET (view));
 }
 
 static void
@@ -305,7 +307,8 @@ gimp_template_view_duplicate_clicked (GtkWidget        *widget,
                                 GIMP_OBJECT (new_template));
 
       if (view->edit_template_func)
-        view->edit_template_func (editor->view->context->gimp, new_template);
+        view->edit_template_func (editor->view->context->gimp, new_template,
+                                  GTK_WIDGET (view));
 
       g_object_unref (new_template);
     }
@@ -326,7 +329,8 @@ gimp_template_view_edit_clicked (GtkWidget        *widget,
                                         GIMP_OBJECT (template)))
     {
       if (view->edit_template_func)
-        view->edit_template_func (editor->view->context->gimp, template);
+        view->edit_template_func (editor->view->context->gimp, template,
+                                  GTK_WIDGET (view));
     }
 }
 
@@ -386,6 +390,7 @@ gimp_template_view_delete_clicked (GtkWidget        *widget,
 			     GIMP_OBJECT (template)->name);
 
       dialog = gimp_query_boolean_box (_("Delete Template"),
+                                       GTK_WIDGET (view),
 				       gimp_standard_help_func, NULL,
 				       GIMP_STOCK_QUESTION,
 				       str,
@@ -443,7 +448,8 @@ gimp_template_view_activate_item (GimpContainerEditor *editor,
     {
       if (view->create_image_func)
         view->create_image_func (editor->view->context->gimp,
-                                 GIMP_TEMPLATE (viewable));
+                                 GIMP_TEMPLATE (viewable),
+                                 GTK_WIDGET (editor));
     }
 }
 

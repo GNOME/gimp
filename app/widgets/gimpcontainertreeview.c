@@ -317,7 +317,9 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
 
   gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+  screen = gtk_widget_get_screen (widget);
+
+  gtk_menu_set_screen (menu, screen);
 
   if (*x + requisition.width > gdk_screen_get_width (screen))
     *x -= requisition.width;
@@ -346,6 +348,7 @@ gimp_container_tree_view_popup_menu (GtkWidget *widget)
     {
       gimp_item_factory_popup_with_data (editor->item_factory,
                                          editor->item_factory_data,
+                                         GTK_WIDGET (editor),
                                          gimp_container_tree_view_menu_position,
                                          editor,
                                          NULL);

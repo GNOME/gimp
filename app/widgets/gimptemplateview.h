@@ -27,7 +27,8 @@
 
 
 typedef void (* GimpTemplateActionFunc) (Gimp         *gimp,
-                                         GimpTemplate *template);
+                                         GimpTemplate *template,
+                                         GtkWidget    *parent);
 
 
 #define GIMP_TYPE_TEMPLATE_VIEW            (gimp_template_view_get_type ())

@@ -591,6 +591,7 @@ gimp_container_popup_dialog_clicked (GtkWidget          *button,
                                      GimpContainerPopup *popup)
 {
   gimp_dialog_factory_dialog_raise (popup->dialog_factory,
+                                    gtk_widget_get_screen (button),
                                     popup->dialog_identifier, -1);
   g_signal_emit (popup, popup_signals[CONFIRM], 0);
 }

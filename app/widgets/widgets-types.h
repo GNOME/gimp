@@ -134,7 +134,8 @@ typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
                                              gint            *y,
                                              gpointer         data);
 
-typedef void (* GimpStrokeItemFunc)         (GimpItem        *item);
+typedef void (* GimpStrokeItemFunc)         (GimpItem        *item,
+                                             GtkWidget       *parent);
 typedef void (* GimpSelectionToVectorsFunc) (GimpImage       *gimage,
                                              gboolean         advanced);
 

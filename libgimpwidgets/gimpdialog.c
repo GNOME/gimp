@@ -219,6 +219,8 @@ gimp_dialog_new_valist (const gchar    *title,
         }
       else
         {
+          gtk_window_set_screen (GTK_WINDOW (dialog),
+                                 gtk_widget_get_screen (parent));
           /* TODO */
         }
     }

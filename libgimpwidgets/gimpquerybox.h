@@ -57,6 +57,7 @@ typedef void (* GimpQueryBooleanCallback) (GtkWidget   *query_box,
 
 /*  some simple query dialogs  */
 GtkWidget * gimp_query_string_box  (const gchar              *title,
+                                    GtkWidget                *parent,
 				    GimpHelpFunc              help_func,
 				    const gchar              *help_data,
 				    const gchar              *message,
@@ -67,6 +68,7 @@ GtkWidget * gimp_query_string_box  (const gchar              *title,
 				    gpointer                  data);
 
 GtkWidget * gimp_query_int_box     (const gchar              *title,
+                                    GtkWidget                *parent,
 				    GimpHelpFunc              help_func,
 				    const gchar              *help_data,
 				    const gchar              *message,
@@ -79,6 +81,7 @@ GtkWidget * gimp_query_int_box     (const gchar              *title,
 				    gpointer                  data);
 
 GtkWidget * gimp_query_double_box  (const gchar              *title,
+                                    GtkWidget                *parent,
 				    GimpHelpFunc              help_func,
 				    const gchar              *help_data,
 				    const gchar              *message,
@@ -92,6 +95,7 @@ GtkWidget * gimp_query_double_box  (const gchar              *title,
 				    gpointer                  data);
 
 GtkWidget * gimp_query_size_box    (const gchar              *title,
+                                    GtkWidget                *parent,
 				    GimpHelpFunc              help_func,
 				    const gchar              *help_data,
 				    const gchar              *message,
@@ -108,6 +112,7 @@ GtkWidget * gimp_query_size_box    (const gchar              *title,
 				    gpointer                  data);
 
 GtkWidget * gimp_query_boolean_box (const gchar              *title,
+                                    GtkWidget                *parent,
 				    GimpHelpFunc              help_func,
 				    const gchar              *help_data,
 				    const gchar              *stock_id,

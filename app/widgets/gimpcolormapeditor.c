@@ -770,6 +770,7 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
       gimp_colormap_editor_set_index (editor, col);
       gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
                                          GIMP_EDITOR (editor)->item_factory_data,
+                                         GTK_WIDGET (editor),
                                          NULL, NULL, NULL);
       return TRUE;
 
@@ -928,6 +929,7 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
                                          _("Edit Indexed Color"),
                                          GIMP_STOCK_CONVERT_INDEXED,
                                          _("Edit Indexed Image Palette Color"),
+                                         GTK_WIDGET (editor),
                                          toplevel_factory,
                                          "gimp-colormap-editor-color-dialog",
                                          (const GimpRGB *) &color,

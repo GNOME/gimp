@@ -492,6 +492,7 @@ gimp_component_editor_button_press (GtkWidget           *widget,
         case 3:
           gimp_item_factory_popup_with_data (GIMP_EDITOR (editor)->item_factory,
                                              GIMP_EDITOR (editor)->item_factory_data,
+                                             GTK_WIDGET (editor),
                                              NULL, NULL, NULL);
           break;
 

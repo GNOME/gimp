@@ -152,13 +152,14 @@ gimp_viewable_dialog_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_viewable_dialog_new (GimpViewable       *viewable,
-                          const gchar        *title,
-                          const gchar        *role,
-                          const gchar        *stock_id,
-                          const gchar        *desc,
-                          GimpHelpFunc        help_func,
-                          const gchar        *help_id,
+gimp_viewable_dialog_new (GimpViewable *viewable,
+                          const gchar  *title,
+                          const gchar  *role,
+                          const gchar  *stock_id,
+                          const gchar  *desc,
+                          GtkWidget    *parent,
+                          GimpHelpFunc  help_func,
+                          const gchar  *help_id,
                           ...)
 {
   GimpViewableDialog *dialog;
@@ -169,12 +170,23 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
   g_return_val_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
+  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "title", title,
                          NULL);
 
   gtk_window_set_role (GTK_WINDOW (dialog), role);
+
+  if (parent)
+    {
+      if (GTK_IS_WINDOW (parent))
+        gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                      GTK_WINDOW (parent));
+      else
+        gtk_window_set_screen (GTK_WINDOW (dialog),
+                               gtk_widget_get_screen (parent));
+    }
 
   if (help_func)
     gimp_help_connect (GTK_WIDGET (dialog), help_func, help_id, dialog);

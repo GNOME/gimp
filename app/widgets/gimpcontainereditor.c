@@ -264,6 +264,7 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
       if (gimp_editor->item_factory)
         gimp_item_factory_popup_with_data (gimp_editor->item_factory,
                                            gimp_editor->item_factory_data,
+                                           GTK_WIDGET (editor),
                                            NULL, NULL, NULL);
     }
 }

@@ -100,6 +100,7 @@ void   gimp_item_factory_update           (GimpItemFactory       *item_factory,
                                            gpointer               popup_data);
 void   gimp_item_factory_popup_with_data  (GimpItemFactory       *factory,
                                            gpointer               popup_data,
+                                           GtkWidget             *parent,
                                            GimpMenuPositionFunc   position_func,
                                            gpointer               position_data,
                                            GtkDestroyNotify       popdown_func);

@@ -809,7 +809,8 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   src_dock = dockable->dockbook->dock;
 
-  dock = gimp_dialog_factory_dock_new (src_dock->dialog_factory);
+  dock = gimp_dialog_factory_dock_new (src_dock->dialog_factory,
+                                       gtk_widget_get_screen (GTK_WIDGET (dockable)));
   gimp_dock_setup (GIMP_DOCK (dock), src_dock);
 
   gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
@@ -954,6 +955,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
 
   gimp_item_factory_popup_with_data (dockbook_item_factory,
                                      dockable,
+                                     GTK_WIDGET (dockable),
                                      gimp_dockable_menu_position,
                                      dockable,
                                      (GtkDestroyNotify) gimp_dockable_menu_end);

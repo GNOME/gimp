@@ -51,6 +51,7 @@
  **/
 GtkWidget *
 gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                      GtkWidget    *parent,
                       const gchar  *desc,
                       ...)
 {
@@ -60,6 +61,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
@@ -68,6 +70,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
                                      GIMP_OBJECT (tool_info)->name,
                                      stock_id,
                                      desc ? desc : tool_info->help,
+                                     parent,
                                      gimp_standard_help_func,
                                      tool_info->help_id,
                                      NULL);

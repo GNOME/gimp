@@ -541,6 +541,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
 
       dialog =
         gimp_dialog_factory_dialog_new (factory,
+                                        gdk_screen_get_default (),
                                         info->toplevel_entry->identifier,
                                         info->toplevel_entry->preview_size);
 
@@ -552,7 +553,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       GimpDock *dock;
       GList    *books;
 
-      dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory));
+      dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory,
+                                                      gdk_screen_get_default ()));
 
       if (dock && info->aux_info)
         session_info_set_aux_info (GTK_WIDGET (dock), info->aux_info);

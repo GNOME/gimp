@@ -957,6 +957,7 @@ crop_info_create (GimpCropTool *crop)
                                      GIMP_OBJECT (tool->tool_info)->name,
                                      stock_id,
                                      _("Crop & Resize Information"),
+                                     GTK_WIDGET (shell),
                                      gimp_standard_help_func,
                                      tool->tool_info->help_id);
 

@@ -600,6 +600,7 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 
       gimp_item_factory_popup_with_data (gimp_editor->item_factory,
                                          gimp_editor->item_factory_data,
+                                         GTK_WIDGET (editor),
                                          NULL, NULL, NULL);
     }
 
@@ -1091,6 +1092,7 @@ palette_editor_edit_clicked (GtkWidget         *widget,
                                      _("Edit Palette Color"),
                                      GTK_STOCK_SELECT_COLOR,
                                      _("Edit Color Palette Entry"),
+                                     GTK_WIDGET (editor),
                                      toplevel_factory,
                                      "gimp-palette-editor-color-dialog",
                                      (const GimpRGB *) &editor->color->color,

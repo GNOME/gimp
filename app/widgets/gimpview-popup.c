@@ -181,8 +181,12 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
 
   popup->timeout_id = 0;
 
+  screen = gtk_widget_get_screen (popup->widget);
+
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
+
+  gtk_window_set_screen (GTK_WINDOW (window), screen);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -200,7 +204,6 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
 
   gdk_window_get_origin (popup->widget->window, &orig_x, &orig_y);
 
-  screen = gtk_widget_get_screen (popup->widget);
   scr_width  = gdk_screen_get_width (screen);
   scr_height = gdk_screen_get_height (screen);
 

@@ -257,12 +257,14 @@ gimp_menu_position (GtkMenu  *menu,
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (data));
 
-  gdk_window_get_pointer (NULL, &pointer_x, &pointer_y, NULL);
+  gdk_display_get_pointer (gtk_widget_get_display (GTK_WIDGET (data)),
+                           &screen, &pointer_x, &pointer_y, NULL);
+
+  gtk_menu_set_screen (menu, screen);
 
   gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
 
   screen_width  = gdk_screen_get_width (screen);
   screen_height = gdk_screen_get_height (screen);
@@ -327,7 +329,9 @@ gimp_button_menu_position (GtkWidget       *button,
         }
     }
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+  screen = gtk_widget_get_screen (GTK_WIDGET (button));
+
+  gtk_menu_set_screen (menu, screen);
 
   gdk_window_get_origin (button->window, x, y);
 

@@ -207,7 +207,7 @@ gimp_help_internal (Gimp        *gimp,
 	{
 	  GtkWidget *not_found =
 	    gimp_query_boolean_box (_("Could not find GIMP Help Browser"),
-				    NULL, NULL, FALSE,
+				    NULL, NULL, NULL, FALSE,
 				    _("Could not find the GIMP Help Browser procedure.\n"
 				      "It probably was not compiled because\n"
 				      "you don't have GtkXmHTML installed."),
@@ -251,7 +251,7 @@ gimp_help_internal (Gimp        *gimp,
     {
       GtkWidget *not_found =
         gimp_query_boolean_box (_("Could not start GIMP Help Browser"),
-                                NULL, NULL, FALSE,
+                                NULL, NULL, NULL, FALSE,
                                 _("Could not start the GIMP Help Browser."),
                                 _("Use web browser instead"),
                                 GTK_STOCK_CANCEL,

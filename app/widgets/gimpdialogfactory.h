@@ -103,16 +103,19 @@ GimpSessionInfo * gimp_dialog_factory_find_session_info
 						   const gchar       *identifier);
 
 GtkWidget * gimp_dialog_factory_dialog_new        (GimpDialogFactory *factory,
+                                                   GdkScreen         *screen,
 						   const gchar       *identifier,
                                                    gint               preview_size);
 GtkWidget * gimp_dialog_factory_dialog_raise      (GimpDialogFactory *factory,
+                                                   GdkScreen         *screen,
 						   const gchar       *identifier,
                                                    gint               preview_size);
 GtkWidget * gimp_dialog_factory_dockable_new      (GimpDialogFactory *factory,
 						   GimpDock          *dock,
 						   const gchar       *identifier,
                                                    gint               preview_size);
-GtkWidget * gimp_dialog_factory_dock_new          (GimpDialogFactory *factory);
+GtkWidget * gimp_dialog_factory_dock_new          (GimpDialogFactory *factory,
+                                                   GdkScreen         *screen);
 
 void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,
 						   GtkWidget         *dialog);

@@ -814,6 +814,7 @@ toolbox_tool_button_press (GtkWidget      *widget,
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     {
       gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
+                                        gtk_widget_get_screen (widget),
                                         "gimp-tool-options",
                                         -1);
     }

@@ -433,5 +433,7 @@ gimp_device_status_preview_clicked (GtkWidget       *widget,
 
   dialog_factory = gimp_dialog_factory_from_name ("dock");
 
-  gimp_dialog_factory_dialog_raise (dialog_factory, identifier, -1);
+  gimp_dialog_factory_dialog_raise (dialog_factory,
+                                    gtk_widget_get_screen (widget),
+                                    identifier, -1);
 }

@@ -374,6 +374,7 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 
 static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
+                                         GdkScreen         *screen,
 					 GimpContext       *context,
 					 const gchar       *identifier,
                                          gint               preview_size,
@@ -427,7 +428,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 	{
           GtkWidget *dockbook;
 
-	  dock     = gimp_dialog_factory_dock_new (factory);
+	  dock     = gimp_dialog_factory_dock_new (factory, screen);
           dockbook = gimp_dockbook_new (factory->menu_factory);
 
 	  gimp_dock_add_book (GIMP_DOCK (dock),
@@ -509,6 +510,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       if (GTK_WIDGET_TOPLEVEL (dialog))
 	{
+          gtk_window_set_screen (GTK_WINDOW (dialog), screen);
           gtk_window_present (GTK_WINDOW (dialog));
 	}
       else if (GIMP_IS_DOCKABLE (dialog))
@@ -559,13 +561,16 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
+                                GdkScreen         *screen,
 				const gchar       *identifier,
                                 gint               preview_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
   return gimp_dialog_factory_dialog_new_internal (factory,
+                                                  screen,
 						  factory->context,
 						  identifier,
                                                   preview_size,
@@ -588,13 +593,16 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
+                                  GdkScreen         *screen,
 				  const gchar       *identifier,
                                   gint               preview_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
 
   return gimp_dialog_factory_dialog_new_internal (factory,
+                                                  screen,
 						  NULL,
 						  identifier,
                                                   preview_size,
@@ -630,6 +638,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
   g_return_val_if_fail (identifier != NULL, NULL);
 
   return gimp_dialog_factory_dialog_new_internal (factory,
+                                                  gtk_widget_get_screen (GTK_WIDGET (dock)),
 						  dock->context,
 						  identifier,
                                                   preview_size,
@@ -648,17 +657,21 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
  * Return value: the newly created #GimpDock.
  **/
 GtkWidget *
-gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
+gimp_dialog_factory_dock_new (GimpDialogFactory *factory,
+                              GdkScreen         *screen)
 {
   GtkWidget *dock;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
   g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
 
   dock = factory->new_dock_func (factory, factory->context, 0);
 
   if (dock)
     {
+      gtk_window_set_screen (GTK_WINDOW (dock), screen);
+
       gimp_dialog_factory_set_widget_data (dock, factory, NULL);
 
       gimp_dialog_factory_add_dialog (factory, dock);

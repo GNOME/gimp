@@ -409,6 +409,7 @@ gimp_tool_options_editor_reset_ext_clicked (GtkWidget             *widget,
       GtkWidget *qbox;
 
       qbox = gimp_query_boolean_box (_("Reset Tool Options"),
+                                     GTK_WIDGET (editor),
                                      gimp_standard_help_func,
                                      GIMP_HELP_TOOL_OPTIONS_RESET,
                                      GTK_STOCK_DIALOG_QUESTION,

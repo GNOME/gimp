@@ -311,6 +311,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   g_return_if_fail (tool->drawable != NULL);
 
   picker_tool->dialog = gimp_tool_dialog_new (tool->tool_info,
+                                              GIMP_TOOL (picker_tool)->gdisp->shell,
                                               _("Color Picker Information"),
 
                                               GTK_STOCK_CLOSE,

@@ -94,7 +94,7 @@ gimp_color_panel_get_type (void)
                                            "GimpColorPanel",
                                            &panel_info, 0);
     }
-  
+
   return panel_type;
 }
 
@@ -110,7 +110,7 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
   widget_class       = GTK_WIDGET_CLASS (klass);
   button_class       = GTK_BUTTON_CLASS (klass);
   color_button_class = GIMP_COLOR_BUTTON_CLASS (klass);
-  
+
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy             = gimp_color_panel_destroy;
@@ -132,7 +132,7 @@ gimp_color_panel_destroy (GtkObject *object)
   GimpColorPanel *panel;
 
   g_return_if_fail (GIMP_IS_COLOR_PANEL (object));
-  
+
   panel = GIMP_COLOR_PANEL (object);
 
   if (panel->color_notebook)
@@ -258,6 +258,7 @@ gimp_color_panel_clicked (GtkButton *button)
     {
       panel->color_notebook =
 	color_notebook_new (GIMP_COLOR_BUTTON (button)->title,
+                            GTK_WIDGET (button),
                             NULL, NULL,
 			    (const GimpRGB *) &color,
 			    gimp_color_panel_select_callback,

@@ -2947,11 +2947,12 @@ dlg_selector_list_item_callback (GtkWidget *widget,
  */
 static void
 dlg_selector_new_callback (GtkWidget *widget,
-			   gpointer data)
+			   gpointer   data)
 {
   GtkWidget *query_box;
 
   query_box = gimp_query_string_box (_("New GFlare"),
+                                     gtk_widget_get_toplevel (widget),
 				     gimp_standard_help_func,
 				     "filters/gflare.html",
 				     _("Enter a Name for the New GFlare:"),
@@ -3024,6 +3025,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
   name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
   query_box = gimp_query_string_box (_("Copy GFlare"),
+                                     gtk_widget_get_toplevel (widget),
 				     gimp_standard_help_func,
 				     "filters/gflare.html",
 				     _("Enter a Name for the Copied GFlare:"),
@@ -3084,6 +3086,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 			 dlg->gflare->name);
 
   dialog = gimp_query_boolean_box (_("Delete GFlare"),
+                                   dlg->shell,
 				   gimp_standard_help_func,
 				   "filters/gflare.html",
 				   GTK_STOCK_DIALOG_QUESTION,

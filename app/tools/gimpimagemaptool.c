@@ -212,7 +212,9 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
       image_map_tool->shell = shell =
-        gimp_tool_dialog_new (tool_info, image_map_tool->shell_desc,
+        gimp_tool_dialog_new (tool_info,
+                              gdisp->shell,
+                              image_map_tool->shell_desc,
 
                               GIMP_STOCK_RESET, RESPONSE_RESET,
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

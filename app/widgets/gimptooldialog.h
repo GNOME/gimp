@@ -23,8 +23,9 @@
 #define __GIMP_TOOL_DIALOG_H__
 
 
-GtkWidget * gimp_tool_dialog_new (GimpToolInfo     *tool_info,
-                                  const gchar      *desc,
+GtkWidget * gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                                  GtkWidget    *parent,
+                                  const gchar  *desc,
                                   ...);
 
 

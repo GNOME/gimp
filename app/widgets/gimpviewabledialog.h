@@ -60,6 +60,7 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            const gchar        *role,
                                            const gchar        *stock_id,
                                            const gchar        *desc,
+                                           GtkWidget          *parent,
                                            GimpHelpFunc        help_func,
                                            const gchar        *help_id,
                                            ...);
