@@ -1,3 +1,8 @@
+Fri Aug 21 17:25:34 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/fileops.c: fixed a lingering bug that occured from the
+	removal of the id system.  This should fix tigert's save problems.
+
 1998-08-21  Chris Lahey  <clahey@umich.edu>
 
 	* app/docindexif.c (create_idea_menu): 

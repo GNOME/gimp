@@ -800,7 +800,7 @@ file_save (GimpImage* gimage,
     args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int = 0;
-  args[1].value.pdb_int = pdb_image_to_id(the_gimage);
+  args[1].value.pdb_int = pdb_image_to_id(gimage);
   args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
