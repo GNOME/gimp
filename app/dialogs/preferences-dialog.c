@@ -1175,7 +1175,7 @@ prefs_dialog_new (Gimp       *gimp,
                               _("Default _Layer & Channel Preview Size:"),
                               GTK_TABLE (table), 0);
   prefs_enum_option_menu_add (object, "navigation-preview-size", 0, 0,
-                              _("Default _Navigation Preview Size:"),
+                              _("_Navigation Preview Size:"),
                               GTK_TABLE (table), 1);
 
   /* Dialog Bahavior */
