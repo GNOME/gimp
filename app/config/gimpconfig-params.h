@@ -149,6 +149,13 @@ GParamSpec * gimp_param_spec_unit         (const gchar  *name,
                                    g_param_spec_double (name, NULL, blurb,\
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_RESOLUTION(class, id,\
+                                            name, blurb, default, flags)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_double (name, NULL, blurb,\
+                                   GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION, \
+                                   default,\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id,\
                                       name, blurb, enum_type, default, flags)\
   g_object_class_install_property (class, id,\

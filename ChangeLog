@@ -1,8 +1,34 @@
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-histogram-linear-16.png
+	* themes/Default/images/stock-histogram-logarithmic-16.png:
+	added placeholders for new icons.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* app/tools/gimphistogramtool.c: made the dialog more compact by
+	using a stock-box for the histogram scale.
+
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose):
+	don't invert the histogram view if the full range is selected.
+
+	* app/widgets/gimphistogrambox.c: moved the range widgets below
+	the histogram.
+
+	* app/config/gimpconfig-params.h: added macro
+	GIMP_CONFIG_INSTALL_PROP_RESOLUTION() that installs a double
+	property with the suitable range.
+
+	* app/core/gimptemplate.c
+	* app/config/gimpdisplayconfig.c: use it here.
+
 2003-10-23  Helvetix Victorinox  <helvetix@gimp.org>
+
 	* app/composite/gimp-composite-3dnow.c:
 	  Incorrectly reported the inverse of whether not the 3dNow
 	  instruction set is supported by the current CPU.
-                                                                                                         
+
 	* app/composite/gimp-composite-{mmx,sse}.c:
 	  Removed linkage of gimp_composite_divide_*.  Something is
 	  inexplicably broken, and this will get people working again

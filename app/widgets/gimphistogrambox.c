@@ -84,7 +84,7 @@ gimp_histogram_box_get_type (void)
       };
 
       box_type = g_type_register_static (GTK_TYPE_VBOX,
-                                         "GimpHistogramBox", 
+                                         "GimpHistogramBox",
                                          &box_info, 0);
     }
 
@@ -114,6 +114,48 @@ gimp_histogram_box_init (GimpHistogramBox *box)
 
   gtk_box_set_spacing (GTK_BOX (box), 4);
 
+  /*  The histogram  */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (box), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  view = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
+                                  GIMP_HISTOGRAM_VIEW_HEIGHT,
+                                  TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), view);
+  gtk_widget_show (view);
+
+  g_signal_connect (view, "range_changed",
+                    G_CALLBACK (gimp_histogram_box_histogram_range),
+                    box);
+
+  box->histogram = GIMP_HISTOGRAM_VIEW (view);
+
+  /*  The gradient below the histogram */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  box->gradient = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (box->gradient,
+                               GIMP_HISTOGRAM_VIEW_WIDTH, GRADIENT_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
+  gtk_widget_show (box->gradient);
+
+  g_signal_connect (box->gradient, "size_allocate",
+                    G_CALLBACK (gimp_histogram_box_gradient_size_allocate),
+                    box);
+  g_signal_connect (box->gradient, "expose_event",
+                    G_CALLBACK (gimp_histogram_box_gradient_expose),
+                    box);
+
+  g_signal_connect_swapped (view, "notify::channel",
+			    G_CALLBACK (gtk_widget_queue_draw),
+			    box->gradient);
+
+  /*  The range selection */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -145,54 +187,13 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_histogram_box_high_adj_update),
                     box);
-
-  /*  The histogram  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (box), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  view = gimp_histogram_view_new (GIMP_HISTOGRAM_VIEW_WIDTH,
-                                  GIMP_HISTOGRAM_VIEW_HEIGHT,
-                                  TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), view);
-  gtk_widget_show (view);
-
-  g_signal_connect (view, "range_changed",
-                    G_CALLBACK (gimp_histogram_box_histogram_range),
-                    box);
-
-  box->histogram = GIMP_HISTOGRAM_VIEW (view);
-
-  /*  The gradient below the histogram */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  box->gradient = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (box->gradient, 
-                               GIMP_HISTOGRAM_VIEW_WIDTH, GRADIENT_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (box->gradient));
-  gtk_widget_show (box->gradient);
-
-  g_signal_connect (box->gradient, "size_allocate",
-                    G_CALLBACK (gimp_histogram_box_gradient_size_allocate),
-                    box);
-  g_signal_connect (box->gradient, "expose_event",
-                    G_CALLBACK (gimp_histogram_box_gradient_expose),
-                    box);
-
-  g_signal_connect_swapped (view, "notify::channel",
-			    G_CALLBACK (gtk_widget_queue_draw),
-			    box->gradient);
 }
 
 static void
 gimp_histogram_box_finalize (GObject *object)
 {
   GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (object);
-  
+
   g_free (box->gradient_buf);
   box->gradient_buf = NULL;
 
@@ -208,7 +209,7 @@ gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
 
   box->high_adj->lower = adjustment->value;
   gtk_adjustment_changed (box->high_adj);
-  
+
   gimp_histogram_view_set_range (box->histogram,
                                  adjustment->value, box->histogram->end);
 }
@@ -222,7 +223,7 @@ gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
 
   box->low_adj->upper = adjustment->value;
   gtk_adjustment_changed (box->low_adj);
-  
+
   gimp_histogram_view_set_range (box->histogram,
                                  box->histogram->start, adjustment->value);
 }
@@ -248,7 +249,7 @@ gimp_histogram_box_gradient_size_allocate (GtkWidget     *widget,
                                            gpointer       data)
 {
   GimpHistogramBox *box = GIMP_HISTOGRAM_BOX (data);
-  
+
   box->gradient_buf = g_realloc (box->gradient_buf,
                                  3 * ((allocation->width  - 2) *
                                       (allocation->height - 2)));
@@ -310,7 +311,7 @@ gimp_histogram_box_gradient_expose (GtkWidget      *widget,
   gdk_draw_rgb_image (widget->window, widget->style->black_gc,
                       1, 1, width, height, GDK_RGB_DITHER_NORMAL,
                       box->gradient_buf, 3 * width);
-  
+
   return TRUE;
 }
 

@@ -371,8 +371,15 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 				    "channel", 0, 0);
   gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (htd->channel_menu),
                                           "gimp-channel");
-  gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, TRUE, TRUE, 0);
   gtk_widget_show (htd->channel_menu);
+
+  /*  The option menu for selecting the histogram scale  */
+  menu =
+    gimp_prop_enum_stock_box_new (G_OBJECT (htd->histogram_box->histogram),
+                                  "scale", "gimp-histogram", 0, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
 
   /*  The histogram tool histogram  */
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (htd->histogram_box),
@@ -382,21 +389,6 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   g_signal_connect (htd->histogram_box->histogram, "range_changed",
                     G_CALLBACK (histogram_tool_histogram_range),
                     htd);
-
-  /*  The option menu for selecting the histogram scale  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Histogram Scale:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  menu =
-    gimp_prop_enum_option_menu_new (G_OBJECT (htd->histogram_box->histogram),
-				    "scale", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (3, 4, TRUE);

@@ -139,7 +139,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 						      G_PARAM_CONSTRUCT));
 }
 
-static void 
+static void
 gimp_histogram_view_init (GimpHistogramView *view)
 {
   view->histogram = NULL;
@@ -147,11 +147,11 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->end       = 255;
 }
 
-static void 
+static void
 gimp_histogram_view_finalize (GObject *object)
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
-  
+
   if (view->range_gc)
     {
       g_object_unref (view->range_gc);
@@ -178,7 +178,7 @@ gimp_histogram_view_set_property (GObject      *object,
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-    }      
+    }
 }
 
 static void
@@ -200,7 +200,7 @@ gimp_histogram_view_get_property (GObject      *object,
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-    }      
+    }
 }
 
 static gboolean
@@ -209,6 +209,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 {
   GimpHistogramView *view;
   gint               x;
+  gint               x1, x2;
   gint               width, height;
   gdouble            max;
 
@@ -239,7 +240,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   /*  Draw the axis  */
   gdk_draw_line (widget->window, widget->style->black_gc,
                  1, height + 1, width, height + 1);
-  
+
   /*  Draw the spikes  */
   for (x = 0; x < width; x++)
     {
@@ -272,13 +273,16 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                      x + 1, height + 1 - y);
     }
 
-  if (view->start >= 0 && view->end >= 0)
+  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
+  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
+
+  if (! (x1 == 0 && x2 == 255))
     {
-      gint x1 = (width * MIN (view->start, view->end)) / 256;
-      gint x2 = (width * MAX (view->start, view->end)) / 255;
+      x1 = (x1 * width) / 256;
+      x2 = (x2 * width) / 255;
 
       if (x2 == x1)
-	x2++;
+        x2++;
 
       if (!view->range_gc)
         {
@@ -312,7 +316,7 @@ gimp_histogram_view_events (GimpHistogramView *view,
       if (bevent->button != 1)
 	break;
 
-      gdk_pointer_grab (widget->window, FALSE, 
+      gdk_pointer_grab (widget->window, FALSE,
 			GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
 			NULL, NULL, bevent->time);
 
@@ -398,7 +402,7 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
       if (histogram && view->channel >= gimp_histogram_nchannels (histogram))
         gimp_histogram_view_set_channel (view, 0);
     }
-  
+
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
@@ -444,8 +448,8 @@ gimp_histogram_view_get_channel (GimpHistogramView *view)
 }
 
 void
-gimp_histogram_view_set_scale (GimpHistogramView   *view,
-			       GimpHistogramScale   scale)
+gimp_histogram_view_set_scale (GimpHistogramView  *view,
+			       GimpHistogramScale  scale)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 

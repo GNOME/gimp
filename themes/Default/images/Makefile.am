@@ -55,6 +55,8 @@ STOCK_MENU_IMAGES = \
 	stock-gradient-spiral-clockwise-16.png		\
 	stock-gradient-square-16.png			\
 	stock-grid-16.png				\
+	stock-histogram-linear-16.png			\
+	stock-histogram-logarithmic-16.png		\
 	stock-image-16.png				\
 	stock-images-16.png				\
 	stock-info-16.png				\

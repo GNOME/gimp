@@ -219,6 +219,8 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_HISTOGRAM_LINEAR,         NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -468,6 +470,9 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_NAVIGATION,               stock_navigation_16               },
   { GIMP_STOCK_QMASK_OFF,                stock_qmask_off_16                },
   { GIMP_STOCK_QMASK_ON,                 stock_qmask_on_16                 },
+
+  { GIMP_STOCK_HISTOGRAM_LINEAR,         stock_histogram_linear_16         },
+  { GIMP_STOCK_HISTOGRAM_LOGARITHMIC,    stock_histogram_logarithmic_16    },
 
   { GIMP_STOCK_LIST,                     stock_list_16                     },
   { GIMP_STOCK_GRID,                     stock_grid_16                     },

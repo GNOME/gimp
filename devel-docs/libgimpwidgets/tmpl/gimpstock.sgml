@@ -143,6 +143,20 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_HISTOGRAM_LINEAR ##### -->
+<para>
+<inlinegraphic fileref="stock-histogram-linear-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_HISTOGRAM_LOGARITHMIC ##### -->
+<para>
+<inlinegraphic fileref="stock-histogram-logarithmic-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_RESHOW_FILTER ##### -->
 <para>
 <inlinegraphic fileref="stock-reshow-filter-16.png" format="png"></inlinegraphic>

@@ -182,7 +182,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_BRUSH_OUTLINE,
-                                    "show-brush-outline", SHOW_BRUSH_OUTLINE_BLURB,
+                                    "show-brush-outline",
+                                    SHOW_BRUSH_OUTLINE_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
@@ -199,16 +200,16 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,
                                     TRUE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_XRESOLUTION,
-                                   "monitor-xresolution",
-                                   MONITOR_XRESOLUTION_BLURB,
-                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_YRESOLUTION,
-                                   "monitor-yresolution",
-                                   MONITOR_YRESOLUTION_BLURB,
-                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
-                                   0);
+  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
+                                       "monitor-xresolution",
+                                       MONITOR_XRESOLUTION_BLURB,
+                                       72.0,
+                                       0);
+  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
+                                       "monitor-yresolution",
+                                       MONITOR_YRESOLUTION_BLURB,
+                                       72.0,
+                                       0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
                                     MONITOR_RES_FROM_GDK_BLURB,

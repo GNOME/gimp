@@ -133,11 +133,11 @@ gimp_template_class_init (GimpTemplateClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
                                 NULL,
-                                1, GIMP_MAX_IMAGE_SIZE, 256,
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
                                 NULL,
-                                1, GIMP_MAX_IMAGE_SIZE, 256,
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
                                  N_("The unit used for coordinate display "
@@ -145,18 +145,16 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XRESOLUTION,
-                                   "xresolution",
-                                   N_("The horizonal image resolution."),
-                                   GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                                   72.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YRESOLUTION,
-                                   "yresolution",
-                                   N_("The vertical image resolution."),
-                                   GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                                   72.0,
-                                   0);
+  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
+                                       "xresolution",
+                                       N_("The horizonal image resolution."),
+                                       72.0,
+                                       0);
+  GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
+                                       "yresolution",
+                                       N_("The vertical image resolution."),
+                                       72.0,
+                                       0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
                                  NULL,
