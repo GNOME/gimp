@@ -1,11 +1,10 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000-2001
-#
+# Softcatala <tradgnome@softcatala.org>, 2000-2002
+# Jordi Jover, jordijn@softcatala.org	
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp1 1.2.2\n"
-"POT-Creation-Date: 2002-02-03 20:05-0800\n"
+"POT-Creation-Date: 2002-06-18 13:33+0200\n"
 "PO-Revision-Date: 2001-09-07 17:29+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -25,7 +24,7 @@ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 #: app/about_dialog.c:209
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "La versió %s que us porta"
+msgstr "La versió %s mostrada per"
 
 #: app/about_dialog.c:259
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -55,59 +54,62 @@ msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
-msgstr "que us porta"
+msgstr "mostrada per"
 
-#: app/app_procs.c:378
+#: app/app_procs.c:379
 msgid "GIMP Startup"
 msgstr "Inici del GIMP"
 
-#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
+#: app/app_procs.c:500 app/app_procs.c:508 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "anàlisi \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Looking for data files"
-msgstr "S'estan buscant els fitxers de dades"
+msgstr "S'estan cercant els fitxers de dades"
 
-#: app/app_procs.c:569
+#: app/app_procs.c:584
 msgid "Parasites"
 msgstr "Paràsits"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:586 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Pinzells"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:588 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Patrons"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:575 app/preferences_dialog.c:2547
+#: app/app_procs.c:590 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Paletes"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:592 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Gradients"
 
-#: app/app_procs.c:655
+#: app/app_procs.c:671
 #, c-format
 msgid ""
 "Unable to open a test swap file.  Please check the\n"
 "location and permissions of the swap directory defined\n"
 "in your Preferences (currently '%s')."
 msgstr ""
+"No es pot obrir un fitxer swap de test. Si us plau, verifiqueu la\n"
+"ubicació i els permisos del directori swap definit\n"
+"en les vostres preferències (actualment '%s')."
 
-#: app/app_procs.c:775
+#: app/app_procs.c:791
 msgid "Really Quit?"
-msgstr "Voleu sortir de debò?"
+msgstr "De debò voleu sortir?"
 
-#: app/app_procs.c:779
+#: app/app_procs.c:795
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -117,12 +119,12 @@ msgstr ""
 "\n"
 "Voleu sortir del GIMP?"
 
-#: app/app_procs.c:780
+#: app/app_procs.c:796
 msgid "Quit"
 msgstr "Surt"
 
 #. the cancel button
-#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:796 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
@@ -132,7 +134,7 @@ msgstr "Surt"
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
 #: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
 #: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
-#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:285 app/user_install.c:597
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -149,7 +151,7 @@ msgstr "Corba corrupta"
 msgid "Curve not closed!"
 msgstr "Corba no tancada!"
 
-#: app/bezier_select.c:3287 app/gimage_mask.c:625
+#: app/bezier_select.c:3294 app/gimage_mask.c:625
 msgid "Paintbrush operation failed."
 msgstr "No s'ha pogut pintar amb el pinzell"
 
@@ -223,7 +225,7 @@ msgstr "Espiral (en sentit invers al de les agulles del rellotge)"
 
 #: app/blend.c:339
 msgid "Gradient:"
-msgstr "Gradient"
+msgstr "Gradient:"
 
 #: app/blend.c:347 app/by_color_select.c:850 app/preferences_dialog.c:1840
 msgid "None"
@@ -255,7 +257,7 @@ msgstr "Llindar:"
 
 #: app/blend.c:440
 msgid "Blend: Invalid for indexed images."
-msgstr "Mescla: No és vàlida per a imatges indexades."
+msgstr "Mescla: No és vàlida per a les imatges indexades."
 
 #: app/blend.c:466
 msgid "Blend: 0, 0"
@@ -267,7 +269,7 @@ msgstr "No s'ha pogut mesclar."
 
 #: app/blend.c:535
 msgid "Blending..."
-msgstr "S'estan mesclant..."
+msgstr "S'està mesclant..."
 
 #: app/blend.c:614 app/blend.c:624
 msgid "Blend: "
@@ -280,7 +282,7 @@ msgstr "Brillantor-Contrast"
 
 #: app/brightness_contrast.c:175
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "L'opció Brillantor-contrast no funciona en imatges indexades."
+msgstr "L'opció Brillantor-contrast no funciona en les imatges indexades."
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
@@ -290,7 +292,7 @@ msgstr "L'opció Brillantor-contrast no funciona en imatges indexades."
 #: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
 #: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "D'acord"
 
@@ -314,7 +316,7 @@ msgstr "Contrast:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:693
-#: app/fileops.c:421 app/hue_saturation.c:571 app/levels.c:579
+#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Vista prèvia"
@@ -326,13 +328,13 @@ msgstr "Editor del pinzell"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:729
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
-#: app/measure.c:333 app/nav_window.c:1426 app/palette.c:2058
-#: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:72
-#: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
-#: app/tools.c:1549 app/undo_history.c:759
+#: app/crop.c:1074 app/devices.c:760 app/docindex.c:721 app/gdisplay_ops.c:310
+#: app/gradient.c:918 app/gradient_select.c:161 app/histogram_tool.c:294
+#: app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:333
+#: app/nav_window.c:1426 app/palette.c:2058 app/palette.c:2074
+#: app/palette.c:3111 app/palette_select.c:72 app/pattern_select.c:178
+#: app/preferences_dialog.c:386 app/tips_dialog.c:171 app/tools.c:1549
+#: app/undo_history.c:759
 msgid "Close"
 msgstr "Tanca"
 
@@ -347,7 +349,7 @@ msgstr "Duresa:"
 
 #: app/brush_edit.c:317
 msgid "Aspect Ratio:"
-msgstr "Ràtio d'aspecte:"
+msgstr "Ràtio de l'aspecte:"
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:329 app/rotate_tool.c:93
 msgid "Angle:"
@@ -398,12 +400,12 @@ msgstr "Espaiat:"
 #. this should never happen
 #: app/brush_select.c:1860
 msgid "Sorry, this brush can't be edited."
-msgstr "Ho sento, aquest pinzell no es pot editar."
+msgstr "No es pot editar aquest pinzell."
 
 #. this should never happen
 #: app/brush_select.c:1889
 msgid "Sorry, this brush can't be deleted."
-msgstr "Ho sento, aquest pinzell no es pot suprimir."
+msgstr "No es pot suprimir aquest pinzell."
 
 #: app/bucket_fill.c:128 app/color_picker.c:162 app/tool_options.c:275
 msgid "Sample Merged"
@@ -449,7 +451,7 @@ msgstr "Mode de selecció"
 
 #: app/by_color_select.c:791 app/paint_funcs.c:105
 msgid "Replace"
-msgstr "Substitueix"
+msgstr "Reemplaça"
 
 #: app/by_color_select.c:793 app/colormap_dialog.i.c:130
 msgid "Add"
@@ -461,7 +463,7 @@ msgstr "Resta"
 
 #: app/by_color_select.c:795
 msgid "Intersect"
-msgstr "Encreua"
+msgstr "Interseca"
 
 #: app/by_color_select.c:806
 msgid "Fuzziness Threshold"
@@ -493,7 +495,7 @@ msgstr "%s còpia"
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
-#: app/channel_ops.c:91 app/resize.c:436
+#: app/channel_ops.c:91 app/resize.c:438
 msgid "Offset"
 msgstr "Compensació"
 
@@ -502,8 +504,8 @@ msgstr "Compensació"
 msgid "Offset X:"
 msgstr "Compensa X:"
 
-#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
-#: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
+#: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
+#: app/resize.c:374 app/resize.c:468 app/resize.c:606 app/rotate_tool.c:111
 #: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
 msgstr "Y:"
@@ -533,11 +535,11 @@ msgstr "Canal nou"
 
 #: app/channels_dialog.c:235
 msgid "Raise Channel"
-msgstr "Apuja el canal"
+msgstr "Canal superior"
 
 #: app/channels_dialog.c:239
 msgid "Lower Channel"
-msgstr "Abaixa el canal"
+msgstr "Canal més baix"
 
 #: app/channels_dialog.c:243
 msgid "Duplicate Channel"
@@ -549,7 +551,7 @@ msgid ""
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
 "Canal per seleccionar \n"
-"<Shift> Afegeix         <Ctrl> Resta        <Shift><Ctrl> Encreua"
+"<Shift> Afegeix         <Ctrl> Resta        <Shift><Ctrl> Interseca"
 
 #: app/channels_dialog.c:255
 msgid "Delete Channel"
@@ -557,7 +559,7 @@ msgstr "Suprimeix el canal"
 
 #: app/channels_dialog.c:1211
 msgid "Empty Channel Copy"
-msgstr "Buida el canal còpia"
+msgstr "Buida el canal Còpia"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
 #: app/curves.c:594 app/histogram_tool.c:322 app/levels.c:379
@@ -618,7 +620,7 @@ msgstr "Alineació"
 
 #: app/clone.c:156
 msgid "Non Aligned"
-msgstr "No alineat"
+msgstr "Sense alinear"
 
 #: app/clone.c:158
 msgid "Aligned"
@@ -799,15 +801,15 @@ msgstr "Selecció de la ploma"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
-msgstr "Selecció de ploma per:"
+msgstr "Selecció de la ploma per:"
 
 #: app/commands.c:376
 msgid "Shrink Selection"
-msgstr "Selecció d'encongiment"
+msgstr "Selecció de l'encongiment"
 
 #: app/commands.c:379
 msgid "Shrink Selection by:"
-msgstr "Selecció d'encongiment per:"
+msgstr "Selecció de l'encongiment per:"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
@@ -823,21 +825,21 @@ msgstr "Selecció d'augment per:"
 
 #: app/commands.c:433
 msgid "Border Selection"
-msgstr "Selecció de contorn"
+msgstr "Selecció del contorn"
 
 #: app/commands.c:436
 msgid "Border Selection by:"
-msgstr "Selecció de contorn per:"
+msgstr "Selecció del contorn per:"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Error en el canvi de la mida: tant l'amplada com l'alçada han de ser "
-"mésgrans de zero."
+"S'ha produït un error en el canvi de la mida: tant l'amplada com l'alçada "
+"han de ser més grans de zero."
 
 #: app/convert.c:509
 msgid "Indexed Color Conversion"
-msgstr "Conversió indexada de color"
+msgstr "Conversió del color indexada"
 
 #: app/convert.c:528
 msgid "General Palette Options"
@@ -882,11 +884,11 @@ msgstr "Sense simulació de color"
 
 #: app/convert.c:696
 msgid "Positioned Color Dithering"
-msgstr "Simulació de color posicionat"
+msgstr "Tramat de color posicionat"
 
 #: app/convert.c:710
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr "Simulació de color Floyd-Steinberg (barreja reduïda de color)"
+msgstr "Simulació de color Floyd-Steinberg (barreja de color reduït)"
 
 #: app/convert.c:723
 msgid "Floyd-Steinberg Color Dithering (Normal)"
@@ -894,7 +896,7 @@ msgstr "Simulació de color Floyd-Steinberg (normal)"
 
 #: app/convert.c:737
 msgid "Enable Dithering of Transparency"
-msgstr "Habilita la simulació de transparència"
+msgstr "Habilita el tramat de la transparència"
 
 #: app/convert.c:766
 msgid "[ Warning ]"
@@ -945,11 +947,11 @@ msgstr "Permet les ampliacions"
 msgid "Tool Toggle"
 msgstr "Commutador d'eines"
 
-#: app/crop.c:221 app/crop.c:1069
+#: app/crop.c:221 app/crop.c:1070
 msgid "Crop"
 msgstr "Escapçar"
 
-#: app/crop.c:223 app/crop.c:1071
+#: app/crop.c:223 app/crop.c:1072
 msgid "Resize"
 msgstr "Canvi de mida"
 
@@ -957,37 +959,37 @@ msgstr "Canvi de mida"
 msgid "Crop: "
 msgstr "Escapça: "
 
-#: app/crop.c:1042
+#: app/crop.c:1043
 msgid "Crop: 0 x 0"
 msgstr "Escapçar: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1063
+#: app/crop.c:1064
 msgid "Crop & Resize Information"
 msgstr "Informació d'escapçat i canvi de mida"
 
 #. add the information fields
-#: app/crop.c:1079
+#: app/crop.c:1080
 msgid "Origin X:"
 msgstr "Origen X:"
 
 #. the pixel size labels
-#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/crop.c:1096 app/file_new_dialog.c:394 app/file_new_dialog.c:412
 #: app/tool_options.c:353
 msgid "Width:"
 msgstr "Amplada:"
 
-#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Alçada:"
 
-#: app/crop.c:1120
+#: app/crop.c:1121
 msgid "From Selection"
-msgstr "De la selecció"
+msgstr "Des de la selecció"
 
-#: app/crop.c:1126
+#: app/crop.c:1127
 msgid "Auto Shrink"
 msgstr "Autoencongiment"
 
@@ -1043,7 +1045,7 @@ msgid "Load/Save Curves"
 msgstr "Carrega/Desa les corbes"
 
 #: app/curves.c:1668 app/curves.c:1686 app/levels.c:1477 app/levels.c:1495
-#: app/paths_dialog.c:1908
+#: app/paths_dialog.c:1918
 #, c-format
 msgid "Unable to open file %s"
 msgstr "No es pot obrir el fitxer %s"
@@ -1068,7 +1070,7 @@ msgid ""
 "<Ctrl> Load Image dialog"
 msgstr ""
 "Obre l'entrada seleccionada\n"
-"<Maj> Presenta la finestra si ja és oberta\n"
+"<Maj> Mostra la finestra si ja és oberta\n"
 "<Ctrl> Carrega el diàleg Imatge"
 
 #: app/docindex.c:118
@@ -1089,7 +1091,7 @@ msgstr ""
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
-msgstr "Elimina de l'índex les entrades seleccionades"
+msgstr "Suprimeix les entrades seleccionades de l'índex"
 
 #: app/docindex.c:715
 msgid "Document Index"
@@ -1126,7 +1128,7 @@ msgstr "Moure: "
 
 #: app/equalize.c:42
 msgid "Equalize does not operate on indexed drawables."
-msgstr "No es poden equalitzar dibuixables indexats."
+msgstr "No es poden equalitzar el dibuixables indexats."
 
 #. the hard toggle
 #: app/eraser.c:112
@@ -1137,35 +1139,6 @@ msgstr "Contorn dur"
 #: app/eraser.c:122 app/paint_funcs.c:106
 msgid "Anti Erase"
 msgstr "Antiesborrat"
-
-#: app/errorconsole.c:173
-#, c-format
-msgid "Error opening file %s: %s"
-msgstr "Error en obrir el fitxer %s: %s"
-
-#: app/errorconsole.c:190
-msgid "Can't save, nothing selected!"
-msgstr "No es pot desar, no hi ha res seleccionat!"
-
-#: app/errorconsole.c:194
-msgid "Save error log to file..."
-msgstr "Desa el registre d'errors a l'arxiu..."
-
-#: app/errorconsole.c:276
-msgid "GIMP Error Console"
-msgstr "Consola d'errors GIMP"
-
-#: app/errorconsole.c:282
-msgid "Clear"
-msgstr "Esborra"
-
-#: app/errorconsole.c:305
-msgid "Write all errors to file..."
-msgstr "Escriu tots els errors al fitxer..."
-
-#: app/errorconsole.c:312
-msgid "Write selection to file..."
-msgstr "Escriu la selecció al fitxer..."
 
 #: app/file_new_dialog.c:195
 #, no-c-format
@@ -1185,14 +1158,14 @@ msgstr ""
 "Esteu intentant de crear una imatge que\n"
 "té una mida inicial de %s.\n"
 "\n"
-"Seleccioneu D'acord si voleu crear aquesta imatge.\n"
-"Seleccioneu Cancel·lar si no voleu\n"
+"Trieu D'acord si voleu crear aquesta imatge.\n"
+"Trieu Cancel·lar si no voleu\n"
 "crear una imatge tan gran.\n"
 "\n"
-"Per tal d'evitar l'aparició d'aquest diàleg,\n"
+"Per evitar l'aparició d'aquest diàleg,\n"
 "augmenteu el paràmetre \"Mida màxima de la imatge\"\n"
 "(actualment %s) en el\n"
-"diàleg de preferències."
+"diàleg Preferències."
 
 #: app/file_new_dialog.c:207
 msgid "Confirm Image Size"
@@ -1213,11 +1186,11 @@ msgid "Pixels"
 msgstr "Píxels"
 
 #. the resolution labels
-#: app/file_new_dialog.c:529 app/resize.c:598
+#: app/file_new_dialog.c:529 app/resize.c:600
 msgid "Resolution X:"
 msgstr "Resolució X:"
 
-#: app/file_new_dialog.c:550 app/resize.c:619
+#: app/file_new_dialog.c:550 app/resize.c:621
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
@@ -1226,16 +1199,16 @@ msgstr "píxels/%a"
 msgid "Image Type"
 msgstr "Tipus d'imatge"
 
-#: app/fileops.c:269 app/fileops.c:315
+#: app/fileops.c:269 app/fileops.c:314
 msgid "Load Image"
 msgstr "Carrega la imatge"
 
 #. format-chooser frame
-#: app/fileops.c:330
+#: app/fileops.c:329
 msgid "Determine File Type"
 msgstr "Determina el tipus de fitxer"
 
-#: app/fileops.c:403
+#: app/fileops.c:402
 msgid ""
 "Generate\n"
 "Preview"
@@ -1243,11 +1216,11 @@ msgstr ""
 "Genera una\n"
 "previsualització"
 
-#: app/fileops.c:422
+#: app/fileops.c:421
 msgid "No Selection."
-msgstr "Cap selecció."
+msgstr "No s'ha escollit cap selecció."
 
-#: app/fileops.c:470 app/fileops.c:1757
+#: app/fileops.c:469 app/fileops.c:1755
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1256,27 +1229,27 @@ msgstr ""
 "No s'ha pogut desar.\n"
 "%s"
 
-#: app/fileops.c:495 app/fileops.c:527
+#: app/fileops.c:494 app/fileops.c:525
 msgid "Save Image"
-msgstr "Desar la imatge"
+msgstr "Desa la imatge"
 
-#: app/fileops.c:544
+#: app/fileops.c:542
 msgid "Save Options"
-msgstr "Desar les opcions"
+msgstr "Desa les opcions"
 
-#: app/fileops.c:553
+#: app/fileops.c:551
 msgid "Determine File Type:"
 msgstr "Determina el tipus de fitxer:"
 
-#: app/fileops.c:616
+#: app/fileops.c:614
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"No es pot revertir.\n"
+"No es pot tornar endarrera.\n"
 "No hi ha cap nom de fitxer associat a aquesta imatge"
 
-#: app/fileops.c:627
+#: app/fileops.c:625
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1285,65 +1258,65 @@ msgid ""
 "(You will lose all your changes\n"
 "including all undo information)"
 msgstr ""
-"S'està deixant %s com\n"
+"S'està deixant %s com a\n"
 "%s\n"
 "\n"
 "(Perdreu tots els canvis\n"
-"incloent tota la informació per desfer)"
+"incloent-hi tota la informació per desfer)"
 
-#: app/fileops.c:634
+#: app/fileops.c:632
 msgid "Revert Image?"
 msgstr "Voleu deixar la imatge com abans?"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:637 app/fileops.c:1897
 msgid "Yes"
 msgstr "Sí"
 
-#: app/fileops.c:639 app/fileops.c:1899
+#: app/fileops.c:637 app/fileops.c:1897
 msgid "No"
 msgstr "No"
 
-#: app/fileops.c:742
+#: app/fileops.c:740
 #, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
 msgstr ""
-"%s ha fallat.\n"
-"%s: tipus de fitxer desconegut."
+"Ha fallat %s.\n"
+"%s: Tipus de fitxer desconegut."
 
-#: app/fileops.c:759
+#: app/fileops.c:757
 #, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
 msgstr ""
-"%s ha fallat.\n"
+"Ha fallat %s.\n"
 "%s no és un fitxer regular."
 
-#: app/fileops.c:780
+#: app/fileops.c:778
 #, c-format
 msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
-"%s ha fallat.\n"
-"%s: permís denegat."
+"Ha fallat %s.\n"
+"%s: Permís denegat."
 
-#: app/fileops.c:836 app/fileops.c:1547
+#: app/fileops.c:834 app/fileops.c:1546
 msgid "Open"
 msgstr "Obre"
 
-#: app/fileops.c:1154
+#: app/fileops.c:1153
 #, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
 msgstr ""
 "No s'ha pogut desar.\n"
-"%s: tipus de fitxer desconegut."
+"%s: Tipus de fitxer desconegut."
 
-#: app/fileops.c:1169
+#: app/fileops.c:1168
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1352,44 +1325,44 @@ msgstr ""
 "No s'ha pogut desar.\n"
 "%s no és un fitxer regular."
 
-#: app/fileops.c:1188
+#: app/fileops.c:1187
 #, c-format
 msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
 "No s'ha pogut desar.\n"
-"%s: permís denegat."
+"%s: Permís denegat."
 
-#: app/fileops.c:1435
+#: app/fileops.c:1434
 msgid "(This thumbnail may be out of date)"
 msgstr "(És possible que aquesta miniatura sigui obsoleta)"
 
-#: app/fileops.c:1436
+#: app/fileops.c:1435
 msgid "(No Information)"
 msgstr "(Sense informació)"
 
-#: app/fileops.c:1446
+#: app/fileops.c:1445
 msgid "(Thumbnail saving is disabled)"
 msgstr "(S'ha inhabilitat l'opció de desar miniatures)"
 
-#: app/fileops.c:1450
+#: app/fileops.c:1449
 msgid "(Could not write thumbnail file)"
 msgstr "(No s'ha pogut escriure el fitxer de miniatures)"
 
-#: app/fileops.c:1454
+#: app/fileops.c:1453
 msgid "(Thumbnail file not written)"
 msgstr "(No s'ha escrit el fitxer de miniatures)"
 
-#: app/fileops.c:1472
+#: app/fileops.c:1471
 msgid "No preview available"
 msgstr "No hi ha cap previsualització disponible"
 
-#: app/fileops.c:1572
+#: app/fileops.c:1571
 msgid "(could not make preview)"
 msgstr "(No s'ha pogut previsualitzar)"
 
-#: app/fileops.c:1643 app/fileops.c:1684
+#: app/fileops.c:1641 app/fileops.c:1682
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1398,26 +1371,26 @@ msgstr ""
 "No s'ha pogut obrir.\n"
 "%s"
 
-#: app/fileops.c:1892
+#: app/fileops.c:1890
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s ja existeix, el voleu sobreescriure?"
 
-#: app/fileops.c:1894
+#: app/fileops.c:1892
 msgid "File Exists!"
 msgstr "El fitxer ja existeix!"
 
-#: app/fileops.c:1956
+#: app/fileops.c:1954
 msgid "Revert"
-msgstr "Revertir"
+msgstr "Tornar-ho a fer"
 
-#: app/fileops.c:1969
+#: app/fileops.c:1967
 #, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
 msgstr ""
-"No s'ha pogut revertir.\n"
+"No s'ha pogut tornar endarrera.\n"
 "%s"
 
 #: app/flip_tool.c:83
@@ -1450,7 +1423,7 @@ msgid ""
 msgstr ""
 "No es pot crear una capa nova a partir de la selecció\n"
 "flotant perquè pertany a una\n"
-"màscara de capa o canal."
+"màscara de la capa o del canal."
 
 #: app/gdisplay.c:239
 msgid "RGB-empty"
@@ -1515,7 +1488,7 @@ msgid ""
 "to convert to a selection."
 msgstr ""
 "La capa activa no té cap màscara\n"
-"per convertir en una selecció."
+"per convertir a una selecció."
 
 #: app/gimage_mask.c:570
 msgid "No selection to stroke!"
@@ -1529,7 +1502,7 @@ msgstr "Versió desconeguda del format del pinzell #%d en \"%s\"."
 #: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Error en el fitxer de pinzells del GIMP \"%s\"."
+msgstr "S'ha produït un error en el fitxer de pinzells del GIMP \"%s\"."
 
 #: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
@@ -1569,7 +1542,7 @@ msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
 msgstr ""
-"Els conductes de pinzells n'han de tenir almenys un:\n"
+"Els conductes de pinzells han de tenir-ne almenys un:\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:387
@@ -1587,11 +1560,11 @@ msgstr "No es pot omplir el tipus d'imatge desconegut."
 
 #: app/gimpdrawable.c:509
 msgid "parasite attach to drawable"
-msgstr "adjunt paràsit al dibuix"
+msgstr "paràsit adjunt al dibuix"
 
 #: app/gimpdrawable.c:544
 msgid "detach parasite from drawable"
-msgstr "extreure paràsit del dibuix"
+msgstr "extreu paràsit del dibuix"
 
 #: app/gimpdrawable.c:752
 msgid "unnamed"
@@ -1600,7 +1573,7 @@ msgstr "sense nom"
 #: app/gimpdrawable.c:769
 #, c-format
 msgid "Layer type %d not supported."
-msgstr "Tipus de capa %d no suportat."
+msgstr "No es suporta el tipus de capa %d."
 
 #: app/gimphelp.c:195
 msgid "Could not find GIMP Help Browser"
@@ -1612,13 +1585,13 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
-"No es pot trobar el procediment per navegar en\n"
+"No s'ha pogut trobar el procediment per navegar en\n"
 "l'ajuda del GIMP. És probable que no fos compilat\n"
 "per què no heu instal·lat el GtkXmHTML."
 
 #: app/gimphelp.c:200
 msgid "Use Netscape instead"
-msgstr "Utilitza el Netscape al seu lloc"
+msgstr "En el seu lloc utilitza el Netscape"
 
 #: app/gimpimage.c:2328
 msgid "Layer cannot be raised any further"
@@ -1630,7 +1603,7 @@ msgstr "No es pot situar la capa més avall"
 
 #: app/gimpimage.c:2382
 msgid "Layer is already on top"
-msgstr "La capa ja és al capdamunt"
+msgstr "La capa ja és a dalt de tot"
 
 #: app/gimpimage.c:2388
 msgid "Can't raise Layer without alpha"
@@ -1638,11 +1611,11 @@ msgstr "No es pot pujar la capa sense alfa"
 
 #: app/gimpimage.c:2416
 msgid "Layer is already on bottom"
-msgstr "La capa ja és al capdavall"
+msgstr "La capa ja és a sota de tot"
 
 #: app/gimpimage.c:2471
 msgid "BG has no alpha, layer was placed above"
-msgstr "El BG no té alfa, s'ha situat la capa al damunt"
+msgstr "El fons no té alfa, la capa era situada al damunt"
 
 #: app/gimpimage.c:2543
 msgid ""
@@ -1678,7 +1651,7 @@ msgid ""
 "with no alpha channel."
 msgstr ""
 "No es pot afegir una capa de màscara\n"
-"a una capa sense canal alfa."
+"a una capa sense un canal alfa."
 
 #: app/gimpimage.c:3098
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -1766,7 +1739,7 @@ msgstr ""
 "Advertència:\n"
 "Hi ha massa diàlegs de missatges\n"
 "oberts. Els missatges són redireccionats\n"
-"cap el fitxer stderr."
+"cap al fitxer stderr."
 
 #: app/gimpui.c:122
 msgid "GIMP Message"
@@ -1839,15 +1812,19 @@ msgstr "Enganxa la memòria intermèdia"
 msgid "Select a buffer to paste:"
 msgstr "Selecciona una memòria intermèdia per enganxar:"
 
-#: app/global_edit.c:883
+#: app/global_edit.c:856
+msgid "(Unnamed Buffer)"
+msgstr "(Memòria intermèdia sense nom)"
+
+#: app/global_edit.c:886
 msgid "Cut Named"
 msgstr "Talla allò designat"
 
-#: app/global_edit.c:886 app/global_edit.c:918
+#: app/global_edit.c:889 app/global_edit.c:921
 msgid "Enter a name for this buffer"
 msgstr "Entra un nom per a aquesta memòria intermèdia"
 
-#: app/global_edit.c:915
+#: app/global_edit.c:918
 msgid "Copy Named"
 msgstr "Copia allò designat"
 
@@ -1873,7 +1850,7 @@ msgstr "RGB simple"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (comptador de tint ensentit horari)"
+msgstr "HSV (comptador de tint en sentit horari)"
 
 #: app/gradient.c:654
 msgid "HSV (clockwise hue)"
@@ -1966,7 +1943,7 @@ msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
-"Esteu segurs que voleu suprimir\n"
+"Esteu segur que voleu suprimir\n"
 "\"%s\" de la llista i del disc?"
 
 #: app/gradient.c:2102
@@ -1986,12 +1963,12 @@ msgstr ""
 #: app/gradient.c:2383
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Color de fons ajustat a RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Color de fons ajustat al RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2407
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "Color de fons a RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Color de fons al RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2698
 msgid "Drag: move    Shift+drag: move & compress"
@@ -2070,7 +2047,7 @@ msgstr "Tipus d'acolorit del segment"
 
 #: app/gradient.c:3835
 msgid "Split segment at midpoint"
-msgstr "Partir el segment pel mig"
+msgstr "Partir el segment per la meitat"
 
 #: app/gradient.c:3837 app/gradient.c:4934
 msgid "Split segment uniformly"
@@ -2106,7 +2083,7 @@ msgstr "Tipus d'acolorit per la selecció"
 
 #: app/gradient.c:3856
 msgid "Split segments at midpoints"
-msgstr "Partir el segment pel mig"
+msgstr "Partir el segment per la meitat"
 
 #: app/gradient.c:3858 app/gradient.c:4935
 msgid "Split segments uniformly"
@@ -2236,7 +2213,7 @@ msgstr "Saturació del color"
 
 #: app/hue_saturation.c:292
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "La saturació de color només és operativa en monitors en color RGB."
+msgstr "La saturació de color només és operativa en monitors en colors RGB."
 
 #: app/hue_saturation.c:360
 msgid "Master"
@@ -2331,7 +2308,7 @@ msgid ""
 "Click to open the Brushes Dialog."
 msgstr ""
 "El pinzell actiu.\n"
-"Feu clic per obrir el diàleg de pinzells."
+"Feu clic per obrir el diàleg dels pinzells."
 
 #: app/indicator_area.c:161
 msgid ""
@@ -2339,7 +2316,7 @@ msgid ""
 "Click to open the Patterns Dialog."
 msgstr ""
 "El patró actiu.\n"
-"Feu clic per obrir el diàleg de patrons."
+"Feu clic per obrir el diàleg dels patrons."
 
 #: app/indicator_area.c:180
 msgid ""
@@ -2719,7 +2696,7 @@ msgstr "Selecció movible"
 
 #: app/layers_dialog.c:3555
 msgid "New Layer Options"
-msgstr "Opcions per a una nova capa"
+msgstr "Opcions per a una capa nova"
 
 #. The name label and entry
 #: app/layers_dialog.c:3584
@@ -2745,12 +2722,12 @@ msgstr "Nom de la capa:"
 
 #: app/layers_dialog.c:3834
 msgid "Add Mask Options"
-msgstr "Afegeix opcions de màscara"
+msgstr "Afegeix opcions de la màscara"
 
 #. The radio frame and box
 #: app/layers_dialog.c:3852
 msgid "Initialize Layer Mask to:"
-msgstr "Inicialitza la màscara de capa a:"
+msgstr "Inicialitza la màscara de la capa a:"
 
 #: app/layers_dialog.c:3857
 msgid "White (Full Opacity)"
@@ -2795,7 +2772,7 @@ msgstr "Tallat a mida de la imatge"
 
 #: app/layers_dialog.c:4130
 msgid "Clipped to bottom layer"
-msgstr "Tallat a la mida de la capa de darrere"
+msgstr "Tallat a la mida de la capa del darrere"
 
 #: app/lc_dialog.c:121
 msgid "Layers, Channels & Paths"
@@ -2853,7 +2830,7 @@ msgstr "Eina per augmentar"
 
 #: app/magnify.c:127
 msgid "Allow Window Resizing"
-msgstr "Permet el redimensionament de finestres"
+msgstr "Permet el redimensionament de les finestres"
 
 #: app/magnify.c:142
 msgid "Zoom in"
@@ -2883,7 +2860,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Utilització: %s [opció...] [fitxers...]\n"
+"Utilització: %s [opció...] [fitxer...]\n"
 "\n"
 
 #: app/main.c:310
@@ -2912,7 +2889,7 @@ msgstr ""
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -i, --no-interface        Execució sense interfície d'usuari.\n"
+msgstr "  -i, --no-interface        Execució sense una interfície d'usuari.\n"
 
 #: app/main.c:315
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -2933,7 +2910,7 @@ msgstr "  -s, --no-splash           No mostris la finestra inicial.\n"
 #: app/main.c:319
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr ""
-"  -S, --no-splash-image     No posis una imatge a la finestra inicial.\n"
+"  -S, --no-splash-image     No afegeixis una imatge a la finestra inicial.\n"
 
 #: app/main.c:320
 msgid "  -v, --version            Output version information.\n"
@@ -2948,19 +2925,20 @@ msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                  No usis memòria compartida entre GIMP i les "
-"seves extensions.\n"
+"  --no-shm                  No usis la memòria compartida entre el GIMP i "
+"les seves extensions.\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
-"  --no-xshm                 No usis l'extensió de memòria compartida X.\n"
+"  --no-xshm                 No usis l'extensió de la memòria compartida X.\n"
 
 #: app/main.c:324
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers          Activa la depuració de gestors de senyals.\n"
+"  --debug-handlers          Habilita la depuració dels gestors de senyals no "
+"fatals.\n"
 
 #: app/main.c:325
 msgid "  --display <display>      Use the designated X display.\n"
@@ -2969,7 +2947,7 @@ msgstr "  --display <monitor>       Utilitza el monitor X indicat.\n"
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
-"  --system-gimprc <gimprc>  Usa un fitxer gimprc de sistema alternatiu.\n"
+"  --system-gimprc <gimprc>  Usa un fitxer gimprc del sistema alternatiu.\n"
 
 #: app/main.c:328
 msgid ""
@@ -3309,7 +3287,7 @@ msgstr "/Visualitza/Vista nova"
 
 #: app/menus.c:359
 msgid "/View/Shrink Wrap"
-msgstr "/Visualitza/Redueix entorn"
+msgstr "/Visualitza/Encongeix el contorn"
 
 #. <Image>/Image/Mode
 #: app/menus.c:364
@@ -3701,7 +3679,7 @@ msgstr "/Edita els atributs del canal..."
 
 #: app/menus.c:723
 msgid "/New Path"
-msgstr "/Nou camí"
+msgstr "/Camí nou"
 
 #: app/menus.c:725
 msgid "/Duplicate Path"
@@ -3922,7 +3900,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
-"Carregant la paleta %s (line %d):\n"
+"Carregant la paleta %s (linia %d):\n"
 "Error de lectura"
 
 #. maybe we should just abort?
@@ -3932,7 +3910,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
-"Carregant la paleta %s (line %d):\n"
+"Carregant la paleta %s (linia %d):\n"
 "S'ha perdut el component VERMELL"
 
 #: app/palette.c:449
@@ -3941,7 +3919,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
-"Carregant la paleta %s (line %d):\n"
+"Carregant la paleta %s (linia %d):\n"
 "S'ha perdut el component VERD"
 
 #: app/palette.c:456
@@ -3950,7 +3928,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
-"Carregant la paleta %s (line %d):\n"
+"Carregant la paleta %s (linia %d):\n"
 "S'ha perdut el component BLAU"
 
 #: app/palette.c:465
@@ -3959,7 +3937,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "RGB value out of range"
 msgstr ""
-"Carregant la paleta %s (line %d):\n"
+"Carregant la paleta %s (linia %d):\n"
 "Valor RGB fora de límits"
 
 #: app/palette.c:514
@@ -3981,7 +3959,7 @@ msgstr "Paleta nova"
 
 #: app/palette.c:1766
 msgid "Enter a name for new palette"
-msgstr "Introdueix un nom per a una nova paleta"
+msgstr "Introdueix un nom per a una paleta nova"
 
 #: app/palette.c:1820
 msgid "Delete Palette"
@@ -4114,40 +4092,40 @@ msgstr "Edita els atributs del camí"
 msgid "Enter a new name for the path"
 msgstr "Introdueix un nom nou per al camí"
 
-#: app/paths_dialog.c:1923
+#: app/paths_dialog.c:1933
 #, c-format
 msgid "Failed to read from %s"
 msgstr "No s'ha pogut llegir des de %s"
 
-#: app/paths_dialog.c:1938
+#: app/paths_dialog.c:1948
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "No s'ha pogut llegir el camí des de %s"
 
-#: app/paths_dialog.c:1945
+#: app/paths_dialog.c:1955
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "No s'han especificat punts al fitxer de camí %s"
 
-#: app/paths_dialog.c:1956
+#: app/paths_dialog.c:1966
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr "Mo s'han pogut llegir els punts de camí des de %s"
+msgstr "No s'han pogut llegir els punts de camí des de %s"
 
-#: app/paths_dialog.c:2029 app/xcf.c:438
+#: app/paths_dialog.c:2039 app/xcf.c:438
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "No s'ha pogut obrir a %s: %s\n"
 
-#: app/paths_dialog.c:2051
+#: app/paths_dialog.c:2061
 msgid "Load/Store Bezier Curves"
 msgstr "Carregar/Desar corbes de Bezier"
 
-#: app/paths_dialog.c:2091
+#: app/paths_dialog.c:2101
 msgid "Load Path"
 msgstr "Carregar el camí"
 
-#: app/paths_dialog.c:2113
+#: app/paths_dialog.c:2123
 msgid "Store Path"
 msgstr "Desar el camí"
 
@@ -4187,38 +4165,38 @@ msgstr "Matriu:"
 msgid "Perspective..."
 msgstr "Perspectiva..."
 
-#: app/plug_in.c:332
+#: app/plug_in.c:334
 msgid "Resource configuration"
 msgstr "Configuració de recursos"
 
-#: app/plug_in.c:339
+#: app/plug_in.c:341
 msgid "Plug-ins"
 msgstr "Extensions"
 
-#: app/plug_in.c:352
+#: app/plug_in.c:354
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "consulta d'extensions: \"%s\"\n"
 
-#: app/plug_in.c:390
+#: app/plug_in.c:392
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "escrivint \"%s\"\n"
 
-#: app/plug_in.c:405
+#: app/plug_in.c:407
 msgid "Starting extensions: "
 msgstr "S'estan iniciant les extensions: "
 
-#: app/plug_in.c:407
+#: app/plug_in.c:409
 msgid "Extensions"
 msgstr "Extensions"
 
-#: app/plug_in.c:850
+#: app/plug_in.c:852
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "No es pot localitzar l'extensió: \"%s\""
 
-#: app/plug_in.c:1477
+#: app/plug_in.c:1479
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4265,7 +4243,7 @@ msgstr "Error: l'alçada per defecte ha de ser 1 o més."
 
 #: app/preferences_dialog.c:292
 msgid "Error: Default unit must be within unit range."
-msgstr "Error: la unitat per defecte ha d'estar dins del límit d'unitat"
+msgstr "Error: la unitat per defecte ha d'estar dins del límit de la unitat"
 
 #: app/preferences_dialog.c:299
 msgid "Error: Default resolution must not be zero."
@@ -4274,8 +4252,8 @@ msgstr "Error: la resolució per defecte no ha de ser zero."
 #: app/preferences_dialog.c:307
 msgid "Error: Default resolution unit must be within unit range."
 msgstr ""
-"Error: la unitat de la resolució per defecte ha d'estar dins del límit "
-"d'unitat."
+"Error: la unitat de la resolució per defecte ha d'estar dins del límit de la "
+"unitat."
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
@@ -4347,7 +4325,7 @@ msgstr "Alçada"
 
 #: app/preferences_dialog.c:1584
 msgid "Default Image Resolution and Resolution Unit"
-msgstr "Resolució d'imatge per defecte i unitat de resolució"
+msgstr "Resolució de la imatge i de la unitat de resolució per defecte."
 
 #: app/preferences_dialog.c:1611 app/preferences_dialog.c:2405
 msgid "dpi"
@@ -4355,7 +4333,7 @@ msgstr "Punts per polzada"
 
 #: app/preferences_dialog.c:1658
 msgid "Default Image Type:"
-msgstr "Tipus d'imatge per defecte"
+msgstr "Tipus d'imatge per defecte:"
 
 #: app/preferences_dialog.c:1670
 msgid "Maximum Image Size:"
@@ -4383,11 +4361,11 @@ msgstr "Comprovacions de la llum"
 
 #: app/preferences_dialog.c:1735
 msgid "Mid-Tone Checks"
-msgstr "Comprovacions de tons mitjans"
+msgstr "Comprovacions dels tons mitjans"
 
 #: app/preferences_dialog.c:1736
 msgid "Dark Checks"
-msgstr "Comprovacions de foscor"
+msgstr "Comprovacions de la foscor"
 
 #: app/preferences_dialog.c:1737
 msgid "White Only"
@@ -4468,7 +4446,8 @@ msgstr "Caixa d'eines"
 #: app/preferences_dialog.c:1879
 msgid "Display Brush, Pattern and Gradient Indicators"
 msgstr ""
-"Mostra els indicadors de brotxa, de patró i de gradient a la barra d'eines"
+"Mostra els indicadors del pinzell, del patró i del gradient a la barra "
+"d'eines"
 
 #: app/preferences_dialog.c:1888
 msgid "Dialog Behaviour"
@@ -4520,7 +4499,7 @@ msgstr "Aparença"
 
 #: app/preferences_dialog.c:1975
 msgid "Use \"Dot for Dot\" by default"
-msgstr "Useu \"Dot for Dot\" per defecte"
+msgstr "Useu \"Punt per punt\" per defecte"
 
 #: app/preferences_dialog.c:1984
 msgid "Resize Window on Zoom"
@@ -4729,7 +4708,7 @@ msgstr "Calibració"
 
 #: app/preferences_dialog.c:2441
 msgid "From windowing system"
-msgstr "Del sistema de finestres"
+msgstr "Des del sistema de finestres"
 
 #: app/preferences_dialog.c:2463
 msgid "Manually:"
@@ -4830,12 +4809,12 @@ msgstr "Base de dades processal"
 #: app/procedural_db.c:142 app/procedural_db.c:154
 #, c-format
 msgid "PDB calling error %s not found"
-msgstr "L'error %s en la base de dades processal no s'ha trobat"
+msgstr "No s'ha trobat l'error %s en la base de dades processals"
 
 #: app/procedural_db.c:172
 #, c-format
 msgid "PDB calling error %s"
-msgstr "Error en base de dades processal%s"
+msgstr "S'ha produït un error en la base de dades processal%s"
 
 #: app/procedural_db.c:248
 #, c-format
@@ -4909,7 +4888,7 @@ msgstr "Dimensions del píxel"
 
 #: app/resize.c:200
 msgid "Set Layer Boundary Size"
-msgstr "Paràmetres del tamany frontera de la capa"
+msgstr "Paràmetres del tamany de la frontera de la capa"
 
 #: app/resize.c:205
 msgid "Set Canvas Size"
@@ -4921,33 +4900,34 @@ msgid "Original Width:"
 msgstr "Amplada original:"
 
 #. the new size labels
-#: app/resize.c:303 app/resize.c:535
+#: app/resize.c:303 app/resize.c:537
 msgid "New Width:"
-msgstr "Nova amplada:"
+msgstr "Amplada nova:"
 
 #. the scale ratio labels
 #: app/resize.c:368
 msgid "Ratio X:"
 msgstr "Ràtio X:"
 
-#: app/resize.c:464
+#: app/resize.c:466
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:521
+#: app/resize.c:523
 msgid "Print Size & Display Unit"
 msgstr "Imprimeix la mida i mostra la unitat"
 
-#: app/resize.c:1310
+#: app/resize.c:1312
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
-"Error en l'escala: tant l'alçada com l'amplada han de ser més grans de zero."
+"S'ha produït un error en l'escala: tant l'alçada com l'amplada han de ser "
+"més grans de zero."
 
-#: app/resize.c:1391
+#: app/resize.c:1393
 msgid "Layer Too Small"
 msgstr "Capa massa petita"
 
-#: app/resize.c:1395
+#: app/resize.c:1397
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -4999,7 +4979,7 @@ msgstr "Escala de la ràtio X:"
 
 #: app/scale_tool.c:509
 msgid "Scaling..."
-msgstr "Escalant..."
+msgstr "S'està escalant..."
 
 #: app/shear_tool.c:79
 msgid "Shear Information"
@@ -5011,7 +4991,7 @@ msgstr "Magnitud del retall en X:"
 
 #: app/shear_tool.c:352
 msgid "Shearing..."
-msgstr "Retallant..."
+msgstr "S'està retallant..."
 
 #. Create the shell
 #: app/text_tool.c:156 app/text_tool.c:405
@@ -5028,19 +5008,14 @@ msgstr "Contorn:"
 
 #: app/text_tool.c:207
 msgid "Use Dynamic Text"
-msgstr "Utilitza text dinàmic"
+msgstr "Utilitza el text dinàmic"
 
-#: app/text_tool.c:613
-#, c-format
-msgid "Font '%s' not found."
-msgstr "No s'ha trobat el tipus de lletra '%s'."
-
-#: app/text_tool.c:635
+#: app/text_tool.c:615 app/text_tool.c:644
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "No es troba el tipus de lletra '%s'.%s"
+msgstr "No s'ha trobat el tipus de lletra '%s'.%s"
 
-#: app/text_tool.c:638
+#: app/text_tool.c:618 app/text_tool.c:647
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5048,9 +5023,9 @@ msgid ""
 msgstr ""
 "\n"
 "Si no teniu tipus de lletra escalables, proveu de desactivar l'antialiasing "
-"en l'eina d'opcions."
+"a l'eina d'opcions."
 
-#: app/text_tool.c:751
+#: app/text_tool.c:760
 msgid "Text Layer"
 msgstr "Capa de text"
 
@@ -5074,38 +5049,49 @@ msgid ""
 "filenames, exit the Gimp and check the location of the\n"
 "swap directory in your Preferences."
 msgstr ""
+"No s'ha pogut obrir el fitxer d'intercanvi. El Gimp s'ha quedat\n"
+"sense memòria i no pot utilitzar el fitxer d'intercanvi. Algunes\n"
+"parts de les vostres imatges poden trobar-se danyades. Trieu desar\n"
+"el vostre treball utilitzant diversos noms de fitxers, sortir del\n"
+"Gimp i comprovar la localització del directori d'intercanvi a les\n"
+"vostres preferències."
 
-#: app/tips_dialog.c:75
+#. The string "gimp_tips.txt" needs special handling by
+#. translators. It is used to identify the tips file to
+#. be used for the current locale. Please translate it
+#. accordingly. For example for the german locale that
+#. would be "gimp_tips.de.txt".
+#: app/tips_dialog.c:80
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.txt"
 
-#: app/tips_dialog.c:87
+#: app/tips_dialog.c:95
 msgid "GIMP Tip of the Day"
 msgstr "Consell del dia del GIMP"
 
-#: app/tips_dialog.c:148
+#: app/tips_dialog.c:156
 msgid "Show tip next time GIMP starts"
 msgstr "Mostra un consell la propera vegada del GIMP"
 
-#: app/tips_dialog.c:178
+#: app/tips_dialog.c:186
 msgid "Previous Tip"
 msgstr "Consell anterior"
 
-#: app/tips_dialog.c:187
+#: app/tips_dialog.c:195
 msgid "Next Tip"
 msgstr "Consell següent"
 
-#: app/tips_dialog.c:290
+#: app/tips_dialog.c:298
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"Sembla que el fitxer de consells del GIMP no hi és!\n"
+"Sembla ser que no hi ha el fitxer de consells del GIMP!\n"
 "Al subdirectori de consells del directori de dades del\n"
 "GIMP ha d'haver un fitxer anomenat gimp_tips.txt.\n"
-"Si us plau, comproveu la instal·lació."
+"Si us plau, comproveu la vostra instal·lació."
 
 #: app/tool_options.c:126
 msgid "This tool has no options."
@@ -5193,7 +5179,7 @@ msgstr "Esvaeix o crema"
 
 #: app/tool_options.c:494
 msgid "Smudge Tool"
-msgstr "Eina d'esborrallar"
+msgstr "Eina d'esborronar"
 
 #: app/tool_options.c:609
 msgid "Incremental"
@@ -5265,15 +5251,15 @@ msgstr "Selecciona les regions contínues"
 
 #: app/tools.c:265
 msgid "Bezier Select"
-msgstr "Selecció Bezier"
+msgstr "Selecciona Bezier"
 
 #: app/tools.c:266
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Eines/Eines de selecció/Selecció Bezier"
+msgstr "/Eines/Eines de selecció/Selecciona Bezier"
 
 #: app/tools.c:271
 msgid "Select regions using Bezier curves"
-msgstr "Selecciona les regions utilitzant corbes Bezier"
+msgstr "Selecciona les regions utilitzant corbes de Bezier"
 
 #: app/tools.c:294
 msgid "/Tools/Select Tools/Intelligent Scissors"
@@ -5423,7 +5409,7 @@ msgstr "/Eines/Eines de pintura/Clona"
 
 #: app/tools.c:775
 msgid "Paint using patterns or image regions"
-msgstr "Pinta utilitzant patrons o regions d'imatge"
+msgstr "Pinta utilitzant patrons o regions de la imatge"
 
 #: app/tools.c:797
 msgid "Convolve"
@@ -5556,7 +5542,7 @@ msgid ""
 "layers that contain layer masks."
 msgstr ""
 "Les transformacions no funcionen en\n"
-"capes que continguin màscares de capa."
+"les capes que continguin màscares de capa."
 
 #: app/transform_core.c:254
 msgid "Rotate"
@@ -5830,14 +5816,14 @@ msgstr "Refés"
 
 #: app/user_install.c:106
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "El GIMP no està instal·lat correctament per a l'usuari actual\n"
+msgstr "El GIMP no s'ha instal·lat correctament per a l'usuari actual\n"
 
 #: app/user_install.c:107
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"S'ha omès la instal·lació perquè s'ha trobat el commutador '--no interface\n"
+"S'ha omès la instal·lació perquè s'ha trobat el commutador '--no interface'\n"
 
 #: app/user_install.c:108
 msgid ""
@@ -5866,7 +5852,7 @@ msgid ""
 "configure it to look differently than other GTK apps."
 msgstr ""
 "El GIMP fa servir un fitxet gtkrc addicional perque\n"
-"el pogueu configurar perquè es vegi diferent d'altresaplicacions GTK."
+"el pogueu configurar perquè es vegi diferent d'altres aplicacions GTK."
 
 #: app/user_install.c:182
 msgid ""
@@ -5907,8 +5893,8 @@ msgid ""
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 "La sessionrc es fa servir per emmagatzemar les finestres\n"
-"de diàleg obertes l'últim cop que vau sortir del GIMP. Podeu configurar\n"
-"el GIMP per obrir-les de nou en la posició desada."
+"de diàleg obertes l'últim cop que es va sortir del GIMP. Podeu\n"
+"configurar el GIMP per obrir-les de nou a la posició desada."
 
 #: app/user_install.c:209
 msgid ""
@@ -5922,7 +5908,7 @@ msgstr ""
 "de dades de les unitats. Podeu definir unitats addicionals\n"
 "i utilitzar-les tal com utilitzeu les polzades, mil·límetres,\n"
 "punts i piques que ja venen predefinits. Aquest fitxer\n"
-"se sobrescriu cada vegada que sortiu del GIMP."
+"se sobreescriu cada vegada que sortiu del GIMP."
 
 #: app/user_install.c:218
 msgid ""
@@ -6047,8 +6033,8 @@ msgid ""
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
 "El GIMP utilitza aquest subdirectori per emmagatzemar\n"
-"temporalment informació en memòria intermèdia per limitar\n"
-"l'ús de memòria. Si el GIMP s'interromp de manera anòmala,\n"
+"temporalment informació en la memòria intermèdia per limitar\n"
+"l'ús de la memòria. Si el GIMP s'interromp de manera anòmala,\n"
 "poden quedar fitxers en aquest directori amb la forma\n"
 "següent: gimp<#>.<#>. Són fitxers inútils per a les\n"
 "sessions GIMP i es poden eliminar tranquil·lament."
@@ -6131,7 +6117,7 @@ msgid ""
 "GIMP directory is being created..."
 msgstr ""
 "Espereu mentre es crea el vostre\n"
-"directori personal GIMP..."
+"directori personal en el GIMP..."
 
 #: app/user_install.c:590
 msgid "GIMP User Installation"
@@ -6152,12 +6138,12 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Benvingut a\n"
-"la instal·lació d'usuari del GIMP"
+"la instal·lació de l'usuari del GIMP"
 
 #: app/user_install.c:735
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
-"Feu clic a \"Continua\" per entrar a la instal·lació d'usuari del GIMP."
+"Feu clic a \"Continua\" per entrar a la instal·lació de l'usuari del GIMP."
 
 #: app/user_install.c:739
 msgid ""
@@ -6188,9 +6174,9 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
-"Aquest programa es distribueix esperant que serà útil,\n"
-"però SENSE CAP GARANTIA; ni tan sols garanties implícites de\n"
-"COMERCIALITZACIÓ o ADEQUACIÓ A UN ÚS DETERMINAT.\n"
+"Aquest programa es distribueix amb l'esperança que serà útil,\n"
+"però SENSE CAP GARANTIA; ni tan sols les garanties implícites de\n"
+"la COMERCIALITZACIÓ o de l'ADEQUACIÓ A UN ÚS DETERMINAT.\n"
 "Consulteu la llicència pública general de GNU per a més informació."
 
 #: app/user_install.c:758
@@ -6235,7 +6221,7 @@ msgstr ""
 
 #: app/user_install.c:897
 msgid "User Installation Log"
-msgstr "Registre d'instal·lació de l'usuari"
+msgstr "Registre de la instal·lació de l'usuari"
 
 #: app/user_install.c:903
 msgid "GIMP Performance Tuning"
@@ -6243,7 +6229,7 @@ msgstr "Ajust del rendiment del GIMP"
 
 #: app/user_install.c:904
 msgid "Click \"Continue\" to accept the settings above."
-msgstr "Feu clic a \"Continua\" per acceptar els paràmetres anteriors."
+msgstr "Feu un clic a \"Continua\" per acceptar els paràmetres anteriors."
 
 #: app/user_install.c:907
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
@@ -6272,53 +6258,57 @@ msgid "Aborting Installation..."
 msgstr "S'està avortant la instal·lació..."
 
 #: app/user_install.c:956
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open %s for reading"
-msgstr "No es pot obrir %s; %s"
+msgstr "No es pot obrir %s per lectura"
 
 #: app/user_install.c:964
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open %s for writing"
-msgstr "No es pot obrir %s; %s"
+msgstr "No es pot obrir %s per escritura"
 
 #: app/user_install.c:974
 #, c-format
 msgid "Error while writing %s"
-msgstr ""
+msgstr "S'ha produït un error en escriure %s"
 
 #: app/user_install.c:984
 #, c-format
 msgid "Error while reading %s"
-msgstr ""
+msgstr "S'ha produít un error en llegir %s"
 
 #: app/user_install.c:1019
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot open directory %s"
-msgstr "advertència: no hi ha directori d'inici."
+msgstr "No es pot obrir el directori %s"
 
 #: app/user_install.c:1026
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create directory %s -- %s"
-msgstr "No es pot escriure a %s; %s"
+msgstr "No es pot crear el directori %s -- %s"
 
 #: app/user_install.c:1046
 #, c-format
 msgid "Cannot get status of file %s"
-msgstr ""
+msgstr "No es pot obtenir l'estat del fitxer %s"
 
 #: app/user_install.c:1094
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s does not exist.\n"
 "Cannot install."
-msgstr "no existeix. No es pot realitzar la instal·lació."
+msgstr ""
+"No existeix %s.\n"
+"No es pot realitzar la instal·lació."
 
 #: app/user_install.c:1106
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has invalid permissions.\n"
 "Cannot install."
-msgstr "té permisos que no són vàlids. No es pot realitzar la instal·lació."
+msgstr ""
+"%s té els permisos que no són vàlids.\n"
+"No es pot realitzar la instal·lació."
 
 #: app/user_install.c:1169
 msgid ""
@@ -6333,7 +6323,7 @@ msgstr ""
 
 #: app/user_install.c:1180
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr "Feu clic a \"Continua\" per completar la instal·lació del GIMP."
+msgstr "Feu un clic a \"Continua\" per completar la instal·lació del GIMP."
 
 #: app/user_install.c:1185 app/user_install.c:1306
 msgid "Installation failed.  Contact system administrator."
@@ -6342,33 +6332,33 @@ msgstr ""
 "sistema."
 
 #: app/user_install.c:1222 app/user_install.c:1243
-#, fuzzy, c-format
+#, c-format
 msgid "Creating directory %s\n"
-msgstr "Directoris dels gradients"
+msgstr "S'està creant el directori %s\n"
 
 #: app/user_install.c:1228 app/user_install.c:1249
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create directory -- %s"
-msgstr "No es pot escriure a %s; %s"
+msgstr "No es pot crear el directori -- %s"
 
 #: app/user_install.c:1233 app/user_install.c:1294
 msgid "  Success\n"
-msgstr ""
+msgstr "  Realitzat\n"
 
 #: app/user_install.c:1270
 #, c-format
 msgid "Populating directory %s from %s\n"
-msgstr ""
+msgstr "Popularització del directori %s des de %s\n"
 
 #: app/user_install.c:1280
-#, fuzzy, c-format
+#, c-format
 msgid "Copying file %s from %s\n"
-msgstr "Error en obrir el fitxer %s: %s"
+msgstr "S'està copiant el fitxer %s des de %s\n"
 
 #: app/user_install.c:1301
 #, c-format
 msgid "  Failure -- %s\n"
-msgstr ""
+msgstr "  Ha fallat -- %s\n"
 
 #: app/user_install.c:1329
 msgid ""
@@ -6426,14 +6416,16 @@ msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
-"També podeu fer clic al botó \"Calibració\" per obrir una\n"
+"També podeu fer un clic al botó \"Calibració\" per obrir una\n"
 "finestra que us permeti determinar la resolució del vostre\n"
 "monitor interactivament."
 
 #: app/xcf.c:384
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Error XCF: s'ha trobat %d una versió del fitxer XCF no suportada"
+msgstr ""
+"S'ha produït un error en el XCF: s'ha trobat %d una versió del fitxer XCF no "
+"suportada"
 
 #: app/xcf.c:1817
 msgid ""
@@ -6470,6 +6462,30 @@ msgstr "Aquarel·la"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historial del color"
+
+#~ msgid "Error opening file %s: %s"
+#~ msgstr "S'ha produït un error en obrir el fitxer %s: %s"
+
+#~ msgid "Can't save, nothing selected!"
+#~ msgstr "No es pot desar, no hi ha res seleccionat!"
+
+#~ msgid "Save error log to file..."
+#~ msgstr "Desa el registre d'errors a l'arxiu..."
+
+#~ msgid "GIMP Error Console"
+#~ msgstr "Consola d'errors GIMP"
+
+#~ msgid "Clear"
+#~ msgstr "Esborra"
+
+#~ msgid "Write all errors to file..."
+#~ msgstr "Escriu tots els errors al fitxer..."
+
+#~ msgid "Write selection to file..."
+#~ msgstr "Escriu la selecció al fitxer..."
+
+#~ msgid "Font '%s' not found."
+#~ msgstr "No s'ha trobat el tipus de lletra '%s'."
 
 #~ msgid ""
 #~ "Did you notice any error messages in the console window?\n"
@@ -7274,7 +7290,7 @@ msgstr "Historial del color"
 #~ msgstr "no s'han trobat suficients mosaics en el nivell"
 
 #~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
-#~ msgstr "xcf: oh oh! error en carregar el mosaic xcf rle: %d"
+#~ msgstr "xcf: s'ha produït un error en carregar el mosaic xcf rle: %d"
 
 #~ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 #~ msgstr ""
@@ -7295,7 +7311,7 @@ msgstr "Historial del color"
 #~ "la unit-menu-format conté una seqüència de format desconeguda '%%%c'"
 
 #~ msgid "Unit Selection"
-#~ msgstr "Selecció d'unitat"
+#~ msgstr "Selecció de la unitat"
 
 #~ msgid "Unit "
 #~ msgstr "Unitat "
