@@ -137,6 +137,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpdialog.h		\
 	gimpfileselection.h	\
 	gimphelpui.h		\
+	gimpmemsizeentry.h	\
 	gimpoffsetarea.h	\
 	gimppatheditor.h	\
 	gimppickbutton.h	\
