@@ -222,8 +222,7 @@ save_image (char   *filename,
   if (gtmvals.caption)
     fprintf (fp,"<CAPTION>%s</CAPTION>\n",gtmvals.captiontxt); 
 
-  name = g_malloc (strlen (filename) + 11);
-  sprintf (name, _("Saving %s:"), filename);
+  name = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (name);
   g_free (name);
 

@@ -321,8 +321,7 @@ load_image (char *filename)
   void *mapped;  /* memory mapped file data */
   struct stat statbuf;  /* must check file size */
 
-  temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, _("Loading %s:"), filename);
+  temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -459,8 +458,7 @@ save_image (char   *filename,
       return FALSE;
     }
 
-  temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, _("Saving %s:"), filename);
+  temp = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 

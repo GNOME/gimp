@@ -260,9 +260,8 @@ load_image (char *filename)
   GPixelRgn pixel_rgn;
   int version_extra;
   
-  temp = g_malloc(strlen (filename) + 11);
-  sprintf(temp, _("Loading %s:"), filename);
-  gimp_progress_init(temp);
+  temp = g_strdup_printf (_("Loading %s:"), filename);
+  gimp_progress_init (temp);
   g_free (temp);
   
   fd = open(filename, O_RDONLY | _O_BINARY);
@@ -366,10 +365,9 @@ save_image (char   *filename,
   if (gimp_drawable_type(drawable_ID) != GRAY_IMAGE)
     return FALSE;
   
-  temp = g_malloc(strlen (filename) + 10);
-  sprintf(temp, _("Saving %s:"), filename);
-  gimp_progress_init(temp);
-  g_free(temp);
+  temp = g_strdup_printf (_("Saving %s:"), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
   
   drawable = gimp_drawable_get(drawable_ID);
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,

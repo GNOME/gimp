@@ -153,8 +153,6 @@ static GtkWidget	*gtkW_dialog_new (gchar	*name,
 					  GtkSignalFunc	close_callback);
 static GtkWidget	*gtkW_frame_new (GtkWidget *parent, gchar *name);
 static GtkWidget	*gtkW_hbox_new (GtkWidget *parent);
-static void	gtkW_message_dialog (gint gtk_was_initialized, gchar *message);
-static GtkWidget	*gtkW_message_dialog_new (gchar * name);
 static GtkWidget	*gtkW_table_add_button (GtkWidget	*table,
 						gchar		*name,
 						gint		x0,
@@ -1921,7 +1919,7 @@ CML_copy_parameters_callback (GtkWidget *widget, gpointer data)
 
   if (copy_source == copy_destination)
     {
-      gtkW_message_dialog (TRUE, _("Warning: the source and the destination are the same channel."));
+      gimp_message (_("Warning: the source and the destination are the same channel."));
       gdk_flush ();
       return;
     }
@@ -2105,10 +2103,11 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
     }
   if ((err != 0) && (file == NULL))
     {
-      gchar buffer[CML_LINE_SIZE];
+      gchar *buffer;
 
-      sprintf (buffer, _("Error: could not open \"%s\""), filename);
-      gtkW_message_dialog (TRUE, buffer);
+      buffer = g_strdup_printf (_("Error: could not open \"%s\""), filename);
+      gimp_message (buffer);
+      g_free (buffer);
       return;
     }
   else
@@ -2150,10 +2149,12 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
       fclose(file);
 #ifdef	VERBOSE_DIALOGS
       {
-	gchar buffer[CML_LINE_SIZE];
+	gchar *buffer;
 
-	sprintf (buffer, "Parameters were saved to \"%s\"", filename);
-	gtkW_message_dialog (TRUE, buffer);
+	buffer = g_strdup_printf (_("Parameters were saved to \"%s\""), 
+				  filename);
+	gimp_message (buffer);
+	g_free (buffer);
       }
 #endif
       if ( sizeof (VALS.last_file_name) <= strlen (filename))
@@ -2169,7 +2170,7 @@ force_overwrite (char *filename)
   GtkWidget	*dlg;
   GtkWidget	*label;
   GtkWidget	*table;
-  gchar		buffer[CML_LINE_SIZE];
+  gchar		*buffer;
   gint		tmp;
 
   dlg = gtkW_dialog_new (_("CML file operation warning"),
@@ -2179,8 +2180,9 @@ force_overwrite (char *filename)
   table = gtkW_table_new (NULL, 1, 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
-  sprintf (buffer, _("%s exists, overwrite?"), filename);
+  buffer = g_strdup_printf (_("%s exists, overwrite?"), filename);
   label = gtk_label_new (buffer);
+  g_free (buffer);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
 		    0, 0, 0);
   gtk_widget_show (label);
@@ -2296,12 +2298,13 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
 
   if (!file)
     {
-      gchar buffer[CML_LINE_SIZE];
+      gchar *buffer;
 
       if (interactive_mode)
 	{
-	  sprintf (buffer, _("Error: could not open \"%s\""), filename);
-	  gtkW_message_dialog (TRUE, buffer);
+	  buffer = g_strdup_printf (_("Error: could not open \"%s\""), filename);
+	  gimp_message (buffer);
+	  g_free (buffer);
 	}
       return FALSE;
     }
@@ -2323,16 +2326,16 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
       if (version == 0)
 	{
 	  if (interactive_mode)
-	    gtkW_message_dialog (TRUE, _("Error: it's not CML parameter file."));
+	    gimp_message (_("Error: it's not CML parameter file."));
 	  fclose(file);
 	  return FALSE;
 	}
       if (interactive_mode)
 	{
 	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    gtkW_message_dialog (TRUE, _("Warning: it's an old format file."));
+	    gimp_message (_("Warning: it's an old format file."));
 	  if (PARAM_FILE_FORMAT_VERSION < version)
-	    gtkW_message_dialog (TRUE, _("Warning: Hmmm, it's a parameter file for newer CML_explorer than me."));
+	    gimp_message (_("Warning: Hmmm, it's a parameter file for newer CML_explorer than me."));
 	}
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
 	{
@@ -2393,7 +2396,7 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
   if (flag == FALSE)
     {
       if (interactive_mode)
-	gtkW_message_dialog (TRUE, "Error: failed to load paramters");
+	gimp_message (_("Error: failed to load parameters"));
     }
   else
     {
@@ -2737,64 +2740,6 @@ gtkW_hbox_new (GtkWidget *parent)
   gtk_widget_show (hbox);
 
   return hbox;
-}
-
-static void
-gtkW_message_dialog (gint gtk_was_initialized, gchar *message)
-{
-  GtkWidget *dlg;
-  GtkWidget *table;
-  GtkWidget *label;
-  gchar	**argv;
-  gint	argc;
-
-  if (! gtk_was_initialized)
-    {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup (PLUG_IN_NAME);
-      gtk_init (&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
-    }
-
-  dlg = gtkW_message_dialog_new (PLUG_IN_NAME);
-
-  table = gtkW_table_new (GTK_DIALOG (dlg)->vbox, 1, 1);
-
-  label = gtk_label_new (message);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
-		    0, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (dlg);
-
-  gtk_main ();
-  gdk_flush ();
-}
-
-static GtkWidget *
-gtkW_message_dialog_new (gchar * name)
-{
-  GtkWidget *dlg, *button;
-
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  return dlg;
 }
 
 static GtkWidget *

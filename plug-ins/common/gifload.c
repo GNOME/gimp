@@ -292,11 +292,9 @@ load_image (char *filename)
       return -1;
     }
 
-  name_buf = g_malloc (strlen (filename) + 11);
-
   if (run_mode != RUN_NONINTERACTIVE)
     {
-      sprintf (name_buf, _("Loading %s:"), filename);
+      name_buf = g_strdup_printf (_("Loading %s:"), filename);
       gimp_progress_init (name_buf);
       g_free (name_buf);
     }
@@ -802,7 +800,8 @@ ReadImage (FILE *fd,
   gint cur_progress, max_progress;
   gint v;
   gint i, j;
-  gchar framename[200]; /* FIXME */
+  gchar *framename;
+  gchar *framenamedisp = NULL;
   gboolean alpha_frame = FALSE;
   int nreturn_vals;
   static int previous_disposal;
@@ -839,9 +838,9 @@ ReadImage (FILE *fd,
       gimp_image_set_cmap (image_ID, gimp_cmap, ncols);
 
       if (Gif89.delayTime < 0)
-	strcpy(framename, _("Background"));
+	framename = g_strdup (_("Background"));
       else
-	sprintf(framename, _("Background (%dms)"), 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Background (%dms)"), 10*Gif89.delayTime);
 
       previous_disposal = Gif89.disposal;
 
@@ -858,6 +857,8 @@ ReadImage (FILE *fd,
 				     INDEXEDA_IMAGE, 100, NORMAL_MODE);
 	  alpha_frame=TRUE;
 	}
+
+      g_free (framename);
     }
   else /* NOT FIRST FRAME */
     {
@@ -888,35 +889,38 @@ ReadImage (FILE *fd,
 	}
 
       if (Gif89.delayTime < 0)
-	sprintf(framename, _("Frame %d"), frame_number);
+	framename = g_strdup_printf (_("Frame %d"), frame_number);
       else
-	sprintf(framename, _("Frame %d (%dms)"),
-		frame_number, 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Frame %d (%dms)"), frame_number, 10*Gif89.delayTime);
 
       switch (previous_disposal)
 	{
 	case 0x00: break; /* 'don't care' */
-	case 0x01: strcat(framename,_(" (combine)")); break;
-	case 0x02: strcat(framename,_(" (replace)")); break;
-	case 0x03: strcat(framename,_(" (combine)")); break;
+	case 0x01: framenamedisp = g_strconcat (framename, _(" (combine)"), NULL); break;
+	case 0x02: framenamedisp = g_strconcat (framename, _(" (replace)"), NULL); break;
+	case 0x03: framenamedisp = g_strconcat (framename, _(" (combine)"), NULL); break;
 	case 0x04:
 	case 0x05:
 	case 0x06:
 	case 0x07:
-	  strcat(framename,_(" (unknown disposal)"));
+	  framenamedisp = g_strconcat (framename, _(" (unknown disposal)"), NULL);
 	  g_message ("GIF: Hmm... please forward this GIF to the "
 		     "GIF plugin author!\n  (adam@foxbox.org)\n");
 	  break;
-	default: g_message ("GIF: Something got corrupted.\n"); break;
+	default: 
+	  g_message ("GIF: Something got corrupted.\n");
+	  framenamedisp = g_strdup (framename);
+	  break;
 	}
-
       previous_disposal = Gif89.disposal;
+      g_free (framename);
 
-      layer_ID = gimp_layer_new (image_ID, framename,
+      layer_ID = gimp_layer_new (image_ID, framenamedisp,
 				 len, height,
 				 promote_to_rgb ? RGBA_IMAGE : INDEXEDA_IMAGE,
 				 100, NORMAL_MODE);
       alpha_frame = TRUE;
+      g_free (framenamedisp);
     }
 
   frame_number++;

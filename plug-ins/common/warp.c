@@ -1344,7 +1344,7 @@ warp        (GDrawable *orig_draw,
   GDrawable *disp_map;    /* Displacement map, ie, control array */
   GDrawable *mag_draw;    /* Magnitude multiplier factor map */
 
-  gchar string[80];           /* string to hold title of progress bar window */
+  gchar *string;          /* string to hold title of progress bar window */
 
   gint    first_time = TRUE;
   gint    width;
@@ -1391,19 +1391,13 @@ warp        (GDrawable *orig_draw,
    for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
    {
      if (run_mode != RUN_NONINTERACTIVE) {
-       sprintf(string, _("Flow Step %d..."),warp_iter+1);
+       string = g_strdup_printf (_("Flow Step %d..."), warp_iter+1);
        gimp_progress_init (string);
-       progress     = 0;
+       g_free (string);
+       progress = 0;
        gimp_progress_update (0);
      }
      warp_one(orig_draw, orig_draw, *map_x, *map_y, mag_draw, first_time, warp_iter);
-
-     /*
-     sprintf(string,"Background Step %d...",warp_iter+1);
-     gimp_progress_init (string);
-     progress     = 0;
-     warp_one(new_image, orig_draw, *map_x, *map_y, mag_draw, FALSE, warp_iter);
-     */
 
      gimp_drawable_update (orig_draw->id, x1, y1, (x2 - x1), (y2 - y1));
 

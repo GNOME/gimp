@@ -341,7 +341,7 @@ load_image (char *filename)	/* I - File to load */
   png_infop	info;		/* PNG info pointers */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
-  char		progress[255];	/* Title for progress display... */
+  gchar		*progress;	/* Title for progress display... */
   guchar	alpha[256],	/* Index -> Alpha */
   		*alpha_ptr;	/* Temporary pointer */
 
@@ -388,11 +388,12 @@ load_image (char *filename)	/* I - File to load */
   png_init_io(pp, fp);
 
   if (strrchr(filename, '/') != NULL)
-    sprintf (progress, _("Loading %s:"), strrchr(filename, '/') + 1);
+    progress = g_strdup_printf (_("Loading %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf (progress, _("Loading %s:"), filename);
+    progress = g_strdup_printf (progress, _("Loading %s:"), filename);
 
   gimp_progress_init(progress);
+  g_free (progress);
 
  /*
   * Get the image dimensions and create the image...
@@ -653,7 +654,7 @@ save_image (char   *filename,	        /* I - File to save to */
   gint		offx, offy;	/* Drawable offsets from origin */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
-  char		progress[255];	/* Title for progress display... */
+  gchar		*progress;	/* Title for progress display... */
   gdouble       xres, yres;	/* GIMP resolution (dpi) */
   gdouble	gamma;
   guchar	red, green, blue; /* For palette background */
@@ -694,11 +695,12 @@ save_image (char   *filename,	        /* I - File to save to */
   png_init_io(pp, fp);
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, _("Saving %s:"), strrchr(filename, '/') + 1);
+    progress = g_strdup_printf (_("Saving %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, _("Saving %s:"), filename);
+    progress = g_strdup_printf (_("Saving %s:"), filename);
 
   gimp_progress_init(progress);
+  g_free (progress);
 
  /*
   * Get the drawable for the current image...

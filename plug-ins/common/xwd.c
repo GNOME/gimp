@@ -367,7 +367,7 @@ load_image (char *filename)
 {
   FILE *ifp;
   int depth, bpp;
-  char *temp;
+  gchar *temp;
   gint32 image_ID;
   L_XWDFILEHEADER xwdhdr;
   L_XWDCOLOR *xwdcolmap = NULL;
@@ -433,8 +433,7 @@ load_image (char *filename)
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, "Loading %s:", filename);
+    temp = g_strdup_printf (_("Loading %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -485,19 +484,11 @@ load_image (char *filename)
 
   if (image_ID == -1)
   {
-    temp = g_malloc (strlen (filename)+256);
-    if (temp == NULL)
-    {
-      show_message (_("this image depth/format is not supported"));
-    }
-    else
-    {
-      sprintf (temp, _("load_image (xwd): XWD-file %s has format %d, depth %d\n\
+    temp = g_strdup_printf (_("load_image (xwd): XWD-file %s has format %d, depth %d\n\
 and bits per pixel %d.\nCurrently this is not supported.\n"),
-               filename, (int)xwdhdr.l_pixmap_format, depth, bpp);
-      show_message (temp);
-      g_free (temp);
-    }
+			    filename, (int)xwdhdr.l_pixmap_format, depth, bpp);
+    show_message (temp);
+    g_free (temp);
     return (-1);
   }
 
@@ -546,8 +537,7 @@ save_image (char   *filename,
 
   if (l_run_mode != RUN_NONINTERACTIVE)
     {
-      temp = g_malloc (strlen (filename) + 11);
-      sprintf (temp, _("Saving %s:"), filename);
+      temp = g_strdup_printf (_("Saving %s:"), filename);
       gimp_progress_init (temp);
       g_free (temp);
     }

@@ -437,8 +437,7 @@ load_image (char *filename)
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 64);
-    sprintf (temp, _("Loading %s:"), filename);
+    temp = g_strdup_printf (temp, _("Loading %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -522,8 +521,7 @@ save_image (char *filename,
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 64);
-    sprintf (temp, _("Saving %s:"), filename);
+    temp = g_strdup_printf (_("Saving %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }

@@ -212,9 +212,9 @@ static gint32 load_image(char *file, char *brief) {
     gimp_quit();
   }
 
-  progress= g_malloc(strlen(brief) + 10);
-  sprintf(progress, _("Loading %s:"), brief);
-  gimp_progress_init(progress);
+  progress = g_strdup_printf (_("Loading %s:"), brief);
+  gimp_progress_init (progress);
+  g_free (progress);
 
  /* Get the image dimensions and create the image... */
 
@@ -413,9 +413,9 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
     gimp_quit();
   }
 
-  progress= g_malloc(strlen(brief) + 9);
-  sprintf(progress, _("Saving %s:"), brief);
-  gimp_progress_init(progress);
+  progress = g_strdup_printf (_("Loading %s:"), brief);
+  gimp_progress_init (progress);
+  g_free (progress);
 
  /* Headers */
   memset(header, 0, 32);

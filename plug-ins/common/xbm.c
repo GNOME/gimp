@@ -541,8 +541,7 @@ load_image (char *filename)
       return -1;
     }
 
-  name_buf = g_malloc (strlen (filename) + 11);
-  sprintf (name_buf, _("Loading %s:"), filename);
+  name_buf = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -799,8 +798,7 @@ save_image (char   *filename,
       return FALSE;
     }
 
-  name_buf = (guchar *) g_malloc (strlen (filename) + 11);
-  sprintf (name_buf, _("Saving %s:"), filename);
+  name_buf = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 

@@ -43,6 +43,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.21  1999/12/29 18:07:43  neo
+ *   NEVER EVER use sprintf together with _(...) !
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.20  1999/12/27 18:43:09  neo
  *   small dialog changes and german translation update
  *
@@ -754,9 +760,7 @@ despeckle_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  plugin_name = g_new(gchar,
-                      strlen( _("Despeckle "))+strlen(PLUG_IN_VERSION)+1);
-  sprintf(plugin_name, "%s%s", _("Despeckle "), PLUG_IN_VERSION);
+  plugin_name = g_strdup_printf ("%s%s", _("Despeckle "), PLUG_IN_VERSION);
   gtk_window_set_title(GTK_WINDOW(dialog), plugin_name);
   g_free(plugin_name);
   gtk_window_set_wmclass(GTK_WINDOW(dialog), "despeckle", "Gimp");

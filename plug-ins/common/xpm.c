@@ -306,15 +306,12 @@ load_image (char *filename)
   XpmImage  xpm_image;
   guchar   *cmap;
   gint32    image_ID;
-  char     *name;
+  gchar    *name;
 
   /* put up a progress bar */
-  name = malloc (strlen (filename) + 12);
-  if (!name)
-    gimp_quit();
-  sprintf (name, _("Loading %s:"), filename);
+  name = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (name);
-  free (name);
+  g_free (name);
 
   /* read the raw file */
   XpmReadFileToXpmImage (filename, &xpm_image, NULL);
@@ -629,12 +626,11 @@ save_image (char   *filename,
   
   /* put up a progress bar */
   {
-    char *name = g_new (char, strlen (filename) + 12);
-    if (!name)
-      gimp_quit();
-    sprintf (name, _("Saving %s:"), filename);
+    gchar *name;
+
+    name = g_strdup_printf (_("Saving %s:"), filename);
     gimp_progress_init (name);
-    free (name);
+    g_free (name);
   }
 
   

@@ -603,7 +603,7 @@ static void iwarp()
  int i;
  gint32 layerID;
  gint32 *animlayers;
- char st[100];
+ gchar *st;
  gfloat delta;
 
  
@@ -621,25 +621,29 @@ static void iwarp()
   if (image_bpp == 1 || image_bpp == 3) layer_alpha = TRUE; else layer_alpha = FALSE;
   frame_number = 0;
   for (i=0; i< animate_num_frames; i++) {
-   sprintf(st,"Frame %d",i);
+   st = g_strdup_printf (_("Frame %d"),i);
    animlayers[i] = iwarp_layer_copy(layerID);
    gimp_layer_set_name(animlayers[i],st);
+   g_free (st);
    destdrawable = gimp_drawable_get(animlayers[i]);
-   sprintf(st, _("Warping Frame Nr %d ..."),frame_number);
+   st = g_strdup_printf (_("Warping Frame Nr %d ..."),frame_number);
    gimp_progress_init(st);
+   g_free (st);
    if (animate_deform_value >0.0) iwarp_frame();
    gimp_image_add_layer(imageID,animlayers[i],0);
    animate_deform_value = animate_deform_value + delta;
    frame_number++;
   }
   if (do_animate_ping_pong) {
-   sprintf(st, _("Warping Frame Nr %d ..."),frame_number);
+   st = g_strdup_printf (_("Warping Frame Nr %d ..."),frame_number);
    gimp_progress_init( _("Ping Pong"));
+   g_free (st);
    for (i=0; i < animate_num_frames; i++) {
      gimp_progress_update((double)i / (animate_num_frames-1));
      layerID = iwarp_layer_copy(animlayers[animate_num_frames-i-1]); 
-     sprintf(st,"Frame %d",i+animate_num_frames);
+     st = g_strdup_printf (_("Frame %d"),i+animate_num_frames);
      gimp_layer_set_name(layerID,st);
+     g_free (st);
      gimp_image_add_layer(imageID,layerID,0); 
    }
   }
