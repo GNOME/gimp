@@ -3,7 +3,7 @@
 	* app/transform_core.c: the button_press and cursor_update
 	functions were still doing checks on the active layer instead of
 	the active drawable.
-	Fixing this automatically made the layers mask transformable.
+	Fixing this automatically made the layer mask transformable.
 
 2000-03-26 Garry R. Osgood <gosgood@idt.net>
 
