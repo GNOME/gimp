@@ -483,7 +483,16 @@ app_init (void)
   gchar *filename;
   gchar *path;
 
+  /*  parse the systemwide gtkrc  */
   filename = gimp_gtkrc ();
+
+  if (be_verbose)
+    g_print (_("parsing \"%s\"\n"), filename);
+
+  gtk_rc_parse (filename);
+
+  /*  parse the user gtkrc  */
+  filename = gimp_personal_rc_file ("gtkrc");
 
   if (be_verbose)
     g_print (_("parsing \"%s\"\n"), filename);

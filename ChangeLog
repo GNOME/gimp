@@ -1,3 +1,11 @@
+2000-11-03  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_init): parse the users gtkrc as found in
+	~/.gimp-1.1 after the systemwide gtkrc has been parsed.
+
+	* user_install.bat: reverted Tor's change since we use the file
+	again now.
+	
 2000-11-03  David Monniaux  <monniaux@quatramaran.ens.fr>
 
 	* autogen.sh: some regexps used to parse the output of
