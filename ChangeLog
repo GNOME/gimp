@@ -1,3 +1,11 @@
+2001-12-30  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimphelp.c (gimp_help_netscape): Check help_data
+	being-non-NULL before dereferencing it. (Bug# 65789)
+	(gimp_idle_help): If the internal browser wasn't found, check if
+	idle_help->help_data is NULL, and in that case put
+	"introduction.html" there, before calling gimp_help_netscape.
+
 2001-12-29  Sven Neumann  <sven@gimp.org>
 
 	* data/brushes/vine.gih: fixed rank and increased spacing.

@@ -130,6 +130,10 @@ gimp_idle_help (gpointer data)
 			      current_locale,
 			      idle_help->help_data))
 	break;
+      if (idle_help->help_data == NULL)
+	idle_help->help_data = g_strdup ("introduction.html");
+
+      /* Fallthrough */
 
     case HELP_BROWSER_NETSCAPE:
       gimp_help_netscape (idle_help->help_path,
@@ -246,7 +250,7 @@ gimp_help_netscape (const gchar *help_path,
   gint      nreturn_vals;
   gchar    *url;
 
-  if (help_data[0] == '/')  /* _not_ g_path_is_absolute() */
+  if (help_data && help_data[0] == '/')	/* _not_ g_path_is_absolute() */
     {
       url = g_strconcat ("file:",
 			 help_data,
