@@ -33,13 +33,105 @@ gimp_composite_regression_print_va8(gimp_va8_t *va8)
 int
 gimp_composite_regression_compare_contexts(char *operation, GimpCompositeContext *ctx1, GimpCompositeContext *ctx2)
 {
-		if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
-				printf("%s: failed to agree\n", operation);
-				return (1);
+		switch (ctx1->pixelformat_D) {
+		case GIMP_PIXELFORMAT_ANY:
+		case GIMP_PIXELFORMAT_N:
+		default:
+				printf("Bad pixelformat! %d\n", ctx1->pixelformat_A);
+				exit(1);
+				break;
+
+		case GIMP_PIXELFORMAT_V8:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_VA8:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGB8:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGBA8:
+				gimp_composite_regression_comp_rgba8(operation, (gimp_rgba8_t *) ctx1->A, (gimp_rgba8_t *) ctx1->B, (gimp_rgba8_t *) ctx1->D, (gimp_rgba8_t *) ctx2->D, ctx1->n_pixels);
+				break;
+
+#if GIMP_COMPOSITE_16BIT
+		case GIMP_PIXELFORMAT_V16:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_VA16:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGB16:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGBA16:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+#endif
+#if GIMP_COMPOSITE_32BIT
+		case GIMP_PIXELFORMAT_V32:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_VA32:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGB32:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+		case GIMP_PIXELFORMAT_RGBA32:
+				if (memcmp(ctx1->D, ctx2->D, ctx1->n_pixels * gimp_composite_pixel_bpp[ctx1->pixelformat_D])) {
+						printf("%s: failed to agree\n", operation);
+						return (1);
+				}
+				break;
+
+#endif
 		}
+
 
 		return (0);
 }
+
 
 int
 gimp_composite_regression_comp_rgba8(char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *got, u_long length)
@@ -134,7 +226,7 @@ gimp_composite_regression_timer_report(char *name, double t1, double t2)
 }
 
 double
-gimp_composite_regression_time_function(int iterations, GimpCompositeFunction (*func)(), GimpCompositeContext *ctx)
+gimp_composite_regression_time_function(int iterations, void (*func)(), GimpCompositeContext *ctx)
 {
 		struct timeval t0;
 		struct timeval t1;

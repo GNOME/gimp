@@ -129,7 +129,7 @@
 
  
 void
-debug_display_mmx()
+debug_display_mmx(void)
 {
 #define mask32(x) ((x)& (unsigned long long) 0xFFFFFFFF)
 #define print64(reg) { unsigned long long reg; asm("movq %%" #reg ",%0" : "=m" (reg)); printf(#reg"=%08llx %08llx", mask32(reg>>32), mask32(reg)); }
@@ -971,7 +971,7 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 unsigned long rgba8_lower_ff[2] = {  0x00FF00FF, 0x00FF00FF };
 
 void
-op_overlay()
+op_overlay(void)
 {
   asm("movq      %mm2, %mm1");
   asm("punpcklbw %mm6, %mm1");
@@ -2425,7 +2425,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
 #endif  /* USE_MMX */
 
 void
-gimp_composite_mmx_init()
+gimp_composite_mmx_init(void)
 {
 
 }

@@ -51,21 +51,32 @@ class nmx:
 
     def update(self, objfile):
         self.filename = objfile
+
+        (sysname, nodename, release, version, machine) = os.uname()
+        if sysname == "Linux":
+            fp = os.popen("nm -B " + objfile, "r")
+            symbols = map(lambda l: string.split(l[8:]), fp.readlines())
+            print symbols
+        elif sysname == "SunOS":
+            fp = os.popen("nm -p " + objfile, "r")
+            symbols = map(lambda l: string.split(l[12:]), fp.readlines())
+            pass
+        elif sysname == "IRIX":
+            fp = os.popen("nm -B " + objfile, "r")
+            symbols = map(lambda l: string.split(l[8:]), fp.readlines())
+            pass
+
+        object = objfile
         
-        fp = os.popen("nm -A " + objfile, "r")
-
-        for line in fp.readlines():
-            (object, type, symbol) = string.split(line)
-            object = object[:string.rfind(object, ':')]
-
+        for (type, symbol) in symbols:
             if not self.objects.has_key(object):
-                self.objects.update({ object : dict({"exports" : dict(), "imports" : dict()})})
+                self.objects.update({ object : dict({ "exports" : dict(), "imports" : dict() }) })
                 pass
 
             if type == "U":
-                self.objects[object]["imports"].update({symbol : dict()})
+                self.objects[object]["imports"].update({ symbol : dict() })
             elif type in ["C", "D", "T"]:
-                self.objects[object]["exports"].update({symbol : dict()})
+                self.objects[object]["exports"].update({ symbol : dict() })
                 pass
             pass
 

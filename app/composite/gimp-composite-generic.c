@@ -1137,7 +1137,7 @@ gimp_composite_scale_any_any_any_generic(GimpCompositeContext * ctx)
 }
 
 void
-gimp_composite_generic_init()
+gimp_composite_generic_init(void)
 {
   guint i;
   GRand *gr;

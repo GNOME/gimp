@@ -98,6 +98,7 @@ typedef enum
   GIMP_COMPOSITE_SWAP,
   GIMP_COMPOSITE_SCALE,
   GIMP_COMPOSITE_CONVERT,
+  GIMP_COMPOSITE_XOR,
   GIMP_COMPOSITE_N
 } GimpCompositeOperation;
 
@@ -136,7 +137,6 @@ typedef struct
   GimpCompositeOperation op;
 } GimpCompositeContext;
 
-typedef void (*GimpCompositeFunction)(GimpCompositeContext *);
 
 struct GimpCompositeOptions {
 		gboolean initialised;

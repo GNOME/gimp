@@ -79,6 +79,7 @@ composite_modes=[
   "GIMP_COMPOSITE_SWAP",
   "GIMP_COMPOSITE_SCALE",
   "GIMP_COMPOSITE_CONVERT",
+  "GIMP_COMPOSITE_XOR",
   ]
 
 pixel_format=[
@@ -98,9 +99,14 @@ pixel_format=[
   ]
 
 
+def mode_name(mode):
+  s = string.replace(mode.lower(), "gimp_composite_", "")
+  return (s)
+  
 def pixel_depth_name(pixel_format):
   s = string.replace(pixel_format.lower(), "gimp_pixelformat_", "")
   return (s)
+
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -122,17 +128,17 @@ def print_function_table(fpout, filename, function_table):
   
   for key in function_table_keys:
     if not function_table_declarations.has_key(function_table[key][0]):
-      print >>fpout, 'GimpCompositeFunction %s();' % (function_table[key][0])
+      print >>fpout, 'void %s(GimpCompositeContext *);' % (function_table[key][0])
       function_table_declarations[function_table[key][0]] = function_table[key][0]
       pass
     pass
 
   print >>fpout, ''
-  print >>fpout, 'GimpCompositeFunction (*%s[%s][%s][%s][%s])() = {' % (functionnameify(filename),
-                                                                        "GIMP_COMPOSITE_N",
-                                                                        "GIMP_PIXELFORMAT_N",
-                                                                        "GIMP_PIXELFORMAT_N",
-                                                                        "GIMP_PIXELFORMAT_N")
+  print >>fpout, 'void (*%s[%s][%s][%s][%s])(GimpCompositeContext *) = {' % (functionnameify(filename),
+                                                                             "GIMP_COMPOSITE_N",
+                                                                             "GIMP_PIXELFORMAT_N",
+                                                                             "GIMP_PIXELFORMAT_N",
+                                                                             "GIMP_PIXELFORMAT_N")
   for mode in composite_modes:
     print >>fpout, ' { /* %s */' % (mode)
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
@@ -231,7 +237,7 @@ def merge_function_tables(tables):
           for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
             key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             if t[1].has_key(key):
-              print >>sys.stderr, "%s = %s::%s" % (key, t[0], t[1][key])
+              #print >>sys.stderr, "%s = %s::%s" % (key, t[0], t[1][key])
               main_table[key] = t[1][key]
               pass
             pass
@@ -248,29 +254,115 @@ def print_test_code(tables):
 
 def gimp_composite_regression(fpout, function_tables):
 
-  print >>fpout, 'void'
-  print >>fpout, 'gimp_composite_regression()'
+  # XXX move all this out to C code, instead of here.
+  print >>fpout, '#include "config.h"'
+  print >>fpout, ''
+  print >>fpout, '#include <stdio.h>'
+  print >>fpout, '#include <stdlib.h>'
+  print >>fpout, '#include <string.h>'
+  print >>fpout, ''
+  print >>fpout, '#include <sys/time.h>'
+  print >>fpout, ''
+  print >>fpout, '#include <glib-object.h>'
+  print >>fpout, ''
+  print >>fpout, '#include "base/base-types.h"'
+  print >>fpout, ''
+  print >>fpout, '#include "gimp-composite.h"'
+  print >>fpout, '#include "gimp-composite-dispatch.h"'
+  print >>fpout, '#include "gimp-composite-regression.h"'
+  print >>fpout, '#include "gimp-composite-util.h"'
+  print >>fpout, '#include "gimp-composite-generic.h"'
+  print >>fpout, ''
+  print >>fpout, 'int'
+  print >>fpout, 'gimp_composite_regression(int iterations, int n_pixels)'
   print >>fpout, '{'
   print >>fpout, '  GimpCompositeContext generic_ctx;'
   print >>fpout, '  GimpCompositeContext special_ctx;'
+  print >>fpout, '  double ft0;'
+  print >>fpout, '  double ft1;'
+  print >>fpout, '  gimp_rgba8_t *rgba8D1;'
+  print >>fpout, '  gimp_rgba8_t *rgba8D2;'
+  print >>fpout, '  gimp_rgba8_t *rgba8A;'
+  print >>fpout, '  gimp_rgba8_t *rgba8B;'
+  print >>fpout, '  gimp_rgba8_t *rgba8M;'
+  print >>fpout, '  gimp_va8_t *va8A;'
+  print >>fpout, '  gimp_va8_t *va8B;'
+  print >>fpout, '  gimp_va8_t *va8M;'
+  print >>fpout, '  gimp_va8_t *va8D1;'
+  print >>fpout, '  gimp_va8_t *va8D2;'
+  print >>fpout, '  int i;'
+  print >>fpout, ''
+  print >>fpout, '  rgba8A =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  rgba8B =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  rgba8M =  (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  rgba8D1 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  rgba8D2 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);'
+  print >>fpout, '  va8A =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
+  print >>fpout, '  va8B =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
+  print >>fpout, '  va8M =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
+  print >>fpout, '  va8D1 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
+  print >>fpout, '  va8D2 =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);'
+  print >>fpout, ''
+  print >>fpout, '  for (i = 0; i < n_pixels; i++) {'
+  print >>fpout, '    rgba8A[i].r = 255-i;'
+  print >>fpout, '    rgba8A[i].g = 255-i;'
+  print >>fpout, '    rgba8A[i].b = 255-i;'
+  print >>fpout, '    rgba8A[i].a = 255-i;'
+  print >>fpout, ''
+  print >>fpout, '    rgba8B[i].r = i;'
+  print >>fpout, '    rgba8B[i].g = i;'
+  print >>fpout, '    rgba8B[i].b = i;'
+  print >>fpout, '    rgba8B[i].a = i;'
+  print >>fpout, ''
+  print >>fpout, '    rgba8M[i].r = i;'
+  print >>fpout, '    rgba8M[i].g = i;'
+  print >>fpout, '    rgba8M[i].b = i;'
+  print >>fpout, '    rgba8M[i].a = i;'
+  print >>fpout, ''
+  print >>fpout, '    va8A[i].v = i;'
+  print >>fpout, '    va8A[i].a = 255-i;'
+  print >>fpout, '    va8B[i].v = i;'
+  print >>fpout, '    va8B[i].a = i;'
+  print >>fpout, '    va8M[i].v = i;'
+  print >>fpout, '    va8M[i].a = i;'
+  print >>fpout, '  }'
+  print >>fpout, ''
 
   generic_table = function_tables[0][1]
+
+  pp.pprint(function_tables[1:])
   
   for mode in composite_modes:
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
         for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
+          key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
           for f in function_tables[1:]:
-            key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             if f[1].has_key(key):
+              print f[0], key
               print >>fpout, ''
-              print >>fpout, '  special_ctx.op = %s;' % (mode)
-              print >>fpout, '  generic_ctx.op = %s;' % (mode)
-              print >>fpout, '  %s(&special_ctx);' % (f[1][key][0])
-              print >>fpout, '  %s(&generic_ctx);' % (generic_table[key][0])
-              print >>fpout, '  if (gimp_composite_regression_compare(&generic_ctx, &special_ctx)) {'
-              print >>fpout, '    printf("%s disagrees with %s\\n");' % (f[1][key][0], generic_table[key][0])
-              print >>fpout, '  }'
+              print >>fpout, '  /* %s */' % (key)
+              print >>fpout, '  memset((void *) &special_ctx, 0, sizeof(special_ctx));'
+              print >>fpout, '  memset((void *) &generic_ctx, 0, sizeof(special_ctx));'
+              print >>fpout, '  special_ctx.op = generic_ctx.op = %s;' % (mode)
+              print >>fpout, '  special_ctx.n_pixels = generic_ctx.n_pixels = n_pixels;'
+              print >>fpout, '  special_ctx.scale.scale = generic_ctx.scale.scale = 2;'
+              print >>fpout, '  special_ctx.pixelformat_A = generic_ctx.pixelformat_A = %s;' % (A)
+              print >>fpout, '  special_ctx.pixelformat_B = generic_ctx.pixelformat_B = %s;' % (B)
+              print >>fpout, '  special_ctx.pixelformat_D = generic_ctx.pixelformat_D = %s;' % (D)
+              print >>fpout, '  special_ctx.pixelformat_M = generic_ctx.pixelformat_M = %s;' % (D)
+              print >>fpout, '  special_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
+              print >>fpout, '  special_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
+              print >>fpout, '  special_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
+              print >>fpout, '  special_ctx.D = (unsigned char *) %sD1;' % (pixel_depth_name(D))
+              print >>fpout, '  generic_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
+              print >>fpout, '  generic_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
+              print >>fpout, '  generic_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
+              print >>fpout, '  generic_ctx.D = (unsigned char *) %sD2;' % (pixel_depth_name(D))
+              print >>fpout, '  ft0 = gimp_composite_regression_time_function(iterations, %s, &special_ctx);' % ("gimp_composite_dispatch")
+              print >>fpout, '  ft1 = gimp_composite_regression_time_function(iterations, %s, &generic_ctx);' % (generic_table[key][0])
+              print >>fpout, '  gimp_composite_regression_compare_contexts("%s", &generic_ctx, &special_ctx);' % (mode_name(mode))
+              print >>fpout, '  gimp_composite_regression_timer_report("%s", ft0, ft1);' % (mode_name(mode))
               pass
             pass
           pass
@@ -278,7 +370,25 @@ def gimp_composite_regression(fpout, function_tables):
       pass
     pass
   
+  print >>fpout, '  return (0);'
   print >>fpout, '}'
+
+  print >>fpout, ''
+  print >>fpout, 'int'
+  print >>fpout, 'main(int argc, char *argv[])'
+  print >>fpout, '{'
+  print >>fpout, '  int iterations;'
+  print >>fpout, '  int n_pixels;'
+  print >>fpout, ''
+  print >>fpout, '  srand(314159);'
+  print >>fpout, ''
+  print >>fpout, '  iterations = 1;'
+  print >>fpout, '  n_pixels = 256*256;'
+  print >>fpout, ''
+  print >>fpout, '  return (gimp_composite_regression(iterations, n_pixels));'
+  print >>fpout, '}'
+
+  return
 
 
 def gimp_composite_init(fpout, function_tables):
@@ -312,14 +422,13 @@ def gimp_composite_init(fpout, function_tables):
 def gimp_composite_hfile(fpout):
   print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
   print >>fpout, ''
-  #print >>fpout, 'typedef void (*GimpCompositeFunction)(GimpCompositeContext *);'
-  print >>fpout, 'typedef GimpCompositeFunction (*GimpCompositeFunctionTable[%s][%s][%s][%s]);' % ("GIMP_COMPOSITE_N",
+  print >>fpout, 'typedef void (*GimpCompositeFunctionTable[%s][%s][%s][%s]);' % ("GIMP_COMPOSITE_N",
                                                                                                    "GIMP_PIXELFORMAT_N",
                                                                                                    "GIMP_PIXELFORMAT_N",
                                                                                                    "GIMP_PIXELFORMAT_N")
   return
 
-def gimp_composite_cfile(fpout):
+def gimp_composite_cfile(fpout, function_tables):
   print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
   print >>fpout, '#include "config.h"'
   print >>fpout, '#include <glib-object.h>'
@@ -327,10 +436,10 @@ def gimp_composite_cfile(fpout):
   print >>fpout, '#include "base/base-types.h"'
   print >>fpout, '#include "gimp-composite.h"'
   print >>fpout, '#include "gimp-composite-dispatch.h"'
-  print >>fpout, 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
+  print >>fpout, 'extern void %s(GimpCompositeContext *);' % ("gimp_composite_unsupported")
   print >>fpout, ''
 
-  for f in d:
+  for f in function_tables:
     print_function_table(fpout, f[0], f[1])
     pass
 
@@ -339,40 +448,18 @@ def gimp_composite_cfile(fpout):
   print_function_table(fpout, "gimp_composite_function", main_table)
   print_function_table_name(fpout, "gimp_composite_function", main_table)
 
-  gimp_composite_init(fpout, d)
+  gimp_composite_init(fpout, function_tables)
 
   return
 
-###########################################3
+###########################################
 d = list()
 for f in sys.argv[1:]:
   d.append((f, load_function_table(f)))
   pass
 
 gimp_composite_hfile(open("gimp-composite-dispatch.h", "w"))
-
-gimp_composite_cfile(open("gimp-composite-dispatch.c", "w"))
-# print '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
-# print '#include "config.h"'
-# print '#include <glib-object.h>'
-# print '#include <stdlib.h>'
-# print '#include "base/base-types.h"'
-# print '#include "gimp-composite.h"'
-# print '#include "gimp-composite-dispatch.h"'
-# print 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
-# print ''
-
-# for f in d:
-#   print_function_table(f[0], f[1])
-#   pass
-
-# main_table = merge_function_tables(d)
-
-# print_function_table("gimp_composite_function", main_table)
-# print_function_table_name("gimp_composite_function", main_table)
-
-# gimp_composite_init(d)
-
-#gimp_composite_regression(d)
+gimp_composite_cfile(open("gimp-composite-dispatch.c", "w"), d)
+gimp_composite_regression(open("gimp-composite-test.c", "w"), d)
 
 sys.exit(0)

@@ -182,7 +182,7 @@ extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP
 void
 gimp_composite_dispatch(GimpCompositeContext *ctx)
 {
-  void (*function)();
+  void (*function)(GimpCompositeContext *);
 
   function = gimp_composite_function[ctx->op][ctx->pixelformat_A][ctx->pixelformat_B][ctx->pixelformat_D];
 

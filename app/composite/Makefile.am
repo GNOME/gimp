@@ -46,17 +46,26 @@ EXTRA_DIST = \
 	make-gimp-composite-dispatch.py	\
 	ns.py
 
-EXTRA_PROGRAMS = test-composite
+EXTRA_PROGRAMS = test-composite gimp-composite-test
 
 #
 # unit tests and meta tools for GimpComposite
 #
 
-TESTS = test-composite
+TESTS = test-composite gimp-composite-test
 
 test_composite_DEPENDENCIES = $(gimpcomposite_dependencies) gimp-composite-regression.o
 
 test_composite_LDADD = \
+	libappcomposite.a					\
+	gimp-composite-regression.o \
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(GLIB_LIBS)
+
+
+gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies) gimp-composite-regression.o
+
+gimp_composite_test_LDADD = \
 	libappcomposite.a					\
 	gimp-composite-regression.o \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\

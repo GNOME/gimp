@@ -83,7 +83,7 @@ typedef struct
 } gimp_rgba32_t;
 #endif
 
-extern double gimp_composite_regression_time_function(int, GimpCompositeFunction (*)(), GimpCompositeContext *);
+extern double gimp_composite_regression_time_function(int, void (*)(), GimpCompositeContext *);
 extern int gimp_composite_regression_comp_rgba8(char *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, gimp_rgba8_t *, u_long);
 extern int gimp_composite_regression_comp_va8(char *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, gimp_va8_t *, u_long);
 extern int gimp_composite_regression_compare_contexts(char *, GimpCompositeContext *, GimpCompositeContext *);

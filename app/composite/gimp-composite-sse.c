@@ -961,7 +961,7 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 unsigned long rgba8_lower_ff[2] = {  0x00FF00FF, 0x00FF00FF };
 
 void
-op_overlay()
+op_overlay(void)
 {
   asm("movq      %mm2, %mm1");
   asm("punpcklbw %mm6, %mm1");
@@ -2418,7 +2418,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_sse(GimpCompositeContext *_op)
 #endif  /* USE_SSE */
 
 void
-gimp_composite_sse_init()
+gimp_composite_sse_init(void)
 {
 
 }

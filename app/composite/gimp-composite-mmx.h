@@ -1,5 +1,7 @@
 #ifndef gimp_composite_context_h
 #define gimp_composite_context_h
+
+extern void gimp_composite_mmx_init(void);
 /*
  *
  */

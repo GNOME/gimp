@@ -51,12 +51,12 @@ main (int argc, char *argv[])
 
   rgba8A = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   rgba8B = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
-  va8A =   (gimp_va8_t *) calloc(sizeof(gimp_va8_t), n_pixels+1);
-  va8B =   (gimp_va8_t *) calloc(sizeof(gimp_va8_t), n_pixels+1);
+  va8A =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
+  va8B =   (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
   d1 =     (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   d2 =     (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
-  va8_d1 = (gimp_va8_t *) calloc(sizeof(gimp_va8_t), n_pixels+1);
-  va8_d2 = (gimp_va8_t *) calloc(sizeof(gimp_va8_t), n_pixels+1);
+  va8_d1 = (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
+  va8_d2 = (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
 
   srand(314159);
 

@@ -5,40 +5,40 @@
 #include "base/base-types.h"
 #include "gimp-composite.h"
 #include "gimp-composite-dispatch.h"
-extern GimpCompositeFunction gimp_composite_unsupported();
+extern void gimp_composite_unsupported(GimpCompositeContext *);
 
-GimpCompositeFunction gimp_composite_addition_any_any_any_generic();
-GimpCompositeFunction gimp_composite_anti_erase_any_any_any_generic();
-GimpCompositeFunction gimp_composite_blend_any_any_any_generic();
-GimpCompositeFunction gimp_composite_burn_any_any_any_generic();
-GimpCompositeFunction gimp_composite_color_erase_any_any_any_generic();
-GimpCompositeFunction gimp_composite_color_only_any_any_any_generic();
-GimpCompositeFunction gimp_composite_convert_any_any_any_generic();
-GimpCompositeFunction gimp_composite_darken_any_any_any_generic();
-GimpCompositeFunction gimp_composite_difference_any_any_any_generic();
-GimpCompositeFunction gimp_composite_dissolve_any_any_any_generic();
-GimpCompositeFunction gimp_composite_divide_any_any_any_generic();
-GimpCompositeFunction gimp_composite_dodge_any_any_any_generic();
-GimpCompositeFunction gimp_composite_erase_rgba8_any_any_generic();
-GimpCompositeFunction gimp_composite_grain_extract_any_any_any_generic();
-GimpCompositeFunction gimp_composite_grain_merge_any_any_any_generic();
-GimpCompositeFunction gimp_composite_hardlight_any_any_any_generic();
-GimpCompositeFunction gimp_composite_hue_any_any_any_generic();
-GimpCompositeFunction gimp_composite_lighten_any_any_any_generic();
-GimpCompositeFunction gimp_composite_multiply_any_any_any_generic();
-GimpCompositeFunction gimp_composite_normal_any_any_any_generic();
-GimpCompositeFunction gimp_composite_normal_rgba8_any_any_generic();
-GimpCompositeFunction gimp_composite_overlay_any_any_any_generic();
-GimpCompositeFunction gimp_composite_replace_any_any_any_generic();
-GimpCompositeFunction gimp_composite_saturation_any_any_any_generic();
-GimpCompositeFunction gimp_composite_scale_any_any_any_generic();
-GimpCompositeFunction gimp_composite_screen_any_any_any_generic();
-GimpCompositeFunction gimp_composite_softlight_any_any_any_generic();
-GimpCompositeFunction gimp_composite_subtract_any_any_any_generic();
-GimpCompositeFunction gimp_composite_swap_any_any_any_generic();
-GimpCompositeFunction gimp_composite_value_any_any_any_generic();
+void gimp_composite_addition_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_anti_erase_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_blend_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_burn_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_color_erase_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_color_only_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_convert_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_darken_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_difference_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_dissolve_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_divide_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_dodge_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_erase_rgba8_any_any_generic(GimpCompositeContext *);
+void gimp_composite_grain_extract_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_grain_merge_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_hardlight_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_hue_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_lighten_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_multiply_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_normal_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_normal_rgba8_any_any_generic(GimpCompositeContext *);
+void gimp_composite_overlay_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_replace_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_saturation_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_scale_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_screen_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_softlight_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_subtract_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_swap_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_value_any_any_any_generic(GimpCompositeContext *);
 
-GimpCompositeFunction (*gimp_composite_generic[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])() = {
+void (*gimp_composite_generic[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *) = {
  { /* GIMP_COMPOSITE_NORMAL */
   { /* A = v8 */
    /* v8     */ { gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  },
@@ -843,42 +843,68 @@ GimpCompositeFunction (*gimp_composite_generic[GIMP_COMPOSITE_N][GIMP_PIXELFORMA
    /* va8    */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
    /* rgb8   */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
    /* rgba8  */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
+  },
+ },
+ { /* GIMP_COMPOSITE_XOR */
+  { /* A = v8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = va8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = rgb8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = rgba8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
   },
  },
 };
 
-GimpCompositeFunction gimp_composite_addition_any_any_any_generic();
-GimpCompositeFunction gimp_composite_anti_erase_any_any_any_generic();
-GimpCompositeFunction gimp_composite_blend_any_any_any_generic();
-GimpCompositeFunction gimp_composite_burn_any_any_any_generic();
-GimpCompositeFunction gimp_composite_color_erase_any_any_any_generic();
-GimpCompositeFunction gimp_composite_color_only_any_any_any_generic();
-GimpCompositeFunction gimp_composite_convert_any_any_any_generic();
-GimpCompositeFunction gimp_composite_darken_any_any_any_generic();
-GimpCompositeFunction gimp_composite_difference_any_any_any_generic();
-GimpCompositeFunction gimp_composite_dissolve_any_any_any_generic();
-GimpCompositeFunction gimp_composite_divide_any_any_any_generic();
-GimpCompositeFunction gimp_composite_dodge_any_any_any_generic();
-GimpCompositeFunction gimp_composite_erase_rgba8_any_any_generic();
-GimpCompositeFunction gimp_composite_grain_extract_any_any_any_generic();
-GimpCompositeFunction gimp_composite_grain_merge_any_any_any_generic();
-GimpCompositeFunction gimp_composite_hardlight_any_any_any_generic();
-GimpCompositeFunction gimp_composite_hue_any_any_any_generic();
-GimpCompositeFunction gimp_composite_lighten_any_any_any_generic();
-GimpCompositeFunction gimp_composite_multiply_any_any_any_generic();
-GimpCompositeFunction gimp_composite_normal_any_any_any_generic();
-GimpCompositeFunction gimp_composite_normal_rgba8_any_any_generic();
-GimpCompositeFunction gimp_composite_overlay_any_any_any_generic();
-GimpCompositeFunction gimp_composite_replace_any_any_any_generic();
-GimpCompositeFunction gimp_composite_saturation_any_any_any_generic();
-GimpCompositeFunction gimp_composite_scale_any_any_any_generic();
-GimpCompositeFunction gimp_composite_screen_any_any_any_generic();
-GimpCompositeFunction gimp_composite_softlight_any_any_any_generic();
-GimpCompositeFunction gimp_composite_subtract_any_any_any_generic();
-GimpCompositeFunction gimp_composite_swap_any_any_any_generic();
-GimpCompositeFunction gimp_composite_value_any_any_any_generic();
+void gimp_composite_addition_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_anti_erase_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_blend_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_burn_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_color_erase_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_color_only_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_convert_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_darken_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_difference_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_dissolve_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_divide_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_dodge_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_erase_rgba8_any_any_generic(GimpCompositeContext *);
+void gimp_composite_grain_extract_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_grain_merge_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_hardlight_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_hue_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_lighten_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_multiply_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_normal_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_normal_rgba8_any_any_generic(GimpCompositeContext *);
+void gimp_composite_overlay_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_replace_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_saturation_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_scale_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_screen_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_softlight_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_subtract_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_swap_any_any_any_generic(GimpCompositeContext *);
+void gimp_composite_value_any_any_any_generic(GimpCompositeContext *);
 
-GimpCompositeFunction (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])() = {
+void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *) = {
  { /* GIMP_COMPOSITE_NORMAL */
   { /* A = v8 */
    /* v8     */ { gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  gimp_composite_normal_any_any_any_generic,  },
@@ -1683,6 +1709,32 @@ GimpCompositeFunction (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORM
    /* va8    */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
    /* rgb8   */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
    /* rgba8  */ { gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  gimp_composite_convert_any_any_any_generic,  },
+  },
+ },
+ { /* GIMP_COMPOSITE_XOR */
+  { /* A = v8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = va8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = rgb8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
+  },
+  { /* A = rgba8 */
+   /* v8     */ { NULL,  NULL,  NULL,  NULL,  },
+   /* va8    */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgb8   */ { NULL,  NULL,  NULL,  NULL,  },
+   /* rgba8  */ { NULL,  NULL,  NULL,  NULL,  },
   },
  },
 };
@@ -2493,6 +2545,32 @@ char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PI
    /* va8    */ { "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  },
    /* rgb8   */ { "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  },
    /* rgba8  */ { "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  "gimp_composite_convert_any_any_any_generic",  },
+  },
+ },
+ { /* GIMP_COMPOSITE_XOR */
+  { /* A = v8 */
+   /* v8     */ { "",  "",  "",  "",  },
+   /* va8    */ { "",  "",  "",  "",  },
+   /* rgb8   */ { "",  "",  "",  "",  },
+   /* rgba8  */ { "",  "",  "",  "",  },
+  },
+  { /* A = va8 */
+   /* v8     */ { "",  "",  "",  "",  },
+   /* va8    */ { "",  "",  "",  "",  },
+   /* rgb8   */ { "",  "",  "",  "",  },
+   /* rgba8  */ { "",  "",  "",  "",  },
+  },
+  { /* A = rgb8 */
+   /* v8     */ { "",  "",  "",  "",  },
+   /* va8    */ { "",  "",  "",  "",  },
+   /* rgb8   */ { "",  "",  "",  "",  },
+   /* rgba8  */ { "",  "",  "",  "",  },
+  },
+  { /* A = rgba8 */
+   /* v8     */ { "",  "",  "",  "",  },
+   /* va8    */ { "",  "",  "",  "",  },
+   /* rgb8   */ { "",  "",  "",  "",  },
+   /* rgba8  */ { "",  "",  "",  "",  },
   },
  },
 };
