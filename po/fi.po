@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-04-22 11:49-0700\n"
-"PO-Revision-Date: 2000-04-23 23:15+0300\n"
+"PO-Revision-Date: 2000-04-26 10:26+02:00\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3812,7 +3812,7 @@ msgid ""
 "Corrupt palette: missing magic header"
 msgstr ""
 "Ladataan palettia %s:\n"
-"Korruptoitunut paletti: puuttuva magic header\n"
+"Korruptoitunut paletti: puuttuva magic header"
 
 #: app/palette.c:432
 #, c-format
@@ -3863,7 +3863,7 @@ msgstr ""
 #: app/palette.c:519
 #, c-format
 msgid "can't save palette \"%s\"\n"
-msgstr "ei voi tallettaa palettia \"%s\"\n""
+msgstr "ei voi tallettaa palettia \"%s\"\n"
 
 #: app/palette.c:1162
 msgid "Black"
