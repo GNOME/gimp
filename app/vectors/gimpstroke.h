@@ -249,7 +249,8 @@ GimpStroke * gimp_stroke_make_bezier          (const GimpStroke      *stroke);
 
 void         gimp_stroke_translate            (GimpStroke            *stroke,
                                                gdouble                offset_x,
-                                               gdouble                offset_y);void         gimp_stroke_scale                (GimpStroke            *stroke,
+                                               gdouble                offset_y);
+void         gimp_stroke_scale                (GimpStroke            *stroke,
                                                gdouble                scale_x,
                                                gdouble                scale_y);
 void         gimp_stroke_transform            (GimpStroke            *stroke,

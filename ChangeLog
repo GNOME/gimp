@@ -1,5 +1,11 @@
 2003-09-15  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpxmlparser.c: fixed inline documentation.
+
+	* app/vectors/gimpstroke.h: added a missing newline.
+
+2003-09-15  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am
 	* app/config/config-types.h
 	* app/config/gimpxmlparser.[ch]: new files that hold a simple XML

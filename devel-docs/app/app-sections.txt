@@ -539,8 +539,6 @@ gimp_drawable_data
 gimp_drawable_shadow
 gimp_drawable_bytes
 gimp_drawable_bytes_with_alpha
-gimp_drawable_get_visible
-gimp_drawable_set_visible
 gimp_drawable_alpha_changed
 gimp_drawable_cmap
 gimp_drawable_get_color_at
@@ -834,8 +832,10 @@ gimp_item_parasite_attach
 gimp_item_parasite_detach
 gimp_item_parasite_find
 gimp_item_parasite_list
-gimp_item_set_linked
+gimp_item_get_visible
+gimp_item_set_visible
 gimp_item_get_linked
+gimp_item_set_linked
 <SUBSECTION Standard>
 GimpItemClass
 GIMP_ITEM
@@ -1276,11 +1276,15 @@ gimp_display_shell_expose_area
 gimp_display_shell_expose_guide
 gimp_display_shell_expose_full
 gimp_display_shell_flush
+gimp_display_shell_pause
+gimp_display_shell_resume
 gimp_display_shell_draw_area
 gimp_display_shell_draw_cursor
 gimp_display_shell_draw_guide
 gimp_display_shell_draw_guides
 gimp_display_shell_draw_grid
+gimp_display_shell_draw_vector
+gimp_display_shell_draw_vectors
 gimp_display_shell_update_icon
 gimp_display_shell_shrink_wrap
 gimp_display_shell_selection_visibility
@@ -2261,9 +2265,13 @@ gimp_draw_tool_draw_arc_by_anchor
 gimp_draw_tool_draw_cross_by_anchor
 gimp_draw_tool_draw_handle
 gimp_draw_tool_on_handle
+gimp_draw_tool_on_vectors_curve
+gimp_draw_tool_on_vectors_handle
 gimp_draw_tool_draw_lines
 gimp_draw_tool_draw_strokes
 gimp_draw_tool_draw_boundary
+gimp_draw_tool_set_vectors
+gimp_draw_tool_set_transform
 <SUBSECTION Standard>
 GimpDrawToolClass
 GIMP_DRAW_TOOL
@@ -2951,11 +2959,11 @@ GIMP_VECTOR_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpvectortool</FILE>
-VectorFunction
 <TITLE>GimpVectorTool</TITLE>
 GimpVectorTool
 gimp_vector_tool_register
 gimp_vector_tool_set_vectors
+GimpVectorFunction
 <SUBSECTION Standard>
 GimpVectorToolClass
 GIMP_VECTOR_TOOL
@@ -2978,6 +2986,7 @@ gimp_bezier_stroke_new_moveto
 gimp_bezier_stroke_lineto
 gimp_bezier_stroke_conicto
 gimp_bezier_stroke_cubicto
+gimp_bezier_stroke_arcto
 <SUBSECTION Standard>
 GimpBezierStrokeClass
 GIMP_BEZIER_STROKE
@@ -3013,6 +3022,7 @@ gimp_stroke_anchor_get_next
 gimp_stroke_anchor_select
 gimp_stroke_anchor_move_relative
 gimp_stroke_anchor_move_absolute
+gimp_stroke_control_points_get
 gimp_stroke_point_is_movable
 gimp_stroke_point_move_relative
 gimp_stroke_point_move_absolute
@@ -3033,9 +3043,6 @@ gimp_stroke_duplicate
 gimp_stroke_make_bezier
 gimp_stroke_translate
 gimp_stroke_scale
-gimp_stroke_resize
-gimp_stroke_flip
-gimp_stroke_rotate
 gimp_stroke_transform
 gimp_stroke_get_draw_anchors
 gimp_stroke_get_draw_controls
@@ -3092,12 +3099,23 @@ GIMP_VECTORS_GET_CLASS
 GimpVectorsCompatPoint
 gimp_vectors_compat_new
 gimp_vectors_compat_get_points
+gimp_vectors_compat_is_compatible
 </SECTION>
 
 <SECTION>
 <FILE>gimpvectors-preview</FILE>
 <TITLE>GimpVectors-preview</TITLE>
 gimp_vectors_get_new_preview
+</SECTION>
+
+<SECTION>
+<FILE>gimpvectors-import</FILE>
+gimp_vectors_import
+</SECTION>
+
+<SECTION>
+<FILE>gimpvectors-export</FILE>
+gimp_vectors_export
 </SECTION>
 
 <SECTION>
@@ -4712,6 +4730,7 @@ gimp_composite_generic_init
 gimp_composite_generic_install
 gimp_composite_addition_any_any_any_generic
 gimp_composite_anti_erase_any_any_any_generic
+gimp_composite_behind_any_any_any_generic
 gimp_composite_blend_any_any_any_generic
 gimp_composite_burn_any_any_any_generic
 gimp_composite_color_any_any_any_generic
@@ -4874,6 +4893,15 @@ gimp_scanner_parse_int
 gimp_scanner_parse_float
 gimp_scanner_parse_color
 gimp_scanner_parse_matrix2
+</SECTION>
+
+<SECTION>
+<FILE>gimpxmlparser</FILE>
+GimpXmlParser
+gimp_xml_parser_new
+gimp_xml_parser_parse_file
+gimp_xml_parser_parse_io_channel
+gimp_xml_parser_free
 </SECTION>
 
 <SECTION>
@@ -5068,6 +5096,7 @@ gimp_drawable_get_preview
 <SECTION>
 <FILE>gimpdrawable-transform-utils</FILE>
 <TITLE>GimpDrawable-transform-utils</TITLE>
+gimp_drawable_transform_matrix_flip
 gimp_drawable_transform_matrix_rotate
 gimp_drawable_transform_matrix_rotate_center
 gimp_drawable_transform_matrix_scale
@@ -5296,7 +5325,7 @@ gimp_image_undo_push_mask
 gimp_image_undo_push_item_rename
 gimp_image_undo_push_item_displace
 gimp_image_undo_push_item_linked
-gimp_image_undo_push_drawable_visibility
+gimp_image_undo_push_item_visibility
 gimp_image_undo_push_layer_add
 gimp_image_undo_push_layer_remove
 gimp_image_undo_push_layer_mod
@@ -5340,6 +5369,8 @@ gimp_image_undo_push_item
 <SECTION>
 <FILE>gimpitem-linked</FILE>
 <TITLE>GimpItem-linked</TITLE>
+GimpItemLinkedMask
+gimp_item_linked_get_list
 gimp_item_linked_translate
 gimp_item_linked_flip
 gimp_item_linked_rotate
@@ -5855,13 +5886,19 @@ grid_dialog_new
 
 <SECTION>
 <FILE>gui</FILE>
+gui_init
 gui_libs_init
 gui_environ_init
 gui_themes_init
-gui_themes_get_theme_dir
-gui_init
 gui_restore
 gui_post_init
+</SECTION>
+
+<SECTION>
+<FILE>themes</FILE>
+themes_init
+themes_exit
+themes_get_theme_dir
 </SECTION>
 
 <SECTION>
@@ -5896,8 +5933,8 @@ image_menu_update
 
 <SECTION>
 <FILE>images-commands</FILE>
-images_raise_displays_cmd_callback
-images_new_display_cmd_callback
+images_raise_views_cmd_callback
+images_new_view_cmd_callback
 images_delete_image_cmd_callback
 </SECTION>
 
@@ -6610,9 +6647,12 @@ tools_exit
 <FILE>gimpanchor</FILE>
 GimpAnchor
 GIMP_ANCHOR
+GIMP_VALUE_HOLDS_ANCHOR
 gimp_anchor_new
 gimp_anchor_free
 gimp_anchor_duplicate
+<SUBSECTION Standard>
+gimp_anchor_get_type
 </SECTION>
 
 <SECTION>

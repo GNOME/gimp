@@ -103,7 +103,7 @@
     </chapter>
 
     <chapter id="app-config-objects">
-      <title>The Actual Config Objects</title>
+      <title>The GimpRc Objects</title>
       <xi:include href="xml/gimpbaseconfig.xml"/>
       <xi:include href="xml/gimpcoreconfig.xml"/>
       <xi:include href="xml/gimpdisplayconfig.xml"/>
@@ -116,6 +116,7 @@
       <title>Lowlevel Serializing/Deserializing Functions</title>
       <xi:include href="xml/gimpconfigwriter.xml"/>
       <xi:include href="xml/gimpscanner.xml"/>
+      <xi:include href="xml/gimpxmlparser.xml"/>
     </chapter>
   </part>
 
@@ -272,6 +273,8 @@
     <xi:include href="xml/gimpvectors.xml"/>
     <xi:include href="xml/gimpvectors-compat.xml"/>
     <xi:include href="xml/gimpvectors-preview.xml"/>
+    <xi:include href="xml/gimpvectors-import.xml"/>
+    <xi:include href="xml/gimpvectors-export.xml"/>
   </part>
 
   <part id="app-xcf-part">
@@ -711,12 +714,13 @@
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/gui.xml"/>
       <xi:include href="xml/session.xml"/>
-      <xi:include href="xml/dialogs.xml"/>
-      <xi:include href="xml/dialogs-constructors.xml"/>
+      <xi:include href="xml/themes.xml"/>
     </chapter>
 
     <chapter id="app-gui-dialogs">
       <title>Dialogs</title>
+      <xi:include href="xml/dialogs.xml"/>
+      <xi:include href="xml/dialogs-constructors.xml"/>
       <xi:include href="xml/about-dialog.xml"/>
       <xi:include href="xml/color-notebook.xml"/>
       <xi:include href="xml/color-history.xml"/>

@@ -42,7 +42,7 @@ static gchar * parse_encoding (const gchar *text,
 
 /**
  * gimp_xml_parser_new:
- * @parser: a #GMarkupParser
+ * @markup_parser: a #GMarkupParser
  * @user_data: user data to pass to #GMarkupParser functions
  *
  * GimpXmlParser is a thin wrapper around GMarkupParser. This function
