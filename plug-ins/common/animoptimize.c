@@ -113,32 +113,31 @@ typedef enum
 
 
 /* Declare local functions. */
-static void query (void);
-static void run   (const gchar      *name,
+static  void query (void);
+static  void run   (const gchar      *name,
 		   gint              nparams,
 		   const GimpParam  *param,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static      gint32 do_optimizations   (GimpRunMode run_mode,
-				       gboolean    diff_only);
-
+static  gint32     do_optimizations    (GimpRunMode   run_mode,
+                                        gboolean      diff_only);
 
 /* tag util functions*/
-static         int parse_ms_tag        (const gchar *str);
-static DisposeType parse_disposal_tag  (const gchar *str);
-static DisposeType get_frame_disposal  (guint        whichframe);
-static     guint32 get_frame_duration  (guint        whichframe);
-static        void remove_disposal_tag (gchar       *dest,
-                                        gchar       *src);
-static        void remove_ms_tag       (gchar       *dest,
-                                        gchar       *src);
-static        gint is_disposal_tag     (const gchar *str,
-                                        DisposeType *disposal,
-                                        gint        *taglength);
-static        gint is_ms_tag           (const gchar *str,
-                                        gint        *duration,
-                                        gint        *taglength);
+static  gint        parse_ms_tag        (const gchar *str);
+static  DisposeType parse_disposal_tag  (const gchar *str);
+static  DisposeType get_frame_disposal  (guint        whichframe);
+static  guint32     get_frame_duration  (guint        whichframe);
+static  void        remove_disposal_tag (gchar       *dest,
+                                         gchar       *src);
+static  void        remove_ms_tag       (gchar       *dest,
+                                         gchar       *src);
+static  gboolean    is_disposal_tag     (const gchar *str,
+                                         DisposeType *disposal,
+                                         gint        *taglength);
+static  gboolean    is_ms_tag           (const gchar *str,
+                                         gint        *duration,
+                                         gint        *taglength);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -151,18 +150,18 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* Global widgets'n'stuff */
-static guint          width,height;
-static gint32         image_id;
-static gint32         new_image_id;
-static gint32         total_frames;
-static gint32        *layers;
-static GimpDrawable     *drawable;
-static GimpImageBaseType     imagetype;
-static GimpImageType  drawabletype_alpha;
-static guchar         pixelstep;
-static guchar        *palette;
-static gint           ncolours;
-static operatingMode  opmode;
+static  guint             width, height;
+static  gint32            image_id;
+static  gint32            new_image_id;
+static  gint32            total_frames;
+static  gint32           *layers;
+static  GimpDrawable     *drawable;
+static  GimpImageBaseType imagetype;
+static  GimpImageType     drawabletype_alpha;
+static  guchar            pixelstep;
+static  guchar           *palette;
+static  gint              ncolours;
+static  operatingMode     opmode;
 
 
 MAIN ()
@@ -277,10 +276,10 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode run_mode;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gboolean diff_only = FALSE;
+  gboolean          diff_only = FALSE;
 
   *nreturn_vals = 2;
   *return_vals = values;
