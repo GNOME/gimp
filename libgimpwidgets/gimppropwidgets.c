@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
+ * gimppropwidgets.c
+ * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -34,6 +37,26 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  utility function prototypes  */
+
+static void         set_param_spec   (GObject     *object,
+                                      GParamSpec  *value);
+static GParamSpec * get_param_spec   (GObject     *object);
+
+static GParamSpec * find_param_spec  (GObject     *object,
+                                      const gchar *property_name,
+                                      const gchar *strloc);
+static GParamSpec * check_param_spec (GObject     *object,
+                                      const gchar *property_name,
+                                      GType        type,
+                                      const gchar *strloc);
+
+static void         connect_notify   (GObject     *config,
+                                      const gchar *property_name,
+                                      GCallback    callback,
+                                      gpointer     callback_data);
+
+
 /******************/
 /*  check button  */
 /******************/
@@ -51,27 +74,12 @@ gimp_prop_check_button_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
-  gchar      *notify_name;
   gboolean    value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! G_IS_PARAM_SPEC_BOOLEAN (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not boolean",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -80,19 +88,15 @@ gimp_prop_check_button_new (GObject     *config,
   button = gtk_check_button_new_with_mnemonic (label);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
 
-  g_object_set_data (G_OBJECT (button), "gimp-config-param-spec", param_spec);
+  set_param_spec (G_OBJECT (button), param_spec);
 
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (gimp_prop_check_button_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_check_button_notify),
-                           button, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_check_button_notify),
+                  button);
 
   return button;
 }
@@ -103,8 +107,7 @@ gimp_prop_check_button_callback (GtkWidget *widget,
 {
   GParamSpec *param_spec;
 
-  param_spec = g_object_get_data (G_OBJECT (widget), "gimp-config-param-spec");
-
+  param_spec = get_param_spec (G_OBJECT (widget));
   if (! param_spec)
     return;
 
@@ -149,11 +152,50 @@ static GtkWidget * gimp_prop_enum_option_menu_new_full (GObject     *config,
                                                         gint         maximum,
                                                         gint         n_values,
                                                         va_list      args);
-static void        gimp_prop_enum_option_menu_callback (GtkWidget   *widget,
+static void        gimp_prop_option_menu_callback      (GtkWidget   *widget,
                                                         GObject     *config);
-static void        gimp_prop_enum_option_menu_notify   (GObject     *config,
+static void        gimp_prop_option_menu_notify        (GObject     *config,
                                                         GParamSpec  *param_spec,
                                                         GtkWidget   *menu);
+
+GtkWidget *
+gimp_prop_boolean_option_menu_new (GObject     *config,
+                                   const gchar *property_name,
+                                   const gchar *true_text,
+                                   const gchar *false_text)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *optionmenu;
+  gboolean    value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_BOOLEAN, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE,
+                           G_CALLBACK (gimp_prop_option_menu_callback),
+			   config,
+			   GINT_TO_POINTER (value),
+
+			   true_text,  GINT_TO_POINTER (TRUE),  NULL,
+			   false_text, GINT_TO_POINTER (FALSE), NULL,
+
+			   NULL);
+
+  set_param_spec (G_OBJECT (optionmenu), param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_option_menu_notify),
+                  optionmenu);
+
+  return optionmenu;
+}
 
 GtkWidget *
 gimp_prop_enum_option_menu_new (GObject     *config,
@@ -197,65 +239,6 @@ gimp_prop_enum_option_menu_new_valist (GObject     *config,
                                               n_values, args);
 }
 
-GtkWidget *
-gimp_prop_boolean_option_menu_new (GObject     *config,
-                                   const gchar *property_name,
-                                   const gchar *true_text,
-                                   const gchar *false_text)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *optionmenu;
-  gchar      *notify_name;
-  gboolean    value;
-
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
-  if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! G_IS_PARAM_SPEC_BOOLEAN (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not boolean",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-                           G_CALLBACK (gimp_prop_enum_option_menu_callback),
-			   config,
-			   GINT_TO_POINTER (value),
-
-			   true_text,  GINT_TO_POINTER (TRUE),  NULL,
-			   false_text, GINT_TO_POINTER (FALSE), NULL,
-
-			   NULL);
-
-  g_object_set_data (G_OBJECT (optionmenu), "gimp-config-param-spec",
-                     param_spec);
-
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_enum_option_menu_notify),
-                           optionmenu, 0);
-
-  g_free (notify_name);
-
-  return optionmenu;
-}
-
 static GtkWidget *
 gimp_prop_enum_option_menu_new_full (GObject     *config,
                                      const gchar *property_name,
@@ -266,27 +249,12 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *optionmenu;
-  gchar      *notify_name;
   gint        value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! G_IS_PARAM_SPEC_ENUM (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not an enum",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -296,7 +264,7 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
     {
       optionmenu =
         gimp_enum_option_menu_new_with_values_valist (param_spec->value_type,
-                                                      G_CALLBACK (gimp_prop_enum_option_menu_callback),
+                                                      G_CALLBACK (gimp_prop_option_menu_callback),
                                                       config,
                                                       n_values, args);
     }
@@ -307,14 +275,14 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
           optionmenu =
             gimp_enum_option_menu_new_with_range (param_spec->value_type,
                                                   minimum, maximum,
-                                                  G_CALLBACK (gimp_prop_enum_option_menu_callback),
+                                                  G_CALLBACK (gimp_prop_option_menu_callback),
                                                   config);
         }
       else
         {
           optionmenu =
             gimp_enum_option_menu_new (param_spec->value_type,
-                                       G_CALLBACK (gimp_prop_enum_option_menu_callback),
+                                       G_CALLBACK (gimp_prop_option_menu_callback),
                                        config);
         }
     }
@@ -322,23 +290,18 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
   gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
                                 GINT_TO_POINTER (value));
 
-  g_object_set_data (G_OBJECT (optionmenu), "gimp-config-param-spec",
-                     param_spec);
+  set_param_spec (G_OBJECT (optionmenu), param_spec);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_enum_option_menu_notify),
-                           optionmenu, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_option_menu_notify),
+                  optionmenu);
 
   return optionmenu;
 }
 
 static void
-gimp_prop_enum_option_menu_callback (GtkWidget *widget,
-                                     GObject   *config)
+gimp_prop_option_menu_callback (GtkWidget *widget,
+                                GObject   *config)
 {
   if (GTK_IS_MENU (widget->parent))
     {
@@ -349,29 +312,26 @@ gimp_prop_enum_option_menu_callback (GtkWidget *widget,
       if (optionmenu)
         {
           GParamSpec *param_spec;
+          gint        value;
 
-          param_spec = g_object_get_data (G_OBJECT (optionmenu),
-                                          "gimp-config-param-spec");
+          param_spec = get_param_spec (G_OBJECT (optionmenu));
+          if (! param_spec)
+            return;
 
-          if (param_spec)
-            {
-              gint value;
+          value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                      "gimp-item-data"));
 
-              value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                          "gimp-item-data"));
-
-              g_object_set (config,
-                            param_spec->name, value,
-                            NULL);
-            }
+          g_object_set (config,
+                        param_spec->name, value,
+                        NULL);
         }
     }
 }
 
 static void
-gimp_prop_enum_option_menu_notify (GObject    *config,
-                                   GParamSpec *param_spec,
-                                   GtkWidget  *menu)
+gimp_prop_option_menu_notify (GObject    *config,
+                              GParamSpec *param_spec,
+                              GtkWidget  *menu)
 {
   gint value;
 
@@ -404,18 +364,10 @@ gimp_prop_spin_button_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *spinbutton;
   GtkObject  *adjustment;
-  gchar      *notify_name;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = find_param_spec (config, property_name, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
+    return NULL;
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
@@ -473,20 +425,15 @@ gimp_prop_spin_button_new (GObject     *config,
       return NULL;
     }
 
-  g_object_set_data (G_OBJECT (adjustment), "gimp-config-param-spec",
-                     param_spec);
+  set_param_spec (G_OBJECT (adjustment), param_spec);
 
   g_signal_connect (G_OBJECT (adjustment), "value_changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_adjustment_notify),
-                           adjustment, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
 
   return spinbutton;
 }
@@ -499,27 +446,12 @@ gimp_prop_memsize_entry_new (GObject     *config,
   GParamSpecULong *ulong_spec;
   GtkObject       *adjustment;
   GtkWidget       *entry;
-  gchar           *notify_name;
   guint            value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! GIMP_IS_PARAM_SPEC_MEMSIZE (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not a memsize",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -533,20 +465,15 @@ gimp_prop_memsize_entry_new (GObject     *config,
                                    1, 64, 0);
   entry = gimp_memsize_entry_new (GTK_ADJUSTMENT (adjustment));
 
-  g_object_set_data (G_OBJECT (adjustment), "gimp-config-param-spec",
-                     param_spec);
+  set_param_spec (G_OBJECT (adjustment), param_spec);
 
   g_signal_connect (G_OBJECT (adjustment), "value_changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_adjustment_notify),
-                           adjustment, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
 
   return entry;
 }
@@ -557,9 +484,7 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 {
   GParamSpec *param_spec;
 
-  param_spec = g_object_get_data (G_OBJECT (adjustment),
-                                  "gimp-config-param-spec");
-
+  param_spec = get_param_spec (G_OBJECT (adjustment));
   if (! param_spec)
     return;
 
@@ -668,6 +593,106 @@ gimp_prop_adjustment_notify (GObject       *config,
 }
 
 
+/***********/
+/*  entry  */
+/***********/
+
+static void   gimp_prop_entry_callback (GtkWidget  *entry,
+                                        GObject    *config);
+static void   gimp_prop_entry_notify   (GObject    *config,
+                                        GParamSpec *param_spec,
+                                        GtkWidget  *entry);
+
+GtkWidget *
+gimp_prop_entry_new (GObject     *config,
+                     const gchar *property_name,
+                     gint         max_len)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *entry;
+  gchar      *value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_STRING, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  entry = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (entry), value);
+
+  g_free (value);
+
+  if (max_len > 0)
+    gtk_entry_set_max_length (GTK_ENTRY (entry), max_len);
+
+  set_param_spec (G_OBJECT (entry), param_spec);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+		    G_CALLBACK (gimp_prop_entry_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_entry_notify),
+                  entry);
+
+  return entry;
+}
+
+static void
+gimp_prop_entry_callback (GtkWidget *entry,
+                          GObject   *config)
+{
+  GParamSpec  *param_spec;
+  const gchar *text;
+
+  param_spec = get_param_spec (G_OBJECT (entry));
+  if (! param_spec)
+    return;
+
+  text = gtk_entry_get_text (GTK_ENTRY (entry));
+
+  g_signal_handlers_block_by_func (G_OBJECT (config),
+                                   gimp_prop_entry_notify,
+                                   entry);
+
+  g_object_set (config,
+                param_spec->name, text,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (config),
+                                     gimp_prop_entry_notify,
+                                     entry);
+}
+
+static void
+gimp_prop_entry_notify (GObject    *config,
+                        GParamSpec *param_spec,
+                        GtkWidget  *entry)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (G_OBJECT (entry),
+                                   gimp_prop_entry_callback,
+                                   config);
+
+  gtk_entry_set_text (GTK_ENTRY (entry), value);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+                                     gimp_prop_entry_callback,
+                                     config);
+
+  g_free (value);
+}
+
+
 /*****************/
 /*  text buffer  */
 /*****************/
@@ -685,27 +710,12 @@ gimp_prop_text_buffer_new (GObject     *config,
 {
   GParamSpec    *param_spec;
   GtkTextBuffer *text_buffer;
-  gchar         *notify_name;
   gchar         *value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_STRING, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! G_IS_PARAM_SPEC_STRING (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not a string",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -720,20 +730,15 @@ gimp_prop_text_buffer_new (GObject     *config,
     g_object_set_data (G_OBJECT (text_buffer), "max-len",
                        GINT_TO_POINTER (max_len));
 
-  g_object_set_data (G_OBJECT (text_buffer), "gimp-config-param-spec",
-                     param_spec);
+  set_param_spec (G_OBJECT (text_buffer), param_spec);
 
   g_signal_connect (G_OBJECT (text_buffer), "changed",
 		    G_CALLBACK (gimp_prop_text_buffer_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_text_buffer_notify),
-                           text_buffer, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_text_buffer_notify),
+                  text_buffer);
 
   return text_buffer;
 }
@@ -742,54 +747,50 @@ static void
 gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
                                 GObject       *config)
 {
-  GParamSpec *param_spec;
+  GParamSpec  *param_spec;
+  GtkTextIter  start_iter;
+  GtkTextIter  end_iter;
+  gchar       *text;
+  gint         max_len;
 
-  param_spec = g_object_get_data (G_OBJECT (text_buffer),
-                                  "gimp-config-param-spec");
+  param_spec = get_param_spec (G_OBJECT (text_buffer));
+  if (! param_spec)
+    return;
 
-  if (param_spec)
+  gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
+  text = gtk_text_buffer_get_text (text_buffer, &start_iter, &end_iter, FALSE);
+
+  max_len = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (text_buffer),
+                                                "max-length"));
+
+  if (max_len > 0 && strlen (text) > max_len)
     {
-      GtkTextIter  start_iter;
-      GtkTextIter  end_iter;
-      gchar       *text;
-      gint         max_len;
+      g_message (_("This text input field is limited to %d characters."), 
+                 max_len);
 
-      gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
-      text = gtk_text_buffer_get_text (text_buffer,
-                                       &start_iter, &end_iter, FALSE);
+      gtk_text_buffer_get_iter_at_offset (text_buffer, &start_iter,
+                                          max_len - 1);
+      gtk_text_buffer_get_end_iter (text_buffer, &end_iter);
 
-      max_len = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (text_buffer),
-                                                    "max-length"));
-
-      if (max_len > 0 && strlen (text) > max_len)
-        {
-          g_message (_("This text input field is limited to %d characters."), 
-                     max_len);
-
-          gtk_text_buffer_get_iter_at_offset (text_buffer, &start_iter,
-                                              max_len - 1);
-          gtk_text_buffer_get_end_iter (text_buffer, &end_iter);
-
-          /*  this calls us recursivaly, but in the else branch  */
-          gtk_text_buffer_delete (text_buffer, &start_iter, &end_iter);
-        }
-      else
-        {
-          g_signal_handlers_block_by_func (G_OBJECT (config),
-                                           gimp_prop_text_buffer_notify,
-                                           text_buffer);
-
-          g_object_set (config,
-                        param_spec->name, text,
-                        NULL);
-
-          g_signal_handlers_unblock_by_func (G_OBJECT (config),
-                                             gimp_prop_text_buffer_notify,
-                                             text_buffer);
-        }
-
-      g_free (text);
+      /*  this calls us recursivaly, but in the else branch  */
+      gtk_text_buffer_delete (text_buffer, &start_iter, &end_iter);
     }
+  else
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (config),
+                                       gimp_prop_text_buffer_notify,
+                                       text_buffer);
+
+      g_object_set (config,
+                    param_spec->name, text,
+                    NULL);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (config),
+                                         gimp_prop_text_buffer_notify,
+                                         text_buffer);
+    }
+
+  g_free (text);
 }
 
 static void
@@ -837,27 +838,12 @@ gimp_prop_file_entry_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *entry;
-  gchar      *notify_name;
   gchar      *value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_PATH, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! GIMP_IS_PARAM_SPEC_PATH (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not a path",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -867,19 +853,15 @@ gimp_prop_file_entry_new (GObject     *config,
 
   g_free (value);
 
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec", param_spec);
+  set_param_spec (G_OBJECT (entry), param_spec);
 
   g_signal_connect (G_OBJECT (entry), "filename_changed",
 		    G_CALLBACK (gimp_prop_file_entry_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_file_entry_notify),
-                           entry, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_file_entry_notify),
+                  entry);
 
   return entry;
 }
@@ -891,8 +873,7 @@ gimp_prop_file_entry_callback (GimpFileSelection *entry,
   GParamSpec *param_spec;
   gchar      *value;
 
-  param_spec = g_object_get_data (G_OBJECT (entry), "gimp-config-param-spec");
-
+  param_spec = get_param_spec (G_OBJECT (entry));
   if (! param_spec)
     return;
 
@@ -947,27 +928,12 @@ gimp_prop_path_editor_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *editor;
-  gchar      *notify_name;
   gchar      *value;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
-
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_PATH, G_STRLOC);
   if (! param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 property_name);
-      return NULL;
-    }
-
-  if (! GIMP_IS_PARAM_SPEC_PATH (param_spec))
-    {
-      g_warning (G_STRLOC ": property '%s' of %s is not a path",
-                 property_name,
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
-      return NULL;
-    }
+    return NULL;
 
   g_object_get (config,
                 property_name, &value,
@@ -977,19 +943,15 @@ gimp_prop_path_editor_new (GObject     *config,
 
   g_free (value);
 
-  g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec", param_spec);
+  set_param_spec (G_OBJECT (editor), param_spec);
 
   g_signal_connect (G_OBJECT (editor), "path_changed",
 		    G_CALLBACK (gimp_prop_path_editor_callback),
 		    config);
 
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_path_editor_notify),
-                           editor, 0);
-
-  g_free (notify_name);
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_path_editor_notify),
+                  editor);
 
   return editor;
 }
@@ -1001,8 +963,7 @@ gimp_prop_path_editor_callback (GimpPathEditor *editor,
   GParamSpec *param_spec;
   gchar      *value;
 
-  param_spec = g_object_get_data (G_OBJECT (editor), "gimp-config-param-spec");
-
+  param_spec = get_param_spec (G_OBJECT (editor));
   if (! param_spec)
     return;
 
@@ -1074,52 +1035,22 @@ gimp_prop_coordinates_new (GObject                   *config,
   gdouble     x_value;
   gdouble     y_value;
   GimpUnit    unit_value;
-  gchar      *notify_name;
   gboolean    chain_checked = FALSE;
 
-  x_param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                               x_property_name);
-
+  x_param_spec = find_param_spec (config, x_property_name, G_STRLOC);
   if (! x_param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 x_property_name);
-      return NULL;
-    }
+    return NULL;
 
-  y_param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                               y_property_name);
-
+  y_param_spec = find_param_spec (config, y_property_name, G_STRLOC);
   if (! y_param_spec)
-    {
-      g_warning (G_STRLOC ": %s has no property named '%s'",
-                 g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                 y_property_name);
-      return NULL;
-    }
+    return NULL;
 
   if (unit_property_name)
     {
-      unit_param_spec =
-        g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                      unit_property_name);
-
+      unit_param_spec = check_param_spec (config, unit_property_name,
+                                          GIMP_TYPE_PARAM_UNIT, G_STRLOC);
       if (! unit_param_spec)
-        {
-          g_warning (G_STRLOC ": %s has no property named '%s'",
-                     g_type_name (G_TYPE_FROM_INSTANCE (config)),
-                     unit_property_name);
-          return NULL;
-        }
-
-      if (! GIMP_IS_PARAM_SPEC_UNIT (unit_param_spec))
-        {
-          g_warning (G_STRLOC ": property '%s' of %s is not a unit",
-                     unit_property_name,
-                     g_type_name (G_TYPE_FROM_INSTANCE (config)));
-          return NULL;
-        }
+        return NULL;
 
       g_object_get (config,
                     unit_property_name, &unit_value,
@@ -1128,8 +1059,7 @@ gimp_prop_coordinates_new (GObject                   *config,
   else
     {
       unit_param_spec = NULL;
-
-      unit_value = GIMP_UNIT_INCH;
+      unit_value      = GIMP_UNIT_INCH;
     }
 
   if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
@@ -1243,31 +1173,18 @@ gimp_prop_coordinates_new (GObject                   *config,
                         config);
     }
 
-  notify_name = g_strconcat ("notify::", x_property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_coordinates_notify_x),
-                           sizeentry, 0);
-
-  g_free (notify_name);
-
-  notify_name = g_strconcat ("notify::", y_property_name, NULL);
-
-  g_signal_connect_object (config, notify_name,
-                           G_CALLBACK (gimp_prop_coordinates_notify_y),
-                           sizeentry, 0);
-
-  g_free (notify_name);
+  connect_notify (config, x_property_name,
+                  G_CALLBACK (gimp_prop_coordinates_notify_x),
+                  sizeentry);
+  connect_notify (config, y_property_name,
+                  G_CALLBACK (gimp_prop_coordinates_notify_y),
+                  sizeentry);
 
   if (unit_property_name)
     {
-      notify_name = g_strconcat ("notify::", unit_property_name, NULL);
-
-      g_signal_connect_object (config, notify_name,
-                               G_CALLBACK (gimp_prop_coordinates_notify_unit),
-                               sizeentry, 0);
-
-      g_free (notify_name);
+      connect_notify (config, unit_property_name,
+                      G_CALLBACK (gimp_prop_coordinates_notify_unit),
+                      sizeentry);
     }
 
   return sizeentry;
@@ -1480,4 +1397,87 @@ gimp_prop_coordinates_notify_unit (GObject       *config,
                                          gimp_prop_coordinates_callback,
                                          config);
     }
+}
+
+
+/*******************************/
+/*  private utility functions  */
+/*******************************/
+
+static GQuark param_spec_quark = 0;
+
+static void
+set_param_spec (GObject     *object,
+                GParamSpec  *value)
+{
+  if (! param_spec_quark)
+    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+
+  g_object_set_qdata (object, param_spec_quark, value);
+}
+
+static GParamSpec *
+get_param_spec (GObject *object)
+{
+  if (! param_spec_quark)
+    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+
+  return g_object_get_qdata (object, param_spec_quark);
+}
+
+static GParamSpec *
+find_param_spec (GObject     *object,
+                 const gchar *property_name,
+                 const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                             property_name);
+
+  if (! param_spec)
+    g_warning ("%s: %s has no property named '%s'",
+               strloc,
+               g_type_name (G_TYPE_FROM_INSTANCE (object)),
+               property_name);
+
+  return param_spec;
+}
+
+static GParamSpec *
+check_param_spec (GObject     *object,
+                  const gchar *property_name,
+                  GType        type,
+                  const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = find_param_spec (object, property_name, strloc);
+
+  if (param_spec && ! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), type))
+    {
+      g_warning ("%s: property '%s' of %s is not a %s",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type),
+                 g_type_name (type));
+      return NULL;
+    }
+
+  return param_spec;
+}
+
+static void
+connect_notify (GObject     *config,
+                const gchar *property_name,
+                GCallback    callback,
+                gpointer     callback_data)
+{
+  gchar *notify_name;
+
+  notify_name = g_strconcat ("notify::", property_name, NULL);
+
+  g_signal_connect_object (config, notify_name, callback, callback_data, 0);
+
+  g_free (notify_name);
 }
