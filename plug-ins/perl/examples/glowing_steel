@@ -221,6 +221,11 @@ sub perl_fu_highlight_edges {
     return;
   }
 
+  if (!gimp_layer_get_visible($drawable)) {
+    gimp_message("highlight_edges: The active layer must be visible!");
+    return;
+  }
+
   if (!gimp_drawable_has_alpha($drawable)) {
     my($sel,$x1,$y1,$x2,$y2) = gimp_selection_bounds($image);
     if ($sel) {
