@@ -1,6 +1,11 @@
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpdrawable.sgml: s/drawable_bytes/drawable_bpp/.
+
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpimage.sgml
 	* libgimp/tmpl/gimpundo.sgml: follow undo API changes.
 

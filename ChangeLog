@@ -1,5 +1,22 @@
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: renamed gimp_drawable_bytes() to
+	gimp_drawable_bpp() because all other libgimp API speak in terms
+	of "bpp" too.
+
+	* libgimp/gimpdrawable.h: removed gimp_drawable_bpp #define.
+
+	* app/pdb/procedural_db.c
+	* libgimp/gimpcompat.h: added compat stuff.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
+	* plug-ins/common/pix.c
+	* plug-ins/common/psd_save.c: changed accordingly.
+
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: removed gimp_image_undo_*() functions...
 
 	* tools/pdbgen/pdb/undo.pdb: ...and added them here. Renamed

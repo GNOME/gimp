@@ -506,7 +506,7 @@ save_image (const gchar *filename,
 		       drawable->height, FALSE, FALSE);
 
   savingColor = gimp_drawable_is_rgb (drawable_ID);
-  depth = gimp_drawable_bytes (drawable_ID);
+  depth = gimp_drawable_bpp (drawable_ID);
 
   /* Open the output file. */
   file = fopen (filename, "wb");

@@ -198,7 +198,7 @@ gimp_drawable_type
 gimp_drawable_is_rgb
 gimp_drawable_is_gray
 gimp_drawable_is_indexed
-gimp_drawable_bytes
+gimp_drawable_bpp
 gimp_drawable_width
 gimp_drawable_height
 gimp_drawable_offsets
@@ -206,7 +206,6 @@ gimp_drawable_is_layer
 gimp_drawable_is_layer_mask
 gimp_drawable_is_channel
 gimp_drawable_offset
-gimp_drawable_bpp
 gimp_drawable_parasite_find
 gimp_drawable_parasite_list
 gimp_drawable_parasite_attach

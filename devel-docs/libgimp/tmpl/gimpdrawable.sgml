@@ -321,7 +321,7 @@ Functions to manipulate drawables.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_bytes ##### -->
+<!-- ##### FUNCTION gimp_drawable_bpp ##### -->
 <para>
 
 </para>
@@ -396,14 +396,6 @@ Functions to manipulate drawables.
 @fill_type: 
 @offset_x: 
 @offset_y: 
-@Returns: 
-
-
-<!-- ##### MACRO gimp_drawable_bpp ##### -->
-<para>
-
-</para>
-
 @Returns: 
 
 

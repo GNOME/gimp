@@ -294,6 +294,36 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
 }
 
 /**
+ * gimp_drawable_type:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's type.
+ *
+ * This procedure returns the drawable's type.
+ *
+ * Returns: The drawable's type.
+ */
+GimpImageType
+gimp_drawable_type (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpImageType type = 0;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_type",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    type = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return type;
+}
+
+/**
  * gimp_drawable_type_with_alpha:
  * @drawable_ID: The drawable.
  *
@@ -324,36 +354,6 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return type_with_alpha;
-}
-
-/**
- * gimp_drawable_type:
- * @drawable_ID: The drawable.
- *
- * Returns the drawable's type.
- *
- * This procedure returns the drawable's type.
- *
- * Returns: The drawable's type.
- */
-GimpImageType
-gimp_drawable_type (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  GimpImageType type = 0;
-
-  return_vals = gimp_run_procedure ("gimp_drawable_type",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    type = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return type;
 }
 
 /**
@@ -450,7 +450,7 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
 }
 
 /**
- * gimp_drawable_bytes:
+ * gimp_drawable_bpp:
  * @drawable_ID: The drawable.
  *
  * Returns the bytes per pixel.
@@ -461,23 +461,23 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
  * Returns: Bytes per pixel.
  */
 gint
-gimp_drawable_bytes (gint32 drawable_ID)
+gimp_drawable_bpp (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint bytes = 0;
+  gint bpp = 0;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_bytes",
+  return_vals = gimp_run_procedure ("gimp_drawable_bpp",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    bytes = return_vals[1].data.d_int32;
+    bpp = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return bytes;
+  return bpp;
 }
 
 /**

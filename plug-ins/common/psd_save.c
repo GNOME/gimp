@@ -1105,7 +1105,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
       ChannelLengthPos[i] = g_new (gint32, nChannelsLayer);
 
-      /* Try with gimp_drawable_bytes() */
+      /* Try with gimp_drawable_bpp() */
 
       for (j = 0; j < nChannelsLayer; j++)
         {

@@ -355,13 +355,13 @@ sub drawable_is_indexed {
     &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'is_indexed');
 }
 
-sub drawable_bytes {
+sub drawable_bpp {
     $help = <<'HELP';
 This procedure returns the number of bytes per pixel (or the number of
 channels) for the specified drawable.
 HELP
 
-    &drawable_prop_proc('the bytes per pixel', 'bytes', 'int32', 'bytes',
+    &drawable_prop_proc('the bytes per pixel', 'bpp', 'int32', 'bytes',
 			'Bytes per pixel');
 }
 
@@ -700,9 +700,9 @@ CODE
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds
             drawable_get_image drawable_set_image
-	    drawable_has_alpha drawable_type_with_alpha
-            drawable_type drawable_is_rgb drawable_is_gray drawable_is_indexed
-            drawable_bytes drawable_width drawable_height drawable_offsets
+	    drawable_has_alpha drawable_type  drawable_type_with_alpha
+            drawable_is_rgb drawable_is_gray drawable_is_indexed
+            drawable_bpp drawable_width drawable_height drawable_offsets
             drawable_is_layer drawable_is_layer_mask drawable_is_channel
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible

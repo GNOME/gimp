@@ -48,12 +48,12 @@ static ProcRecord drawable_mask_bounds_proc;
 static ProcRecord drawable_get_image_proc;
 static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_has_alpha_proc;
-static ProcRecord drawable_type_with_alpha_proc;
 static ProcRecord drawable_type_proc;
+static ProcRecord drawable_type_with_alpha_proc;
 static ProcRecord drawable_is_rgb_proc;
 static ProcRecord drawable_is_gray_proc;
 static ProcRecord drawable_is_indexed_proc;
-static ProcRecord drawable_bytes_proc;
+static ProcRecord drawable_bpp_proc;
 static ProcRecord drawable_width_proc;
 static ProcRecord drawable_height_proc;
 static ProcRecord drawable_offsets_proc;
@@ -84,12 +84,12 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_get_image_proc);
   procedural_db_register (gimp, &drawable_set_image_proc);
   procedural_db_register (gimp, &drawable_has_alpha_proc);
-  procedural_db_register (gimp, &drawable_type_with_alpha_proc);
   procedural_db_register (gimp, &drawable_type_proc);
+  procedural_db_register (gimp, &drawable_type_with_alpha_proc);
   procedural_db_register (gimp, &drawable_is_rgb_proc);
   procedural_db_register (gimp, &drawable_is_gray_proc);
   procedural_db_register (gimp, &drawable_is_indexed_proc);
-  procedural_db_register (gimp, &drawable_bytes_proc);
+  procedural_db_register (gimp, &drawable_bpp_proc);
   procedural_db_register (gimp, &drawable_width_proc);
   procedural_db_register (gimp, &drawable_height_proc);
   procedural_db_register (gimp, &drawable_offsets_proc);
@@ -551,60 +551,6 @@ static ProcRecord drawable_has_alpha_proc =
 };
 
 static Argument *
-drawable_type_with_alpha_invoker (Gimp     *gimp,
-                                  Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpDrawable *drawable;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_drawable_type_with_alpha (drawable);
-
-  return return_args;
-}
-
-static ProcArg drawable_type_with_alpha_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  }
-};
-
-static ProcArg drawable_type_with_alpha_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "type_with_alpha",
-    "The drawable's type with alpha: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
-  }
-};
-
-static ProcRecord drawable_type_with_alpha_proc =
-{
-  "gimp_drawable_type_with_alpha",
-  "Returns the drawable's type with alpha.",
-  "This procedure returns the drawable's type if an alpha channel were added. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  drawable_type_with_alpha_inargs,
-  1,
-  drawable_type_with_alpha_outargs,
-  { { drawable_type_with_alpha_invoker } }
-};
-
-static Argument *
 drawable_type_invoker (Gimp     *gimp,
                        Argument *args)
 {
@@ -656,6 +602,60 @@ static ProcRecord drawable_type_proc =
   1,
   drawable_type_outargs,
   { { drawable_type_invoker } }
+};
+
+static Argument *
+drawable_type_with_alpha_invoker (Gimp     *gimp,
+                                  Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_drawable_type_with_alpha (drawable);
+
+  return return_args;
+}
+
+static ProcArg drawable_type_with_alpha_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_type_with_alpha_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "type_with_alpha",
+    "The drawable's type with alpha: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
+  }
+};
+
+static ProcRecord drawable_type_with_alpha_proc =
+{
+  "gimp_drawable_type_with_alpha",
+  "Returns the drawable's type with alpha.",
+  "This procedure returns the drawable's type if an alpha channel were added. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_type_with_alpha_inargs,
+  1,
+  drawable_type_with_alpha_outargs,
+  { { drawable_type_with_alpha_invoker } }
 };
 
 static Argument *
@@ -821,8 +821,8 @@ static ProcRecord drawable_is_indexed_proc =
 };
 
 static Argument *
-drawable_bytes_invoker (Gimp     *gimp,
-                        Argument *args)
+drawable_bpp_invoker (Gimp     *gimp,
+                      Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -832,7 +832,7 @@ drawable_bytes_invoker (Gimp     *gimp,
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_bytes_proc, success);
+  return_args = procedural_db_return_args (&drawable_bpp_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_drawable_bytes (drawable);
@@ -840,7 +840,7 @@ drawable_bytes_invoker (Gimp     *gimp,
   return return_args;
 }
 
-static ProcArg drawable_bytes_inargs[] =
+static ProcArg drawable_bpp_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -849,18 +849,18 @@ static ProcArg drawable_bytes_inargs[] =
   }
 };
 
-static ProcArg drawable_bytes_outargs[] =
+static ProcArg drawable_bpp_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "bytes",
+    "bpp",
     "Bytes per pixel"
   }
 };
 
-static ProcRecord drawable_bytes_proc =
+static ProcRecord drawable_bpp_proc =
 {
-  "gimp_drawable_bytes",
+  "gimp_drawable_bpp",
   "Returns the bytes per pixel.",
   "This procedure returns the number of bytes per pixel (or the number of channels) for the specified drawable.",
   "Spencer Kimball & Peter Mattis",
@@ -868,10 +868,10 @@ static ProcRecord drawable_bytes_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  drawable_bytes_inargs,
+  drawable_bpp_inargs,
   1,
-  drawable_bytes_outargs,
-  { { drawable_bytes_invoker } }
+  drawable_bpp_outargs,
+  { { drawable_bpp_invoker } }
 };
 
 static Argument *
