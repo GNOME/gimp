@@ -441,6 +441,7 @@ shoot_dialog (void)
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
 
+  gtk_widget_show (button);
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
