@@ -103,13 +103,9 @@ gimp_brushes_get_list (const gchar *filter,
  * @height: The brush height.
  * @spacing: The brush spacing.
  *
- * Retrieve information about the currently active brush mask.
+ * This procedure is deprecated! Use 'gimp_context_get_brush' instead.
  *
- * This procedure retrieves information about the currently active
- * brush mask. This includes the brush name, the width and height, and
- * the brush spacing paramter. All paint operations and stroke
- * operations use this mask to control the application of paint to the
- * image.
+ * This procedure is deprecated! Use 'gimp_context_get_brush' instead.
  *
  * Returns: The brush name.
  */
@@ -142,12 +138,9 @@ gimp_brushes_get_brush (gint *width,
 /**
  * gimp_brushes_get_spacing:
  *
- * Get the brush spacing.
+ * This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.
  *
- * This procedure returns the spacing setting for brushes. This value
- * is set per brush and will change if a different brush is selected.
- * The return value is an integer between 0 and 1000 which represents
- * percentage of the maximum of the width and height of the mask.
+ * This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.
  *
  * Returns: The brush spacing.
  */
@@ -174,12 +167,9 @@ gimp_brushes_get_spacing (void)
  * gimp_brushes_set_spacing:
  * @spacing: The brush spacing.
  *
- * Set the brush spacing.
+ * This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.
  *
- * This procedure modifies the spacing setting for the current brush.
- * This value is set on a per-brush basis and will change if a
- * different brush mask is selected. The value should be a integer
- * between 0 and 1000.
+ * This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.
  *
  * Returns: TRUE on success.
  */
@@ -200,48 +190,6 @@ gimp_brushes_set_spacing (gint spacing)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
-}
-
-/**
- * gimp_brushes_get_brush_info:
- * @name: The brush name (\"\" means current active brush).
- * @width: The brush width.
- * @height: The brush height.
- * @spacing: The brush spacing.
- *
- * Retrieve information about the specified brush.
- *
- * This procedure retrieves information about the specified brush. This
- * includes the brush name, and the brush extents (width and height).
- *
- * Returns: The brush name.
- */
-gchar *
-gimp_brushes_get_brush_info (const gchar *name,
-			     gint        *width,
-			     gint        *height,
-			     gint        *spacing)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *ret_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_get_brush_info",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      ret_name = g_strdup (return_vals[1].data.d_string);
-      *width = return_vals[2].data.d_int32;
-      *height = return_vals[3].data.d_int32;
-      *spacing = return_vals[4].data.d_int32;
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return ret_name;
 }
 
 /**

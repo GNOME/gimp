@@ -2,6 +2,7 @@ PDBGEN_BACKUP = 0
 PDBGEN_GROUPS =
 
 pdb_sources = \
+	pdb/brush.pdb		\
 	pdb/brush_select.pdb	\
 	pdb/brushes.pdb		\
 	pdb/channel.pdb		\
@@ -16,7 +17,7 @@ pdb_sources = \
 	pdb/font_select.pdb	\
 	pdb/fonts.pdb		\
 	pdb/gimprc.pdb		\
-	pdb/gradient_edit.pdb	\
+	pdb/gradient.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/gradients.pdb	\
 	pdb/guides.pdb		\
@@ -26,10 +27,12 @@ pdb_sources = \
 	pdb/message.pdb		\
 	pdb/misc.pdb		\
 	pdb/paint_tools.pdb	\
+	pdb/palette.pdb		\
 	pdb/palette_select.pdb	\
 	pdb/palettes.pdb	\
 	pdb/parasite.pdb	\
 	pdb/paths.pdb		\
+	pdb/pattern.pdb		\
 	pdb/pattern_select.pdb	\
 	pdb/patterns.pdb	\
 	pdb/plug_in.pdb		\

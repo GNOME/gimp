@@ -17,22 +17,23 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub rock_pdb_misc {
+sub rock_misc {
     $author = 'Nathan Summers <rock@gimp.org>';
     $copyright = 'Nathan Summers';
     $date = '2001';
 }
 
-sub adrian_pdb_misc {
+sub adrian_misc {
     $author = 'Adrian Likins <adrian@gimp.org>';
     $copyright = 'Adrian Likins';
     $date = '1998';
 }
 
-sub mitch_pdb_misc {
+sub mitch_misc {
     $author = 'Michael Natterer <mitch@gimp.org>';
     $copyright = 'Michael Natterer';
     $date = '2004';
+    $since = '2.2';
 }
 
 sub palette_arg () {{
@@ -65,6 +66,20 @@ sub palette_outargs {
     }
 }
 
+my $get_palette_from_name = <<'CODE';
+if (name && strlen (name))
+  {
+    palette = (GimpPalette *)
+      gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                        name);
+  }
+else
+  {
+    palette = gimp_context_get_palette (context);
+  }
+CODE
+
+
 # The defs
 
 sub palettes_refresh {
@@ -75,7 +90,7 @@ This procedure retrieves all palettes currently in the user's palette path
 and updates the palette dialogs accordingly.
 HELP
 
-    &adrian_pdb_misc;
+    &adrian_misc;
 
     %invoke = (
 	code => <<'CODE'
@@ -95,7 +110,7 @@ This procedure returns a complete listing of available palettes. Each name
 returned can be used as input to the command 'gimp_context_set_palette'.
 HELP
 
-    &rock_pdb_misc;
+    &rock_misc;
 
     @inargs = (
 	{ name => 'filter', type => 'string', null_ok => 1,
@@ -117,16 +132,10 @@ HELP
 }
 
 sub palettes_get_palette {
-    $blurb = 'Retrieve information about the currently active palette.';
-
-    $help = <<'HELP';
-This procedure retrieves information about the currently active palette. This
-includes the name, and the number of colors.
-HELP
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_palette' instead.";
+    $author = $copyright = $date = '';
 
     $deprecated = 1;
-
-    &rock_pdb_misc;
 
     @outargs = (
         &palette_arg,
@@ -141,59 +150,11 @@ HELP
     );
 }
 
-sub palettes_get_palette_info {
-    $blurb = 'Retrieve information about the specified palette.';
-
-    $help = <<'HELP';
-This procedure retrieves information about the specified palette. This
-includes the name, and the number of colors.
-HELP
-
-    &mitch_pdb_misc;
-
-    @inargs = (
-        &palette_arg
-    );
-    $inargs[0]->{desc} = 'The palette name ("" means currently active palette)';
-
-    @outargs = (
-        &palette_arg,
-        &dim_args
-    );
-
-    &palette_outargs;
-
-    %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
-	code => <<'CODE'
-{
-  if (name && strlen (name))
-    {
-      palette = (GimpPalette *)
-        gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                          name);
-    }
-  else
-    {
-      palette = gimp_context_get_palette (context);
-    }
-
-  if (! palette)
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub palettes_get_palette_entry {
-    $blurb = 'Gets the specified palette entry from the specified palette.';
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.";
+    $author = $copyright = $date = '';
 
-    $help = <<'HELP';
-This procedure retrieves the color of the zero-based entry specifed for the
-specified palette. It returns an error if the entry does not exist.
-HELP
-
-    &rock_pdb_misc;
+    $deprecated = 1;
 
     @inargs = (
         &palette_arg,
@@ -214,18 +175,9 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL' ],
-	code => <<'CODE'
+	code => <<"CODE"
 {
-  if (name && strlen (name))
-    {
-      palette = (GimpPalette *)
-        gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                          name);
-    }
-  else
-    {
-      palette = gimp_context_get_palette (context);
-    }
+  $get_palette_from_name
 
   if (palette)
     {
@@ -250,11 +202,12 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
               "core/gimpdatafactory.h" "core/gimppalette.h");
 
-@procs = qw(palettes_refresh  palettes_get_list palettes_get_palette
-	    palettes_get_palette_info palettes_get_palette_entry);
+@procs = qw(palettes_refresh  palettes_get_list
+            palettes_get_palette palettes_get_palette_entry);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palettes';

@@ -39,7 +39,6 @@
 static ProcRecord palettes_refresh_proc;
 static ProcRecord palettes_get_list_proc;
 static ProcRecord palettes_get_palette_proc;
-static ProcRecord palettes_get_palette_info_proc;
 static ProcRecord palettes_get_palette_entry_proc;
 
 void
@@ -48,7 +47,6 @@ register_palettes_procs (Gimp *gimp)
   procedural_db_register (gimp, &palettes_refresh_proc);
   procedural_db_register (gimp, &palettes_get_list_proc);
   procedural_db_register (gimp, &palettes_get_palette_proc);
-  procedural_db_register (gimp, &palettes_get_palette_info_proc);
   procedural_db_register (gimp, &palettes_get_palette_entry_proc);
 }
 
@@ -188,99 +186,17 @@ static ProcArg palettes_get_palette_outargs[] =
 static ProcRecord palettes_get_palette_proc =
 {
   "gimp_palettes_get_palette",
-  "Retrieve information about the currently active palette.",
-  "This procedure retrieves information about the currently active palette. This includes the name, and the number of colors.",
-  "Nathan Summers <rock@gimp.org>",
-  "Nathan Summers",
-  "2001",
+  "This procedure is deprecated! Use 'gimp_context_get_palette' instead.",
+  "This procedure is deprecated! Use 'gimp_context_get_palette' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   0,
   NULL,
   2,
   palettes_get_palette_outargs,
   { { palettes_get_palette_invoker } }
-};
-
-static Argument *
-palettes_get_palette_info_invoker (Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar *name;
-  GimpPalette *palette = NULL;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      if (name && strlen (name))
-        {
-          palette = (GimpPalette *)
-            gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              name);
-        }
-      else
-        {
-          palette = gimp_context_get_palette (context);
-        }
-
-      if (! palette)
-        success = FALSE;
-    }
-
-  return_args = procedural_db_return_args (&palettes_get_palette_info_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (palette)->name);
-      return_args[2].value.pdb_int = palette->n_colors;
-    }
-
-  return return_args;
-}
-
-static ProcArg palettes_get_palette_info_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The palette name (\"\" means currently active palette)"
-  }
-};
-
-static ProcArg palettes_get_palette_info_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The palette name"
-  },
-  {
-    GIMP_PDB_INT32,
-    "num_colors",
-    "The palette num_colors"
-  }
-};
-
-static ProcRecord palettes_get_palette_info_proc =
-{
-  "gimp_palettes_get_palette_info",
-  "Retrieve information about the specified palette.",
-  "This procedure retrieves information about the specified palette. This includes the name, and the number of colors.",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer",
-  "2004",
-  GIMP_INTERNAL,
-  1,
-  palettes_get_palette_info_inargs,
-  2,
-  palettes_get_palette_info_outargs,
-  { { palettes_get_palette_info_invoker } }
 };
 
 static Argument *
@@ -305,15 +221,15 @@ palettes_get_palette_entry_invoker (Gimp         *gimp,
   if (success)
     {
       if (name && strlen (name))
-        {
-          palette = (GimpPalette *)
-            gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              name);
-        }
-      else
-        {
-          palette = gimp_context_get_palette (context);
-        }
+      {
+        palette = (GimpPalette *)
+          gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                            name);
+      }
+    else
+      {
+        palette = gimp_context_get_palette (context);
+      }
 
       if (palette)
         {
@@ -383,11 +299,11 @@ static ProcArg palettes_get_palette_entry_outargs[] =
 static ProcRecord palettes_get_palette_entry_proc =
 {
   "gimp_palettes_get_palette_entry",
-  "Gets the specified palette entry from the specified palette.",
-  "This procedure retrieves the color of the zero-based entry specifed for the specified palette. It returns an error if the entry does not exist.",
-  "Nathan Summers <rock@gimp.org>",
-  "Nathan Summers",
-  "2001",
+  "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.",
+  "This procedure is deprecated! Use 'gimp_palette_entry_get_color' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   2,
   palettes_get_palette_entry_inargs,

@@ -101,18 +101,10 @@ HELP
 }
 
 sub patterns_get_pattern {
-    $blurb = 'Retrieve information about the currently active pattern.';
-
-    $help = <<'HELP';
-This procedure retrieves information about the currently active pattern. This
-includes the pattern name, and the pattern extents (width and height). All
-clone and bucket-fill operations with patterns will use this pattern to control
-the application of paint to the image.
-HELP
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.";
+    $author = $copyright = $date = '';
 
     $deprecated = 1;
-
-    &std_pdb_misc;
 
     @outargs = (
 	&pattern_arg,
@@ -124,51 +116,6 @@ HELP
     %invoke = (
 	vars => [ 'GimpPattern *pattern' ],
 	code => 'success = (pattern = gimp_context_get_pattern (context)) != NULL;'
-    );
-}
-
-sub patterns_get_pattern_info {
-    $blurb = <<'BLURB';
-Retrieve information about the specified pattern.
-BLURB
-
-    $help = <<'HELP';
-This procedure retrieves information about the specified pattern.
-This includes the pattern extents (width and height).
-HELP
-
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2004';
-
-    @inargs = ( &pattern_arg );
-    $inargs[0]->{desc} = 'The pattern name ("" means currently active pattern)';
-
-    @outargs = (
-	&pattern_arg,
-	&dim_args,
-    );
-
-    &pattern_outargs;
-
-    %invoke = (
-	vars => [ 'GimpPattern *pattern = NULL' ],
-	code => <<'CODE'
-{
-  if (name && strlen (name))
-    {
-      pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                          name);
-    }
-  else
-    {
-      pattern = gimp_context_get_pattern (context);
-    }
-
-  if (! pattern)
-    success = FALSE;
-}
-CODE
     );
 }
 
@@ -236,7 +183,7 @@ CODE
               "core/gimpdatafactory.h" "core/gimppattern.h" "base/temp-buf.h");
 
 @procs = qw(patterns_refresh patterns_get_list patterns_get_pattern
-            patterns_get_pattern_info patterns_get_pattern_data);
+            patterns_get_pattern_data);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Patterns';

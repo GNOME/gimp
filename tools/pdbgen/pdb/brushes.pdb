@@ -49,7 +49,6 @@ sub paint_mode_arg () {{
     desc => 'The paint mode: { %%desc%% }'
 }}
 
-
 sub brush_outargs {
     foreach (@outargs) {
 	my $alias = ($_->{type} eq 'string') ?
@@ -60,6 +59,20 @@ sub brush_outargs {
 	$_->{no_declare} = 1;
     }
 }
+
+my $get_brush_from_name = <<'CODE';
+if (name && strlen (name))
+  {
+    brush = (GimpBrush *)
+      gimp_container_get_child_by_name (gimp->brush_factory->container,
+                                        name);
+  }
+else
+  {
+    brush = gimp_context_get_brush (context);
+  }
+CODE
+
 
 # The defs
 
@@ -115,18 +128,10 @@ HELP
 }
 
 sub brushes_get_brush {
-    $blurb = 'Retrieve information about the currently active brush mask.';
-
-    $help = <<'HELP';
-This procedure retrieves information about the currently active brush mask.
-This includes the brush name, the width and height, and the brush spacing
-paramter. All paint operations and stroke operations use this mask to control
-the application of paint to the image.
-HELP
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_context_get_brush' instead.";
+    $author = $copyright = $date = '';
 
     $deprecated = 1;
-
-    &std_pdb_misc;
 
     @outargs = (
 	&brush_arg,
@@ -143,16 +148,10 @@ HELP
 }
 
 sub brushes_get_spacing {
-    $blurb = 'Get the brush spacing.';
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.";
+    $author = $copyright = $date = '';
 
-    $help = <<'HELP';
-This procedure returns the spacing setting for brushes. This value is set per
-brush and will change if a different brush is selected. The return value is an
-integer between 0 and 1000 which represents percentage of the maximum of the
-width and height of the mask.
-HELP
-
-    &std_pdb_misc;
+    $deprecated = 1;
 
     @outargs = ( &spacing_arg );
     $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (context))';
@@ -160,67 +159,15 @@ HELP
 }
 
 sub brushes_set_spacing {
-    $blurb = 'Set the brush spacing.';
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.";
+    $author = $copyright = $date = '';
 
-    $help = <<'HELP';
-This procedure modifies the spacing setting for the current brush. This value
-is set on a per-brush basis and will change if a different brush mask is
-selected. The value should be a integer between 0 and 1000.
-HELP
-
-    &std_pdb_misc;
+    $deprecated = 1;
 
     @inargs = ( &spacing_arg );
 
     %invoke = (
 	code => 'gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);'
-    );
-}
-
-sub brushes_get_brush_info {
-    $blurb = <<'BLURB';
-Retrieve information about the specified brush.
-BLURB
-
-    $help = <<'HELP';
-This procedure retrieves information about the specified brush. This
-includes the brush name, and the brush extents (width and height).
-HELP
-
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2004';
-
-    @inargs = (
-        &brush_arg
-    );
-    $inargs[0]->{desc} = 'The brush name ("" means current active brush)';
-
-    @outargs = (
-	&brush_arg,
-	&dim_args,
-	&spacing_arg
-    );
-
-    &brush_outargs;
-
-    %invoke = (
-	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<'CODE'
-{
-  if (name && strlen (name))
-    {
-      brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-    }
-  else
-    {
-      brush = gimp_context_get_brush (context);
-    }
-
-  if (! brush)
-    success = FALSE;
-}
-CODE
     );
 }
 
@@ -287,13 +234,13 @@ CODE
     );
 }
 
+
 @headers = qw(<string.h> "base/temp-buf.h"
               "core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
               "core/gimpcontext.h" "core/gimpdatafactory.h");
 
 @procs = qw(brushes_refresh brushes_get_list brushes_get_brush
-            brushes_get_spacing brushes_set_spacing
-	    brushes_get_brush_info brushes_get_brush_data);
+            brushes_get_spacing brushes_set_spacing brushes_get_brush_data);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brushes';

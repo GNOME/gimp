@@ -40,7 +40,6 @@ static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_proc;
 static ProcRecord brushes_get_spacing_proc;
 static ProcRecord brushes_set_spacing_proc;
-static ProcRecord brushes_get_brush_info_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
@@ -51,7 +50,6 @@ register_brushes_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_get_brush_proc);
   procedural_db_register (gimp, &brushes_get_spacing_proc);
   procedural_db_register (gimp, &brushes_set_spacing_proc);
-  procedural_db_register (gimp, &brushes_get_brush_info_proc);
   procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
@@ -203,11 +201,11 @@ static ProcArg brushes_get_brush_outargs[] =
 static ProcRecord brushes_get_brush_proc =
 {
   "gimp_brushes_get_brush",
-  "Retrieve information about the currently active brush mask.",
-  "This procedure retrieves information about the currently active brush mask. This includes the brush name, the width and height, and the brush spacing paramter. All paint operations and stroke operations use this mask to control the application of paint to the image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use 'gimp_context_get_brush' instead.",
+  "This procedure is deprecated! Use 'gimp_context_get_brush' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -242,11 +240,11 @@ static ProcArg brushes_get_spacing_outargs[] =
 static ProcRecord brushes_get_spacing_proc =
 {
   "gimp_brushes_get_spacing",
-  "Get the brush spacing.",
-  "This procedure returns the spacing setting for brushes. This value is set per brush and will change if a different brush is selected. The return value is an integer between 0 and 1000 which represents percentage of the maximum of the width and height of the mask.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.",
+  "This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   0,
   NULL,
@@ -286,110 +284,17 @@ static ProcArg brushes_set_spacing_inargs[] =
 static ProcRecord brushes_set_spacing_proc =
 {
   "gimp_brushes_set_spacing",
-  "Set the brush spacing.",
-  "This procedure modifies the spacing setting for the current brush. This value is set on a per-brush basis and will change if a different brush mask is selected. The value should be a integer between 0 and 1000.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.",
+  "This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   1,
   brushes_set_spacing_inargs,
   0,
   NULL,
   { { brushes_set_spacing_invoker } }
-};
-
-static Argument *
-brushes_get_brush_info_invoker (Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar *name;
-  GimpBrush *brush = NULL;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      if (name && strlen (name))
-        {
-          brush = (GimpBrush *)
-            gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-        }
-      else
-        {
-          brush = gimp_context_get_brush (context);
-        }
-
-      if (! brush)
-        success = FALSE;
-    }
-
-  return_args = procedural_db_return_args (&brushes_get_brush_info_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
-      return_args[2].value.pdb_int = brush->mask->width;
-      return_args[3].value.pdb_int = brush->mask->height;
-      return_args[4].value.pdb_int = brush->spacing;
-    }
-
-  return return_args;
-}
-
-static ProcArg brushes_get_brush_info_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The brush name (\"\" means current active brush)"
-  }
-};
-
-static ProcArg brushes_get_brush_info_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The brush name"
-  },
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The brush width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The brush height"
-  },
-  {
-    GIMP_PDB_INT32,
-    "spacing",
-    "The brush spacing: 0 <= spacing <= 1000"
-  }
-};
-
-static ProcRecord brushes_get_brush_info_proc =
-{
-  "gimp_brushes_get_brush_info",
-  "Retrieve information about the specified brush.",
-  "This procedure retrieves information about the specified brush. This includes the brush name, and the brush extents (width and height).",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
-  "2004",
-  GIMP_INTERNAL,
-  1,
-  brushes_get_brush_info_inargs,
-  4,
-  brushes_get_brush_info_outargs,
-  { { brushes_get_brush_info_invoker } }
 };
 
 static Argument *

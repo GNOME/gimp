@@ -585,10 +585,10 @@ gfig_read_gimp_style (Style *style,
   gimp_context_get_foreground (&style->foreground);
   gimp_context_get_background (&style->background);
 
-  style->brush_name = gimp_brushes_get_brush_info (NULL,
-                                                   &style->brush_width,
-                                                   &style->brush_height,
-                                                   &style->brush_spacing);
+  style->brush_name = gimp_context_get_brush ();
+  gimp_brush_get_info (NULL, &style->brush_width, &style->brush_height);
+  gimp_brush_get_spacing (NULL, &style->brush_spacing);
+
   style->gradient = gimp_context_get_gradient ();
   style->pattern  = gimp_context_get_pattern ();
 
@@ -688,15 +688,10 @@ void
 mygimp_brush_info (gint *width,
                    gint *height)
 {
-  char *name;
-  gint spacing;
-
-  name = gimp_brushes_get_brush_info (NULL, width, height, &spacing);
-  if (name)
+  if (gimp_brush_get_info (NULL, width, height))
     {
       *width  = MAX (*width, 32);
       *height = MAX (*height, 32);
-      g_free (name);
     }
   else
     {

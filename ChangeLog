@@ -1,3 +1,51 @@
+2004-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl: renamed group "gradient_edit" to
+	"gradient" and added "brush", "palette" and "pattern" groups.
+
+	* tools/pdbgen/pdb/gradient_edit.pdb: removed.
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/pattern.pdb: new files containing functions
+	which create, duplicate, rename, delete, query and manipulate
+	a single brush, pattern etc.
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: deprecated stuff that is obsolete
+	now and simply removed the procedures that were added after 2.0.
+
+	* app/pdb/gradient_edit_cmds.c
+	* libgimp/gimpgradientedit_pdb.[ch]: removed.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/pattern_cmds.c
+	* libgimp/gimpbrush_pdb.[ch]
+	* libgimp/gimpgradient_pdb.[ch]
+	* libgimp/gimppalette_pdb.[ch]
+	* libgimp/gimppattern_pdb.[ch]: new files.
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalettes_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]: regenerated.
+
+	* app/pdb/Makefile.am
+	* libgimp/Makefile.am
+	* plug-ins/gfig/gfig-style.c: changed accordingly.
+
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
 	* app/file/gimprecentlist.c (gimp_recent_list_write): don't write

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgradientedit_pdb.c
+ * gimpgradient_pdb.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +24,136 @@
 #include "config.h"
 
 #include "gimp.h"
+
+/**
+ * gimp_gradient_new:
+ * @name: The requested name of the new gradient.
+ *
+ * Creates a new gradient
+ *
+ * This procedure creates a new, uninitialized gradient
+ *
+ * Returns: The actual new gradient name.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_gradient_new (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_new",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+/**
+ * gimp_gradient_duplicate:
+ * @name: The name of the gradient to duplicate.
+ *
+ * Duplicates a gradient
+ *
+ * This procedure creates an identical gradient by a different name
+ *
+ * Returns: The name of the gradient's copy.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_gradient_duplicate (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_duplicate",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+/**
+ * gimp_gradient_rename:
+ * @name: The name of the gradient to rename.
+ * @new_name: The new name of the gradient.
+ *
+ * Rename a gradient
+ *
+ * This procedure renames a gradient
+ *
+ * Returns: The actual new name of the gradient.
+ *
+ * Since: GIMP 2.2
+ */
+gchar *
+gimp_gradient_rename (const gchar *name,
+		      const gchar *new_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_rename",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_STRING, new_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+/**
+ * gimp_gradient_delete:
+ * @name: The name of the gradient to delete.
+ *
+ * Deletes a gradient
+ *
+ * This procedure deletes a gradient
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_gradient_delete (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_delete",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
 
 /**
  * gimp_gradient_segment_get_left_color:

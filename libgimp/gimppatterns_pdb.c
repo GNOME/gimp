@@ -102,13 +102,11 @@ gimp_patterns_get_list (const gchar *filter,
  * @width: The pattern width.
  * @height: The pattern height.
  *
- * Retrieve information about the currently active pattern.
+ * This procedure is deprecated! Use 'gimp_context_get_pattern'
+ * instead.
  *
- * This procedure retrieves information about the currently active
- * pattern. This includes the pattern name, and the pattern extents
- * (width and height). All clone and bucket-fill operations with
- * patterns will use this pattern to control the application of paint
- * to the image.
+ * This procedure is deprecated! Use 'gimp_context_get_pattern'
+ * instead.
  *
  * Returns: The pattern name.
  */
@@ -134,45 +132,6 @@ gimp_patterns_get_pattern (gint *width,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return name;
-}
-
-/**
- * gimp_patterns_get_pattern_info:
- * @name: The pattern name (\"\" means currently active pattern).
- * @width: The pattern width.
- * @height: The pattern height.
- *
- * Retrieve information about the specified pattern.
- *
- * This procedure retrieves information about the specified pattern.
- * This includes the pattern extents (width and height).
- *
- * Returns: The pattern name.
- */
-gchar *
-gimp_patterns_get_pattern_info (const gchar *name,
-				gint        *width,
-				gint        *height)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *ret_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_info",
-				    &nreturn_vals,
-				    GIMP_PDB_STRING, name,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      ret_name = g_strdup (return_vals[1].data.d_string);
-      *width = return_vals[2].data.d_int32;
-      *height = return_vals[3].data.d_int32;
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return ret_name;
 }
 
 /**

@@ -3,10 +3,14 @@
 noinst_LIBRARIES = libapppdb.a
 
 libapppdb_a_SOURCES = \
-	internal_procs.c	\
-	internal_procs.h	\
+	pdb-types.h		\
+	pdb_glue.h		\
 	procedural_db.c		\
 	procedural_db.h		\
+	\
+	internal_procs.c	\
+	internal_procs.h	\
+	brush_cmds.c		\
 	brush_select_cmds.c	\
 	brushes_cmds.c		\
 	channel_cmds.c		\
@@ -21,7 +25,7 @@ libapppdb_a_SOURCES = \
 	font_select_cmds.c	\
 	fonts_cmds.c		\
 	gimprc_cmds.c		\
-	gradient_edit_cmds.c	\
+	gradient_cmds.c		\
 	gradient_select_cmds.c	\
 	gradients_cmds.c	\
 	guides_cmds.c		\
@@ -31,14 +35,14 @@ libapppdb_a_SOURCES = \
 	message_cmds.c		\
 	misc_cmds.c		\
 	paint_tools_cmds.c	\
+	palette_cmds.c		\
 	palette_select_cmds.c	\
 	palettes_cmds.c		\
 	parasite_cmds.c		\
 	paths_cmds.c		\
+	pattern_cmds.c		\
 	pattern_select_cmds.c	\
 	patterns_cmds.c		\
-	pdb_glue.h		\
-	pdb-types.h		\
 	plug_in_cmds.c		\
 	procedural_db_cmds.c	\
 	progress_cmds.c		\

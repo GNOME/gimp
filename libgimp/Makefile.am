@@ -74,6 +74,7 @@ EXTRA_DIST = \
 lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
 
 PDB_WRAPPERS_C = \
+	gimpbrush_pdb.c			\
 	gimpbrushes_pdb.c		\
 	gimpbrushselect_pdb.c		\
 	gimpchannel_pdb.c		\
@@ -88,7 +89,7 @@ PDB_WRAPPERS_C = \
 	gimpfonts_pdb.c			\
 	gimpfontselect_pdb.c		\
 	gimpgimprc_pdb.c		\
-	gimpgradientedit_pdb.c		\
+	gimpgradient_pdb.c		\
 	gimpgradients_pdb.c		\
 	gimpgradientselect_pdb.c	\
 	gimpguides_pdb.c		\
@@ -98,10 +99,12 @@ PDB_WRAPPERS_C = \
 	gimpmessage_pdb.c		\
 	gimpmisc_pdb.c			\
 	gimppainttools_pdb.c		\
+	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
 	gimppaletteselect_pdb.c		\
 	gimpparasite_pdb.c		\
 	gimppaths_pdb.c			\
+	gimppattern_pdb.c		\
 	gimppatterns_pdb.c		\
 	gimppatternselect_pdb.c		\
 	gimpplugin_pdb.c		\
@@ -116,6 +119,7 @@ PDB_WRAPPERS_C = \
 
 PDB_WRAPPERS_H = \
 	gimp_pdb.h			\
+	gimpbrush_pdb.h			\
 	gimpbrushes_pdb.h		\
 	gimpbrushselect_pdb.h		\
 	gimpchannel_pdb.h		\
@@ -130,7 +134,7 @@ PDB_WRAPPERS_H = \
 	gimpfonts_pdb.h			\
 	gimpfontselect_pdb.h		\
 	gimpgimprc_pdb.h		\
-	gimpgradientedit_pdb.h		\
+	gimpgradient_pdb.h		\
 	gimpgradients_pdb.h		\
 	gimpgradientselect_pdb.h	\
 	gimpguides_pdb.h		\
@@ -140,10 +144,12 @@ PDB_WRAPPERS_H = \
 	gimpmessage_pdb.h		\
 	gimpmisc_pdb.h			\
 	gimppainttools_pdb.h		\
+	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\
 	gimppaletteselect_pdb.h		\
 	gimpparasite_pdb.h		\
 	gimppaths_pdb.h			\
+	gimppattern_pdb.h		\
 	gimppatterns_pdb.h		\
 	gimppatternselect_pdb.h		\
 	gimpplugin_pdb.h		\

@@ -15,13 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-sub pdb_misc {
+sub shlomi_misc {
     $author = $copyright = 'Shlomi Fish';
     $date   = '2003';
     $since  = '2.2';
 }
 
-my $_get_gradient_from_name_code = <<'CODE';
+my $get_gradient_from_name = <<'CODE';
   if (strlen (name))
     {
       gradient = (GimpGradient *)
@@ -47,7 +47,7 @@ sub _gen_gradient_search_for_segment_code
 
     return <<"CODE";
 {
-$_get_gradient_from_name_code
+$get_gradient_from_name
 
   success = (gradient != NULL);
 
@@ -99,7 +99,7 @@ This procedure retrieves the $side endpoint color of the specified segment of
 the specified gradient.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = (
         &_grad_and_seg_params,
@@ -127,7 +127,6 @@ CODE
     );
 }
 
-
 sub _gen_gradient_get_side_color
 {
     my $side = shift;
@@ -139,7 +138,7 @@ This procedure retrieves the $side endpoint color of the specified segment of
 the specified gradient.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = (
         &_grad_and_seg_params,
@@ -161,7 +160,6 @@ CODE
     );
 }
 
-
 sub _gen_gradient_get_pos
 {
     my $side = shift;
@@ -179,7 +177,7 @@ This procedure retrieves the $side_endpoint position of the specified segment of
 the specified gradient.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = &_grad_and_seg_params;
 
@@ -225,7 +223,7 @@ the specified gradient. The final position will be between $betweens{$side}.
 This procedure returns the final position.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = (
         &_grad_and_seg_params,
@@ -243,6 +241,149 @@ HELP
         code => &_gen_gradient_search_for_segment_code(<<"CODE"),
 final_pos =
   gimp_gradient_segment_set_${side}_pos (gradient, seg, pos);
+CODE
+    );
+}
+
+
+# The defs
+
+sub gradient_new {
+    $blurb = "Creates a new gradient";
+    $help  = "This procedure creates a new, uninitialized gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The requested name of the new gradient' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The actual new gradient name',
+	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 },
+    );
+
+    %invoke = (
+        vars => [ 'GimpGradient * gradient = NULL'],
+        code => <<'CODE'
+{
+  gradient = (GimpGradient *)
+    gimp_data_factory_data_new (gimp->gradient_factory, name);
+}
+CODE
+    );
+}
+
+sub gradient_duplicate {
+    $blurb = "Duplicates a gradient";
+    $help  = "This procedure creates an identical gradient by a different name";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to duplicate" }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The name of the gradient's copy",
+	  alias => 'g_strdup (GIMP_OBJECT (gradient_copy)->name)',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL',
+                  'GimpGradient *gradient_copy = NULL' ],
+        code => <<"CODE"
+{
+  $get_gradient_from_name
+
+  if (gradient)
+    {
+      gradient_copy = (GimpGradient *)
+        gimp_data_factory_data_duplicate (gimp->gradient_factory,
+                                          GIMP_DATA (gradient));
+
+      success = (gradient_copy != NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_rename {
+    $blurb = "Rename a gradient";
+    $help  = "This procedure renames a gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to rename" },
+        { name => 'new_name', type => 'string',
+          desc => "The new name of the gradient" }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The actual new name of the gradient",
+	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL' ],
+	code => <<"CODE"
+{
+  $get_gradient_from_name
+
+  if (gradient && GIMP_DATA (gradient)->writable)
+    gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_delete {
+    $blurb = "Deletes a gradient";
+    $help  = "This procedure deletes a gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to delete" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL' ],
+	code => <<"CODE"
+{
+  $get_gradient_from_name
+
+  if (gradient && GIMP_DATA (gradient)->deletable)
+    {
+      GError *error = NULL;
+
+      success = gimp_data_factory_data_delete (gimp->gradient_factory,
+                                               GIMP_DATA (gradient),
+                                               TRUE, &error);
+
+      if (! success)
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
+    }
+  else
+    success = FALSE;
+}
 CODE
     );
 }
@@ -306,7 +447,7 @@ This procedure retrieves the blending function of the segment at the
 specified gradient name and segment index.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = &_grad_and_seg_params;
 
@@ -334,7 +475,7 @@ This procedure retrieves the coloring type of the segment at the
 specified gradient name and segment index.
 HELP
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = &_grad_and_seg_params;
 
@@ -361,7 +502,7 @@ sub _gen_gradient_operate_on_segments_range
 
     $help = $args{help};
 
-    &pdb_misc;
+    &shlomi_misc;
 
     @inargs = (
         { name => 'name', type => 'string',
@@ -387,7 +528,8 @@ sub _gen_gradient_operate_on_segments_range
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => <<"CODE",
 {
-$_get_gradient_from_name_code
+$get_gradient_from_name
+
   if (gradient)
     {
       GimpGradientSegment *start_seg, *end_seg;
@@ -664,10 +806,11 @@ CODE
 }
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
-    "core/gimpgradient.h" "core/gimpcontainer.h"
-    "core/gimpdatafactory.h" "core/gimplist.h");
+              "core/gimpgradient.h" "core/gimpcontainer.h"
+              "core/gimpdatafactory.h" "core/gimplist.h");
 
-@procs = qw(gradient_segment_get_left_color gradient_segment_set_left_color
+@procs = qw(gradient_new gradient_duplicate gradient_rename gradient_delete
+            gradient_segment_get_left_color gradient_segment_set_left_color
             gradient_segment_get_right_color gradient_segment_set_right_color
             gradient_segment_get_left_pos gradient_segment_set_left_pos
             gradient_segment_get_middle_pos gradient_segment_set_middle_pos

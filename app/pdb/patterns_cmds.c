@@ -38,7 +38,6 @@
 static ProcRecord patterns_refresh_proc;
 static ProcRecord patterns_get_list_proc;
 static ProcRecord patterns_get_pattern_proc;
-static ProcRecord patterns_get_pattern_info_proc;
 static ProcRecord patterns_get_pattern_data_proc;
 
 void
@@ -47,7 +46,6 @@ register_patterns_procs (Gimp *gimp)
   procedural_db_register (gimp, &patterns_refresh_proc);
   procedural_db_register (gimp, &patterns_get_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_proc);
-  procedural_db_register (gimp, &patterns_get_pattern_info_proc);
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
 
@@ -193,105 +191,17 @@ static ProcArg patterns_get_pattern_outargs[] =
 static ProcRecord patterns_get_pattern_proc =
 {
   "gimp_patterns_get_pattern",
-  "Retrieve information about the currently active pattern.",
-  "This procedure retrieves information about the currently active pattern. This includes the pattern name, and the pattern extents (width and height). All clone and bucket-fill operations with patterns will use this pattern to control the application of paint to the image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.",
+  "This procedure is deprecated! Use 'gimp_context_get_pattern' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   0,
   NULL,
   3,
   patterns_get_pattern_outargs,
   { { patterns_get_pattern_invoker } }
-};
-
-static Argument *
-patterns_get_pattern_info_invoker (Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar *name;
-  GimpPattern *pattern = NULL;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      if (name && strlen (name))
-        {
-          pattern = (GimpPattern *)
-            gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                              name);
-        }
-      else
-        {
-          pattern = gimp_context_get_pattern (context);
-        }
-
-      if (! pattern)
-        success = FALSE;
-    }
-
-  return_args = procedural_db_return_args (&patterns_get_pattern_info_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
-      return_args[2].value.pdb_int = pattern->mask->width;
-      return_args[3].value.pdb_int = pattern->mask->height;
-    }
-
-  return return_args;
-}
-
-static ProcArg patterns_get_pattern_info_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name (\"\" means currently active pattern)"
-  }
-};
-
-static ProcArg patterns_get_pattern_info_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The pattern name"
-  },
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The pattern width"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The pattern height"
-  }
-};
-
-static ProcRecord patterns_get_pattern_info_proc =
-{
-  "gimp_patterns_get_pattern_info",
-  "Retrieve information about the specified pattern.",
-  "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
-  "Michael Natterer <mitch@gimp.org>",
-  "Michael Natterer <mitch@gimp.org>",
-  "2004",
-  GIMP_INTERNAL,
-  1,
-  patterns_get_pattern_info_inargs,
-  3,
-  patterns_get_pattern_info_outargs,
-  { { patterns_get_pattern_info_invoker } }
 };
 
 static Argument *
