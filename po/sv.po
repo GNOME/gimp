@@ -1,33 +1,34 @@
 # Swedish translation of GIMP 1.1.x
 # Copyright (C) 1999-2000 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999-2000.
+# Christian Rose <menthos@menthos.com>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-05-13 01:15+0200\n"
-"Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
+"POT-Creation-Date: 2000-09-03 16:28+0200\n"
+"PO-Revision-Date: 2000-09-03 17:51+0200\n"
+"Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "Om GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Version %s presenterat av"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Besök gärna http://www.gimp.org/ för mer information"
 
@@ -118,13 +119,13 @@ msgstr "Avsluta"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -140,11 +141,11 @@ msgstr "Korrupt kurva"
 
 #: app/bezier_select.c:2995
 msgid "Curve not closed!"
-msgstr "Kurva ej stängd!"
+msgstr "Kurvan är inte stängd!"
 
 #: app/bezier_select.c:3282 app/gimage_mask.c:620
 msgid "Paintbrush operation failed."
-msgstr "Målarpensel-operation misslyckades."
+msgstr "Målarpenseloperation misslyckades."
 
 #: app/blend.c:294
 msgid "Offset:"
@@ -176,7 +177,7 @@ msgstr "Linjär"
 
 #: app/blend.c:321
 msgid "Bi-Linear"
-msgstr "Bi-linjär"
+msgstr "Bilinjär"
 
 #: app/blend.c:322
 msgid "Radial"
@@ -256,7 +257,7 @@ msgstr "Tona: 0, 0"
 
 #: app/blend.c:523
 msgid "Blend operation failed."
-msgstr "Tona-operation misslyckades."
+msgstr "Toningsoperationen misslyckades."
 
 #: app/blend.c:529
 msgid "Blending..."
@@ -273,7 +274,7 @@ msgstr "Ljusstyrka-Kontrast"
 
 #: app/brightness_contrast.c:163
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Ljusstyrka-Kontrast går ej att använda på indexerade bilder."
+msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 
 #: app/brightness_contrast.c:214 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
@@ -327,7 +328,7 @@ msgstr "Penseleditor"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Stäng"
 
@@ -393,12 +394,12 @@ msgstr "Mellanrum:"
 #. this should never happen
 #: app/brush_select.c:1850
 msgid "Sorry, this brush can't be edited."
-msgstr "Tyvärr, den här penslen kan inte redigeras."
+msgstr "Tyvärr, den här penseln kan inte redigeras."
 
 #. this should never happen
 #: app/brush_select.c:1879
 msgid "Sorry, this brush can't be deleted."
-msgstr "Tyvärr, den här penslen kan inte tas bort."
+msgstr "Tyvärr, den här penseln kan inte tas bort."
 
 #: app/bucket_fill.c:124 app/color_picker.c:156 app/tool_options.c:270
 msgid "Sample Merged"
@@ -411,11 +412,11 @@ msgstr "Fyllnadstyp"
 
 #: app/bucket_fill.c:159
 msgid "FG Color Fill"
-msgstr "Fyll färg förgrund"
+msgstr "Fyll med förgrundsfärg"
 
 #: app/bucket_fill.c:162
 msgid "BG Color Fill"
-msgstr "Fyll färg bakgrund"
+msgstr "Fyll med bakgrundsfärg"
 
 #: app/bucket_fill.c:165
 msgid "Pattern Fill"
@@ -423,7 +424,7 @@ msgstr "Fyll mönster"
 
 #: app/bucket_fill.c:244
 msgid "Bucket Fill operation failed."
-msgstr "Fyll-operation misslyckades."
+msgstr "Fylloperation misslyckades."
 
 #: app/bucket_fill.c:368
 msgid "No available patterns for this operation."
@@ -432,7 +433,7 @@ msgstr "Inga tillgängliga mönster för denna operation."
 #. The shell and main vbox
 #: app/by_color_select.c:716
 msgid "By Color Selection"
-msgstr "Markera per färg"
+msgstr "Markera genom färg"
 
 #: app/by_color_select.c:772
 msgid "Inactive"
@@ -483,7 +484,7 @@ msgstr "kopia"
 #: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
 #, c-format
 msgid "%s copy"
-msgstr "%s kopia"
+msgstr "%s-kopia"
 
 #: app/channel.c:615
 msgid "Selection Mask"
@@ -496,7 +497,7 @@ msgstr "Offset"
 #. The offset labels
 #: app/channel_ops.c:109
 msgid "Offset X:"
-msgstr "Offset X:"
+msgstr "X-offset:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
@@ -614,7 +615,7 @@ msgstr "Uppställning"
 
 #: app/clone.c:151
 msgid "Non Aligned"
-msgstr "Ej uppställd"
+msgstr "Inte uppställd"
 
 #: app/clone.c:153
 msgid "Aligned"
@@ -635,7 +636,7 @@ msgstr "Färgbalans"
 
 #: app/color_balance.c:206
 msgid "Color balance operates only on RGB color drawables."
-msgstr "Färgbalans fungerar endast på RGB bilder."
+msgstr "Färgbalans fungerar endast på RGB-bilder."
 
 #: app/color_balance.c:255 app/dodgeburn.c:183
 msgid "Shadows"
@@ -687,7 +688,7 @@ msgstr "Färghämtaren"
 
 #: app/color_picker.c:171
 msgid "Sample Average"
-msgstr "Medel provtagningar"
+msgstr "Provmedel"
 
 #: app/color_picker.c:214
 msgid "Update Active Color"
@@ -712,7 +713,7 @@ msgstr "Alfa:"
 #: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:441
 #: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
-msgstr "Hex triplett:"
+msgstr "Hex-triplett:"
 
 #: app/color_picker.c:263 app/colormap_dialog.i.c:267
 msgid "Index:"
@@ -720,7 +721,7 @@ msgstr "Index:"
 
 #: app/color_picker.c:268
 msgid "Hex Triplet"
-msgstr "Hex triplett"
+msgstr "Hex-triplett"
 
 #: app/color_picker.c:272 app/histogram_tool.c:259
 msgid "Intensity:"
@@ -738,15 +739,15 @@ msgstr "E/T"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "N"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "M"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -828,15 +829,15 @@ msgstr "Kantmarkering med:"
 #: app/commands.c:1324
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Fel vid ändrande av storlek: Både bredd och höjd måste vara större än 0."
+"Fel vid ändring av storlek: Både bredd och höjd måste vara större än 0."
 
 #: app/convert.c:498
 msgid "Indexed Color Conversion"
-msgstr "Indexerad färg konvertering"
+msgstr "Konvertering av indexerad färg"
 
 #: app/convert.c:517
 msgid "General Palette Options"
-msgstr "Standard palett-inställningar"
+msgstr "Standardpalettinställningar"
 
 #: app/convert.c:530
 msgid "Generate Optimal Palette:"
@@ -844,12 +845,12 @@ msgstr "Generera optimal palett:"
 
 #: app/convert.c:563
 msgid "# of Colors:"
-msgstr "# färger:"
+msgstr "Antal färger:"
 
 #. create the custom_frame here, it'll be added later
 #: app/convert.c:579
 msgid "Custom Palette Options"
-msgstr "Egen palett - inställningar"
+msgstr "Inställningar för egen palett"
 
 #: app/convert.c:585
 msgid "Remove Unused Colors from Final Palette"
@@ -857,7 +858,7 @@ msgstr "Ta bort oanvända färger från den slutgiltiga paletten"
 
 #: app/convert.c:597
 msgid "Use Custom Palette:"
-msgstr "Använd egen palett"
+msgstr "Använd egen palett:"
 
 #: app/convert.c:631
 msgid "Use WWW-Optimized Palette"
@@ -869,7 +870,7 @@ msgstr "Använd svart/vit (1-bit) palett"
 
 #: app/convert.c:658
 msgid "Dither Options"
-msgstr "Dither val"
+msgstr "Dither-alternativ"
 
 #: app/convert.c:671
 msgid "No Color Dithering"
@@ -903,12 +904,12 @@ msgid ""
 "create a transparent or animated GIF file from this image."
 msgstr ""
 "Du försöker konvertera en bild med alfa/lager från RGB/GRÅ till INDEXERAD.\n"
-"Du ska inte generera en palett på mer än 255 färger om du vill skapa en "
+"Du bör inte generera en palett på mer än 255 färger om du vill skapa en "
 "transparent eller animerad GIF-fil från denna bild."
 
 #: app/convert.c:965
 msgid "Select Custom Palette"
-msgstr "Använd egen palett"
+msgstr "Välj egen palett"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
@@ -954,7 +955,7 @@ msgstr "Beskär: "
 
 #: app/crop.c:1037
 msgid "Crop: 0 x 0"
-msgstr "Beskär: 0 x 0"
+msgstr "Beskär: 0 × 0"
 
 #. create the info dialog
 #: app/crop.c:1058
@@ -1041,11 +1042,11 @@ msgstr "Ladda/spara kurvor"
 #: app/paths_dialog.c:1905
 #, c-format
 msgid "Unable to open file %s"
-msgstr "kunde ej öppna fil %s"
+msgstr "Kunde inte öppna filen %s"
 
 #: app/desaturate.c:36
 msgid "Desaturate operates only on RGB color drawables."
-msgstr "Avfärga fungerar endast på RGB bilder."
+msgstr "Avfärga fungerar endast på RGB-bilder."
 
 #: app/devices.c:747
 msgid "Device Status"
@@ -1070,13 +1071,17 @@ msgstr ""
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Flytta den valda posten uppåt i listan<Shift> Till toppen"
+msgstr ""
+"Flytta den valda posten uppåt i listan\n"
+"<Shift> Till toppen"
 
 #: app/docindex.c:122
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Flytta den valda posten nedåt i listanShift> Till botten"
+msgstr ""
+"Flytta den valda posten nedåt i listan\n"
+"Shift> Till botten"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1136,7 +1141,7 @@ msgstr "Kunde inte öppna fil %s: %s"
 
 #: app/errorconsole.c:187
 msgid "Can't save, nothing selected!"
-msgstr "Kan ej spara, inget markerat!"
+msgstr "Kan inte spara, inget markerat!"
 
 #: app/errorconsole.c:191
 msgid "Save error log to file..."
@@ -1174,14 +1179,14 @@ msgid ""
 "preferences dialog."
 msgstr ""
 "Du försöker skapa en bild som har en\n"
-"initial-storlek på %s.\n"
+"initialstorlek på %s.\n"
 "\n"
 "Välj OK för att skapa bilden ändå.\n"
 "Välj Avbryt om det inte var meningen att\n"
 "skapa en så stor bild.\n"
 "\n"
-"För att förhindra detta meddelande,\n"
-"öka \"Max bildstorlek\"\n"
+"För att förhindra detta meddelande\n"
+"kan du öka \"Max bildstorlek\"-\n"
 "inställningen (just nu %d) i inställningsdialogen."
 
 #: app/file_new_dialog.c:202
@@ -1209,7 +1214,7 @@ msgstr "Upplösning X:"
 
 #: app/file_new_dialog.c:545 app/resize.c:587
 msgid "pixels/%a"
-msgstr "pixel/%a"
+msgstr "pixlar/%a"
 
 #. frame for Image Type
 #: app/file_new_dialog.c:590
@@ -1230,8 +1235,8 @@ msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
-"skapa\n"
-"förhandsvisning"
+"Skapa\n"
+"Förhandsvisning"
 
 #: app/fileops.c:405
 msgid "No Selection."
@@ -1263,12 +1268,12 @@ msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"Kan ej gå återta gammal fil.\n"
+"Kan inte återgå till gammal fil.\n"
 "Inget filnamn är associerat med den här bilden."
 
 #: app/fileops.c:603
 msgid "Revert"
-msgstr "Återta"
+msgstr "Återgå"
 
 #: app/fileops.c:614
 #, c-format
@@ -1276,7 +1281,7 @@ msgid ""
 "Revert failed.\n"
 "%s"
 msgstr ""
-"Återta bild misslyckades.\n"
+"Återgång till tidigare bild misslyckades.\n"
 "%s"
 
 #: app/fileops.c:711
@@ -1355,7 +1360,7 @@ msgstr "(kunde inte skriva tumnagelsfil)"
 
 #: app/fileops.c:1408
 msgid "(Thumbnail file not written)"
-msgstr "(tumnagelsfil ej sparad)"
+msgstr "(tumnagelsfil är inte sparad)"
 
 #: app/fileops.c:1425
 msgid "No preview available"
@@ -1363,7 +1368,7 @@ msgstr "ingen förhandsvisning tillgänglig"
 
 #: app/fileops.c:1531
 msgid "(could not make preview)"
-msgstr "(kunde ej skapa förhandsvisning)"
+msgstr "(kunde inte skapa förhandsvisning)"
 
 #: app/fileops.c:1594 app/fileops.c:1636
 #, c-format
@@ -1374,20 +1379,20 @@ msgstr ""
 "Öppning misslyckades.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existerar, skriv över?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "Filen existerar!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Nej"
 
@@ -1489,7 +1494,7 @@ msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr ""
-"Kunde ej kopiera/klippa ut eftersom den markerade\n"
+"Kunde inte kopiera/klippa ut eftersom den markerade\n"
 "regionen är tom."
 
 #: app/gimage_mask.c:346
@@ -1543,7 +1548,7 @@ msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
 msgstr ""
-"Varning: Misslyckades att ladda pensel\n"
+"Varning: Misslyckades med att ladda pensel\n"
 "\"%s\""
 
 #: app/gimpbrushlist.c:206
@@ -1552,7 +1557,7 @@ msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
 msgstr ""
-"Varning: Misslyckades att ladda pixmap-pensel\n"
+"Varning: Misslyckades med att ladda pixmap-pensel\n"
 "\"%s\""
 
 #: app/gimpbrushlist.c:215
@@ -1561,7 +1566,7 @@ msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
 msgstr ""
-"Misslyckades att ladda pixmap-rör\n"
+"Varning: Misslyckades med att ladda pixmap-rör\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:309
@@ -1573,16 +1578,16 @@ msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr ""
-"Misslyckades att ladda en av\n"
+"Misslyckades med att ladda en av\n"
 "penslarna i penselröret."
 
 #: app/gimpbrushpipe.c:466
 msgid "Failed to load pixmap brush."
-msgstr "Misslyckades att ladda pixmap-pensel."
+msgstr "Misslyckades med att ladda pixmap-pensel."
 
 #: app/gimpdrawable.c:171
 msgid "Can't fill unknown image type."
-msgstr "Kan ej fylla en okänd bildtyp."
+msgstr "Kan inte fylla en okänd bildtyp."
 
 #: app/gimpdrawable.c:505
 msgid "parasite attach to drawable"
@@ -1599,9 +1604,13 @@ msgstr "namnlös"
 #: app/gimpdrawable.c:764
 #, c-format
 msgid "Layer type %d not supported."
-msgstr "Lagertyp %d ej stödd."
+msgstr "Lagertyp %d inte stödd."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:190
+msgid "Could not find GIMP Help Browser"
+msgstr "Kunde inte hitta GIMP-hjälpläsaren"
+
+#: app/gimphelp.c:192
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1611,90 +1620,86 @@ msgstr ""
 "Den var förmodligen inte kompilerad eftersom\n"
 "du inte har GtkXmHTML installerat."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "koppla parasit till bild"
+#: app/gimphelp.c:195
+msgid "Use Netscape instead"
+msgstr "Använd Netscape istället"
 
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "koppla loss parasit från bilden"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
-msgstr "Lagret kan ej höjas mer"
+msgstr "Lagret kan inte höjas mer"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
-msgstr "Lagret kan ej sänkas mer"
+msgstr "Lagret kan inte sänkas mer"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "Lagret är redan längst upp"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
-msgstr "Kan ej höja lager utan alfa-kanal"
+msgstr "Kan inte höja lager utan alfa-kanal"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "Lagret är redan längst ner"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "BG har ingen alfa, lagret placerades ovanför"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"Det finns ej tillräckligt många synliga lager för att sammanfoga.\n"
+"Det finns inte tillräckligt många synliga lager för att sammanfoga.\n"
 "Det måste vara minst två."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
-"Det finns ej tillräckligt många synliga lager för att sammanfoga neråt."
+"Det finns inte tillräckligt många synliga lager för att sammanfoga neråt."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
-"Kan ej lägga till lagermask eftersom\n"
+"Kan inte lägga till lagermask eftersom\n"
 "lagret redan har en."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
-"Kan ej lägga till en lagermask till\n"
+"Kan inte lägga till en lagermask till\n"
 "ett lager i en indexerad bild."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
-"Kan ej lägga till lagermask till ett\n"
+"Kan inte lägga till lagermask till ett\n"
 "lager utan alfa-kanal."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
-"Kan ej lägga till lagermask som har andra dimensioner än det specifierade "
+"Kan inte lägga till lagermask som har andra dimensioner än det specifierade "
 "lagret"
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
-msgstr "Kanalen kan ej höjas högre"
+msgstr "Kanalen kan inte höjas högre"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
-msgstr "Kanalen kan ej sänkas längre"
+msgstr "Kanalen kan inte sänkas längre"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Namnlös"
@@ -1729,22 +1734,22 @@ msgstr "fel vid tolkning av pluginrc"
 #: app/gimprc.c:2917
 #, c-format
 msgid "Can't open %s; %s"
-msgstr "Kan ej öppna %s: %s"
+msgstr "Kan inte öppna %s: %s"
 
 #: app/gimprc.c:2936
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "Kan ej döpa om %s till %s.old: %s"
+msgstr "Kan inte döpa om %s till %s.old: %s"
 
 #: app/gimprc.c:2942
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr "Kan ej öppna %s igen\n"
+msgstr "Kan inte öppna %s igen\n"
 
 #: app/gimprc.c:2954
 #, c-format
 msgid "Can't write to %s; %s"
-msgstr "Kan ej skriva till %s: %s"
+msgstr "Kan inte skriva till %s: %s"
 
 #: app/gimpui.c:83
 #, c-format
@@ -2195,7 +2200,7 @@ msgstr "Histogram"
 
 #: app/histogram_tool.c:203
 msgid "Histogram does not operate on indexed drawables."
-msgstr "Kan ej använda histogram på indexerade bilder."
+msgstr "Kan inte använda histogram på indexerade bilder."
 
 #: app/histogram_tool.c:255
 msgid "Mean:"
@@ -2392,7 +2397,7 @@ msgstr "Utökad"
 #. add the information fields
 #: app/info_window.c:274
 msgid "Dimensions (w x h):"
-msgstr "Dimensioner (b x h):"
+msgstr "Dimensioner (b × h):"
 
 #: app/info_window.c:278
 msgid "Resolution:"
@@ -2423,17 +2428,17 @@ msgstr "Info: %s-%d.%d"
 #: app/info_window.c:508
 #, c-format
 msgid "%d x %d pixels"
-msgstr "%d x %d pixel"
+msgstr "%d × %d pixlar"
 
 #. image resolution
 #: app/info_window.c:520
 #, c-format
 msgid "%g x %g dpi"
-msgstr "%g x %g dpi"
+msgstr "%g × %g dpi"
 
 #: app/info_window.c:532
 msgid "RGB Color"
-msgstr "RGB Färg"
+msgstr "RGB-färg"
 
 #: app/info_window.c:537
 msgid "Indexed Color"
@@ -2595,7 +2600,7 @@ msgstr "Textprocedurer"
 msgid "Tool procedures"
 msgstr "Verktygsprocedurer"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "Ångra"
 
@@ -2605,7 +2610,7 @@ msgstr "Enheter"
 
 #: app/invert.c:41
 msgid "Invert does not operate on indexed drawables."
-msgstr "Kan ej använda invert på indexerade bilder."
+msgstr "Kan inte använda invert på indexerade bilder."
 
 #: app/invert.c:51
 msgid "Invert operation failed."
@@ -2613,7 +2618,7 @@ msgstr "Invertera-operation misslyckades."
 
 #: app/layer.c:259
 msgid "Zero width or height layers not allowed."
-msgstr "Lager med noll i bredd eller höjd är ej tillåtna."
+msgstr "Lager med noll i bredd eller höjd är inte tillåtna."
 
 #: app/layer.c:507
 #, c-format
@@ -2701,9 +2706,8 @@ msgid "Keep Trans."
 msgstr "Behåll transp."
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Transparent"
+msgstr "Behåll transparens"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -2816,7 +2820,7 @@ msgstr "Nivåer"
 
 #: app/levels.c:235
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "Kan ej justera nivåer för indexerade bilder."
+msgstr "Kan inte justera nivåer för indexerade bilder."
 
 #: app/levels.c:361
 msgid "Modify Levels for Channel:"
@@ -2858,105 +2862,121 @@ msgstr "Zooma in"
 msgid "Zoom out"
 msgstr "Zooma ut"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr ""
+"\n"
+"Ogiltig flagga.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Användning: %s [flagga ...] [fil ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Giltiga flaggor är:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Skriv ut denna hjälptext.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Skriv ut versionsinformation.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <kommandon>   Kör i fler-jobbs-läge.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Använd en alternativ gimprc fil.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr ""
+"\n"
+"Användning: %s [flagga ...] [fil ...]\n"
+"\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Kör utan användargränssnitt.\n"
+msgid "Options:\n"
+msgstr "Alternativ:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Försök återställ sparad session.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b, --batch <kommandon>  Kör i flerjobbsläge.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
 msgstr ""
-"  --no-data                Ladda inte in mönster, färgskalor, färgpaletter, "
-"penslar.\n"
+"  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte "
+"ett separat dialogfönster.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr ""
+"  -d, --no-data            Ladda inte in mönster, färgskalor, färgpaletter, "
+"penslar.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i, --no-interface       Kör utan användargränssnitt.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>    Använd en alternativ gimprc-fil.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help               Skriv ut denna hjälptext.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session    Försök att återställa sparad session.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash          Visa inte startfönstret.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Visa ingen bild i startfönstret.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version            Skriv ut versionsinformation.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Visa inte start-fönstret.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Visa ingen bild i start-fönstret.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm                 Använd inte delat minne mellan GIMP och dess "
-"tillägg.\n"
-
-#: app/main.c:313
-msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
-msgstr "  --no-xshm                Använd inte 'X Shared Memory' tillägget.\n"
-
-#: app/main.c:314
-msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Visa varningsmeddelanden till konsollen, inte ett "
-"separat dialogfönster.\n"
-
-#: app/main.c:315
-#, fuzzy
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
-msgstr "  --debug-handlers         Aktivera signalhanterare för felsökning.\n"
-
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr ""
-
-#: app/main.c:318
-msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <display>      Använd en speciell X 'display'.\n"
+"  --no-shm                 Använd inte delat minne mellan GIMP och tillägg.\n"
 
 #: app/main.c:319
-msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Använd en alternativ system gimprc fil.\n"
+msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
+msgstr "  --no-xshm                Använd inte \"X Shared Memory\"-tillägget.\n"
 
-#: app/main.c:336
+#: app/main.c:320
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr ""
+"  --debug-handlers         Aktivera ickefatal signalhanterare för felsökning.\n"
+
+#: app/main.c:321
+msgid "  --display <display>      Use the designated X display.\n"
+msgstr "  --display <display>      Använd en speciell X-display.\n"
+
+#: app/main.c:322
+msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
+msgstr "  --system-gimprc <gimprc> Använd en alternativ system-gimprc-fil.\n"
+
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr ""
+"                           Felsökningsläge för fatala signaler.\n"
+"\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
-msgstr "(Detta konsoll-fönster kommer att stängas om tio sekunder)\n"
+msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
 #: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
@@ -2964,7 +2984,7 @@ msgstr "Mätverktyg"
 
 #: app/measure.c:130
 msgid "Use Info Window"
-msgstr "Använd info-fönster"
+msgstr "Använd infofönster"
 
 #: app/measure.c:316
 msgid "Distance:"
@@ -3776,7 +3796,7 @@ msgstr "endast i minnet"
 
 #: app/module_db.c:835
 msgid "nowhere (click 'refresh')"
-msgstr "ingenstans (tryck på 'uppdatera')"
+msgstr "ingenstans (tryck på \"uppdatera\")"
 
 #: app/module_db.c:874
 msgid "Unload"
@@ -3938,9 +3958,9 @@ msgstr ""
 "RGB-värdet utanför giltigt område"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "kan inte spara palett \"%s\"\n"
+msgstr "Kan inte spara paletten \"%s\"\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -4092,27 +4112,27 @@ msgstr "Ange nytt namn för slingan"
 #: app/paths_dialog.c:1919
 #, c-format
 msgid "Failed to read from %s"
-msgstr "Misslyckades att läsa från %s"
+msgstr "Misslyckades med att läsa från %s"
 
 #: app/paths_dialog.c:1934
 #, c-format
 msgid "Failed to read path from %s"
-msgstr "Misslyckades att läsa slinga från %s"
+msgstr "Misslyckades med att läsa slinga från %s"
 
 #: app/paths_dialog.c:1941
 #, c-format
 msgid "No points specified in path file %s"
-msgstr "Inga punkter specifierade i sling-filen %s"
+msgstr "Inga punkter specifierade i slingfilen %s"
 
 #: app/paths_dialog.c:1952
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr "Misslyckades att läsa sling-punkter från %s"
+msgstr "Misslyckades med att läsa slingpunkter från %s"
 
 #: app/paths_dialog.c:2025 app/xcf.c:436
 #, c-format
 msgid "open failed on %s: %s\n"
-msgstr "kunde ej öppna %s: %s\n"
+msgstr "öppnande av %s misslyckades: %s\n"
 
 #: app/paths_dialog.c:2047
 msgid "Load/Store Bezier Curves"
@@ -4150,7 +4170,7 @@ msgstr "GIMP-mönsterfilen verkar vara trunkerad."
 
 #: app/patterns.c:283
 msgid "Pattern load failed"
-msgstr "Misslyckades att ladda mönster"
+msgstr "Misslyckades med att ladda mönster"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4191,9 +4211,9 @@ msgid "Extensions"
 msgstr "Tillägg"
 
 #: app/plug_in.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Kunde ej hitta insticksprogram: \"%s\""
+msgstr "Kunde inte hitta insticksprogram: \"%s\""
 
 #: app/plug_in.c:1467
 #, c-format
@@ -4205,10 +4225,16 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Insticksprogrammet kraschade: \"%s\"\n"
+"(%s)\n"
+"\n"
+"Insticksprogrammet som dog kan ha rört till GIMPs interna tillstånd.\n"
+"Du bör nog spara dina bilder och starta om GIMP för att vara på den\n"
+"säkra sidan."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
-msgstr "Kan ej använda posterisering på indexerade bilder."
+msgstr "Kan inte använda posterisering på indexerade bilder."
 
 #: app/posterize.c:193 app/tools.c:1105
 msgid "Posterize"
@@ -4216,7 +4242,7 @@ msgstr "Posterisering"
 
 #: app/posterize.c:215
 msgid "Posterize Levels:"
-msgstr "Posterisering nivåer:"
+msgstr "Posteriseringsnivåer:"
 
 #: app/preferences_dialog.c:247
 msgid "Error: Levels of undo must be zero or greater."
@@ -4240,7 +4266,7 @@ msgstr "Fel: Standardmåttet måste vara inom måttområdet."
 
 #: app/preferences_dialog.c:279
 msgid "Error: Default resolution must not be zero."
-msgstr "Fel: Standard bildskärmsupplösningen får ej vara 0."
+msgstr "Fel: Standardbildskärmsupplösningen får inte vara 0."
 
 #: app/preferences_dialog.c:287
 msgid "Error: Default resolution unit must be within unit range."
@@ -4248,11 +4274,11 @@ msgstr "Fel: Standardmåttenheten måste vara inom måttområdet."
 
 #: app/preferences_dialog.c:294
 msgid "Error: Monitor resolution must not be zero."
-msgstr "Fel: Bildskärmsupplösningen får ej vara 0."
+msgstr "Fel: Bildskärmsupplösningen får inte vara 0."
 
 #: app/preferences_dialog.c:301
 msgid "Error: Image title format must not be NULL."
-msgstr "Fel: Bildtitelformatet får ej vara NULL."
+msgstr "Fel: Bildtitelformatet får inte vara NULL."
 
 #: app/preferences_dialog.c:308
 msgid "Error: Number of processors must be between 1 and 30."
@@ -4260,7 +4286,7 @@ msgstr "Fel: Antalet processorer måste vara mellan 1 och 30."
 
 #: app/preferences_dialog.c:359
 msgid "Save Preferences ?"
-msgstr "Spara inställningar ?"
+msgstr "Spara inställningar?"
 
 #: app/preferences_dialog.c:380
 msgid ""
@@ -4276,7 +4302,7 @@ msgstr ""
 "att träda i kraft efter du startat om GIMP.\n"
 "\n"
 "Du kan välja att spara nu för att göra dina förändringar\n"
-"permanenta så du kan starta om GIMP eller trycka på 'Stäng'\n"
+"permanenta så du kan starta om GIMP eller trycka på \"Stäng\"\n"
 "för att strunta i att använda de förändringarna."
 
 #: app/preferences_dialog.c:474
@@ -4303,7 +4329,7 @@ msgstr "Ny fil"
 
 #: app/preferences_dialog.c:1518
 msgid "Default Image Size and Unit"
-msgstr "Standard bildstorlek och mått"
+msgstr "Standardbildstorlek och mått"
 
 #: app/preferences_dialog.c:1532
 msgid "Width"
@@ -4315,7 +4341,7 @@ msgstr "Höjd"
 
 #: app/preferences_dialog.c:1564
 msgid "Default Image Resolution and Resolution Unit"
-msgstr "Standard bildstorlek och måttenhet"
+msgstr "Standardbildstorlek och måttenhet"
 
 #: app/preferences_dialog.c:1591 app/preferences_dialog.c:2384
 msgid "dpi"
@@ -4323,11 +4349,11 @@ msgstr "dpi"
 
 #: app/preferences_dialog.c:1638
 msgid "Default Image Type:"
-msgstr "Standard bildtyp:"
+msgstr "Standardbildtyp:"
 
 #: app/preferences_dialog.c:1650
 msgid "Maximum Image Size:"
-msgstr "Max bildstorlek:"
+msgstr "Maximal bildstorlek:"
 
 #: app/preferences_dialog.c:1655 app/preferences_dialog.c:1657
 msgid "Default Comment"
@@ -4339,11 +4365,11 @@ msgstr "Kommentar som används för nya bilder"
 
 #: app/preferences_dialog.c:1685 app/preferences_dialog.c:1687
 msgid "Display"
-msgstr "Visuellt"
+msgstr "Visning"
 
 #: app/preferences_dialog.c:1695
 msgid "Transparency"
-msgstr "Transparent"
+msgstr "Transparens"
 
 #: app/preferences_dialog.c:1714
 msgid "Light Checks"
@@ -4371,7 +4397,7 @@ msgstr "Endast svart"
 
 #: app/preferences_dialog.c:1723
 msgid "Transparency Type:"
-msgstr "Transparenthets-typ:"
+msgstr "Transparenstyp:"
 
 #: app/preferences_dialog.c:1730 app/preferences_dialog.c:1822
 #: app/preferences_dialog.c:1836
@@ -4545,21 +4571,20 @@ msgid "Disable Cursor Updating"
 msgstr "Slå av marköruppdatering"
 
 #: app/preferences_dialog.c:2081
-#, fuzzy
 msgid "Tool Icon"
-msgstr "Verktygsinställningar"
+msgstr "Verktygsikon"
 
 #: app/preferences_dialog.c:2083
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Verktygsikon med korshår"
 
 #: app/preferences_dialog.c:2085
 msgid "Crosshair only"
-msgstr ""
+msgstr "Endast korshår"
 
 #: app/preferences_dialog.c:2090
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Markörläge:"
 
 #: app/preferences_dialog.c:2096 app/preferences_dialog.c:2098
 #: app/tools.c:1536
@@ -4689,11 +4714,11 @@ msgstr "Hämta bildskärmsupplösning"
 #: app/preferences_dialog.c:2357
 #, c-format
 msgid "(Currently %d x %d dpi)"
-msgstr "(Nuvarande %d x %d dpi)"
+msgstr "(Nuvarande %d × %d dpi)"
 
 #: app/preferences_dialog.c:2409
 msgid "From windowing system"
-msgstr ""
+msgstr "Från fönstersystemet"
 
 #: app/preferences_dialog.c:2424
 msgid "Manually:"
@@ -4808,7 +4833,7 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 "Felaktigt antal parametrar skickades till procedural_db_run_proc:\n"
-"Argument %d till '%s' borde vara en %s, men skickade en %s"
+"Argument %d till \"%s\" borde vara en %s, men skickade en %s"
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
@@ -4820,7 +4845,7 @@ msgstr "GIMP Insticksprogram"
 
 #: app/procedural_db_cmds.c:66
 msgid "GIMP Extension"
-msgstr "GIMP tillägg"
+msgstr "GIMP Tillägg"
 
 #: app/procedural_db_cmds.c:67
 msgid "Temporary Procedure"
@@ -4981,12 +5006,12 @@ msgstr "Använd Dynamisk Text"
 #: app/text_tool.c:609
 #, c-format
 msgid "Font '%s' not found."
-msgstr "Hittade ej typsnittet '%s'"
+msgstr "Hittade inte typsnittet \"%s\""
 
 #: app/text_tool.c:628
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "Hittade ej typsnittet '%s'.%s"
+msgstr "Hittade inte typsnittet \"%s\".%s"
 
 #: app/text_tool.c:631
 msgid ""
@@ -4995,7 +5020,7 @@ msgid ""
 "options."
 msgstr ""
 "\n"
-"Om du ej har några skalbara typsnitt, prova att stänga av kantutjämning i "
+"Om du inte har några skalbara typsnitt, prova att stänga av kantutjämning i "
 "verktygsmenyn."
 
 #: app/text_tool.c:742
@@ -5008,7 +5033,7 @@ msgstr "Tröskelvärde"
 
 #: app/threshold.c:207
 msgid "Threshold does not operate on indexed drawables."
-msgstr "Kan ej använda tröskelvärde på indexerade bilder."
+msgstr "Kan inte använda tröskelvärde på indexerade bilder."
 
 #: app/threshold.c:288
 msgid "Threshold Range:"
@@ -5035,16 +5060,16 @@ msgid "Next Tip"
 msgstr "Nästa tips"
 
 #: app/tips_dialog.c:285
-#, fuzzy
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"Din GIMP tips-fil verkar saknas!\n"
-"Du borde ha en fil som heter gimp_tips.txt i din\n"
-"GIMP datakatalog. Var god kontrollera din installation."
+"Din GIMP-tipsfil verkar saknas!\n"
+"Du borde ha en fil som heter gimp_tips.txt i\n"
+"underkatalogen tips i din GIMP-datakatalog.\n"
+"Var god kontrollera din installation."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -5239,9 +5264,8 @@ msgid "Magnify"
 msgstr "Förstora"
 
 #: app/tools.c:345
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Verktyg/Transformeringsverktyg/Flytta"
+msgstr "/Verktyg/Transformeringsverktyg/Förstora"
 
 #: app/tools.c:350
 msgid "Zoom in & out"
@@ -5506,7 +5530,7 @@ msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr ""
-"Transformationer fungerar ej på\n"
+"Transformationer fungerar inte på\n"
 "lager som innehåller lager-masker."
 
 #: app/transform_core.c:1604
@@ -5569,7 +5593,7 @@ msgstr "Klipp resultat"
 #: app/undo.c:2871
 #, c-format
 msgid "Can't undo %s"
-msgstr "Kan ej ångra %s"
+msgstr "Kan inte ångra %s"
 
 #: app/undo.c:2902
 msgid "<<invalid>>"
@@ -5754,7 +5778,7 @@ msgstr "ändra storlek på bild"
 msgid "misc"
 msgstr "div"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "Ångre-historia: %s"
@@ -5763,28 +5787,28 @@ msgstr "Ångre-historia: %s"
 msgid "[ base image ]"
 msgstr "[ grundbild ]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Gör om"
 
 #: app/user_install.c:100
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "GIMP är ej korrekt uppsatt för den nuvarande användaren\n"
+msgstr "GIMP är inte korrekt uppsatt för den nuvarande användaren\n"
 
 #: app/user_install.c:101
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
-"Användarinstallationen hoppas över eftersom '--nointerface' "
-"flagganpåträffades\n"
+"Användarinstallationen hoppades över eftersom \"--nointerface\"-flaggan "
+"påträffades\n"
 
 #: app/user_install.c:102
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"För att utföra användarinstallationen, starta GIMP utan '--nointerface' "
-"flaggn\n"
+"För att utföra användarinstallationen startar du GIMP utan\n"
+"\"--nointerface\"-flaggan\n"
 
 #: app/user_install.c:151
 msgid ""
@@ -5858,7 +5882,7 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"Filen 'unitrc' används för att lagra dina egna enheter.\n"
+"Filen \"unitrc\" används för att lagra dina egna enheter.\n"
 "Du kan definera ytterligare enheter och använda dem precis\n"
 "som du använder de inbyggda enheterna tum, millimeter,\n"
 "punkter och picas. Denna fil skrivs över varje gång du\n"
@@ -6099,7 +6123,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2000\n"
+"Copyright © 1995-2000\n"
 "Spencer Kimball, Peter Mattis och GIMPs utvecklingsteam."
 
 #: app/user_install.c:699
@@ -6202,11 +6226,11 @@ msgstr "Avbryter installation..."
 
 #: app/user_install.c:947
 msgid "does not exist.  Cannot install."
-msgstr "finns ej. Kan ej installera."
+msgstr "finns inte. Kan inte installera."
 
 #: app/user_install.c:959
 msgid "has invalid permissions.  Cannot install."
-msgstr "har ogiltiga rättigheter. Kan ej installera."
+msgstr "har ogiltiga rättigheter. Kan inte installera."
 
 #: app/user_install.c:997
 msgid ""
@@ -6279,18 +6303,17 @@ msgid "Vertical:"
 msgstr "Vertikal:"
 
 #: app/user_install.c:1352
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP kan hämta denna information från din X-server.\n"
-"De flesta X-servrarna returnerar dock inga vettiga värden."
+"GIMP kan hämta den här informationen från fönstersystemet.\n"
+"Normalt returneras dock inga vettiga värden."
 
 #: app/user_install.c:1359
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Hämta upplösning från X-server (Nuvarande %d x %d dpi)"
+msgstr "Hämta upplösning från fönstersystem (Nuvarande %d × %d dpi)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6315,7 +6338,7 @@ msgstr "Kalibrera"
 #: app/xcf.c:382
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF fel: ej stödd XCF filversion %d påträffad"
+msgstr "XCF-fel: ej stödd XCF-filversion %d påträffad"
 
 #: app/xcf.c:1814
 msgid ""
@@ -6323,13 +6346,13 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"XCF varning: version 0 av XCF filformatet\n"
+"XCF-varning: version 0 av XCF-filformatet\n"
 "sparade inte indexerade färgkartor rätt.\n"
 "Byter ut gråskalekartan."
 
 #: modules/cdisplay_gamma.c:96
 msgid "Gamma color display filter"
-msgstr "Gamma färgvisnings-filter"
+msgstr "Gammafärgvisningsfilter"
 
 #: modules/cdisplay_gamma.c:325
 msgid "Gamma"
@@ -6375,6 +6398,12 @@ msgstr "Vattenfärg"
 msgid "Color History"
 msgstr "Färghistoria"
 
+#~ msgid "attach parasite to image"
+#~ msgstr "koppla parasit till bild"
+
+#~ msgid "detach parasite from image"
+#~ msgstr "koppla loss parasit från bilden"
+
 #~ msgid "From X Server"
 #~ msgstr "från X-servern"
 
@@ -6389,13 +6418,13 @@ msgstr "Färghistoria"
 #~ msgstr "/Verktyg/Förstora"
 
 #~ msgid "This file cannot be moved up."
-#~ msgstr "Den här filen kan ej flyttas ner."
+#~ msgstr "Den här filen kan inte flyttas ner."
 
 #~ msgid "There's no selection to move up."
 #~ msgstr "Finns inget markerat att flytta upp."
 
 #~ msgid "This file cannot be moved down."
-#~ msgstr "Den här filen kan ej flyttas upp."
+#~ msgstr "Den här filen kan inte flyttas upp."
 
 #~ msgid "There's no selection to move down."
 #~ msgstr "Finns inget markerat att flytta ner."
