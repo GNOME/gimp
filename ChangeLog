@@ -1,7 +1,9 @@
 2001-07-03  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: added ChangeLog.pre-1-2 to EXTRA_DIST (makes a good 
-	read on long winter evenings)
+	read on long winter evenings).
+
+	* tools/Makefile.am: added gimppath2svg.py to EXTRA_DIST.
 
 2001-07-03  Sven Neumann  <sven@gimp.org>
 

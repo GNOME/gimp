@@ -36,3 +36,5 @@ INCLUDES = \
 #endif
 
 SUBDIRS = $(D_pdbgen) $(D_authorgen) #$(D_gcg)
+
+EXTRA_DIST = gimppath2svg.py
