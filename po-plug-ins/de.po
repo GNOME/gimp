@@ -289,8 +289,7 @@ msgstr "Benutze Kosinusfunktion für die rote Komponente."
 
 #: plug-ins/AlienMap/AlienMap.c:717
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Roter Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
+msgstr "Roter Kanal: Benutze lineare Abbildung anstelle trigonometrischer Funktion"
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:725 plug-ins/FractalExplorer/Dialogs.c:770
@@ -310,8 +309,7 @@ msgstr "Benutze Kosinusfunktion für die grüne Komponente."
 #: plug-ins/AlienMap/AlienMap.c:740
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Grüner Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
+msgstr "Grüner Kanal: Benutze lineare Abbildung anstelle trigonometrischer Funktion"
 
 #. Bluemode toggle box
 #: plug-ins/AlienMap/AlienMap.c:748 plug-ins/FractalExplorer/Dialogs.c:811
@@ -331,8 +329,7 @@ msgstr "Benutze Cosinusfunktion für die blaue Komponente."
 #: plug-ins/AlienMap/AlienMap.c:763
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
-"Blauer Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
+msgstr "Blauer Kanal: Benutze lineare Abbildung anstelle trigonometrischer Funktion"
 
 #: plug-ins/AlienMap/AlienMap.c:893
 msgid "About AlienMap"
@@ -563,9 +560,7 @@ msgstr "ITER:"
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
-msgstr ""
-"Iterationswert ändern. Je höher er ist desto detailierter wird berechnet, "
-"erhöht die Laufzeit"
+msgstr "Iterationswert ändern. Je höher er ist desto detaillierter wird berechnet, erhöht die Laufzeit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:510
 msgid "CX:"
@@ -688,11 +683,11 @@ msgstr "Anzahl der Farben in der Abbildung ändern"
 
 #: plug-ins/FractalExplorer/Dialogs.c:664
 msgid "Use loglog Smoothing"
-msgstr "loglog Glättung benutzen"
+msgstr "loglog-Glättung benutzen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:671
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "Benutze log log Glättung um \"banding\" im Ergebnis zu eliminieren"
+msgstr "Benutze log log Glättung um \"Streifenbildung\" im Ergebnis zu verhindern"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:675
@@ -734,9 +729,7 @@ msgstr "Benutze Kosinusfunktion für diese Farbkomponente"
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
-msgstr ""
-"Benutze lineare Abbildung anstelle trigonemetrischer Funktion für diesen "
-"Farbkanal"
+msgstr "Benutze lineare Abbildung anstelle trigonometrischer Funktion für diesen Farbkanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:757
 #: plug-ins/FractalExplorer/Dialogs.c:798
@@ -1859,7 +1852,7 @@ msgstr "Gekoppelte Abbildungs-Gitter"
 
 #: plug-ins/common/CML_explorer.c:1252
 msgid "Random Seed"
-msgstr "Zufällige Init-Zahl"
+msgstr "Init-Zahl (seed)"
 
 #: plug-ins/common/CML_explorer.c:1262
 msgid "Fix Seed"
@@ -6610,7 +6603,7 @@ msgstr "Finde XY-Gradient..."
 #: plug-ins/common/warp.c:1250
 #, c-format
 msgid "Flow Step %d..."
-msgstr ""
+msgstr "Schritt %d..."
 
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
@@ -10374,7 +10367,7 @@ msgstr "<Image>/Filter/Licht-Effekte/GFlare..."
 
 #: plug-ins/gflare/gflare.c:942
 msgid "Gradient Flare..."
-msgstr ""
+msgstr "Gradient Flare..."
 
 #: plug-ins/gflare/gflare.c:954
 msgid "GFlare: cannot operate on indexed color images"
@@ -10531,7 +10524,7 @@ msgstr "Verläufe neu einlesen"
 #. Glow
 #: plug-ins/gflare/gflare.c:3616
 msgid "Glow Paint Options"
-msgstr "Glühen Zeicheneinstellungen"
+msgstr "Zeicheneinstellungen für Glühen"
 
 # TODO ??
 #: plug-ins/gflare/gflare.c:3641 plug-ins/gflare/gflare.c:3671
@@ -10542,12 +10535,12 @@ msgstr "Zeichenmodus:"
 #. Rays
 #: plug-ins/gflare/gflare.c:3646
 msgid "Rays Paint Options"
-msgstr "Strahlen Zeicheneinstellungen"
+msgstr "Zeicheneinstellungen für Strahlen"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3676
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "Zeicheneinstellungen für anderes Flare"
 
 #: plug-ins/gflare/gflare.c:3708 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
@@ -10570,11 +10563,11 @@ msgstr "Radialer Farbverlauf:"
 
 #: plug-ins/gflare/gflare.c:3750 plug-ins/gflare/gflare.c:3860
 msgid "Angular Gradient:"
-msgstr ""
+msgstr "Drehungs-Gradient:"
 
 #: plug-ins/gflare/gflare.c:3754 plug-ins/gflare/gflare.c:3864
 msgid "Angular Size Gradient:"
-msgstr ""
+msgstr "Umfangs-Gradient:"
 
 #: plug-ins/gflare/gflare.c:3775 plug-ins/gflare/gflare.c:3885
 #: plug-ins/gflare/gflare.c:4027
@@ -10610,7 +10603,7 @@ msgstr "Wahrscheinlichkeitsgradient:"
 #.
 #: plug-ins/gflare/gflare.c:4069
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "Form des anderen Flare"
 
 #: plug-ins/gflare/gflare.c:4078 plug-ins/imagemap/imap_circle.c:60
 #: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
@@ -10624,7 +10617,7 @@ msgstr "Polygon"
 
 #: plug-ins/gflare/gflare.c:4153
 msgid "Second Flares"
-msgstr ""
+msgstr "Zweites Flare"
 
 #: plug-ins/gflare/gflare.c:4760
 msgid "none"
@@ -11598,7 +11591,7 @@ msgstr "Hor. Abstand"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "No. Across"
-msgstr ""
+msgstr "Anz. horiz."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:194
 msgid "Vert. Spacing"
@@ -11606,7 +11599,7 @@ msgstr "Vert. Abstand"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:199
 msgid "No. Down"
-msgstr "Nein. Runter"
+msgstr "Anz. vert."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:224
 #, c-format
@@ -11627,9 +11620,10 @@ msgstr "Hilfslinien"
 msgid "Move Down"
 msgstr "Runter"
 
+# TODO
 #: plug-ins/imagemap/imap_cmd_move_sash.c:64
 msgid "Move Sash"
-msgstr ""
+msgstr "Bewege Rahmen"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:52
 msgid "Move Selected Objects"
@@ -12007,7 +12001,7 @@ msgstr "Standard Map-Typ"
 
 #: plug-ins/imagemap/imap_preferences.c:453
 msgid "Prompt for area info"
-msgstr ""
+msgstr "Bereichsinformationen erfragen"
 
 #: plug-ins/imagemap/imap_preferences.c:455
 msgid "Require default URL"
@@ -12015,19 +12009,19 @@ msgstr "Standard-URL erforderlich"
 
 #: plug-ins/imagemap/imap_preferences.c:457
 msgid "Show area handles"
-msgstr ""
+msgstr "Bereichsanker anzeigen"
 
 #: plug-ins/imagemap/imap_preferences.c:459
 msgid "Keep NCSA circles true"
-msgstr ""
+msgstr "NCSA-Kreise beibehalten"
 
 #: plug-ins/imagemap/imap_preferences.c:461
 msgid "Show area URL tip"
-msgstr ""
+msgstr "Zeige URL-tooltip über Bereich"
 
 #: plug-ins/imagemap/imap_preferences.c:464
 msgid "Use double-sized grab handles"
-msgstr ""
+msgstr "Griffe haben doppelte Grösse"
 
 #: plug-ins/imagemap/imap_preferences.c:488
 msgid "Number of Undo levels (1 - 99):"

@@ -1,13 +1,14 @@
 # This is the German catalog for GIMP Script-Fu.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>
+# Felix Natter <fnatter@gmx.net>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.19\n"
+"Project-Id-Version: GIMP 1.1.20\n"
 "POT-Creation-Date: 2000-04-18 14:21+0200\n"
-"PO-Revision-Date: 2000-04-25 19:56+02:00\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"PO-Revision-Date: 2000-04-26 01:19+02:00\n"
+"Last-Translator: Felix Natter <fnatter@gmx.net>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -839,11 +840,11 @@ msgstr "Rand"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "Buffer-Grösse (in % der Höhe d. Textes)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Bumpmap (Alpha-Ebene) Weichzeichner-Radius"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
@@ -896,7 +897,7 @@ msgstr "Weiße Flächen verchromen"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr ""
+msgstr "Circuit Init-Zahl"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
@@ -1043,7 +1044,7 @@ msgstr "Ende Farbübergang"
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr ""
+msgstr "Environment Map"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
@@ -1280,11 +1281,11 @@ msgstr "Glanzlicht Y-Versatz"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr ""
+msgstr "Treffer-Rate"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr ""
+msgstr "Farbton-Rate"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1502,32 +1503,32 @@ msgstr "Umriß Größe"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
-msgstr ""
+msgstr "Auffüll-Farbe"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity [0:100]"
-msgstr ""
+msgstr "Auffüll-Deckkraft"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Padding Around Text"
-msgstr ""
+msgstr "Abstand um Text"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding X"
-msgstr ""
+msgstr "Abstand X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding Y"
-msgstr ""
+msgstr "Abstand Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "Füllung für transparente Regionen"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Padding"
-msgstr ""
+msgstr "Füllung"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
@@ -1553,7 +1554,7 @@ msgstr "Muster"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "Stift Radius / Kreis Radius"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
@@ -1619,7 +1620,7 @@ msgstr "Breite der Bänder"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
-msgstr ""
+msgstr "Flatter-Intensität"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1628,7 +1629,7 @@ msgstr "Grobheit"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
-msgstr ""
+msgstr "Rundungs-Rate"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
@@ -1651,7 +1652,7 @@ msgstr "Init-Zahl"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr "\"Nach Farbe auswählen\"-Schwellwert"
+msgstr "\"Nach Farbe auswählen\"-Schwellenwert"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
@@ -1659,9 +1660,10 @@ msgstr "\"Nach Farbe auswählen\"-Schwellwert"
 msgid "Separate Layer"
 msgstr "Auf eigener Ebene"
 
+# Tinten/Kuttelfisch
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
-msgstr ""
+msgstr "Sepia"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Shadow Blur Radius"
@@ -1772,7 +1774,7 @@ msgstr "Start Farbübergang"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr ""
+msgstr "Hochrechnung"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "TRUE = Detail in Middle, FALSE = Tile"
@@ -1913,7 +1915,7 @@ msgstr "Muster anstelle Farbverlauf für Text verwenden"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr ""
+msgstr "Benutze Auswahl anstelle dem unten Angegebenen"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
@@ -1921,7 +1923,7 @@ msgstr "Wellenlänge"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
+msgstr "Rad-Radius (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
