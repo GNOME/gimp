@@ -68,7 +68,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 /* Global widgets'n'stuff */
 static guchar     *disp;      /* RGBX preview data      */
-static guchar     *environ;   /* src warping image data */
+static guchar     *env;	      /* src warping image data */
 static guchar     *bump1base;
 static guchar     *bump1;
 static guchar     *bump2base;
@@ -406,7 +406,7 @@ iterate (void)
 
   frame++;
 
-  env = (guint32*) environ;
+  env = (guint32*) env;
   dest = (guint32*) disp;
   srcbump = (frame&1) ? bump1 : bump2;
   destbump = (frame&1) ? bump2 : bump1;
@@ -615,8 +615,7 @@ render_frame (void)
       
       for (i=0;i<bytes;i++)
 	{
-	  disp[i] =
-	    environ[i];
+	  disp[i] = env[i];
 	}
     }
 #endif
@@ -638,7 +637,7 @@ init_preview_misc (void)
 
   has_alpha = gimp_drawable_has_alpha(drawable->id);
 
-  environ = g_malloc (4 * IWIDTH * IHEIGHT * 2);
+  env = g_malloc (4 * IWIDTH * IHEIGHT * 2);
   disp = g_malloc ((IWIDTH + 2 + IWIDTH * IHEIGHT) * 4);
   bump1base = g_malloc (IWIDTH * IHEIGHT + IWIDTH+IWIDTH);
   bump2base = g_malloc (IWIDTH * IHEIGHT + IWIDTH+IWIDTH);
@@ -663,22 +662,22 @@ init_preview_misc (void)
 				   FALSE,
 				   FALSE);
 	      gimp_pixel_rgn_get_rect (&pixel_rgn,
-				       &environ[(256*i +
-						 (
-						  (
-						   drawable->width<256 ?
-						   (256-drawable->width)/2 :
-						   0
-						   )
-						  +
-						  (
-						   drawable->height<256 ?
-						   (256-drawable->height)/2 :
-						   0
-						   ) * 256
-						  )) *
-						 gimp_drawable_bpp
-						 (drawable->id)
+				       &env[(256*i +
+					     (
+					      (
+					       drawable->width<256 ?
+					       (256-drawable->width)/2 :
+					       0
+					       )
+					      +
+					      (
+					       drawable->height<256 ?
+					       (256-drawable->height)/2 :
+					       0
+					       ) * 256
+					      )) *
+					   gimp_drawable_bpp
+					   (drawable->id)
 				       ],
 				       drawable->width>256?
 				       (drawable->width/2-128):0,
@@ -700,7 +699,7 @@ init_preview_misc (void)
 			   FALSE,
 			   FALSE);
       gimp_pixel_rgn_get_rect (&pixel_rgn,
-			       environ,
+			       env,
 			       drawable->width>256?(drawable->width/2-128):0,
 			       drawable->height>256?(drawable->height/2-128):0,
 			       MIN(256,drawable->width),
@@ -719,24 +718,24 @@ init_preview_misc (void)
 	{
 	  for (i=IWIDTH*IHEIGHT;i>0;i--)
 	    {
-	      environ[4*(i-1)+2] =
-		((palette[3*(environ[(i-1)*2])+2]*environ[(i-1)*2+1])/255)
-		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
-	      environ[4*(i-1)+1] =
-		((palette[3*(environ[(i-1)*2])+1]*environ[(i-1)*2+1])/255)
-		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
-	      environ[4*(i-1)+0] =
-		((palette[3*(environ[(i-1)*2])+0]*environ[(i-1)*2+1])/255)
-		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
+	      env[4*(i-1)+2] =
+		((palette[3*(env[(i-1)*2])+2]*env[(i-1)*2+1])/255)
+		+ ((255-env[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
+	      env[4*(i-1)+1] =
+		((palette[3*(env[(i-1)*2])+1]*env[(i-1)*2+1])/255)
+		+ ((255-env[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
+	      env[4*(i-1)+0] =
+		((palette[3*(env[(i-1)*2])+0]*env[(i-1)*2+1])/255)
+		+ ((255-env[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
 	    }
 	}
       else
 	{
 	  for (i=IWIDTH*IHEIGHT;i>0;i--)
 	    {
-	      environ[4*(i-1)+2] = palette[3*(environ[i-1])+2];
-	      environ[4*(i-1)+1] = palette[3*(environ[i-1])+1];
-	      environ[4*(i-1)+0] = palette[3*(environ[i-1])+0];
+	      env[4*(i-1)+2] = palette[3*(env[i-1])+2];
+	      env[4*(i-1)+1] = palette[3*(env[i-1])+1];
+	      env[4*(i-1)+0] = palette[3*(env[i-1])+0];
 	    }
 	}
       break;
@@ -746,24 +745,24 @@ init_preview_misc (void)
 	{
 	  for (i=0;i<IWIDTH*IHEIGHT;i++)
 	    {
-	      environ[i*4+2] =
-		(environ[i*4+2]*environ[i*4+3])/255
-		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
-	      environ[i*4+1] =
-		(environ[i*4+1]*environ[i*4+3])/255
-		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
-	      environ[i*4+0] =
-		(environ[i*4+0]*environ[i*4+3])/255
-		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
+	      env[i*4+2] =
+		(env[i*4+2]*env[i*4+3])/255
+		+ ((255-env[i*4+3])*((i&255) ^ (i>>8)))/255;
+	      env[i*4+1] =
+		(env[i*4+1]*env[i*4+3])/255
+		+ ((255-env[i*4+3])*((i&255) ^ (i>>8)))/255;
+	      env[i*4+0] =
+		(env[i*4+0]*env[i*4+3])/255
+		+ ((255-env[i*4+3])*((i&255) ^ (i>>8)))/255;
 	    }
 	}
       else
 	{
 	  for (i=IWIDTH*IHEIGHT;i>0;i--)
 	    {
-	      environ[4*(i-1)+2] = environ[(i-1)*3+2];
-	      environ[4*(i-1)+1] = environ[(i-1)*3+1];
-	      environ[4*(i-1)+0] = environ[(i-1)*3+0];
+	      env[4*(i-1)+2] = env[(i-1)*3+2];
+	      env[4*(i-1)+1] = env[(i-1)*3+1];
+	      env[4*(i-1)+0] = env[(i-1)*3+0];
 	    }
 	}
       break;
@@ -776,15 +775,15 @@ init_preview_misc (void)
   for (i = 0; i < IWIDTH*IHEIGHT/2; i++)
     {
       guchar t;
-      t = environ[4*(i)+0];
-      environ[4*(i)+0] = environ[4*(IWIDTH*IHEIGHT-(i+1))+0];
-      environ[4*(IWIDTH*IHEIGHT-(i+1))+0] = t;
-      t = environ[4*(i)+1];
-      environ[4*(i)+1] = environ[4*(IWIDTH*IHEIGHT-(i+1))+1];
-      environ[4*(IWIDTH*IHEIGHT-(i+1))+1] = t;
-      t = environ[4*(i)+2];
-      environ[4*(i)+2] = environ[4*(IWIDTH*IHEIGHT-(i+1))+2];
-      environ[4*(IWIDTH*IHEIGHT-(i+1))+2] = t;
+      t = env[4*(i)+0];
+      env[4*(i)+0] = env[4*(IWIDTH*IHEIGHT-(i+1))+0];
+      env[4*(IWIDTH*IHEIGHT-(i+1))+0] = t;
+      t = env[4*(i)+1];
+      env[4*(i)+1] = env[4*(IWIDTH*IHEIGHT-(i+1))+1];
+      env[4*(IWIDTH*IHEIGHT-(i+1))+1] = t;
+      t = env[4*(i)+2];
+      env[4*(i)+2] = env[4*(IWIDTH*IHEIGHT-(i+1))+2];
+      env[4*(IWIDTH*IHEIGHT-(i+1))+2] = t;
     }
 }
 

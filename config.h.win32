@@ -84,7 +84,7 @@
 /* #undef HAVE_STPCPY */
 /* #undef HAVE_SYS_DIR_H */
 /* #undef HAVE_SYS_NDIR_H */
-/* #undef HAVE_SYS_PARAM_H /*
+/* #undef HAVE_SYS_PARAM_H */
 /* #undef HAVE_SYS_SELECT_H */
 /* #undef HAVE_SYS_TIME_H */
 /* #undef HAVE_SYS_TIMES_H */
@@ -98,8 +98,8 @@
 /* #undef NO_DIFFTIME */
 /* #undef NO_FD_SET */
 
-#define RAND_FUNC rand
-#define SRAND_FUNC srand
+#define RAND_FUNC g_random_int
+#define SRAND_FUNC g_random_set_seed
 
 /* #undef USE_PTHREADS */
 

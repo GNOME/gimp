@@ -33,10 +33,6 @@
 
 #include "config.h"
 
-#ifdef G_OS_WIN32
-#include <glib.h>
-#endif
-
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>

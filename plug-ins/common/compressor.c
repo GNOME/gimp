@@ -58,15 +58,6 @@
 
 #include "config.h"
 
-#ifdef G_OS_WIN32
-#include <glib.h>
-
-#define STRICT
-#define WinMain WinMain_foo
-#include <windows.h>
-#undef WinMain
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -89,6 +80,13 @@
 #endif
 
 #include <libgimp/gimp.h>
+
+#ifdef G_OS_WIN32
+#define STRICT
+#define WinMain WinMain_foo
+#include <windows.h>
+#undef WinMain
+#endif
 
 #include "libgimp/stdplugins-intl.h"
 

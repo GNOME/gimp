@@ -113,16 +113,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifdef G_OS_WIN32
-#include <glib.h>
-
-/* This just to be able to include windows.h and undef RGB */
-#define WinMain WinMain_foo
-#include <windows.h>
-#undef WinMain
-#undef RGB
-#endif
-
 #include <gtk/gtk.h>
 #ifndef GDK_WINDOWING_WIN32
 #include <gdk/gdkx.h>

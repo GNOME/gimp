@@ -51,10 +51,6 @@
 
 #include "config.h"
 
-#ifdef G_OS_WIN32
-#include <glib.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,6 +63,15 @@
 #include <unistd.h>
 #endif
 #include <ctype.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "pix_data.h"
+
+#include "FractalExplorer.h"
+#include "Events.h"
+#include "Dialogs.h"
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -81,15 +86,6 @@
 #define S_ISREG(m) ((m) & _S_IFREG)
 #endif
 #endif
-
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
-#include "pix_data.h"
-
-#include "FractalExplorer.h"
-#include "Events.h"
-#include "Dialogs.h"
 
 #include "libgimp/stdplugins-intl.h"
 
