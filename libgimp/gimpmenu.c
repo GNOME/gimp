@@ -28,8 +28,12 @@
 #endif
 #undef GTK_DISABLE_DEPRECATED
 
+#include <gtk/gtk.h>
+
 #include "gimp.h"
-#include "gimpui.h"
+
+#undef GIMP_DISABLE_DEPRECATED
+#include "gimpmenu.h"
 
 #include "libgimp-intl.h"
 

@@ -1,3 +1,15 @@
+2004-04-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/flame/flame.c
+	* plug-ins/gimpressionist/brush.c: ported the last two users of
+	gimpmenu.h to GimpDrawableComboBox.
+
+	* libgimp/gimpmenu.[ch]: declared the functions found here as
+	deprecated.
+
+	* plug-ins/common/plugindetails.c
+	* plug-ins/ifscompose/ifscompose.c: silent the compiler.
+
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c 

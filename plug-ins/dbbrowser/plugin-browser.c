@@ -462,7 +462,7 @@ list_store_select_callback (GtkTreeSelection *selection,
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      gtk_tree_model_get (model, &iter, 
+      gtk_tree_model_get (model, &iter,
                           LIST_PINFO_COLUMN, &pinfo,
                           LIST_PATH_COLUMN,  &mpath,
                           -1);
@@ -513,7 +513,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      gtk_tree_model_get (model, &iter, 
+      gtk_tree_model_get (model, &iter,
                           TREE_PINFO_COLUMN, &pinfo,
                           TREE_MPATH_COLUMN, &mpath,
                           -1);
@@ -532,7 +532,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
       /* Walk through the list, reading each row */
       gchar *picked_mpath;
 
-      gtk_tree_model_get (model, &iter, 
+      gtk_tree_model_get (model, &iter,
                           LIST_PATH_COLUMN, &picked_mpath,
                           -1);
       if (picked_mpath && !strcmp (mpath, picked_mpath))
@@ -544,7 +544,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
       valid = gtk_tree_model_iter_next (model, &iter);
     }
   g_free (mpath);
-  
+
   if (found)
     {
       GtkTreeSelection *list_selection;
@@ -571,6 +571,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
   procedure_general_select_callback (pdesc, pinfo);
 }
 
+#if 0
 static void
 pinfo_free (gpointer p)
 {
@@ -583,6 +584,7 @@ pinfo_free (gpointer p)
   g_free (pinfo->realname);
   g_free (pinfo);
 }
+#endif
 
 static gboolean
 find_existing_mpath_helper (GtkTreeModel *model,
@@ -596,7 +598,7 @@ find_existing_mpath_helper (GtkTreeModel *model,
       GtkTreeIter  child;
       gchar       *picked_mpath;
 
-      gtk_tree_model_get (model, iter, 
+      gtk_tree_model_get (model, iter,
                           TREE_MPATH_COLUMN, &picked_mpath,
                           -1);
       if (!strcmp(mpath, picked_mpath))
@@ -609,7 +611,7 @@ find_existing_mpath_helper (GtkTreeModel *model,
       if (gtk_tree_model_iter_children (model, &child, iter))
         {
           gtk_tree_path_down (path);
-          if (find_existing_mpath_helper (model, &child, path, 
+          if (find_existing_mpath_helper (model, &child, path,
                                           mpath, return_iter)  )
           {
             g_free (picked_mpath);
@@ -1084,7 +1086,7 @@ gimp_plugin_desc (void)
   plugindesc->tree_view = GTK_TREE_VIEW (tree_view);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"), 
+  column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"),
                                                      renderer,
                                                      "text",
                                                      TREE_PATH_NAME_COLUMN,

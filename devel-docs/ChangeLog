@@ -1,3 +1,7 @@
+2004-04-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/Makefile.am: specify --deprecated-guards.
+
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

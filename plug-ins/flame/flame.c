@@ -203,11 +203,6 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_flame", &config);
       maybe_init_cp ();
 
-      /*  reusing a drawable_ID from the last run is a bad idea
-          since the drawable might have vanished  (bug #37761)   */
-      if (config.cmap_drawable >= 0)
-        config.cmap_drawable = GRADIENT_DRAWABLE;
-
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       config.cp.width = drawable->width;
       config.cp.height = drawable->height;
@@ -219,6 +214,13 @@ run (const gchar      *name,
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
+      else
+        {
+          /*  reusing a drawable_ID from the last run is a bad idea
+              since the drawable might have vanished  (bug #37761)   */
+          if (config.cmap_drawable >= 0)
+            config.cmap_drawable = GRADIENT_DRAWABLE;
+        }
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -469,7 +471,7 @@ make_file_dlg (const gchar *title,
 
                                           NULL);
 
-  g_object_add_weak_pointer (G_OBJECT (file_dlg), (gpointer *) &file_dlg);
+  g_object_add_weak_pointer (G_OBJECT (file_dlg), (gpointer) &file_dlg);
 
   gtk_dialog_set_default_response (GTK_DIALOG (file_dlg), GTK_RESPONSE_OK);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
@@ -857,26 +859,18 @@ set_cmap_preview (void)
 }
 
 static void
-gradient_cb (GtkWidget *widget,
-	     gpointer   data)
+cmap_callback (GtkWidget *widget,
+	       gpointer   data)
 {
-  config.cmap_drawable = GPOINTER_TO_INT (data);
-  set_cmap_preview();
-  set_flame_preview();
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &config.cmap_drawable);
+
+  set_cmap_preview ();
+  set_flame_preview ();
   /* set_edit_preview(); */
 }
 
-static void
-cmap_callback (gint32   id,
-	       gpointer data)
-{
-  config.cmap_drawable = id;
-  set_cmap_preview();
-  set_flame_preview();
-  /* set_edit_preview(); */
-}
-
-static gint
+static gboolean
 cmap_constrain (gint32   image_id,
 		gint32   drawable_id,
 		gpointer data)
@@ -1072,12 +1066,9 @@ dialog (void)
 
   {
     GtkWidget *sep;
-    GtkWidget *menu;
     GtkWidget *hbox;
     GtkWidget *label;
-    GtkWidget *menuitem;
-    GtkWidget *option_menu;
-    gint32     save_drawable = config.cmap_drawable;
+    GtkWidget *combo;
 
     sep = gtk_hseparator_new ();
     gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 0);
@@ -1091,25 +1082,19 @@ dialog (void)
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    option_menu = gtk_option_menu_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
-    menu = gimp_drawable_menu_new (cmap_constrain, cmap_callback,
-				   0, config.cmap_drawable);
+    combo = gimp_drawable_combo_box_new (cmap_constrain, NULL);
 
-    config.cmap_drawable = save_drawable;
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
 #if 0
-    menuitem = gtk_menu_item_new_with_label (_("Black"));
-    g_signal_connect (menuitem, "activate",
-                      G_CALLBACK (gradient_cb),
-                      (gpointer) BLACK_DRAWABLE);
-    gtk_menu_prepend (GTK_MENU (menu), menuitem);
-    if (BLACK_DRAWABLE == save_drawable)
-      gtk_menu_set_active (GTK_MENU (menu), 0);
-    gtk_widget_show (menuitem);
+    gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                GIMP_INT_STORE_VALUE, BLACK_DRAWABLE,
+                                GIMP_INT_STORE_LABEL, _("Black"),
+                                -1);
 #endif
+
     {
-      static gchar *names[] =
+      static const gchar *names[] =
       {
 	"sunny harvest",
 	"rose",
@@ -1118,41 +1103,41 @@ dialog (void)
 	"ernst anti-pope",
 	"gris josette"
       };
-      static gint good[] = { 10, 20, 68, 79, 70, 75 };
-      gint i, n = G_N_ELEMENTS (good);
+      static const gint good[] = { 10, 20, 68, 79, 70, 75 };
 
-      for (i = 0; i < n; i++)
+      gint i;
+
+      for (i = 0; i < G_N_ELEMENTS (good); i++)
 	{
-	  gint d = TABLE_DRAWABLE - good[i];
+          gint value = TABLE_DRAWABLE - good[i];
 
-	  menuitem = gtk_menu_item_new_with_label (names[i]);
-	  g_signal_connect (menuitem, "activate",
-                            G_CALLBACK (gradient_cb),
-                            GINT_TO_POINTER (d));
-	  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
-	  if (d == save_drawable)
-	    gtk_menu_set_active (GTK_MENU (menu), 0);
-	  gtk_widget_show (menuitem);
-	}
+          gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                      GIMP_INT_STORE_VALUE, value,
+                                      GIMP_INT_STORE_LABEL, names[i],
+                                      -1);
+        }
     }
 
-    menuitem = gtk_menu_item_new_with_label (_("Custom Gradient"));
-    g_signal_connect (menuitem, "activate",
-                      G_CALLBACK (gradient_cb),
-                      (gpointer) GRADIENT_DRAWABLE);
-    gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
-    if (GRADIENT_DRAWABLE == save_drawable)
-      gtk_menu_set_active (GTK_MENU (menu), 0);
-    gtk_widget_show (menuitem);
+    gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
+                                GIMP_INT_STORE_VALUE,    GRADIENT_DRAWABLE,
+                                GIMP_INT_STORE_LABEL,    _("Custom Gradient"),
+                                GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                                -1);
 
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-    gtk_widget_show (option_menu);
+    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                config.cmap_drawable,
+                                G_CALLBACK (cmap_callback),
+                                NULL);
+
+    gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+    gtk_widget_show (combo);
 
     cmap_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
     gtk_preview_size (GTK_PREVIEW (cmap_preview), 32, 32);
 
     gtk_box_pack_end (GTK_BOX (hbox), cmap_preview, FALSE, FALSE, 0);
     gtk_widget_show (cmap_preview);
+
     set_cmap_preview ();
   }
 

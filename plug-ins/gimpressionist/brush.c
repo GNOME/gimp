@@ -28,54 +28,59 @@
 #include <libgimp/stdplugins-intl.h>
 
 
-GtkWidget *brushlist = NULL;
-static GtkWidget *brushprev = NULL;
-GtkObject *brushreliefadjust = NULL;
-GtkObject *brushaspectadjust = NULL;
-GtkObject *brushgammaadjust = NULL;
-static GtkListStore *brushstore;
+GtkWidget *brushlist            = NULL;
+GtkObject *brushreliefadjust    = NULL;
+GtkObject *brushaspectadjust    = NULL;
+GtkObject *brushgammaadjust     = NULL;
 
-GtkWidget *brushdrawablemenu = NULL;
-static GtkWidget *brushemptyitem;
+gint  brushfile = 2;
+ppm_t brushppm  = {0, 0, NULL};
 
-gint32 brushdrawableid;
+static GtkWidget    *brushprev  = NULL;
+static GtkListStore *brushstore = NULL;
 
-int brushfile = 2;
+static void  updatebrushprev (char *fn);
 
-ppm_t brushppm = {0,0,NULL};
-
-static void updatebrushprev(char *fn);
-
-static gboolean colorfile(char *fn)
+static gboolean colorfile (char *fn)
 {
   return fn && strstr(fn, ".ppm");
 }
 
-static void brushdmenuselect(gint32 id, gpointer data)
+static void
+brushdmenuselect (GtkWidget *widget,
+                  gpointer   data)
 {
   GimpPixelRgn src_rgn;
   guchar *src_row;
   guchar *src;
+  gint id;
   gint alpha, has_alpha, bpp;
   gint x, y;
   ppm_t *p;
   gint x1, y1, x2, y2;
   gint row, col;
   GimpDrawable *drawable;
-  int rowstride;
+  gint rowstride;
 
-  if(brushfile == 2) return; /* Not finished GUI-building yet */
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &id);
 
-  if (brushfile) {
-    /* unselectall(brushlist); */
-    if(GTK_IS_WIDGET(presetsavebutton))
-      gtk_widget_set_sensitive(GTK_WIDGET(presetsavebutton), FALSE);
-  }
+  if (id == -1)
+    return;
 
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(brushgammaadjust), 1.0);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(brushaspectadjust), 0.0);
+  if (brushfile == 2)
+    return; /* Not finished GUI-building yet */
 
-  drawable = gimp_drawable_get(id);
+  if (brushfile)
+    {
+      /* unselectall(brushlist); */
+      if (GTK_IS_WIDGET (presetsavebutton))
+        gtk_widget_set_sensitive (GTK_WIDGET (presetsavebutton), FALSE);
+    }
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (brushgammaadjust), 1.0);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (brushaspectadjust), 0.0);
+
+  drawable = gimp_drawable_get (id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -218,10 +223,13 @@ savebrush (GtkWidget *wg,
   gtk_widget_show (window);
 }
 
-static gboolean validdrawable(gint32 imageid, gint32 drawableid, gpointer data)
+static gboolean
+validdrawable (gint32    imageid,
+               gint32    drawableid,
+               gpointer  data)
 {
-  if(drawableid == -1) return TRUE;
-  return (gimp_drawable_is_rgb(drawableid) || gimp_drawable_is_gray(drawableid));
+  return (gimp_drawable_is_rgb (drawableid) ||
+          gimp_drawable_is_gray (drawableid));
 }
 
 void reloadbrush(char *fn, ppm_t *p)
@@ -360,10 +368,9 @@ void create_brushpage(GtkNotebook *notebook)
   GtkWidget *box1, *box2, *box3, *thispage;
   GtkWidget *view;
   GtkWidget *tmpw, *table;
-  GtkWidget *dmenu;
+  GtkWidget *combo;
   GtkWidget *label;
   GtkTreeSelection *selection;
-  GtkWidget *emptyitem;
 
   label = gtk_label_new_with_mnemonic (_("_Brush"));
 
@@ -428,19 +435,14 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box3), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
-  g_signal_connect (emptyitem, "activate",
-                    G_CALLBACK (dummybrushdmenuselect),
-                    NULL);
-  gtk_widget_show(emptyitem);
+  combo = gimp_drawable_combo_box_new (validdrawable, NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), -1,
+                              G_CALLBACK (brushdmenuselect),
+                              NULL);
 
-  tmpw = gtk_option_menu_new();
-  gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-  gtk_widget_show(tmpw);
+  gtk_box_pack_start(GTK_BOX (box3), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
-  brushdrawablemenu = dmenu = gimp_drawable_menu_new(validdrawable, brushdmenuselect, NULL, -1);
-  gtk_menu_shell_prepend (GTK_MENU_SHELL (dmenu), emptyitem);
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
   tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
   gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(savebrush), NULL);

@@ -22,6 +22,13 @@
 #ifndef __GIMP_MENU_H__
 #define __GIMP_MENU_H__
 
+/*  These functions are deprecated and should not be used in newly
+ *  written code.
+ */
+
+#ifndef GIMP_DISABLE_DEPRECATED
+
+
 G_BEGIN_DECLS
 
 
@@ -51,5 +58,8 @@ GtkWidget * gimp_drawable_menu_new (GimpConstraintFunc constraint,
 
 
 G_END_DECLS
+
+
+#endif /*  GIMP_DISABLE_DEPRECATED  */
 
 #endif /* __GIMP_MENU_H__ */
