@@ -1,3 +1,19 @@
+2005-02-09  Sven Neumann  <sven@gimp.org>
+
+	* */Makefile.am: set AUTOMAKE_OPTIONS to 1.7.
+
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpconfig/libgimpconfig.types: let gtk-doc do introspection
+	on GimpColorConfig.
+
+	* libgimpconfig/tmpl/gimpcolorconfig.sgml
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml: regenerated.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new function.
+
+	* libgimpwidgets/tmpl/gimpsizeentry.sgml: regenerated.
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/libgimpconfig-docs.sgml

@@ -26,14 +26,6 @@ High-level API functions for libgimpconfig.
 
 </para>
 
-@base_iface: 
-@serialize: 
-@deserialize: 
-@serialize_property: 
-@deserialize_property: 
-@duplicate: 
-@equal: 
-@reset: 
 
 <!-- ##### FUNCTION gimp_config_serialize_to_file ##### -->
 <para>

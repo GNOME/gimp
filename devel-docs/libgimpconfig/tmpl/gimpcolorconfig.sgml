@@ -19,14 +19,41 @@ GimpColorConfig
 
 </para>
 
-@parent_instance: 
-@mode: 
-@rgb_profile: 
-@cmyk_profile: 
-@display_profile: 
-@printer_profile: 
-@display_intent: 
-@simulation_intent: 
+
+<!-- ##### ARG GimpColorConfig:cmyk-profile ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:display-profile ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:display-rendering-intent ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:mode ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:printer-profile ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:rgb-profile ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:simulation-rendering-intent ##### -->
+<para>
+
+</para>
 
 <!-- ##### ENUM GimpColorManagementMode ##### -->
 <para>

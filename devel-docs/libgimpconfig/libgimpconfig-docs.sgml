@@ -13,6 +13,12 @@
 
   <part id="libgimpconfig">
     <title>GIMP Config Library</title>
+
+    <chapter id="libgimpconfig-hierarchy">
+      <title>Object Hierarchy</title>
+      <xi:include href="xml/tree_index.sgml" />
+    </chapter>    
+
     <xi:include href="xml/gimpconfig-iface.xml" />
     <xi:include href="xml/gimpconfig-deserialize.xml" />
     <xi:include href="xml/gimpconfig-serialize.xml" />

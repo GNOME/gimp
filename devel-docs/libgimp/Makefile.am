@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-AUTOMAKE_OPTIONS = 1.6
+AUTOMAKE_OPTIONS = 1.7
 
 # The name of the module.
 DOC_MODULE = libgimp

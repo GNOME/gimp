@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-AUTOMAKE_OPTIONS = 1.6
+AUTOMAKE_OPTIONS = 1.7
 
 # The name of the module.
 DOC_MODULE = libgimpconfig
@@ -15,13 +15,13 @@ DOC_SOURCE_DIR = $(top_srcdir)/$(DOC_MODULE)
 SCANGOBJ_OPTIONS =
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS =
+SCAN_OPTIONS = --deprecated-guards="GIMP_DISABLE_DEPRECATED"
 
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS = --sgml-mode --output-format=xml
 
 # Extra options to supply to gtkdoc-fixref
-FIXXREF_OPTIONS =
+FIXXREF_OPTIONS = --extra-dir=../libgimpbase/html --extra-dir=../libgimpcolor/html --extra-dir=../libgimpmath/html
 
 # Used for dependencies
 HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h
@@ -42,8 +42,18 @@ extra_files =
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
-GTKDOC_CFLAGS =
-GTKDOC_LIBS =
+GTKDOC_CFLAGS = \
+	@CFLAGS@		\
+	-I$(top_srcdir) 	\
+	-I$(top_builddir) 	\
+	@GLIB_CFLAGS@
+
+GTKDOC_LIBS = \
+        $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la	\
+        $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la\
+        $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la	\
+        $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
+	@GLIB_LIBS@
 
 
 include $(top_srcdir)/gtk-doc.make
