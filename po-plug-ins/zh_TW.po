@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-10-28 05:50+0800\n"
-"PO-Revision-Date: 2001-11-05 13:10+0800\n"
+"POT-Creation-Date: 2001-11-13 03:08+0800\n"
+"PO-Revision-Date: 2001-11-13 14:41+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
 #: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:560
-#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:36
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "關於"
@@ -63,7 +63,7 @@ msgstr "關於"
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:455 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:308 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:308 plug-ins/common/png.c:1049
 #: plug-ins/common/pnm.c:930 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -145,7 +145,7 @@ msgstr "確定"
 #: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:457
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:310
-#: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:932
+#: plug-ins/common/png.c:1051 plug-ins/common/pnm.c:932
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
 #: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
@@ -247,19 +247,19 @@ msgstr "還原上次縮放"
 
 #: plug-ins/FractalExplorer/Dialogs.c:389
 msgid "Redo Zoom"
-msgstr "重做縮放"
+msgstr "取消還原縮放"
 
 #: plug-ins/FractalExplorer/Dialogs.c:395
 msgid "Redo last zoom"
-msgstr "重做上次縮放"
+msgstr "取消還原上次縮放"
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
 msgid "Step In"
-msgstr ""
+msgstr "拉近"
 
 #: plug-ins/FractalExplorer/Dialogs.c:404
 msgid "Step Out"
-msgstr ""
+msgstr "拉遠"
 
 #.
 #. *  Scales
@@ -355,12 +355,12 @@ msgstr "重設"
 
 #: plug-ins/FractalExplorer/Dialogs.c:534
 msgid "Reset parameters to default values"
-msgstr "重設參數成為預設值"
+msgstr "重設為預設值"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
 #: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
-#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
-#: plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:219
+#: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Save"
 msgstr "儲存"
 
@@ -411,7 +411,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
 #: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
-#: plug-ins/imagemap/imap_preferences.c:542
+#: plug-ins/imagemap/imap_preferences.c:543
 msgid "Colors"
 msgstr "顏色"
 
@@ -541,7 +541,7 @@ msgstr "此顏色組成部份使用餘弦函數"
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
-msgstr "此顏色組成部份使用線性對映而非任何三角函數"
+msgstr "使用線性映射而非任何三角函數來處理此色版"
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 #: plug-ins/FractalExplorer/Dialogs.c:782
@@ -626,7 +626,7 @@ msgstr "儲存：不能儲存為目錄"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1665
 msgid "Load Fractal Parameters"
-msgstr ""
+msgstr "載入碎形參數"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1676
 msgid "Click here to load your file"
@@ -670,7 +670,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:352
 msgid "Rendering Fractal..."
-msgstr ""
+msgstr "正在描繪碎形..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:732 plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3369
@@ -682,28 +682,28 @@ msgstr "是否確定要由列表和磁碟中刪除 \"%s\"？"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:736
 msgid "Delete Fractal"
-msgstr ""
+msgstr "刪除碎形"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:741
 #: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3568
 #: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3102
 #: plug-ins/gflare/gflare.c:3378 plug-ins/gimpressionist/presets.c:648
-#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:53
-#: plug-ins/imagemap/imap_selection.c:175
+#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:56
+#: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:155
 msgid "Delete"
 msgstr "刪除"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:826
 msgid "Edit fractal name"
-msgstr ""
+msgstr "編輯碎形名稱"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:837
 msgid "Fractal name:"
-msgstr ""
+msgstr "碎形名稱︰"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:878
 msgid "New Fractal"
-msgstr ""
+msgstr "新增碎形"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1150
 #, c-format
@@ -721,11 +721,11 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1343
 msgid "My first fractal"
-msgstr ""
+msgstr "我的第一個碎形"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1360
 msgid "Choose Fractal by double-clicking on it"
-msgstr ""
+msgstr "在想選擇的碎形上以滑鼠按兩下"
 
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1391 plug-ins/gfig/gfig.c:3537
@@ -738,12 +738,12 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1409
 msgid "Delete currently selected fractal"
-msgstr ""
+msgstr "刪除目前選擇的碎形"
 
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1461
 msgid "Rescan for Fractals"
-msgstr ""
+msgstr "重新掃描碎形"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1479
 msgid "Add FractalExplorer Path"
@@ -813,7 +813,7 @@ msgstr "(不)啟用高品質預覽"
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:469 plug-ins/MapObject/mapobject_ui.c:615
 msgid "Antialiasing Options"
-msgstr "反鋸齒選項（Antialiasing）"
+msgstr "反鋸齒選項"
 
 #: plug-ins/Lighting/lighting_ui.c:478 plug-ins/MapObject/mapobject_ui.c:624
 msgid "Enable Antialiasing"
@@ -850,15 +850,15 @@ msgstr "光源設定"
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Directional"
-msgstr ""
+msgstr "方向性"
 
 #: plug-ins/Lighting/lighting_ui.c:576
 msgid "Point"
-msgstr "點光源"
+msgstr "點"
 
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
-msgstr ""
+msgstr "射燈"
 
 #: plug-ins/Lighting/lighting_ui.c:583
 msgid "Light Type:"
@@ -964,19 +964,19 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:766 plug-ins/Lighting/lighting_ui.c:805
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
 msgid "Diffuse:"
-msgstr ""
+msgstr "散射："
 
 #: plug-ins/Lighting/lighting_ui.c:779 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "被光源照到時原色彩的強度"
 
 #: plug-ins/Lighting/lighting_ui.c:787 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
-msgstr ""
+msgstr "反射率"
 
 #: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "較高的值表示物件會反射較多光線（看起來較光亮）"
 
 #: plug-ins/Lighting/lighting_ui.c:830 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
@@ -997,7 +997,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
-msgstr ""
+msgstr "Bumpmap 設定"
 
 #: plug-ins/Lighting/lighting_ui.c:907
 msgid "Enable Bump Mapping"
@@ -1009,7 +1009,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:934
 msgid "Bumpmap Image:"
-msgstr ""
+msgstr "Bumpmap 圖像︰"
 
 #: plug-ins/Lighting/lighting_ui.c:942 plug-ins/common/mblur.c:784
 #: plug-ins/common/sinus.c:1988 plug-ins/flame/flame.c:724
@@ -1018,15 +1018,15 @@ msgstr "線性"
 
 #: plug-ins/Lighting/lighting_ui.c:943
 msgid "Logarithmic"
-msgstr ""
+msgstr "對數"
 
 #: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:725
 msgid "Sinusoidal"
-msgstr ""
+msgstr "弦波"
 
 #: plug-ins/Lighting/lighting_ui.c:945 plug-ins/flame/flame.c:726
 msgid "Spherical"
-msgstr ""
+msgstr "球形"
 
 #: plug-ins/Lighting/lighting_ui.c:949
 msgid "Curve:"
@@ -1058,7 +1058,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
-msgstr ""
+msgstr "環境設定"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
 msgid "Enable Environment Mapping"
@@ -1094,7 +1094,7 @@ msgstr "質地"
 
 #: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:851
 msgid "Bump Map"
-msgstr ""
+msgstr "Bump Map"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
 msgid "Environment Map"
@@ -1115,7 +1115,7 @@ msgstr "重新計算預覽圖像"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr ""
+msgstr "<Image>/濾鏡/映射/映射物件..."
 
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
@@ -1129,7 +1129,7 @@ msgstr "圓柱體"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
-msgstr ""
+msgstr "映射到："
 
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
@@ -1137,11 +1137,11 @@ msgstr "平面"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
-msgstr "球體"
+msgstr "球面"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
-msgstr ""
+msgstr "映射後的物件類型"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
@@ -1149,11 +1149,11 @@ msgstr "物體外的部份是透明的"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr "重覆排列來源圖像"
+msgstr "鋪排來源圖像"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
-msgstr "重覆排列來源圖像：對於無限大的平面比較有用"
+msgstr "鋪排來源圖像：對於無限大的平面比較有用"
 
 #: plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
@@ -1169,7 +1169,7 @@ msgstr "點光源"
 
 #: plug-ins/MapObject/mapobject_ui.c:708
 msgid "Directional Light"
-msgstr ""
+msgstr "方向光源"
 
 #: plug-ins/MapObject/mapobject_ui.c:710
 msgid "No Light"
@@ -1245,7 +1245,7 @@ msgstr "右："
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
-msgstr ""
+msgstr "將圖像映射到方盒表面"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
 msgid "Scale X:"
@@ -1265,12 +1265,12 @@ msgstr "Z 比例（大小）"
 
 #: plug-ins/MapObject/mapobject_ui.c:1231
 msgid "Images for the Cap Faces"
-msgstr ""
+msgstr "柱體蓋面的圖像"
 
 #: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
 #: plug-ins/gimpressionist/size.c:56
 msgid "Size"
-msgstr "大小"
+msgstr "尺寸"
 
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
 #: plug-ins/common/nlfilt.c:430 plug-ins/common/nova.c:504
@@ -1300,7 +1300,7 @@ msgstr "方向"
 
 #: plug-ins/MapObject/mapobject_ui.c:1362
 msgid "Map to Object"
-msgstr ""
+msgstr "映射至物件"
 
 #: plug-ins/MapObject/mapobject_ui.c:1419 plug-ins/common/diffraction.c:575
 msgid "Preview!"
@@ -1316,11 +1316,11 @@ msgstr "放大（令圖像變大）"
 
 #: plug-ins/MapObject/mapobject_ui.c:1447
 msgid "Show Preview Wireframe"
-msgstr ""
+msgstr "顯示預覽線框"
 
 #: plug-ins/MapObject/mapobject_ui.c:1455
 msgid "Show/hide preview wireframe"
-msgstr ""
+msgstr "顯示/隱藏預覽線框"
 
 #. memory mapped file data
 #. must check file size
@@ -1343,7 +1343,7 @@ msgstr "正在載入 %s："
 #: plug-ins/bmp/bmpread.c:64
 #, c-format
 msgid "%s: can't open \"%s\""
-msgstr "%s：無法開啟 \"%s\""
+msgstr "%s：無法開啟「%s」"
 
 #: plug-ins/bmp/bmpread.c:75 plug-ins/bmp/bmpread.c:83
 #: plug-ins/bmp/bmpread.c:88 plug-ins/bmp/bmpread.c:95
@@ -1401,8 +1401,8 @@ msgstr "無法開啟 %s"
 #: plug-ins/common/gih.c:1218 plug-ins/common/gtm.c:247
 #: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1197
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
-#: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
-#: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
+#: plug-ins/common/pix.c:532 plug-ins/common/png.c:777
+#: plug-ins/common/png.c:779 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
@@ -1427,7 +1427,7 @@ msgstr "RLE 編碼"
 
 #: plug-ins/common/AlienMap.c:964
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/映射/Alien Map..."
 
 #: plug-ins/common/AlienMap.c:1162
 msgid "AlienMap: Transforming..."
@@ -1439,15 +1439,15 @@ msgstr "AlienMap"
 
 #: plug-ins/common/AlienMap.c:1442
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "改變紅色色版的亮度"
 
 #: plug-ins/common/AlienMap.c:1451
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "改變綠色色版的亮度"
 
 #: plug-ins/common/AlienMap.c:1460
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "改變藍色色版的亮度"
 
 #: plug-ins/common/AlienMap.c:1477
 msgid "Use sine-function for red component."
@@ -1459,7 +1459,7 @@ msgstr "紅色部份使用餘弦函數。"
 
 #: plug-ins/common/AlienMap.c:1481
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "紅色色版：使用線性映射而非任何三角函數"
 
 #: plug-ins/common/AlienMap.c:1500
 msgid "Use sine-function for green component."
@@ -1472,7 +1472,7 @@ msgstr "綠色部份使用餘弦函數。"
 #: plug-ins/common/AlienMap.c:1504
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "綠色色版：使用線性映射而非任何三角函數"
 
 #: plug-ins/common/AlienMap.c:1523
 msgid "Use sine-function for blue component."
@@ -1485,7 +1485,7 @@ msgstr "藍色部份使用餘弦函數。"
 #: plug-ins/common/AlienMap.c:1527
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "藍色色版：使用線性映射而非任何三角函數"
 
 #: plug-ins/common/AlienMap.c:1657
 msgid "About AlienMap"
@@ -1493,7 +1493,7 @@ msgstr "關於 AlienMap"
 
 #: plug-ins/common/AlienMap2.c:988
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/映射/Alien Map 2..."
 
 #: plug-ins/common/AlienMap2.c:1161
 msgid "AlienMap2: Transforming..."
@@ -1517,7 +1517,7 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1445
 msgid "Change angle of the red/hue channel"
-msgstr ""
+msgstr "改變紅色/色相色版的角度"
 
 #: plug-ins/common/AlienMap2.c:1452
 msgid "G/S-Frequency:"
@@ -1676,7 +1676,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:142
 msgid "sin^p-based function"
-msgstr ""
+msgstr "基於 sin^p 的函數"
 
 #: plug-ins/common/CML_explorer.c:143
 msgid "sin^p, stepped"
@@ -1801,7 +1801,7 @@ msgstr "連續漸層"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr ""
+msgstr "連續漸層且沒有縫隙"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
@@ -1868,11 +1868,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1279
 msgid "Hue Settings"
-msgstr ""
+msgstr "色相設定"
 
 #: plug-ins/common/CML_explorer.c:1284
 msgid "Saturation Settings"
-msgstr ""
+msgstr "飽和度設定"
 
 #: plug-ins/common/CML_explorer.c:1289
 msgid "Value (Gray Image) Settings"
@@ -2049,7 +2049,7 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:2189 plug-ins/common/CML_explorer.c:2391
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "錯誤：無法開啟「%s」"
 
 #: plug-ins/common/CML_explorer.c:2230
 #, c-format
@@ -2057,10 +2057,12 @@ msgid ""
 "Parameters were Saved to\n"
 "\"%s\""
 msgstr ""
+"參數已儲存至\n"
+"\"%s\""
 
 #: plug-ins/common/CML_explorer.c:2249
 msgid "CML File Operation Warning"
-msgstr ""
+msgstr "CML 檔案操作警告"
 
 #: plug-ins/common/CML_explorer.c:2269
 #, c-format
@@ -2068,6 +2070,8 @@ msgid ""
 "%s\n"
 "exists, Overwrite?"
 msgstr ""
+"%s\n"
+"已存在，要覆寫？"
 
 #: plug-ins/common/CML_explorer.c:2306
 msgid "Load Parameters from"
@@ -2079,11 +2083,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "錯誤：它不是 CML 參數檔。"
 
 #: plug-ins/common/CML_explorer.c:2419
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "警告：它是舊格式的檔案。"
 
 #: plug-ins/common/CML_explorer.c:2421
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
@@ -2091,12 +2095,12 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
-msgstr ""
+msgstr "錯誤：載入參數失敗"
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:339
 msgid "Save as Text"
-msgstr ""
+msgstr "儲存為文字檔"
 
 #. file save type
 #: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:942
@@ -2106,15 +2110,15 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:152
 msgid "<Image>/Layers/Align Visible Layers..."
-msgstr "<Image>/圖層/對齊可見的圖層..."
+msgstr "<Image>/圖層/對齊可見圖層..."
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
-msgstr ""
+msgstr "對齊可見圖層：圖層數目不足。"
 
 #: plug-ins/common/align_layers.c:420
 msgid "Align Visible Layers"
-msgstr ""
+msgstr "對齊可見圖層"
 
 #.
 #. *  Parameter settings
@@ -2134,7 +2138,7 @@ msgstr ""
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
 #: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:345
-#: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
+#: plug-ins/common/png.c:1060 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:428 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:612 plug-ins/common/shift.c:389
@@ -2147,7 +2151,7 @@ msgstr ""
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
-msgstr ""
+msgstr "參數設定"
 
 #: plug-ins/common/align_layers.c:454 plug-ins/common/align_layers.c:487
 msgid "Collect"
@@ -2223,16 +2227,16 @@ msgstr ""
 msgid "Grid Size:"
 msgstr ""
 
-#: plug-ins/common/animationplay.c:264
+#: plug-ins/common/animationplay.c:272
 msgid "<Image>/Filters/Animation/Animation Playback..."
 msgstr "<Image>/濾鏡/動畫/動畫播放..."
 
-#: plug-ins/common/animationplay.c:660
+#: plug-ins/common/animationplay.c:668
 msgid "Animation Playback: "
 msgstr "動畫播放："
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:667 plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/animationplay.c:675 plug-ins/common/plugindetails.c:1013
 #: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
@@ -2240,29 +2244,29 @@ msgstr "動畫播放："
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:593
 #: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:833
-#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:227
+#: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:228
 #: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
 msgstr "關閉"
 
 #. The 'playback' half of the dialog
-#: plug-ins/common/animationplay.c:681 plug-ins/common/animationplay.c:684
+#: plug-ins/common/animationplay.c:689 plug-ins/common/animationplay.c:692
 msgid "Playback: "
 msgstr "播放："
 
-#: plug-ins/common/animationplay.c:714
+#: plug-ins/common/animationplay.c:722
 msgid "Play/Stop"
 msgstr "播放/停止"
 
-#: plug-ins/common/animationplay.c:720
+#: plug-ins/common/animationplay.c:728
 msgid "Rewind"
 msgstr "倒捲"
 
-#: plug-ins/common/animationplay.c:726
+#: plug-ins/common/animationplay.c:734
 msgid "Step"
 msgstr ""
 
-#: plug-ins/common/animationplay.c:784
+#: plug-ins/common/animationplay.c:792
 msgid "Frame %v of %u"
 msgstr "畫格 %u 之 %v"
 
@@ -2550,7 +2554,7 @@ msgstr ""
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:418
 #: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:328
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "色彩"
@@ -2808,7 +2812,7 @@ msgstr "註解："
 #.
 #: plug-ins/common/csource.c:696
 msgid "Save Comment to File"
-msgstr "儲存註解到檔案"
+msgstr "將註解儲存到檔案中"
 
 #. GLib types
 #.
@@ -2820,7 +2824,7 @@ msgstr ""
 #.
 #: plug-ins/common/csource.c:718
 msgid "Use Macros instead of Struct"
-msgstr ""
+msgstr "使用巨集而不用 Struct"
 
 #. Use RLE
 #.
@@ -2849,7 +2853,7 @@ msgstr "<Image>/濾鏡/藝術/立體主義..."
 
 #: plug-ins/common/cubism.c:276
 msgid "Cubistic Transformation"
-msgstr "立體化變換"
+msgstr "立體主義變換"
 
 #: plug-ins/common/cubism.c:298
 msgid "Cubism"
@@ -2861,11 +2865,11 @@ msgstr "使用背景顏色"
 
 #: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:654
 msgid "Tile Size:"
-msgstr ""
+msgstr "磚片尺寸："
 
 #: plug-ins/common/cubism.c:348
 msgid "Tile Saturation:"
-msgstr ""
+msgstr "磚片色彩飽和度："
 
 #: plug-ins/common/curve_bend.c:351
 msgid "Upper"
@@ -2899,9 +2903,9 @@ msgstr ""
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
 #: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5283
-#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:49
-#: plug-ins/imagemap/imap_cmd_copy_object.c:50
-#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
+#: plug-ins/gflare/gflare.c:3101 plug-ins/imagemap/imap_cmd_copy.c:52
+#: plug-ins/imagemap/imap_cmd_copy_object.c:53
+#: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:134
 msgid "Copy"
 msgstr "複製"
 
@@ -3190,15 +3194,15 @@ msgstr ""
 
 #: plug-ins/common/destripe.c:147
 msgid "<Image>/Filters/Enhance/Destripe..."
-msgstr ""
+msgstr "<Image>/濾鏡/加強品質/去條紋..."
 
 #: plug-ins/common/destripe.c:345
 msgid "Destriping..."
-msgstr ""
+msgstr "正在消去條紋..."
 
 #: plug-ins/common/destripe.c:545
 msgid "Destripe"
-msgstr ""
+msgstr "去條紋"
 
 #: plug-ins/common/destripe.c:647
 msgid "Create Histogram"
@@ -3212,23 +3216,23 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
-msgstr ""
+msgstr "寬度："
 
 #: plug-ins/common/diffraction.c:185
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr ""
+msgstr "<Image>/濾鏡/描繪/圖樣/繞射圖樣..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
-msgstr ""
+msgstr "正在產生繞射圖樣..."
 
 #: plug-ins/common/diffraction.c:529
 msgid "Diffraction Patterns"
-msgstr ""
+msgstr "繞射圖樣"
 
 #: plug-ins/common/diffraction.c:626
 msgid "Frequencies"
-msgstr ""
+msgstr "頻率"
 
 #: plug-ins/common/diffraction.c:665
 msgid "Contours"
@@ -3241,7 +3245,7 @@ msgstr ""
 #: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1014
 #: plug-ins/print/gimp_color_window.c:178
 msgid "Brightness:"
-msgstr ""
+msgstr "亮度："
 
 #: plug-ins/common/diffraction.c:726
 msgid "Scattering:"
@@ -3316,7 +3320,7 @@ msgstr "邊緣偵測"
 
 #: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:821
 msgid "Amount:"
-msgstr ""
+msgstr "程度："
 
 #: plug-ins/common/emboss.c:167
 msgid "<Image>/Filters/Distorts/Emboss..."
@@ -3382,23 +3386,23 @@ msgstr "色彩交換"
 
 #: plug-ins/common/exchange.c:369
 msgid "Preview: Click Inside to Pick \"From Color\""
-msgstr ""
+msgstr "預覽：請按裡面來選擇「來源顏色」"
 
 #: plug-ins/common/exchange.c:400
 msgid "To Color"
-msgstr "到顏色"
+msgstr "目標顏色"
 
 #: plug-ins/common/exchange.c:400
 msgid "From Color"
-msgstr "從顏色"
+msgstr "來源顏色"
 
 #: plug-ins/common/exchange.c:413
 msgid "Color Exchange: To Color"
-msgstr "色彩交換：到顏色"
+msgstr "色彩交換：目標顏色"
 
 #: plug-ins/common/exchange.c:414
 msgid "Color Exchange: From Color"
-msgstr "色彩交換：從顏色"
+msgstr "色彩交換：來源顏色"
 
 #: plug-ins/common/exchange.c:454
 msgid "Red Threshold:"
@@ -3446,38 +3450,38 @@ msgid "Add >>"
 msgstr "加入 >>"
 
 #: plug-ins/common/film.c:1142 plug-ins/common/iwarp.c:1037
-#: plug-ins/imagemap/imap_polygon.c:464
+#: plug-ins/imagemap/imap_polygon.c:466
 msgid "Remove"
 msgstr "移除"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1177 plug-ins/common/film.c:1210
 msgid "Film"
-msgstr ""
+msgstr "影片"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1219
 msgid "Fit Height to Images"
-msgstr ""
+msgstr "縮放成圖像的高度"
 
 #. Film color
 #: plug-ins/common/film.c:1251
 msgid "Select Film Color"
-msgstr ""
+msgstr "選擇影片顏色"
 
 #: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:500 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
-msgstr ""
+msgstr "顏色："
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1262
 msgid "Numbering"
-msgstr ""
+msgstr "編號"
 
 #: plug-ins/common/film.c:1283
 msgid "Start Index:"
-msgstr ""
+msgstr "起始索引："
 
 #: plug-ins/common/film.c:1291
 msgid "Font:"
@@ -3486,7 +3490,7 @@ msgstr "字型："
 #. Numbering color
 #: plug-ins/common/film.c:1295
 msgid "Select Number Color"
-msgstr ""
+msgstr "選擇編號的顏色"
 
 #: plug-ins/common/film.c:1305
 msgid "At Bottom"
@@ -3603,7 +3607,7 @@ msgstr "Y2："
 
 #: plug-ins/common/gauss_iir.c:184
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr "<Image>/濾鏡/模糊/高斯模糊化（IIR）..."
+msgstr "<Image>/濾鏡/模糊/高斯模糊（IIR）..."
 
 #: plug-ins/common/gauss_iir.c:257
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -3612,7 +3616,7 @@ msgstr "高斯_IIR：必須指定是水平還是垂直模式（或兩者皆是）"
 #: plug-ins/common/gauss_iir.c:307 plug-ins/common/gauss_iir.c:361
 #: plug-ins/common/gauss_iir.c:444
 msgid "IIR Gaussian Blur"
-msgstr "IIR 高斯模糊化"
+msgstr "IIR 高斯模糊"
 
 #: plug-ins/common/gauss_iir.c:387 plug-ins/common/gauss_rle.c:382
 msgid "Blur Horizontally"
@@ -3625,12 +3629,12 @@ msgstr "垂直模糊化"
 #: plug-ins/common/gauss_iir.c:406 plug-ins/common/gauss_rle.c:401
 #: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
-msgstr "模糊化半徑："
+msgstr "模糊半徑："
 
 #. parameter settings
 #: plug-ins/common/gauss_iir.c:461 plug-ins/common/gauss_rle.c:456
 msgid "Blur Radius"
-msgstr "模糊化半徑"
+msgstr "模糊半徑"
 
 #: plug-ins/common/gauss_iir.c:476 plug-ins/common/gauss_rle.c:471
 #: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
@@ -3644,7 +3648,7 @@ msgstr "垂直："
 
 #: plug-ins/common/gauss_rle.c:179
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr "<Image>/濾鏡/模糊/高斯模糊化（RLE）..."
+msgstr "<Image>/濾鏡/模糊/高斯模糊（RLE）..."
 
 #: plug-ins/common/gauss_rle.c:251
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
@@ -3653,7 +3657,7 @@ msgstr "高斯_RLE：必須指定是水平還是垂直模式（或兩者皆是）"
 #: plug-ins/common/gauss_rle.c:302 plug-ins/common/gauss_rle.c:356
 #: plug-ins/common/gauss_rle.c:439
 msgid "RLE Gaussian Blur"
-msgstr "RLE 高斯模糊化"
+msgstr "RLE 高斯模糊"
 
 #: plug-ins/common/gbr.c:347
 #, c-format
@@ -3684,7 +3688,7 @@ msgstr "間隔："
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
 #: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:373
-#: plug-ins/imagemap/imap_settings.c:93
+#: plug-ins/imagemap/imap_settings.c:94
 msgid "Description:"
 msgstr "描述："
 
@@ -3706,8 +3710,8 @@ msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"一個不太過時的 Adam D. Moss 作品 / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+"一個不太過時的 Adam D. Moss 作品 / adam@gimp.org / adam@foxbox.org / 1998-"
+"2000"
 
 #: plug-ins/common/gee_zoom.c:139
 msgid "<Image>/Filters/Toys/Gee-Zoom"
@@ -3722,8 +3726,7 @@ msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"一個已過時的 Adam D. Moss 作品 / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+"一個已過時的 Adam D. Moss 作品 / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gicon.c:436
 msgid "Save as GIcon"
@@ -3922,11 +3925,11 @@ msgstr "玻璃磚"
 
 #: plug-ins/common/glasstile.c:307
 msgid "Tile Width:"
-msgstr "磚塊寬度："
+msgstr "磚片寬度："
 
 #: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
 msgid "Tile Height:"
-msgstr "磚塊高度："
+msgstr "磚片高度："
 
 #: plug-ins/common/gqbist.c:338
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
@@ -3965,8 +3968,8 @@ msgid "Drawing Grid..."
 msgstr "正在繪畫格線..."
 
 #: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
-#: plug-ins/imagemap/imap_toolbar.c:163
+#: plug-ins/imagemap/imap_menu.c:403 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/imagemap/imap_toolbar.c:165
 msgid "Grid"
 msgstr "格線"
 
@@ -4003,7 +4006,7 @@ msgstr "交點顏色"
 
 #: plug-ins/common/gtm.c:370
 msgid "GIMP Table Magic"
-msgstr "GIMP 表格魔術"
+msgstr "GIMP 表格魔術（GTM）"
 
 #: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
 msgid "Warning"
@@ -4036,8 +4039,8 @@ msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
-"若選上此選項 GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，"
-"而非只有表格部份的 HTML。"
+"若選上此選項 GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，而非只有"
+"表格部份的 HTML。"
 
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:447
@@ -4053,6 +4056,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
+"若選上此選項，GTM 會將任何成矩型區域而且顏色相同的格子合成一個有 ROWSPAN 和 "
+"COLSPAN 值的大型方格。"
 
 #: plug-ins/common/gtm.c:470
 msgid "Compress TD tags"
@@ -4064,6 +4069,8 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
+"若選上此選項，GTM 將不會在 TD 標籤及格子內容之間留下任何空白字元。這只在需要"
+"以像素的程度控制位置才有需要使用。"
 
 #: plug-ins/common/gtm.c:484
 msgid "Caption"
@@ -4071,7 +4078,7 @@ msgstr "標題"
 
 #: plug-ins/common/gtm.c:492
 msgid "Check if you would like to have the table captioned."
-msgstr "若要表格有標題文字請選取此選項。"
+msgstr "若表格要有標題請選取此選項。"
 
 #: plug-ins/common/gtm.c:505
 msgid "The text for the table caption."
@@ -4083,7 +4090,7 @@ msgstr "格子內容："
 
 #: plug-ins/common/gtm.c:520
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "要放到格內的文字。"
 
 #. HTML Table Options
 #: plug-ins/common/gtm.c:526
@@ -4096,39 +4103,39 @@ msgstr "邊框："
 
 #: plug-ins/common/gtm.c:545
 msgid "The number of pixels in the table border."
-msgstr ""
+msgstr "表格邊框的寬度（像素）。"
 
 #: plug-ins/common/gtm.c:558
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
+msgstr "表格格子的寬度。可以是數字或是百分比。"
 
 #: plug-ins/common/gtm.c:572
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr ""
+msgstr "表格格子的高度。可以是數字或是百分比。"
 
 #: plug-ins/common/gtm.c:579
 msgid "Cell-Padding:"
-msgstr ""
+msgstr "格子留邊："
 
 #: plug-ins/common/gtm.c:585
 msgid "The amount of cellpadding."
-msgstr ""
+msgstr "格子留邊的寬度。"
 
 #: plug-ins/common/gtm.c:590
 msgid "Cell-Spacing:"
-msgstr "格字間隔："
+msgstr "格子間隔："
 
 #: plug-ins/common/gtm.c:596
 msgid "The amount of cellspacing."
-msgstr "格字間隔的距離。"
+msgstr "格子間隔的距離。"
 
 #: plug-ins/common/guillotine.c:78
 msgid "<Image>/Image/Transforms/Guillotine"
-msgstr ""
+msgstr "<Image>/圖像/變換/切紙機"
 
 #: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
-msgstr ""
+msgstr "切紙機..."
 
 #: plug-ins/common/gz.c:321
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
@@ -4140,11 +4147,11 @@ msgstr "gz：沒有合理的延伸檔名，嘗試自動偵測檔案類型\n"
 
 #: plug-ins/common/hot.c:234
 msgid "<Image>/Filters/Colors/Hot..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/Hot..."
 
 #: plug-ins/common/hot.c:384 plug-ins/common/hot.c:584
 msgid "Hot"
-msgstr ""
+msgstr "Hot"
 
 #: plug-ins/common/hot.c:609
 msgid "Create New Layer"
@@ -4232,8 +4239,8 @@ msgid "Deform Mode"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:1034 plug-ins/ifscompose/ifscompose.c:873
-#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:80
-#: plug-ins/imagemap/imap_cmd_object_move.c:53
+#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:83
+#: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr ""
 
@@ -4401,15 +4408,15 @@ msgstr "最優化"
 
 #: plug-ins/common/jpeg.c:1751
 msgid "Progressive"
-msgstr ""
+msgstr "漸進式"
 
 #: plug-ins/common/jpeg.c:1797
 msgid "Subsampling:"
-msgstr ""
+msgstr "減低取樣率："
 
 #: plug-ins/common/jpeg.c:1806
 msgid "Fast Integer"
-msgstr ""
+msgstr "快速整數"
 
 #: plug-ins/common/jpeg.c:1807
 msgid "Integer"
@@ -4421,7 +4428,7 @@ msgstr "浮點數"
 
 #: plug-ins/common/jpeg.c:1812
 msgid "DCT method (Speed/quality tradeoff):"
-msgstr ""
+msgstr "DCT 壓縮方法（速度與品質之間的平衡）："
 
 #: plug-ins/common/jpeg.c:1820
 msgid "Image comments"
@@ -4532,7 +4539,7 @@ msgid "Subject:"
 msgstr "標題："
 
 #: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:79
+#: plug-ins/imagemap/imap_settings.c:80
 msgid "Filename:"
 msgstr "檔案名稱："
 
@@ -4551,7 +4558,7 @@ msgstr "MIME"
 
 #: plug-ins/common/mail.c:692
 msgid "mail: some sort of error with the file extension or lack thereof \n"
-msgstr ""
+msgstr "電郵：延伸檔名有誤或是沒有延伸檔名 \n"
 
 #: plug-ins/common/mapcolor.c:139
 msgid "First Source Color"
@@ -4575,13 +4582,15 @@ msgstr "<Image>/濾鏡/色彩/映射/調整前景背景"
 
 #: plug-ins/common/mapcolor.c:361
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/映射/色彩範圍映射..."
 
 #: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
+"色彩映射 / 調整前景背景：\n"
+"不適用於灰階或索引色圖像"
 
 #: plug-ins/common/mapcolor.c:434
 msgid "Adjusting Foreground/Background"
@@ -4593,15 +4602,15 @@ msgstr ""
 
 #: plug-ins/common/mapcolor.c:553
 msgid "Map Color Range"
-msgstr ""
+msgstr "映射色彩範圍"
 
 #: plug-ins/common/mapcolor.c:604
 msgid "Source color range"
-msgstr ""
+msgstr "來源色彩範圍"
 
 #: plug-ins/common/mapcolor.c:605
 msgid "Destination color range"
-msgstr ""
+msgstr "目的色彩範圍"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:663
 #: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
@@ -4825,7 +4834,7 @@ msgstr "超新星"
 
 #: plug-ins/common/nova.c:493
 msgid "SuperNova Color Picker"
-msgstr ""
+msgstr "超新星的顏色選擇器"
 
 #: plug-ins/common/nova.c:516
 msgid "Spokes:"
@@ -4838,7 +4847,7 @@ msgstr "隨機色相："
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:596
 msgid "Center of SuperNova"
-msgstr "超新星中心位置"
+msgstr "超新星的中心點"
 
 #: plug-ins/common/oilify.c:119
 msgid "<Image>/Filters/Artistic/Oilify..."
@@ -4990,55 +4999,55 @@ msgstr "暫時性的程序"
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "<Toolbox>/擴展/增效模組細節..."
 
-#: plug-ins/common/plugindetails.c:219
+#: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
 msgstr "細節 <<"
 
-#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1120
+#: plug-ins/common/plugindetails.c:234 plug-ins/common/plugindetails.c:1125
 msgid "Details >>"
 msgstr "細節 >>"
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:316
+#: plug-ins/common/plugindetails.c:320
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr ""
 
 #. menu path
-#: plug-ins/common/plugindetails.c:334
+#: plug-ins/common/plugindetails.c:338
 msgid "Menu Path:"
 msgstr "選單路徑："
 
 #. show the name
-#: plug-ins/common/plugindetails.c:355
+#: plug-ins/common/plugindetails.c:359
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
 #: plug-ins/gap/gap_dbbrowser_utils.c:329
 msgid "Name:"
 msgstr "名稱："
 
 #. show the description
-#: plug-ins/common/plugindetails.c:377
+#: plug-ins/common/plugindetails.c:381
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #: plug-ins/gap/gap_dbbrowser_utils.c:346
 msgid "Blurb:"
 msgstr "簡介："
 
-#: plug-ins/common/plugindetails.c:399
+#: plug-ins/common/plugindetails.c:403
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 #: plug-ins/gap/gap_dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "說明："
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:447 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "類型："
 
-#: plug-ins/common/plugindetails.c:1002
+#: plug-ins/common/plugindetails.c:1006
 msgid "Plugin Descriptions"
 msgstr "增效模組描述"
 
-#: plug-ins/common/plugindetails.c:1007
+#: plug-ins/common/plugindetails.c:1011
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
 #: plug-ins/gap/gap_dbbrowser_utils.c:179
@@ -5046,36 +5055,36 @@ msgid "Search by Name"
 msgstr "依名稱搜尋"
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1044
+#: plug-ins/common/plugindetails.c:1049
 msgid "Name"
 msgstr "名稱"
 
-#: plug-ins/common/plugindetails.c:1045 plug-ins/common/plugindetails.c:1073
+#: plug-ins/common/plugindetails.c:1050 plug-ins/common/plugindetails.c:1078
 msgid "Ins Date"
 msgstr "安裝日期"
 
-#: plug-ins/common/plugindetails.c:1046
+#: plug-ins/common/plugindetails.c:1051
 msgid "Menu Path"
 msgstr "選單路徑"
 
-#: plug-ins/common/plugindetails.c:1047 plug-ins/common/plugindetails.c:1074
+#: plug-ins/common/plugindetails.c:1052 plug-ins/common/plugindetails.c:1079
 msgid "Image Types"
 msgstr "圖像類型"
 
-#: plug-ins/common/plugindetails.c:1065
+#: plug-ins/common/plugindetails.c:1070
 msgid "List View"
 msgstr "列表檢視模式"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1072
+#: plug-ins/common/plugindetails.c:1077
 msgid "Menu Path/Name"
 msgstr "選單路徑/名稱"
 
-#: plug-ins/common/plugindetails.c:1089
+#: plug-ins/common/plugindetails.c:1094
 msgid "Tree View"
 msgstr "樹狀檢視模式"
 
-#: plug-ins/common/plugindetails.c:1109
+#: plug-ins/common/plugindetails.c:1114
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
 #: plug-ins/gap/gap_dbbrowser_utils.c:142
 msgid "Search:"
@@ -5100,7 +5109,7 @@ msgstr ""
 "%s\n"
 "PNG 不明的色系"
 
-#: plug-ins/common/png.c:758
+#: plug-ins/common/png.c:760
 #, c-format
 msgid ""
 "%s\n"
@@ -5109,7 +5118,7 @@ msgstr ""
 "%s\n"
 "PNG 錯誤。無法儲存圖像"
 
-#: plug-ins/common/png.c:768
+#: plug-ins/common/png.c:770
 #, c-format
 msgid ""
 "%s\n"
@@ -5118,35 +5127,35 @@ msgstr ""
 "%s\n"
 "無法建立檔案"
 
-#: plug-ins/common/png.c:1040
+#: plug-ins/common/png.c:1044
 msgid "Save as PNG"
 msgstr "儲存為 PNG"
 
-#: plug-ins/common/png.c:1069
+#: plug-ins/common/png.c:1073
 msgid "Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1078
+#: plug-ins/common/png.c:1082
 msgid "Save background color"
 msgstr "儲存背景顏色"
 
-#: plug-ins/common/png.c:1087
+#: plug-ins/common/png.c:1091
 msgid "Save gamma"
 msgstr "儲存 gamma 值"
 
-#: plug-ins/common/png.c:1096
+#: plug-ins/common/png.c:1100
 msgid "Save layer offset"
 msgstr "儲存圖層偏移量"
 
-#: plug-ins/common/png.c:1105
+#: plug-ins/common/png.c:1109
 msgid "Save resolution"
 msgstr "儲存解析度"
 
-#: plug-ins/common/png.c:1114
+#: plug-ins/common/png.c:1118
 msgid "Save creation time"
 msgstr "儲存建立檔案時間"
 
-#: plug-ins/common/png.c:1131
+#: plug-ins/common/png.c:1135
 msgid "Compression Level:"
 msgstr "壓縮程度："
 
@@ -5868,15 +5877,15 @@ msgstr ""
 #. Tilable
 #: plug-ins/common/snoise.c:566
 msgid "Tilable"
-msgstr ""
+msgstr "可鋪排"
 
 #: plug-ins/common/snoise.c:577
 msgid "X Size:"
-msgstr ""
+msgstr "X 尺寸："
 
 #: plug-ins/common/snoise.c:587
 msgid "Y Size:"
-msgstr ""
+msgstr "Y 尺寸："
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
@@ -5888,11 +5897,11 @@ msgstr "Sobel 邊緣偵測"
 
 #: plug-ins/common/sobel.c:272
 msgid "Sobel Horizontally"
-msgstr ""
+msgstr "水平 Sobel"
 
 #: plug-ins/common/sobel.c:280
 msgid "Sobel Vertically"
-msgstr ""
+msgstr "垂直 Sobel"
 
 #: plug-ins/common/sobel.c:288
 msgid "Keep Sign of Result (one Direction only)"
@@ -6346,16 +6355,16 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"此欄是數值輸入欄位的提示。此指定了輸入欄位應提供多少個小數點，使得準確度"
-"大致上等於「英吋」輸入欄位的小數點後兩位。"
+"此欄是數值輸入欄位的提示。此指定了輸入欄位應提供多少個小數點，使得準確度大致"
+"上等於「英吋」輸入欄位的小數點後兩位。"
 
 #: plug-ins/common/uniteditor.c:548
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
-"此單位的符號（如果有的話，例如英吋的 \"'\"）。如果沒有該單位的相應符號"
-"則使用縮寫。"
+"此單位的符號（如果有的話，例如英吋的 \"'\"）。如果沒有該單位的相應符號則使用"
+"縮寫。"
 
 #: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
@@ -7096,7 +7105,7 @@ msgstr "輸出參數："
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/gap/gap_dbbrowser_utils.c:501 plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:501 plug-ins/imagemap/imap_settings.c:90
 msgid "Author:"
 msgstr "作者："
 
@@ -7444,7 +7453,7 @@ msgid "Press Button"
 msgstr ""
 
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
-#: plug-ins/imagemap/imap_cmd_select.c:49
+#: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:130
 msgid "Select"
 msgstr ""
 
@@ -7479,29 +7488,29 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
-msgstr ""
+msgstr "<Image>/視像/分解視像檔為畫格"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr ""
+msgstr "<Toolbox>/視像/分解視像檔為畫格"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Image>/視像/分解視像檔為畫格/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Toolbox>/視像/分解視像檔為畫格/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
-msgstr ""
+msgstr "覆寫畫格"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
 #: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
-msgstr ""
+msgstr "覆寫全部"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
 #: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
@@ -7510,11 +7519,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
 msgid "File already exists"
-msgstr ""
+msgstr "檔案已經存在"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:438
 msgid "Decoding MPEG Movie..."
-msgstr ""
+msgstr "正在將 MPEG 視像檔解碼..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:644
 msgid ""
@@ -7534,18 +7543,20 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
 msgid "Framenames:"
-msgstr ""
+msgstr "畫格名稱："
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:674
 msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and .xcf is added)"
 msgstr ""
+"要寫入磁碟的動畫畫格基本名稱\n"
+"（會自動加入畫格編號及 .xcf）"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#: plug-ins/imagemap/imap_toolbar.c:110
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
 msgid "Open the 1st one of the extracted frames"
@@ -7557,45 +7568,47 @@ msgid ""
 "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
 "Before you proceed, you should save all open images."
 msgstr ""
+"\n"
+"警告：請勿嘗試分解任何不是 MPEG1 視像檔的檔案。\n"
+"進行之前，你應該先儲存任何仍開啟的圖像。"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689
 msgid "Split MPEG1 Video to Frames"
-msgstr ""
+msgstr "將 MPEG1 視像檔分解為畫格"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
 #: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
-msgstr ""
+msgstr "選擇畫格範圍"
 
 #: plug-ins/gap/gap_decode_xanim.c:114
 msgid "Conditions to run the xanim based video split"
-msgstr ""
+msgstr "執行以 xanim 為基礎的分解視像檔程序的先決條件"
 
 #: plug-ins/gap/gap_decode_xanim.c:122
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr ""
+msgstr "１）你必須安裝 xanim 2.80.0 支援匯出檔案的版本"
 
 #: plug-ins/gap/gap_decode_xanim.c:126
 msgid "    must be installed somewhere in your PATH"
-msgstr ""
+msgstr "　　（即 loki 版本）而且 PATH 中有該執行檔路徑"
 
 #: plug-ins/gap/gap_decode_xanim.c:130
 msgid "    you can get xanim exporting edition at"
-msgstr ""
+msgstr "　　你可以在以下位置取得 xanim 支援匯出檔案的版本"
 
 #: plug-ins/gap/gap_decode_xanim.c:146
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
-msgstr ""
-"2.）如果 xanim exporting 版本不在 PATH 或者檔名不是稱為 xanim，"
+msgstr "２）如果 xanim 支援匯出檔案的版本不在 PATH 或者檔名"
 
 #: plug-ins/gap/gap_decode_xanim.c:150
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr "    就必須要設定環境變數 GAP_XANIM_PROG "
+msgstr "　　不是稱為 xanim，就必須要設定環境變數 GAP_XANIM_PROG "
 
 #: plug-ins/gap/gap_decode_xanim.c:154
 msgid "    to your xanim exporting program and restart gimp"
-msgstr "    到 xanim exporting 程式並重新啟動 gimp"
+msgstr "　　為支援匯出檔案的 xanim 程式並重新啟動 gimp"
 
 #: plug-ins/gap/gap_decode_xanim.c:162
 msgid "An ERROR occured while trying to call xanim:"
@@ -7622,6 +7635,8 @@ msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
 msgstr ""
+"要寫入磁碟的動畫畫格基本名稱\n"
+"（會自動加入畫格編號及延伸檔名）"
 
 #: plug-ins/gap/gap_decode_xanim.c:252
 msgid "Format"
@@ -7660,6 +7675,8 @@ msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
+"最後 Jpeg 畫格的品質\n"
+"（若使用其它格式會忽略此選項）"
 
 #: plug-ins/gap/gap_decode_xanim.c:288
 msgid "Run asynchronously"
@@ -7683,7 +7700,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:297
 msgid "Split any Xanim readable Video to Frames"
-msgstr ""
+msgstr "將任何 Xanim 支援的視像檔分解為畫格"
 
 #: plug-ins/gap/gap_decode_xanim.c:540
 #, c-format
@@ -7735,7 +7752,7 @@ msgstr ""
 #: plug-ins/gap/gap_decode_xanim.c:1025
 #, c-format
 msgid "videofile %s not existent or empty\n"
-msgstr ""
+msgstr "視像檔「%s」不存在或是空白的\n"
 
 #: plug-ins/gap/gap_decode_xanim.c:1078
 #, c-format
@@ -7743,6 +7760,8 @@ msgid ""
 "could not create %s directory\n"
 "(that is required for xanim frame export)"
 msgstr ""
+"無法建立 %s 目錄\n"
+"（作為 xanim 匯出畫格之用）"
 
 #: plug-ins/gap/gap_decode_xanim.c:1089
 msgid "extracting frames..."
@@ -7773,12 +7792,12 @@ msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:126
 msgid "backup to file"
-msgstr ""
+msgstr "備份至檔案"
 
 #. pixel
 #: plug-ins/gap/gap_filter_foreach.c:128
 msgid "Make backup of the image after each step"
-msgstr ""
+msgstr "每一步後都製作圖像的備份檔"
 
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
 msgid "Continue"
@@ -7825,11 +7844,11 @@ msgstr "<Image>/濾鏡/過濾所有圖層..."
 
 #: plug-ins/gap/gap_frontends_main.c:128
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Image>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
 
 #: plug-ins/gap/gap_frontends_main.c:140
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Toolbox>/視像/分解視像檔為畫格/任何 XANIM 支援的檔案..."
 
 #: plug-ins/gap/gap_frontends_main.c:152
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -7856,6 +7875,10 @@ msgid ""
 "that end in numbers like _0001.xcf.\n"
 "==> Rename your image, then try again."
 msgstr ""
+"操作已取消。\n"
+"GAP 增效模組只能使用類似 _0001.xcf 般\n"
+"以數字作結尾的檔案名稱。\n"
+"─→請更改圖像檔名，並再試一次。"
 
 #: plug-ins/gap/gap_lib.c:1020
 msgid ""
@@ -7863,14 +7886,16 @@ msgid ""
 "Save Operations may result\n"
 "in loss of layer information."
 msgstr ""
+"你所使用的檔案格式不是 xcf。\n"
+"儲存檔案可能會引致圖層資料遺失。"
 
 #: plug-ins/gap/gap_lib.c:1036
 msgid "Save Flattened"
-msgstr ""
+msgstr "平面化後再儲存"
 
 #: plug-ins/gap/gap_lib.c:1038
 msgid "Save As Is"
-msgstr ""
+msgstr "強迫儲存"
 
 #: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
 #: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
@@ -8098,19 +8123,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "選擇所有名稱與樣式一樣的圖層"
 
 #: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "選擇所有名稱開始部份與樣式一樣的圖層"
 
 #: plug-ins/gap/gap_mod_layer.c:94
 msgid "Select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "選擇所有名稱結尾部份與樣式一樣的圖層"
 
 #: plug-ins/gap/gap_mod_layer.c:95
 msgid "Select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "選擇所有名稱含有樣式的圖層"
 
 #: plug-ins/gap/gap_mod_layer.c:96
 msgid ""
@@ -8134,7 +8159,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:98
 msgid "Select all visible Layers"
-msgstr "選擇所有可見的圖層"
+msgstr "選擇所有可見圖層"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:102
@@ -8203,7 +8228,7 @@ msgstr "從畫格："
 #: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
-msgstr ""
+msgstr "第一個處理的畫格"
 
 #: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
@@ -8212,7 +8237,7 @@ msgstr "到畫格："
 #: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
-msgstr ""
+msgstr "最後一個處理的畫格"
 
 #: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
@@ -8290,7 +8315,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:891
 msgid "Modifying Frames/Layer(s)..."
-msgstr ""
+msgstr "修改畫格/圖層..."
 
 #: plug-ins/gap/gap_mod_layer.c:972
 msgid "No selected Layer in start frame"
@@ -8585,7 +8610,7 @@ msgstr ""
 #. Source Layer menu
 #: plug-ins/gap/gap_mov_dialog.c:1669
 msgid "Source Image/Layer:"
-msgstr ""
+msgstr "來源圖像/圖層："
 
 #: plug-ins/gap/gap_mov_dialog.c:1679
 msgid "Source Object to insert into Frame Range"
@@ -8594,7 +8619,7 @@ msgstr ""
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1694
 msgid "Mode:"
-msgstr ""
+msgstr "模式："
 
 #: plug-ins/gap/gap_mov_dialog.c:1703
 msgid "Paintmode"
@@ -8627,12 +8652,12 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1846
 msgid "X Coordinate"
-msgstr ""
+msgstr "X 座標"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1864
 msgid "Y Coordinate"
-msgstr ""
+msgstr "Y 座標"
 
 #. label text
 #. scalesize spinsize
@@ -8644,7 +8669,7 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1881
 msgid "Scale Source Layer's Width in percent"
-msgstr ""
+msgstr "縮放來源圖層寬度（百分比）"
 
 #. label text
 #. scalesize spinsize
@@ -8656,7 +8681,7 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1898
 msgid "Scale SrcLayer's Height in percent"
-msgstr ""
+msgstr "縮放來源圖層高度（百分比）"
 
 #. label text
 #. scalesize spinsize
@@ -8668,13 +8693,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1915
 msgid "SrcLayer's Opacity in percent"
-msgstr ""
+msgstr "來源圖層不透明度（百分比）"
 
 #. Rotation
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1924
 msgid "Rotate:"
-msgstr ""
+msgstr "旋轉："
 
 #. label text
 #. scalesize spinsize
@@ -8686,7 +8711,7 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1932
 msgid "Rotate SrcLayer (in degree)"
-msgstr ""
+msgstr "旋轉圖層（角度）"
 
 #. Keyframe
 #. table col, row
@@ -8721,7 +8746,7 @@ msgstr ""
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:2038
 msgid "Show Path"
-msgstr ""
+msgstr "顯示路徑"
 
 #: plug-ins/gap/gap_mov_dialog.c:2045
 msgid ""
@@ -8730,8 +8755,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
-#: plug-ins/imagemap/imap_cmd_insert_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:683
+#: plug-ins/imagemap/imap_cmd_insert_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:685
 msgid "Insert Point"
 msgstr ""
 
@@ -8742,8 +8767,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2067
-#: plug-ins/imagemap/imap_cmd_delete_point.c:57
-#: plug-ins/imagemap/imap_polygon.c:669
+#: plug-ins/imagemap/imap_cmd_delete_point.c:60
+#: plug-ins/imagemap/imap_polygon.c:671
 msgid "Delete Point"
 msgstr ""
 
@@ -8753,35 +8778,35 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2081
 msgid "Prev Point"
-msgstr ""
+msgstr "上一點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2089
 msgid "Show Previous Controlpoint"
-msgstr ""
+msgstr "顯示上一個控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2093
 msgid "Next Point"
-msgstr ""
+msgstr "下一點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2101
 msgid "Show Next Controlpoint"
-msgstr ""
+msgstr "顯示下一個控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2107
 msgid "First Point"
-msgstr ""
+msgstr "第一點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2115
 msgid "Show First Controlpoint"
-msgstr ""
+msgstr "顯示第一個控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2119
 msgid "Last Point"
-msgstr ""
+msgstr "最後一點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2127
 msgid "Show Last Controlpoint"
-msgstr ""
+msgstr "顯示最後一個控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Clear Point"
@@ -8817,7 +8842,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2186
 msgid "Delete all Controlpoints"
-msgstr ""
+msgstr "刪除所有控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2193
 msgid "Load Points"
@@ -8825,7 +8850,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2201
 msgid "Load Controlpoints from file"
-msgstr ""
+msgstr "由檔案載入控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2205
 msgid "Save Points"
@@ -8833,7 +8858,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2213
 msgid "Save Controlpoints to file"
-msgstr ""
+msgstr "將控制點存檔"
 
 #: plug-ins/gap/gap_mov_dialog.c:2671
 msgid ""
@@ -8851,7 +8876,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2684
 msgid "Errors:"
-msgstr ""
+msgstr "錯誤："
 
 #: plug-ins/gap/gap_mov_exec.c:444
 msgid ""
@@ -9231,33 +9256,33 @@ msgstr ""
 
 #: plug-ins/gap/gap_navigator_dialog.c:405
 msgid "Goto last Frame"
-msgstr "到最後一個畫格"
+msgstr "移至最後一個畫格"
 
 #: plug-ins/gap/gap_navigator_dialog.c:463
 msgid "<Image>/Video/VCR Navigator..."
-msgstr ""
+msgstr "<Image>/視像/錄影控制器..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:526
 msgid "Cant open two or more Video Navigator Windows."
-msgstr ""
+msgstr "不可開啟兩個或更多的錄影控制器視窗。"
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2932
-#: plug-ins/imagemap/imap_cmd_cut.c:53
-#: plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: plug-ins/imagemap/imap_menu.c:284 plug-ins/imagemap/imap_toolbar.c:129
+#: plug-ins/imagemap/imap_cmd_cut.c:56
+#: plug-ins/imagemap/imap_cmd_cut_object.c:54
+#: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Cut"
 msgstr "剪下"
 
 #. menu_item paste before
 #: plug-ins/gap/gap_navigator_dialog.c:2942
 msgid "Paste before"
-msgstr ""
+msgstr "貼到前一格"
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2952
 msgid "Paste after"
-msgstr ""
+msgstr "貼到後一格"
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2962
@@ -9284,7 +9309,7 @@ msgstr ""
 #. The main shell
 #: plug-ins/gap/gap_navigator_dialog.c:3129
 msgid "Video Navigator"
-msgstr ""
+msgstr "錄影控制器"
 
 #: plug-ins/gap/gap_range_ops.c:120
 msgid "New Width:"
@@ -9318,7 +9343,7 @@ msgstr ""
 #: plug-ins/gap/gap_range_ops.c:170
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr "重設尺寸（原來尺寸 %d×%d）"
+msgstr "重定尺寸（原來尺寸 %d×%d）"
 
 #: plug-ins/gap/gap_range_ops.c:176
 msgid "Scale AnimFrames (all)"
@@ -9755,7 +9780,7 @@ msgstr "字元：%c，%d，0x%02x"
 msgid "Selected char:"
 msgstr ""
 
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
 msgid "Insert"
 msgstr "插入"
 
@@ -9767,7 +9792,7 @@ msgstr "在游標處插入所選的字元"
 #: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:267
 #: plug-ins/imagemap/imap_circle.c:273 plug-ins/imagemap/imap_circle.c:279
 #: plug-ins/imagemap/imap_grid.c:206 plug-ins/imagemap/imap_grid.c:212
-#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
+#: plug-ins/imagemap/imap_polygon.c:439 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_rectangle.c:383
 #: plug-ins/imagemap/imap_rectangle.c:389
 #: plug-ins/imagemap/imap_rectangle.c:395
@@ -9787,8 +9812,7 @@ msgstr "<Image>/濾鏡/描繪/動態文字..."
 msgid ""
 " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
 "new layer creation."
-msgstr ""
-"目前的圖層不是 GDynText 圖層，或是它沒有透明色版。強制建立新的圖層。"
+msgstr "目前的圖層不是 GDynText 圖層，或是它沒有透明色版。強制建立新的圖層。"
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:436
 msgid "GDynText Layer"
@@ -9997,8 +10021,8 @@ msgstr ""
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1914 plug-ins/gfig/gfig.c:5296
-#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:277
-#: plug-ins/imagemap/imap_selection.c:171
+#: plug-ins/gflare/gflare.c:3100 plug-ins/imagemap/imap_menu.c:280
+#: plug-ins/imagemap/imap_selection.c:173 plug-ins/imagemap/imap_tools.c:150
 msgid "Edit"
 msgstr "編輯"
 
@@ -10163,7 +10187,7 @@ msgid "Draw on:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:358
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:360
 #: plug-ins/rcm/rcm_dialog.c:668
 msgid "Selection"
 msgstr ""
@@ -10310,8 +10334,9 @@ msgstr "顯示圖像"
 msgid "Reload Image"
 msgstr "重新載入圖像"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:384
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:387
 #: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:64
+#: plug-ins/imagemap/imap_tools.c:135
 msgid "Rectangle"
 msgstr "矩形"
 
@@ -10421,13 +10446,13 @@ msgstr "完成"
 msgid "Paint"
 msgstr "繪畫"
 
-#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap_menu.c:298
+#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:53
+#: plug-ins/imagemap/imap_menu.c:301
 msgid "Clear"
 msgstr "清除"
 
 #: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1205
-#: plug-ins/imagemap/imap_toolbar.c:120
+#: plug-ins/imagemap/imap_toolbar.c:122
 msgid "Undo"
 msgstr "復原"
 
@@ -10702,7 +10727,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:468
 msgid "General"
 msgstr "一般"
 
@@ -10764,12 +10789,14 @@ msgid "Shape of Second Flares"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:62
-#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_menu.c:390 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/imagemap/imap_tools.c:140
 msgid "Circle"
 msgstr "圓形"
 
-#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:389
-#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_polygon.c:71 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Polygon"
 msgstr "多邊形"
 
@@ -10931,7 +10958,7 @@ msgstr ""
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr ""
+msgstr "可鋪排"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
@@ -11314,7 +11341,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
-#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:448
 msgid "Update"
 msgstr "更新"
 
@@ -11453,8 +11480,8 @@ msgstr "目錄"
 msgid "Index"
 msgstr "索引"
 
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
-#: plug-ins/imagemap/imap_settings.c:149
+#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:512
+#: plug-ins/imagemap/imap_settings.c:150
 msgid "<Untitled>"
 msgstr "<無標題>"
 
@@ -11587,8 +11614,8 @@ msgid "Relative Probability:"
 msgstr "相對機率："
 
 #: plug-ins/ifscompose/ifscompose.c:1181
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
-#: plug-ins/imagemap/imap_menu.c:294
+#: plug-ins/imagemap/imap_cmd_select_all.c:53
+#: plug-ins/imagemap/imap_menu.c:297
 msgid "Select All"
 msgstr "選擇全部"
 
@@ -11596,7 +11623,7 @@ msgstr "選擇全部"
 msgid "Recompute Center"
 msgstr "重新計算中心點"
 
-#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:125
 msgid "Redo"
 msgstr "取消復原"
 
@@ -11627,7 +11654,7 @@ msgstr "正在描繪 IFS（%d/%d）..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "複製 IFS 到圖像（%d/%d）..."
 
-#: plug-ins/imagemap/imap_about.c:39
+#: plug-ins/imagemap/imap_about.c:42
 msgid ""
 "Imagemap plug-in 1.3\n"
 "\n"
@@ -11651,25 +11678,25 @@ msgstr "x 中心點："
 msgid "Center y:"
 msgstr "y 中心點："
 
-#: plug-ins/imagemap/imap_cmd_create.c:52
+#: plug-ins/imagemap/imap_cmd_create.c:55
 msgid "Create"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_edit_object.c:50
+#: plug-ins/imagemap/imap_cmd_edit_object.c:53
 msgid "Edit Object"
 msgstr "編輯物件"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:71
-#: plug-ins/imagemap/imap_cmd_guides.c:132
+#: plug-ins/imagemap/imap_cmd_guides.c:73
+#: plug-ins/imagemap/imap_cmd_guides.c:134
 msgid "Create Guides"
 msgstr "建立參考線"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:111
+#: plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:136
+#: plug-ins/imagemap/imap_cmd_guides.c:138
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define\n"
 "them by their width, height, and spacing from each other. This\n"
@@ -11677,94 +11704,103 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_cmd_guides.c:166 plug-ins/imagemap/imap_grid.c:202
 msgid "Width"
 msgstr "寬度"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:169
+#: plug-ins/imagemap/imap_cmd_guides.c:171
 msgid "Left Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:208
+#: plug-ins/imagemap/imap_cmd_guides.c:176 plug-ins/imagemap/imap_grid.c:208
 msgid "Height"
 msgstr "高度"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:179
+#: plug-ins/imagemap/imap_cmd_guides.c:181
 msgid "Top Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:184
+#: plug-ins/imagemap/imap_cmd_guides.c:186
 msgid "Horz. Spacing"
 msgstr "水平間隔"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:189
+#: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "No. Across"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:196
 msgid "Vert. Spacing"
 msgstr "垂直間隔"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:199
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. Down"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:207
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 msgid "Base URL:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:224
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "圖像尺寸：%d×%d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:229
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:264
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "參考線"
 
-#: plug-ins/imagemap/imap_cmd_move_down.c:52
-#: plug-ins/imagemap/imap_cmd_object_down.c:51
-#: plug-ins/imagemap/imap_selection.c:166
+#: plug-ins/imagemap/imap_cmd_move_down.c:55
+#: plug-ins/imagemap/imap_cmd_object_down.c:54
+#: plug-ins/imagemap/imap_selection.c:168
 msgid "Move Down"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_move_sash.c:64
+#: plug-ins/imagemap/imap_cmd_move_sash.c:67
 msgid "Move Sash"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_move_selected.c:52
+#: plug-ins/imagemap/imap_cmd_move_selected.c:55
 msgid "Move Selected Objects"
 msgstr "移動所選的物件"
 
-#: plug-ins/imagemap/imap_cmd_move_up.c:52
-#: plug-ins/imagemap/imap_cmd_object_up.c:51
-#: plug-ins/imagemap/imap_selection.c:163
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:54
+#: plug-ins/imagemap/imap_toolbar.c:156
+msgid "Move To Front"
+msgstr ""
+
+#: plug-ins/imagemap/imap_cmd_move_up.c:55
+#: plug-ins/imagemap/imap_cmd_object_up.c:54
+#: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
+#: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_menu.c:293
+#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:137
 msgid "Paste"
 msgstr "貼上"
 
-#: plug-ins/imagemap/imap_cmd_select_next.c:51
+#: plug-ins/imagemap/imap_cmd_select_next.c:55
 msgid "Select Next"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_select_region.c:63
+#: plug-ins/imagemap/imap_cmd_select_prev.c:54
+msgid "Select Previous"
+msgstr ""
+
+#: plug-ins/imagemap/imap_cmd_select_region.c:66
 msgid "Select Region"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_send_to_back.c:51
-#: plug-ins/imagemap/imap_toolbar.c:158
+#: plug-ins/imagemap/imap_cmd_send_to_back.c:54
+#: plug-ins/imagemap/imap_toolbar.c:160
 msgid "Send To Back"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_unselect.c:49
+#: plug-ins/imagemap/imap_cmd_unselect.c:52
 msgid "Unselect"
 msgstr ""
 
@@ -11802,7 +11838,7 @@ msgstr "其它"
 #. * always first in the list, else call psearch.
 #.
 #: plug-ins/imagemap/imap_edit_area_info.c:201
-#: plug-ins/imagemap/imap_menu.c:211 plug-ins/print/print.c:973
+#: plug-ins/imagemap/imap_menu.c:212 plug-ins/print/print.c:973
 #: plug-ins/print/print.c:974 plug-ins/print/print.c:1055
 #: plug-ins/print/print.c:1056 plug-ins/print/print.c:1155
 #: plug-ins/print/print.c:1156 plug-ins/print/print.c:1392
@@ -11862,7 +11898,7 @@ msgstr "區域設定"
 msgid "Area #%d Settings"
 msgstr "區域 %d 之設定"
 
-#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:67
 msgid "Error opening file"
 msgstr "開啟檔案發生錯誤"
 
@@ -11930,149 +11966,149 @@ msgstr ""
 msgid "pixels from top"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:145
+#: plug-ins/imagemap/imap_main.c:146
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/濾鏡/網頁/Imagemap..."
 
-#: plug-ins/imagemap/imap_main.c:660
+#: plug-ins/imagemap/imap_main.c:661
 msgid "Data changed"
 msgstr "資料已改變"
 
-#: plug-ins/imagemap/imap_main.c:664
+#: plug-ins/imagemap/imap_main.c:665
 msgid ""
 "Some data has been changed.\n"
-"Do you really want to continue?"
+"Do you really want to discard your changes?"
 msgstr ""
 "某些資料已變更。\n"
-"是否要繼續？"
+"是否確定要放棄所有變更？"
 
-#: plug-ins/imagemap/imap_main.c:873
+#: plug-ins/imagemap/imap_main.c:874
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "檔案「%s」已儲存。"
 
-#: plug-ins/imagemap/imap_main.c:877
+#: plug-ins/imagemap/imap_main.c:878
 msgid "Couldn't save file:"
 msgstr "無法儲存檔案："
 
-#: plug-ins/imagemap/imap_main.c:902
+#: plug-ins/imagemap/imap_main.c:903
 msgid "Image size changed"
 msgstr "圖像尺寸已改變"
 
-#: plug-ins/imagemap/imap_main.c:906
+#: plug-ins/imagemap/imap_main.c:907
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
 
-#: plug-ins/imagemap/imap_main.c:937
+#: plug-ins/imagemap/imap_main.c:938
 msgid "Couldn't read file:"
 msgstr "無法讀取檔案："
 
-#: plug-ins/imagemap/imap_main.c:983
+#: plug-ins/imagemap/imap_main.c:984
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:215
+#: plug-ins/imagemap/imap_menu.c:216
 msgid "Open..."
 msgstr "開啟..."
 
-#: plug-ins/imagemap/imap_menu.c:221
+#: plug-ins/imagemap/imap_menu.c:222
 msgid "Save As..."
 msgstr "另存新檔..."
 
-#: plug-ins/imagemap/imap_menu.c:224
+#: plug-ins/imagemap/imap_menu.c:225
 msgid "Preferences..."
 msgstr "偏好設定..."
 
-#: plug-ins/imagemap/imap_menu.c:230
+#: plug-ins/imagemap/imap_menu.c:231
 msgid "Quit"
 msgstr "離開"
 
-#: plug-ins/imagemap/imap_menu.c:243
+#: plug-ins/imagemap/imap_menu.c:244
 #, c-format
 msgid "Undo %s"
 msgstr "復原 %s"
 
-#: plug-ins/imagemap/imap_menu.c:254
+#: plug-ins/imagemap/imap_menu.c:256
 #, c-format
 msgid "Redo %s"
 msgstr "取消復原 %s"
 
-#: plug-ins/imagemap/imap_menu.c:301
+#: plug-ins/imagemap/imap_menu.c:304
 msgid "Edit Area Info..."
 msgstr "編輯區域資訊..."
 
-#: plug-ins/imagemap/imap_menu.c:313
+#: plug-ins/imagemap/imap_menu.c:316
 msgid "View"
 msgstr "檢視"
 
-#: plug-ins/imagemap/imap_menu.c:317
+#: plug-ins/imagemap/imap_menu.c:320
 msgid "Area List"
 msgstr "區域列表"
 
-#: plug-ins/imagemap/imap_menu.c:321
+#: plug-ins/imagemap/imap_menu.c:324
 msgid "Source..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:329
+#: plug-ins/imagemap/imap_menu.c:332
 msgid "Grayscale"
 msgstr "灰階"
 
-#: plug-ins/imagemap/imap_menu.c:341
+#: plug-ins/imagemap/imap_menu.c:344
 msgid "Zoom In"
 msgstr "拉近"
 
-#: plug-ins/imagemap/imap_menu.c:344
+#: plug-ins/imagemap/imap_menu.c:347
 msgid "Zoom Out"
 msgstr "拉遠"
 
-#: plug-ins/imagemap/imap_menu.c:349
+#: plug-ins/imagemap/imap_menu.c:352
 msgid "Zoom To"
 msgstr "縮放至"
 
-#: plug-ins/imagemap/imap_menu.c:379
+#: plug-ins/imagemap/imap_menu.c:382
 msgid "Mapping"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
+#: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr "箭頭"
 
-#: plug-ins/imagemap/imap_menu.c:392
+#: plug-ins/imagemap/imap_menu.c:395
 msgid "Edit Map Info..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:399
+#: plug-ins/imagemap/imap_menu.c:402
 msgid "Goodies"
 msgstr "好東西"
 
-#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
+#: plug-ins/imagemap/imap_menu.c:404 plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
 msgstr "格線設定..."
 
-#: plug-ins/imagemap/imap_menu.c:403
+#: plug-ins/imagemap/imap_menu.c:406
 msgid "Create Guides..."
 msgstr "建立參考線..."
 
-#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:413 plug-ins/maze/maze_face.c:193
 msgid "Help"
 msgstr "說明"
 
-#: plug-ins/imagemap/imap_menu.c:413
+#: plug-ins/imagemap/imap_menu.c:416
 msgid "About ImageMap..."
 msgstr "關於 ImageMap..."
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "x (pixels)"
 msgstr "x（像素）"
 
-#: plug-ins/imagemap/imap_polygon.c:391
+#: plug-ins/imagemap/imap_polygon.c:393
 msgid "y (pixels)"
 msgstr "y（像素）"
 
-#: plug-ins/imagemap/imap_polygon.c:458
+#: plug-ins/imagemap/imap_polygon.c:460
 msgid "Append"
 msgstr ""
 
@@ -12096,63 +12132,63 @@ msgstr ""
 msgid "Guides..."
 msgstr "參考線..."
 
-#: plug-ins/imagemap/imap_preferences.c:204
+#: plug-ins/imagemap/imap_preferences.c:205
 msgid "Couldn't save resource file:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:356
+#: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
 msgstr "選擇顏色"
 
-#: plug-ins/imagemap/imap_preferences.c:434
+#: plug-ins/imagemap/imap_preferences.c:435
 msgid "Default Map Type"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:453
+#: plug-ins/imagemap/imap_preferences.c:454
 msgid "Prompt for area info"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:455
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Require default URL"
 msgstr "需要預設的 URL"
 
-#: plug-ins/imagemap/imap_preferences.c:457
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Show area handles"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:459
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Keep NCSA circles true"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:461
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Show area URL tip"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:464
+#: plug-ins/imagemap/imap_preferences.c:465
 msgid "Use double-sized grab handles"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:488
+#: plug-ins/imagemap/imap_preferences.c:489
 msgid "Number of Undo levels (1 - 99):"
 msgstr "可復原的次數（1-99）："
 
-#: plug-ins/imagemap/imap_preferences.c:491
+#: plug-ins/imagemap/imap_preferences.c:492
 msgid "Number of MRU entries (1 - 16):"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:494
+#: plug-ins/imagemap/imap_preferences.c:495
 msgid "Menu"
 msgstr "選單"
 
-#: plug-ins/imagemap/imap_preferences.c:530
+#: plug-ins/imagemap/imap_preferences.c:531
 msgid "Normal:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:536
+#: plug-ins/imagemap/imap_preferences.c:537
 msgid "Selected:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:564
+#: plug-ins/imagemap/imap_preferences.c:565
 msgid "General Preferences"
 msgstr "一般偏好設定"
 
@@ -12164,87 +12200,83 @@ msgstr ""
 msgid "Upper left y:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Target"
 msgstr "目標"
 
-#: plug-ins/imagemap/imap_selection.c:336
+#: plug-ins/imagemap/imap_selection.c:338
 msgid "Comment"
 msgstr "註解"
 
-#: plug-ins/imagemap/imap_settings.c:68
+#: plug-ins/imagemap/imap_settings.c:69
 msgid "Settings for this Mapfile"
 msgstr ""
 
-#: plug-ins/imagemap/imap_settings.c:82
+#: plug-ins/imagemap/imap_settings.c:83
 msgid "Image name:"
 msgstr "圖像名稱："
 
-#: plug-ins/imagemap/imap_settings.c:83
+#: plug-ins/imagemap/imap_settings.c:84
 msgid "Select Image File"
 msgstr "選擇圖像檔"
 
-#: plug-ins/imagemap/imap_settings.c:87
+#: plug-ins/imagemap/imap_settings.c:88
 msgid "Title:"
 msgstr "標題："
 
-#: plug-ins/imagemap/imap_settings.c:91
+#: plug-ins/imagemap/imap_settings.c:92
 msgid "Default URL:"
 msgstr "預設 URL："
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:109
 msgid "Map file format"
 msgstr ""
 
-#: plug-ins/imagemap/imap_source.c:54
+#: plug-ins/imagemap/imap_source.c:57
 msgid "View Source"
 msgstr ""
 
-#: plug-ins/imagemap/imap_toolbar.c:115
+#: plug-ins/imagemap/imap_toolbar.c:117
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: plug-ins/imagemap/imap_toolbar.c:142
+#: plug-ins/imagemap/imap_toolbar.c:144
 msgid "Zoom in"
 msgstr "拉近"
 
-#: plug-ins/imagemap/imap_toolbar.c:145
+#: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Zoom out"
 msgstr "拉遠"
 
-#: plug-ins/imagemap/imap_toolbar.c:150
+#: plug-ins/imagemap/imap_toolbar.c:152
 msgid "Edit Map Info"
 msgstr ""
 
-#: plug-ins/imagemap/imap_toolbar.c:154
-msgid "Move To Front"
-msgstr ""
-
-#: plug-ins/imagemap/imap_tools.c:128
+#: plug-ins/imagemap/imap_tools.c:131
 msgid "Select existing area"
 msgstr ""
 
-#: plug-ins/imagemap/imap_tools.c:132
+#: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Rectangle area"
 msgstr "定義矩形區域"
 
-#: plug-ins/imagemap/imap_tools.c:136
+#: plug-ins/imagemap/imap_tools.c:141
 msgid "Define Circle/Oval area"
 msgstr "定義圓形/橢圓形區域"
 
-#: plug-ins/imagemap/imap_tools.c:140
+#: plug-ins/imagemap/imap_tools.c:146
 msgid "Define Polygon area"
 msgstr "定義多邊形區域"
 
-#: plug-ins/imagemap/imap_tools.c:144
+#: plug-ins/imagemap/imap_tools.c:151
 msgid "Edit selected area info"
 msgstr "編輯所選區域的資訊"
 
-#: plug-ins/imagemap/imap_tools.c:148
+#: plug-ins/imagemap/imap_tools.c:156
 msgid "Delete selected area"
 msgstr "刪除所選的區域"
 
@@ -12303,6 +12335,8 @@ msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"選擇區域的尺寸不是偶數。\n"
+"鋪排迷宮時不會得到預期的效果。"
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:600
@@ -12327,7 +12361,7 @@ msgstr "正在尋找邊緣..."
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:497
 msgid "Rendering Tiles..."
-msgstr ""
+msgstr "正在描繪磚片..."
 
 #: plug-ins/mosaic/mosaic.c:526
 msgid "Mosaic"
@@ -12348,35 +12382,35 @@ msgstr ""
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:625
 msgid "Tiling Primitives"
-msgstr ""
+msgstr "鋪排方式"
 
 #: plug-ins/mosaic/mosaic.c:629
 msgid "Squares"
-msgstr ""
+msgstr "正方形"
 
 #: plug-ins/mosaic/mosaic.c:631
 msgid "Hexagons"
-msgstr ""
+msgstr "六邊形"
 
 #: plug-ins/mosaic/mosaic.c:633
 msgid "Octagons & Squares"
-msgstr ""
+msgstr "八邊形及正方形"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Tile Spacing:"
-msgstr ""
+msgstr "磚片間隔："
 
 #: plug-ins/mosaic/mosaic.c:681
 msgid "Tile Neatness:"
-msgstr ""
+msgstr "磚片整齊程度："
 
 #: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
-msgstr ""
+msgstr "光源方向："
 
 #: plug-ins/mosaic/mosaic.c:700
 msgid "Color Variation:"
-msgstr ""
+msgstr "色彩變化："
 
 #: plug-ins/mosaic/mosaic.c:2469
 msgid "Unable to add additional point.\n"
@@ -12640,7 +12674,7 @@ msgstr "指令："
 #.
 #: plug-ins/print/gimp_main_window.c:931
 msgid "Print To File?"
-msgstr "列印成檔案？"
+msgstr "列印至檔案？"
 
 #.
 #. * PPD file selection dialog...
@@ -12688,12 +12722,12 @@ msgstr ""
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:289 plug-ins/rcm/rcm_dialog.c:360
 msgid "From"
-msgstr ""
+msgstr "從"
 
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:311 plug-ins/rcm/rcm_dialog.c:361
 msgid "To"
-msgstr ""
+msgstr "到"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:484
@@ -12923,9 +12957,9 @@ msgstr "無法開啟（讀取）：%s"
 #: plug-ins/xjt/xjt.c:3119
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
-msgstr ""
+msgstr "錯誤：無法讀取 XJT 屬性檔 %s"
 
 #: plug-ins/xjt/xjt.c:3124
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
-msgstr ""
+msgstr "錯誤：XJT 屬性檔 %s 是空的"
