@@ -1,3 +1,7 @@
+2001-02-02  Michael Natterer  <mitch@gimp.org>
+
+	* po/POTFILES.in: forgot to rename the files here.
+
 2001-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

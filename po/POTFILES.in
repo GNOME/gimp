@@ -5,7 +5,6 @@ app/about_dialog.c
 app/app_procs.c
 app/brush_edit.c
 app/brush_select.c
-app/channel.c
 app/channel_ops.c
 app/channels_dialog.c
 app/color_area.c
@@ -29,9 +28,11 @@ app/gimage_mask.c
 app/gimpbrush.c
 app/gimpbrushlist.c
 app/gimpbrushpipe.c
+app/gimpchannel.c
 app/gimpdrawable.c
 app/gimphelp.c
 app/gimpimage.c
+app/gimplayer.c
 app/gimpprogress.c
 app/gimprc.c
 app/gimpui.c
@@ -45,7 +46,6 @@ app/info_dialog.c
 app/info_window.c
 app/interface.c
 app/invert.c
-app/layer.c
 app/layer_select.c
 app/layers_dialog.c
 app/lc_dialog.c
