@@ -72,6 +72,8 @@ static void     file_open_genbutton_callback    (GtkWidget     *widget,
 						 gpointer       data);
 static void     file_open_clistrow_callback     (GtkWidget     *widget,
 						 gint           row,
+                                                 gint           column,
+                                                 GdkEvent      *event,
                                                  gpointer       data);
 static void     file_open_ok_callback           (GtkWidget     *widget,
 						 gpointer       data);
@@ -606,6 +608,8 @@ set_preview (Gimp        *gimp,
 static void
 file_open_clistrow_callback (GtkWidget *widget,
 			     gint       row,
+                             gint       column,
+                             GdkEvent  *event,
                              gpointer   data)
 {
   GtkFileSelection *fileload;
@@ -636,9 +640,10 @@ file_open_genbutton_callback (GtkWidget *widget,
   /* added for multi-file preview generation... */
   GtkFileSelection *fs;
   gchar            *full_filename = NULL;
-  gchar            *filedirname   = NULL;
+  gchar            *dirname       = NULL;
   struct stat       buf;
   gint              err;
+  GSList           *list, *toplist;
 
   fs = GTK_FILE_SELECTION (data);
 
@@ -654,89 +659,68 @@ file_open_genbutton_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
   /* new mult-file preview make: */  
-  {
-    GSList *list, *toplist;
 
-    /* Have to read the clist before touching anything else */
+  /* Have to read the clist before touching anything else */
+  toplist = clist_to_slist (GTK_CLIST (fs->file_list));
 
-    list= clist_to_slist(GTK_CLIST(fs->file_list));
-    toplist = list;
-    
-    /* Find a real base directory for the multiple selection */
+  dirname = g_path_get_dirname (gtk_file_selection_get_filename (fs));
+  
+  for (list= toplist; list; list = g_slist_next (list))
+    {
+      full_filename = g_build_filename (dirname,
+                                        (gchar *) list->data,
+                                        NULL);
+      
+      err = stat (full_filename, &buf);
+      
+      if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+        {
+          /* Is not directory. */
+          GimpPDBStatusType dummy;
+          
+          gimage_to_be_thumbed = file_open_image (gimp,
+                                                  full_filename,
+                                                  list->data,
+                                                  NULL,
+                                                  NULL,
+                                                  RUN_NONINTERACTIVE,
+                                                  &dummy);
+          
+          if (gimage_to_be_thumbed)
+            {			
+              tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
+              RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
+                                                  &RGBbuf_w,
+                                                  &RGBbuf_h);
+              if (gimp->config->thumbnail_mode)
+                {
+                  file_save_thumbnail (gimage_to_be_thumbed,
+                                       full_filename, tempbuf);
+                }
+              
+              set_preview (gimp, full_filename,
+                           RGBbuf, RGBbuf_w, RGBbuf_h);
+              
+              g_object_unref (G_OBJECT (gimage_to_be_thumbed));
+              
+              if (RGBbuf)
+                g_free (RGBbuf);
+            }
+          else
+            {
+              gtk_label_set_text (GTK_LABEL (open_options_label),
+                                  _("(could not make preview)"));
+            }
+        }      
+     }
 
-    gtk_file_selection_set_filename (fs, "");
-    filedirname = g_strdup (gtk_file_selection_get_filename (fs));
+  g_free (full_filename);
 
-    while (list)
-      {
-        full_filename = g_build_filename (filedirname,
-                                          (gchar *) list->data,
-                                          NULL);
+  for (list = toplist; list; list = g_slist_next (list))
+    g_free (list->data);
 
-	err = stat (full_filename, &buf);
-
-	if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-	  {
-	    /* Is not directory. */
-	    GimpPDBStatusType dummy;
-
-	    gimage_to_be_thumbed = file_open_image (gimp,
-						    full_filename,
-						    list->data,
-						    NULL,
-						    NULL,
-						    RUN_NONINTERACTIVE,
-						    &dummy);
-
-	    if (gimage_to_be_thumbed)
-	      {			
-		tempbuf = make_thumb_tempbuf (gimage_to_be_thumbed);
-		RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
-						    &RGBbuf_w,
-						    &RGBbuf_h);
-		if (gimp->config->thumbnail_mode)
-		  {
-		    file_save_thumbnail (gimage_to_be_thumbed,
-					 full_filename, tempbuf);
-		  }
-
-		set_preview (gimp, full_filename,
-                             RGBbuf, RGBbuf_w, RGBbuf_h);
-
-		g_object_unref (G_OBJECT (gimage_to_be_thumbed));
-
-		if (RGBbuf)
-		  g_free (RGBbuf);
-	      }
-	    else
-	      {
-		gtk_label_set_text (GTK_LABEL (open_options_label),
-				    _("(could not make preview)"));
-	      }
-	  }
-
-        g_free (full_filename);
-        list = g_slist_next (list);
-      }
-    
-    for (list = toplist; list; list = g_slist_next (list))
-      {
-	if (! g_slist_next (list))
-	  {
-	    full_filename = g_build_filename (filedirname,
-                                              (gchar *) list->data, NULL);
-            gtk_file_selection_set_filename (fs, full_filename);
-	    g_free (full_filename);
-	  }
-
-        g_free (list->data);
-      }
-
-    g_slist_free (toplist);
-    toplist = NULL;
-
-    g_free (filedirname);
-  }
+  g_slist_free (toplist);
+  g_free (dirname);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   gimp_unset_busy (gimp);
@@ -750,10 +734,11 @@ file_open_ok_callback (GtkWidget *widget,
   Gimp              *gimp;
   gchar             *full_filename;
   gchar             *raw_filename;
-  const gchar       *filedirname;
+  gchar             *dirname;
   struct stat        buf;
   gint               err;
   GimpPDBStatusType  status;
+  GSList            *list;
 
   fs = GTK_FILE_SELECTION (data);
 
@@ -809,64 +794,55 @@ file_open_ok_callback (GtkWidget *widget,
    * Now deal with multiple selections from the filesel clist
    */
 
-  {
-    GSList *list;
+  /* Have to read the clist before touching anything else */
 
-    /* Have to read the clist before touching anything else */
+  list = clist_to_slist (GTK_CLIST (fs->file_list));
+  
+  raw_filename = g_strdup (raw_filename);
+  dirname = g_path_get_dirname (full_filename);
+  
+  while (list)
+    {
+      g_free (full_filename);
+      
+      full_filename = g_build_filename (dirname,
+                                        (gchar *) list->data, NULL);
+      
+      if (strcmp (list->data, raw_filename))
+        { /* don't load current selection twice */
+          
+          err = stat (full_filename, &buf);
+          
+          if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+            { /* Is not directory. */
+              
+              status = file_open_with_proc_and_display (gimp,
+                                                        full_filename,
+                                                        (const gchar *) list->data,
+                                                        load_file_proc);
+              
+              if (status == GIMP_PDB_SUCCESS)
+                {
+                  file_dialog_hide (data);
+                }
+              else if (status != GIMP_PDB_CANCEL)
+                {
+                  g_message (_("Open failed.\n%s"), full_filename);
+                }
+            }
+        }
+      
+      g_free (list->data);
+      list = g_slist_next (list);
+    }
+  
+  g_slist_free (list);
 
-    list = clist_to_slist (GTK_CLIST (fs->file_list));
-
-    /* Find a real base directory for the multiple selection */
-
-    raw_filename = g_strdup (raw_filename);
-
-    gtk_file_selection_set_filename (fs, "");
-    filedirname = gtk_file_selection_get_filename (fs);
-
-    while (list)
-      {
-	g_free (full_filename);
-
-        full_filename = g_build_filename (filedirname,
-                                          (gchar *) list->data, NULL);
-
-        if (strcmp (list->data, raw_filename))
-          { /* don't load current selection twice */
-
-            err = stat (full_filename, &buf);
-
-            if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-              { /* Is not directory. */
-
-                status = file_open_with_proc_and_display (gimp,
-                                                          full_filename,
-                                                          (const gchar *) list->data,
-                                                          load_file_proc);
-
-                if (status == GIMP_PDB_SUCCESS)
-                  {
-                    file_dialog_hide (data);
-                  }
-                else if (status != GIMP_PDB_CANCEL)
-                  {
-                    g_message (_("Open failed.\n%s"), full_filename);
-                  }
-              }
-          }
-     
-        g_free (list->data);
-        list = g_slist_next (list);
-      }
-
-    g_slist_free (list);
-    list = NULL;
-  }
-    
-  gtk_file_selection_set_filename (fs, raw_filename);
-  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-
+  g_free (dirname);
   g_free (full_filename);
   g_free (raw_filename);
+    
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 }
 
 static GSList *

@@ -1,3 +1,17 @@
+2001-11-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-open-dialog.c: merged fix for bug #63880 from stable
+	branch and fixed a wrong signal callback signature.
+	
+	* plug-ins/imagemap/imap_main.c: merged fix for bug #64075 from stable
+	branch.
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: merged fix for bug #57853 from stable
+	branch.
+
+	* plug-ins/Lighting/lighting_ui.c: s/gdk_image_unref/g_object_unref/
+
 2001-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: build display/ before tools/.

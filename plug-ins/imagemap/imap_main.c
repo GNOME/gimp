@@ -665,7 +665,7 @@ do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
       default_dialog_set_label(
 	 dialog,
 	 _("Some data has been changed.\n"
-	   "Do you really want to continue?"));
+	   "Do you really want to discard your changes?"));
    }
    default_dialog_set_ok_cb(dialog, continue_cb, param);
    default_dialog_show(dialog);

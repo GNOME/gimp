@@ -603,6 +603,9 @@ gauss_iir (GimpDrawable *drawable,
   max_progress = (horz < 1.0 ) ? 0 : width * height * horz;
   max_progress += (vert < 1.0 ) ? 0 : width * height * vert;
 
+  if (has_alpha)
+    multiply_alpha (src, height, bytes);
+  
   /*  First the vertical pass  */
   if (vert >= 1.0)
     {
@@ -618,9 +621,6 @@ gauss_iir (GimpDrawable *drawable,
 	  memset(val_m, 0, height * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
-
-	  if (has_alpha)
-	    multiply_alpha (src, height, bytes);
 
 	  sp_p = src;
 	  sp_m = src + (height - 1) * bytes;
@@ -674,9 +674,6 @@ gauss_iir (GimpDrawable *drawable,
 
 	  transfer_pixels (val_p, val_m, dest, bytes, height);
 
-	  if (has_alpha && !horz)
-	    separate_alpha (dest, height, bytes);
-
 	  gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 
 	  progress += height * vert;
@@ -707,9 +704,6 @@ gauss_iir (GimpDrawable *drawable,
 	  memset(val_m, 0, width * bytes * sizeof (gdouble));
 
 	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
-
-	  if (has_alpha && !vert)
-	    multiply_alpha (src, height, bytes);
 
 	  sp_p = src;
 	  sp_m = src + (width - 1) * bytes;
@@ -763,9 +757,6 @@ gauss_iir (GimpDrawable *drawable,
 
 	  transfer_pixels (val_p, val_m, dest, bytes, width);
 
-	  if (has_alpha)
-	    separate_alpha (dest, width, bytes);
-
 	  gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 
 	  progress += width * horz;
@@ -773,6 +764,9 @@ gauss_iir (GimpDrawable *drawable,
 	    gimp_progress_update ((double) progress / (double) max_progress);
 	}
     }
+
+  if (has_alpha)
+    separate_alpha (dest, width, bytes);
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);

@@ -595,6 +595,9 @@ gauss_rle (GimpDrawable *drawable,
   progress = 0;
   max_progress = (horz < 1.0 ) ? 0 : width * height * horz;
   max_progress += (vert < 1.0 ) ? 0 : width * height * vert;
+	  
+  if (has_alpha)
+    multiply_alpha (src, height, bytes);
 
   /*  First the vertical pass  */
   if (vert >= 1.0)
@@ -616,9 +619,6 @@ gauss_rle (GimpDrawable *drawable,
        for (col = 0; col < width; col++)
 	{
 	  gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
-
-	  if (has_alpha)
-	    multiply_alpha (src, height, bytes);
 
 	  sp = src;
 	  dp = dest;
@@ -661,9 +661,6 @@ gauss_rle (GimpDrawable *drawable,
 		}
 	    }
 
-	  if (has_alpha && !horz)
-	    separate_alpha (dest, height, bytes);
-
 	  gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
 	  progress += height * vert;
 	  if ((col % 5) == 0)
@@ -698,9 +695,6 @@ gauss_rle (GimpDrawable *drawable,
       for (row = 0; row < height; row++)
 	{
 	  gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
-
-	  if (has_alpha && vert < 1.0)
-	    multiply_alpha (src, height, bytes);
 
 	  sp = src;
 	  dp = dest;
@@ -743,15 +737,16 @@ gauss_rle (GimpDrawable *drawable,
 		}
 	    }
 
-	  if (has_alpha)
-	    separate_alpha (dest, width, bytes);
-
 	  gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
 	  progress += width * horz;
 	  if ((row % 5) == 0)
 	    gimp_progress_update ((double) progress / (double) max_progress);
 	}
     }
+	  
+  if (has_alpha)
+    separate_alpha (dest, width, bytes);
+
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);
