@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
-"PO-Revision-Date: 2001-10-24 12:58+0200\n"
+"Project-Id-Version: GIMP 1.2.4\n"
+"POT-Creation-Date: 2002-08-24 14:49+0200\n"
+"PO-Revision-Date: 2002-08-24 15:19+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +164,7 @@ msgstr "eine Ebenenmaske"
 msgid "a channel (saved selection)"
 msgstr "einen Kanal (gespeicherte Auswahl)"
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:389
 msgid "Select File"
 msgstr "Datei auswählen"
 
