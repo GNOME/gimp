@@ -1,3 +1,11 @@
+2000-01-02  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* configure.in: bumped GTK req. to 1.2.6 -- I hadn't updated GTK
+	or glib in a while and the silent acceptance of out-of-date
+	versions was making for a lot of annoying bugs.  This should be
+	updated whenever appropriate, not simply ignored until major
+	release time, people.
+
 Sun Jan  2 16:43:46 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/AlienMap/AlienMap.c
