@@ -754,7 +754,24 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 	      data += rowstride;
 	    }
     }
-    
+
+  /*
+   * Have to check in case the mask image was empty, thus no
+   * "hits" and x1,y1 are still in their "initialized" (wrong)
+   * state.
+  */
+  if( *x1 > *x2 )
+  {
+	  int t = *x1;
+	  *x1 = *x2;
+	  *x2 = t;
+  }
+  if( *y1 > *y2 )
+  {
+	  int t = *y1;
+	  *y1 = *y2;
+	  *y2 = t;
+  }
 
   *x2 = BOUNDS (*x2 + 1, 0, drawable_width (GIMP_DRAWABLE(mask)));
   *y2 = BOUNDS (*y2 + 1, 0, drawable_height (GIMP_DRAWABLE(mask)));
@@ -775,6 +792,8 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       mask->x2 = *x2;
       mask->y2 = *y2;
     }
+
+	/*printf( "X1: %d, Y1: %d, X2: %d, Y2: %d\n", *x1, *y1, *x2, *y2 );*/
 
   mask->bounds_known = TRUE;
   return (mask->empty) ? FALSE : TRUE;
