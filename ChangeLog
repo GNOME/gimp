@@ -1,5 +1,10 @@
 2003-02-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfontselection-dialog.c: use gtk_window_present()
+	to raise the dialog; some code cleanup.
+
+2003-02-04  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.[ch]
 	* app/tools/gimpblendtool.c
 	* app/tools/gimpcolorpickertool.c

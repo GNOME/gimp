@@ -111,6 +111,7 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
 {
   GimpFontSelectionDialog *dialog;
   GtkListStore            *model;
+  GtkTreeSelection        *select;
   GtkTreeViewColumn       *column;
   GtkWidget               *scrolled_win;
   GtkWidget               *table;
@@ -179,10 +180,10 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->family_list), column);
 
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dialog->family_list), 
-                                     FALSE);
-  gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list)),
-			       GTK_SELECTION_BROWSE);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dialog->family_list),
+				     FALSE);
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list));
+  gtk_tree_selection_set_mode (select, GTK_SELECTION_BROWSE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), 
@@ -216,8 +217,8 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->face_list), column);
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dialog->face_list), FALSE);
-  gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list)),
-			       GTK_SELECTION_BROWSE);
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list));
+  gtk_tree_selection_set_mode (select, GTK_SELECTION_BROWSE);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win), 
@@ -254,13 +255,15 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
   /* Insert the fonts. */
   gimp_font_selection_dialog_show_available_fonts (dialog);
   
-  g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list)), "changed",
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list));
+  g_signal_connect (select, "changed",
 		    G_CALLBACK (gimp_font_selection_dialog_select_family), 
                     dialog);
 
   gimp_font_selection_dialog_show_available_styles (dialog);
   
-  g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list)), "changed",
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list));
+  g_signal_connect (select, "changed",
 		    G_CALLBACK (gimp_font_selection_dialog_select_style), 
                     dialog);
 
@@ -291,15 +294,15 @@ gimp_font_selection_dialog_show (GimpFontSelectionDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
   
-  gtk_widget_show (dialog->dialog);
+  gtk_window_present (GTK_WINDOW (dialog->dialog));
 }
 
 static void
 scroll_to_selection (GtkTreeView *tree_view)
 {
   GtkTreeSelection *selection = gtk_tree_view_get_selection (tree_view);
-  GtkTreeModel *model;
-  GtkTreeIter iter;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -323,20 +326,23 @@ void
 gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
                                           PangoFontDescription    *desc)
 {
-  PangoFontFamily *new_family = NULL;
-  GtkTreeModel    *model;
-  GtkTreeIter      iter;
-  gboolean         valid;
-  const gchar     *name;
+  PangoFontFamily  *new_family = NULL;
+  GtkTreeModel     *model;
+  GtkTreeSelection *select;
+  GtkTreeIter       iter;
+  gboolean          valid;
+  const gchar      *name;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (desc != NULL);
 
   name = pango_font_description_get_family (desc);
+  if (!name)
+    return;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->family_list));
   for (valid = gtk_tree_model_get_iter_root (model, &iter);
-       valid;
+       valid && !new_family;
        valid = gtk_tree_model_iter_next (model, &iter))
     {
       PangoFontFamily *family;
@@ -347,21 +353,13 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
         new_family = family;
       
       g_object_unref (family);
-      
-      if (new_family)
-        {
-          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list)), &iter);
-          break;
-        }
     }
 
-  if (!new_family)
-    {
-      if (!gtk_tree_model_get_iter_root (model, &iter))
-        return;
+  if (!new_family && !gtk_tree_model_get_iter_root (model, &iter))
+     return;
 
-      gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list)), &iter);
-    }
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list));
+  gtk_tree_selection_select_iter (select, &iter);
 
   gimp_font_selection_dialog_show_available_styles (dialog);
 
@@ -378,8 +376,10 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
       
       if (font_description_style_equal (tmp_desc, desc))
         {
-          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list)), &iter);
-      
+	  select =
+	    gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list));
+          gtk_tree_selection_select_iter (select, &iter);
+
           pango_font_description_free (tmp_desc);
           g_object_unref (face);
           break;
@@ -573,6 +573,7 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
   PangoFontFace        **faces;
   PangoFontDescription  *old_desc;
   GtkListStore          *model;
+  GtkTreeSelection      *select;
   GtkTreeIter            match_row;
   PangoFontFace         *match_face = NULL;
   gint                   n_faces, i;
@@ -589,6 +590,9 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 
   gtk_list_store_clear (model);
 
+  if (n_faces < 0)
+    return;
+
   for (i = 0; i < n_faces; i++)
     {
       GtkTreeIter  iter;
@@ -601,7 +605,7 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 
       if (i == 0)
 	{
-	  match_row = iter;
+	  match_row  = iter;
 	  match_face = faces[i];
 	}
       else if (old_desc)
@@ -610,7 +614,7 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 	  
 	  if (font_description_style_equal (tmp_desc, old_desc))
             {
-	      match_row = iter;
+	      match_row  = iter;
               match_face = faces[i];
             }
 
@@ -625,7 +629,8 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 
   g_free (faces);
 
-  gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list)), &match_row);
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->face_list));
+  gtk_tree_selection_select_iter (select, &match_row);
 }
 
 static void
