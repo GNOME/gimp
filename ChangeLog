@@ -1,5 +1,10 @@
 2003-11-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: fixed the default gamma value which I
+	broke with my recent change (see bug #120031).
+
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpbaseconfig.h
 	* app/config/gimpcoreconfig.h: use gint64 for all memsize properties.
 

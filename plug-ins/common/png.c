@@ -1079,7 +1079,7 @@ save_image (const gchar *filename,
   if (pngvals.gama)
     {
       GimpParasite *parasite;
-      gdouble       gamma = DEFAULT_GAMMA;
+      gdouble       gamma = 1.0 / DEFAULT_GAMMA;
 
       parasite = gimp_image_parasite_find (orig_image_ID, "gamma");
       if (parasite)
