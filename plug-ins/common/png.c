@@ -177,8 +177,8 @@ query (void)
     {GIMP_PDB_INT32, "bkgd", "Write bKGD chunk?"},
     {GIMP_PDB_INT32, "gama", "Write gAMA chunk?"},
     {GIMP_PDB_INT32, "offs", "Write oFFs chunk?"},
-    {GIMP_PDB_INT32, "phys", "Write tIME chunk?"},
-    {GIMP_PDB_INT32, "time", "Write pHYs chunk?"}
+    {GIMP_PDB_INT32, "phys", "Write pHYs chunk?"},
+    {GIMP_PDB_INT32, "time", "Write tIME chunk?"}
   };
 
   gimp_install_procedure ("file_png_load",
@@ -318,8 +318,8 @@ run (const gchar      *name,
               pngvals.compression_level = param[6].data.d_int32;
               pngvals.bkgd              = param[7].data.d_int32;
               pngvals.gama              = param[8].data.d_int32;
-              pngvals.phys              = param[9].data.d_int32;
-              pngvals.offs              = param[10].data.d_int32;
+              pngvals.offs              = param[9].data.d_int32;
+              pngvals.phys              = param[10].data.d_int32;
               pngvals.time              = param[11].data.d_int32;
 
               if (pngvals.compression_level < 0 ||

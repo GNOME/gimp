@@ -1,3 +1,8 @@
+2003-10-08  Manish Singh  <yosh@gimp.org>
+
+        * plug-ins/common/png.c: fix handling and docs of offs, phys, and time
+        parameters.
+
 2003-10-08  Ville Pätsi  <drc@gimp.org>
 
 	* gimp.spec.in: Enabled debuginfo packages again.
