@@ -1,3 +1,8 @@
+2003-09-03  Ville Pätsi  <drc@gimp.org>
+
+	* gimp.spec.in: Moved some essential config files from the 
+	devel package to the main one. Oops.
+
 2003-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask.[ch]: removed the _translate()

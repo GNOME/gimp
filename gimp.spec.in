@@ -137,6 +137,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{sysconfdir}/gimp/%{subver}/gtkrc_user
 %{sysconfdir}/gimp/%{subver}/unitrc
 %{sysconfdir}/gimp/%{subver}/ps-menurc
+%{sysconfdir}/gimp/%{subver}/gimprc
+%{sysconfdir}/gimp/%{subver}/sessionrc
+%{sysconfdir}/gimp/%{subver}/templaterc
 
 %defattr (0555, bin, bin)
 
@@ -166,13 +169,13 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %{prefix}/share/locale/
 
-%{prefix}/share/man/man1/*
-%{prefix}/share/man/man5/*
-
 %{prefix}/bin/gimp-1.3
 %{prefix}/bin/gimp-remote-1.3
 
 %defattr (0444, bin, man)
+
+%{prefix}/share/man/man1/*
+%{prefix}/share/man/man5/*
 
 %files devel
 %defattr (0555, bin, bin, 0555)
@@ -185,9 +188,6 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %defattr (0444, root, root, 0555)
 #new stuff 1.3
-/etc/gimp/%{subver}/gimprc
-/etc/gimp/%{subver}/sessionrc
-/etc/gimp/%{subver}/templaterc
 %{prefix}/lib/pkgconfig/gimp-1.3.pc
 %{prefix}/lib/pkgconfig/gimpui-1.3.pc
 
@@ -225,6 +225,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Wed Sep 03 2003 Ville PÄtsi <drc@gimp.org>
+- Move /etc/gimp/* from the devel package to the main one. 
+
 * Tue Aug 12 2003 Ville Pätsi <drc@gimp.org>
 - Remove stripping by defining DONT_STRIP=1 in the install stage
 - Disable building of separate debug packages
