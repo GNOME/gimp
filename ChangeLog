@@ -1,3 +1,11 @@
+2004-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_settings_dialog):
+	add a shortcut to the filechooser that points to the user's folder.
+
+	* app/actions/vectors-commands.c: added a file filter to the SVG
+	import dialog.
+
 2004-09-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): added some

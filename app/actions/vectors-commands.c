@@ -618,6 +618,7 @@ vectors_new_vectors_response (GtkWidget      *widget,
 
       if (vectors_name)
         g_free (vectors_name);
+
       vectors_name =
         g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
@@ -657,37 +658,48 @@ static void
 vectors_import_query (GimpImage *gimage,
                       GtkWidget *parent)
 {
-  GtkFileChooser *chooser;
+  GtkWidget     *dialog;
+  GtkFileFilter *filter;
 
-  chooser = GTK_FILE_CHOOSER
-    (gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
-                                  GTK_FILE_CHOOSER_ACTION_OPEN,
+  dialog = gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-                                  NULL));
+                                        NULL);
 
-     g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
-                     chooser);
+  g_object_weak_ref (G_OBJECT (gimage),
+                     (GWeakNotify) gtk_widget_destroy, dialog);
 
-  gtk_window_set_screen (GTK_WINDOW (chooser),
-                         gtk_widget_get_screen (parent));
+  gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (parent));
 
-  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-import");
-  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-import");
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
-  g_signal_connect (chooser, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (vectors_import_response),
                     gimage);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (dialog, "delete_event",
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  /*  FIXME: add a proper file selector
-      and controls for merge and scale options  */
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files (*.*)"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-  gtk_widget_show (GTK_WIDGET (chooser));
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Scalable SVG image (*.svg)"));
+  gtk_file_filter_add_pattern (filter, "*.svg");
+  gtk_file_filter_add_mime_type (filter, "image/svg+xml");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  /*  FIXME: add controls for merge and scale options  */
+
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -723,34 +735,34 @@ vectors_export_query (GimpImage   *gimage,
                       GimpVectors *vectors,
                       GtkWidget   *parent)
 {
-  GtkFileChooser *chooser;
+  GtkWidget *dialog;
 
-  chooser = GTK_FILE_CHOOSER
-    (gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
-                                  GTK_FILE_CHOOSER_ACTION_SAVE,
+  dialog = gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-                                  NULL));
+                                        NULL);
 
-  g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
-                     chooser);
+  g_object_weak_ref (G_OBJECT (gimage),
+                     (GWeakNotify) gtk_widget_destroy, dialog);
 
-  gtk_window_set_screen (GTK_WINDOW (chooser),
-                         gtk_widget_get_screen (parent));
+  gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (parent));
 
-  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-export");
-  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
-  g_signal_connect (chooser, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (vectors_export_response),
                     gimage);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (dialog, "delete_event",
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  gtk_widget_show (GTK_WIDGET (chooser));
+  /*  FIXME: add control for saving all or just the active vectors  */
+
+  gtk_widget_show (dialog);
 }
 
 static void
