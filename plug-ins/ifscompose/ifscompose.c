@@ -54,6 +54,9 @@
 
 #define UNDO_LEVELS 10
 
+#define IFSCOMPOSE_PARASITE "ifscompose-parasite"
+#define IFSCOMPOSE_DATA "plug_in_ifscompose"
+
 typedef enum {
   OP_TRANSLATE,
   OP_ROTATE,			/* or scale */
@@ -368,6 +371,8 @@ run (char    *name,
   GDrawable *active_drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+  Parasite *parasite = NULL;
+  gboolean found_parasite;
 
   run_mode = param[0].data.d_int32;
 
@@ -377,32 +382,41 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  /*  getchar(); */
-
+  /* kill (getpid(), 19); */
+  
   /*  Get the active drawable  */
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
-      /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_ifs_compose_vals", &ifsvals);
+      /*  Possibly retrieve data; first look for a parasite -
+       *  if not found, fall back to global values
+       */
+      parasite = gimp_drawable_find_parasite (active_drawable->id,
+					      IFSCOMPOSE_PARASITE);
+      found_parasite = FALSE;
+      if (parasite)
+	{
+	  found_parasite = ifsvals_parse_string (parasite_data (parasite),
+						 &ifsvals, &elements);
+	  parasite_free (parasite);
+	}
 
-      if (ifsvals.num_elements != 0)
-        {
-	  AffElementVals *element_vals = g_new(AffElementVals,
-					       ifsvals.num_elements);
-	  IfsColor color = {{0.0,0.0,0.0}};
-	  int i;
-	  elements = g_new(AffElement *,ifsvals.num_elements);
-	  gimp_get_data ("plug_in_ifs_compose_elements", element_vals);
-
-	  for (i=0;i<ifsvals.num_elements;i++)
+      if (!found_parasite)
+	{
+	  gint length;
+	  gchar *data; 
+	  
+	  length = gimp_get_data_size (IFSCOMPOSE_DATA);
+	  if (length)
 	    {
-	      elements[i] = aff_element_new(0.0,0.0,color,element_count++);
-	      elements[i]->v = element_vals[i];
+	      data = g_new (gchar, length);
+	      gimp_get_data(IFSCOMPOSE_DATA, data);
+
+	      ifsvals_parse_string (data, &ifsvals, &elements);
+	      g_free (data);
 	    }
-	  g_free(element_vals);
 	}
 
       /*  First acquire information with a dialog  */
@@ -440,27 +454,26 @@ run (char    *name,
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
-      /*  Store data for next invocation */
+      /*  Store data for next invocation - both globally and
+       *  as a parasite on this layer
+       */
      if (run_mode == RUN_INTERACTIVE)
        {
-	 AffElementVals *element_vals = g_new(AffElementVals,
-					      ifsvals.num_elements);
-	 int i;
+	 char *str = ifsvals_stringify (&ifsvals, elements);
+	 Parasite *parasite;
 
-	 for (i=0;i<ifsvals.num_elements;i++)
-	   element_vals[i] = elements[i]->v;
+	 gimp_set_data (IFSCOMPOSE_DATA, str, strlen(str)+1);
+	 parasite = parasite_new (IFSCOMPOSE_PARASITE,
+				  PARASITE_PERSISTENT | PARASITE_UNDOABLE,
+				  strlen(str)+1, str);
+	 gimp_drawable_attach_parasite (active_drawable->id, parasite);
+	 parasite_free (parasite);
 
-	 gimp_set_data ("plug_in_ifs_compose_vals", &ifsvals,
-			sizeof (IfsComposeVals));
-	 gimp_set_data ("plug_in_ifs_compose_elements", element_vals,
-			sizeof (AffElementVals)*ifsvals.num_elements);
-
-	 g_free(element_vals);
+	 g_free (str);
        }
     }
   else if (status == STATUS_SUCCESS)
     {
-      /* gimp_message ("mosaic: cannot operate on indexed color images"); */
       status = STATUS_EXECUTION_ERROR;
     }
 

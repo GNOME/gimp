@@ -130,3 +130,8 @@ void ifs_render(AffElement **elements, gint num_elements,
 		gint width, gint height, gint nsteps,
 		IfsComposeVals *vals, gint band_y, gint band_height,
 		guchar *data, guchar *mask, guchar *nhits, gint preview);
+
+char *   ifsvals_stringify (IfsComposeVals *vals, AffElement **elements);
+gboolean ifsvals_parse_string (char           *str,
+			       IfsComposeVals *vals,
+			       AffElement   ***elements);

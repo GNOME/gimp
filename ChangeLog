@@ -1,3 +1,12 @@
+Thu Jul  1 23:37:38 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* ifscompose_storage.c: New file implementing saving
+	and loading of parameters in text format.
+
+	* ifscompose.c: Store parameters in parasites.
+	Also, use new format for storing parameters between
+	invokations of IfsCompose on different layers.
+
 Thu Jul  1 09:42:40 PDT 1999 Calvin Williamson  <calvin@rhythm.com>
 
 	Added the files:

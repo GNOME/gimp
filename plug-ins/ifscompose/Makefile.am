@@ -9,7 +9,8 @@ libexec_PROGRAMS = ifscompose
 ifscompose_SOURCES = \
 	ifscompose.c		\
 	ifscompose.h		\
-	ifscompose_utils.c   
+	ifscompose_utils.c      \
+	ifscompose_storage.c
 
 INCLUDES = \
 	-I$(top_srcdir)			\

@@ -23,8 +23,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <gdk/gdk.h>
 #include "libgimp/gimp.h"
-#include "gdk/gdk.h"
 #include "ifscompose.h"
 
 #ifndef RAND_MAX
