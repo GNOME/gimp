@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2000-12-27 13:29+0200\n"
+"POT-Creation-Date: 2000-12-29 14:28+0200\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1937,7 +1937,7 @@ msgstr "Початкове зм╕щення:"
 
 #: plug-ins/common/CML_explorer.c:1386
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr ""
+msgstr "Випадкова база (лише для режиму \"З бази\")"
 
 #: plug-ins/common/CML_explorer.c:1398 plug-ins/maze/maze_face.c:297
 msgid "Seed:"
@@ -1945,7 +1945,7 @@ msgstr "База:"
 
 #: plug-ins/common/CML_explorer.c:1410
 msgid "Switch to \"From Seed\" with the last Seed"
-msgstr ""
+msgstr "Перемикнутись на \"З бази\" з останньою базою"
 
 #: plug-ins/common/CML_explorer.c:1421
 msgid ""
@@ -2009,7 +2009,7 @@ msgstr "Складання:"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Misc Arrange:"
-msgstr ""
+msgstr "Р╕зне впорядкування:"
 
 #: plug-ins/common/CML_explorer.c:1742
 msgid "Use Cyclic Range"
@@ -2017,7 +2017,7 @@ msgstr "Використовувати цикл╕чний д╕апазон"
 
 #: plug-ins/common/CML_explorer.c:1752
 msgid "Mod. Rate:"
-msgstr ""
+msgstr "Швидк╕сть зм╕н:"
 
 #: plug-ins/common/CML_explorer.c:1761
 msgid "Env. Sensitivity:"
@@ -2095,7 +2095,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2249
 msgid "CML File Operation Warning"
-msgstr ""
+msgstr "Попередження файлових оперец╕й CML"
 
 #: plug-ins/common/CML_explorer.c:2269
 #, c-format
@@ -3768,8 +3768,8 @@ msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
-"GIF: Вибачте, неможливо зберегти RGB-зображення как GIF - спершу "
-"перетвор╕ть його в ╕ндексоване чи с╕ре.\n"
+"GIF: Вибачте, неможливо зберегти RGB-зображення как GIF - спершу перетвор╕ть "
+"його в ╕ндексоване чи с╕ре.\n"
 
 #: plug-ins/common/gif.c:953
 #, c-format
@@ -7673,17 +7673,19 @@ msgstr "Д╕стати кадри"
 
 #: plug-ins/gap/gap_decode_xanim.c:261
 msgid "Enable extraction of Frames"
-msgstr "Дозвилити д╕ставання кадр╕в"
+msgstr "Ув╕мкнути д╕ставання кадр╕в"
 
 #: plug-ins/gap/gap_decode_xanim.c:265
 msgid "Extract Audio"
-msgstr "Д╕стат╕ ауд╕одан╕"
+msgstr "Д╕стати ауд╕одан╕"
 
 #: plug-ins/gap/gap_decode_xanim.c:266
 msgid ""
 "Enable extraction of audio to raw audiofile\n"
 "(frame range limits are ignored for audio)"
 msgstr ""
+"Ув╕мкнути д╕ставання ауд╕оданих в простий ауд╕офайл\n"
+"(обмеження д╕апазону кадр╕в ╕╜нору╓ться для звуку)"
 
 #: plug-ins/gap/gap_decode_xanim.c:271
 msgid "Jpeg Quality:"
@@ -7694,6 +7696,8 @@ msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
 msgstr ""
+"Як╕сть вих╕дних кадр╕в JPEG\n"
+"(╕╜нору╓ться при використанн╕ ╕нших формат╕в)"
 
 #: plug-ins/gap/gap_decode_xanim.c:288
 msgid "Run asynchronously"
@@ -7704,6 +7708,8 @@ msgid ""
 "Run xanim asynchronously and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
 msgstr ""
+"Запустити xanim асинхронно ╕ стерти небажан╕ кадри\n"
+"(поза вказаним д╕апазоном) поки xanim ще запущено"
 
 #: plug-ins/gap/gap_decode_xanim.c:294
 msgid ""
@@ -7711,6 +7717,9 @@ msgid ""
 "Warning: xanim 2.80 has only limited MPEG support.\n"
 "Most of the frames (type P and B) will be skipped."
 msgstr ""
+"\n"
+"Увага: xanim 2.80 ма╓ обмежену п╕дтримку MPEG.\n"
+"Б╕льш╕сть кадр╕в (типу P ╕ B) буде пропущено."
 
 #: plug-ins/gap/gap_decode_xanim.c:297
 msgid "Split any Xanim readable Video to Frames"
@@ -7723,31 +7732,34 @@ msgid ""
 "%s\n"
 "maybe xanim has failed or was cancelled"
 msgstr ""
+"неможливо знайти д╕стан╕ кадри,\n"
+"%s\n"
+"можливо операц╕╖ xanim не вдались чи ╖х було перервано"
 
 #: plug-ins/gap/gap_decode_xanim.c:565
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
-msgstr ""
+msgstr "кадри не д╕стано, тому що перезапис %s було в╕дм╕нено"
 
 #: plug-ins/gap/gap_decode_xanim.c:575
 #, c-format
 msgid "failed to overwrite %s (check permissions ?)"
-msgstr ""
+msgstr "не вдалося записать %s (перев╕рте права доступу)"
 
 #: plug-ins/gap/gap_decode_xanim.c:597
 #, c-format
 msgid "failed to write %s (check permissions ?)"
-msgstr ""
+msgstr "не вдалося записати %s (перев╕рте права доступу)"
 
 #: plug-ins/gap/gap_decode_xanim.c:723
 #, c-format
 msgid "could not execute %s (check if xanim is installed)"
-msgstr ""
+msgstr "не вдалося виконати %s (переконайтесь, що xanim встановлено)"
 
 #: plug-ins/gap/gap_decode_xanim.c:731
 #, c-format
 msgid "%s does not look like xanim"
-msgstr ""
+msgstr "%s не схоже на xanim"
 
 #: plug-ins/gap/gap_decode_xanim.c:755
 #, c-format
@@ -7755,6 +7767,8 @@ msgid ""
 "The xanim program on your system \"%s\"\n"
 "does not support the exporting options Ea, Ee, Eq"
 msgstr ""
+"Програма xanim на ваш╕й систем╕ \"%s\"\n"
+"не п╕дтриму╓ експорту поодиноких кадр╕в"
 
 #: plug-ins/gap/gap_decode_xanim.c:762
 #, c-format
@@ -7781,7 +7795,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1089
 msgid "extracting frames..."
-msgstr ""
+msgstr "д╕ставання кадр╕в..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1114
 #, c-format
@@ -7789,12 +7803,16 @@ msgid ""
 "could not start xanim process\n"
 "(program=%s)"
 msgstr ""
+"не вдалося запустити процес xanim\n"
+"(програма: %s)"
 
 #: plug-ins/gap/gap_decode_xanim.c:1135
 msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
 msgstr ""
+"неможливо знайти д╕стан╕ кадри,\n"
+"операц╕╖ xanim не вдались чи ╖х було перервано"
 
 #: plug-ins/gap/gap_decode_xanim.c:1154
 msgid "renaming frames..."
@@ -7823,6 +7841,8 @@ msgid ""
 "2nd call of %s\n"
 "(define end-settings)"
 msgstr ""
+"другий виклик %s\n"
+"(визначення остаточних установок)"
 
 #: plug-ins/gap/gap_filter_foreach.c:159
 #, c-format
@@ -7830,6 +7850,8 @@ msgid ""
 "Non-Interactive call of %s\n"
 "(for all layers in between)"
 msgstr ""
+"Не╕нтерактивний виклик %s\n"
+"(для вс╕х пром╕жкових шар╕в)"
 
 #: plug-ins/gap/gap_filter_foreach.c:278
 msgid "Applying Filter to all Layers..."
@@ -7837,7 +7859,7 @@ msgstr "Застосування ф╕льтру до вс╕х шар╕в..."
 
 #: plug-ins/gap/gap_filter_foreach.c:552
 msgid "Select Filter for Animated apply"
-msgstr ""
+msgstr "Вибрати ф╕льтр для застосування на ан╕мац╕╖"
 
 #: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
 msgid "Apply Constant"
@@ -7876,6 +7898,8 @@ msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
 msgstr ""
+"ОПЕРАЦ╤Ю В╤ДМ╤НЕНО.\n"
+"Поточний кадр зм╕нено поки д╕алог було в╕крито."
 
 #: plug-ins/gap/gap_lib.c:926
 msgid ""
@@ -7884,6 +7908,10 @@ msgid ""
 "that end with _0001.xcf.\n"
 "==> Rename your image, then try again."
 msgstr ""
+"ОПЕРАЦ╤Ю В╤ДМ╤НЕНО.\n"
+"Доповнення GAP прац╕╓ лише з файлами,\n"
+"назви яких зак╕нчуються на  _0001.xcf.\n"
+"==> Перейменуйте ваше зображення ╕ спробуйте знову."
 
 #: plug-ins/gap/gap_lib.c:1013
 msgid ""
@@ -7891,6 +7919,9 @@ msgid ""
 "Save Operations may result\n"
 "in loss of layer information."
 msgstr ""
+"Ви використову╓те файл не формату XCF.\n"
+"Збереження може призвести до втрати\n"
+"╕нформац╕╖ про шари"
 
 #: plug-ins/gap/gap_lib.c:1029
 msgid "Save Flattened"
@@ -7948,11 +7979,11 @@ msgstr "Дублювати кадри (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2117
 msgid "Source Range starts at this framenumber"
-msgstr ""
+msgstr "Початковий д╕апазон почина╓ться на кадр╕ з цим номером"
 
 #: plug-ins/gap/gap_lib.c:2125
 msgid "Source Range ends at this framenumber"
-msgstr ""
+msgstr "Початковий д╕апазон зак╕нчу╓ться на кадр╕ з цим номером"
 
 #: plug-ins/gap/gap_lib.c:2128
 msgid "N times:"
@@ -7963,6 +7994,8 @@ msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
 msgstr ""
+"Скоп╕ювати вибраний д╕апазон n раз╕в\n"
+"(ви можете ввести в поле значення > 99)"
 
 #: plug-ins/gap/gap_lib.c:2137
 msgid "Duplicate Frame Range"
@@ -7984,21 +8017,23 @@ msgstr "Зсув посл╕довност╕ кадр╕в (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2296
 msgid "Affected Range starts at this framenumber"
-msgstr ""
+msgstr "Оброблюваний д╕апазон почина╓ться кадром з цим номером"
 
 #: plug-ins/gap/gap_lib.c:2304
 msgid "Affected Range ends at this framenumber"
-msgstr ""
+msgstr "Оброблюваний д╕апазон зак╕нчу╓ться кадром з цим номером"
 
 #: plug-ins/gap/gap_lib.c:2307
 msgid "N-Shift:"
-msgstr ""
+msgstr "N-зсув:"
 
 #: plug-ins/gap/gap_lib.c:2312
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
 msgstr ""
+"Перенумерувати оброблювану посл╕довн╕сть\n"
+"кадр╕в (номери цикл╕чно зсовуються на N)"
 
 #: plug-ins/gap/gap_lib.c:2314
 msgid "Framesequence shift"
@@ -8011,6 +8046,9 @@ msgid ""
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""
+"Неможливо виконати б╕льше одн╕╓╖ В╕део-функц╕╖ на одному\n"
+"╕ тому ж ан╕мованому кадровому зображенн╕ одночасно\n"
+"LOCK ID:%s\n"
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
@@ -8139,6 +8177,9 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
+"Вибрати позиц╕ю в стос╕ шар╕в.\n"
+"0, 4-5, 8\n"
+"де 0 - це верхн╕й шар"
 
 #: plug-ins/gap/gap_mod_layer.c:97
 msgid ""
@@ -8146,6 +8187,9 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
+"Вибрати позиц╕ю в стос╕ шар╕в.\n"
+"0, 4-5, 8\n"
+"де 0 - це шар тла"
 
 #: plug-ins/gap/gap_mod_layer.c:98
 msgid "Select all visible Layers"
@@ -8154,19 +8198,19 @@ msgstr "Вибрати вс╕ видим╕ шари"
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) visible"
-msgstr ""
+msgstr "Зробити шари видимими"
 
 #: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) invisible"
-msgstr ""
+msgstr "Зробити шари невидимими"
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "Set Layer(s) linked"
-msgstr ""
+msgstr "Зробити шари зв'язаними"
 
 #: plug-ins/gap/gap_mod_layer.c:105
 msgid "Set Layer(s) unlinked"
-msgstr ""
+msgstr "Зробити шари незв'язаними"
 
 #: plug-ins/gap/gap_mod_layer.c:106
 msgid "Raise Layer(s)"
@@ -8178,15 +8222,15 @@ msgstr "Опустити шари"
 
 #: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) expand as necessary"
-msgstr ""
+msgstr "Об'╓днати шари, розширюючи в раз╕ необх╕дност╕"
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "Merge Layer(s) clipped to image"
-msgstr ""
+msgstr "Об'╓днати шари, обр╕заючи до зображення"
 
 #: plug-ins/gap/gap_mod_layer.c:110
 msgid "Merge Layer(s) clipped to bg-layer"
-msgstr ""
+msgstr "Об'╓днати шари, обр╕заючи до шару тла"
 
 #: plug-ins/gap/gap_mod_layer.c:111
 msgid "Apply filter on Layer(s)"
@@ -8209,6 +8253,8 @@ msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
 msgstr ""
+"Застосувати функц╕ю до шар╕в у\n"
+"вс╕х кадрах вибраного д╕апазону\n"
 
 #: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
 #: plug-ins/gap/gap_range_ops.c:443
@@ -8244,6 +8290,9 @@ msgid ""
 "or layerstack position numbers\n"
 "0,3-5"
 msgstr ""
+"Рядок з назвою шару чи\n"
+"номер позиц╕╖ у стос╕ шар╕в\n"
+"0,3-5"
 
 #: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
@@ -8251,15 +8300,15 @@ msgstr "Рег╕строва чутлив╕сть"
 
 #: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr ""
+msgstr "Л╕тери у нижньому ╕ ВЕРХНЬОМУ ре╜╕стр╕ вважаються р╕зними"
 
 #: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
-msgstr ""
+msgstr "╤нвертувати виб╕р"
 
 #: plug-ins/gap/gap_mod_layer.c:199
 msgid "Perform actions on all unselected Layers"
-msgstr ""
+msgstr "Застосувати д╕╖ до вс╕х невибраних шар╕в"
 
 #: plug-ins/gap/gap_mod_layer.c:204
 msgid "Function:"
@@ -8281,6 +8330,9 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
+"Нова назва шару для вс╕х оброблюваних шар╕в\n"
+"[####] зам╕ня╓ться на номер кадру\n"
+"(використову╓ться лише у функц╕╖ перейменування)"
 
 #: plug-ins/gap/gap_mod_layer.c:221
 msgid "Frames Modify"
@@ -8292,6 +8344,8 @@ msgid ""
 "Non-Interactive call of %s\n"
 "(for all selected layers)"
 msgstr ""
+"Не╕нтерактивний виклик %s\n"
+"(для вс╕х вибраних шар╕в)"
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
@@ -8322,48 +8376,48 @@ msgstr "Розчинення"
 
 #: plug-ins/gap/gap_mov_dialog.c:264
 msgid "Multiply"
-msgstr ""
+msgstr "Множення"
 
 #: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
-msgstr ""
+msgstr "Перекривання"
 
 #: plug-ins/gap/gap_mov_dialog.c:267
 msgid "Difference"
-msgstr ""
+msgstr "Р╕знаця"
 
 #: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:595
 msgid "Addition"
-msgstr ""
+msgstr "Додавання"
 
 #: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
-msgstr ""
+msgstr "В╕дн╕мання"
 
 #: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Darken Only"
-msgstr ""
+msgstr "Зам╕на темним"
 
 #: plug-ins/gap/gap_mov_dialog.c:271
 msgid "Lighten Only"
-msgstr ""
+msgstr "Зам╕на св╕тлим"
 
 #: plug-ins/gap/gap_mov_dialog.c:282
 msgid "Left  Top"
-msgstr ""
+msgstr "Л╕вий верхн╕й"
 
 #: plug-ins/gap/gap_mov_dialog.c:283
 msgid "Left  Bottom"
-msgstr ""
+msgstr "Л╕вий нижн╕й"
 
 #: plug-ins/gap/gap_mov_dialog.c:284
 msgid "Right Top"
-msgstr ""
+msgstr "Правий верхн╕й"
 
 #: plug-ins/gap/gap_mov_dialog.c:285
 msgid "Right Bottom"
-msgstr ""
+msgstr "Правий нижн╕й"
 
 #: plug-ins/gap/gap_mov_dialog.c:294
 msgid "Loop"
@@ -8415,7 +8469,7 @@ msgstr "Перем╕стити шлях"
 
 #: plug-ins/gap/gap_mov_dialog.c:514
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
-msgstr ""
+msgstr "Показати кадр перегляду з вибраним початковим шаром в поточн╕й контрольн╕й точц╕."
 
 #: plug-ins/gap/gap_mov_dialog.c:518
 msgid "Anim Preview"
@@ -8423,18 +8477,18 @@ msgstr "Перегляд ан╕мац╕╖"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Generate Animated Preview as multilayer image"
-msgstr ""
+msgstr "Створити перегляд ан╕мац╕╖ як багатошарове зображення"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:538
 msgid "Copy moving source-layer(s) into frames"
-msgstr ""
+msgstr "Скоп╕ювати рухом╕ початков╕ шари в кадри"
 
 #. the start frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:571
 msgid "Start Frame:"
-msgstr ""
+msgstr "Початковий кадр:"
 
 #. label text
 #. scalesize spinsize
@@ -8446,13 +8500,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:579
 msgid "First handled frame"
-msgstr ""
+msgstr "Перший оброблюваний кадр"
 
 #. the end frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:586
 msgid "End Frame:"
-msgstr ""
+msgstr "К╕нцевий кадр:"
 
 #. label text
 #. scalesize spinsize
@@ -8464,13 +8518,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:594
 msgid "Last handled frame"
-msgstr ""
+msgstr "Останн╕й оброблюваний кадр"
 
 #. the Preview Frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:601
 msgid "Preview Frame:"
-msgstr ""
+msgstr "Перегляд кадру:"
 
 #. label text
 #. scalesize spinsize
@@ -8482,13 +8536,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:609
 msgid "Frame to show when UpdPreview button is pressed"
-msgstr ""
+msgstr "Кадр, що показу╓ться коли натиснуто кнопку \"Оновити перегляд\""
 
 #. the Layerstack scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:617 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
-msgstr ""
+msgstr "Стос шар╕в:"
 
 #. label text
 #. scalesize spinsize
@@ -9289,11 +9343,11 @@ msgstr "Нова висота:"
 
 #: plug-ins/gap/gap_range_ops.c:138
 msgid "Offset X:"
-msgstr ""
+msgstr "Зсув по X:"
 
 #: plug-ins/gap/gap_range_ops.c:147
 msgid "Offset Y:"
-msgstr ""
+msgstr "Зсув по Y:"
 
 #: plug-ins/gap/gap_range_ops.c:158
 msgid "Crop AnimFrames (all)"
@@ -9311,7 +9365,7 @@ msgstr ""
 #: plug-ins/gap/gap_range_ops.c:170
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr ""
+msgstr "Зм╕нити розм╕р (ори╜╕нал %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:176
 msgid "Scale AnimFrames (all)"
@@ -9320,11 +9374,11 @@ msgstr ""
 #: plug-ins/gap/gap_range_ops.c:177
 #, c-format
 msgid "Scale (original %dx%d)"
-msgstr ""
+msgstr "Масштабувати (ори╜╕нал %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:308
 msgid "Generate Optimal Palette"
-msgstr ""
+msgstr "Створити оптимальну"
 
 #: plug-ins/gap/gap_range_ops.c:309
 msgid "WEB Palette"
@@ -9332,27 +9386,27 @@ msgstr "Пал╕тра WWW"
 
 #: plug-ins/gap/gap_range_ops.c:310
 msgid "Use Custom Palette"
-msgstr ""
+msgstr "Використувувати власну пал╕тру"
 
 #: plug-ins/gap/gap_range_ops.c:311
 msgid "Use Black/White (1-Bit) Palette"
-msgstr ""
+msgstr "Використовувати чорно-б╕лу (1-б╕тову) пал╕тру"
 
 #: plug-ins/gap/gap_range_ops.c:313
 msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr ""
+msgstr "Зм╕шування кольор╕в за Флойдом-Стейнбер╜ом (нормальне)"
 
 #: plug-ins/gap/gap_range_ops.c:314
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr ""
+msgstr "Зм╕шування кольор╕в за Флойдом-Стейнбер╜ом (зменшене розт╕кання)"
 
 #: plug-ins/gap/gap_range_ops.c:315
 msgid "Positioned Color Dithering"
-msgstr ""
+msgstr "Позиц╕йне зм╕шування кольор╕в"
 
 #: plug-ins/gap/gap_range_ops.c:316
 msgid "No Color Dithering"
-msgstr ""
+msgstr "Без зм╕шування кольор╕в"
 
 #: plug-ins/gap/gap_range_ops.c:327
 msgid "Palette Type"
@@ -9367,46 +9421,52 @@ msgid ""
 "Name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Назва нетипово╖ пал╕три\n"
+"(╕╜нору╓ться якщо тип пал╕три типовий)"
 
 #: plug-ins/gap/gap_range_ops.c:340
 msgid "Remove Unused"
-msgstr ""
+msgstr "Видаляти невикористан╕"
 
 #: plug-ins/gap/gap_range_ops.c:341
 msgid ""
 "Remove unused or double colors\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Видаляти кольори, що не використовуютьяс чи повторюються\n"
+"(╕╜нору╓ться якщо тип пал╕три не користувацький)"
 
 #: plug-ins/gap/gap_range_ops.c:347
 msgid ""
 "Number of resulting Colors\t\t \n"
 "(ignored if Palette Type is not Generate optimal palette)"
 msgstr ""
+"Остаточна к╕льк╕сть кольор╕в\n"
+"(╕╜нору╓ться якщо тип пал╕три не \"Створити оптимальну\")"
 
 #: plug-ins/gap/gap_range_ops.c:354
 msgid "Dither Options"
-msgstr ""
+msgstr "Параметри зм╕шування"
 
 #: plug-ins/gap/gap_range_ops.c:361
 msgid "Enable transparency"
-msgstr ""
+msgstr "Дозволити прозор╕сть"
 
 #: plug-ins/gap/gap_range_ops.c:362
 msgid "Enable dithering of transparency"
-msgstr ""
+msgstr "Дозволити зм╕шування прозорост╕"
 
 #: plug-ins/gap/gap_range_ops.c:365
 msgid "Convert Frames to Indexed"
-msgstr ""
+msgstr "Перетворити кадри в ╕ндексован╕"
 
 #: plug-ins/gap/gap_range_ops.c:366
 msgid "Palette and Dither Settings"
-msgstr ""
+msgstr "Установки пал╕три та зм╕шування"
 
 #: plug-ins/gap/gap_range_ops.c:431
 msgid "Keep Type"
-msgstr ""
+msgstr "Лишити тип"
 
 #: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to RGB"
