@@ -1,5 +1,9 @@
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version number to 2.1.7.
+
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/lib.pl: put subsequent deprecated prototypes into
 	a single #ifndef ... #endif pair.
 
