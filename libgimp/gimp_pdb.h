@@ -28,6 +28,7 @@
 #include <libgimp/gimpbrushselect_pdb.h>
 #include <libgimp/gimpchannel_pdb.h>
 #include <libgimp/gimpcolor_pdb.h>
+#include <libgimp/gimpcontext_pdb.h>
 #include <libgimp/gimpconvert_pdb.h>
 #include <libgimp/gimpdisplay_pdb.h>
 #include <libgimp/gimpdrawable_pdb.h>

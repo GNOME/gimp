@@ -6,6 +6,7 @@ pdb_sources = \
 	pdb/brushes.pdb		\
 	pdb/channel.pdb		\
 	pdb/color.pdb		\
+	pdb/context.pdb		\
 	pdb/convert.pdb		\
 	pdb/display.pdb		\
 	pdb/drawable.pdb	\

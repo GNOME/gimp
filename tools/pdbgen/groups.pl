@@ -4,6 +4,7 @@
     brushes
     channel
     color
+    context
     convert
     display
     drawable

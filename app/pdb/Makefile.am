@@ -11,6 +11,7 @@ libapppdb_a_SOURCES = \
 	brushes_cmds.c		\
 	channel_cmds.c		\
 	color_cmds.c		\
+	context_cmds.c		\
 	convert_cmds.c		\
 	display_cmds.c		\
 	drawable_cmds.c		\
@@ -20,7 +21,7 @@ libapppdb_a_SOURCES = \
 	font_select_cmds.c	\
 	fonts_cmds.c		\
 	gimprc_cmds.c		\
-	gradient_edit_cmds.c \
+	gradient_edit_cmds.c	\
 	gradient_select_cmds.c	\
 	gradients_cmds.c	\
 	guides_cmds.c		\

@@ -51,10 +51,7 @@ plug_in_progress_start (PlugIn      *plug_in,
 
   g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (! message)
     message = plug_in->prog;
@@ -99,10 +96,7 @@ plug_in_progress_update (PlugIn  *plug_in,
 
   g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (! proc_frame->progress                           ||
       ! gimp_progress_is_active (proc_frame->progress) ||
@@ -122,10 +116,7 @@ plug_in_progress_end (PlugIn *plug_in)
 
   g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->progress)
     {
@@ -171,10 +162,7 @@ plug_in_progress_install (PlugIn      *plug_in,
       return FALSE;
     }
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->progress)
     {
@@ -204,10 +192,7 @@ plug_in_progress_uninstall (PlugIn      *plug_in,
   g_return_val_if_fail (plug_in != NULL, FALSE);
   g_return_val_if_fail (progress_callback != NULL, FALSE);
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (GIMP_IS_PDB_PROGRESS (proc_frame->progress))
     {

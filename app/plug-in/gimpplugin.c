@@ -849,6 +849,17 @@ plug_in_pop (Gimp *gimp)
     gimp->current_plug_in = NULL;
 }
 
+PlugInProcFrame *
+plug_in_get_proc_frame (PlugIn *plug_in)
+{
+  g_return_val_if_fail (plug_in != NULL, NULL);
+
+  if (plug_in->temp_proc_frames)
+    return plug_in->temp_proc_frames->data;
+  else
+    return &plug_in->main_proc_frame;
+}
+
 void
 plug_in_proc_frame_push (PlugIn       *plug_in,
                          GimpContext  *context,
@@ -918,8 +929,6 @@ plug_in_main_loop_quit (PlugIn *plug_in)
 
   g_return_if_fail (proc_frame->main_loop != NULL);
 
-  proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
-
   g_main_loop_quit (proc_frame->main_loop);
 }
 
@@ -932,10 +941,7 @@ plug_in_get_undo_desc (PlugIn *plug_in)
 
   g_return_val_if_fail (plug_in != NULL, NULL);
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   if (proc_frame)
     proc_def = plug_ins_proc_def_find (plug_in->gimp, proc_frame->proc_rec);

@@ -1,0 +1,83 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+   $author = 'Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>';
+   $copyright = 'Michael Natterer & Sven Neumann';
+   $date = '2004';
+   $since = '2.2';
+}
+
+sub context_push {
+    $blurb = 'Pushes a context to the top of the plug-in\'s context stack.';
+
+    $help = <<'HELP';
+This procedure creates a new context by copying the current context. This
+copy becomes the new current context for the calling plug-in until it is
+popped again.
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      plug_in_context_push (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_pop {
+    $blurb = 'Pops the topmost context from the plug-in\'s context stack.';
+
+    $help = <<'HELP';
+This procedure creates a new context and makes it the current context for the
+calling plug-in.
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->open)
+    {
+      plug_in_context_push (gimp->current_plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-context.h");
+
+@procs = qw(context_push context_pop);
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Context';
+
+1;

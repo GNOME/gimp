@@ -352,10 +352,7 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   Argument        *args;
   Argument        *return_vals;
 
-  if (plug_in->temp_proc_frames)
-    proc_frame = plug_in->temp_proc_frames->data;
-  else
-    proc_frame = &plug_in->main_proc_frame;
+  proc_frame = plug_in_get_proc_frame (plug_in);
 
   proc_rec = procedural_db_lookup (plug_in->gimp, proc_run->name);
 
