@@ -527,6 +527,38 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
 }
 
 void
+view_snap_to_canvas_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_snap_to_canvas (shell, active);
+}
+
+void
+view_snap_to_vectors_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          active;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  gimp_display_shell_set_snap_to_vectors (shell, active);
+}
+
+void
 view_padding_color_cmd_callback (GtkAction *action,
                                  gint       value,
                                  gpointer   data)

@@ -82,6 +82,8 @@
 #define GIMP_HELP_VIEW_SNAP_TO_GUIDES             "gimp-view-snap-to-guides"
 #define GIMP_HELP_VIEW_SHOW_GRID                  "gimp-view-show-grid"
 #define GIMP_HELP_VIEW_SNAP_TO_GRID               "gimp-view-snap-to-grid"
+#define GIMP_HELP_VIEW_SNAP_TO_CANVAS             "gimp-view-snap-to-canvas"
+#define GIMP_HELP_VIEW_SNAP_TO_VECTORS            "gimp-view-snap-to-vectors"
 #define GIMP_HELP_VIEW_SHOW_MENUBAR               "gimp-view-show-menubar"
 #define GIMP_HELP_VIEW_SHOW_RULERS                "gimp-view-show-rulers"
 #define GIMP_HELP_VIEW_SHOW_SCROLLBARS            "gimp-view-show-scrollbars"

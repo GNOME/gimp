@@ -1,3 +1,25 @@
+2005-01-03  Michael Natterer  <mitch@gimp.org>
+
+	Implemented "Snap to Canvas Edges" (fixes bug #152971) and
+	"Snap to Active Path" (half way done):
+
+	* app/core/gimpimage-snap.[ch]: added boolean snap_to_canvas and
+	snap_to_vectors parameters (snap_to_vectors works fine when
+	snapping to a point, but is unimplemented for snapping to a
+	rectangle).
+
+	* app/display/gimpdisplayshell.[ch] (struct GimpDisplayShell):
+	added snap_to_canvas and snap_to_vectors booleans.
+
+	* app/display/gimpdisplayshell-appearance.[ch]: added API to
+	get/set them.
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]
+	* app/widgets/gimphelp-ids.h: added actions, callbacks and help IDs.
+
+	* menus/image-menu.xml.in: added them to Image->View.
+
 2005-01-03  Sven Neumann  <neumann@jpk.com>
 
 	* plug-ins/ifscompose/ifscompose.c: use g_free() to release memory

@@ -157,6 +157,18 @@ static GimpToggleActionEntry view_toggle_actions[] =
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_GRID },
 
+  { "view-snap-to-canvas", NULL,
+    N_("S_nap to Canvas Edges"), NULL, NULL,
+    G_CALLBACK (view_snap_to_canvas_cmd_callback),
+    FALSE,
+    GIMP_HELP_VIEW_SNAP_TO_CANVAS },
+
+  { "view-snap-to-vectors", NULL,
+    N_("Snap to Active Pat_h"), NULL, NULL,
+    G_CALLBACK (view_snap_to_vectors_cmd_callback),
+    FALSE,
+    GIMP_HELP_VIEW_SNAP_TO_VECTORS },
+
   { "view-show-menubar", NULL,
     N_("Show _Menubar"), NULL, NULL,
     G_CALLBACK (view_toggle_menubar_cmd_callback),
@@ -514,6 +526,8 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-snap-to-guides",      gdisp && shell->snap_to_guides);
   SET_ACTIVE    ("view-show-grid",           gdisp && options->show_grid);
   SET_ACTIVE    ("view-snap-to-grid",        gdisp && shell->snap_to_grid);
+  SET_ACTIVE    ("view-snap-to-canvas",      gdisp && shell->snap_to_canvas);
+  SET_ACTIVE    ("view-snap-to-vectors",     gdisp && shell->snap_to_vectors);
 
   if (gdisp)
     {

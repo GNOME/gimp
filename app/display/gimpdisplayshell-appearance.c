@@ -453,6 +453,56 @@ gimp_display_shell_get_snap_to_guides (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_snap_to_canvas (GimpDisplayShell *shell,
+                                       gboolean          snap)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (snap != shell->snap_to_canvas)
+    {
+      shell->snap_to_canvas = snap ? TRUE : FALSE;
+
+      SET_ACTIVE (shell->menubar_manager, "view-snap-to-canvas", snap);
+
+      if (IS_ACTIVE_DISPLAY (shell))
+        SET_ACTIVE (shell->popup_manager, "view-snap-to-canvas", snap);
+    }
+}
+
+gboolean
+gimp_display_shell_get_snap_to_canvas (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->snap_to_canvas;
+}
+
+void
+gimp_display_shell_set_snap_to_vectors (GimpDisplayShell *shell,
+                                        gboolean          snap)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (snap != shell->snap_to_vectors)
+    {
+      shell->snap_to_vectors = snap ? TRUE : FALSE;
+
+      SET_ACTIVE (shell->menubar_manager, "view-snap-to-vectors", snap);
+
+      if (IS_ACTIVE_DISPLAY (shell))
+        SET_ACTIVE (shell->popup_manager, "view-snap-to-vectors", snap);
+    }
+}
+
+gboolean
+gimp_display_shell_get_snap_to_vectors (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->snap_to_vectors;
+}
+
+void
 gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                                 GimpCanvasPaddingMode  padding_mode,
                                 const GimpRGB         *padding_color)

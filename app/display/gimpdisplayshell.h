@@ -93,6 +93,8 @@ struct _GimpDisplayShell
   gboolean          proximity;         /*  is a device in proximity           */
   gboolean          snap_to_guides;    /*  should the guides be snapped to?   */
   gboolean          snap_to_grid;      /*  should the grid be snapped to?     */
+  gboolean          snap_to_canvas;    /*  should the canvas be snapped to?   */
+  gboolean          snap_to_vectors;   /*  should the active path be snapped  */
 
   Selection        *select;            /*  Selection object                   */
 

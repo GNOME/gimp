@@ -241,6 +241,8 @@
       <menuitem action="view-snap-to-guides" />
       <menuitem action="view-show-grid" />
       <menuitem action="view-snap-to-grid" />
+      <menuitem action="view-snap-to-canvas" />
+      <menuitem action="view-snap-to-vectors" />
       <menu action="view-padding-color-menu" name="Padding color">
         <menuitem action="view-padding-color-theme" />
         <menuitem action="view-padding-color-light-check" />
