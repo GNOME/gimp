@@ -57,6 +57,7 @@ app/core/gimpmodules.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
+app/core/gimptemplate.c
 app/core/gimpunit.c
 app/core/gimpunits.c
 
@@ -136,6 +137,7 @@ app/gui/resolution-calibrate-dialog.c
 app/gui/select-commands.c
 app/gui/session.c
 app/gui/splash.c
+app/gui/templates-menu.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c
 app/gui/tool-options-dialog.c
@@ -264,6 +266,7 @@ app/widgets/gimplayertreeview.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
+app/widgets/gimptemplateview.c
 app/widgets/gimptexteditor.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
