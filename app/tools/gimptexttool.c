@@ -549,16 +549,16 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
    *   - the last undo changed the same text property on the same layer
    *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
    */
-  if (pspec && ! gimp_undo_stack_peek (image->redo_stack))
+  if (pspec)
     {
-      GimpUndo *undo = gimp_undo_stack_peek (image->undo_stack);
+      GimpUndo *undo = gimp_image_undo_can_compress (image, GIMP_TYPE_TEXT_UNDO,
+                                                     GIMP_UNDO_TEXT_LAYER);
 
-      if (GIMP_IS_TEXT_UNDO (undo))
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
         {
           GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
 
-          if (text_undo->pspec == pspec &&
-              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+          if (text_undo->pspec == pspec)
             {
               guint now = time (NULL);
 

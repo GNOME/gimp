@@ -20,26 +20,30 @@
 #define __GIMP_IMAGE_UNDO_H__
 
 
-gboolean   gimp_image_undo             (GimpImage        *gimage);
-gboolean   gimp_image_redo             (GimpImage        *gimage);
+gboolean   gimp_image_undo              (GimpImage        *gimage);
+gboolean   gimp_image_redo              (GimpImage        *gimage);
 
-void       gimp_image_undo_free        (GimpImage        *gimage);
+void       gimp_image_undo_free         (GimpImage        *gimage);
 
-gboolean   gimp_image_undo_group_start (GimpImage        *gimage,
-                                        GimpUndoType      type,
-                                        const gchar      *name);
-gboolean   gimp_image_undo_group_end   (GimpImage        *gimage);
+gboolean   gimp_image_undo_group_start  (GimpImage        *gimage,
+                                         GimpUndoType      undo_type,
+                                         const gchar      *name);
+gboolean   gimp_image_undo_group_end    (GimpImage        *gimage);
 
-GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
-                                        GType             undo_gtype,
-                                        gint64            size,
-                                        gsize             struct_size,
-                                        GimpUndoType      type,
-                                        const gchar      *name,
-                                        GimpDirtyMask     dirty_mask,
-                                        GimpUndoPopFunc   pop_func,
-                                        GimpUndoFreeFunc  free_func,
-                                        ...);
+GimpUndo * gimp_image_undo_push         (GimpImage        *gimage,
+                                         GType             object_type,
+                                         gint64            size,
+                                         gsize             struct_size,
+                                         GimpUndoType      undo_type,
+                                         const gchar      *name,
+                                         GimpDirtyMask     dirty_mask,
+                                         GimpUndoPopFunc   pop_func,
+                                         GimpUndoFreeFunc  free_func,
+                                         ...);
+
+GimpUndo * gimp_image_undo_can_compress (GimpImage        *gimage,
+                                         GType             object_type,
+                                         GimpUndoType      undo_type);
 
 
 #endif /* __GIMP_IMAGE_UNDO_H__ */

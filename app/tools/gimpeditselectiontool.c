@@ -1195,30 +1195,30 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
       break;
     }
 
-  undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
-
   /* compress undo */
-  if (! gimp_undo_stack_peek (gdisp->gimage->redo_stack) &&
-      GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
+  undo = gimp_image_undo_can_compress (gdisp->gimage, GIMP_TYPE_UNDO_STACK,
+                                       undo_type);
+
+  if (undo                                                         &&
+      g_object_get_data (G_OBJECT (undo),
+                         "edit-selection-tool") == (gpointer) tool &&
+      g_object_get_data (G_OBJECT (undo),
+                         "edit-selection-item") == (gpointer) item &&
+      g_object_get_data (G_OBJECT (undo),
+                         "edit-selection-type") == GINT_TO_POINTER (edit_mode))
     {
-      if (g_object_get_data (G_OBJECT (undo), "edit-selection-tool") ==
-          (gpointer) tool                                                &&
-          g_object_get_data (G_OBJECT (undo), "edit-selection-item") ==
-          (gpointer) item                                                &&
-          g_object_get_data (G_OBJECT (undo), "edit-selection-type") ==
-          GINT_TO_POINTER (edit_mode))
-        {
-          push_undo = FALSE;
-        }
+      push_undo = FALSE;
     }
 
   if (push_undo)
     {
       if (gimp_image_undo_group_start (gdisp->gimage, undo_type, undo_desc))
         {
-          undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
+          undo = gimp_image_undo_can_compress (gdisp->gimage,
+                                               GIMP_TYPE_UNDO_STACK,
+                                               undo_type);
 
-          if (GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
+          if (undo)
             {
               g_object_set_data (G_OBJECT (undo), "edit-selection-tool",
                                  tool);

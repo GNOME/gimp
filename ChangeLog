@@ -1,5 +1,25 @@
 2004-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_can_compress):
+	new function which checks if undo compression is possible:
+
+	(1) is the image dirty? Fixes bug #148853.
+	(2) is redo stack empty?
+	(3) do both the passed undo object_type and undo_type
+	    match the top undo item?
+
+	Consistently name the GType and GimpUndoType passed to undo
+	functions "object_type" and "undo_type" to avoid confusion.
+
+	* app/actions/layers-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c: use the new utility function
+	instead of checking the above conditions manually.
+
+2004-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_load): don't
 	leak the brush's name if parsing the shape fails.
 

@@ -38,7 +38,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitemundo.h"
 #include "core/gimppattern.h"
-#include "core/gimpundostack.h"
 
 #include "text/gimptextlayer.h"
 
@@ -942,13 +941,11 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
 
-          undo = gimp_undo_stack_peek (gimage->undo_stack);
-
           /*  compress layer mode undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
-              GIMP_IS_ITEM_UNDO (undo)                    &&
-              undo->undo_type == GIMP_UNDO_LAYER_MODE     &&
-              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+          undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_LAYER_MODE);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
             push_undo = FALSE;
 
 	  BLOCK();
@@ -1011,13 +1008,11 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
 
-          undo = gimp_undo_stack_peek (gimage->undo_stack);
-
           /*  compress opacity undos  */
-          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
-              GIMP_IS_ITEM_UNDO (undo)                    &&
-              undo->undo_type == GIMP_UNDO_LAYER_OPACITY  &&
-              GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+          undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_LAYER_OPACITY);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
             push_undo = FALSE;
 
 	  BLOCK();

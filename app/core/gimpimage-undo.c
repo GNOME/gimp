@@ -43,7 +43,7 @@ static void          gimp_image_undo_pop_stack       (GimpImage     *gimage,
 static void          gimp_image_undo_free_space      (GimpImage     *gimage);
 static void          gimp_image_undo_free_redo       (GimpImage     *gimage);
 
-static GimpDirtyMask gimp_image_undo_dirty_from_type (GimpUndoType   type);
+static GimpDirtyMask gimp_image_undo_dirty_from_type (GimpUndoType   undo_type);
 
 
 /*  public functions  */
@@ -108,20 +108,20 @@ gimp_image_undo_free (GimpImage *gimage)
 
 gboolean
 gimp_image_undo_group_start (GimpImage    *gimage,
-                             GimpUndoType  type,
+                             GimpUndoType  undo_type,
                              const gchar  *name)
 {
   GimpUndoStack *undo_group;
   GimpDirtyMask  dirty_mask;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (type >  GIMP_UNDO_GROUP_FIRST &&
-                        type <= GIMP_UNDO_GROUP_LAST, FALSE);
+  g_return_val_if_fail (undo_type >  GIMP_UNDO_GROUP_FIRST &&
+                        undo_type <= GIMP_UNDO_GROUP_LAST, FALSE);
 
   if (! name)
-    name = gimp_undo_type_to_name (type);
+    name = gimp_undo_type_to_name (undo_type);
 
-  dirty_mask = gimp_image_undo_dirty_from_type (type);
+  dirty_mask = gimp_image_undo_dirty_from_type (undo_type);
 
   /* Notify listeners that the image will be modified */
   if (gimage->group_count == 0 && dirty_mask != GIMP_DIRTY_NONE)
@@ -151,12 +151,12 @@ gimp_image_undo_group_start (GimpImage    *gimage,
   undo_group = gimp_undo_stack_new (gimage);
 
   gimp_object_set_name (GIMP_OBJECT (undo_group), name);
-  GIMP_UNDO (undo_group)->undo_type  = type;
+  GIMP_UNDO (undo_group)->undo_type  = undo_type;
   GIMP_UNDO (undo_group)->dirty_mask = dirty_mask;
 
   gimp_undo_stack_push_undo (gimage->undo_stack, GIMP_UNDO (undo_group));
 
-  gimage->pushing_undo_group = type;
+  gimage->pushing_undo_group = undo_type;
 
   return TRUE;
 }
@@ -191,10 +191,10 @@ gimp_image_undo_group_end (GimpImage *gimage)
 
 GimpUndo *
 gimp_image_undo_push (GimpImage        *gimage,
-                      GType             undo_gtype,
+                      GType             object_type,
                       gint64            size,
                       gsize             struct_size,
-                      GimpUndoType      type,
+                      GimpUndoType      undo_type,
                       const gchar      *name,
                       GimpDirtyMask     dirty_mask,
                       GimpUndoPopFunc   pop_func,
@@ -208,8 +208,8 @@ gimp_image_undo_push (GimpImage        *gimage,
   gpointer    undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (g_type_is_a (undo_gtype, GIMP_TYPE_UNDO), NULL);
-  g_return_val_if_fail (type > GIMP_UNDO_GROUP_LAST, NULL);
+  g_return_val_if_fail (g_type_is_a (object_type, GIMP_TYPE_UNDO), NULL);
+  g_return_val_if_fail (undo_type > GIMP_UNDO_GROUP_LAST, NULL);
 
   /* Does this undo dirty the image?  If so, we always want to mark
    * image dirty, even if we can't actually push the undo.
@@ -221,15 +221,15 @@ gimp_image_undo_push (GimpImage        *gimage,
     return NULL;
 
   if (! name)
-    name = gimp_undo_type_to_name (type);
+    name = gimp_undo_type_to_name (undo_type);
 
   if (struct_size > 0)
     undo_struct = g_malloc0 (struct_size);
 
-  params = gimp_parameters_append (undo_gtype, params, &n_params,
+  params = gimp_parameters_append (object_type, params, &n_params,
                                    "name",       name,
                                    "image",      gimage,
-                                   "undo-type",  type,
+                                   "undo-type",  undo_type,
                                    "dirty-mask", dirty_mask,
                                    "data",       undo_struct,
                                    "size",       size,
@@ -238,10 +238,10 @@ gimp_image_undo_push (GimpImage        *gimage,
                                    NULL);
 
   va_start (args, free_func);
-  params = gimp_parameters_append_valist (undo_gtype, params, &n_params, args);
+  params = gimp_parameters_append_valist (object_type, params, &n_params, args);
   va_end (args);
 
-  undo = g_object_newv (undo_gtype, n_params, params);
+  undo = g_object_newv (object_type, n_params, params);
 
   gimp_parameters_free (params, n_params);
 
@@ -278,6 +278,27 @@ gimp_image_undo_push (GimpImage        *gimage,
       gimp_undo_stack_push_undo (undo_group, undo);
 
       return undo;
+    }
+
+  return NULL;
+}
+
+GimpUndo *
+gimp_image_undo_can_compress (GimpImage    *gimage,
+                              GType         object_type,
+                              GimpUndoType  undo_type)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  if (gimage->dirty != 0 && ! gimp_undo_stack_peek (gimage->redo_stack))
+    {
+      GimpUndo *undo = gimp_undo_stack_peek (gimage->undo_stack);
+
+      if (undo && undo->undo_type == undo_type &&
+          g_type_is_a (G_TYPE_FROM_INSTANCE (undo), object_type))
+        {
+          return undo;
+        }
     }
 
   return NULL;
@@ -412,9 +433,9 @@ gimp_image_undo_free_redo (GimpImage *gimage)
 }
 
 static GimpDirtyMask
-gimp_image_undo_dirty_from_type (GimpUndoType type)
+gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
 {
-  switch (type)
+  switch (undo_type)
     {
     case GIMP_UNDO_GROUP_IMAGE_SCALE:
     case GIMP_UNDO_GROUP_IMAGE_RESIZE:

@@ -447,20 +447,15 @@ layers_opacity_cmd_callback (GtkAction *action,
   GimpImage      *gimage;
   GimpLayer      *layer;
   gdouble         opacity;
+  GimpUndo       *undo;
   gboolean        push_undo = TRUE;
   return_if_no_layer (gimage, layer, data);
 
-  if (! gimp_undo_stack_peek (gimage->redo_stack))
-    {
-      GimpUndo *undo = gimp_undo_stack_peek (gimage->undo_stack);
+  undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
+                                       GIMP_UNDO_LAYER_OPACITY);
 
-      if (GIMP_IS_ITEM_UNDO (undo)                         &&
-          undo->undo_type == GIMP_UNDO_LAYER_OPACITY       &&
-          GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
-        {
-          push_undo = FALSE;
-        }
-    }
+  if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+    push_undo = FALSE;
 
   opacity = gimp_layer_get_opacity (layer);
   opacity = action_select_value ((GimpActionSelectType) value,
