@@ -273,3 +273,7 @@ proc pdb-help-init {} {
 
     show_proc "pdb_help"
 }
+
+if {![string compare [interp slave] ""]} {
+	uplevel \#0 gimptcl_run 1
+}

@@ -59,6 +59,7 @@ int
 Gtcl_ConstInit(Tcl_Interp *interp){
   char t[30], t1[30];
 
+  Tcl_PkgProvide(interp, "GtclConstant", "1.0");
   /* the auto-generated ones from <gimpenums.h> */
 #include "gtclenums.h"
 

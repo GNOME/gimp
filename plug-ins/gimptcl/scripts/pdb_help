@@ -1,4 +1,4 @@
-#!/usr/libexec/gimptcl
+#!/usr/X11R6//libexec/gimptcl
 # -*-Mode: Tcl;-*-
 ##################################################
 # file: pdb-help.tcl
@@ -272,4 +272,8 @@ proc pdb-help-init {} {
     pack .about .ctl
 
     show_proc "pdb_help"
+}
+
+if {![string compare [interp slave] ""]} {
+	uplevel \#0 gimptcl_run 1
 }

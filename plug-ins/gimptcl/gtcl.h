@@ -34,6 +34,8 @@ int Gtcl_QueryDBProc(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
 int Gtcl_QueryDB(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
 int Gtcl_InstallProc(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
 int Gtcl_GimpMain(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
+int Gtcl_SetData(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
+int Gtcl_GetData(ClientData data, Tcl_Interp *interp, int ac, char *av[]);
 
 int Argv_to_GParam(Tcl_Interp *interp, char *name, int ac, char **av,
 		   GParam *parr);
@@ -46,6 +48,7 @@ void cvtfrom (char *str);
 void cvtto (char *str);
 
 extern char *GtclConst;
+extern char *GtclProcs;
 
 #define debugging 1
 

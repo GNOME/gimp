@@ -33,6 +33,8 @@
 #include <libgimp/gimp.h>
 #include "gtcl.h"
 
+char *GtclProcs = NULL;
+
 static char *proc_types[] = {
   "undefined",
   "plug-in",
@@ -84,16 +86,20 @@ Gtcl_PDBInit(Tcl_Interp *interp){
   int nreturn_vals;
   GParamDef *params, *return_vals;
   int num_procs, i, j;
-  char whole_proc[2048];
-  char arglist[400];
-  char carglist[400];
+  char whole_proc[4096];
+  char arglist[1024];
+  char carglist[1024];
+  char **theproc_list;
 
+  Tcl_PkgProvide(interp, "GtclPDB", "1.0");
   gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*",
 		       &num_procs, &proc_list);
+  theproc_list = (char **)malloc(num_procs * sizeof(char *));
+
   for (i = 0; i < num_procs; i++) {
-    memset(whole_proc, 0, 2048);
-    memset(arglist, 0, 400);
-    memset(carglist, 0, 400);
+    memset(whole_proc, 0, sizeof(whole_proc));
+    memset(arglist, 0, sizeof(arglist));
+    memset(carglist, 0, (sizeof(carglist)));
     proc_name = strdup (proc_list[i]);
 		/*  fprintf(stderr, "(proc %d/%d %s)\n", i, num_procs, proc_name);*/
       /*  lookup the procedure  */
@@ -102,19 +108,25 @@ Gtcl_PDBInit(Tcl_Interp *interp){
 			    &nparams, &nreturn_vals,
 			    &params, &return_vals) == TRUE) {
       cvtfrom(proc_name);
+      theproc_list[i] = (char *)malloc(strlen(proc_name)+1);
+      strcpy(theproc_list[i], proc_name);
+      /*      fprintf(stderr, "adding %d `%s' -> `%s' %d\n", i, proc_name,
+	      theproc_list[i], strlen(proc_name)); */
       sprintf(carglist, "gimp-run-procedure %s ", proc_name);
       for(j=0;j<nparams;j++){
 	if (strcmp(params[j].name, "run_mode")==0){
 	  strcat(carglist, "1 ");
 	} else {
-	  strcat(arglist, params[j].name);
+     char vname[30];
+     sprintf(vname, "%s%d", params[j].name, j);
+	  strcat(arglist, vname);
 	  strcat(arglist, " ");
 	  strcat(carglist, "$");
-	  strcat(carglist, params[j].name);
+	  strcat(carglist, vname);
 	  strcat(carglist, " ");
 	}
       }
-      sprintf(whole_proc, "proc %s {%s} {\n global GimpPDBCmd\n  set GimpPDBCmd %s\n   update\n   return [%s]\n}\n\n",
+      sprintf(whole_proc, "proc {%s} {%s} {\n   global env\n   set env(GimpPDBCmd) %s\n   update\n   return [%s]\n}\n\n",
 	      proc_name, arglist, proc_name, carglist);
 #if 0
       fprintf(stderr, "%s", whole_proc);
@@ -132,6 +144,11 @@ Gtcl_PDBInit(Tcl_Interp *interp){
 
     }
   }
+  GtclProcs = Tcl_Merge(num_procs, theproc_list);
+  /*  fprintf(stderr, "%s", GtclProcs);*/
+  for(i=0;i<num_procs;i++) free(theproc_list[i]);
+  free(theproc_list);
+
   return TCL_OK;
 }
 
@@ -147,6 +164,12 @@ Gtcl_GimpRunProc(ClientData data, Tcl_Interp *interp, int ac, char *av[]){
   GParamDef *p_par, *p_rv;
   char *p_name;
   int i;
+
+  if (ac < 2) {
+    Tcl_SetResult(interp, "gimp-run-procedure: too few arguments",
+						TCL_STATIC);
+    return TCL_ERROR;
+  }
 
   rv_a=(char **)NULL;
   p_name = strdup(av[1]);
@@ -436,6 +459,42 @@ Gtcl_GimpMain(ClientData data, Tcl_Interp *interp, int argc, char *argv[]){
   gimp_main(ac0+1, av);
   free((char*)av);
   free((char*)av0);
+  return TCL_OK;
+}
+
+/*
+ * get/set runtime data from the gimp program
+ * for running with last args
+ */
+int
+Gtcl_SetData(ClientData data, Tcl_Interp *interp, int ac, char *av[]){
+  if(ac!=3){
+    Tcl_SetResult(interp, "gimp-set-data: wrong # args:\n",
+		  TCL_STATIC);
+    Tcl_AppendResult(interp, "usage: ", av[0],
+		     " <key> <value>", (char *)NULL);
+    return(TCL_ERROR);
+  }
+  gimp_set_data(av[1], av[2], strlen(av[2]));
+  return TCL_OK;
+}
+
+int
+Gtcl_GetData(ClientData data, Tcl_Interp *interp, int ac, char *av[]){
+  char tmp[1024];
+
+  memset(tmp, 0, 1024);
+
+  if(ac!=2){
+    Tcl_SetResult(interp, "gimp-get-data: wrong # args:\n",
+		  TCL_STATIC);
+    Tcl_AppendResult(interp, "usage: ", av[0],
+		     " <key>", (char *)NULL);
+    return(TCL_ERROR);
+  }
+  gimp_get_data(av[1], tmp);
+
+  Tcl_SetResult(interp, tmp, TCL_VOLATILE);
   return TCL_OK;
 }
 

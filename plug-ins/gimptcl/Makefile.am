@@ -28,7 +28,7 @@ LDADD = \
         @LIBTCL_LIB@	                                           \
         $(X_LIBS)                                               \
         -lc                                                     \
-        -lm -ldl
+        -lm
 
 gtclenums.h: ${top_srcdir}/libgimp/gimpenums.h gtclEnums.h
 	misc/enum.pl ${top_srcdir}/libgimp/gimpenums.h gtclEnums.h >$@

@@ -277,13 +277,28 @@ Argv_to_GParam(Tcl_Interp *interp, char *name, int ac, char **av,
       break;
 
     case PARAM_DISPLAY:
+      sscanf(av[i], "display-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (display)%d ", pc->data.d_int32));
+      break;
     case PARAM_IMAGE:
+      sscanf(av[i], "image-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (image)%d ", pc->data.d_int32));
+      break;
     case PARAM_LAYER:
+      sscanf(av[i], "layer-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (layer)%d ", pc->data.d_int32));
+      break;
     case PARAM_CHANNEL:
+      sscanf(av[i], "channel-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (channel)%d ", pc->data.d_int32));
+      break;
     case PARAM_DRAWABLE:
+      sscanf(av[i], "layer-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (drawable)%d ", pc->data.d_int32));
+      break;
     case PARAM_SELECTION:
-      pc->data.d_int32 = strtol(av[i], (char **)NULL, 0);
-      DPRINTF(2,(stderr, " (dsp,img,lay,chan,drw,sel)%d ", pc->data.d_int32));
+      sscanf(av[i], "selection-%d", &pc->data.d_int32);
+      DPRINTF(2,(stderr, " (selection)%d ", pc->data.d_int32));
       break;
 
     case PARAM_BOUNDARY:
@@ -332,7 +347,10 @@ GParam_to_Argv(Tcl_Interp *interp, char *p_name, int p_nrv,
       sprintf(t, "%g", vals[i].data.d_float);
       break;
     case PARAM_STRING:
-      strcpy(t,vals[i].data.d_string);
+      if(vals[i].data.d_string)
+	strcpy(t,vals[i].data.d_string);
+      else
+	sprintf(t,"(null)");
       break;
     case PARAM_INT32ARRAY: {
       char **ar, *t1;
@@ -415,12 +433,22 @@ GParam_to_Argv(Tcl_Interp *interp, char *p_name, int p_nrv,
       return TCL_ERROR;
       break;
     case PARAM_DISPLAY:
+      sprintf(t, "display-%d", vals[i].data.d_int32);
+      break;
     case PARAM_IMAGE:
+      sprintf(t, "image-%d", vals[i].data.d_int32);
+      break;
     case PARAM_LAYER:
+      sprintf(t, "layer-%d", vals[i].data.d_int32);
+      break;
     case PARAM_CHANNEL:
+      sprintf(t, "channel-%d", vals[i].data.d_int32);
+      break;
     case PARAM_DRAWABLE:
+      sprintf(t, "layer-%d", vals[i].data.d_int32);
+      break;
     case PARAM_SELECTION:
-      sprintf(t, "%d", vals[i].data.d_int32);
+      sprintf(t, "selection-%d", vals[i].data.d_int32);
       break;
     case PARAM_BOUNDARY:
       Tcl_SetResult(interp, "Unsupported return type: Boundary",

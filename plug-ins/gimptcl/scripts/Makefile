@@ -1,22 +1,16 @@
 # Generated automatically from Makefile.in by configure.
-# Makefile.in generated automatically by automake 1.2c from Makefile.am
+# Makefile.in generated automatically by automake 1.2 from Makefile.am
 
 # Copyright (C) 1994, 1995, 1996, 1997 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
-# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+# gives unlimited permission to copy, distribute and modify it.
 
 
 SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../../..
-prefix = /usr
+prefix = /usr/X11R6/
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -55,18 +49,18 @@ POST_INSTALL = true
 NORMAL_UNINSTALL = true
 PRE_UNINSTALL = true
 POST_UNINSTALL = true
-host_alias = i486-pc-linux-gnu
-host_triplet = i486-pc-linux-gnu
+host_alias = i386-unknown-freebsd3.0
+host_triplet = i386-unknown-freebsd3.0
 CC = gcc
 CPP = gcc -E
-EMACS = /usr/bin/emacs
+EMACS = 
 GIMPTCL = gimptcl
 JPEG = jpeg
-LD = /usr/lib/gcc-lib/i386-linux/egcs-2.90.18/ld
+LD = /usr/bin/ld
 LIBJPEG_LIB = -ljpeg
-LIBMPEG_LIB = 
+LIBMPEG_LIB = -lmpeg
 LIBPNG_LIB = -lpng -lz
-LIBTCL_LIB = -ltcl -ltk
+LIBTCL_LIB = -ltcl75 -ltk41 
 LIBTIFF_LIB = -ltiff
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIBXDELTA_LIB = 
@@ -74,8 +68,8 @@ LIBXPM_LIB = -lXpm
 LN_S = ln -s
 MAINT = #M#
 MAKEINFO = makeinfo
-MPEG = 
-NM = /usr/bin/nm -B
+MPEG = mpeg
+NM = /usr/bin/nm -p
 PACKAGE = gimp
 PNG = png
 RANLIB = ranlib
@@ -111,9 +105,9 @@ default: all
 $(srcdir)/Makefile.in: #M# Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
 	cd $(top_srcdir) && $(AUTOMAKE) --gnu plug-ins/gimptcl/scripts/Makefile
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
-	cd $(top_builddir) \
-	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+#Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
+#	cd $(top_builddir) \
+#	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
 install-pluginlibSCRIPTS: $(pluginlib_SCRIPTS)
@@ -145,7 +139,6 @@ subdir = plug-ins/gimptcl/scripts
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
-	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
 	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu plug-ins/gimptcl/scripts/Makefile
 	@for file in $(DISTFILES); do \
@@ -179,26 +172,26 @@ installdirs:
 
 
 mostlyclean-generic:
-	-test -z "$(MOSTLYCLEANFILES)" || rm -f $(MOSTLYCLEANFILES)
+	test -z "$(MOSTLYCLEANFILES)" || rm -f $(MOSTLYCLEANFILES)
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+	test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
-	-rm -f Makefile $(DISTCLEANFILES)
-	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
-	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+	rm -f Makefile $(DISTCLEANFILES)
+	rm -f config.cache config.log stamp-h stamp-h[0-9]*
+	test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 
 maintainer-clean-generic:
-	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+	test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+	test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 mostlyclean:  mostlyclean-generic
 
 clean:  clean-generic mostlyclean
 
 distclean:  distclean-generic clean
-	-rm -f config.status
-	-rm -f libtool
+	rm -f config.status
+	rm -f libtool
 
 maintainer-clean:  maintainer-clean-generic distclean
 	@echo "This command is intended for maintainers to use;"

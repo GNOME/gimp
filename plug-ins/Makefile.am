@@ -15,6 +15,7 @@ SUBDIRS = 			\
 	dgimp			\
 	fuse			\
 	gflare			\
+	@GIMPTCL@		\
 	refract			\
 	script-fu		\
 	struc			\

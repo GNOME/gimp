@@ -56,7 +56,6 @@ GPlugInInfo PLUG_IN_INFO = {
 int
 main(int ac, char *av[]){
   char *tcllib_p, *tcllib;
-  char *tklib_p, *tklib;
 
 /*  fprintf(stderr, "gimptcl: %d %s\n", ac, av[1]);*/
 
@@ -74,16 +73,8 @@ main(int ac, char *av[]){
   free(tcllib);
   free(tcllib_p);
 
-  if (Tk_Init(theInterp) == TCL_OK) {
-    tklib_p = Tcl_GetVar(theInterp, "tk_library", TCL_GLOBAL_ONLY);
-    tklib = malloc(strlen(tklib_p)+10);
-    sprintf(tklib, "%s/init.tcl", tklib_p);
-    Tcl_EvalFile(theInterp, tklib);
-    free(tklib_p);
-    free(tklib);
-  }
-
   Gimptcl_Init(theInterp);
+  Tcl_StaticPackage(theInterp, "Gimptcl", Gimptcl_Init, Gimptcl_Init);
 
   Tcl_EvalFile(theInterp, av[1]);
 
@@ -95,6 +86,11 @@ main(int ac, char *av[]){
  */
 int
 Gimptcl_Init(Tcl_Interp *interp){
+  char debuglevelvar[] = "DebugLevel";
+  char GimpTclProcsVar[] = "GimpTclProcs";
+
+  Tcl_PkgProvide(interp, "Gimptcl", "1.0");
+
   Tcl_CreateCommand(interp, "gimp-run-procedure", Gtcl_GimpRunProc,
 		    (ClientData) NULL, (Tcl_CmdDeleteProc *) NULL);
   Tcl_CreateCommand(interp, "gimp-query-dbproc", Gtcl_QueryDBProc,
@@ -103,19 +99,26 @@ Gimptcl_Init(Tcl_Interp *interp){
 		    (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
   Tcl_CreateCommand(interp, "gimp-install-procedure", Gtcl_InstallProc,
 		    (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
+  Tcl_CreateCommand(interp, "gimp-set-data", Gtcl_SetData,
+		    (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
+  Tcl_CreateCommand(interp, "gimp-get-data", Gtcl_GetData,
+		    (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
 #ifdef SHLIB_METHOD
   Tcl_CreateCommand(interp, "gimp-main", Gtcl_GimpMain,
 		    (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
 #endif
-  Tcl_LinkVar(interp, "DebugLevel",  (char *)&debuglevel,
+  Tcl_LinkVar(interp, debuglevelvar,  (char *)&debuglevel,
 	      TCL_LINK_INT);
+  Tcl_LinkVar(interp, GimpTclProcsVar, (char *)&GtclProcs,
+	      TCL_LINK_STRING |TCL_LINK_READ_ONLY);
+
   /*
-   * we have to belay adding PDB and Const to the interp
+   * we have to delay adding PDB and Const to the interp
    * until gtcl_run is called, because we need
    * gimp_main to setup the IPC to the PDB.
    */
-
-  theInterp=interp;
+  if (!theInterp)
+    theInterp=interp;
 
   return TCL_OK;
 }
@@ -185,6 +188,8 @@ gtcl_run(char *name, int nparm, GParam *p, int *nrv, GParam **rv){
   /* ok, add in our constants and the full PDB */
   Gtcl_PDBInit(theInterp);
   Gtcl_ConstInit(theInterp);
+  Tcl_StaticPackage(theInterp, "GtclConstant", Gtcl_ConstInit, Gtcl_ConstInit);
+  Tcl_StaticPackage(theInterp, "GtclPDB", Gtcl_PDBInit, Gtcl_PDBInit);
 
   Tcl_Eval(theInterp, "info procs gimptcl_run");
   if (strcmp(theInterp->result, "gimptcl_run")!=0){
@@ -204,6 +209,17 @@ gtcl_run(char *name, int nparm, GParam *p, int *nrv, GParam **rv){
   free(pars);
   sprintf(cmd, "gimptcl_run %s", t);
   Tcl_Free(t);
+  if (p[0].data.d_int32 == RUN_INTERACTIVE) {
+    if (Tk_Init(theInterp) == TCL_OK) {
+    } else {
+      fprintf (stderr, "error in Tk_Init(): %s\n", theInterp->result);
+    }
+#if TK_MAJOR_VERSION == 8
+    Tcl_StaticPackage(theInterp, "Tk", Tk_Init, Tk_SafeInit);
+#else
+    Tcl_StaticPackage(theInterp, "Tk", Tk_Init, NULL);
+#endif
+  }
 
   if(Tcl_Eval(theInterp, cmd)==TCL_ERROR){
     fprintf(stderr, "Error in gtcl_run:%s\n", theInterp->result);
