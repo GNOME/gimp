@@ -1,3 +1,7 @@
+2005-04-01  Steve Murphy  <murf@e-tools.com>
+
+	* rw.po: Added Kinyarwanda translations from compendium, even if I couldn't use intltool-update.
+
 2005-03-31  Takeshi AIHANA <aihana@gnome.gr.jp>
 
 	* ja.po: Fixed a typo reported by
