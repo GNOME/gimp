@@ -61,7 +61,10 @@ typedef struct
   gint       x_hot, y_hot;
   GdkCursor *cursor;
 } BM_Cursor;
-    
+
+/* FIXME: gimp_busy HACK */
+gboolean gimp_busy = FALSE;
+
 static BM_Cursor gimp_cursors[] =
 /* these have to match up with the enum in cursorutil.h */
 {
@@ -232,6 +235,9 @@ gimp_add_busy_cursors (void)
   GDisplay *gdisp;
   GSList   *list;
 
+  /* FIXME: gimp_busy HACK */
+  gimp_busy = TRUE;
+
   /* Canvases */
   for (list = display_list; list; list = g_slist_next (list))
     {
@@ -262,6 +268,9 @@ gimp_remove_busy_cursors (gpointer data)
   dialog_unidle_all ();
 
   pending_removebusy = FALSE;
+
+  /* FIXME: gimp_busy HACK */
+  gimp_busy = FALSE;
 
   return 0;
 }

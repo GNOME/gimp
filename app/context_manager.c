@@ -17,6 +17,7 @@
  */
 #include "appenv.h"
 #include "colormaps.h"
+#include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -37,29 +38,57 @@ context_manager_display_changed (GimpContext *context,
 }
 
 static void
-context_manager_tool_changed (GimpContext *context,
+context_manager_tool_changed (GimpContext *user_context,
 			      ToolType     tool_type,
 			      gpointer     data)
 {
-  GimpContext* tool_context;
-
-  if (! global_paint_options)
+  /* FIXME: gimp_busy HACK */
+  if (gimp_busy)
     {
-      if (active_tool &&
-	  (tool_context = tool_info[active_tool->type].tool_context))
+      /*  there may be contexts waiting for the user_context's "tool_changed"
+       *  signal, so stop emitting it.
+       */
+      gtk_signal_emit_stop_by_name (GTK_OBJECT (user_context), "tool_changed");
+
+      if (active_tool->type != tool_type)
 	{
-	  gimp_context_unset_parent (tool_context);
+	  gtk_signal_handler_block_by_func (GTK_OBJECT (user_context),
+					    context_manager_tool_changed,
+					    NULL);
+
+	  /*  explicitly set the current tool  */
+	  gimp_context_set_tool (user_context, active_tool->type);
+
+	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (user_context),
+					      context_manager_tool_changed,
+					      NULL);
 	}
 
-      if ((tool_context = tool_info[tool_type].tool_context))
-	{
-	  gimp_context_copy_args (tool_context, gimp_context_get_user (),
-				  PAINT_OPTIONS_MASK);
-	  gimp_context_set_parent (tool_context, gimp_context_get_user ());
-	}
+      /*  take care that the correct toolbox button gets re-activated  */
+      tool_type = active_tool->type;
     }
+  else
+    {
+      GimpContext* tool_context;
 
-  tools_select (tool_type);
+      if (! global_paint_options)
+	{
+	  if (active_tool &&
+	      (tool_context = tool_info[active_tool->type].tool_context))
+	    {
+	      gimp_context_unset_parent (tool_context);
+	    }
+
+	  if ((tool_context = tool_info[tool_type].tool_context))
+	    {
+	      gimp_context_copy_args (tool_context, user_context,
+				      PAINT_OPTIONS_MASK);
+	      gimp_context_set_parent (tool_context, user_context);
+	    }
+	}
+
+      tools_select (tool_type);
+    }
 
   if (tool_type == SCALE ||
       tool_type == SHEAR ||

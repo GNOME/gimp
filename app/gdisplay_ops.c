@@ -116,6 +116,12 @@ void
 gdisplay_close_window (GDisplay *gdisp,
 		       gboolean  kill_it)
 {
+  /*  FIXME: gimp_busy HACK not really appropriate here because we only
+   *  want to prevent the busy image and display to be closed.  --Mitch
+   */
+  if (gimp_busy)
+    return;
+
   /*  If the image has been modified, give the user a chance to save
    *  it before nuking it--this only applies if its the last view
    *  to an image canvas.  (a gimage with disp_count = 1)

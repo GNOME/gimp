@@ -21,18 +21,24 @@
 #include "gimage.h"
 #include "tools.h"
 
-
-/*  fuzzy select functions  */
-Tool *        tools_new_fuzzy_select      (void);
-void          tools_free_fuzzy_select     (Tool *);
-
-
-/*  functions  */
-Channel *     find_contiguous_region (GimpImage *, GimpDrawable *, int, int,
-    				      int, int, int);
-void          fuzzy_select           (GimpImage *, GimpDrawable *, int, int,
-     				      double);
-
 extern Channel *fuzzy_mask;
 
-#endif  /*  __FUZZY_SELECT_H__  */
+/*  fuzzy select functions  */
+Tool    * tools_new_fuzzy_select  (void);
+void      tools_free_fuzzy_select (Tool *tool);
+
+/*  functions  */
+Channel * find_contiguous_region  (GimpImage    *gimage,
+				   GimpDrawable *drawable,
+				   gboolean      antialias,
+				   gint          threshold,
+				   gint          x,
+				   gint          y,
+				   gboolean      sample_merged);
+void      fuzzy_select            (GimpImage    *gimage,
+				   GimpDrawable *drawable,
+				   gint          op,
+				   gboolean      feather,
+				   gdouble       feather_radius);
+
+#endif  /* __FUZZY_SELECT_H__ */

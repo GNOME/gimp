@@ -1,3 +1,33 @@
+2000-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/cursorutil.[ch]: new global variable "gimp_busy" which gets
+	set/unset whenever busy cursors are added/removed.
+
+	* app/info_dialog.c: register the info dialogs with the dialog
+	handler.
+
+	* app/fuzzy_select.[ch]: cleanups.
+	
+	Here starts the ugly workaround which simulates something like
+	locking. If it works, it will close lots of bugs, if not, it's
+	easy to remove again.
+
+	So far, I didn't find strange side effects but Gimp is told to be
+	a complex program :-) Please test this.
+
+	* app/context_manager.c: don't allow tool changes if gimp_busy
+	is TRUE.
+
+	* app/disp_callbacks.c: don't allow mouse and key events in the
+	display_canvas if gimp_busy is TRUE.
+	(except if the current tool is FUZZY_SELECT and it is ACTIVE,
+	 which is very ugly)
+	Also block other stuff like dropping colors/patterns etc.
+
+	* app/gdisplay_ops.c: don't close any display while Gimp is
+	busy. This is not really what we want but at least it prevents
+	crashes.
+
 2000-03-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c: only call gtk_main_quit()

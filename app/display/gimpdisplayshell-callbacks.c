@@ -49,12 +49,12 @@ static void gdisplay_check_device_cursor (GDisplay *gdisp);
 
 static void
 redraw (GDisplay *gdisp,
-	int       x,
-	int       y,
-	int       w,
-	int       h)
+	gint      x,
+	gint      y,
+	gint      w,
+	gint      h)
 {
-  long x1, y1, x2, y2;    /*  coordinate of rectangle corners  */
+  glong x1, y1, x2, y2;    /*  coordinate of rectangle corners  */
 
   x1 = x;
   y1 = y;
@@ -76,9 +76,9 @@ gdisplay_check_device_cursor (GDisplay *gdisp)
 {
   GList *list;
 
-  /* gdk_input_list_devices returns an internal list, so we shouldn't
-     free it afterwards */
-
+  /*  gdk_input_list_devices returns an internal list, so we shouldn't
+   *  free it afterwards
+   */
   for (list = gdk_input_list_devices(); list; list = g_list_next (list))
     {
       GdkDeviceInfo *info = (GdkDeviceInfo *) list->data;
@@ -92,15 +92,18 @@ gdisplay_check_device_cursor (GDisplay *gdisp)
 }
 
 static int
-key_to_state (int key)
+key_to_state (gint key)
 {
   switch (key)
     {
-    case GDK_Alt_L: case GDK_Alt_R:
+    case GDK_Alt_L:
+    case GDK_Alt_R:
       return GDK_MOD1_MASK;
-    case GDK_Shift_L: case GDK_Shift_R:
+    case GDK_Shift_L:
+    case GDK_Shift_R:
       return GDK_SHIFT_MASK;
-    case GDK_Control_L: case GDK_Control_R:
+    case GDK_Control_L:
+    case GDK_Control_R:
       return GDK_CONTROL_MASK;
     default:
       return 0;
@@ -130,19 +133,18 @@ gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
 {
-  GDisplay *gdisp;
-  GdkEventExpose *eevent;
-  GdkEventMotion *mevent;
-  GdkEventButton *bevent;
-  GdkEventKey *kevent;
-  gdouble tx, ty;
-  guint state = 0;
-  gint return_val = FALSE;
-  static gboolean scrolled = FALSE;
-  static guint key_signal_id = 0;
-  int update_cursor = FALSE;
-
-  tx = ty = 0;
+  GDisplay        *gdisp;
+  GdkEventExpose  *eevent;
+  GdkEventMotion  *mevent;
+  GdkEventButton  *bevent;
+  GdkEventKey     *kevent;
+  gdouble          tx            = 0;
+  gdouble          ty            = 0;
+  guint            state         = 0;
+  gint             return_val    = FALSE;
+  static gboolean  scrolled      = FALSE;
+  static guint     key_signal_id = 0;
+  gboolean         update_cursor = FALSE;
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
@@ -177,7 +179,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     }
 
   /*  Find out what device the event occurred upon  */
-  if (devices_check_change (event))
+  if (!gimp_busy && devices_check_change (event))
     gdisplay_check_device_cursor (gdisp);
 
   switch (event->type)
@@ -221,6 +223,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
       state = bevent->state;
+
+      /*  ignore new mouse events  */
+      if (gimp_busy)
+	return TRUE;
 
       switch (bevent->button)
 	{
@@ -337,11 +343,23 @@ gdisplay_canvas_events (GtkWidget *canvas,
       bevent = (GdkEventButton *) event;
       state = bevent->state;
 
+      /*  ugly side consition: all operations which set busy cursors are
+       *  invoked on BUTTON_RELEASE, thus no new BUTTON_PRESS events are
+       *  accepted while Gimp is busy, thus it should be safe to block
+       *  BUTTON_RELEASE.  --Mitch
+       *
+       *  ugly: fuzzy_select sets busy cursors while ACTIVE.
+       */
+      if (gimp_busy &&
+	  !(active_tool->type == FUZZY_SELECT &&
+	    active_tool->state == ACTIVE))
+	return TRUE;
+
       switch (bevent->button)
 	{
 	case 1:
 	  state &= ~GDK_BUTTON1_MASK;
-	  
+
 	  /* Lame hack. See above */
 	  if (key_signal_id)
 	    {
@@ -401,17 +419,29 @@ gdisplay_canvas_events (GtkWidget *canvas,
       mevent = (GdkEventMotion *) event;
       state = mevent->state;
 
+      /*  for the same reason we block BUTTON_RELEASE,
+       *  we block MOTION_NOTIFY.  --Mitch
+       *
+       *  ugly: fuzzy_select sets busy cursors while ACTIVE.
+       */
+      if (gimp_busy &&
+	  !(active_tool->type == FUZZY_SELECT &&
+	    active_tool->state == ACTIVE))
+	return TRUE;
+
      /* Ask for the pointer position, but ignore it except for cursor
       * handling, so motion events sync with the button press/release events */
 
       if (mevent->is_hint)
-	gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
+	{
+	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
 #ifdef GTK_HAVE_SIX_VALUATORS
-				      NULL, NULL, NULL, NULL, NULL
+					NULL, NULL, NULL, NULL, NULL
 #else /* !GTK_HAVE_SIX_VALUATORS */	
-				      NULL, NULL, NULL, NULL
+					NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */
-				      );
+					);
+	}
       else
 	{
 	  tx = mevent->x;
@@ -424,7 +454,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gdisp->proximity = TRUE;
 	  gdisplay_check_device_cursor (gdisp);
 	}
-      
+
       if (active_tool && ((active_tool->type == MOVE) ||
 			  !gimage_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
@@ -434,7 +464,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	      /*  if the first mouse button is down, check for automatic
 	       *  scrolling...
 	       */
-	      if ((mevent->state & GDK_BUTTON1_MASK) && !active_tool->scroll_lock)
+	      if ((mevent->state & GDK_BUTTON1_MASK) &&
+		  !active_tool->scroll_lock)
 		{
 		  if (mevent->x < 0 || mevent->y < 0 ||
 		      mevent->x > gdisp->disp_width ||
@@ -460,13 +491,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
       /* Operator update support: Bug #XXXX */
 
-      if (
-            /* Should we have a tool...      */
-            active_tool && 
-            /* and this event is NOT driving */
-            /* button press handlers ...     */
-           !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK))
-         )
+      if (/* Should we have a tool...      */
+	  active_tool && 
+	  /* and this event is NOT driving */
+	  /* button press handlers ...     */
+	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
         {
           /* ...then preconditions to modify a tool */ 
           /* operator state have been met.          */
@@ -478,6 +507,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_KEY_PRESS:
       kevent = (GdkEventKey *) event;
       state = kevent->state;
+
+      /*  ignore any key presses  */
+      if (gimp_busy)
+	return TRUE;
 
       switch (kevent->keyval)
 	{
@@ -491,7 +524,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	case GDK_Tab:
 	  if (kevent->state & GDK_MOD1_MASK && !gimage_is_empty (gdisp->gimage))
 	    layer_select_init (gdisp->gimage, 1, kevent->time);
-	  if (kevent->state & GDK_CONTROL_MASK && !gimage_is_empty (gdisp->gimage))
+
+	  if (kevent->state & GDK_CONTROL_MASK &&
+	      !gimage_is_empty (gdisp->gimage))
 	    layer_select_init (gdisp->gimage, -1, kevent->time);
 
 	  /* Hide or show all dialogs */
@@ -505,7 +540,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	case GDK_Alt_L: case GDK_Alt_R:
 	case GDK_Shift_L: case GDK_Shift_R:
 	case GDK_Control_L: case GDK_Control_R:
-	  state |= key_to_state(kevent->keyval);
+	  state |= key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
@@ -527,12 +562,16 @@ gdisplay_canvas_events (GtkWidget *canvas,
       kevent = (GdkEventKey *) event;
       state = kevent->state;
 
+      /*  ignore any key releases  */
+      if (gimp_busy)
+	return TRUE;
+
       switch (kevent->keyval)
 	{
 	case GDK_Alt_L: case GDK_Alt_R:
 	case GDK_Shift_L: case GDK_Shift_R:
 	case GDK_Control_L: case GDK_Control_R:
-	  state &= ~key_to_state(kevent->keyval);
+	  state &= ~key_to_state (kevent->keyval);
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
@@ -555,6 +594,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
     default:
       break;
     }
+
+  /*  if re reached this point in gimp_busy mode, return now  */
+  if (gimp_busy)
+    return TRUE;
 
   /* Cursor update support                               */
   /* no_cursor_updating is TRUE (=1) when                */
@@ -590,6 +633,9 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
+  if (gimp_busy)
+    return TRUE;
+
   if (event->button == 1)
     {
       gdisp = data;
@@ -608,6 +654,9 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 			      gpointer        data)
 {
   GDisplay *gdisp;
+
+  if (gimp_busy)
+    return TRUE;
 
   if (event->button == 1)
     {
@@ -628,15 +677,16 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 {
   GDisplay *gdisp;
 
-  if (event->button == 1)
+  if (!gimp_busy && event->button == 1)
     {
       gdisp = data;
       gtk_menu_popup (GTK_MENU (gdisp->popup),
 		      NULL, NULL, NULL, NULL, 1, event->time);
     }
 
-  /* Stop the signal emission so the button doesn't grab the
-   * pointer away from us */
+  /*  Stop the signal emission so the button doesn't grab the
+   *  pointer away from us
+   */
   gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
 
   return FALSE;
@@ -656,7 +706,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
   gdisp = (GDisplay *) data;
 
-  if ((src_widget = gtk_drag_get_source_widget (context)))
+  if (!gimp_busy && (src_widget = gtk_drag_get_source_widget (context)))
     {
       GimpDrawable *drawable       = NULL;
       Layer        *layer          = NULL;
@@ -811,6 +861,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   guchar    color[3];
   TempBuf  *pat_buf = NULL;
   gboolean  new_buf = FALSE;
+
+  if (gimp_busy)
+    return;
 
   gimage = ((GDisplay *) data)->gimage;
   drawable = gimage_active_drawable (gimage);

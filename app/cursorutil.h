@@ -28,6 +28,9 @@
 
 #include <gtk/gtk.h>
 
+/* FIXME: gimp_busy HACK */
+extern gboolean gimp_busy;
+
 typedef enum
 {
   GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),

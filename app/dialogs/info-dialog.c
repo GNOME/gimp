@@ -162,6 +162,8 @@ info_dialog_new_extended (gchar        *title,
   gtk_window_set_title (GTK_WINDOW (shell), title);
   session_set_window_geometry (shell, &info_dialog_session_info, FALSE );
 
+  dialog_register (shell);
+
   gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
 		      GTK_SIGNAL_FUNC (info_dialog_delete_callback),
 		      idialog);
@@ -235,6 +237,8 @@ info_dialog_free (InfoDialog *idialog)
 
   /*  Free the actual field linked list  */
   g_slist_free (idialog->field_list);
+
+  dialog_unregister (idialog->shell);
 
   session_get_window_info (idialog->shell, &info_dialog_session_info);
 
