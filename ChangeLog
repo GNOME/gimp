@@ -1,5 +1,18 @@
 2002-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.[ch]: added "book_added" and "book_removed"
+	signals. Removed the "destroy_if_empty" flag and destroy empty
+	docks in book_removed's default implementation.
+
+	* app/widgets/gimptoolbox.c: implement "dock_added" and
+	"dock_removed" and set the window to freely resizable vertically
+	if it contains dockbooks, and to the current behaviour of snapping
+	to multiples of tool_button height otherwise. Fixes bug #93309.
+
+	* app/widgets/gimpimagedock.c: changed accordingly.
+
+2002-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c
 	* app/gui/about-dialog.c
 	* app/gui/convert-dialog.c
@@ -20,7 +33,7 @@
 	* plug-ins/gfig/gfig.c
 	* plug-ins/gimpressionist/general.c
 	* plug-ins/gimpressionist/gimpressionist.c: replaced all sorts of
-	gtk_widget_show()/gdk_window_rise() combinations by
+	gtk_widget_show()/gdk_window_raise() combinations by
 	gtk_window_present().
 
 2002-10-25  Michael Natterer  <mitch@gimp.org>

@@ -264,7 +264,7 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   context = gimp_context_new (dialog_factory->context->gimp,
                               "Dock Context", NULL);
 
-  gimp_dock_construct (GIMP_DOCK (image_dock), dialog_factory, context, TRUE);
+  gimp_dock_construct (GIMP_DOCK (image_dock), dialog_factory, context);
 
   gimp_context_define_properties (context,
 				  GIMP_CONTEXT_ALL_PROPS_MASK &

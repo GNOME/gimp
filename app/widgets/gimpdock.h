@@ -42,7 +42,6 @@ struct _GimpDock
 
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
-  gboolean           destroy_if_empty;
 
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
@@ -53,6 +52,11 @@ struct _GimpDock
 struct _GimpDockClass
 {
   GtkWindowClass parent_class;
+
+  void (* book_added)   (GimpDock     *dock,
+                         GimpDockbook *dockbook);
+  void (* book_removed) (GimpDock     *dock,
+                         GimpDockbook *dockbook);
 };
 
 
@@ -60,8 +64,7 @@ GType       gimp_dock_get_type    (void) G_GNUC_CONST;
 
 gboolean    gimp_dock_construct   (GimpDock          *dock,
                                    GimpDialogFactory *dialog_factory,
-                                   GimpContext       *context,
-                                   gboolean           destroy_if_empty);
+                                   GimpContext       *context);
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
@@ -39,6 +40,14 @@
 #define DEFAULT_SEPARATOR_HEIGHT 6
 
 
+enum
+{
+  BOOK_ADDED,
+  BOOK_REMOVED,
+  LAST_SIGNAL
+};
+
+
 static void        gimp_dock_class_init               (GimpDockClass  *klass);
 static void        gimp_dock_init                     (GimpDock       *dock);
 
@@ -47,6 +56,11 @@ static GtkWidget * gimp_dock_separator_new            (GimpDock       *dock);
 static void        gimp_dock_destroy                  (GtkObject      *object);
 static void        gimp_dock_style_set                (GtkWidget      *widget,
                                                        GtkStyle       *prev_style);
+
+static void        gimp_dock_real_book_added          (GimpDock       *dock,
+                                                       GimpDockbook   *dockbook);
+static void        gimp_dock_real_book_removed        (GimpDock       *dock,
+                                                       GimpDockbook   *dockbook);
 
 static gboolean    gimp_dock_separator_button_press   (GtkWidget      *widget,
 						       GdkEventButton *bevent,
@@ -73,6 +87,8 @@ static gboolean    gimp_dock_separator_drag_drop      (GtkWidget      *widget,
 
 
 static GtkWindowClass *parent_class = NULL;
+
+static guint  dock_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTargetEntry dialog_target_table[] =
 {
@@ -119,9 +135,32 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  dock_signals[BOOK_ADDED] =
+    g_signal_new ("book_added",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDockClass, book_added),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_DOCKBOOK);  
+
+  dock_signals[BOOK_REMOVED] =
+    g_signal_new ("book_removed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDockClass, book_removed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_DOCKBOOK);  
+
   object_class->destroy   = gimp_dock_destroy;
 
   widget_class->style_set = gimp_dock_style_set;
+
+  klass->book_added       = gimp_dock_real_book_added;
+  klass->book_added       = gimp_dock_real_book_removed;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("separator_height",
@@ -137,8 +176,7 @@ gimp_dock_init (GimpDock *dock)
 {
   GtkWidget *separator;
 
-  dock->context          = NULL;
-  dock->destroy_if_empty = FALSE;
+  dock->context = NULL;
 
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
@@ -208,6 +246,20 @@ gimp_dock_style_set (GtkWidget *widget,
   g_list_free (children);
 }
 
+static void
+gimp_dock_real_book_added (GimpDock     *dock,
+                           GimpDockbook *dockbook)
+{
+}
+
+static void
+gimp_dock_real_book_removed (GimpDock     *dock,
+                             GimpDockbook *dockbook)
+{
+  if (dock->dockbooks == NULL)
+    gtk_widget_destroy (GTK_WIDGET (dock));
+}
+
 static GtkWidget *
 gimp_dock_separator_new (GimpDock *dock)
 {
@@ -251,16 +303,14 @@ gimp_dock_separator_new (GimpDock *dock)
 gboolean
 gimp_dock_construct (GimpDock          *dock,
                      GimpDialogFactory *dialog_factory,
-                     GimpContext       *context,
-                     gboolean           destroy_if_empty)
+                     GimpContext       *context)
 {
   g_return_val_if_fail (GIMP_IS_DOCK (dock), FALSE);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  dock->dialog_factory   = dialog_factory;
-  dock->context          = context;
-  dock->destroy_if_empty = destroy_if_empty ? TRUE : FALSE;
+  dock->dialog_factory = dialog_factory;
+  dock->context        = context;
 
   g_object_ref (G_OBJECT (dock->context));
 
@@ -385,6 +435,8 @@ gimp_dock_add_book (GimpDock     *dock,
     }
 
   gtk_widget_show (GTK_WIDGET (dockbook));
+
+  g_signal_emit (G_OBJECT (dock), dock_signals[BOOK_ADDED], 0, dockbook);
 }
 
 void
@@ -404,6 +456,8 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   dockbook->dock  = NULL;
   dock->dockbooks = g_list_remove (dock->dockbooks, dockbook);
+
+  g_object_ref (dockbook);
 
   if (old_length == 1)
     {
@@ -448,10 +502,9 @@ gimp_dock_remove_book (GimpDock     *dock,
       g_object_unref (G_OBJECT (other_book));
     }
 
-  if ((old_length == 1) && (dock->destroy_if_empty))
-    {
-      gtk_widget_destroy (GTK_WIDGET (dock));
-    }
+  g_signal_emit (G_OBJECT (dock), dock_signals[BOOK_REMOVED], 0, dockbook);
+
+  g_object_unref (dockbook);
 }
 
 static gboolean
