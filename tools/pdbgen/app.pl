@@ -668,16 +668,23 @@ CODE
 
 GPL
 
-    my $group_procs = ""; my $longest = 0;
-    my $once = 0; my $pcount = 0.0;
+    my $group_procs = "";
+    my $longest = 0;
+    my $once = 0;
+    my $pcount = 0.0;
+    my $tool_eek = 0;
+
     foreach $group (@main::groups) {
 	my $out = $out{$group};
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
 	delete $out->{headers}->{q/"config.h"/};
-	delete $out->{headers}->{q/"appenums.h"/};
-	delete $out->{headers}->{q/"apptypes.h"/};
+
+        if (exists $out->{headers}->{q|"tools/tools-types.h"|}) {
+	    $tool_eek = 1;
+	    delete $out->{headers}->{q|"tools/tools-types.h"|};
+	}
 
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
@@ -707,8 +714,14 @@ GPL
 		$headers .= "\n";
 		$headers .= '#include <gtk/gtk.h>';
 		$headers .= "\n\n";
-		$headers .= '#include "apptypes.h"';
+		$headers .= '#include "core/core-types.h"';
 		$headers .= "\n";
+
+		if ($tool_eek == 1) {
+		    $headers .= '#include "tools/tools-types.h"';
+		    $headers .= "\n";		    
+		}
+
 		$headers .= '#include "procedural_db.h"';
 		$headers .= "\n";
 		$headers .= "\n";
@@ -740,7 +753,6 @@ GPL
 		$headers .= "#endif\n\n";
 		$seen = 0;
 	    }
-            
 
 	    $headers .= "\n" if $_ eq '"config.h"';
 	}
