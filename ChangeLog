@@ -1,5 +1,9 @@
 2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
 
+	* base/pixel-region.c: corrected an off-by-one error, sorry :)
+
+2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
+
 	* app/undo.c: Fixed another use of array of gpointer in place of a
 	proper struct, this time in undo_(push|pop)_channel_mod.
 
