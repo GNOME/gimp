@@ -131,7 +131,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
           gint         mask_offx, mask_offy;
           gint         columns, rows;
           gint         col, row;
-          
+
           mask = NULL;
           mask_offx = mask_offy = 0;
 
@@ -175,8 +175,10 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                   for (j = 0; j < 2; j++)
                     for (i = 0; i < 2; i++)
                       {
-                        u [j*2+i] = mask_x1 + ((mask_x2-mask_x1) * (col+j)) / columns;
-                        v [j*2+i] = mask_y1 + ((mask_y2-mask_y1) * (row+i)) / rows;
+                        u [j*2+i] = tr_tool->x1 + ((tr_tool->x2 - tr_tool->x1) *
+                                    (col + j)) / ((gfloat) columns);
+                        v [j*2+i] = tr_tool->y1 + ((tr_tool->y2 - tr_tool->y1) *
+                                    (row + i)) / ((gfloat) rows);
                       }
 
                   /*  transform source coordinates to display coordinates
@@ -184,20 +186,30 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
                    */
                   for (i = 0; i < 4; i++)
                     {
-                      double du, dv;
-                      double dx, dy;
+                      gdouble tx1, ty1;
+                      gdouble tx2, ty2;
 
                       gimp_matrix3_transform_point (&tr_tool->transform,
                                                     u[i], v[i],
-                                                    &du, &dv);
+                                                    &tx1, &ty1);
 
                       gimp_display_shell_transform_xy_f (shell,
-                                                         du, dv,
-                                                         &dx, &dy,
+                                                         tx1, ty1,
+                                                         &tx2, &ty2,
                                                          FALSE);
-                      x [i] = (gint) dx;
-                      y [i] = (gint) dy;
+                      x [i] = (gint) tx2;
+                      y [i] = (gint) ty2;
+
                     }
+
+                  for (j = 0; j < 2; j++)
+                    for (i = 0; i < 2; i++)
+                      {
+                        u [j*2+i] = mask_x1 + ((mask_x2 - mask_x1) * (col + j)) /
+                                    ((gfloat) columns);
+                        v [j*2+i] = mask_y1 + ((mask_y2 - mask_y1) * (row + i)) /
+                                    ((gfloat) rows);
+                      }
 
                   gimp_display_shell_draw_quad (tool->drawable,
                                     GDK_DRAWABLE (GTK_WIDGET (shell->canvas)->window),
