@@ -809,15 +809,15 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
   if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
-	TIFF='tiff'; LIBTIFF='-ltiff',
+	TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff',
 	[AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff'; LIBTIFF='-ltiff -ljpeg -lz',
+          TIFF='tiff(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
 	  [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
 	[AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF='tiff'; LIBTIFF='-ltiff34 -ljpeg -lz',
+            TIFF='tiff(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
 	    [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
         [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***)], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi
@@ -856,7 +856,7 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; LIBJPEG='-ljpeg'
+	JPEG='jpeg$(EXEEXT)'; LIBJPEG='-ljpeg'
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
 	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG, 1,
                     [Define to 1 if jpeglib supports progressive JPEG.]),
@@ -889,7 +889,7 @@ AM_CONDITIONAL(BUILD_XJT, test x$jpeg_ok = xyes && test x"$os_win32" = xno)
 if test -z "$LIBZ"; then
   AC_CHECK_LIB(z, gzsetparams,
     [AC_CHECK_HEADER(zlib.h,
-      PSP='psp'; LIBZ='-lz',
+      PSP='psp$(EXEEXT)'; LIBZ='-lz',
       [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB header files not found) ***)])],
     [AC_MSG_WARN(*** PSP and PNG plug-ins will not be built (ZLIB library not found) ***)])
 fi
@@ -917,7 +917,7 @@ AC_ARG_WITH(libpng,  [  --without-libpng        build without PNG support])
         png_ok=no)
       AC_MSG_RESULT($png_ok)
       if test "$png_ok" = yes; then
-        PNG='png'; LIBPNG="-lpng $LIBZ"
+        PNG='png$(EXEEXT)'; LIBPNG="-lpng $LIBZ"
       else
         AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
       fi
@@ -947,7 +947,7 @@ AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
       [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
       [AC_MSG_WARN(*** MNG plug-in will not be built (MNG library not found) ***)], -lz -lm)
     if test "$mng_ok" = yes; then
-      MNG='mng'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
+      MNG='mng$(EXEEXT)'; LIBMNG="-lmng $LIBJPEG $LIBPNG"
     else
       AC_MSG_WARN(*** MNG plug-in will not be built (MNG header file not found) ***)
     fi
@@ -984,7 +984,7 @@ AC_ARG_WITH(aa,  [  --without-aa            do not build the AA plug-in])
 if test x$with_aa != xno && test -z "$LIBAA"; then
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
-      AA='aa'; LIBAA='-laa',
+      AA='aa$(EXEEXT)'; LIBAA='-laa',
       [AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)])],
     [AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***)])
 fi
@@ -1007,7 +1007,7 @@ fi
 if test -z "$LIBXPM"; then
   AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
     [AC_CHECK_HEADER(X11/xpm.h,
-      XPM='xpm'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
+      XPM='xpm$(EXEEXT)'; LIBXPM="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",
       [AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)])],
     [AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***)], $X_PRE_LIBS $lib_X11)
 fi
@@ -1035,7 +1035,7 @@ AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
 ###################
 
 PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-  SVG=svg
+  SVG='svg$(EXEEXT)'
   LIBSVG=$SVG_LIBS,
   AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg not found) ***]))
 AC_SUBST(SVG)
@@ -1087,7 +1087,7 @@ if test "x$WMF_CONFIG" != "xno" ; then
   wmf_version=`$WMF_CONFIG --version`
   if expr $wmf_version \>= wmf_required_version >/dev/null; then
     AC_MSG_RESULT([yes (version $wmf_version)])
-    WMF=wmf
+    WMF='wmf$(EXEEXT)'
     LIBWMF=`$WMF_CONFIG --libs`
     WMF_CFLAGS=`$WMF_CONFIG --cflags`
   else
@@ -1208,13 +1208,13 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 ###########################################################
 
 if test x"$os_win32" = xyes; then
-  WINCLIPBOARD='winclipboard'
-  WINPRINT='winprint'
+  WINCLIPBOARD='winclipboard$(EXEEXT)'
+  WINPRINT='winprint$(EXEEXT)'
 else
-  BZ2='bz2'
-  MAIL='mail'
-  SCREENSHOT='screenshot'
-  URL='url'
+  BZ2='bz2$(EXEEXT)'
+  MAIL='mail$(EXEEXT)'
+  SCREENSHOT='screenshot$(EXEEXT)'
+  URL='url$(EXEEXT)'
 fi
 
 AC_SUBST(BZ2)

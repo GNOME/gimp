@@ -1,3 +1,9 @@
+2004-01-28  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: according to the automake docs, we need to add
+	$(EXEEXT) explicitely for programs that are conditionally built
+	using configure substitutions instead of automake conditionals.
+
 2004-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-path.c (gimp_config_path_expand): return
