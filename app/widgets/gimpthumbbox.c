@@ -579,7 +579,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
       gtk_widget_show (box->thumb_progress);
 
-      for (list = box->uris->next, i = 0;
+      for (list = box->uris->next, i = 1;
            list;
            list = g_slist_next (list), i++)
         {

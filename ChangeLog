@@ -1,5 +1,10 @@
 2004-10-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_create_thumbnails):
+	user-visible counting starts at 1, not 0.
+
+2004-10-11  Michael Natterer  <mitch@gimp.org>
+
 	* tools/authorsgen/contributors: added missing contributors.
 	Thanks to Kevin Cozens for going through ChangeLog and making a list.
 
