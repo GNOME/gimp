@@ -1,5 +1,13 @@
 2003-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]
+	* app/vectors/gimpvectors-import.c: add vectors in an undo-group.
+
+	* app/gui/vectors-commands.c: added simple file selection dialogs
+	for vectors import and export.
+	
+2003-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.c: simplified the parser and
 	make it optionally create multiple vectors again.
 

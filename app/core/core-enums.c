@@ -518,6 +518,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_PAINT, N_("Paint"), "group-paint" },
   { GIMP_UNDO_GROUP_PARASITE_ATTACH, N_("Attach Parasite"), "group-parasite-attach" },
   { GIMP_UNDO_GROUP_PARASITE_REMOVE, N_("Remove Parasite"), "group-parasite-remove" },
+  { GIMP_UNDO_GROUP_VECTORS_IMPORT, N_("Import Paths"), "group-vectors-import" },
   { GIMP_UNDO_GROUP_MISC, N_("Plug-In"), "group-misc" },
   { GIMP_UNDO_IMAGE, N_("Image"), "image" },
   { GIMP_UNDO_IMAGE_MOD, N_("Image Mod"), "image-mod" },

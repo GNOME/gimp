@@ -35,6 +35,7 @@
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 
 #include "gimpbezierstroke.h"
 #include "gimpstroke.h"
@@ -182,6 +183,9 @@ gimp_vectors_import (GimpImage    *image,
 
           base.paths = g_list_reverse (base.paths);
 
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
+                                       _("Import Paths"));
+
           vectors = gimp_vectors_new (image, _("Imported Path"));
 
           for (paths = base.paths; paths; paths = paths->next)
@@ -201,6 +205,8 @@ gimp_vectors_import (GimpImage    *image,
             }
 
           gimp_image_add_vectors (image, vectors, -1);
+
+          gimp_image_undo_group_end (image);
         }
       else
         {

@@ -77,6 +77,11 @@
     return
 
 
+static void  vectors_import_query  (GimpImage   *gimage);
+static void  vectors_export_query  (GimpImage   *gimage,
+                                    GimpVectors *vectors);
+
+
 /*  public functions  */
 
 void
@@ -227,16 +232,9 @@ vectors_import_cmd_callback (GtkWidget *widget,
                              gpointer   data)
 {
   GimpImage *gimage;
-  GError    *error = NULL;
   return_if_no_image (gimage, data);
 
-  if (! gimp_vectors_import (gimage, "path.svg", FALSE, &error))
-    {
-      g_message (error->message);
-      g_error_free (error);
-    }
-
-  gimp_image_flush (gimage);
+  vectors_import_query (gimage);
 }
 
 void
@@ -245,15 +243,9 @@ vectors_export_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  GError      *error = NULL;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  if (! gimp_vectors_export (gimage, active_vectors,
-                             "path-export.svg", &error))
-    {
-      g_message (error->message);
-      g_error_free (error);
-    }
+  vectors_export_query (gimage, active_vectors);
 }
 
 void
@@ -594,4 +586,129 @@ vectors_edit_vectors_query (GimpVectors *vectors)
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
   gtk_widget_show (options->query_box);
+}
+
+
+/*******************************/
+/*  The vectors import dialog  */
+/*******************************/
+
+static void
+vectors_import_ok_callback (GtkWidget *widget)
+{
+  GimpImage *gimage = g_object_get_data (G_OBJECT (widget), "gimp-image");
+
+  if (gimage)
+    {
+      const gchar *filename;
+      GError      *error = NULL;
+
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
+
+      if (gimp_vectors_import (gimage, filename, FALSE, &error))
+        {
+          gimp_image_flush (gimage);
+        }
+      else
+        {
+          g_message (error->message);
+          g_error_free (error);
+        }
+
+      g_object_weak_unref (G_OBJECT (gimage),
+                           (GWeakNotify) gtk_widget_destroy, widget);
+    }
+
+  gtk_widget_destroy (widget);
+}
+
+static void
+vectors_import_query (GimpImage *gimage)
+{
+  GtkFileSelection *filesel;
+
+  filesel =
+    GTK_FILE_SELECTION (gtk_file_selection_new (_("Import Paths from SVG")));
+
+  g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
+  g_object_weak_ref (G_OBJECT (gimage),
+                     (GWeakNotify) gtk_widget_destroy, filesel);
+
+  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-vectors-import", "Gimp");
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+
+  g_signal_connect_swapped (filesel->ok_button, "clicked",
+                            G_CALLBACK (vectors_import_ok_callback),
+                            filesel);
+  g_signal_connect_swapped (filesel->cancel_button, "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
+
+  gtk_widget_show (GTK_WIDGET (filesel));
+}
+
+
+/*******************************/
+/*  The vectors export dialog  */
+/*******************************/
+
+static void
+vectors_export_ok_callback (GtkWidget *widget)
+{
+  GimpImage *gimage = g_object_get_data (G_OBJECT (widget), "gimp-image");
+
+  if (gimage)
+    {
+      const gchar *filename;
+      GError      *error = NULL;
+
+      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (widget));
+
+      if (gimp_vectors_export (gimage, NULL, filename, &error))
+        {
+          gimp_image_flush (gimage);
+        }
+      else
+        {
+          g_message (error->message);
+          g_error_free (error);
+        }
+
+      g_object_weak_unref (G_OBJECT (gimage),
+                           (GWeakNotify) gtk_widget_destroy, widget);
+    }
+
+  gtk_widget_destroy (widget);
+}
+
+static void
+vectors_export_query (GimpImage   *gimage,
+                      GimpVectors *vectors)
+{
+  GtkFileSelection *filesel;
+
+  filesel =
+    GTK_FILE_SELECTION (gtk_file_selection_new (_("Export Path to SVG")));
+
+  g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
+  g_object_weak_ref (G_OBJECT (gimage),
+                     (GWeakNotify) gtk_widget_destroy, filesel);
+
+  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-vectors-export", "Gimp");
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+
+  g_signal_connect_swapped (filesel->ok_button, "clicked",
+                            G_CALLBACK (vectors_export_ok_callback),
+                            filesel);
+  g_signal_connect_swapped (filesel->cancel_button, "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
+
+  gtk_widget_show (GTK_WIDGET (filesel));
 }
