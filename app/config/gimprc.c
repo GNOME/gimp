@@ -208,7 +208,7 @@ gimp_rc_query (GimpRc      *rc,
       g_value_init (&value, prop_spec->value_type);
       g_object_get_property (G_OBJECT (rc), prop_spec->name, &value);
 
-      if (gimp_config_serialize_value (&value, str))
+      if (gimp_config_serialize_value (&value, str, FALSE))
         retval = g_string_free (str, FALSE);
       else
         g_string_free (str, TRUE);

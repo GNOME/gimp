@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+#include "stdlib.h"
+#include "string.h"
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimplimits.h"
@@ -82,7 +85,7 @@ main (int   argc,
   if (! gimp_config_serialize (G_OBJECT (gimprc), filename, &error))
     {
       g_print ("%s\n", error->message);
-      return -1;
+      return EXIT_FAILURE;
     }
   g_print (" done.\n\n");
 
@@ -94,7 +97,7 @@ main (int   argc,
   if (! gimp_config_deserialize (G_OBJECT (gimprc), filename, &error))
     {
       g_print ("%s\n", error->message);
-      return -1;
+      return EXIT_FAILURE;
     }
   header = "\n  Unknown string tokens:\n";
   gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
@@ -118,7 +121,7 @@ main (int   argc,
   g_print ("\n Testing gimp_rc_write_changes() ... \n\n");
   
   if (! gimp_rc_write_changes (gimprc2, gimprc, NULL))
-    return -1;
+    return EXIT_FAILURE;
 
   g_print ("\n done.\n");
 
@@ -133,26 +136,35 @@ main (int   argc,
   else
     {
       g_print ("This test should have failed :-(\n");
-      return -1;
+      return EXIT_FAILURE;
     }
 
-  g_print ("\n Querying for default-comment ... ");
+  g_print ("\n Querying for \"default-comment\" ... ");
   
   result = gimp_rc_query (gimprc, "default-comment");
   if (result)
-    g_print ("OK, found %s.\n", result);
+    {
+      g_print ("OK, found \"%s\".\n", result);
+    }
   else
-    g_print ("failed!\n");
-
+    {
+      g_print ("failed!\n");
+      return EXIT_FAILURE;
+    }
   g_free (result);
 
-  g_print (" Querying for foobar ... ");
+  g_print (" Querying for \"foobar\" ... ");
   
   result = gimp_rc_query (gimprc, "foobar");
   if (result && strcmp (result, "hadjaha") == 0)
-    g_print ("OK, found %s.\n", result);
+    {
+      g_print ("OK, found \"%s\".\n", result);
+    }
   else
-    g_print ("failed!\n");
+    {
+      g_print ("failed!\n");
+      return EXIT_FAILURE;
+    }
 
   g_free (result);
 
@@ -160,7 +172,7 @@ main (int   argc,
   
   g_print ("\nFinished test of GimpConfig.\n\n");
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 

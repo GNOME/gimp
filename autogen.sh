@@ -37,7 +37,7 @@ DIE=0
 	echo
 	echo "You must have glib-gettextize installed to compile $PROJECT."
 	echo "glib-gettextize is part of glib-2.0, so you should already"
-        echo "have it. Make sure it is in your PATH".
+        echo "have it. Make sure it is in your PATH."
 	DIE=1
 }
 (intltoolize --version) < /dev/null > /dev/null 2>&1 || {
@@ -101,6 +101,7 @@ else
         echo "too old! (Need 0.17, have $VER)"
         DIE=1
 fi
+
 echo
 
 if test "$DIE" -eq 1; then

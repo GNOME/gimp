@@ -31,6 +31,7 @@ void     gimp_config_serialize_changed_properties (GObject      *new,
 void     gimp_config_serialize_unknown_tokens     (GObject      *object,
                                                    gint          fd);
 gboolean gimp_config_serialize_value              (const GValue *value,
-                                                   GString      *str);
+                                                   GString      *str,
+                                                   gboolean      escaped);
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

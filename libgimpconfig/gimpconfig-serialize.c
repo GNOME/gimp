@@ -89,7 +89,7 @@ gimp_config_serialize_properties (GObject *object,
       g_string_append (str, prop_spec->name);
       g_string_append_c (str, ' ');
       
-      if (gimp_config_serialize_value (&value, str))
+      if (gimp_config_serialize_value (&value, str, TRUE))
         {
           g_string_append (str, ")\n");
           write (fd, str->str, str->len);
@@ -165,7 +165,7 @@ gimp_config_serialize_changed_properties (GObject *new,
           g_string_append (str, prop_spec->name);
           g_string_append_c (str, ' ');
       
-          if (gimp_config_serialize_value (&new_value, str))
+          if (gimp_config_serialize_value (&new_value, str, TRUE))
             {
               g_string_append (str, ")\n");
               write (fd, str->str, str->len);
@@ -191,6 +191,7 @@ gimp_config_serialize_changed_properties (GObject *new,
  * gimp_config_serialize_value:
  * @value: a #GValue.
  * @str: a #Gstring.
+ * @escaped: whether to escape string values.
  *
  * This utility function appends a string representation of #GValue to @str.
  * 
@@ -198,7 +199,8 @@ gimp_config_serialize_changed_properties (GObject *new,
  **/
 gboolean
 gimp_config_serialize_value (const GValue *value,
-                             GString      *str)
+                             GString      *str,
+                             gboolean      escaped)
 {
   if (G_VALUE_HOLDS_BOOLEAN (value))
     {
@@ -233,15 +235,22 @@ gimp_config_serialize_value (const GValue *value,
   
   if (G_VALUE_HOLDS_STRING (value))
     {
-      gchar       *escaped;
+      gchar       *esc;
       const gchar *cstr = g_value_get_string (value);
 
       if (!cstr)
         return FALSE;
 
-      escaped = g_strescape (cstr, NULL);
-      g_string_append_printf (str, "\"%s\"", escaped);
-      g_free (escaped);
+      if (escaped)
+        {
+          esc = g_strescape (cstr, NULL);
+          g_string_append_printf (str, "\"%s\"", esc);
+          g_free (esc);
+        }
+      else
+        {
+          g_string_append (str, cstr);
+        }
       return TRUE;
     }
 

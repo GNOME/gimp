@@ -1,3 +1,14 @@
+2002-05-06  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: fixed typo.
+
+	* app/config/gimpconfig-serialize.[ch] (gimp_config_serialize_value):
+	allow to specify whether strings should be escaped.
+
+	* app/config/gimprc.c (gimp_rc_query): don't escape string values.
+
+	* app/config/test-config.c: changed accordingly.
+
 2002-05-06  Nathan Summers  <rock@gimp.org>
 
 	* tools/gimp-mkproxy: added proxy-subst command, which substitutes its
