@@ -242,9 +242,9 @@ run (const gchar      *name,
 #endif
 }
 
-/* this function is written as if it is blurring a column at a time,
-   even though it can operate on rows, too.  There is no difference
-   in the processing of the lines, at least to the blur_line function.
+/* This function is written as if it is blurring a column at a time,
+ * even though it can operate on rows, too.  There is no difference
+ * in the processing of the lines, at least to the blur_line function.
  */
 static void
 blur_line (const gdouble *ctable,
@@ -267,7 +267,7 @@ blur_line (const gdouble *ctable,
   const guchar  *src_p;
   const guchar  *src_p1;
 
-  /* this first block is the same as the non-optimized version --
+  /* This first block is the same as the optimized version --
    * it is only used for very small pictures, so speed isn't a
    * big concern.
    */
@@ -383,16 +383,14 @@ unsharp_mask (GimpDrawable *drawable,
   GimpPixelRgn srcPR, destPR;
   gint         x1, y1, x2, y2;
 
-  /* Get the input */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  gimp_progress_init (_("Blurring..."));
-
   /* initialize pixel regions */
   gimp_pixel_rgn_init (&srcPR, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable,
                        0, 0, drawable->width, drawable->height, TRUE, TRUE);
+
+  /* Get the input */
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   radius, amount,
@@ -422,17 +420,16 @@ unsharp_region (GimpPixelRgn *srcPR,
 {
   guchar  *src;
   guchar  *dest;
-  gint     width;
-  gint     height;
+  gint     width   = x2 - x1;
+  gint     height  = y2 - y1;
   gdouble *cmatrix = NULL;
   gint     cmatrix_length;
   gdouble *ctable;
   gint     row, col;
   gint     threshold = unsharp_params.threshold;
 
-  /* find height and width of subregion to act on */
-  width  = x2 - x1;
-  height = y2 - y1;
+  if (show_progress)
+    gimp_progress_init (_("Blurring..."));
 
   /* generate convolution matrix
      and make sure it's smaller than each dimension */
@@ -523,12 +520,11 @@ static gint
 gen_convolve_matrix (gdouble   radius,
                      gdouble **cmatrix_p)
 {
-  gint     matrix_length;
-  gint     matrix_midpoint;
   gdouble *cmatrix;
-  gint     i,j;
   gdouble  std_dev;
   gdouble  sum;
+  gint     matrix_length;
+  gint     i, j;
 
   /* we want to generate a matrix that goes out a certain radius
    * from the center, so we have to go out ceil(rad-0.5) pixels,
@@ -550,8 +546,6 @@ gen_convolve_matrix (gdouble   radius,
   if (matrix_length <= 0)
     matrix_length = 1;
 
-  matrix_midpoint = matrix_length / 2 + 1;
-
   *cmatrix_p = g_new (gdouble, matrix_length);
   cmatrix = *cmatrix_p;
 
@@ -565,7 +559,8 @@ gen_convolve_matrix (gdouble   radius,
   /* first we do the top (right) half of matrix */
   for (i = matrix_length / 2 + 1; i < matrix_length; i++)
     {
-      double base_x = i - floor (matrix_length / 2) - 0.5;
+      gdouble base_x = i - (matrix_length / 2) - 0.5;
+
       sum = 0;
       for (j = 1; j <= 50; j++)
         {
