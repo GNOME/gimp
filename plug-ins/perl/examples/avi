@@ -126,7 +126,6 @@ register "file_avi_save",
 
             $idx1 .= "00db" . pack "V*", 16, tell FILE, $framesize if $index;
 
-
             print FILE "00db",
                        (pack "V", $framesize),
                        $d;
@@ -136,7 +135,7 @@ register "file_avi_save",
       pop_hunk;
       if ($index) {
          push_hunk "idx1";
-         print FILE $idx1;
+            print FILE $idx1;
          pop_hunk;
       }
    pop_hunk;
