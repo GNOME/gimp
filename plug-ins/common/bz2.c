@@ -392,7 +392,7 @@ load_image (gchar             *filename,
     }
   else  /* parent process */
 #else /* __EMX__ */
-  if (spawn_bz (filename, tmpname, "-cfd", &pid) == -1) 
+  if (spawn_bz (tmpname, filename,"-cfd", &pid) == -1) 
     {
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
