@@ -59,7 +59,7 @@ struct _RenderContext
 
 
 static void  gimp_text_render_vectors (PangoFont     *font,
-				       PangoGlyph    *glyph,
+				       PangoGlyph     glyph,
 				       FT_Int32       flags,
 				       FT_Matrix     *matrix,
 				       gint           x,
@@ -274,7 +274,7 @@ cubicto (FT_Vector *control1,
 
 static void
 gimp_text_render_vectors (PangoFont     *font,
-			  PangoGlyph    *pango_glyph,
+			  PangoGlyph     pango_glyph,
 			  FT_Int32       flags,
 			  FT_Matrix     *trafo,
 			  gint           x,

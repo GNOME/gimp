@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <string.h> 
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -50,6 +50,7 @@
 #include "display/gimpdisplay.h"
 
 #include "layers-commands.h"
+#include "image-commands.h"
 #include "resize-dialog.h"
 
 #include "gimp-intl.h"
@@ -73,7 +74,6 @@ static void   layers_resize_layer_query   (GimpImage *gimage,
     gimage = ((GimpItemTreeView *) data)->gimage; \
   else \
     gimage = NULL; \
-  \
   if (! gimage) \
     return
 
@@ -123,8 +123,8 @@ layers_select_next_cmd_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gimage, gimp_image_get_active_layer (gimage));
 
-  new_layer = 
-    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers, 
+  new_layer =
+    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers,
 						   current_layer + 1));
 
   if (new_layer)
@@ -313,7 +313,7 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
-  
+
   gimp_layer_resize_to_image (active_layer);
   gimp_image_flush (gimage);
 }
@@ -473,6 +473,27 @@ layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
 }
 
 void
+layers_merge_layers_cmd_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  image_layers_merge_query (gimage, TRUE);
+}
+
+void
+layers_flatten_image_cmd_callback (GtkWidget *widget,
+                                   gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  gimp_image_flatten (gimage);
+  gimp_image_flush (gimage);
+}
+
+void
 layers_edit_attributes_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
@@ -520,7 +541,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
     g_free (layer_name);
   layer_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-  options->xsize = 
+  options->xsize =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0));
   options->ysize =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1));
@@ -535,16 +556,16 @@ new_layer_query_ok_callback (GtkWidget *widget,
 			      gimp_image_base_type_with_alpha (gimage),
 			      layer_name,
                               GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-      if (layer) 
+      if (layer)
 	{
 	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
 				      gimp_get_user_context (gimage->gimp),
 				      fill_type);
 	  gimp_image_add_layer (gimage, layer, -1);
-	  
+
           gimp_image_flush (gimage);
-	} 
-      else 
+	}
+      else
 	{
 	  g_message ("new_layer_query_ok_callback():\n"
 		     "could not allocate new layer");
@@ -713,7 +734,7 @@ layers_new_layer_query (GimpImage *gimage,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (options->size_se);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), 
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se),
 			    GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
@@ -750,7 +771,7 @@ layers_new_layer_query (GimpImage *gimage,
                                                 &options->fill_type,
                                                 &button);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (options->fill_type));  
+                               GINT_TO_POINTER (options->fill_type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -796,7 +817,7 @@ edit_layer_query_ok_callback (GtkWidget *widget,
         }
     }
 
-  gtk_widget_destroy (options->query_box); 
+  gtk_widget_destroy (options->query_box);
 }
 
 void
@@ -911,7 +932,7 @@ layers_add_mask_query (GimpLayer *layer)
   GtkWidget      *button;
   GtkWidget      *sep;
   GimpImage      *gimage;
-  
+
   /*  The new options structure  */
   options = g_new (AddMaskOptions, 1);
   options->layer         = layer;
@@ -919,7 +940,7 @@ layers_add_mask_query (GimpLayer *layer)
   options->invert        = FALSE;
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
-  
+
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
@@ -947,7 +968,7 @@ layers_add_mask_query (GimpLayer *layer)
                                      &options->add_mask_type,
                                      &button);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (options->add_mask_type));  
+                               GINT_TO_POINTER (options->add_mask_type));
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);

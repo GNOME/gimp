@@ -74,6 +74,11 @@ void   layers_alpha_to_selection_cmd_callback (GtkWidget *widet,
                                                gpointer   data,
                                                guint      action);
 
+void   layers_merge_layers_cmd_callback       (GtkWidget *widget,
+                                               gpointer   data);
+void   layers_flatten_image_cmd_callback      (GtkWidget *widget,
+                                               gpointer   data);
+
 void   layers_edit_attributes_cmd_callback    (GtkWidget *widet,
                                                gpointer   data);
 

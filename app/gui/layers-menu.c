@@ -142,6 +142,19 @@ GimpItemFactoryEntry layers_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
+  { { N_("/Merge Visible Layers..."), NULL,
+      layers_merge_layers_cmd_callback, 0,
+      NULL, NULL },
+    NULL,
+    GIMP_HELP_IMAGE_MERGE_LAYERS, NULL },
+  { { N_("/Flatten Image"), NULL,
+      layers_flatten_image_cmd_callback, 0,
+      NULL, NULL },
+    NULL,
+    GIMP_HELP_IMAGE_FLATTEN, NULL },
+
+  MENU_SEPARATOR ("/---"),
+
   { { N_("/_Edit Layer Attributes..."), NULL,
       layers_edit_attributes_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_EDIT },
@@ -187,7 +200,7 @@ layers_menu_update (GtkItemFactory *factory,
 
       for (list = GIMP_LIST (gimage->layers)->list;
            list;
-           list = g_list_next (list)) 
+           list = g_list_next (list))
         {
           if (layer == (GimpLayer *) list->data)
             {
@@ -230,6 +243,9 @@ layers_menu_update (GtkItemFactory *factory,
 
   SET_SENSITIVE ("/Add Alpha Channel",  layer && !fs && !alpha);
   SET_SENSITIVE ("/Alpha to Selection", layer && !fs && !ac && alpha);
+
+  SET_SENSITIVE ("/Merge Visible Layers...", layer && !fs && !ac);
+  SET_SENSITIVE ("/Flatten Image",           layer && !fs && !ac);
 
   SET_SENSITIVE ("/Edit Layer Attributes...", layer && !fs && !ac);
 
