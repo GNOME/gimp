@@ -56,7 +56,7 @@ VER=`gettextize --version | grep gettext | sed "s/.* \([0-9.]*\)[a-z]*$/\1/;s/0.
 if expr $VER \>= 10.38 >/dev/null; then
 	echo "looks OK."
 else
-	echo "too old! (Need (0.)10.35, have $VER)"
+	echo "too old! (Need (0.)10.38, have $VER)"
 	DIE=1
 fi
 
