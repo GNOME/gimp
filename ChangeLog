@@ -1,5 +1,10 @@
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/qmask-commands.c (qmask_channel_query): don't free the
+	options structure twice (fixes bug #102515).
+
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c: (gimp_prop_enum_option_menu_new):
 	pass NULL, not 0 to fix compilation on Alpha (bug #102514).
 

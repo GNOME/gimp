@@ -191,7 +191,7 @@ qmask_channel_query (GimpDisplayShell *shell)
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
-                     (GWeakNotify) g_free, options);
+		     (GWeakNotify) g_free, options);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -268,7 +268,6 @@ qmask_query_ok_callback (GtkWidget *widget,
   options->gimage->qmask_color = color;
 
   gtk_widget_destroy (options->query_box);
-  g_free (options);
 }
 
 static void 
