@@ -44,8 +44,11 @@ gimprc_query_invoker (Argument *args)
   if (token == NULL)
     success = FALSE;
 
-  if (success)
+  if (success) /* tests the custom tokens only */
     success = (value = gimprc_find_token (token)) != NULL;
+
+  if (!success) /* try the standard ones, and do necessary conversions */
+    success = (value = gimprc_value_to_str(token)) != NULL;
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
 

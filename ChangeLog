@@ -1,4 +1,12 @@
-Thu May 20 16:38:05 BST 1999  Austin Donnelly  <austin@gimp.org
+Fri May 21 10:39:00 CST 1999  Seth Burgess <sjburges@gimp.org>
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/gimprc_cmds.c : wrapped up value_to_str and added it to
+            the gimprc_query function.  Now most values will be queryable,
+            but there are still a few exceptions (generally structure info
+            not really stored in gimprc anyway).
+
+Thu May 20 16:38:05 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/curves.c: colour in the previously greyscale bars to the
 	    left and below the curve itself.  Might want to take alpha and

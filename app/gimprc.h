@@ -85,6 +85,7 @@ void    parse_gimprc (void);
 void    parse_gimprc_file (char *filename);
 void    save_gimprc (GList **updated_options, GList **conflicting_options);
 char *  gimprc_find_token (char *token);
+char *  gimprc_value_to_str (char *name);
 void    save_gimprc_strings (gchar *token, gchar *value);
 
 #endif  /*  __GIMPRC_H__  */

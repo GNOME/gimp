@@ -182,6 +182,7 @@ static int parse_proc_def (PlugInProcDef **proc_def);
 static int parse_proc_arg (ProcArg *arg);
 static int parse_unknown (char *token_sym);
 
+char* gimprc_value_to_str (char *name);
 static char* value_to_str (char *name);
 
 static inline char* string_to_str (gpointer val1p, gpointer val2p);
@@ -2258,11 +2259,18 @@ parse_unknown (char *token_sym)
   return OK;
 }
 
+
+char* 
+gimprc_value_to_str (char *name)
+{
+  return value_to_str (name); /* had a namespace collision */
+}
+
 static char *
 value_to_str (char *name)
 {
   int i;
-
+  printf(" STRING = %s", name);
   for (i = 0; i < nfuncs; i++)
     if (! strcmp (funcs[i].name, name))
       switch (funcs[i].type)
@@ -2550,6 +2558,7 @@ open_backup_file (char *filename,
     g_free (oldfilename);
   return NULL;
 }
+
 
 char*
 gimprc_find_token (char *token)
