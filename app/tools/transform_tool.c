@@ -35,6 +35,7 @@ struct _TransformOptions
   int         smoothing;
   int	      clip;
   int	      grid_size;
+  int         show_grid;
   ToolType    type;
 };
 
@@ -56,6 +57,14 @@ transform_toggle_update (GtkWidget *w,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
+}
+
+static void
+transform_show_grid_update (GtkWidget *w,
+			    gpointer   data)
+{
+  transform_toggle_update (w, data);
+  transform_core_grid_density_changed ();
 }
 
 static void
@@ -95,8 +104,7 @@ create_transform_options (void)
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
-  GtkWidget *smoothing_toggle;
-  GtkWidget *clip_toggle;
+  GtkWidget *toggle;
   GtkAdjustment *grid_adj;
   GtkWidget *grid_density;
   GSList *group;
@@ -121,6 +129,7 @@ create_transform_options (void)
   options->clip = 1;
   options->direction = TRANSFORM_TRADITIONAL;
   options->grid_size = 32;
+  options->show_grid = TRUE;
 
   /* the main vbox */
   main_box = gtk_vbox_new (FALSE, 1);
@@ -162,14 +171,14 @@ create_transform_options (void)
   gtk_widget_show (radio_frame);
 
   /*  the smoothing toggle button  */
-  smoothing_toggle = gtk_check_button_new_with_label ("Smoothing");
-  gtk_box_pack_start (GTK_BOX (vbox), smoothing_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (smoothing_toggle), "toggled",
+  toggle = gtk_check_button_new_with_label ("Smoothing");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
 		      &options->smoothing);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (smoothing_toggle),
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
                       options->smoothing);
-  gtk_widget_show (smoothing_toggle);
+  gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);
 
@@ -200,6 +209,18 @@ create_transform_options (void)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
+  /* the show grid toggle button */
+  toggle = gtk_check_button_new_with_label ("Show grid");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+                      options->show_grid);
+  /* important: connect the signal after setting the state, because calling
+     transform_show_grid_update before the tool is created will fail */
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      (GtkSignalFunc) transform_show_grid_update,
+		      &options->show_grid);
+  gtk_widget_show (toggle);
+  
   /*  the grid density entry  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_widget_show (hbox);
@@ -217,14 +238,14 @@ create_transform_options (void)
   gtk_widget_show (grid_density);
 
   /*  the clip resulting image toggle button  */
-  clip_toggle = gtk_check_button_new_with_label ("Clip perspective");
-  gtk_box_pack_start (GTK_BOX (vbox), clip_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (clip_toggle), "toggled",
+  toggle = gtk_check_button_new_with_label ("Clip perspective");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
 		      &options->clip);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (clip_toggle),
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
                       options->clip);
-  gtk_widget_show (clip_toggle);
+  gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);
   gtk_widget_show (box);
@@ -333,4 +354,13 @@ transform_tool_grid_size ()
     return 32;
   else
     return transform_options->grid_size;
+}
+
+int
+transform_tool_show_grid ()
+{
+  if (!transform_options)
+    return TRUE;
+  else
+    return transform_options->show_grid;
 }

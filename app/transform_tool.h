@@ -25,6 +25,7 @@ int           transform_tool_smoothing      (void);
 int	      transform_tool_clip	    (void);
 int	      transform_tool_direction      (void);
 int	      transform_tool_grid_size	    (void);
+int           transform_tool_show_grid      (void);
 
 /*  transform directions  */
 #define TRANSFORM_TRADITIONAL 0

@@ -1,3 +1,11 @@
+Fri Aug 14 16:40:30 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/transform_tool.c
+	* app/transform_core.[ch]: Added a "Show grid" toggle. Fixed a
+	problem that occured when changing the grid size before the tool
+	is created. Don't draw the grid if the perspective trafo is too
+	weird.
+
 Thu Aug 13 23:00:39 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* plug-ins/script-fu/scripts: tileblur.scm, title-header.scm,

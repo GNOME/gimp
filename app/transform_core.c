@@ -245,7 +245,8 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	    transform_core_bounds (tool, gdisp_ptr);
 
 	    /*  Calculate the grid line endpoints  */
-	    transform_core_setup_grid (tool);
+	    if (transform_tool_show_grid ())
+	      transform_core_setup_grid (tool);
 	    
 	    /*  Initialize the transform tool  */
 	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
@@ -601,22 +602,30 @@ transform_core_draw (tool)
   gdk_draw_line (transform_core->core->win, transform_core->core->gc,
 		 x3, y3, x1, y1);
 
-  /*  Draw the grid  */
+  /*  Draw the grid */
 
-  gci = 0;
-  k = transform_core->ngx + transform_core->ngy;
-  for (i = 0; i < k; i++)
+  if ((transform_core->grid_coords != NULL) && 
+      (transform_core->tgrid_coords != NULL) &&
+      ((tool->type != PERSPECTIVE) ||
+       (transform_core->transform[0][0] >=0.0) && 
+       (transform_core->transform[1][1] >=0.0)))
     {
-      gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci],
-				 transform_core->tgrid_coords[gci+1],
-				 &xa, &ya, 0);
-      gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci+2],
-				 transform_core->tgrid_coords[gci+3],
-				 &xb, &yb, 0);
+
+      gci = 0;
+      k = transform_core->ngx + transform_core->ngy;
+      for (i = 0; i < k; i++)
+	{
+	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci],
+				     transform_core->tgrid_coords[gci+1],
+				     &xa, &ya, 0);
+	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci+2],
+				     transform_core->tgrid_coords[gci+3],
+				     &xb, &yb, 0);
       
-      gdk_draw_line (transform_core->core->win, transform_core->core->gc,
-		     xa, ya, xb, yb);
-      gci += 4;
+	  gdk_draw_line (transform_core->core->win, transform_core->core->gc,
+			 xa, ya, xb, yb);
+	  gci += 4;
+	}
     }
 
   /*  draw the tool handles  */
@@ -713,9 +722,11 @@ transform_core_free (tool)
     info_dialog_free (transform_info);
   transform_info = NULL;
 
-  /*  Free the grid line endpoint arrays  */ 
-  g_free (transform_core->grid_coords);
-  g_free (transform_core->tgrid_coords);
+  /*  Free the grid line endpoint arrays if they exist */ 
+  if (transform_core->grid_coords != NULL)
+    g_free (transform_core->grid_coords);
+  if (transform_core->tgrid_coords != NULL)
+    g_free (transform_core->tgrid_coords);
 
   /*  Finally, free the transform tool itself  */
   g_free (transform_core);
@@ -749,16 +760,20 @@ transform_bounding_box (tool)
 		     transform_core->cx, transform_core->cy,
 		     &transform_core->tcx, &transform_core->tcy);
 
-  gci = 0;
-  k  = (transform_core->ngx + transform_core->ngy) * 2;
-  for (i = 0; i < k; i++)
+  if (transform_core->grid_coords != NULL &&
+      transform_core->tgrid_coords != NULL)
     {
-      transform_point (transform_core->transform,
-		       transform_core->grid_coords[gci],
-		       transform_core->grid_coords[gci+1],
-		       &(transform_core->tgrid_coords[gci]),
-		       &(transform_core->tgrid_coords[gci+1]));
-      gci += 2;
+      gci = 0;
+      k  = (transform_core->ngx + transform_core->ngy) * 2;
+      for (i = 0; i < k; i++)
+	{
+	  transform_point (transform_core->transform,
+			   transform_core->grid_coords[gci],
+			   transform_core->grid_coords[gci+1],
+			   &(transform_core->tgrid_coords[gci]),
+			   &(transform_core->tgrid_coords[gci+1]));
+	  gci += 2;
+	}
     }
 }
 
@@ -1019,10 +1034,23 @@ transform_core_grid_density_changed ()
   TransformCore * transform_core;
   
   transform_core = (TransformCore *) active_tool->private;
+
+  if (transform_core->function == CREATING)
+    return;
+
   draw_core_pause (transform_core->core, active_tool);
-  g_free (transform_core->grid_coords);
-  g_free (transform_core->tgrid_coords);
-  transform_core_setup_grid (active_tool);
+  if (transform_core->grid_coords != NULL)
+    {
+      g_free (transform_core->grid_coords);
+      transform_core->grid_coords = NULL;
+    }
+  if (transform_core->tgrid_coords != NULL)
+    {
+      g_free (transform_core->tgrid_coords);
+      transform_core->tgrid_coords = NULL;
+    }
+  if (transform_tool_show_grid())
+    transform_core_setup_grid (active_tool);
   transform_bounding_box (active_tool);
   draw_core_resume (transform_core->core, active_tool);
 }
@@ -1037,8 +1065,8 @@ transform_core_setup_grid (tool)
 
   transform_core = (TransformCore *) tool->private;
       
-  /*  We use the transform_tool_grid_size function only here, even if the
-   *  user changes the grid size in the middle of a
+  /*  We use the transform_tool_grid_size function only here, even
+   *  if the user changes the grid size in the middle of an
    *  operation, nothing happens.
    */
   transform_core->ngx =
@@ -1055,7 +1083,7 @@ transform_core_setup_grid (tool)
   transform_core->tgrid_coords = (double *)
     g_malloc ((transform_core->ngx + transform_core->ngy) * 4
 	      * sizeof(double));
-
+  
   gci = 0;
   for (i = 1; i <= transform_core->ngx; i++)
     {
