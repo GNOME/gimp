@@ -1,3 +1,44 @@
+2002-02-17  Michael Natterer  <mitch@gimp.org>
+
+	Fixed #34633 (wheel mouse zooming leaves straigth-line helpline on
+	image) and maybe some other stuff caused by the misbehaviour
+	described below:
+
+	* app/tools/tools-types.h
+	* app/tools/tool_manager.c (tool_manager_control_active):
+
+	Removed the "PAUSED" ToolState.
+
+	The possible state transitions were INACTIVE <-> ACTIVE <-> PAUSED,
+	where the ACTIVE <-> PAUSED transition was done only in the
+	tool_manager, causing the tools's control() never to be called
+	when the tool was INACTIVE.
+
+	The GimpPaintTool however wants to draw on the display when it's
+	INACTIVE, and of course wants to be suspended/resumed correctly
+	while fiddling with display repainting/scaling/...
+
+	The PAUSED state was also redundant information, since
+	(tool->paused_count > 0) is the same information (only more
+	correct and independent of tool activity).
+
+	* app/display/gimpdisplayshell-scale.[ch]: suspend/resume the
+	active tool around _all_ changes to the display's "scale" and
+	"offset" fields.  Added new function
+	gimp_display_shell_scale_by_values() which does that and is called
+	from all places which need to change these values.
+
+	* app/tools/gimpmagnifytool.c: changed accordingly.
+
+	Unrelated stuff:
+
+	* app/paint/gimpairbrush.c: added a #warning FIXME.
+
+	* app/tools/gimpdrawtool.c: made a warning more verbose.
+
+	* app/tools/gimppainttool.c: put one more drawable offset
+	calculation in { .. }, will make a utility function out of it...
+
 2002-02-16  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/file-open-dialog.c: use new GtkFileSelection multiselect

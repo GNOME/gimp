@@ -258,7 +258,8 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     }
   else
     {
-      g_warning ("called with draw_tool->paused_count == 0");
+      g_warning ("gimp_draw_tool_resume(): "
+                 "called with draw_tool->paused_count == 0");
     }
 }
 

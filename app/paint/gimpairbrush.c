@@ -207,6 +207,10 @@ gimp_airbrush_timeout (gpointer client_data)
   gimp_airbrush_motion (airbrush_timeout.paint_core,
                         airbrush_timeout.drawable,
                         airbrush_timeout.paint_options);
+
+#ifdef __GNUC__
+#warning: FIXME: gdisplays_flush()
+#endif
   gdisplays_flush ();
 
   rate = ((AirbrushOptions *) airbrush_timeout.paint_options)->rate;

@@ -336,56 +336,51 @@ tool_manager_control_active (Gimp        *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  if (! tool_manager->active_tool)
+    return;
+
+  if (tool_manager->active_tool->gdisp == gdisp)
     {
-      if (tool_manager->active_tool->gdisp == gdisp)
+      switch (action)
         {
-          switch (action)
+        case PAUSE:
+          if (tool_manager->active_tool->paused_count == 0)
             {
-            case PAUSE:
-              if (tool_manager->active_tool->state == ACTIVE)
-                {
-                  if (! tool_manager->active_tool->paused_count)
-                    {
-                      tool_manager->active_tool->state = PAUSED;
-
-		      gimp_tool_control (tool_manager->active_tool,
-					 action, gdisp);
-                    }
-                }
-
-              tool_manager->active_tool->paused_count++;
-              break;
-
-            case RESUME:
-              tool_manager->active_tool->paused_count--;
-
-              if (tool_manager->active_tool->state == PAUSED)
-                {
-                  if (! tool_manager->active_tool->paused_count)
-                    {
-                      tool_manager->active_tool->state = ACTIVE;
-
-		      gimp_tool_control (tool_manager->active_tool,
-					 action, gdisp);
-                    }
-                }
-              break;
-
-            case HALT:
-              tool_manager->active_tool->state = INACTIVE;
-
-	      gimp_tool_control (tool_manager->active_tool, action, gdisp);
-              break;
-
-            default:
-              break;
+              gimp_tool_control (tool_manager->active_tool,
+                                 action,
+                                 gdisp);
             }
+
+          tool_manager->active_tool->paused_count++;
+          break;
+
+        case RESUME:
+          tool_manager->active_tool->paused_count--;
+
+          if (tool_manager->active_tool->paused_count == 0)
+            {
+              gimp_tool_control (tool_manager->active_tool,
+                                 action,
+                                 gdisp);
+            }
+          break;
+
+        case HALT:
+          gimp_tool_control (tool_manager->active_tool,
+                             action,
+                             gdisp);
+
+          tool_manager->active_tool->state        = INACTIVE;
+          tool_manager->active_tool->paused_count = 0;
+          break;
+
+        default:
+          break;
         }
-      else if (action == HALT)
-        {
-          tool_manager->active_tool->state = INACTIVE;
-        }
+    }
+  else if (action == HALT)
+    {
+      tool_manager->active_tool->state = INACTIVE;
     }
 }
 

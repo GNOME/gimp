@@ -176,12 +176,20 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->gdisp->dot_for_dot)
     {
+      /* freeze the active tool */
+      tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
+                                   shell->gdisp);
+
       shell->gdisp->dot_for_dot = dot_for_dot;
 
       gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
       gimp_display_shell_scale_resize (shell,
                                        gimprc.resize_windows_on_zoom, TRUE);
+
+      /* re-enable the active tool */
+      tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
+                                   shell->gdisp);
     }
 }
 
@@ -228,16 +236,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       break;
 
     default:
-      scalesrc = zoom_type % 100;
-      if (scalesrc < 1)
-	scalesrc = 1;
-      else if (scalesrc > 0x10)
-	scalesrc = 0x10;
-      scaledest = zoom_type / 100;
-      if (scaledest < 1)
-	scaledest = 1;
-      else if (scaledest > 0x10)
-	scaledest = 0x10;
+      scalesrc  = CLAMP (zoom_type % 100, 1, 0x10);
+      scaledest = CLAMP (zoom_type / 100, 1, 0x10);
       break;
     }
 
@@ -249,18 +249,15 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
    */
   if (sx < 0xffff && sy < 0xffff)
     {
-      shell->gdisp->scale = (scaledest << 8) + scalesrc;
-
       /*  set the offsets  */
       offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
       offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
 
-      shell->offset_x = (gint) (offset_x - (shell->disp_width / 2));
-      shell->offset_y = (gint) (offset_y - (shell->disp_height / 2));
-
-      /*  resize the display  */
-      gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_zoom,
-                                       TRUE);
+      gimp_display_shell_scale_by_values (shell,
+                                          (scaledest << 8) + scalesrc,
+                                          (offset_x - (shell->disp_width  / 2)),
+                                          (offset_y - (shell->disp_height / 2)),
+                                          gimprc.resize_windows_on_zoom);
     }
 }
 
@@ -367,12 +364,43 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
         }
     }
 
-  shell->gdisp->scale = (scaledest << 8) + scalesrc;
+  gimp_display_shell_scale_by_values (shell,
+                                      (scaledest << 8) + scalesrc,
+                                      0,
+                                      0,
+                                      FALSE);
+}
 
-  shell->offset_x = 0;
-  shell->offset_y = 0;
+void
+gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
+                                    gint              scale,
+                                    gint              offset_x,
+                                    gint              offset_y,
+                                    gboolean          resize_window)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_resize (shell, FALSE, TRUE);
+  /* freeze the active tool */
+  tool_manager_control_active (shell->gdisp->gimage->gimp, PAUSE,
+                               shell->gdisp);
+
+  shell->gdisp->scale = scale;
+  shell->offset_x     = offset_x;
+  shell->offset_y     = offset_y;
+
+  gimp_display_shell_scale_resize (shell, resize_window, TRUE);
+
+  /* re-enable the active tool */
+  tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
+                               shell->gdisp);
+}
+
+void
+gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_display_shell_scale_resize (shell, TRUE, TRUE);
 }
 
 void
@@ -405,15 +433,6 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   /* re-enable the active tool */
   tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
                                shell->gdisp);
-}
-
-
-void
-gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimp_display_shell_scale_resize (shell, TRUE, TRUE);
 }
 
 

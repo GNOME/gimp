@@ -468,15 +468,19 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
            *  draw a line
            */
 
-          gint    off_x, off_y;
 	  gdouble dx, dy, dist;
           gchar   status_str[STATUSBAR_SIZE];
 
-          gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+          core->cur_coords = *coords;
 
-	  /*  Get the current coordinates */
-          core->cur_coords.x = coords->x - off_x;
-          core->cur_coords.y = coords->y - off_y;
+          {
+            gint off_x, off_y;
+
+            gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+            core->cur_coords.x -= off_x;
+            core->cur_coords.y -= off_y;
+          }
 
 	  if (state & GDK_CONTROL_MASK)
 	    {

@@ -288,16 +288,13 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 	  break;
 	}
 
-      gdisp->scale = (scaledest << 8) + scalesrc;
-
-      shell->offset_x = ((scaledest * ((x1 + x2) / 2)) / scalesrc -
-                         (win_width / 2));
-      shell->offset_y = ((scaledest * ((y1 + y2) / 2)) / scalesrc -
-                         (win_height / 2));
-
-      /*  resize the image  */
-      gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_zoom,
-                                       TRUE);
+      gimp_display_shell_scale_by_values (shell,
+                                          (scaledest << 8) + scalesrc,
+                                          ((scaledest * ((x1 + x2) / 2)) / scalesrc -
+                                           (win_width / 2)),
+                                          ((scaledest * ((y1 + y2) / 2)) / scalesrc -
+                                           (win_height / 2)),
+                                          gimprc.resize_windows_on_zoom);
     }
 }
 

@@ -22,16 +22,22 @@
 
 void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
 
-void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp, 
+void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp,
                                                  gboolean          dot_for_dot);
 
 void   gimp_display_shell_scale                 (GimpDisplayShell *gdisp,
                                                  GimpZoomType      zoom_type);
 void   gimp_display_shell_scale_fit             (GimpDisplayShell *gdisp);
+void   gimp_display_shell_scale_by_values       (GimpDisplayShell *gdisp,
+                                                 gint              scale,
+                                                 gint              offset_x,
+                                                 gint              offset_y,
+                                                 gboolean          resize_window);
+void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
+
 void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
                                                  gboolean          resize_window,
                                                  gboolean          redisplay);
-void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */

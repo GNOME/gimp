@@ -82,8 +82,7 @@ typedef enum /*< pdb-skip >*/
 typedef enum /*< pdb-skip >*/
 {
   INACTIVE,
-  ACTIVE,
-  PAUSED
+  ACTIVE
 } ToolState;
 
 /*  Tool control actions  */
