@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+	- updated burst <sjburges@gimp.org>
 1.20
 	- image types updated to reflect gimp's reality.
         - updated perlotine.

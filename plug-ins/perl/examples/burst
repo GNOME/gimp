@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
-# <sjburges@gimp.org> (original release)
+# <sjburges@gimp.org> 
 #
-use Gimp;
+use Gimp qw(:auto N_ __);
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -16,17 +16,35 @@ use Gimp::Util;
 # Enjoy,
 #  Seth Burgess <sjburges@gimp.org>
 
+####-----
+# Revision 03/18/2000
+#  Changed second angle to be a sweep measurement, not an absolute angle (I
+#  found that I was calculating a lot more by hand than I should be when
+#  using it)
+#  
+#  Also fixed up a bug that I'd covered up, and did a decent for loop for
+#  a change.  Fixed up rectangle to not mess up on corner areas.
+# 
+#  Lastly, I added a special case for 360 degrees - don't redraw the last
+#  line for a full circle; instead re-adjust end point.  I'm not entirely
+#  happy with this solution, but its close to what I expect to happen.  I
+#  don't desire to litter the interface with more strange options if possible
+#  and I suspect most users will never notice.
+#
+
+
+
 # Gimp::set_trace(TRACE_ALL);
 
 # find an equivalent polar value in the range of 0 to 2 pi 
 sub find_in_2pi
 {
-my ($ang) = @_;
-if ($ang < 0)
-{
-  return ($ang - int($ang/(2*3.1415926))*2*3.1415926 + 2*3.1415926);
-}
-return ($ang - int($ang/(2*3.1415926))*2*3.1415926);
+  my ($ang) = @_;
+  if ($ang < 0)
+    {
+       return ($ang - int($ang/(2*3.1415926))*2*3.1415926 + 2*3.1415926);
+    }
+  return ($ang - int($ang/(2*3.1415926))*2*3.1415926);
 }
 
 # actual script
@@ -50,16 +68,27 @@ fades from if you have Fade set\n",
    [PF_VALUE, 'spokes', "How many spokes", 16],
    [PF_VALUE, 'inside_pixels', "Inside Pixels", 10],
    [PF_VALUE, 'outside_pixels', "Outside Pixels", 10], 
-   [PF_SLIDER, 'start_angle', "Angle to start at, with 0 being left sweeping counter-clockwise.", 0, [-360, 360, 1]],
-   [PF_SLIDER, 'end_angle', "Angle to end at, with 0 being left sweeping counter-clockwise.", 360, [-360, 360, 1]]
+   [PF_SLIDER, 'start_angle', "Angle to start at, with 0 being left, and sweeping counter-clockwise.", 0, [-360, 360, 1]],
+   [PF_SLIDER, 'arc_angle', "How many degrees to arc through.", 360, [-360, 360, 1]]
   ],
   [],
   [],
   sub {
     my($img,$layer, $shape, $fade_dir, $points, 
-       $inside_pixels, $outside_pixels, $start_angle, $end_angle) =@_;
+       $inside_pixels, $outside_pixels, $start_angle, $arc_angle) =@_;
+    
     $pi = 3.1415927;
-
+    
+    # Special case 360
+    if (abs($arc_angle) == 360) 
+      {
+        $end_angle = $start_angle + $arc_angle - abs ($arc_angle/$points);
+      }
+    else 
+      {
+        $end_angle = $start_angle + $arc_angle;
+      }
+      
     eval { $img->undo_push_group_start };
 
     Gimp->progress_init("Burst");    
@@ -67,7 +96,7 @@ fades from if you have Fade set\n",
     $progress = 0;
 
     ($dumb, $x1, $y1, $x2, $y2) = $img->selection_bounds;
-    $img->selection_none;
+    # $img->selection_none;
     
     $width = $x2 - $x1;
     $height = $y2 - $y1;
@@ -77,164 +106,165 @@ fades from if you have Fade set\n",
     $center_y = $y1 + $height/2;
 
     if ($start_angle > $end_angle)
-    { # swap them
-      $angle = $end_angle;
-      $end_angle = $start_angle;
-      $start_angle = $angle;
-    }
+      { # swap them
+        $angle = $end_angle;
+        $end_angle = $start_angle;
+        $start_angle = $angle;
+      }
 
     if ($shape == 0) 
-    { #ellipse
-	# the for loop just increments $i until $angle is big enough
-        for ($i = 0, $angle=$start_angle*$pi/180; 
-             $angle <$end_angle*$pi/180-0.01; 
+      { #ellipse
+        # do $points worth
+        for ($i = 0;
+             $i < $points;
+	     #$angle <$end_angle*$pi/180-0.01; 
              $i++ )
-        {
-        $angle = $i * abs($start_angle-$end_angle)*$pi/$points/180;
-        $angle += $start_angle*$pi/180;
+          {
+            $angle = $i * abs($start_angle-$end_angle)*$pi/($points-1)/180;
+            $angle += $start_angle*$pi/180;
         
-        # use the major/minor axis description of an ellipse:
-        # x^2   y^2
-        # --- + --- = 1
-        # a^2   b^2
-        # 
-        # where a is the x axis, b is the y axis, and the equation of
-        # a line passing through 0 (y=mb).  Solve for x&y, and pick the
-        # correct one for the angle.
+            # use the major/minor axis description of an ellipse:
+            # x^2   y^2
+            # --- + --- = 1
+            # a^2   b^2
+            # 
+            # where a is the x axis, b is the y axis, and the equation of
+            # a line passing through 0 (y=mb).  Solve for x&y, and pick the
+            # correct one for the angle.
 
-        $a = $width/2 - $outside_pixels;
-        $b = $height/2 - $outside_pixels;
+            $a = $width/2 - $outside_pixels;
+            $b = $height/2 - $outside_pixels;
 
-        # dimensions for an "inside ellipse"
-        $c = ($a>$b)?$inside_pixels:$inside_pixels*$a/$b;
-        $d = ($a>$b)?$inside_pixels*$b/$a:$inside_pixels;
+            # dimensions for an "inside ellipse"
+            $c = ($a>$b)?$inside_pixels:$inside_pixels*$a/$b;
+            $d = ($a>$b)?$inside_pixels*$b/$a:$inside_pixels;
 
-        # get the slope
-        $m = sin($angle)/cos($angle);
-        if ($m ==0) { $m = 0.000000000001; } #avoid div by 0
-        if ($c ==0) { $c = 0.000000000001; } #avoid div by 0
-        if ($d ==0) { $d = 0.000000000001; } #avoid div by 0
+            # get the slope
+            $m = sin($angle)/cos($angle);
+            if ($m ==0) { $m = 0.000000000001; } #avoid div by 0
+            if ($c ==0) { $c = 0.000000000001; } #avoid div by 0
+            if ($d ==0) { $d = 0.000000000001; } #avoid div by 0
         
-        # find the positive solution of the quadratic for the endpoints        
-        $x = sqrt(1/((1/$a/$a)+($m*$m/$b/$b)));
-        $y = sqrt(1/((1/($m*$m*$a*$a))+(1/$b/$b)));
+            # find the positive solution of the quadratic for the endpoints 
+            $x = sqrt(1/((1/$a/$a)+($m*$m/$b/$b)));
+            $y = sqrt(1/((1/($m*$m*$a*$a))+(1/$b/$b)));
 
-        # and find the starting points in the same manner
-        $x_start = sqrt(1/((1/$c/$c)+($m*$m/$d/$d)));
-        $y_start = sqrt(1/((1/($m*$m*$c*$c))+(1/$d/$d)));
+            # and find the starting points in the same manner
+            $x_start = sqrt(1/((1/$c/$c)+($m*$m/$d/$d)));
+            $y_start = sqrt(1/((1/($m*$m*$c*$c))+(1/$d/$d)));
 
-        # pick the right solution of the quadratic
-        if ((find_in_2pi($angle) < $pi/2) || (find_in_2pi($angle) > 3*$pi/2)) 
-        { 
+            # pick the right solution of the quadratic
+            if ((find_in_2pi($angle) < $pi/2) || 
+	         (find_in_2pi($angle) > 3*$pi/2)) 
+              { 
                 $x = -$x; 
                 $x_start = -$x_start;
-        }
-        if (find_in_2pi($angle) > $pi) 
-        {
+              }
+            if (find_in_2pi($angle) > $pi) 
+              {
                 $y = -$y; 
                 $y_start = -$y_start;
-        }
-        # do translations to center stuff
-        $x = $x + $center_x;
-        $y = $y + $center_y;
-        $x_start = $x_start + $center_x;
-        $y_start = $y_start + $center_y;
+              }
+            # do translations to center stuff
+            $x = $x + $center_x;
+            $y = $y + $center_y;
+            $x_start = $x_start + $center_x;
+            $y_start = $y_start + $center_y;
 
-#        print "X = $x, Y = $y, M = $m\n";
-        
-        if ($fade_dir == 1) 
-        {        
+            if ($fade_dir == 1) 
+              {        
                 $layer->paintbrush_default(4, [$x, $y, $x_start, $y_start]);
-        }
-        else
-        {
+              }
+            else
+              {
                 $layer->paintbrush_default(4, [$x_start, $y_start, $x, $y]);
-        }
-      $progress += $progress_increment;
-      Gimp->progress_update($progress);
+              }
+            $progress += $progress_increment;
+            Gimp->progress_update($progress);
+         }
       }
-    }
     else 
-    { #rectangle
+      { #rectangle
         # The idea here is to see where the line intersects with the
         # rightmost line.  If the abs of that is higer than the height, 
         # see where it intersects the top instead.
 
         #print "width = $width, height = $height\n";        
 
-        for ($i = 0, $angle=$start_angle*$pi/180; 
-             $angle <$end_angle*$pi/180-0.01; 
+        for ($i = 0;
+             $i < $points;
              $i++ )
-        {
-        $angle = $i * abs($start_angle-$end_angle)*$pi/$points/180;
-        $angle += $start_angle*$pi/180;
+          {
+            $angle = $i * abs($start_angle-$end_angle)*$pi/($points-1)/180;
+            $angle += $start_angle*$pi/180;
         
-        # get the slope
-        $m = sin($angle)/cos($angle);
-# print "M = $m\n";        
-        if (abs($m*$width/2) < $height/2-$outside_pixels)
-        { # draw on the right/left borders        
+            # get the slope
+            $m = sin($angle)/cos($angle);
+            if (abs($m*$width/2) < $height/2)
+              { # draw on the right/left borders        
                 $x = $width/2-$outside_pixels;
                 $y = $m*($width/2-$outside_pixels);
                 $x_start = ($width>$height)
-                        ?$inside_pixels
-                        :$inside_pixels*$width/$height;
+                        ?($inside_pixels)
+                        :($inside_pixels*$width/$height);
                 $y_start = ($width>$height)
-                        ?$m*$inside_pixels
-                        :$m*$inside_pixels*$width/$height;
-        }
-        else
-        { # draw on the top/bottom borders
+                        ?($m*$inside_pixels)
+                        :($m*$inside_pixels*$width/$height);
+              }
+           else
+             { # draw on the top/bottom borders
                 $y = $height/2-$outside_pixels;
                 $x = ($height/2-$outside_pixels)/$m;        
                 $y_start = ($width>$height)
-                        ?$inside_pixels*$height/$width
-                        :$inside_pixels;
+                        ?($inside_pixels*$height/$width)
+                        :($inside_pixels);
                 $x_start = ($width>$height)
-                        ?$inside_pixels*$height/$width/$m
-                        :$inside_pixels/$m;
-        } 
-       # the method of finding points by lines like above makes picking right
-       # values kinda icky, as shown by these if statements. 
-        if ((find_in_2pi($angle) <= $pi/2) || (find_in_2pi($angle) > 3*$pi/2)) 
-        { 
+                        ?($inside_pixels*$height/$width/$m)
+                        :($inside_pixels/$m);
+             } 
+          # the method of finding points by lines like above makes picking right
+          # values kinda icky, as shown by these if statements. 
+          if ((find_in_2pi($angle) <= $pi/2) || 
+	      (find_in_2pi($angle) > 3*$pi/2)) 
+            { 
                 $x = -abs($x); 
                 $x_start = -abs($x_start);
-        }
-        else
-        {
-           $x = abs($x);
-           $x_start = abs($x_start);
-        }
+            }
+          else
+            {
+                $x = abs($x);
+                $x_start = abs($x_start);
+            }
 
-        if (find_in_2pi($angle) > $pi) 
-        {
-          $y = -abs($y); 
-          $y_start = -abs($y_start);
+          if (find_in_2pi($angle) > $pi) 
+            {
+              $y = -abs($y); 
+              $y_start = -abs($y_start);
+            }
+          else 
+            {
+              $y = abs($y); 
+              $y_start = abs($y_start);
+            }
+          # do translations to center stuff
+          $x = $x + $center_x;
+          $y = $y + $center_y;
+          $x_start = $x_start + $center_x;
+          $y_start = $y_start + $center_y;
+          if ($fade_dir == 1) 
+            {        
+              $layer->paintbrush_default(4, [$x, $y, $x_start, $y_start]);
+            }
+          else
+            {
+              $layer->paintbrush_default(4, [$x_start, $y_start, $x, $y]);
+            }
+          $progress += $progress_increment;
+          Gimp->progress_update($progress);
         }
-        else 
-        {
-          $y = abs($y); 
-          $y_start = abs($y_start);
-        }
-        # do translations to center stuff
-        $x = $x + $center_x;
-        $y = $y + $center_y;
-        $x_start = $x_start + $center_x;
-        $y_start = $y_start + $center_y;
-        if ($fade_dir == 1) 
-        {        
-                $layer->paintbrush_default(4, [$x, $y, $x_start, $y_start]);
-        }
-        else
-        {
-                $layer->paintbrush_default(4, [$x_start, $y_start, $x, $y]);
-        }
-      $progress += $progress_increment;
-      Gimp->progress_update($progress);
-      }
     } 
-   eval { $img->undo_push_group_end };
-   return();
-  };
+  eval { $img->undo_push_group_end };
+  return();
+};
+
 exit main;
