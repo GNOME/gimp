@@ -1,5 +1,8 @@
 2003-03-16  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/file-save-dialog.c (file_save_overwrite): set the dialog
+	transient to the file selection dialog (see bug #61092).
+
 	* app/gui/info-dialog.c: set a window type hint of
 	GDK_WINDOW_TYPE_HINT_UTILITY for info windows (fixes bug #92175).
 

@@ -342,6 +342,9 @@ file_save_overwrite (GtkWidget   *save_dialog,
 
   g_free (message);
 
+  gtk_window_set_transient_for (GTK_WINDOW (query_box),
+				GTK_WINDOW (save_dialog));
+
   gtk_widget_show (query_box);
 
   gtk_widget_set_sensitive (save_dialog, FALSE);
