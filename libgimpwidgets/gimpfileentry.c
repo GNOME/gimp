@@ -347,7 +347,9 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
     {
       if (gfs->dir_only)
 	{
-	  gfs->file_selection = gtk_file_selection_new (gfs->title);
+          gfs->file_selection = 
+            gtk_file_selection_new (gfs->title ? 
+                                    gfs->title : _("Select Directory"));
 
 	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
 	   *  easier than creating my own directory browser -- michael
@@ -358,9 +360,11 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 	    (GTK_FILE_SELECTION (gfs->file_selection)->file_list->parent);
 	}
       else
-	{
-	  gfs->file_selection = gtk_file_selection_new (_("Select File"));
-	}
+        {
+          gfs->file_selection = 
+            gtk_file_selection_new (gfs->title ? 
+                                    gfs->title : _("Select File"));
+        }
 
       gtk_window_set_position (GTK_WINDOW (gfs->file_selection),
 			       GTK_WIN_POS_MOUSE);

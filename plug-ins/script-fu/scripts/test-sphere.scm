@@ -27,7 +27,6 @@
 ; Usage:
 ; SF-FONT "label" "fontname"		
 ; ----------------------------------------------------------------------
-;
 ; SF-BRUSH 
 ; is only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget consists of a preview area (which when pressed will 
@@ -39,7 +38,7 @@
 ; consisting of Brush name, opacity, spacing and brush mode in the same 
 ; units as passed in as the default value.
 ;
-; Usage:-
+; Usage:
 ; SF_BRUSH "Brush" '("Circle (03)" 1.0 44 0)
 ;
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
@@ -49,63 +48,65 @@
 ; is generally available in the libgimpui library for any plugin that
 ; wishes to select a brush.
 ; ----------------------------------------------------------------------
-;
 ; SF-PATTERN
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget consists of a preview area (which when pressed will 
 ; produce a popup preview ) and a button with the "..." label. The button will
 ; popup a dialog where patterns can be selected.
 ;
-; Usage:-
+; Usage:
 ; SF-PATTERN "Pattern" "Maple Leaves"
 ;
 ; The value returned when the script is invoked is a string containing the 
 ; pattern name. If the above selection was not altered the string would 
 ; contain "Maple Leaves"
 ; ----------------------------------------------------------------------
-;
 ; SF-GRADIENT
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget consists of a button containing a preview of the selected
 ; gradient. If the button is pressed a gradient selection dialog will popup.
-; 
 ;
-; Usage:-
+; Usage:
 ; SF-GRADIENT "Gradient" "Deep_Sea"
 ;
 ; The value returned when the script is invoked is a string containing the 
 ; gradient name. If the above selection was not altered the string would 
 ; contain "Deep_Sea"
-;
 ; ----------------------------------------------------------------------
-;
 ; SF-FILENAME
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget consists of a button containing the name of a file.
 ; If the button is pressed a file selection dialog will popup.
 ;
-; Usage:-
+; Usage:
 ; SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 ;
 ; The value returned when the script is invoked is a string containing the 
 ; filename.
 ; ----------------------------------------------------------------------
+; SF-DIRNAME
+; Only useful in interactive mode. Very similar to SF-FILENAME, but the
+; created widget allows to choose a directory instead of a file.
 ;
+; Usage:
+; SF-DIRNAME "Image Directory" "/var/tmp/images"
+;
+; The value returned when the script is invoked is a string containing the 
+; dirname.
+; ----------------------------------------------------------------------
 ; SF-OPTION
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget is an option_menu showing the options that are passed
 ; as a list. The first option is the default choice. 
 ;
-; Usage:-
+; Usage:
 ; SF-OPTION "Orientation" '("Horzontal" "Vertical")
 ;
 ; The value returned when the script is invoked is the number of the
 ; choosen option, where the option first is counted as 0.
 ; ----------------------------------------------------------------------
-;
 
 
-;
 (define (script-fu-test-sphere radius 
 			       light 
 			       shadow 
@@ -118,7 +119,8 @@
 			       font 
 			       size 
 			       filename
-			       orientation)
+			       orientation
+			       dirname)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -202,6 +204,7 @@
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
 		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-OPTION "Orientation" '("Horzontal" "Vertical"))
+		    SF-OPTION "Orientation" '("Horzontal" "Vertical")
+		    SF-DIRNAME "Output Directory" "/var/tmp/")
 
 

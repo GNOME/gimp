@@ -624,6 +624,10 @@ script_fu_add_script (LISP a)
 		case SF_FILENAME:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
+                  /* fallthrough */
+		case SF_DIRNAME:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: dirname defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_file.filename = 
 		    g_strdup (get_c_string (car (a)));
 
@@ -645,7 +649,8 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_file.fileselection = NULL;
 
 		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "filename";
+		  args[i + 1].name = (script->arg_types[i] == SF_FILENAME ? 
+                                      "filename" : "dirname");
 		  args[i + 1].description = script->arg_labels[i];
 		 break;
 
@@ -921,6 +926,7 @@ script_fu_script_proc (gchar       *name,
 
 		  case SF_STRING:
 		  case SF_FILENAME:
+		  case SF_DIRNAME:
 		    escaped = ESCAPE (params[i + 1].data.d_string);
 		    length += strlen (escaped) + 3;
 		    g_free (escaped);
@@ -986,6 +992,7 @@ script_fu_script_proc (gchar       *name,
 
                         case SF_STRING:
                         case SF_FILENAME:
+                        case SF_DIRNAME:
                           escaped = ESCAPE (params[i + 1].data.d_string);
                           g_snprintf (buffer, sizeof (buffer), "\"%s\"",
 				      escaped);
@@ -1119,6 +1126,7 @@ script_fu_free_script (SFScript *script)
 	      break;
 
 	    case SF_FILENAME:
+	    case SF_DIRNAME:
 	      g_free (script->arg_defaults[i].sfa_file.filename);
 	      g_free (script->arg_values[i].sfa_file.filename);
 	      break;
@@ -1381,12 +1389,20 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_FILENAME:
-	  widget_leftalign = FALSE
-;
-	  sf_interface->args_widgets[i] =
-	    gimp_file_selection_new (_("Script-Fu File Selection"),
-				     script->arg_values[i].sfa_file.filename,
-				     FALSE, TRUE);
+	case SF_DIRNAME:
+	  widget_leftalign = FALSE;
+
+          if (script->arg_types[i] == SF_FILENAME)
+            sf_interface->args_widgets[i] =
+              gimp_file_selection_new (_("Script-Fu File Selection"),
+                                       script->arg_values[i].sfa_file.filename,
+                                       FALSE, TRUE);
+          else
+            sf_interface->args_widgets[i] =
+              gimp_file_selection_new (_("Script-Fu Directory Selection"),
+                                       script->arg_values[i].sfa_file.filename,
+                                       TRUE, TRUE);
+            
 	  script->arg_values[i].sfa_file.fileselection = 
 	    sf_interface->args_widgets[i];
 
@@ -1770,6 +1786,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	break;
 
       case SF_FILENAME:
+      case SF_DIRNAME:
 	escaped = ESCAPE (script->arg_values[i].sfa_file.filename);
 	length += strlen (escaped) + 3;
 	g_free (escaped);
@@ -1872,6 +1889,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
 	case SF_FILENAME:
+	case SF_DIRNAME:
 	  escaped = ESCAPE (script->arg_values[i].sfa_file.filename);
 	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
 	  g_free (escaped);
@@ -2099,6 +2117,7 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_FILENAME:
+      case SF_DIRNAME:
 	g_free (script->arg_values[i].sfa_file.filename);
 	script->arg_values[i].sfa_file.filename =
 	  g_strdup (script->arg_defaults[i].sfa_file.filename);

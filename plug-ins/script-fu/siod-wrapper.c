@@ -288,6 +288,7 @@ init_constants (void)
   setvar (cintern ("SF-VALUE"),       flocons (SF_VALUE),      NIL);
   setvar (cintern ("SF-STRING"),      flocons (SF_STRING),     NIL);
   setvar (cintern ("SF-FILENAME"),    flocons (SF_FILENAME),   NIL);
+  setvar (cintern ("SF-DIRNAME"),     flocons (SF_DIRNAME),    NIL);
   setvar (cintern ("SF-ADJUSTMENT"),  flocons (SF_ADJUSTMENT), NIL);
   setvar (cintern ("SF-FONT"),        flocons (SF_FONT),       NIL);
   setvar (cintern ("SF-PATTERN"),     flocons (SF_PATTERN),    NIL);

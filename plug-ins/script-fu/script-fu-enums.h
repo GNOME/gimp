@@ -37,6 +37,7 @@ typedef enum
   SF_BRUSH,
   SF_GRADIENT,
   SF_FILENAME,
+  SF_DIRNAME,
   SF_OPTION
 } SFArgType;
 
@@ -47,9 +48,3 @@ typedef enum
 } SFAdjustmentType;
 
 #endif /*  __SCRIPT_FU_ENUMS__  */
-
-
-
-
-
-

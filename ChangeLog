@@ -1,3 +1,17 @@
+2001-11-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpfileselection.c: set the window title for file
+	selection dialogs as we do for directory selection dialogs. Provide
+	fallbacks if gimp_file_selection_new() is called with a NULL title.
+
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/siod-wrapper.c: applied a modified version of a
+	patch from Matteo Nastasi <nastasi@tiscalinet.it> that adds the new 
+	Script-Fu parameter type SF-DIRNAME.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: use SF-DIRNAME.
+
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
 	* RELEASE-TO-CVS.patch: regenerated with the stuff below included.
