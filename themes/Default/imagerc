@@ -83,6 +83,77 @@ style "gimp-icons"
       { "images/stock-button-visible.png", *, *, *            }
     }
 
+  # Selection tool options window
+  #
+  stock["gimp-selection-replace"] =
+    {
+      { "images/stock-button-selection-replace.png", *, *, "gtk-button" },
+      { "images/stock-button-selection-replace.png", *, *, * }
+    }
+  stock["gimp-selection-add"] =
+    {
+      { "images/stock-button-selection-add.png", *, *, "gtk-button" },
+      { "images/stock-button-selection-add.png", *, *, * }
+    }
+  stock["gimp-selection-subtract"] =
+    {
+      { "images/stock-button-selection-substract.png", *, *, "gtk-button" },
+      { "images/stock-button-selection-substract.png", *, *, * }
+    }
+  stock["gimp-selection-intersect"] =
+    {
+      { "images/stock-button-selection-intersect.png", *, *, "gtk-button" },
+      { "images/stock-button-selection-intersect.png", *, *, * }
+    }
+
+  # Image window icons
+  #
+  stock["gimp-navigation"] =
+     {
+      { "images/stock-menu-navigation.png", *, *, "gtk-menu" },
+      { "images/stock-menu-navigation.png", *, *, * }
+    }
+  stock["gimp-qmask-off"] =
+     {
+      { "images/stock-menu-qmask-off.png", *, *, "gtk-menu" },
+      { "images/stock-menu-qmask-off.png", *, *, * }
+    }
+  stock["gimp-qmask-on"] =
+     {
+      { "images/stock-menu-qmask-on.png", *, *, "gtk-menu" },
+      { "images/stock-menu-qmask-on.png", *, *, * }
+    }
+
+  # X & Y linked or not
+  #
+  stock["gimp-hchain"] =
+     {
+      { "images/stock-button-hchain.png", *, *, "gtk-button" },
+      { "images/stock-button-hchain.png", *, *, * }
+    }
+  stock["gimp-hchain-broken"] =
+     {
+      { "images/stock-button-hchain-broken.png", *, *, "gtk-button" },
+      { "images/stock-button-hchain-broken.png", *, *, * }
+    }
+  stock["gimp-vchain"] =
+     {
+      { "images/stock-button-vchain.png", *, *, "gtk-button" },
+      { "images/stock-button-vchain.png", *, *, * }
+    }
+  stock["gimp-vchain-broken"] =
+     {
+      { "images/stock-button-vchain-broken.png", *, *, "gtk-button" },
+      { "images/stock-button-vchain-broken.png", *, *, * }
+    }
+
+  # Wilber *_`@@'
+  #
+  stock["gimp-wilber-eek"] =
+    {
+      { "images/stock-wilber-eek.png", *, *, * }
+    }
+
   # Tool icons
   #
   stock["gimp-tool-airbrush"] =
@@ -277,4 +348,4 @@ style "gimp-icons"
     }
 }
 
-class "GtkImage" style "gimp-icons"
+class "GtkWidget" style "gimp-icons"

@@ -1,3 +1,8 @@
+2002-03-07  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/imagerc: applied patch from Guillermo S. Romero that
+	adds missing icons.
+
 2002-03-07  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/tools/stock-tool-*.png: new icon set
