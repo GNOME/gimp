@@ -106,15 +106,13 @@ do {									 \
 #define TM_END()
 #endif
 
-#define TILE_CACHE_SIZE 16
-#define ENTSCALE_SCALE_WIDTH 125
-#define ENTSCALE_ENTRY_WIDTH 40
-#define DEF_OVERSAMPLE	1	/* default for how much to oversample by */
-#define SPOT_PREVIEW_SZ	16
-#define PREVIEW_OVERSAMPLE 3
+#define TILE_CACHE_SIZE     16
+#define SCALE_WIDTH        125
+#define DEF_OVERSAMPLE	     1 /* default for how much to oversample by */
+#define SPOT_PREVIEW_SZ	    16
+#define PREVIEW_OVERSAMPLE   3
 
 
-#define BOUNDS(a,x,y)	((a < x) ? x : ((a > y) ? y : a))
 #define ISNEG(x)	(((x) < 0)? 1 : 0)
 #define DEG2RAD(d)	((d) * G_PI / 180)
 #define VALID_BOOL(x)	((x) == TRUE || (x) == FALSE)
@@ -150,62 +148,74 @@ static spotfn_t spot_diamond;
 static spotfn_t spot_PSsquare;
 static spotfn_t spot_PSdiamond;
 
-typedef struct {
-    const char	*name;		/* function's name */
-    spotfn_t	*fn;		/* function itself */
-    guchar	*thresh;	/* cached threshold matrix */
-    gdouble	prev_lvl[3];	/* intensities to preview */
-    guchar	*prev_thresh;	/* preview-sized threshold matrix */
-    gint	balanced;	/* TRUE if spot fn is already balanced */
+typedef struct
+{
+  const gchar *name;        /* function's name */
+  spotfn_t    *fn;          /* function itself */
+  guchar      *thresh;      /* cached threshold matrix */
+  gdouble      prev_lvl[3]; /* intensities to preview */
+  guchar      *prev_thresh; /* preview-sized threshold matrix */
+  gint         balanced;    /* TRUE if spot fn is already balanced */
 } spot_info_t;
 
 
 /* This is all the info needed per spot function.  Functions are refered to
  * by their index into this array. */
-static spot_info_t spotfn_list[] = {
+static spot_info_t spotfn_list[] =
+{
 #define SPOTFN_DOT 0
-    { N_("round"),
-     spot_round,
-     NULL,
-     {.22, .50, .90},
-     NULL,
-     FALSE},
+  {
+    N_("Round"),
+    spot_round,
+    NULL,
+    { .22, .50, .90 },
+    NULL,
+    FALSE
+  },
 
-    { N_("line"),
-     spot_line,
-     NULL,
-     {.15, .50, .80},
-     NULL,
-     FALSE},
+  {
+    N_("Line"),
+    spot_line,
+    NULL,
+    { .15, .50, .80 },
+    NULL,
+    FALSE
+  },
 
-    { N_("diamond"),
-     spot_diamond,
-     NULL,
-     {.15, .50, .80},
-     NULL,
-     TRUE},
+  {
+    N_("Diamond"),
+    spot_diamond,
+    NULL,
+    { .15, .50, .80 },
+    NULL,
+    TRUE
+  },
 
-    { N_("PS square (Euclidean dot)"),
-     spot_PSsquare,
-     NULL,
-     {.15, .50, .90},
-     NULL,
-     FALSE},
+  { N_("PS Square (Euclidean Dot)"),
+    spot_PSsquare,
+    NULL,
+    { .15, .50, .90 },
+    NULL,
+    FALSE
+  },
 
-    { N_("PS diamond"),
-     spot_PSdiamond,
-     NULL,
-     {.15, .50, .90},
-     NULL,
-     FALSE},
+  {
+    N_("PS Diamond"),
+    spot_PSdiamond,
+    NULL,
+    { .15, .50, .90 },
+    NULL,
+    FALSE
+  },
 
     /* NULL-name terminates */
-    {NULL,
-     NULL,
-     NULL,
-     {0.0, 0.0, 0.0},
-     NULL,
-     FALSE}
+  { NULL,
+    NULL,
+    NULL,
+    { 0.0, 0.0, 0.0 },
+    NULL,
+    FALSE
+  }
 };
 
 #define NUM_SPOTFN	((sizeof(spotfn_list) / sizeof(spot_info_t)) - 1)
@@ -214,247 +224,260 @@ static spot_info_t spotfn_list[] = {
 #define THRESHn(n,x,y)	((thresh[n])[(y)*width + (x)])
     
 
-
 /* Arguments to filter */
 
 /* Some of these are here merely to save them across calls.  They are
  * marked as "UI use".  Everything else is a valid arg. */
-typedef struct {
-    /* resolution section: */
-    gint	cell_width;
+typedef struct
+{
+  /* resolution section: */
+  gint    cell_width;
 
-    /* screening section: */
-    gint	colourspace;	/* 0: RGB, 1: CMYK, 2: Intensity */
-    gint	k_pullout;	/* percentage of black to pull out */
+  /* screening section: */
+  gint    colourspace;  /* 0: RGB, 1: CMYK, 2: Intensity */
+  gint    k_pullout;    /* percentage of black to pull out */
 
-    /* grey screen (only used if greyscale drawable) */
-    gdouble	gry_ang;
-    gint	gry_spotfn;
-    /* red / cyan screen */
-    gdouble	red_ang;
-    gint	red_spotfn;
-    /* green / magenta screen */
-    gdouble	grn_ang;
-    gint	grn_spotfn;
-    /* blue / yellow screen */
-    gdouble	blu_ang;
-    gint	blu_spotfn;
+  /* grey screen (only used if greyscale drawable) */
+  gdouble gry_ang;
+  gint    gry_spotfn;
 
-    /* anti-alias section */
-    gint	oversample;	/* 1 == no anti-aliasing, else small odd int */
+  /* red / cyan screen */
+  gdouble red_ang;
+  gint    red_spotfn;
+
+  /* green / magenta screen */
+  gdouble grn_ang;
+  gint    grn_spotfn;
+
+  /* blue / yellow screen */
+  gdouble blu_ang;
+  gint    blu_spotfn;
+
+  /* anti-alias section */
+  gint    oversample;   /* 1 == no anti-aliasing, else small odd int */
 } NewsprintValues;
 
 /* bits of state used by the UI, but not visible from the PDB */
-typedef struct {
-    gint	input_spi;	/* input samples per inch */
-    gdouble	output_lpi;	/* desired output lines per inch */
-    gint	lock_channels;	/* changes to one channel affect all */
+typedef struct
+{
+  gint	  input_spi;     /* input samples per inch */
+  gdouble output_lpi;    /* desired output lines per inch */
+  gint	  lock_channels; /* changes to one channel affect all */
 } NewsprintUIValues;
 
-typedef struct {
-    gint	run;
+typedef struct
+{
+  gint run;
 } NewsprintInterface;
 
 
-typedef void (*EntscaleCallbackFunc) (gdouble new_val, gpointer data);
-
-
-typedef enum {
-  ENTSCALE_INT,
-  ENTSCALE_DOUBLE
-} EntscaleType;
-
-
-typedef struct {
-  GtkObject		*adjustment;
-  GtkWidget		*entry;
-  GtkWidget		*label;
-  GtkWidget		*hbox;
-  EntscaleType		type;
-  gchar			fmt_string[16];
-  gint			constraint;
-  EntscaleCallbackFunc	callback;
-  gpointer		call_data;
-} Entscale;
-
-
-
-
 /* state for the preview widgets */
-typedef struct {
-    GtkWidget	*widget;	/* preview widget itself */
-    GtkWidget	*label;		/* the label below it */
+typedef struct
+{
+  GtkWidget *widget;    /* preview widget itself */
+  GtkWidget *label;     /* the label below it */
 } preview_st;
 
-/* state for the channel frames */
-typedef struct _channel_st {
-    GtkWidget	*frame;		/* frame around this channel */
-    gint	*spotfn_num;	/* which spotfn the menu is controlling */
-    preview_st	prev[3];	/* state for 3 preview widgets */
-    Entscale	*entscale;	/* angle entscale widget */
-    GtkWidget	*option_menu;	/* popup for spot function */
-    GtkWidget	*menuitem[NUM_SPOTFN];	/* menuitems for each spot function */
-    GtkWidget	*ch_menuitem;	/* menuitem for the channel selector */
-    gint	ch_menu_num;	/* this channel's position in the selector */
-    struct _channel_st *next;	/* circular list of channels in locked group */
-} channel_st;
+/* state for the channel notebook pages */
+typedef struct _channel_st channel_st;
+
+struct _channel_st
+{
+  GtkWidget   *vbox;             /* vbox of this channel */
+  gint        *spotfn_num;       /* which spotfn the menu is controlling */
+  preview_st   prev[3];          /* state for 3 preview widgets */
+  GtkObject   *angle_adj;        /* angle adjustment */
+  GtkWidget   *option_menu;      /* popup for spot function */
+  GtkWidget   *menuitem[NUM_SPOTFN]; /* menuitems for each spot function */
+  GtkWidget   *ch_menuitem;      /* menuitem for the channel selector */
+  gint         ch_menu_num;      /* this channel's position in the selector */
+  channel_st  *next;             /* circular list of channels in locked group */
+};
 
 
 /* State associated with the configuration dialog and passed to its
  * callback functions */
-typedef struct {
-    GtkWidget	*dlg;	/* main dialog itself */
-    Entscale	*pull;	/* black pullout percentage */
-    Entscale	*input_spi;
-    Entscale	*output_lpi;
-    Entscale	*cellsize;
-    GtkWidget	*vbox;	/* container for screen info */    
-    GtkWidget	*current_ch; /* which channel is currently being edited */
-    GtkWidget	*channel_menu;		/* menu of channels */
-    GtkWidget	*channel_option;	/* option menu for channels */
-    /* room for up to 4 channels per colourspace */
-    channel_st	*chst[NUM_CS][4];
+typedef struct
+{
+  GtkWidget  *dlg;             /* main dialog itself */
+  GtkWidget  *pull_table;
+  GtkObject  *pull;            /* black pullout percentage */
+  GtkObject  *input_spi;
+  GtkObject  *output_lpi;
+  GtkObject  *cellsize;
+  GtkWidget  *vbox;            /* container for screen info */    
+
+  /* Notebook for the channels (one per colorspace) */
+  GtkWidget  *channel_notebook[NUM_CS];
+
+  /* room for up to 4 channels per colourspace */
+  channel_st *chst[NUM_CS][4];
 } NewsprintDialog_st;
 
 
-
-
 /***** Local vars *****/
-
 
 /* defaults */
 /* fixed copy so we can reset them */
 static const NewsprintValues factory_defaults =
 {
-    /* resolution stuff */
-    10,		/* cell width */
+  /* resolution stuff */
+  10,          /* cell width */
 
-    /* screen setup (default is the classic rosette pattern) */
-    CS_RGB,	/* use RGB, not CMYK or Intensity */
-    100,	/* max pullout */
-    /* grey/black */
-    45.0,
-    SPOTFN_DOT,
-    /* red/cyan */
-    15.0,
-    SPOTFN_DOT,
-    /* green/magenta */
-    75.0,
-    SPOTFN_DOT,
-    /* blue/yellow */
-    0.0,
-    SPOTFN_DOT,
+  /* screen setup (default is the classic rosette pattern) */
+  CS_RGB,      /* use RGB, not CMYK or Intensity */
+  100, /* max pullout */
 
-    /* anti-alias control */
-    DEF_OVERSAMPLE
+  /* grey/black */
+  45.0,
+  SPOTFN_DOT,
+
+  /* red/cyan */
+  15.0,
+  SPOTFN_DOT,
+
+  /* green/magenta */
+  75.0,
+  SPOTFN_DOT,
+
+  /* blue/yellow */
+  0.0,
+  SPOTFN_DOT,
+
+  /* anti-alias control */
+  DEF_OVERSAMPLE
 };
 
-static const NewsprintUIValues factory_defaults_ui = {
-    72,		/* input spi */
-     7.2,	/* output lpi */
-    FALSE	/* lock channels */
+static const NewsprintUIValues factory_defaults_ui =
+{
+  72,    /* input spi */
+  7.2,   /* output lpi */
+  FALSE  /* lock channels */
 };
 
 /* Mutable copy for normal use.  Initialised in run(). */
-static NewsprintValues pvals;
+static NewsprintValues   pvals;
 static NewsprintUIValues pvals_ui;
 
 static NewsprintInterface pint =
 {
-  FALSE	    /* run */
+  FALSE      /* run */
 };
 
 
 /* channel templates */
-typedef struct {
-    const gchar	*name;
-    /* pointers to the variables this channel updates */
-    gdouble	*angle;
-    gint	*spotfn;
-    /* factory defaults for the angle and spot function (as pointers so
-     * the silly compiler can see they're really constants) */
-    const gdouble *factory_angle;
-    const gint	*factory_spotfn;
+typedef struct
+{
+  const gchar   *name;
+  /* pointers to the variables this channel updates */
+  gdouble       *angle;
+  gint          *spotfn;
+  /* factory defaults for the angle and spot function (as pointers so
+   * the silly compiler can see they're really constants) */
+  const gdouble *factory_angle;
+  const gint    *factory_spotfn;
 } chan_tmpl;
 
-static const chan_tmpl grey_tmpl[] = {
-    { N_("Grey"),
-     &pvals.gry_ang,
-     &pvals.gry_spotfn,
-     &factory_defaults.gry_ang,
-     &factory_defaults.gry_spotfn},
+static const chan_tmpl grey_tmpl[] =
+{
+  {
+    N_("Grey"),
+    &pvals.gry_ang,
+    &pvals.gry_spotfn,
+    &factory_defaults.gry_ang,
+    &factory_defaults.gry_spotfn
+  },
 
-    {NULL, NULL, NULL, NULL, NULL}
+  { NULL, NULL, NULL, NULL, NULL }
 };
 
-static const chan_tmpl rgb_tmpl[] = {
-    { N_("Red"),
-     &pvals.red_ang,
-     &pvals.red_spotfn,
-     &factory_defaults.red_ang,
-     &factory_defaults.red_spotfn},
+static const chan_tmpl rgb_tmpl[] =
+{
+  {
+    N_("Red"),
+    &pvals.red_ang,
+    &pvals.red_spotfn,
+    &factory_defaults.red_ang,
+    &factory_defaults.red_spotfn
+  },
 
-    { N_("Green"),
-     &pvals.grn_ang,
-     &pvals.grn_spotfn,
-     &factory_defaults.grn_ang,
-     &factory_defaults.grn_spotfn},
+  {
+    N_("Green"),
+    &pvals.grn_ang,
+    &pvals.grn_spotfn,
+    &factory_defaults.grn_ang,
+    &factory_defaults.grn_spotfn
+  },
 
-    { N_("Blue"),
-     &pvals.blu_ang,
-     &pvals.blu_spotfn,
-     &factory_defaults.blu_ang,
-     &factory_defaults.blu_spotfn},
+  {
+    N_("Blue"),
+    &pvals.blu_ang,
+    &pvals.blu_spotfn,
+    &factory_defaults.blu_ang,
+    &factory_defaults.blu_spotfn
+  },
 
-    {NULL, NULL, NULL, NULL, NULL}
+  { NULL, NULL, NULL, NULL, NULL }
 };
 
-static const chan_tmpl cmyk_tmpl[] = {
-    { N_("Cyan"),
-     &pvals.red_ang,
-     &pvals.red_spotfn,
-     &factory_defaults.red_ang,
-     &factory_defaults.red_spotfn},
+static const chan_tmpl cmyk_tmpl[] =
+{
+  {
+    N_("Cyan"),
+    &pvals.red_ang,
+    &pvals.red_spotfn,
+    &factory_defaults.red_ang,
+    &factory_defaults.red_spotfn
+  },
 
+  {
+    N_("Magenta"),
+    &pvals.grn_ang,
+    &pvals.grn_spotfn,
+    &factory_defaults.grn_ang,
+    &factory_defaults.grn_spotfn
+  },
 
-    { N_("Magenta"),
-     &pvals.grn_ang,
-     &pvals.grn_spotfn,
-     &factory_defaults.grn_ang,
-     &factory_defaults.grn_spotfn},
+  {
+    N_("Yellow"),
+    &pvals.blu_ang,
+    &pvals.blu_spotfn,
+    &factory_defaults.blu_ang,
+    &factory_defaults.blu_spotfn
+  },
 
-    { N_("Yellow"),
-     &pvals.blu_ang,
-     &pvals.blu_spotfn,
-     &factory_defaults.blu_ang,
-     &factory_defaults.blu_spotfn},
+  {
+    N_("Black"),
+    &pvals.gry_ang,
+    &pvals.gry_spotfn,
+    &factory_defaults.gry_ang,
+    &factory_defaults.gry_spotfn
+  },
 
-    { N_("Black"),
-     &pvals.gry_ang,
-     &pvals.gry_spotfn,
-     &factory_defaults.gry_ang,
-     &factory_defaults.gry_spotfn},
-
-    {NULL, NULL, NULL, NULL, NULL}
+  { NULL, NULL, NULL, NULL, NULL }
 };
 
-static const chan_tmpl intensity_tmpl[] = {
-    { N_("Intensity"),
-     &pvals.gry_ang,
-     &pvals.gry_spotfn,
-     &factory_defaults.gry_ang,
-     &factory_defaults.gry_spotfn},
+static const chan_tmpl intensity_tmpl[] =
+{
+  {
+    N_("Intensity"),
+    &pvals.gry_ang,
+    &pvals.gry_spotfn,
+    &factory_defaults.gry_ang,
+    &factory_defaults.gry_spotfn
+  },
 
-    {NULL, NULL, NULL, NULL, NULL}
+  { NULL, NULL, NULL, NULL, NULL }
 };
 
 /* cspace_chan_tmpl is indexed by colourspace, and gives an array of
  * channel templates for that colourspace */
-static const chan_tmpl *cspace_chan_tmpl[] = {
-    grey_tmpl,
-    rgb_tmpl,
-    cmyk_tmpl,
-    intensity_tmpl
+static const chan_tmpl *cspace_chan_tmpl[] =
+{
+  grey_tmpl,
+  rgb_tmpl,
+  cmyk_tmpl,
+  intensity_tmpl
 };
 
 #define NCHANS(x) ((sizeof(x) / sizeof(chan_tmpl)) - 1)
@@ -462,11 +485,12 @@ static const chan_tmpl *cspace_chan_tmpl[] = {
 /* cspace_nchans gives a quick way of finding the number of channels
  * in a colourspace.  Alternatively, if you're walking the channel
  * template, you can use the NULL entry at the end to stop. */
-static const gint cspace_nchans[] = {
-    NCHANS(grey_tmpl),
-    NCHANS(rgb_tmpl),
-    NCHANS(cmyk_tmpl),
-    NCHANS(intensity_tmpl)
+static const gint cspace_nchans[] =
+{
+  NCHANS (grey_tmpl),
+  NCHANS (rgb_tmpl),
+  NCHANS (cmyk_tmpl),
+  NCHANS (intensity_tmpl)
 };
 
 
@@ -478,43 +502,23 @@ static void	run	(gchar	 *name,
 			 gint	 *nreturn_vals,
 			 GParam	 **return_vals);
 
-static gint	newsprint_dialog (GDrawable *drawable);
-static void	newsprint_ok_callback	 (GtkWidget *widget,
-					  gpointer   data);
-
-static void	newsprint_toggle_update (GtkWidget *widget,
+static gint	newsprint_dialog        (GDrawable *drawable);
+static void	newsprint_ok_callback   (GtkWidget *widget,
 					 gpointer   data);
-
 static void	newsprint_cspace_update (GtkWidget *widget,
 					 gpointer   data);
 
 static void	newsprint	(GDrawable *drawable);
-
-static guchar *	spot2thresh	(gint type, gint width);
-
-static Entscale * entscale_new (GtkWidget *table, gint x, gint y,
-			  gchar *caption, EntscaleType type, gpointer variable,
-			  gdouble min, gdouble max, gdouble step,
-			  gint constraint, EntscaleCallbackFunc callback,
-			  gpointer call_data);
-
-
-static int entscale_get_precision (gdouble step);
-static void entscale_destroy_callback (GtkWidget *widget, gpointer data);
-static void entscale_scale_update (GtkAdjustment *adjustment, gpointer data);
-static void entscale_entry_update (GtkWidget *widget, gpointer data);
-
-static void entscale_set_sensitive (Entscale *ent, gint sensitive);
-static void entscale_set_value(Entscale *ent, gfloat value);
-
+static guchar *	spot2thresh	(gint       type,
+				 gint       width);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	   /* init_proc */
-  NULL,	   /* quit_proc */
-  query,   /* query_proc */
-  run	   /* run_proc */
+  NULL,	 /* init_proc  */
+  NULL,	 /* quit_proc  */
+  query, /* query_proc */
+  run	 /* run_proc   */
 };
 
 
@@ -524,34 +528,32 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query()
+query(void)
 {
   static GParamDef args[]=
-    {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" },
+  {
+    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
+    { PARAM_IMAGE, "image", "Input image (unused)" },
+    { PARAM_DRAWABLE, "drawable", "Input drawable" },
 
-      { PARAM_INT32, "cell_width", "screen cell width, in pixels" },
+    { PARAM_INT32, "cell_width", "screen cell width, in pixels" },
 
-      { PARAM_INT32, "colourspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
-      { PARAM_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
+    { PARAM_INT32, "colourspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
+    { PARAM_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
 
-      { PARAM_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
-      { PARAM_INT32, "gry_spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
-      { PARAM_FLOAT, "red_ang", "Red/cyan screen angle (degrees)" },
-      { PARAM_INT32, "red_spotfn", "Red/cyan spot function (values as gry_spotfn)" },
-      { PARAM_FLOAT, "grn_ang", "Green/magenta screen angle (degrees)" },
-      { PARAM_INT32, "grn_spotfn", "Green/magenta spot function (values as gry_spotfn)" },
-      { PARAM_FLOAT, "blu_ang", "Blue/yellow screen angle (degrees)" },
-      { PARAM_INT32, "blu_spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
-      
-      { PARAM_INT32, "oversample", "how many times to oversample spot fn" }
-      /* 15 args */
-   };
-  static GParamDef *return_vals = NULL;
+    { PARAM_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
+    { PARAM_INT32, "gry_spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
+    { PARAM_FLOAT, "red_ang", "Red/cyan screen angle (degrees)" },
+    { PARAM_INT32, "red_spotfn", "Red/cyan spot function (values as gry_spotfn)" },
+    { PARAM_FLOAT, "grn_ang", "Green/magenta screen angle (degrees)" },
+    { PARAM_INT32, "grn_spotfn", "Green/magenta spot function (values as gry_spotfn)" },
+    { PARAM_FLOAT, "blu_ang", "Blue/yellow screen angle (degrees)" },
+    { PARAM_INT32, "blu_spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
+
+    { PARAM_INT32, "oversample", "how many times to oversample spot fn" }
+    /* 15 args */
+  };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -564,8 +566,8 @@ query()
 			  N_("<Image>/Filters/Distorts/Newsprint..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -596,597 +598,587 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
-  {
-  case RUN_INTERACTIVE:
-    INIT_I18N_UI();
+    {
+    case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
       gimp_get_data ("plug_in_newsprint_ui", &pvals_ui);
 
       /*  First acquire information with a dialog  */
       if (! newsprint_dialog (drawable))
-      {
+	{
 	  gimp_drawable_detach (drawable);
 	  return;
-      }
+	}
       break;
 
     case RUN_NONINTERACTIVE:
       INIT_I18N();
-	/*  Make sure all the arguments are there!  */
-	if (nparams != 15)
+      /*  Make sure all the arguments are there!  */
+      if (nparams != 15)
 	{
-	    status = STATUS_CALLING_ERROR;
-	    break;
+	  status = STATUS_CALLING_ERROR;
+	  break;
 	}
 
-	pvals.cell_width = param[3].data.d_int32;
-	pvals.colourspace = param[4].data.d_int32;
-	pvals.k_pullout  = param[5].data.d_int32;
-	pvals.gry_ang	 = param[6].data.d_float;
-	pvals.gry_spotfn = param[7].data.d_int32;
-	pvals.red_ang    = param[8].data.d_float;
-	pvals.red_spotfn = param[9].data.d_int32;
-	pvals.grn_ang    = param[10].data.d_float;
-	pvals.grn_spotfn = param[11].data.d_int32;
-	pvals.blu_ang    = param[12].data.d_float;
-	pvals.blu_spotfn = param[13].data.d_int32;
-	pvals.oversample = param[14].data.d_int32;
+      pvals.cell_width  = param[3].data.d_int32;
+      pvals.colourspace = param[4].data.d_int32;
+      pvals.k_pullout   = param[5].data.d_int32;
+      pvals.gry_ang     = param[6].data.d_float;
+      pvals.gry_spotfn  = param[7].data.d_int32;
+      pvals.red_ang     = param[8].data.d_float;
+      pvals.red_spotfn  = param[9].data.d_int32;
+      pvals.grn_ang     = param[10].data.d_float;
+      pvals.grn_spotfn  = param[11].data.d_int32;
+      pvals.blu_ang     = param[12].data.d_float;
+      pvals.blu_spotfn  = param[13].data.d_int32;
+      pvals.oversample  = param[14].data.d_int32;
 
-	/* check values are within permitted ranges */
-	if (!VALID_SPOTFN(pvals.gry_spotfn) ||
-	    !VALID_SPOTFN(pvals.red_spotfn) ||
-	    !VALID_SPOTFN(pvals.grn_spotfn) ||
-	    !VALID_SPOTFN(pvals.blu_spotfn) ||
-	    !VALID_CS(pvals.colourspace) ||
-	    pvals.k_pullout < 0 || pvals.k_pullout > 100)
-	    status = STATUS_CALLING_ERROR;
+      /* check values are within permitted ranges */
+      if (!VALID_SPOTFN (pvals.gry_spotfn) ||
+	  !VALID_SPOTFN (pvals.red_spotfn) ||
+	  !VALID_SPOTFN (pvals.grn_spotfn) ||
+	  !VALID_SPOTFN (pvals.blu_spotfn) ||
+	  !VALID_CS (pvals.colourspace) ||
+	  pvals.k_pullout < 0 || pvals.k_pullout > 100)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      break;
 
-	break;
-
-  case RUN_WITH_LAST_VALS:
+    case RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
       break;
 
-  default:
+    default:
       break;
-  }
+    }
 
   if (status == STATUS_SUCCESS)
-  {
+    {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
 	  gimp_drawable_is_gray (drawable->id))
-      {
+	{
 	  gimp_progress_init( _("Newsprintifing..."));
 
 	  /*  set the tile cache size  */
-	  gimp_tile_cache_ntiles(TILE_CACHE_SIZE);
+	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
 	  /*  run the newsprint effect  */
-	  newsprint(drawable);
+	  newsprint (drawable);
 
 	  if (run_mode != RUN_NONINTERACTIVE)
-	      gimp_displays_flush();
+	    gimp_displays_flush ();
 
 	  /*  Store data  */
 	  if (run_mode == RUN_INTERACTIVE)
-	  {
+	    {
 	      gimp_set_data ("plug_in_newsprint",
 			     &pvals, sizeof (NewsprintValues));
 	      gimp_set_data ("plug_in_newsprint_ui",
 			     &pvals_ui, sizeof (NewsprintUIValues));
-	  }
-      }
+	    }
+	}
       else
-      {
+	{
 	  /*gimp_message ("newsprint: cannot operate on indexed images");*/
 	  status = STATUS_EXECUTION_ERROR;
-      }
-  }
+	}
+    }
 
   values[0].data.d_status = status;
-  
-  gimp_drawable_detach(drawable);
+
+  gimp_drawable_detach (drawable);
 }
-
-
 
 
 /* create new menu state, and the preview widgets for it */
 static channel_st *
-new_preview(gint *sfn)
+new_preview (gint *sfn)
 {
-    channel_st	*st;
-    GtkWidget	*preview;
-    GtkWidget	*label;
-    gint	i;
+  channel_st *st;
+  GtkWidget  *preview;
+  GtkWidget  *label;
+  gint        i;
 
-    st = g_new(channel_st, 1);
+  st = g_new (channel_st, 1);
 
-    st->spotfn_num = sfn;
+  st->spotfn_num = sfn;
 
-    /* make the preview widgets */
-    for(i=0; i < 3; i++)
+  /* make the preview widgets */
+  for (i = 0; i < 3; i++)
     {
-	preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_size(GTK_PREVIEW(preview),
-			 SPOT_PREVIEW_SZ*2 + 1, SPOT_PREVIEW_SZ*2 + 1);
-	gtk_widget_show(preview);
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      gtk_preview_size (GTK_PREVIEW (preview),
+			SPOT_PREVIEW_SZ*2 + 1, SPOT_PREVIEW_SZ*2 + 1);
+      gtk_widget_show (preview);
 
-	label = gtk_label_new("");
-	gtk_widget_show(label);
-	
-	st->prev[i].widget = preview;
-	st->prev[i].label  = label;
-	/* st->prev[i].value changed by preview_update */
+      label = gtk_label_new ("");
+      gtk_widget_show (label);
+
+      st->prev[i].widget = preview;
+      st->prev[i].label  = label;
+      /* st->prev[i].value changed by preview_update */
     }
 
-    return st;
+  return st;
 }
 
 
 /* the popup menu "st" has changed, so the previews associated with it 
  * need re-calculation */
 static void
-preview_update(channel_st *st)
+preview_update (channel_st *st)
 {
-    gint	sfn = *(st->spotfn_num);
-    preview_st	*prev;
-    gint	i;
-    gint	x;
-    gint	y;
-    gint	width = SPOT_PREVIEW_SZ * PREVIEW_OVERSAMPLE;
-    gint	oversample = PREVIEW_OVERSAMPLE;
-    guchar	*thresh;
-    gchar	pct[12];
-    guchar	value;
-    guchar	row[3 * (2 * SPOT_PREVIEW_SZ + 1)];
+  gint        sfn = *(st->spotfn_num);
+  preview_st *prev;
+  gint        i;
+  gint        x;
+  gint        y;
+  gint        width = SPOT_PREVIEW_SZ * PREVIEW_OVERSAMPLE;
+  gint        oversample = PREVIEW_OVERSAMPLE;
+  guchar     *thresh;
+  gchar       pct[12];
+  guchar      value;
+  guchar      row[3 * (2 * SPOT_PREVIEW_SZ + 1)];
 
-    /* If we don't yet have a preview threshold matrix for this spot
-     * function, generate one now. */
-    if (!spotfn_list[sfn].prev_thresh)
+  /* If we don't yet have a preview threshold matrix for this spot
+   * function, generate one now. */
+  if (!spotfn_list[sfn].prev_thresh)
     {
-	spotfn_list[sfn].prev_thresh =
-	    spot2thresh(sfn, SPOT_PREVIEW_SZ*PREVIEW_OVERSAMPLE);
+      spotfn_list[sfn].prev_thresh =
+	spot2thresh (sfn, SPOT_PREVIEW_SZ*PREVIEW_OVERSAMPLE);
     }
 
+  thresh = spotfn_list[sfn].prev_thresh;
 
-    thresh = spotfn_list[sfn].prev_thresh;
-
-    for(i=0; i < 3; i++)
+  for (i = 0; i < 3; i++)
     {
-	prev = &st->prev[i];
+      prev = &st->prev[i];
 
-	value = spotfn_list[sfn].prev_lvl[i] * 0xff;
+      value = spotfn_list[sfn].prev_lvl[i] * 0xff;
 
-	for (y=0; y <= SPOT_PREVIEW_SZ*2; y++)
+      for (y = 0; y <= SPOT_PREVIEW_SZ*2; y++)
 	{
-	    for (x=0; x <= SPOT_PREVIEW_SZ*2; x++)
+	  for (x = 0; x <= SPOT_PREVIEW_SZ*2; x++)
 	    {
-		guint32 sum = 0;
-		gint sx, sy;
-		gint tx, ty;
-		gint rx, ry;
+	      guint32 sum = 0;
+	      gint sx, sy;
+	      gint tx, ty;
+	      gint rx, ry;
 
-		rx = x * PREVIEW_OVERSAMPLE;
-		ry = y * PREVIEW_OVERSAMPLE;
+	      rx = x * PREVIEW_OVERSAMPLE;
+	      ry = y * PREVIEW_OVERSAMPLE;
 
-		for(sy=-oversample/2; sy<=oversample/2; sy++)
-		    for(sx=-oversample/2; sx<=oversample/2; sx++)
-		    {
-			tx = rx+sx;
-			ty = ry+sy;
-			while(tx < 0)  tx += width;
-			while(ty < 0)  ty += width;
-			while(tx >= width)  tx -= width;
-			while(ty >= width)  ty -= width;
-			
-			if (value > THRESH(tx, ty))
-			    sum += 0xff * BARTLETT(sx, sy);
-		    }
-		sum /= BARTLETT(0,0) * BARTLETT(0,0);
+	      for (sy = -oversample/2; sy <= oversample/2; sy++)
+		for (sx = -oversample/2; sx <= oversample/2; sx++)
+		  {
+		    tx = rx+sx;
+		    ty = ry+sy;
+		    while (tx < 0)  tx += width;
+		    while (ty < 0)  ty += width;
+		    while (tx >= width)  tx -= width;
+		    while (ty >= width)  ty -= width;
 
-		/* blue lines on cell boundaries */
-		if ((x % SPOT_PREVIEW_SZ) == 0 ||
-		    (y % SPOT_PREVIEW_SZ) == 0)
+		    if (value > THRESH (tx, ty))
+		      sum += 0xff * BARTLETT (sx, sy);
+		  }
+	      sum /= BARTLETT (0, 0) * BARTLETT (0, 0);
+
+	      /* blue lines on cell boundaries */
+	      if ((x % SPOT_PREVIEW_SZ) == 0 ||
+		  (y % SPOT_PREVIEW_SZ) == 0)
 		{
-		    row[x*3+0] = 0;
-		    row[x*3+1] = 0;
-		    row[x*3+2] = 0xff;
+		  row[x*3+0] = 0;
+		  row[x*3+1] = 0;
+		  row[x*3+2] = 0xff;
 		}
-		else
+	      else
 		{
-		    row[x*3+0] = sum;
-		    row[x*3+1] = sum;
-		    row[x*3+2] = sum;
+		  row[x*3+0] = sum;
+		  row[x*3+1] = sum;
+		  row[x*3+2] = sum;
 		}
 	    }
 
-	    gtk_preview_draw_row(GTK_PREVIEW(prev->widget),
-				 row, 0, y, SPOT_PREVIEW_SZ*2+1);
-}
+	  gtk_preview_draw_row (GTK_PREVIEW (prev->widget),
+				row, 0, y, SPOT_PREVIEW_SZ*2+1);
+	}
 
-	/* redraw preview widget */
-	gtk_widget_draw(prev->widget, NULL);
+      /* redraw preview widget */
+      gtk_widget_draw (prev->widget, NULL);
 
-	sprintf(pct, "%2d%%", (int)RINT(spotfn_list[sfn].prev_lvl[i] * 100));
-	gtk_label_set_text (GTK_LABEL(prev->label), pct);
+      g_snprintf (pct, sizeof (pct), "%2d%%",
+		  (int) RINT (spotfn_list[sfn].prev_lvl[i] * 100));
+      gtk_label_set_text (GTK_LABEL(prev->label), pct);
     }
 
-    gdk_flush ();
+  gdk_flush ();
 }
 
     
 static void
-newsprint_menu_callback(GtkWidget *widget,
-			gpointer   data)
+newsprint_menu_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-    channel_st *st = data;
-    gpointer ud;
-    gint menufn;
-    static gint in_progress = FALSE;
+  channel_st  *st = data;
+  gpointer     ud;
+  gint         menufn;
+  static gint  in_progress = FALSE;
 
-    /* we shouldn't need recursion protection, but if lock_channels is
-     * set, and gtk_option_menu_set_history ever generates an
-     * "activated" signal, then we'll get back here.  So we've defensive. */
-    if (in_progress)
+  /* we shouldn't need recursion protection, but if lock_channels is
+   * set, and gtk_option_menu_set_history ever generates an
+   * "activated" signal, then we'll get back here.  So we've defensive. */
+  if (in_progress)
     {
-	printf("newsprint_menu_callback: unexpected recursion: "
-	       "can't happen\n");
-	return;
-    }	
+      printf ("newsprint_menu_callback: unexpected recursion: can't happen\n");
+      return;
+    }
 
-    in_progress = TRUE;
+  in_progress = TRUE;
 
-    ud = gtk_object_get_user_data(GTK_OBJECT(widget));
-    menufn = GPOINTER_TO_INT(ud);
+  ud = gtk_object_get_user_data (GTK_OBJECT (widget));
+  menufn = GPOINTER_TO_INT (ud);
 
-    *(st->spotfn_num) = menufn;
+  *(st->spotfn_num) = menufn;
 
-    preview_update(st);
+  preview_update (st);
 
-    /* ripple the change to the other popups if the channels are
-     * locked together. */
-    if (pvals_ui.lock_channels)
+  /* ripple the change to the other popups if the channels are
+   * locked together. */
+  if (pvals_ui.lock_channels)
     {
-	channel_st *c = st->next;
-	gint	oldfn;
+      channel_st *c = st->next;
+      gint        oldfn;
 
-	while(c != st)
+      while (c != st)
 	{
-	    gtk_option_menu_set_history(GTK_OPTION_MENU(c->option_menu),
-					menufn);
-	    oldfn = *(c->spotfn_num);
-	    *(c->spotfn_num) = menufn;
-	    if (oldfn != menufn)
-		preview_update(c);
-	    c = c->next;
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (c->option_menu),
+				       menufn);
+	  oldfn = *(c->spotfn_num);
+	  *(c->spotfn_num) = menufn;
+	  if (oldfn != menufn)
+	    preview_update (c);
+	  c = c->next;
 	}
     }
 
-    in_progress = FALSE;
+  in_progress = FALSE;
 }
 
 
 static void
-angle_callback(gdouble new_val, gpointer data)
+angle_callback (GtkAdjustment *adjustment,
+		gpointer       data)
 {
-    channel_st *st = data;
-    channel_st *c;
-    static gint in_progress = FALSE;
+  channel_st *st = data;
+  channel_st *c;
+  gdouble    *angle_ptr;
+  static gint in_progress = FALSE;
 
-    if (pvals_ui.lock_channels && !in_progress)
+  angle_ptr = gtk_object_get_user_data (GTK_OBJECT (adjustment));
+
+  gimp_double_adjustment_update (adjustment, angle_ptr);
+
+  if (pvals_ui.lock_channels && !in_progress)
     {
-	in_progress = TRUE;
+      in_progress = TRUE;
 
-	c = st->next;
+      c = st->next;
 
-	while(c != st)
+      while (c != st)
 	{
-	    entscale_set_value(c->entscale, new_val);
-	    c = c->next;
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (c->angle_adj), *angle_ptr);
+	  c = c->next;
 	}
 
-	in_progress = FALSE;
+      in_progress = FALSE;
     }
 }
 
-
 static void
-spi_callback(gdouble new_val, gpointer data)
+spi_callback (GtkAdjustment *adjustment,
+	      gpointer       data)
 {
-    NewsprintDialog_st *st = data;
-    Entscale *save;
+  NewsprintDialog_st *st = data;
 
-    save = st->input_spi;
-    st->input_spi = NULL;
-    
-    if (st->output_lpi)
-	entscale_set_value(st->output_lpi, new_val / pvals.cell_width);
+  gimp_double_adjustment_update (adjustment, &pvals_ui.input_spi);
 
-    st->input_spi = save;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (st->output_lpi), data);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
+			    pvals_ui.input_spi / pvals.cell_width);
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->output_lpi), data);
 }
 
 static void
-lpi_callback(gdouble new_val, gpointer data)
+lpi_callback (GtkAdjustment *adjustment,
+	      gpointer       data)
 {
-    NewsprintDialog_st *st = data;
-    Entscale *save;
+  NewsprintDialog_st *st = data;
 
-    save = st->output_lpi;
-    st->output_lpi = NULL;
-    
-    if (st->cellsize)
-	entscale_set_value(st->cellsize, pvals_ui.input_spi / new_val);
+  gimp_double_adjustment_update (adjustment, &pvals_ui.output_lpi);
 
-    st->output_lpi = save;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (st->cellsize), data);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->cellsize),
+			    pvals_ui.input_spi / pvals_ui.output_lpi);
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->cellsize), data);
 }
 
 static void
-cellsize_callback(gdouble new_val, gpointer data)
+cellsize_callback (GtkAdjustment *adjustment,
+		   gpointer       data)
 {
-    NewsprintDialog_st *st = data;
-    Entscale *save;
+  NewsprintDialog_st *st = data;
 
-    save = st->cellsize;
-    st->cellsize = NULL;
-    
-    if (st->output_lpi)
-	entscale_set_value(st->output_lpi,
-			   pvals_ui.input_spi / pvals.cell_width);
+  gimp_int_adjustment_update (adjustment, &pvals.cell_width);
 
-    st->cellsize = save;
+  gtk_signal_handler_block_by_data (GTK_OBJECT (st->output_lpi), data);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
+			    pvals_ui.input_spi / pvals.cell_width);
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->output_lpi), data);
 }
 
-
 static void
-newsprint_channel_select_callback(GtkWidget *widget,
-				  gpointer  data)
+newsprint_defaults_callback (GtkWidget *widget,
+			     gpointer   data)
 {
-    NewsprintDialog_st *st = data;
-    channel_st *chst;
+  NewsprintDialog_st  *st = data;
+  gint                 saved_lock;
+  gint                 cspace;
+  channel_st         **chst;
+  const chan_tmpl     *ct;
+  gint                 spotfn;
+  gint                 c;
 
-    chst = gtk_object_get_user_data(GTK_OBJECT(widget));
+  /* temporarily turn off channel lock */
+  saved_lock = pvals_ui.lock_channels;
+  pvals_ui.lock_channels = FALSE;
 
-    /* hide the current channel, and show our channel */
-    if (st->current_ch)
-	gtk_widget_hide(st->current_ch);
-
-    gtk_widget_show(chst->frame);
-
-    st->current_ch = chst->frame;
-}
-
-
-static void
-newsprint_defaults_callback(GtkWidget *widget,
-			    gpointer   data)
-{
-    NewsprintDialog_st *st = data;
-    gint	saved_lock;
-    gint	cspace;
-    channel_st	**chst;
-    const chan_tmpl *ct;
-    gint	spotfn;
-    gint	c;
-
-    /* temporarily turn off channel lock */
-    saved_lock = pvals_ui.lock_channels;
-    pvals_ui.lock_channels = FALSE;
-
-    /* for each colourspace, reset its channel info */
-    for(cspace=0; cspace < NUM_CS; cspace++)
+  /* for each colourspace, reset its channel info */
+  for (cspace = 0; cspace < NUM_CS; cspace++)
     {
-	chst = st->chst[cspace];
-	ct = cspace_chan_tmpl[cspace];
+      chst = st->chst[cspace];
+      ct = cspace_chan_tmpl[cspace];
 
-	/* skip this colourspace if we haven't used it yet */
-	if (!chst[0])
-	    continue;
+      /* skip this colourspace if we haven't used it yet */
+      if (!chst[0])
+	continue;
 
-	c = 0;
-	while(ct->name)
+      c = 0;
+      while (ct->name)
 	{
-	    entscale_set_value(chst[c]->entscale, *(ct->factory_angle));
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (chst[c]->angle_adj),
+				    *(ct->factory_angle));
 
-	    /* change the popup menu and also activate the menuitem in
-	     * question, in order to run the handler that re-computes
-	     * the preview area */
-	    spotfn = *(ct->factory_spotfn);
-	    gtk_option_menu_set_history(GTK_OPTION_MENU(chst[c]->option_menu),
-					spotfn);
-	    gtk_menu_item_activate(GTK_MENU_ITEM(chst[c]->menuitem[spotfn]));
+	  /* change the popup menu and also activate the menuitem in
+	   * question, in order to run the handler that re-computes
+	   * the preview area */
+	  spotfn = *(ct->factory_spotfn);
+	  gtk_option_menu_set_history (GTK_OPTION_MENU (chst[c]->option_menu),
+				       spotfn);
+	  gtk_menu_item_activate (GTK_MENU_ITEM (chst[c]->menuitem[spotfn]));
 
-	    c++;
-	    ct++;
+	  c++;
+	  ct++;
 	}
     }
 
-    pvals_ui.lock_channels = saved_lock;
+  pvals_ui.lock_channels = saved_lock;
 }
 
-/* Create (but don't yet show) a new frame for a channel 'widget'.
- * Return the channel state, so caller can find the frame and place it
- * in a container. */
+/* Create (but don't yet show) a new vbox for a channel 'widget'.
+ * Return the channel state, so caller can find the vbox and place it
+ * in the notebook. */
 static channel_st *
-new_channel(const chan_tmpl *ct)
+new_channel (const chan_tmpl *ct)
 {
-    GtkWidget *table;
-    GtkWidget *label;
-    GtkWidget *menu;
-    spot_info_t *sf;
-    channel_st *chst;
-    gint      i;    
+  GtkWidget   *table;
+  GtkWidget   *hbox;
+  GtkWidget   *hbox2;
+  GtkWidget   *abox;
+  GtkWidget   *label;
+  GtkWidget   *menu;
+  spot_info_t *sf;
+  channel_st  *chst;
+  gint         i;    
 
-    /* create the channel state record */
-    chst = new_preview(ct->spotfn);
+  /* create the channel state record */
+  chst = new_preview (ct->spotfn);
 
-    chst->frame = gtk_frame_new (ct->name);
-    gtk_frame_set_shadow_type (GTK_FRAME (chst->frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (chst->frame), 4);
+  chst->vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (chst->vbox), 4);
 
-    table = gtk_table_new (3, 2, FALSE);
-    gtk_container_border_width (GTK_CONTAINER (table), 4);
-    gtk_container_add (GTK_CONTAINER (chst->frame), table);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (chst->vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-    /* angle slider */
-    chst->entscale = entscale_new(table, 0, 0, _("angle"),
-				  ENTSCALE_DOUBLE, ct->angle,
-				  -90.0, 90.0, 1.0, TRUE/*constrain*/,
-				  angle_callback, chst);
+  /* angle slider */
+  chst->angle_adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+					  _("Angle:"), SCALE_WIDTH, 0,
+					  *ct->angle,
+					  -90, 90, 1, 15, 1,
+					  NULL, NULL);
+  gtk_object_set_user_data (chst->angle_adj, ct->angle);
+  gtk_signal_connect (GTK_OBJECT (chst->angle_adj), "value_changed",
+		      GTK_SIGNAL_FUNC (angle_callback),
+		      chst);
 
-    /* spot function popup */
-    label = gtk_label_new( _("spot function"));
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-		     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-    gtk_widget_show(label);
+  /* spot function popup */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (chst->vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+  
+  abox = gtk_alignment_new (0.5, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
+  gtk_widget_show (abox);
 
-    chst->option_menu = gtk_option_menu_new();
-    gtk_table_attach(GTK_TABLE(table), chst->option_menu, 0, 1, 2, 3,
-		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-    gtk_widget_show(chst->option_menu);
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (abox), hbox2);
+  gtk_widget_show (hbox2);
 
-    menu = gtk_menu_new();
+  label = gtk_label_new( _("Spot Function:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-    sf = spotfn_list;
-    i = 0;
-    while(sf->name)
+  chst->option_menu = gtk_option_menu_new ();
+  gtk_box_pack_start (GTK_BOX (hbox2), chst->option_menu, FALSE, FALSE, 0);
+  gtk_widget_show (chst->option_menu);
+
+  menu = gtk_menu_new ();
+
+  sf = spotfn_list;
+  i = 0;
+  while (sf->name)
     {
-	chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
-	gtk_signal_connect(GTK_OBJECT(chst->menuitem[i]), "activate",
-			   (GtkSignalFunc) newsprint_menu_callback,
-			   chst);
-	gtk_object_set_user_data(GTK_OBJECT(chst->menuitem[i]),
-				 GINT_TO_POINTER(i));
-	gtk_widget_show(chst->menuitem[i]);
-	gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(chst->menuitem[i]));
-	sf++;
-	i++;
+      chst->menuitem[i] = gtk_menu_item_new_with_label( gettext(sf->name));
+      gtk_signal_connect (GTK_OBJECT (chst->menuitem[i]), "activate",
+			  GTK_SIGNAL_FUNC (newsprint_menu_callback),
+			  chst);
+      gtk_object_set_user_data (GTK_OBJECT (chst->menuitem[i]),
+				GINT_TO_POINTER (i));
+      gtk_widget_show (chst->menuitem[i]);
+      gtk_menu_append (GTK_MENU (menu), GTK_WIDGET (chst->menuitem[i]));
+      sf++;
+      i++;
     }
 
-    gtk_menu_set_active(GTK_MENU(menu), *ct->spotfn);
+  gtk_menu_set_active (GTK_MENU (menu), *ct->spotfn);
 
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(chst->option_menu), menu);
-    gtk_widget_show(chst->option_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (chst->option_menu), menu);
+  gtk_widget_show (chst->option_menu);
 
-    /* spot function previews go in table slots 1-2, 1-3 (double
-     * height) */
-    {
-	GtkWidget *sub;
-	GtkWidget *align;
+  /* spot function previews */
+  {
+    GtkWidget *sub;
 
-	sub = gtk_table_new(2, 3, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(sub), 1);
+    sub = gtk_table_new (2, 3, FALSE);
+    gtk_table_set_col_spacings (GTK_TABLE (sub), 6);
+    gtk_table_set_row_spacings (GTK_TABLE (sub), 1);
+    gtk_box_pack_start (GTK_BOX (hbox), sub, FALSE, FALSE, 0);
 
-	align = gtk_alignment_new(0.5, 1.0, 1.0, 0.0);
-	gtk_container_add(GTK_CONTAINER(align), sub);
-	gtk_widget_show(align);
+    for (i = 0; i < 3; i++)
+      {
+	gtk_table_attach (GTK_TABLE (sub), chst->prev[i].widget,
+			  i, i+1, 0, 1,
+			  GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
-	gtk_table_attach(GTK_TABLE(table), align, 1, 2, 1, 3,
-			 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+	gtk_table_attach (GTK_TABLE (sub), chst->prev[i].label,
+			  i, i+1, 1, 2,
+			  GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+      }
 
-	for(i=0; i < 3; i++)
-	{
-	    gtk_table_attach(GTK_TABLE(sub), chst->prev[i].widget,
-			     i, i+1, 0, 1,
-			     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+    gtk_widget_show (sub);
+  }
 
-	    gtk_table_attach(GTK_TABLE(sub), chst->prev[i].label,
-			     i, i+1, 1, 2,
-			     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-	}
+  /* fire the update once to make sure we start with something
+   * in the preview windows */
+  preview_update (chst);
 
-	gtk_widget_show(sub);
-    }
+  gtk_widget_show (table);
 
-    /* fire the update once to make sure we start with something
-     * in the preview windows */
-    preview_update(chst);
+  /* create the menuitem used to select this channel for editing */
+  chst->ch_menuitem = gtk_menu_item_new_with_label (gettext (ct->name));
+  gtk_object_set_user_data (GTK_OBJECT (chst->ch_menuitem), chst);
+  /* signal attachment and showing left to caller */
 
-    gtk_widget_show(table);
+  /* deliberately don't show the chst->frame, leave that up to
+   * the caller */
 
-    /* create the menuitem used to select this channel for editing */
-    chst->ch_menuitem = gtk_menu_item_new_with_label( gettext(ct->name));
-    gtk_object_set_user_data(GTK_OBJECT(chst->ch_menuitem), chst);
-    /* signal attachment and showing left to caller */
-
-    /* deliberately don't show the chst->frame, leave that up to
-     * the caller */
-
-    return chst;
+  return chst;
 }
 
 
 /* Make all the channels needed for "colourspace", and fill in
  * the respective channel state fields in "st". */
 static void
-gen_channels(NewsprintDialog_st *st, gint colourspace)
+gen_channels (NewsprintDialog_st *st,
+	      gint                colourspace)
 {
-    static int cur_menu_num = 0;
-    const chan_tmpl *ct;
-    channel_st	**chst;
-    channel_st	*base = NULL;
-    gint	i;
+  const chan_tmpl  *ct;
+  channel_st      **chst;
+  channel_st       *base = NULL;
+  gint              i;
 
-    chst = st->chst[colourspace];
-    ct   = cspace_chan_tmpl[colourspace];
-    i    = 0;
+  chst = st->chst[colourspace];
+  ct   = cspace_chan_tmpl[colourspace];
+  i    = 0;
 
-    while(ct->name)
+  st->channel_notebook[colourspace] = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (st->vbox), st->channel_notebook[colourspace],
+		      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (st->vbox),
+			 st->channel_notebook[colourspace], 3);
+  gtk_widget_show (st->channel_notebook[colourspace]);
+
+  while (ct->name)
     {
-	chst[i] = new_channel(ct);
+      chst[i] = new_channel (ct);
 
-	gtk_signal_connect(GTK_OBJECT(chst[i]->ch_menuitem), "activate",
-			   (GtkSignalFunc)newsprint_channel_select_callback,
-			   st);
+      if (i)
+	chst[i-1]->next = chst[i];
+      else
+	base = chst[i];
 
-	/* only link in the menuitem if we're doing multiple channels */
-	if (st->channel_menu)
-	{
-	    gtk_menu_append(GTK_MENU(st->channel_menu),
-			    GTK_WIDGET(chst[i]->ch_menuitem));
-	    chst[i]->ch_menu_num = cur_menu_num;
-	    cur_menu_num++;
-	}
+      gtk_notebook_append_page (GTK_NOTEBOOK (st->channel_notebook[colourspace]),
+				chst[i]->vbox,
+				gtk_label_new (gettext (ct->name)));
+      gtk_widget_show (chst[i]->vbox);
 
-	if (i)
-	    chst[i-1]->next = chst[i];
-	else
-	    base = chst[i];
-
-	gtk_box_pack_start(GTK_BOX(st->vbox), chst[i]->frame,
-			   TRUE, FALSE, 0);
-	gtk_box_reorder_child(GTK_BOX(st->vbox), chst[i]->frame, 5+i);
-
-	i++;
-	ct++;
+      i++;
+      ct++;
     }
 
-    /* make the list circular */
-    chst[i-1]->next = base;
+  /* make the list circular */
+  chst[i-1]->next = base;
 }
 
 
 static gint
 newsprint_dialog (GDrawable *drawable)
 {
-  gchar	**argv;
-  gint    argc;
   /* widgets we need from callbacks stored here */
   NewsprintDialog_st st;
+  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *align;
-  GtkWidget *button;
-  GtkWidget *hbox;
-  GtkWidget *toggle;
-  GtkWidget *label;
-  GSList    *group = NULL;
-  gint    bpp;
+  GtkObject *adj;
+  GSList *group = NULL;
+  gchar	**argv;
+  gint    argc;
   guchar *color_cube;
+  gint    bpp;
   gint    i;
 
   argc    = 1;
@@ -1215,14 +1207,11 @@ newsprint_dialog (GDrawable *drawable)
   for(i=0; i<NUM_CS; i++)
     st.chst[i][0] = NULL;
 
-  /* we haven't shown any channels yet */
-  st.current_ch = NULL;
-
   /* need to know the bpp, so we can tell if we're doing 
    * RGB/CMYK or grey style of dialog box */
-  bpp = gimp_drawable_bpp(drawable->id);
-  if (gimp_drawable_has_alpha(drawable->id))
-    bpp--;	
+  bpp = gimp_drawable_bpp (drawable->id);
+  if (gimp_drawable_has_alpha (drawable->id))
+    bpp--;
 
   /* force greyscale if it's the only thing we can do */
   if (bpp == 1)
@@ -1251,22 +1240,28 @@ newsprint_dialog (GDrawable *drawable)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /* resolution settings  */
-  frame = gtk_frame_new ( _("Resolution"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  /* resolution settings  */
+  frame = gtk_frame_new (_("Resolution"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     double xres, yres;
-    gimp_image_get_resolution(gimp_drawable_image_id(drawable->id),
-			      &xres, &yres);
+    gimp_image_get_resolution (gimp_drawable_image_id( drawable->id),
+			       &xres, &yres);
     /* XXX hack: should really note both resolutions, and use
      * rectangular cells, not square cells.  But I'm being lazy,
      * and the majority of the world works with xres == yres */
@@ -1274,74 +1269,95 @@ newsprint_dialog (GDrawable *drawable)
   }
 #endif
 
-  st.input_spi  = NULL;
-  st.output_lpi = NULL;
-  st.cellsize   = NULL;
+  st.input_spi = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				       _("Input SPI:"), SCALE_WIDTH, 0,
+				       pvals_ui.input_spi,
+				       1.0, 1200.0, 1.0, 10.0, 0,
+				       NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (st.input_spi), "value_changed",
+		      GTK_SIGNAL_FUNC (spi_callback),
+		      &st);
 
-  st.input_spi = entscale_new(table, 0, 0, _("Input SPI "),
-			      ENTSCALE_INT, &pvals_ui.input_spi,
-			      1.0, 1200.0, 5.0, FALSE/*constrain*/,
-			      spi_callback, &st);
+  st.output_lpi = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+					_("Output LPI:"), SCALE_WIDTH, 0,
+					pvals_ui.output_lpi,
+					1.0, 1200.0, 1.0, 10.0, 1,
+					NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (st.output_lpi), "value_changed",
+		      GTK_SIGNAL_FUNC (lpi_callback),
+		      &st);
 
-  st.output_lpi = entscale_new(table, 0, 1, _("Output LPI "),
-			       ENTSCALE_DOUBLE, &pvals_ui.output_lpi,
-			       1.0, 1200.0, 5.0, FALSE/*constrain*/,
-			       lpi_callback, &st);
+  st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+				      _("Cell Size:"), SCALE_WIDTH, 0,
+				      pvals.cell_width,
+				      3.0, 100.0, 1.0, 5.0, 0,
+				      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (st.cellsize), "value_changed",
+		      GTK_SIGNAL_FUNC (cellsize_callback),
+		      &st);
 
-  st.cellsize = entscale_new(table, 0, 2, _("Cell size "),
-			     ENTSCALE_INT, &pvals.cell_width,
-			     3.0, 100.0, 1.0, FALSE/*constrain*/,
-			     cellsize_callback, &st);
-
-  gtk_widget_show(table);
-  gtk_widget_show(frame);
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
 
   /* screen settings */
-  frame = gtk_frame_new ( _("Screen"));
+  frame = gtk_frame_new (_("Screen"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  st.vbox = gtk_vbox_new(FALSE, 1);
+  st.vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (st.vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), st.vbox);
-
-  /* we only create the channel menu and option menu if there are 
-   * more than one channels involved */
-  st.channel_menu   = NULL;
-  st.channel_option = NULL;
 
   /* optional portion begins */
   if (bpp != 1)
     {
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_container_border_width (GTK_CONTAINER (table), 10);
-      gtk_box_pack_start (GTK_BOX (st.vbox), table, TRUE, TRUE, 0);
+      GtkWidget *hbox;
+      GtkWidget *label;
+      GtkWidget *sep;
+      GtkWidget *button;
+      GtkWidget *toggle;
+
+      st.pull_table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (st.pull_table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (st.pull_table), 2);
 
       /* black pullout */
-      st.pull = entscale_new(table, 0, 1, _("Black pullout (%)"),
-			     ENTSCALE_INT, &pvals.k_pullout,
-			     0.0, 100.0, 1.0, TRUE/*constrain*/,
-			     NULL, NULL);
-      entscale_set_sensitive(st.pull, (pvals.colourspace == CS_CMYK));
+      st.pull = gimp_scale_entry_new (GTK_TABLE (st.pull_table), 0, 0,
+				      _("Black Pullout (%):"), SCALE_WIDTH, 0,
+				      pvals.k_pullout,
+				      0, 100, 1, 10, 0,
+				      NULL, NULL);
+      gtk_signal_connect (GTK_OBJECT (st.pull), "value_changed",
+			  GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+			  &pvals.k_pullout);
+      gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
+
+      gtk_widget_show (st.pull_table);
 
       /* RGB / CMYK / Intensity select */
-      label = gtk_label_new( _("Separate to"));
-      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-		       GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show(label);
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
 
-      hbox = gtk_hbox_new(FALSE, 5);
+      sep = gtk_hseparator_new ();
+      gtk_box_pack_start (GTK_BOX (st.vbox), sep, FALSE, FALSE, 0);
+      gtk_widget_show (sep);
+
+      /*  pack the scaleentry table  */
+      gtk_box_pack_start (GTK_BOX (st.vbox), st.pull_table, FALSE, FALSE, 0);
+
+      label = gtk_label_new( _("Separate to:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show(label);
 
       toggle = gtk_radio_button_new_with_label(group, _("RGB"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    (pvals.colourspace == CS_RGB));
+                                    (pvals.colourspace == CS_RGB));
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) newsprint_cspace_update,
-			  GINT_TO_POINTER(CS_RGB));
+                          (GtkSignalFunc) newsprint_cspace_update,
+                          GINT_TO_POINTER(CS_RGB));
       gtk_widget_show (toggle);
 
       toggle = gtk_radio_button_new_with_label (group, _("CMYK"));
@@ -1349,10 +1365,10 @@ newsprint_dialog (GDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    (pvals.colourspace == CS_CMYK));
+                                    (pvals.colourspace == CS_CMYK));
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) newsprint_cspace_update,
-			  GINT_TO_POINTER(CS_CMYK));
+                          (GtkSignalFunc) newsprint_cspace_update,
+                          GINT_TO_POINTER(CS_CMYK));
       gtk_widget_show (toggle);
 
       toggle = gtk_radio_button_new_with_label (group, _("Intensity"));
@@ -1360,99 +1376,69 @@ newsprint_dialog (GDrawable *drawable)
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    (pvals.colourspace == CS_INTENSITY));
+                                    (pvals.colourspace == CS_INTENSITY));
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) newsprint_cspace_update,
-			  GINT_TO_POINTER(CS_INTENSITY));
+                          (GtkSignalFunc) newsprint_cspace_update,
+                          GINT_TO_POINTER(CS_INTENSITY));
       gtk_widget_show (toggle);
 
-      gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 0, 1,
-		       GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show(hbox);
-
-      gtk_widget_show(table);
+      gtk_widget_show (hbox);
 
       /* channel lock & factory defaults button */
-      align = gtk_alignment_new(0.0, 1.0, 0.1, 1.0);
-      hbox = gtk_hbutton_box_new();
-      gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbox), 10);
-      gtk_button_box_set_layout(GTK_BUTTON_BOX(hbox), GTK_BUTTONBOX_SPREAD);
+      hbox = gtk_hbutton_box_new ();
+      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbox), 10);
+      gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-      gtk_container_add(GTK_CONTAINER(align), hbox);
-      gtk_box_pack_start(GTK_BOX(st.vbox), align, TRUE, FALSE, 0);
-      /* make sure it went in the right place, since colourspace
-       * radio button callbacks may have already inserted the
-       * channel frames */
-      gtk_box_reorder_child(GTK_BOX(st.vbox), align, 1);
-      gtk_widget_show(align);
-      gtk_widget_show(hbox);
+      toggle = gtk_check_button_new_with_label (_("Lock Channels"));
+      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			  &pvals_ui.lock_channels);
+      gtk_object_set_user_data (GTK_OBJECT (toggle), NULL);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    pvals_ui.lock_channels);
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
 
-      toggle = gtk_check_button_new_with_label( _("Lock channels"));
-      gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
-			 (GtkSignalFunc) newsprint_toggle_update,
-			 &pvals_ui.lock_channels);
-      gtk_object_set_user_data(GTK_OBJECT(toggle), NULL);
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (toggle),
-				   pvals_ui.lock_channels);
-      gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 0);
-      gtk_widget_show(toggle);
-
-      st.channel_menu   = gtk_menu_new();
-      st.channel_option = gtk_option_menu_new();
-      gtk_option_menu_set_menu(GTK_OPTION_MENU(st.channel_option),
-			       st.channel_menu);
-      gtk_widget_show(st.channel_option);
-      gtk_box_pack_start(GTK_BOX(hbox), st.channel_option, TRUE, TRUE, 0);
-
-      button = gtk_button_new_with_label( _("Factory defaults"));
-      gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			 (GtkSignalFunc) newsprint_defaults_callback,
+      button = gtk_button_new_with_label (_("Factory Defaults"));
+      gtk_signal_connect(GTK_OBJECT (button), "clicked",
+			 GTK_SIGNAL_FUNC (newsprint_defaults_callback),
 			 &st);
-      gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
-      gtk_widget_show(button);
+      gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
     }
 
-  /* Make the channels appropriate for this colourspace and
-   * currently selected defaults.  They may have already been
-   * created as a result of callbacks to cspace_update from
-   * gtk_toggle_button_set_active().  Other channel frames are
-   * created lazily the first time they are required. */
+  /*  Make the channels appropriate for this colourspace and
+   *  currently selected defaults.  They may have already been
+   *  created as a result of callbacks to cspace_update from
+   *  gtk_toggle_button_set_active().
+   */
   if (!st.chst[pvals.colourspace][0])
     {
-      channel_st **chst;
-
-      gen_channels(&st, pvals.colourspace);
-
-      chst = st.chst[pvals.colourspace];
-
-      for(i=0; i < cspace_nchans[pvals.colourspace]; i++)
-	gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
-
-      /* select the first channel to edit */
-      if (st.channel_option)
-	gtk_option_menu_set_history(GTK_OPTION_MENU(st.channel_option),
-				    chst[0]->ch_menu_num);
-      gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
+      gen_channels (&st, pvals.colourspace);
     }
 
-  gtk_widget_show(st.vbox);
-  gtk_widget_show(frame);
+  gtk_widget_show (st.vbox);
+  gtk_widget_show (frame);
 
   /* anti-alias control */
-  frame = gtk_frame_new ( _("Anti-alias"));
+  frame = gtk_frame_new (_("Anti-Alias"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), frame,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  entscale_new(table, 1, 0, _("oversample "),
-	       ENTSCALE_INT, &pvals.oversample,
-	       1.0, 15.0, 1.0, TRUE/*constrain*/,
-	       NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Oversample:"), SCALE_WIDTH, 0,
+			      pvals.oversample,
+			      1.0, 15.0, 1.0, 5.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &pvals.oversample);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -1469,87 +1455,63 @@ newsprint_dialog (GDrawable *drawable)
 
 static void
 newsprint_ok_callback (GtkWidget *widget,
-		      gpointer	 data)
+		       gpointer   data)
 {
-    pint.run = TRUE;
-    gtk_widget_destroy (GTK_WIDGET (data));
+  pint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-static void
-newsprint_toggle_update (GtkWidget *widget,
-			 gpointer   data)
-{
-    int *toggle_val;
-
-    toggle_val = (int *) data;
-
-    *toggle_val = GTK_TOGGLE_BUTTON(widget)->active;
-}
-
 
 static void
 newsprint_cspace_update (GtkWidget *widget,
 			 gpointer   data)
 {
-    NewsprintDialog_st	*st;
-    gint		new_cs = GPOINTER_TO_INT(data);
-    gint		old_cs = pvals.colourspace;
-    channel_st		**chst;
-    gint		i;
+  NewsprintDialog_st  *st;
+  gint new_cs = GPOINTER_TO_INT (data);
+  gint old_cs = pvals.colourspace;
 
-    st = gtk_object_get_user_data(GTK_OBJECT(widget));
+  st = gtk_object_get_user_data (GTK_OBJECT (widget));
 
-    if (!st)
-	printf("newsprint: cspace_update: no state, can't happen!\n");
+  if (!st)
+    printf ("newsprint: cspace_update: no state, can't happen!\n");
 
-    if (st)
+  if (st)
     {
-	/* the CMYK widget looks after the black pullout widget */
-	if (new_cs == CS_CMYK)
+      /* the CMYK widget looks after the black pullout widget */
+      if (new_cs == CS_CMYK)
 	{
-	    entscale_set_sensitive(st->pull,
-				   GTK_TOGGLE_BUTTON(widget)->active);
+	  gtk_widget_set_sensitive (st->pull_table,
+				    GTK_TOGGLE_BUTTON (widget)->active);
 	}
 
-	/* if we're not activate, then there's nothing more to do */
-	if (!GTK_TOGGLE_BUTTON(widget)->active)
-	    return;
+      /* if we're not activate, then there's nothing more to do */
+      if (!GTK_TOGGLE_BUTTON (widget)->active)
+	return;
 
-	pvals.colourspace = new_cs;
+      pvals.colourspace = new_cs;
 
-	/* make sure we have the necessary channels for the new
-         * colourspace */
-	if (!st->chst[new_cs][0])
-	    gen_channels(st, new_cs);
+      /* make sure we have the necessary channels for the new
+       * colourspace */
+      if (!st->chst[new_cs][0])
+	gen_channels (st, new_cs);
 
-	/* hide the old channels (if any) */
-	if (st->chst[old_cs][0])
+      /* hide the old channels (if any) */
+      if (st->channel_notebook[old_cs])
 	{
-	    chst = st->chst[old_cs];
-
-	    for(i=0; i < cspace_nchans[old_cs]; i++)
-		gtk_widget_hide(GTK_WIDGET(chst[i]->ch_menuitem));
+	  gtk_widget_hide (st->channel_notebook[old_cs]);
 	}
 
-	/* show the new channels */
-	chst = st->chst[new_cs];
-	for(i=0; i < cspace_nchans[new_cs]; i++)
-	    gtk_widget_show(GTK_WIDGET(chst[i]->ch_menuitem));
+      /* show the new channels */
+      gtk_widget_show (st->channel_notebook[new_cs]);
 
-	/* and select the first one */
-	gtk_option_menu_set_history(GTK_OPTION_MENU(st->channel_option),
-				    chst[0]->ch_menu_num);
-	gtk_menu_item_activate(GTK_MENU_ITEM(chst[0]->ch_menuitem));
+      gtk_notebook_set_page (GTK_NOTEBOOK (st->channel_notebook[new_cs]), 0);
     }
 }
-
-
 
 
 /*
  * Newsprint Effect
  */
-
 
 /*************************************************************/
 /* Spot functions */
@@ -1593,31 +1555,32 @@ newsprint_cspace_update (GtkWidget *widget,
  *
  * return a(radius) / 4; */
 static gdouble
-spot_round(gdouble x, gdouble y)
+spot_round (gdouble x,
+	    gdouble y)
 {
-    return 1 - (x*x + y*y);
+  return 1 - (x * x + y * y);
 }
-
 
 /* Another commonly seen spot function is the v-shaped wedge. Tonally
  * balanced. */
 static gdouble
-spot_line(gdouble x, gdouble y)
+spot_line (gdouble x,
+	   gdouble y)
 {
-    return ABS(y);
+  return ABS (y);
 }
-
 
 /* Square/Diamond dot that never becomes round.  Tonally balanced. */
 static gdouble
-spot_diamond(gdouble x, gdouble y)
+spot_diamond (gdouble x,
+	      gdouble y)
 {
-    gdouble xy = ABS(x) + ABS(y);
-    /* spot only valid for 0 <= xy <= 2 */
-    return ((xy <= 1)? 2*xy*xy : 2*xy*xy - 4*(xy-1)*(xy-1)) / 4;
+  gdouble xy = ABS (x) + ABS (y);
+  /* spot only valid for 0 <= xy <= 2 */
+  return ((xy <= 1) ?
+	  2 * xy * xy :
+	  2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
 }
-
-
 
 /* The following functions were derived from a peice of PostScript by
  * Peter Fink and published in his book, "PostScript Screening: Adobe
@@ -1640,31 +1603,32 @@ spot_diamond(gdouble x, gdouble y)
 
 /* Square (or Euclidean) dot.  Also very common. */
 static gdouble
-spot_PSsquare(gdouble x, gdouble y)
+spot_PSsquare (gdouble x,
+	       gdouble y)
 {
-    gdouble ax = ABS(x);
-    gdouble ay = ABS(y);
+  gdouble ax = ABS (x);
+  gdouble ay = ABS (y);
 
-    return (ax+ay)>1? ((ay-1)*(ay-1) + (ax-1)*(ax-1)) - 1 : 1-(ay*ay + ax*ax);
+  return ((ax + ay) > 1 ?
+	  ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) - 1 :
+	  1 - (ay * ay + ax * ax));
 }
 
 /* Diamond spot function, again from Peter Fink's PostScript
  * original.  Copyright as for previous function. */
 static gdouble
-spot_PSdiamond(gdouble x, gdouble y)
+spot_PSdiamond (gdouble x,
+		gdouble y)
 {
-    gdouble ax = ABS(x);
-    gdouble ay = ABS(y);
+  gdouble ax = ABS (x);
+  gdouble ay = ABS (y);
 
-    return (ax+ay)<=0.75? 1-(ax*ax + ay*ay) :	/* dot */
-	( (ax+ay)<=1.23?  1-((ay*0.76) + ax) :	/* to diamond (0.76 distort) */
-	  ((ay-1)*(ay-1) + (ax-1)*(ax-1)) -1);	/* back to dot */
+  return ((ax + ay) <= 0.75 ? 1 - (ax * ax + ay * ay) :     /* dot */
+	  ((ax + ay) <= 1.23 ?  1 - ((ay * 0.76) + ax) :    /* to diamond (0.76 distort) */
+	   ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) -1)); /* back to dot */
 }
 
 /* end of Adobe Systems Incorporated copyrighted functions */
-
-
-
 
 
 /*************************************************************/
@@ -1672,19 +1636,21 @@ spot_PSdiamond(gdouble x, gdouble y)
 
 
 /* Each call of the spot function results in one of these */
-typedef struct {
-    gint	index;	/* (y * width) + x */
-    gdouble	value;	/* return value of the spot function */
+typedef struct
+{
+  gint    index;  /* (y * width) + x */
+  gdouble value;  /* return value of the spot function */
 } order_t;
 
 /* qsort(3) compare function */
-static int
-order_cmp(const void *va, const void *vb)
+static gint
+order_cmp (const void *va,
+	   const void *vb)
 {
-    const order_t *a = va;
-    const order_t *b = vb;
+  const order_t *a = va;
+  const order_t *b = vb;
 
-    return (a->value < b->value)? -1 : ((a->value > b->value)? +1 : 0);
+  return (a->value < b->value) ? -1 : ((a->value > b->value)? + 1 : 0);
 }
 
 /* Convert spot function "type" to a threshold matrix of size "width"
@@ -1716,68 +1682,67 @@ order_cmp(const void *va, const void *vb)
  * output pixel is illuminated.  This means that a threshold matrix
  * entry of 0 never causes output pixels to be illuminated.  */
 static guchar *
-spot2thresh(gint type, gint width)
+spot2thresh (gint type,
+	     gint width)
 {
-    gdouble	sx, sy;
-    gdouble	val;
-    spotfn_t	*spotfn;
-    guchar	*thresh;
-    order_t	*order;
-    gint	x, y;
-    gint	i;
-    gint	wid2 = width*width;
-    gint	balanced = spotfn_list[type].balanced;
+  gdouble   sx, sy;
+  gdouble   val;
+  spotfn_t *spotfn;
+  guchar   *thresh;
+  order_t  *order;
+  gint      x, y;
+  gint      i;
+  gint      wid2 = width * width;
+  gint      balanced = spotfn_list[type].balanced;
 
-    thresh = g_new(guchar, wid2);
-    spotfn = spotfn_list[type].fn;
+  thresh = g_new (guchar, wid2);
+  spotfn = spotfn_list[type].fn;
 
-    order = g_new(order_t, wid2);
+  order = g_new (order_t, wid2);
 
-    i = 0;
-    for(y=0; y<width; y++)
+  i = 0;
+  for (y = 0; y < width; y++)
     {
-	for(x=0; x<width; x++)
+      for (x = 0; x < width; x++)
 	{
-	    /* scale x & y to -1 ... +1 inclusive */
-	    sx = (((gdouble)x) / (width-1) - 0.5) * 2;
-	    sy = (((gdouble)y) / (width-1) - 0.5) * 2;
-	    val = spotfn(sx, sy);
-	    val = BOUNDS(val, -1, 1);	/* interval is inclusive */
+	  /* scale x & y to -1 ... +1 inclusive */
+	  sx = (((gdouble)x) / (width-1) - 0.5) * 2;
+	  sy = (((gdouble)y) / (width-1) - 0.5) * 2;
+	  val = spotfn(sx, sy);
+	  val = CLAMP (val, -1, 1);  /* interval is inclusive */
 
-	    order[i].index = i;
-	    order[i].value = val;
-	    i++;
+	  order[i].index = i;
+	  order[i].value = val;
+	  i++;
 	}
     }
 
-    if (!balanced)
+  if (!balanced)
     {
-	/* now sort array of (point, value) pairs in ascending order */
-	qsort(order, wid2, sizeof(order_t), order_cmp);
+      /* now sort array of (point, value) pairs in ascending order */
+      qsort (order, wid2, sizeof (order_t), order_cmp);
     }
 
-    /* compile threshold matrix in order from darkest to lightest */
-    for(i=0; i < wid2; i++)
+  /* compile threshold matrix in order from darkest to lightest */
+  for (i = 0; i < wid2; i++)
     {
-	/* thresh[] contains values from 0 .. 254.  The reason for not
-	 * including 255 is so that an image value of 255 remains
-	 * unmolested.  It would be bad to filter a completely white
-	 * image and end up with black speckles.  */
-	if (balanced)
-	    thresh[order[i].index] = order[i].value * 0xfe;
-	else
-	    thresh[order[i].index] = i * 0xff / wid2;
+      /* thresh[] contains values from 0 .. 254.  The reason for not
+       * including 255 is so that an image value of 255 remains
+       * unmolested.  It would be bad to filter a completely white
+       * image and end up with black speckles.  */
+      if (balanced)
+	thresh[order[i].index] = order[i].value * 0xfe;
+      else
+	thresh[order[i].index] = i * 0xff / wid2;
     }
 
-    g_free(order);
+  g_free (order);
 
-    /* TODO: this is where the code to apply a transfer or dot gain
-     * function to the threshold matrix would go. */
+  /* TODO: this is where the code to apply a transfer or dot gain
+   * function to the threshold matrix would go. */
 
-    return thresh;
+  return thresh;
 }
-
-
 
 
 /**************************************************************/
@@ -1786,68 +1751,72 @@ spot2thresh(gint type, gint width)
 
 /* This function operates on the image, striding across it in tiles. */
 static void
-newsprint(GDrawable *drawable)
+newsprint (GDrawable *drawable)
 {
-    GPixelRgn	src_rgn, dest_rgn;
-    guchar	*src_row, *dest_row;
-    guchar	*src, *dest;
-    guchar	*thresh[4];
-    gdouble	r;
-    gdouble	theta;
-    gdouble	rot[4];
-    gdouble	k_pullout;
-    gint	bpp, colour_bpp;
-    gint	has_alpha;
-    gint	b;
-    gint	tile_width;
-    gint	width;
-    gint	row, col;
-    gint	x, y, x_step, y_step;
-    gint	x1, y1, x2, y2;
-    gint	rx, ry;
-    gint	progress, max_progress;
-    gint	oversample;
-    gint	colourspace;
-    gpointer	pr;
-    gint	w002;
-    TM_INIT();
+  GPixelRgn  src_rgn, dest_rgn;
+  guchar    *src_row, *dest_row;
+  guchar    *src, *dest;
+  guchar    *thresh[4];
+  gdouble    r;
+  gdouble    theta;
+  gdouble    rot[4];
+  gdouble    k_pullout;
+  gint       bpp, colour_bpp;
+  gint       has_alpha;
+  gint       b;
+  gint       tile_width;
+  gint       width;
+  gint       row, col;
+  gint       x, y, x_step, y_step;
+  gint       x1, y1, x2, y2;
+  gint       rx, ry;
+  gint       progress, max_progress;
+  gint       oversample;
+  gint       colourspace;
+  gpointer   pr;
+  gint       w002;
 
-    width = pvals.cell_width;
+  TM_INIT ();
 
-    if (width < 0)
-	width = -width;
-    if (width < 1)
-	width = 1;
+  width = pvals.cell_width;
 
-    oversample = pvals.oversample;
-    k_pullout = ((gdouble)pvals.k_pullout) / 100.0;
+  if (width < 0)
+    width = -width;
+  if (width < 1)
+    width = 1;
 
-    width *= oversample;
+  oversample = pvals.oversample;
+  k_pullout = ((gdouble) pvals.k_pullout) / 100.0;
 
-    tile_width = gimp_tile_width();
+  width *= oversample;
 
-    gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
+  tile_width = gimp_tile_width ();
 
-    bpp        = gimp_drawable_bpp(drawable->id);
-    has_alpha  = gimp_drawable_has_alpha(drawable->id);
-    colour_bpp = has_alpha? bpp-1 : bpp;
-    colourspace= pvals.colourspace;
-    if (bpp == 1) {
-	colourspace = CS_GREY;
-    } else {
-	if (colourspace == CS_GREY)
-	    colourspace = CS_RGB;
+  gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
+  bpp        = gimp_drawable_bpp (drawable->id);
+  has_alpha  = gimp_drawable_has_alpha (drawable->id);
+  colour_bpp = has_alpha ? bpp-1 : bpp;
+  colourspace= pvals.colourspace;
+  if (bpp == 1)
+    {
+      colourspace = CS_GREY;
+    }
+  else
+    {
+      if (colourspace == CS_GREY)
+	colourspace = CS_RGB;
     }
 
-    /* Bartlett window matrix optimisation */
-    w002 = BARTLETT(0,0) * BARTLETT(0,0);
+  /* Bartlett window matrix optimisation */
+  w002 = BARTLETT (0, 0) * BARTLETT (0, 0);
 #if 0
-    /* It turns out to be slightly slower to cache a pre-computed
-     * bartlett matrix!   I put it down to d-cache pollution *shrug* */
-    wgt = g_new(gint, oversample*oversample);
-    for(y=-oversample/2; y<=oversample/2; y++)
-	for(x=-oversample/2; x<=oversample/2; x++)
-	    WGT(x,y) = BARTLETT(x,y);
+  /* It turns out to be slightly slower to cache a pre-computed
+   * bartlett matrix!   I put it down to d-cache pollution *shrug* */
+  wgt = g_new (gint, oversample * oversample);
+  for (y = -oversample / 2; y <= oversample / 2; y++)
+    for (x = -oversample / 2; x<=oversample / 2; x++)
+      WGT (x, y) = BARTLETT (x, y);
 #endif /* 0 */
 
 #define ASRT(_x)						\
@@ -1859,504 +1828,219 @@ do {								\
     }								\
 } while(0)
 
-    /* calculate the RGB / CMYK rotations and threshold matrices */
-    if (bpp == 1 || colourspace == CS_INTENSITY)
+  /* calculate the RGB / CMYK rotations and threshold matrices */
+  if (bpp == 1 || colourspace == CS_INTENSITY)
     {
-	rot[0]    = DEG2RAD(pvals.gry_ang);	
-	thresh[0] = spot2thresh(pvals.gry_spotfn, width);
+      rot[0]    = DEG2RAD (pvals.gry_ang);	
+      thresh[0] = spot2thresh (pvals.gry_spotfn, width);
     }
-    else
+  else
     {
-	gint rf = pvals.red_spotfn;
-	gint gf = pvals.grn_spotfn;
-	gint bf = pvals.blu_spotfn;
+      gint rf = pvals.red_spotfn;
+      gint gf = pvals.grn_spotfn;
+      gint bf = pvals.blu_spotfn;
 
-	rot[0] = DEG2RAD(pvals.red_ang);
-	rot[1] = DEG2RAD(pvals.grn_ang);
-	rot[2] = DEG2RAD(pvals.blu_ang);
+      rot[0] = DEG2RAD (pvals.red_ang);
+      rot[1] = DEG2RAD (pvals.grn_ang);
+      rot[2] = DEG2RAD (pvals.blu_ang);
 
-	/* always need at least one threshold matrix */
-	ASRT(rf);
-	spotfn_list[rf].thresh = spot2thresh(rf, width);
-	thresh[0] = spotfn_list[rf].thresh;
+      /* always need at least one threshold matrix */
+      ASRT (rf);
+      spotfn_list[rf].thresh = spot2thresh (rf, width);
+      thresh[0] = spotfn_list[rf].thresh;
 
-	/* optimisation: only use separate threshold matrices if the
-	 * spot functions are actually different */
-	ASRT(gf);
-	if (!spotfn_list[gf].thresh)
-	    spotfn_list[gf].thresh = spot2thresh(gf, width);
-	thresh[1] = spotfn_list[gf].thresh;
+      /* optimisation: only use separate threshold matrices if the
+       * spot functions are actually different */
+      ASRT (gf);
+      if (!spotfn_list[gf].thresh)
+	spotfn_list[gf].thresh = spot2thresh (gf, width);
+      thresh[1] = spotfn_list[gf].thresh;
 
-	ASRT(bf);
-	if (!spotfn_list[bf].thresh)
-	    spotfn_list[bf].thresh = spot2thresh(bf, width);
-	thresh[2] = spotfn_list[bf].thresh;
+      ASRT (bf);
+      if (!spotfn_list[bf].thresh)
+	spotfn_list[bf].thresh = spot2thresh (bf, width);
+      thresh[2] = spotfn_list[bf].thresh;
 
-	if (colourspace == CS_CMYK)
+      if (colourspace == CS_CMYK)
 	{
-	    rot[3] = DEG2RAD(pvals.gry_ang);
-	    gf = pvals.gry_spotfn;
-	    ASRT(gf);
-	    if (!spotfn_list[gf].thresh)
-		spotfn_list[gf].thresh = spot2thresh(gf, width);	
-	    thresh[3] = spotfn_list[gf].thresh;
+	  rot[3] = DEG2RAD (pvals.gry_ang);
+	  gf = pvals.gry_spotfn;
+	  ASRT (gf);
+	  if (!spotfn_list[gf].thresh)
+	    spotfn_list[gf].thresh = spot2thresh (gf, width);	
+	  thresh[3] = spotfn_list[gf].thresh;
 	}
     }
 
+  /* Initialize progress */
+  progress     = 0;
+  max_progress = (x2 - x1) * (y2 - y1);
 
+  TM_START ();
 
-    /* Initialize progress */
-    progress     = 0;
-    max_progress = (x2 - x1) * (y2 - y1);
-
-    TM_START();
-
-    for( y = y1; y < y2; y += tile_width - ( y % tile_width ) )
+  for (y = y1; y < y2; y += tile_width - (y % tile_width))
     {
-	for( x = x1; x < x2; x += tile_width - ( x % tile_width ) )
+      for (x = x1; x < x2; x += tile_width - (x % tile_width))
 	{
-	    /* snap to tile boundary */
-	    x_step = tile_width - ( x % tile_width );
-	    y_step = tile_width - ( y % tile_width );
-	    /* don't step off the end of the image */
-	    x_step = MIN( x_step, x2-x );
-	    y_step = MIN( y_step, y2-y );
+	  /* snap to tile boundary */
+	  x_step = tile_width - (x % tile_width);
+	  y_step = tile_width - (y % tile_width);
+	  /* don't step off the end of the image */
+	  x_step = MIN (x_step, x2-x);
+	  y_step = MIN (y_step, y2-y);
 
-	    /* set up the source and dest regions */
-	    gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step,
-				 FALSE/*dirty*/, FALSE/*shadow*/);
+	  /* set up the source and dest regions */
+	  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step,
+			       FALSE/*dirty*/, FALSE/*shadow*/);
 
-	    gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
-				 TRUE/*dirty*/, TRUE/*shadow*/);
+	  gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
+			       TRUE/*dirty*/, TRUE/*shadow*/);
 
-	    /* page in the image, one tile at a time */
-	    for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-		 pr != NULL;
-		 pr = gimp_pixel_rgns_process (pr))
+	  /* page in the image, one tile at a time */
+	  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+	       pr != NULL;
+	       pr = gimp_pixel_rgns_process (pr))
 	    {
-		src_row  = src_rgn.data;
-		dest_row = dest_rgn.data;
+	      src_row  = src_rgn.data;
+	      dest_row = dest_rgn.data;
 
-		for (row = 0; row < src_rgn.h; row++)
+	      for (row = 0; row < src_rgn.h; row++)
 		{
-		    src  = src_row;
-		    dest = dest_row;
-		    for (col = 0; col < src_rgn.w; col++)
+		  src  = src_row;
+		  dest = dest_row;
+		  for (col = 0; col < src_rgn.w; col++)
 		    {
-			guchar data[4];
+		      guchar data[4];
 
-			rx = (x + col) * oversample;
-			ry = (y + row) * oversample;
+		      rx = (x + col) * oversample;
+		      ry = (y + row) * oversample;
 
-			/* convert rx and ry to polar (r, theta) */
-			r = sqrt(((double)rx)*rx + ((double)ry)*ry);
-			theta = atan2(((gdouble)ry), ((gdouble)rx));
+		      /* convert rx and ry to polar (r, theta) */
+		      r = sqrt (((double)rx)*rx + ((double)ry)*ry);
+		      theta = atan2 (((gdouble)ry), ((gdouble)rx));
 
-			for(b=0; b<colour_bpp; b++)
-			    data[b] = src[b];
+		      for (b = 0; b < colour_bpp; b++)
+			data[b] = src[b];
 
-			/* do colour space conversion */
-			switch(colourspace) {
+		      /* do colour space conversion */
+		      switch (colourspace)
+			{
 			case CS_CMYK:
-			    data[3] = 0xff;
+			  data[3] = 0xff;
 
-			    data[0] = 0xff - data[0];
-			    data[3] = MIN(data[3], data[0]);
-			    data[1] = 0xff - data[1];
-			    data[3] = MIN(data[3], data[1]);
-			    data[2] = 0xff - data[2];
-			    data[3] = MIN(data[3], data[2]);
+			  data[0] = 0xff - data[0];
+			  data[3] = MIN (data[3], data[0]);
+			  data[1] = 0xff - data[1];
+			  data[3] = MIN (data[3], data[1]);
+			  data[2] = 0xff - data[2];
+			  data[3] = MIN (data[3], data[2]);
 
-			    data[3] = ((gdouble)data[3]) * k_pullout;
+			  data[3] = ((gdouble)data[3]) * k_pullout;
 
-			    data[0] -= data[3];
-			    data[1] -= data[3];
-			    data[2] -= data[3];
-			    break;
+			  data[0] -= data[3];
+			  data[1] -= data[3];
+			  data[2] -= data[3];
+			  break;
 
 			case CS_INTENSITY:
-			    data[3] = data[0]; /* save orig for later */
-			    data[0] = INTENSITY(data[0], data[1], data[2]);
-			    break;
+			  data[3] = data[0]; /* save orig for later */
+			  data[0] = INTENSITY (data[0], data[1], data[2]);
+			  break;
 
 			default:
-			    break;
+			  break;
 			}
 			
-
-			for(b=0; b<cspace_nchans[colourspace]; b++)
+		      for (b = 0; b < cspace_nchans[colourspace]; b++)
 			{
-			    rx = RINT(r * cos(theta + rot[b]));
-			    ry = RINT(r * sin(theta + rot[b]));
+			  rx = RINT (r * cos (theta + rot[b]));
+			  ry = RINT (r * sin (theta + rot[b]));
 
-			    /* Make sure rx and ry are positive and within
-			     * the range 0 .. width-1 (incl).  Can't use %
-			     * operator, since its definition on negative
-			     * numbers is not helpful.  Can't use ABS(),
-			     * since that would cause reflection about the
-			     * x- and y-axes.  Relies on integer division
-			     * rounding towards zero. */
-			    rx -= ((rx - ISNEG(rx)*(width-1)) / width) * width;
-			    ry -= ((ry - ISNEG(ry)*(width-1)) / width) * width;
+			  /* Make sure rx and ry are positive and within
+			   * the range 0 .. width-1 (incl).  Can't use %
+			   * operator, since its definition on negative
+			   * numbers is not helpful.  Can't use ABS(),
+			   * since that would cause reflection about the
+			   * x- and y-axes.  Relies on integer division
+			   * rounding towards zero. */
+			  rx -= ((rx - ISNEG (rx) * (width-1)) / width) * width;
+			  ry -= ((ry - ISNEG (ry) * (width-1)) / width) * width;
 
-			    {
-				guint32 sum = 0;
-				gint sx, sy;
-				gint tx, ty;
-				for(sy=-oversample/2; sy<=oversample/2; sy++)
-				    for(sx=-oversample/2; sx<=oversample/2; sx++)
-				    {
-					tx = rx+sx;
-					ty = ry+sy;
-					while (tx < 0)  tx += width;
-					while (ty < 0)  ty += width;
-					while (tx >= width)  tx -= width;
-					while (ty >= width)  ty -= width;
-					if (data[b] > THRESHn(b, tx, ty))
-					    sum += 0xff * BARTLETT(sx, sy);
-				    }
-				sum /= w002;
-				data[b] = sum;
-			    }
+			  {
+			    guint32 sum = 0;
+			    gint sx, sy;
+			    gint tx, ty;
+			    for (sy = -oversample/2; sy <= oversample/2; sy++)
+			      for (sx = -oversample/2; sx <= oversample/2; sx++)
+				{
+				  tx = rx+sx;
+				  ty = ry+sy;
+				  while (tx < 0)  tx += width;
+				  while (ty < 0)  ty += width;
+				  while (tx >= width)  tx -= width;
+				  while (ty >= width)  ty -= width;
+				  if (data[b] > THRESHn(b, tx, ty))
+				    sum += 0xff * BARTLETT(sx, sy);
+				}
+			    sum /= w002;
+			    data[b] = sum;
+			  }
 			}
-			if (has_alpha)
-			    dest[colour_bpp] = src[colour_bpp];
+		      if (has_alpha)
+			dest[colour_bpp] = src[colour_bpp];
 
-			/* re-pack the colours into RGB */
-			switch(colourspace) {
+		      /* re-pack the colours into RGB */
+		      switch (colourspace)
+			{
 			case CS_CMYK:
-			    data[0] = CLAMPED_ADD(data[0], data[3]);
-			    data[1] = CLAMPED_ADD(data[1], data[3]);
-			    data[2] = CLAMPED_ADD(data[2], data[3]);
-			    data[0] = 0xff - data[0];
-			    data[1] = 0xff - data[1];
-			    data[2] = 0xff - data[2];
-			    break;
+			  data[0] = CLAMPED_ADD (data[0], data[3]);
+			  data[1] = CLAMPED_ADD (data[1], data[3]);
+			  data[2] = CLAMPED_ADD (data[2], data[3]);
+			  data[0] = 0xff - data[0];
+			  data[1] = 0xff - data[1];
+			  data[2] = 0xff - data[2];
+			  break;
 
 			case CS_INTENSITY:
-			    if (has_alpha)
+			  if (has_alpha)
 			    {
-				dest[colour_bpp] = data[0];
-				data[0] = 0xff;
+			      dest[colour_bpp] = data[0];
+			      data[0] = 0xff;
 			    }
-			    data[1] = data[1] * data[0] / 0xff;
-			    data[2] = data[2] * data[0] / 0xff;
-			    data[0] = data[3] * data[0] / 0xff;
-			    break;
+			  data[1] = data[1] * data[0] / 0xff;
+			  data[2] = data[2] * data[0] / 0xff;
+			  data[0] = data[3] * data[0] / 0xff;
+			  break;
 
 			default:
-			    /* no other special cases */
-			    break;
+			  /* no other special cases */
+			  break;
 			}
 
-			for(b=0; b<colour_bpp; b++)
-			    dest[b] = data[b];
+		      for (b = 0; b < colour_bpp; b++)
+			dest[b] = data[b];
 
-			src  += src_rgn.bpp;
-			dest += dest_rgn.bpp;
+		      src  += src_rgn.bpp;
+		      dest += dest_rgn.bpp;
 		    }
-		    src_row  += src_rgn.rowstride;
-		    dest_row += dest_rgn.rowstride;
+		  src_row  += src_rgn.rowstride;
+		  dest_row += dest_rgn.rowstride;
 		}
 
-		/* Update progress */
-		progress += src_rgn.w * src_rgn.h;
-		gimp_progress_update (
-		    (double) progress / (double) max_progress);
+	      /* Update progress */
+	      progress += src_rgn.w * src_rgn.h;
+	      gimp_progress_update ((double) progress / (double) max_progress);
 	    }
 	}
     }
 
-    TM_END();
+  TM_END ();
 
-    /* We don't free the threshold matrices, since we're about to
-     * exit, and the OS should clean up after us. */
+  /* We don't free the threshold matrices, since we're about to
+   * exit, and the OS should clean up after us. */
 
-    /* update the affected region */
-    gimp_drawable_flush (drawable);
-    gimp_drawable_merge_shadow (drawable->id, TRUE);
-    gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-}
-
-
-
-
-/**************************************************************/
-/* Support routines */
-
-/* Lightly modified entscale:
- *  o Added entscale_set_sensitive() method */
-
-
-/*************************************************************************/
-/**									**/
-/**			+++ Entscale					**/
-/**									**/
-/*************************************************************************/
-
-/* these routines are taken from gflare.c */
-
-/* -*- mode:c -*- */
-/*
-  Entry and Scale pair (int and double integrated)
-
-  This is an attempt to combine entscale_int and double.
-  Never compiled yet.
-
-  TODO:
-  - Do the proper thing when the user changes value in entry,
-  so that callback should not be called when value is actually not changed.
-  - Update delay
- */
-
-
-static void   entscale_destroy_callback (GtkWidget *widget,
-					 gpointer data);
-static void   entscale_scale_update (GtkAdjustment *adjustment,
-				     gpointer	   data);
-static void   entscale_entry_update (GtkWidget *widget,
-				     gpointer	data);
-/*
- *  Create an entry, a scale and a label, then attach them to
- *  specified table.
- *  1 row and 2 cols of table are needed.
- *
- *  Input:
- *    table:	  table which entscale is attached to
- *    x, y:	  starting row and col in table
- *    caption:	  label string
- *    type:	  type of variable (ENTSCALE_INT or ENTSCALE_DOUBLE)
- *    variable:	  pointer to variable
- *    min, max:	  boundary of scale
- *    step:	  step of scale (ignored when (type == ENTSCALE_INT))
- *    constraint: (bool) true iff the value of *variable should be
- *		  constraint by min and max
- *    callback:	  called when the value is actually changed
- *		  (*variable is automatically changed, so there's no
- *		  need of callback func usually.)
- *    call_data:  data for callback func
- */
-
-Entscale *
-entscale_new (GtkWidget *table, gint x, gint y, gchar *caption,
-	      EntscaleType type, gpointer variable,
-	      gdouble min, gdouble max, gdouble step,
-	      gint constraint,
-	      EntscaleCallbackFunc callback,
-	      gpointer call_data)
-{
-  Entscale	*entscale;
-  GtkWidget	*entry;
-  GtkWidget	*scale;
-  GtkObject	*adjustment;
-  gchar		buffer[256];
-  gdouble	val;
-  gdouble	constraint_val;
-
-  entscale = g_new0 (Entscale, 1 );
-  entscale->type	= type;
-  entscale->constraint	= constraint;
-  entscale->callback	= callback;
-  entscale->call_data	= call_data;
-
-  switch (type)
-    {
-    case ENTSCALE_INT:
-      step = 1.0;
-      strcpy (entscale->fmt_string, "%.0f");
-      val = *(gint *)variable;
-      break;
-    case ENTSCALE_DOUBLE:
-      sprintf (entscale->fmt_string, "%%.%df", entscale_get_precision (step) + 1);
-      val = *(gdouble *)variable;
-      break;
-    default:
-      g_error ("TYPE must be either ENTSCALE_INT or ENTSCALE_DOUBLE");
-      val = 0;
-      break;
-    }
-
-  entscale->label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (entscale->label), 0.0, 0.5);
-
-  /*
-    If the first arg of gtk_adjustment_new() isn't between min and
-    max, it is automatically corrected by gtk later with
-    "value_changed" signal. I don't like this, since I want to leave
-    *variable untouched when `constraint' is false.
-    The lines below might look oppositely, but this is OK.
-   */
-  if (constraint)
-    constraint_val = val;
-  else
-    constraint_val = BOUNDS (val, min, max);
-
-  adjustment = entscale->adjustment =
-    gtk_adjustment_new (constraint_val, min, max, step, step, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, ENTSCALE_SCALE_WIDTH, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-
-  entry = entscale->entry = gtk_entry_new ();
-  gtk_widget_set_usize (entry, ENTSCALE_ENTRY_WIDTH, 0);
-  sprintf (buffer, entscale->fmt_string, val);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-
-  /* entscale is done */
-  gtk_object_set_user_data (GTK_OBJECT(adjustment), entscale);
-  gtk_object_set_user_data (GTK_OBJECT(entry), entscale);
-
-  /* now ready for signals */
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entscale_entry_update,
-		      variable);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) entscale_scale_update,
-		      variable);
-  gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-		      (GtkSignalFunc) entscale_destroy_callback,
-		      NULL );
-
-  /* start packing */
-  entscale->hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (entscale->hbox), scale, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (entscale->hbox), entry, FALSE, TRUE, 0);
-
-  gtk_table_attach (GTK_TABLE (table), entscale->label, x, x+1, y, y+1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), entscale->hbox, x+1, x+2, y, y+1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-
-  gtk_widget_show (entscale->label);
-  gtk_widget_show (entry);
-  gtk_widget_show (scale);
-  gtk_widget_show (entscale->hbox);
-
-  return entscale;
-}
-
-static int
-entscale_get_precision (gdouble step)
-{
-  int precision;
-  if (step <= 0)
-    return 0;
-  for (precision = 0; pow (0.1, precision) > step; precision++) ;
-  return precision;
-}
-
-static void
-entscale_destroy_callback (GtkWidget *widget,
-			   gpointer data)
-{
-  Entscale *entscale;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (widget));
-  g_free (entscale);
-}
-static void
-entscale_scale_update (GtkAdjustment *adjustment,
-		       gpointer	     data)
-{
-  Entscale	*entscale;
-  GtkEntry	*entry;
-  gchar		buffer[256];
-  gdouble	old_val, new_val;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-
-  new_val = adjustment->value;
-  /* adjustmet->value is always constrainted */
-
-  switch (entscale->type)
-    {
-    case ENTSCALE_INT:
-      old_val = *(gint*) data;
-      *(gint*) data = (gint) new_val;
-      DEBUG_PRINT (("entscale_scale_update(int): fmt=\"%s\" old=%g new=%g\n",
-		    entscale->fmt_string, old_val, new_val));
-      break;
-    case ENTSCALE_DOUBLE:
-      old_val = *(gdouble*) data;
-      *(gdouble*) data = new_val;
-      DEBUG_PRINT (("entscale_scale_update(double): fmt=\"%s\" old=%g new=%g\n",
-		    entscale->fmt_string, old_val, new_val));
-      break;
-    default:
-      g_warning ("entscale_scale_update: invalid type");
-      return;
-    }
-
-  entry = GTK_ENTRY (entscale->entry);
-  sprintf (buffer, entscale->fmt_string, new_val);
-
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data (GTK_OBJECT(entry), data);
-  gtk_entry_set_text (entry, buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT(entry), data);
-
-  if (entscale->callback && (old_val != new_val))
-    (*entscale->callback) (new_val, entscale->call_data);
-}
-
-static void
-entscale_entry_update (GtkWidget *widget,
-		       gpointer	  data)
-{
-  Entscale	*entscale;
-  GtkAdjustment *adjustment;
-  gdouble	old_val, val, new_val, constraint_val;
-
-  entscale = gtk_object_get_user_data (GTK_OBJECT (widget));
-  adjustment = GTK_ADJUSTMENT (entscale->adjustment);
-
-  val = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  constraint_val = BOUNDS (val, adjustment->lower, adjustment->upper);
-
-  if (entscale->constraint)
-    new_val = constraint_val;
-  else
-    new_val = val;
-
-  switch (entscale->type)
-    {
-    case ENTSCALE_INT:
-      old_val = *(gint*) data;
-      *(gint*) data = (gint) new_val;
-      DEBUG_PRINT (("entscale_entry_update(int): old=%g new=%g const=%g\n",
-		    old_val, new_val, constraint_val));
-      break;
-    case ENTSCALE_DOUBLE:
-      old_val = *(gdouble*) data;
-      *(gdouble*) data = new_val;
-      DEBUG_PRINT (("entscale_entry_update(double): old=%g new=%g const=%g\n",
-		    old_val, new_val, constraint_val));
-      break;
-    default:
-      g_warning ("entscale_entry_update: invalid type");
-      return;
-    }
-
-  adjustment->value = constraint_val;
-  /* avoid infinite loop (scale, entry, scale, entry ...) */
-  gtk_signal_handler_block_by_data (GTK_OBJECT(adjustment), data );
-  gtk_signal_emit_by_name (GTK_OBJECT(adjustment), "value_changed");
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT(adjustment), data );
-
-  if (entscale->callback && (old_val != new_val))
-    (*entscale->callback) (new_val, entscale->call_data);
-}
-
-
-static void entscale_set_sensitive(Entscale *ent, gint sensitive)
-{
-    gtk_widget_set_sensitive(GTK_WIDGET(ent->label), sensitive);
-    gtk_widget_set_sensitive(GTK_WIDGET(ent->hbox), sensitive);
-}
-
-
-static void entscale_set_value(Entscale *ent, gfloat value)
-{
-    gtk_adjustment_set_value(GTK_ADJUSTMENT(ent->adjustment), value);
+  /* update the affected region */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->id, TRUE);
+  gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
