@@ -43,7 +43,8 @@ gchar             * gimp_thumb_find_thumb       (const gchar    *uri,
 
 GimpThumbFileType   gimp_thumb_file_test        (const gchar    *filename,
                                                  gint64         *mtime,
-                                                 gint64         *size);
+                                                 gint64         *size,
+                                                 gint           *err_no);
 
 
 G_END_DECLS

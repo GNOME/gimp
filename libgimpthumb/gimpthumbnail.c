@@ -583,7 +583,8 @@ gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
 
     default:
       switch (gimp_thumb_file_test (thumbnail->image_filename,
-                                    &mtime, &filesize))
+                                    &mtime, &filesize,
+                                    &thumbnail->image_not_found_errno))
         {
         case GIMP_THUMB_FILE_TYPE_REGULAR:
           state = GIMP_THUMB_STATE_EXISTS;

@@ -25,6 +25,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -262,7 +263,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name, NULL, NULL) ==
+      if (gimp_thumb_file_test (thumb_name, NULL, NULL, NULL) ==
           GIMP_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
@@ -276,7 +277,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name, NULL, NULL) ==
+      if (gimp_thumb_file_test (thumb_name, NULL, NULL, NULL) ==
           GIMP_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
@@ -294,6 +295,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
  * @filename: a filename in the encoding of the filesystem
  * @mtime: return location for modification time
  * @size: return location for file size
+ * @err_no: return location for system "errno"
  *
  * This is a convenience and portability wrapper around stat(). It
  * checks if the given @filename exists and returns modification time
@@ -305,7 +307,8 @@ gimp_thumb_find_thumb (const gchar   *uri,
 GimpThumbFileType
 gimp_thumb_file_test (const gchar *filename,
                       gint64      *mtime,
-                      gint64      *size)
+                      gint64      *size,
+                      gint        *err_no)
 {
   struct stat s;
 
@@ -313,8 +316,9 @@ gimp_thumb_file_test (const gchar *filename,
 
   if (stat (filename, &s) == 0)
     {
-      if (mtime) *mtime = s.st_mtime;
-      if (size)  *size  = s.st_size;
+      if (mtime)  *mtime  = s.st_mtime;
+      if (size)   *size   = s.st_size;
+      if (err_no) *err_no = 0;
 
       if (S_ISREG (s.st_mode))
         {
@@ -328,8 +332,9 @@ gimp_thumb_file_test (const gchar *filename,
       return GIMP_THUMB_FILE_TYPE_SPECIAL;
     }
 
-  if (mtime) *mtime = 0;
-  if (size)  *size  = 0;
+  if (mtime)  *mtime  = 0;
+  if (size)   *size   = 0;
+  if (err_no) *err_no = errno;
 
   return GIMP_THUMB_FILE_TYPE_NONE;
 }

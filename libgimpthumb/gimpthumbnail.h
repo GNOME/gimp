@@ -48,6 +48,7 @@ struct _GimpThumbnail
   gchar          *image_filename;
   gint64          image_filesize;
   gint64          image_mtime;
+  gint            image_not_found_errno;
   gint            image_width;
   gint            image_height;
   gchar          *image_type;

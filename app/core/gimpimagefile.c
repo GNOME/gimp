@@ -490,7 +490,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       break;
 
     case GIMP_THUMB_STATE_NOT_FOUND:
-      imagefile->description = _("Could not open");
+      imagefile->description = g_strerror (thumbnail->image_not_found_errno);
       imagefile->static_desc = TRUE;
       break;
 

@@ -1,5 +1,19 @@
 2004-03-03  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpthumb/gimpthumb-utils.[ch] (gimp_thumb_file_test):
+	return the "errno" of a failed stat() call.
+
+	* libgimpthumb/gimpthumbnail.[ch]: added member
+	"image_not_found_errno" which contains the errno as returned by
+	gimp_thumb_file_test() if thumbnail->image_state is
+	GIMP_THUMB_STATE_NOT_FOUND.
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_desc_string): display
+	the real error as specified by thumbnail->image_not_found_errno
+	instead of just "Could not open".
+
+2004-03-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimppreviewrendererimagefile.[ch]: added new preview
