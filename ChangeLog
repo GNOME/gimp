@@ -1,5 +1,10 @@
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_draw):
+	optimized alpha blending.
+
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
 	Applied a bunch of AIX portability fixes (bug #148813):
 
 	* configure.in: when testing for Xmu library, link with -lXt -lX11.
