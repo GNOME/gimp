@@ -132,7 +132,7 @@ static gint logo_height       = 0;
 static gint logo_area_width   = 0;
 static gint logo_area_height  = 0;
 static gint show_logo         = SHOW_NEVER;
-static gint max_label_length  = MAXPATHLEN;
+static gint max_label_length  = 64;
 
 
 void

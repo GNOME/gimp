@@ -1,3 +1,8 @@
+2003-04-03  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: don't use MAXPATHLEN, spotted by Robert Millan
+	<zeratul2@wanadoo.es>.
+
 2003-03-26  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/max_rgb.c: actually honor the max_p parameter in
