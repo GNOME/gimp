@@ -32,6 +32,8 @@
 
 	* app/install.c: mention unitrc installation
 
+	* app/internal_procs.c: install unit procedures
+
 	* app/xcf.c: new xcf property for user defined units. An image's
 	unit is saved as either an integer ID (built in units) or as
 	a full unit definition without any ID
