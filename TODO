@@ -4,6 +4,22 @@ even better. Insight into possible ways to implement are even better
 than that.
 ===================================================================
 
+a few GUI things suggestions...
+
+	1) Zoom-indicator to titlebar [   Foo.xcf.gz-1.0 (50%, RGB) ]
+
+	2) Crop tool could have an optional shader for the outside area
+		so when you crop, the area outside would show in a darker color /
+		user definable color / black / white etc.. (maybe a selector for
+		the outside area:                  ____________ 
+                         Outside fill: [|_none_______| - ]
+		                                  | black      |
+	                                     | white      |
+                                        | shade 50%  |
+                                        `------------'
+		That would be very handy for cropping scanned photos etc - 
+		one would see the result much easier apart from the rest.
+
 gui/functionality separation
 
 	both file scope wise and in use, particulary so that
