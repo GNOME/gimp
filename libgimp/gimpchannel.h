@@ -30,12 +30,12 @@ G_BEGIN_DECLS
 #define gimp_channel_get_image_id  gimp_drawable_image
 
 
-gint32  gimp_channel_new (gint32    image_ID,
-			  gchar    *name,
-			  guint     width,
-			  guint     height,
-			  gdouble   opacity,
-			  GimpRGB  *color);
+gint32  gimp_channel_new (gint32         image_ID,
+			  const gchar   *name,
+			  guint          width,
+			  guint          height,
+			  gdouble        opacity,
+			  const GimpRGB *color);
 
 
 G_END_DECLS

@@ -1,5 +1,22 @@
 2003-07-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.[ch]
+	* libgimp/gimpchannel.[ch]
+	* libgimp/gimpdrawable.[ch]
+	* libgimp/gimpimage.[ch]
+	* libgimp/gimplayer.[ch]
+	* libgimp/gimpmisc.[ch]
+	* libgimp/gimpmiscui.[ch]
+	* libgimp/gimppixelrgn.[ch]
+	* libgimp/gimpproceduraldb.[ch]: added const qualifiers to the
+	libgimp API. Will cause lots of compiler warnings until the
+	generated PDB code has been constified as well.
+
+	* libgimpbase/gimpparasite.[ch]: use gconstpointer, not const
+	gpointer.
+
+2003-07-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/ripple.c (average_four_pixels): fixed the
 	non-alpha case (bug #116470).
 

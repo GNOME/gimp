@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 guchar   * gimp_image_get_cmap            (gint32          image_ID,
 					   gint           *num_colors);
 gboolean   gimp_image_set_cmap            (gint32          image_ID,
-					   guchar         *cmap,
+					   const guchar   *cmap,
 					   gint            num_colors);
   
 guchar   * gimp_image_get_thumbnail_data  (gint32          image_ID,
@@ -46,7 +46,7 @@ void       gimp_image_attach_new_parasite (gint32          image_ID,
 					   const gchar    *name, 
 					   gint            flags,
 					   gint            size, 
-					   const gpointer  data);
+					   gconstpointer   data);
 
 
 G_END_DECLS

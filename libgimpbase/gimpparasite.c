@@ -66,7 +66,7 @@ GimpParasite *
 gimp_parasite_new (const gchar    *name, 
 		   guint32         flags,
 		   guint32         size, 
-		   const gpointer  data)
+		   gconstpointer   data)
 {
   GimpParasite *parasite;
 

@@ -485,19 +485,19 @@ gimp_quit (void)
  * that will be automatically started on each GIMP startup.
  **/
 void
-gimp_install_procedure (const gchar     *name,
-			const gchar     *blurb,
-			const gchar     *help,
-			const gchar     *author,
-			const gchar     *copyright,
-			const gchar     *date,
-			const gchar     *menu_path,
-			const gchar     *image_types,
-			GimpPDBProcType  type,
-			gint             n_params,
-			gint             n_return_vals,
-			GimpParamDef    *params,
-			GimpParamDef    *return_vals)
+gimp_install_procedure (const gchar        *name,
+			const gchar        *blurb,
+			const gchar        *help,
+			const gchar        *author,
+			const gchar        *copyright,
+			const gchar        *date,
+			const gchar        *menu_path,
+			const gchar        *image_types,
+			GimpPDBProcType     type,
+			gint                n_params,
+			gint                n_return_vals,
+			const GimpParamDef *params,
+			const GimpParamDef *return_vals)
 {
   GPProcInstall proc_install;
 
@@ -566,20 +566,20 @@ gimp_install_procedure (const gchar     *name,
  * details.
  **/
 void
-gimp_install_temp_proc (const gchar     *name,
-			const gchar     *blurb,
-			const gchar     *help,
-			const gchar     *author,
-			const gchar     *copyright,
-			const gchar     *date,
-			const gchar     *menu_path,
-			const gchar     *image_types,
-			GimpPDBProcType  type,
-			gint             n_params,
-			gint             n_return_vals,
-			GimpParamDef    *params,
-			GimpParamDef    *return_vals,
-			GimpRunProc      run_proc)
+gimp_install_temp_proc (const gchar        *name,
+			const gchar        *blurb,
+			const gchar        *help,
+			const gchar        *author,
+			const gchar        *copyright,
+			const gchar        *date,
+			const gchar        *menu_path,
+			const gchar        *image_types,
+			GimpPDBProcType     type,
+			gint                n_params,
+			gint                n_return_vals,
+			const GimpParamDef *params,
+			const GimpParamDef *return_vals,
+			GimpRunProc         run_proc)
 {
   g_return_if_fail (name != NULL);
   g_return_if_fail ((n_params == 0 && params == NULL) ||
@@ -869,10 +869,10 @@ gimp_read_expect_msg (WireMessage *msg,
  * Return value: the procedure's return values.
  **/
 GimpParam *
-gimp_run_procedure2 (const gchar *name,
-		     gint        *n_return_vals,
-		     gint         n_params,
-		     GimpParam   *params)
+gimp_run_procedure2 (const gchar     *name,
+		     gint            *n_return_vals,
+		     gint             n_params,
+		     const GimpParam *params)
 {
   GPProcRun     proc_run;
   GPProcReturn *proc_return;
@@ -1235,10 +1235,10 @@ gimp_extension_process (guint timeout)
  * See Also: gimp_parasite_attach()
  */
 void
-gimp_attach_new_parasite (const gchar    *name, 
-			  gint            flags,
-			  gint            size, 
-			  const gpointer  data)
+gimp_attach_new_parasite (const gchar   *name,
+			  gint           flags,
+			  gint           size, 
+			  gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
 

@@ -92,11 +92,14 @@ gimp_fixme_preview_free (GimpFixMePreview *preview)
 }
 
 GimpFixMePreview*
-gimp_fixme_preview_new2 (GimpImageType drawable_type, gboolean has_frame)
+gimp_fixme_preview_new2 (GimpImageType drawable_type,
+                         gboolean      has_frame)
 {
-  GimpFixMePreview *preview = g_new0 (GimpFixMePreview, 1);
-  guchar    *buf     = NULL;
-  gint       y;
+  GimpFixMePreview *preview;
+  guchar           *buf = NULL;
+  gint              y;
+
+  preview = g_new0 (GimpFixMePreview, 1);
 
   switch (drawable_type)
     {
@@ -140,14 +143,14 @@ gimp_fixme_preview_new2 (GimpImageType drawable_type, gboolean has_frame)
 
 void
 gimp_fixme_preview_put_pixel (GimpFixMePreview *preview,
-			      gint x,
-			      gint y,
-			      const guchar *pixel)
+			      gint              x,
+			      gint              y,
+			      const guchar     *pixel)
 {
   guchar *dest;
 
-  g_assert (x >= 0 && x < PREVIEW_SIZE);
-  g_assert (y >= 0 && y < PREVIEW_SIZE);
+  g_return_if_fail (x >= 0 && x < PREVIEW_SIZE);
+  g_return_if_fail (y >= 0 && y < PREVIEW_SIZE);
 
   dest = preview->buffer + y * preview->rowstride;
 
@@ -167,14 +170,14 @@ gimp_fixme_preview_put_pixel (GimpFixMePreview *preview,
 
 void
 gimp_fixme_preview_get_pixel (GimpFixMePreview *preview,
-			      gint x,
-			      gint y,
-			      guchar *pixel)
+			      gint              x,
+			      gint              y,
+			      guchar           *pixel)
 {
-  guchar *src;
+  const guchar *src;
 
-  g_assert (x >= 0 && x < PREVIEW_SIZE);
-  g_assert (y >= 0 && y < PREVIEW_SIZE);
+  g_return_if_fail (x >= 0 && x < PREVIEW_SIZE);
+  g_return_if_fail (y >= 0 && y < PREVIEW_SIZE);
 
   src = preview->buffer + y * preview->rowstride;
 
@@ -196,52 +199,54 @@ void
 gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 			   gint              row,
 			   gint              width,
-			   guchar           *src)
+			   const guchar     *src)
 {
   gint    x;
   guchar *p0 = preview->even;
   guchar *p1 = preview->odd;
-  gint bpp = preview->bpp;
+  gint    bpp = preview->bpp;
   gdouble r, g, b, a;
   gdouble c0, c1;
 
   for (x = 0; x < width; x++) 
     {
-      if (bpp == 4)
-	{
+      switch (bpp)
+        {
+        case 4:
 	  r = ((gdouble) src[x*4 + 0]) / 255.0;
 	  g = ((gdouble) src[x*4 + 1]) / 255.0;
 	  b = ((gdouble) src[x*4 + 2]) / 255.0;
 	  a = ((gdouble) src[x*4 + 3]) / 255.0;
-	}
-      else if (bpp == 3)
-	{
+          break;
+
+        case 3:
 	  r = ((gdouble) src[x*3 + 0]) / 255.0;
 	  g = ((gdouble) src[x*3 + 1]) / 255.0;
 	  b = ((gdouble) src[x*3 + 2]) / 255.0;
 	  a = 1.0;
-	}
-      else
-	{
+          break;
+
+        default:
 	  if (preview->cmap)
 	    {
 	      gint index = MIN (src[x*bpp], preview->ncolors - 1);
 	      
-	      r = ((gdouble)preview->cmap[index * 3 + 0]) / 255.0;
-	      g = ((gdouble)preview->cmap[index * 3 + 1]) / 255.0;
-	      b = ((gdouble)preview->cmap[index * 3 + 2]) / 255.0;
+	      r = ((gdouble) preview->cmap[index * 3 + 0]) / 255.0;
+	      g = ((gdouble) preview->cmap[index * 3 + 1]) / 255.0;
+	      b = ((gdouble) preview->cmap[index * 3 + 2]) / 255.0;
 	    }
 	  else
 	    {
-	      r = ((gdouble)src[x*bpp + 0]) / 255.0;
+	      r = ((gdouble) src[x*bpp + 0]) / 255.0;
 	      g = b = r;
 	    }
 	  
 	  if (bpp == 2)
-	    a = ((gdouble)src[x*2 + 1]) / 255.0;
+	    a = ((gdouble) src[x*2 + 1]) / 255.0;
 	  else
 	    a = 1.0;
-	}
+          break;
+        }
       
       if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	{
@@ -266,12 +271,12 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
   if ((row / GIMP_CHECK_SIZE_SM) & 1)
     {
       gtk_preview_draw_row (GTK_PREVIEW (preview->widget), 
-                            (guchar *) preview->odd,  0, row, width); 
+                            preview->odd,  0, row, width); 
     }
   else
     {
       gtk_preview_draw_row (GTK_PREVIEW (preview->widget),
-                            (guchar *) preview->even, 0, row, width); 
+                            preview->even, 0, row, width); 
     }
 }
 
@@ -280,8 +285,8 @@ gimp_fixme_preview_update (GimpFixMePreview      *preview,
 			   GimpFixeMePreviewFunc  func,
 			   gpointer               data)
 {
-  gint    x, y;
   guchar *buffer;
+  gint    x, y;
   gint    bpp;
 
   bpp    = preview->bpp;
@@ -289,8 +294,8 @@ gimp_fixme_preview_update (GimpFixMePreview      *preview,
 
   for (y = 0; y < preview->height; y++)
     {
-      guchar *src  = preview->cache + y * preview->rowstride;
-      guchar *dest = buffer;
+      const guchar *src  = preview->cache + y * preview->rowstride;
+      guchar       *dest = buffer;
 
       for (x = 0; x < preview->width; x++)
 	{
@@ -312,11 +317,11 @@ void
 gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 				    gint32            drawable_ID)
 {
-  gint    bpp;
-  gint    y;
-  gint    width  = PREVIEW_SIZE;
-  gint    height = PREVIEW_SIZE;
-  guchar *src;
+  const guchar *src;
+  gint          bpp;
+  gint          y;
+  gint          width  = PREVIEW_SIZE;
+  gint          height = PREVIEW_SIZE;
 
   preview->cache = 
     gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
@@ -369,7 +374,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   gint          x1, x2, y1, y2;
   gint          bpp;
   gint          y;
-  guchar       *src;
+  const guchar *src;
   
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -504,8 +509,8 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 }
 
-GList*
-gimp_plug_in_parse_path (gchar       *path_name,
+GList *
+gimp_plug_in_parse_path (const gchar *path_name,
 			 const gchar *dir_name)
 {
   GList *path_list = NULL;

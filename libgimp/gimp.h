@@ -74,11 +74,11 @@ GIMPVAR const guint gimp_micro_version;
 typedef void (* GimpInitProc)  (void);
 typedef void (* GimpQuitProc)  (void);
 typedef void (* GimpQueryProc) (void);
-typedef void (* GimpRunProc)   (gchar      *name,
-				gint        nparams,
-				GimpParam  *param,
-				gint       *nreturn_vals,
-				GimpParam **return_vals);
+typedef void (* GimpRunProc)   (const gchar      *name,
+				gint              n_params,
+				const GimpParam  *param,
+				gint             *n_return_vals,
+				GimpParam       **return_vals);
 
 
 struct _GimpPlugInInfo
@@ -217,36 +217,36 @@ void G_GNUC_NORETURN gimp_quit         (void);
 
 /* Install a procedure in the procedure database.
  */
-void          gimp_install_procedure   (const gchar     *name,
-                                        const gchar     *blurb,
-                                        const gchar     *help,
-                                        const gchar     *author,
-                                        const gchar     *copyright,
-                                        const gchar     *date,
-                                        const gchar     *menu_path,
-                                        const gchar     *image_types,
-                                        GimpPDBProcType  type,
-                                        gint             n_params,
-                                        gint             n_return_vals,
-                                        GimpParamDef    *params,
-                                        GimpParamDef    *return_vals);
+void          gimp_install_procedure   (const gchar        *name,
+                                        const gchar        *blurb,
+                                        const gchar        *help,
+                                        const gchar        *author,
+                                        const gchar        *copyright,
+                                        const gchar        *date,
+                                        const gchar        *menu_path,
+                                        const gchar        *image_types,
+                                        GimpPDBProcType     type,
+                                        gint                n_params,
+                                        gint                n_return_vals,
+                                        const GimpParamDef *params,
+                                        const GimpParamDef *return_vals);
 
 /* Install a temporary procedure in the procedure database.
  */
-void          gimp_install_temp_proc   (const gchar     *name,
-                                        const gchar     *blurb,
-                                        const gchar     *help,
-                                        const gchar     *author,
-                                        const gchar     *copyright,
-                                        const gchar     *date,
-                                        const gchar     *menu_path,
-                                        const gchar     *image_types,
-                                        GimpPDBProcType  type,
-                                        gint             n_params,
-                                        gint             n_return_vals,
-                                        GimpParamDef    *params,
-                                        GimpParamDef    *return_vals,
-                                        GimpRunProc      run_proc);
+void          gimp_install_temp_proc   (const gchar        *name,
+                                        const gchar        *blurb,
+                                        const gchar        *help,
+                                        const gchar        *author,
+                                        const gchar        *copyright,
+                                        const gchar        *date,
+                                        const gchar        *menu_path,
+                                        const gchar        *image_types,
+                                        GimpPDBProcType     type,
+                                        gint                n_params,
+                                        gint                n_return_vals,
+                                        const GimpParamDef *params,
+                                        const GimpParamDef *return_vals,
+                                        GimpRunProc         run_proc);
 
 /* Uninstall a temporary procedure
  */
@@ -279,7 +279,7 @@ GimpParam   * gimp_run_procedure       (const gchar     *name,
 GimpParam   * gimp_run_procedure2      (const gchar     *name,
                                         gint            *n_return_vals,
                                         gint             n_params,
-                                        GimpParam       *params);
+                                        const GimpParam *params);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to
@@ -314,7 +314,7 @@ const gchar * gimp_get_progname        (void) G_GNUC_CONST;
 void          gimp_attach_new_parasite (const gchar    *name,
                                         gint            flags,
                                         gint            size,
-                                        const gpointer  data);
+                                        gconstpointer   data);
 
 
 G_END_DECLS

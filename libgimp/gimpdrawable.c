@@ -103,7 +103,6 @@ gimp_drawable_delete (GimpDrawable *drawable)
     }
 }
 
-
 gchar *
 gimp_drawable_name (gint32 drawable_ID)
 {
@@ -112,7 +111,6 @@ gimp_drawable_name (gint32 drawable_ID)
 
   return gimp_channel_get_name (drawable_ID);
 }
-
 
 gboolean
 gimp_drawable_visible (gint32 drawable_ID)
@@ -123,10 +121,9 @@ gimp_drawable_visible (gint32 drawable_ID)
   return gimp_channel_get_visible (drawable_ID);
 }
 
-
 void
-gimp_drawable_set_name (gint32  drawable_ID,
-			gchar  *name)
+gimp_drawable_set_name (gint32       drawable_ID,
+			const gchar *name)
 {
   if (gimp_drawable_is_layer (drawable_ID))
     gimp_layer_set_name (drawable_ID, name);
@@ -268,7 +265,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 				   const gchar    *name, 
 				   gint            flags,
 				   gint            size, 
-				   const gpointer  data)
+				   gconstpointer   data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
 

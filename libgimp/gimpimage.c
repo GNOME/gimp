@@ -68,9 +68,9 @@ gimp_image_get_cmap (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_set_cmap (gint32  image_ID,
-		     guchar *cmap,
-		     gint    num_colors)
+gimp_image_set_cmap (gint32        image_ID,
+		     const guchar *cmap,
+		     gint          num_colors)
 {
   return _gimp_image_set_cmap (image_ID,
 			       num_colors * 3,
@@ -117,11 +117,11 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  * See Also: gimp_image_parasite_attach()
  */
 void
-gimp_image_attach_new_parasite (gint32          image_ID, 
-				const gchar    *name, 
-				gint            flags,
-				gint            size, 
-				const gpointer  data)
+gimp_image_attach_new_parasite (gint32         image_ID, 
+				const gchar   *name, 
+				gint           flags,
+				gint           size, 
+				gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
 

@@ -57,7 +57,7 @@ void               gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf,
 void               gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf, 
 						    gint              x,
 						    gint              y,
-						    guchar           *pixel);
+						    const guchar     *pixel);
 void               gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
 
 

@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_procedural_db_proc_info    (gchar            *procedure,
+gboolean gimp_procedural_db_proc_info    (const gchar      *procedure,
 					  gchar           **blurb,
 					  gchar           **help,
 					  gchar           **author,
@@ -38,9 +38,9 @@ gboolean gimp_procedural_db_proc_info    (gchar            *procedure,
 					  gint             *num_values,
 					  GimpParamDef    **args,
 					  GimpParamDef    **return_vals);
-gboolean gimp_procedural_db_get_data     (gchar            *identifier,
+gboolean gimp_procedural_db_get_data     (const gchar      *identifier,
 					  gpointer          data);
-gboolean gimp_procedural_db_set_data     (gchar            *identifier,
+gboolean gimp_procedural_db_set_data     (const gchar      *identifier,
 					  gpointer          data,
 					  guint32           bytes);
 

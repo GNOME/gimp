@@ -53,7 +53,7 @@ struct _GimpParasite
 GimpParasite * gimp_parasite_new           (const gchar        *name, 
                                             guint32             flags,
                                             guint32             size, 
-                                            const gpointer      data);
+                                            gconstpointer       data);
 void           gimp_parasite_free          (GimpParasite       *parasite);
 
 GimpParasite * gimp_parasite_copy          (const GimpParasite *parasite);

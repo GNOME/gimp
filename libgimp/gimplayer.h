@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 
 gint32   gimp_layer_new  (gint32                image_ID,
-			  gchar                *name,
+			  const gchar          *name,
 			  gint                  width,
 			  gint                  height,
 			  GimpImageType         type,

@@ -39,7 +39,8 @@ G_BEGIN_DECLS
  * Don't say I didn't warn you (Maurits).
  */
 
-typedef struct {
+typedef struct
+{
   GtkWidget *widget;
   GtkWidget *frame;
   guchar    *cache;
@@ -57,40 +58,45 @@ typedef struct {
   gboolean   is_gray;
 } GimpFixMePreview;
 
-typedef void (*GimpFixeMePreviewFunc)(guchar *src, guchar *dest, 
-				      gint bpp, gpointer data);
+typedef void (*GimpFixeMePreviewFunc)  (const guchar *src,
+                                        guchar       *dest, 
+                                        gint          bpp,
+                                        gpointer      data);
 
-GimpFixMePreview *gimp_fixme_preview_new (GimpDrawable *drawable,
-					  gboolean has_frame);
-GimpFixMePreview *gimp_fixme_preview_new2 (GimpImageType drawable_type, 
-					   gboolean has_frame);
-void gimp_fixme_preview_free (GimpFixMePreview *preview);
+GimpFixMePreview * gimp_fixme_preview_new    (GimpDrawable     *drawable,
+                                              gboolean          has_frame);
+GimpFixMePreview * gimp_fixme_preview_new2   (GimpImageType     drawable_type, 
+                                              gboolean          has_frame);
+void               gimp_fixme_preview_free   (GimpFixMePreview *preview);
 
-void gimp_fixme_preview_update (GimpFixMePreview *preview,
-				GimpFixeMePreviewFunc func,
-				gpointer data);
+void               gimp_fixme_preview_update (GimpFixMePreview *preview,
+                                              GimpFixeMePreviewFunc func,
+                                              gpointer          data);
 
-void gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
-					 gint32     drawable_ID);
-void gimp_fixme_preview_fill (GimpFixMePreview *preview, 
-			      GimpDrawable *drawable);
-void gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview, 
-				     GimpDrawable *drawable);
-void gimp_fixme_preview_do_row (GimpFixMePreview *preview,
-				gint    row,
-				gint    width,
-				guchar *src);
+void      gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
+                                              gint32            drawable_ID);
+void      gimp_fixme_preview_fill            (GimpFixMePreview *preview, 
+                                              GimpDrawable     *drawable);
+void      gimp_fixme_preview_fill_scaled     (GimpFixMePreview *preview, 
+                                              GimpDrawable     *drawable);
 
-void gimp_fixme_preview_put_pixel (GimpFixMePreview *preview,
-				   gint x,
-				   gint y,
-				   const guchar *pixel);
-void gimp_fixme_preview_get_pixel (GimpFixMePreview *preview,
-				   gint x,
-				   gint y,
-				   guchar *pixel);
+void      gimp_fixme_preview_do_row          (GimpFixMePreview *preview,
+                                              gint              row,
+                                              gint              width,
+                                              const guchar     *src);
 
-GList *gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name);
+void      gimp_fixme_preview_put_pixel       (GimpFixMePreview *preview,
+                                              gint              x,
+                                              gint              y,
+                                              const guchar     *pixel);
+void      gimp_fixme_preview_get_pixel       (GimpFixMePreview *preview,
+                                              gint              x,
+                                              gint              y,
+                                              guchar           *pixel);
+
+GList   * gimp_plug_in_parse_path            (const gchar *path_name,
+                                              const gchar *dir_name);
+
 
 G_END_DECLS
 

@@ -46,12 +46,12 @@
  * Returns: The newly created channel.
  */
 gint32
-gimp_channel_new (gint32   image_ID,
-		  gchar   *name,
-		  guint    width,
-		  guint    height,
-		  gdouble  opacity,
-		  GimpRGB *color)
+gimp_channel_new (gint32         image_ID,
+		  const gchar   *name,
+		  guint          width,
+		  guint          height,
+		  gdouble        opacity,
+		  const GimpRGB *color)
 {
   return _gimp_channel_new (image_ID,
 			    width,

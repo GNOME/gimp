@@ -51,7 +51,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_proc_info (gchar            *procedure,
+gimp_procedural_db_proc_info (const gchar      *procedure,
 			      gchar           **blurb,
 			      gchar           **help,
 			      gchar           **author,
@@ -130,8 +130,8 @@ gimp_procedural_db_proc_info (gchar            *procedure,
  * the identifier
  */
 gboolean
-gimp_procedural_db_get_data (gchar    *identifier,
-			     gpointer  data)
+gimp_procedural_db_get_data (const gchar *identifier,
+			     gpointer     data)
 {
   gint      size;
   guint8   *hack;
@@ -164,9 +164,9 @@ gimp_procedural_db_get_data (gchar    *identifier,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_set_data (gchar    *identifier,
-			     gpointer  data,
-			     guint32   bytes)
+gimp_procedural_db_set_data (const gchar *identifier,
+			     gpointer     data,
+			     guint32      bytes)
 {
   return _gimp_procedural_db_set_data (identifier,
 				       bytes,

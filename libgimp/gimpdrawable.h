@@ -50,7 +50,7 @@ void           gimp_drawable_delete              (GimpDrawable   *drawable);
 gchar        * gimp_drawable_name                (gint32          drawable_ID);
 gboolean       gimp_drawable_visible             (gint32          drawable_ID);
 void           gimp_drawable_set_name            (gint32          drawable_ID,
-						  gchar          *name);
+						  const gchar    *name);
 void           gimp_drawable_set_visible         (gint32          drawable_ID,
 						  gboolean        visible);
 GimpTile     * gimp_drawable_get_tile            (GimpDrawable   *drawable,
@@ -71,7 +71,7 @@ void           gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 						  const gchar    *name, 
 						  gint            flags,
 						  gint            size, 
-						  const gpointer  data);
+						  gconstpointer   data);
 
 G_END_DECLS
 

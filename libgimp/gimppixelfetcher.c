@@ -169,7 +169,7 @@ void
 gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
 			      gint              x,
 			      gint              y,
-			      guchar           *pixel)
+			      const guchar     *pixel)
 {
   guchar *p;
   gint    i;
