@@ -1,5 +1,20 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb: added _defaults()
+	variants (flip_defaults, rotate_defaults, ...) for all transform
+	functions which finally call gimp_drawable_transform_affine().
+	The _defaults() functions don't take the whole interpolation_type,
+	supersample etc. parameter overkill, but only a "interpolation"
+	boolean like the old PDB wrappers.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable_transform.pdb: renamed flip() and
 	rotate() to flip_simple() and rotate_simple(). Renamed flip_free()
 	and rotate_free() to flip() and rotate() (the special cases should
