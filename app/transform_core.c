@@ -865,10 +865,10 @@ transform_core_recalc (tool, gdisp_ptr)
                 ((1-dy) * ((1-dx)*jk + dx*j1k) + \
 		    dy  * ((1-dx)*jk1 + dx*j1k1))
 
-#define REF_TILE(i,x,y) \
+#define REF_TILE(i,x,y,type) \
      tilex[i] = x; tiley[i] = y; \
      canvas_portion_refro (float_tiles, x, y); \
-     src[i] = canvas_portion_data (float_tiles, x, y);
+     src[i] = (type *) canvas_portion_data (float_tiles, x, y);
 
 static Canvas * 
 transform_core_do_u8  (
@@ -1054,22 +1054,22 @@ transform_core_do_u8  (
 		      minus_y = (ity > y1) ? -1 : 0;
 		      plus2_y = ((ity + 1) < (y2 - 1)) ? 2 : plus_y;
 
-		      REF_TILE (0, sx + minus_x, sy + minus_y);
-		      REF_TILE (1, sx, sy + minus_y);
-		      REF_TILE (2, sx + plus_x, sy + minus_y);
-		      REF_TILE (3, sx + plus2_x, sy + minus_y);
-		      REF_TILE (4, sx + minus_x, sy);
-		      REF_TILE (5, sx, sy);
-		      REF_TILE (6, sx + plus_x, sy);
-		      REF_TILE (7, sx + plus2_x, sy);
-		      REF_TILE (8, sx + minus_x, sy + plus_y);
-		      REF_TILE (9, sx, sy + plus_y);
-		      REF_TILE (10, sx + plus_x, sy + plus_y);
-		      REF_TILE (11, sx + plus2_x, sy + plus_y);
-		      REF_TILE (12, sx + minus_x, sy + plus2_y);
-		      REF_TILE (13, sx, sy + plus2_y);
-		      REF_TILE (14, sx + plus_x, sy + plus2_y);
-		      REF_TILE (15, sx + plus2_x, sy + plus2_y);
+		      REF_TILE (0, sx + minus_x, sy + minus_y, guint8);
+		      REF_TILE (1, sx, sy + minus_y, guint8);
+		      REF_TILE (2, sx + plus_x, sy + minus_y, guint8);
+		      REF_TILE (3, sx + plus2_x, sy + minus_y, guint8);
+		      REF_TILE (4, sx + minus_x, sy, guint8);
+		      REF_TILE (5, sx, sy, guint8);
+		      REF_TILE (6, sx + plus_x, sy, guint8);
+		      REF_TILE (7, sx + plus2_x, sy, guint8);
+		      REF_TILE (8, sx + minus_x, sy + plus_y, guint8);
+		      REF_TILE (9, sx, sy + plus_y, guint8);
+		      REF_TILE (10, sx + plus_x, sy + plus_y, guint8);
+		      REF_TILE (11, sx + plus2_x, sy + plus_y, guint8);
+		      REF_TILE (12, sx + minus_x, sy + plus2_y, guint8);
+		      REF_TILE (13, sx, sy + plus2_y, guint8);
+		      REF_TILE (14, sx + plus_x, sy + plus2_y, guint8);
+		      REF_TILE (15, sx + plus2_x, sy + plus2_y, guint8);
 
 		      a[0] = (minus_y * minus_x) ? src[0][alpha] : 0;
 		      a[1] = (minus_y) ? src[1][alpha] : 0;
@@ -1134,10 +1134,10 @@ transform_core_do_u8  (
 		    }
 		  else  /*  linear  */
 		    {
-		      REF_TILE (0, sx, sy);
-		      REF_TILE (1, sx + plus_x, sy);
-		      REF_TILE (2, sx, sy + plus_y);
-		      REF_TILE (3, sx + plus_x, sy + plus_y);
+		      REF_TILE (0, sx, sy, guint8);
+		      REF_TILE (1, sx + plus_x, sy, guint8);
+		      REF_TILE (2, sx, sy + plus_y, guint8);
+		      REF_TILE (3, sx + plus_x, sy + plus_y, guint8);
 
 		      /*  Need special treatment for the alpha channel  */
 		      if (plus_x == 0 && plus_y == 0)
@@ -1192,7 +1192,7 @@ transform_core_do_u8  (
 		}
 	      else  /*  no interpolation  */
 		{
-		  REF_TILE (0, sx, sy);
+		  REF_TILE (0, sx, sy, guint8);
 
 		  for (b = 0; b < bytes; b++)
 		    *d++ = src[0][b];
@@ -1221,6 +1221,360 @@ transform_core_do_u8  (
 }
 
 
+
+static Canvas * 
+transform_core_do_u16  (
+                        GImage * gimage,
+                        GimpDrawable * drawable,
+                        Canvas * float_tiles,
+                        int interpolation,
+                        Matrix matrix
+                        )
+{
+  PixelArea destPR;
+  PixelRow destRow;
+  Canvas *tiles;
+  Matrix m;
+  int itx, ity;
+  int tx1, ty1, tx2, ty2;
+  int width, height;
+  int alpha;
+  int chans, bytes, b;
+  int x, y;
+  int sx, sy;
+  int plus_x, plus_y;
+  int plus2_x, plus2_y;
+  int minus_x, minus_y;
+  int x1, y1, x2, y2;
+  double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
+  double xinc, yinc, winc;
+  double tx, ty, tw;
+  double ttx = 0.0, tty = 0.0;
+  double dx = 0.0, dy = 0.0;
+  guint16 * dest, * d;
+  guint16 * src[16];
+  double src_a[16][MAX_CHANNELS];
+  int tilex[16];
+  int tiley[16];
+  int a[16];
+  guint16 bg_col[MAX_CHANNELS];
+  int i;
+  double a_val, a_mult, a_recip;
+  int newval;
+
+  alpha = 0;
+
+  /*  Get the background color  */
+  {
+    PixelRow color;
+    pixelrow_init (&color, drawable_tag (drawable), (guchar*) bg_col, 1);
+    palette_get_background (&color);
+  }
+
+  
+  switch (tag_format (drawable_tag (drawable)))
+    {
+    case FORMAT_RGB:
+      bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;
+      alpha = 3;
+      break;
+    case FORMAT_GRAY:
+      bg_col[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
+      alpha = 1;
+      break;
+    case FORMAT_INDEXED:
+      bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
+      alpha = 1;
+      /*  If the gimage is indexed color, ignore smoothing value  */
+      interpolation = 0;
+      break;
+    }
+
+  /*  Find the inverse of the transformation matrix  */
+  invert (matrix, m);
+
+  x1 = canvas_fixme_getx (float_tiles);
+  y1 = canvas_fixme_gety (float_tiles);
+  x2 = x1 + canvas_width (float_tiles);
+  y2 = y1 + canvas_height (float_tiles);
+
+  transform_point (matrix, x1, y1, &dx1, &dy1);
+  transform_point (matrix, x2, y1, &dx2, &dy2);
+  transform_point (matrix, x1, y2, &dx3, &dy3);
+  transform_point (matrix, x2, y2, &dx4, &dy4);
+
+  /*  Find the bounding coordinates  */
+  tx1 = MINIMUM (dx1, dx2);
+  tx1 = MINIMUM (tx1, dx3);
+  tx1 = MINIMUM (tx1, dx4);
+  ty1 = MINIMUM (dy1, dy2);
+  ty1 = MINIMUM (ty1, dy3);
+  ty1 = MINIMUM (ty1, dy4);
+  tx2 = MAXIMUM (dx1, dx2);
+  tx2 = MAXIMUM (tx2, dx3);
+  tx2 = MAXIMUM (tx2, dx4);
+  ty2 = MAXIMUM (dy1, dy2);
+  ty2 = MAXIMUM (ty2, dy3);
+  ty2 = MAXIMUM (ty2, dy4);
+
+  /*  Get the new temporary buffer for the transformed result  */
+  tiles = canvas_new (canvas_tag (float_tiles),
+                      (tx2 - tx1), (ty2 - ty1),
+                      STORAGE_TILED);
+
+  pixelarea_init (&destPR, tiles,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  canvas_fixme_setx (tiles, tx1);
+  canvas_fixme_sety (tiles, ty1);
+
+  width = canvas_width (tiles);
+  height = canvas_height (tiles);
+  bytes = canvas_bytes (tiles);
+  chans = tag_num_channels (canvas_tag (tiles));
+  
+  dest = (guint16 *) g_malloc (width * bytes);
+  pixelrow_init (&destRow, canvas_tag (tiles), (guchar*) dest, width);
+  
+  xinc = m[0][0];
+  yinc = m[1][0];
+  winc = m[2][0];
+
+  for (y = ty1; y < ty2; y++)
+    {
+      /*  When we calculate the inverse transformation, we should transform
+       *  the center of each destination pixel...
+       */
+      tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2];
+      ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2];
+      tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
+      d = dest;
+      for (x = tx1; x < tx2; x++)
+	{
+	  /*  normalize homogeneous coords  */
+	  if (tw == 0.0)
+	    g_message ("homogeneous coordinate = 0...\n");
+	  else if (tw != 1.0)
+	    {
+	      ttx = tx / tw;
+	      tty = ty / tw;
+	    }
+	  else
+	    {
+	      ttx = tx;
+	      tty = ty;
+	    }
+
+	  /*  tx & ty are the coordinates of the point in the original
+	   *  selection's floating buffer.  Make sure they're within bounds
+	   */
+	  if (ttx < 0)
+	    itx = (int) (ttx - 0.999999);
+	  else
+	    itx = (int) ttx;
+
+	  if (tty < 0)
+	    ity = (int) (tty - 0.999999);
+	  else
+	    ity = (int) tty;
+
+	  /*  if interpolation is on, get the fractional error  */
+	  if (interpolation)
+	    {
+	      dx = ttx - itx;
+	      dy = tty - ity;
+	    }
+
+	  if (itx >= x1 && itx < x2 && ity >= y1 && ity < y2)
+	    {
+	      /*  x, y coordinates into source tiles  */
+	      sx = itx - x1;
+	      sy = ity - y1;
+
+	      /*  Set the destination pixels  */
+	      if (interpolation)
+		{
+		  plus_x = (itx < (x2 - 1)) ? 1 : 0;
+		  plus_y = (ity < (y2 - 1)) ? 1 : 0;
+
+		  if (cubic_interpolation)
+		    {
+		      minus_x = (itx > x1) ? -1 : 0;
+		      plus2_x = ((itx + 1) < (x2 - 1)) ? 2 : plus_x;
+
+		      minus_y = (ity > y1) ? -1 : 0;
+		      plus2_y = ((ity + 1) < (y2 - 1)) ? 2 : plus_y;
+
+		      REF_TILE (0, sx + minus_x, sy + minus_y, guint16);
+		      REF_TILE (1, sx, sy + minus_y, guint16);
+		      REF_TILE (2, sx + plus_x, sy + minus_y, guint16);
+		      REF_TILE (3, sx + plus2_x, sy + minus_y, guint16);
+		      REF_TILE (4, sx + minus_x, sy, guint16);
+		      REF_TILE (5, sx, sy, guint16);
+		      REF_TILE (6, sx + plus_x, sy, guint16);
+		      REF_TILE (7, sx + plus2_x, sy, guint16);
+		      REF_TILE (8, sx + minus_x, sy + plus_y, guint16);
+		      REF_TILE (9, sx, sy + plus_y, guint16);
+		      REF_TILE (10, sx + plus_x, sy + plus_y, guint16);
+		      REF_TILE (11, sx + plus2_x, sy + plus_y, guint16);
+		      REF_TILE (12, sx + minus_x, sy + plus2_y, guint16);
+		      REF_TILE (13, sx, sy + plus2_y, guint16);
+		      REF_TILE (14, sx + plus_x, sy + plus2_y, guint16);
+		      REF_TILE (15, sx + plus2_x, sy + plus2_y, guint16);
+
+		      a[0] = (minus_y * minus_x) ? src[0][alpha] : 0;
+		      a[1] = (minus_y) ? src[1][alpha] : 0;
+		      a[2] = (minus_y * plus_x) ? src[2][alpha] : 0;
+		      a[3] = (minus_y * plus2_x) ? src[3][alpha] : 0;
+
+		      a[4] = (minus_x) ? src[4][alpha] : 0;
+		      a[5] = src[5][alpha];
+		      a[6] = (plus_x) ? src[6][alpha] : 0;
+		      a[7] = (plus2_x) ? src[7][alpha] : 0;
+
+		      a[8] = (plus_y * minus_x) ? src[8][alpha] : 0;
+		      a[9] = (plus_y) ? src[9][alpha] : 0;
+		      a[10] = (plus_y * plus_x) ? src[10][alpha] : 0;
+		      a[11] = (plus_y * plus2_x) ? src[11][alpha] : 0;
+
+		      a[12] = (plus2_y * minus_x) ? src[12][alpha] : 0;
+		      a[13] = (plus2_y) ? src[13][alpha] : 0;
+		      a[14] = (plus2_y * plus_x) ? src[14][alpha] : 0;
+		      a[15] = (plus2_y * plus2_x) ? src[15][alpha] : 0;
+
+		      a_val = cubic (dy,
+				    cubic (dx, a[0], a[1], a[2], a[3]),
+				    cubic (dx, a[4], a[5], a[6], a[7]),
+				    cubic (dx, a[8], a[9], a[10], a[11]),
+				    cubic (dx, a[12], a[13], a[14], a[15]));
+
+		      if (a_val != 0)
+			a_recip = 65535.0 / a_val;
+		      else
+			a_recip = 0.0;
+
+		      /* premultiply the alpha */
+		      for (i = 0; i < 16; i++)
+			{
+			  a_mult = a[i] * (1.0 / 65535.0);
+			  for (b = 0; b < alpha; b++)
+			    src_a[i][b] = src[i][b] * a_mult;
+			}
+
+		      for (b = 0; b < alpha; b++)
+			{
+			  newval =
+			    a_recip *
+			    cubic (dy,
+				   cubic (dx, src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b]),
+				   cubic (dx, src_a[4][b], src_a[5][b], src_a[6][b], src_a[7][b]),
+				   cubic (dx, src_a[8][b], src_a[9][b], src_a[10][b], src_a[11][b]),
+				   cubic (dx, src_a[12][b], src_a[13][b], src_a[14][b], src_a[15][b]));
+			  if ((newval & 0x10000) == 0)
+			    *d++ = newval;
+			  else if (newval < 0)
+			    *d++ = 0;
+			  else
+			    *d++ = 65535;
+			}
+
+		      *d++ = a_val;
+
+		      for (b = 0; b < 16; b++)
+			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+		    }
+		  else  /*  linear  */
+		    {
+		      REF_TILE (0, sx, sy, guint16);
+		      REF_TILE (1, sx + plus_x, sy, guint16);
+		      REF_TILE (2, sx, sy + plus_y, guint16);
+		      REF_TILE (3, sx + plus_x, sy + plus_y, guint16);
+
+		      /*  Need special treatment for the alpha channel  */
+		      if (plus_x == 0 && plus_y == 0)
+			{
+			  a[0] = src[0][alpha];
+			  a[1] = a[2] = a[3] = 0;
+			}
+		      else if (plus_x == 0)
+			{
+			  a[0] = src[0][alpha];
+			  a[2] = src[2][alpha];
+			  a[1] = a[3] = 0;
+			}
+		      else if (plus_y == 0)
+			{
+			  a[0] = src[0][alpha];
+			  a[1] = src[1][alpha];
+			  a[2] = a[3] = 0;
+			}
+		      else
+			{
+			  a[0] = src[0][alpha];
+			  a[1] = src[1][alpha];
+			  a[2] = src[2][alpha];
+			  a[3] = src[3][alpha];
+			}
+
+		      /*  The alpha channel  */
+		      a_val = BILINEAR (a[0], a[1], a[2], a[3], dx, dy);
+
+		      if (a_val != 0)
+			a_recip = 65535.0 / a_val;
+		      else
+			a_recip = 0.0;
+
+		      /* premultiply the alpha */
+		      for (i = 0; i < 4; i++)
+			{
+			  a_mult = a[i] * (1.0 / 65535.0);
+			  for (b = 0; b < alpha; b++)
+			    src_a[i][b] = src[i][b] * a_mult;
+			}
+
+		      for (b = 0; b < alpha; b++)
+			*d++ = a_recip * BILINEAR (src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b], dx, dy);
+
+		      *d++ = a_val;
+
+		      for (b = 0; b < 4; b++)
+			canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+		    }
+		}
+	      else  /*  no interpolation  */
+		{
+		  REF_TILE (0, sx, sy, guint16);
+
+		  for (b = 0; b < chans; b++)
+		    *d++ = src[0][b];
+
+                  canvas_portion_unref (float_tiles, tilex[b], tiley[b]);
+		}
+	    }
+	  else
+	    {
+	      /*  increment the destination pointers  */
+	      for (b = 0; b < chans; b++)
+		*d++ = bg_col[b];
+	    }
+	  /*  increment the transformed coordinates  */
+	  tx += xinc;
+	  ty += yinc;
+	  tw += winc;
+	}
+
+      /*  set the pixel region row  */
+      pixelarea_write_row (&destPR, &destRow, 0, (y - ty1), width);
+    }
+
+  g_free (dest);
+  return tiles;
+}
+
+
+
 /*  Actually carry out a transformation  */
 Canvas *
 transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
@@ -1235,6 +1589,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
     case PRECISION_U8:
       return transform_core_do_u8 (gimage, drawable, float_tiles, interpolation, matrix);
     case PRECISION_U16:
+      return transform_core_do_u16 (gimage, drawable, float_tiles, interpolation, matrix);
     case PRECISION_FLOAT:
     case PRECISION_NONE:
     default:
