@@ -526,6 +526,9 @@ info_window_free (InfoDialog *info_win)
       return;
     }
 
+  if(!info_win)
+    return;
+
   iwd = (InfoWinData *) info_win->user_data;
 
   gtk_signal_disconnect_by_data (GTK_OBJECT (iwd->gdisp->gimage), info_win);

@@ -1,3 +1,10 @@
+Tue Nov 30 21:23:39 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/info_window.c
+
+	Fix crash where display closed & info dialog had not been used.
+	Yasuhiro SHIRASAKI pointed this problem out. Thanks.
+
 Mon Nov 29 18:17:34 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: support for optional gap_decode_mpeg plugin
