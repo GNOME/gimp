@@ -345,7 +345,8 @@ shear_tool_shear (GimpImage    *gimage,
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
-			   progress ? progress_update_and_flush : NULL,
+			   progress ? progress_update_and_flush :
+			   (progress_func_t) NULL,
 			   progress);
 
   if (progress)

@@ -391,8 +391,8 @@ gauss_rle_dialog (void)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adj,
-				     bvals.radius, 1.0, G_MAXDOUBLE, 1.0, 5.0,
-				     0, 1, 2);
+				     bvals.radius, 1.0, GIMP_MAX_IMAGE_SIZE,
+				     1.0, 5.0, 0, 1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),

@@ -1,3 +1,22 @@
+2000-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/perspective_tool.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: fix Solaris compilation problems
+	reported by Ludovic Poitou <ludovic.poitou@france.sun.com>.
+
+	* libgimp/gimppixmap.[ch]: new function gimp_pixmap_set().
+
+	* plug-ins/gfig/gfig.c: hacked the ui to use the libgimp widgets &
+	constructors and slightly reorganized it to use fewer screen
+	space (not yet perfect). Did a general namespace & code cleanup.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: use a GimpPathEditor
+	widget.
+
 Mon Feb 21 11:59:33 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c

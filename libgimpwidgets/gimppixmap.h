@@ -43,7 +43,10 @@ struct _GimpPixmapClass
 };
 
 GtkType     gimp_pixmap_get_type (void);
-GtkWidget * gimp_pixmap_new      (gchar **xpm_data);
+GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
+
+void        gimp_pixmap_set      (GimpPixmap  *pixmap,
+				  gchar      **xpm_data);
 
 #ifdef __cplusplus
 }

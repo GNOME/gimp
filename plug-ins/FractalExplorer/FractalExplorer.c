@@ -151,15 +151,10 @@ static void        fractalexplorer_free_everything   (fractalexplorerOBJ *feOBJ)
 static void        fractalexplorer_list_free_all             (void);
 static fractalexplorerOBJ * fractalexplorer_load       (gchar     *filename,
 							gchar     *name);
-static void        fractalexplorer_rescan_file_selection_ok  (GtkWidget *widget,
-							GtkFileSelection *fs,
-							gpointer   data);
 
 static void        fractalexplorer_list_load_all             (GList     *plist);
 static void        fractalexplorer_rescan_ok_callback        (GtkWidget *widget,
-							gpointer   data);
-static void        fractalexplorer_rescan_add_entry_callback (GtkWidget *widget,
-							gpointer   data);
+							      gpointer   data);
 static void        fractalexplorer_rescan_list               (void);
 
 
@@ -654,29 +649,31 @@ delete_dialog_callback (GtkWidget *widget,
 			gboolean   delete,
 			gpointer   data)
 {
-  gint pos;
-  GList * sellist;
-  fractalexplorerOBJ * sel_obj;
-  GtkWidget *list = (GtkWidget *)data;
+  gint       pos;
+  GList     *sellist;
+  fractalexplorerOBJ *sel_obj;
+  GtkWidget *list = (GtkWidget *) data;
 
   if (delete)
     {
       /* Must update which object we are editing */
       /* Get the list and which item is selected */
       /* Only allow single selections */
-      
+
       sellist = GTK_LIST(list)->selection; 
       
-      g_print ("list: %i\n", g_list_length (sellist));
+      /* g_print ("list: %i\n", g_list_length (sellist)); */
       
-      sel_obj = (fractalexplorerOBJ *)gtk_object_get_user_data(GTK_OBJECT((GtkWidget *)(sellist->data)));
-      
-      pos = gtk_list_child_position(GTK_LIST(fractalexplorer_gtk_list),sellist->data);
-      
+      sel_obj = (fractalexplorerOBJ *)
+	gtk_object_get_user_data (GTK_OBJECT(sellist->data));
+
+      pos = gtk_list_child_position (GTK_LIST (fractalexplorer_gtk_list),
+				     sellist->data);
+
       /* Delete the current  item + asssociated file */
-      gtk_list_clear_items(GTK_LIST (fractalexplorer_gtk_list),pos,pos+1);
+      gtk_list_clear_items (GTK_LIST (fractalexplorer_gtk_list), pos, pos + 1);
       /* Shadow copy for ordering info */
-      fractalexplorer_list = g_list_remove(fractalexplorer_list,sel_obj);
+      fractalexplorer_list = g_list_remove (fractalexplorer_list, sel_obj);
       /*
 	if(sel_obj == current_obj)
 	{
@@ -684,14 +681,15 @@ delete_dialog_callback (GtkWidget *widget,
 	}
       */  
       /* Free current obj */
-      fractalexplorer_free_everything(sel_obj);
-      
+      fractalexplorer_free_everything (sel_obj);
+
       /* Select previous one */
       if (pos > 0)
 	pos--;
       
-      if((pos == 0) && (g_list_length(fractalexplorer_list) == 0))
-	{      
+      if ((pos == 0) && (g_list_length (fractalexplorer_list) == 0))
+	{
+	  /*gtk_widget_sed_sensitive ();*/
 	  /* Warning - we have a problem here
 	   * since we are not really "creating an entry"
 	   * why call fractalexplorer_new?
@@ -699,19 +697,19 @@ delete_dialog_callback (GtkWidget *widget,
 	  new_button_press(NULL,NULL,NULL);
 	}
 
-      gtk_list_select_item(GTK_LIST(fractalexplorer_gtk_list), pos);
+      gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
 
-      current_obj = g_list_nth_data(fractalexplorer_list,pos);
+      gtk_list_select_item (GTK_LIST (fractalexplorer_gtk_list), pos);
 
-      /*
-	draw xxxxxxxxxxxxxxxx 
-	update_draw_area(fractalexplorer_preview,NULL);
-      */
-      
+      current_obj = g_list_nth_data (fractalexplorer_list, pos);
+
       list_button_update(current_obj);
     }
-  
-  gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
+  else
+    {
+      gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
+    }
+
   delete_dialog = NULL;
   
   return;
@@ -1205,7 +1203,8 @@ plug_in_parse_fractalexplorer_path (void)
 	}
       else
 	{
-	  g_message (_("fractalexplorer-path miss-configured - \nPath `%.100s' not found\n"), path);
+	  g_message (_("fractalexplorer-path misconfigured\nPath "
+		       "\"%s\" not found."), path);
 	  g_free (path);
 	}
       token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
@@ -1306,38 +1305,6 @@ fractalexplorer_load (gchar *filename,
   fractalexplorer->obj_status = fractalexplorer_OK;
 
   return fractalexplorer;
-}
-
-static void
-fractalexplorer_rescan_file_selection_ok (GtkWidget        *widget,
-					  GtkFileSelection *fs,
-					  gpointer          data)
-{
-  GtkWidget *list_item;
-  GtkWidget *lw = (GtkWidget *) gtk_object_get_user_data (GTK_OBJECT (fs));
-  gchar * filenamebuf;
-  struct stat	filestat;
-  gint		err;
-
-  filenamebuf = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs));
-
-  err = stat(filenamebuf, &filestat);
-
-  if (!S_ISDIR (filestat.st_mode))
-    {
-      g_warning("Entry %.100s is not a directory\n", filenamebuf);
-    }  
-  else
-    {
-      list_item = gtk_list_item_new_with_label (filenamebuf);
-      gtk_widget_show (list_item);
-
-      gtk_list_prepend_items (GTK_LIST (lw), g_list_append (NULL, list_item));
-
-      rescan_list = g_list_prepend (rescan_list, g_strdup (filenamebuf));
-    }
-
-  gtk_widget_destroy (GTK_WIDGET (fs));
 }
 
 static void
@@ -1480,147 +1447,103 @@ static void
 fractalexplorer_rescan_ok_callback (GtkWidget *widget,
 				    gpointer   data)
 {
-  GList *list;
+  GtkWidget *patheditor;
+  GList     *list;
+  gchar     *raw_path;
+  gchar    **path;
+  gint       i;
 
-  list = rescan_list;
-  while (list)
+  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
+
+  for (list = fractalexplorer_path_list; list; list = g_list_next (list))
+    g_free (list->data);
+
+  g_list_free (fractalexplorer_path_list);
+  fractalexplorer_path_list = NULL;
+
+  patheditor = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (data),
+                                                "patheditor"));
+
+  raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
+
+  path = g_strsplit (raw_path, ":", 16);
+
+  for (i = 0; i < 16; i++)
     {
-      list = list->next;
-    }
-  list = fractalexplorer_path_list;
-  while (list) 
-    {
-      rescan_list = g_list_append (rescan_list, g_strdup (list->data));
-      list = list->next;
+      if (!path[i])
+        break;
+
+      fractalexplorer_path_list = g_list_append (fractalexplorer_path_list,
+						 g_strdup (path[i]));
     }
 
-  gtk_list_clear_items (GTK_LIST (fractalexplorer_gtk_list), 0, -1);
-  fractalexplorer_list_load_all (rescan_list);
-  build_list_items (fractalexplorer_gtk_list);
-  list_button_update (current_obj);
+  g_strfreev (path);
+
+  if (fractalexplorer_path_list)
+    {
+      gtk_list_clear_items (GTK_LIST (fractalexplorer_gtk_list), 0, -1);
+      fractalexplorer_list_load_all (fractalexplorer_path_list);
+      build_list_items (fractalexplorer_gtk_list);
+      list_button_update (current_obj);
+    }
+
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-fractalexplorer_rescan_add_entry_callback (GtkWidget *widget,
-					   gpointer   data)
-{
-  static GtkWidget *window = NULL;
-
-  /* Call up the file sel dialogue */
-  window = gtk_file_selection_new (_("Add FractalExplorer path"));
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-  gtk_object_set_user_data (GTK_OBJECT (window), data);
-
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &window);
-
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (fractalexplorer_rescan_file_selection_ok),
-		      window);
-
-  gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (window)->cancel_button),
-			     "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (window));
-
-  gtk_widget_show (window);
 }
 
 static void
 fractalexplorer_rescan_list (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *button;
-  GtkWidget *dlg;
-  GtkWidget *list_frame;
-  GtkWidget *scrolled_win;
-  GtkWidget *list_widget;
-  GList *list;
+  static GtkWidget *dlg = NULL;
+
+  GtkWidget *patheditor;
+  GString   *path = NULL;
+  GList     *list;
+
+  if (dlg)
+    {
+      gdk_window_raise (dlg->window);
+      return;
+    }
 
   /*  the dialog  */
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Rescan for fractals"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
+                         gimp_plugin_help_func, "filters/fractalexplorer.html",
+                         GTK_WIN_POS_MOUSE,
+                         FALSE, TRUE, FALSE,
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+                         _("OK"), fractalexplorer_rescan_ok_callback,
+                         NULL, NULL, NULL, TRUE, FALSE,
+                         _("Cancel"), gtk_widget_destroy,
+                         NULL, 1, NULL, FALSE, TRUE,
 
-  /* path list */
-  list_frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (list_frame), GTK_SHADOW_ETCHED_IN);
-  gtk_widget_show(list_frame);
+                         NULL);
 
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (list_frame), scrolled_win);
-  gtk_widget_show (scrolled_win);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+                      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+                      &dlg);
 
-  list_widget = gtk_list_new ();
-  gtk_list_set_selection_mode (GTK_LIST (list_widget), GTK_SELECTION_BROWSE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-					 list_widget);
-  gtk_widget_show (list_widget);
-  gtk_box_pack_start (GTK_BOX (vbox), list_frame, TRUE, TRUE, 0);
-
-  list = fractalexplorer_path_list;
-  while (list)
+  for (list = fractalexplorer_path_list; list; list = g_list_next (list))
     {
-      GtkWidget *list_item;
-      list_item = gtk_list_item_new_with_label(list->data);
-      gtk_widget_show(list_item);
-      gtk_container_add (GTK_CONTAINER (list_widget), list_item);
-      list = list->next;
+      if (path == NULL)
+        {
+          path = g_string_new (list->data);
+        }
+      else
+        {
+          g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
+          g_string_append (path, list->data);
+        }
     }
 
-  button = gtk_button_new_with_label (_("OK"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc)fractalexplorer_rescan_ok_callback,
-                      (gpointer)dlg);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"), path->str);
+  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (patheditor);
 
-  /* Clear the old list out */
-  if((list = rescan_list))
-    {
-      while (list) 
-	{
-	  g_free(list->data);
-	  list = list->next;
-	}
+  g_string_free (path, TRUE);
 
-      g_list_free(rescan_list);
-      rescan_list = NULL;
-    }
+  gtk_object_set_data (GTK_OBJECT (dlg), "patheditor", patheditor);
 
-  button = gtk_button_new_with_label (_("Add dir"));
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc)fractalexplorer_rescan_add_entry_callback,
-                      (gpointer)list_widget);
-
-  gtk_object_set_user_data(GTK_OBJECT(dlg),(gpointer)list_widget);
-
-
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT (dlg));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 }
-
