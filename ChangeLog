@@ -1,3 +1,10 @@
+2000-11-11  Simon Budig <simon@gimp.org>
+
+	* app/interface.c: fixed #10554 by requesting a window
+	with the max. size of 0.75*screen_width x 0.75*screen_height.
+	These 75% value is taken from the shrink_wrap code and
+	probably should be configurable...
+
 2000-11-11  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gpb.c: Implement the noninteractive run mode for

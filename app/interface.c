@@ -698,8 +698,10 @@ create_display_shell (GDisplay *gdisp,
   gint contextid;
 
   /*  adjust the initial scale -- so that window fits on screen */
-  s_width  = gdk_screen_width ();
-  s_height = gdk_screen_height ();
+  /*  the 75% value is the same as in gdisplay_shrink_wrap. It  */
+  /*  probably should be a user-configurable option.            */
+  s_width  = gdk_screen_width () * 0.75;
+  s_height = gdk_screen_height () * 0.75;
 
   scalesrc  = SCALESRC (gdisp);
   scaledest = SCALEDEST (gdisp);
