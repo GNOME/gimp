@@ -1,5 +1,14 @@
 2000-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print.c: Oops, didn't see Sven's patch when applying
+	a different one to both sourceforge branches:
+
+	Don't define LOCALE in Makefile.am but check if the macro
+	INIT_I18N_UI exists and use in that case.
+
+2000-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/fileops.c
 	* libgimp/gimpquerybox.[ch]: Make sure that we don't try to destroy
 	query_boxes twice or try to disconnect not-any-more connected

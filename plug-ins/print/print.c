@@ -327,7 +327,11 @@ run (char   *name,		/* I - Name of print program. */
     ;
 #endif
 
-  INIT_LOCALE (LOCALE);
+#ifdef INIT_I18N_UI
+  INIT_I18N_UI();
+#else
+  INIT_LOCALE ("gimp-print");
+#endif
 
   /*
    * Initialize parameter data...
