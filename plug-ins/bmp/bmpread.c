@@ -120,7 +120,8 @@ ReadBMP (const gchar *name)
       return -1;
     }
 
-  temp_buf = g_strdup_printf (_("Opening '%s'..."), name);
+  temp_buf = g_strdup_printf (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (name));
   gimp_progress_init (temp_buf);
   g_free (temp_buf);
 

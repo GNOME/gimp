@@ -1000,7 +1000,8 @@ save_image (const gchar *filename,
 
 
   /* init the progress meter */
-  temp_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  temp_buf = g_strdup_printf (_("Saving '%s'..."),
+                              gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp_buf);
   g_free (temp_buf);
 

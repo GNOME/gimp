@@ -1,3 +1,15 @@
+2004-01-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/pix.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/xpm.c
+	* plug-ins/xjt/xjt.c: some more gimp_filename_to_utf8().
+
 2004-01-19  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0pre2 release.

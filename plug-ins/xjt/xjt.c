@@ -1630,123 +1630,125 @@ save_xjt_image (const gchar *filename,
 		gint32       image_id,
 		gint32       drawable_id)
 {
-   int     l_rc;
-   int     l_len;
-   int     l_idx;
-   gchar  *l_dirname;
-   gchar  *l_prop_file;
-   gchar  *l_jpg_file;
-   gchar  *l_cmd;
-   gchar  *l_name;
-   FILE   *l_fp_prp;
-   mode_t  l_mode_dir;
+  int     l_rc;
+  int     l_len;
+  int     l_idx;
+  gchar  *l_dirname;
+  gchar  *l_prop_file;
+  gchar  *l_jpg_file;
+  gchar  *l_cmd;
+  gchar  *l_name;
+  FILE   *l_fp_prp;
+  mode_t  l_mode_dir;
 
-   GimpImageBaseType l_image_type;
-   gint32 *l_layers_list;
-   gint32 *l_channels_list;
-   gint    l_nlayers;
-   gint    l_nchannels;
-   gint32  l_layer_id;
-   gint32  l_channel_id;
-   gint32  l_floating_layer_id;
-   gint32  l_selection_channel_id;
-   int     l_sel;
-   gint32  l_x1, l_x2, l_y1, l_y2;
-   gboolean non_empty;
+  GimpImageBaseType l_image_type;
+  gint32 *l_layers_list;
+  gint32 *l_channels_list;
+  gint    l_nlayers;
+  gint    l_nchannels;
+  gint32  l_layer_id;
+  gint32  l_channel_id;
+  gint32  l_floating_layer_id;
+  gint32  l_selection_channel_id;
+  int     l_sel;
+  gint32  l_x1, l_x2, l_y1, l_y2;
+  gboolean non_empty;
 
-   gint    l_wr_all_prp;
+  gint    l_wr_all_prp;
 
-   l_rc = -1;  /* init retcode to Errorstate */
-   l_floating_layer_id = -1;
-   l_fp_prp = NULL;
-   l_layers_list = NULL;
-   l_channels_list = NULL;
-   l_dirname = NULL;
-   l_prop_file = NULL;
-   l_jpg_file = NULL;
-   l_wr_all_prp = FALSE;     /* FALSE write only non-default properties
+  l_rc = -1;  /* init retcode to Errorstate */
+  l_floating_layer_id = -1;
+  l_fp_prp = NULL;
+  l_layers_list = NULL;
+  l_channels_list = NULL;
+  l_dirname = NULL;
+  l_prop_file = NULL;
+  l_jpg_file = NULL;
+  l_wr_all_prp = FALSE;     /* FALSE write only non-default properties
                               * TRUE  write all properties (should be used for DEBUG only)
 			      */
-   global_parasite_id = 0;
-   global_parasite_prop_lines = NULL;
+  global_parasite_id = 0;
+  global_parasite_prop_lines = NULL;
 
 
-   /* get info about the image */
-   l_image_type = gimp_image_base_type(image_id);
-   switch (l_image_type)
-   {
-      case GIMP_RGB:
-      case GIMP_GRAY:
-	break;
-      case GIMP_INDEXED:
-	g_message (_("Cannot operate on indexed color images."));
-	return -1;
-	break;
-      default:
-	g_message (_("Cannot operate on unknown image types."));
-	return -1;
-	break;
-   }
+  /* get info about the image */
+  l_image_type = gimp_image_base_type(image_id);
+  switch (l_image_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      break;
+    case GIMP_INDEXED:
+      g_message (_("Cannot operate on indexed color images."));
+      return -1;
+      break;
+    default:
+      g_message (_("Cannot operate on unknown image types."));
+      return -1;
+      break;
+    }
 
-   l_name = g_strdup_printf (_("Saving '%s'..."), filename);
-   gimp_progress_init (l_name);
-   g_free (l_name);
+  l_name = g_strdup_printf (_("Saving '%s'..."),
+                            gimp_filename_to_utf8 (filename));
+  gimp_progress_init (l_name);
+  g_free (l_name);
 
-   /* create temporary directory  <filename>.tmpdir.<PID> */
-   l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
-   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
-   l_mode_dir = 0777;
-   if(mkdir(l_dirname, l_mode_dir) != 0)
-   {
-     g_message (_("Could not create working folder '%s': %s"),
+  /* create temporary directory  <filename>.tmpdir.<PID> */
+  l_dirname = g_strdup_printf ("%s.tmpdir.%d", filename, (int) g_pid);
+  l_prop_file = g_strdup_printf ("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
+  l_mode_dir = 0777;
+  if (mkdir (l_dirname, l_mode_dir) != 0)
+    {
+      g_message (_("Could not create working folder '%s': %s"),
                  gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
-     goto cleanup;
-   }
+      goto cleanup;
+    }
 
-
-   /* create property file PRP */
-   l_fp_prp = fopen(l_prop_file, "w");
-   if(l_fp_prp == NULL)
-   {
-     g_message (_("Could not open '%s' for writing: %s"),
+  /* create property file PRP */
+  l_fp_prp = fopen (l_prop_file, "w");
+  if (l_fp_prp == NULL)
+    {
+      g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (l_prop_file), g_strerror (errno));
-     goto cleanup;
-   }
+      goto cleanup;
+    }
 
-   /* write image properties */
-   p_write_image_prp(l_dirname, l_fp_prp, image_id, l_wr_all_prp);
+  /* write image properties */
+  p_write_image_prp (l_dirname, l_fp_prp, image_id, l_wr_all_prp);
 
 
-   l_floating_layer_id = gimp_image_get_floating_sel(image_id);
-   if (l_floating_layer_id >= 0)
-   {
-       if(xjt_debug) printf("XJT-DEBUG: call floating_sel_relax fsel_id=%d\n",
-                           (int)l_floating_layer_id);
+  l_floating_layer_id = gimp_image_get_floating_sel (image_id);
+  if (l_floating_layer_id >= 0)
+    {
+      if (xjt_debug) printf ("XJT-DEBUG: call floating_sel_relax fsel_id=%d\n",
+                             (int) l_floating_layer_id);
 
-       gimp_floating_sel_relax (l_floating_layer_id, FALSE);
-   }
+      gimp_floating_sel_relax (l_floating_layer_id, FALSE);
+    }
 
-   l_layers_list = gimp_image_get_layers(image_id, &l_nlayers);
+  l_layers_list = gimp_image_get_layers (image_id, &l_nlayers);
 
-   /* foreach layer do */
-   for(l_idx = 0; l_idx < l_nlayers; l_idx++)
-   {
+  /* foreach layer do */
+  for (l_idx = 0; l_idx < l_nlayers; l_idx++)
+    {
       l_layer_id = l_layers_list[l_idx];
 
-      if(xjt_debug) printf("Layer [%d] id=%d\n", (int)l_idx, (int)l_layer_id);
+      if (xjt_debug) printf ("Layer [%d] id=%d\n", (int)l_idx, (int)l_layer_id);
 
       /* save layer as jpeg file */
-      l_jpg_file = g_strdup_printf("%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
-      if(xjt_debug) printf("XJT-DEBUG: saving layer to file %s\n", l_jpg_file);
+      l_jpg_file = g_strdup_printf ("%s%cl%d.jpg", l_dirname,
+                                    G_DIR_SEPARATOR, l_idx);
+      if (xjt_debug) printf ("XJT-DEBUG: saving layer to file %s\n", l_jpg_file);
 
-      if(TRUE != xjpg_save_drawable(l_jpg_file,
-                                    image_id,
-				    l_layer_id,
-				    JSVM_DRAWABLE,
-				    &jsvals))
-      {   goto cleanup;
-      }
-      g_free(l_jpg_file);
+      if (TRUE != xjpg_save_drawable (l_jpg_file,
+                                      image_id,
+                                      l_layer_id,
+                                      JSVM_DRAWABLE,
+                                      &jsvals))
+        {
+          goto cleanup;
+        }
+      g_free (l_jpg_file);
 
       /* write out the layer properties */
       if(gimp_drawable_has_alpha(l_layer_id)) { l_jpg_file = g_strdup_printf("L%d", l_idx); }
@@ -3316,7 +3318,8 @@ load_xjt_image (const gchar *filename)
   l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
   l_fsel_id = -1;                /* -1  assume there is no floating selection */
 
-  l_name = g_strdup_printf (_("Opening '%s'..."), filename);
+  l_name = g_strdup_printf (_("Opening '%s'..."),
+                            gimp_filename_to_utf8 (filename));
   gimp_progress_init (l_name);
   g_free (l_name);
 

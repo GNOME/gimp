@@ -331,12 +331,13 @@ load_image (const gchar *filename)
   if (NULL == file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
   /* Set up progress display */
-  progMessage = g_strdup_printf (_("Opening '%s'..."), filename);
+  progMessage = g_strdup_printf (_("Opening '%s'..."),
+                                 gimp_filename_to_utf8 (filename));
   gimp_progress_init (progMessage);
   g_free (progMessage);
 
@@ -513,12 +514,13 @@ save_image (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 filename, g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
   /* Set up progress display */
-  progMessage = g_strdup_printf (_("Saving '%s'..."), filename);
+  progMessage = g_strdup_printf (_("Saving '%s'..."),
+                                 gimp_filename_to_utf8 (filename));
   gimp_progress_init (progMessage);
   g_free (progMessage);
 

@@ -541,7 +541,8 @@ save_image (const gchar *filename,
   height = drawable->height;
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  message = g_strdup_printf (_("Saving '%s'..."), filename);
+  message = g_strdup_printf (_("Saving '%s'..."),
+                             gimp_filename_to_utf8 (filename));
   gimp_progress_init (message);
   g_free (message);
 

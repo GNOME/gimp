@@ -326,7 +326,8 @@ load_image (const gchar *filename)
   gchar    *name;
 
   /* put up a progress bar */
-  name = g_strdup_printf (_("Opening '%s'..."), filename);
+  name = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (name);
   g_free (name);
 
@@ -615,7 +616,8 @@ save_image (const gchar *filename,
   {
     gchar *name;
 
-    name = g_strdup_printf (_("Saving '%s'..."), filename);
+    name = g_strdup_printf (_("Saving '%s'..."),
+                            gimp_filename_to_utf8 (filename));
     gimp_progress_init (name);
     g_free (name);
   }

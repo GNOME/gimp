@@ -432,7 +432,8 @@ load_image (const gchar *filename)
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
   gimp_progress_init (temp);
   g_free (temp);
 
