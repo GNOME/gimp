@@ -18,7 +18,10 @@ Bugs fixed in GIMP 2.0.5
 - fixed parsing of SVG transform attributes
 - guard against bogus logical screen dimensions in GIF images (#151053)
 - fixed use of global context for stroke operations (#150716)
-- avoid stack overflows when buecket-filling complex regions (#151124)
+- avoid stack overflows when bucket-filling complex regions (#151124)
+- fixes to the composite code (#149429, #147013)
+- fixed run-with-last-vals mode for vpropagate plug-in (#151308)
+- respect the global-brush setting when stroking
 
 
 Bugs fixed in GIMP 2.0.4
