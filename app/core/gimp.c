@@ -56,11 +56,13 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_class_init (GimpClass *klass);
-static void   gimp_init       (Gimp      *gimp);
+static void    gimp_class_init  (GimpClass  *klass);
+static void    gimp_init        (Gimp       *gimp);
 
-static void   gimp_dispose    (GObject   *object);
-static void   gimp_finalize   (GObject   *object);
+static void    gimp_dispose     (GObject    *object);
+static void    gimp_finalize    (GObject    *object);
+
+static gsize   gimp_get_memsize (GimpObject *object);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -97,14 +99,18 @@ gimp_get_type (void)
 static void
 gimp_class_init (GimpClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose  = gimp_dispose;
-  object_class->finalize = gimp_finalize;
+  object_class->dispose          = gimp_dispose;
+  object_class->finalize         = gimp_finalize;
+
+  gimp_object_class->get_memsize = gimp_get_memsize;
 }
 
 static void
@@ -315,6 +321,53 @@ gimp_finalize (GObject *object)
     gimp_units_exit (gimp);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_get_memsize (GimpObject *object)
+{
+  Gimp  *gimp;
+  gsize  memsize = 0;
+
+  gimp = GIMP (object);
+
+  memsize += g_list_length (gimp->user_units) * sizeof (GList); /* FIXME */
+
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->parasites)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->modules)));
+
+  memsize += (g_hash_table_size (gimp->image_table) *
+              3 * sizeof (gpointer)); /* FIXME */
+  memsize += (g_hash_table_size (gimp->drawable_table) *
+              3 * sizeof (gpointer)); /* FIXME */
+
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory)));
+
+  memsize += (g_hash_table_size (gimp->procedural_ht) *
+              3 * sizeof (gpointer)); /* FIXME */
+
+  memsize += g_slist_length (gimp->load_procs) * sizeof (GSList); /* FIXME */
+  memsize += g_slist_length (gimp->save_procs) * sizeof (GSList); /* FIXME */
+
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->documents)));
+
+  memsize += g_list_length (gimp->image_base_type_names) * sizeof (GList); /* FIXME */
+  memsize += g_list_length (gimp->fill_type_names) * sizeof (GList); /* FIXME */
+
+  memsize += g_list_length (gimp->context_list) * sizeof (GList);
+
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_context)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context)) +
+              gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context)));
+
+  return memsize = GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 Gimp *

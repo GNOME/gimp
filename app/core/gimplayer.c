@@ -62,18 +62,20 @@ enum
 };
 
 
-static void      gimp_layer_class_init           (GimpLayerClass     *klass);
-static void      gimp_layer_init                 (GimpLayer          *layer);
+static void    gimp_layer_class_init         (GimpLayerClass     *klass);
+static void    gimp_layer_init               (GimpLayer          *layer);
 
-static void      gimp_layer_finalize             (GObject            *object);
+static void    gimp_layer_finalize           (GObject            *object);
 
-static void      gimp_layer_invalidate_preview   (GimpViewable       *viewable);
+static gsize   gimp_layer_get_memsize        (GimpObject         *object);
 
-static void      gimp_layer_transform_color      (GimpImage          *gimage,
-						  PixelRegion        *layerPR,
-						  PixelRegion        *bufPR,
-						  GimpDrawable       *drawable,
-						  GimpImageBaseType   type);
+static void    gimp_layer_invalidate_preview (GimpViewable       *viewable);
+
+static void    gimp_layer_transform_color    (GimpImage          *gimage,
+                                              PixelRegion        *layerPR,
+                                              PixelRegion        *bufPR,
+                                              GimpDrawable       *drawable,
+                                              GimpImageBaseType   type);
 
 
 static guint  layer_signals[LAST_SIGNAL] = { 0 };
@@ -113,10 +115,12 @@ static void
 gimp_layer_class_init (GimpLayerClass *klass)
 {
   GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -166,6 +170,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_TYPE_NONE, 0);
 
   object_class->finalize             = gimp_layer_finalize;
+
+  gimp_object_class->get_memsize     = gimp_layer_get_memsize;
 
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 
@@ -221,6 +227,25 @@ gimp_layer_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_layer_get_memsize (GimpObject *object)
+{
+  GimpLayer *layer;
+  gsize      memsize = 0;
+
+  layer = GIMP_LAYER (object);
+
+  if (layer->mask)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask));
+
+  if (layer->fs.backing_store)
+    memsize += tile_manager_get_memsize (layer->fs.backing_store);
+
+  memsize += layer->fs.num_segs * sizeof (BoundSeg);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

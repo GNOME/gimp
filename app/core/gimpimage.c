@@ -98,6 +98,7 @@ static void     gimp_image_dispose               (GObject        *object);
 static void     gimp_image_finalize              (GObject        *object);
 
 static void     gimp_image_name_changed          (GimpObject     *object);
+static gsize    gimp_image_get_memsize           (GimpObject     *object);
 
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
@@ -353,6 +354,7 @@ gimp_image_class_init (GimpImageClass *klass)
   object_class->finalize              = gimp_image_finalize;
 
   gimp_object_class->name_changed     = gimp_image_name_changed;
+  gimp_object_class->get_memsize      = gimp_image_get_memsize;
 
   viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
   viewable_class->size_changed        = gimp_image_size_changed;
@@ -559,6 +561,52 @@ gimp_image_name_changed (GimpObject *object)
       g_free (object->name);
       object->name = NULL;
     }
+}
+
+static gsize
+gimp_image_get_memsize (GimpObject *object)
+{
+  GimpImage *gimage;
+  gsize      memsize = 0;
+
+  gimage = GIMP_IMAGE (object);
+
+  if (gimage->cmap)
+    memsize += COLORMAP_SIZE;
+
+  if (gimage->shadow)
+    memsize += tile_manager_get_memsize (gimage->shadow);
+
+  if (gimage->projection)
+    memsize += tile_manager_get_memsize (gimage->projection);
+
+  memsize += (g_list_length (gimage->guides) * (sizeof (GList) +
+                                                sizeof (GimpGuide)));
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->layers));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->channels));
+
+  memsize += g_slist_length (gimage->layer_stack) * sizeof (GSList);
+
+  if (gimage->selection_mask)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask));
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->parasites));
+
+  /* FIXME paths */
+
+  memsize += g_slist_length (gimage->undo_stack) * (3 * sizeof (gint) +
+                                                    4 * sizeof (gpointer)); /* FIXME */
+  memsize += g_slist_length (gimage->redo_stack) * (3 * sizeof (gint) +
+                                                    4 * sizeof (gpointer)); /* FIXME */
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->new_undo_stack));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->new_redo_stack));
+
+  if (gimage->comp_preview)
+    memsize += temp_buf_get_memsize (gimage->comp_preview);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

@@ -37,14 +37,16 @@ enum
 };
 
 
-static void   gimp_parasite_list_class_init (GimpParasiteListClass *klass);
-static void   gimp_parasite_list_init       (GimpParasiteList      *list);
+static void    gimp_parasite_list_class_init  (GimpParasiteListClass *klass);
+static void    gimp_parasite_list_init        (GimpParasiteList      *list);
 
-static void   gimp_parasite_list_finalize   (GObject               *object);
+static void    gimp_parasite_list_finalize    (GObject               *object);
 
-static gint   free_a_parasite               (gpointer               key,
-					     gpointer               parasite,
-					     gpointer               unused);
+static gsize   gimp_parasite_list_get_memsize (GimpObject            *object);
+
+static gint    free_a_parasite                (gpointer               key,
+                                               gpointer               parasite,
+                                               gpointer               unused);
 
 
 static guint parasite_list_signals[LAST_SIGNAL] = { 0 };
@@ -83,9 +85,11 @@ gimp_parasite_list_get_type (void)
 static void
 gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -109,26 +113,18 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
-  object_class->finalize = gimp_parasite_list_finalize;
+  object_class->finalize         = gimp_parasite_list_finalize;
 
-  klass->add             = NULL;
-  klass->remove          = NULL;
+  gimp_object_class->get_memsize = gimp_parasite_list_get_memsize;
+
+  klass->add                     = NULL;
+  klass->remove                  = NULL;
 }
 
 static void
 gimp_parasite_list_init (GimpParasiteList *list)
 {
   list->table = NULL;
-}
-
-GimpParasiteList *
-gimp_parasite_list_new (void)
-{
-  GimpParasiteList *list;
-
-  list = g_object_new (GIMP_TYPE_PARASITE_LIST, NULL);
-
-  return list;
 }
 
 static void
@@ -150,10 +146,57 @@ gimp_parasite_list_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_parasite_list_get_memsize_foreach (gpointer key,
+                                        gpointer p,
+                                        gpointer m)
+{
+  GimpParasite *parasite;
+  gsize        *memsize;
+
+  parasite = (GimpParasite *) p;
+  memsize  = (gsize *) m;
+
+  *memsize += (sizeof (GimpParasite) +
+               strlen (parasite->name) + 1 +
+               parasite->size);
+}
+
+static gsize
+gimp_parasite_list_get_memsize (GimpObject *object)
+{
+  GimpParasiteList *list;
+  gsize             memsize = 0;
+
+  list = GIMP_PARASITE_LIST (object);
+
+  if (list->table)
+    {
+      memsize += (g_hash_table_size (list->table) *
+                  3 * sizeof (gpointer)); /* FIXME */
+
+      g_hash_table_foreach (list->table,
+                            gimp_parasite_list_get_memsize_foreach,
+                            &memsize);
+    }
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+GimpParasiteList *
+gimp_parasite_list_new (void)
+{
+  GimpParasiteList *list;
+
+  list = g_object_new (GIMP_TYPE_PARASITE_LIST, NULL);
+
+  return list;
+}
+
 static gint
-free_a_parasite (void *key, 
-		 void *parasite, 
-		 void *unused)
+free_a_parasite (gpointer key, 
+		 gpointer parasite, 
+		 gpointer unused)
 {
   gimp_parasite_free ((GimpParasite *) parasite);
 
@@ -162,13 +205,11 @@ free_a_parasite (void *key,
 
 static void
 parasite_copy_one (gpointer key, 
-		   gpointer p, 
-		   gpointer data)
+		   gpointer parasite, 
+		   gpointer list)
 {
-  GimpParasiteList *list     = (GimpParasiteList *) data;
-  GimpParasite     *parasite = (GimpParasite *) p;
-
-  gimp_parasite_list_add (list, parasite);
+  gimp_parasite_list_add ((GimpParasiteList *) list,
+                          (GimpParasite *) parasite);
 }
 
 GimpParasiteList *

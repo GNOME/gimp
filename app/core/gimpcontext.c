@@ -58,20 +58,22 @@ typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 
 /*  local function prototypes  */
 
-static void gimp_context_class_init          (GimpContextClass *klass);
-static void gimp_context_init                (GimpContext      *context);
+static void    gimp_context_class_init       (GimpContextClass *klass);
+static void    gimp_context_init             (GimpContext      *context);
 
-static void gimp_context_dispose             (GObject          *object);
-static void gimp_context_finalize            (GObject          *object);
-
-static void gimp_context_set_property        (GObject          *object,
+static void    gimp_context_dispose          (GObject          *object);
+static void    gimp_context_finalize         (GObject          *object);
+static void    gimp_context_set_property     (GObject          *object,
 					      guint             property_id,
 					      const GValue     *value,
 					      GParamSpec       *pspec);
-static void gimp_context_get_property        (GObject          *object,
+static void    gimp_context_get_property     (GObject          *object,
 					      guint             property_id,
 					      GValue           *value,
 					      GParamSpec       *pspec);
+
+static gsize   gimp_context_get_memsize      (GimpObject       *object);
+
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
@@ -366,9 +368,11 @@ gimp_context_get_type (void)
 static void
 gimp_context_class_init (GimpContextClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -502,24 +506,26 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_IMAGEFILE);
 
-  object_class->set_property = gimp_context_set_property;
-  object_class->get_property = gimp_context_get_property;
-  object_class->dispose      = gimp_context_dispose;
-  object_class->finalize     = gimp_context_finalize;
+  object_class->set_property     = gimp_context_set_property;
+  object_class->get_property     = gimp_context_get_property;
+  object_class->dispose          = gimp_context_dispose;
+  object_class->finalize         = gimp_context_finalize;
 
-  klass->image_changed       = NULL;
-  klass->display_changed     = NULL;
-  klass->tool_changed        = NULL;
-  klass->foreground_changed  = NULL;
-  klass->background_changed  = NULL;
-  klass->opacity_changed     = NULL;
-  klass->paint_mode_changed  = NULL;
-  klass->brush_changed       = NULL;
-  klass->pattern_changed     = NULL;
-  klass->gradient_changed    = NULL;
-  klass->palette_changed     = NULL;
-  klass->buffer_changed      = NULL;
-  klass->imagefile_changed   = NULL;
+  gimp_object_class->get_memsize = gimp_context_get_memsize;
+
+  klass->image_changed           = NULL;
+  klass->display_changed         = NULL;
+  klass->tool_changed            = NULL;
+  klass->foreground_changed      = NULL;
+  klass->background_changed      = NULL;
+  klass->opacity_changed         = NULL;
+  klass->paint_mode_changed      = NULL;
+  klass->brush_changed           = NULL;
+  klass->pattern_changed         = NULL;
+  klass->gradient_changed        = NULL;
+  klass->palette_changed         = NULL;
+  klass->buffer_changed          = NULL;
+  klass->imagefile_changed       = NULL;
 
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]     = GIMP_TYPE_IMAGE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]      = GIMP_TYPE_TOOL_INFO;
@@ -890,6 +896,30 @@ gimp_context_get_property (GObject    *object,
       break;
     }
 }
+
+static gsize
+gimp_context_get_memsize (GimpObject *object)
+{
+  GimpContext *context;
+  gsize        memsize = 0;
+
+  context = GIMP_CONTEXT (object);
+
+  if (context->tool_name)
+    memsize += strlen (context->tool_name) + 1;
+
+  if (context->brush_name)
+    memsize += strlen (context->brush_name) + 1;
+
+  if (context->pattern_name)
+    memsize += strlen (context->pattern_name) + 1;
+
+  if (context->palette_name)
+    memsize += strlen (context->palette_name) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
 
 /*****************************************************************************/
 /*  public functions  ********************************************************/

@@ -49,13 +49,15 @@ enum
 };
 
 
-static void          gimp_data_class_init         (GimpDataClass *klass);
-static void          gimp_data_init               (GimpData      *data);
+static void    gimp_data_class_init   (GimpDataClass *klass);
+static void    gimp_data_init         (GimpData      *data);
 
-static void          gimp_data_finalize           (GObject       *object);
+static void    gimp_data_finalize     (GObject       *object);
 
-static void          gimp_data_name_changed       (GimpObject    *object);
-static void          gimp_data_real_dirty         (GimpData      *data);
+static void    gimp_data_name_changed (GimpObject    *object);
+static gsize   gimp_data_get_memsize  (GimpObject    *object);
+
+static void    gimp_data_real_dirty   (GimpData      *data);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -141,6 +143,7 @@ gimp_data_class_init (GimpDataClass *klass)
   object_class->finalize          = gimp_data_finalize;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
+  gimp_object_class->get_memsize  = gimp_data_get_memsize;
 
   klass->dirty                    = gimp_data_real_dirty;
   klass->save                     = NULL;
@@ -178,6 +181,20 @@ gimp_data_name_changed (GimpObject *object)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
   gimp_data_dirty (GIMP_DATA (object));
+}
+
+static gsize
+gimp_data_get_memsize (GimpObject *object)
+{
+  GimpData *data;
+  gsize     memsize = 0;
+
+  data = GIMP_DATA (object);
+
+  if (data->filename)
+    memsize += strlen (data->filename) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 gboolean

@@ -65,13 +65,15 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_drawable_class_init         (GimpDrawableClass *klass);
-static void   gimp_drawable_init               (GimpDrawable      *drawable);
+static void    gimp_drawable_class_init         (GimpDrawableClass *klass);
+static void    gimp_drawable_init               (GimpDrawable      *drawable);
 
-static void   gimp_drawable_finalize           (GObject           *object);
+static void    gimp_drawable_finalize           (GObject           *object);
 
-static void   gimp_drawable_name_changed       (GimpObject        *drawable);
-static void   gimp_drawable_invalidate_preview (GimpViewable      *viewable);
+static void    gimp_drawable_name_changed       (GimpObject        *object);
+static gsize   gimp_drawable_get_memsize        (GimpObject        *object);
+
+static void    gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
 
 /*  private variables  */
@@ -143,6 +145,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   object_class->finalize             = gimp_drawable_finalize;
 
   gimp_object_class->name_changed    = gimp_drawable_name_changed;
+  gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
 
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
   viewable_class->get_preview        = gimp_drawable_get_preview;
@@ -302,6 +305,25 @@ gimp_drawable_name_changed (GimpObject *object)
           break;
         }
     }
+}
+
+static gsize
+gimp_drawable_get_memsize (GimpObject *object)
+{
+  GimpDrawable *drawable;
+  gsize         memsize = 0;
+
+  drawable = GIMP_DRAWABLE (object);
+
+  if (drawable->tiles)
+    memsize += tile_manager_get_memsize (drawable->tiles);
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (drawable->parasites));
+
+  if (drawable->preview_cache)
+    memsize += gimp_preview_cache_get_memsize (drawable->preview_cache);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

@@ -50,10 +50,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_channel_class_init (GimpChannelClass *klass);
-static void   gimp_channel_init       (GimpChannel      *channel);
+static void    gimp_channel_class_init  (GimpChannelClass *klass);
+static void    gimp_channel_init        (GimpChannel      *channel);
 
-static void   gimp_channel_finalize   (GObject          *object);
+static void    gimp_channel_finalize    (GObject          *object);
+
+static gsize   gimp_channel_get_memsize (GimpObject       *object);
 
 
 static GimpDrawableClass * parent_class = NULL;
@@ -90,13 +92,17 @@ gimp_channel_get_type (void)
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_channel_finalize;
+  object_class->finalize         = gimp_channel_finalize;
+
+  gimp_object_class->get_memsize = gimp_channel_get_memsize;
 }
 
 static void
@@ -142,6 +148,20 @@ gimp_channel_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_channel_get_memsize (GimpObject *object)
+{
+  GimpChannel *channel;
+  gsize        memsize = 0;
+
+  channel = GIMP_CHANNEL (object);
+
+  memsize += channel->num_segs_in  * sizeof (BoundSeg);
+  memsize += channel->num_segs_out * sizeof (BoundSeg);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

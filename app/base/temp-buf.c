@@ -493,14 +493,40 @@ temp_buf_data (TempBuf *temp_buf)
 guchar *
 temp_buf_data_clear (TempBuf *temp_buf)
 {
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+
   if (temp_buf->swapped)
     temp_buf_unswap (temp_buf);
-  
+
   memset (temp_buf->data, 0,
 	  temp_buf->height * temp_buf->width * temp_buf->bytes);
 
   return temp_buf->data;
 }
+
+gsize
+temp_buf_get_memsize (TempBuf *temp_buf)
+{
+  gsize memsize = 0;
+
+  g_return_val_if_fail (temp_buf != NULL, 0);
+
+  memsize += sizeof (TempBuf);
+
+  if (temp_buf->swapped)
+    {
+      memsize += strlen (temp_buf->filename) + 1;
+    }
+  else
+    {
+      memsize += (temp_buf->bytes *
+                  temp_buf->width *
+                  temp_buf->height);
+    }
+
+  return memsize;
+}
+
 
 /******************************************************************
  *  Mask buffer functions                                         *
@@ -508,7 +534,7 @@ temp_buf_data_clear (TempBuf *temp_buf)
 
 
 MaskBuf *
-mask_buf_new (gint width, 
+mask_buf_new (gint width,
 	      gint height)
 {
   static guchar empty = 0;
@@ -525,7 +551,7 @@ mask_buf_free (MaskBuf *mask)
 guchar *
 mask_buf_data (MaskBuf *mask_buf)
 {
-  return temp_buf_data ((TempBuf *) mask_buf); 
+  return temp_buf_data ((TempBuf *) mask_buf);
 }
 
 guchar *
@@ -562,11 +588,15 @@ mask_buf_data_clear (MaskBuf *mask_buf)
  */
 
 
-/*  a static counter for generating unique filenames  */
+/*  a static counter for generating unique filenames
+ */
 static gint swap_index = 0;
 
-/*  a static pointer which keeps track of the last request for a swapped buffer  */
-static TempBuf * cached_in_memory = NULL;
+
+/*  a static pointer which keeps track of the last request for
+ *  a swapped buffer
+ */
+static TempBuf *cached_in_memory = NULL;
 
 
 static gchar *
@@ -614,8 +644,10 @@ temp_buf_swap (TempBuf *buf)
       cached_in_memory = buf;
     }
 
-  /*  For the case where there is no temp buf ready to be moved to disk, return  */
-  if (!swap)
+  /*  For the case where there is no temp buf ready
+   *  to be moved to disk, return
+   */
+  if (! swap)
     return;
 
   /*  Get a unique filename for caching the data to a UNIX file  */

@@ -42,10 +42,12 @@ enum
 };
 
 
-static void   gimp_module_info_class_init (GimpModuleInfoObjClass *klass);
-static void   gimp_module_info_init       (GimpModuleInfoObj      *mod);
+static void    gimp_module_info_class_init (GimpModuleInfoObjClass *klass);
+static void    gimp_module_info_init       (GimpModuleInfoObj      *mod);
 
-static void   gimp_module_info_finalize   (GObject                *object);
+static void    gimp_module_info_finalize   (GObject                *object);
+
+static gsize   gimp_module_info_get_memsize (GimpObject            *object);
 
 
 static guint module_info_signals[LAST_SIGNAL];
@@ -84,9 +86,11 @@ gimp_module_info_get_type (void)
 static void
 gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -99,9 +103,11 @@ gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize = gimp_module_info_finalize;
+  object_class->finalize         = gimp_module_info_finalize;
 
-  klass->modified        = NULL;
+  gimp_object_class->get_memsize = gimp_module_info_get_memsize;
+
+  klass->modified                = NULL;
 }
 
 static void
@@ -143,6 +149,20 @@ gimp_module_info_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_module_info_get_memsize (GimpObject *object)
+{
+  GimpModuleInfoObj *module_info;
+  gsize              memsize = 0;
+
+  module_info = GIMP_MODULE_INFO (object);
+
+  if (module_info->fullpath)
+    memsize += strlen (module_info->fullpath) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 GimpModuleInfoObj *

@@ -42,7 +42,6 @@ struct _GimpUndo
   GimpViewable      parent_instance;
 
   gpointer          data;           /* data to implement the undo */
-  glong             size;           /* size of undo item          */
   gboolean          dirties_image;  /* TRUE if undo mutates image */
 
   GimpUndoPopFunc   pop_func;       /* function pointer to undo pop proc  */
@@ -65,7 +64,6 @@ struct _GimpUndoClass
 GType      gimp_undo_get_type (void) G_GNUC_CONST;
 GimpUndo * gimp_undo_new      (const gchar      *name,
                                gpointer          data,
-                               glong             size,
                                gboolean          dirties_image,
                                GimpUndoPopFunc   pop_func,
                                GimpUndoFreeFunc  free_func);

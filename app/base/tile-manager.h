@@ -122,6 +122,8 @@ void          tile_manager_set_offsets       (TileManager       *tm,
 					      gint               x,
 					      gint               y);
 
+gsize         tile_manager_get_memsize       (const TileManager *tm);
+
 void          tile_manager_get_tile_coordinates (TileManager *tm,
 						 Tile        *tile,
 						 gint        *x,

@@ -586,6 +586,21 @@ tile_manager_set_offsets (TileManager *tm,
   tm->y = y;
 }
 
+gsize
+tile_manager_get_memsize (const TileManager *tm)
+{
+  gsize memsize = 0;
+
+  g_return_val_if_fail (tm != NULL, 0);
+
+  memsize += (sizeof (TileManager) +
+              tm->ntile_rows *
+              tm->ntile_cols *
+              (sizeof (Tile) + tm->bpp * TILE_WIDTH * TILE_HEIGHT)); /* FIXME */
+
+  return memsize;
+}
+
 void
 tile_manager_get_tile_coordinates (TileManager *tm,
 				   Tile        *tile,

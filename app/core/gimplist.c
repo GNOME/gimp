@@ -35,6 +35,8 @@ static void         gimp_list_init               (GimpList            *list);
 
 static void         gimp_list_dispose            (GObject             *object);
 
+static gsize        gimp_list_get_memsize        (GimpObject          *object);
+
 static void         gimp_list_add                (GimpContainer       *container,
 						  GimpObject          *object);
 static void         gimp_list_remove             (GimpContainer       *container,
@@ -90,14 +92,18 @@ static void
 gimp_list_class_init (GimpListClass *klass)
 {
   GObjectClass       *object_class;
+  GimpObjectClass    *gimp_object_class;
   GimpContainerClass *container_class;
 
-  object_class    = G_OBJECT_CLASS (klass);
-  container_class = GIMP_CONTAINER_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  container_class   = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose               = gimp_list_dispose;
+
+  gimp_object_class->get_memsize      = gimp_list_get_memsize;
 
   container_class->add                = gimp_list_add;
   container_class->remove             = gimp_list_remove;
@@ -129,6 +135,31 @@ gimp_list_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static gsize
+gimp_list_get_memsize (GimpObject *object)
+{
+  GimpList *gimp_list;
+  gsize     memsize = 0;
+
+  gimp_list = GIMP_LIST (object);
+
+  memsize += (gimp_container_num_children (GIMP_CONTAINER (gimp_list)) *
+              sizeof (GList));
+
+  if (gimp_container_policy (GIMP_CONTAINER (gimp_list)) ==
+      GIMP_CONTAINER_POLICY_STRONG)
+    {
+      GList *list;
+
+      for (list = gimp_list->list; list; list = g_list_next (list))
+        {
+          memsize += gimp_object_get_memsize (GIMP_OBJECT (list->data));
+        }
+    }
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

@@ -323,3 +323,24 @@ gimp_preview_cache_get (GSList **plist,
 /*   g_print ("gimp_preview_cache_get returning NULL\n");  */
   return NULL;
 }
+
+gsize
+gimp_preview_cache_get_memsize (GSList *cache)
+{
+  GSList *list;
+  gsize   memsize = 0;
+
+  g_return_val_if_fail (cache != NULL, 0);
+
+  for (list = cache; list; list = g_slist_next (list))
+    {
+      PreviewCache *pc;
+
+      pc = (PreviewCache *) list->data;
+
+      memsize += (sizeof (PreviewCache) +
+                  temp_buf_get_memsize (pc->preview));
+    }
+
+  return memsize;
+}

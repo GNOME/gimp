@@ -42,13 +42,16 @@ static void      gimp_undo_init        (GimpUndo      *undo);
 
 static void      gimp_undo_finalize    (GObject       *object);
 
+static gsize     gimp_undo_get_memsize (GimpObject    *object);
+
+static TempBuf * gimp_undo_get_preview (GimpViewable  *viewable,
+                                        gint           width,
+                                        gint           height);
+
 static void      gimp_undo_real_push   (GimpUndo      *undo,
                                         GimpImage     *gimage);
 static void      gimp_undo_real_pop    (GimpUndo      *undo,
                                         GimpImage     *gimage);
-static TempBuf * gimp_undo_get_preview (GimpViewable  *viewable,
-                                        gint           width,
-                                        gint           height);
 
 
 static guint undo_signals[LAST_SIGNAL] = { 0 };
@@ -88,10 +91,12 @@ static void
 gimp_undo_class_init (GimpUndoClass *klass)
 {
   GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -115,19 +120,20 @@ gimp_undo_class_init (GimpUndoClass *klass)
 		  G_TYPE_NONE, 1,
 		  G_TYPE_POINTER);
 
-  object_class->finalize      = gimp_undo_finalize;
+  object_class->finalize         = gimp_undo_finalize;
 
-  viewable_class->get_preview = gimp_undo_get_preview;
+  gimp_object_class->get_memsize = gimp_undo_get_memsize;
 
-  klass->push                 = gimp_undo_real_push;
-  klass->pop                  = gimp_undo_real_pop;
+  viewable_class->get_preview    = gimp_undo_get_preview;
+
+  klass->push                    = gimp_undo_real_push;
+  klass->pop                     = gimp_undo_real_pop;
 }
 
 static void
 gimp_undo_init (GimpUndo *undo)
 {
   undo->data          = NULL;
-  undo->size          = 0;
   undo->dirties_image = FALSE;
   undo->pop_func      = NULL;
   undo->free_func     = NULL;
@@ -156,10 +162,31 @@ gimp_undo_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static gsize
+gimp_undo_get_memsize (GimpObject *object)
+{
+  GimpUndo *undo;
+  gsize     memsize = 0;
+
+  undo = GIMP_UNDO (object);
+
+  if (undo->preview)
+    memsize += temp_buf_get_memsize (undo->preview);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static TempBuf *
+gimp_undo_get_preview (GimpViewable *viewable,
+                       gint          width,
+                       gint          height)
+{
+  return (GIMP_UNDO (viewable)->preview);
+}
+
 GimpUndo *
 gimp_undo_new (const gchar      *name,
                gpointer          data,
-               glong             size,
                gboolean          dirties_image,
                GimpUndoPopFunc   pop_func,
                GimpUndoFreeFunc  free_func)
@@ -171,7 +198,6 @@ gimp_undo_new (const gchar      *name,
   gimp_object_set_name (GIMP_OBJECT (undo), name);
   
   undo->data = data;
-  undo->size = sizeof (GimpUndo) + size;
   
   undo->pop_func  = pop_func;
   undo->free_func = free_func;
@@ -218,12 +244,4 @@ gimp_undo_real_pop (GimpUndo  *undo,
 {
   if (undo->pop_func)
     undo->pop_func (undo, gimage);
-}
-
-static TempBuf *
-gimp_undo_get_preview (GimpViewable *viewable,
-                       gint          width,
-                       gint          height)
-{
-  return (GIMP_UNDO (viewable)->preview);
 }

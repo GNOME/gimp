@@ -46,6 +46,8 @@ static void       gimp_palette_init             (GimpPalette       *palette);
 
 static void       gimp_palette_finalize         (GObject           *object);
 
+static gsize      gimp_palette_get_memsize      (GimpObject        *object);
+
 static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
@@ -93,16 +95,20 @@ static void
 gimp_palette_class_init (GimpPaletteClass *klass)
 {
   GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
-  data_class     = GIMP_DATA_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  data_class        = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize          = gimp_palette_finalize;
+
+  gimp_object_class->get_memsize  = gimp_palette_get_memsize;
 
   viewable_class->get_new_preview = gimp_palette_get_new_preview;
 
@@ -136,6 +142,30 @@ gimp_palette_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_palette_get_memsize (GimpObject *object)
+{
+  GimpPalette *palette;
+  GList       *list;
+  gsize        memsize = 0;
+
+  palette = GIMP_PALETTE (object);
+
+  for (list = palette->colors; list; list = g_list_next (list))
+    {
+      GimpPaletteEntry *entry;
+
+      entry = (GimpPaletteEntry *) list->data;
+
+      memsize += sizeof (GList) + sizeof (GimpPaletteEntry);
+
+      if (entry->name)
+        memsize += strlen (entry->name) + 1;
+    }
+
+  return memsize += GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static TempBuf *

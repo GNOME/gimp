@@ -41,8 +41,12 @@ struct _GimpObjectClass
 {
   GObjectClass  parent_class;
 
-  void (* disconnect)   (GimpObject *object);
-  void (* name_changed) (GimpObject *object);
+  /*  signals  */
+  void  (* disconnect)   (GimpObject *object);
+  void  (* name_changed) (GimpObject *object);
+
+  /*  virtual functions  */
+  gsize (* get_memsize)  (GimpObject *object);
 };
 
 
@@ -52,6 +56,8 @@ void          gimp_object_set_name     (GimpObject       *object,
 					const gchar      *name);
 const gchar * gimp_object_get_name     (const GimpObject *object);
 void          gimp_object_name_changed (GimpObject       *object);
+
+gsize         gimp_object_get_memsize  (GimpObject       *object);
 
 
 #endif  /* __GIMP_OBJECT_H__ */

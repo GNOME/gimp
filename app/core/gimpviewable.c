@@ -39,10 +39,12 @@ enum
 };
 
 
-static void   gimp_viewable_class_init         (GimpViewableClass *klass);
-static void   gimp_viewable_init               (GimpViewable      *viewable);
+static void    gimp_viewable_class_init         (GimpViewableClass *klass);
+static void    gimp_viewable_init               (GimpViewable      *viewable);
 
-static void   gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
+static gsize   gimp_viewable_get_memsize        (GimpObject        *object);
+
+static void    gimp_viewable_real_invalidate_preview (GimpViewable *viewable);
 
 
 static guint  viewable_signals[LAST_SIGNAL] = { 0 };
@@ -81,6 +83,10 @@ gimp_viewable_get_type (void)
 static void
 gimp_viewable_class_init (GimpViewableClass *klass)
 {
+  GimpObjectClass *gimp_object_class;
+
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
   viewable_signals[INVALIDATE_PREVIEW] =
@@ -101,16 +107,57 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  klass->invalidate_preview = gimp_viewable_real_invalidate_preview;
-  klass->size_changed       = NULL;
+  gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
-  klass->get_preview        = NULL;
-  klass->get_new_preview    = NULL;
+  klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
+  klass->size_changed            = NULL;
+
+  klass->get_preview             = NULL;
+  klass->get_new_preview         = NULL;
 }
 
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
+}
+
+static gsize
+gimp_viewable_get_memsize (GimpObject *object)
+{
+  TempBuf   *temp_buf;
+  GdkPixbuf *pixbuf;
+  gsize      memsize = 0;
+
+  temp_buf = g_object_get_data (G_OBJECT (object),
+				"static-viewable-preview");
+
+  pixbuf = g_object_get_data (G_OBJECT (object),
+                              "static-viewable-preview-pixbuf");
+
+  if (temp_buf)
+    {
+      memsize += temp_buf_get_memsize (temp_buf);
+    }
+
+  if (pixbuf)
+    {
+      static gsize pixbuf_instance_size = 0;
+
+      if (! pixbuf_instance_size)
+        {
+          GTypeQuery type_query;
+
+          g_type_query (G_TYPE_FROM_INSTANCE (pixbuf), &type_query);
+
+          pixbuf_instance_size = type_query.instance_size;
+        }
+
+      memsize += (pixbuf_instance_size +
+                  gdk_pixbuf_get_height (pixbuf) *
+                  gdk_pixbuf_get_rowstride (pixbuf));
+    }
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 void

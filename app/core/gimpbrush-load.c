@@ -67,6 +67,8 @@ static void        gimp_brush_init                  (GimpBrush      *brush);
 
 static void        gimp_brush_finalize              (GObject        *object);
 
+static gsize       gimp_brush_get_memsize           (GimpObject     *object);
+
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
@@ -117,12 +119,14 @@ static void
 gimp_brush_class_init (GimpBrushClass *klass)
 {
   GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
   GimpDataClass     *data_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
-  data_class     = GIMP_DATA_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  data_class        = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -136,6 +140,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
 		  G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_brush_finalize;
+
+  gimp_object_class->get_memsize  = gimp_brush_get_memsize;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
 
@@ -178,6 +184,23 @@ gimp_brush_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_brush_get_memsize (GimpObject *object)
+{
+  GimpBrush *brush;
+  gsize      memsize = 0;
+
+  brush = GIMP_BRUSH (object);
+
+  if (brush->mask)
+    memsize += temp_buf_get_memsize (brush->mask);
+
+  if (brush->pixmap)
+    memsize += temp_buf_get_memsize (brush->pixmap);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static TempBuf *

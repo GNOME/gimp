@@ -1,3 +1,42 @@
+2002-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorarea.c: pass a GdkGC to
+	gdk_draw_rgb_image(), fixed dither offsets.
+
+	* app/core/gimpobject.[ch]: new virtual function
+	gimp_object_get_memsize().
+
+	* app/base/temp-buf.[ch]
+	* app/base/tile-manager.[ch]: added *_get_memsize() methods.
+
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpchannel.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdata.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer.c
+	* app/core/gimplist.c
+	* app/core/gimpmoduleinfo.c
+	* app/core/gimppalette.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimppattern.c
+	* app/core/gimppreviewcache.[ch]
+	* app/core/gimpundo.[ch]
+	* app/core/gimpundostack.c
+	* app/core/gimpviewable.c: added get_memsize() implementations.
+
+	* app/widgets/gimppreview.c
+	* app/core/gimpobject.[ch]: some #ifdef DEBUG_MEMSIZE code to
+	test the new memsize stuff (middle click any preview to get
+	it's viewable's memory footprint).
+
 2002-01-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Events.c

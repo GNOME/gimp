@@ -38,6 +38,8 @@ static void      gimp_buffer_init            (GimpBuffer      *buffer);
 
 static void      gimp_buffer_finalize        (GObject         *object);
 
+static gsize     gimp_buffer_get_memsize     (GimpObject      *object);
+
 static TempBuf * gimp_buffer_get_new_preview (GimpViewable    *viewable,
 					      gint             width,
 					      gint             height);
@@ -78,14 +80,18 @@ static void
 gimp_buffer_class_init (GimpBufferClass *klass)
 {
   GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
 
-  object_class   = G_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize          = gimp_buffer_finalize;
+
+  gimp_object_class->get_memsize  = gimp_buffer_get_memsize;
 
   viewable_class->get_new_preview = gimp_buffer_get_new_preview;
 }
@@ -110,6 +116,20 @@ gimp_buffer_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_buffer_get_memsize (GimpObject *object)
+{
+  GimpBuffer *buffer;
+  gsize       memsize = 0;
+
+  buffer = GIMP_BUFFER (object);
+
+  if (buffer->tiles)
+    memsize += tile_manager_get_memsize (buffer->tiles);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static TempBuf *

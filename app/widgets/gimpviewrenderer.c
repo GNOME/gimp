@@ -540,6 +540,15 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
+#define DEBUG_MEMSIZE 1
+
+#ifdef DEBUG_MEMSIZE
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
+    {
+      gimp_object_get_memsize (GIMP_OBJECT (preview->viewable));
+    }
+#endif /* DEBUG_MEMSIZE */
+
   if (! preview->clickable &&
       ! preview->show_popup)
     return FALSE;

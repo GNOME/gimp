@@ -34,13 +34,15 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_data_factory_class_init (GimpDataFactoryClass *klass);
-static void   gimp_data_factory_init       (GimpDataFactory      *factory);
+static void    gimp_data_factory_class_init  (GimpDataFactoryClass *klass);
+static void    gimp_data_factory_init        (GimpDataFactory      *factory);
 
-static void   gimp_data_factory_finalize   (GObject              *object);
+static void    gimp_data_factory_finalize    (GObject              *object);
 
-static void   gimp_data_factory_data_load_callback (const gchar *filename,
-						    gpointer     callback_data);
+static gsize   gimp_data_factory_get_memsize (GimpObject           *object);
+
+static void    gimp_data_factory_data_load_callback (const gchar *filename,
+                                                     gpointer     callback_data);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -77,13 +79,17 @@ gimp_data_factory_get_type (void)
 static void
 gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_data_factory_finalize;
+  object_class->finalize         = gimp_data_factory_finalize;
+
+  gimp_object_class->get_memsize = gimp_data_factory_get_memsize;
 }
 
 static void
@@ -113,6 +119,19 @@ gimp_data_factory_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static gsize
+gimp_data_factory_get_memsize (GimpObject *object)
+{
+  GimpDataFactory *factory;
+  gsize            memsize = 0;
+
+  factory = GIMP_DATA_FACTORY (object);
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (factory->container));
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
 GimpDataFactory *
 gimp_data_factory_new (GType                              data_type,
 		       const gchar                      **data_path,
@@ -130,7 +149,7 @@ gimp_data_factory_new (GType                              data_type,
 
   factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
-  factory->container = gimp_data_list_new (data_type);
+  factory->container              = gimp_data_list_new (data_type);
 
   factory->data_path              = data_path;
 

@@ -73,6 +73,8 @@ static void   gimp_container_get_property        (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
+static gsize  gimp_container_get_memsize         (GimpObject         *object);
+
 static void   gimp_container_disconnect_callback (GimpObject         *object,
 						  gpointer            data);
 
@@ -134,9 +136,11 @@ gimp_container_get_type (void)
 static void
 gimp_container_class_init (GimpContainerClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -189,21 +193,23 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->dispose      = gimp_container_dispose;
-  object_class->set_property = gimp_container_set_property;
-  object_class->get_property = gimp_container_get_property;
+  object_class->dispose          = gimp_container_dispose;
+  object_class->set_property     = gimp_container_set_property;
+  object_class->get_property     = gimp_container_get_property;
 
-  klass->add                 = NULL;
-  klass->remove              = NULL;
-  klass->reorder             = NULL;
-  klass->freeze              = NULL;
-  klass->thaw                = NULL;
+  gimp_object_class->get_memsize = gimp_container_get_memsize;
 
-  klass->have                = NULL;
-  klass->foreach             = NULL;
-  klass->get_child_by_name   = NULL;
-  klass->get_child_by_index  = NULL;
-  klass->get_child_index     = NULL;
+  klass->add                     = NULL;
+  klass->remove                  = NULL;
+  klass->reorder                 = NULL;
+  klass->freeze                  = NULL;
+  klass->thaw                    = NULL;
+
+  klass->have                    = NULL;
+  klass->foreach                 = NULL;
+  klass->get_child_by_name       = NULL;
+  klass->get_child_by_index      = NULL;
+  klass->get_child_index         = NULL;
 
   g_object_class_install_property (object_class,
 				   PROP_CHILDREN_TYPE,
@@ -301,6 +307,29 @@ gimp_container_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gsize
+gimp_container_get_memsize (GimpObject *object)
+{
+  GimpContainer *container;
+  GList         *list;
+  gsize          memsize = 0;
+
+  container = GIMP_CONTAINER (object);
+
+  for (list = container->handlers; list; list = g_list_next (list))
+    {
+      GimpContainerHandler *handler;
+
+      handler = (GimpContainerHandler *) list->data;
+
+      memsize += (sizeof (GList) +
+                  sizeof (GimpContainerHandler) +
+                  strlen (handler->signame));
+    }
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static void

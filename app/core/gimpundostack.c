@@ -28,17 +28,19 @@
 #include "gimpundostack.h"
 
 
-static void  gimp_undo_stack_class_init      (GimpUndoStackClass *klass);
-static void  gimp_undo_stack_init            (GimpUndoStack      *stack);
+static void    gimp_undo_stack_class_init      (GimpUndoStackClass *klass);
+static void    gimp_undo_stack_init            (GimpUndoStack      *stack);
 
-static void  gimp_undo_stack_finalize        (GObject            *object);
+static void    gimp_undo_stack_finalize        (GObject            *object);
 
-static void  gimp_undo_stack_add_callback    (GimpContainer      *container,
-                                              GimpObject         *object,
-                                              gpointer            data);
-static void  gimp_undo_stack_remove_callback (GimpContainer      *container,
-                                              GimpObject         *object,
-                                              gpointer           data);
+static gsize   gimp_undo_stack_get_memsize     (GimpObject         *object);
+
+static void    gimp_undo_stack_add_callback    (GimpContainer      *container,
+                                                GimpObject         *object,
+                                                gpointer            data);
+static void    gimp_undo_stack_remove_callback (GimpContainer      *container,
+                                                GimpObject         *object,
+                                                gpointer           data);
 
 
 static GimpUndoClass *parent_class = NULL;
@@ -75,13 +77,17 @@ gimp_undo_stack_get_type (void)
 static void
 gimp_undo_stack_class_init (GimpUndoStackClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass    *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_undo_stack_finalize;
+  object_class->finalize         = gimp_undo_stack_finalize;
+
+  gimp_object_class->get_memsize = gimp_undo_stack_get_memsize;
 }
 
 static void
@@ -118,6 +124,20 @@ gimp_undo_stack_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gsize
+gimp_undo_stack_get_memsize (GimpObject *object)
+{
+  GimpUndoStack *stack;
+  gsize          memsize = 0;
+
+  stack = GIMP_UNDO_STACK (object);
+
+  if (stack->undos)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (stack->undos));
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 GimpUndoStack *
@@ -188,8 +208,6 @@ gimp_undo_stack_add_callback (GimpContainer *container,
 
   undo  = GIMP_UNDO (object);
   stack = GIMP_UNDO (data);
-  
-  stack->size += undo->size;
 }
 
 static void
@@ -202,6 +220,4 @@ gimp_undo_stack_remove_callback (GimpContainer *container,
 
   undo  = GIMP_UNDO (object);
   stack = GIMP_UNDO (data);
-  
-  stack->size -= undo->size;
 }

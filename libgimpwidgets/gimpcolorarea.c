@@ -224,7 +224,8 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   buf = gca->buf + event->area.y * gca->rowstride + event->area.x * 3;
 
-  gdk_draw_rgb_image_dithalign (widget->window, NULL,
+  gdk_draw_rgb_image_dithalign (widget->window,
+                                widget->style->black_gc,
                                 event->area.x,
                                 event->area.y,
                                 event->area.width,
@@ -232,8 +233,8 @@ gimp_color_area_expose (GtkWidget      *widget,
                                 GDK_RGB_DITHER_NORMAL,
                                 buf,
                                 gca->rowstride,
-                                - event->area.x,
-                                - event->area.y);
+                                event->area.x,
+                                event->area.y);
 
   return FALSE;
 }
