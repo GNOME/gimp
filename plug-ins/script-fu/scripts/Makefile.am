@@ -64,6 +64,7 @@ scriptdata_DATA = \
 	old_photo.scm				\
 	mkbrush.scm				\
 	neon-logo.scm				\
+	news-text.scm				\
 	perspective-shadow.scm			\
 	predator.scm				\
 	pupi-button.scm				\
@@ -75,6 +76,7 @@ scriptdata_DATA = \
 	selection-round.scm			\
 	slide.scm				\
 	sota-chrome-logo.scm			\
+	speed-text.scm				\
 	sphere.scm				\
 	spinning_globe.scm			\
 	starburst-logo.scm			\
