@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "POT-Creation-Date: 2001-10-02 22:23+0200\n"
-"PO-Revision-Date: 2001-10-02 22:26+0200\n"
+"PO-Revision-Date: 2001-10-03 11:52+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4854,7 +4854,7 @@ msgstr "<Image>/Filtry/Szum/Szum..."
 
 #: plug-ins/common/noisify.c:1
 msgid "Adding Noise..."
-msgstr "Dodaje szum..."
+msgstr "Dodawanie szumu..."
 
 #: plug-ins/common/noisify.c:1
 msgid "Noisify"
