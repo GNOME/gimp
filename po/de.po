@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-09 20:57+0100\n"
+"POT-Creation-Date: 2000-03-10 02:47+0100\n"
 "PO-Revision-Date: 2000-03-08 21:52+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -145,123 +145,123 @@ msgstr "Kurve ist nicht geschlossen!"
 msgid "Paintbrush operation failed."
 msgstr "Pinseloperation schlug fehl."
 
-#: app/blend.c:272
+#: app/blend.c:294
 msgid "Offset:"
 msgstr "Versatz:"
 
-#: app/blend.c:283
+#: app/blend.c:305
 msgid "FG to BG (RGB)"
 msgstr "VG nach HG (RGB)"
 
-#: app/blend.c:284
+#: app/blend.c:306
 msgid "FG to BG (HSV)"
 msgstr "VG nach HG (HSV)"
 
-#: app/blend.c:285
+#: app/blend.c:307
 msgid "FG to Transparent"
 msgstr "VG nach Transparent"
 
-#: app/blend.c:286
-msgid "Custom from Editor"
-msgstr "Selbsterstellt aus Editor"
+#: app/blend.c:308
+msgid "Custom Gradient"
+msgstr "Eigener Farbverlauf"
 
-#: app/blend.c:290
+#: app/blend.c:312
 msgid "Blend:"
 msgstr "Übergang:"
 
-#: app/blend.c:298 app/gradient.c:533 app/preferences_dialog.c:2209
+#: app/blend.c:320 app/gradient.c:533 app/preferences_dialog.c:2209
 msgid "Linear"
 msgstr "Linear"
 
-#: app/blend.c:299
+#: app/blend.c:321
 msgid "Bi-Linear"
 msgstr "Bi-Linear"
 
-#: app/blend.c:300
+#: app/blend.c:322
 msgid "Radial"
 msgstr "Kreisförmig"
 
-#: app/blend.c:301
+#: app/blend.c:323
 msgid "Square"
 msgstr "Quadratisch"
 
-#: app/blend.c:302
+#: app/blend.c:324
 msgid "Conical (symmetric)"
 msgstr "Konisch (symmetrisch)"
 
-#: app/blend.c:303
+#: app/blend.c:325
 msgid "Conical (asymmetric)"
 msgstr "Konisch (asymmetrisch)"
 
-#: app/blend.c:304
+#: app/blend.c:326
 msgid "Shapeburst (angular)"
 msgstr "Formangepasst (winklig)"
 
-#: app/blend.c:305
+#: app/blend.c:327
 msgid "Shapeburst (spherical)"
 msgstr "Formangepasst (sphärisch)"
 
-#: app/blend.c:306
+#: app/blend.c:328
 msgid "Shapeburst (dimpled)"
 msgstr "Formangepasst (dimpled)"
 
-#: app/blend.c:307
+#: app/blend.c:329
 msgid "Spiral (clockwise)"
 msgstr "Spirale (rechtsdrehend)"
 
-#: app/blend.c:308
+#: app/blend.c:330
 msgid "Spiral (anticlockwise)"
 msgstr "Spirale (linksdrehend)"
 
-#: app/blend.c:312
+#: app/blend.c:334
 msgid "Gradient:"
 msgstr "Farbverlauf:"
 
-#: app/blend.c:320 app/preferences_dialog.c:1808
+#: app/blend.c:342 app/preferences_dialog.c:1808
 msgid "None"
 msgstr "Keine"
 
-#: app/blend.c:321
+#: app/blend.c:343
 msgid "Sawtooth Wave"
 msgstr "Sägezahnwelle"
 
-#: app/blend.c:322
+#: app/blend.c:344
 msgid "Triangular Wave"
 msgstr "Dreieckswelle"
 
-#: app/blend.c:326
+#: app/blend.c:348
 msgid "Repeat:"
 msgstr "Wiederholung:"
 
-#: app/blend.c:345
+#: app/blend.c:367
 msgid "Adaptive Supersampling"
 msgstr "Anpassende Hochrechnung"
 
-#: app/blend.c:373
+#: app/blend.c:395
 msgid "Max Depth:"
 msgstr "Maximale Tiefe:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:661
+#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:661
 msgid "Threshold:"
 msgstr "Schwellenwert:"
 
-#: app/blend.c:413
+#: app/blend.c:435
 msgid "Blend: Invalid for indexed images."
 msgstr "Übergang: Bei indizierten Bildern nicht möglich."
 
-#: app/blend.c:438
+#: app/blend.c:460
 msgid "Blend: 0, 0"
 msgstr "Übergang: 0, 0"
 
-#: app/blend.c:501
+#: app/blend.c:523
 msgid "Blend operation failed."
 msgstr "Übergang schlug fehl."
 
-#: app/blend.c:507
+#: app/blend.c:529
 msgid "Blending..."
 msgstr "Übergang..."
 
-#: app/blend.c:585 app/blend.c:595
+#: app/blend.c:607 app/blend.c:617
 msgid "Blend: "
 msgstr "Übergang: "
 

@@ -29,6 +29,7 @@
 #include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpdnd.h"
 #include "gimpui.h"
 #include "gradient.h"
 #include "interface.h"
@@ -139,6 +140,14 @@ static PixelRegion distR =
   0      /* process count */
 };
 
+/*  dnd stuff  */
+static GtkTargetEntry blend_target_table[] =
+{
+  GIMP_TARGET_GRADIENT,  
+  GIMP_TARGET_TOOL
+};
+static guint blend_n_targets = (sizeof (blend_target_table) /
+				sizeof (blend_target_table[0]));
 
 /*  local function prototypes  */
 
@@ -149,6 +158,9 @@ static void   blend_button_release      (Tool *, GdkEventButton *, gpointer);
 static void   blend_motion              (Tool *, GdkEventMotion *, gpointer);
 static void   blend_cursor_update       (Tool *, GdkEventMotion *, gpointer);
 static void   blend_control             (Tool *, ToolAction,       gpointer);
+
+static void   blend_options_drop_gradient  (GtkWidget *, gradient_t *, gpointer);
+static void   blend_options_drop_tool      (GtkWidget *, ToolType,     gpointer);
 
 static double gradient_calc_conical_sym_factor           (double dist, double *axis, double offset,
 							  double x, double y);
@@ -256,6 +268,16 @@ blend_options_new (void)
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
+  /*  dnd stuff  */
+  gtk_drag_dest_set (vbox,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     blend_target_table, blend_n_targets,
+		     GDK_ACTION_COPY); 
+  gimp_dnd_gradient_dest_set (vbox, blend_options_drop_gradient, NULL);
+  gimp_dnd_tool_dest_set (vbox, blend_options_drop_tool, NULL);
+
   /*  the offset scale  */
   table = gtk_table_new (4, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
@@ -283,7 +305,7 @@ blend_options_new (void)
      _("FG to BG (RGB)"),     (gpointer) FG_BG_RGB_MODE, NULL,
      _("FG to BG (HSV)"),     (gpointer) FG_BG_HSV_MODE, NULL,
      _("FG to Transparent"),  (gpointer) FG_TRANS_MODE, NULL,
-     _("Custom from Editor"), (gpointer) CUSTOM_MODE, NULL,
+     _("Custom Gradient"),    (gpointer) CUSTOM_MODE, NULL,
 
      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -689,6 +711,26 @@ blend_control (Tool       *tool,
     default:
       break;
     }
+}
+
+
+static void
+blend_options_drop_gradient (GtkWidget  *widget,
+			     gradient_t *gradient,
+			     gpointer    data)
+{
+  gimp_context_set_gradient (gimp_context_get_user (), gradient);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 
+			       CUSTOM_MODE);
+  blend_options->blend_mode = CUSTOM_MODE;
+}
+
+static void
+blend_options_drop_tool (GtkWidget *widget,
+			 ToolType   tool,
+			 gpointer   data)
+{
+  gimp_context_set_tool (gimp_context_get_user (), tool);
 }
 
 

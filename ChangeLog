@@ -1,4 +1,11 @@
-Thu Mar  9 22:29:14 GMT 2000
+Fri Mar 10 02:55:12 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c: renamed Blend Mode from "Custom from Editor" to 
+	"Custom Gradient" since the gradient editor is not any longer
+	the primary source for gradients. As an extra bonus, you get a
+	new dnd target...
+
+Thu Mar  9 22:29:14 GMT 2000  Andy Thomas <alt@gimp.org>
 	
 	* app/gimpimage.c
 
