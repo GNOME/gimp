@@ -1,3 +1,10 @@
+2001-11-15  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po -> zh_TW.po: Replace traditional Chinese translation with
+	  the one from stable branch, convert to UTF8, renamed to avoid encoding
+	  naming problem in the future, and trying to resolve resulting CVS
+	  conflict. (that's my error)
+
 2001-11-13  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: temporarily commented out gap, gdyntext and helpbrowser
