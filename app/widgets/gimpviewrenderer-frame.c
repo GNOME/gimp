@@ -125,10 +125,10 @@ stretch_frame_image (GdkPixbuf *frame_image,
   target_frame_width  = frame_width - left_offset - right_offset;
   target_frame_height = frame_height - top_offset - bottom_offset;
 
-  left_offset   += MIN (target_width / 2, target_frame_width / 2);
-  right_offset  += MIN (target_width / 2, target_frame_width / 2);
-  top_offset    += MIN (target_height / 2, target_frame_height / 2);
-  bottom_offset += MIN (target_height / 2, target_frame_height / 2);
+  left_offset   += MIN (target_width / 4, target_frame_width / 4);
+  right_offset  += MIN (target_width / 4, target_frame_width / 4);
+  top_offset    += MIN (target_height / 4, target_frame_height / 4);
+  bottom_offset += MIN (target_height / 4, target_frame_height / 4);
 
   target_width = dest_width - left_offset - right_offset;
   target_height = dest_height - top_offset - bottom_offset;
