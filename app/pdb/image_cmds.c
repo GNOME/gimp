@@ -776,7 +776,7 @@ static ProcRecord image_resize_to_layers_proc =
 {
   "gimp_image_resize_to_layers",
   "Resize the image to fit all layers.",
-  "This procedure resizes the image so that it exactly fits all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
+  "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
   "Simon Budig",
   "Simon Budig",
   "2004",

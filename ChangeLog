@@ -1,5 +1,17 @@
 2004-09-05  Simon Budig  <simon@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: improved documentation for
+	gimp_image_resize_to_layers
+
+	* libgimp/gimp.def
+	* devel-docs/libgimp/libgimp-sections.txt: added
+	gimp_image_resize_to_layers
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated
+
+2004-09-05  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpimage-resize.[ch]: Implement function to resize
 	the image to contain all layers completely. Untabified.
 
