@@ -341,7 +341,7 @@ path_get_points_invoker (Gimp     *gimp,
   gchar *name;
   gint32 path_type = 0;
   gint32 path_closed = 0;
-  gint32 num_points = 0;
+  gint32 num_point_details = 0;
   gdouble *points_pairs = NULL;
   GimpVectors *vectors;
 
@@ -360,18 +360,21 @@ path_get_points_invoker (Gimp     *gimp,
       if (vectors)
 	{
 	  GimpVectorsCompatPoint *points;
+	  gint num_points;
     
 	  path_type = 1; /* BEZIER (1.2 compat) */
     
 	  points = gimp_vectors_compat_get_points (vectors, &num_points,
 						   &path_closed);
     
+	  num_point_details = num_points * 3;
+    
 	  if (points)
 	    {
 	      gdouble *curr_point;
 	      gint     i;
     
-	      points_pairs = g_new0 (gdouble, num_points * 3);
+	      points_pairs = g_new0 (gdouble, num_point_details);
     
 	      for (i = 0, curr_point = points_pairs;
 		   i < num_points;
@@ -397,7 +400,7 @@ path_get_points_invoker (Gimp     *gimp,
     {
       return_args[1].value.pdb_int = path_type;
       return_args[2].value.pdb_int = path_closed;
-      return_args[3].value.pdb_int = num_points;
+      return_args[3].value.pdb_int = num_point_details;
       return_args[4].value.pdb_pointer = points_pairs;
     }
 

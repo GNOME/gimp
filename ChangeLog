@@ -1,3 +1,8 @@
+2003-10-24  Dave Neary  <bolsh@gimp.org>
+
+	* app/pdb/path_cmds.c: Forgot to commit this generated file 
+	earlier.
+
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: an attempt to improve our installation instructions.
