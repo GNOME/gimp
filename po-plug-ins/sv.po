@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-06-18 21:23+0200\n"
+"POT-Creation-Date: 2003-07-26 00:28+0200\n"
+"PO-Revision-Date: 2003-07-26 00:31+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:295
 #: plug-ins/FractalExplorer/Dialogs.c:1401 plug-ins/gfig/gfig.c:3216
@@ -1264,9 +1264,8 @@ msgid "_RLE encoded"
 msgstr "_RLE-kodad"
 
 #: plug-ins/common/AlienMap.c:941
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-msgstr "<Image>/Filter/Färger/Karta/Rymdkarta..."
+msgstr "<Image>/Filter/Färger/Karta/_Rymdkarta..."
 
 #: plug-ins/common/AlienMap.c:1084
 msgid "AlienMap: Transforming..."
@@ -1371,9 +1370,8 @@ msgid "About AlienMap"
 msgstr "Om Rymdkarta"
 
 #: plug-ins/common/AlienMap2.c:949
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-msgstr "<Image>/Filter/Färger/Karta/Rymdkarta 2..."
+msgstr "<Image>/Filter/Färger/Karta/Rymdkarta _2..."
 
 #: plug-ins/common/AlienMap2.c:1074
 msgid "AlienMap2: Transforming..."
@@ -2084,9 +2082,8 @@ msgid "_Grid Size:"
 msgstr "_Rutnätsstorlek:"
 
 #: plug-ins/common/animationplay.c:241
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation _Playback..."
-msgstr "<Image>/Filter/Animering/Animeringsuppspelning..."
+msgstr "<Image>/Filter/Animering/Animerings_uppspelning..."
 
 #: plug-ins/common/animationplay.c:544
 msgid "Animation Playback: "
@@ -2115,24 +2112,20 @@ msgid "Frame %d of %d"
 msgstr "Bildruta %d av %d"
 
 #: plug-ins/common/animoptimize.c:176
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation _Optimize"
-msgstr "<Image>/Filter/Animering/Optimera Animering"
+msgstr "<Image>/Filter/Animering/_Optimera Animering"
 
 #: plug-ins/common/animoptimize.c:193
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation _UnOptimize"
-msgstr "<Image>/Filter/Animering/Avoptimera Animering"
+msgstr "<Image>/Filter/Animering/A_voptimera Animering"
 
 #: plug-ins/common/animoptimize.c:208
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation: _Remove Backdrop"
-msgstr "<Image>/Filter/Animering/Animering: Ta bort bakgrund"
+msgstr "<Image>/Filter/Animering/Animering: _Ta bort bakgrund"
 
 #: plug-ins/common/animoptimize.c:224
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation: _Find Backdrop"
-msgstr "<Image>/Filter/Animering/Animering: Hitta bakgrund"
+msgstr "<Image>/Filter/Animering/Animering: _Hitta bakgrund"
 
 #: plug-ins/common/animoptimize.c:423
 msgid "UnOptimizing Animation..."
@@ -2156,9 +2149,8 @@ msgstr ""
 "Inte tillräckligt med minne till att allokera buffertar för optimering.\n"
 
 #: plug-ins/common/apply_lens.c:131
-#, fuzzy
 msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-msgstr "<Image>/Filter/Glaseffekter/Applicera lins..."
+msgstr "<Image>/Filter/Glaseffekter/Applicera _lins..."
 
 #: plug-ins/common/apply_lens.c:195
 msgid "Applying lens..."
@@ -2189,27 +2181,24 @@ msgid "_Lens Refraction Index:"
 msgstr "Refraktionsindex för _lins:"
 
 #: plug-ins/common/autocrop.c:75
-#, fuzzy
 msgid "<Image>/Image/Transform/_Autocrop"
-msgstr "<Image>/Bild/Transformera/Autocrop"
+msgstr "<Image>/Bild/Transformera/_Autocrop"
 
 #: plug-ins/common/autocrop.c:120
 msgid "Cropping..."
 msgstr "Beskär..."
 
 #: plug-ins/common/autostretch_hsv.c:92
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-msgstr "<Image>/Lager/Färger/Auto/Sträck ut HSV"
+msgstr "<Image>/Lager/Färger/Auto/Sträck ut _HSV"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
 msgstr "Sträcker ut HSV..."
 
 #: plug-ins/common/blinds.c:185
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Blinds..."
-msgstr "<Image>/Filter/Störningar/Persienner..."
+msgstr "<Image>/Filter/Störningar/_Persienner..."
 
 #: plug-ins/common/blinds.c:274
 msgid "Adding Blinds..."
@@ -2249,9 +2238,8 @@ msgid "_Num Segments:"
 msgstr "_Antal segment:"
 
 #: plug-ins/common/blur.c:196
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Blur..."
-msgstr "<Image>/Filter/Suddigare/Oskärpa..."
+msgstr "<Image>/Filter/Suddigare/_Oskärpa..."
 
 #.
 #. *  JUST DO IT!
@@ -2282,9 +2270,8 @@ msgid "Number of times to apply filter"
 msgstr "Antal gånger filtret skall appliceras"
 
 #: plug-ins/common/borderaverage.c:99
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Border Average..."
-msgstr "<Image>/Filter/Färger/Kantmedelvärde..."
+msgstr "<Image>/Filter/Färger/_Kantmedelvärde..."
 
 #: plug-ins/common/borderaverage.c:162
 msgid "Border Average..."
@@ -2315,9 +2302,8 @@ msgid "256 (nonsense?)"
 msgstr "256 (nonsens?)"
 
 #: plug-ins/common/bumpmap.c:376
-#, fuzzy
 msgid "<Image>/Filters/Map/_Bump Map..."
-msgstr "<Image>/Filter/Mappa/Bumpmap..."
+msgstr "<Image>/Filter/Mappa/_Bumpmap..."
 
 #: plug-ins/common/bumpmap.c:528
 msgid "Bump-mapping..."
@@ -2392,18 +2378,16 @@ msgid "Can't open bzip2ed file without a sensible extension"
 msgstr "Kan inte öppna bzip2:ad fil utan en rimlig filändelse"
 
 #: plug-ins/common/c_astretch.c:88
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-msgstr "<Image>/Lager/Färger/Auto/Sträck ut kontrast"
+msgstr "<Image>/Lager/Färger/Auto/_Sträck ut kontrast"
 
 #: plug-ins/common/c_astretch.c:120
 msgid "Auto-Stretching Contrast..."
 msgstr "Sträcker ut kontrast..."
 
 #: plug-ins/common/checkerboard.c:104
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-msgstr "<Image>/Filter/Rendera/Mönster/Schackrutor..."
+msgstr "<Image>/Filter/Rendera/Mönster/_Schackrutor..."
 
 #: plug-ins/common/checkerboard.c:169
 msgid "Adding Checkerboard..."
@@ -2423,18 +2407,16 @@ msgid "_Size:"
 msgstr "_Storlek:"
 
 #: plug-ins/common/color_enhance.c:92
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
-msgstr "<Image>/Lager/Färger/Auto/Förbättra färger"
+msgstr "<Image>/Lager/Färger/Auto/_Förbättra färger"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
 msgstr "Förbättra färger..."
 
 #: plug-ins/common/colorify.c:132
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Colorify..."
-msgstr "<Image>/Filter/Färger/Kolorera..."
+msgstr "<Image>/Filter/Färger/_Kolorera..."
 
 #: plug-ins/common/colorify.c:190
 msgid "Colorifying..."
@@ -2460,9 +2442,8 @@ msgid "Colorify Custom Color"
 msgstr "Kolorera egen färg"
 
 #: plug-ins/common/colortoalpha.c:108
-#, fuzzy
 msgid "<Image>/Filters/Colors/Color to _Alpha..."
-msgstr "<Image>/Filter/Färger/Färg till Alfa..."
+msgstr "<Image>/Filter/Färger/Färg till _Alfa..."
 
 #: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
@@ -2673,9 +2654,8 @@ msgid "Cro_p"
 msgstr "Be_skär"
 
 #: plug-ins/common/convmatrix.c:193
-#, fuzzy
 msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-msgstr "<Image>/Filter/Allmänna/Konvolveringsmatris..."
+msgstr "<Image>/Filter/Allmänna/_Konvolveringsmatris..."
 
 #: plug-ins/common/convmatrix.c:227
 msgid ""
@@ -2769,9 +2749,8 @@ msgid "Op_acity:"
 msgstr "Op_acitet:"
 
 #: plug-ins/common/cubism.c:157
-#, fuzzy
 msgid "<Image>/Filters/Artistic/_Cubism..."
-msgstr "<Image>/Filter/Artistiskt/Kubism..."
+msgstr "<Image>/Filter/Artistiskt/_Kubism..."
 
 #: plug-ins/common/cubism.c:264
 msgid "Cubism"
@@ -2810,9 +2789,8 @@ msgid "Free"
 msgstr "Ledigt"
 
 #: plug-ins/common/curve_bend.c:682
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_CurveBend..."
-msgstr "<Image>/Filter/Störningar/CurveBend..."
+msgstr "<Image>/Filter/Störningar/_Böj efter kurva..."
 
 #: plug-ins/common/curve_bend.c:811
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
@@ -3064,9 +3042,8 @@ msgid "redness_cr709f"
 msgstr "rödton_cr709f"
 
 #: plug-ins/common/decompose.c:229
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Decompose..."
-msgstr "<Image>/Filter/Färger/Separera..."
+msgstr "<Image>/Filter/Färger/_Separera..."
 
 #: plug-ins/common/decompose.c:310
 msgid "Decomposing..."
@@ -3082,9 +3059,8 @@ msgid "Extract Channels:"
 msgstr "Extrahera kanaler:"
 
 #: plug-ins/common/deinterlace.c:91
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_Deinterlace..."
-msgstr "<Image>/Filter/Förbättra/Ej sammanflätning..."
+msgstr "<Image>/Filter/Förbättra/_Ej sammanflätning..."
 
 #: plug-ins/common/deinterlace.c:146
 msgid "Deinterlace..."
@@ -3103,9 +3079,8 @@ msgid "Keep _Even Fields"
 msgstr "Behåll _jämna fält"
 
 #: plug-ins/common/depthmerge.c:202
-#, fuzzy
 msgid "<Image>/Filters/Combine/_Depth Merge..."
-msgstr "<Image>/Filter/Kombinera/Sammanfoga djup..."
+msgstr "<Image>/Filter/Kombinera/Sammanfoga _djup..."
 
 #: plug-ins/common/depthmerge.c:392
 msgid "Depth-merging..."
@@ -3144,9 +3119,8 @@ msgid "Scale 2:"
 msgstr "Skala 2:"
 
 #: plug-ins/common/despeckle.c:186
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Des_peckle..."
-msgstr "<Image>/Filter/Förbättra/Damm och repor..."
+msgstr "<Image>/Filter/Förbättra/Damm och _repor..."
 
 #. Source image region
 #. Destination image region
@@ -3213,9 +3187,8 @@ msgid "_White Level:"
 msgstr "_Vitnivå:"
 
 #: plug-ins/common/destripe.c:149
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Des_tripe..."
-msgstr "<Image>/Filter/Förbättra/Ta bort bandning..."
+msgstr "<Image>/Filter/Förbättra/Ta bort _bandning..."
 
 #: plug-ins/common/destripe.c:348
 msgid "Destriping..."
@@ -3238,9 +3211,8 @@ msgid "_Width:"
 msgstr "_Bredd:"
 
 #: plug-ins/common/diffraction.c:189
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-msgstr "<Image>/Filter/Rendera/Mönster/Diffraktionsmönster..."
+msgstr "<Image>/Filter/Rendera/Mönster/_Diffraktionsmönster..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
@@ -3279,9 +3251,8 @@ msgid "O_ther options"
 msgstr "A_ndra alternativ"
 
 #: plug-ins/common/displace.c:163
-#, fuzzy
 msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Image>/Filter/Mappa/Förskjutning..."
+msgstr "<Image>/Filter/Mappa/_Förskjutning..."
 
 #: plug-ins/common/displace.c:235
 msgid "Displacing..."
@@ -3324,9 +3295,8 @@ msgid "_Black"
 msgstr "_Svart"
 
 #: plug-ins/common/edge.c:134
-#, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
-msgstr "<Image>/Filter/Leta kanter/Kanter..."
+msgstr "<Image>/Filter/Leta kanter/_Kanter..."
 
 #: plug-ins/common/edge.c:201
 msgid "Edge Detection..."
@@ -3341,9 +3311,8 @@ msgid "_Amount:"
 msgstr "_Mängd:"
 
 #: plug-ins/common/emboss.c:154
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Emboss..."
-msgstr "<Image>/Filter/Störningar/Ciselera..."
+msgstr "<Image>/Filter/Störningar/_Ciselera..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:500
 msgid "Emboss"
@@ -3370,9 +3339,8 @@ msgid "Do _Preview"
 msgstr "_Förhandsgranska"
 
 #: plug-ins/common/engrave.c:118
-#, fuzzy
 msgid "<Image>/Filters/Distorts/En_grave..."
-msgstr "<Image>/Filter/Störningar/Gravera..."
+msgstr "<Image>/Filter/Störningar/_Gravera..."
 
 #: plug-ins/common/engrave.c:189
 msgid "Engraving..."
@@ -3395,9 +3363,8 @@ msgid "_Height:"
 msgstr "_Höjd:"
 
 #: plug-ins/common/exchange.c:140
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Image>/Filter/Färger/Karta/Färgutbyte..."
+msgstr "<Image>/Filter/Färger/Karta/_Färgutbyte..."
 
 #: plug-ins/common/exchange.c:242
 msgid "Color Exchange..."
@@ -3445,9 +3412,8 @@ msgid "Lock Thresholds"
 msgstr "Lås tröskelvärden"
 
 #: plug-ins/common/film.c:252
-#, fuzzy
 msgid "<Image>/Filters/Combine/_Film..."
-msgstr "<Image>/Filter/Kombinera/Film..."
+msgstr "<Image>/Filter/Kombinera/_Film..."
 
 #: plug-ins/common/film.c:338
 msgid "Composing Images..."
@@ -3564,9 +3530,8 @@ msgstr "_Sifferhöjd:"
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:202
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_FlareFX..."
-msgstr "<Image>/Filter/Ljuseffekter/FlareFX..."
+msgstr "<Image>/Filter/Ljuseffekter/_FlareFX..."
 
 #: plug-ins/common/flarefx.c:274
 msgid "Render Flare..."
@@ -3587,9 +3552,8 @@ msgid "_Show Cursor"
 msgstr "_Visa markör"
 
 #: plug-ins/common/fractaltrace.c:130
-#, fuzzy
 msgid "<Image>/Filters/Map/_Fractal Trace..."
-msgstr "<Image>/Filter/Mappa/Fraktalspåra..."
+msgstr "<Image>/Filter/Mappa/_Fraktalspåra..."
 
 #: plug-ins/common/fractaltrace.c:468 plug-ins/common/fractaltrace.c:750
 msgid "Fractal Trace"
@@ -3630,9 +3594,8 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: plug-ins/common/gauss_iir.c:177
-#, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
-msgstr "<Image>/Filter/Suddigare/Gaussisk oskärpa (IIR)..."
+msgstr "<Image>/Filter/Suddigare/Gaussisk oskärpa (_IIR)..."
 
 #: plug-ins/common/gauss_iir.c:249
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
@@ -3671,9 +3634,8 @@ msgid "_Vertical:"
 msgstr "_Vertikal:"
 
 #: plug-ins/common/gauss_rle.c:171
-#, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
-msgstr "<Image>/Filter/Suddigare/Gaussisk oskärpa (RLE)..."
+msgstr "<Image>/Filter/Suddigare/Gaussisk oskärpa (_RLE)..."
 
 #: plug-ins/common/gauss_rle.c:242
 msgid "You must specify either horizontal or vertical (or both)"
@@ -3721,9 +3683,8 @@ msgid "Description:"
 msgstr "Beskrivning:"
 
 #: plug-ins/common/gee.c:103
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-_Slime"
-msgstr "<Image>/Filter/Leksaker/Gee-Slime"
+msgstr "<Image>/Filter/Leksaker/Gee-_Slime"
 
 #: plug-ins/common/gee.c:174
 msgid "GEE-SLIME"
@@ -3743,9 +3704,8 @@ msgstr ""
 "org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:139
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-_Zoom"
-msgstr "<Image>/Filter/Leksaker/Gee-Zoom"
+msgstr "<Image>/Filter/Leksaker/Gee-_Zoom"
 
 #: plug-ins/common/gee_zoom.c:205
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -3780,6 +3740,8 @@ msgid ""
 "The GIF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
+"GIF-formatet stöder endast kommentarer i\n"
+"7-bitars ASCII. Ingen kommentar sparad."
 
 #: plug-ins/common/gif.c:967
 msgid ""
@@ -3968,9 +3930,8 @@ msgid "Frame %d (%dms)"
 msgstr "Bildruta %d (%d ms)"
 
 #: plug-ins/common/glasstile.c:123
-#, fuzzy
 msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
-msgstr "<Image>/Filter/Glaseffekter/Glasplattor..."
+msgstr "<Image>/Filter/Glaseffekter/_Glasplattor..."
 
 #: plug-ins/common/glasstile.c:199
 msgid "Glass Tile..."
@@ -3989,9 +3950,8 @@ msgid "Tile _Height:"
 msgstr "Platt_höjd:"
 
 #: plug-ins/common/gqbist.c:438
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Image>/Filter/Rendera/Mönster/Qbist..."
+msgstr "<Image>/Filter/Rendera/Mönster/_Qbist..."
 
 #: plug-ins/common/gqbist.c:535
 msgid "Qbist ..."
@@ -4010,18 +3970,16 @@ msgid "G-Qbist 1.12"
 msgstr "G-Qbist 1.12"
 
 #: plug-ins/common/gradmap.c:121
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-msgstr "<Image>/Filter/Färger/Karta/Gradientkarta"
+msgstr "<Image>/Filter/Färger/Karta/_Gradientkarta"
 
 #: plug-ins/common/gradmap.c:156
 msgid "Gradient Map..."
 msgstr "Gradientkarta..."
 
 #: plug-ins/common/grid.c:152
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Image>/Filter/Rendera/Mönster/Rutnät..."
+msgstr "<Image>/Filter/Rendera/Mönster/_Rutnät..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4200,9 +4158,8 @@ msgid "The amount of cellspacing."
 msgstr "Mängden cellmellanrum."
 
 #: plug-ins/common/guillotine.c:79
-#, fuzzy
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Image>/Bild/Transformera/Guillotine"
+msgstr "<Image>/Bild/Transformera/_Guillotine"
 
 #: plug-ins/common/guillotine.c:110
 msgid "Guillotine..."
@@ -4217,9 +4174,8 @@ msgid "No sensible extension, attempting to load with file magic"
 msgstr "Ingen rimlig ändelse, försöker ladda med filmagi"
 
 #: plug-ins/common/hot.c:217
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Hot..."
-msgstr "<Image>/Filter/Färger/Hetta..."
+msgstr "<Image>/Filter/Färger/_Hetta..."
 
 #: plug-ins/common/hot.c:377
 msgid "Hot..."
@@ -4263,9 +4219,8 @@ msgid "Image must be RGB or GRAY"
 msgstr "Bilden måste vara RGB eller GRÅSKALA"
 
 #: plug-ins/common/illusion.c:103
-#, fuzzy
 msgid "<Image>/Filters/Map/_Illusion..."
-msgstr "<Image>/Filter/Mappa/Illusion..."
+msgstr "<Image>/Filter/Mappa/_Illusion..."
 
 #: plug-ins/common/illusion.c:175
 msgid "Illusion..."
@@ -4288,9 +4243,8 @@ msgid "Mode _2"
 msgstr "Läge _2"
 
 #: plug-ins/common/iwarp.c:259
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_IWarp..."
-msgstr "<Image>/Filter/Störningar/IWarp..."
+msgstr "<Image>/Filter/Störningar/_IWarp..."
 
 #: plug-ins/common/iwarp.c:679
 msgid "Warping..."
@@ -4387,9 +4341,8 @@ msgid "IWarp"
 msgstr "IWarp"
 
 #: plug-ins/common/jigsaw.c:409
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-msgstr "<Image>/Filter/Rendera/Mönster/Pussel..."
+msgstr "<Image>/Filter/Rendera/Mönster/_Pussel..."
 
 #: plug-ins/common/jigsaw.c:464
 msgid "Assembling Jigsaw..."
@@ -4534,9 +4487,8 @@ msgid "Image comments"
 msgstr "Bildkommentarer"
 
 #: plug-ins/common/laplace.c:95
-#, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Laplace"
-msgstr "<Image>/Filter/Leta kanter/Laplace"
+msgstr "<Image>/Filter/Leta kanter/_Laplace"
 
 #: plug-ins/common/laplace.c:225
 msgid "Laplace..."
@@ -4615,14 +4567,12 @@ msgid "M_aximum Value:"
 msgstr "M_aximimvärde:"
 
 #: plug-ins/common/lic.c:896
-#, fuzzy
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-msgstr "<Image>/Filter/Mappa/Van Gogh (LIC)..."
+msgstr "<Image>/Filter/Mappa/_Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
-#, fuzzy
 msgid "<Image>/File/_Mail Image..."
-msgstr "<Image>/Fil/Posta bild..."
+msgstr "<Image>/Fil/_Posta bild..."
 
 #: plug-ins/common/mail.c:463
 msgid "Send to Mail"
@@ -4685,9 +4635,8 @@ msgid "Second Destination Color"
 msgstr "Andra målfärgen"
 
 #: plug-ins/common/mapcolor.c:354
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-msgstr "<Image>/Filter/Färger/Karta/Justera FG-BG"
+msgstr "<Image>/Filter/Färger/Karta/Justera _FG-BG"
 
 #: plug-ins/common/mapcolor.c:369
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
@@ -4727,9 +4676,8 @@ msgid "To:"
 msgstr "Till:"
 
 #: plug-ins/common/max_rgb.c:121
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Max RGB..."
-msgstr "<Image>/Filter/Färger/Max RGB..."
+msgstr "<Image>/Filter/Färger/_Max RGB..."
 
 #: plug-ins/common/max_rgb.c:157
 msgid "Can only operate on RGB drawables."
@@ -4752,9 +4700,8 @@ msgid "Ho_ld the Minimal Channels"
 msgstr "L_ås minimala kanalerna"
 
 #: plug-ins/common/mblur.c:153
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Motion Blur..."
-msgstr "<Image>/Filter/Suddigare/Rörelseoskärpa..."
+msgstr "<Image>/Filter/Suddigare/_Rörelseoskärpa..."
 
 #: plug-ins/common/mblur.c:670
 msgid "Motion Blurring..."
@@ -4906,9 +4853,8 @@ msgid "Intensity"
 msgstr "Intensitet"
 
 #: plug-ins/common/newsprint.c:564
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Newsprin_t..."
-msgstr "<Image>/Filter/Störningar/Tidningstryck..."
+msgstr "<Image>/Filter/Störningar/_Tidningstryck..."
 
 #: plug-ins/common/newsprint.c:663
 msgid "Newsprint..."
@@ -4982,9 +4928,8 @@ msgid "O_versample:"
 msgstr "Ö_versampla:"
 
 #: plug-ins/common/nlfilt.c:126
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_NL Filter..."
-msgstr "<Image>/Filter/Förbättra/NL-filter..."
+msgstr "<Image>/Filter/Förbättra/_NL-filter..."
 
 #: plug-ins/common/nlfilt.c:244
 msgid "NL Filter..."
@@ -5019,9 +4964,8 @@ msgid "_Do Preview"
 msgstr "_Förhandsgranska"
 
 #: plug-ins/common/noisify.c:132
-#, fuzzy
 msgid "<Image>/Filters/Noise/_Noisify..."
-msgstr "<Image>/Filter/Brus/Brusifiera..."
+msgstr "<Image>/Filter/Brus/_Brusifiera..."
 
 #: plug-ins/common/noisify.c:206
 msgid "Adding Noise..."
@@ -5049,9 +4993,8 @@ msgid "Channel #%d:"
 msgstr "Kanal %d:"
 
 #: plug-ins/common/normalize.c:90
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto/_Normalize"
-msgstr "<Image>/Lager/Färger/Auto/Normalisera"
+msgstr "<Image>/Lager/Färger/Auto/_Normalisera"
 
 #: plug-ins/common/normalize.c:122
 msgid "Normalizing..."
@@ -5059,9 +5002,8 @@ msgstr "Normaliserar..."
 
 #. don't translate '<Image>'
 #: plug-ins/common/nova.c:209
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/Su_perNova..."
-msgstr "<Image>/Filter/Ljuseffekter/SuperNova..."
+msgstr "<Image>/Filter/Ljuseffekter/_SuperNova..."
 
 #: plug-ins/common/nova.c:290
 msgid "Rendering SuperNova..."
@@ -5093,9 +5035,8 @@ msgid "S_how Cursor"
 msgstr "V_isa markör"
 
 #: plug-ins/common/oilify.c:118
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Oili_fy..."
-msgstr "<Image>/Filter/Artistiskt/Olja..."
+msgstr "<Image>/Filter/Artistiskt/_Olja..."
 
 #: plug-ins/common/oilify.c:193
 msgid "Oil Painting..."
@@ -5190,9 +5131,8 @@ msgid "September 31, 1999"
 msgstr "31 september, 1999"
 
 #: plug-ins/common/papertile.c:838
-#, fuzzy
 msgid "<Image>/Filters/Map/_Paper Tile..."
-msgstr "<Image>/Filter/Mappa/Pappersplattor..."
+msgstr "<Image>/Filter/Mappa/_Pappersplattor..."
 
 #: plug-ins/common/pat.c:451
 msgid "Save as Pattern"
@@ -5229,9 +5169,8 @@ msgstr ""
 "Platta ut din bild"
 
 #: plug-ins/common/pixelize.c:184
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Pixelize..."
-msgstr "<Image>/Filter/Suddigare/Pixellera..."
+msgstr "<Image>/Filter/Suddigare/_Pixellera..."
 
 #: plug-ins/common/pixelize.c:282
 msgid "Pixelizing..."
@@ -5250,9 +5189,8 @@ msgid "Pixel _Height:"
 msgstr "Pixel_höjd:"
 
 #: plug-ins/common/plasma.c:192
-#, fuzzy
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
-msgstr "<Image>/Filter/Rendera/Moln/Plasma..."
+msgstr "<Image>/Filter/Rendera/Moln/_Plasma..."
 
 #: plug-ins/common/plasma.c:271
 msgid "Plasma..."
@@ -5287,9 +5225,8 @@ msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
 #: plug-ins/common/plugindetails.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details..."
-msgstr "<Toolbox>/Xtns/Detaljer för insticksmodul..."
+msgstr "<Toolbox>/Xtns/_Detaljer för insticksmodul..."
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
@@ -5426,34 +5363,28 @@ msgid "_Interlacing (Adam7)"
 msgstr "_Sammanflätning (Adam7)"
 
 #: plug-ins/common/png.c:1329
-#, fuzzy
 msgid "Save _Background Color"
-msgstr "Spara bakgrundsfärg"
+msgstr "Spara _bakgrundsfärg"
 
 #: plug-ins/common/png.c:1337
-#, fuzzy
 msgid "Save _Gamma"
-msgstr "Spara gamma"
+msgstr "Spara _gamma"
 
 #: plug-ins/common/png.c:1345
-#, fuzzy
 msgid "Save _Layer Offset"
 msgstr "Spara _lageroffset"
 
 #: plug-ins/common/png.c:1353
-#, fuzzy
 msgid "Save _Resolution"
-msgstr "Spara upplösning"
+msgstr "Spara _upplösning"
 
 #: plug-ins/common/png.c:1361
-#, fuzzy
 msgid "Save Creation _Time"
-msgstr "Spara skapad tid"
+msgstr "Spara skapad _tid"
 
 #: plug-ins/common/png.c:1369
-#, fuzzy
 msgid "Save Comme_nt"
-msgstr "Spara nuvarande"
+msgstr "Spara _kommentar"
 
 #: plug-ins/common/png.c:1384
 msgid "Co_mpression Level:"
@@ -5506,9 +5437,8 @@ msgid "Ascii"
 msgstr "Ascii"
 
 #: plug-ins/common/polar.c:184
-#, fuzzy
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
-msgstr "<Image>/Filter/Störningar/Polärkoordinater..."
+msgstr "<Image>/Filter/Störningar/_Polärkoordinater..."
 
 #: plug-ins/common/polar.c:350
 msgid "Polarizing..."
@@ -5727,28 +5657,24 @@ msgid "Random Slur 1.7"
 msgstr "Slumpsluddra 1.7"
 
 #: plug-ins/common/randomize.c:237
-#, fuzzy
 msgid "<Image>/Filters/Noise/_Hurl..."
-msgstr "<Image>/Filter/Brus/Släng..."
+msgstr "<Image>/Filter/Brus/_Släng..."
 
 #: plug-ins/common/randomize.c:249
-#, fuzzy
 msgid "<Image>/Filters/Noise/_Pick..."
-msgstr "<Image>/Filter/Brus/Peta..."
+msgstr "<Image>/Filter/Brus/_Peta..."
 
 #: plug-ins/common/randomize.c:261
-#, fuzzy
 msgid "<Image>/Filters/Noise/_Slur..."
-msgstr "<Image>/Filter/Brus/Sluddra..."
+msgstr "<Image>/Filter/Brus/S_luddra..."
 
 #: plug-ins/common/randomize.c:746
 msgid "R_andomization (%):"
 msgstr "R_andomisering (%):"
 
 #: plug-ins/common/ripple.c:147
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Ripple..."
-msgstr "<Image>/Filter/Störningar/Krusning..."
+msgstr "<Image>/Filter/Störningar/_Krusning..."
 
 #: plug-ins/common/ripple.c:226
 msgid "Rippling..."
@@ -5805,9 +5731,8 @@ msgid "Rotating..."
 msgstr "Roterar..."
 
 #: plug-ins/common/sample_colorize.c:307
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-msgstr "<Image>/Filter/Färger/Karta/Sampelfärglägg..."
+msgstr "<Image>/Filter/Färger/Karta/_Sampelfärglägg..."
 
 #: plug-ins/common/sample_colorize.c:1358
 msgid "Sample Colorize"
@@ -5890,9 +5815,8 @@ msgid "Remap Colorized..."
 msgstr "Mappa om färgsättningen..."
 
 #: plug-ins/common/scatter_hsv.c:149
-#, fuzzy
 msgid "<Image>/Filters/Noise/S_catter HSV..."
-msgstr "<Image>/Filter/Brus/Skingra HSV..."
+msgstr "<Image>/Filter/Brus/_Skingra HSV..."
 
 #: plug-ins/common/scatter_hsv.c:244
 msgid "Scattering HSV..."
@@ -5923,9 +5847,8 @@ msgid "_Value:"
 msgstr "_Värde:"
 
 #: plug-ins/common/screenshot.c:135
-#, fuzzy
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-msgstr "<Toolbox>/Arkiv/Inhämta/Skärmdump..."
+msgstr "<Toolbox>/Arkiv/Inhämta/_Skärmdump..."
 
 #. main dialog
 #: plug-ins/common/screenshot.c:383
@@ -5958,9 +5881,8 @@ msgid "Seconds Delay"
 msgstr "sekunders fördröjning"
 
 #: plug-ins/common/sel_gauss.c:124
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-msgstr "<Image>/Filter/Suddigare/Selektiv Gaussisk oskärpa..."
+msgstr "<Image>/Filter/Suddigare/_Selektiv Gaussisk oskärpa..."
 
 #: plug-ins/common/sel_gauss.c:201
 msgid "Selective Gaussian Blur..."
@@ -5983,18 +5905,16 @@ msgid "_Max. Delta:"
 msgstr "_Max delta:"
 
 #: plug-ins/common/semiflatten.c:79
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Semi-Flatten"
-msgstr "<Image>/Filter/Färger/Delutplattning"
+msgstr "<Image>/Filter/Färger/_Delutplattning"
 
 #: plug-ins/common/semiflatten.c:118
 msgid "Semi-Flattening..."
 msgstr "Delutplattning..."
 
 #: plug-ins/common/sharpen.c:171
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_Sharpen..."
-msgstr "<Image>/Filter/Förbättra/Gör skarpare..."
+msgstr "<Image>/Filter/Förbättra/_Gör skarpare..."
 
 #.
 #. * Let the user know what we're doing...
@@ -6013,9 +5933,8 @@ msgid "_Sharpness:"
 msgstr "_Skärpa:"
 
 #: plug-ins/common/shift.c:116
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Shift..."
-msgstr "<Image>/Filter/Störningar/Skifta..."
+msgstr "<Image>/Filter/Störningar/_Skifta..."
 
 #: plug-ins/common/shift.c:192
 msgid "Shifting..."
@@ -6038,9 +5957,8 @@ msgid "Shift _Amount:"
 msgstr "Skift_mängd:"
 
 #: plug-ins/common/sinus.c:1162
-#, fuzzy
 msgid "<Image>/Filters/Render/_Sinus..."
-msgstr "<Image>/Filter/Rendera/Sinus..."
+msgstr "<Image>/Filter/Rendera/_Sinus..."
 
 #: plug-ins/common/sinus.c:1247
 msgid "Sinus: rendering..."
@@ -6159,9 +6077,8 @@ msgid "_Blend"
 msgstr "_Blanda ihop"
 
 #: plug-ins/common/smooth_palette.c:89
-#, fuzzy
 msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-msgstr "<Image>/Filter/Färger/Utjämnad palett..."
+msgstr "<Image>/Filter/Färger/_Utjämnad palett..."
 
 #: plug-ins/common/smooth_palette.c:178
 msgid "Deriving Smooth Palette..."
@@ -6176,9 +6093,8 @@ msgid "_Search Depth:"
 msgstr "_Sökdjup:"
 
 #: plug-ins/common/snoise.c:183
-#, fuzzy
 msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-msgstr "<Image>/Filter/Rendera/Moln/Fast brus..."
+msgstr "<Image>/Filter/Rendera/Moln/_Fast brus..."
 
 #: plug-ins/common/snoise.c:309
 msgid "Solid Noise..."
@@ -6213,9 +6129,8 @@ msgid "_Y Size:"
 msgstr "_Y-storlek:"
 
 #: plug-ins/common/sobel.c:141
-#, fuzzy
 msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-msgstr "<Image>/Filter/Leta kanter/Sobel..."
+msgstr "<Image>/Filter/Leta kanter/_Sobel..."
 
 #: plug-ins/common/sobel.c:244
 msgid "Sobel Edge Detection"
@@ -6240,9 +6155,8 @@ msgstr "Sobel kantdetekterar..."
 #. don't translate '<Image>', it's a special
 #. * keyword for the gtk toolkit
 #: plug-ins/common/sparkle.c:193
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_Sparkle..."
-msgstr "<Image>/Filter/Ljuseffekter/Glittra..."
+msgstr "<Image>/Filter/Ljuseffekter/_Glittra..."
 
 #: plug-ins/common/sparkle.c:296
 msgid "Sparkling..."
@@ -6512,14 +6426,12 @@ msgid "Rendering Sphere..."
 msgstr "Skapar sfär..."
 
 #: plug-ins/common/spheredesigner.c:3097
-#, fuzzy
 msgid "<Image>/Filters/Render/Sphere _Designer..."
-msgstr "<Image>/Filter/Rendera/Sfärdesigner..."
+msgstr "<Image>/Filter/Rendera/_Sfärdesigner..."
 
 #: plug-ins/common/spread.c:118
-#, fuzzy
 msgid "<Image>/Filters/Noise/Sp_read..."
-msgstr "<Image>/Filter/Brus/Sprid..."
+msgstr "<Image>/Filter/Brus/_Sprid..."
 
 #: plug-ins/common/spread.c:196
 msgid "Spreading..."
@@ -6535,9 +6447,8 @@ msgid "Spread Amount"
 msgstr "Spridningsmängd"
 
 #: plug-ins/common/struc.c:1153
-#, fuzzy
 msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-msgstr "<Image>/Filter/Artistiskt/Applicera canvas..."
+msgstr "<Image>/Filter/Artistiskt/_Applicera canvas..."
 
 #: plug-ins/common/struc.c:1232
 msgid "Applying Canvas..."
@@ -6657,9 +6568,8 @@ msgid "Or_igin at bottom left"
 msgstr "Ur_sprung från nere till vänster"
 
 #: plug-ins/common/threshold_alpha.c:107
-#, fuzzy
 msgid "<Image>/Layer/Transparency/_Threshold Alpha..."
-msgstr "<Image>/Lager/Transparens/Tröskla alfa..."
+msgstr "<Image>/Lager/Transparens/_Tröskla alfa..."
 
 #: plug-ins/common/threshold_alpha.c:142
 msgid "The layer preserves transparency."
@@ -6702,6 +6612,8 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
+"TIFF-formatet stöder endast kommentarer i\n"
+"7-bitars ASCII. Ingen kommentar sparad."
 
 #: plug-ins/common/tiff.c:1779
 msgid "Save as TIFF"
@@ -6729,9 +6641,8 @@ msgid "_JPEG"
 msgstr "_JPEG"
 
 #: plug-ins/common/tile.c:127
-#, fuzzy
 msgid "<Image>/Filters/Map/_Tile..."
-msgstr "<Image>/Filter/Mappa/Plattor..."
+msgstr "<Image>/Filter/Mappa/_Plattor..."
 
 #: plug-ins/common/tile.c:205 plug-ins/common/tileit.c:329
 msgid "Tiling..."
@@ -6752,9 +6663,8 @@ msgid "C_reate New Image"
 msgstr "S_kapa ny bild"
 
 #: plug-ins/common/tileit.c:234
-#, fuzzy
 msgid "<Image>/Filters/Map/_Small Tiles..."
-msgstr "<Image>/Filter/Mappa/Små plattor..."
+msgstr "<Image>/Filter/Mappa/_Små plattor..."
 
 #. Get the preview image
 #. Start buildng the dialog up
@@ -6801,9 +6711,8 @@ msgid "Segment Setting"
 msgstr "Segmentinställning"
 
 #: plug-ins/common/tiler.c:65
-#, fuzzy
 msgid "<Image>/Filters/Map/_Make Seamless"
-msgstr "<Image>/Filter/Mappa/Gör kantlös"
+msgstr "<Image>/Filter/Mappa/_Gör kantlös"
 
 #: plug-ins/common/tiler.c:319
 msgid "Tiler..."
@@ -6891,9 +6800,8 @@ msgid "The unit's plural form."
 msgstr "Enhetens namn i plural."
 
 #: plug-ins/common/uniteditor.c:115
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor..."
-msgstr "<Toolbox>/Xtns/Enhetseditor..."
+msgstr "<Toolbox>/Xtns/_Enhetseditor..."
 
 #: plug-ins/common/uniteditor.c:179
 msgid "New Unit"
@@ -6948,9 +6856,8 @@ msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
 
 #: plug-ins/common/unsharp.c:153
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-msgstr "<Image>/Filter/Förbättra/Oskarp mask..."
+msgstr "<Image>/Filter/Förbättra/_Oskarp mask..."
 
 #: plug-ins/common/unsharp.c:365
 msgid "Merging..."
@@ -6997,9 +6904,8 @@ msgid "_Dots"
 msgstr "_Prickar"
 
 #: plug-ins/common/video.c:1840
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Vi_deo..."
-msgstr "<Image>/Filter/Störningar/Video..."
+msgstr "<Image>/Filter/Störningar/_Video..."
 
 #: plug-ins/common/video.c:1910
 msgid "Video/RGB..."
@@ -7023,9 +6929,8 @@ msgid "_Rotated"
 msgstr "_Roterad"
 
 #: plug-ins/common/vinvert.c:85
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Value Invert"
-msgstr "<Image>/Filter/Färger/Invertera värde"
+msgstr "<Image>/Filter/Färger/_Invertera värde"
 
 #: plug-ins/common/vinvert.c:124
 msgid "Value Invert..."
@@ -7064,19 +6969,16 @@ msgid "More T_ransparent"
 msgstr "Mera _genomskinlig"
 
 #: plug-ins/common/vpropagate.c:249
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Value Propagate..."
-msgstr "<Image>/Filter/Störningar/Sprid värden..."
+msgstr "<Image>/Filter/Störningar/_Sprid värden..."
 
 #: plug-ins/common/vpropagate.c:261
-#, fuzzy
 msgid "<Image>/Filters/Generic/E_rode"
-msgstr "<Image>/Filter/Allmänna/Erodera"
+msgstr "<Image>/Filter/Allmänna/_Erodera"
 
 #: plug-ins/common/vpropagate.c:273
-#, fuzzy
 msgid "<Image>/Filters/Generic/_Dilate"
-msgstr "<Image>/Filter/Allmänna/Vidga"
+msgstr "<Image>/Filter/Allmänna/_Vidga"
 
 #: plug-ins/common/vpropagate.c:461
 msgid "Value Propagating..."
@@ -7128,9 +7030,8 @@ msgid "Propagating Value Channel"
 msgstr "Sprider värdekanal"
 
 #: plug-ins/common/warp.c:266
-#, fuzzy
 msgid "<Image>/Filters/Map/_Warp..."
-msgstr "<Image>/Filter/Mappa/Förvrid..."
+msgstr "<Image>/Filter/Mappa/_Förvrid..."
 
 #: plug-ins/common/warp.c:413
 msgid "Warp"
@@ -7250,9 +7151,8 @@ msgid "Flow Step %d..."
 msgstr "Utflytning steg %d..."
 
 #: plug-ins/common/waves.c:124
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Waves..."
-msgstr "<Image>/Filter/Störningar/Vågor..."
+msgstr "<Image>/Filter/Störningar/_Vågor..."
 
 #: plug-ins/common/waves.c:303
 msgid "Waves"
@@ -7279,9 +7179,8 @@ msgid "Waving..."
 msgstr "Gör vågor..."
 
 #: plug-ins/common/whirlpinch.c:189
-#, fuzzy
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-msgstr "<Image>/Filter/Störningar/Virvla och nypa..."
+msgstr "<Image>/Filter/Störningar/_Virvla och nypa..."
 
 #: plug-ins/common/whirlpinch.c:379
 msgid "Whirling and Pinching..."
@@ -7334,9 +7233,8 @@ msgid "Pasting..."
 msgstr "Klistrar in..."
 
 #: plug-ins/common/wind.c:195
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Wi_nd..."
-msgstr "<Image>/Filter/Störningar/Vind..."
+msgstr "<Image>/Filter/Störningar/Vi_nd..."
 
 #: plug-ins/common/wind.c:328
 msgid "Rendering Blast..."
@@ -7406,9 +7304,8 @@ msgid "Higher values increase the magnitude of the effect"
 msgstr "Högre värden ökar magnituden av effekten"
 
 #: plug-ins/common/winprint.c:186
-#, fuzzy
 msgid "<Image>/File/_Print"
-msgstr "<Image>/Arkiv/Skriv ut"
+msgstr "<Image>/Arkiv/_Skriv ut"
 
 #: plug-ins/common/winprint.c:198
 msgid "<Image>/File/Page Setup"
@@ -7635,9 +7532,8 @@ msgid "Error during writing rgb image"
 msgstr "Fel uppstod då rgb-bild skrevs"
 
 #: plug-ins/common/zealouscrop.c:69
-#, fuzzy
 msgid "<Image>/Layer/Transform/_Zealous Crop"
-msgstr "<Image>/Lager/Transformera/Zealous Crop"
+msgstr "<Image>/Lager/Transformera/_Zealous Crop"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
@@ -8639,7 +8535,7 @@ msgid "invalid formatted GFlare file: %s\n"
 msgstr "felaktigt formatterad GFlare-fil: %s\n"
 
 #: plug-ins/gflare/gflare.c:1443
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GFlare `%s' is not saved.\n"
 "If you add a new entry in %s, like:\n"

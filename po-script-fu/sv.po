@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-06-25 12:48+0100\n"
+"POT-Creation-Date: 2003-07-26 00:06+0200\n"
+"PO-Revision-Date: 2003-07-26 00:09+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -809,9 +809,8 @@ msgstr "Färgskala"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient Reverse"
-msgstr "Färgskala"
+msgstr "Reversera färgskala"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
@@ -820,7 +819,7 @@ msgstr "Avstånd (bildpunkter)"
 # Kommer inte på något bättre
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Koskinn..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/Komönster..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
@@ -844,7 +843,7 @@ msgstr "Efterglöd"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Inbränning: behöver totalt två lager!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona Width"
@@ -1429,9 +1428,8 @@ msgid "Blend Gradient (Text)"
 msgstr "Färgtoningsskala (text)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
-#, fuzzy
 msgid "Outline Gradient Reverse"
-msgstr "Utsmetningsradie för kontur"
+msgstr "Reversera konturgradient"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
@@ -1452,7 +1450,7 @@ msgstr "Skugga"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "Reversera textgradient"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
