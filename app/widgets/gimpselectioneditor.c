@@ -182,7 +182,7 @@ gimp_selection_editor_constructor (GType                  type,
 
   str = g_strdup_printf (_("Selection to path\n"
                            "%s  Advanced options"),
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
   editor->path_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "vectors",

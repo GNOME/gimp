@@ -308,7 +308,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                             editor);
 
   str = g_strdup_printf (_("New color from FG\n%s  from BG"),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
   editor->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_NEW, str,

@@ -172,7 +172,8 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the pick FG/BG frame  */
-  str = g_strdup_printf (_("Pick Mode  %s"), gimp_get_mod_name_control ());
+  str = g_strdup_printf (_("Pick Mode  %s"),
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
   frame = gimp_prop_enum_radio_frame_new (config, "pick-mode", str, -1, -1);
   g_free (str);
 

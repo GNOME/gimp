@@ -207,7 +207,7 @@ gimp_tool_options_editor_constructor (GType                  type,
 
   str = g_strdup_printf (_("Reset to default values\n"
                            "%s  Reset all Tool Options"),
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
   editor->reset_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "tool-options",
                                    "tool-options-reset",

@@ -130,8 +130,8 @@ gimp_document_view_new (GimpViewType     view_type,
   str = g_strdup_printf (_("Open the selected entry\n"
                            "%s  Raise window if already open\n"
                            "%s  Open image dialog"),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK),
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
 
   document_view->open_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
@@ -159,8 +159,8 @@ gimp_document_view_new (GimpViewType     view_type,
   str = g_strdup_printf (_("Recreate preview\n"
                            "%s  Reload all previews\n"
                            "%s  Remove Dangling Entries"),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK),
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
 
   document_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",

@@ -56,6 +56,7 @@ const gchar * gimp_get_mod_name_shift    (void);
 const gchar * gimp_get_mod_name_control  (void);
 const gchar * gimp_get_mod_name_alt      (void);
 const gchar * gimp_get_mod_separator     (void);
+const gchar * gimp_get_mod_string        (GdkModifierType  modifiers);
 
 void          gimp_get_screen_resolution (GdkScreen       *screen,
                                           gdouble         *xres,

@@ -324,14 +324,14 @@ gimp_scale_constraints_callback (GtkWidget *widget,
 
   value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                               "gimp-item-data"));
-  
+
   c0 = c1 = FALSE;
 
   if (value == 1 || value == 3)
     c0 = TRUE;
   if (value == 2 || value == 3)
     c1 = TRUE;
-  
+
   g_object_set (config,
                 "constrain-1", c0,
                 "constrain-2", c1,
@@ -398,7 +398,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   button = gimp_prop_check_button_new (config, "show-preview", _("Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  
+
   /*  the grid frame  */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -431,10 +431,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
     {
       GtkWidget *vbox2;
       GtkWidget *vbox3;
-      gchar     *str;
-      gchar     *str1;
-      gchar     *str2;
-      gchar     *str3;
 
       /*  the constraints frame  */
       frame = gimp_frame_new (_("Constraints"));
@@ -448,8 +444,10 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
       if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
         {
+          gchar *str;
+
           str = g_strdup_printf (_("15 degrees  %s"),
-                                 gimp_get_mod_name_control ());
+                                 gimp_get_mod_string (GDK_CONTROL_MASK));
 
           button = gimp_prop_check_button_new (config, "constrain-1", str);
           gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
@@ -459,17 +457,22 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         }
       else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
-          g_object_set (config, 
+          gchar *str1;
+          gchar *str2;
+          gchar *str3;
+
+          g_object_set (config,
                         "constrain-1", FALSE,
                         "constrain-2", FALSE,
                         NULL);
 
           str1 = g_strdup_printf (_("Keep height  %s"),
-                                 gimp_get_mod_name_control ());
+                                  gimp_get_mod_string (GDK_SHIFT_MASK));
           str2 = g_strdup_printf (_("Keep width  %s"),
-                                 gimp_get_mod_name_alt ());
-          str3 = g_strdup_printf (_("Keep aspect  %s-%s"),
-                                 gimp_get_mod_name_control (), gimp_get_mod_name_alt ());
+                                  gimp_get_mod_string (GDK_MOD1_MASK));
+          str3 = g_strdup_printf (_("Keep aspect  %s"),
+                                  gimp_get_mod_string (GDK_CONTROL_MASK |
+                                                       GDK_MOD1_MASK));
 
           vbox3 = gimp_int_radio_group_new (FALSE, NULL,
                                             G_CALLBACK (gimp_scale_constraints_callback),
@@ -481,7 +484,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
                                             str3,      3, NULL,
 
                                             NULL);
-                                            
+
           gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
           gtk_widget_show (vbox3);
 

@@ -225,7 +225,8 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (label);
 
   /*  tool toggle  */
-  title = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_shift ());
+  title = g_strdup_printf (_("Tool Toggle  %s"),
+                           gimp_get_mod_string (GDK_SHIFT_MASK));
 
   frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
                                              title, "true", "false");

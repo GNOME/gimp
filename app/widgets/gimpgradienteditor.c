@@ -1123,7 +1123,7 @@ control_do_hint (GimpGradientEditor *editor,
 	      if (seg->prev != NULL)
                 {
                   str = g_strdup_printf (_("%s%sDrag: move & compress"),
-                                         gimp_get_mod_name_shift (),
+                                         gimp_get_mod_string (GDK_SHIFT_MASK),
                                          gimp_get_mod_separator ());
 
                   gradient_editor_set_hint (editor,
@@ -1136,7 +1136,7 @@ control_do_hint (GimpGradientEditor *editor,
 	      else
                 {
                   str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                         gimp_get_mod_name_shift (),
+                                         gimp_get_mod_string (GDK_SHIFT_MASK),
                                          gimp_get_mod_separator ());
 
                   gradient_editor_set_hint (editor,
@@ -1150,7 +1150,7 @@ control_do_hint (GimpGradientEditor *editor,
 	  else
 	    {
               str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                     gimp_get_mod_name_shift (),
+                                     gimp_get_mod_string (GDK_SHIFT_MASK),
                                      gimp_get_mod_separator ());
 
 	      gradient_editor_set_hint (editor,
@@ -1164,7 +1164,7 @@ control_do_hint (GimpGradientEditor *editor,
 
 	case GRAD_DRAG_MIDDLE:
           str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                 gimp_get_mod_name_shift (),
+                                 gimp_get_mod_string (GDK_SHIFT_MASK),
                                  gimp_get_mod_separator ());
 
 	  gradient_editor_set_hint (editor,
@@ -1186,10 +1186,10 @@ control_do_hint (GimpGradientEditor *editor,
       gchar *str2;
 
       str  = g_strdup_printf (_("%s%sClick: extend selection"),
-                              gimp_get_mod_name_shift (),
+                              gimp_get_mod_string (GDK_SHIFT_MASK),
                               gimp_get_mod_separator ());
       str2 = g_strdup_printf (_("%s%sDrag: move & compress"),
-                              gimp_get_mod_name_shift (),
+                              gimp_get_mod_string (GDK_SHIFT_MASK),
                               gimp_get_mod_separator ());
 
       gradient_editor_set_hint (editor,

@@ -166,12 +166,11 @@ gimp_channel_tree_view_constructor (GType                  type,
   str = g_strdup_printf (_("Channel to selection\n"
                            "%s  Add\n"
                            "%s  Subtract\n"
-                           "%s%s%s  Intersect"),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_name_control (),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_separator (),
-                         gimp_get_mod_name_control ());
+                           "%s  Intersect"),
+                         gimp_get_mod_string (GDK_SHIFT_MASK),
+                         gimp_get_mod_string (GDK_CONTROL_MASK),
+                         gimp_get_mod_string (GDK_SHIFT_MASK |
+                                              GDK_CONTROL_MASK));
 
   view->toselection_button =
     gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",

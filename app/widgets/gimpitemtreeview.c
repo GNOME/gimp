@@ -348,7 +348,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             view);
 
   str = g_strdup_printf (view_class->new_desc,
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
   view->new_button =
     gimp_editor_add_button (editor,
@@ -362,7 +362,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   str = g_strdup_printf (_("%s\n"
                            "%s  To Top"),
                          view_class->raise_desc,
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
   view->raise_button =
     gimp_editor_add_button (editor,
@@ -376,7 +376,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   str = g_strdup_printf (_("%s\n"
                            "%s  To Bottom"),
                          view_class->lower_desc,
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
   view->lower_button =
     gimp_editor_add_button (editor,

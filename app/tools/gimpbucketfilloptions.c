@@ -255,7 +255,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_paint_options_gui (tool_options);
 
   /*  fill type  */
-  str = g_strdup_printf (_("Fill Type  %s"), gimp_get_mod_name_control ());
+  str = g_strdup_printf (_("Fill Type  %s"),
+                         gimp_get_mod_string (GDK_CONTROL_MASK)),
   frame = gimp_prop_enum_radio_frame_new (config, "fill-mode", str, 0, 0);
   g_free (str);
 
@@ -263,7 +264,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  fill selection  */
-  str = g_strdup_printf (_("Affected Area  %s"), gimp_get_mod_name_shift ());
+  str = g_strdup_printf (_("Affected Area  %s"),
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
   frame = gimp_prop_boolean_radio_frame_new (config, "fill-selection",
                                              str,
                                              _("Fill whole selection"),

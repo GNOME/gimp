@@ -600,6 +600,67 @@ gimp_get_mod_separator (void)
   return (const gchar *) mod_separator;
 }
 
+const gchar *
+gimp_get_mod_string (GdkModifierType modifiers)
+{
+  static struct
+  {
+    GdkModifierType  modifiers;
+    gchar           *name;
+  }
+  modifier_strings[] =
+  {
+    { GDK_SHIFT_MASK,                                    NULL },
+    { GDK_CONTROL_MASK,                                  NULL },
+    { GDK_MOD1_MASK,                                     NULL },
+    { GDK_SHIFT_MASK | GDK_CONTROL_MASK,                 NULL },
+    { GDK_SHIFT_MASK | GDK_MOD1_MASK,                    NULL },
+    { GDK_CONTROL_MASK | GDK_MOD1_MASK,                  NULL },
+    { GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK, NULL }
+  };
+
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (modifier_strings); i++)
+    {
+      if (modifiers == modifier_strings[i].modifiers)
+        {
+          if (! modifier_strings[i].name)
+            {
+              GString *str = g_string_new ("");
+
+              if (modifiers & GDK_SHIFT_MASK)
+                {
+                  g_string_append (str, gimp_get_mod_name_shift ());
+                }
+
+              if (modifiers & GDK_CONTROL_MASK)
+                {
+                  if (str->len)
+                    g_string_append (str, gimp_get_mod_separator ());
+
+                  g_string_append (str, gimp_get_mod_name_control ());
+                }
+
+              if (modifiers & GDK_MOD1_MASK)
+                {
+                  if (str->len)
+                    g_string_append (str, gimp_get_mod_separator ());
+
+                  g_string_append (str, gimp_get_mod_name_alt ());
+                }
+
+              modifier_strings[i].name = g_string_free (str, FALSE);
+            }
+
+          return modifier_strings[i].name;
+        }
+    }
+
+  return "<BUG: unsupported modifiers>";
+}
+
+
 /**
  * gimp_get_screen_resolution:
  * @screen: a #GdkScreen or %NULL

@@ -239,7 +239,7 @@ gimp_colormap_editor_constructor (GType                  type,
                             editor);
 
   str = g_strdup_printf (_("Add color from FG\n%s  from BG"),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
   editor->add_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
                                    "colormap-editor-add-color-from-fg",

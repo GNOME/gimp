@@ -180,7 +180,7 @@ gimp_error_console_init (GimpErrorConsole *console)
 
   str = g_strdup_printf (_("Save all errors\n"
                            "%s  Save selection"),
-                         gimp_get_mod_name_shift ());
+                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
   console->save_button =
     gimp_editor_add_button (GIMP_EDITOR (console),

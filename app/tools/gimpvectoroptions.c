@@ -197,12 +197,11 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   str = g_strdup_printf (_("Path to Selection\n"
                            "%s  Add\n"
                            "%s  Subtract\n"
-                           "%s%s%s  Intersect"),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_name_control (),
-                         gimp_get_mod_name_shift (),
-                         gimp_get_mod_separator (),
-                         gimp_get_mod_name_control ());
+                           "%s  Intersect"),
+                         gimp_get_mod_string (GDK_SHIFT_MASK),
+                         gimp_get_mod_string (GDK_CONTROL_MASK),
+                         gimp_get_mod_string (GDK_SHIFT_MASK |
+                                              GDK_CONTROL_MASK));
 
   button = gimp_button_new ();
   gtk_button_set_label (GTK_BUTTON (button), _("Create selection from path"));

@@ -189,7 +189,7 @@ gimp_thumb_box_new (Gimp *gimp)
   str = g_strdup_printf (_("Click to update preview\n"
                            "%s  Click to force update even "
                            "if preview is up-to-date"),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
 
   gimp_help_set_help_data (ebox, str, NULL);
 

@@ -191,7 +191,7 @@ gimp_convolve_options_gui (GimpToolOptions *tool_options)
 
   /*  the type radio box  */
   str = g_strdup_printf (_("Convolve Type  %s"),
-                         gimp_get_mod_name_control ());
+                         gimp_get_mod_string (GDK_CONTROL_MASK));
 
   frame = gimp_prop_enum_radio_frame_new (config, "type",
                                           str, 0, 0);

@@ -1,3 +1,36 @@
+2004-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch]: added new function
+	gimp_get_mod_string() which takes a GdkModifierType and returns
+	correctly formated strings for all shift,control,alt combinations.
+
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpcolorpickeroptions.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpflipoptions.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpmoveoptions.c
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimpvectoroptions.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimpvectorstreeview.c: use the new function instead
+	of gimp_get_mod_name_shift(),control(),alt(),separator(). This
+	kindof addresses the issue of configurable modifier keys but is
+	actually indended to ease translation of format strings ("%s" is
+	easier to get right than "%s%s%s").
+
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
 	Allow all sorts of things to be dropped on or in between the
