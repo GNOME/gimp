@@ -1,6 +1,6 @@
 2005-02-11  Sven Neumann  <sven@gimp.org>
 
-	* app/base/pixel-processor.[ch]: code cleanup. Removed unsued code,
+	* app/base/pixel-processor.[ch]: code cleanup. Removed unused code,
 	renamed variables and types.
 
 	* app/base/gimphistogram.c
