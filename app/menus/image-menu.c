@@ -791,7 +791,6 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_BRANCH (N_("/Filters/Artistic")),
   MENU_BRANCH (N_("/Filters/Map")),
   MENU_BRANCH (N_("/Filters/Render")),
-  MENU_BRANCH (N_("/Filters/Text")),
   MENU_BRANCH (N_("/Filters/Web")),
 
   MENU_SEPARATOR ("/Filters/web-separator"),
