@@ -1,3 +1,8 @@
+2004-11-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c: some more HIG-ification tweaks to the
+	Export dialogs.
+
 2004-11-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpactiongroup.c

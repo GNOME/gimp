@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpexport.c
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -372,7 +372,6 @@ confirm_save_dialog (const gchar *message,
   GtkWidget        *image;
   GtkWidget        *main_vbox;
   GtkWidget        *label;
-  gchar            *tmp_text;
   gchar            *text;
   GimpExportReturn  retval;
 
@@ -389,9 +388,9 @@ confirm_save_dialog (const gchar *message,
 
 			    NULL);
 
-  hbox = gtk_hbox_new (FALSE, 8);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING,
@@ -400,23 +399,22 @@ confirm_save_dialog (const gchar *message,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  main_vbox = gtk_vbox_new (FALSE, 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  tmp_text = g_strdup_printf (message, format_name);
-  text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
-                          tmp_text);
-  g_free (tmp_text);
-
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label), text);
+  text = g_strdup_printf (message, format_name);
+  label = gtk_label_new (text);
   g_free (text);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
@@ -447,7 +445,6 @@ export_dialog (GSList      *actions,
   GtkWidget        *main_vbox;
   GtkWidget        *label;
   GSList           *list;
-  gchar            *tmp_text;
   gchar            *text;
   GimpExportReturn  retval;
 
@@ -466,9 +463,9 @@ export_dialog (GSList      *actions,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 8);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
@@ -477,26 +474,24 @@ export_dialog (GSList      *actions,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  main_vbox = gtk_vbox_new (FALSE, 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
   /* the headline */
-  tmp_text = g_strdup_printf (_("Your image should be exported before it "
-                                "can be saved as %s for the following reasons:"),
-                              format_name);
-  text = g_strdup_printf ("<span size=\"larger\">%s</span>",
-                          tmp_text);
-  g_free (tmp_text);
-
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label), text);
+  text = g_strdup_printf (_("Your image should be exported before it "
+                            "can be saved as %s for the following reasons:"),
+                          format_name);
+  label = gtk_label_new (text);
   g_free (text);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   for (list = actions; list; list = g_slist_next (list))
@@ -512,9 +507,8 @@ export_dialog (GSList      *actions,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 4);
+      vbox = gtk_vbox_new (FALSE, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
       if (action->possibilities[0] && action->possibilities[1])
 	{
@@ -544,9 +538,10 @@ export_dialog (GSList      *actions,
       else if (action->possibilities[0])
 	{
 	  label = gtk_label_new (gettext (action->possibilities[0]));
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+          gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
+	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	  gtk_widget_show (label);
 	  action->choice = 0;
 	}
@@ -555,18 +550,15 @@ export_dialog (GSList      *actions,
     }
 
   /* the footline */
-  text = g_strdup_printf ("<span style=\"italic\" size=\"larger\">%s</span>",
-                          _("The export conversion won't modify "
-                            "your original image."));
-
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label), text);
-  g_free (text);
-
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("The export conversion won't modify your "
+                           "original image."));
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
