@@ -1,3 +1,8 @@
+Wed Apr 21 00:36:03 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/menus.c: only add file to the 'recently opened' list if
+	    it's not there already.
+
 Tue Apr 20 21:53:01 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/color_cmds.c: moved a bunch of PDB stuff here
