@@ -32,9 +32,12 @@
 # Tips for beginners start here
 #
 
-The GIMP uses layers to let you organize your image.  Think of them 
-as a stack of slides or filters, such that looking through them you 
-see a composite of their contents.
+#The GIMP uses layers to let you organize your image.  Think of them 
+#as a stack of slides or filters, such that looking through them you 
+#see a composite of their contents.
+GIMP використову╓ шари дозволяючи орган╕зувати ваше зображення. Уяв╕ть
+соб╕ стосик ф╕льтр╕в  чи  слайд╕в,  дивлячись кр╕зь який,  ви побачите
+зображення, що склада╓ться з них.
 
 You can perform many layer operations by right-clicking on the text
 label of a layer in the Layers dialog (Dialogs->Layers & Channels).
