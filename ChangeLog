@@ -1,3 +1,8 @@
+2000-11-03  David Monniaux  <monniaux@quatramaran.ens.fr>
+
+	* autogen.sh: some regexps used to parse the output of
+	  <some tool> --version did not work with Solaris sed.
+
 2000-11-03  Nick Lamb  <njl195@zepler.org.uk>
 
 	* PLUGIN_MAINTAINERS: I'll take BMP and TGA too, any more?
