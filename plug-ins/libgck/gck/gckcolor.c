@@ -25,7 +25,8 @@
 /* to whatever format the current visual is.                 */
 /*************************************************************/
 
-#include "stdlib.h"
+#include <stdlib.h>
+#include <string.h>
 
 #include <glib.h>
 
