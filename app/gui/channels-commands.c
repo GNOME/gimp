@@ -376,7 +376,7 @@ channels_new_channel_query (GimpImage   *gimage,
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("New Channel"), "new_channel_options",
-                              GTK_STOCK_NEW,
+                              GIMP_STOCK_CHANNEL,
                               _("New Channel Options"),
                               gimp_standard_help_func,
                               "dialogs/channels/new_channel.html",

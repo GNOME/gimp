@@ -433,7 +433,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("New Path"), "new_path_options",
-                              GTK_STOCK_NEW,
+                              GIMP_STOCK_TOOL_PATH,
                               _("New Path Options"),
                               gimp_standard_help_func,
                               "dialogs/vectors/new_vectors.html",

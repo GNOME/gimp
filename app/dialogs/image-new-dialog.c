@@ -114,7 +114,7 @@ file_new_dialog_create (Gimp      *gimp,
   info->dialog =
     gimp_viewable_dialog_new (NULL,
                               _("New Image"), "new_image",
-                              GTK_STOCK_NEW,
+                              GIMP_STOCK_IMAGE,
                               _("Create a New Image"),
                               gimp_standard_help_func,
                               "dialogs/file_new.html",

@@ -1,3 +1,11 @@
+2003-03-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/channels-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c: use layer, channel, ... icons for
+	the new layer, channel, ... dialogs.
+
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplist.[ch]: added new function gimp_list_sort().

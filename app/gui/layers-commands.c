@@ -575,7 +575,7 @@ layers_new_layer_query (GimpImage *gimage,
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("New Layer"), "new_layer_options",
-                              GTK_STOCK_NEW,
+                              GIMP_STOCK_LAYER,
                               _("Create a New Layer"),
                               gimp_standard_help_func,
                               "dialogs/layers/new_layer.html",
