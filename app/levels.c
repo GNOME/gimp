@@ -1325,7 +1325,7 @@ levels_input_da_events (GtkWidget    *widget,
 	  ld->gamma[ld->channel] = 1.0 / pow (10, tmp);
 
 	  /*  round the gamma value to the nearest 1/100th  */
-	  snprintf (text, sizeof (text), "%2.2f", ld->gamma[ld->channel]);
+	  g_snprintf (text, sizeof (text), "%2.2f", ld->gamma[ld->channel]);
 	  ld->gamma[ld->channel] = atof (text);
 	  break;
 
