@@ -1455,6 +1455,7 @@ GIMP_PENCIL_OPTIONS_GET_CLASS
 <SECTION>
 <FILE>gimpsmudge</FILE>
 <TITLE>GimpSmudge</TITLE>
+GimpSmudge
 gimp_smudge_register
 <SUBSECTION Standard>
 GIMP_SMUDGE

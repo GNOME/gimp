@@ -84,6 +84,8 @@
 
   <chapter>
     <title>Core</title>
+    <xi:include href="xml/core-enums.xml"/>
+    <xi:include href="xml/core-types.xml"/>
     <xi:include href="xml/gimp.xml"/>
     <xi:include href="xml/gimpbrush.xml"/>
     <xi:include href="xml/gimpbrushgenerated.xml"/>
@@ -117,11 +119,6 @@
     <xi:include href="xml/gimpundo.xml"/>
     <xi:include href="xml/gimpundostack.xml"/>
     <xi:include href="xml/gimpviewable.xml"/>
-    <xi:include href="xml/gimpdisplay.xml"/>
-    <xi:include href="xml/gimpdisplayshell.xml"/>
-    <xi:include href="xml/gimpnavigationview.xml"/>
-    <xi:include href="xml/core-enums.xml"/>
-    <xi:include href="xml/core-types.xml"/>
     <xi:include href="xml/gimp-documents.xml"/>
     <xi:include href="xml/gimp-gradients.xml"/>
     <xi:include href="xml/gimp-parasites.xml"/>
@@ -287,6 +284,7 @@
     <title>Display</title>
     <xi:include href="xml/display-enums.xml"/>
     <xi:include href="xml/display-types.xml"/>
+    <xi:include href="xml/gimpdisplay.xml"/>
     <xi:include href="xml/gimpdisplay-area.xml"/>
     <xi:include href="xml/gimpdisplay-foreach.xml"/>
     <xi:include href="xml/gimpdisplay-handlers.xml"/>
@@ -304,12 +302,16 @@
     <xi:include href="xml/gimpdisplayshell-selection.xml"/>
     <xi:include href="xml/gimpdisplayshell-title.xml"/>
     <xi:include href="xml/gimpdisplayshell-transform.xml"/>
+    <xi:include href="xml/gimpdisplayshell.xml"/>
+    <xi:include href="xml/gimpnavigationview.xml"/>
     <xi:include href="xml/gimpprogress.xml"/>
     <xi:include href="xml/gimpstatusbar.xml"/>
   </chapter>
 
   <chapter>
     <title>Tools</title>
+    <xi:include href="xml/tools-enums.xml"/>
+    <xi:include href="xml/tools-types.xml"/>
     <xi:include href="xml/gimpairbrushtool.xml"/>
     <xi:include href="xml/gimpblendoptions.xml"/>
     <xi:include href="xml/gimpblendtool.xml"/>
@@ -376,8 +378,6 @@
     <xi:include href="xml/gimptooloptions-gui.xml"/>
     <xi:include href="xml/gimptransformtool-undo.xml"/>
     <xi:include href="xml/tool_manager.xml"/>
-    <xi:include href="xml/tools-enums.xml"/>
-    <xi:include href="xml/tools-types.xml"/>
     <xi:include href="xml/tools.xml"/>
   </chapter>
 
