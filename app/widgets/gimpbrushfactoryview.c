@@ -113,8 +113,8 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
   view->spacing_adjustment =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                           _("Spacing:"), -1, -1,
-                                          0.0, 1.0, 1000.0, 1.0, 10.0, 1,
-                                          TRUE, 0.0, 0.0,
+                                          0.0, 1.0, 200.0, 1.0, 10.0, 1,
+                                          FALSE, 1.0, 5000.0,
                                           _("Percentage of width of brush"), 
                                           NULL));
 
