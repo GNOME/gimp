@@ -436,7 +436,7 @@ lens_dialog (GDrawable *drawable)
 				     drawtype == INDEXEDA_IMAGE ||
 				     drawtype == INDEXED_IMAGE ?
 				     _("Set Surroundings to Index 0") :
-				     _("Set Surroundings to Background Bolor"));
+				     _("Set Surroundings to Background Color"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

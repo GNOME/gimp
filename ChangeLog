@@ -1,3 +1,8 @@
+Mon Jan 17 22:24:00 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/common/apply_lens.c: fixed typos
+
 Mon Jan 17 12:05:35 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* help/C/*/Makefile.am: use $(LN_S) instead of ln -sf, should fix

@@ -748,7 +748,7 @@ alienmap2_dialog (void)
   gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
 			   NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Modify Green/Caturation Channel"));
+  toggle = gtk_check_button_new_with_label (_("Modify Green/Saturation Channel"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
