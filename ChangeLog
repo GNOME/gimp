@@ -1,3 +1,15 @@
+Tue Oct  5 14:02:07 EDT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/iscissors.c: all-singing, all-dancing iscissors.  Now
+	    scan converts so you can actually select stuff.  Doesn't leak
+	    tiles either.  Still have a problem with occasional segfault
+	    and CRITICAL assertion failing on addition of anchor when
+	    curve not closed.
+	* app/scan_convert.c: add connecting list between blocks of points
+	    so we actually have a closed polygon.
+	* app/tool_options.c: iscissors has just the standard feather and
+	    antialias options now.
+
 Mon Oct  4 19:13:39 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/color_display.h

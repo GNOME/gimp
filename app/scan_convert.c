@@ -23,6 +23,13 @@
 #include "libgimp/gimpintl.h"
 
 
+#ifdef DEBUG
+#define TRC(x) printf x
+#else
+#define TRC(x)
+#endif
+
+
 /* Reveal our private structure */
 struct ScanConverterPrivate
 {
@@ -113,7 +120,6 @@ convert_segment (ScanConverter *sc,
     }
     else
     {
-	printf ("%d ===================== %d\n", x1, x2);
 	/* horizontal line */
 	scanlines[y1] = insert_into_sorted_list (scanlines[y1], ROUND (x1));
 	scanlines[y1] = insert_into_sorted_list (scanlines[y1], ROUND (x2));
@@ -168,6 +174,19 @@ scan_converter_add_points (ScanConverter *sc,
 	sc->first = pointlist[0];
     }
 
+    /* link from previous point */
+    if (sc->got_last && npoints > 0)
+    {
+	TRC (("|| %g,%g -> %g,%g\n",
+	      sc->last.x, sc->last.y,
+	      pointlist[0].x, pointlist[0].y));
+	convert_segment (sc,
+			 (int)sc->last.x * antialias,
+			 (int)sc->last.y * antialias,
+			 (int)pointlist[0].x * antialias,
+			 (int)pointlist[0].y * antialias);
+    }
+
     for (i = 0; i < (npoints - 1); i++)
     {
 	convert_segment (sc,
@@ -176,6 +195,10 @@ scan_converter_add_points (ScanConverter *sc,
 			 (int) pointlist[i + 1].x * antialias,
 			 (int) pointlist[i + 1].y * antialias);
     }
+
+    TRC (("[] %g,%g -> %g,%g\n",
+	  pointlist[0].x, pointlist[0].y,
+	  pointlist[npoints-1].x, pointlist[npoints-1].y));
 
     if (npoints > 0)
     {
@@ -233,13 +256,13 @@ scan_converter_to_channel (ScanConverter *sc,
     for(i=0; i<heighta; i++)
     {
 	list = sc->scanlines[i];
-	printf ("%03d: ", i);
+	TRC (("%03d: ", i));
 	while (list)
 	{
-	    printf ("%3d ", GPOINTER_TO_INT (list->data));
+	    TRC (("%3d ", GPOINTER_TO_INT (list->data)));
 	    list = g_slist_next (list);
 	}
-	printf ("\n");
+	TRC (("\n"));
     }
 
     pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 

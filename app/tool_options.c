@@ -333,11 +333,11 @@ selection_options_init (SelectionOptions     *options,
     {
     case FREE_SELECT:
     case BEZIER_SELECT:
+    case ISCISSORS:
       break;
     case RECT_SELECT:
     case ELLIPSE_SELECT:
     case FUZZY_SELECT:
-    case ISCISSORS:
     case BY_COLOR_SELECT:
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
