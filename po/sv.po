@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-08-21 14:22+0200\n"
-"PO-Revision-Date: 2003-08-21 14:25+0200\n"
+"POT-Creation-Date: 2003-08-21 16:31+0200\n"
+"PO-Revision-Date: 2003-08-21 16:34+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5343,7 +5343,7 @@ msgstr "Aktivera _löstagbara menyer"
 
 #: app/gui/preferences-dialog.c:1190
 msgid "Open _Recent Menu Size:"
-msgstr "Öppna Senaste menystorlek:"
+msgstr "Storlek av Öppna _senaste-menyn:"
 
 #. Keyboard Shortcuts
 #: app/gui/preferences-dialog.c:1194
@@ -5352,7 +5352,7 @@ msgstr "Kortkommandon"
 
 #: app/gui/preferences-dialog.c:1197
 msgid "Dynamic _Keyboard Shortcuts"
-msgstr "Dynamiska kortkommandon"
+msgstr "Dynamiska _kortkommandon"
 
 #: app/gui/preferences-dialog.c:1200
 msgid "Save Keyboard Shortcuts on Exit"
@@ -5360,7 +5360,7 @@ msgstr "Spara kortkommandon vid avslut"
 
 #: app/gui/preferences-dialog.c:1203
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
-msgstr "_Återställ sparade kortkommandon vid uppstart"
+msgstr "Återställ sparade kortkommandon vid uppstart"
 
 #: app/gui/preferences-dialog.c:1211
 msgid "Save Keyboard Shortcuts Now"
