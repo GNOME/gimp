@@ -1,5 +1,9 @@
 2004-08-07  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/illusion.c: ported to GimpPreviewArea.
+
+2004-08-07  DindinX  <david@dindinx.org>
+
 	* libgimpwidgets/gimppreviewarea.c: fixed the rendering for INDEXED
 	and INDEXEDA image types.
 
