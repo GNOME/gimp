@@ -20,11 +20,11 @@
 #define __GIMP_CLIPBOARD_H__
 
 
-void         gimp_clipboard_init         (Gimp *gimp);
-void         gimp_clipboard_exit         (Gimp *gimp);
+void         gimp_clipboard_init       (Gimp *gimp);
+void         gimp_clipboard_exit       (Gimp *gimp);
 
-gboolean     gimp_clipboard_is_available (Gimp *gimp);
-GimpBuffer * gimp_clipboard_get_buffer   (Gimp *gimp);
+gboolean     gimp_clipboard_has_buffer (Gimp *gimp);
+GimpBuffer * gimp_clipboard_get_buffer (Gimp *gimp);
 
 
 #endif /* __GIMP_CLIPBOARD_H__ */

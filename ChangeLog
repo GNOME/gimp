@@ -1,3 +1,9 @@
+2004-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpclipboard.[ch]: changed to allow pasting any
+	GdkPixbuf supported format (makes pasting from OpenOffice
+	work). Cleaned up a bit to perpare pasting of SVG data.
+
 2004-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_new_from_tiles): add an alpha

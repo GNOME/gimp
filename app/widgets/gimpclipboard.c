@@ -36,23 +36,29 @@
 #include "gimp-intl.h"
 
 
+#define GIMP_PIXBUF_FORMATS_KEY "gimp-pixbuf-formats"
+
 static  const GtkTargetEntry  target_entry = GIMP_TARGET_PNG;
 
 
-static void      gimp_clipboard_buffer_changed    (Gimp             *gimp);
-static void      gimp_clipboard_set               (Gimp             *gimp,
-                                                   GimpBuffer       *buffer);
+static void      gimp_clipboard_buffer_changed   (Gimp             *gimp);
+static void      gimp_clipboard_set              (Gimp             *gimp,
+                                                  GimpBuffer       *buffer);
 
-static void      gimp_clipboard_get               (GtkClipboard     *clipboard,
-                                                   GtkSelectionData *selection_data,
-                                                   guint             info,
-                                                   Gimp             *gimp);
-static gboolean  gimp_clipboard_wait_is_available (void);
+static void      gimp_clipboard_get              (GtkClipboard     *clipboard,
+                                                  GtkSelectionData *selection_data,
+                                                  guint             info,
+                                                  Gimp             *gimp);
+
+static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
+static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
 
 
 void
 gimp_clipboard_init (Gimp *gimp)
 {
+  GSList *pixbuf_formats;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_clipboard_set (gimp, gimp->global_buffer);
@@ -60,6 +66,11 @@ gimp_clipboard_init (Gimp *gimp)
   g_signal_connect_object (gimp, "buffer_changed",
                            G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
+
+  pixbuf_formats = gdk_pixbuf_get_formats ();
+
+  g_object_set_data_full (G_OBJECT (gimp), GIMP_PIXBUF_FORMATS_KEY,
+                          pixbuf_formats, (GDestroyNotify) g_slist_free);
 }
 
 void
@@ -71,10 +82,12 @@ gimp_clipboard_exit (Gimp *gimp)
                                         G_CALLBACK (gimp_clipboard_buffer_changed),
                                         NULL);
   gimp_clipboard_set (gimp, NULL);
+
+  g_object_set_data (G_OBJECT (gimp), GIMP_PIXBUF_FORMATS_KEY, NULL);
 }
 
 /**
- * gimp_clipboard_is_available:
+ * gimp_clipboard_has_buffer:
  * @gimp: pointer to #Gimp
  *
  * Tests if there's image data in the clipboard. If the global cut
@@ -86,14 +99,14 @@ gimp_clipboard_exit (Gimp *gimp)
  * Return value: %TRUE if there's image data in the clipboard, %FALSE otherwise
  **/
 gboolean
-gimp_clipboard_is_available (Gimp *gimp)
+gimp_clipboard_has_buffer (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
   if (gimp->global_buffer)
     return TRUE;
 
-  return gimp_clipboard_wait_is_available ();
+  return (gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE);
 }
 
 
@@ -148,18 +161,18 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 {
   GimpBuffer   *buffer = NULL;
   GtkClipboard *clipboard;
+  GdkAtom       atom;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                              &&
-      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
-      gimp_clipboard_wait_is_available ())
+  if (clipboard                                                         &&
+      gtk_clipboard_get_owner (clipboard)            != G_OBJECT (gimp) &&
+      (atom = gimp_clipboard_wait_for_buffer (gimp)) != GDK_NONE)
     {
       GtkSelectionData *data;
-      GdkAtom           atom = gdk_atom_intern (target_entry.target, FALSE);
 
       gimp_set_busy (gimp);
 
@@ -221,11 +234,10 @@ gimp_clipboard_set (Gimp       *gimp,
     }
 }
 
-static gboolean
-gimp_clipboard_wait_is_available (void)
+static GdkAtom *
+gimp_clipboard_wait_for_targets (gint *n_targets)
 {
   GtkClipboard *clipboard;
-  gboolean      result = FALSE;
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
@@ -239,27 +251,86 @@ gimp_clipboard_wait_is_available (void)
                                                                FALSE));
       if (data)
         {
-          GdkAtom *targets;
-          gint     n_targets;
+          GdkAtom  *targets;
+          gboolean  success;
 
-          if (gtk_selection_data_get_targets (data, &targets, &n_targets))
+          success = gtk_selection_data_get_targets (data, &targets, n_targets);
+
+          gtk_selection_data_free (data);
+
+          if (success)
             {
-              GdkAtom  atom = gdk_atom_intern (target_entry.target, FALSE);
+              gint i;
+
+              for (i = 0; i < *n_targets; i++)
+                g_print ("offered type: %s\n", gdk_atom_name (targets[i]));
+
+              g_print ("\n");
+
+              return targets;
+            }
+        }
+    }
+
+  return NULL;
+}
+
+static GdkAtom
+gimp_clipboard_wait_for_buffer (Gimp *gimp)
+{
+  GdkAtom *targets;
+  gint     n_targets;
+  GSList  *pixbuf_formats;
+  GdkAtom  result = GDK_NONE;
+
+  pixbuf_formats = g_object_get_data (G_OBJECT (gimp),
+                                      GIMP_PIXBUF_FORMATS_KEY);
+
+  targets = gimp_clipboard_wait_for_targets (&n_targets);
+
+  if (targets)
+    {
+      GSList *list;
+
+      for (list = pixbuf_formats; list; list = g_slist_next (list))
+        {
+          GdkPixbufFormat  *format = list->data;
+          gchar           **mime_types;
+          gchar           **type;
+
+          g_print ("checking pixbuf format '%s'\n",
+                   gdk_pixbuf_format_get_name (format));
+
+          mime_types = gdk_pixbuf_format_get_mime_types (format);
+
+          for (type = mime_types; *type; type++)
+            {
+              gchar   *mime_type = *type;
+              GdkAtom  atom      = gdk_atom_intern (mime_type, FALSE);
               gint     i;
+
+              g_print (" - checking mime type '%s'\n", mime_type);
 
               for (i = 0; i < n_targets; i++)
                 {
-                  g_print ("offered type: %s\n", gdk_atom_name (targets[i]));
-
                   if (targets[i] == atom)
-                    result = TRUE;
+                    {
+                      result = atom;
+                      break;
+                    }
                 }
 
-              g_free (targets);
+              if (result != GDK_NONE)
+                break;
             }
 
-          gtk_selection_data_free (data);
+          g_strfreev (mime_types);
+
+          if (result != GDK_NONE)
+            break;
         }
+
+      g_free (targets);
     }
 
   return result;
