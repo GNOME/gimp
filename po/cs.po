@@ -1,0 +1,6246 @@
+# Czech translation of GIMP 1.1.7.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Stanislav Brabec <utx@k332.feld.cvut.cz>, 1999.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP 1.1.7\n"
+"POT-Creation-Date: 1999-07-27 03:09+0200\n"
+"PO-Revision-Date: 1999-06-08 13:40+02:00\n"
+"Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: app/about_dialog.c:156
+msgid "About the GIMP"
+msgstr "O programu GIMP"
+
+#: app/about_dialog.c:198
+msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+
+#: app/about_dialog.c:201
+msgid "Version "
+msgstr "Verzi "
+
+#: app/about_dialog.c:202
+msgid " brought to you by"
+msgstr " pro vás napsali"
+
+#: app/about_dialog.c:208
+msgid "Spencer Kimball & Peter Mattis"
+msgstr "Spencer Kimball a Peter Mattis"
+
+#: app/about_dialog.c:240
+msgid "Please visit http://www.gimp.org/ for more info"
+msgstr "Více se dozvíte, nav¹tívíte-li http://www.gimp.org/"
+
+#: app/airbrush.c:127
+msgid "Rate:"
+msgstr "Rychlost:"
+
+#. the pressure scale
+#: app/airbrush.c:145 app/convolve.c:153 app/smudge.c:116
+msgid "Pressure:"
+msgstr "Tlak:"
+
+#: app/airbrush.c:206
+msgid "killing stray timer, please report to lewing@gimp.org"
+msgstr "ru¹í se zbloudilý èasovaè, prosím ohlaste na lewing@gimp.org"
+
+#: app/app_procs.c:358
+msgid "GIMP Startup"
+msgstr "Spou¹tí se program GIMP"
+
+#: app/app_procs.c:471 app/gimprc.c:394
+#, c-format
+msgid "parsing \"%s\"\n"
+msgstr "analyzuje se \"%s\"\n"
+
+#. initialize the xcf file format routines
+#: app/app_procs.c:526
+msgid "Looking for data files"
+msgstr "Hledají se datové soubory"
+
+#: app/app_procs.c:526
+msgid "Parasites"
+msgstr "Cizopasníci"
+
+#. initialize  the global parasite table
+#: app/app_procs.c:528 app/internal_procs.c:70 app/preferences_dialog.c:2395
+msgid "Brushes"
+msgstr "©tìtce"
+
+#. initialize the list of gimp brushes
+#: app/app_procs.c:530 app/internal_procs.c:139 app/preferences_dialog.c:2397
+msgid "Patterns"
+msgstr "Vzorky"
+
+#. initialize the list of gimp patterns
+#: app/app_procs.c:532 app/preferences_dialog.c:2399
+msgid "Palettes"
+msgstr "Palety"
+
+#. initialize the list of gimp palettes
+#: app/app_procs.c:534 app/gradient_select.c:557 app/internal_procs.c:109
+#: app/preferences_dialog.c:2401
+msgid "Gradients"
+msgstr "Pøechody"
+
+#: app/app_procs.c:702 app/app_procs.c:703 app/app_procs.c:728
+#: app/app_procs.c:729 app/menus.c:82 app/menus.c:97
+msgid "/File/Quit"
+msgstr "/Soubor/Konec"
+
+#: app/app_procs.c:733
+msgid "Really Quit?"
+msgstr "Opravdu skonèit?"
+
+#: app/app_procs.c:741 app/fileops.c:1576
+msgid "Yes"
+msgstr "Ano"
+
+#: app/app_procs.c:750 app/fileops.c:1577
+msgid "No"
+msgstr "Ne"
+
+#: app/app_procs.c:776
+#, fuzzy
+msgid ""
+"Some files unsaved.\n"
+"\n"
+"Quit the GIMP?"
+msgstr "Nìkteré soubory nejsou zapsány. Opravdu opustit GIMP?"
+
+#: app/batch.c:65
+msgid "script-fu not available: batch mode disabled\n"
+msgstr "script-fu není dostupné: dávkový re¾im zakázán\n"
+
+#: app/batch.c:74
+msgid "reading batch commands from stdin\n"
+msgstr "ète se dávka pøíkazù ze standardního vstupu\n"
+
+#: app/batch.c:114
+msgid "batch command: experienced an execution error.\n"
+msgstr "pøíkaz dávky: do¹lo k chybì pøi vykonávání.\n"
+
+#: app/batch.c:117
+msgid "batch command: experienced a calling error.\n"
+msgstr "pøíkaz dávky: do¹lo k chybì volání.\n"
+
+#: app/batch.c:120
+msgid "batch command: executed successfully.\n"
+msgstr "pøíkaz dávky: probìhlo úspì¹nì.\n"
+
+#: app/batch.c:204
+msgid "extension_perl_server not available: unable to start the perl server\n"
+msgstr ""
+"extension_perl_server není dostupné: nepodaøilo se spustit server perlu\n"
+
+#: app/batch.c:220
+msgid "perl server: experienced an execution error.\n"
+msgstr "server perlu: do¹lo k chybì pøi vykonávání.\n"
+
+#: app/batch.c:223
+msgid "perl server: experienced a calling error.\n"
+msgstr "server perlu: do¹lo k chybì volání.\n"
+
+#: app/batch.c:226
+msgid "perl server: executed successfully.\n"
+msgstr "server perlu: probìhlo úspì¹nì.\n"
+
+#: app/bezier_select.c:473
+msgid "Bezier path already closed."
+msgstr "Bézierova køivka je ji¾ uzavøená."
+
+#: app/bezier_select.c:494
+msgid "Corrupt curve"
+msgstr "Poru¹ená køivka"
+
+#: app/bezier_select.c:1008
+#, fuzzy
+msgid ""
+"bezier_select_button_press(): Tried to edit on open bezier curve in edit "
+"selection"
+msgstr "pokus o editaci otevøené Bézierovy køivky v úpravách výbìru"
+
+#: app/bezier_select.c:1288
+#, fuzzy
+msgid "bezier_select_motion(): Encountered orphaned bezier control point"
+msgstr "Nalezen opu¹tìný øídící bod Bézierovy køivky"
+
+#: app/bezier_select.c:1971
+#, fuzzy
+msgid "bezier_draw_segment(): Bad bezier segment"
+msgstr "¹patný úsek Bézierovy køivky"
+
+#: app/bezier_select.c:1988
+#, fuzzy, c-format
+msgid "bezier_draw_segment(): Unknown coordinate space: %d"
+msgstr "neznámý souøadnicový systém: %d"
+
+#: app/bezier_select.c:2131
+#, fuzzy
+msgid "bezier_convert(): tried to convert an open bezier curve"
+msgstr "pokus o pøevod otevøené Bézierovy køivky"
+
+#: app/bezier_select.c:2632
+#, fuzzy, c-format
+msgid "test_add_point_on_segment(): Unknown coordinate space: %d"
+msgstr "neznámý souøadnicový systém: %d"
+
+#: app/bezier_select.c:3171
+msgid "Paintbrush operation failed."
+msgstr "©tìtec selhal."
+
+#: app/bezier_select.c:3215
+msgid "bezier_draw_segment_for_distance(): Bad bezier segment"
+msgstr ""
+
+#: app/blend.c:261
+msgid "FG to BG (RGB)"
+msgstr "Popøedí do pozadí (RGB)"
+
+#: app/blend.c:263
+msgid "FG to BG (HSV)"
+msgstr "Popøedí do pozadí (HSV)"
+
+#: app/blend.c:265
+msgid "FG to Transparent"
+msgstr "Pozadí do prùhlednosti"
+
+#: app/blend.c:267
+msgid "Custom from editor"
+msgstr "Vlastní z editoru"
+
+#: app/blend.c:273 app/gradient.c:472
+msgid "Linear"
+msgstr "Lineární"
+
+#: app/blend.c:275
+msgid "Bi-Linear"
+msgstr "Bilineární"
+
+#: app/blend.c:277
+msgid "Radial"
+msgstr "Radiální"
+
+#: app/blend.c:279
+msgid "Square"
+msgstr "Ètvercový"
+
+#: app/blend.c:281
+msgid "Conical (symmetric)"
+msgstr "Ku¾elový (symetrický)"
+
+#: app/blend.c:283
+msgid "Conical (asymmetric)"
+msgstr "Ku¾elový (nesymetrický)"
+
+#: app/blend.c:285
+msgid "Shapeburst (angular)"
+msgstr "Pronikající (úhlový)"
+
+#: app/blend.c:287
+msgid "Shapeburst (spherical)"
+msgstr "Pronikající (kulový)"
+
+#: app/blend.c:289
+msgid "Shapeburst (dimpled)"
+msgstr "Pronikající (dùlkový)"
+
+#: app/blend.c:291
+msgid "Spiral (clockwise)"
+msgstr "Spirála (ve smìru hodinových ruèièek)"
+
+#: app/blend.c:293
+msgid "Spiral (anticlockwise)"
+msgstr "Spirála (proti smìru hodinových ruèièek)"
+
+#: app/blend.c:299 app/preferences_dialog.c:1759
+msgid "None"
+msgstr "Není"
+
+#: app/blend.c:301
+msgid "Sawtooth wave"
+msgstr "Pilová vlna"
+
+#: app/blend.c:303
+msgid "Triangular wave"
+msgstr "Trojúhelníková vlna"
+
+#: app/blend.c:331
+msgid "Offset:"
+msgstr "Posun:"
+
+#. the blend mode menu
+#: app/blend.c:349
+msgid "Blend:"
+msgstr "Mísení:"
+
+#. the gradient type menu
+#: app/blend.c:367
+msgid "Gradient:"
+msgstr "Pøechod:"
+
+#. the repeat option
+#: app/blend.c:385
+msgid "Repeat:"
+msgstr "Opakování:"
+
+#: app/blend.c:418
+msgid "Adaptive supersampling"
+msgstr "Adaptivní pøevzorkování"
+
+#. max depth scale
+#: app/blend.c:440
+msgid "Max depth:"
+msgstr "Nejvìt¹í hloubka:"
+
+#. threshold scale
+#: app/blend.c:458 app/bucket_fill.c:136 app/fuzzy_select.c:641
+#: app/iscissors.c:356
+msgid "Threshold:"
+msgstr "Práh:"
+
+#: app/blend.c:496
+msgid "Blend: Invalid for indexed images."
+msgstr "Mísení: Není povoleno pro indexované obrázky."
+
+#: app/blend.c:521
+msgid "Blend: 0, 0"
+msgstr "Mísení: 0, 0"
+
+#: app/blend.c:584
+msgid "Blend operation failed."
+msgstr "Mísení selhalo."
+
+#: app/blend.c:590
+msgid "Blending..."
+msgstr "Mísení..."
+
+#: app/blend.c:661 app/blend.c:671
+msgid "Blend: "
+msgstr "Mísení: "
+
+#: app/blend.c:1326
+#, fuzzy, c-format
+msgid "gradient_render_pixel(): Unknown gradient type %d"
+msgstr "gradient_render_pixel(): neznámý typ pøechodu %d"
+
+#: app/blend.c:1464
+#, fuzzy, c-format
+msgid "gradient_fill_region(): Unknown blend mode %d"
+msgstr "gradient_fill_region(): neznámý typ mísení %d"
+
+#: app/blend.c:1505
+#, fuzzy, c-format
+msgid "gradient_fill_region(): Unknown gradient type %d"
+msgstr "gradient_fill_region(): neznámý typ pøechodu %d"
+
+#: app/blend.c:1527
+#, fuzzy, c-format
+msgid "gradient_fill_region(): Unknown repeat mode %d"
+msgstr "gradient_fill_region(): neznámý typ opakování %d"
+
+#: app/boundary.c:202
+#, fuzzy
+msgid "make_seg(): Unable to reallocate segments array for mask boundary."
+msgstr "Nepodaøilo se pøemístit v pamìti pole segmentù hranic masky."
+
+#: app/boundary.c:244
+#, fuzzy
+msgid ""
+"allocate_empty_segs(): Unable to reallocate empty segments array for mask "
+"boundary."
+msgstr "Nepodaøilo se pøemístit v pamìti prázdné pole segmentù hranic masky."
+
+#: app/brightness_contrast.c:135
+msgid "Brightness-Contrast Options"
+msgstr "Volby jasu-kontrastu"
+
+#: app/brightness_contrast.c:171
+msgid "Brightness-Contrast does not operate on indexed drawables."
+msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
+
+#: app/brightness_contrast.c:213 app/channel_ops.c:82
+#: app/channels_dialog.c:1840 app/channels_dialog.c:2029
+#: app/color_balance.c:273 app/color_notebook.c:49 app/color_notebook.c:192
+#: app/color_select.c:155 app/color_select.c:210 app/convert.c:293
+#: app/curves.c:517 app/file_new_dialog.c:292 app/file_new_dialog.c:482
+#: app/hue_saturation.c:361 app/interface.c:1013 app/interface.c:1391
+#: app/layers_dialog.c:2812 app/layers_dialog.c:3042 app/layers_dialog.c:3178
+#: app/layers_dialog.c:3635 app/levels.c:335 app/module_db.c:263
+#: app/posterize.c:199 app/preferences_dialog.c:1469 app/resize.c:115
+#: app/threshold.c:278
+msgid "OK"
+msgstr "OK"
+
+#: app/brightness_contrast.c:214 app/channel_ops.c:83
+#: app/channels_dialog.c:1841 app/channels_dialog.c:2030
+#: app/color_balance.c:274 app/color_notebook.c:50 app/color_notebook.c:193
+#: app/color_select.c:156 app/color_select.c:211 app/convert.c:294
+#: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
+#: app/gdisplay_ops.c:348 app/gimpprogress.c:135 app/global_edit.c:712
+#: app/gradient.c:1557 app/gradient.c:4603 app/gradient.c:5182
+#: app/hue_saturation.c:362 app/interface.c:917 app/interface.c:1014
+#: app/layers_dialog.c:2813 app/layers_dialog.c:3043 app/layers_dialog.c:3179
+#: app/layers_dialog.c:3317 app/layers_dialog.c:3636 app/levels.c:336
+#: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:116
+#: app/threshold.c:279
+msgid "Cancel"
+msgstr "Zru¹it"
+
+#: app/brightness_contrast.c:225 app/tools.c:517
+msgid "Brightness-Contrast"
+msgstr "Jas-kontrast"
+
+#. Create the brightness scale widget
+#: app/brightness_contrast.c:241
+msgid "Brightness"
+msgstr "Jas"
+
+#. Create the contrast scale widget
+#: app/brightness_contrast.c:274
+msgid "Contrast"
+msgstr "Kontrast"
+
+#. The preview toggle
+#: app/brightness_contrast.c:312 app/color_balance.c:438 app/curves.c:651
+#: app/fileops.c:395 app/hue_saturation.c:572 app/levels.c:531
+#: app/palette.c:2838 app/posterize.c:246 app/threshold.c:354
+msgid "Preview"
+msgstr "Náhled"
+
+#. The close push button
+#: app/brush_edit.c:37 app/brush_select.c:135 app/by_color_select.c:664
+#: app/color_notebook.c:187 app/color_picker.c:206 app/color_select.c:205
+#: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
+#: app/devices.c:124 app/docindexif.c:100 app/errorconsole.c:260
+#: app/gdisplay_ops.c:347 app/gradient.c:679 app/gradient_select.c:76
+#: app/histogram_tool.c:262 app/info_window.c:120 app/lc_dialog.c:196
+#: app/palette.c:1984 app/palette.c:1990 app/palette.c:2725
+#: app/palette_select.c:55 app/pattern_select.c:87 app/tips_dialog.c:146
+#: app/tools.c:874 libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+msgid "Close"
+msgstr "Zavøít"
+
+#: app/brush_edit.c:199
+msgid "Brush Editor"
+msgstr "Editor ¹tìtcù"
+
+#. brush radius scale
+#: app/brush_edit.c:239 app/color_picker.c:161 app/tool_options.c:284
+msgid "Radius:"
+msgstr "Prùmìr:"
+
+#. brush hardness scale
+#: app/brush_edit.c:256
+msgid "Hardness:"
+msgstr "Tvrdost:"
+
+#. brush aspect ratio scale
+#: app/brush_edit.c:272
+msgid "Aspect Ratio:"
+msgstr "Pomìr stran:"
+
+#. brush angle scale
+#: app/brush_edit.c:288 app/rotate_tool.c:91
+msgid "Angle:"
+msgstr "Úhel:"
+
+#: app/brush_select.c:134 app/gradient.c:678 app/module_db.c:307
+#: app/palette.c:1989 app/pattern_select.c:86
+msgid "Refresh"
+msgstr "Zaktualizovat"
+
+#: app/brush_select.c:155
+msgid "Brush Selection"
+msgstr "Výbìr ¹tìtce"
+
+#: app/brush_select.c:244 app/pattern_select.c:144
+msgid "Active"
+msgstr "Aktivní"
+
+#. Create the opacity scale widget
+#: app/brush_select.c:274 app/layers_dialog.c:331 app/tool_options.c:593
+msgid "Opacity:"
+msgstr "Krytí:"
+
+#. Create the paint mode option menu
+#: app/brush_select.c:292 app/layers_dialog.c:304 app/tool_options.c:623
+msgid "Mode:"
+msgstr "Re¾im:"
+
+#: app/brush_select.c:315
+msgid "Edit Brush"
+msgstr "Úpravy ¹tìtce"
+
+#: app/brush_select.c:321
+msgid "New Brush"
+msgstr "Nový ¹tìtec"
+
+#: app/brush_select.c:343
+msgid "Spacing:"
+msgstr "Skok:"
+
+#: app/brush_select.c:536
+msgid "failed to run brush callback function"
+msgstr "nepodaøilo se vyvolat funkci zpìtného volání ¹tìtce"
+
+#: app/brush_select.c:1213
+msgid ""
+"We are all fresh out of brush editors today,\n"
+"please write your own or try back tomorrow\n"
+msgstr ""
+"Dnes jsme ji¾ v¹ichni vyèerpání editory ¹tìtcù,\n"
+"napi¹te prosím svùj nebo zkuste pøí¹tì\n"
+
+#: app/bucket_fill.c:113
+msgid "FG Color Fill"
+msgstr "Vyplòování popøedí barvou"
+
+#: app/bucket_fill.c:114
+msgid "BG Color Fill"
+msgstr "Vyplòování pozadí barvou"
+
+#: app/bucket_fill.c:115
+msgid "Pattern Fill"
+msgstr "Vyplòování vzorkem"
+
+#: app/bucket_fill.c:156 app/color_picker.c:136 app/tool_options.c:358
+msgid "Sample Merged"
+msgstr "Slouèený vzorek"
+
+#. fill type
+#: app/bucket_fill.c:164 app/file_new_dialog.c:842
+msgid "Fill Type"
+msgstr "Typ vyplòování"
+
+#: app/bucket_fill.c:242
+msgid "Bucket Fill operation failed."
+msgstr "Vyplòování z plechovky se nezdaøilo."
+
+#: app/bucket_fill.c:344
+msgid "No available patterns for this operation."
+msgstr "K práci nejsou dostupné ¾ádné vzorky."
+
+#: app/by_color_select.c:542 app/paint_funcs.c:100
+msgid "Replace"
+msgstr "Pøepsat"
+
+#: app/by_color_select.c:543 app/colormap_dialog.i.c:99
+msgid "Add"
+msgstr "Pøidat"
+
+#: app/by_color_select.c:544 app/layers_dialog.c:212 app/tool_options.c:784
+msgid "Subtract"
+msgstr "Rozdíl"
+
+#: app/by_color_select.c:545
+msgid "Intersect"
+msgstr "Prùnik"
+
+#: app/by_color_select.c:564
+msgid "By Color Selection"
+msgstr "Výbìr dle barvy"
+
+#: app/by_color_select.c:607
+msgid "Inactive"
+msgstr "Neaktivní"
+
+#. Create the selection mode radio box
+#: app/by_color_select.c:614
+msgid "Selection Mode"
+msgstr "Re¾im výbìru"
+
+#: app/by_color_select.c:638
+msgid "Fuzziness Threshold"
+msgstr "Práh citlivosti"
+
+#. The reset push button
+#: app/by_color_select.c:654 app/curves.c:516 app/file_new_dialog.c:483
+#: app/tools.c:873 app/transform_core.c:116
+msgid "Reset"
+msgstr "Obnovit"
+
+#: app/channel.c:191 app/channel.c:193 app/layer.c:316 app/layer.c:318
+msgid "copy"
+msgstr "kopie"
+
+#. formulate the new layer_mask name
+#: app/channel.c:199 app/gradient.c:1391 app/layer.c:324 app/layer.c:1486
+#, c-format
+msgid "%s copy"
+msgstr "%s kopie"
+
+#. Create the new channel
+#: app/channel.c:521
+msgid "Selection Mask"
+msgstr "Maska výbìru"
+
+#: app/channel_ops.c:95 app/resize.c:397
+msgid "Offset"
+msgstr "Posun:"
+
+#. The offset labels
+#: app/channel_ops.c:113
+msgid "Offset X:"
+msgstr "Posun X:"
+
+#: app/channel_ops.c:119 app/crop.c:1039 app/file_new_dialog.c:753
+#: app/resize.c:335 app/resize.c:420 app/resize.c:578 app/rotate_tool.c:109
+#: app/scale_tool.c:99 app/shear_tool.c:83
+msgid "Y:"
+msgstr "Y:"
+
+#. The wrap around option
+#: app/channel_ops.c:168
+msgid "Wrap-Around"
+msgstr "Oøíznout kolem"
+
+#. The fill options
+#: app/channel_ops.c:173
+msgid "Fill Options"
+msgstr "Volby vyplòování"
+
+#: app/channel_ops.c:180 app/file_new_dialog.c:135 app/file_new_dialog.c:497
+#: app/layers_dialog.c:2818
+msgid "Background"
+msgstr "Pozadí"
+
+#: app/channel_ops.c:192 app/file_new_dialog.c:499 app/layers_dialog.c:2820
+msgid "Transparent"
+msgstr "Prùhledný"
+
+#. The by half height and half width option
+#: app/channel_ops.c:205
+msgid "Offset by (x/2),(y/2)"
+msgstr "Posun o (x/2),(y/2)"
+
+#: app/channels_dialog.c:162 app/channels_dialog.c:1890
+msgid "New Channel"
+msgstr "Nový kanál"
+
+#: app/channels_dialog.c:164
+msgid "Raise Channel"
+msgstr "Kanál vý¹"
+
+#: app/channels_dialog.c:166
+msgid "Lower Channel"
+msgstr "Kanál ní¾"
+
+#: app/channels_dialog.c:168
+msgid "Duplicate Channel"
+msgstr "Duplikovat kanál"
+
+#: app/channels_dialog.c:170
+#, fuzzy
+msgid ""
+"Channel to Selection \n"
+"<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
+msgstr ""
+"Kanál do výbìru\n"
+"<Pøeøaïovaè> Sjednocení   <Ctrl> Rozdíl   <Pøeøaïovaè><Ctrl> Prùnik"
+
+#: app/channels_dialog.c:175
+msgid "Delete Channel"
+msgstr "Smazat kanál"
+
+#: app/channels_dialog.c:535 app/menus.c:274
+#, fuzzy
+msgid "/New Channel"
+msgstr "/Nový kanál"
+
+#: app/channels_dialog.c:538 app/menus.c:275
+#, fuzzy
+msgid "/Raise Channel"
+msgstr "Kanál vý¹"
+
+#: app/channels_dialog.c:541 app/menus.c:276
+#, fuzzy
+msgid "/Lower Channel"
+msgstr "Kanál ní¾"
+
+#: app/channels_dialog.c:544 app/menus.c:277
+#, fuzzy
+msgid "/Duplicate Channel"
+msgstr "Duplikovat kanál"
+
+#: app/channels_dialog.c:547 app/menus.c:279
+#, fuzzy
+msgid "/Channel to Selection"
+msgstr "Kanál do výbìru"
+
+#: app/channels_dialog.c:550 app/menus.c:280
+#, fuzzy
+msgid "/Add to Selection"
+msgstr "Pøidat do výbìru"
+
+#: app/channels_dialog.c:551 app/menus.c:281
+#, fuzzy
+msgid "/Subtract From Selection"
+msgstr "Ubrat z výbìru"
+
+#: app/channels_dialog.c:552 app/menus.c:282
+#, fuzzy
+msgid "/Intersect With Selection"
+msgstr "Prùnik s výbìrem"
+
+#: app/channels_dialog.c:554 app/menus.c:284
+#, fuzzy
+msgid "/Delete Channel"
+msgstr "Smazat kanál"
+
+#: app/channels_dialog.c:605 app/channels_dialog.c:659
+#, c-format
+msgid "error in %s at %d: this shouldn't happen."
+msgstr "chyba v %s na %d: to by se nemìlo stát."
+
+#: app/channels_dialog.c:1103 app/color_balance.c:370 app/curves.c:405
+#: app/histogram_tool.c:279 app/levels.c:231
+msgid "Red"
+msgstr "Èervená"
+
+#: app/channels_dialog.c:1107 app/color_balance.c:397 app/curves.c:406
+#: app/histogram_tool.c:280 app/levels.c:232
+msgid "Green"
+msgstr "Zelená"
+
+#: app/channels_dialog.c:1111 app/color_balance.c:424 app/curves.c:407
+#: app/histogram_tool.c:281 app/levels.c:233
+msgid "Blue"
+msgstr "Modrá"
+
+#: app/channels_dialog.c:1115
+msgid "Gray"
+msgstr "©edá"
+
+#: app/channels_dialog.c:1119
+msgid "Indexed"
+msgstr "Indexovaná"
+
+#: app/channels_dialog.c:1855
+msgid "New Channel Options"
+msgstr "Volby nového kanálu"
+
+#. The name entry hbox, label and entry
+#: app/channels_dialog.c:1879 app/channels_dialog.c:2072
+msgid "Channel name:"
+msgstr "Jméno kanálu:"
+
+#. The opacity scale
+#: app/channels_dialog.c:1894 app/channels_dialog.c:2087
+#, fuzzy
+msgid "Fill Opacity:"
+msgstr "Krytí vyplòování: "
+
+#: app/channels_dialog.c:2048
+msgid "Edit Channel Attributes"
+msgstr "Úpravy vlastností kanálu"
+
+#: app/clone.c:141
+msgid "Image Source"
+msgstr "Z obrázku"
+
+#: app/clone.c:142
+msgid "Pattern Source"
+msgstr "Ze vzorku"
+
+#: app/clone.c:148
+msgid "Non Aligned"
+msgstr "Nesledovaný"
+
+#: app/clone.c:149
+msgid "Aligned"
+msgstr "Sledovaný"
+
+#: app/clone.c:150
+msgid "Registered"
+msgstr "Registrovaný"
+
+#. the radio frame and box
+#: app/clone.c:166
+msgid "Source"
+msgstr "Zdroj"
+
+#. the radio frame and box
+#: app/clone.c:191
+msgid "Alignment"
+msgstr "Sledování"
+
+#: app/clone.c:318
+msgid "No patterns available for this operation."
+msgstr "Nejsou k dispozici ¾ádné vzorky pro tuto operaci."
+
+#: app/color_balance.c:184
+msgid "Color Balance Options"
+msgstr "Volby vyvá¾ení barev"
+
+#: app/color_balance.c:222
+msgid "Color balance operates only on RGB color drawables."
+msgstr "Vyvá¾ení barev pracuje pouze s obrazovkami v RGB barvách."
+
+#: app/color_balance.c:279 app/dodgeburn.c:123
+msgid "Shadows"
+msgstr "Stíny"
+
+#: app/color_balance.c:280 app/dodgeburn.c:122
+msgid "Midtones"
+msgstr "Støední tóny"
+
+#: app/color_balance.c:281 app/dodgeburn.c:121
+msgid "Highlights"
+msgstr "Svìtla"
+
+#: app/color_balance.c:299 app/tools.c:502
+msgid "Color Balance"
+msgstr "Vyvá¾ení barev"
+
+#: app/color_balance.c:314
+msgid "Color Levels: "
+msgstr "Úrovnì barev: "
+
+#. Create the cyan-red scale widget
+#: app/color_balance.c:353
+msgid "Cyan"
+msgstr "Azurová"
+
+#. Create the magenta-green scale widget
+#: app/color_balance.c:380
+msgid "Magenta"
+msgstr "Purpurová"
+
+#. Create the yellow-blue scale widget
+#: app/color_balance.c:407
+msgid "Yellow"
+msgstr "®lutá"
+
+#. The preserve luminosity toggle
+#: app/color_balance.c:447
+msgid "Preserve Luminosity"
+msgstr "Zachovat svìtlost"
+
+#: app/color_notebook.c:117 app/color_select.c:187
+msgid "Color Selection"
+msgstr "Výbìr barvy"
+
+#: app/color_notebook.c:188 app/color_select.c:206
+msgid "Revert to Old Color"
+msgstr "Navrátit pøedchozí barvu"
+
+#: app/color_picker.c:125
+msgid "Color Picker Options"
+msgstr "Volby barevné pipety"
+
+#: app/color_picker.c:151
+msgid "Sample Average"
+msgstr "Prùmìr vzorku"
+
+#: app/color_picker.c:220 app/tools.c:306
+msgid "Color Picker"
+msgstr "Barevná pipeta"
+
+#: app/color_picker.c:226 app/color_picker.c:236
+msgid "Red:"
+msgstr "Èervená:"
+
+#: app/color_picker.c:227 app/color_picker.c:237
+msgid "Green:"
+msgstr "Zelená:"
+
+#: app/color_picker.c:228 app/color_picker.c:238
+msgid "Blue:"
+msgstr "Modrá:"
+
+#: app/color_picker.c:229 app/color_picker.c:235 app/color_picker.c:244
+msgid "Alpha:"
+msgstr "Alfa:"
+
+#: app/color_picker.c:230 app/color_picker.c:245 app/color_select.c:387
+#: app/colormap_dialog.i.c:201
+msgid "Hex Triplet:"
+msgstr "Hex trojice:"
+
+#: app/color_picker.c:234 app/colormap_dialog.i.c:194
+msgid "Index:"
+msgstr "Index:"
+
+#: app/color_picker.c:239
+msgid "Hex Triplet"
+msgstr "Hex trojice"
+
+#: app/color_picker.c:243 app/histogram_tool.c:271
+msgid "Intensity:"
+msgstr "Intenzita:"
+
+#: app/color_picker.c:548 app/color_picker.c:549 app/color_picker.c:550
+#: app/color_picker.c:551 app/color_picker.c:552 app/color_picker.c:553
+#: app/color_picker.c:554 app/color_picker.c:567 app/color_picker.c:579
+#: app/color_picker.c:594
+msgid "N/A"
+msgstr "Není"
+
+#: app/colormap_dialog.i.c:101 app/gradient_select.c:75 app/palette.c:1433
+#: app/palette.c:1983 app/palette_select.c:54
+msgid "Edit"
+msgstr "Úpravy"
+
+#: app/colormap_dialog.i.c:121
+msgid "Indexed Color Palette"
+msgstr "Paleta indexované barvy"
+
+#. The GIMP image option menu
+#: app/colormap_dialog.i.c:136 app/lc_dialog.c:131
+msgid "Image:"
+msgstr "Obrázek:"
+
+#: app/colormap_dialog.i.c:155
+msgid "Operations"
+msgstr "Operace"
+
+#: app/colormap_dialog.i.c:833 app/lc_dialog.c:614
+msgid "none"
+msgstr "není"
+
+#: app/commands.c:342
+msgid "Border Selection"
+msgstr "Vybrat obvod"
+
+#: app/commands.c:343
+msgid "Border selection by:"
+msgstr "Vybrat obvod:"
+
+#: app/commands.c:360
+msgid "Feather Selection"
+msgstr "Zaoblit výbìr"
+
+#: app/commands.c:361
+msgid "Feather selection by:"
+msgstr "Zaoblit výbìr o:"
+
+#: app/commands.c:378
+msgid "Grow Selection"
+msgstr "Zvìt¹it výbìr"
+
+#: app/commands.c:379
+msgid "Grow selection by:"
+msgstr "Zvìt¹it výbìr o:"
+
+#: app/commands.c:399
+msgid "Shrink Selection"
+msgstr "Zmen¹it výbìr"
+
+#: app/commands.c:400
+msgid "Shrink selection by:"
+msgstr "Zmen¹it výbìr o:"
+
+#: app/commands.c:409
+msgid "Shrink from image border"
+msgstr ""
+
+#: app/commands.c:1194
+msgid "Resize Error: Both width and height must be greater than zero."
+msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
+
+#: app/commands.c:1243
+msgid "Scale Error: Both width and height must be greater than zero."
+msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
+
+#: app/convert.c:336
+msgid "Indexed Color Conversion"
+msgstr "Pøevod indexované barvy"
+
+#: app/convert.c:341
+msgid "Palette Options"
+msgstr "Volby palety"
+
+#: app/convert.c:358
+msgid "Generate optimal palette: "
+msgstr "Generovat optimální paletu: "
+
+#: app/convert.c:366
+msgid "# of colors: "
+msgstr "poèet barev: "
+
+#: app/convert.c:419
+msgid "Use custom palette"
+msgstr "Pou¾ít vlastní paletu"
+
+#: app/convert.c:451
+msgid "Use WWW-optimised palette"
+msgstr "Pou¾ít WWW-optimalizovanou paletu"
+
+#: app/convert.c:469
+msgid "Use black/white (1-bit) palette"
+msgstr "Pou¾ít èernobílou (1bitovou) paletu"
+
+#: app/convert.c:479
+msgid "Dither Options"
+msgstr "Volby rozptylu"
+
+#: app/convert.c:493
+msgid "Enable Floyd-Steinberg dithering"
+msgstr "Povolit Floyd-Steinbergùv rozptyl"
+
+#: app/convert.c:517
+msgid " [ Warning ] "
+msgstr " [ Varování ] "
+
+#: app/convolve.c:135
+msgid "Blur"
+msgstr "Rozostøení"
+
+#: app/convolve.c:135
+msgid "Sharpen"
+msgstr "Zaostøení"
+
+#: app/convolve.c:170
+msgid "Convolve Type"
+msgstr "Druh zmìny ostrosti"
+
+#: app/crop.c:170 app/crop.c:1025
+msgid "Crop"
+msgstr "Oøez"
+
+#: app/crop.c:170 app/crop.c:1026
+msgid "Resize"
+msgstr "Rozmìry plátna"
+
+#: app/crop.c:176
+msgid "Crop & Resize Options"
+msgstr "Volby oøezu a rozmìrù plátna"
+
+#: app/crop.c:187
+msgid "Current layer only"
+msgstr "Pouze aktuální vrstva"
+
+#. enlarge toggle
+#: app/crop.c:198
+msgid "Allow Enlarging"
+msgstr "Povolit zvìt¹ení"
+
+#. tool toggle
+#: app/crop.c:209 app/flip_tool.c:85
+msgid "Tool Toggle"
+msgstr "Pøepínaè nástrojù"
+
+#: app/crop.c:501 app/crop.c:509
+msgid "Crop: "
+msgstr "Oøez: "
+
+#: app/crop.c:1005
+msgid "Crop: 0 x 0"
+msgstr "Oøez: 0 × 0"
+
+#. create the info dialog
+#: app/crop.c:1033
+msgid "Crop & Resize Information"
+msgstr "Informace o oøezu a rozmìrech plátna"
+
+#. add the information fields
+#: app/crop.c:1036
+msgid "Origin X:"
+msgstr "X poèátek:"
+
+#. the pixel size labels
+#: app/crop.c:1052 app/file_new_dialog.c:614 app/file_new_dialog.c:632
+#: app/tool_options.c:405
+msgid "Width:"
+msgstr "©íøka:"
+
+#: app/crop.c:1055 app/file_new_dialog.c:620 app/file_new_dialog.c:638
+#: app/layers_dialog.c:2873 app/resize.c:246 app/resize.c:271 app/resize.c:515
+#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:427
+msgid "Height:"
+msgstr "Vý¹ka:"
+
+#: app/crop.c:1077
+msgid "From Selection"
+msgstr "Z výbìru"
+
+#: app/crop.c:1083
+msgid "Auto Shrink"
+msgstr ""
+
+#: app/curves.c:368
+msgid "Curves Options"
+msgstr "Volby køivek"
+
+#: app/curves.c:404 app/histogram_tool.c:278 app/layers_dialog.c:224
+#: app/levels.c:230 app/paint_funcs.c:97 app/tool_options.c:790
+msgid "Value"
+msgstr "Jas"
+
+#: app/curves.c:408 app/levels.c:234
+msgid "Alpha"
+msgstr "Alfa"
+
+#: app/curves.c:419
+msgid "Curves for indexed drawables cannot be adjusted."
+msgstr "Køivky nemohou být nastaveny v indexovaných obrazovkách."
+
+#: app/curves.c:523
+msgid "Smooth"
+msgstr "Hladká"
+
+#: app/curves.c:524
+msgid "Free"
+msgstr "Volná"
+
+#: app/curves.c:550 app/tools.c:577
+msgid "Curves"
+msgstr "Køivky"
+
+#: app/curves.c:564
+msgid "Modify Curves for Channel: "
+msgstr "Upravit køivky pro kanál: "
+
+#. The option menu for selecting the drawing method
+#: app/curves.c:638
+msgid "Curve Type: "
+msgstr "Typ køivky: "
+
+#: app/desaturate.c:43
+msgid "Desaturate operates only on RGB color drawables."
+msgstr "Odbarvení pracuje pouze s obrazovkami v RGB barvách."
+
+#: app/devices.c:123 app/gradient.c:677 app/palette.c:1988
+#: app/preferences_dialog.c:1471
+msgid "Save"
+msgstr "Zapsat"
+
+#: app/devices.c:378
+msgid "devices_rc_update called multiple times for not present device\n"
+msgstr "devices_rc_update bylo voláno vícekrát pro nepøítomné zaøízení\n"
+
+#: app/devices.c:677
+msgid "Device Status"
+msgstr "Stav zaøízení"
+
+#: app/devices.c:1053
+msgid "Failed to find device_info\n"
+msgstr "Nepodaøilo se najít device_info\n"
+
+#: app/docindex.c:545
+msgid "This file cannot be moved up."
+msgstr "Tento soubor nemù¾e být posunut vý¹."
+
+#: app/docindex.c:548
+msgid "There's no selection to move up."
+msgstr "Není ¾ádný výbìr k posunutí vý¹."
+
+#: app/docindex.c:558
+msgid "This file cannot be moved down."
+msgstr "Tento soubor nemù¾e být posunut ní¾."
+
+#: app/docindex.c:561
+msgid "There's no selection to move down."
+msgstr "Není ¾ádný výbìr k posunutí ní¾."
+
+#: app/docindex.c:573
+msgid "There's no selection to remove."
+msgstr "Není ¾ádný výbìr k odstranìní."
+
+#: app/docindexif.c:80
+msgid "Open"
+msgstr "Otevøít"
+
+#: app/docindexif.c:80
+msgid "Open a file"
+msgstr "Otevøít soubor"
+
+#: app/docindexif.c:85
+msgid "Up"
+msgstr "Vý¹"
+
+#: app/docindexif.c:85
+msgid "Move the selected entry up in the index"
+msgstr "Pøesun zvolené polo¾ky vý¹ v seznamu"
+
+#: app/docindexif.c:90
+msgid "Down"
+msgstr "Ní¾"
+
+#: app/docindexif.c:90
+msgid "Move the selected entry down in the index"
+msgstr "Pøesun zvolené polo¾ky ní¾ v seznamu"
+
+#: app/docindexif.c:95
+msgid "Remove"
+msgstr "Odstranit"
+
+#: app/docindexif.c:95
+msgid "Remove the selected entry from the index"
+msgstr "Odstranìní zvolené polo¾ky ze seznamu"
+
+#: app/docindexif.c:100
+msgid "Close the Document Index"
+msgstr "Zavøení seznamu dokumentù"
+
+#. Set the GOWindow title
+#: app/docindexif.c:218
+msgid "Document Index"
+msgstr "Seznam dokumentù"
+
+#. Set the initial status message
+#: app/docindexif.c:224
+msgid "GTK successfully started"
+msgstr "GTK úspì¹nì nabìhl"
+
+#: app/dodgeburn.c:118
+#, fuzzy
+msgid "Dodge"
+msgstr "Re¾im:"
+
+#: app/dodgeburn.c:118
+#, fuzzy
+msgid "Burn"
+msgstr "Rozostøení"
+
+#: app/dodgeburn.c:146
+#, fuzzy
+msgid "Exposure:"
+msgstr "Zdroj:"
+
+#. the type (dodge or burn)
+#: app/dodgeburn.c:166 app/ink.c:419
+msgid "Type"
+msgstr "Typ"
+
+#. mode (highlights, midtones, or shadows)
+#: app/dodgeburn.c:177
+#, fuzzy
+msgid "Mode"
+msgstr "Re¾im:"
+
+#: app/drawable.c:64
+msgid "drawable_fill called with unknown fill type"
+msgstr "drawable_fill volán s neznámým typem vyplòování"
+
+#: app/edit_selection.c:163
+msgid "Move: 0, 0"
+msgstr "Pøesun: 0, 0"
+
+#: app/edit_selection.c:442 app/edit_selection.c:452
+msgid "Move: "
+msgstr "Pøesun: "
+
+#: app/equalize.c:43
+msgid "Equalize does not operate on indexed drawables."
+msgstr "Ekvalizace nefunguje na indexovaných obrazovkách."
+
+#. the hard toggle
+#: app/eraser.c:102
+msgid "Hard edge"
+msgstr "Ostré hrany"
+
+#. the incremental toggle
+#: app/eraser.c:112 app/paintbrush.c:269
+msgid "Incremental"
+msgstr "Postupný"
+
+#: app/errorconsole.c:174
+#, c-format
+msgid "Error opening file %s: %s"
+msgstr "Chyba pøi otvírání souboru %s: %s"
+
+#: app/errorconsole.c:189
+msgid "Can't save, nothing selected!"
+msgstr "Nelze zapsat, nebylo nic vybráno!"
+
+#: app/errorconsole.c:193
+msgid "Save error log to file..."
+msgstr "Zapsat protokol o chybách do souboru..."
+
+#: app/errorconsole.c:277
+msgid "GIMP Error console"
+msgstr "GIMP: Chybová konzole"
+
+#: app/errorconsole.c:292
+msgid "Write all errors to file..."
+msgstr "Zapsat v¹echny chyby do souboru..."
+
+#: app/errorconsole.c:299
+msgid "Write selection to file..."
+msgstr "Zapsat výbìr do souboru..."
+
+#: app/errors.c:75 app/errors.c:77
+#, fuzzy, c-format
+msgid "%s: fatal error: %s\n"
+msgstr "chyba %s volání PDB"
+
+#: app/file_new_dialog.c:303
+msgid "Confirm Image Size"
+msgstr "Potvrdit rozmìry plátna"
+
+#: app/file_new_dialog.c:317
+#, c-format
+msgid ""
+"You are trying to create an image which\n"
+"has an initial size of %s.\n"
+"\n"
+"Choose OK to create this image anyway.\n"
+"Choose Cancel if you didn't mean to\n"
+"create such a large image.\n"
+"\n"
+"To prevent this dialog from appearing,\n"
+"increase the \"Maximum Image Size\"\n"
+"setting (currently %s) in the\n"
+"preferences dialog."
+msgstr ""
+"Pokou¹íte se o vytvoøení obrázku, který\n"
+"má výchozí velikost %s.\n"
+"\n"
+"Zvolte OK, chcete-li jistì obrázek vytvoøit.\n"
+"Zvolte Zru¹it, jestli tak velký obrázek\n"
+"nechcete vytvoøit.\n"
+"\n"
+"Tomuto dialogu pøedejdete, zvý¹íte-li\n"
+"nastavení \"Nejvìt¹í velikost obrázku\"\n"
+"(nyní %s) v dialogu pøedvoleb."
+
+#: app/file_new_dialog.c:411
+#, c-format
+msgid "%d Bytes"
+msgstr "%d bajtù"
+
+#: app/file_new_dialog.c:413
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KB"
+
+#: app/file_new_dialog.c:415
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KB"
+
+#: app/file_new_dialog.c:417
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: app/file_new_dialog.c:419
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: app/file_new_dialog.c:421
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#. bytes per pixel
+#. alpha channel
+#: app/file_new_dialog.c:446
+#, c-format
+msgid "Image Size: %s"
+msgstr "Velikost obrázku: %s"
+
+#: app/file_new_dialog.c:489 app/gdisplay.c:199 app/preferences_dialog.c:1633
+msgid "RGB"
+msgstr "RGB barvy"
+
+#: app/file_new_dialog.c:490 app/info_window.c:49 app/info_window.c:241
+#: app/preferences_dialog.c:1634
+msgid "Grayscale"
+msgstr "Odstíny ¹edi"
+
+#: app/file_new_dialog.c:496 app/layers_dialog.c:2817
+msgid "Foreground"
+msgstr "Popøedí"
+
+#: app/file_new_dialog.c:498 app/layers_dialog.c:2819
+msgid "White"
+msgstr "Bílá"
+
+#: app/file_new_dialog.c:572
+msgid "New Image"
+msgstr "Nový obrázek"
+
+#: app/file_new_dialog.c:678 app/preferences_dialog.c:1542
+msgid "Pixels"
+msgstr "pixelù"
+
+#. the resolution labels
+#: app/file_new_dialog.c:747 app/resize.c:572
+msgid "Resolution X:"
+msgstr "Rozli¹ení X:"
+
+#: app/file_new_dialog.c:768 app/resize.c:593
+msgid "pixels/%a"
+msgstr "pixelù/%a"
+
+#. frame for Image Type
+#: app/file_new_dialog.c:812
+msgid "Image Type"
+msgstr "Typ obrázku"
+
+#: app/fileops.c:224 app/fileops.c:253
+msgid "Load Image"
+msgstr "Naèíst obrázek"
+
+#. format-chooser frame
+#: app/fileops.c:263
+msgid "Open Options"
+msgstr "Volby otevøení"
+
+#: app/fileops.c:278 app/fileops.c:482
+msgid "Determine file type:"
+msgstr "Rozpoznání typu souboru:"
+
+#: app/fileops.c:443 app/fileops.c:465
+msgid "Save Image"
+msgstr "Zapsat obrázek"
+
+#: app/fileops.c:474
+msgid "Save Options"
+msgstr "Volby zápisu"
+
+#: app/fileops.c:526
+msgid "Can't revert. No filename associated with this image"
+msgstr "Nelze navrátit. S tímto obrázkem není spojeno jméno souboru"
+
+#: app/fileops.c:540
+msgid "Revert failed."
+msgstr "Navrácení selhalo."
+
+#: app/fileops.c:1364 app/fileops.c:1454
+msgid "Open failed: "
+msgstr "Otevøení selhalo: "
+
+#: app/fileops.c:1520
+#, c-format
+msgid "%s is an irregular file (%s)"
+msgstr "%s je nestandardní soubor (%s)"
+
+#: app/fileops.c:1534 app/fileops.c:1641
+msgid "Save failed: "
+msgstr "Zápis selhal: "
+
+#: app/fileops.c:1546 app/fileops.c:1547 app/fileops.c:1559 app/fileops.c:1560
+#: app/menus.c:57 app/menus.c:89
+msgid "/File/Open"
+msgstr "/Soubor/Otevøít"
+
+#: app/fileops.c:1548 app/fileops.c:1564 app/gdisplay.c:1586 app/menus.c:90
+msgid "/File/Save"
+msgstr "/Soubor/Zapsat"
+
+#: app/fileops.c:1549 app/fileops.c:1565 app/gdisplay.c:1587 app/menus.c:91
+msgid "/File/Save as"
+msgstr "/Soubor/Zapsat jako"
+
+#: app/fileops.c:1586
+#, c-format
+msgid "%s exists, overwrite?"
+msgstr "%s existuje, pøepsat?"
+
+#: app/fileops.c:1592
+msgid "File Exists!"
+msgstr "Soubor existuje!"
+
+#: app/flip_tool.c:71 app/preferences_dialog.c:1588
+#: app/preferences_dialog.c:2290
+msgid "Horizontal"
+msgstr "Vodorovnì"
+
+#: app/flip_tool.c:71 app/preferences_dialog.c:1590
+#: app/preferences_dialog.c:2292
+msgid "Vertical"
+msgstr "Svisle"
+
+#: app/flip_tool.c:77
+msgid "Flip Tool Options"
+msgstr "Volby pøevrácení"
+
+#: app/floating_sel.c:107
+msgid ""
+"Cannot anchor this layer because\n"
+"it is not a floating selection."
+msgstr ""
+"Tuto vrstvu nelze vlo¾it,\n"
+"proto¾e to není plovoucí výbìr."
+
+#: app/floating_sel.c:173
+msgid ""
+"Cannot create a new layer from the floating\n"
+"selection because it belongs to a\n"
+"layer mask or channel."
+msgstr ""
+"Nelze vytvoøit novou vrstvu z plovoucího výbìru\n"
+"proto¾e patøí do masky výbìru nebo kanálu."
+
+#: app/free_select.c:76
+#, fuzzy
+msgid "add_point(): Unable to reallocate points array in free_select."
+msgstr "Nepodaøilo se pøemístit v pamìti pole bodù pøi free_select."
+
+#: app/free_select.c:231
+msgid "Cannot properly scanline convert polygon!\n"
+msgstr "Nelze správnì vyrastrovat polygon!\n"
+
+#: app/gdisplay.c:199
+msgid "RGB-empty"
+msgstr "RGB barvy - prázdný"
+
+#: app/gdisplay.c:202
+msgid "grayscale-empty"
+msgstr "odstíny ¹edi - prázdný"
+
+#: app/gdisplay.c:202
+msgid "grayscale"
+msgstr "odstíny ¹edi"
+
+#: app/gdisplay.c:205
+msgid "indexed-empty"
+msgstr "indexovaný - prázdný"
+
+#: app/gdisplay.c:205
+msgid "indexed"
+msgstr "indexovaný"
+
+#: app/gdisplay.c:1588 app/menus.c:92
+msgid "/File/Revert"
+msgstr "/Soubor/Navrátit"
+
+#: app/gdisplay.c:1589 app/gdisplay_ops.c:304 app/gdisplay_ops.c:319
+#: app/gdisplay_ops.c:329 app/gdisplay_ops.c:365 app/menus.c:96
+msgid "/File/Close"
+msgstr "/Soubor/Zavøít"
+
+#: app/gdisplay.c:1591
+msgid "/Edit"
+msgstr "/Úpravy"
+
+#: app/gdisplay.c:1594 app/menus.c:101
+msgid "/Edit/Cut"
+msgstr "/Úpravy/Vyøíznout"
+
+#: app/gdisplay.c:1595 app/menus.c:102
+msgid "/Edit/Copy"
+msgstr "/Úpravy/Kopírovat"
+
+#: app/gdisplay.c:1596 app/menus.c:103
+msgid "/Edit/Paste"
+msgstr "/Úpravy/Vlo¾it"
+
+#: app/gdisplay.c:1597 app/menus.c:104
+msgid "/Edit/Paste Into"
+msgstr "/Úpravy/Vlo¾it do"
+
+#: app/gdisplay.c:1598 app/menus.c:105
+#, fuzzy
+msgid "/Edit/Paste As New"
+msgstr "/Úpravy/Vlo¾it pojmenované"
+
+#: app/gdisplay.c:1599 app/menus.c:107
+msgid "/Edit/Clear"
+msgstr "/Úpravy/Vymazat"
+
+#: app/gdisplay.c:1600 app/menus.c:108
+msgid "/Edit/Fill"
+msgstr "/Úpravy/Vyplnit"
+
+#: app/gdisplay.c:1601 app/menus.c:109
+msgid "/Edit/Stroke"
+msgstr "/Úpravy/Tahy"
+
+#: app/gdisplay.c:1602 app/menus.c:113
+msgid "/Edit/Cut Named"
+msgstr "/Úpravy/Vyøíznout pojmenované"
+
+#: app/gdisplay.c:1603 app/menus.c:114
+msgid "/Edit/Copy Named"
+msgstr "/Úpravy/Kopírovat pojmenované"
+
+#: app/gdisplay.c:1604 app/menus.c:115
+msgid "/Edit/Paste Named"
+msgstr "/Úpravy/Vlo¾it pojmenované"
+
+#: app/gdisplay.c:1607
+msgid "/Select"
+msgstr "/Výbìr"
+
+#: app/gdisplay.c:1608 app/menus.c:130
+msgid "/Select/Save To Channel"
+msgstr "/Výbìr/Ulo¾it do kanálu"
+
+#: app/gdisplay.c:1610
+msgid "/View"
+msgstr "/Zobrazení"
+
+#: app/gdisplay.c:1613 app/menus.c:148
+#, fuzzy
+msgid "/View/Toggle Selection"
+msgstr "/Zobrazení/Pøepnout pravítka"
+
+#: app/gdisplay.c:1614 app/menus.c:149
+msgid "/View/Toggle Rulers"
+msgstr "/Zobrazení/Pøepnout pravítka"
+
+#: app/gdisplay.c:1616 app/menus.c:151
+msgid "/View/Toggle Guides"
+msgstr "/Zobrazení/Pøepnout vodítka"
+
+#: app/gdisplay.c:1617 app/menus.c:152
+msgid "/View/Snap To Guides"
+msgstr "/Zobrazení/Chytat na vodítka"
+
+#: app/gdisplay.c:1618 app/menus.c:150
+msgid "/View/Toggle Statusbar"
+msgstr "/Zobrazení/Pøepnout stavovou li¹tu"
+
+#: app/gdisplay.c:1620 app/menus.c:144
+msgid "/View/Dot for dot"
+msgstr "/Zobrazení/Bod na bod"
+
+#: app/gdisplay.c:1623
+msgid "/Image"
+msgstr "/Obrázek"
+
+#: app/gdisplay.c:1624 app/gdisplay.c:1634
+msgid "/Image/Colors"
+msgstr "/Obrázek/Barvy"
+
+#: app/gdisplay.c:1625
+msgid "/Image/Channel Ops"
+msgstr "/Obrázek/Práce s kanály"
+
+#: app/gdisplay.c:1626
+msgid "/Image/Alpha"
+msgstr "/Obrázek/Alfa"
+
+#: app/gdisplay.c:1629 app/menus.c:171
+msgid "/Image/RGB"
+msgstr "/Obrázek/RGB barvy"
+
+#: app/gdisplay.c:1630 app/menus.c:172
+msgid "/Image/Grayscale"
+msgstr "/Obrázek/Odstíny ¹edi"
+
+#: app/gdisplay.c:1631 app/menus.c:173
+msgid "/Image/Indexed"
+msgstr "/Obrázek/Indexovaný"
+
+#: app/gdisplay.c:1632 app/tools.c:609
+msgid "/Image/Histogram"
+msgstr "/Obrázek/Histogram"
+
+#: app/gdisplay.c:1635 app/tools.c:564
+msgid "/Image/Colors/Threshold"
+msgstr "/Obrázek/Barvy/Práh"
+
+#: app/gdisplay.c:1636 app/tools.c:549
+msgid "/Image/Colors/Posterize"
+msgstr "/Obrázek/Barvy/Posterizace"
+
+#: app/gdisplay.c:1637 app/menus.c:160
+msgid "/Image/Colors/Equalize"
+msgstr "/Obrázek/Barvy/Ekvalizace"
+
+#: app/gdisplay.c:1638 app/menus.c:161
+msgid "/Image/Colors/Invert"
+msgstr "/Obrázek/Barvy/Invertovat"
+
+#: app/gdisplay.c:1639 app/tools.c:504
+msgid "/Image/Colors/Color Balance"
+msgstr "/Obrázek/Barvy/Vyvá¾ení barev"
+
+#: app/gdisplay.c:1640 app/tools.c:519
+msgid "/Image/Colors/Brightness-Contrast"
+msgstr "/Obrázek/Barvy/Jas-kontrast"
+
+#: app/gdisplay.c:1642 app/tools.c:534
+msgid "/Image/Colors/Hue-Saturation"
+msgstr "/Obrázek/Barvy/Odstín-sytost"
+
+#: app/gdisplay.c:1643 app/tools.c:579
+msgid "/Image/Colors/Curves"
+msgstr "/Obrázek/Barvy/Køivky"
+
+#: app/gdisplay.c:1644 app/tools.c:594
+msgid "/Image/Colors/Levels"
+msgstr "/Obrázek/Barvy/Úrovnì"
+
+#: app/gdisplay.c:1645 app/menus.c:163
+msgid "/Image/Colors/Desaturate"
+msgstr "/Obrázek/Barvy/Odbarvit"
+
+#: app/gdisplay.c:1647 app/menus.c:168
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr "/Obrázek/Alfa/Pøidat alfa kanál"
+
+#: app/gdisplay.c:1650 app/menus.c:166
+msgid "/Image/Channel Ops/Offset"
+msgstr "/Obrázek/Práce s kanály/Posun"
+
+#: app/gdisplay.c:1653
+#, fuzzy
+msgid "/Layers/Stack"
+msgstr "/Vrstvy/Zásobník/Následující vrstva"
+
+#: app/gdisplay.c:1656 app/menus.c:182
+msgid "/Layers/Stack/Previous Layer"
+msgstr "/Vrstvy/Zásobník/Pøedchozí vrstva"
+
+#: app/gdisplay.c:1658 app/menus.c:183
+msgid "/Layers/Stack/Next Layer"
+msgstr "/Vrstvy/Zásobník/Následující vrstva"
+
+#: app/gdisplay.c:1660 app/menus.c:184
+msgid "/Layers/Stack/Raise Layer"
+msgstr "/Vrstvy/Zásobník/Vrstvu vý¹"
+
+#: app/gdisplay.c:1662 app/menus.c:185
+msgid "/Layers/Stack/Lower Layer"
+msgstr "/Vrstvy/Zásobník/Vrstvu ní¾"
+
+#: app/gdisplay.c:1664 app/menus.c:186
+msgid "/Layers/Stack/Layer to Top"
+msgstr "/Vrstvy/Zásobník/Vrstvu navrch"
+
+#: app/gdisplay.c:1666 app/menus.c:187
+msgid "/Layers/Stack/Layer to Bottom"
+msgstr "/Vrstvy/Zásobník/Vrstvu dospod"
+
+#: app/gdisplay.c:1670 app/menus.c:189
+msgid "/Layers/Anchor Layer"
+msgstr "/Vrstvy/Vlo¾it vrstvu"
+
+#: app/gdisplay.c:1671 app/menus.c:190
+msgid "/Layers/Merge Visible Layers"
+msgstr "/Vrstvy/Slouèit viditelné vrstvy"
+
+#: app/gdisplay.c:1672 app/menus.c:191
+msgid "/Layers/Flatten Image"
+msgstr "/Vrstvy/Slouèit obraz"
+
+#: app/gdisplay.c:1673 app/menus.c:192
+msgid "/Layers/Alpha To Selection"
+msgstr "/Vrstvy/Alfa do výbìru"
+
+#: app/gdisplay.c:1674 app/menus.c:193
+msgid "/Layers/Mask To Selection"
+msgstr "/Vrstvy/Maska do výbìru"
+
+#: app/gdisplay.c:1675 app/menus.c:194
+msgid "/Layers/Add Alpha Channel"
+msgstr "/Vrstvy/Pøidat alfa kanál"
+
+#: app/gdisplay.c:1678
+msgid "/Filters"
+msgstr "/Filtry"
+
+#: app/gdisplay.c:1680
+#, fuzzy
+msgid "/Script-Fu"
+msgstr "/Script-Fu/"
+
+#: app/gdisplay.c:2100
+msgid "gdisplays_flush() called recursively."
+msgstr "rekurzívnì volaný gdisplays_flush()."
+
+#: app/gdisplay_ops.c:388
+#, c-format
+msgid "Changes were made to %s. Close anyway?"
+msgstr "V %s byly provedeny zmìny. Pøesto zavøít?"
+
+#: app/gimage_mask.c:213
+msgid ""
+"Unable to cut/copy because the selected\n"
+"region is empty."
+msgstr ""
+"Nelze vyøíznout/kopírovat, proto¾e zvolená oblast\n"
+"je prázdná."
+
+#: app/gimage_mask.c:343
+msgid "Float Selection: No selection to float."
+msgstr "Plovoucí výbìr: Není pro nìj výbìr."
+
+#. Create a new layer from the buffer
+#: app/gimage_mask.c:354
+msgid "Floated Layer"
+msgstr "Plovoucí vrstva"
+
+#: app/gimage_mask.c:491
+msgid ""
+"The active layer has no alpha channel\n"
+"to convert to a selection."
+msgstr ""
+"Aktivní vrstva nemá alfa kanál\n"
+"pro pøevod do výbìru."
+
+#: app/gimage_mask.c:510
+msgid ""
+"The active layer has no mask\n"
+"to convert to a selection."
+msgstr ""
+"Aktivní vrstva nemá masku\n"
+"pro pøevod do výbìru."
+
+#: app/gimage_mask.c:557
+msgid "No selection to stroke!"
+msgstr "Pro tah není výbìr!"
+
+#: app/gimpbrush.c:219
+msgid "Error in GIMP brush file...aborting."
+msgstr "Chyba v souboru GIMP ¹tìtce... ru¹í se."
+
+#: app/gimpbrush.c:226 app/patterns.c:238
+msgid "Unnamed"
+msgstr "Beze jména"
+
+#: app/gimpbrush.c:244
+msgid "GIMP brush file appears to be truncated."
+msgstr "Soubor GIMP ¹tìtce je zøejmì useknutý."
+
+#: app/gimpbrush.c:247
+#, c-format
+msgid "Unknown brush format version #%d in \"%s\"\n"
+msgstr "Neznámý formát ¹tìtce verze #%d v \"%s\"\n"
+
+#: app/gimpbrushlist.c:213
+#, fuzzy
+msgid "get_active_brush(): Specified default brush not found!"
+msgstr "Zadaný implicitní ¹tìtec nebyl nalezen!"
+
+#: app/gimpdrawable.c:168
+msgid "Can't fill unknown image type."
+msgstr "Nelze vyplnit neznámý typ obrázku."
+
+#: app/gimpdrawable.c:701
+msgid "unnamed"
+msgstr "beze jména"
+
+#: app/gimpdrawable.c:718
+#, c-format
+msgid "Layer type %d not supported."
+msgstr "Typ vrstvy %d není podporován."
+
+#: app/gimpimage.c:649 app/gimpimage.c:747
+msgid "gimp_image_apply_image sent illegal parameters"
+msgstr "gimp_image_apply_image zaslán s nepovolenými parametry"
+
+#: app/gimpimage.c:1178
+msgid "Unable to project indexed image."
+msgstr "Nepodaøilo se promítnout indexovaný obrázek."
+
+#: app/gimpimage.c:2109
+msgid "Layer cannot be raised any further"
+msgstr "Vrstva nemù¾e být je¹tì vý¹"
+
+#: app/gimpimage.c:2184
+msgid "Layer cannot be lowered any further"
+msgstr "Vrstva nemù¾e být je¹tì ní¾"
+
+#. layer_arg is already the top_layer
+#: app/gimpimage.c:2214
+msgid "Layer is already on top"
+msgstr "Vrstva je ji¾ navrch"
+
+#: app/gimpimage.c:2219
+msgid "Can't raise Layer without alpha"
+msgstr "Nelze dát vý¹ vrstvu bez alfa"
+
+#. there is no next layer below layer_arg
+#: app/gimpimage.c:2314
+msgid "Layer is already on bottom"
+msgstr "Vrstva je ji¾ vespod"
+
+#: app/gimpimage.c:2327
+msgid "BG has no alpha, layer was placed above"
+msgstr "Pozadí nemá alfa, vrstva byla umístìna nad nìj"
+
+#: app/gimpimage.c:2390
+msgid ""
+"There are not enough visible layers for a merge.\n"
+"There must be at least two."
+msgstr ""
+"Není dostatek viditelných vrstev.\n"
+"Ke slouèení jsou nutné alespoò dvì."
+
+#: app/gimpimage.c:2468
+msgid "There are not enough visible layers for a merge down."
+msgstr "Ke slouèení dolù není dostatek viditelných vrstev."
+
+#: app/gimpimage.c:2581 app/gimpimage.c:2614
+msgid "gimp_image_merge_layers: could not allocate merge layer"
+msgstr "gimp_image_merge_layers: slouèenou vrstvu nelze umístit v pamìti"
+
+#: app/gimpimage.c:2653
+msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
+msgstr "gimp_image_merge_layers pokus o slouèení nesluèitelných vrstev\n"
+
+#: app/gimpimage.c:2735
+msgid "gimp_image_add_layer: attempt to add layer to wrong image"
+msgstr "gimp_image_add_layer: pokus o pøidání vrstvy do ¹patného obrázku"
+
+#: app/gimpimage.c:2745
+msgid "gimp_image_add_layer: trying to add layer to image twice"
+msgstr "gimp_image_add_layer: pokus o dvojí pøidání vrstvy do obrázku"
+
+#: app/gimpimage.c:2864
+msgid ""
+"Unable to add a layer mask since\n"
+"the layer already has one."
+msgstr ""
+"Nelze pøidat masku vrstvy, pokud\n"
+"vrstva ji¾ masku má."
+
+#: app/gimpimage.c:2868
+msgid ""
+"Unable to add a layer mask to a\n"
+"layer in an indexed image."
+msgstr ""
+"Nelze pøidat masku do vrstvy\n"
+"indexovaného obrázku."
+
+#: app/gimpimage.c:2872
+msgid ""
+"Cannot add layer mask to a layer\n"
+"with no alpha channel."
+msgstr ""
+"Nelze pøidat masku do vrstvy\n"
+"bez alfa kanálu."
+
+#: app/gimpimage.c:2876
+msgid "Cannot add layer mask of different dimensions than specified layer."
+msgstr "Nelze pøidat masku jiných rozmìrù ne¾ je vrstva."
+
+#: app/gimpimage.c:2983
+msgid "Channel cannot be raised any further"
+msgstr "Kanál nemù¾e být je¹tì vý¹"
+
+#: app/gimpimage.c:3031
+msgid "Channel cannot be lowered any further"
+msgstr "Kanál nemù¾e být je¹tì ní¾"
+
+#: app/gimpimage.c:3053
+msgid "gimp_image_add_channel: attempt to add channel to wrong image"
+msgstr "gimp_image_add_channel: pokus o pøidání kanálu do ¹patného obrázku"
+
+#: app/gimpimage.c:3063
+msgid "gimp_image_add_channel: trying to add channel to image twice"
+msgstr "gimp_image_add_channel: pokus o dvojí pøidání kanálu do obrázku"
+
+#: app/gimpimage.c:3190 app/palette.c:530 app/palette.c:557 app/palette.c:919
+#: app/palette.c:923 app/palette.c:2275 app/palette.c:2969
+msgid "Untitled"
+msgstr "Bez názvu"
+
+#: app/gimpparasite.c:122
+msgid ""
+"# GIMP parasiterc\n"
+"# This file will be entirely rewritten every time you quit the gimp.\n"
+"\n"
+msgstr ""
+
+#: app/gimpprogress.c:115
+msgid "Progress"
+msgstr "Prùbìh"
+
+#: app/gimprc.c:358 app/plug_in.c:305
+msgid "Resource configuration"
+msgstr "Konfigurace zdrojù"
+
+#: app/gimprc.c:413
+#, c-format
+msgid "error parsing: \"%s\"\n"
+msgstr "chyba pøi analýze: \"%s\"\n"
+
+#: app/gimprc.c:414
+#, c-format
+msgid "  at line %d column %d\n"
+msgstr "  øádek %d sloupec %d\n"
+
+#: app/gimprc.c:415
+#, c-format
+msgid "  unexpected token: %s\n"
+msgstr "  neoèekávaný symbol: %s\n"
+
+#: app/gimprc.c:1305
+msgid "error parsing pluginrc"
+msgstr "chyba pøi analýze pluginrc"
+
+#: app/gimprc.c:1640
+#, fuzzy, c-format
+msgid "transform_path(): gimprc token referenced but not defined: %s"
+msgstr "gimprc odkaz na nedefinovaný symbol: %s"
+
+#: app/gimprc.c:2522
+#, c-format
+msgid "Can't open %s; %s"
+msgstr "Nelze otevøít %s; %s"
+
+#: app/gimprc.c:2541
+#, c-format
+msgid "Can't rename %s to %s.old; %s"
+msgstr "Nelze pøejmenovat %s na %s.old; %s"
+
+#: app/gimprc.c:2547
+#, c-format
+msgid "Couldn't reopen %s\n"
+msgstr "Nelze znovu otevøít %s\n"
+
+#: app/gimprc.c:2559
+#, c-format
+msgid "Can't write to %s; %s"
+msgstr "Nelze zapisovat do %s; %s"
+
+#. pseudo unit
+#: app/gimpunit.c:58 libgimp/gimpunit.c:44
+#, fuzzy
+msgid "pixel"
+msgstr "pixelù"
+
+#: app/gimpunit.c:58 libgimp/gimpunit.c:44
+#, fuzzy
+msgid "pixels"
+msgstr "pixelù"
+
+#. standard units
+#: app/gimpunit.c:61 libgimp/gimpunit.c:47
+msgid "inch"
+msgstr "palce"
+
+#: app/gimpunit.c:61 libgimp/gimpunit.c:47
+msgid "inches"
+msgstr "palcù"
+
+#: app/gimpunit.c:62 libgimp/gimpunit.c:48
+msgid "millimeter"
+msgstr ""
+
+#: app/gimpunit.c:62 libgimp/gimpunit.c:48
+#, fuzzy
+msgid "millimeters"
+msgstr "/Filtry"
+
+#. professional units
+#: app/gimpunit.c:65 libgimp/gimpunit.c:51
+#, fuzzy
+msgid "point"
+msgstr "Rozdìlit"
+
+#: app/gimpunit.c:65 libgimp/gimpunit.c:51
+msgid "points"
+msgstr ""
+
+#: app/gimpunit.c:66 libgimp/gimpunit.c:52
+#, fuzzy
+msgid "pica"
+msgstr "Replikovat"
+
+#: app/gimpunit.c:66 libgimp/gimpunit.c:52
+msgid "picas"
+msgstr ""
+
+#: app/gimpunit.c:73 libgimp/gimpunit.c:59
+#, fuzzy
+msgid "percent"
+msgstr "Procento:"
+
+#: app/gimpunit.c:299
+#, fuzzy
+msgid ""
+"# GIMP unitrc\n"
+"# This file contains your user unit database. You can\n"
+"# modify this list with the unit editor. You are not\n"
+"# supposed to edit it manually, but of course you can do.\n"
+"# This file will be entirely rewritten every time you\n"
+"# quit the gimp.\n"
+"\n"
+msgstr ""
+"# Záznam GIMP sezení\n"
+"# Tento soubor pøechovává informaci o sezení (to jest informace,\n"
+"# které chcete zachovat mezi dvìma GIMP sezeními). Neèeká se,\n"
+"# ¾e byste jej mìnili ruènì, ale samozøejmì mù¾ete.\n"
+"# Tento soubor bude zcela pøepsán, kdykoliv opustíte gimp.\n"
+"# Nebude-li temto soubor nalezen, budou pou¾ity implicitní\n"
+"# hodnoty.\n"
+"\n"
+
+#. Make a new floating layer
+#: app/global_edit.c:288 app/global_edit.c:343 app/global_edit.c:353
+msgid "Pasted Layer"
+msgstr "Vlo¾ená vrstva"
+
+#: app/global_edit.c:705
+msgid "Paste"
+msgstr "Vlo¾it"
+
+#: app/global_edit.c:706
+#, fuzzy
+msgid "Paste Into"
+msgstr "/Úpravy/Vlo¾it do"
+
+#: app/global_edit.c:707
+msgid "Paste As New"
+msgstr ""
+
+#: app/global_edit.c:711 app/gradient.c:1556 app/palette.c:1448
+#: app/palette.c:2181
+msgid "Delete"
+msgstr "Smazat"
+
+#: app/global_edit.c:720
+msgid "Paste Named Buffer"
+msgstr "Vlo¾it pojmenovaný buffer"
+
+#: app/global_edit.c:732
+msgid "Select a buffer to paste:"
+msgstr "Zvolte buffer k vlo¾ení:"
+
+#: app/global_edit.c:820
+msgid "Cut Named"
+msgstr "Vyøíznout pojmenované"
+
+#: app/global_edit.c:821 app/global_edit.c:853
+msgid "Enter a name for this buffer"
+msgstr "Zadejte jméno tohoto bufferu"
+
+#: app/global_edit.c:852
+msgid "Copy Named"
+msgstr "Kopírovat pojmenované"
+
+#: app/gradient.c:473
+msgid "Curved"
+msgstr "Køivkový"
+
+#: app/gradient.c:474
+msgid "Sinusoidal"
+msgstr "Sinusoidní"
+
+#: app/gradient.c:475
+msgid "Spherical (increasing)"
+msgstr "Sférický (vzestupný)"
+
+#: app/gradient.c:476
+msgid "Spherical (decreasing)"
+msgstr "Sférický (sestupný)"
+
+#: app/gradient.c:481
+msgid "Plain RGB"
+msgstr "Obecné RGB barvy"
+
+#: app/gradient.c:482
+msgid "HSV (counter-clockwise hue)"
+msgstr "HSV (odstín proti smìru hodinových ruèièek)"
+
+#: app/gradient.c:483
+msgid "HSV (clockwise hue)"
+msgstr "HSV (odstín ve smìru hodinových ruèièek)"
+
+#: app/gradient.c:504
+msgid "Default"
+msgstr "Implicitní"
+
+#: app/gradient.c:584
+#, fuzzy, c-format
+msgid "grad_get_color_at(): Unknown gradient type %d"
+msgstr "grad_get_color_at(): ach, neznámý typ pøechodu %d"
+
+#: app/gradient.c:641
+#, fuzzy, c-format
+msgid "grad_get_color_at(): Unknown coloring mode %d"
+msgstr "grad_get_color_at(): ach, neznámý re¾im vybarvení %d"
+
+#: app/gradient.c:708
+msgid "Gradient Editor"
+msgstr "Editor pøechodù"
+
+#: app/gradient.c:734 app/gradient_select.c:475 app/paintbrush.c:216
+#: app/palette.c:2787
+msgid "Gradient"
+msgstr "Pøechod"
+
+#: app/gradient.c:735 app/gradient_select.c:476 app/palette.c:2143
+#: app/palette_select.c:276
+msgid "Name"
+msgstr "Jméno"
+
+#. Frame & vbox for gradient functions
+#: app/gradient.c:756
+#, fuzzy
+msgid "Gradient Ops"
+msgstr "Pøechody"
+
+#. Buttons for gradient functions
+#: app/gradient.c:764
+#, fuzzy
+msgid "New Gradient"
+msgstr "Nový pøechod"
+
+#: app/gradient.c:770
+#, fuzzy
+msgid "Copy Gradient"
+msgstr "Kopírovat pøechod"
+
+#: app/gradient.c:776
+#, fuzzy
+msgid "Delete Gradient"
+msgstr "Smazat pøechod"
+
+#: app/gradient.c:782
+msgid "Rename Gradient"
+msgstr "Pøejmenovat pøechod"
+
+#: app/gradient.c:788 app/gradient.c:1688
+msgid "Save as POV-Ray"
+msgstr "Zapsat jako POV-Ray"
+
+#. Zoom all button
+#: app/gradient.c:804
+msgid "Zoom all"
+msgstr "Zvìt¹it v¹e"
+
+#: app/gradient.c:869
+msgid "Instant update"
+msgstr "Rychlá aktualizace"
+
+#: app/gradient.c:1332
+msgid "New gradient"
+msgstr "Nový pøechod"
+
+#: app/gradient.c:1333
+msgid "Enter a name for the new gradient"
+msgstr "Zadejte jméno nového pøechodu"
+
+#: app/gradient.c:1334
+msgid "untitled"
+msgstr "bez názvu"
+
+#: app/gradient.c:1352
+msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
+msgstr "ed_do_new_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#: app/gradient.c:1393
+msgid "Copy gradient"
+msgstr "Kopírovat pøechod"
+
+#: app/gradient.c:1394
+msgid "Enter a name for the copied gradient"
+msgstr "Zadejte jméno kopie pøechodu"
+
+#: app/gradient.c:1416
+msgid "ed_do_copy_gradient_callback(): oops, received NULL in call_data"
+msgstr "ed_do_copy_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#: app/gradient.c:1476
+msgid "Rename gradient"
+msgstr "Pøejmenovat pøechod"
+
+#: app/gradient.c:1477
+msgid "Enter a new name for the gradient"
+msgstr "Zadejte nové jméno pøechodu"
+
+#: app/gradient.c:1499
+msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
+msgstr "ed_do_rename_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#: app/gradient.c:1520
+msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
+msgstr ""
+"ed_do_rename_gradient_callback(): ouha, nelze nalézt pøechod k pøejmenování"
+
+#: app/gradient.c:1565
+msgid "Delete gradient"
+msgstr "Smazat pøechod"
+
+#: app/gradient.c:1579
+#, fuzzy, c-format
+msgid ""
+"Are you sure you want to delete\n"
+"\"%s\" from the list and from disk?"
+msgstr "\"%s\" ze seznamu a z disku?"
+
+#: app/gradient.c:1633
+#, fuzzy
+msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
+msgstr ""
+"ed_do_delete_gradient_callback(): ach, nelze nalézt pøechod ke smazání!"
+
+#: app/gradient.c:1720
+#, c-format
+msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
+msgstr "ed_do_save_pov_callback(): ouha, nelze otevøít \"%s\""
+
+#: app/gradient.c:1843
+#, c-format
+msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
+msgstr "Zvìt¹ení: %d:1    Zobrazuje se [%0.6f, %0.6f]"
+
+#: app/gradient.c:2087
+#, c-format
+msgid ""
+"Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
+"Opacity: %0.3f"
+msgstr ""
+"Poloha: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
+"Krytí: %0.3f"
+
+#: app/gradient.c:2111
+#, c-format
+msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Barva popøedí nastavenana RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+
+#: app/gradient.c:2134
+#, fuzzy, c-format
+msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+msgstr "Barva popøedí nastavenana RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+
+#: app/gradient.c:2423
+msgid "Drag: move    Shift+drag: move & compress"
+msgstr "Táhnutí: posun    Pøeøaïovaè+táhnutí: posun a komprese"
+
+#: app/gradient.c:2425 app/gradient.c:2427
+msgid "Click: select    Shift+click: extend selection"
+msgstr "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøít výbìr"
+
+#: app/gradient.c:2432
+msgid "Click: select    Shift+click: extend selection    Drag: move"
+msgstr ""
+"Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøít výbìr    Táhnutí: posun"
+
+#: app/gradient.c:2443
+msgid ""
+"Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
+"move & compress"
+msgstr ""
+"Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøít výbìr    Táhnutí: posun    "
+"Pøeøaïovaè+táhnutí: posun a komprese"
+
+#: app/gradient.c:2682 app/gradient.c:2691
+#, c-format
+msgid "Handle position: %0.6f"
+msgstr "Poloha øídícího bodu: %0.6f"
+
+#: app/gradient.c:2708
+#, c-format
+msgid "Distance: %0.6f"
+msgstr "Vzdálenost: %0.6f"
+
+#: app/gradient.c:2715
+#, fuzzy, c-format
+msgid "control_motion(): Attempt to move bogus handle %d"
+msgstr "control_motion(): ach, pokus o posun zmateného øídícího bodu %d"
+
+#: app/gradient.c:3167 app/gradient.c:4218
+msgid "Left endpoint's color"
+msgstr "Barva levého koncového bodu"
+
+#: app/gradient.c:3178 app/gradient.c:3220
+msgid "Load from"
+msgstr "Naèíst..."
+
+#: app/gradient.c:3182
+msgid "Left neighbor's right endpoint"
+msgstr "Pravý koncový bod levého souseda"
+
+#: app/gradient.c:3183
+msgid "Right endpoint"
+msgstr "Pravý koncový bod"
+
+#: app/gradient.c:3193 app/gradient.c:3235
+msgid "Save to"
+msgstr "Zapsat jako..."
+
+#: app/gradient.c:3209 app/gradient.c:4296
+msgid "Right endpoint's color"
+msgstr "Barva pravého koncového bodu"
+
+#: app/gradient.c:3224
+msgid "Right neighbor's left endpoint"
+msgstr "Levý koncový bod pravého souseda"
+
+#: app/gradient.c:3225
+msgid "Left endpoint"
+msgstr "Levý koncový bod"
+
+#: app/gradient.c:3336
+msgid "Selection operations"
+msgstr "Operace výbìru"
+
+#: app/gradient.c:3512
+msgid "Blending function for segment"
+msgstr "Funkce mísení pro segment"
+
+#: app/gradient.c:3514
+msgid "Coloring type for segment"
+msgstr "Typ vybarvení pro segment"
+
+#: app/gradient.c:3516
+msgid "Split segment at midpoint"
+msgstr "Rozdìlit segment ve støedním bodì"
+
+#: app/gradient.c:3518 app/gradient.c:4612
+msgid "Split segment uniformly"
+msgstr "Rozdìlit segment stejnomìrnì"
+
+#: app/gradient.c:3520
+msgid "Delete segment"
+msgstr "Smazat segment"
+
+#: app/gradient.c:3522
+msgid "Re-center segment's midpoint"
+msgstr "Pøecentrovat støedový bod segmentu"
+
+#: app/gradient.c:3524
+msgid "Re-distribute handles in segment"
+msgstr "Pøerozdìlit øídící body v segmentu"
+
+#: app/gradient.c:3526
+msgid "Flip segment"
+msgstr "Pøevrátit segment"
+
+#: app/gradient.c:3528 app/gradient.c:5191
+msgid "Replicate segment"
+msgstr "Replikovat segment"
+
+#: app/gradient.c:3533
+msgid "Blending function for selection"
+msgstr "Funkce mísení pro výbìr"
+
+#: app/gradient.c:3535
+msgid "Coloring type for selection"
+msgstr "Typ vybarvení pro výbìr"
+
+#: app/gradient.c:3537
+msgid "Split segments at midpoints"
+msgstr "Rozdìlit segmenty ve støedních bodech"
+
+#: app/gradient.c:3539 app/gradient.c:4613
+msgid "Split segments uniformly"
+msgstr "Rozdìlit segmenty stejnomìrnì"
+
+#: app/gradient.c:3541
+msgid "Delete selection"
+msgstr "Smazat výbìr"
+
+#: app/gradient.c:3543
+msgid "Re-center midpoints in selection"
+msgstr "Pøecentrovat støedové body ve výbìru"
+
+#: app/gradient.c:3545
+msgid "Re-distribute handles in selection"
+msgstr "Pøerozdìlit øídící body ve výbìru"
+
+#: app/gradient.c:3547
+msgid "Flip selection"
+msgstr "Pøevrátit výbìr"
+
+#: app/gradient.c:3549 app/gradient.c:5192
+msgid "Replicate selection"
+msgstr "Replikovat výbìr"
+
+#: app/gradient.c:3825
+msgid "FG color"
+msgstr "Barva popøedí"
+
+#: app/gradient.c:3870
+#, c-format
+msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+
+#: app/gradient.c:4387 app/gradient.c:4459
+msgid "(Varies)"
+msgstr "(Promìnná)"
+
+#: app/gradient.c:4602
+msgid "Split"
+msgstr "Rozdìlit"
+
+#. Instructions
+#: app/gradient.c:4628
+msgid "Please select the number of uniform parts"
+msgstr "Prosím zvolte poèet stejných èástí"
+
+#: app/gradient.c:4634
+msgid "in which you want to split the selected segment"
+msgstr "na které chcete rozdìlit zvolený segment"
+
+#: app/gradient.c:4635
+msgid "in which you want to split the segments in the selection"
+msgstr "na které chcete rozdìlit segmenty ve výbìru"
+
+#: app/gradient.c:5010
+msgid "Blend endpoints' colors"
+msgstr "Barvy koncových bodù mísení"
+
+#: app/gradient.c:5022
+msgid "Blend endpoints' opacity"
+msgstr "Krytí koncových bodù mísení"
+
+#: app/gradient.c:5181
+msgid "Replicate"
+msgstr "Replikovat"
+
+#. Instructions
+#: app/gradient.c:5206
+msgid "Please select the number of times"
+msgstr "Prosím vyberte kolikrát"
+
+#: app/gradient.c:5211
+msgid "you want to replicate the selected segment"
+msgstr "chcete replikovat zvolený segment"
+
+#: app/gradient.c:5212
+msgid "you want to replicate the selection"
+msgstr "chcete replikovat výbìr"
+
+#: app/gradient.c:5588
+#, c-format
+msgid "grad_load_gradient(): invalid number of segments in \"%s\""
+msgstr "grad_load_gradient(): neplatný poèet segmentù v \"%s\""
+
+#: app/gradient.c:5611
+#, c-format
+msgid ""
+"grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
+"things may happen soon"
+msgstr ""
+"grad_load_gradient(): ¹patnì formátovaný segment pøechodu %d v \"%s\" --- "
+"brzy mohou nastat ¹patné vìci"
+
+#: app/gradient.c:5645
+msgid "grad_save_gradient(): can not save gradient with NULL filename"
+msgstr "grad_save_gradient(): nelze zapsat gradient s NULLovým jménem souboru"
+
+#: app/gradient.c:5651
+#, c-format
+msgid "grad_save_gradient(): can't open \"%s\""
+msgstr "grad_save_gradient(): nelze otevøít \"%s\""
+
+#: app/gradient.c:5853
+#, fuzzy, c-format
+msgid "seg_get_segment_at(): No matching segment for position %0.15f"
+msgstr "seg_get_segment_at(): ach, není odpovídající segment pro polohu %0.15f"
+
+#: app/gradient_select.c:508
+msgid "Gradient Selection"
+msgstr "Výbìr pøechodu"
+
+#: app/histogram_tool.c:172
+msgid "Histogram Options"
+msgstr "Volby histogramu"
+
+#: app/histogram_tool.c:210
+#, fuzzy
+msgid "Histogram does not operate on indexed drawables."
+msgstr "Posterizace nefunguje na indexovaných obrazovkách."
+
+#: app/histogram_tool.c:267
+msgid "Mean:"
+msgstr "Prùmìr:"
+
+#: app/histogram_tool.c:268
+msgid "Std Dev:"
+msgstr "Rozptyl:"
+
+#: app/histogram_tool.c:269
+msgid "Median:"
+msgstr "Medián:"
+
+#: app/histogram_tool.c:270
+msgid "Pixels:"
+msgstr "Pixelù:"
+
+#: app/histogram_tool.c:272
+msgid "Count:"
+msgstr "Poèet:"
+
+#: app/histogram_tool.c:273
+msgid "Percentile:"
+msgstr "Procento:"
+
+#: app/histogram_tool.c:296 app/tools.c:607
+msgid "Histogram"
+msgstr "Histogram"
+
+#: app/histogram_tool.c:315
+msgid "Information on Channel:"
+msgstr ""
+
+#: app/hue_saturation.c:260
+msgid "Hue-Saturation Options"
+msgstr "Volby odstínu-sytosti"
+
+#: app/hue_saturation.c:298
+msgid "Hue-Saturation operates only on RGB color drawables."
+msgstr "Odstín-sytost pracuje pouze s obrazovkami v RGB barvách."
+
+#: app/hue_saturation.c:367
+msgid "Master"
+msgstr "Spoleèná"
+
+#: app/hue_saturation.c:368
+msgid "R"
+msgstr "R"
+
+#: app/hue_saturation.c:369
+msgid "Y"
+msgstr "Y"
+
+#: app/hue_saturation.c:370
+msgid "G"
+msgstr "G"
+
+#: app/hue_saturation.c:371
+msgid "C"
+msgstr "C"
+
+#: app/hue_saturation.c:372
+msgid "B"
+msgstr "B"
+
+#: app/hue_saturation.c:373
+msgid "M"
+msgstr "M"
+
+#: app/hue_saturation.c:394 app/tools.c:532
+msgid "Hue-Saturation"
+msgstr "Odstín-sytost"
+
+#: app/hue_saturation.c:456
+msgid "Hue / Lightness / Saturation Adjustments"
+msgstr "Nastavení odstínu / svìtlosti / sytosti"
+
+#. Create the hue scale widget
+#: app/hue_saturation.c:466 app/layers_dialog.c:218 app/paint_funcs.c:94
+#: app/tool_options.c:787
+msgid "Hue"
+msgstr "Odstín"
+
+#. Create the lightness scale widget
+#: app/hue_saturation.c:500
+msgid "Lightness"
+msgstr "Svìtlost"
+
+#. Create the saturation scale widget
+#: app/hue_saturation.c:534 app/layers_dialog.c:220 app/paint_funcs.c:95
+#: app/tool_options.c:788
+msgid "Saturation"
+msgstr "Sytost"
+
+#: app/image_map.c:283
+msgid "image depth change, unable to restore original image"
+msgstr "hloubka obrázku se zmìnila, nepodaøilo se obnovit pùvodní obrázek"
+
+#: app/info_window.c:48
+msgid "Static Gray"
+msgstr "Statické ¹edi"
+
+#: app/info_window.c:50
+msgid "Static Color"
+msgstr "Statická barva"
+
+#: app/info_window.c:51
+msgid "Pseudo Color"
+msgstr "Pseudo barva"
+
+#: app/info_window.c:52
+msgid "True Color"
+msgstr "Skuteèná barva"
+
+#: app/info_window.c:53
+msgid "Direct Color"
+msgstr "Pøímá barva"
+
+#. create the info dialog
+#: app/info_window.c:138
+#, c-format
+msgid "%s: Window Info"
+msgstr "%s: Informaèní okno"
+
+#. add the information fields
+#: app/info_window.c:154
+msgid "Dimensions (w x h):"
+msgstr "Rozmìry (w × h):"
+
+#: app/info_window.c:156 app/iscissors.c:327
+msgid "Resolution:"
+msgstr "Rozli¹ení:"
+
+#: app/info_window.c:158 app/tool_options.c:449
+msgid "Unit:"
+msgstr "Jednotky:"
+
+#: app/info_window.c:160
+msgid "Scale Ratio:"
+msgstr "Zvìt¹ení:"
+
+#: app/info_window.c:162
+msgid "Display Type:"
+msgstr "Druh zobrazování:"
+
+#: app/info_window.c:164
+msgid "Visual Class:"
+msgstr "Vizuální tøída:"
+
+#: app/info_window.c:166
+msgid "Visual Depth:"
+msgstr "Vizuální hloubka:"
+
+#: app/info_window.c:169
+msgid "Shades of Color:"
+msgstr "Barevné odstíny:"
+
+#: app/info_window.c:172
+msgid "Shades:"
+msgstr "Odstíny:"
+
+#: app/info_window.c:175
+msgid "Shades of Gray:"
+msgstr "Odstíny ¹edi:"
+
+#: app/info_window.c:239
+msgid "RGB Color"
+msgstr "RGB barva"
+
+#: app/info_window.c:243
+msgid "Indexed Color"
+msgstr "Indexovaná barva"
+
+#. size slider
+#: app/ink.c:294
+msgid "Size:"
+msgstr "Velikost:"
+
+#. sens slider
+#: app/ink.c:312 app/ink.c:336 app/ink.c:366
+msgid "Sensitivity:"
+msgstr "Citlivost:"
+
+#. tilt sens slider
+#: app/ink.c:330
+msgid "Tilt"
+msgstr "Sklon"
+
+#. velocity sens slider
+#: app/ink.c:360
+msgid "Speed"
+msgstr "Rychlost"
+
+#. angle adjust slider
+#: app/ink.c:390
+msgid "Angle"
+msgstr "Úhel"
+
+#: app/ink.c:396
+msgid "Adjust:"
+msgstr "Nastavení:"
+
+#. Brush shape widget
+#: app/ink.c:483
+msgid "Shape"
+msgstr "Tvar"
+
+#: app/install.c:84
+msgid "The GIMP is not properly installed for the current user\n"
+msgstr "GIMP není øádnì instalován pro aktuálního u¾ivatele\n"
+
+#: app/install.c:85
+msgid ""
+"User installation was skipped because the '--nointerface' flag was "
+"encountered\n"
+msgstr ""
+"U¾ivatelská instalace byla pøeskoèena, proto¾e bylo pou¾ito '--nointerface'\n"
+
+#: app/install.c:86
+msgid ""
+"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgstr ""
+"Abyste provedli u¾ivatelskou instalaci, spus»te GIMP bez volby "
+"'--nointerface'\n"
+
+#: app/install.c:105
+msgid "Install"
+msgstr "Instalovat"
+
+#: app/install.c:106
+msgid "Ignore"
+msgstr "Ignorovat"
+
+#: app/install.c:107 app/install.c:392
+msgid "Quit"
+msgstr "Konec"
+
+#: app/install.c:120
+msgid ""
+"The GIMP - GNU Image Manipulation Program\n"
+"\n"
+msgstr ""
+"GIMP - GNU program pro práci s obrázky\n"
+"(GNU Image Manipulation Program)\n"
+"\n"
+
+#: app/install.c:121
+msgid "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n"
+msgstr "Copyright (C) 1995 Spencer Kimball a Peter Mattis\n"
+
+#: app/install.c:125
+msgid ""
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+msgstr ""
+"Tento program je volnì ¹iøitelný; mù¾ete jej redistribuovat a mìnit\n"
+"v souladu s Obecnou veøejnou licencí GNU publikovanou\n"
+"Free Software Foundation; buï licencí verze 2 nebo\n"
+"(dle va¹i volby) jakoukoliv novìj¹í.\n"
+
+#: app/install.c:130
+msgid ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details.\n"
+msgstr ""
+"Tento program je ¹íøen v nadìji, ¾e bude u¾iteèný, av¹ak\n"
+"BEZ JAKÉKOLI ZÁRUKY; neposkytují se ani odvozené záruky\n"
+"PRODEJNOSTI anebo VHODNOSTI PRO URÈITÝ ÚÈEL.\n"
+"Dal¹í podrobnosti hledejte v Obecné veøejné licenci GNU.\n"
+
+#: app/install.c:135
+msgid ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA.\n"
+msgstr ""
+"S tímto programem byste mìli získat kopii Obecné veøejné\n"
+"licenci GNU; pokud tomu tak není, pi¹te na Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA.\n"
+
+#: app/install.c:141
+msgid ""
+"Personal GIMP Installation\n"
+"\n"
+msgstr ""
+"U¾ivatelská instalace programu GIMP\n"
+"\n"
+
+#: app/install.c:142
+msgid "For a proper GIMP installation, a subdirectory called\n"
+msgstr "Pøi øádné instalaci programu GIMP bude vytvoøen podadresáø\n"
+
+#. will be replaced with gimp_directory()
+#: app/install.c:144
+msgid ""
+" needs to be created.  This\n"
+"subdirectory will contain a number of important files:\n"
+"\n"
+msgstr ""
+" je tøeba vytvoøit. Tento\n"
+"podadresáø bude obsahovat mno¾ství dùle¾itých souborù:\n"
+"\n"
+
+#: app/install.c:147
+msgid "gimprc\n"
+msgstr "gimprc\n"
+
+#: app/install.c:148
+msgid ""
+"\t\tThe gimprc is used to store personal preferences\n"
+"\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
+"\t\tPaths to search for brushes, palettes, gradients\n"
+"\t\tpatterns, plug-ins and modules are also configured here.\n"
+msgstr ""
+"\t\tgimprc uchovává osobní pøedvolby, jako je implicitní\n"
+"\t\tchování programu GIMP a klávesové zkratky zásuvných modulù.\n"
+"\t\tJsou zde také nastaveny cesty pro hledání ¹tìtcù,\n"
+"\t\tpalet, pøechodù, vzorkù, zásuvných modulù a modulù.\n"
+
+#: app/install.c:153
+msgid "unitrc\n"
+msgstr "unitrc\n"
+
+#: app/install.c:154
+msgid ""
+"\t\tThe unitrc is used to store your user units database.\n"
+"\t\tYou can define additional units and use them just\n"
+"\t\tlike you use the built-in units inches, millimeters,\n"
+"\t\tpoints and picas. This file is overwritten each time\n"
+"\t\tyou quit the GIMP.\n"
+msgstr ""
+"\t\tunitrc uchovává databázi u¾ivatelských jednotek.\n"
+"\t\tMù¾ete definovat vlastní jednotky a pou¾ívat je\n"
+"\t\tstejnì jako vestavìné palce, milimetry,\n"
+"\t\tbody a piky. Tento soubor je pøepsán poka¾dé,\n"
+"\t\tkdy¾ opou¹títe GIMP.\n"
+
+#: app/install.c:160
+msgid "pluginrc\n"
+msgstr "pluginrc\n"
+
+#: app/install.c:161
+msgid ""
+"\t\tPlug-ins and extensions are external programs run by\n"
+"\t\tthe GIMP which provide additional functionality.\n"
+"\t\tThese programs are searched for at run-time and\n"
+"\t\tinformation about their functionality and mod-times\n"
+"\t\tis cached in this file.  This file is intended to\n"
+"\t\tbe GIMP-readable only, and should not be edited.\n"
+msgstr ""
+"\t\tZásuvné moduly a roz¹íøení jsou vnìj¹í programy\n"
+"\t\ts doplòujícími funkcemi, spou¹tìné programem GIMP.\n"
+"\t\tTyto programy jsou vyhledávány za bìhu a informace\n"
+"\t\to jejich funkci a èasech zmìn jsou ulo¾eny do tohoto\n"
+"\t\tsouboru. Tento soubor je navr¾en pro ètení\n"
+"\t\tpouze programem GIMP a nemìl by být editován.\n"
+
+#: app/install.c:168
+msgid "brushes\n"
+msgstr "brushes\n"
+
+#: app/install.c:169
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined brushes.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp brushes installation when searching for\n"
+"\t\tbrushes.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované ¹tìtce.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\t¹tìtcù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp ¹tìtcù.\n"
+
+#: app/install.c:175
+msgid "gradients\n"
+msgstr "gradients\n"
+
+#: app/install.c:176
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gradients.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp gradients installation when searching for\n"
+"\t\tgradients.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované pøechody.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tpøechodù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp pøechodù.\n"
+
+#: app/install.c:182
+msgid "gfig\n"
+msgstr "gfig\n"
+
+#: app/install.c:183
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined figures to be used by the gfig plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gfig installation\n"
+"\t\twhen searching for gfig figures.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované kresby u¾ívané zásuvným modulem gfig.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tkreseb kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gfig kreseb.\n"
+
+#: app/install.c:189
+msgid "gflares\n"
+msgstr "gflares\n"
+
+#: app/install.c:190
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined gflares to be used by the gflare plug-in.\n"
+"\t\tThe default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp gflares installation\n"
+"\t\twhen searching for gflares.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované plameny u¾ívané zásuvným modulem gflare.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tplamenù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gflare plamenù.\n"
+
+#: app/install.c:196
+msgid "fractalexplorer\n"
+msgstr "fractalexplorer\n"
+
+#: app/install.c:197
+#, fuzzy
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined fractals to be used by the FractalExplorer\n"
+"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
+"\t\taddition to the systemwide gimp FractalExplorer installation\n"
+"\t\twhen searching for fractals.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované fraktály u¾ívané zásuvným modulem "
+"FractalExplorer.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tfraktálù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp fraktálù.\n"
+
+#: app/install.c:203
+msgid "palettes\n"
+msgstr "palettes\n"
+
+#: app/install.c:204
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined palettes.  The default gimprc file\n"
+"\t\tchecks only this subdirectory (not the system-wide\n"
+"\t\tinstallation) when searching for palettes.  During\n"
+"\t\tinstallation, the system palettes will be copied\n"
+"\t\there.  This is done to allow modifications made to\n"
+"\t\tpalettes during GIMP execution to persist across\n"
+"\t\tsessions.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované palety.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tpalet kontroluje pouze tento podadresáø\n"
+"\t\t(nikoli systémová instalace). Bìhem instalace\n"
+"\t\tsem budou systémové palety zkopírovány. Je to proto,\n"
+"\t\taby bylo mo¾né bìhem práce programu GIMP zmìnìné\n"
+"\t\tpalety uchovat mezi sezeními.\n"
+
+#: app/install.c:213
+msgid "patterns\n"
+msgstr "patterns\n"
+
+#: app/install.c:214
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser defined patterns.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide gimp patterns installation when searching for\n"
+"\t\tpatterns.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem definované vzorky.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tvzorkù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp vzorkù.\n"
+
+#: app/install.c:220
+msgid "plug-ins\n"
+msgstr "plug-ins\n"
+
+#: app/install.c:221
+msgid ""
+"\t\tThis is a subdirectory which can be used to store\n"
+"\t\tuser created, temporary, or otherwise non-system-\n"
+"\t\tsupported plug-ins.  The default gimprc file\n"
+"\t\tchecks this subdirectory in addition to the system-\n"
+"\t\twide GIMP plug-in directories when searching for\n"
+"\t\tplug-ins.\n"
+msgstr ""
+"\t\tToto je podadresáø, kam je mo¾né ukládat\n"
+"\t\tu¾ivatelem vytvoøené, pomocné nebo jiné v systému\n"
+"\t\tneobsa¾ené zásuvné moduly.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tzásuvných modulù kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gimp zásuvných modulù.\n"
+
+#: app/install.c:228
+msgid "modules\n"
+msgstr "modules\n"
+
+#: app/install.c:229
+msgid ""
+"\t\tThis subdirectory can be used to store user created,\n"
+"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+"\t\tThe default gimprc file checks this subdirectory\n"
+"\t\tin addition to the system-wide GIMP module directory\n"
+"\t\twhen searching for modules to load when initialising.\n"
+msgstr ""
+"\t\tTento adresáø mù¾e být pou¾it k uchování u¾ivatelem vytvoøených,\n"
+"\t\tpomocných nebo jiných v systému neobsa¾ených DLL modulù.\n"
+"\t\tDle implicitního gimprc souboru se pøi hledání\n"
+"\t\tmodulù kontroluje tento podadresáø spolu se systémovou\n"
+"\t\tinstalací modulù bìhem inicializace.\n"
+
+#: app/install.c:235
+msgid "scripts\n"
+msgstr "scripts\n"
+
+#: app/install.c:236
+msgid ""
+"\t\tThis subdirectory is used by the GIMP to store \n"
+"\t\tuser created and installed scripts. The default gimprc\n"
+"\t\tfile checks this subdirectory in addition to the system\n"
+"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
+msgstr ""
+"\t\tTento podadresáø je pou¾íván programem GIMP k uchování\n"
+"\t\tu¾ivatelem vytvoøených a instalovaných skriptù. Dle\n"
+"\t\timplicitního gimprc souboru se pøi hledání skriptù kontroluje\n"
+"\t\ttento podadresáø spolu se systémovou instalací gimp skriptù.\n"
+
+#: app/install.c:241
+msgid "tmp\n"
+msgstr "tmp\n"
+
+#: app/install.c:242
+msgid ""
+"\t\tThis subdirectory is used by the GIMP to temporarily\n"
+"\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
+"\t\tunceremoniously killed, files may persist in this directory\n"
+"\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
+"\t\tGIMP sessions and can be destroyed with impunity.\n"
+msgstr ""
+"\t\tTento podadresáø je pou¾íván programem GIMP k doèasnému\n"
+"\t\tuchování bufferù pro vracení, èím¾ se u¹etøí pamì».\n"
+"\t\tPokud je program GIMP bez ceremonie zabit, mohou zde zbýt\n"
+"\t\tsoubory ve formì: gimp<#>.<#>. Ty jsou mezi GIMP sezeními\n"
+"\t\tzbyteèné a mohou být odstranìny jako smetí.\n"
+
+#: app/install.c:256
+msgid "GIMP Installation"
+msgstr "Instalace programu GIMP"
+
+#: app/install.c:391
+msgid "Continue"
+msgstr "Pokraèovat"
+
+#: app/install.c:411
+msgid "Installation Log"
+msgstr "Protokol o instalaci"
+
+#: app/install.c:443
+msgid ""
+"User Installation Log\n"
+"\n"
+msgstr ""
+"Protokol o u¾ivatelské instalaci\n"
+"\n"
+
+#: app/install.c:453
+msgid " does not exist.  Cannot install.\n"
+msgstr " neexistuje. Nelze instalovat.\n"
+
+#: app/install.c:461
+msgid ""
+" has invalid permissions.\n"
+"Cannot install."
+msgstr ""
+" má neplatná práva.\n"
+"Nelze instalovat."
+
+#: app/install.c:527
+msgid ""
+"\n"
+"Installation successful!\n"
+msgstr ""
+"\n"
+"Instalace probìhla úspì¹nì!\n"
+
+#: app/install.c:536
+msgid ""
+"\n"
+"Installation failed.  Contact system administrator.\n"
+msgstr ""
+"\n"
+"Instalace selhala. Spojte se se systémovým administrátorem.\n"
+
+#: app/interface.c:322
+msgid ""
+"Foreground & background colors.  The black and white squares reset colors.  "
+"The arrows swap colors. Double click to select a color from a colorrequester."
+msgstr ""
+"Barvy popøedí a pozadí. Èerný a bílý ètverec obnovuje barvy. ©ipky prohazují "
+"barvy. Dvojitým klepnutím vyberete barvu z panelu barev."
+
+#: app/interface.c:545
+msgid "The GIMP"
+msgstr "GIMP"
+
+#: app/interface.c:1383
+msgid "GIMP Message"
+msgstr "Zpráva programu GIMP"
+
+#: app/internal_procs.c:67
+msgid "Internal Procedures"
+msgstr "Vnitøní procedury"
+
+#: app/internal_procs.c:67
+msgid "Brush UI"
+msgstr "Rozhraní ¹tìtcù"
+
+#: app/internal_procs.c:73
+msgid "Channel"
+msgstr "Kanál"
+
+#: app/internal_procs.c:76
+msgid "Channel Ops"
+msgstr "Práce s kanály"
+
+#: app/internal_procs.c:79 app/layers_dialog.c:222 app/paint_funcs.c:96
+#: app/tool_options.c:789
+msgid "Color"
+msgstr "Barva"
+
+#: app/internal_procs.c:82
+msgid "Convert"
+msgstr "Pøevod"
+
+#: app/internal_procs.c:85
+msgid "Drawable procedures"
+msgstr "Procedury obrazovky"
+
+#: app/internal_procs.c:88
+msgid "Edit procedures"
+msgstr "Úpravy procerur"
+
+#: app/internal_procs.c:91
+msgid "File Operations"
+msgstr "Práce se soubory"
+
+#: app/internal_procs.c:94
+msgid "Floating selections"
+msgstr "Plovoucí výbìry"
+
+#: app/internal_procs.c:97
+msgid "GDisplay procedures"
+msgstr "Procedury GDisplay"
+
+#: app/internal_procs.c:100
+msgid "Image"
+msgstr "Obrázek"
+
+#: app/internal_procs.c:103
+msgid "Image mask"
+msgstr "Maska obrázku"
+
+#: app/internal_procs.c:106
+msgid "Gimprc procedures"
+msgstr "Procedury Gimprc"
+
+#: app/internal_procs.c:112
+msgid "Gradient UI"
+msgstr "Rozhraní pøechodu"
+
+#: app/internal_procs.c:115
+msgid "Guide procedures"
+msgstr "Procedury prùvodce"
+
+#: app/internal_procs.c:118 app/preferences_dialog.c:1721
+msgid "Interface"
+msgstr "Rozhraní"
+
+#. the layer name label
+#: app/internal_procs.c:121 app/layer_select.c:137
+msgid "Layer"
+msgstr "Vrstva"
+
+#: app/internal_procs.c:124
+msgid "Miscellaneous"
+msgstr "Rùzné"
+
+#: app/internal_procs.c:127 app/palette.c:2129 app/palette.c:2141
+#: app/palette_select.c:274
+msgid "Palette"
+msgstr "Paleta"
+
+#: app/internal_procs.c:130
+msgid "Parasite procedures"
+msgstr "Procerury cizopasníkù"
+
+#: app/internal_procs.c:133 app/lc_dialog.c:180
+msgid "Paths"
+msgstr "Cesty"
+
+#: app/internal_procs.c:136
+msgid "Pattern UI"
+msgstr "Rozhraní vzorkù"
+
+#: app/internal_procs.c:142
+msgid "Plug-in"
+msgstr "Zásuvný modul"
+
+#: app/internal_procs.c:145
+msgid "Procedural database"
+msgstr "Procedurální databáze"
+
+#: app/internal_procs.c:148
+msgid "Text procedures"
+msgstr "Procedury textù"
+
+#: app/internal_procs.c:151
+msgid "Tool procedures"
+msgstr "Procedury nástrojù"
+
+#: app/internal_procs.c:154
+msgid "Undo"
+msgstr "Vrátit"
+
+#: app/internal_procs.c:157
+msgid "Units"
+msgstr "Jednotky"
+
+#: app/invert.c:43
+msgid "Invert does not operate on indexed drawables."
+msgstr "Invertování nefunguje na indexovaných obrazovkách."
+
+#: app/invert.c:53
+msgid "Invert operation failed."
+msgstr "Invertování selhalo."
+
+#: app/iscissors.c:321
+msgid "Curve"
+msgstr "Køivka"
+
+#. the threshold scale
+#: app/iscissors.c:350
+msgid "Edge Detect "
+msgstr "Práh detekce hran "
+
+#. the elasticity scale
+#: app/iscissors.c:379
+msgid "Elasticity:"
+msgstr "Pru¾nost:"
+
+#. the convert to bezier button
+#: app/iscissors.c:399
+msgid "Convert to Bezier Curve"
+msgstr "Pøevést na Bézierovu køivku"
+
+#: app/iscissors.c:933
+#, fuzzy
+msgid "add_segment(): Unable to reallocate segment array in iscissors."
+msgstr "Nepodaøilo se to pøemístit v pamìti pole segmentù v iscissors."
+
+#: app/iscissors.c:976
+#, fuzzy
+msgid "add_point(): Unable to reallocate points array in iscissors."
+msgstr "Nepodaøilo se to pøemístit v pamìti pole bodù v iscissors."
+
+#: app/iscissors.c:1780
+msgid "Boundary contains < 4 points!  Cannot bezierify."
+msgstr "Hranice obsahuje < 4 body!  Nelze pøevést na Bézierovu køivku."
+
+#: app/layer.c:248
+msgid "Zero width or height layers not allowed."
+msgstr "Nulová ¹íøka nebo vý¹ka vrstvy není pøípustná."
+
+#: app/layer.c:354
+msgid "layer_copy: could not allocate new layer"
+msgstr "layer_copy: nelze umístit v pamìti novou vrstvu"
+
+#: app/layer.c:431
+msgid "layer_from_tiles: could not allocate new layer"
+msgstr "layer_from_tiles: nelze umístit v pamìti novou vrstvu"
+
+#: app/layer.c:486
+#, c-format
+msgid "%s mask"
+msgstr "%s maska"
+
+#: app/layer_select.c:101
+msgid "Layer Select"
+msgstr "Vrstva výbìru"
+
+#: app/layers_dialog.c:196 app/paint_funcs.c:83 app/tool_options.c:775
+msgid "Normal"
+msgstr "Normální"
+
+#: app/layers_dialog.c:198 app/paint_funcs.c:84 app/tool_options.c:776
+msgid "Dissolve"
+msgstr "Rozpou¹tìní"
+
+#: app/layers_dialog.c:200 app/paint_funcs.c:86 app/tool_options.c:778
+msgid "Multiply (Burn)"
+msgstr "Násobení (propalování)"
+
+#: app/layers_dialog.c:202 app/paint_funcs.c:98 app/tool_options.c:779
+msgid "Divide (Dodge)"
+msgstr "Dìlení (Vyhýbání)"
+
+#: app/layers_dialog.c:204 app/paint_funcs.c:87 app/tool_options.c:780
+msgid "Screen"
+msgstr "Obraz"
+
+#: app/layers_dialog.c:206 app/paint_funcs.c:88 app/tool_options.c:781
+msgid "Overlay"
+msgstr "Pøekrytí"
+
+#: app/layers_dialog.c:208 app/paint_funcs.c:89 app/tool_options.c:782
+msgid "Difference"
+msgstr "Diference"
+
+#: app/layers_dialog.c:210 app/paint_funcs.c:90 app/tool_options.c:783
+msgid "Addition"
+msgstr "Souèet"
+
+#: app/layers_dialog.c:214 app/paint_funcs.c:92 app/tool_options.c:785
+msgid "Darken Only"
+msgstr "Pouze ztmavení"
+
+#: app/layers_dialog.c:216 app/paint_funcs.c:93 app/tool_options.c:786
+msgid "Lighten Only"
+msgstr "Pouze zesvìtlení"
+
+#: app/layers_dialog.c:243 app/layers_dialog.c:2863
+msgid "New Layer"
+msgstr "Nová vrstva"
+
+#: app/layers_dialog.c:245
+msgid ""
+"Raise Layer    \n"
+"<Shift> To Top"
+msgstr ""
+"Vrstvu vý¹\n"
+"<Pøeøaïovaè> Navrch"
+
+#: app/layers_dialog.c:248
+msgid ""
+"Lower Layer       \n"
+"<Shift> To Bottom"
+msgstr ""
+"Vrstvu ní¾\n"
+"<Shift> Dospod"
+
+#: app/layers_dialog.c:251
+msgid "Duplicate Layer"
+msgstr "Duplikovat vrstvu"
+
+#: app/layers_dialog.c:253
+msgid "Anchor Layer"
+msgstr "Vlo¾it vrstvu"
+
+#: app/layers_dialog.c:255
+msgid "Delete Layer"
+msgstr "Smazat vrstvu"
+
+#: app/layers_dialog.c:318
+msgid "Keep Trans."
+msgstr "Zachovat krytí"
+
+#: app/layers_dialog.c:947 app/menus.c:246
+#, fuzzy
+msgid "/Stack/Previous Layer"
+msgstr "/Vrstvy/Zásobník/Pøedchozí vrstva"
+
+#: app/layers_dialog.c:948 app/menus.c:247
+#, fuzzy
+msgid "/Stack/Next Layer"
+msgstr "/Vrstvy/Zásobník/Následující vrstva"
+
+#: app/layers_dialog.c:950 app/menus.c:248
+#, fuzzy
+msgid "/Stack/Raise Layer"
+msgstr "/Vrstvy/Zásobník/Vrstvu vý¹"
+
+#: app/layers_dialog.c:954 app/menus.c:249
+#, fuzzy
+msgid "/Stack/Lower Layer"
+msgstr "/Vrstvy/Zásobník/Vrstvu ní¾"
+
+#: app/layers_dialog.c:958 app/menus.c:250
+#, fuzzy
+msgid "/Stack/Layer to Top"
+msgstr "/Vrstvy/Zásobník/Vrstvu navrch"
+
+#: app/layers_dialog.c:960 app/menus.c:251
+#, fuzzy
+msgid "/Stack/Layer to Bottom"
+msgstr "/Vrstvy/Zásobník/Vrstvu dospod"
+
+#: app/layers_dialog.c:963 app/menus.c:245
+#, fuzzy
+msgid "/New Layer"
+msgstr "Nová vrstva"
+
+#: app/layers_dialog.c:966 app/menus.c:252
+#, fuzzy
+msgid "/Duplicate Layer"
+msgstr "Duplikovat vrstvu"
+
+#: app/layers_dialog.c:969 app/menus.c:253
+#, fuzzy
+msgid "/Anchor Layer"
+msgstr "Vlo¾it vrstvu"
+
+#: app/layers_dialog.c:972 app/menus.c:254
+#, fuzzy
+msgid "/Delete Layer"
+msgstr "Smazat vrstvu"
+
+#: app/layers_dialog.c:975 app/menus.c:256
+#, fuzzy
+msgid "/Scale Layer"
+msgstr "Velikost vrstvy"
+
+#: app/layers_dialog.c:976 app/menus.c:257
+#, fuzzy
+msgid "/Resize Layer"
+msgstr "Rozmìry plátna vrstvy"
+
+#: app/layers_dialog.c:978 app/menus.c:259
+#, fuzzy
+msgid "/Merge Visible Layers"
+msgstr "Slouèit viditelné vrstvy"
+
+#: app/layers_dialog.c:979 app/menus.c:260
+#, fuzzy
+msgid "/Merge Down"
+msgstr "Slouèit dolù"
+
+#: app/layers_dialog.c:980 app/menus.c:261
+#, fuzzy
+msgid "/Flatten Image"
+msgstr "Slouèit obraz"
+
+#: app/layers_dialog.c:982 app/menus.c:263
+#, fuzzy
+msgid "/Add Layer Mask"
+msgstr "Pøidat masku vrstvy"
+
+#: app/layers_dialog.c:983 app/menus.c:264
+#, fuzzy
+msgid "/Apply Layer Mask"
+msgstr "Pou¾ít masku vrstvy"
+
+#: app/layers_dialog.c:984 app/menus.c:265
+#, fuzzy
+msgid "/Alpha to Selection"
+msgstr "Alfa do výbìru"
+
+#: app/layers_dialog.c:985 app/menus.c:266
+#, fuzzy
+msgid "/Mask to Selection"
+msgstr "Maska do výbìru"
+
+#: app/layers_dialog.c:986 app/menus.c:267
+#, fuzzy
+msgid "/Add Alpha Channel"
+msgstr "Pøidat alfa kanál"
+
+#: app/layers_dialog.c:1174
+msgid "Unknown layer mode"
+msgstr "Neznámý re¾im vrstvy"
+
+#: app/layers_dialog.c:1805 app/layers_dialog.c:2628 app/layers_dialog.c:3082
+msgid "Floating Selection"
+msgstr "Plovoucí výbìr"
+
+#: app/layers_dialog.c:2751
+#, fuzzy
+msgid ""
+"new_layer_query_ok_callback():\n"
+"could not allocate new layer"
+msgstr "new_layer_query_ok_callback: nelze umístit v pamìti novou vrstvu"
+
+#: app/layers_dialog.c:2833
+msgid "New Layer Options"
+msgstr "Volby nové vrstvy"
+
+#. The name label and entry
+#: app/layers_dialog.c:2853
+msgid "Layer Name:"
+msgstr "Jméno vrstvy:"
+
+#. The size labels
+#: app/layers_dialog.c:2867
+msgid "Layer Width:"
+msgstr "©íøka vrstvy:"
+
+#. The radio frame and box
+#: app/layers_dialog.c:2926
+msgid "Layer Fill Type"
+msgstr "Typ vyplòování vrstvy"
+
+#: app/layers_dialog.c:3056
+msgid "Edit Layer Attributes"
+msgstr "Úpravy vlastností vrstvy"
+
+#: app/layers_dialog.c:3074
+#, fuzzy
+msgid "Layer name:"
+msgstr "Jméno vrstvy: "
+
+#: app/layers_dialog.c:3183
+msgid "White (Full Opacity)"
+msgstr "Bílá (úplné krytí)"
+
+#: app/layers_dialog.c:3184
+msgid "Black (Full Transparency)"
+msgstr "Èerná (úplná prùhlednost)"
+
+#: app/layers_dialog.c:3185
+msgid "Layer's Alpha Channel"
+msgstr "Alfa kanál vrstvy"
+
+#: app/layers_dialog.c:3197
+msgid "Add Mask Options"
+msgstr "Volby pøidání masky"
+
+#. The radio frame and box
+#: app/layers_dialog.c:3212
+#, fuzzy
+msgid "Initialize Layer Mask to:"
+msgstr "Výchozí stav masky vrstvy:"
+
+#: app/layers_dialog.c:3315
+msgid "Apply"
+msgstr "Pou¾ít"
+
+#: app/layers_dialog.c:3316
+msgid "Discard"
+msgstr "Zahodit"
+
+#: app/layers_dialog.c:3327
+msgid "Layer Mask Options"
+msgstr "Volby masky vrstvy"
+
+#. The name entry hbox, label and entry
+#: app/layers_dialog.c:3342
+msgid "Apply layer mask?"
+msgstr "Pou¾ít masku vrstvy?"
+
+#: app/layers_dialog.c:3402 app/layers_dialog.c:3502
+#, fuzzy
+msgid ""
+"Invalid width or height.\n"
+"Both must be positive."
+msgstr "Neplatný ¹íøka nebo vý¹ka. Obì musí být kladné."
+
+#: app/layers_dialog.c:3640
+msgid "Expanded as necessary"
+msgstr "Zvìt¹it dle potøeby"
+
+#: app/layers_dialog.c:3641
+msgid "Clipped to image"
+msgstr "Oøíznout dle obrázku"
+
+#: app/layers_dialog.c:3642
+msgid "Clipped to bottom layer"
+msgstr "Oøíznout dle spodní vrstvy"
+
+#: app/layers_dialog.c:3655
+msgid "Layer Merge Options"
+msgstr "Volby slouèení vrstvy"
+
+#: app/layers_dialog.c:3671
+#, fuzzy
+msgid "Final, Merged Layer should be:"
+msgstr "Koneènou, slouèenou vrstvu:"
+
+#: app/layers_dialog.c:3673
+#, fuzzy
+msgid "Final, Anchored Layer should be:"
+msgstr "Koneènou, vlo¾enou vrstvu:"
+
+#: app/lc_dialog.c:111
+msgid "Layers & Channels"
+msgstr "Vrstvy a kanály"
+
+#. The Auto-button
+#: app/lc_dialog.c:150
+msgid "Auto"
+msgstr "Automaticky"
+
+#: app/lc_dialog.c:170
+msgid "Layers"
+msgstr "Vrstvy"
+
+#: app/lc_dialog.c:175
+msgid "Channels"
+msgstr "Kanály"
+
+#: app/levels.c:197
+msgid "Levels Options"
+msgstr "Volby úrovní"
+
+#: app/levels.c:245
+msgid "Levels for indexed drawables cannot be adjusted."
+msgstr "Úrovnì nemohou být nastaveny v indexovaných obrazovkách."
+
+#: app/levels.c:334
+msgid "Auto Levels"
+msgstr "Auto úrovnì"
+
+#: app/levels.c:351 app/tools.c:592
+msgid "Levels"
+msgstr "Úrovnì"
+
+#: app/levels.c:366
+msgid "Modify Levels for Channel: "
+msgstr "Úpravy úrovní pro kanál: "
+
+#: app/levels.c:382
+msgid "Input Levels: "
+msgstr "Vstupní úrovnì: "
+
+#: app/levels.c:470
+msgid "Output Levels: "
+msgstr "Výstupní úrovnì: "
+
+#: app/magnify.c:95
+msgid "Magnify Options"
+msgstr "Volby lupy"
+
+#: app/magnify.c:104
+msgid "Allow Window Resizing"
+msgstr "Povolit zmìny velikosti okna"
+
+#: app/main.c:287
+msgid "GIMP version"
+msgstr "GIMP verze"
+
+#: app/main.c:291
+#, c-format
+msgid "Usage: %s [option ...] [files ...]\n"
+msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
+
+#: app/main.c:292
+msgid "Valid options are:\n"
+msgstr "Platné pøepínaèe jsou:\n"
+
+#: app/main.c:293
+msgid "  -h --help                Output this help.\n"
+msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
+
+#: app/main.c:294
+msgid "  -v --version             Output version info.\n"
+msgstr "  -v --version             Vypí¹e informace o verzi.\n"
+
+#: app/main.c:295
+msgid "  -b --batch <commands>    Run in batch mode.\n"
+msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
+
+#: app/main.c:296
+msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
+
+#: app/main.c:297
+msgid "  -n --no-interface        Run without a user interface.\n"
+msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
+
+#: app/main.c:298
+msgid "  -r --restore-session     Try to restore saved session.\n"
+msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
+
+#: app/main.c:299
+msgid ""
+"  --no-data                Do not load patterns, gradients, palettes, "
+"brushes.\n"
+msgstr "  --no-data                Neète vzorky, pøechody, palety, ¹tìtce.\n"
+
+#: app/main.c:300
+msgid "  --verbose                Show startup messages.\n"
+msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
+
+#: app/main.c:301
+msgid "  --no-splash              Do not show the startup window.\n"
+msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
+
+#: app/main.c:302
+msgid "  --no-splash-image        Do not add an image to the startup window.\n"
+msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
+
+#: app/main.c:303
+msgid ""
+"  --no-shm                 Do not use shared memory between GIMP and its "
+"plugins.\n"
+msgstr ""
+"  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
+"zásuvnými moduly.\n"
+
+#: app/main.c:304
+msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
+msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
+
+#: app/main.c:305
+msgid ""
+"  --console-messages       Display warnings to console instead of a dialog "
+"box.\n"
+msgstr ""
+"  --console-messages       Zobrazí varování na konzoli namísto dialogového "
+"okna.\n"
+
+#: app/main.c:306
+msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
+
+#: app/main.c:307
+msgid ""
+"  --display <display>      Use the designated X display.\n"
+"\n"
+msgstr ""
+"  --display <displej>      Pou¾ije zvolený X displej.\n"
+"\n"
+
+#: app/main.c:308
+msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
+
+#: app/main.c:418
+msgid "sighup caught"
+msgstr "zachycen sighup"
+
+#: app/main.c:423
+msgid "sigint caught"
+msgstr "zachycen sigint"
+
+#: app/main.c:428
+msgid "sigquit caught"
+msgstr "zachycen sigquit"
+
+#: app/main.c:433
+msgid "sigabrt caught"
+msgstr "zachycen sigabrt"
+
+#: app/main.c:438
+msgid "sigbus caught"
+msgstr "zachycen sigbus"
+
+#: app/main.c:443
+msgid "sigsegv caught"
+msgstr "zachycen sigsegv"
+
+#: app/main.c:448
+msgid "sigpipe caught"
+msgstr "zachycen sigpipe"
+
+#: app/main.c:453
+msgid "sigterm caught"
+msgstr "zachycen sigterm"
+
+#: app/main.c:458
+msgid "sigfpe caught"
+msgstr "zachycen sigfpe"
+
+#: app/main.c:462
+msgid "unknown signal"
+msgstr "neznámý signal"
+
+#: app/menus.c:45
+msgid "/File/MRU00 "
+msgstr "/Soubor/MRU00 "
+
+#: app/menus.c:55 app/menus.c:87
+#, fuzzy
+msgid "/File/tearoff1"
+msgstr "/Filtry"
+
+#: app/menus.c:56 app/menus.c:88
+msgid "/File/New"
+msgstr "/Soubor/Nový"
+
+#: app/menus.c:58
+msgid "/File/About..."
+msgstr "/Soubor/O programu..."
+
+#: app/menus.c:59 app/menus.c:93
+msgid "/File/Preferences..."
+msgstr "/Soubor/Pøedvolby..."
+
+#: app/menus.c:60
+msgid "/File/Tip of the day"
+msgstr "/Soubor/Tip dne"
+
+#: app/menus.c:62
+msgid "/File/Dialogs/Brushes..."
+msgstr "/Soubor/Dialogy/©tìtce..."
+
+#: app/menus.c:63
+msgid "/File/Dialogs/Patterns..."
+msgstr "/Soubor/Dialogy/Vzorky..."
+
+#: app/menus.c:64
+msgid "/File/Dialogs/Palette..."
+msgstr "/Soubor/Dialogy/Paleta..."
+
+#: app/menus.c:65
+msgid "/File/Dialogs/Gradient..."
+msgstr "/Soubor/Dialogy/Pøechody..."
+
+#: app/menus.c:66
+msgid "/File/Dialogs/Layers & Channels..."
+msgstr "/Soubor/Dialogy/Vrstvy a kanály..."
+
+#: app/menus.c:67
+msgid "/File/Dialogs/Tool Options..."
+msgstr "/Soubor/Dialogy/Volby nástrojù..."
+
+#: app/menus.c:68
+msgid "/File/Dialogs/Input Devices..."
+msgstr "/Soubor/Dialogy/Vstupní zaøízení..."
+
+#: app/menus.c:69
+msgid "/File/Dialogs/Device Status..."
+msgstr "/Soubor/Dialogy/Stav zaøízení..."
+
+#: app/menus.c:70
+msgid "/File/Dialogs/Document Index..."
+msgstr "/Soubor/Dialogy/Seznam dokumentù..."
+
+#: app/menus.c:71
+msgid "/File/Dialogs/Error Console..."
+msgstr "/Soubor/Dialogy/Chybová konzole..."
+
+#: app/menus.c:73
+msgid "/Xtns/tearoff1"
+msgstr ""
+
+#: app/menus.c:74
+msgid "/Xtns/Module Browser"
+msgstr "/Xtns/Dialogy/Prohlí¾eè modulù"
+
+#: app/menus.c:75 app/menus.c:76 app/menus.c:81 app/menus.c:94
+msgid "/File/---"
+msgstr "/Soubor/---"
+
+#: app/menus.c:86
+msgid "/tearoff1"
+msgstr ""
+
+#: app/menus.c:98
+msgid "/File/---moved"
+msgstr "/Soubor/---pøestìhováno"
+
+#: app/menus.c:100
+#, fuzzy
+msgid "/Edit/tearoff1"
+msgstr "/Úpravy/Vymazat"
+
+#: app/menus.c:106 app/menus.c:112 app/menus.c:116
+msgid "/Edit/---"
+msgstr "/Úpravy/---"
+
+#: app/menus.c:110
+msgid "/Edit/Undo"
+msgstr "/Úpravy/Vrátit"
+
+#: app/menus.c:111
+msgid "/Edit/Redo"
+msgstr "/Úpravy/Zru¹it vrácení"
+
+#: app/menus.c:118
+#, fuzzy
+msgid "/Select/tearoff1"
+msgstr "/Výbìr/Zvìt¹it"
+
+#: app/menus.c:119
+msgid "/Select/Invert"
+msgstr "/Výbìr/Invertovat"
+
+#: app/menus.c:120
+msgid "/Select/All"
+msgstr "/Výbìr/V¹e"
+
+#: app/menus.c:121
+msgid "/Select/None"
+msgstr "/Výbìr/Nic"
+
+#: app/menus.c:122
+msgid "/Select/Float"
+msgstr "/Výbìr/Plovoucí"
+
+#: app/menus.c:123 app/menus.c:129
+#, fuzzy
+msgid "/Select/---"
+msgstr "/Výbìr"
+
+#: app/menus.c:124
+msgid "/Select/Feather"
+msgstr "/Výbìr/Zaoblení"
+
+#: app/menus.c:125
+msgid "/Select/Sharpen"
+msgstr "/Výbìr/Zaostøení"
+
+#: app/menus.c:126
+msgid "/Select/Shrink"
+msgstr "/Výbìr/Zmen¹it"
+
+#: app/menus.c:127
+msgid "/Select/Grow"
+msgstr "/Výbìr/Zvìt¹it"
+
+#: app/menus.c:128
+msgid "/Select/Border"
+msgstr "/Výbìr/Obvod"
+
+#: app/menus.c:132
+msgid "/View/tearoff1"
+msgstr ""
+
+#: app/menus.c:133
+msgid "/View/Zoom In"
+msgstr "/Zobrazení/Pøiblí¾it"
+
+#: app/menus.c:134
+msgid "/View/Zoom Out"
+msgstr "/Zobrazení/Vzdálit"
+
+#: app/menus.c:135
+msgid "/View/Zoom/16:1"
+msgstr "/Zobrazení/Zvìt¹ení/16:1"
+
+#: app/menus.c:136
+msgid "/View/Zoom/8:1"
+msgstr "/Zobrazení/Zvìt¹ení/8:1"
+
+#: app/menus.c:137
+msgid "/View/Zoom/4:1"
+msgstr "/Zobrazení/Zvìt¹ení/4:1"
+
+#: app/menus.c:138
+msgid "/View/Zoom/2:1"
+msgstr "/Zobrazení/Zvìt¹ení/2:1"
+
+#: app/menus.c:139
+msgid "/View/Zoom/1:1"
+msgstr "/Zobrazení/Zvìt¹ení/1:1"
+
+#: app/menus.c:140
+msgid "/View/Zoom/1:2"
+msgstr "/Zobrazení/Zvìt¹ení/1:2"
+
+#: app/menus.c:141
+msgid "/View/Zoom/1:4"
+msgstr "/Zobrazení/Zvìt¹ení/1:4"
+
+#: app/menus.c:142
+msgid "/View/Zoom/1:8"
+msgstr "/Zobrazení/Zvìt¹ení/1:8"
+
+#: app/menus.c:143
+msgid "/View/Zoom/1:16"
+msgstr "/Zobrazení/Zvìt¹ení/1:16"
+
+#: app/menus.c:145
+msgid "/View/Window Info..."
+msgstr "/Zobrazení/Informaèní okno..."
+
+#: app/menus.c:147 app/menus.c:153
+msgid "/View/---"
+msgstr "/Zobrazení/---"
+
+#: app/menus.c:155
+msgid "/View/New View"
+msgstr "/Zobrazení/Nové zobrazení"
+
+#: app/menus.c:156
+msgid "/View/Shrink Wrap"
+msgstr "/Zobrazení/Zmen¹it obalení"
+
+#: app/menus.c:158
+#, fuzzy
+msgid "/Image/tearoff1"
+msgstr "<Image>/Úpravy/Vymazat"
+
+#: app/menus.c:159
+#, fuzzy
+msgid "/Image/Colors/tearoff1"
+msgstr "/Obrázek/Barvy/Invertovat"
+
+#: app/menus.c:162
+msgid "/Image/Colors/---"
+msgstr "/Obrázek/Barvy/---"
+
+#: app/menus.c:164
+#, fuzzy
+msgid "/Image/Channel Ops/tearoff1"
+msgstr "/Obrázek/Práce s kanály/Posun"
+
+#: app/menus.c:165
+msgid "/Image/Channel Ops/Duplicate"
+msgstr "/Obrázek/Práce s kanály/Duplikovat"
+
+#: app/menus.c:167
+#, fuzzy
+msgid "/Image/Alpha/tearoff1"
+msgstr "/Obrázek/Alfa"
+
+#: app/menus.c:170 app/menus.c:174 app/menus.c:177
+msgid "/Image/---"
+msgstr "/Obrázek/---"
+
+#: app/menus.c:175
+msgid "/Image/Resize"
+msgstr "/Obrázek/Rozmìry plátna"
+
+#: app/menus.c:176
+msgid "/Image/Scale"
+msgstr "/Obrázek/Velikost"
+
+#: app/menus.c:179
+#, fuzzy
+msgid "/Layers/tearoff1"
+msgstr "/Vrstvy/Zásobník/Následující vrstva"
+
+#: app/menus.c:180
+msgid "/Layers/Layers & Channels..."
+msgstr "/Vrstvy/Vrstvy a kanály..."
+
+#: app/menus.c:181
+#, fuzzy
+msgid "/Layers/Stack/tearoff1"
+msgstr "/Vrstvy/Zásobník/Následující vrstva"
+
+#: app/menus.c:188 app/menus.c:195
+msgid "/Layers/---"
+msgstr "/Vrstvy/---"
+
+#: app/menus.c:197
+#, fuzzy
+msgid "/Tools/tearoff1"
+msgstr "/Nástroje/Guma"
+
+#: app/menus.c:198
+msgid "/Tools/Toolbox"
+msgstr "/Nástroje/Panel nástrojù"
+
+#: app/menus.c:199
+msgid "/Tools/Default Colors"
+msgstr "/Nástroje/Implicitní Barvy"
+
+#: app/menus.c:200
+msgid "/Tools/Swap Colors"
+msgstr "/Nástroje/Prohodit Barvy"
+
+#: app/menus.c:201
+msgid "/Tools/---"
+msgstr "/Nástroje/---"
+
+#. the tool entries themselves are built on the fly
+#: app/menus.c:205
+#, fuzzy
+msgid "/Filters/tearoff1"
+msgstr "/Filtry"
+
+#: app/menus.c:206 app/plug_in.c:1285
+msgid "/Filters/Repeat last"
+msgstr "/Filtry/Opakovat minulý"
+
+#: app/menus.c:207 app/plug_in.c:1286
+msgid "/Filters/Re-show last"
+msgstr "/Filtry/Zobrazit minulý"
+
+#: app/menus.c:208
+msgid "/Filters/---"
+msgstr "/Filtry/---"
+
+#: app/menus.c:210
+#, fuzzy
+msgid "/Script-Fu/tearoff1"
+msgstr "/Script-Fu/"
+
+#: app/menus.c:211
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
+
+#: app/menus.c:213
+#, fuzzy
+msgid "/Dialogs/tearoff1"
+msgstr "/Dialogy/Vzorky..."
+
+#: app/menus.c:214
+msgid "/Dialogs/Brushes..."
+msgstr "/Dialogy/©tìtce..."
+
+#: app/menus.c:215
+msgid "/Dialogs/Patterns..."
+msgstr "/Dialogy/Vzorky..."
+
+#: app/menus.c:216
+msgid "/Dialogs/Palette..."
+msgstr "/Dialogy/Paleta..."
+
+#: app/menus.c:217
+msgid "/Dialogs/Gradient..."
+msgstr "/Dialogy/Pøechody..."
+
+#: app/menus.c:218
+msgid "/Dialogs/Layers & Channels..."
+msgstr "/Dialogy/Vrstvy a kanály..."
+
+#: app/menus.c:219
+msgid "/Dialogs/Indexed Palette..."
+msgstr "/Dialogy/Indexovaná paleta..."
+
+#: app/menus.c:220
+msgid "/Dialogs/Tool Options..."
+msgstr "/Dialogy/Volby nástrojù..."
+
+#: app/menus.c:221
+msgid "/Dialogs/Input Devices..."
+msgstr "/Dialogy/Vstupní zaøízení..."
+
+#: app/menus.c:222
+msgid "/Dialogs/Device Status..."
+msgstr "/Dialogy/Stav zaøízení..."
+
+#: app/menus.c:229
+msgid "/Automatic"
+msgstr "/Automatické"
+
+#: app/menus.c:237
+msgid "/By extension"
+msgstr "/Podle pøípony"
+
+#: app/menus.c:291 app/paths_dialog.c:204
+#, fuzzy
+msgid "/New Path"
+msgstr "Nová paleta"
+
+#: app/menus.c:292 app/paths_dialog.c:208
+#, fuzzy
+msgid "/Duplicate Path"
+msgstr "Duplikovat vrstvu"
+
+#: app/menus.c:293 app/paths_dialog.c:212
+#, fuzzy
+msgid "/Path to Selection"
+msgstr "Výbìr palety"
+
+#: app/menus.c:294 app/paths_dialog.c:216
+msgid "/Stroke Path"
+msgstr ""
+
+#: app/menus.c:295 app/paths_dialog.c:220
+#, fuzzy
+msgid "/Delete Path"
+msgstr "Smazat"
+
+#: app/menus.c:297 app/paths_dialog.c:224
+#, fuzzy
+msgid "/Copy Path"
+msgstr "Kopírovat pøechod"
+
+#: app/menus.c:298 app/paths_dialog.c:227
+#, fuzzy
+msgid "/Paste Path"
+msgstr "Vlo¾it"
+
+#: app/menus.c:299
+#, fuzzy
+msgid "/Import Path"
+msgstr "Import palety"
+
+#: app/menus.c:300
+#, fuzzy
+msgid "/Export Path"
+msgstr "Import palety"
+
+#: app/menus.c:597
+#, c-format
+msgid "Error opening file: %s\n"
+msgstr "Chyba pøi otvírání souboru: %s\n"
+
+#: app/menus.c:619 app/menus.c:700
+#, c-format
+msgid "/File/MRU%02d"
+msgstr "/Soubor/MRU%02d"
+
+#: app/module_db.c:269
+#, fuzzy
+msgid "Module DB"
+msgstr "Moduly"
+
+#: app/module_db.c:555
+#, fuzzy, c-format
+msgid "load module: \"%s\"\n"
+msgstr "modules\n"
+
+#: app/module_db.c:562
+#, c-format
+msgid "skipping module: \"%s\"\n"
+msgstr ""
+
+#: app/module_db.c:586
+#, c-format
+msgid "module load error: %s: %s"
+msgstr ""
+
+#: app/module_db.c:604
+msgid "missing module_init() symbol"
+msgstr ""
+
+#: app/module_db.c:607
+#, c-format
+msgid "%s: module_init() symbol not found"
+msgstr ""
+
+#: app/module_db.c:760
+#, fuzzy
+msgid "<No modules>"
+msgstr "modules\n"
+
+#: app/module_db.c:773 app/module_db.c:782
+msgid "on disk"
+msgstr ""
+
+#: app/module_db.c:773
+msgid "only in memory"
+msgstr ""
+
+#: app/module_db.c:782
+msgid "nowhere (click 'refresh')"
+msgstr ""
+
+#: app/module_db.c:812
+msgid "Load"
+msgstr "Naèíst"
+
+#: app/module_db.c:821
+#, fuzzy
+msgid "Unload"
+msgstr "Beze jména"
+
+#: app/module_db.c:834
+msgid "Purpose: "
+msgstr ""
+
+#: app/module_db.c:835
+#, fuzzy
+msgid "Author: "
+msgstr "Automaticky"
+
+#: app/module_db.c:836
+#, fuzzy
+msgid "Version: "
+msgstr "Verzi "
+
+#: app/module_db.c:837
+#, fuzzy
+msgid "Copyright: "
+msgstr "Vý¹ka vrstvy: "
+
+#: app/module_db.c:838
+#, fuzzy
+msgid "Date: "
+msgstr "Rychlost:"
+
+#: app/module_db.c:839
+#, fuzzy
+msgid "Location: "
+msgstr "Výbìr: "
+
+#: app/module_db.c:840
+#, fuzzy
+msgid "State: "
+msgstr "Rychlost:"
+
+#: app/module_db.c:859
+msgid "Autoload during startup"
+msgstr ""
+
+#: app/move.c:444
+msgid "Move Tool Options"
+msgstr "Volby pøesunu"
+
+#: app/paint_core.c:586
+msgid "No brushes available for use with this tool."
+msgstr "Nejsou dostupné ¾ádné ¹tìtce pro pou¾ití s tímto nástrojem."
+
+#: app/paint_core.c:1573
+msgid "set_undo_tiles: undo_tiles is null"
+msgstr "set_undo_tiles: undo_tiles je nula"
+
+#: app/paint_funcs.c:85 app/tool_options.c:777
+msgid "Behind"
+msgstr "Zakrytí"
+
+#: app/paint_funcs.c:91
+msgid "Subtraction"
+msgstr "Odèítání"
+
+#: app/paint_funcs.c:99
+msgid "Erase"
+msgstr "Smazat"
+
+#: app/paintbrush.c:160
+msgid "Once Forward"
+msgstr "Jednou dopøedu"
+
+#: app/paintbrush.c:162
+msgid "Once Backward"
+msgstr "Jednou zpìt"
+
+#: app/paintbrush.c:164
+msgid "Loop Sawtooth"
+msgstr "Cyklická pila"
+
+#: app/paintbrush.c:166
+msgid "Loop Triangle"
+msgstr "Cyklický trojúhelník"
+
+#: app/paintbrush.c:197
+msgid "Fade Out:"
+msgstr "Dobìh:"
+
+#: app/paintbrush.c:224
+msgid "Length:"
+msgstr "Délka:"
+
+#. the gradient type
+#: app/paintbrush.c:249
+#, fuzzy
+msgid "Type:"
+msgstr "Typ"
+
+#: app/palette.c:491
+#, c-format
+msgid "can't save palette \"%s\"\n"
+msgstr "nelze zapsat paletu \"%s\"\n"
+
+#: app/palette.c:631
+#, fuzzy, c-format
+msgid ""
+"Loading palette %s:\n"
+"Corrupt palette:\n"
+"missing magic header\n"
+"Does this file need converting from DOS?"
+msgstr ""
+"Ète se paleta %s:\n"
+"Po¹kozená paleta: chybí rozli¹ovací hlavièka\n"
+"Nepotøebuje soubor pøevést z DOSu?"
+
+#: app/palette.c:636
+#, c-format
+msgid ""
+"Loading palette %s:\n"
+"Corrupt palette: missing magic header"
+msgstr ""
+"Ète se paleta %s:\n"
+"Po¹kozená paleta: chybí rozli¹ovací hlavièka"
+
+#: app/palette.c:649
+#, c-format
+msgid ""
+"Loading palette %s (line %d):\n"
+"Read error"
+msgstr ""
+"Ète se paleta %s (øádek %d):\n"
+"Chyba ètení"
+
+#: app/palette.c:664
+#, c-format
+msgid ""
+"Loading palette %s (line %d):\n"
+"Missing RED component"
+msgstr ""
+"Ète se paleta %s (øádek %d):\n"
+"Chybí ÈERVENÁ slo¾ka"
+
+#: app/palette.c:672
+#, c-format
+msgid ""
+"Loading palette %s (line %d):\n"
+"Missing GREEN component"
+msgstr ""
+"Ète se paleta %s (øádek %d):\n"
+"Chybí ZELENÁ slo¾ka"
+
+#: app/palette.c:679
+#, c-format
+msgid ""
+"Loading palette %s (line %d):\n"
+"Missing BLUE component"
+msgstr ""
+"Ète se paleta %s (øádek %d):\n"
+"Chybí MODRÁ slo¾ka"
+
+#: app/palette.c:688
+#, c-format
+msgid ""
+"Loading palette %s (line %d):\n"
+"RGB value out of range"
+msgstr ""
+"Ète se paleta %s (øádek %d):\n"
+"Hodnota RGB mimo rozsah"
+
+#: app/palette.c:896
+msgid "Black"
+msgstr "Èerná"
+
+#: app/palette.c:1065
+msgid "New Palette"
+msgstr "Nová paleta"
+
+#: app/palette.c:1066
+msgid "Enter a name for new palette"
+msgstr "Zadejte jméno nové palety"
+
+#: app/palette.c:1441 app/palette.c:1462 app/palette.c:2172
+msgid "New"
+msgstr "Nový"
+
+#: app/palette.c:1926 app/palette.c:2079
+msgid "Undefined"
+msgstr "Nedefinováno"
+
+#: app/palette.c:2010
+msgid "Color Palette Edit"
+msgstr "Úpravy barevné palety"
+
+#: app/palette.c:2016
+msgid "Color Palette"
+msgstr "Barevná paleta"
+
+#: app/palette.c:2131 app/palette.c:2855 libgimp/gimpfileselection.c:355
+#: libgimp/gimpunitmenu.c:510
+#, fuzzy
+msgid "Select"
+msgstr "/Výbìr"
+
+#: app/palette.c:2142 app/palette_select.c:275
+msgid "Ncols"
+msgstr "Barev"
+
+#: app/palette.c:2163
+msgid "Palette Ops"
+msgstr "Práce s paletou"
+
+#. The "Import" frame
+#: app/palette.c:2190 app/palette.c:2724 app/palette.c:2748
+msgid "Import"
+msgstr "Importovat"
+
+#: app/palette.c:2199
+msgid "Merge"
+msgstr "Slouèit"
+
+#: app/palette.c:2385
+msgid "Merge Palette"
+msgstr "Slouèení palety"
+
+#: app/palette.c:2386
+msgid "Enter a name for merged palette"
+msgstr "Zadejte jméno slouèené palety"
+
+#: app/palette.c:2734
+msgid "Import Palette"
+msgstr "Import palety"
+
+#. The source's name
+#: app/palette.c:2764
+msgid "Name:"
+msgstr "Jméno:"
+
+#: app/palette.c:2773
+msgid "new_import"
+msgstr "nový_import"
+
+#. The source type
+#: app/palette.c:2777
+msgid "Source:"
+msgstr "Zdroj:"
+
+#. The sample size
+#: app/palette.c:2807
+msgid "Sample Size:"
+msgstr "Velikost vzorku:"
+
+#. The interval
+#: app/palette.c:2820
+msgid "Interval:"
+msgstr "Interval:"
+
+#: app/palette_select.c:304
+msgid "Palette Selection"
+msgstr "Výbìr palety"
+
+#: app/paths_dialog.c:174
+#, fuzzy
+msgid "New Path"
+msgstr "Nová paleta"
+
+#: app/paths_dialog.c:175
+#, fuzzy
+msgid "Duplicate Path"
+msgstr "Duplikovat vrstvu"
+
+#: app/paths_dialog.c:176
+#, fuzzy
+msgid "Path to Selection"
+msgstr "Výbìr palety"
+
+#: app/paths_dialog.c:177
+#, fuzzy
+msgid "Selection to Path"
+msgstr "Výbìr: "
+
+#: app/paths_dialog.c:178
+msgid "Stroke Path"
+msgstr ""
+
+#: app/paths_dialog.c:179
+#, fuzzy
+msgid "Delete Path"
+msgstr "Smazat"
+
+#: app/paths_dialog.c:190
+#, fuzzy
+msgid "New Point"
+msgstr "Nový pøechod"
+
+#: app/paths_dialog.c:191
+msgid "Add Point"
+msgstr "Pøidat bod"
+
+#: app/paths_dialog.c:192
+#, fuzzy
+msgid "Delete Point"
+msgstr "Smazat pøechod"
+
+#: app/paths_dialog.c:193
+#, fuzzy
+msgid "Edit Point"
+msgstr "Pøidat bod"
+
+#: app/paths_dialog.c:230
+msgid "paths_ops_button_set_sensitive:: invalid button specified"
+msgstr ""
+
+#: app/paths_dialog.c:253
+msgid "point_ops_button_set_sensitive:: invalid button specified"
+msgstr ""
+
+#: app/paths_dialog.c:1123
+msgid "paths list: internal list error"
+msgstr ""
+
+#: app/paths_dialog.c:1233
+#, fuzzy
+msgid "Rename path"
+msgstr "Pøejmenovat pøechod"
+
+#: app/paths_dialog.c:1234
+#, fuzzy
+msgid "Enter a new name for the path"
+msgstr "Zadejte nové jméno pøechodu"
+
+#: app/paths_dialog.c:1545
+#, fuzzy
+msgid "Selection to path (advanced) procedure lookup failed"
+msgstr "text_call_gdyntext: hledání procedury gDynText selhalo"
+
+#: app/paths_dialog.c:1583
+#, fuzzy
+msgid "Selection to path procedure lookup failed"
+msgstr "text_call_gdyntext: hledání procedury gDynText selhalo"
+
+#: app/paths_dialog.c:2185
+#, fuzzy, c-format
+msgid "Unable to open file %s"
+msgstr "nepodaøilo se otevøít rouru"
+
+#: app/paths_dialog.c:2199
+#, c-format
+msgid "Failed to read from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2214
+#, c-format
+msgid "Failed to read path from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2221
+#, c-format
+msgid "No points specified in path file %s"
+msgstr ""
+
+#: app/paths_dialog.c:2232
+#, c-format
+msgid "Failed to read path points from %s"
+msgstr ""
+
+#: app/paths_dialog.c:2245 app/paths_dialog.c:2775
+msgid "Invalid single point in path\n"
+msgstr ""
+
+#: app/paths_dialog.c:2252 app/paths_dialog.c:2781
+#, fuzzy
+msgid "Invalid point type passed\n"
+msgstr "Neplatný konec rozsahu"
+
+#: app/paths_dialog.c:2311 app/xcf.c:419
+#, c-format
+msgid "open failed on %s: %s\n"
+msgstr "otevøení %s selhalo: %s\n"
+
+#: app/paths_dialog.c:2332
+msgid "Load/Store Bezier Curves"
+msgstr "Naèíst/Zapsat Bézierovy køivky"
+
+#: app/paths_dialog.c:2353
+#, fuzzy
+msgid "Load Path"
+msgstr "Naèíst obrázek"
+
+#: app/paths_dialog.c:2371
+msgid "Store Path"
+msgstr ""
+
+#: app/paths_dialog.c:2738
+msgid "wrong number of points\n"
+msgstr ""
+
+#: app/paths_dialog.c:2900
+msgid "paths_get_tattoo: invalid path"
+msgstr ""
+
+#: app/paths_dialog.c:2948
+msgid "paths_delete_path: invalid path"
+msgstr ""
+
+#: app/pattern_select.c:105
+msgid "Pattern Selection"
+msgstr "Výbìr vzorku"
+
+#: app/patterns.c:143
+#, fuzzy
+msgid "get_active_pattern(): Specified default pattern not found!"
+msgstr "Zadaný implicitní vzorek nebyl nalezen!"
+
+#: app/patterns.c:214
+#, c-format
+msgid "Unknown GIMP version #%d in \"%s\"\n"
+msgstr "Neznámá verze programu GIMP: #%d v \"%s\"\n"
+
+#: app/patterns.c:231
+msgid "Error in GIMP pattern file...aborting."
+msgstr "Chyba v souboru GIMP vzorku... ru¹í se."
+
+#: app/patterns.c:245
+msgid "GIMP pattern file appears to be truncated."
+msgstr "Soubor GIMP vzorku je zøejmì useknutý."
+
+#: app/perspective_tool.c:60
+msgid "Perspective Transform Information"
+msgstr "Informace o transformaci perspektivy"
+
+#: app/perspective_tool.c:309
+msgid "Perspective..."
+msgstr "Perspektiva..."
+
+#: app/plug_in.c:207
+msgid "shmget failed...disabling shared memory tile transport"
+msgstr "shmget selhalo... zakázán pøenos dla¾dic sdílenou pamìtí"
+
+#: app/plug_in.c:213
+msgid "shmat failed...disabling shared memory tile transport"
+msgstr "shmat selhalo... zakázán pøenos dla¾dic sdílenou pamìtí"
+
+#: app/plug_in.c:312
+msgid "Plug-ins"
+msgstr "Zásuvné moduly"
+
+#: app/plug_in.c:324
+#, c-format
+msgid "query plug-in: \"%s\"\n"
+msgstr "dotaz na zásuvný modul: \"%s\"\n"
+
+#: app/plug_in.c:362
+#, c-format
+msgid "writing \"%s\"\n"
+msgstr "zapisuje se \"%s\"\n"
+
+#: app/plug_in.c:377
+msgid "Starting extensions: "
+msgstr "Spou¹tí se roz¹íøení: "
+
+#: app/plug_in.c:378
+msgid "Extensions"
+msgstr "Roz¹íøení"
+
+#: app/plug_in.c:693
+#, c-format
+msgid "\"%s\" executable not found\n"
+msgstr "spustitelný program \"%s\" nebyl nalezen\n"
+
+#: app/plug_in.c:746
+#, c-format
+msgid "unable to locate plug-in: \"%s\""
+msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
+
+#: app/plug_in.c:828
+msgid "unable to open pipe"
+msgstr "nepodaøilo se otevøít rouru"
+
+#: app/plug_in.c:917
+#, c-format
+msgid "unable to run plug-in: %s"
+msgstr "nepodaøilo se vyvolat zásuvný modul: %s"
+
+#: app/plug_in.c:1648 app/plug_in.c:1661 app/plug_in.c:1674 app/plug_in.c:1689
+#, c-format
+msgid ""
+"plug-in \"%s\" attempted to install procedure \"%s\" which does not take the "
+"standard plug-in args"
+msgstr ""
+"zásuvný modul \"%s\" se pokusil instalovat proceduru \"%s\", která nepøijímá "
+"standardní argumenty zásuvných modulù"
+
+#: app/plug_in.c:1697
+#, c-format
+msgid ""
+"plug-in \"%s\" attempted to install procedure \"%s\" in an invalid menu "
+"location.  Use either \"<Toolbox>\", \"<Image>\", \"<Load>\", or \"<Save>\"."
+msgstr ""
+"zásuvný modul \"%s\" se pokusil instalovat proceduru \"%s\" do neplatného "
+"menu.  Musí pou¾ít jedno z \"<Toolbox>\", \"<Image>\", \"<Load>\" nebo "
+"\"<Save>\"."
+
+#: app/plug_in.c:1717
+#, c-format
+msgid ""
+"plug_in \"%s\" attempted to install procedure \"%s\" which fails to comply "
+"with the array parameter passing standard.  Argument %d is noncompliant."
+msgstr ""
+"plug_in \"%s\" se pokusil instalovat proceduru \"%s\", která nevyhovìla "
+"standardnímu pøedávání argumentù.  Argument %d je nevyhovující."
+
+#: app/plug_in.c:2149
+#, c-format
+msgid "duplicate plug-in: \"%s\" (skipping)\n"
+msgstr "zdvojený zásuvný modul: \"%s\" (pøeskakuje se)\n"
+
+#: app/plug_in.c:2357
+msgid "Unknown procedure type."
+msgstr "Neznámý typ procedury."
+
+#: app/plug_in.c:2438
+#, c-format
+msgid "removing duplicate PDB procedure \"%s\""
+msgstr "v PDB se odstraòuje zdvojená procedura \"%s\""
+
+#: app/plug_in.c:2694 app/plug_in.c:2859 app/plug_in.c:2976 app/plug_in.c:3061
+msgid "the \"region\" arg type is not currently supported"
+msgstr "argument typu \"region\" není v souèasnosti podporován"
+
+#: app/posterize.c:164
+msgid "Posterize does not operate on indexed drawables."
+msgstr "Posterizace nefunguje na indexovaných obrazovkách."
+
+#: app/posterize.c:211 app/tools.c:547
+msgid "Posterize"
+msgstr "Posterizace"
+
+#: app/posterize.c:225
+msgid "Posterize Levels: "
+msgstr "Úrovnì posterizace: "
+
+#: app/preferences_dialog.c:205
+msgid "Error: Levels of undo must be zero or greater."
+msgstr "Chyba: Poèet úrovní vracení musí být nula nebo vìt¹í."
+
+#: app/preferences_dialog.c:211
+msgid "Error: Number of processors must be between 1 and 30."
+msgstr "Chyba: Poèet procesorù musí být mezi 1 a 30."
+
+#: app/preferences_dialog.c:217
+msgid "Error: Marching speed must be 50 or greater."
+msgstr "Chyba: Rychlost bìhu èáry musí být 50 nebo vìt¹í."
+
+#: app/preferences_dialog.c:223
+msgid "Error: Default width must be one or greater."
+msgstr "Chyba: Implicitní ¹íøka musí být jedna nebo vìt¹í."
+
+#: app/preferences_dialog.c:229
+msgid "Error: Default height must be one or greater."
+msgstr "Chyba: Implicitní vý¹ka musí být jedna nebo vìt¹í."
+
+#: app/preferences_dialog.c:236
+msgid "Error: Default unit must be within unit range."
+msgstr "Chyba: Implicitní jednotky musejí být v rozsahu jednotek."
+
+#: app/preferences_dialog.c:243
+msgid "Error: default resolution must not be zero."
+msgstr "Chyba: implicitní rozli¹ení nesmí být nula."
+
+#: app/preferences_dialog.c:251
+msgid "Error: Default resolution unit must be within unit range."
+msgstr "Chyba: Implicitní jednotky rozli¹ení musejí být v rozsahu jednotek."
+
+#: app/preferences_dialog.c:258
+msgid "Error: Monitor resolution must not be zero."
+msgstr "Chyba: Rozli¹ení monitoru nesmí být nula."
+
+#: app/preferences_dialog.c:265
+msgid "Error: Image title format must not be NULL."
+msgstr "Chyba: Image_title_format nesmí být nikdy NULL."
+
+#: app/preferences_dialog.c:536
+msgid "You will need to restart GIMP for these changes to take effect."
+msgstr "Aby se zmìny projevily, musíte program GIMP restartovat."
+
+#: app/preferences_dialog.c:1467
+msgid "Preferences"
+msgstr "Pøedvolby"
+
+#. The categories tree
+#: app/preferences_dialog.c:1485
+msgid "Categories"
+msgstr "Kategorie"
+
+#: app/preferences_dialog.c:1512
+msgid "New File Settings"
+msgstr "Nastavení nového souboru"
+
+#: app/preferences_dialog.c:1514
+msgid "New File"
+msgstr "Nový soubor"
+
+#: app/preferences_dialog.c:1524
+msgid "Default Image Size and Unit"
+msgstr "Velikost a jednotky implicitního obrázku"
+
+#: app/preferences_dialog.c:1538
+msgid "Width"
+msgstr "©íøka"
+
+#: app/preferences_dialog.c:1540
+msgid "Height"
+msgstr "Vý¹ka"
+
+#: app/preferences_dialog.c:1567
+msgid "Default Image Resolution and Resolution Unit"
+msgstr "Implicitní rozli¹ení obrázku a jednotky rozli¹ení"
+
+#: app/preferences_dialog.c:1592 app/preferences_dialog.c:2294
+msgid "dpi"
+msgstr "dpi"
+
+#: app/preferences_dialog.c:1637
+msgid "Default Image Type:"
+msgstr "Implicitní typ obrázku:"
+
+#: app/preferences_dialog.c:1642
+msgid "Display Settings"
+msgstr "Nastavení zobrazování"
+
+#: app/preferences_dialog.c:1644
+msgid "Display"
+msgstr "Zobrazování"
+
+#: app/preferences_dialog.c:1651
+msgid "Transparency"
+msgstr "Prùhlednost"
+
+#: app/preferences_dialog.c:1669
+msgid "Light Checks"
+msgstr "Svìtlá ¹achovnice"
+
+#: app/preferences_dialog.c:1671
+msgid "Mid-Tone Checks"
+msgstr "Støední ¹achovnice"
+
+#: app/preferences_dialog.c:1673
+msgid "Dark Checks"
+msgstr "Tmavá ¹achovnice"
+
+#: app/preferences_dialog.c:1675
+msgid "White Only"
+msgstr "Pouze bílá"
+
+#: app/preferences_dialog.c:1677
+msgid "Gray Only"
+msgstr "Pouze ¹edá"
+
+#: app/preferences_dialog.c:1679
+msgid "Black Only"
+msgstr "Pouze èerná"
+
+#: app/preferences_dialog.c:1683
+msgid "Transparency Type:"
+msgstr "Typ prùhlednosti:"
+
+#: app/preferences_dialog.c:1689 app/preferences_dialog.c:1760
+msgid "Small"
+msgstr "Malá"
+
+#: app/preferences_dialog.c:1691 app/preferences_dialog.c:1761
+msgid "Medium"
+msgstr "Støední"
+
+#: app/preferences_dialog.c:1693 app/preferences_dialog.c:1762
+msgid "Large"
+msgstr "Velká"
+
+#: app/preferences_dialog.c:1697
+msgid "Check Size:"
+msgstr "Velikost polí ¹achovnice:"
+
+#: app/preferences_dialog.c:1699 app/transform_tool.c:190
+msgid "Scaling"
+msgstr "Zvìt¹ování"
+
+#: app/preferences_dialog.c:1708
+msgid "Cubic Interpolation"
+msgstr "Kubická interpolace"
+
+#: app/preferences_dialog.c:1719
+msgid "Interface Settings"
+msgstr "Nastavení rozhraní"
+
+#: app/preferences_dialog.c:1728
+msgid "General"
+msgstr "V¹eobecné"
+
+#: app/preferences_dialog.c:1765
+msgid "Preview Size:"
+msgstr "Velikost náhledu:"
+
+#: app/preferences_dialog.c:1774
+msgid "Levels of Undo:"
+msgstr "Poèet úrovní vracení:"
+
+#: app/preferences_dialog.c:1783
+msgid "Recent Documents List Size:"
+msgstr "Délka seznamu pøede¹lých dokumentù:"
+
+#: app/preferences_dialog.c:1786
+msgid "Help System"
+msgstr "Systém nápovìdy"
+
+#: app/preferences_dialog.c:1795
+msgid "Show Tool Tips"
+msgstr "Ukazovat tipy nástrojù"
+
+#: app/preferences_dialog.c:1806
+msgid "Image Windows Settings"
+msgstr "Nastavení oken obrázku"
+
+#: app/preferences_dialog.c:1808
+msgid "Image Windows"
+msgstr "Okna obrázku"
+
+#: app/preferences_dialog.c:1815
+msgid "Appearance"
+msgstr "Zobrazování"
+
+#: app/preferences_dialog.c:1824
+msgid "Resize Window on Zoom"
+msgstr "U lupy mìnit velikost okna"
+
+#: app/preferences_dialog.c:1833
+msgid "Show Rulers"
+msgstr "Ukázat pravítka"
+
+#: app/preferences_dialog.c:1842
+msgid "Show Statusbar"
+msgstr "Ukázat stavový øádek"
+
+#: app/preferences_dialog.c:1866
+msgid "Marching Ants Speed:"
+msgstr "Rychlost bìhu èáry:"
+
+#. Set the currently used string as "Custom"
+#: app/preferences_dialog.c:1874
+msgid "Custom"
+msgstr "Vlastní"
+
+#. set some commonly used format strings
+#: app/preferences_dialog.c:1880
+msgid "Standard"
+msgstr "Standardní"
+
+#: app/preferences_dialog.c:1885
+msgid "Show zoom percentage"
+msgstr "Ukázat procento zvìt¹ení"
+
+#: app/preferences_dialog.c:1890
+msgid "Show zoom ratio"
+msgstr "Ukázat pomìr zvìt¹ení"
+
+#: app/preferences_dialog.c:1895
+msgid "Show reversed zoom ratio"
+msgstr "Ukázat pomìr zmen¹ení"
+
+#: app/preferences_dialog.c:1906
+msgid "Image Title Format:"
+msgstr "Formát popisku okna:"
+
+#. End of the title format string
+#: app/preferences_dialog.c:1909
+msgid "Pointer Movement Feedback"
+msgstr "Zpìtná vazba pohybu ukazovátka"
+
+#: app/preferences_dialog.c:1919
+msgid "Perfect-but-slow Pointer Tracking"
+msgstr "Dokonalé, ale pomalé øízení ukazovátka"
+
+#: app/preferences_dialog.c:1928
+msgid "Disable Cursor Updating"
+msgstr "Zakázat aktualizaci kurzoru"
+
+#: app/preferences_dialog.c:1939
+msgid "Tool Options Settings"
+msgstr "Nastavení voleb nástrojù"
+
+#: app/preferences_dialog.c:1941 app/tools.c:884
+msgid "Tool Options"
+msgstr "Volby nástrojù"
+
+#: app/preferences_dialog.c:1948
+msgid "Paint Options"
+msgstr "Volby ¹tìtce"
+
+#: app/preferences_dialog.c:1958
+msgid "Use Global Paint Options"
+msgstr "Pou¾ít globální volby ¹tìtce"
+
+#: app/preferences_dialog.c:1974
+msgid "Display brush and pattern indicators on Toolbar"
+msgstr ""
+
+#: app/preferences_dialog.c:1988
+msgid "Environment Settings"
+msgstr "Nastavení prostøedí"
+
+#: app/preferences_dialog.c:1990
+msgid "Environment"
+msgstr "Prostøedí"
+
+#: app/preferences_dialog.c:1997
+msgid "Resource Consumption"
+msgstr "Pøíjem zdrojù"
+
+#: app/preferences_dialog.c:2006
+msgid "Conservative Memory Usage"
+msgstr "©etrné u¾ívání pamìti"
+
+#: app/preferences_dialog.c:2057 app/preferences_dialog.c:2098
+msgid "Bytes"
+msgstr "bajtù"
+
+#: app/preferences_dialog.c:2058 app/preferences_dialog.c:2099
+msgid "KiloBytes"
+msgstr "kilobajtù"
+
+#: app/preferences_dialog.c:2059 app/preferences_dialog.c:2100
+msgid "MegaBytes"
+msgstr "megabajtù"
+
+#: app/preferences_dialog.c:2064
+msgid "Tile Cache Size:"
+msgstr "Velikost vyrovnávací pamìti dla¾dic:"
+
+#: app/preferences_dialog.c:2105
+msgid "Maximum Image Size:"
+msgstr "Nejvìt¹í velikost obrázku:"
+
+#: app/preferences_dialog.c:2115
+msgid "Number of Processors to Use:"
+msgstr "Poèet u¾ívaných procesorù:"
+
+#: app/preferences_dialog.c:2119
+msgid "8-Bit Displays"
+msgstr "8bitové obrazovky"
+
+#: app/preferences_dialog.c:2130
+msgid "Install Colormap"
+msgstr "Instalovat barevnou mapu"
+
+#: app/preferences_dialog.c:2139
+msgid "Colormap Cycling"
+msgstr "Cyklovat barevnou mapu"
+
+#: app/preferences_dialog.c:2148
+msgid "File Previews / Thumbnails"
+msgstr ""
+
+#: app/preferences_dialog.c:2171
+msgid "Always"
+msgstr ""
+
+#: app/preferences_dialog.c:2172
+msgid "Never"
+msgstr ""
+
+#: app/preferences_dialog.c:2175
+msgid "Try to Write a Thumbnail File:"
+msgstr ""
+
+#: app/preferences_dialog.c:2180
+msgid "Session Management"
+msgstr "Správa sezení"
+
+#: app/preferences_dialog.c:2182
+msgid "Session"
+msgstr "Sezení"
+
+#: app/preferences_dialog.c:2189
+msgid "Window Positions"
+msgstr "Polohy oken"
+
+#: app/preferences_dialog.c:2198
+msgid "Save Window Positions on Exit"
+msgstr "Zapsat polohy oken pøi skonèení"
+
+#: app/preferences_dialog.c:2212
+msgid "Clear Saved Window Positions"
+msgstr "Vymazat zapsané polohy oken"
+
+#: app/preferences_dialog.c:2219
+msgid "Always Try to Restore Session"
+msgstr "V¾dy se pokusit o obnovu sezení"
+
+#: app/preferences_dialog.c:2228
+msgid "Devices"
+msgstr "Zaøízení"
+
+#: app/preferences_dialog.c:2237
+msgid "Save Device Status on Exit"
+msgstr "Zapsat stav zaøízení pøi skonèení"
+
+#: app/preferences_dialog.c:2248
+msgid "Monitor Information"
+msgstr "Informace o monitoru"
+
+#: app/preferences_dialog.c:2250
+msgid "Monitor"
+msgstr "Monitor"
+
+#: app/preferences_dialog.c:2257
+msgid "Get Monitor Resolution"
+msgstr "Rozli¹ení monitoru získat"
+
+#: app/preferences_dialog.c:2272
+#, c-format
+msgid "(Currently %d x %d dpi)"
+msgstr "(nyní %d × %d dpi)"
+
+#: app/preferences_dialog.c:2319
+msgid "From X Server"
+msgstr "z X serveru"
+
+#: app/preferences_dialog.c:2334
+msgid "Manually:"
+msgstr "Ruènì:"
+
+#: app/preferences_dialog.c:2347
+msgid "Directories Settings"
+msgstr "Nastavení adresáøù"
+
+#: app/preferences_dialog.c:2349
+msgid "Directories"
+msgstr "Adresáøe"
+
+#: app/preferences_dialog.c:2362
+msgid "Temp Dir:"
+msgstr "Pomocný adresáø:"
+
+#: app/preferences_dialog.c:2362
+msgid "Select Temp Dir"
+msgstr "Zvolte pomocný adresáø"
+
+#: app/preferences_dialog.c:2363
+msgid "Swap Dir:"
+msgstr "Odkládací adresáø:"
+
+#: app/preferences_dialog.c:2363
+msgid "Select Swap Dir"
+msgstr "Zvolte odkládací adresáø"
+
+#: app/preferences_dialog.c:2395
+msgid "Brushes Directories"
+msgstr "Adresáøe ¹tìtcù"
+
+#: app/preferences_dialog.c:2395
+msgid "Select Brushes Dir"
+msgstr "Zvolte adresáø ¹tìtcù"
+
+#: app/preferences_dialog.c:2397
+msgid "Patterns Directories"
+msgstr "Adresáøe vzorkù"
+
+#: app/preferences_dialog.c:2397
+msgid "Select Patterns Dir"
+msgstr "Zvolte adresáø vzorkù"
+
+#: app/preferences_dialog.c:2399
+msgid "Palettes Directories"
+msgstr "Adresáøe palet"
+
+#: app/preferences_dialog.c:2399
+msgid "Select Palettes Dir"
+msgstr "Zvolte adresáø palet"
+
+#: app/preferences_dialog.c:2401
+msgid "Gradients Directories"
+msgstr "Adresáøe pøechodù"
+
+#: app/preferences_dialog.c:2401
+msgid "Select Gradients Dir"
+msgstr "Zvolte adresáø pøechodù"
+
+#: app/preferences_dialog.c:2403
+msgid "Plug-Ins"
+msgstr "Zásuvné moduly"
+
+#: app/preferences_dialog.c:2403
+msgid "Plug-Ins Directories"
+msgstr "Adresáøe zásuvných modulù"
+
+#: app/preferences_dialog.c:2403
+msgid "Select Plug-Ins Dir"
+msgstr "Zvolte adresáø zásuvných modulù"
+
+#: app/preferences_dialog.c:2405
+msgid "Modules"
+msgstr "Moduly"
+
+#: app/preferences_dialog.c:2405
+msgid "Modules Directories"
+msgstr "Adresáøe modulù"
+
+#: app/preferences_dialog.c:2405
+msgid "Select Modules Dir"
+msgstr "Zvolte adresáø modulù"
+
+#: app/procedural_db.c:44
+msgid "Procedural Database"
+msgstr "Procedurální databáze"
+
+#: app/procedural_db.c:142
+#, c-format
+msgid "PDB calling error %s"
+msgstr "chyba %s volání PDB"
+
+#: app/procedural_db.c:218
+#, c-format
+msgid ""
+"Incorrect arguments passed to procedural_db_run_proc:\n"
+"Argument %d to '%s' should be a %s, but got passed a %s"
+msgstr ""
+"Nesprávné argumenty pøedány do procedural_db_run_proc:\n"
+"Argument %d pro '%s' by mìl být %s, ale obdr¾eno bylo %s"
+
+#: app/procedural_db_cmds.c:64
+msgid "Internal GIMP procedure"
+msgstr "Vnitøní procedura programu GIMP"
+
+#: app/procedural_db_cmds.c:65
+msgid "GIMP Plug-In"
+msgstr "Zásuvný modul programu GIMP"
+
+#: app/procedural_db_cmds.c:66
+msgid "GIMP Extension"
+msgstr "Roz¹íøení programu GIMP"
+
+#: app/procedural_db_cmds.c:67
+msgid "Temporary Procedure"
+msgstr "Pomocná procedura"
+
+#: app/rect_select.c:180
+msgid "Selection: ADD"
+msgstr "Výbìr: PØIDÁNÍ"
+
+#: app/rect_select.c:183
+msgid "Selection: SUBTRACT"
+msgstr "Výbìr: ODEBRÁNÍ"
+
+#: app/rect_select.c:186
+msgid "Selection: INTERSECT"
+msgstr "Výbìr: PRÙNIK"
+
+#: app/rect_select.c:189
+msgid "Selection: REPLACE"
+msgstr "Výbìr: PØEPSÁNÍ"
+
+#: app/rect_select.c:405 app/rect_select.c:412
+msgid "Selection: "
+msgstr "Výbìr: "
+
+#: app/resize.c:160
+msgid "Scale Layer"
+msgstr "Velikost vrstvy"
+
+#: app/resize.c:161 app/resize.c:182
+msgid "Size"
+msgstr "Velikost"
+
+#: app/resize.c:165
+msgid "Image Scale"
+msgstr "Velikost obrázku"
+
+#: app/resize.c:166
+msgid "Pixel Dimensions"
+msgstr "Velikosti pixelu"
+
+#: app/resize.c:175
+msgid "Resize Layer"
+msgstr "Rozmìry plátna vrstvy"
+
+#: app/resize.c:179
+msgid "Image Resize"
+msgstr "Rozmìry plátna"
+
+#. the original width & height labels
+#: app/resize.c:240 app/scale_tool.c:76
+msgid "Original Width:"
+msgstr "Pùvodní ¹íøka:"
+
+#. the new size labels
+#: app/resize.c:265 app/resize.c:509
+msgid "New Width:"
+msgstr "Nová ¹íøka:"
+
+#. the scale ratio labels
+#: app/resize.c:329
+msgid "Ratio X:"
+msgstr "Pomìr X:"
+
+#. the x and y offset labels
+#: app/resize.c:414
+msgid "X:"
+msgstr "X:"
+
+#: app/resize.c:495
+msgid "Print Size & Display Unit"
+msgstr "Tisková velikost a jednotky zobrazování"
+
+#: app/rotate_tool.c:88
+msgid "Rotation Information"
+msgstr "Informace o rotaci"
+
+#: app/rotate_tool.c:106
+msgid "Center X:"
+msgstr "Støed X:"
+
+#: app/rotate_tool.c:401
+msgid "Rotating..."
+msgstr "Rotuje se..."
+
+#: app/scale_tool.c:74
+msgid "Scaling Information"
+msgstr "Informace o zvìt¹ování"
+
+#: app/scale_tool.c:82
+msgid "Current Width:"
+msgstr "Aktuální ¹íøka:"
+
+#: app/scale_tool.c:97
+msgid "Scale Ratio X:"
+msgstr "Zvìt¹ení X:"
+
+#: app/scale_tool.c:494
+msgid "Scaling..."
+msgstr "Zvìt¹uje se..."
+
+#: app/session.c:139
+msgid ""
+"# GIMP sessionrc\n"
+"# This file takes session-specific info (that is info,\n"
+"# you want to keep between two gimp-sessions). You are\n"
+"# not supposed to edit it manually, but of course you\n"
+"# can do. This file will be entirely rewritten every time\n"
+"# you quit the gimp. If this file isn't found, defaults\n"
+"# are used.\n"
+"\n"
+msgstr ""
+"# Záznam GIMP sezení\n"
+"# Tento soubor pøechovává informaci o sezení (to jest informace,\n"
+"# které chcete zachovat mezi dvìma GIMP sezeními). Neèeká se,\n"
+"# ¾e byste jej mìnili ruènì, ale samozøejmì mù¾ete.\n"
+"# Tento soubor bude zcela pøepsán, kdykoliv opustíte gimp.\n"
+"# Nebude-li temto soubor nalezen, budou pou¾ity implicitní\n"
+"# hodnoty.\n"
+"\n"
+
+#: app/shear_tool.c:74
+msgid "Shear Information"
+msgstr "Informace o naklonìní"
+
+#: app/shear_tool.c:77
+msgid "Shear Magnitude X:"
+msgstr "Zvìt¹ení X naklonìní:"
+
+#: app/shear_tool.c:356
+msgid "Shearing..."
+msgstr "Naklání se..."
+
+#: app/text_tool.c:157
+msgid "Text Tool Options"
+msgstr "Volby textového nástroje"
+
+#: app/text_tool.c:168 app/tool_options.c:317
+msgid "Antialiasing"
+msgstr "Vyhlazování"
+
+#: app/text_tool.c:182
+msgid "Border:"
+msgstr "Obvod:"
+
+#: app/text_tool.c:208
+msgid "Use Dynamic Text"
+msgstr "Pou¾ít dynamický text"
+
+#: app/text_tool.c:278
+msgid "text_call_gdyntext: gDynText procedure lookup failed"
+msgstr "text_call_gdyntext: hledání procedury gDynText selhalo"
+
+#. Create the shell
+#: app/text_tool.c:399 app/text_tool.c:401
+msgid "Text Tool"
+msgstr "Textový nástroj"
+
+#: app/text_tool.c:609
+#, c-format
+msgid "Font '%s' not found.%s"
+msgstr "Znaková sada '%s' nebyla nalezena.%s"
+
+#: app/text_tool.c:611
+msgid ""
+"\n"
+"If you don't have scalable fonts, try turning off antialiasing in the tool "
+"options."
+msgstr ""
+"\n"
+"Nemáte-li vektorová písma, zkuste vypnout vyhlazování ve volbách nástroje."
+
+#: app/text_tool.c:722
+msgid "Text Layer"
+msgstr "Textová vrstva"
+
+#: app/text_tool.c:765
+msgid "text_render: could not allocate image"
+msgstr "text_render: obrázek nelze umístit v pamìti"
+
+#: app/threshold.c:189
+msgid "Threshold Options"
+msgstr "Volby prahu"
+
+#: app/threshold.c:232
+msgid "Threshold does not operate on indexed drawables."
+msgstr "Práh nefunguje na indexovaných obrazovkách."
+
+#: app/threshold.c:291 app/tools.c:562
+msgid "Threshold"
+msgstr "Práh"
+
+#: app/threshold.c:306
+msgid "Threshold Range: "
+msgstr "Rozsah prahu: "
+
+#: app/tile_cache.c:266
+msgid "starting tile preswapper\n"
+msgstr "spou¹tí se odkladaè dla¾dic\n"
+
+#: app/tile_swap.c:381
+msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
+msgstr "nepodaøilo se otevøít odkládací soubor... BRZY NASTANOU ©PATNÉ VÌCI"
+
+#: app/tile_swap.c:501 app/tile_swap.c:562
+#, c-format
+msgid "unable to seek to tile location on disk: %d"
+msgstr "nepodaøilo se na disku postavit na polohu dla¾dice: %d"
+
+#: app/tile_swap.c:520
+#, c-format
+msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
+msgstr "nepodaøilo se naèíst data dla¾dice z disku: naèteno %d/%d (%d) bytù"
+
+#: app/tile_swap.c:575
+#, c-format
+msgid "unable to write tile data to disk: %d ( %d ) bytes written"
+msgstr "nepodaøilo se zapsat data dla¾dice na disk: zapsáno %d (%d) bytù"
+
+#: app/tips_dialog.c:57
+msgid "gimp_tips.txt"
+msgstr "gimp_tips.txt"
+
+#: app/tips_dialog.c:69
+msgid "GIMP Tip of the day"
+msgstr "GIMP: tip dne"
+
+#: app/tips_dialog.c:130
+msgid "Previous Tip"
+msgstr "Pøedchozí tip"
+
+#: app/tips_dialog.c:138
+msgid "Next Tip"
+msgstr "Dal¹í tip"
+
+#: app/tips_dialog.c:158
+msgid "Show tip next time"
+msgstr "Ukázat tip i pøí¹tì"
+
+#: app/tips_dialog.c:256
+msgid ""
+"Your GIMP tips file appears to be missing!\n"
+"There should be a file called gimp_tips.txt in the\n"
+"GIMP data directory.  Please check your installation."
+msgstr ""
+"Soubor s tipy programu GIMP zøejmì chybí!\n"
+"Mìl by to být soubor se jménem gimp_tips.txt v datovém\n"
+"adresáøi programu GIMP. Prosím zkontrolujte instalaci."
+
+#: app/tool_options.c:206 app/tool_options.c:688
+msgid "This tool has no options."
+msgstr "Tento nástroj nemá volby."
+
+#: app/tool_options.c:230
+msgid "Rectangular Select Options"
+msgstr "Volby obdélníkového výbìru"
+
+#: app/tool_options.c:232
+msgid "Elliptical Selection Options"
+msgstr "Volby eliptického výbìru"
+
+#: app/tool_options.c:234
+msgid "Free-hand Selection Options"
+msgstr "Volby volného výbìru"
+
+#: app/tool_options.c:236
+msgid "Fuzzy Selection Options"
+msgstr "Volby magické hùlky"
+
+#: app/tool_options.c:238
+msgid "Bezier Selection Options"
+msgstr "Volby Bézierova výbìru"
+
+#: app/tool_options.c:240
+msgid "Intelligent Scissors Options"
+msgstr "Volby inteligentních nù¾ek"
+
+#: app/tool_options.c:242
+msgid "By-Color Select Options"
+msgstr "Volby výbìru podle barvy"
+
+#: app/tool_options.c:243
+msgid "ERROR: Unknown Selection Type"
+msgstr ""
+
+#: app/tool_options.c:273
+msgid "Feather"
+msgstr "Zaoblení"
+
+#: app/tool_options.c:381
+msgid "Fixed size / aspect ratio"
+msgstr "Pevná velikost / pomìr stran"
+
+#: app/tool_options.c:552
+msgid "Bucket Fill Options"
+msgstr "Volby plechovky"
+
+#: app/tool_options.c:554
+msgid "Blend Options"
+msgstr "Volby mísení"
+
+#: app/tool_options.c:556
+msgid "Pencil Options"
+msgstr "Volby tu¾ky"
+
+#: app/tool_options.c:558
+#, fuzzy
+msgid "Paintbrush Options"
+msgstr "Volby ¹tìtce"
+
+#: app/tool_options.c:560
+#, fuzzy
+msgid "Erazer Options"
+msgstr "Volby gumy"
+
+#: app/tool_options.c:562
+msgid "Airbrush Options"
+msgstr "Volby americké retu¹e"
+
+#: app/tool_options.c:564
+msgid "Clone Tool Options"
+msgstr "Volby razítka"
+
+#: app/tool_options.c:566
+msgid "Convolver Options"
+msgstr "Volby ostrosti"
+
+#: app/tool_options.c:568
+msgid "Ink Options"
+msgstr "Volby pera"
+
+#: app/tool_options.c:570
+#, fuzzy
+msgid "Dodge or Burn Options"
+msgstr "Volby vyvá¾ení barev"
+
+#: app/tool_options.c:572
+#, fuzzy
+msgid "Smudge Options"
+msgstr "Volby zápisu"
+
+#: app/tool_options.c:573
+msgid "ERROR: Unknown Paint Type"
+msgstr ""
+
+#: app/tools.c:81
+msgid "Rect Select"
+msgstr "Obdélníkový výbìr"
+
+#: app/tools.c:83
+msgid "/Tools/Rect Select"
+msgstr "/Nástroje/Obdélníkový výbìr"
+
+#: app/tools.c:86
+msgid "Select rectangular regions"
+msgstr "Výbìr obdélníkové oblasti"
+
+#: app/tools.c:96
+msgid "Ellipse Select"
+msgstr "Eliptický výbìr"
+
+#: app/tools.c:98
+msgid "/Tools/Ellipse Select"
+msgstr "/Nástroje/Eliptický výbìr"
+
+#: app/tools.c:101
+msgid "Select elliptical regions"
+msgstr "Výbìr eliptické oblasti"
+
+#: app/tools.c:111
+msgid "Free Select"
+msgstr "Volný výbìr"
+
+#: app/tools.c:113
+msgid "/Tools/Free Select"
+msgstr "/Nástroje/Volný výbìr"
+
+#: app/tools.c:116
+msgid "Select hand-drawn regions"
+msgstr "Volný výbìr oblasti"
+
+#: app/tools.c:126
+msgid "Fuzzy Select"
+msgstr "Magická hùlka"
+
+#: app/tools.c:128
+msgid "/Tools/Fuzzy Select"
+msgstr "/Nástroje/Magická hùlka"
+
+#: app/tools.c:131
+msgid "Select contiguous regions"
+msgstr "Vybìr spojitých oblastí"
+
+#: app/tools.c:141
+msgid "Bezier Select"
+msgstr "Bézierùv výbìr"
+
+#: app/tools.c:143
+msgid "/Tools/Bezier Select"
+msgstr "/Nástroje/Bézierùv výbìr"
+
+#: app/tools.c:146
+msgid "Select regions using Bezier curves"
+msgstr "Výbìr oblastí ohranièených Bézierovou køivkou"
+
+#: app/tools.c:156
+msgid "Intelligent Scissors"
+msgstr "Inteligentní nù¾ky"
+
+#: app/tools.c:158
+msgid "/Tools/Intelligent Scissors"
+msgstr "/Nástroje/Inteligentní nù¾ky"
+
+#: app/tools.c:161
+msgid "Select shapes from image"
+msgstr "Výbìr dle obrysù z obrázku"
+
+#: app/tools.c:171
+msgid "Move"
+msgstr "Pøesun"
+
+#: app/tools.c:173
+msgid "/Tools/Move"
+msgstr "/Nástroje/Pøesun"
+
+#: app/tools.c:176
+msgid "Move layers & selections"
+msgstr "Pøesun vrstev a výbìrù"
+
+#: app/tools.c:186
+msgid "Magnify"
+msgstr "Lupa"
+
+#: app/tools.c:188
+msgid "/Tools/Magnify"
+msgstr "/Nástroje/Lupa"
+
+#: app/tools.c:191
+msgid "Zoom in & out"
+msgstr "Zvìt¹ení a zmen¹ení"
+
+#: app/tools.c:201
+msgid "Crop & Resize"
+msgstr "Oøez a rozmìry plátna"
+
+#: app/tools.c:203
+msgid "/Tools/Crop & Resize"
+msgstr "/Nástroje/Oøez a rozmìry plátna"
+
+#: app/tools.c:206
+msgid "Crop or resize the image"
+msgstr "Oøez obrázku nebo nastavení rozmìrù plátna"
+
+#. the first radio frame and box, for transform type
+#: app/tools.c:216 app/tools.c:231 app/tools.c:246 app/tools.c:261
+#: app/transform_core.c:125 app/transform_tool.c:224
+msgid "Transform"
+msgstr "Transformace"
+
+#: app/tools.c:218
+msgid "/Tools/Transform"
+msgstr "/Nástroje/Transformace"
+
+#: app/tools.c:221
+msgid "Transform the layer or selection"
+msgstr "Transformace vrstvy nebo výbìru"
+
+#: app/tools.c:276
+msgid "Flip"
+msgstr "Pøevrátit"
+
+#: app/tools.c:278
+msgid "/Tools/Flip"
+msgstr "/Nástroje/Pøevrátit"
+
+#: app/tools.c:281
+msgid "Flip the layer or selection"
+msgstr "Pøevrácení vrstvy nebo výbìru"
+
+#: app/tools.c:291
+msgid "Text"
+msgstr "Text"
+
+#: app/tools.c:293
+msgid "/Tools/Text"
+msgstr "/Nástroje/Text"
+
+#: app/tools.c:296
+msgid "Add text to the image"
+msgstr "Pøidání textu do obrázku"
+
+#: app/tools.c:308
+msgid "/Tools/Color Picker"
+msgstr "/Nástroje/Barevná pipeta"
+
+#: app/tools.c:311
+msgid "Pick colors from the image"
+msgstr "Nasajtí barvy z obrázku"
+
+#: app/tools.c:321
+msgid "Bucket Fill"
+msgstr "Plechovka"
+
+#: app/tools.c:323
+msgid "/Tools/Bucket Fill"
+msgstr "/Nástroje/Plechovka"
+
+#: app/tools.c:326
+msgid "Fill with a color or pattern"
+msgstr "Vyplòování barvou nebo vzorkem"
+
+#: app/tools.c:336
+msgid "Blend"
+msgstr "Mísení"
+
+#: app/tools.c:338
+msgid "/Tools/Blend"
+msgstr "/Nástroje/Mísení"
+
+#: app/tools.c:341
+msgid "Fill with a color gradient"
+msgstr "Vyplòuje barevným pøechodem"
+
+#: app/tools.c:351
+msgid "Pencil"
+msgstr "Tu¾ka"
+
+#: app/tools.c:353
+msgid "/Tools/Pencil"
+msgstr "/Nástroje/Tu¾ka"
+
+#: app/tools.c:356
+msgid "Draw sharp pencil strokes"
+msgstr "Kreslení ostrých tahy tu¾kou"
+
+#: app/tools.c:366
+msgid "Paintbrush"
+msgstr "©tìtec"
+
+#: app/tools.c:368
+msgid "/Tools/Paintbrush"
+msgstr "/Nástroje/©tìtec"
+
+#: app/tools.c:371
+msgid "Paint fuzzy brush strokes"
+msgstr "Kreslení neostrých tahù ¹tìtcem"
+
+#: app/tools.c:381
+msgid "Eraser"
+msgstr "Guma"
+
+#: app/tools.c:383
+msgid "/Tools/Eraser"
+msgstr "/Nástroje/Guma"
+
+#: app/tools.c:386
+msgid "Erase to background or transparency"
+msgstr "Mazání do barvy pozadí nebo prùhlednosti"
+
+#: app/tools.c:396
+msgid "Airbrush"
+msgstr "Americká retu¹"
+
+#: app/tools.c:398
+msgid "/Tools/Airbrush"
+msgstr "/Nástroje/Americká retu¹"
+
+#: app/tools.c:401
+msgid "Airbrush with variable pressure"
+msgstr "Americká retu¹ s promìnným tlakem"
+
+#: app/tools.c:411
+msgid "Clone"
+msgstr "Razítko"
+
+#: app/tools.c:413
+msgid "/Tools/Clone"
+msgstr "/Nástroje/Razítko"
+
+#: app/tools.c:416
+msgid "Paint using patterns or image regions"
+msgstr "Kreslení s pou¾itím vzorkù nebo oblastí z obrázku"
+
+#: app/tools.c:426
+msgid "Convolve"
+msgstr "Ostrost"
+
+#: app/tools.c:428
+msgid "/Tools/Convolve"
+msgstr "/Nástroje/Ostrost"
+
+#: app/tools.c:431
+msgid "Blur or sharpen"
+msgstr "Rozostøení nebo zaostøení"
+
+#: app/tools.c:441
+msgid "Ink"
+msgstr "Pero"
+
+#: app/tools.c:443
+msgid "/Tools/Ink"
+msgstr "/Nástroje/Pero"
+
+#: app/tools.c:446
+msgid "Draw in ink"
+msgstr "Kreslení perem"
+
+#: app/tools.c:456 app/tools.c:461
+msgid "Dodge or Burn"
+msgstr ""
+
+#: app/tools.c:458
+#, fuzzy
+msgid "/Tools/DodgeBurn"
+msgstr "/Nástroje/Pøesun"
+
+#: app/tools.c:471 app/tools.c:476
+msgid "Smudge"
+msgstr ""
+
+#: app/tools.c:473
+#, fuzzy
+msgid "/Tools/Smudge"
+msgstr "/Nástroje/Pøesun"
+
+#: app/tools.c:487
+msgid "By Color Select"
+msgstr "Výbìr podle barvy"
+
+#: app/tools.c:489
+msgid "/Select/By Color..."
+msgstr "/Výbìr/Podle barvy..."
+
+#: app/transform_core.c:122
+msgid "Rotate"
+msgstr "Rotovat"
+
+#: app/transform_core.c:123
+msgid "Scale"
+msgstr "Velikost"
+
+#: app/transform_core.c:124
+msgid "Shear"
+msgstr "Naklonit"
+
+#: app/transform_core.c:229
+msgid ""
+"Transformations do not work on\n"
+"layers that contain layer masks."
+msgstr ""
+"Transformace nefunguje na vrstvách,\n"
+"které obsahují masky."
+
+#: app/transform_core.c:1140
+msgid "homogeneous coordinate = 0...\n"
+msgstr "stejnomìrné souøadnice = 0...\n"
+
+#: app/transform_core.c:1395
+msgid "Transformation"
+msgstr "Transformace"
+
+#: app/transform_tool.c:189
+msgid "Rotation"
+msgstr "Rotace"
+
+#: app/transform_tool.c:191
+msgid "Shearing"
+msgstr "Naklápìní"
+
+#: app/transform_tool.c:192
+msgid "Perspective"
+msgstr "Perspektiva"
+
+#: app/transform_tool.c:197
+msgid "Traditional"
+msgstr "Tradièní"
+
+#: app/transform_tool.c:198
+msgid "Corrective"
+msgstr "Korektivní"
+
+#: app/transform_tool.c:204
+msgid "Transform Tool Options"
+msgstr "Volby transformace"
+
+#. the smoothing toggle button
+#: app/transform_tool.c:251
+msgid "Smoothing"
+msgstr "Vyhlazování"
+
+#: app/transform_tool.c:258
+#, fuzzy
+msgid "Show path"
+msgstr "Ukázat cestu"
+
+#. the second radio frame and box, for transform direction
+#: app/transform_tool.c:272
+msgid "Tool paradigm"
+msgstr "Paradigma nástroje"
+
+#. the show grid toggle button
+#: app/transform_tool.c:299
+msgid "Show grid"
+msgstr "Ukázat møí¾"
+
+#: app/transform_tool.c:310
+msgid "Grid density:"
+msgstr "Hustota møí¾e:"
+
+#. the clip resulting image toggle button
+#: app/transform_tool.c:331
+msgid "Clip result"
+msgstr "Oøíznout výsledek"
+
+#: app/xcf.c:365
+#, c-format
+msgid "XCF error: unsupported XCF file version %d encountered"
+msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
+
+#: app/xcf.c:1486 app/xcf.c:2492
+msgid "xcf: zlib compression unimplemented"
+msgstr "xcf: zlib komprese není implementovaná"
+
+#: app/xcf.c:1635
+#, c-format
+msgid "xcf: uh oh! xcf rle tile saving error: %d"
+msgstr "xcf: jejda! chyba zápisu xcf rle dla¾dice: %d"
+
+#: app/xcf.c:1777
+msgid ""
+"XCF warning: version 0 of XCF file format\n"
+"did not save indexed colormaps correctly.\n"
+"Substituting grayscale map."
+msgstr ""
+"Varování XCF: soubor formátu XCF verze 0\n"
+"nezapisoval korektnì indexovanou barevnou mapu.\n"
+"Bude nahrazena barevnou mapou s odstíny ¹edi."
+
+#: app/xcf.c:1808
+#, c-format
+msgid "unknown compression type: %d"
+msgstr "neznámý typ komprese: %d"
+
+#: app/xcf.c:1848
+msgid "Warning, resolution out of range in XCF file"
+msgstr "Varování, rozli¹ení v XCF souboru mimo rozsah"
+
+#: app/xcf.c:1871
+msgid "Error detected while loading an image's parasites"
+msgstr "Chyba nalezena bìhem naèítání parazitù obrázku"
+
+#: app/xcf.c:1882
+msgid "Warning, unit out of range in XCF file, falling back to inches"
+msgstr "Varování, jednotky v XCF souboru mimo rozsah, pou¾ijí se palce"
+
+#: app/xcf.c:1946
+#, c-format
+msgid "unexpected/unknown image property: %d (skipping)"
+msgstr "neoèekávaná/neznámá vlastnost obrázku: %d (pøeskakuje se)"
+
+#: app/xcf.c:2038
+#, c-format
+msgid "unexpected/unknown layer property: %d (skipping)"
+msgstr "neoèekávaná/neznámá vlastnost vrstvy: %d (pøeskakuje se)"
+
+#: app/xcf.c:2115
+#, c-format
+msgid "unexpected/unknown channel property: %d (skipping)"
+msgstr "neoèekávaná/neznámá vlastnost kanálu: %d (pøeskakuje se)"
+
+#: app/xcf.c:2455
+msgid "not enough tiles found in level"
+msgstr "v úrovni nebyl nalezen dostatek dla¾dic"
+
+#: app/xcf.c:2496
+msgid "xcf: fractal compression unimplemented"
+msgstr "xcf: fraktální komprese není implementovaná"
+
+#: app/xcf.c:2636
+#, c-format
+msgid "xcf: uh oh! xcf rle tile loading error: %d"
+msgstr "xcf: jejda! chyba naèítání xcf rle dla¾dice: %d"
+
+#: app/xcf.c:2683
+#, c-format
+msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
+msgstr ""
+"nepodaøilo se naèíst data dla¾dice z xcf souboru: naèteno %d (%d)  bytù"
+
+#: libgimp/gimpfileselection.c:352
+#, fuzzy
+msgid "Select File"
+msgstr "Výbìr"
+
+#: libgimp/gimpenv.c:82
+msgid "warning: no home directory."
+msgstr "varování: chybí domovský adresáø."
+
+#: libgimp/gimpunitmenu.c:207
+msgid "More..."
+msgstr ""
+
+#: libgimp/gimpunitmenu.c:333
+#, fuzzy
+msgid "unit-menu-format string ended within %%-sequence"
+msgstr "øetìzec image-title-format konèí %% sekvencí"
+
+#: libgimp/gimpunitmenu.c:366
+#, fuzzy
+msgid "unit-menu-format contains unknown format sequence '%%%c'"
+msgstr "image-title-format obsahuje neznámou formátovací sekvenci '%%%c'"
+
+#: libgimp/gimpunitmenu.c:453
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Výbìr"
+
+#: libgimp/gimpunitmenu.c:479
+#, fuzzy
+msgid "Unit "
+msgstr "Jednotky:"
+
+#: libgimp/gimpunitmenu.c:481
+#, fuzzy
+msgid "Factor"
+msgstr "Zaoblení"
+
+#: app/regex.c:976
+msgid "Success"
+msgstr "Zdaøilo se"
+
+#. REG_NOERROR
+#: app/regex.c:977
+msgid "No match"
+msgstr "Nic neodpovídá"
+
+#. REG_NOMATCH
+#: app/regex.c:978
+msgid "Invalid regular expression"
+msgstr "Neplatný regulární výraz"
+
+#. REG_BADPAT
+#: app/regex.c:979
+msgid "Invalid collation character"
+msgstr "Neplatný znak tøídìní"
+
+#. REG_ECOLLATE
+#: app/regex.c:980
+msgid "Invalid character class name"
+msgstr "Neplatné jméno tøídy znakù"
+
+#. REG_ECTYPE
+#: app/regex.c:981
+msgid "Trailing backslash"
+msgstr "Koncové zpìtné lomítko"
+
+#. REG_EESCAPE
+#: app/regex.c:982
+msgid "Invalid back reference"
+msgstr "Neplatný zpìtný odkaz"
+
+#. REG_ESUBREG
+#: app/regex.c:983
+msgid "Unmatched [ or [^"
+msgstr "Nespárovaná [ nebo [^"
+
+#. REG_EBRACK
+#: app/regex.c:984
+msgid "Unmatched ( or \\("
+msgstr "Nespárovaná ( nebo \\("
+
+#. REG_EPAREN
+#: app/regex.c:985
+msgid "Unmatched \\{"
+msgstr "Nespárovaná \\{"
+
+#. REG_EBRACE
+#: app/regex.c:986
+msgid "Invalid content of \\{\\}"
+msgstr "Neplatný kontext \\{\\}"
+
+#. REG_BADBR
+#: app/regex.c:987
+msgid "Invalid range end"
+msgstr "Neplatný konec rozsahu"
+
+#. REG_ERANGE
+#: app/regex.c:988
+msgid "Memory exhausted"
+msgstr "Pamì» vyèerpána"
+
+#. REG_ESPACE
+#: app/regex.c:989
+msgid "Invalid preceding regular expression"
+msgstr "Neplatný pøedchozí regulární výraz"
+
+#. REG_BADRPT
+#: app/regex.c:990
+msgid "Premature end of regular expression"
+msgstr "Pøedèasnì ukonèený regulární výraz"
+
+#. REG_EEND
+#: app/regex.c:991
+msgid "Regular expression too big"
+msgstr "Regulární výraz je pøíli¹ dlouhý"
+
+#. REG_ESIZE
+#: app/regex.c:992
+msgid "Unmatched ) or \\)"
+msgstr "Nespárovaná ) nebo \\)"
+
+#: app/regex.c:5442
+msgid "No previous regular expression"
+msgstr "Není pøedchozí regulární výraz"
