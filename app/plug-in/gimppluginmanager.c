@@ -135,7 +135,7 @@ plug_ins_init (Gimp               *gimp,
   (* status_callback) (_("Resource configuration"), filename, -1);
   plug_in_rc_parse (gimp, filename);
 
-  /* query any plug-ins that have changed since we last wrote out
+  /*  Query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   (* status_callback) (_("Querying new Plug-ins"), "", 0);
@@ -206,10 +206,17 @@ plug_ins_init (Gimp               *gimp,
   /* write the pluginrc file if necessary */
   if (gimp->write_pluginrc)
     {
+      GError *error = NULL;
+
       if (gimp->be_verbose)
 	g_print (_("writing \"%s\"\n"), filename);
 
-      plug_in_rc_write (gimp->plug_in_defs, filename);
+      if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
+        {
+          g_message ("%s", error->message);
+          g_error_free (error);
+        }
+
       gimp->write_pluginrc = FALSE;
     }
 
@@ -295,7 +302,7 @@ plug_ins_init (Gimp               *gimp,
 	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
 	{
 	  if (gimp->be_verbose)
-	    g_print (_("Starting extension: \"%s\""), proc_def->db_info.name);
+	    g_print (_("Starting extension: \"%s\"\n"), proc_def->db_info.name);
 
 	  (* status_callback) (NULL, proc_def->db_info.name, nth / n_plugins);
 

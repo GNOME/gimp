@@ -50,6 +50,8 @@ void               gimp_config_writer_print       (GimpConfigWriter  *writer,
 void               gimp_config_writer_printf      (GimpConfigWriter  *writer,
 						   const gchar       *format,
 						   ...);
+void               gimp_config_writer_string      (GimpConfigWriter  *writer,
+						   const gchar       *string);
 void               gimp_config_writer_revert      (GimpConfigWriter  *writer);
 void               gimp_config_writer_close       (GimpConfigWriter  *writer);
 

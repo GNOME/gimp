@@ -524,14 +524,9 @@ serialize_unknown_token (const gchar *key,
                          const gchar *value,
                          gpointer     data)
 {
-  GimpConfigWriter *writer  = data;
-  gchar            *escaped;
-
-  escaped = g_strescape (value, NULL);
+  GimpConfigWriter *writer = data;
 
   gimp_config_writer_open (writer, key);
-  gimp_config_writer_printf (writer, "\"%s\"", escaped);
+  gimp_config_writer_string (writer, value);
   gimp_config_writer_close (writer);
-
-  g_free (escaped);
 }

@@ -80,7 +80,7 @@ gimp_config_writer_new (const gchar  *filename,
     }
   else
     {
-      fd = open (filename, O_WRONLY);
+      fd = creat (filename, 0644);
 
       if (fd == -1)
 	{
@@ -191,10 +191,34 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
 }
 
 void
+gimp_config_writer_string (GimpConfigWriter  *writer,
+                           const gchar       *string)
+{
+  g_return_if_fail (writer != NULL);
+
+  if (writer->error)
+    return;
+
+  if (string)
+    {
+      gchar *escaped = g_strescape (string, NULL);
+  
+      g_string_append_printf (writer->buffer, " \"%s\"", escaped);
+
+      g_free (escaped);
+    }
+  else
+    {
+      g_string_append_len (writer->buffer, " \"\"", 3);
+    }
+}
+
+void
 gimp_config_writer_revert (GimpConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
   g_return_if_fail (writer->depth > 0);
+  g_return_if_fail (writer->marker != -1);
 
   if (writer->error)
     return;
@@ -202,6 +226,7 @@ gimp_config_writer_revert (GimpConfigWriter *writer)
   g_string_truncate (writer->buffer, writer->marker);
 
   writer->depth--;
+  writer->marker = -1;
 }
 
 void
@@ -269,15 +294,21 @@ void
 gimp_config_writer_linefeed (GimpConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (writer->depth == 0);
-  g_return_if_fail (writer->buffer->len == 0);
  
   if (writer->error)
     return;
 
-  if (write (writer->fd, "\n", 1) < 0)
-    g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		 g_strerror (errno));
+  if (writer->buffer->len == 0)
+    {
+      if (write (writer->fd, "\n", 1) < 0)
+        g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                     g_strerror (errno));
+    }
+  else
+    {
+      g_string_append_c (writer->buffer, '\n');
+      gimp_config_string_indent (writer->buffer, writer->depth);
+    }
 }
 
 void

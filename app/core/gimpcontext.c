@@ -1010,7 +1010,7 @@ gimp_context_serialize_property (GObject          *object,
     case GIMP_CONTEXT_PROP_PATTERN:
     case GIMP_CONTEXT_PROP_GRADIENT:
     case GIMP_CONTEXT_PROP_PALETTE:
-      serialize_obj =  g_value_get_object (value);
+      serialize_obj = g_value_get_object (value);
       break;
 
     default:
@@ -1019,11 +1019,7 @@ gimp_context_serialize_property (GObject          *object,
 
   if (serialize_obj)
     {
-      gchar *escaped;
-
-      escaped = g_strescape (gimp_object_get_name (serialize_obj), NULL);
-      gimp_config_writer_printf (writer, "\"%s\"", escaped);
-      g_free (escaped);
+      gimp_config_writer_string (writer, gimp_object_get_name (serialize_obj));
     }
   else
     {

@@ -1,3 +1,19 @@
+2003-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfigwriter.[ch]: fixed creation of config file,
+	added new function gimp_config_writer_string() and improved
+	gimp_config_writer_linefeed().
+
+	* app/config/gimpconfig-serialize.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdocumentlist.c: use gimp_config_writer_string()
+	instead of escaping the string manually.
+
+	* app/core/gimpunits.c (gimp_unitrc_save): use a GimpConfigWriter.
+
+	* app/plug-in/plug-in-rc.[ch] (plug_in_rc_write)
+	* app/plug-in/plug-ins.c: use a GimpConfigWriter.
+
 2003-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdataeditor.[ch]: added "gboolean data_editable"

@@ -111,14 +111,8 @@ gimp_document_list_serialize (GObject          *object,
 
   for (list = GIMP_LIST (object)->list; list; list = list->next)
     {
-      gchar *escaped;
-
       gimp_config_writer_open (writer, document_symbol);
-
-      escaped = g_strescape (GIMP_OBJECT (list->data)->name, NULL);
-      gimp_config_writer_printf (writer, "\"%s\"", escaped); 
-      g_free (escaped);
-
+      gimp_config_writer_string (writer, GIMP_OBJECT (list->data)->name); 
       gimp_config_writer_close (writer);
     }
 

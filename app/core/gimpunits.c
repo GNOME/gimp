@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -33,6 +31,7 @@
 #include "gimpunit.h"
 #include "gimpunits.h"
 
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "libgimp/gimpintl.h"
@@ -167,27 +166,29 @@ gimp_unitrc_load (Gimp *gimp)
 void
 gimp_unitrc_save (Gimp *gimp)
 {
-  gint   i;
-  gchar *filename;
-  FILE  *fp;
+  GimpConfigWriter *writer;
+  gchar            *filename;
+  gint              i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("unitrc");
 
-  fp = fopen (filename, "w");
-  g_free (filename);
-  if (!fp)
-    return;
+  writer = gimp_config_writer_new (filename,
+                                   TRUE,
+                                   "GIMP units\n\n"
+                                   "This file contains the user unit database. "
+                                   "You can edit this list with the unit "
+                                   "editor. You are not supposed to edit it "
+                                   "manually, but of course you can do.\n"
+                                   "This file will be entirely rewritten every "
+                                   "time you quit the gimp.",
+                                   NULL);
 
-  fprintf (fp,
-	   "# GIMP unitrc\n"
-           "#\n"
-	   "# This file contains your user unit database. You can\n"
-	   "# modify this list with the unit editor. You are not\n"
-	   "# supposed to edit it manually, but of course you can do.\n"
-	   "# This file will be entirely rewritten every time you\n"
-	   "# quit the gimp.\n\n");
+  g_free (filename);
+
+  if (!writer)
+    return;
 
   /*  save user defined units  */
   for (i = gimp_unit_get_number_of_built_in_units ();
@@ -198,28 +199,41 @@ gimp_unitrc_save (Gimp *gimp)
         {
           gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-          fprintf (fp,
-                   "(unit-info \"%s\"\n"
-                   "   (factor %s)\n"
-                   "   (digits %d)\n"
-                   "   (symbol \"%s\")\n"
-                   "   (abbreviation \"%s\")\n"
-                   "   (singular \"%s\")\n"
-                   "   (plural \"%s\"))\n\n",
-                   gimp_unit_get_identifier (i),
-                   g_ascii_formatd (buf, sizeof (buf), "%f",
-                                    gimp_unit_get_factor (i)),
-                   gimp_unit_get_digits (i),
-                   gimp_unit_get_symbol (i),
-                   gimp_unit_get_abbreviation (i),
-                   gimp_unit_get_singular (i),
-                   gimp_unit_get_plural (i));
+          gimp_config_writer_open (writer, "unit-info");
+          gimp_config_writer_string (writer, gimp_unit_get_identifier (i));
+
+          gimp_config_writer_open (writer, "factor");
+          gimp_config_writer_print (writer,
+                                    g_ascii_formatd (buf, sizeof (buf), "%f",
+                                                     gimp_unit_get_factor (i)),
+                                    -1);
+          gimp_config_writer_close (writer);
+
+          gimp_config_writer_open (writer, "digits");
+          gimp_config_writer_printf (writer, "%d", gimp_unit_get_digits (i));
+          gimp_config_writer_close (writer);
+
+          gimp_config_writer_open (writer, "symbol");
+          gimp_config_writer_string (writer, gimp_unit_get_symbol (i));
+          gimp_config_writer_close (writer);
+          
+          gimp_config_writer_open (writer, "abbreviation");
+          gimp_config_writer_string (writer, gimp_unit_get_abbreviation (i));
+          gimp_config_writer_close (writer);
+
+          gimp_config_writer_open (writer, "singular");
+          gimp_config_writer_string (writer, gimp_unit_get_singular (i));
+          gimp_config_writer_close (writer);
+         
+          gimp_config_writer_open (writer, "plural");
+          gimp_config_writer_string (writer, gimp_unit_get_plural (i));
+          gimp_config_writer_close (writer);
+
+          gimp_config_writer_close (writer);
         }
     }
 
-  fprintf (fp, "# end of unitrc\n");
-  
-  fclose (fp);
+  gimp_config_writer_finish (writer, "end of units", NULL);
 }
 
 
