@@ -1,5 +1,10 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/dialogs-actions.c (dialogs_actions): set Ctrl-B as
+	default shortcut to raise the Toolbox (as suggested in bug #163368).
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/paint-enums.h
 	* libgimpbase/gimpbaseenums.h: moved enums to libgimpbase (from
 	app/paint and libgimp). The remaining enums in

@@ -54,7 +54,7 @@ static GimpActionEntry dialogs_actions[] =
     GIMP_HELP_DOCK },
 
   { "dialogs-toolbox", NULL,
-    N_("Tool_box"), NULL, NULL,
+    N_("Tool_box"), "<control>B", NULL,
     G_CALLBACK (dialogs_show_toolbox_cmd_callback),
     GIMP_HELP_TOOLBOX }
 };
