@@ -1,3 +1,8 @@
+2005-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient.c (gimp_gradient_segment_split_uniform):
+	fixed brokeness introduced I when eliminating gradient->last_visited.
+
 2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpviewrenderergradient.c: revert previous
@@ -54,7 +59,6 @@
 2005-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpellipseselecttool.c
-
 	* app/tools/gimprectselecttool.[ch]: applied a patch by Nils
 	Bjorklund that should fix bug #143887 (selection rectangle "moves"
 	when starting at the top-right corner).

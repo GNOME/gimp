@@ -777,9 +777,9 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      gimp_gradient_get_color_at (gradient, seg,
+      gimp_gradient_get_color_at (gradient, lseg,
                                   seg->left,  FALSE, &seg->left_color);
-      gimp_gradient_get_color_at (gradient, seg,
+      gimp_gradient_get_color_at (gradient, lseg,
                                   seg->right, FALSE, &seg->right_color);
 
       seg->type  = lseg->type;
