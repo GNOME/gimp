@@ -29,6 +29,7 @@ Overview of Changes in GIMP 1.3.23
 - Redone GimpDialog API [Mitch]
 - Load GIMP brush format version 3 [Sven]
 - Allow to use GIMP without any fonts [Sven]
+- Improved animoptimize plug-in [Raphaël]
 - Lots of bug fixes
 
 Other contributors:
@@ -112,7 +113,7 @@ Overview of Changes in GIMP 1.3.20
 
 Other contributors: 
   Maurits Rijk, Ville Pätsi, Larry Ewing, Dmitry G. Mastrukov,
-  Pedro Gimeno, Raphael Quinet, S. Mukund, Andy Wallis, Carl Adams,
+  Pedro Gimeno, Raphaël Quinet, S. Mukund, Andy Wallis, Carl Adams,
   Tino Schwarz, Tor Lillqvist, Emmet Caulfield, Guillermo S. Romero,
   Dave Neary, Wolfgang Hofer
 
@@ -151,7 +152,7 @@ Overview of Changes in GIMP 1.3.18
 - Allow patent-free compression for GIF [Cameron]
 - Add several edge detection algorithms to the edge tool [Bolsh]
 - Fixed handle leak in plug-ins on Win32 [Tor]
-- Changed default quality for jpegs [Raphael]
+- Changed default quality for jpegs [Raphaël]
 - Add changing opacity via cursor keys [Simon]
 - Fix text tool outlines [Mitch]
 - Serialize/deserialize documentation [Sven]
@@ -162,7 +163,7 @@ Overview of Changes in GIMP 1.3.18
 - Lots of bug fixes
 
 Other contributors:
-  Maurits Rijk, Raphael Quinet, Adam Moss
+  Maurits Rijk, Raphaël Quinet, Adam Moss
 
 
 Overview of Changes in GIMP 1.3.17
@@ -231,7 +232,7 @@ Overview of Changes in GIMP 1.3.15
 - Lots of bug fixes
 
 Other contributors:
-  Branko Collin, Pedro Gimeno, Dave Neary, Raphael Quinet, Maurits Rijk,
+  Branko Collin, Pedro Gimeno, Dave Neary, Raphaël Quinet, Maurits Rijk,
   Adam D. Moss, Jakub Steiner
 
 
@@ -252,7 +253,7 @@ Overview of Changes in GIMP 1.3.14
 - Lots of bug fixes
 
 Other contributors:
-  Pedro Gimeno, Owen, Raphael Quinet
+  Pedro Gimeno, Owen, Raphaël Quinet
 
 
 Overview of Changes in GIMP 1.3.13
@@ -271,7 +272,7 @@ Overview of Changes in GIMP 1.3.13
 
 Other contributors:
   Sunil Mohan Adapa, Tor Lillqvist, Jay Cox, Dave Neary, Michael J. Hammel,
-  Toralf Lund, Raphael Quinet, Hans Breuer, Tuomas Kuosmanen, David Necas,
+  Toralf Lund, Raphaël Quinet, Hans Breuer, Tuomas Kuosmanen, David Necas,
   Jakub Steiner, Simon Budig
 
 
@@ -351,7 +352,7 @@ Overview of Changes in GIMP 1.3.10
 
 Other contributors:
   Maurits Rijk, Michael Niedermayer, Garry R. Osgood, David Necas,
-  Toby Smith, Raphael Quinet, Dave Neary, Jim Meyer
+  Toby Smith, Raphaël Quinet, Dave Neary, Jim Meyer
 
 
 Overview of Changes in GIMP 1.3.9
@@ -421,7 +422,7 @@ Overview of Changes in GIMP 1.3.6
 - More stuff not mentioned here (see the ChangeLog)
 
 Other contributors:
-  Zbigniew Chyla, OEyvind Kolaas, Nick Lamb, David Monniaux, Raphael Quinet,
+  Zbigniew Chyla, OEyvind Kolaas, Nick Lamb, David Monniaux, Raphaël Quinet,
   Jakub Steiner, Simon Budig
 
 

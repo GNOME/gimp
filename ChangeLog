@@ -1,3 +1,8 @@
+2003-11-25  Raphaël Quinet  <quinet@gamers.org>
+
+	* NEWS: Improved the spelling of my name (missing accents) and
+	added a mention about animoptimize in the last release.
+
 2003-11-24  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-generic.c: Repaired an oversight on
