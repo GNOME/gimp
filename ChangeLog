@@ -1,5 +1,16 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpvectors.[ch]: added new function
+	gimp_vectors_convert() which duplicates a GimpVectors for another
+	image.
+
+	* app/widgets/gimpvectorstreeview.c
+	(gimp_vectors_tree_view_class_init): use it as
+	GimpItemTreeView::convert_item() implementation. Enables
+	DND-copying of vectors between images.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.c
 	* app/tools/gimptransformtool-undo.[ch]: removed old path undo stuff.
 

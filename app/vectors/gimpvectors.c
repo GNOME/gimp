@@ -496,6 +496,30 @@ gimp_vectors_new (GimpImage   *gimage,
   return vectors;
 }
 
+GimpVectors *
+gimp_vectors_convert (GimpVectors *vectors,
+                      GimpImage   *dest_image)
+{
+  GimpItem    *new_item;
+  GimpVectors *new_vectors;
+
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+
+  new_item = gimp_item_duplicate (GIMP_ITEM (vectors),
+                                  GIMP_TYPE_VECTORS,
+                                  FALSE);
+
+  new_vectors = GIMP_VECTORS (new_item);
+
+  new_item->width  = dest_image->width;
+  new_item->height = dest_image->height;
+
+  gimp_item_set_image (new_item, dest_image);
+
+  return new_vectors;
+}
+
 void
 gimp_vectors_freeze (GimpVectors *vectors)
 {

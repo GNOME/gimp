@@ -118,6 +118,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  item_view_class->convert_item    = (GimpConvertItemFunc) gimp_vectors_convert;
 
   item_view_class->new_desc             = _("New Path");
   item_view_class->duplicate_desc       = _("Duplicate Path");

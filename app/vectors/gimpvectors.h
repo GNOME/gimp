@@ -85,6 +85,8 @@ GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
 
 GimpVectors   * gimp_vectors_new                (GimpImage         *gimage,
                                                  const gchar       *name);
+GimpVectors   * gimp_vectors_convert            (GimpVectors       *vectors,
+                                                 GimpImage         *dest_image);
 
 void            gimp_vectors_freeze             (GimpVectors       *vectors);
 void            gimp_vectors_thaw               (GimpVectors       *vectors);
