@@ -123,10 +123,6 @@ tool_options_menu_update (GtkItemFactory *factory,
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
-  GtkWidget    *save_menu;
-  GtkWidget    *restore_menu;
-  GtkWidget    *delete_menu;
-  GList        *list;
 
   context   = gimp_get_user_context (GIMP_ITEM_FACTORY (factory)->gimp);
   tool_info = gimp_context_get_tool (context);
