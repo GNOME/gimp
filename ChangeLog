@@ -1,5 +1,32 @@
 2003-05-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask.[ch] (gimp_image_mask_extract): added
+	"gboolean cut_image" parameter so we can float selections
+	without cutting them from the original drawable.
+
+	* app/gui/select-commands.c
+	* tools/pdbgen/pdb/selection.pdb: pass cut_image == TRUE.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
+	* app/tools/tools-enums.[ch]: added SELECTION_MOVE_COPY value
+	to the SelectOps enum.
+
+	* app/tools/gimpselectiontool.c: use the new mode when
+	<ctrl>+<alt>-dragging a selction (yes, this is evil but there are
+	no modifiers left).
+
+	* app/tools/gimpeditselectiontool.[ch]: extended EditType enum by
+	EDIT_MASK_COPY_TO_LAYER_TRANSLATE and pass cut_image == FALSE if
+	it's passed to init_edit_selection().
+
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimprectselecttool.c: pass the new mode to
+	GimpEditSelectionTool.
+
+2003-05-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/color-notebook.[ch]: added dialog_factory and
 	dialog_identifier parameters to the constructors and register the
 	color_notebook with the passed factory as foreign dialog.

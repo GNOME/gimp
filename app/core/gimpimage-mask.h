@@ -42,12 +42,13 @@ gboolean      gimp_image_mask_is_empty    (GimpImage    *gimage);
 
 TileManager * gimp_image_mask_extract     (GimpImage    *gimage,
                                            GimpDrawable *drawable,
-                                           gboolean      cut_gimage,
+                                           gboolean      cut_image,
                                            gboolean      keep_indexed,
                                            gboolean      add_alpha);
 
 GimpLayer   * gimp_image_mask_float       (GimpImage    *gimage,
                                            GimpDrawable *drawable,
+                                           gboolean      cut_image,
                                            gint          off_x,
                                            gint          off_y);
 

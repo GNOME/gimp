@@ -179,6 +179,8 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   GimpSelectionOptions *options;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
+  gboolean              move_layer        = FALSE;
+  gboolean              move_floating_sel = FALSE;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
   options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
@@ -186,15 +188,29 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);
 
-  if ((state & GDK_MOD1_MASK) && ! gimp_image_mask_is_empty (gdisp->gimage))
+  if (layer)
+    {
+      if (floating_sel)
+        {
+          if (layer == floating_sel)
+            move_floating_sel = TRUE;
+        }
+      else if (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+        {
+          move_layer = TRUE;
+        }
+    }
+
+  if ((state & GDK_MOD1_MASK) && (state & GDK_CONTROL_MASK) && move_layer)
+    {
+      selection_tool->op = SELECTION_MOVE_COPY; /* move a copy of the selection */
+    }
+  else if ((state & GDK_MOD1_MASK) && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       selection_tool->op = SELECTION_MOVE_MASK; /* move the selection mask */
     }
   else if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
-           layer &&
-	   (layer == floating_sel ||
-	    (gimp_image_mask_value (gdisp->gimage, coords->x, coords->y) &&
-	     floating_sel == NULL)))
+           (move_layer || move_floating_sel))
     {
       selection_tool->op = SELECTION_MOVE;      /* move the selection */
     }
@@ -252,8 +268,8 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case SELECTION_MOVE:
+    case SELECTION_MOVE_COPY:
       tool_cursor = GIMP_MOVE_TOOL_CURSOR;
-      cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
       break;
     case SELECTION_ANCHOR:
       cmodifier = GIMP_CURSOR_MODIFIER_ANCHOR;

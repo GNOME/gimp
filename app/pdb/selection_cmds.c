@@ -369,7 +369,7 @@ selection_float_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      layer = gimp_image_mask_float (gimage, drawable, offx, offy);
+      layer = gimp_image_mask_float (gimage, drawable, TRUE, offx, offy);
       success = layer != NULL;
     }
 

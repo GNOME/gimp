@@ -229,6 +229,9 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
     case SELECTION_MOVE:
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
+    case SELECTION_MOVE_COPY:
+      init_edit_selection (tool, gdisp, coords, EDIT_MASK_COPY_TO_LAYER_TRANSLATE);
+      return;
     default:
       break;
     }

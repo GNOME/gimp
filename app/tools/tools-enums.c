@@ -36,6 +36,7 @@ static const GEnumValue select_ops_enum_values[] =
   { SELECTION_INTERSECT, "SELECTION_INTERSECT", "intersect" },
   { SELECTION_MOVE_MASK, "SELECTION_MOVE_MASK", "move-mask" },
   { SELECTION_MOVE, "SELECTION_MOVE", "move" },
+  { SELECTION_MOVE_COPY, "SELECTION_MOVE_COPY", "move-copy" },
   { SELECTION_ANCHOR, "SELECTION_ANCHOR", "anchor" },
   { 0, NULL, NULL }
 };

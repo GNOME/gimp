@@ -296,6 +296,7 @@ init_edit_selection (GimpTool    *tool,
         break;
 
       case EDIT_MASK_TO_LAYER_TRANSLATE:
+      case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
         x1 = edit_select->x1 + off_x;
         y1 = edit_select->y1 + off_y;
         x2 = edit_select->x2 + off_x;
@@ -589,8 +590,11 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    break;
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
+	  case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
 	    if (! gimp_image_mask_float (gdisp->gimage, 
                                          gimp_image_active_drawable (gdisp->gimage),
+                                         edit_select->edit_type ==
+                                         EDIT_MASK_TO_LAYER_TRANSLATE,
                                          0, 0))
 	      {
 		/* no region to float, abort safely */
@@ -741,6 +745,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case EDIT_MASK_TO_LAYER_TRANSLATE:
+    case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
       gimp_draw_tool_draw_rectangle (draw_tool,
                                      FALSE,
                                      edit_select->x1,
@@ -1089,7 +1094,8 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	{
 	case EDIT_MASK_TRANSLATE:
 	case EDIT_MASK_TO_LAYER_TRANSLATE:
-	  /*  this won't happen  */
+        case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
+          /*  this won't happen  */
 	  break;
 
 	case EDIT_LAYER_TRANSLATE:

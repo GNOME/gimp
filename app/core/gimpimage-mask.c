@@ -197,7 +197,7 @@ gimp_image_mask_is_empty (GimpImage *gimage)
 TileManager *
 gimp_image_mask_extract (GimpImage    *gimage,
                          GimpDrawable *drawable,
-                         gboolean      cut_gimage,
+                         gboolean      cut_image,
                          gboolean      keep_indexed,
                          gboolean      add_alpha)
 {
@@ -270,7 +270,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
    */
-  if (cut_gimage && non_empty)
+  if (cut_image && non_empty)
     gimp_drawable_push_undo (drawable, NULL, x1, y1, x2, y2, NULL, FALSE);
 
   gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
@@ -283,7 +283,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     x1, y1,
                      x2 - x1, y2 - y1,
-                     cut_gimage);
+                     cut_image);
   pixel_region_init (&destPR, tiles,
                      0, 0,
                      x2 - x1, y2 - y1,
@@ -298,9 +298,9 @@ gimp_image_mask_extract (GimpImage    *gimage,
       extract_from_region (&srcPR, &destPR, &maskPR,
 			   gimp_drawable_cmap (drawable),
 			   bg_color, base_type,
-			   gimp_drawable_has_alpha (drawable), cut_gimage);
+			   gimp_drawable_has_alpha (drawable), cut_image);
 
-      if (cut_gimage)
+      if (cut_image)
 	{
 	  /*  Clear the region  */
 	  gimp_image_mask_clear (gimage, NULL);
@@ -332,7 +332,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
       /*  If we're cutting, remove either the layer (or floating selection),
        *  the layer mask, or the channel
        */
-      if (cut_gimage)
+      if (cut_image)
 	{
 	  if (GIMP_IS_LAYER (drawable))
 	    {
@@ -359,6 +359,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
 GimpLayer *
 gimp_image_mask_float (GimpImage    *gimage,
                        GimpDrawable *drawable,
+                       gboolean      cut_image,
                        gint          off_x,    /* optional offset */
                        gint          off_y)
 {
@@ -382,8 +383,12 @@ gimp_image_mask_float (GimpImage    *gimage,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_FLOAT,
                                _("Float Selection"));
 
-  /*  Cut the selected region  */
-  tiles = gimp_image_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
+  /*  Cut or copy the selected region  */
+  tiles = gimp_image_mask_extract (gimage, drawable, cut_image, FALSE, TRUE);
+
+  /*  Clear the selection as if we had cut the pixels  */
+  if (! cut_image)
+    gimp_image_mask_clear (gimage, NULL);
 
   /* Create a new layer from the buffer, using the drawable's type
    *  because it may be different from the image's type if we cut from
