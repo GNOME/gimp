@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-10-25 21:28+0200\n"
-"PO-Revision-Date: 2001-10-25 21:30+0200\n"
+"POT-Creation-Date: 2001-11-06 19:13+0100\n"
+"PO-Revision-Date: 2001-11-06 19:13+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -710,7 +710,7 @@ msgstr "Usuñ fraktal"
 #: plug-ins/gfig/gfig.c:1 plug-ins/gflare/gflare.c:1
 #: plug-ins/gflare/gflare.c:1 plug-ins/gimpressionist/presets.c:1
 #: plug-ins/ifscompose/ifscompose.c:1 plug-ins/imagemap/imap_cmd_delete.c:1
-#: plug-ins/imagemap/imap_selection.c:1
+#: plug-ins/imagemap/imap_selection.c:1 plug-ins/imagemap/imap_tools.c:1
 msgid "Delete"
 msgstr "Usuñ"
 
@@ -7534,7 +7534,7 @@ msgid "Press Button"
 msgstr "Naci¶nij przycisk"
 
 #: plug-ins/gap/gap_arr_dialog.c:1 plug-ins/gfig/gfig.c:1
-#: plug-ins/imagemap/imap_cmd_select.c:1
+#: plug-ins/imagemap/imap_cmd_select.c:1 plug-ins/imagemap/imap_tools.c:1
 msgid "Select"
 msgstr "Zaznaczenie"
 
@@ -10257,7 +10257,7 @@ msgstr "Podgl±d"
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1 plug-ins/gfig/gfig.c:1
 #: plug-ins/gflare/gflare.c:1 plug-ins/imagemap/imap_menu.c:1
-#: plug-ins/imagemap/imap_selection.c:1
+#: plug-ins/imagemap/imap_selection.c:1 plug-ins/imagemap/imap_tools.c:1
 msgid "Edit"
 msgstr "Edycja"
 
@@ -10584,6 +10584,7 @@ msgstr "Od¶wie¿ obraz"
 
 #: plug-ins/gfig/gfig.c:1 plug-ins/imagemap/imap_menu.c:1
 #: plug-ins/imagemap/imap_popup.c:1 plug-ins/imagemap/imap_rectangle.c:1
+#: plug-ins/imagemap/imap_tools.c:1
 msgid "Rectangle"
 msgstr "Prostok±t"
 
@@ -11048,11 +11049,13 @@ msgstr "Kszta³t dodatkowych przeb³ysków"
 
 #: plug-ins/gflare/gflare.c:1 plug-ins/imagemap/imap_circle.c:1
 #: plug-ins/imagemap/imap_menu.c:1 plug-ins/imagemap/imap_popup.c:1
+#: plug-ins/imagemap/imap_tools.c:1
 msgid "Circle"
 msgstr "Okr±g"
 
 #: plug-ins/gflare/gflare.c:1 plug-ins/imagemap/imap_menu.c:1
 #: plug-ins/imagemap/imap_polygon.c:1 plug-ins/imagemap/imap_popup.c:1
+#: plug-ins/imagemap/imap_tools.c:1
 msgid "Polygon"
 msgstr "Wielok±t"
 
@@ -12070,6 +12073,11 @@ msgstr "Przesuwa szarfê"
 msgid "Move Selected Objects"
 msgstr "Przesuwa zaznaczony obiekt"
 
+#: plug-ins/imagemap/imap_cmd_move_to_front.c:1
+#: plug-ins/imagemap/imap_toolbar.c:1
+msgid "Move To Front"
+msgstr "Przesuwa na wierzch"
+
 #: plug-ins/imagemap/imap_cmd_move_up.c:1
 #: plug-ins/imagemap/imap_cmd_object_up.c:1
 #: plug-ins/imagemap/imap_selection.c:1
@@ -12084,6 +12092,10 @@ msgstr "Wklej"
 #: plug-ins/imagemap/imap_cmd_select_next.c:1
 msgid "Select Next"
 msgstr "Zaznacz nastêpny"
+
+#: plug-ins/imagemap/imap_cmd_select_prev.c:1
+msgid "Select Previous"
+msgstr "Zaznacz poprzedni"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:1
 msgid "Select Region"
@@ -12551,10 +12563,6 @@ msgstr "Powiêksz"
 #: plug-ins/imagemap/imap_toolbar.c:1
 msgid "Edit Map Info"
 msgstr "Modyfikuje informacje o mapie obrazu"
-
-#: plug-ins/imagemap/imap_toolbar.c:1
-msgid "Move To Front"
-msgstr "Przesuwa na wierzch"
 
 #: plug-ins/imagemap/imap_tools.c:1
 msgid "Select existing area"
