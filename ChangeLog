@@ -1,3 +1,19 @@
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: registered GimpFillType enum and added
+	translatable names to GimpImageBaseType.
+
+	* app/core/gimp.[ch]
+	* app/core/gimpedit.c
+	* app/core/gimpimage-new.[ch]: removed gimp_image_new_[init|exit]()
+	where we used to create names for the enums mentioned above. Dropped
+	gimp_image_new_set_have_current_cut_buffer() in favor of accessing
+	the value directly.
+
+	* app/gui/file-new-dialog.c (file_new_dialog_create)
+	* app/gui/layers-commands.c (layers_new_layer_query): use
+	GimpEnumMenus to choose the base_type and fill_type.
+
 2002-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c commented out a warning in

@@ -31,6 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "file-new-dialog.h"
 
 #include "gimprc.h"
@@ -49,9 +51,8 @@ typedef struct
   GtkWidget          *resolution_se;
   GtkWidget          *couple_resolutions;
 
-  /* this should be a list */
-  GtkWidget          *type_w[2];
-  GtkWidget          *fill_type_w[4];
+  GtkWidget          *type_w;
+  GtkWidget          *fill_type_w;
 
   GimpImageNewValues *values;
   gdouble             size;
@@ -72,6 +73,10 @@ static void   file_new_cancel_callback     (GtkWidget    *widget,
 					    gpointer      data);
 static void   file_new_resolution_callback (GtkWidget    *widget,
 					    gpointer      data);
+static void   file_new_image_type_callback (GtkWidget    *widget,
+                                            gpointer      data);
+static void   file_new_fill_type_callback  (GtkWidget    *widget,
+                                            gpointer      data);
 static void   file_new_image_size_callback (GtkWidget    *widget,
 					    gpointer      data);
 
@@ -91,13 +96,9 @@ file_new_dialog_create (Gimp      *gimp,
   GtkWidget    *table;
   GtkWidget    *separator;
   GtkWidget    *label;
-  GtkWidget    *button;
   GtkObject    *adjustment;
   GtkWidget    *spinbutton;
   GtkWidget    *spinbutton2;
-  GtkWidget    *radio_box;
-  GSList       *group;
-  GList        *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
@@ -358,86 +359,30 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (hbox);
 
   /*  frame for Image Type  */
-  frame = gtk_frame_new (_("Image Type"));
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_IMAGE_BASE_TYPE,
+                                     gtk_label_new (_("Image Type")),
+                                     2,
+                                     G_CALLBACK (file_new_image_type_callback),
+                                     info,
+                                     &info->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->type_w),
+                               GINT_TO_POINTER (info->values->type));
+
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-
-  /*  radio buttons and box  */
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (frame), radio_box);
-  gtk_widget_show (radio_box);
-
-  group = NULL;
-
-  for (list = gimp_image_new_get_base_type_names (gimp);
-       list;
-       list = g_list_next (list))
-    {
-      GimpImageBaseTypeName *name_info;
-
-      name_info = (GimpImageBaseTypeName*) list->data;
-
-      button = gtk_radio_button_new_with_label (group, name_info->name);
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, TRUE, 0);
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
-			 (gpointer) name_info->type);
-      gtk_widget_show (button);
-
-      g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (gimp_radio_button_update),
-			&info->values->type);
-      g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (file_new_image_size_callback),
-			info);
-
-      if (info->values->type == name_info->type)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      info->type_w[name_info->type] = button;
-    }
 
   /* frame for Fill Type */
-  frame = gtk_frame_new (_("Fill Type"));
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_FILL_TYPE,
+                                     gtk_label_new (_("Fill Type")),
+                                     2,
+                                     G_CALLBACK (file_new_fill_type_callback),
+                                     info,
+                                     &info->fill_type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w),
+                               GINT_TO_POINTER (info->values->fill_type));
+
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (frame), radio_box);
-  gtk_widget_show (radio_box);
-
-  group = NULL;
-
-  for (list = gimp_image_new_get_fill_type_names (gimp);
-       list;
-       list = g_list_next (list))
-    {
-      GimpFillTypeName *name_info;
-
-      name_info = (GimpFillTypeName*) list->data;
-
-      button =
-	gtk_radio_button_new_with_label (group, name_info->name);
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
-			 (gpointer) name_info->type);
-      gtk_widget_show (button);
-
-      g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (gimp_radio_button_update),
-			&info->values->fill_type);
-      g_signal_connect (G_OBJECT (button), "toggled",
-			G_CALLBACK (file_new_image_size_callback),
-			info);
-
-      if (info->values->fill_type == name_info->type)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      info->fill_type_w[name_info->type] = button;
-    }
 
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (info->size_se));
 
@@ -492,9 +437,12 @@ static void
 file_new_reset_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  NewImageInfo *info;
+  NewImageInfo   *info;
+  GimpCoreConfig *config;
 
   info = (NewImageInfo *) data;
+
+  config = info->gimp->config;
 
   g_signal_handlers_block_by_func (G_OBJECT (info->resolution_se),
                                    file_new_resolution_callback,
@@ -502,36 +450,35 @@ file_new_reset_callback (GtkWidget *widget,
 
   gimp_chain_button_set_active
     (GIMP_CHAIN_BUTTON (info->couple_resolutions),
-     ABS (info->gimp->config->default_xresolution -
-	  info->gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION);
+     ABS (config->default_xresolution -
+	  config->default_yresolution) < GIMP_MIN_RESOLUTION);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0,
-			      info->gimp->config->default_xresolution);
+			      config->default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
-			      info->gimp->config->default_yresolution);
+			      config->default_yresolution);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
-			    info->gimp->config->default_resolution_units);
+			    config->default_resolution_units);
 
   g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
                                      file_new_resolution_callback,
                                      info);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
-				  info->gimp->config->default_xresolution, TRUE);
+				  config->default_xresolution, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
-				  info->gimp->config->default_yresolution, TRUE);
+				  config->default_yresolution, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0,
-			      info->gimp->config->default_width);
+			      config->default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
-			      info->gimp->config->default_height);
+			      config->default_height);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
-			    info->gimp->config->default_units);
+			    config->default_units);
 
-  gimp_radio_group_set_active
-    (GTK_RADIO_BUTTON (info->type_w[0]),
-     GINT_TO_POINTER (info->gimp->config->default_type));
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->type_w),
+                               GINT_TO_POINTER (config->default_type));
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w),
                                GINT_TO_POINTER (GIMP_BACKGROUND_FILL));
 }
 
@@ -668,6 +615,32 @@ file_new_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
 				  yres, FALSE);
 
+  file_new_image_size_callback (widget, data);
+}
+
+static void
+file_new_image_type_callback (GtkWidget *widget,
+                              gpointer   data)
+{
+  NewImageInfo *info;
+
+  info = (NewImageInfo*) data;
+
+  gimp_radio_button_update (widget, &info->values->type);
+  
+  file_new_image_size_callback (widget, data);
+}
+
+static void
+file_new_fill_type_callback (GtkWidget *widget,
+                             gpointer   data)
+{
+  NewImageInfo *info;
+
+  info = (NewImageInfo*) data;
+
+  gimp_radio_button_update (widget, &info->values->fill_type);
+  
   file_new_image_size_callback (widget, data);
 }
 

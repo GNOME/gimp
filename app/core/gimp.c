@@ -187,8 +187,6 @@ gimp_init (Gimp *gimp)
 
   gimp_documents_init (gimp);
 
-  gimp->image_base_type_names   = NULL;
-  gimp->fill_type_names         = NULL;
   gimp->have_current_cut_buffer = FALSE;
 
   gimp->context_list            = NULL;
@@ -241,9 +239,6 @@ gimp_finalize (GObject *object)
       g_object_unref (G_OBJECT (gimp->standard_context));
       gimp->standard_context = NULL;
     }
-
-  if (gimp->image_base_type_names)
-    gimp_image_new_exit (gimp);
 
   if (gimp->documents)
     gimp_documents_exit (gimp);
@@ -385,9 +380,6 @@ gimp_get_memsize (GimpObject *object)
               gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->documents)));
 
-  memsize += g_list_length (gimp->image_base_type_names) * sizeof (GList); /* FIXME */
-  memsize += g_list_length (gimp->fill_type_names) * sizeof (GList); /* FIXME */
-
   memsize += g_list_length (gimp->context_list) * sizeof (GList);
 
   memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_context)) +
@@ -485,7 +477,18 @@ gimp_initialize (Gimp               *gimp,
 			   gimp_palette_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
 
-  gimp_image_new_init (gimp);
+  /* Set the last values used to default values. */
+
+  gimp->image_new_last_values.width       = gimp->config->default_width;
+  gimp->image_new_last_values.height      = gimp->config->default_height;
+  gimp->image_new_last_values.unit        = gimp->config->default_units;
+  gimp->image_new_last_values.xresolution = gimp->config->default_xresolution;
+  gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
+  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_units;
+  gimp->image_new_last_values.type        = gimp->config->default_type;
+  gimp->image_new_last_values.fill_type   = GIMP_BACKGROUND_FILL;
+
+  gimp->have_current_cut_buffer = FALSE;
 
   gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
 

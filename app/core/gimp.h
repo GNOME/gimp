@@ -107,8 +107,6 @@ struct _Gimp
   GimpContainer         *documents;
 
   /*  image_new values  */
-  GList                 *image_base_type_names;
-  GList                 *fill_type_names;
   GimpImageNewValues     image_new_last_values;
   gboolean               have_current_cut_buffer;
 

@@ -93,6 +93,27 @@ gimp_convert_dither_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_fill_type_enum_values[] =
+{
+  { GIMP_FOREGROUND_FILL, N_("Foreground"), "foreground-fill" },
+  { GIMP_BACKGROUND_FILL, N_("Background"), "background-fill" },
+  { GIMP_WHITE_FILL, N_("White"), "white-fill" },
+  { GIMP_TRANSPARENT_FILL, N_("Transparent"), "transparent-fill" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_fill_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpFillType", gimp_fill_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_gradient_type_enum_values[] =
 {
   { GIMP_LINEAR, N_("Linear"), "linear" },
@@ -123,9 +144,8 @@ gimp_gradient_type_get_type (void)
 
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
-  { GIMP_RGB, "GIMP_RGB", "rgb" },
-  { GIMP_GRAY, "GIMP_GRAY", "gray" },
-  { GIMP_INDEXED, "GIMP_INDEXED", "indexed" },
+  { GIMP_RGB, N_("RGB"), "rgb" },
+  { GIMP_GRAY, N_("Grayscale"), "gray" },
   { 0, NULL, NULL }
 };
 

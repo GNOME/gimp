@@ -94,23 +94,37 @@ typedef enum
 } GimpConvertDitherType;
 
 
+#define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
+
+GType gimp_fill_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"  >*/ 
+  GIMP_BACKGROUND_FILL,   /*< desc="Background"  >*/
+  GIMP_WHITE_FILL,        /*< desc="White"       >*/
+  GIMP_TRANSPARENT_FILL,  /*< desc="Transparent" >*/
+  GIMP_NO_FILL            /*< skip >*/
+} GimpFillType;
+
+
 #define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
 
 GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LINEAR,                 /*< desc="Linear"                 >*/ 
-  GIMP_BILINEAR,               /*< desc="Bi-Linear"              >*/
-  GIMP_RADIAL,                 /*< desc="Radial"                 >*/
-  GIMP_SQUARE,                 /*< desc="Square"                 >*/
-  GIMP_CONICAL_SYMMETRIC,      /*< desc="Conical (symmetric)"    >*/
-  GIMP_CONICAL_ASYMMETRIC,     /*< desc="Conical (asymmetric)"   >*/
-  GIMP_SHAPEBURST_ANGULAR,     /*< desc="Shapeburst (angular)"   >*/
-  GIMP_SHAPEBURST_SPHERICAL,   /*< desc="Shapeburst (spherical)" >*/
-  GIMP_SHAPEBURST_DIMPLED,     /*< desc="Shapeburst (dimpled)"   >*/
-  GIMP_SPIRAL_CLOCKWISE,       /*< desc="Spiral (clockwise)"     >*/
-  GIMP_SPIRAL_ANTICLOCKWISE    /*< desc="Spiral (anticlockwise)" >*/
+  GIMP_LINEAR,                /*< desc="Linear"                 >*/ 
+  GIMP_BILINEAR,              /*< desc="Bi-Linear"              >*/
+  GIMP_RADIAL,                /*< desc="Radial"                 >*/
+  GIMP_SQUARE,                /*< desc="Square"                 >*/
+  GIMP_CONICAL_SYMMETRIC,     /*< desc="Conical (symmetric)"    >*/
+  GIMP_CONICAL_ASYMMETRIC,    /*< desc="Conical (asymmetric)"   >*/
+  GIMP_SHAPEBURST_ANGULAR,    /*< desc="Shapeburst (angular)"   >*/
+  GIMP_SHAPEBURST_SPHERICAL,  /*< desc="Shapeburst (spherical)" >*/
+  GIMP_SHAPEBURST_DIMPLED,    /*< desc="Shapeburst (dimpled)"   >*/
+  GIMP_SPIRAL_CLOCKWISE,      /*< desc="Spiral (clockwise)"     >*/
+  GIMP_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (anticlockwise)" >*/
 } GimpGradientType;
 
 
@@ -120,9 +134,9 @@ GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RGB,
-  GIMP_GRAY,
-  GIMP_INDEXED
+  GIMP_RGB,     /*< desc="RGB"       >*/
+  GIMP_GRAY,    /*< desc="Grayscale" >*/
+  GIMP_INDEXED  /*< skip >*/
 } GimpImageBaseType;
 
 
@@ -241,15 +255,6 @@ typedef enum  /*< proxy-skip >*/ /*< skip >*/
   GIMP_MONO_PALETTE,
   GIMP_CUSTOM_PALETTE
 } GimpConvertPaletteType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_FOREGROUND_FILL,
-  GIMP_BACKGROUND_FILL,
-  GIMP_WHITE_FILL,
-  GIMP_TRANSPARENT_FILL,
-  GIMP_NO_FILL
-} GimpFillType;
 
 typedef enum  /*< pdb-skip >*/ /*< skip >*/
 {

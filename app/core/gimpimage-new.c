@@ -39,92 +39,6 @@
 #include "libgimp/gimpintl.h"
 
 
-void
-gimp_image_new_init (Gimp *gimp)
-{
-  GimpImageBaseTypeName *new_type;
-  GimpFillTypeName      *new_fill_type;
-
-  /* Available Image Base Types */
-
-  new_type = g_new (GimpImageBaseTypeName, 1);
-  new_type->type = GIMP_RGB;
-  new_type->name = _("RGB");
-
-  gimp->image_base_type_names = g_list_append (gimp->image_base_type_names,
-					       new_type);
-
-  new_type = g_new (GimpImageBaseTypeName, 1);
-  new_type->type = GIMP_GRAY;
-  new_type->name = _("Grayscale");
-
-  gimp->image_base_type_names = g_list_append (gimp->image_base_type_names,
-					       new_type);
-  
-  /* Available Fill Types */
-
-  new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = GIMP_FOREGROUND_FILL;
-  new_fill_type->name = _("Foreground");
-
-  gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
-
-  new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = GIMP_BACKGROUND_FILL;
-  new_fill_type->name = _("Background");
-
-  gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
-
-  new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = GIMP_WHITE_FILL;
-  new_fill_type->name = _("White");
-
-  gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
-
-  new_fill_type = g_new (GimpFillTypeName, 1);
-  new_fill_type->type = GIMP_TRANSPARENT_FILL;
-  new_fill_type->name = _("Transparent");
-
-  gimp->fill_type_names = g_list_append (gimp->fill_type_names, new_fill_type);
-
-  /* Set the last values used to default values. */
-
-  gimp->image_new_last_values.width       = gimp->config->default_width;
-  gimp->image_new_last_values.height      = gimp->config->default_height;
-  gimp->image_new_last_values.unit        = gimp->config->default_units;
-  gimp->image_new_last_values.xresolution = gimp->config->default_xresolution;
-  gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
-  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_units;
-  gimp->image_new_last_values.type        = gimp->config->default_type;
-  gimp->image_new_last_values.fill_type   = GIMP_BACKGROUND_FILL;
-
-  gimp->have_current_cut_buffer = FALSE;
-}
-
-void
-gimp_image_new_exit (Gimp *gimp)
-{
-  g_list_foreach (gimp->image_base_type_names, (GFunc) g_free, NULL);
-  g_list_free (gimp->image_base_type_names);
-  gimp->image_base_type_names = NULL;
-
-  g_list_foreach (gimp->fill_type_names, (GFunc) g_free, NULL);
-  g_list_free (gimp->fill_type_names);
-  gimp->fill_type_names = NULL;
-}
-
-GList *
-gimp_image_new_get_base_type_names (Gimp *gimp)
-{
-  return gimp->image_base_type_names;
-}
-
-GList *
-gimp_image_new_get_fill_type_names (Gimp *gimp)
-{
-  return gimp->fill_type_names;
-}
-
 GimpImageNewValues *
 gimp_image_new_values_new (Gimp      *gimp,
 			   GimpImage *gimage)
@@ -221,12 +135,6 @@ gimp_image_new_get_memsize_string (gsize memsize)
     {
       return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0 / 1024.0);
     }
-}
-
-void
-gimp_image_new_set_have_current_cut_buffer (Gimp *gimp)
-{
-  gimp->have_current_cut_buffer = TRUE;
 }
 
 GimpImage *

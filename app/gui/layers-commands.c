@@ -40,6 +40,7 @@
 
 #include "pdb/procedural_db.h"
 
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -522,6 +523,7 @@ layers_new_layer_query (GimpImage *gimage,
   GtkObject       *adjustment;
   GtkWidget       *spinbutton;
   GtkWidget       *frame;
+  GtkWidget       *button;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (! template || GIMP_IS_LAYER (template));
@@ -678,18 +680,14 @@ layers_new_layer_query (GimpImage *gimage,
   gtk_widget_show (table);
 
   /*  The radio frame  */
-  frame = gimp_radio_group_new2
-    (TRUE, _("Layer Fill Type"),
-     G_CALLBACK (gimp_radio_button_update),
-     &options->fill_type,
-     GINT_TO_POINTER (options->fill_type),
-
-     _("Foreground"),  GINT_TO_POINTER (GIMP_FOREGROUND_FILL),  NULL,
-     _("Background"),  GINT_TO_POINTER (GIMP_BACKGROUND_FILL),  NULL,
-     _("White"),       GINT_TO_POINTER (GIMP_WHITE_FILL),       NULL,
-     _("Transparent"), GINT_TO_POINTER (GIMP_TRANSPARENT_FILL), NULL,
-
-     NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_FILL_TYPE,
+                                     gtk_label_new (_("Layer Fill Type")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->fill_type,
+                                     &button);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                               GINT_TO_POINTER (options->fill_type));  
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
