@@ -1,3 +1,9 @@
+2004-03-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_new_preview):
+	let GdkPixbuf scale the thumbnail. It does a nicer job than
+	temp_buf_scale().
+
 2004-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_class_init):

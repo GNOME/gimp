@@ -66,7 +66,8 @@ static TempBuf  * gimp_imagefile_get_new_preview  (GimpViewable   *viewable,
                                                    gint            width,
                                                    gint            height);
 static TempBuf  * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
-                                                   gint            size);
+                                                   gint            width,
+                                                   gint            height);
 static gboolean   gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
                                                    GimpImage      *gimage,
                                                    gint            size,
@@ -232,6 +233,8 @@ void
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                  gint           size)
 {
+  GimpThumbnail *thumbnail;
+
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
 
   if (! imagefile->gimp->config->layer_previews)
@@ -240,10 +243,12 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   if (size < 1)
     return;
 
-  gimp_thumbnail_set_uri (imagefile->thumbnail,
+  thumbnail = imagefile->thumbnail;
+
+  gimp_thumbnail_set_uri (thumbnail,
                           gimp_object_get_name (GIMP_OBJECT (imagefile)));
 
-  if (gimp_thumbnail_peek_image (imagefile->thumbnail) >= GIMP_THUMB_STATE_EXISTS)
+  if (gimp_thumbnail_peek_image (thumbnail) >= GIMP_THUMB_STATE_EXISTS)
     {
       GimpImage         *gimage;
       GimpPDBStatusType  dummy;
@@ -251,8 +256,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       GError            *error = NULL;
 
       gimage = file_open_image (imagefile->gimp,
-                                imagefile->thumbnail->image_uri,
-                                imagefile->thumbnail->image_uri,
+                                thumbnail->image_uri,
+                                thumbnail->image_uri,
                                 NULL,
                                 GIMP_RUN_NONINTERACTIVE,
                                 &dummy,
@@ -267,7 +272,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
         }
       else
         {
-          success = gimp_thumbnail_save_failure (imagefile->thumbnail,
+          success = gimp_thumbnail_save_failure (thumbnail,
                                                  "The GIMP " GIMP_VERSION,
                                                  &error);
         }
@@ -347,43 +352,16 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
                                 gint          width,
                                 gint          height)
 {
-  GimpImagefile *imagefile;
+  GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
   TempBuf       *temp_buf;
-
-  imagefile = GIMP_IMAGEFILE (viewable);
 
   if (! GIMP_OBJECT (imagefile)->name)
     return NULL;
 
-  temp_buf = gimp_imagefile_load_thumb (imagefile, MAX (width, height));
+  temp_buf = gimp_imagefile_load_thumb (imagefile, width, height);
 
   if (temp_buf)
     {
-      gint preview_width;
-      gint preview_height;
-
-      gimp_viewable_calc_preview_size (temp_buf->width,
-                                       temp_buf->height,
-                                       width,
-                                       height,
-                                       TRUE, 1.0, 1.0,
-                                       &preview_width,
-                                       &preview_height,
-                                       NULL);
-
-      if (preview_width  < temp_buf->width &&
-          preview_height < temp_buf->height)
-        {
-          TempBuf *scaled_buf;
-
-          scaled_buf = temp_buf_scale (temp_buf,
-                                       preview_width, preview_height);
-
-          temp_buf_free (temp_buf);
-
-          temp_buf = scaled_buf;
-        }
-
       gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
     }
   else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
@@ -410,12 +388,9 @@ static gchar *
 gimp_imagefile_get_description (GimpViewable   *viewable,
                                 gchar         **tooltip)
 {
-  GimpImagefile *imagefile;
-  GimpThumbnail *thumbnail;
+  GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
+  GimpThumbnail *thumbnail = imagefile->thumbnail;
   gchar         *basename;
-
-  imagefile = GIMP_IMAGEFILE (viewable);
-  thumbnail = imagefile->thumbnail;
 
   if (! thumbnail->image_uri)
     return NULL;
@@ -490,7 +465,8 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       break;
 
     case GIMP_THUMB_STATE_NOT_FOUND:
-      imagefile->description = g_strerror (thumbnail->image_not_found_errno);
+      imagefile->description =
+        (gchar *) g_strerror (thumbnail->image_not_found_errno);
       imagefile->static_desc = TRUE;
       break;
 
@@ -567,21 +543,25 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
 static TempBuf *
 gimp_imagefile_load_thumb (GimpImagefile *imagefile,
-                           gint           size)
+                           gint           width,
+                           gint           height)
 {
-  GimpThumbnail *thumbnail;
-  TempBuf       *temp_buf = NULL;
-  GdkPixbuf     *pixbuf   = NULL;
-  GError        *error    = NULL;
-
-  thumbnail = imagefile->thumbnail;
+  GimpThumbnail *thumbnail = imagefile->thumbnail;
+  TempBuf       *temp_buf  = NULL;
+  GdkPixbuf     *pixbuf    = NULL;
+  GError        *error     = NULL;
+  gint           size      = MAX (width, height);
+  gint           pixbuf_width;
+  gint           pixbuf_height;
+  gint           preview_width;
+  gint           preview_height;
 
   if (gimp_thumbnail_peek_thumb (thumbnail, size) < GIMP_THUMB_STATE_EXISTS)
     return NULL;
 
   pixbuf = gimp_thumbnail_load_thumb (thumbnail, size, &error);
 
-  if (!pixbuf)
+  if (! pixbuf)
     {
       if (error)
         g_message (_("Could not open thumbnail '%s': %s"),
@@ -589,28 +569,52 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
       goto cleanup;
     }
 
+  pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
+  pixbuf_height = gdk_pixbuf_get_height (pixbuf);
+
+  gimp_viewable_calc_preview_size (pixbuf_width,
+                                   pixbuf_height,
+                                   width,
+                                   height,
+                                   TRUE, 1.0, 1.0,
+                                   &preview_width,
+                                   &preview_height,
+                                   NULL);
+
+  if (preview_width < pixbuf_width || preview_height < pixbuf_height)
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf,
+                                        preview_width, preview_height,
+                                        GDK_INTERP_BILINEAR);
+      g_object_unref (pixbuf);
+
+      pixbuf = scaled;
+
+      pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
+      pixbuf_height = gdk_pixbuf_get_height (pixbuf);
+    }
+
   {
-    gint    width;
-    gint    height;
     gint    bytes;
     guchar *src;
     guchar *dest;
     gint    y;
 
-    width  = gdk_pixbuf_get_width (pixbuf);
-    height = gdk_pixbuf_get_height (pixbuf);
     bytes  = gdk_pixbuf_get_n_channels (pixbuf);
 
-    temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
+    temp_buf = temp_buf_new (pixbuf_width, pixbuf_height, bytes, 0, 0, NULL);
 
     dest = temp_buf_data (temp_buf);
     src  = gdk_pixbuf_get_pixels (pixbuf);
 
-    for (y = 0; y < height; y++)
+    for (y = 0; y < pixbuf_height; y++)
       {
-        memcpy (dest, src, width * bytes);
-        dest += width * bytes;
-        src += gdk_pixbuf_get_rowstride (pixbuf);
+        memcpy (dest, src, pixbuf_width * bytes);
+
+        dest += pixbuf_width * bytes;
+        src  += gdk_pixbuf_get_rowstride (pixbuf);
       }
   }
 
