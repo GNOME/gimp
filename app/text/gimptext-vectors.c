@@ -32,6 +32,7 @@
 
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpanchor.h"
 
 #include "gimptext.h"
 #include "gimptext-private.h"
@@ -44,7 +45,6 @@
 #ifndef FT_GLYPH_FORMAT_OUTLINE
 #define FT_GLYPH_FORMAT_OUTLINE ft_glyph_format_outline
 #endif
-
 
 typedef struct _RenderContext  RenderContext;
 
@@ -134,10 +134,10 @@ moveto (FT_Vector *to,
                                &coords, NULL, EXTEND_SIMPLE);
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+			       &coords, context->anchor, EXTEND_SIMPLE);
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+			       &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
@@ -172,12 +172,15 @@ lineto (FT_Vector *to,
 }
 
 static gint
-conicto (FT_Vector *control,
+conicto (FT_Vector *ftcontrol,
 	 FT_Vector *to,
 	 gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
   GimpCoords     coords;
+  GimpCoords     control;
+  GimpCoords     last;
+  GList         *l;
 
 #if TEXT_DEBUG
   g_printerr ("conicto %f, %f\n", to->x / 64.0, to->y / 64.0);
@@ -185,21 +188,47 @@ conicto (FT_Vector *control,
 
   if (! context->stroke)
     return 0;
+   
+  gimp_text_vector_coords (context, ftcontrol, &control);
 
-  gimp_text_vector_coords (context, control, &coords);
+  last = control;
 
+  /* Find the last endpoint */
+  for (l = g_list_last (context->stroke->anchors); l; l = l->prev)
+    {
+      GimpAnchor *anchor = l->data;
+
+      if (anchor->type == GIMP_ANCHOR_ANCHOR)
+	{
+	  last = anchor->position;
+	  break;
+	} 
+    }
+  
+  /* interpolate the cubic control point */
+  coords =  last;
+  coords.x = (last.x + 2 * control.x) * (1.0 / 3.0);
+  coords.y = (last.y + 2 * control.y) * (1.0 / 3.0);
+  
+  context->anchor->position = coords;
+
+  gimp_text_vector_coords (context, to, &last);
+
+  /* interpolate the cubic control point */
+  coords =  last;
+  coords.x = (last.x + 2 * control.x) * (1.0 / 3.0);
+  coords.y = (last.y + 2 * control.y) * (1.0 / 3.0);
+  
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
 
-  gimp_text_vector_coords (context, to, &coords);
-
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+                               &last, context->anchor, EXTEND_SIMPLE);
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
-                               &coords, context->anchor, EXTEND_SIMPLE);
+                               &last, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
@@ -222,6 +251,10 @@ cubicto (FT_Vector *control1,
 
   gimp_text_vector_coords (context, control1, &coords);
 
+  context->anchor->position = coords;
+
+  gimp_text_vector_coords (context, control2, &coords);
+
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
@@ -231,9 +264,6 @@ cubicto (FT_Vector *control1,
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
-
-  gimp_text_vector_coords (context, control2, &coords);
-
   context->anchor =
     gimp_bezier_stroke_extend (context->stroke,
                                &coords, context->anchor, EXTEND_SIMPLE);
