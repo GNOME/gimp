@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 01:00+0200\n"
-"PO-Revision-Date: 2004-10-17 03:00+0200\n"
+"POT-Creation-Date: 2004-10-17 20:39+0200\n"
+"PO-Revision-Date: 2004-10-17 21:10+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,9 @@ msgstr "La apertura de «%s» ha fallado: %s"
 #: app/batch.c:85
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
-msgstr "El intérprete del proceso por lotes «%s» no está disponible, el modo batch se desactivará."
+msgstr ""
+"El intérprete del proceso por lotes «%s» no está disponible, el modo batch "
+"se desactivará."
 
 #: app/main.c:211
 msgid ""
@@ -214,11 +216,14 @@ msgid ""
 "                           The procedure to process batch commands with.\n"
 msgstr ""
 "  --batch-interpreter <procedure>\n"
-"                           El procedimiento con el procesar comandos por lotes (batch).\n"
+"                           El procedimiento con el procesar comandos por "
+"lotes (batch).\n"
 
 #: app/main.c:534
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr "  -b, --batch <comandos>   Procesa los comandos en modo no interactivo (batch-mode).\n"
+msgstr ""
+"  -b, --batch <comandos>   Procesa los comandos en modo no interactivo "
+"(batch-mode).\n"
 
 #: app/sanity.c:200
 #, c-format
@@ -227,7 +232,8 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"La codificación configurada para el nombre del fichero no puede ser convertida a UTF-8: %s\n"
+"La codificación configurada para el nombre del fichero no puede ser "
+"convertida a UTF-8: %s\n"
 "\n"
 "Compruebe el valor de la variable de entorno G_FILENAME_ENCODING."
 
@@ -241,6 +247,10 @@ msgid ""
 "8 and you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
+"El nombre del directorio que contiene la configuración de usuario de Gimp no se puede convertir a UTF-8: %s\n"
+" \n"
+"Lo más probable es que su sistema de ficheros almacene los archivos en una codificación "
+"diferenta a UTF-8 y no ha dicho esto a Glib. Por favor, establezca la variable de entorno G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:92 app/core/gimp.c:856 app/dialogs/dialogs.c:135
@@ -756,7 +766,7 @@ msgstr "_Brochas, patrones y degradados"
 
 #: app/actions/dialogs-actions.c:52
 msgid "_Misc. Stuff"
-msgstr ""
+msgstr "Material _variado"
 
 #: app/actions/dialogs-actions.c:57
 msgid "Tool_box"
@@ -985,7 +995,7 @@ msgstr "_Elevar o abrir imagen"
 
 #: app/actions/documents-actions.c:52
 msgid "Raise window if already open"
-msgstr ""
+msgstr "Elevar la ventana si ya está abierta"
 
 #: app/actions/documents-actions.c:57
 msgid "File Open _Dialog"
@@ -1195,7 +1205,7 @@ msgstr "Vaciar historial de deshacer"
 
 #: app/actions/edit-commands.c:122
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "¿Seguro que quiere vaciar el histórico de deshacer de la imagen?"
 
 #: app/actions/edit-commands.c:199
 msgid "Cut Named"
@@ -1323,13 +1333,15 @@ msgstr "Revertir imagen"
 #: app/actions/file-commands.c:317
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr ""
+msgstr "¿Quiere revertir «%s» a «%s»?"
 
 #: app/actions/file-commands.c:323
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
-msgstr "Al revertir la imagen al estado guardado en el disco, perderá todos sus cambios, incluyendo toda la información de deshacer."
+msgstr ""
+"Al revertir la imagen al estado guardado en el disco, perderá todos sus "
+"cambios, incluyendo toda la información de deshacer."
 
 #: app/actions/file-commands.c:372
 msgid "Open Image as Layer"
@@ -1438,7 +1450,7 @@ msgstr "_Curvado"
 
 #: app/actions/gradient-editor-actions.c:255
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_Sinusoidal"
 
 #: app/actions/gradient-editor-actions.c:260
 msgid "Spherical (i_ncreasing)"
@@ -1451,7 +1463,7 @@ msgstr "Esférica (_decreciente)"
 #: app/actions/gradient-editor-actions.c:270
 #: app/actions/gradient-editor-actions.c:293
 msgid "(Varies)"
-msgstr ""
+msgstr "(Variaciones)"
 
 #: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:115
 msgid "_RGB"
@@ -1729,7 +1741,7 @@ msgstr "Tamaño del _lienzo..."
 
 #: app/actions/image-actions.c:77
 msgid "F_it Canvas to Layers"
-msgstr ""
+msgstr "_Ajustar lienzo a las capas"
 
 #: app/actions/image-actions.c:82
 msgid "_Scale Image..."
@@ -1817,7 +1829,7 @@ msgstr "Confirmar escalado"
 #: app/actions/image-commands.c:577 app/dialogs/image-new-dialog.c:283
 #, c-format
 msgid "You are trying to create an image with a size of %s."
-msgstr ""
+msgstr "Está intentando crear una imagen con un tamaño de %s."
 
 #: app/actions/image-commands.c:583
 #, c-format
@@ -1825,13 +1837,15 @@ msgid ""
 "Scaling the image to the choosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr ""
+msgstr "Escalar la imagen al tamaño elegido hará que use más memoria de la que está configurada actualmente como «Tamaño máximo de imagen» en el diálogo de Preferencias (actualmente %s)."
 
 #: app/actions/image-commands.c:598
 msgid ""
 "Scaling the image to the choosen size will shrink some layers completely "
 "away."
-msgstr "Escalar la imagen al tamaño elegido hará encogerse algunas capas hasta desaparecer completamente."
+msgstr ""
+"Escalar la imagen al tamaño elegido hará encogerse algunas capas hasta "
+"desaparecer completamente."
 
 #: app/actions/image-commands.c:602
 msgid "Is this what you want to do?"
@@ -3400,7 +3414,6 @@ msgstr ""
 "se activa."
 
 #: app/config/gimprc-blurbs.h:77
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -3408,8 +3421,8 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Herramientas como «Selección borrosa» y «Relleno de celda» buscan regiones "
-"basadas en un algoritmo de búsqueda de semilla.  El relleno de semilla "
+"Herramientas como «Selección difusa» y «Relleno» buscan regiones "
+"basándose en un algoritmo de búsqueda de semilla.  El relleno de semilla "
 "arranca en el píxel seleccionado inicialmente y avanza en todas direcciones "
 "hasta que la diferencia de la intensidad del píxel del original es más "
 "grande que el umbral especificado. Este valor representa el umbral "
@@ -3473,8 +3486,8 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:167
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
-"Instala un mapa de color privado; podría ser muy útil en las pantallas de "
-"8 bits (256 colores)."
+"Instala un mapa de color privado; podría ser muy útil en las pantallas de 8 "
+"bits (256 colores)."
 
 #: app/config/gimprc-blurbs.h:170
 msgid "Sets the level of interpolation used for scaling and other transformations."
@@ -3523,8 +3536,8 @@ msgid ""
 "resolution information."
 msgstr ""
 "Establece la resolución horizontal del monitor, en puntos por pulgada. Si se "
-"establece a 0, se fuerza una consulta al servidor X para obtener la resolución horizontal "
-"y vertical."
+"establece a 0, se fuerza una consulta al servidor X para obtener la "
+"resolución horizontal y vertical."
 
 #: app/config/gimprc-blurbs.h:204
 msgid ""
@@ -3533,8 +3546,8 @@ msgid ""
 "resolution information."
 msgstr ""
 "Establece la resolución vertical del monitor, en puntos por pulgada. Si se "
-"establece a 0, se fuerza una consulta al servidor X para obtener la resolución horizontal "
-"y vertical."
+"establece a 0, se fuerza una consulta al servidor X para obtener la "
+"resolución horizontal y vertical."
 
 #: app/config/gimprc-blurbs.h:209
 msgid ""
@@ -3582,8 +3595,8 @@ msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
-"Establece el tamaño de la vista previa usado para las vistas preliminares de las capas y los "
-"canales en los diálogos nuevos creados."
+"Establece el tamaño de la vista previa usado para las vistas preliminares de "
+"las capas y los canales en los diálogos nuevos creados."
 
 # Creo que aquí es necesaria la coma. FVD
 #: app/config/gimprc-blurbs.h:249
@@ -3634,13 +3647,15 @@ msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
-msgstr ""
+msgstr "Cuando está activado, los diálogos mostrarán un botón de ayuda que da acceso a la página de ayuda relacionada. Sin ese botón, la página de ayuda puede verse al pulsar F1."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
-msgstr "Cuando se encuentre activado, el cursor se mostrará sobre la imagen cuando se use una herramienta de pintura."
+msgstr ""
+"Cuando se encuentre activado, el cursor se mostrará sobre la imagen cuando "
+"se use una herramienta de pintura."
 
 #: app/config/gimprc-blurbs.h:283
 msgid ""
@@ -3786,15 +3801,15 @@ msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
 msgstr ""
-"Establece el tamaño de las miniaturas que se muestran en el diálogo Abrir. Tenga "
-"en cuenta que El GIMP no puede crear miniaturas si las vistas previas "
+"Establece el tamaño de las miniaturas que se muestran en el diálogo Abrir. "
+"Tenga en cuenta que El GIMP no puede crear miniaturas si las vistas previas "
 "de capa están desactivadas."
 
 #: app/config/gimprc-blurbs.h:364
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
-msgstr ""
+msgstr "La miniatura en el diálogo Abrir será actualizada automáticamente si el archivo que se está previsualizando es más pequeño que el tamaño establecido aquí."
 
 # en ESP decimos Caché, puede que sea un galicismo. FVD
 #: app/config/gimprc-blurbs.h:368
@@ -4149,7 +4164,7 @@ msgstr "ID de fábrica"
 
 #: app/core/core-enums.c:356
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Pixbuf en línea"
 
 #: app/core/core-enums.c:357
 msgid "Image file"
@@ -4604,7 +4619,9 @@ msgstr ""
 #: app/core/gimpbrushgenerated.c:669
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Error fatal de análisis en el archivo de brocha «%s»: Forma de brocha de GIMP desconocida."
+msgstr ""
+"Error fatal de análisis en el archivo de brocha «%s»: Forma de brocha de "
+"GIMP desconocida."
 
 #: app/core/gimpbrushgenerated.c:750
 #, c-format
@@ -5412,8 +5429,8 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»."
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
-"No se puede ejecutar la retrollamada %s. El complemento "
-"correspondiente debe haber fallado."
+"No se puede ejecutar la retrollamada %s. El complemento correspondiente debe "
+"haber fallado."
 
 #: app/core/gimpprogress.c:107 app/core/gimpprogress.c:154
 msgid "Please wait..."
@@ -5717,7 +5734,7 @@ msgstr "Confirmar el tamaño de la imagen"
 msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr ""
+msgstr "Una imagen del tamaño elegido usará más memoria que lo que está configurado como «Tamaño de imagen máximo» en el diálogo Preferencias (actualmente %s)."
 
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1498
@@ -5831,9 +5848,8 @@ msgid "Visual class:"
 msgstr "Clase visual:"
 
 #: app/dialogs/info-window.c:298
-#, fuzzy
 msgid "Visual depth:"
-msgstr "Profundidad de la pantalla:"
+msgstr "Profundidad visual:"
 
 #: app/dialogs/info-window.c:563
 #, c-format
@@ -6062,19 +6078,19 @@ msgstr "Configurar combinaciones de teclas"
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Sus combinaciones de teclas serán restablecidas a los valores de fábrica la próxima vez que inicie Gimp."
 
 #: app/dialogs/preferences-dialog.c:598
 msgid ""
 "Your window setup will be reset to default values. the next time you start "
 "GIMP."
-msgstr ""
+msgstr "Su configuración de ventanas será restablecida al valor de fábrica la próxima vez que inicie el Gimp."
 
 #: app/dialogs/preferences-dialog.c:632
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr ""
+msgstr "Su configuración de dispositivos de entrada será reestablecida a los valores de fábrica la siguiente vez que inicie el Gimp."
 
 #: app/dialogs/preferences-dialog.c:1042
 msgid "Show _menubar"
@@ -6332,7 +6348,7 @@ msgstr "_Proporción de ampliación inicial:"
 #. Mouse Cursors
 #: app/dialogs/preferences-dialog.c:1676
 msgid "Mouse Cursors"
-msgstr ""
+msgstr "Cursores del ratón"
 
 #: app/dialogs/preferences-dialog.c:1680
 msgid "Show _brush outline"
@@ -6450,7 +6466,9 @@ msgstr "Guardar la configuración del dispositivo de entrada _ahora"
 
 #: app/dialogs/preferences-dialog.c:2007
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "_Restablecer la configuración guardada del dispositivo de entrada a los valores de fábrica"
+msgstr ""
+"_Restablecer la configuración guardada del dispositivo de entrada a los "
+"valores de fábrica"
 
 #: app/dialogs/preferences-dialog.c:2022
 msgid "Additional Input Controllers"
@@ -9450,33 +9468,33 @@ msgstr "Nombre"
 
 #: app/widgets/gimpactionview.c:459 app/widgets/gimpactionview.c:649
 msgid "Changing shortcut failed."
-msgstr ""
+msgstr "Ha fallado el cambio de la combinación de teclas."
 
 #: app/widgets/gimpactionview.c:499
 msgid "Conflicting Shortcuts"
-msgstr ""
+msgstr "Combinaciones de teclas en conflicto"
 
 #: app/widgets/gimpactionview.c:505
 msgid "_Reassign shortcut"
-msgstr ""
+msgstr "_Reasginar combinación de teclas"
 
 #: app/widgets/gimpactionview.c:516
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
+msgstr "La combinación de teclas «%s» ya la usa «%s» del grupo «%s»."
 
 #: app/widgets/gimpactionview.c:520
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
+msgstr "Si reasigna la combinación de teclas, hará que se quite de «%s»."
 
 #: app/widgets/gimpactionview.c:587
 msgid "Removing shortcut failed."
-msgstr ""
+msgstr "Ha fallado la eliminación de la combinación de teclas."
 
 #: app/widgets/gimpactionview.c:592
 msgid "Invalid shortcut."
-msgstr ""
+msgstr "Combinación de teclas inválida."
 
 #: app/widgets/gimpbrusheditor.c:168
 msgid "Spikes:"
@@ -9646,134 +9664,131 @@ msgstr "Vistas previas enormes"
 
 #: app/widgets/gimpcontrollerkeyboard.c:68
 msgid "Key Up (Shift + Control + Alt)"
-msgstr ""
+msgstr "Tecla subir (Mayús + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:71
 msgid "Key Up (Control + Alt)"
-msgstr ""
+msgstr "Tecla subir (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:74
 msgid "Key Up (Shift + Alt)"
-msgstr ""
+msgstr "Tecla subir (Mayús + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:77
 msgid "Key Up (Shift + Control)"
-msgstr ""
+msgstr "Tecla subir (Mayús + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:80
 msgid "Key Up (Alt)"
-msgstr ""
+msgstr "Tecla subir (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:83
 msgid "Key Up (Control)"
-msgstr ""
+msgstr "Tecla subir (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:86
 msgid "Key Up (Shift)"
-msgstr ""
+msgstr "Tecla subir (Mayús.)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:89
 msgid "Key Up"
-msgstr ""
+msgstr "Tecla subir"
 
 #: app/widgets/gimpcontrollerkeyboard.c:93
 msgid "Key Down (Shift + Control + Alt)"
-msgstr ""
+msgstr "Tecla bajar (Mayús. + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:96
 msgid "Key Down (Control + Alt)"
-msgstr ""
+msgstr "Tecla bajar (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:99
 msgid "Key Down (Shift + Alt)"
-msgstr ""
+msgstr "Tecla bajar (Mayús. + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:102
 msgid "Key Down (Shift + Control)"
-msgstr ""
+msgstr "Tecla bajar (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:105
 msgid "Key Down (Alt)"
-msgstr ""
+msgstr "Tecla bajar (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:108
 msgid "Key Down (Control)"
-msgstr ""
+msgstr "Tecla bajar (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:111
 msgid "Key Down (Shift)"
-msgstr ""
+msgstr "Tecla bajar (Mayús.)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:114
-#, fuzzy
 msgid "Key Down"
-msgstr "Combinar hacia abajo"
+msgstr "Tecla bajar"
 
 #: app/widgets/gimpcontrollerkeyboard.c:118
 msgid "Key Left (Shift + Control + Alt)"
-msgstr ""
+msgstr "Tecla izquierda (Mayús. +Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:121
 msgid "Key Left (Control + Alt)"
-msgstr ""
+msgstr "Tecla izquierda (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:124
 msgid "Key Left (Shift + Alt)"
-msgstr ""
+msgstr "Tecla izquierda (Mayús. + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:127
 msgid "Key Left (Shift + Control)"
-msgstr ""
+msgstr "Tecla izquierda (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:130
 msgid "Key Left (Alt)"
-msgstr ""
+msgstr "Tecla izquierda (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:133
 msgid "Key Left (Control)"
-msgstr ""
+msgstr "Tecla izquierda (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:136
 msgid "Key Left (Shift)"
-msgstr ""
+msgstr "Tecla izquierda (Mayús.)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:139
 msgid "Key Left"
-msgstr ""
+msgstr "Tecla izquierda"
 
 #: app/widgets/gimpcontrollerkeyboard.c:143
 msgid "Key Right (Shift + Control + Alt)"
-msgstr ""
+msgstr "Tecla derecha (Mayús. + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:146
 msgid "Key Right (Control + Alt)"
-msgstr ""
+msgstr "Tecla derecha (Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:149
 msgid "Key Right (Shift + Alt)"
-msgstr ""
+msgstr "Tecla derecha (Mayús. + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:152
 msgid "Key Right (Shift + Control)"
-msgstr ""
+msgstr "Tecla derecha (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:155
 msgid "Key Right (Alt)"
-msgstr ""
+msgstr "Tecla derecha (Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:158
-#, fuzzy
 msgid "Key Right (Control)"
-msgstr "/G_uardar color derecho en"
+msgstr "Tecla derecha (Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:161
 msgid "Key Right (Shift)"
-msgstr ""
+msgstr "Tecla derecha (Mayús.)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:164
-#, fuzzy
 msgid "Key Right"
-msgstr "Altura"
+msgstr "Tecla derecha"
 
 #: app/widgets/gimpcontrollerkeyboard.c:206
 msgid "Keyboard"
@@ -9781,131 +9796,131 @@ msgstr "Teclado"
 
 #: app/widgets/gimpcontrollerkeyboard.c:227
 msgid "Main Keyboard"
-msgstr ""
+msgstr "Teclado principal"
 
 #: app/widgets/gimpcontrollerwheel.c:67
 msgid "Scroll Up (Shift + Control + Alt)"
-msgstr ""
+msgstr "Desplazar arriba (Mayús. + Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:70
 msgid "Scroll Up (Control + Alt)"
-msgstr ""
+msgstr "Desplazar arriba (Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:73
 msgid "Scroll Up (Shift + Alt)"
-msgstr ""
+msgstr "Desplazar arriba (Mayús. + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:76
 msgid "Scroll Up (Shift + Control)"
-msgstr ""
+msgstr "Desplazar arriba (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:79
 msgid "Scroll Up (Alt)"
-msgstr ""
+msgstr "Desplazar arriba (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:82
 msgid "Scroll Up (Control)"
-msgstr ""
+msgstr "Desplazar arriba (Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:85
 msgid "Scroll Up (Shift)"
-msgstr ""
+msgstr "Desplazar arriba (Mayús.)"
 
 #: app/widgets/gimpcontrollerwheel.c:88
 msgid "Scroll Up"
-msgstr ""
+msgstr "Desplazar arriba"
 
 #: app/widgets/gimpcontrollerwheel.c:92
 msgid "Scroll Down (Shift + Control + Alt)"
-msgstr ""
+msgstr "Desplazar abajo (Mayús. + Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:95
 msgid "Scroll Down (Control + Alt)"
-msgstr ""
+msgstr "Desplazar abajo (Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:98
 msgid "Scroll Down (Shift + Alt)"
-msgstr ""
+msgstr "Desplazar abajo (Mayús + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:101
 msgid "Scroll Down (Shift + Control)"
-msgstr ""
+msgstr "Desplazar abajo (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:104
 msgid "Scroll Down (Alt)"
-msgstr ""
+msgstr "Desplazar abajo (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:107
 msgid "Scroll Down (Control)"
-msgstr ""
+msgstr "Desplazar abajo (Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:110
 msgid "Scroll Down (Shift)"
-msgstr ""
+msgstr "Desplazar abajo (Mayús.)"
 
 #: app/widgets/gimpcontrollerwheel.c:113
 msgid "Scroll Down"
-msgstr ""
+msgstr "Desplazar abajo"
 
 #: app/widgets/gimpcontrollerwheel.c:117
 msgid "Scroll Left (Shift + Control + Alt)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Mayús. + Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:120
 msgid "Scroll Left (Control + Alt)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:123
 msgid "Scroll Left (Shift + Alt)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Mayús. + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:126
 msgid "Scroll Left (Shift + Control)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:129
 msgid "Scroll Left (Alt)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:132
 msgid "Scroll Left (Control)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:135
 msgid "Scroll Left (Shift)"
-msgstr ""
+msgstr "Desplazar a la izquierda (Mayús.)"
 
 #: app/widgets/gimpcontrollerwheel.c:138
 msgid "Scroll Left"
-msgstr "Desplazar el izquierdo"
+msgstr "Desplazar a la izquierda"
 
 #: app/widgets/gimpcontrollerwheel.c:142
 msgid "Scroll Right (Shift + Control + Alt)"
-msgstr ""
+msgstr "Desplazar a la derecha (Mayús + Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:145
 msgid "Scroll Right (Control + Alt)"
-msgstr ""
+msgstr "Desplazar a la derecha (Control + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:148
 msgid "Scroll Right (Shift + Alt)"
-msgstr ""
+msgstr "Desplazar a la derecha (Mayús + Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:151
 msgid "Scroll Right (Shift + Control)"
-msgstr ""
+msgstr "Desplazar a la derecha (Mayús. + Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:154
 msgid "Scroll Right (Alt)"
-msgstr ""
+msgstr "Desplazar a la derecha (Alt)"
 
 #: app/widgets/gimpcontrollerwheel.c:157
 msgid "Scroll Right (Control)"
-msgstr ""
+msgstr "Desplazar a la derecha (Control)"
 
 #: app/widgets/gimpcontrollerwheel.c:160
 msgid "Scroll Right (Shift)"
-msgstr ""
+msgstr "Desplazar a la derecha (Mayús)"
 
 #: app/widgets/gimpcontrollerwheel.c:163
 msgid "Scroll Right"
@@ -9986,7 +10001,7 @@ msgstr ""
 
 #: app/widgets/gimperrordialog.c:229
 msgid "Too many error messages!"
-msgstr ""
+msgstr "Demasiados mensajes de error."
 
 #: app/widgets/gimperrordialog.c:230
 msgid "Messages are redirected to stderr."
@@ -10157,7 +10172,7 @@ msgstr "No se ha podido encontrar el navegador de ayuda de El GIMP."
 
 #: app/widgets/gimphelp.c:189
 msgid "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
+msgstr "Parece que el complemento del visor de la ayuda de Gimp falta en su instalación."
 
 # feo, para mí. FVD
 #: app/widgets/gimphelp.c:213
@@ -10377,7 +10392,7 @@ msgstr "%d x %d píxeles, %s"
 #: app/widgets/gimptemplateeditor.c:695
 #, c-format
 msgid "%d dpi, %s"
-msgstr ""
+msgstr "%d ppp, %s"
 
 #: app/widgets/gimptexteditor.c:183
 msgid "Load text from file"
@@ -10634,7 +10649,7 @@ msgstr "CMYK"
 
 #: app/widgets/widgets-enums.c:109
 msgid "Black & white"
-msgstr ""
+msgstr "Negro y blanco"
 
 #: app/widgets/widgets-enums.c:110
 msgid "Fancy"
@@ -10698,7 +10713,7 @@ msgstr "Ventana de utilidades"
 
 #: app/widgets/widgets-enums.c:207
 msgid "Keep above"
-msgstr ""
+msgstr "Mantener por encima"
 
 #: app/xcf/xcf-load.c:297
 msgid ""
@@ -10744,9 +10759,8 @@ msgid "Create and edit images or photographs"
 msgstr "Cree y edite imágenes o fotografías"
 
 #: data/misc/gimp.desktop.in.in.h:2
-#, fuzzy
 msgid "Image Editor"
-msgstr "Editor de paleta"
+msgstr "Editor de imagen"
 
 #~ msgid ""
 #~ "New Channel\n"

@@ -1,23 +1,25 @@
+# traducción de es.po al Spanish
 # Spanish translation for gimp-libgimp 1.3.X.
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 # Francisco Javier Fernandez <serrador@arrakis.es>, 2003.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-03-16 17:17-0300\n"
-"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
+"PO-Revision-Date: 2004-10-17 21:17+0200\n"
+"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: libgimp/gimpbrushmenu.c:129
@@ -103,8 +105,7 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -200,11 +201,11 @@ msgstr "Selección de gradiente"
 
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
-msgstr ""
+msgstr "(Vacío)"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
-msgstr "Selección de patrón"
+msgstr "Patrón de selección"
 
 #: libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -212,73 +213,71 @@ msgstr "porcentaje"
 
 #: libgimpbase/gimpbaseenums.c:15
 msgid "Small"
-msgstr ""
+msgstr "Pequeño"
 
 #: libgimpbase/gimpbaseenums.c:16
 msgid "Medium"
-msgstr ""
+msgstr "Mediano"
 
 #: libgimpbase/gimpbaseenums.c:17
 msgid "Large"
-msgstr ""
+msgstr "Grande"
 
 #: libgimpbase/gimpbaseenums.c:37
 msgid "Light Checks"
-msgstr ""
+msgstr "Cuadros claros"
 
 #: libgimpbase/gimpbaseenums.c:38
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Cuadros de tonos medios"
 
 #: libgimpbase/gimpbaseenums.c:39
 msgid "Dark Checks"
-msgstr ""
+msgstr "Cuadros oscuros"
 
 #: libgimpbase/gimpbaseenums.c:40
 msgid "White Only"
-msgstr ""
+msgstr "Sólo blanco"
 
 #: libgimpbase/gimpbaseenums.c:41
 msgid "Gray Only"
-msgstr ""
+msgstr "Sólo gris"
 
 #: libgimpbase/gimpbaseenums.c:42
-#, fuzzy
 msgid "Black Only"
-msgstr "Negro"
+msgstr "Sólo negro"
 
 #: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
-msgstr ""
+msgstr "Color RGB"
 
 #: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
-#, fuzzy
 msgid "Grayscale"
-msgstr "Convertir a tonos de gris"
+msgstr "Escala de grises"
 
 #: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
-msgstr ""
+msgstr "Color indexado"
 
 #: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Escala de grises-alfa"
 
 #: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
-msgstr ""
+msgstr "Indexado"
 
 #: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indexado-alfa"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -288,47 +287,47 @@ msgstr "%d Bytes"
 #: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
-msgstr "%.2f KB"
+msgstr "%.2f KiB"
 
 #: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f KB"
+msgstr "%.1f KiB"
 
 #: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
-msgstr "%d KB"
+msgstr "%d KiB"
 
 #: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f MB"
+msgstr "%.2f MiB"
 
 #: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f MB"
+msgstr "%.1f MiB"
 
 #: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
-msgstr "%d MB"
+msgstr "%d MiB"
 
 #: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
-msgstr "%.2f GB"
+msgstr "%.2f GiB"
 
 #: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
-msgstr "%.1f GB"
+msgstr "%.1f GiB"
 
 #: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
-msgstr "%d GB"
+msgstr "%d GiB"
 
 #: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
 msgid "(invalid UTF-8 string)"
@@ -450,13 +449,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notación hexadecimal del color como la usada en HTML"
+msgstr "Notación hexadecimal del color como la usada en HTML y CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "_Notación HTML:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -476,15 +474,15 @@ msgstr "Seleccione archivo"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
-msgstr "KiloBytes"
+msgstr "Kilobytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
-msgstr "MegaBytes"
+msgstr "Mega Bytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
-msgstr "GigaBytes"
+msgstr "Gigabytes"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
@@ -504,16 +502,16 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Tamaño de cuadrícula"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Estilo de cuadrícula"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "Vista _previa"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -744,13 +742,12 @@ msgid "Black"
 msgstr "Negro"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Degradación del negro (%):"
+msgstr "_Degradación del negro:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "El porcentaje de negro que se extraerá de las tintas coloreadas."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -777,3 +774,4 @@ msgstr "Presión"
 
 #~ msgid "None"
 #~ msgstr "Ninguno"
+
