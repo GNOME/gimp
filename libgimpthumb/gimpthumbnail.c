@@ -711,6 +711,7 @@ gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
   g_object_set (thumbnail,
                 "image-width",      0,
                 "image-height",     0,
+                "image-mimetype",   NULL,
                 "image-type",       NULL,
                 "image-num-layers", 0,
                 NULL);

@@ -1,3 +1,7 @@
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: plugged a small memory leak.
+
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.h: removed enum GimpDndType...
