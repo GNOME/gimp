@@ -1,3 +1,8 @@
+2004-07-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpchannel-combine.c: put in two lines accidentally
+	omitted in previous change, improve doc comment.
+	
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpwin32-io.h: added copyright header, added

@@ -201,9 +201,9 @@ gimp_channel_combine_rect (GimpChannel    *mask,
  * @h:         height of ellipse bounding box
  * @antialias: if %TRUE, antialias the ellipse
  *
- * Mainly used for elliptical selections.  If @op is "replace" or
- * "add", sets  pixels within the ellipse to 255.  If @op is
- * "subtract", sets pixels within to zero.  If antialiasing is
+ * Mainly used for elliptical selections.  If @op is %GIMP_CHANNEL_OP_REPLACE or
+ * %GIMP_CHANNEL_OP_ADD, sets  pixels within the ellipse to 255.  If @op is
+ * %GIMP_CHANNEL_OP_SUBTRACT, sets pixels within to zero.  If antialiasing is
  * turned on, a pixels that impinge on the edge of the ellipse 
  * are set to intermediate values, depending on how much they
  * overlap.
@@ -234,6 +234,9 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 
   if (!w || !h)
     return;
+
+  a = w / 2.;
+  b = h / 2.;
 
   a_sqr = (w * w / 4.0);
   b_sqr = (h * h / 4.0);
