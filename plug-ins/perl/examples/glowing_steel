@@ -274,7 +274,7 @@ register
   "Use this pluggin to make a surface (selected area) look like ".
 	"brushed metal (kind of like steel).",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  __"<Image>/Filters/Render/Brushed Metal",
+  N_"<Image>/Filters/Render/Brushed Metal",
   "*",
   [
    [PF_SLIDER, "stroke_length", "Length", 25, [1, 100, 1]],
