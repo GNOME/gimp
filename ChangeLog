@@ -1,3 +1,8 @@
+2004-11-22  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: correctly initialize the Antialising
+	check box.  Reported by Zigomar.
+
 2004-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: sort the SFMenu structs

@@ -1192,6 +1192,7 @@ options_dialog_callback (GtkWidget *widget,
 
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), selopt.antia);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selopt.antia);
