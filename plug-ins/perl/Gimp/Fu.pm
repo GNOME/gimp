@@ -104,10 +104,10 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_CUSTOM	=> 'string',
          &PF_FILE	=> 'string',
          &PF_TEXT	=> 'string',
-         &PF_IMAGE	=> 'NYI',
-         &PF_LAYER	=> 'NYI',
-         &PF_CHANNEL	=> 'NYI',
-         &PF_DRAWABLE	=> 'NYI',
+         &PF_IMAGE	=> 'path',
+         &PF_LAYER	=> 'index',
+         &PF_CHANNEL	=> 'index',
+         &PF_DRAWABLE	=> 'index',
 );
 
 @_params=qw(PF_INT8 PF_INT16 PF_INT32 PF_FLOAT PF_VALUE PF_STRING PF_COLOR
@@ -136,6 +136,19 @@ sub carp {
    require Carp;
    goto &Carp::carp;
 }
+
+# Some Standard Arguments
+my @image_params = ([&Gimp::PARAM_IMAGE		, "image",	"The image to work on"],
+                    [&Gimp::PARAM_DRAWABLE	, "drawable",	"The drawable to work on"]);
+
+my @load_params  = ([&Gimp::PARAM_STRING	, "filename",	"The name of the file"],
+                    [&Gimp::PARAM_STRING	, "raw_filename","The name of the file"]);
+
+my @save_params  = (@image_params, @load_params);
+
+my @load_retvals = ([&Gimp::PARAM_IMAGE		, "image",	"Output image"]);
+
+my $image_retval = [&Gimp::PARAM_IMAGE		, "image",	"The resulting image"];
 
 # expand all the pod directives in string (currently they are only removed)
 sub expand_podsections() {
@@ -203,6 +216,8 @@ sub this_script {
    die "function '$exe' not found in this script (must be one of ".join(", ",@names).")\n";
 }
 
+my $latest_image;
+
 sub string2pf($$) {
    my($s,$type,$name,$desc)=($_[0],@{$_[1]});
    if($type==PF_STRING
@@ -229,6 +244,7 @@ sub string2pf($$) {
       $s=Gimp::canonicalize_colour($s);
    } elsif($type==PF_TOGGLE) {
       $s?1:0;
+   #} elsif($type==PF_IMAGE) {
    } else {
       die "conversion to type $pf_type2string{$type} is not yet implemented\n";
    }
@@ -251,15 +267,17 @@ Gimp::on_net {
    my $this = this_script;
    my(%map,@args);
    my($interact)=1;
-   my $params = $this->[9];
    
-   for(@{$this->[11]}) {
-      return unless fu_feature_present($_,$this->[1]);
+   my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
+      $menupath,$imagetypes,$params,$results,$features,$code,$type)=@$this;
+
+   for(@$features) {
+      return unless fu_feature_present($_, $function);
    }
 
    # %map is a hash that associates (mangled) parameter names to parameter index
    @map{map mangle_key($_->[1]), @{$params}} = (0..$#{$params});
-   
+
    # Parse the command line
    while(defined($_=shift @ARGV)) {
       if (/^-+(.*)$/) {
@@ -292,31 +310,16 @@ Gimp::on_net {
    }
    
    # Go for it
-   $this->[0]->($interact>0 ? $this->[7]=~/^<Image>/ ? (&Gimp::RUN_FULLINTERACTIVE,undef,undef,@args)
-                                                     : (&Gimp::RUN_INTERACTIVE,@args)
-                            : (&Gimp::RUN_NONINTERACTIVE,@args));
+   $perl_sub->(($interact>0 ? &Gimp::RUN_FULLINTERACTIVE : &Gimp::RUN_NONINTERACTIVE),
+               @args);
 };
 
-# the <Image> arguments
-@image_params = ([&Gimp::PARAM_IMAGE	, "image",	"The image to work on"],
-                 [&Gimp::PARAM_DRAWABLE	, "drawable",	"The drawable to work on"]);
-
-@load_params  = ([&Gimp::PARAM_STRING	, "filename",	"The name of the file"],
-                 [&Gimp::PARAM_STRING	, "raw_filename","The name of the file"]);
-
-@save_params  = (@image_params, @load_params);
-
-@load_retvals = ([&Gimp::PARAM_IMAGE	, "image",	"Output image"]);
-
-$image_retval = [&Gimp::PARAM_IMAGE	, "image",	"The resulting image"];
-
 Gimp::on_query {
-   my($type);
    expand_podsections;
    script:
    for(@scripts) {
       my($perl_sub,$function,$blurb,$help,$author,$copyright,$date,
-         $menupath,$imagetypes,$params,$results,$features,$code)=@$_;
+         $menupath,$imagetypes,$params,$results,$features,$code,$type)=@$_;
 
       for (@$results) {
          next if ref $_;
@@ -327,25 +330,6 @@ Gimp::on_query {
 
       for(@$features) {
          next script unless fu_feature_present($_,$function);
-      }
-
-      if ($menupath=~/^<Image>\//) {
-         $type=&Gimp::PROC_PLUG_IN;
-         unshift(@$params,@image_params);
-      } elsif ($menupath=~/^<Load>\//) {
-         $type=&Gimp::PROC_PLUG_IN;
-         unshift(@$params,@load_params);
-         unshift(@$results,@load_retvals);
-      } elsif ($menupath=~/^<Save>\//) {
-         $type=&Gimp::PROC_PLUG_IN;
-         unshift(@$params,@save_params);
-      } elsif ($menupath=~/^<Toolbox>\//) {
-         $type=&Gimp::PROC_EXTENSION;
-      } elsif ($menupath=~/^<None>/) {
-         $type=&Gimp::PROC_EXTENSION;
-         $menupath=undef;
-      } else {
-         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
 
       # guess the datatype. yeah!
@@ -360,25 +344,24 @@ Gimp::on_query {
          my %x = @_; values %x;
       }
       
-      unshift(@$params,
-              [&Gimp::PARAM_INT32,"run_mode","Interactive, [non-interactive]"]);
+      for(@params) {
+         $_->[0]=Gimp::PARAM_INT32	if $_->[0] == PF_TOGGLE;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_PATTERN;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_GRADIENT;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
+         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_TEXT;
+         $_->[0]=datatype(odd_values(@{$_->[4]})) if $_->[0] == PF_RADIO;
+         $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SLIDER;
+         $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SPINNER;
+         $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_ADJUSTMENT;
+      }
       Gimp->gimp_install_procedure($function,$blurb,$help,$author,$copyright,$date,
                                    $menupath,$imagetypes,$type,
-                                   [map {
-                                      $_->[0]=Gimp::PARAM_INT32		if $_->[0] == PF_TOGGLE;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_PATTERN;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_GRADIENT;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
-                                      $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_TEXT;
-                                      $_->[0]=datatype(odd_values(@{$_->[4]})) if $_->[0] == PF_RADIO;
-                                      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SLIDER;
-				      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SPINNER;
-                                      $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_ADJUSTMENT;
-                                      $_;
-                                   } @$params],
+                                   [[Gimp::PARAM_INT32,"run_mode","Interactive, [non-interactive]"],
+                                    @$params],
                                    $results);
 
       Gimp::logger(message => 'OK', function => $function, fatal => 0);
@@ -633,12 +616,33 @@ sub register($$$$$$$$$;@) {
    no strict 'refs';
    my($function,$blurb,$help,$author,$copyright,$date,
       $menupath,$imagetypes,$params)=splice(@_,0,9);
-   my($results,$features,$code);
-   
+   my($results,$features,$code,$type);
+
    $results  = (ref $_[0] eq "ARRAY") ? shift : [];
    $features = (ref $_[0] eq "ARRAY") ? shift : [];
    $code = shift;
 
+   for($menupath) {
+      if (/^<Image>\//) {
+         $type = &Gimp::PROC_PLUG_IN;
+         unshift @$params, @image_params;
+      } elsif (/^<Load>\//) {
+         $type = &Gimp::PROC_PLUG_IN;
+         unshift @$params, @load_params;
+         unshift @$results, @load_retvals;
+      } elsif (/^<Save>\//) {
+         $type = &Gimp::PROC_PLUG_IN;
+         unshift @$params, @save_params;
+      } elsif (/^<Toolbox>\//) {
+         $type = &Gimp::PROC_EXTENSION;
+      } elsif (/^<None>/) {
+         $type = &Gimp::PROC_EXTENSION;
+      } else {
+         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
+      }
+   }
+   undef $menupath if $menupath eq "<None>";#d#
+   
    @_==0 or die "register called with too many or wrong arguments\n";
    
    for my $p (@$params,@$results) {
@@ -656,25 +660,9 @@ sub register($$$$$$$$$;@) {
       if $function =~ y/-//;
 
    my $perl_sub = sub {
-      $run_mode=shift;	# global!
+      $run_mode = shift;	# global!
       my(@pre,@defaults,@lastvals,$input_image);
 
-      if ($menupath=~/^<Image>\//) {
-         @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";
-         @pre = (shift,shift);
-      } elsif ($menupath=~/^<Toolbox>\// or !defined $menupath) {
-         # valid ;)
-      } elsif ($menupath=~/^<Load>\//) {
-         @_ >= 2 or die "<Load> plug-in called without the 5 standard arguments!\n";
-         @pre = (shift,shift);
-      } elsif ($menupath=~/^<Save>\//) {
-         @_ >= 4 or die "<Save> plug-in called without the 5 standard arguments!\n";
-         @pre = (shift,shift,shift,shift);
-      } elsif ($menupath=~/^<None>\/?/) {
-      } else {
-         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
-      }
-      
       if (@defaults) {
          for (0..$#{$params}) {
 	    $params->[$_]->[3]=$defaults[$_];
@@ -686,6 +674,22 @@ sub register($$$$$$$$$;@) {
          $_[$_]=$params->[$_]->[3] unless defined($_[$_]);
       }
 
+      for($menupath) {
+         if (/^<Image>\//) {
+            @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";
+            @pre = (shift,shift);
+         } elsif (/^<Toolbox>\// or !defined $menupath) {
+            # valid ;)
+         } elsif (/^<Load>\//) {
+            @_ >= 2 or die "<Load> plug-in called without the 3 standard arguments!\n";
+            @pre = (shift,shift);
+         } elsif (/^<Save>\//) {
+            @_ >= 4 or die "<Save> plug-in called without the 5 standard arguments!\n";
+            @pre = (shift,shift,shift,shift);
+         } elsif (defined $_) {
+            die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
+         }
+      }
       if ($run_mode == &Gimp::RUN_INTERACTIVE
           || $run_mode == &Gimp::RUN_WITH_LAST_VALS) {
          my $fudata = $Gimp::Data{"$function/_fu_data"};
@@ -694,21 +698,29 @@ sub register($$$$$$$$$;@) {
             @_ = @{$fudata};
          } else {
             if (@_) {
+               # prevent the standard arguments from showing up in interact
+               my @hide = splice @$params, 0, scalar@pre;
+               
                my $res;
                local $^W=0; # perl -w is braindamaged
                # gimp is braindamaged, is doesn't deliver useful values!!
                ($res,@_)=interact($function,$blurb,$help,$params,@{$fudata});
                return unless $res;
+               
+               unshift @$params, @hide;
             }
          }
       } elsif ($run_mode == &Gimp::RUN_FULLINTERACTIVE) {
-         my($res);
-         ($res,@_)=interact($function,$blurb,$help,[@image_params,@$params],[@pre,@_]);
-         undef @pre;
-         return unless $res;
+         if (@_) {
+            my($res);
+            ($res,@_)=interact($function,$blurb,$help,$params,@pre,@_);
+            undef @pre;
+            return unless $res;
+         }
       } elsif ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
+         # nop
       } else {
-         die "run_mode must be INTERACTIVE, NONINTERACTIVE or WITH_LAST_VALS\n";
+         die "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n";
       }
       $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
       $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
@@ -752,7 +764,7 @@ sub register($$$$$$$$$;@) {
 
    Gimp::register_callback($function,$perl_sub);
    push(@scripts,[$perl_sub,$function,$blurb,$help,$author,$copyright,$date,
-                  $menupath,$imagetypes,$params,$results,$features,$code]);
+                  $menupath,$imagetypes,$params,$results,$features,$code,$type]);
 }
 
 =cut

@@ -16,6 +16,11 @@ firetext! AND _grayscale_ for map_gradient(!)
 
 script-fu 4.9 vs. 3.3
 
+olof
+
+  * improve PDB explorer
+  * input image arguments
+
 bugs
 
   * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm

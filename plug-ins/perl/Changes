@@ -1,6 +1,11 @@
 Revision history for Gimp-Perl extension.
 
 	- possible fix for another installation horror problem.
+        - fixed a longstanding bug (?): not every class had a DESTROY, so
+          the AUTOLOAD tried to resolve DESTROY after gimp_close had been
+          called.
+        - started to revamp the extra argument handling.
+        - updated PDB Explorer a bit, still broken.
 
 1.13  Wed Sep  8 02:55:43 CEST 1999
 	- removed some glib-1.1 compatibility cruft.

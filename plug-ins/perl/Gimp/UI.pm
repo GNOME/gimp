@@ -516,7 +516,6 @@ sub help_window(\$$$) {
       $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
       $font = $b->style->font unless $font;
       $$helpwin->vbox->add($b);
-      $b->realize; # for gtk-1.0
       $b->insert($font,$b->style->fg(-normal),undef,"BLURB:\n\n$blurb\n\nHELP:\n\n$help");
       $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*26);
 
@@ -552,8 +551,6 @@ sub interact($$$$@) {
    my $res=0;
 
    Gimp::init_gtk;
-
-   require Gimp::UI; import Gimp::UI;
 
    my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
    
@@ -617,7 +614,7 @@ sub interact($$$$@) {
            my $setval = sub {
               $val=$_[0];
               unless (defined $val && $fs->set_font_name ($val)) {
-                 warn "illegal default font description for $function: $val\n" if defined $val;
+                 warn "Illegal default font description for $function: $val\n" if defined $val;
                  $val=$def;
                  $fs->set_font_name ($val);
               }

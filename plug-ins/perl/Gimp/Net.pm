@@ -39,6 +39,7 @@ sub import {
 
    return if @_;
 
+   # overwrite some destroy functions
    *Gimp::Tile::DESTROY=
    *Gimp::PixelRgn::DESTROY=
    *Gimp::GDrawable::DESTROY=sub {
