@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-20 19:54+0100\n"
-"PO-Revision-Date: 2000-01-21 11:15+01:00\n"
+"POT-Creation-Date: 2000-01-25 21:33+0100\n"
+"PO-Revision-Date: 2000-01-25 21:40+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,7 +84,7 @@ msgstr "Konec"
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
 #: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:500
 #: app/curves.c:583 app/file_new_dialog.c:198 app/file_new_dialog.c:369
-#: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:360 app/gimpprogress.c:114
+#: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:369 app/gimpprogress.c:114
 #: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1789
 #: app/gradient.c:4876 app/gradient.c:5437 app/hue_saturation.c:376
 #: app/interface.c:967 app/layers_dialog.c:3325 app/layers_dialog.c:3516
@@ -286,7 +286,7 @@ msgstr "Kontrast"
 
 #. The preview toggle
 #: app/brightness_contrast.c:299 app/color_balance.c:440 app/curves.c:690
-#: app/fileops.c:416 app/hue_saturation.c:564 app/levels.c:575
+#: app/fileops.c:374 app/hue_saturation.c:564 app/levels.c:575
 #: app/palette.c:3297 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
 msgstr "Náhled"
@@ -299,7 +299,7 @@ msgstr "Editor ¹tìtcù"
 #: app/brush_edit.c:215 app/brush_select.c:279 app/by_color_select.c:591
 #: app/color_notebook.c:112 app/color_picker.c:296 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1045 app/devices.c:755
-#: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:358
+#: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:367
 #: app/gradient.c:800 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
@@ -771,7 +771,7 @@ msgstr "Vybrat obvod:"
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Chyba rozmìrù plátna: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
-#: app/commands.c:1360
+#: app/commands.c:1367
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Chyba velikosti: Jak ¹íøka tak vý¹ka musí být vìt¹í ne¾ nula."
 
@@ -989,7 +989,7 @@ msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
 #: app/curves.c:1692 app/curves.c:1710 app/levels.c:1494 app/levels.c:1512
-#: app/paths_dialog.c:2217
+#: app/paths_dialog.c:2220
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nepodaøilo se otevøít soubor %s"
@@ -1196,102 +1196,104 @@ msgstr "pixelù/%a"
 msgid "Image Type"
 msgstr "Typ obrázku"
 
-#: app/fileops.c:238 app/fileops.c:278
+#: app/fileops.c:223 app/fileops.c:268
 msgid "Load Image"
 msgstr "Naèíst obrázek"
 
 #. format-chooser frame
-#: app/fileops.c:288
-msgid "Determine file type"
+#: app/fileops.c:283
+msgid "Determine File Type"
 msgstr "Urèení typu souboru"
 
-#: app/fileops.c:382
+#: app/fileops.c:356
 msgid ""
-"generate\n"
-"preview"
+"Generate\n"
+"Preview"
 msgstr ""
-"vygenerovat\n"
+"Vygenerovat\n"
 "náhled"
 
-#: app/fileops.c:417
-msgid "No selection."
+#: app/fileops.c:375
+msgid "No Selection."
 msgstr "Bez výbìru."
 
-#: app/fileops.c:468 app/fileops.c:504
+#: app/fileops.c:418 app/fileops.c:1624 app/fileops.c:1731
+#, c-format
+msgid "Save failed: %s"
+msgstr "Zápis selhal: %s"
+
+#: app/fileops.c:438 app/fileops.c:473
 msgid "Save Image"
 msgstr "Zapsat obrázek"
 
-#: app/fileops.c:509
+#: app/fileops.c:486
 msgid "Save Options"
 msgstr "Volby zápisu"
 
-#: app/fileops.c:518
-msgid "Determine file type:"
+#: app/fileops.c:495
+msgid "Determine File Type:"
 msgstr "Urèení typu souboru:"
 
-#: app/fileops.c:571
+#: app/fileops.c:555
 msgid "Can't revert. No filename associated with this image"
 msgstr "Nelze navrátit. S tímto obrázkem není spojeno jméno souboru"
 
-#: app/fileops.c:585
+#: app/fileops.c:571
 msgid "Revert failed."
 msgstr "Navrácení selhalo."
 
+#: app/fileops.c:1240
+msgid "(This thumbnail may be out of date)"
+msgstr "(Tato miniatura mù¾e být neaktuální)"
+
+#: app/fileops.c:1241
+msgid "(No Information)"
+msgstr "(Není informace)"
+
+#: app/fileops.c:1251
+msgid "(Thumbnail saving is disabled)"
+msgstr "(Zapisování miniatur je zakázáno)"
+
 #: app/fileops.c:1255
-msgid "(this thumbnail may be out of date)"
-msgstr "(tato miniatura mù¾e být neaktuální)"
+msgid "(Could not write thumbnail file)"
+msgstr "(Nelze zapsat soubor s miniaturou)"
 
-#: app/fileops.c:1256
-msgid "(no information)"
-msgstr "(není informace)"
+#: app/fileops.c:1259
+msgid "(Thumbnail file not written)"
+msgstr "(Soubor s miniaturou není zapsán)"
 
-#: app/fileops.c:1266
-msgid "(thumbnail saving is disabled)"
-msgstr "(zapisování miniatur je zakázáno)"
+#: app/fileops.c:1276
+msgid "No preview available"
+msgstr "Náhled není k dispozici"
 
-#: app/fileops.c:1270
-msgid "(could not write thumbnail file)"
-msgstr "(nelze zapsat soubor s miniaturou)"
-
-#: app/fileops.c:1274
-msgid "(thumbnail file not written)"
-msgstr "(soubor s miniaturou není zapsán)"
-
-#: app/fileops.c:1291
-msgid "no preview available"
-msgstr "náhled není k dispozici"
-
-#: app/fileops.c:1405
+#: app/fileops.c:1394
 msgid "(could not make preview)"
 msgstr "(nelze vytvoøit náhled)"
 
-#: app/fileops.c:1477 app/fileops.c:1558
-msgid "Open failed: "
-msgstr "Otevøení selhalo: "
+#: app/fileops.c:1467 app/fileops.c:1546
+#, c-format
+msgid "Open failed: %s"
+msgstr "Otevøení selhalo: %s"
 
-#: app/fileops.c:1618
+#: app/fileops.c:1602
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s je nestandardní soubor (%s)"
 
-#: app/fileops.c:1632 app/fileops.c:1734
-msgid "Save failed: "
-msgstr "Zápis selhal: "
-
-#: app/fileops.c:1679
+#: app/fileops.c:1670
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existuje, pøepsat?"
 
-#: app/fileops.c:1683
+#: app/fileops.c:1674
 msgid "File Exists!"
 msgstr "Soubor existuje!"
 
-#: app/fileops.c:1689
+#: app/fileops.c:1680
 msgid "Yes"
 msgstr "Ano"
 
-#: app/fileops.c:1691
+#: app/fileops.c:1682
 msgid "No"
 msgstr "Ne"
 
@@ -1366,7 +1368,7 @@ msgstr "Dostupné filtry"
 msgid "Active Filters"
 msgstr "Aktivní filtry"
 
-#: app/gdisplay_ops.c:377
+#: app/gdisplay_ops.c:386
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1548,7 +1550,7 @@ msgstr ""
 msgid "Progress"
 msgstr "Prùbìh"
 
-#: app/gimprc.c:399 app/plug_in.c:305
+#: app/gimprc.c:399 app/plug_in.c:304
 msgid "Resource configuration"
 msgstr "Konfigurace zdrojù"
 
@@ -3987,7 +3989,7 @@ msgid "/Automatic"
 msgstr "/Automatické"
 
 #: app/menus.c:669
-msgid "/By extension"
+msgid "/By Extension"
 msgstr "/Podle pøípony"
 
 #: app/menus.c:683
@@ -4147,7 +4149,7 @@ msgstr "/Import cesty..."
 msgid "/Export Path..."
 msgstr "/Export cesty..."
 
-#: app/menus.c:1305
+#: app/menus.c:1311
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Chyba pøi otvírání souboru: %s\n"
@@ -4514,48 +4516,48 @@ msgstr "Zmìny bodu"
 msgid "Path %d"
 msgstr "Cesta %d"
 
-#: app/paths_dialog.c:1239
+#: app/paths_dialog.c:1240
 msgid "Rename path"
 msgstr "Pøejmenovat cestu"
 
-#: app/paths_dialog.c:1242
+#: app/paths_dialog.c:1243
 msgid "Enter a new name for the path"
 msgstr "Zadejte nové jméno cesty"
 
-#: app/paths_dialog.c:2231
+#: app/paths_dialog.c:2234
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Nepodaøilo se naèíst z %s"
 
-#: app/paths_dialog.c:2246
+#: app/paths_dialog.c:2249
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Nepodaøilo se naèíst cestu z %s"
 
-#: app/paths_dialog.c:2253
+#: app/paths_dialog.c:2256
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "V souboru cesty %s nebyly zadány ¾ádné body"
 
-#: app/paths_dialog.c:2264
+#: app/paths_dialog.c:2267
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "<Nepodaøilo se naèíst body cesty z %s"
 
-#: app/paths_dialog.c:2337 app/xcf.c:419
+#: app/paths_dialog.c:2340 app/xcf.c:419
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "otevøení %s selhalo: %s\n"
 
-#: app/paths_dialog.c:2359
+#: app/paths_dialog.c:2362
 msgid "Load/Store Bezier Curves"
 msgstr "Naèíst/Zapsat Bézierovy køivky"
 
-#: app/paths_dialog.c:2399
+#: app/paths_dialog.c:2402
 msgid "Load Path"
 msgstr "Naèíst cestu"
 
-#: app/paths_dialog.c:2421
+#: app/paths_dialog.c:2424
 msgid "Store Path"
 msgstr "Uschovat cestu"
 
@@ -4597,29 +4599,29 @@ msgstr "Matice:"
 msgid "Perspective..."
 msgstr "Perspektiva..."
 
-#: app/plug_in.c:312
+#: app/plug_in.c:311
 msgid "Plug-ins"
 msgstr "Zásuvné moduly"
 
-#: app/plug_in.c:324
+#: app/plug_in.c:323
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "dotaz na zásuvný modul: \"%s\"\n"
 
-#: app/plug_in.c:362
+#: app/plug_in.c:361
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "zapisuje se \"%s\"\n"
 
-#: app/plug_in.c:377
+#: app/plug_in.c:376
 msgid "Starting extensions: "
 msgstr "Spou¹tí se roz¹íøení: "
 
-#: app/plug_in.c:378
+#: app/plug_in.c:377
 msgid "Extensions"
 msgstr "Roz¹íøení"
 
-#: app/plug_in.c:737
+#: app/plug_in.c:736
 #, c-format
 msgid "unable to locate plug-in: \"%s\""
 msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
@@ -4674,7 +4676,7 @@ msgstr "Chyba: Rozli¹ení monitoru nesmí být nula."
 
 #: app/preferences_dialog.c:289
 msgid "Error: Image title format must not be NULL."
-msgstr "Chyba: Image_title_format nesmí být nikdy NULL."
+msgstr "Chyba: Formát titulu obrázku nesmí být nikdy NULL."
 
 #: app/preferences_dialog.c:356
 msgid "Save Preferences ?"
@@ -5231,7 +5233,7 @@ msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
-"Nesprávné argumenty pøedány do procedural_db_run_proc:\n"
+"Nesprávné argumenty pøedány do procedurální_db_spus»_proc:\n"
 "Argument %d pro '%s' by mìl být %s, ale obdr¾eno bylo %s"
 
 #: app/procedural_db_cmds.c:64
@@ -5449,7 +5451,7 @@ msgid ""
 "GIMP data directory.  Please check your installation."
 msgstr ""
 "Soubor s tipy programu GIMP zøejmì chybí!\n"
-"Mìl by to být soubor se jménem gimp_tips.txt v datovém\n"
+"Mìl by to být soubor se jménem gimp_tips.cs.txt v datovém\n"
 "adresáøi programu GIMP. Prosím zkontrolujte instalaci."
 
 #: app/tool_options.c:94
@@ -5978,6 +5980,10 @@ msgstr ""
 msgid "Transformation"
 msgstr "Transformace"
 
+#: app/transform_core.c:1586
+msgid "transform_core_paste: layer_new_frome_tiles() failed"
+msgstr "transform_jádro_vlo¾: vrstva_nová_z_dla¾dic() selhalo"
+
 #: app/transform_tool.c:190
 msgid "Transform Tool Options"
 msgstr "Volby transformace"
@@ -6298,11 +6304,11 @@ msgstr "Gama:"
 msgid "GTK colour selector as a pluggable colour selector"
 msgstr "GTK panel barevného výbìru v modulárním provedení"
 
-#: modules/colorsel_triangle.c:79
+#: modules/colorsel_triangle.c:78
 msgid "Painter-style colour selector as a pluggable colour selector"
 msgstr "Výbìr barev na malíøský zpùsob v modulárním provedení"
 
-#: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
+#: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
 msgstr "Trojúhelník"
 
