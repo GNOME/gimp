@@ -1,5 +1,11 @@
 2003-03-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c (run): put the actual effect
+	and the attachment of a parasite into an undo group so that only a
+	single undo step is pushed when the plug-in is run.
+
+2003-03-17  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.[ch]: added the new function
 	gimp_config_string_append_escaped(), see inline docs.
 

@@ -68,7 +68,7 @@
 typedef enum
 {
   OP_TRANSLATE,
-  OP_ROTATE,			/* or scale */
+  OP_ROTATE,	/* or scale */
   OP_STRETCH
 } DesignOp;
 
@@ -387,6 +387,7 @@ run (gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpParasite      *parasite = NULL;
+  guint32            image_id;
   gboolean           found_parasite;
 
   run_mode = param[0].data.d_int32;
@@ -399,7 +400,7 @@ run (gchar      *name,
 
   INIT_I18N_UI (); 
 
-  /*  Get the active drawable  */
+  image_id        = param[1].data.d_image;
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
@@ -421,14 +422,13 @@ run (gchar      *name,
       if (!found_parasite)
 	{
 	  gint length;
-	  gchar *data; 
 	  
 	  length = gimp_get_data_size (IFSCOMPOSE_DATA);
 	  if (length)
 	    {
-	      data = g_new (gchar, length);
-	      gimp_get_data (IFSCOMPOSE_DATA, data);
+	      gchar *data = g_new (gchar, length);
 
+	      gimp_get_data (IFSCOMPOSE_DATA, data);
 	      ifsvals_parse_string (data, &ifsvals, &elements);
 	      g_free (data);
 	    }
@@ -436,6 +436,7 @@ run (gchar      *name,
 
       /* after ifsvals_parse_string, need to set up naming */
       count_for_naming = ifsvals.num_elements;
+
       /*  First acquire information with a dialog  */
       if (! ifs_compose_dialog (active_drawable))
 	return;
@@ -450,20 +451,21 @@ run (gchar      *name,
       /*  Possibly retrieve data  */
 	{
 	  gint length;
-	  gchar *data; 
 	  
 	  length = gimp_get_data_size (IFSCOMPOSE_DATA);
 	  if (length)
 	    {
-	      data = g_new (gchar, length);
-	      gimp_get_data (IFSCOMPOSE_DATA, data);
+              gchar *data = g_new (gchar, length);
 
+	      gimp_get_data (IFSCOMPOSE_DATA, data);
 	      ifsvals_parse_string (data, &ifsvals, &elements);
 	      g_free (data);
 	    }
           else
-            ifs_compose_set_defaults ();
-	}
+            {
+              ifs_compose_set_defaults ();
+            }
+        }
       break;
 
     default:
@@ -480,32 +482,44 @@ run (gchar      *name,
                                         active_drawable->height) /
 				   gimp_tile_width () + 1));
 
-      /*  run the effect  */
-      ifs_compose (active_drawable);
-
-      /*  If the run mode is interactive, flush the displays  */
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
-
-      /*  Store data for next invocation - both globally and
-       *  as a parasite on this layer
-       */
       if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
-	  gchar *str = ifsvals_stringify (&ifsvals, elements);
+	  gchar        *str;
 	  GimpParasite *parasite;
 
-	  gimp_set_data (IFSCOMPOSE_DATA, str, strlen(str)+1);
+          gimp_undo_push_group_start (image_id);
+
+          /*  run the effect  */
+          ifs_compose (active_drawable);
+
+          /*  Store data for next invocation - both globally and
+           *  as a parasite on this layer
+           */
+          str = ifsvals_stringify (&ifsvals, elements);
+
+	  gimp_set_data (IFSCOMPOSE_DATA, str, strlen (str) + 1);
+
 	  parasite = gimp_parasite_new (IFSCOMPOSE_PARASITE,
 					GIMP_PARASITE_PERSISTENT |
 					GIMP_PARASITE_UNDOABLE,
-					strlen(str)+1, str);
+					strlen (str) + 1, str);
 	  gimp_drawable_parasite_attach (active_drawable->drawable_id,
                                          parasite);
 	  gimp_parasite_free (parasite);
 
 	  g_free (str);
+
+          gimp_undo_push_group_end (image_id);
 	}
+      else
+        {
+          /*  run the effect  */
+          ifs_compose (active_drawable);
+        }
+
+      /*  If the run mode is interactive, flush the displays  */
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
     }
   else if (status == GIMP_PDB_SUCCESS)
     {
