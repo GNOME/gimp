@@ -1,3 +1,7 @@
+2004-10-07  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: gz.c and bz2.c are now compressor.c
+
 2004-10-02  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
