@@ -509,8 +509,8 @@ cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
 
   if (colorblind->optionmenu)
     {
-      gimp_option_menu_set_history (GTK_OPTION_MENU (colorblind->optionmenu),
-                                    GINT_TO_POINTER (DEFAULT_DEFICIENCY));
+      gimp_int_option_menu_set_history (GTK_OPTION_MENU (colorblind->optionmenu),
+                                        DEFAULT_DEFICIENCY);
       colorblind->deficiency = DEFAULT_DEFICIENCY;
 
       gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));

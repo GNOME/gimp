@@ -99,8 +99,10 @@ GtkWidget * gimp_int_option_menu_new (gboolean            menu_only,
 
 				      ...);
 
-void  gimp_option_menu_set_history   (GtkOptionMenu    *option_menu,
-                                      gpointer          item_data);
+void  gimp_option_menu_set_history     (GtkOptionMenu    *option_menu,
+                                        gpointer          item_data);
+void  gimp_int_option_menu_set_history (GtkOptionMenu    *option_menu,
+                                        gint              item_data);
 
 typedef gboolean (*GimpOptionMenuSensitivityCallback) (gpointer item_data,
                                                        gpointer callback_data);

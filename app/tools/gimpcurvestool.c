@@ -311,8 +311,8 @@ gimp_curves_tool_initialize (GimpTool    *tool,
                                   c_tool);
 
   /* set the current selection */
-  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
-                                GINT_TO_POINTER (c_tool->channel));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
+                                    c_tool->channel);
 
   curves_update (c_tool, ALL);
 }

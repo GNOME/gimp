@@ -712,8 +712,8 @@ resize_widget_new (GimpViewable *viewable,
         gimp_enum_option_menu_new (GIMP_TYPE_INTERPOLATION_TYPE,
                                    G_CALLBACK (gimp_menu_item_update),
                                    &resize->interpolation);
-      gimp_option_menu_set_history (GTK_OPTION_MENU (option_menu),
-                                    GINT_TO_POINTER (resize->interpolation));
+      gimp_int_option_menu_set_history (GTK_OPTION_MENU (option_menu),
+                                        resize->interpolation);
       gtk_box_pack_start (GTK_BOX (hbox), option_menu,
                           FALSE, FALSE, 0);
       gtk_widget_show (option_menu);
@@ -879,8 +879,8 @@ response_callback (GtkWidget *widget,
           resize->interpolation =
             resize->gimage->gimp->config->interpolation_type;
 
-          gimp_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
-                                        GINT_TO_POINTER (resize->interpolation));
+          gimp_int_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
+                                            resize->interpolation);
         }
       break;
 

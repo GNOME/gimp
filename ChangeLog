@@ -1,6 +1,20 @@
 2003-11-14  Manish Singh  <yosh@gimp.org>
 
-	* libgimpwidgets/gimpwidgets.[ch]: implementedgimp_int_option_menu_new
+	* libgimpwidgets/gimpwidgets.[ch]: add gimp_int_option_menu_set_history
+	as a wrapper for gimp_option_menu_set_history.
+
+	* app/gui/brush-select.c
+	* app/gui/resize-dialog.c
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpcolorframe.c
+	* libgimpwidgets/gimpmemsizeentry.c
+	* modules/cdisplay_colorblind.c: use the above.
+
+2003-11-14  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]: implemented gimp_int_option_menu_new
 	and gimp_int_radio_group_new, which are the same as
 	gimp_option_menu_new2 and gimp_radio_group_new2, but they take
 	integers as values to map instead of gpointers, which avoids casts

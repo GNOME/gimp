@@ -918,8 +918,8 @@ static void
 gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 				     GimpLayer         *layer)
 {
-  gimp_option_menu_set_history (GTK_OPTION_MENU (view->paint_mode_menu),
-				GINT_TO_POINTER (layer->mode));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (view->paint_mode_menu),
+				    layer->mode);
 
   if (layer->preserve_trans !=
       GTK_TOGGLE_BUTTON (view->preserve_trans_toggle)->active)

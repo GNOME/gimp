@@ -364,8 +364,7 @@ gimp_prop_enum_option_menu_new (GObject     *config,
                                         config);
     }
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (menu),
-                                GINT_TO_POINTER (value));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (menu), value);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
@@ -448,8 +447,7 @@ gimp_prop_option_menu_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (menu),
-                                GINT_TO_POINTER (value));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (menu), value);
 }
 
 

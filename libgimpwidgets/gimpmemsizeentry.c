@@ -254,8 +254,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
       entry->shift = shift;
       entry->value = value;
 
-      gimp_option_menu_set_history (GTK_OPTION_MENU (entry->menu),
-				    GUINT_TO_POINTER (shift));
+      gimp_int_option_menu_set_history (GTK_OPTION_MENU (entry->menu), shift);
     }
 
   gtk_adjustment_set_value (entry->adjustment, value >> shift);

@@ -362,8 +362,8 @@ brush_select_paint_mode_changed (GimpContext          *context,
 				 GimpLayerModeEffects  paint_mode,
 				 BrushSelect          *bsp)
 {
-  gimp_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
-				GINT_TO_POINTER (paint_mode));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
+				    paint_mode);
 
   brush_select_change_callbacks (bsp, FALSE);
 }

@@ -154,8 +154,7 @@ gimp_color_frame_set_mode (GimpColorFrame     *frame,
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
-  gimp_option_menu_set_history (GTK_OPTION_MENU (frame->menu),
-                                GINT_TO_POINTER (mode));
+  gimp_int_option_menu_set_history (GTK_OPTION_MENU (frame->menu), mode);
   frame->frame_mode = mode;
 
   gimp_color_frame_update (frame);
