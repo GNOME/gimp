@@ -333,7 +333,7 @@ CODE
 }
 
 
-@headers = qw("plug_in.h" "regex.h" "appenv.h" <string.h> <stdlib.h>);
+@headers = qw("plug_in.h" "regexrepl.h" "appenv.h" <string.h> <stdlib.h>);
 
 $extra{app}->{code} = <<'CODE';
 static int

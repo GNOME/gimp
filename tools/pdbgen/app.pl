@@ -710,7 +710,18 @@ GPL
 
 	    $headers .= "\n" if /libgimp/ && !$lib++ && $headers;
 
+            if ($_ eq '"regexrepl.h"') {
+		$headers .= "\n";
+		$headers .= "#ifdef HAVE_GLIBC_REGEX\n";
+		$headers .= "#include <regex.h>\n";
+		$headers .= "#else\n";
+	    }
+
 	    $headers .= "#include $_\n";
+
+            if ($_ eq '"regexrepl.h"') {
+		$headers .= "#endif\n\n";
+	    }
 
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "#endif\n\n";

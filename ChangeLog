@@ -1,3 +1,12 @@
+2001-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in_cmds.c
+	* app/procedural_db_cmds.c
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/app.pl: conditionally include <regex.h> or
+	"regexrepl.h", depending on HAVE_GLIBC_REGEX.
+
 2001-01-03  Daniel Egger  <egger@suse.de>
 
 	* app/plug_in_cmds.c:
@@ -404,7 +413,7 @@
 	* plug-ins/imagemap/imap_default_dialog.c
 	* plug-ins/imagemap/imap_file.c: these files used to include
 	"libgimp/gimpui.h" without including "libgimp/gimp.h". This is
-	no longer possible because the libgimpui headers don't inlcude
+	no longer possible because the libgimpui headers don't include
 	"libgimp/gimpunit.h" any more.
 
 2000-12-29  Asbjorn Pettersen  <asbjornP@dualog.no>

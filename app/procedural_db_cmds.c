@@ -29,7 +29,13 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "regex.h"
+
+#ifdef HAVE_GLIBC_REGEX
+#include <regex.h>
+#else
+#include "regexrepl.h"
+#endif
+
 
 #include "libgimp/gimpintl.h"
 
