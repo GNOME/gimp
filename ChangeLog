@@ -1,3 +1,8 @@
+1999-05-17  Jay Cox  <jaycox@earthlink.net>
+
+	* app/xcf.c: fixed bogus computation of the maximum compressed
+ 	size of a tile in xcf_load_level and xcf_save_level.
+
 1999-05-16  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* plug-ins/displace/displace.c (run): Fixed a dumb typo reported

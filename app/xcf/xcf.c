@@ -1459,7 +1459,7 @@ xcf_save_level (XcfInfo     *info,
 
   /* allocate a temporary buffer to store the rle data before it is
      written to disk */
-  rlebuf = g_malloc(level->width*level->height*level->bpp * 1.5);
+  rlebuf = g_malloc(TILE_WIDTH*TILE_HEIGHT*level->bpp * 1.5);
 
   if (level->tiles)
     {
@@ -2466,8 +2466,8 @@ xcf_load_level (XcfInfo     *info,
       /* if the offset is 0 then we need to read in the maximum possible
 	 allowing for negative compression */
       if (offset2 == 0)
-	offset2 = offset + width*height*4*1.5; /* 1.5 is probably more
-						  than we need to allow */
+	offset2 = offset + TILE_WIDTH*TILE_WIDTH*4*1.5; /* 1.5 is probably more
+							   than we need to allow */
 
       /* seek to the tile offset */
       xcf_seek_pos (info, offset);
