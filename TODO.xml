@@ -32,7 +32,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="easy" status="90%" target="1.4">
+    <entry size="medium" difficulty="easy" status="95%" target="1.4">
       <title>Header cleanup</title>
       <description>
 	<p>
@@ -46,7 +46,7 @@
       </contact>
     </entry>    
 
-    <entry size="big" difficulty="medium" status="80%" target="1.4">
+    <entry size="big" difficulty="medium" status="90%" target="1.4">
       <title>Code reorganization</title>
       <description>
 	<p>
@@ -128,7 +128,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="80%" target="1.4">
+    <entry size="medium" difficulty="medium" status="90%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>
@@ -142,7 +142,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="advanced" status="80%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="90%" target="1.4">
       <title>Generic data structures</title>
       <description>
 	<p>
@@ -155,7 +155,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="80%" target="1.4">
+    <entry size="medium" difficulty="medium" status="100%" target="1.4">
       <title>Generic object container(s)</title>
       <description>
 	<p>
@@ -173,7 +173,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="advanced" status="0%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="20%" target="1.4">
       <title>Abstract GimpBrush object and derived brush types</title>
       <description>
 	<p>
@@ -195,7 +195,7 @@
   <section>
     <title>Tools</title>
 
-    <entry size="medium" difficulty="advanced" status="10%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="20%" target="1.4">
       <title>Rewrite Path Tool</title>
       <description>
 	<p>
@@ -207,7 +207,7 @@
       </contact>
     </entry>
     
-    <entry size="medium" difficulty="advanced" status="30%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="50%" target="1.4">
       <title>Rewrite Text Tool</title>
       <description>
 	<p>
@@ -252,7 +252,7 @@
   <section>
     <title>LibGimp</title>
 
-    <entry size="medium" difficulty="medium" status="70%" target="1.4">
+    <entry size="medium" difficulty="medium" status="95%" target="1.4">
       <title>Restructure LibGimp</title>
       <description>
 	<p>
@@ -267,7 +267,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="20%" target="1.4">
+    <entry size="small" difficulty="easy" status="30%" target="1.4">
       <title>Utility library</title>
       <description>
 	<p>
@@ -293,7 +293,7 @@
       </contact>
     </entry>
      
-    <entry size="medium" difficulty="medium" status="90%" target="1.4">
+    <entry size="medium" difficulty="medium" status="95%" target="1.4">
       <title>Move GCK functionality into LibGimp</title>
       <description>
 	<p>
@@ -312,7 +312,7 @@
   <section>
     <title>User Interface</title>
 
-    <entry size="medium" difficulty="medium" status="80%" target="1.4">
+    <entry size="medium" difficulty="medium" status="90%" target="1.4">
       <title>Abstract Container Views</title>
       <description>
 	<p>
@@ -326,7 +326,7 @@
       </contact>
     </entry>
 
-    <entry size="big" difficulty="advanced" status="0%" target="1.4">
+    <entry size="big" difficulty="advanced" status="10%" target="1.4">
       <title>Effect Preview Widget</title>
       <description>
 	<p>
@@ -382,7 +382,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="50%" target="1.4">
+    <entry size="small" difficulty="easy" status="100%" target="1.4">
       <title>Optionally set a different background for the image window</title>
       <description>
 	<p>
@@ -409,7 +409,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="70%" target="1.4">
+    <entry size="medium" difficulty="medium" status="90%" target="1.4">
       <title>Cleanup GIMP's color selectors</title>
       <description>
 	<p>
@@ -426,7 +426,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="60%" target="1.4">
       <title>Better keyboard navigation</title>
       <description>
 	<p>
@@ -455,7 +455,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="10%" target="1.4">
+    <entry size="medium" difficulty="medium" status="20%" target="1.4">
       <title>Add more widgets</title>
       <description>
 	<p>
