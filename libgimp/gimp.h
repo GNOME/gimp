@@ -345,6 +345,19 @@ guchar*  gimp_color_cube   (void);
 gchar*   gimp_gtkrc        (void);
 
 
+/* Popup the brush dialog interactively */
+typedef void (* GRunBrushCallback) (gchar *, /* Name */
+				    gdouble, /* opacity */
+				    gint,    /* spacing */
+				    gint,    /* paint_mode */
+				    gint,    /* width */
+				    gint,    /* height */
+				    gchar *, /* mask data */
+				    gint     /* dialog closing */);
+
+void 
+gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushCallback callback);
+
 /****************************************
  *              Images                  *
  ****************************************/

@@ -1,3 +1,18 @@
+Sat Sep 19 01:19:18 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/blend.c app/brush_select.c app/brush_select.h app/bucket_fill.c 
+	app/gimpbrushlist.c app/internal_procs.c app/plug_in.c libgimp/gimp.c 
+	libgimp/gimp.h libgimp/gimpmenu.c libgimp/gimptile.c
+	plug-ins/gfig/gfig.c
+
+	Infrastructure to allow gimp dialogs to be controlled from plugins.
+	Brush dialog can now be invoked multiple times. Dialogs invoked 
+	via plugins do not control the active brush (dialog only used for 
+	selections).
+	New gimp_interactive_selection_brush() function to popup dialog 
+	Example of usage in the gfig plugin. 
+	Other dialogs should be able to use this method of invocation.
+ 
 Tue Sep 15 21:27:10 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/gif.c:

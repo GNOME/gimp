@@ -42,6 +42,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "brush_select.h"  /* Need for closing dialogs */
 #include "drawable.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -127,6 +128,8 @@ static Argument* message_invoker         (Argument *args);
 
 static Argument* message_handler_get_invoker (Argument *args);
 static Argument* message_handler_set_invoker (Argument *args);
+
+static Argument* plugin_temp_PDB_name_invoker (Argument *args);
 
 
 static GSList *plug_in_defs = NULL;
@@ -271,6 +274,30 @@ static ProcRecord message_handler_set_proc =
   { { message_handler_set_invoker } },
 };
 
+static ProcArg plugin_temp_PDB_name_out_args[] =
+{
+  { PDB_STRING,
+    "Temp name",
+    "A unique temporary name for a temporary PDB entry name",
+  },
+};
+
+static ProcRecord plugin_temp_PDB_name_proc =
+{
+  "gimp_temp_PDB_name",
+  "Generates a unique temporary PDB name",
+  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+  0,
+  NULL,
+  1,
+  plugin_temp_PDB_name_out_args,
+  { { plugin_temp_PDB_name_invoker } },
+};
+
 
 void
 plug_in_init ()
@@ -290,6 +317,9 @@ plug_in_init ()
   procedural_db_register (&message_proc);
   procedural_db_register (&message_handler_get_proc);
   procedural_db_register (&message_handler_set_proc);
+
+  /* initialize the message box procedural db calls */
+  procedural_db_register (&plugin_temp_PDB_name_proc);
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -1026,6 +1056,9 @@ plug_in_close (PlugIn *plug_in,
 	  g_slist_free (plug_in->temp_proc_defs);
 	  plug_in->temp_proc_defs = NULL;
 	}
+
+      /* Close any dialogs that this plugin might have opened */
+      brushes_check_dialogs();
 
       open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
     }
@@ -2434,16 +2467,17 @@ plug_in_temp_run (ProcRecord *proc_rec,
 	  goto done;
 	}
 
-      plug_in_pop ();
+/*       plug_in_pop (); */
 
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
       old_recurse = plug_in->recurse;
       plug_in->recurse = TRUE;
 
-      gtk_main ();
+/*       gtk_main (); */
       
-      return_vals = plug_in_get_current_return_vals (proc_rec);
+/*       return_vals = plug_in_get_current_return_vals (proc_rec); */
+      return_vals = procedural_db_return_args (proc_rec, TRUE);
       plug_in->recurse = old_recurse;
       plug_in->busy = FALSE;
     }
@@ -3174,3 +3208,18 @@ message_handler_set_invoker (Argument *args)
  
   return procedural_db_return_args (&message_handler_set_proc, success);
 }
+
+static Argument*
+plugin_temp_PDB_name_invoker (Argument *args)
+{
+  Argument *return_args;
+  static gint proc_number = 0;
+  static gchar *proc_name = "temp_plugin_number_%d";
+  static gchar temp_area[20+10]; /* 10 should allow enough plugins! */
+
+  return_args = procedural_db_return_args (&plugin_temp_PDB_name_proc, TRUE);
+  sprintf(temp_area,proc_name,proc_number++);
+  return_args[1].value.pdb_pointer = g_strdup(temp_area);
+  return return_args;
+}
+

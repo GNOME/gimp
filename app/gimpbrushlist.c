@@ -207,7 +207,6 @@ get_active_brush ()
   return active_brush;
 }
 
-
 #if 0
 static GSList *
 insert_brush_in_list (GSList *list, GimpBrush * brush)
@@ -408,7 +407,7 @@ create_brush_dialog ()
   if (!brush_select_dialog)
     {
       /*  Create the dialog...  */
-      brush_select_dialog = brush_select_new ();
+      brush_select_dialog = brush_select_new (NULL,NULL,0.0,0,0);
     }
   else
     {

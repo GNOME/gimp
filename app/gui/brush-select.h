@@ -18,6 +18,7 @@
 #ifndef  __BRUSH_SELECT_H__
 #define  __BRUSH_SELECT_H__
 
+#include "procedural_db.h"
 #include "buildmenu.h"
 #include "gimpbrush.h"
 
@@ -33,6 +34,7 @@ struct _BrushSelect {
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
   GtkAdjustment *sbar_data;
+  GtkWidget *edit_button;
   int width, height;
   int cell_width, cell_height;
   int scroll_offset;
@@ -40,14 +42,34 @@ struct _BrushSelect {
   /*  Brush preview  */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
-  GtkWidget *edit_button;
+  /* Call back function name */
+  gchar * callback_name;
+  /* current brush */
+  GimpBrushP brush; 
+  /* Stuff for current selection */
+  int old_row;
+  int old_col;
+  gdouble opacity_value;
+  gint spacing_value;
+  gint paint_mode;
 };
 
-BrushSelectP  brush_select_new     (void);
+BrushSelectP  brush_select_new     (gchar *,
+				    gchar *, /* These are the required initial vals*/
+				    gdouble, /* If init_name == NULL then 
+							   * use current brush 
+							   */
+				    gint,
+				    gint);
 void          brush_select_select  (BrushSelectP, int);
 void          brush_select_free    (BrushSelectP);
+void          brush_change_callbacks (BrushSelectP,gint);
+void          brushes_check_dialogs(void);
 
 /*  An interface to other dialogs which need to create a paint mode menu  */
-GtkWidget *   create_paint_mode_menu (MenuItemCallback);
+GtkWidget *   create_paint_mode_menu (MenuItemCallback, gpointer);
+
+/* PDB entry */
+extern ProcRecord brushes_popup_proc;
 
 #endif  /*  __BRUSH_SELECT_H__  */

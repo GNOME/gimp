@@ -50,6 +50,8 @@
 
 void gimp_extension_process (guint timeout);
 void gimp_extension_ack     (void);
+void gimp_read_expect_msg(WireMessage *msg, int type);
+
 
 static RETSIGTYPE gimp_signal        (int signum);
 static int        gimp_write         (int fd, guint8 *buf, gulong count);
@@ -59,6 +61,7 @@ static void       gimp_config        (GPConfig *config);
 static void       gimp_proc_run      (GPProcRun *proc_run);
 static void       gimp_temp_proc_run (GPProcRun *proc_run);
 static void       gimp_message_func  (char *str);
+static void       gimp_process_message(WireMessage *msg);
 
 
 int _readfd = 0;
@@ -716,11 +719,8 @@ gimp_run_procedure (char *name,
 
   if (!gp_proc_run_write (_writefd, &proc_run))
     gimp_quit ();
-  if (!wire_read_msg (_readfd, &msg))
-    gimp_quit ();
 
-  if (msg.type != GP_PROC_RETURN)
-    g_error ("unexpected message: %d\n", msg.type);
+  gimp_read_expect_msg(&msg,GP_PROC_RETURN);
 
   proc_return = msg.data;
   *nreturn_vals = proc_return->nparams;
@@ -745,6 +745,30 @@ gimp_run_procedure (char *name,
   return return_vals;
 }
 
+void
+gimp_read_expect_msg(WireMessage *msg, int type)
+{
+  while(1)
+    {
+      if (!wire_read_msg (_readfd, msg))
+	gimp_quit ();
+      
+      if (msg->type != type)
+	{
+	  if(msg->type == GP_TEMP_PROC_RUN)
+	    {
+	      gimp_process_message(msg);
+	      continue;
+	    }
+	  else
+	    g_error ("unexpected message: %d\n", msg->type);
+	}
+      else
+	break;
+    }
+}
+
+
 GParam*
 gimp_run_procedure2 (char   *name,
 		     int    *nreturn_vals,
@@ -762,12 +786,9 @@ gimp_run_procedure2 (char   *name,
 
   if (!gp_proc_run_write (_writefd, &proc_run))
     gimp_quit ();
-  if (!wire_read_msg (_readfd, &msg))
-    gimp_quit ();
 
-  if (msg.type != GP_PROC_RETURN)
-    g_error ("unexpected message: %d\n", msg.type);
-
+  gimp_read_expect_msg(&msg,GP_PROC_RETURN);
+  
   proc_return = msg.data;
   *nreturn_vals = proc_return->nparams;
   return_vals = (GParam*) proc_return->params;
@@ -837,10 +858,57 @@ gimp_gtkrc ()
   return filename;
 }
 
+static void
+gimp_process_message(WireMessage *msg)
+{
+  switch (msg->type)
+    {
+    case GP_QUIT:
+      gimp_quit ();
+      break;
+    case GP_CONFIG:
+      gimp_config (msg->data);
+      break;
+    case GP_TILE_REQ:
+    case GP_TILE_ACK:
+    case GP_TILE_DATA:
+      g_warning ("unexpected tile message received (should not happen)\n");
+      break;
+    case GP_PROC_RUN:
+      g_warning ("unexpected proc run message received (should not happen)\n");
+      break;
+    case GP_PROC_RETURN:
+      g_warning ("unexpected proc return message received (should not happen)\n");
+      break;
+    case GP_TEMP_PROC_RUN:
+      gimp_temp_proc_run (msg->data);
+      break;
+    case GP_TEMP_PROC_RETURN:
+      g_warning ("unexpected temp proc return message received (should not happen)\n");
+      break;
+    case GP_PROC_INSTALL:
+      g_warning ("unexpected proc install message received (should not happen)\n");
+      break;
+    }
+}
+
+static void 
+gimp_single_message()
+{
+  WireMessage msg;
+
+  /* Run a temp function */
+  if (!wire_read_msg (_readfd, &msg))
+    gimp_quit ();
+
+  gimp_process_message(&msg);
+  
+  wire_destroy (&msg);
+}
+
 void
 gimp_extension_process (guint timeout)
 {
-  WireMessage msg;
   fd_set readfds;
   int select_val;
   struct timeval tv;
@@ -860,40 +928,7 @@ gimp_extension_process (guint timeout)
 
   if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
     {
-      if (!wire_read_msg (_readfd, &msg))
-	gimp_quit ();
-
-      switch (msg.type)
-	{
-	case GP_QUIT:
-	  gimp_quit ();
-	  break;
-	case GP_CONFIG:
-	  gimp_config (msg.data);
-	  break;
-	case GP_TILE_REQ:
-	case GP_TILE_ACK:
-	case GP_TILE_DATA:
-	  g_warning ("unexpected tile message received (should not happen)\n");
-	  break;
-	case GP_PROC_RUN:
-	  g_warning ("unexpected proc run message received (should not happen)\n");
-	  break;
-	case GP_PROC_RETURN:
-	  g_warning ("unexpected proc return message received (should not happen)\n");
-	  break;
-	case GP_TEMP_PROC_RUN:
-	  gimp_temp_proc_run (msg.data);
-	  break;
-	case GP_TEMP_PROC_RETURN:
-	  g_warning ("unexpected temp proc return message received (should not happen)\n");
-	  break;
-	case GP_PROC_INSTALL:
-	  g_warning ("unexpected proc install message received (should not happen)\n");
-	  break;
-	}
-
-      wire_destroy (&msg);
+      gimp_single_message();
     }
   else if (select_val == -1)
     {
@@ -909,6 +944,13 @@ gimp_extension_ack ()
   if (! gp_extension_ack_write (_writefd))
     gimp_quit ();
 }
+
+void
+gimp_run_temp()
+{
+  gimp_single_message();
+}
+
 
 static RETSIGTYPE
 gimp_signal (int signum)
@@ -1105,7 +1147,6 @@ gimp_proc_run (GPProcRun *proc_run)
 static void
 gimp_temp_proc_run (GPProcRun *proc_run)
 {
-  GPProcReturn proc_return;
   GParam *return_vals;
   int nreturn_vals;
   GRunProc run_proc;
@@ -1120,11 +1161,12 @@ gimp_temp_proc_run (GPProcRun *proc_run)
 		    &nreturn_vals,
 		    &return_vals);
 
-      proc_return.name = proc_run->name;
-      proc_return.nparams = nreturn_vals;
-      proc_return.params = (GPParam*) return_vals;
+      /* No longer a return message */
+/*       proc_return.name = proc_run->name; */
+/*       proc_return.nparams = nreturn_vals; */
+/*       proc_return.params = (GPParam*) return_vals; */
 
-      if (!gp_temp_proc_return_write (_writefd, &proc_return))
-	gimp_quit ();
+/*       if (!gp_temp_proc_return_write (_writefd, &proc_return)) */
+/* 	gimp_quit (); */
     }
 }

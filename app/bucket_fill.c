@@ -205,7 +205,7 @@ create_bucket_options (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new ("Mode:");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
-  menu = create_paint_mode_menu (bucket_fill_paint_mode_callback);
+  menu = create_paint_mode_menu (bucket_fill_paint_mode_callback,NULL);
   option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 2);
 

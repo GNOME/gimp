@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -116,17 +117,21 @@ static ActionAreaItem action_items[] =
   { "Refresh", brush_select_refresh_callback, NULL, NULL }
 };
 
-static double old_opacity;
-static int old_spacing;
-static int old_paint_mode;
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
+
+/* PDB interface data */
+static int          success;
 
 int NUM_BRUSH_COLUMNS=5;
 int NUM_BRUSH_ROWS=5;
+static GSList *active_dialogs = NULL; /* List of active dialogs */
+
+
+extern BrushSelectP brush_select_dialog; /* The main brush dialog */
 
 
 GtkWidget *
-create_paint_mode_menu (MenuItemCallback callback)
+create_paint_mode_menu (MenuItemCallback callback, gpointer udata)
 {
   GtkWidget *menu;
   int i;
@@ -136,12 +141,23 @@ create_paint_mode_menu (MenuItemCallback callback)
 
   menu = build_menu (option_items, NULL);
 
+  for (i = 0; i <= VALUE_MODE; i++)
+    gtk_object_set_user_data(GTK_OBJECT(option_items[i].widget),udata);
+
   return menu;
 }
 
 
+/* If title is null then it is the main brush dialog */
+
 BrushSelectP
-brush_select_new ()
+brush_select_new (gchar * title,
+		  gchar *init_name, /* These are the required initial vals*/
+		  gdouble init_opacity, /* If init_name == NULL then 
+					 * use current brush 
+					 */
+		  gint init_spacing,
+		  gint init_mode)
 {
   BrushSelectP bsp;
   GtkWidget *vbox;
@@ -152,19 +168,36 @@ brush_select_new ()
   GtkWidget *util_box;
   GtkWidget *option_menu;
   GtkWidget *slider;
-  GimpBrushP active;
+  GimpBrushP active = NULL;
   GtkWidget *button2;
+  gint gotinitbrush = FALSE;
 
   bsp = g_malloc (sizeof (_BrushSelect));
   bsp->redraw = TRUE;
   bsp->scroll_offset = 0;
+  bsp->callback_name = 0;
+  bsp->old_row = bsp->old_col = 0;
+  bsp->brush = NULL; /* NULL -> main dialog window */
   bsp->brush_popup = NULL;
 
   /*  The shell and main vbox  */
   bsp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
-  session_set_window_geometry (bsp->shell, &brush_select_session_info, TRUE);
+
+  if(!title)
+    {
+      gtk_window_set_title (GTK_WINDOW (bsp->shell), "Brush Selection");
+      session_set_window_geometry (bsp->shell, &brush_select_session_info, TRUE);
+    }
+  else
+    {
+      gtk_window_set_title (GTK_WINDOW (bsp->shell), title);
+      if(init_name && strlen(init_name))
+	 active = gimp_brush_list_get_brush(brush_list, init_name);
+      if(active)
+	gotinitbrush = TRUE;
+    }
+
   gtk_window_set_policy(GTK_WINDOW(bsp->shell), FALSE, TRUE, FALSE);
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 2);
@@ -231,13 +264,11 @@ brush_select_new ()
   gtk_widget_show (util_box);
 
   /*  Create the paint mode option menu  */
-  old_paint_mode = gimp_brush_get_paint_mode ();
-
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
   label = gtk_label_new ("Mode:");
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-  menu = create_paint_mode_menu (paint_mode_menu_callback);
+  menu = create_paint_mode_menu (paint_mode_menu_callback,(gpointer)bsp);
   option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (util_box), option_menu, FALSE, FALSE, 2);
 
@@ -247,13 +278,12 @@ brush_select_new ()
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   /*  Create the opacity scale widget  */
-  old_opacity = gimp_brush_get_opacity ();
-
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
   label = gtk_label_new ("Opacity:");
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
-  bsp->opacity_data = GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
+  bsp->opacity_data = 
+    GTK_ADJUSTMENT (gtk_adjustment_new ((active)?init_opacity:100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
   slider = gtk_hscale_new (bsp->opacity_data);
   gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -264,9 +294,6 @@ brush_select_new ()
   gtk_widget_show (label);
   gtk_widget_show (slider);
   gtk_widget_show (util_box);
-
-  /*  Create the brush spacing scale widget  */
-  old_spacing = gimp_brush_get_spacing ();
 
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
@@ -291,6 +318,9 @@ brush_select_new ()
   gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
 		      (GtkSignalFunc) edit_brush_callback,
 		      NULL);
+
+  /* We can only edit in the main window! (for now)*/
+
   gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
 
   button2 =  gtk_button_new_with_label ("New Brush");
@@ -299,9 +329,15 @@ brush_select_new ()
 		      NULL);
   gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 5);
 
-  gtk_widget_show (bsp->edit_button);
+  gtk_widget_show (bsp->edit_button);    
   gtk_widget_show (button2);
   gtk_widget_show (util_box);
+
+  if(title)
+    {
+      gtk_widget_set_sensitive(bsp->edit_button,FALSE);
+      gtk_widget_set_sensitive(button2,FALSE);
+    }
 
   /*  The action area  */
   action_items[0].user_data = bsp;
@@ -324,29 +360,60 @@ brush_select_new ()
   display_brushes (bsp);
 
   /*  add callbacks to keep the display area current  */
-  gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
-		    bsp);
-  gtk_signal_connect (GTK_OBJECT (brush_list), "add",
-		      (GtkSignalFunc) brush_added_callback,
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
-		      (GtkSignalFunc) brush_removed_callback,
-		      bsp);
+  /* Only for main dialog */
+
+  if(!title)
+    {
+      gimp_list_foreach(GIMP_LIST(brush_list), (GFunc)connect_signals_to_brush,
+			bsp);
+      gtk_signal_connect (GTK_OBJECT (brush_list), "add",
+			  (GtkSignalFunc) brush_added_callback,
+			  bsp);
+      gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
+			  (GtkSignalFunc) brush_removed_callback,
+			  bsp);
+    }
   
   /*  update the active selection  */
-  active = get_active_brush ();
+  if(!active)
+    active = get_active_brush ();
+
+  if(title)
+    {
+      bsp->brush = active;
+    }
+
   if (active)
     {
       int old_value = bsp->redraw;
       bsp->redraw = FALSE;
+      if(!gotinitbrush)
+	{
+	  bsp->opacity_value = gimp_brush_get_opacity();
+	  bsp->spacing_value = gimp_brush_get_spacing();
+	  bsp->paint_mode = gimp_brush_get_paint_mode();
+	}
+      else
+	{
+	  bsp->opacity_value = init_opacity;
+	  bsp->paint_mode = init_mode;
+	}
       brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
 								active));
+
+      if(gotinitbrush && init_spacing >= 0)
+	{
+	  /* Use passed spacing instead of brushes default */
+	  bsp->spacing_data->value = init_spacing;
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
+	}
       bsp->redraw = old_value;
-      if (GIMP_IS_BRUSH_GENERATED(active))
+      if (GIMP_IS_BRUSH_GENERATED(active) && title)
 	gtk_widget_set_sensitive (bsp->edit_button, 1);
       else
-	gtk_widget_set_sensitive (bsp->edit_button, 0);
+	gtk_widget_set_sensitive (bsp->edit_button, 0); 
     }
+  
 
   return bsp;
 }
@@ -372,11 +439,66 @@ brush_select_free (BrushSelectP bsp)
 {
   if (bsp)
     {
-      session_get_window_info (bsp->shell, &brush_select_session_info);
+      /* Only main one is saved */
+      if(bsp == brush_select_dialog)
+	session_get_window_info (bsp->shell, &brush_select_session_info);
       if (bsp->brush_popup != NULL)
 	gtk_widget_destroy (bsp->brush_popup);
+
+      if(bsp->callback_name)
+	g_free(bsp->callback_name);
+
+      /* remove from active list */
+
+      active_dialogs = g_slist_remove(active_dialogs,bsp);
+
       g_free (bsp);
     }
+}
+
+void
+brush_change_callbacks(BrushSelectP bsp, gint closing)
+{
+  gchar * name;
+  ProcRecord *prec = NULL;
+  GimpBrushP brush;
+  int nreturn_vals;
+  static int busy = 0;
+
+  /* Any procs registered to callback? */
+  Argument *return_vals; 
+  
+  if(!bsp || !bsp->callback_name || busy != 0)
+    return;
+
+  busy = 1;
+  name = bsp->callback_name;
+  brush = bsp->brush;
+
+  /* If its still registered run it */
+  prec = procedural_db_lookup(name);
+
+  if(prec && brush)
+    {
+      return_vals = procedural_db_run_proc (name,
+					    &nreturn_vals,
+					    PDB_STRING,brush->name,
+					    PDB_FLOAT,bsp->opacity_value,
+					    PDB_INT32,bsp->spacing_value,
+					    PDB_INT32,(gint)bsp->paint_mode,
+					    PDB_INT32,brush->mask->width,
+					    PDB_INT32,brush->mask->height,
+					    PDB_INT32,brush->mask->width * brush->mask->height,
+					    PDB_INT8ARRAY,temp_buf_data (brush->mask),
+					    PDB_INT32,closing,
+					    PDB_END);
+ 
+      if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+	g_message ("failed to run brush callback function");
+      
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+    }
+  busy = 0;
 }
 
 static void
@@ -617,8 +739,6 @@ brush_select_show_selected (BrushSelectP bsp,
 			    int          col)
 {
   GdkRectangle area;
-  static int old_row = 0;
-  static int old_col = 0;
   unsigned char * buf;
   int yend;
   int ystart;
@@ -627,11 +747,11 @@ brush_select_show_selected (BrushSelectP bsp,
 
   buf = (unsigned char *) g_malloc (sizeof (char) * bsp->cell_width);
 
-  if (old_col != col || old_row != row)
+  if (bsp->old_col != col || bsp->old_row != row)
     {
       /*  remove the old selection  */
-      offset_x = old_col * bsp->cell_width;
-      offset_y = old_row * bsp->cell_height - bsp->scroll_offset;
+      offset_x = bsp->old_col * bsp->cell_width;
+      offset_y = bsp->old_row * bsp->cell_height - bsp->scroll_offset;
 
       ystart = BOUNDS (offset_y , 0, bsp->preview->requisition.height);
       yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->requisition.height);
@@ -690,8 +810,8 @@ brush_select_show_selected (BrushSelectP bsp,
       gtk_widget_draw (bsp->preview, &area);
     }
 
-  old_row = row;
-  old_col = col;
+  bsp->old_row = row;
+  bsp->old_col = col;
 
   g_free (buf);
 }
@@ -755,7 +875,10 @@ update_active_brush_field (BrushSelectP bsp)
   GimpBrushP brush;
   char buf[32];
 
-  brush = get_active_brush ();
+  if(bsp->brush)
+    brush = bsp->brush;
+  else
+    brush = get_active_brush ();
 
   if (!brush)
     return;
@@ -768,7 +891,11 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
-  bsp->spacing_data->value = gimp_brush_get_spacing ();
+  if(bsp == brush_select_dialog)
+    bsp->spacing_data->value = gimp_brush_get_spacing ();
+  else
+    bsp->spacing_data->value = bsp->spacing_value = brush->spacing;
+
   gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
 }
 
@@ -799,6 +926,7 @@ brush_select_events (GtkWidget    *widget,
 	  /*  Get the brush and display the popup brush preview  */
 	  if ((brush = gimp_brush_list_get_brush_by_index (brush_list, index)))
 	    {
+
 	      gdk_pointer_grab (bsp->preview->window, FALSE,
 				(GDK_POINTER_MOTION_HINT_MASK |
 				 GDK_BUTTON1_MOTION_MASK |
@@ -806,9 +934,24 @@ brush_select_events (GtkWidget    *widget,
 				NULL, NULL, bevent->time);
 
 	      /*  Make this brush the active brush  */
-	      select_brush (brush);
-            
-	      if (GIMP_IS_BRUSH_GENERATED(brush))
+	      /* only if dialog is main one */
+	      if(bsp == brush_select_dialog)
+		{
+		  select_brush (brush);
+		}
+	      else
+		{
+		  /* Keeping up appearances */
+		  if(bsp)
+		    {
+		      bsp->brush = brush;
+		      brush_select_select (bsp,
+			gimp_brush_list_get_brush_index(brush_list, brush));
+		    }
+		}
+		
+
+	      if (GIMP_IS_BRUSH_GENERATED(brush) && bsp == brush_select_dialog)
 		gtk_widget_set_sensitive (bsp->edit_button, 1);
 	      else
 		gtk_widget_set_sensitive (bsp->edit_button, 0);
@@ -835,6 +978,9 @@ brush_select_events (GtkWidget    *widget,
 
 	  /*  Close the brush popup window  */
 	  brush_popup_close (bsp);
+
+	  /* Call any callbacks registered */
+	  brush_change_callbacks(bsp,0);
 	}
       break;
     case GDK_DELETE:
@@ -894,19 +1040,24 @@ brush_select_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 }
 
 static void
-brush_select_close_callback (GtkWidget *w,
+brush_select_close_callback (GtkWidget *w, /* Unused so can be NULL */
 			     gpointer   client_data)
 {
   BrushSelectP bsp;
 
   bsp = (BrushSelectP) client_data;
 
-  old_paint_mode = gimp_brush_get_paint_mode ();
-  old_opacity = gimp_brush_get_opacity ();
-  old_spacing = gimp_brush_get_spacing ();
-
   if (GTK_WIDGET_VISIBLE (bsp->shell))
     gtk_widget_hide (bsp->shell);
+
+  /* Free memory if poping down dialog which is not the main one */
+  if(bsp != brush_select_dialog)
+    {
+      /* Send data back */
+      brush_change_callbacks(bsp,1);
+      gtk_widget_destroy(bsp->shell); 
+      brush_select_free(bsp); 
+    }
 }
 
 
@@ -957,7 +1108,11 @@ preview_scroll_update (GtkAdjustment *adjustment,
       bsp->scroll_offset = adjustment->value;
       display_brushes (bsp);
 
-      active = get_active_brush ();
+      if(bsp->brush)
+	active = bsp->brush;
+      else
+	active = get_active_brush ();
+
       if (active)
 	{
 	  index = gimp_brush_list_get_brush_index(brush_list, active);
@@ -977,7 +1132,15 @@ static void
 paint_mode_menu_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
-  gimp_brush_set_paint_mode ((long) client_data);
+  BrushSelectP bsp = (BrushSelectP)gtk_object_get_user_data(GTK_OBJECT(w));
+  
+  if(bsp == brush_select_dialog)
+    gimp_brush_set_paint_mode ((int) client_data);
+  else
+    {
+      bsp->paint_mode = (int) client_data;
+      brush_change_callbacks(bsp,0);
+    }
 }
 
 
@@ -985,7 +1148,15 @@ static void
 opacity_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  gimp_brush_set_opacity (adjustment->value / 100.0);
+  BrushSelectP bsp = (BrushSelectP)data;
+  
+  if(bsp == brush_select_dialog)
+    gimp_brush_set_opacity (adjustment->value / 100.0);
+  else
+    {
+      bsp->opacity_value = (adjustment->value / 100.0);
+      brush_change_callbacks(bsp,0); 
+    }
 }
 
 
@@ -993,5 +1164,154 @@ static void
 spacing_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  gimp_brush_set_spacing ((int) adjustment->value);
+  BrushSelectP bsp = (BrushSelectP)data;
+  
+  if(bsp == brush_select_dialog)
+    gimp_brush_set_spacing ((int) adjustment->value);
+  else
+    {
+      if(bsp->spacing_value != adjustment->value)
+	{
+	  bsp->spacing_value = adjustment->value;
+	  brush_change_callbacks(bsp,0);
+	}
+    }
 }
+
+/* Close active dialogs that no longer have PDB registered for them */
+
+void
+brushes_check_dialogs()
+{
+  GSList *list;
+  BrushSelectP bsp;
+  gchar * name;
+  ProcRecord *prec = NULL;
+
+  list = active_dialogs;
+
+
+  while (list)
+    {
+      bsp = (BrushSelectP) list->data;
+      list = list->next;
+
+      name = bsp->callback_name;
+      prec = procedural_db_lookup(name);
+      
+      if(!prec)
+	{
+	  active_dialogs = g_slist_remove(active_dialogs,bsp);
+
+	  /* Can alter active_dialogs list*/
+	  brush_select_close_callback(NULL,bsp);
+	}
+    }
+}
+
+/************
+ * PDB interfaces.
+ */
+
+
+static Argument *
+brushes_popup_invoker (Argument *args)
+{
+  gchar * name; 
+  gchar * title;
+  gchar * initial_brush;
+  gdouble initial_opacity = 100.0;
+  gint initial_spacing = 20;
+  gint initial_mode = 0;
+  ProcRecord *prec = NULL;
+  BrushSelectP newdialog;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+  title = (char *) args[1].value.pdb_pointer;
+  initial_brush = (char *) args[2].value.pdb_pointer;
+
+  /* If null just use the active brush */
+  if(initial_brush && strlen(initial_brush))
+    {
+      initial_opacity = args[3].value.pdb_float;
+      initial_spacing = args[4].value.pdb_int;
+      initial_mode = args[5].value.pdb_int;
+    }
+  
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&brushes_popup_proc, success);
+    }
+
+  /*create_brush_dialog();*/
+  if(initial_brush && strlen(initial_brush))
+    newdialog = brush_select_new(title,
+				 initial_brush,
+				 initial_opacity,
+				 initial_spacing,
+				 initial_mode);
+  else
+    newdialog = brush_select_new(title,NULL,0.0,0,0);
+
+  /* Add to list of proc to run when brush changes */
+  /* change_callbacks = g_list_append(change_callbacks,g_strdup(name));*/
+  newdialog->callback_name = g_strdup(name);
+
+  /* Add to active brush dialogs list */
+  active_dialogs = g_slist_append(active_dialogs,newdialog);
+
+  return procedural_db_return_args (&brushes_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg brushes_popup_in_args[] =
+{
+  { PDB_STRING,
+    "brush_callback",
+    "the callback PDB proc to call when brush selection is made"
+  },
+  { PDB_STRING,
+    "popup title",
+    "title to give the popup window",
+  },
+  { PDB_STRING,
+    "initial brush",
+    "The name of the brush to set as the first selected",
+  },
+  { PDB_FLOAT,
+    "initial opacity",
+    "The initial opacity of the brush",
+  },
+  { PDB_INT32,
+    "initial spacing",
+    "The initial spacing of the brush (if < 0 then use brush default spacing)",
+  },
+  { PDB_INT32,
+    "initial paint mode",
+    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
+  },
+};
+
+ProcRecord brushes_popup_proc =
+{
+  "gimp_brushes_popup",
+  "Invokes the Gimp brush selection",
+  "This procedure popups the brush selection dialog",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(brushes_popup_in_args) / sizeof(brushes_popup_in_args[0]),
+  brushes_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { brushes_popup_invoker } },
+};

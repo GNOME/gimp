@@ -27,6 +27,7 @@
  */
 #define FREE_QUANTUM 0.1
 
+void gimp_read_expect_msg(WireMessage *msg, int type);
 
 static void  gimp_tile_get          (GTile *tile);
 static void  gimp_tile_put          (GTile *tile);
@@ -138,7 +139,6 @@ static void
 gimp_tile_get (GTile *tile)
 {
   extern int _writefd;
-  extern int _readfd;
   extern guchar* _shm_addr;
 
   GPTileReq tile_req;
@@ -151,14 +151,7 @@ gimp_tile_get (GTile *tile)
   if (!gp_tile_req_write (_writefd, &tile_req))
     gimp_quit ();
 
-  if (!wire_read_msg (_readfd, &msg))
-    gimp_quit ();
-
-  if (msg.type != GP_TILE_DATA)
-    {
-      g_message ("unexpected message: %d\n", msg.type);
-      gimp_quit ();
-    }
+  gimp_read_expect_msg(&msg,GP_TILE_DATA);
 
   tile_data = msg.data;
   if ((tile_data->drawable_ID != tile->drawable->id) ||
@@ -193,7 +186,6 @@ static void
 gimp_tile_put (GTile *tile)
 {
   extern int _writefd;
-  extern int _readfd;
   extern guchar* _shm_addr;
 
   GPTileReq tile_req;
@@ -207,14 +199,7 @@ gimp_tile_put (GTile *tile)
   if (!gp_tile_req_write (_writefd, &tile_req))
     gimp_quit ();
 
-  if (!wire_read_msg (_readfd, &msg))
-    gimp_quit ();
-
-  if (msg.type != GP_TILE_DATA)
-    {
-      g_message ("unexpected message: %d\n", msg.type);
-      gimp_quit ();
-    }
+  gimp_read_expect_msg(&msg,GP_TILE_DATA);
 
   tile_info = msg.data;
 
@@ -235,14 +220,7 @@ gimp_tile_put (GTile *tile)
   if (!gp_tile_data_write (_writefd, &tile_data))
     gimp_quit ();
 
-  if (!wire_read_msg (_readfd, &msg))
-    gimp_quit ();
-
-  if (msg.type != GP_TILE_ACK)
-    {
-      g_message ("unexpected message: %d\n", msg.type);
-      gimp_quit ();
-    }
+  gimp_read_expect_msg(&msg,GP_TILE_ACK);
 
   wire_destroy (&msg);
 }

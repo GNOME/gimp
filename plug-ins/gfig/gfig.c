@@ -125,7 +125,7 @@ GdkPixmap *gfig_pixmap;
 gint32 gfig_image;
 gint32 gfig_drawable;
 GtkWidget *brush_page_pw;
-
+GtkWidget *brush_sel_button;
 
 static gint   tile_width, tile_height;
 static gint   img_width, img_height,img_bpp,real_img_bpp;
@@ -3433,6 +3433,43 @@ set_brush_press(GtkWidget *widget,
 
 #endif /* NOT USED */
 
+static void
+gfig_brush_invoker(gchar    *name,
+		   gdouble  opacity,
+		   gint     spacing,
+		   gint     paint_mode,
+		   gint     width,
+		   gint     height,
+		   gchar *  mask_data,
+		   gint     closing)
+{
+  BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); /* Mem leak */
+
+  bdesc->bpp = 3;
+  bdesc->width = width;
+  bdesc->height = height;
+  bdesc->bname = g_strdup(name);
+
+  brush_list_button_press(NULL,NULL,bdesc);
+
+}
+
+static gint
+select_brush_press(GtkWidget *widget,
+		  GdkEventButton *event,
+		  gpointer   data)
+{
+   BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); 
+   gimp_interactive_selection_brush("Gfig brush selection",mygimp_brush_get(),gfig_brush_invoker);
+
+   bdesc->bpp = 3; 
+   bdesc->bname = mygimp_brush_get();
+   
+   brush_list_button_press(NULL,NULL,bdesc); 
+
+   return(TRUE);
+}
+
 static GtkWidget *
 brush_page()
 {
@@ -3446,6 +3483,9 @@ brush_page()
   GtkObject *fade_out_scale_data;
   GtkObject *pressure_scale_data;
   GtkWidget *vbox;
+  GtkWidget *button;
+  BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); /* Initial brush settings */
+
 
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(vbox), 4);
@@ -3514,6 +3554,7 @@ brush_page()
                       (GtkSignalFunc)gfig_brush_update_preview,
                       (gpointer)brush_page_pw);
 
+#if 0
   /* Brush list */
   list_frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (list_frame), GTK_SHADOW_ETCHED_IN);
@@ -3533,6 +3574,20 @@ brush_page()
 
   /* Get brush list and insert in table */
   gfig_get_brushes(list);
+#endif /* 0 */
+
+  /* Start of new brush selection code */
+  brush_sel_button = button = gtk_button_new_with_label ("Set brush...");
+  gtk_table_attach(GTK_TABLE(table), button, 0,4,1,5, 0, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+		      (GtkSignalFunc) select_brush_press,
+		      NULL);
+  gtk_widget_show(button);
+
+  /* Setup initial brush settings */
+  bdesc->bpp = 3;
+  bdesc->bname = mygimp_brush_get();
+  brush_list_button_press(NULL,NULL,bdesc);
 
   return(vbox);
 }

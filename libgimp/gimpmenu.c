@@ -383,3 +383,242 @@ gimp_menu_callback (GtkWidget *w,
 
   (* callback) (*id, callback_data);
 }
+
+
+/* These functions allow the callback PDB work with gtk
+ * ALT.
+ * Note that currently PDB calls in libgimp are completely deterministic.
+ * There is always one call followed by a reply.
+ * If we are in the main gdk wait routine we can cannot get a reply
+ * to a wire message, only the request for a new PDB proc to be run.
+ * we will restrict this to a temp PDB function we have registered.
+ */
+
+/* Copy data from temp_PDB call */
+struct _GBrush_data {
+  gint busy;
+  gchar * bname;
+  gdouble opacity;
+  gint spacing;
+  gint paint_mode;
+  gint width;
+  gint height;
+  gchar * brush_mask_data;
+  GRunBrushCallback callback;
+  gint closing;
+};
+
+typedef struct _GBrush_data GBrush_data;
+
+static GHashTable * gbrush_ht = NULL;
+static GBrush_data * active_brush_pdb = NULL;
+
+static void 
+do_brush_callback(GBrush_data * bdata)
+{
+  if(!bdata->busy)
+    return;
+
+  if(bdata->callback)
+    bdata->callback(bdata->bname,
+		    bdata->opacity,
+		    bdata->spacing,
+		    bdata->paint_mode,
+		    bdata->width,
+		    bdata->height,
+		    bdata->brush_mask_data,
+		    bdata->closing);
+
+  if(bdata->bname)
+    g_free(bdata->bname);  
+  
+  if(bdata->brush_mask_data)
+    g_free(bdata->brush_mask_data); 
+
+  bdata->busy = 0;
+  bdata->bname = bdata->brush_mask_data = 0;
+}
+
+static gint
+idle_test (GBrush_data * bd)
+{
+  do_brush_callback(bd);
+
+  return FALSE;
+}
+
+
+static void
+temp_brush_invoker(char    *name,
+	     int      nparams,
+	     GParam  *param,
+	     int     *nreturn_vals,
+	     GParam **return_vals)
+{
+  static GParam values[1];
+  GStatusType status = STATUS_SUCCESS;
+  GBrush_data *bdata = (GBrush_data *)g_hash_table_lookup(gbrush_ht,name);
+
+  if(!bdata)
+    {
+      g_warning("Can't find internal brush data");
+    }
+  else
+    {
+      if(!bdata->busy)
+	{
+	  /*       printf("\nXX  Here I am in the temp proc\n"); */
+	  
+	  /*       printf("String name passed is '%s'\n",param[0].data.d_string); */
+	  /*       printf("opacity is '%g'\n",(gdouble)param[1].data.d_float); */
+	  /*       printf("spacing is '%d'\n",param[2].data.d_int32); */
+	  /*       printf("paint mode is '%d'\n",param[3].data.d_int32); */
+	  /*       printf("width is '%d'\n",param[4].data.d_int32); */
+	  /*       printf("height is '%d'\n",param[5].data.d_int32); */
+	  /*       printf("String mask data length passed is '%d'\n",param[6].data.d_int32); */
+	  /*       printf("closing is '%d'\n",param[8].data.d_int32); */
+      
+	  bdata->bname = g_strdup(param[0].data.d_string);
+	  bdata->opacity = (gdouble)param[1].data.d_float;
+	  bdata->spacing = param[2].data.d_int32;
+	  bdata->paint_mode = param[3].data.d_int32;
+	  bdata->width = param[4].data.d_int32;
+	  bdata->height = param[5].data.d_int32;
+	  bdata->brush_mask_data = g_malloc(param[6].data.d_int32);
+	  g_memmove(bdata->brush_mask_data,param[7].data.d_int8array,param[6].data.d_int32); 
+	  bdata->closing = param[8].data.d_int32;
+	  active_brush_pdb = bdata;
+	  bdata->busy = 1;
+	  
+	  gtk_idle_add((GtkFunction) idle_test,active_brush_pdb);
+	}
+    }
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+  
+  values[0].type = PARAM_STATUS;
+  values[0].data.d_status = status;
+}
+
+extern void gimp_run_temp(); /* gimp.c */
+
+void input_callback( gpointer          data,
+                     gint              source,
+                     GdkInputCondition condition )
+{
+  /* We have some data in the wire - read it */
+  /* The below will only ever run a single proc */
+  gimp_run_temp();
+
+}
+
+static void
+gimp_setup_callbacks()
+{
+  static int first_time = TRUE;
+  extern int _readfd;
+  if(first_time)
+    {
+      /* Tie into the gdk input function */
+      /* only once */
+      gdk_input_add(_readfd,GDK_INPUT_READ,input_callback,NULL);
+      first_time = FALSE;
+    }
+}
+
+static gchar *
+gen_temp_plugin_name()
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  char *result;
+
+  return_vals = gimp_run_procedure ("gimp_temp_PDB_name",
+				    &nreturn_vals,
+				    PARAM_END);
+
+  result = "temp_name_gen_failed";
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    result = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return result;
+}
+
+
+/* Can only be used in conjuction with gdk since we need to tie into the input 
+ * selection mech.
+ */
+void
+gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushCallback callback)
+{
+  static GParamDef args[] =
+  {
+    { PARAM_STRING, "str", "String"},
+    { PARAM_FLOAT, "opacity", "Opacity"},
+    { PARAM_INT32, "spacing", "spacing"},
+    { PARAM_INT32, "paint mode","paint mode"},
+    { PARAM_INT32, "mask width","brush width"},
+    { PARAM_INT32, "mask height","brush heigth"},
+    { PARAM_INT32, "mask len","Length of brush mask data"},
+    { PARAM_INT8ARRAY,"mask data","The brush mask data"},
+    { PARAM_INT32, "dialog status","Registers if the dialog was closing [0 = No, 1 = Yes]"},
+  };
+  static GParamDef *return_vals = NULL;
+  static int nargs = sizeof (args) / sizeof (args[0]);
+  static int nreturn_vals = 0;
+  gint bnreturn_vals;
+  GParam *pdbreturn_vals;
+  gchar *pdbname = gen_temp_plugin_name();
+  GBrush_data *bdata = g_malloc0(sizeof(struct _GBrush_data));
+
+  gimp_install_temp_proc (pdbname,
+			  "Temp PDB for interactive popups",
+			  "More here later",
+			  "Andy Thomas",
+			  "Andy Thomas",
+			  "1997",
+			  NULL,
+			  "RGB*, GRAY*",
+			  PROC_TEMPORARY,
+			  nargs, nreturn_vals,
+			  args, return_vals,
+			  temp_brush_invoker);
+
+  pdbreturn_vals =
+    gimp_run_procedure("gimp_brushes_popup",
+		       &bnreturn_vals,
+		       PARAM_STRING,pdbname,
+		       PARAM_STRING,dialogname,
+		       PARAM_STRING,brush_name,/*name*/
+		       PARAM_FLOAT, 1.0, /*Opacity*/
+		       PARAM_INT32, -1, /*default spacing*/
+		       PARAM_INT32, 0, /*paint mode*/
+		       PARAM_END);
+
+/*   if (pdbreturn_vals[0].data.d_status != STATUS_SUCCESS) */
+/*     { */
+/*       printf("ret failed = 0x%x\n",bnreturn_vals); */
+/*     } */
+/*   else */
+/*       printf("worked = 0x%x\n",bnreturn_vals); */
+
+  gimp_setup_callbacks(); /* New function to allow callbacks to be watched */
+
+  gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
+
+  /*   g_free(pdbname); */
+
+  /* Now add to hash table so we can find it again */
+  if(gbrush_ht == NULL)
+    gbrush_ht = g_hash_table_new (g_str_hash,
+				      g_str_equal);
+
+  bdata->callback = callback;
+  g_hash_table_insert(gbrush_ht,pdbname,bdata);
+
+}
+
+

@@ -405,7 +405,7 @@ create_blend_options ()
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  pm_menu = create_paint_mode_menu (paint_mode_callback);
+  pm_menu = create_paint_mode_menu (paint_mode_callback,NULL);
   pm_option_menu = gtk_option_menu_new ();
   gtk_table_attach (GTK_TABLE (table), pm_option_menu, 1, 2, 2, 3,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
