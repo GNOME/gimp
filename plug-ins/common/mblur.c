@@ -306,8 +306,8 @@ mblur_linear (void)
   max_progress = sel_width * sel_height;
 
   n = mbvals.length;
-  px = n * cos (mbvals.angle / 180.0 * G_PI);
-  py = n * sin (mbvals.angle / 180.0 * G_PI);
+  px = (gdouble) n * cos (mbvals.angle / 180.0 * G_PI);
+  py = (gdouble) n * sin (mbvals.angle / 180.0 * G_PI);
 
   /*
    * Initialization for Bresenham algorithm:
@@ -377,7 +377,7 @@ mblur_linear (void)
 		    sum[c]+= pixel[c];
 		  i++;
 
-		  while (e >= 0)
+		  while (e >= 0 && dx)
 		    {
 		      if (swapdir)
 			xx += s1;

@@ -28,6 +28,10 @@
  */
 
 /* revision history:
+ * 1.2.2a;  2001/10/21   hof: bufix # 61677 (error in duplicate frames GUI) 
+ *                            and disable duplicate for Unsaved/untitled Images.
+ *                            (creating frames from such images with a default name may cause problems
+ *                             as unexpected overwriting frames or mixing animations with different sized frames)
  * 1.2.1a;  2001/07/07   hof: p_file_copy use binary modes in fopen (hope that fixes bug #52890 in video/duplicate)
  * 1.1.29a; 2000/11/23   hof: gap locking (changed to procedures and placed here)
  * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
@@ -634,6 +638,9 @@ t_anim_info *p_alloc_ainfo(gint32 image_id, GimpRunModeType run_mode)
    l_ainfo_ptr->old_filename = gimp_image_get_filename(image_id);
    if(l_ainfo_ptr->old_filename == NULL)
    {
+     /* note: gimp versions > 1.2  have default filenames for new created images
+      * and we'll probably never step into this place anymore
+      */
      l_ainfo_ptr->old_filename = g_strdup("frame_0001.xcf");    /* assign a defaultname */
      gimp_image_set_filename (image_id, l_ainfo_ptr->old_filename);
    }
@@ -792,7 +799,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
 
   /* set first_frame_nr and last_frame_nr (found as "_0099" in diskfile namepart) */
   ainfo_ptr->last_frame_nr = l_maxnr;
-  ainfo_ptr->first_frame_nr = l_minnr;
+  ainfo_ptr->first_frame_nr = MIN(l_minnr, l_maxnr);
 
   return 0;           /* OK */
 }	/* end p_dir_ainfo */
@@ -924,9 +931,9 @@ int p_chk_framerange(t_anim_info *ainfo_ptr)
   {
      p_msg_win(ainfo_ptr->run_mode,
 	       _("OPERATION CANCELLED.\n"
-		 "GAP-plugins works only with filenames\n"
-		 "that end with _0001.xcf.\n"
-		 "==> Rename your image, then try again."));
+                 "GAP plug-ins only work with filenames\n"
+                 "that end in numbers like _0001.xcf.\n"
+                 "==> Rename your image, then try again."));
      return -1;
   }
   return 0;
@@ -1554,16 +1561,23 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    long  l_src_nr, l_src_nr_min, l_src_nr_max;
    char  *l_dup_name;
    char  *l_curr_name;
-   gdouble    l_percentage, l_percentage_step;  
-
-   if(gap_debug) fprintf(stderr, "DEBUG  p_dup fr:%d to:%d cnt:%d\n",
-                         (int)range_from, (int)range_to, (int)cnt);
+   gdouble    l_percentage, l_percentage_step;
+ 
+   if(gap_debug) fprintf(stderr, "DEBUG  p_dup fr:%d to:%d cnt:%d extension:%s: basename:%s frame_cnt:%d\n",
+                         (int)range_from, (int)range_to, (int)cnt, ainfo_ptr->extension, ainfo_ptr->basename, (int)ainfo_ptr->frame_cnt);
 
    if(cnt < 1) return -1;
 
    l_curr_name = p_alloc_fname(ainfo_ptr->basename, ainfo_ptr->curr_frame_nr, ainfo_ptr->extension);
    /* save current frame  */   
-   p_save_named_frame(ainfo_ptr->image_id, l_curr_name);
+   if(p_save_named_frame(ainfo_ptr->image_id, l_curr_name) < 0)
+   {
+     gchar *tmp_errtxt;
+     tmp_errtxt = g_strdup_printf(_("Error: could not save frame %s"), l_curr_name);
+     p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+     g_free(tmp_errtxt);
+     return -1;
+   }
 
    /* use a new name (0001.xcf Konvention) */ 
    gimp_image_set_filename (ainfo_ptr->image_id, l_curr_name);
@@ -2127,13 +2141,14 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   p_init_arr_arg(&argv[2], WGT_INT_PAIR);
   argv[2].label_txt = _("N times:");
   argv[2].constraint = FALSE;
-  argv[2].int_min   = 0;
+  argv[2].int_min   = 1;
   argv[2].int_max   = 99;
   argv[2].int_ret   = 1;
-  argv[2].umin      = 0;
+  argv[2].umin      = 1;
   argv[2].umax      = 9999;
   argv[2].help_txt  = _("Copy selected Range n-times  \n(you may type in Values > 99)");
-  
+
+
   if(TRUE == p_array_dialog(l_title, _("Duplicate Frame Range"),  3, argv))
   { 
     g_free (l_title);
@@ -2172,7 +2187,22 @@ int gap_dup(GimpRunModeType run_mode, gint32 image_id, int nr,
       if(run_mode == GIMP_RUN_INTERACTIVE)
       {
          if(0 != p_chk_framechange(ainfo_ptr)) { l_cnt = -1; }
-         else { l_cnt = p_dup_dialog(ainfo_ptr, &l_from, &l_to); }
+         else
+	 {
+	   if(*ainfo_ptr->extension == '\0' && ainfo_ptr->frame_cnt == 0)
+	   {
+	     /* duplicate was called on a frame without extension and without framenumer in its name
+	      * (typical for new created images named like 'Untitled' (or 'Unbenannt' for german GUI or .. in other languages)
+	      */
+	       p_msg_win(ainfo_ptr->run_mode,
+		       _("OPERATION CANCELLED.\n"
+			 "GAP plug-ins only work with filenames\n"
+			 "that end in numbers like _0001.xcf.\n"
+			 "==> Rename your image, then try again."));
+	       return -1;
+	   }
+	   l_cnt = p_dup_dialog(ainfo_ptr, &l_from, &l_to);
+	 }
 
          if((0 != p_chk_framechange(ainfo_ptr)) || (l_cnt < 1))
          {
@@ -2926,7 +2956,7 @@ p_gap_lock_is_locked(gint32 image_id, GimpRunModeType run_mode)
           gimp_message(l_lockmsg);
           g_free(l_lockmsg);
        }
-       printf("GAP plugin is LOCKED  ID:%s PID:%d\n", l_lock.key, (int)l_lock.pid);
+       printf("GAP plug-in is LOCKED  ID:%s PID:%d\n", l_lock.key, (int)l_lock.pid);
        
        return(TRUE);
      }

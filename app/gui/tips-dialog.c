@@ -174,6 +174,7 @@ tips_dialog_create (void)
 
   button = gtk_button_new_with_label (_("Previous Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -183,6 +184,7 @@ tips_dialog_create (void)
 
   button = gtk_button_new_with_label (_("Next Tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
