@@ -67,7 +67,7 @@ static GimpActionEntry file_actions[] =
     N_("_Acquire"), NULL, NULL },
 
   { "file-open", GTK_STOCK_OPEN,
-    N_("_Open..."), "<control>O", NULL,
+    N_("_Open..."), NULL, NULL,
     G_CALLBACK (file_open_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
@@ -75,6 +75,11 @@ static GimpActionEntry file_actions[] =
     N_("_Open..."), NULL, NULL,
     G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
+
+  { "file-open-as-layer", GIMP_STOCK_LAYER,
+    N_("Open as _Layer..."), "<control><alt>O", NULL,
+    G_CALLBACK (file_open_as_layer_cmd_callback),
+    GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
     N_("_Open Location..."), NULL, NULL,
@@ -199,6 +204,7 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
+  SET_SENSITIVE ("file-open-as-layer",    gimage);
   SET_SENSITIVE ("file-save",             gimage && drawable);
   SET_SENSITIVE ("file-save-as",          gimage && drawable);
   SET_SENSITIVE ("file-save-a-copy",      gimage && drawable);

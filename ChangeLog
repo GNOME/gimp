@@ -1,3 +1,20 @@
+2004-09-21  Michael Natterer  <mitch@gimp.org>
+
+	For the sake of completeness, added a GUI for the hidden
+	"Open as Layer" feature:
+
+	* app/actions/file-actions.c
+	* app/actions/file-commands.[ch]: added "file-open-as-layer"
+	action and callback. Abuse the "gimage" field of GimpFileDialog to
+	indicate layer opening (it's otherwise unused for file-open).
+
+	* app/dialogs/file-open-dialog.c: if dialog->gimage is non-NULL,
+	open the selected files as layers for that image.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_FILE_OPEN_AS_LAYER.
+
+	* menus/image-menu.xml.in: added it to the menu.
+
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c (save_dialog): let the dialog collapse

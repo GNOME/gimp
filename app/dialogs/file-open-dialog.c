@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimpprogress.h"
 
 #include "file/file-open.h"
@@ -49,6 +50,11 @@ static void       file_open_dialog_response   (GtkWidget     *open_dialog,
                                                Gimp          *gimp);
 static gboolean   file_open_dialog_open_image (GtkWidget     *open_dialog,
                                                Gimp          *gimp,
+                                               const gchar   *uri,
+                                               const gchar   *entered_filename,
+                                               PlugInProcDef *load_proc);
+static gboolean   file_open_dialog_open_layer (GtkWidget     *open_dialog,
+                                               GimpImage     *gimage,
                                                const gchar   *uri,
                                                const gchar   *entered_filename,
                                                PlugInProcDef *load_proc);
@@ -103,21 +109,41 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
 
+  /*  open layers in reverse order so they appear in the same
+   *  order as in the file dialog
+   */
+  if (dialog->gimage)
+    uris = g_slist_reverse (uris);
+
   for (list = uris; list; list = g_slist_next (list))
     {
       gchar *filename = g_filename_from_uri (list->data, NULL, NULL);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {
-          if (file_open_dialog_open_image (open_dialog,
-                                           gimp,
-                                           list->data,
-                                           list->data,
-                                           dialog->file_proc))
+          if (dialog->gimage)
             {
-              success = TRUE;
+              if (file_open_dialog_open_layer (open_dialog,
+                                               dialog->gimage,
+                                               list->data,
+                                               list->data,
+                                               dialog->file_proc))
+                {
+                  success = TRUE;
+                }
+            }
+          else
+            {
+              if (file_open_dialog_open_image (open_dialog,
+                                               gimp,
+                                               list->data,
+                                               list->data,
+                                               dialog->file_proc))
+                {
+                  success = TRUE;
 
-              gdk_window_raise (open_dialog->window);
+                  gdk_window_raise (open_dialog->window);
+                }
             }
         }
 
@@ -128,7 +154,12 @@ file_open_dialog_response (GtkWidget *open_dialog,
     }
 
   if (success)
-    gtk_widget_hide (open_dialog);
+    {
+      gtk_widget_hide (open_dialog);
+
+      if (dialog->gimage)
+        gimp_image_flush (dialog->gimage);
+    }
 
   gimp_file_dialog_set_sensitive (dialog, TRUE);
 
@@ -158,6 +189,57 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
   if (gimage)
     {
+      return TRUE;
+    }
+  else if (status != GIMP_PDB_CANCEL)
+    {
+      gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+      g_message (_("Opening '%s' failed:\n\n%s"),
+                 filename, error->message);
+      g_clear_error (&error);
+
+      g_free (filename);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+file_open_dialog_open_layer (GtkWidget     *open_dialog,
+                             GimpImage     *gimage,
+                             const gchar   *uri,
+                             const gchar   *entered_filename,
+                             PlugInProcDef *load_proc)
+{
+  GimpLayer         *new_layer;
+  GimpPDBStatusType  status;
+  GError            *error = NULL;
+
+  new_layer = file_open_layer (gimage->gimp,
+                               gimp_get_user_context (gimage->gimp),
+                               GIMP_PROGRESS (open_dialog),
+                               gimage, uri,
+                               &status, &error);
+
+  if (new_layer)
+    {
+      GimpItem *new_item = GIMP_ITEM (new_layer);
+      gint      width, height;
+      gint      off_x, off_y;
+
+      width  = gimp_image_get_width (gimage);
+      height = gimp_image_get_height (gimage);
+
+      gimp_item_offsets (new_item, &off_x, &off_y);
+
+      off_x = (width  - gimp_item_width  (new_item)) / 2 - off_x;
+      off_y = (height - gimp_item_height (new_item)) / 2 - off_y;
+
+      gimp_item_translate (new_item, off_x, off_y, FALSE);
+
+      gimp_image_add_layer (gimage, new_layer, -1);
+
       return TRUE;
     }
   else if (status != GIMP_PDB_CANCEL)
