@@ -12,10 +12,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.3\n"
+"Project-Id-Version: gimp 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-03 00:57+0100\n"
-"PO-Revision-Date: 2003-11-03 13:52+0100\n"
+"PO-Revision-Date: 2003-11-05 15:26+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -166,19 +166,16 @@ msgid ""
 msgstr "  --debug-handlers         Abilita debugging dei segnali non fatali.\n"
 
 #: app/main.c:471
-#, fuzzy
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
 msgstr ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Modalità di debugging per segnali fatali.\n"
-"\n"
 
 #: app/main.c:473
-#, fuzzy
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr "  -b, --batch <comandi>  Esegue comandi in modalità batch.\n"
+msgstr "  -b, --batch <comandi>    Esegue comandi in modalità batch.\n"
 
 #: app/main.c:493
 msgid "(This console window will close in ten seconds)\n"
@@ -409,7 +406,7 @@ msgstr "Specifica come dovrebbe essere disegnata l'area attorno l'immagine."
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr ""
+msgstr "Imposta il colore di riempimento della tela se la modalità riempimento è impostata su color personalizzato."
 
 #: app/config/gimprc-blurbs.h:23
 msgid ""
@@ -417,6 +414,10 @@ msgid ""
 "cycling as opposed to be drawn as animated lines.  This color cycling option "
 "works only with 8-bit displays."
 msgstr ""
+"Specifica che l'animazione del tratteggio per le regioni selezionate sarà\n"
+"ottenuta con il cambiamento ciclico della mappa dei colori invece che come\n"
+"linee animate. L'opzione colori ciclici funziona solo con schermi a colori\n"
+"a 8 bit."
 
 #: app/config/gimprc-blurbs.h:28
 msgid "Ask for confirmation before closing an image without saving."
@@ -505,7 +506,7 @@ msgstr ""
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
-msgstr ""
+msgstr "Velocità dell'animazione del tratteggio di selezione. Il valore è in millisecondi (un tempo inferiore indica una velocità superiore)."
 
 #: app/config/gimprc-blurbs.h:144
 msgid ""
@@ -620,61 +621,45 @@ msgstr ""
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr ""
-"Se abilitata i righelli sono visibili. Questo può essere modificato anche "
-"con il comando \"Visualizza->Mostra i righelli\""
+msgstr "Se abilitata i righelli sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra i righelli\""
 
 #: app/config/gimprc-blurbs.h:237
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr ""
-"Se abilitata le barre di scorrimento sono visibili. Questo può essere "
-"modificato con il comando \"Visualizza->Mostra le barre di scorrimento\"."
+msgstr "Se abilitata le barre di scorrimento sono visibili. Questo comportamento può essere modificato con il comando \"Visualizza->Mostra le barre di scorrimento\"."
 
 #: app/config/gimprc-blurbs.h:241
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"Se abilitata la barra di stato è visibile. Questo può essere modificato "
-"anche con il comando \"Visualizza->Mostra barra di stato\"."
+"Se abilitata la barra di stato è visibile. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:245
-#, fuzzy
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr ""
-"Se abilitata la barra dei menu è visibile. Questo può essere modificato "
-"anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata la selezione è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra selezione\"."
 
 #: app/config/gimprc-blurbs.h:249
-#, fuzzy
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr ""
-"Se abilitata la barra dei menu è visibile. Questo può essere modificato "
-"anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata il bordo dei livelli è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:253
-#, fuzzy
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr ""
-"Se abilitata i righelli sono visibili. Questo può essere modificato anche "
-"con il comando \"Visualizza->Mostra i righelli\""
+msgstr "Se abilitata le guide sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra le guide\"."
 
 #: app/config/gimprc-blurbs.h:257
-#, fuzzy
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr ""
-"Se abilitata la barra dei menu è visibile. Questo può essere modificato "
-"anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata la griglia è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra la griglia\"."
 
 #: app/config/gimprc-blurbs.h:261
 msgid "Enable to display a handy GIMP tip on startup."
@@ -758,6 +743,11 @@ msgid ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
+"La cache delle tile fa in modo che GIMP non perda troppo tempo continuando "
+"a scambiare tile tra la memoria e il disco. Impostando alto questo valore "
+"farà in modo che GIMP usi meno il file di scambio a scapito della memoria. "
+"Viceversa, una cache piccola provocherà un uso maggiore del file di scambio "
+"e di meno memoria da parte di GIMP."
 
 #: app/config/gimprc-blurbs.h:316
 msgid "Sets the manner in which transparency is displayed in images."
@@ -766,8 +756,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:319
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr ""
-"Imposta la grandezza della scacchiera usata per mostrare la trasparenza."
+msgstr "Imposta la grandezza della scacchiera usata per mostrare la trasparenza."
 
 #: app/config/gimprc-blurbs.h:322
 msgid ""
@@ -3164,11 +3153,11 @@ msgstr "/Stile scheda/St_ato e testo"
 
 #: app/gui/dialogs-menu.c:165
 msgid "/View as _List"
-msgstr "/Vista come e_lenco"
+msgstr "/Mostra come e_lenco"
 
 #: app/gui/dialogs-menu.c:169
 msgid "/View as _Grid"
-msgstr "/Vissta come _griglia"
+msgstr "/Mostra come _griglia"
 
 #: app/gui/dialogs-menu.c:176
 msgid "/Show Image _Menu"
@@ -4765,7 +4754,7 @@ msgstr "Pixel"
 #: app/gui/info-window.c:371 app/gui/info-window.c:372
 #: app/widgets/gimpcolorframe.c:343
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #: app/gui/info-window.c:159 app/gui/info-window.c:182
 #: app/gui/resize-dialog.c:479
@@ -5590,7 +5579,7 @@ msgstr "Utilizzo \"punto per punto\" come preimpostazione"
 
 #: app/gui/preferences-dialog.c:1329
 msgid "Marching _Ants Speed:"
-msgstr "Velocità _animazione:"
+msgstr "Velocità _animazione selezione:"
 
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1333
@@ -5808,9 +5797,8 @@ msgid "Session Management"
 msgstr "Gestione sessioni"
 
 #: app/gui/preferences-dialog.c:1752
-#, fuzzy
 msgid "Session"
-msgstr "Versione:"
+msgstr "Sessione"
 
 #. Window Positions
 #: app/gui/preferences-dialog.c:1759
@@ -5858,9 +5846,8 @@ msgid "Save Input Device Settings Now"
 msgstr "Salva lo stato dei dispositivi di ingresso"
 
 #: app/gui/preferences-dialog.c:1845
-#, fuzzy
 msgid "Clear Saved Input Device Settings Now"
-msgstr "Salva lo stato dei dispositivi di ingresso"
+msgstr "Cancella lo stato dei dispositivi di ingresso salvato"
 
 #: app/gui/preferences-dialog.c:1860 app/gui/preferences-dialog.c:1863
 msgid "Folders"
@@ -6315,14 +6302,12 @@ msgid "/File/Dialogs/_Paths"
 msgstr "/File/Finestre/_Tracciati"
 
 #: app/gui/toolbox-menu.c:136
-#, fuzzy
 msgid "/File/Dialogs/Inde_xed Palette"
-msgstr "/Finestre/Palette _indicizzata"
+msgstr "/File/Finestre/Tavolozza _indicizzata"
 
 #: app/gui/toolbox-menu.c:141
-#, fuzzy
 msgid "/File/Dialogs/Histogra_m"
-msgstr "/File/Finestre/Cronologia modifiche"
+msgstr "/File/Finestre/Cronologia _modifiche"
 
 #: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/_Selection Editor"
@@ -6365,9 +6350,8 @@ msgid "/File/Dialogs/_Buffers"
 msgstr "/File/Finestre/_Buffer"
 
 #: app/gui/toolbox-menu.c:202
-#, fuzzy
 msgid "/File/Dialogs/_Images"
-msgstr "/File/Finestre/I_mmagini"
+msgstr "/File/Finestre/_Immagini"
 
 #: app/gui/toolbox-menu.c:207
 msgid "/File/Dialogs/Document Histor_y"
@@ -6378,9 +6362,8 @@ msgid "/File/Dialogs/_Templates"
 msgstr "/File/Finestre/Modelli"
 
 #: app/gui/toolbox-menu.c:217
-#, fuzzy
 msgid "/File/Dialogs/T_ools"
-msgstr "/File/Finestre/Caratteri"
+msgstr "/File/Finestre/Str_umenti"
 
 #: app/gui/toolbox-menu.c:222
 msgid "/File/Dialogs/Error Co_nsole"
@@ -6806,9 +6789,7 @@ msgstr "Fare clic su \"Continua\" per accettare le impostazioni."
 #: app/gui/user-install-dialog.c:951
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
-msgstr ""
-"<b>Per una prestazione ottimale di GIMP, è necessario aggiustare alcuni "
-"parametri.</b>"
+msgstr "<b>Per una prestazione ottimale di GIMP, è necessario regolare alcuni parametri.</b>"
 
 #: app/gui/user-install-dialog.c:957
 msgid "Click \"Continue\" to start The GIMP."
@@ -6853,9 +6834,8 @@ msgid ""
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP utilizza un ammontare di memoria limitata per gestire le immagini,\n"
-"chiamata \"cache immagine\". Dovreste modificarne la dimensione "
-"considerando\n"
-"l'ammontare di memoria per gli altri processi attivi."
+"chiamata \"cache immagine\". Dovreste modificarne la dimensione\n"
+"considerando l'ammontare di memoria per gli altri processi attivi."
 
 #: app/gui/user-install-dialog.c:1190
 msgid ""
@@ -7430,6 +7410,12 @@ msgid ""
 "Some text properties may be wrong.  Unless you want to\n"
 "edit the text layer, you don't need to worry about this."
 msgstr ""
+"Problemi nell'elaborare il testo parassita per il livello %s:\n"
+"%s\n"
+"\n"
+"Alcune proprietà del testo possono essere errate. A meno\n"
+"che non si voglia modificare il livello del testo, non\n"
+"preoccupatevi di questo."
 
 #: app/tools/tools-enums.c:14
 msgid "Pick Only"
@@ -7564,7 +7550,7 @@ msgstr "Sfumatura in corso..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Adjust brightness and contrast"
-msgstr "Aggiusta luminosità e contrasto"
+msgstr "Regola luminosità e contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:86
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
@@ -7572,7 +7558,7 @@ msgstr "/Strumenti/Strumenti di colore/Luminosità-Cont_rasto..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:147
 msgid "Adjust Brightness and Contrast"
-msgstr "Aggiusta luminosità e contrasto"
+msgstr "Regola luminosità e contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:180
 msgid "Brightness-Contrast does not operate on indexed drawables."
@@ -7656,7 +7642,7 @@ msgstr "Allineamento"
 
 #: app/tools/gimpcolorbalancetool.c:96
 msgid "Adjust color balance"
-msgstr "Imposta bilanciamento colore"
+msgstr "Regola il bilanciamento colore"
 
 #: app/tools/gimpcolorbalancetool.c:97
 msgid "/Tools/Color Tools/Color _Balance..."
@@ -7664,7 +7650,7 @@ msgstr "/Strumenti/Strumenti di colore/_Bilanciamento colore..."
 
 #: app/tools/gimpcolorbalancetool.c:158
 msgid "Adjust Color Balance"
-msgstr "Imposta bilanciamento del colore"
+msgstr "Regola il bilanciamento del colore"
 
 #: app/tools/gimpcolorbalancetool.c:192
 msgid "Color balance operates only on RGB color drawables."
@@ -7699,29 +7685,24 @@ msgid "Preserve _Luminosity"
 msgstr "Preserva _luminosità"
 
 #: app/tools/gimpcolorizetool.c:95
-#, fuzzy
 msgid "Colorize"
-msgstr "Posterizza"
+msgstr "Colora"
 
 #: app/tools/gimpcolorizetool.c:96
-#, fuzzy
 msgid "Colorize the image"
-msgstr "Posterizza l'immagine"
+msgstr "Colora l'immagine"
 
 #: app/tools/gimpcolorizetool.c:97
-#, fuzzy
 msgid "/Tools/Color Tools/Colori_ze..."
-msgstr "/Strumenti/Strumenti di colore/Posteriz_zazione..."
+msgstr "/Strumenti/Strumenti di colore/Colora_zione..."
 
 #: app/tools/gimpcolorizetool.c:161
-#, fuzzy
 msgid "Colorize the Image"
-msgstr "Posterizza l'immagine"
+msgstr "Colora l'immagine"
 
 #: app/tools/gimpcolorizetool.c:194
-#, fuzzy
 msgid "Colorize operates only on RGB color drawables."
-msgstr "Posterizza opera solo su figure con colore RGB."
+msgstr "Colora opera solo su figure a colori RGB."
 
 #: app/tools/gimpcolorizetool.c:236
 msgid "Select Color"
@@ -7775,13 +7756,12 @@ msgid "Blur or Sharpen"
 msgstr "Sfoca o contrasta"
 
 #: app/tools/gimpconvolvetool.c:92
-#, fuzzy
 msgid "/Tools/Paint Tools/Con_volve"
-msgstr "/Strumenti/Strumenti di disegno/Arrotolamento"
+msgstr "/Strumenti/Strumenti di disegno/Ar_rotolamento"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:221
-#, fuzzy, c-format
+#, c-format
 msgid "Convolve Type  %s"
 msgstr "Tipo di arrotolamento %s"
 
@@ -7844,7 +7824,7 @@ msgstr "Riduzione automatica"
 
 #: app/tools/gimpcurvestool.c:161
 msgid "Adjust color curves"
-msgstr "Aggiusta curva colore"
+msgstr "Regola le curve di colore"
 
 #: app/tools/gimpcurvestool.c:162
 msgid "/Tools/Color Tools/_Curves..."
@@ -7852,11 +7832,11 @@ msgstr "/Strumenti/Strumenti di colore/_Curve..."
 
 #: app/tools/gimpcurvestool.c:232
 msgid "Adjust Color Curves"
-msgstr "Imposta curve di colore"
+msgstr "Regola le curve di colore"
 
 #: app/tools/gimpcurvestool.c:289
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "Le curve per le immagini a colori indicizzati non sono impostabili."
+msgstr "Le curve per le immagini a colori indicizzati non sono modificabili."
 
 #: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:431
 msgid "R_eset Channel"
@@ -7986,13 +7966,12 @@ msgid "/Tools/Selection Tools/Fu_zzy Select"
 msgstr "/Strumenti/Strumenti di selezione/Selezione fu_zzy"
 
 #: app/tools/gimphistogramoptions.c:151
-#, fuzzy
 msgid "Histogram Scale"
-msgstr "Scala dell'istogramma:"
+msgstr "Scala istogramma"
 
 #: app/tools/gimphuesaturationtool.c:110
 msgid "Adjust hue and saturation"
-msgstr "Aggiusta Tonalità-Saturazione"
+msgstr "Regola tonalità e saturazione"
 
 #: app/tools/gimphuesaturationtool.c:111
 msgid "/Tools/Color Tools/Hue-_Saturation..."
@@ -8000,7 +7979,7 @@ msgstr "/Strumenti/Strumenti di colore/Tonalità-_Saturazione..."
 
 #: app/tools/gimphuesaturationtool.c:175
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Aggiustamenti tonalità / luminosità / saturazione"
+msgstr "Regola tonalità / luminosità / saturazione"
 
 #: app/tools/gimphuesaturationtool.c:209
 msgid "Hue-Saturation operates only on RGB color drawables."
@@ -8053,7 +8032,7 @@ msgstr "R_eimposta colore"
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:257
 msgid "Adjustment"
-msgstr "Aggiustamento"
+msgstr "Regolazione"
 
 #: app/tools/gimpinkoptions.c:271 app/tools/gimpinkoptions.c:297
 msgid "Size:"
@@ -8112,7 +8091,7 @@ msgstr "/Strumenti/Strumenti di selezione/Forbici _intelligenti"
 
 #: app/tools/gimplevelstool.c:163
 msgid "Adjust color levels"
-msgstr "Aggiusta livelli colore"
+msgstr "Regola i livelli colore"
 
 #: app/tools/gimplevelstool.c:164
 msgid "/Tools/Color Tools/_Levels..."
@@ -8120,11 +8099,11 @@ msgstr "/Strumenti/Strumenti di colore/_Livelli..."
 
 #: app/tools/gimplevelstool.c:232
 msgid "Adjust Color Levels"
-msgstr "Aggiusta livelli colore"
+msgstr "Regola i livelli colore"
 
 #: app/tools/gimplevelstool.c:282
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "I livelli per figure in scala di colore non possono essere modificate."
+msgstr "I livelli per le figure a colori indicizzati non sono modificabili."
 
 #: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
@@ -8170,7 +8149,7 @@ msgstr "_Auto"
 
 #: app/tools/gimplevelstool.c:696
 msgid "Adjust levels automatically"
-msgstr "Aggiusta i livelli automaticamente"
+msgstr "Regola livelli automaticamente"
 
 #: app/tools/gimplevelstool.c:1416
 msgid "Load Levels"
@@ -8205,9 +8184,8 @@ msgid "Measure"
 msgstr "Misurino"
 
 #: app/tools/gimpmeasuretool.c:114
-#, fuzzy
 msgid "Measure distances and angles"
-msgstr "Misura distanze e angoli"
+msgstr "Misura distanze ed angoli"
 
 #: app/tools/gimpmeasuretool.c:115
 msgid "/Tools/_Measure"
@@ -8226,24 +8204,20 @@ msgid "Distance:"
 msgstr "Distanza:"
 
 #: app/tools/gimpmoveoptions.c:179
-#, fuzzy
 msgid "Pick a Layer or Guide to Move"
-msgstr "Prendi un livello / tracciato da spostare"
+msgstr "Prendi un livello o un tracciato da spostare"
 
 #: app/tools/gimpmoveoptions.c:180
-#, fuzzy
 msgid "Move the Current Layer"
-msgstr "Sposta tracciato / livello corrente"
+msgstr "Sposta livello corrente"
 
 #: app/tools/gimpmoveoptions.c:189
-#, fuzzy
 msgid "Pick a Path to Move"
-msgstr "Prendi un livello / tracciato da spostare"
+msgstr "Prendi un tracciato da spostare"
 
 #: app/tools/gimpmoveoptions.c:190
-#, fuzzy
 msgid "Move the Current Path"
-msgstr "Sposta tracciato / livello corrente"
+msgstr "Sposta tracciato corrente"
 
 #: app/tools/gimpmovetool.c:110
 msgid "Move layers & selections"
@@ -8914,48 +8888,40 @@ msgid "Blue:"
 msgstr "Blu:"
 
 #: app/widgets/gimpcolorframe.c:261 app/widgets/gimpcolorframe.c:292
-#, fuzzy
 msgid "Value:"
-msgstr "Valore"
+msgstr "Valore:"
 
 #: app/widgets/gimpcolorframe.c:280
-#, fuzzy
 msgid "Hex:"
-msgstr "_Tonalità:"
+msgstr "Esa:"
 
 #: app/widgets/gimpcolorframe.c:290
-#, fuzzy
 msgid "Hue:"
-msgstr "_Tonalità:"
+msgstr "Ton.:"
 
 #: app/widgets/gimpcolorframe.c:291
-#, fuzzy
 msgid "Sat.:"
-msgstr "Stato:"
+msgstr "Sat.:"
 
 #: app/widgets/gimpcolorframe.c:308
-#, fuzzy
 msgid "Cyan:"
-msgstr "Ciano"
+msgstr "Ciano:"
 
 #: app/widgets/gimpcolorframe.c:309
-#, fuzzy
 msgid "Yellow:"
-msgstr "Giallo"
+msgstr "Giallo:"
 
 #: app/widgets/gimpcolorframe.c:310
-#, fuzzy
 msgid "Magenta:"
-msgstr "Magenta"
+msgstr "Magenta:"
 
 #: app/widgets/gimpcolorframe.c:311
-#, fuzzy
 msgid "Black:"
-msgstr "Nero"
+msgstr "Nero:"
 
 #: app/widgets/gimpcolorframe.c:325
 msgid "Alpha:"
-msgstr "Alpha:"
+msgstr "Alfa:"
 
 #: app/widgets/gimpcolormapeditor.c:225 app/widgets/gimppaletteeditor.c:319
 msgid "Edit Color"
@@ -9056,9 +9022,8 @@ msgid "You can drop dockable dialogs here."
 msgstr "Puoi rilasciare qui le finestre di dialogo."
 
 #: app/widgets/gimpdockable.c:210
-#, fuzzy
 msgid "Close this Tab"
-msgstr "/_Rimuovi scheda"
+msgstr "Chiudi questa scheda"
 
 #: app/widgets/gimpdocumentview.c:165
 #, c-format
@@ -9326,9 +9291,8 @@ msgid "Intensity Range:"
 msgstr "Campo di intensità:"
 
 #: app/widgets/gimphistogrameditor.c:148
-#, fuzzy
 msgid "Channel:"
-msgstr "Canale"
+msgstr "Canale:"
 
 #: app/widgets/gimpimagedock.c:187
 msgid "Auto"
@@ -9451,11 +9415,11 @@ msgstr "Stile _pennino:"
 
 #: app/widgets/gimpstrokeeditor.c:204
 msgid "_Join Style:"
-msgstr "_Unisci stile:"
+msgstr "Stile _unione:"
 
 #: app/widgets/gimpstrokeeditor.c:209
 msgid "_Miter Limit:"
-msgstr ""
+msgstr "Rapporto u_nione:"
 
 #: app/widgets/gimpstrokeeditor.c:214
 msgid "_Antialiasing"
@@ -9600,9 +9564,9 @@ msgstr ""
 "%s  Reimposta tutte le opzioni strumenti"
 
 #: app/widgets/gimptooloptionseditor.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "%s Options"
-msgstr "Opzioni:\n"
+msgstr "%s opzioni"
 
 #: app/widgets/gimptooloptionseditor.c:411
 msgid "Reset Tool Options"
@@ -9843,11 +9807,11 @@ msgstr "Stato e desc"
 
 #: app/widgets/widgets-enums.c:117
 msgid "View as List"
-msgstr "Vista elenco"
+msgstr "Mostra come elenco"
 
 #: app/widgets/widgets-enums.c:118
 msgid "View as Grid"
-msgstr "Vista a griglia"
+msgstr "Mostra come griglia"
 
 #: app/xcf/xcf-load.c:288
 msgid ""
@@ -9860,9 +9824,8 @@ msgstr ""
 "Sostituzione mappa in scala di grigio."
 
 #: app/xcf/xcf-read.c:107
-#, fuzzy
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
+msgstr "Stringa UTF-8 non valida nel file XCF"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
 #: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:201 app/xcf/xcf.c:318
@@ -9902,142 +9865,3 @@ msgstr "Crea e modifica immagini o fotografie"
 msgid "The GIMP (unstable)"
 msgstr "Gimp (instabile)"
 
-#~ msgid ""
-#~ "Specifies how the area around the image should be drawn when in "
-#~ "fullscreen mode."
-#~ msgstr ""
-#~ "Specifica come l'area intorno all'immagine dovrebbe essere disegnata in "
-#~ "modalità schermo pieno."
-
-#~ msgid ""
-#~ "When enabled, the menubar is visible by default in fullscreen mode. This "
-#~ "can also be toggled with the \"View->Show Menubar\" command."
-#~ msgstr ""
-#~ "Se abilitata la barra dei menu è visibile in modalità pieno schermo. "
-#~ "Questo può essere modificato anche con il comando \"Visualizza->Mostra "
-#~ "barra di stato\"."
-
-#~ msgid ""
-#~ "When enabled, the rulers are visible by default in fullscreen mode. This "
-#~ "can also be toggled with the \"View->Show Rulers\" command."
-#~ msgstr ""
-#~ "Se abilitata i righelli sono visibili in modalità pieno schermo. Questo "
-#~ "può essere modificato con il comando \"Visualizza->Mostra i righelli\"."
-
-#~ msgid ""
-#~ "When enabled, the scrollbars are visible by default in fullscreen mode. "
-#~ "This can also be toggled with the \"View->Show Scrollbars\" command."
-#~ msgstr ""
-#~ "Se abilitata, le barre di scorrimento sono visibili in modalità pieno "
-#~ "schermo. Questo può essere modificato anche con il comando \"Visualizza-"
-#~ ">Mostra le barre di scorrimento\"."
-
-#~ msgid ""
-#~ "When enabled, the statusbar is visible by default in fullscreen mode. "
-#~ "This can also be toggled with the \"View->Show Statusbar\" command."
-#~ msgstr ""
-#~ "Se abilitata la barra di stato è visibile in modalità pieno schermo. "
-#~ "Questo può essere modificato anche con il comando \"Visualizza->Mostra "
-#~ "barra di stato\"."
-
-#~ msgid "/_Select Tab"
-#~ msgstr "/_Seleziona scheda"
-
-#~ msgid "Remove Grid"
-#~ msgstr "Rimuovi griglia"
-
-#~ msgid "N/A"
-#~ msgstr "Non disponibile"
-
-#~ msgid "R:"
-#~ msgstr "R:"
-
-#~ msgid "G:"
-#~ msgstr "G:"
-
-#~ msgid "B:"
-#~ msgstr "B:"
-
-#~ msgid "H:"
-#~ msgstr "H:"
-
-#~ msgid "S:"
-#~ msgstr "S:"
-
-#~ msgid "V:"
-#~ msgstr "V:"
-
-#~ msgid "C:"
-#~ msgstr "C:"
-
-#~ msgid "M:"
-#~ msgstr "M:"
-
-#~ msgid "K:"
-#~ msgstr "K:"
-
-#~ msgid "A:"
-#~ msgstr "A:"
-
-#~ msgid "/Layer to _Imagesize"
-#~ msgstr "/Livello a dimensione _immagine"
-
-#~ msgid "Default Image Size and Unit"
-#~ msgstr "Dimensioni base dell'immagine"
-
-#~ msgid "Default Image Resolution and Resolution Unit"
-#~ msgstr "Risoluzione dell'immagine e unità di misura"
-
-#~ msgid "Default Comment"
-#~ msgstr "Commento di base"
-
-#~ msgid "Comment Used for New Images"
-#~ msgstr "Commento utilizzato per le nuove immagini"
-
-#~ msgid "How many pixels the first line should be shorter"
-#~ msgstr "Di quanti punti la prima riga dovrebbe essere più corta"
-
-#~ msgid "Additional line spacing (in pixels)"
-#~ msgstr "Spaziatura addizionale (in punti)"
-
-#~ msgid "Pick Foreground Color"
-#~ msgstr "Prendi colore del primo piano"
-
-#~ msgid "Pick Background Color"
-#~ msgstr "Prendi colore dello sfondo"
-
-#~ msgid "Transform Active Layer"
-#~ msgstr "Trasforma il livello attivo"
-
-#~ msgid "Transform Active Path"
-#~ msgstr "Trasforma il percorso attivo"
-
-#~ msgid "Update Toolbox Color"
-#~ msgstr "Aggiorna strumenti colore"
-
-#~ msgid "Intensity:"
-#~ msgstr "Intensità:"
-
-#~ msgid "Hex Triplet:"
-#~ msgstr "Esadecimale:"
-
-#~ msgid "View image histogram"
-#~ msgstr "Visualizza istogramma immagine"
-
-#~ msgid "/Tools/Color Tools/_Histogram..."
-#~ msgstr "/Strumenti/Strumenti di colore/Istogramma..."
-
-#~ msgid "Histogram does not operate on indexed drawables."
-#~ msgstr "Gli istogrammi non operano su immagini indicizzate."
-
-#~ msgid "View Image Histogram"
-#~ msgstr "Visualizza istogramma immagine"
-
-#~ msgid "Information on Channel:"
-#~ msgstr "Informazioni sul canale:"
-
-#~ msgid "Measure angles and lengths"
-#~ msgstr "Misura distanze e angoli"
-
-#~ msgid "degrees"
-#~ msgstr "gradi"
