@@ -1,3 +1,12 @@
+2004-01-22  Simon Budig  <simon@gimp.org>
+
+	* app/gui/dialogs-commands.c: replaced the indexed palette in
+	the default "Layers, Channels, Paths"-Dock (as created by the
+	menu in the toolbox) with the Undo History, since the indexed
+	palette is pretty useless most of the time and the new setup
+	at least matches the upper half of the dockable that comes up
+	after a new user starts the Gimp the first time.
+
 2004-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/dialogs-commands.c: show the image menu in newly created

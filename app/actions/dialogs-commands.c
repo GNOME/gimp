@@ -415,7 +415,7 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
     "gimp-layer-list",
     "gimp-channel-list",
     "gimp-vectors-list",
-    "gimp-indexed-palette"
+    "gimp-undo-history"
   };
 
   dialogs_create_dock (gtk_widget_get_screen (widget), TRUE,
