@@ -1,5 +1,15 @@
 2001-11-19  Michael Natterer  <mitch@gimp.org>
 
+	Some moving of unused files so they don't clutter app/...
+
+	* app/gdisplay_color.[ch]
+	* app/gdisplay_color_ui.[ch]: removed...
+
+	* app/display/gimpdisplayshell-filter.[ch]
+	* app/display/gimpdisplayshell-filter-dialog.[ch]: ...added here.
+
+2001-11-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplay-foreach.c: forgot to commit last time.
 
 	Transform stuff cleanup:
