@@ -182,7 +182,7 @@ msgstr "Spirale (gegen Uhrzeigersinn)"
 
 #: app/blend.c:297 app/preferences_dialog.c:1493
 msgid "None"
-msgstr "Kein"
+msgstr "Keine"
 
 #: app/blend.c:299
 msgid "Sawtooth wave"
@@ -4728,7 +4728,7 @@ msgstr "Vorschaugröße:"
 
 #: app/preferences_dialog.c:1511
 msgid "Nav Preview Size:"
-msgstr "Neue Vorschaugröße:"
+msgstr "Größe der Navigationsvorschau:"
 
 #: app/preferences_dialog.c:1520
 msgid "Levels of Undo:"
@@ -4816,7 +4816,6 @@ msgstr "Vergrößerung als umgekehrtes Verhältnis"
 msgid "Image Title Format:"
 msgstr "Bildtitel Format:"
 
-#. End of the title format string
 #: app/preferences_dialog.c:1694
 msgid "Pointer Movement Feedback"
 msgstr "Zeigerbewegung"

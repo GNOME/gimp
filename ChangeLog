@@ -1,3 +1,8 @@
+1999-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/preferances_dialog.c: oops, all frames said "General" after
+	my last change.
+
 Sat Nov 27 14:49:20 MET 1999  Sven Neuman <sven@gimp.org>
 
 	* app/commands.c
@@ -9,7 +14,7 @@ Sat Nov 27 14:49:20 MET 1999  Sven Neuman <sven@gimp.org>
 	* app/menus.c: implemented "Resize Layer to Imagesize" in C
 
 	* app/apptypes.h: indentation
-	
+
 	* app/bezier_select.c
 	* app/nav_window.h: get rid of compiler warnings 
 

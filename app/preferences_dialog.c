@@ -1075,7 +1075,7 @@ file_prefs_frame_new (gchar  *label,
   GtkWidget *frame;
   GtkWidget *vbox2;
 
-  frame = gtk_frame_new (_("General")); 
+  frame = gtk_frame_new (label);
   gtk_box_pack_start (vbox, frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
