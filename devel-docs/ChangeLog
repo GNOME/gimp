@@ -1,4 +1,8 @@
-2002-12-01  Sven Neumann  <neo@wintermute>
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
+	* README.gtkdoc: updated.
+
+2002-12-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am (IGNORE_HFILES): ignore gimpmiscui.h.
 
