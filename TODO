@@ -31,3 +31,42 @@ export filters...
 previews in file save (for jpeg compression, etc)
 
 save/restore state of major dialogs (exported to the PDB too)
+
+keybindings for simple "binary" tools (for ex, flip should
+flip horiz normal, and shift+click to shift vertically)
+
+curve deal in the gradient editor?
+
+some degree of drawing tools, straight line, etc... 
+
+paths, and better beziers would be a nice toch
+
+Macro recording and better scripting support
+
+More Xinput stuff ( gradient brushes, pen "strokes" ?)
+
+natural media tools (raph?)
+
+A "Revert To" menu options
+
+Redesign of the Blend Tool dialog? (its rather large...)
+
+"Fit text to selection"? make selection, scare text to fit it...
+
+a complete groundup rewrite of iscissors?
+
+Interactive resixing of layers (maybe with handles on the edges)
+
+progress bars on long proccesses?
+
+status bars on image window (maybe swallow pluign progress bars, show
+current x,Y, file type, etc...)
+
+"open into layer" and new image from cut buffer stuff should
+perhaps be in core?
+
+drag & drop for layers (both in the dialog, and from image to image)
+
+more indicators of current status (X,Y position, selection size and
+placemtn etc ), maybe in another dialog, maybe a status bar?
+
