@@ -449,17 +449,14 @@ GimpLayer *
 gimp_layer_new_from_drawable (GimpDrawable *drawable,
                               GimpImage    *dest_image)
 {
-  GimpImage         *src_image;
-  GimpImageBaseType  old_base_type;
+  GimpImageBaseType  src_base_type;
   GimpDrawable      *new_drawable;
   GimpImageBaseType  new_base_type;
 
-  g_return_val_if_fail (GIMP_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
 
-  src_image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  old_base_type = gimp_image_base_type (src_image);
+  src_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
   new_base_type = gimp_image_base_type (dest_image);
 
   if (GIMP_IS_LAYER (drawable))
@@ -475,7 +472,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
                                          TRUE);
     }
 
-  if (old_base_type != new_base_type)
+  if (src_base_type != new_base_type)
     {
       TileManager   *new_tiles;
       GimpImageType  new_type;
@@ -494,13 +491,13 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
         case GIMP_RGB:
           gimp_drawable_convert_rgb (new_drawable,
                                      new_tiles,
-                                     old_base_type);
+                                     src_base_type);
           break;
 
         case GIMP_GRAY:
           gimp_drawable_convert_grayscale (new_drawable,
                                            new_tiles,
-                                           old_base_type);
+                                           src_base_type);
           break;
 
         case GIMP_INDEXED:
@@ -522,7 +519,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
             gimp_layer_transform_color (dest_image,
                                         &newPR, &layerPR,
                                         NULL,
-                                        old_base_type);
+                                        src_base_type);
           }
           break;
         }

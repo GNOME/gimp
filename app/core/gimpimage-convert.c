@@ -763,7 +763,7 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)
     {
-      int i;
+      gint i;
 
       /* fprintf(stderr, " TO INDEXED(%d) ", num_cols); */
 
@@ -1048,6 +1048,8 @@ gimp_drawable_convert_rgb (GimpDrawable      *drawable,
 
   has_alpha = gimp_drawable_has_alpha (drawable);
 
+  g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
+
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
                      drawable->width,
@@ -1138,6 +1140,8 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
   g_return_if_fail (new_tiles != NULL);
 
   has_alpha = gimp_drawable_has_alpha (drawable);
+
+  g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
