@@ -43,13 +43,13 @@ query ()
    int nargs = sizeof (args) / sizeof (args[0]);
    int nreturn_vals = 0;
 
-  gimp_install_procedure ("Colormap Rotation Plug-in",
+  gimp_install_procedure ("plug_in_colormap_rotation",
 			  "Does that xv rotation thingy",
 			  "Then something else here",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
-			  "<Image>/Filters/Darkroom/Colormap Rotation",
+			  "<Image>/Filters/Colors/Colormap Rotation",
 			  "RGB*,INDEXED*,GRAY",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

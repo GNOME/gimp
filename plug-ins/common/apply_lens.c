@@ -128,7 +128,7 @@ query(void)
 			 "Morten Eriksen",
 			 "Morten Eriksen",
 			 "1997",
-			 "<Image>/Filters/Distorts/Apply lens",
+			 "<Image>/Filters/Glass Effects/Apply Lens",
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

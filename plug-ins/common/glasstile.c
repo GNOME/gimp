@@ -100,7 +100,7 @@ static void query ()
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  "<Image>/Filters/Distorts/Glass Tile",
+			  "<Image>/Filters/Glass Effects/Glass Tile",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

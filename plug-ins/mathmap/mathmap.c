@@ -249,7 +249,7 @@ query(void)
 			   "Mark Probst",
 			   "Mark Probst",
 			   "October 1997, 0.1",
-			   "<Image>/Filters/Distorts/MathMap",
+			   "<Image>/Filters/Generic/MathMap",
 			   "RGB",
 			   PROC_PLUG_IN,
 			   nargs,

@@ -128,7 +128,7 @@ query(void)
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "December, 1997",
-			 "<Image>/Filters/Image/Stegano",
+			 "<Image>/Filters/Crypt/Stegano",
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

@@ -183,7 +183,7 @@ query (void)
 			  "O. Steinfatt",
 			  "O. Steinfatt",
 			  "June 1997, 0.0",
-			  "<Image>/Filters/Image/Universal...",
+			  "<Image>/Filters/Generic/Universal",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs,

@@ -720,7 +720,7 @@ plugin_query()
 			  "Eiichi Takamori",
 			  "Eiichi Takamori, and a lot of GIMP people",
 			  "1997",
-			  "<Image>/Filters/Effects/GFlare",
+			  "<Image>/Filters/Light Effects/GFlare",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -74,7 +74,7 @@ query ()
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  "<Image>/Filters/Image/Normalize",
+			  "<Image>/Image/Colors/Normalize",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

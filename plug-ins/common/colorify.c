@@ -113,11 +113,11 @@ query ()
 	static int        nargs        = sizeof(args) / sizeof(args[0]),
 		          nreturn_vals = 0;
 
-	gimp_install_procedure ("Colorify",
+	gimp_install_procedure ("plug_in_colorify",
 				"Similar to the \"Color\" mode for layers.",
 				"Makes an average of the RGB channels and uses it to set the color",
 				"Francisco Bustamante", "Francisco Bustamante",
-				"0.0.1", "<Image>/Filters/Image/Colorify", "RGB",
+				"0.0.1", "<Image>/Filters/Colors/Colorify", "RGB",
 				PROC_PLUG_IN,
 				nargs, nreturn_vals,
 				args, return_vals);

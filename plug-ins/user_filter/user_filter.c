@@ -33,8 +33,8 @@
  */
 
 #define NUM_SLIDERS 8
-#define PLUG_IN_NAME "New Filter..."
-#define PLUG_IN_PLACE "User Filters"
+#define PLUG_IN_NAME "User Filter"
+#define PLUG_IN_PLACE "Generic"
 #define PLUG_IN_VERSION "1.0"
 #define PLUG_IN_TYPE "<Image>/Filters/" PLUG_IN_PLACE "/" PLUG_IN_NAME
 

@@ -130,7 +130,7 @@ static void query()
 			 "Scott Draves",
 			 "Scott Draves",
 			 "Nov 1997",
-			 "<Image>/Filters/Transforms/Fuse",
+			 "<Image>/Filters/Combine/Fuse",
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

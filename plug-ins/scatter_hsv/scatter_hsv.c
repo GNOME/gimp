@@ -31,7 +31,7 @@
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
 #define PROGRESS_NAME	"scatter_hsv: scattering..."
-#define MENU_POSITION	"<Image>/Filters/Image/Scatter HSV"
+#define MENU_POSITION	"<Image>/Filters/Colors/Scatter HSV"
 #define	MAIN_FUNCTION	scatter_hsv
 #define INTERFACE	scatter_hsv_interface
 #define	DIALOG		scatter_hsv_dialog

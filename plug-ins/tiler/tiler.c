@@ -51,13 +51,13 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
-  gimp_install_procedure ("plug_in_tiler",
+  gimp_install_procedure ("plug_in_make_seamless",
 			  "Seamless tile creation",
 			  "This plugin creates a seamless tileable from the input image",
 			  "Tim Rowley",
 			  "Tim Rowley",
 			  "1997",
-			  "<Image>/Filters/Transforms/Tiler",
+			  "<Image>/Filters/Map/Make Seamless",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -178,7 +178,7 @@ query()
 			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott",
 			  "1995",
-			  "<Image>/Filters/Image/Pixelize",
+			  "<Image>/Filters/Blur/Pixelize",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

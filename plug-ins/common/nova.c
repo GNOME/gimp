@@ -214,7 +214,7 @@ query()
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",
-			  "<Image>/Filters/Effects/SuperNova",
+			  "<Image>/Filters/Light Effects/SuperNova",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -99,13 +99,13 @@ static void query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0; 
 
-  gimp_install_procedure ("plug_in_struc",
+  gimp_install_procedure ("plug_in_apply_canvas",
 			  "Adds a canvas texture map to the picture",
 			  "This function applies a canvas texture map to the drawable.",
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  "<Image>/Filters/Artistic/Struc",
+			  "<Image>/Filters/Artistic/Apply Canvas",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

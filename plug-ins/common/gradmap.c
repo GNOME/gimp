@@ -111,7 +111,7 @@ query()
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",
-			  "<Image>/Filters/Image/Gradient Map",
+			  "<Image>/Filters/Colors/Gradient Map",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

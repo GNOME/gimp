@@ -68,7 +68,7 @@ AC_DEFUN(AC_GIMP_CHECK,
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
 
 	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for glib and gtk >= 0.99.3])
+	AC_MSG_CHECKING([for gtk >= 0.99.3])
         AC_TRY_COMPILE(
 [#include <gtk/gtk.h>],
 [GtkArgSetFunc arg_set_func;],

@@ -124,7 +124,7 @@ query ()
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",
-			  "<Image>/Filters/Distorts/Noisify",
+			  "<Image>/Filters/Noise/Noisify",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -102,7 +102,7 @@ static void query( void )
 			 "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			 "Hirotsuna Mizuno",
 			 PLUG_IN_VERSION,
-			 "<Image>/Filters/Effects/Illusion",
+			 "<Image>/Filters/Map/Illusion",
 			 "RGB*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs,

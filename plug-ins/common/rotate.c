@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.5 by Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/01/09
+ *  Rotate plug-in v0.6 by Sven Neumann, neumanns@uni-duesseldorf.de  
+ *  1998/01/15
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -38,7 +38,8 @@
  *  (10/13/97)  v0.3a  small bugfix, no real changes
  *  (10/17/97)  v0.4   now handles selections
  *  (01/09/98)  v0.5   a few fixes to support portability
- *                  
+ *  (01/15/98)  v0.6   fixed a line that caused rotate to crash on some 
+ *                     systems                
  */
 
 /* TODO List
@@ -55,8 +56,8 @@
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_rotate"
 #define PLUG_IN_PRINT_NAME  "Rotate"
-#define PLUG_IN_VERSION     "v0.5 (01/09/98)"
-#define PLUG_IN_MENU_PATH   "<Image>/Filters/Transforms/Rotate"
+#define PLUG_IN_VERSION     "v0.6 (01/15/98)"
+#define PLUG_IN_MENU_PATH   "<Image>/Image/Transforms/Rotate"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
@@ -586,7 +587,6 @@ rotate_dialog (void)
   gtk_rc_parse (gimp_gtkrc ());
 
   gdk_set_use_xshm (gimp_use_xshm ());
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
 
   /* Main Dialog */
   dialog = gtk_dialog_new ();

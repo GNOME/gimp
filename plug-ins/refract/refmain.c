@@ -141,7 +141,7 @@ query ()
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997",
-			  "<Image>/Filters/Distorts/Refract&Reflect...",
+			  "<Image>/Filters/Glass Effects/Refract",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

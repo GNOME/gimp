@@ -211,13 +211,13 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
-  gimp_install_procedure ("plug_in_tileit",
+  gimp_install_procedure ("plug_in_small_tiles",
 			  "Tiles image into smaller versions of the orginal",
 			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  "<Image>/Filters/Transforms/TileIt",
+			  "<Image>/Filters/Map/Small Tiles",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

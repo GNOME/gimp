@@ -75,7 +75,7 @@ query ()
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero",
 			  "1996",
-			  "<Image>/Filters/Image/Contrast Auto-Stretch",
+			  "<Image>/Image/Colors/Auto-Stretch Contrast",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -157,7 +157,7 @@ query(void)
       "This plug-in selectively performs a median or adaptive box filter on an image.",
       "Marc Lehmann", "Marc Lehmann",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Image/Destripe...",
+      "<Image>/Filters/Enhance/Destripe...",
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }

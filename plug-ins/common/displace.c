@@ -187,7 +187,7 @@ query ()
 			  "Stephen Robert Norris & (ported to 1.0 by) Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",
-			  "<Image>/Filters/Distorts/Displace",
+			  "<Image>/Filters/Map/Displace",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

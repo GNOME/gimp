@@ -164,7 +164,7 @@ query ()
 			  "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & (ported to GIMP v1.0) Spencer Kimball",
 			  "John Beale",
 			  "1996",
-			  "<Image>/Filters/Artistic/Sparkle",
+			  "<Image>/Filters/Light Effects/Sparkle",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -124,7 +124,7 @@ query ()
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Federico Mena Quintero and Brian Degenhardt",
 			  "1997",
-			  "<Image>/Filters/Distorts/Spread",
+			  "<Image>/Filters/Noise/Spread",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

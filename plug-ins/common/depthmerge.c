@@ -195,7 +195,7 @@ static void query() {
     "Sean Cier",
     "Sean Cier",
     PLUG_IN_VERSION,
-    "<Image>/Filters/Effects/Depth merge",
+    "<Image>/Filters/Combine/Depth Merge",
     "RGB*, GRAY*",
     PROC_PLUG_IN,
     numArgs,

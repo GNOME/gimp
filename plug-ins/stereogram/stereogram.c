@@ -117,7 +117,7 @@ query(void)
 			       "Francisco Bustamante",
 			       "Francisco Bustamante",
 			       "1997",
-			       "<Image>/Filters/Render/Stereogram",
+			       "<Image>/Filters/Misc/Stereogram",
 			       "GRAY",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,

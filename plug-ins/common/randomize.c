@@ -293,7 +293,7 @@ query()
 	(char *) author,
 	(char *) copyrights,
 	(char *) copyright_date,
-	"<Image>/Filters/Distorts/Randomize",
+	"<Image>/Filters/Noise/Randomize",
 	"RGB*, GRAY*, INDEXED*",
 	PROC_PLUG_IN,
 	nargs, nreturn_vals,

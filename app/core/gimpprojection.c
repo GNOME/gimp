@@ -1014,8 +1014,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Edit/Stroke", lp);
   menus_set_sensitive ("<Image>/Edit/Cut Named", lp);
   menus_set_sensitive ("<Image>/Edit/Copy Named", lp);
-  menus_set_sensitive ("<Image>/Image/Map", lp);
-  menus_set_sensitive ("<Image>/Image/Adjust", lp);
+  menus_set_sensitive ("<Image>/Image/Colors", lp);
   menus_set_sensitive ("<Image>/Image/Channel Ops/Offset", lp);
   menus_set_sensitive ("<Image>/Image/Histogram", lp);
   menus_set_sensitive ("<Image>/Filters", lp);

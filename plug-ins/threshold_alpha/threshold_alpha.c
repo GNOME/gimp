@@ -31,7 +31,7 @@
 #define	PLUG_IN_NAME	"plug_in_threshold_alpha"
 #define SHORT_NAME	"threshold_alpha"
 #define PROGRESS_NAME	"threshold_alpha (0.13):coloring transparency..."
-#define MENU_POSITION	"<Image>/Filters/Image/Threshold alpha"
+#define MENU_POSITION	"<Image>/Image/Alpha/Threshold Alpha"
 #define	MAIN_FUNCTION	threshold_alpha
 /* you need not change the following names */
 #define INTERFACE	threshold_alpha_interface

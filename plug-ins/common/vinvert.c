@@ -85,7 +85,7 @@ query ()
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
-			  "<Image>/Filters/Image/Value Invert",
+			  "<Image>/Filters/Colors/Value Invert",
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

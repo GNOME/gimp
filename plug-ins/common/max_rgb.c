@@ -31,7 +31,7 @@
 #define	PLUG_IN_NAME	"plug_in_max_rgb"
 #define SHORT_NAME	"max_rgb"
 #define PROGRESS_NAME	"max_rgb: scanning..."
-#define MENU_POSITION	"<Image>/Filters/Image/Max RGB"
+#define MENU_POSITION	"<Image>/Filters/Colors/Max RGB"
 #define	MAIN_FUNCTION	max_rgb
 /* you need not change the following names */
 #define INTERFACE	max_rgb_interface

@@ -65,7 +65,7 @@ static void query()
 			 "Adam D. Moss",
 			 "Adam D. Moss",
 			 "1997",
-			 "<Image>/Filters/Transforms/ZealousCrop(tm)",
+			 "<Image>/Image/Transforms/Zealous Crop",
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

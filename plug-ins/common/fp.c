@@ -65,7 +65,7 @@ query ()
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
-			  "<Image>/Filters/Darkroom/Filter Pack",
+			  "<Image>/Filters/Colors/Filter Pack",
 			  "RGB*,INDEXED*,GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

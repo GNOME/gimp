@@ -40,6 +40,11 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.2  1998/01/25 02:18:43  yosh
+ *   Applied Sven's menu patch
+ *
+ *   -Yosh
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -195,7 +200,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Michael Sweet <mike@easysw.com>",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Image/Sharpen...", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Sharpen...", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 

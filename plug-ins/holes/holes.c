@@ -122,7 +122,7 @@ static void query()
 				"Xavier Bouchoux",
 				"Xavier Bouchoux",
 				"1997",
-				"<Image>/Filters/Holes",
+				"<Image>/Image/Alpha/Holes",
 				"RGBA, GRAYA, INDEXEDA",
 				PROC_PLUG_IN,
 				nargs, nreturn_vals,

@@ -141,7 +141,7 @@ static void query ()
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1998",
-			  "<Image>/Filters/Effects/FlareFX",
+			  "<Image>/Filters/Light Effects/FlareFX",
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -339,7 +339,7 @@ query(void)
 			       "Federico Mena Quintero and Jens Lautenbacher",
 			       "Federico Mena Quintero and Jens Lautenbacher",
 			       PLUG_IN_VERSION,
-			       "<Image>/Filters/Effects/Bump map",
+			       "<Image>/Filters/Map/Bump Map",
 			       "RGB*, GRAY*",
 			       PROC_PLUG_IN,
 			       nargs,

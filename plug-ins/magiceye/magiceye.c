@@ -79,7 +79,7 @@ query ()
 			  "Alexander Schulz",
 			  "Alexander Schulz",
 			  "1997",
-			  "<Image>/Filters/Render/Magic Eye",
+			  "<Image>/Filters/Misc/Magic Eye",
 			  "GRAY",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

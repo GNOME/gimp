@@ -124,7 +124,7 @@ query ()
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996-1997",
-			  "<Image>/Filters/Transforms/Tile",
+			  "<Image>/Filters/Map/Tile",
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

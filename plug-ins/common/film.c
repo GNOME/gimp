@@ -239,7 +239,7 @@ query ()
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (pkirchg@aol.com)",
 			  "1997",
-			  "<Image>/Filters/Darkroom/Film",
+			  "<Image>/Filters/Combine/Film",
 			  "INDEXED*, GRAY*, RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

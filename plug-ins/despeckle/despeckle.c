@@ -44,6 +44,11 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.4  1998/01/25 02:18:21  yosh
+ *   Applied Sven's menu patch
+ *
+ *   -Yosh
+ *
  *   Revision 1.3  1998/01/04 19:20:55  scott
  *   * plug-ins/despeckle/despeckle.c: realloc buffers when the radius
  *   of effect changes; save all values (not just radius) in plugin
@@ -248,7 +253,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Michael Sweet <mike@easysw.com>",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Image/Despeckle...", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Despeckle...", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 

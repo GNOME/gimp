@@ -103,7 +103,7 @@ void	query()
 			       "robert@experimental.net",
 			       "robert@experimental.net",
 			       "June 17th, 1997",
-			       "<Image>/Filters/Image/Color exchange",
+			       "<Image>/Filters/Colors/Color Exchange",
 			       "RGB*",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,

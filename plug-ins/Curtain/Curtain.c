@@ -107,7 +107,7 @@ query(void)
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "October, 1997",
-			 "<Image>/Filters/Image/Curtain",
+			 "<Image>/Filters/Distorts/Curtain",
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

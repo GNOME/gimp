@@ -118,7 +118,7 @@ query()
     "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
     "Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen",
 			   "1995,1996,1997",
-			   "<Image>/Filters/Image/Engrave",
+			   "<Image>/Filters/Distorts/Engrave",
 			   "RGB, GRAY",
 			   PROC_PLUG_IN,
 			   nargs, nreturn_vals,

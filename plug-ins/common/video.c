@@ -1833,7 +1833,7 @@ query ()
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "2nd March 1997",
-			  "<Image>/Filters/Distorts/Video",
+			  "<Image>/Filters/Misc/Video",
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

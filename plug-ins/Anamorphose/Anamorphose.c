@@ -119,7 +119,7 @@ query(void)
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
 			 "October, 1997",
-			 "<Image>/Filters/Distorts/Conical Anamorphose",
+			 "<Image>/Filters/Glass Effects/Conical Anamorphose",
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

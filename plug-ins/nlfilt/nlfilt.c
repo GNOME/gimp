@@ -118,7 +118,7 @@ query(void){
                          "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
                          "Graeme W. Gill, Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Image/NL Filter",
+                         "<Image>/Filters/Enhance/NL Filter",
                          "RGB,GRAY",
                          PROC_PLUG_IN,
                          nargs, nrets,

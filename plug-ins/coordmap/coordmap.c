@@ -172,7 +172,7 @@ static void query()
 			  "Michael Schubart",
 			  "Michael Schubart",
 			  "Sep 1 1997",
-			  "<Image>/Filters/Distorts/Coordinate Map",
+			  "<Image>/Filters/Map/Coordinate Map",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

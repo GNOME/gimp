@@ -55,7 +55,7 @@ static void query()
 			       "Tim Newsome",
 			       "Tim Newsome",
 			       "1997",
-			       "<Image>/Filters/Transforms/Autocrop",
+			       "<Image>/Image/Transforms/Autocrop",
 			       "RGB*, GRAY*, INDEXED*",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,

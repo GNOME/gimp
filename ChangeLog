@@ -1,3 +1,7 @@
+Sat Jan 24 18:16:35 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* applied Sven's menu patch
+
 Sat Jan 24 17:23:13 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/indexed_palette.c: fix for wrong color selected in indexed

@@ -169,7 +169,7 @@ static void query()
 			       "Lauri Alanko",
 			       "Lauri Alanko",
 			       "1997",
-			       "<Image>/Filters/Image/Convolution Matrix",
+			       "<Image>/Filters/Generic/Convolution Matrix",
 			       "RGB*, GRAY*",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,
