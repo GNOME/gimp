@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-27 16:33-0400\n"
-"PO-Revision-Date: 2004-10-27 20:02-0400\n"
+"POT-Creation-Date: 2004-10-31 15:09-0500\n"
+"PO-Revision-Date: 2004-10-31 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -475,16 +475,16 @@ msgid "Select File"
 msgstr "Select File"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-msgid "KiloBytes"
-msgstr "KiloBytes"
+msgid "Kilobytes"
+msgstr "Kilobytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-msgid "MegaBytes"
-msgstr "MegaBytes"
+msgid "Megabytes"
+msgstr "Megabytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "GigaBytes"
-msgstr "GigaBytes"
+msgid "Gigabytes"
+msgstr "Gigabytes"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
