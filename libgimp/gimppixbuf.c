@@ -56,27 +56,24 @@ gimp_image_get_thumbnail (gint32                  image_ID,
                           gint                    height,
                           GimpPixbufTransparency  alpha)
 {
-  gint    thumb_width;
-  gint    thumb_height;
+  gint    thumb_width  = width;
+  gint    thumb_height = height;
   gint    thumb_bpp;
-  gint    data_size;
   guchar *data;
 
   g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
   g_return_val_if_fail (height > 0 && height <= 512, NULL);
 
-  if (! _gimp_image_thumbnail (image_ID,
-                               width, height,
-                               &thumb_width, &thumb_height, &thumb_bpp,
-                               &data_size, &data))
+  data = gimp_image_get_thumbnail_data (image_ID,
+                                        &thumb_width,
+                                        &thumb_height,
+                                        &thumb_bpp);
+  if (data)
+    return gimp_pixbuf_from_data (data,
+                                  thumb_width, thumb_height, thumb_bpp,
+                                  alpha);
+  else
     return NULL;
-
-  g_return_val_if_fail (data_size == (thumb_width * thumb_height * thumb_bpp),
-                        NULL);
-
-  return gimp_pixbuf_from_data (data,
-                                thumb_width, thumb_height, thumb_bpp,
-                                alpha);
 }
 
 /**
@@ -100,26 +97,25 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
                              gint                    height,
                              GimpPixbufTransparency  alpha)
 {
-  gint    thumb_width;
-  gint    thumb_height;
+  gint    thumb_width  = width;
+  gint    thumb_height = height;
   gint    thumb_bpp;
-  gint    data_size;
   guchar *data;
 
   g_return_val_if_fail (width  > 0 && width  <= 512, NULL);
   g_return_val_if_fail (height > 0 && height <= 512, NULL);
 
-  if (! _gimp_drawable_thumbnail (drawable_ID,
-                                  width, height,
-                                  &thumb_width, &thumb_height, &thumb_bpp,
-                                  &data_size, &data))
+  data = gimp_drawable_get_thumbnail_data (drawable_ID,
+                                           &thumb_width,
+                                           &thumb_height,
+                                           &thumb_bpp);
+
+  if (data)
+    return gimp_pixbuf_from_data (data,
+                                  thumb_width, thumb_height, thumb_bpp,
+                                  alpha);
+  else
     return NULL;
-
-  g_return_val_if_fail (data_size == (thumb_width * thumb_height * thumb_bpp),
-                        NULL);
-
-  return gimp_pixbuf_from_data (data,
-                                thumb_width, thumb_height, thumb_bpp, alpha);
 }
 
 static GdkPixbuf *

@@ -1,3 +1,13 @@
+2004-09-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimppixbuf.c (gimp_drawable_get_thumbnail,
+	gimp_image_get_thumbnail): use the exported symbols from
+	libgimp, not the private _gimp_drawable_thumbnail()
+	and _gimp_image_thumbnail() functions.
+
+	* libgimp/gimp.def: added new symbols, removed
+	_gimp_image_thumbnail and _gimp_drawable_thumbnail.
+
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brushes.pdb
