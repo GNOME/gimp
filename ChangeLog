@@ -1,3 +1,10 @@
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* configure.in: select localedir according to the format of the
+	gettext message catalogs. Closes bug #169274 again.
+
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
