@@ -69,6 +69,8 @@ color, the "color_changed" signal is emitted.
 </para>
 
 @gcb: 
+@type: 
+<!-- # Unused Parameters # -->
 @alpha: 
 
 

@@ -2,6 +2,7 @@
 
 	* Makefile.am: fixes for srcdir != builddir.
 
+	* gimp_tips.txt
 	* gimp_tips.pt.txt: removed.
 
 	* pt.po: fixed markup.

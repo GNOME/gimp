@@ -1,3 +1,17 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	Handle gtk-doc just like GTK+ does it now:
+	
+	* configure.in: check for gtk-doc version 0.9. Do not build the API
+	reference by default.
+
+	* autogen.sh: pass --enable-gtk-doc to configure.
+
+	* Makefile.am: Added a slightly modified distcheck rule that passes
+        --enable-gtk-doc to the configure inside.
+
+	* NEWS: updated.
+	
 2002-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-types.h: added GimpPaletteEntry typedef.

@@ -1,7 +1,12 @@
 Makefile
 Makefile.in
-libgimp.html
+libgimp.args
+libgimp.hierarchy
+libgimp.signals
+libgimp-decl.txt
 libgimp-decl-list.txt
 libgimp-unused.txt
+libgimp-undocumented.txt
 html
 sgml
+*.stamp

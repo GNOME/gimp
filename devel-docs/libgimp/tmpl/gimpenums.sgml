@@ -25,6 +25,8 @@ Enums and definitions.
 @GIMP_ALPHA_MASK: 
 @GIMP_SELECTION_MASK: 
 @GIMP_INV_SELECTION_MASK: 
+@GIMP_COPY_MASK: 
+@GIMP_INV_COPY_MASK: 
 
 <!-- ##### ENUM GimpBlendMode ##### -->
 <para>
@@ -135,15 +137,6 @@ Enums and definitions.
 @GIMP_SHARPEN_CONVOLVE: 
 @GIMP_CUSTOM_CONVOLVE: 
 
-<!-- ##### ENUM GimpDodgeBurnMode ##### -->
-<para>
-
-</para>
-
-@GIMP_DODGEBURN_HIGHLIGHTS: 
-@GIMP_DODGEBURN_MIDTONES: 
-@GIMP_DODGEBURN_SHADOWS: 
-
 <!-- ##### ENUM GimpDodgeBurnType ##### -->
 <para>
 
@@ -233,15 +226,6 @@ Enums and definitions.
 @GIMP_BLUE_HUES: 
 @GIMP_MAGENTA_HUES: 
 
-<!-- ##### ENUM GimpInterpolationType ##### -->
-<para>
-
-</para>
-
-@GIMP_LINEAR_INTERPOLATION: 
-@GIMP_CUBIC_INTERPOLATION: 
-@GIMP_NEAREST_NEIGHBOR_INTERPOLATION: 
-
 <!-- ##### ENUM GimpLayerModeEffects ##### -->
 <para>
 
@@ -266,6 +250,7 @@ Enums and definitions.
 @GIMP_DODGE_MODE: 
 @GIMP_BURN_MODE: 
 @GIMP_HARDLIGHT_MODE: 
+@GIMP_COLOR_ERASE_MODE: 
 
 <!-- ##### ENUM GimpMaskApplyMode ##### -->
 <para>
@@ -284,15 +269,6 @@ Enums and definitions.
 @GIMP_CLIP_TO_IMAGE: 
 @GIMP_CLIP_TO_BOTTOM_LAYER: 
 @GIMP_FLATTEN_IMAGE: 
-
-<!-- ##### ENUM GimpMessageHandlerType ##### -->
-<para>
-
-</para>
-
-@GIMP_MESSAGE_BOX: 
-@GIMP_CONSOLE: 
-@GIMP_ERROR_CONSOLE: 
 
 <!-- ##### ENUM GimpOrientationType ##### -->
 <para>
@@ -320,14 +296,16 @@ Enums and definitions.
 @GIMP_REPEAT_SAWTOOTH: 
 @GIMP_REPEAT_TRIANGULAR: 
 
-<!-- ##### ENUM GimpRunModeType ##### -->
+<!-- ##### MACRO GimpRunModeType ##### -->
 <para>
 
 </para>
 
+<!-- # Unused Parameters # -->
 @GIMP_RUN_INTERACTIVE: 
 @GIMP_RUN_NONINTERACTIVE: 
 @GIMP_RUN_WITH_LAST_VALS: 
+
 
 <!-- ##### ENUM GimpSizeType ##### -->
 <para>
@@ -336,15 +314,6 @@ Enums and definitions.
 
 @GIMP_PIXELS: 
 @GIMP_POINTS: 
-
-<!-- ##### ENUM GimpStackTraceMode ##### -->
-<para>
-
-</para>
-
-@GIMP_STACK_TRACE_NEVER: 
-@GIMP_STACK_TRACE_QUERY: 
-@GIMP_STACK_TRACE_ALWAYS: 
 
 <!-- ##### ENUM GimpTransferMode ##### -->
 <para>

@@ -65,8 +65,8 @@ gimpgradients
 </para>
 
 @name: 
-@width: 
 @sample_size: 
+@width: 
 @grad_data: 
 @Returns: 
 

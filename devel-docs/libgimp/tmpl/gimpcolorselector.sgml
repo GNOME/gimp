@@ -133,9 +133,11 @@ instances have finished.  The callback could be used to unload
 dynamiclly loaded code, for example.
 </para>
 
-@id: The @id as returned by gimp_color_selector_register().
+@selector_id: 
 @finished_cb: Optional callback which will be called once all instances have finished.
 @finished_data: The @finished_data which will be passed to @finished_cb.
 @Returns: #TRUE on success, #FALSE if @id was not found.
+<!-- # Unused Parameters # -->
+@id: The @id as returned by gimp_color_selector_register().
 
 

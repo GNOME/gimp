@@ -53,7 +53,7 @@ echo "automake, glib-gettextize and intltoolize. This test is not foolproof,"
 echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 
-echo "Testing libtool... "
+echo -n "Testing libtool... "
 VER=`libtoolize --version | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 1.3.4 >/dev/null; then
 	echo "looks OK."
@@ -62,7 +62,7 @@ else
 	DIE=1
 fi
 
-echo "Testing autoconf... "
+echo -n "Testing autoconf... "
 VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 2.13 >/dev/null; then
 	echo "looks OK."
@@ -71,7 +71,7 @@ else
 	DIE=1
 fi
 
-echo "Testing automake... "
+echo -n "Testing automake... "
 VER=`automake --version | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 1.4 >/dev/null; then
 	echo "looks OK."
@@ -80,7 +80,7 @@ else
 	DIE=1
 fi
 
-echo "Testing glib-gettextize... "
+echo -n "Testing glib-gettextize... "
 VER=`glib-gettextize --version | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
 if expr $VER \>= 1.3.14 >/dev/null; then
         echo "looks OK."
@@ -89,7 +89,7 @@ else
         DIE=1
 fi
 
-echo "Testing intltoolize... "
+echo -n "Testing intltoolize... "
 VER=`intltoolize --version | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
 if expr $VER \>= 0.17 >/dev/null; then
         echo "looks OK."
@@ -151,7 +151,7 @@ intltoolize --copy --force --automake
 
 cd $ORIGDIR
 
-$srcdir/configure --enable-maintainer-mode "$@"
+$srcdir/configure --enable-maintainer-mode --enable-gtk-doc "$@"
 
 echo 
 echo "Now type 'make' to compile $PROJECT."

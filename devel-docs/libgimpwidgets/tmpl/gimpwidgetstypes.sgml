@@ -28,7 +28,6 @@ gimpwidgetstypes
 
 </para>
 
-@parent_instance: 
 
 <!-- ##### STRUCT GimpChainButton ##### -->
 <para>
@@ -41,6 +40,7 @@ gimpwidgetstypes
 
 </para>
 
+@parent_instance: 
 
 <!-- ##### STRUCT GimpColorButton ##### -->
 <para>

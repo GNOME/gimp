@@ -49,14 +49,6 @@ dialog-related stuff.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_dialog_set_icon ##### -->
-<para>
-
-</para>
-
-@dialog: 
-
-
 <!-- ##### FUNCTION gimp_dialog_create_action_area ##### -->
 <para>
 

@@ -59,9 +59,11 @@ gimp_coordinates_new()
 @menu_show_pixels: 
 @menu_show_percent: 
 @show_refval: 
-@spinbutton_usize: 
+@spinbutton_width: 
 @update_policy: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@spinbutton_usize: 
 
 
 <!-- ##### FUNCTION gimp_size_entry_add_field ##### -->
@@ -206,13 +208,6 @@ gimp_coordinates_new()
 @gse: 
 
 
-<!-- ##### SIGNAL GimpSizeEntry::value-changed ##### -->
-<para>
-
-</para>
-
-@gimpsizeentry: the object which received the signal.
-
 <!-- ##### SIGNAL GimpSizeEntry::refval-changed ##### -->
 <para>
 
@@ -221,6 +216,13 @@ gimp_coordinates_new()
 @gimpsizeentry: the object which received the signal.
 
 <!-- ##### SIGNAL GimpSizeEntry::unit-changed ##### -->
+<para>
+
+</para>
+
+@gimpsizeentry: the object which received the signal.
+
+<!-- ##### SIGNAL GimpSizeEntry::value-changed ##### -->
 <para>
 
 </para>

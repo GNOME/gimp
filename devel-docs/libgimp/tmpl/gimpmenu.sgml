@@ -30,8 +30,10 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@id: 
+@any_id: 
 @data: 
+<!-- # Unused Parameters # -->
+@id: 
 
 
 <!-- ##### USER_FUNCTION GimpRunBrushCallback ##### -->

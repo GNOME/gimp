@@ -16,22 +16,3 @@ provide it here.
 g_strescape()
 </para>
 
-<!-- ##### FUNCTION gimp_strescape ##### -->
-<para>
-
-</para>
-
-@source: 
-@exceptions: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_strcompress ##### -->
-<para>
-
-</para>
-
-@source: 
-@Returns: 
-
-

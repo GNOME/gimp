@@ -1,7 +1,12 @@
 Makefile
 Makefile.in
-libgimpwidgets.html
+libgimpwidgets.args
+libgimpwidgets.hierarchy
+libgimpwidgets.signals
+libgimpwidgets-decl.txt
 libgimpwidgets-decl-list.txt
 libgimpwidgets-unused.txt
+libgimpwidgets-undocumented.txt
 html
 sgml
+*.stamp

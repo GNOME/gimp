@@ -63,16 +63,6 @@ See #GimpHelpFunc for the naming conventions of HTML help files.
 @help_data: A string containing the path to a HTML page.
 
 
-<!-- ##### FUNCTION gimp_help_connect_help_accel ##### -->
-<para>
-
-</para>
-
-@widget: 
-@help_func: 
-@help_data: 
-
-
 <!-- ##### FUNCTION gimp_help_set_help_data ##### -->
 <para>
 

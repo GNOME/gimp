@@ -133,10 +133,10 @@ gimptools
 @sample_merged: 
 @sample_average: 
 @average_radius: 
-@save_color: 
 @color: 
 @Returns: 
 <!-- # Unused Parameters # -->
+@save_color: 
 @red: 
 @green: 
 @blue: 
@@ -163,19 +163,6 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_crop ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@new_width: 
-@new_height: 
-@offx: 
-@offy: 
 @Returns: 
 
 

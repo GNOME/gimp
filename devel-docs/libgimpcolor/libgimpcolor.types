@@ -1,3 +1,0 @@
-#include <gtk/gtk.h>
-
-#include "libgimpcolor-include.c"

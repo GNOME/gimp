@@ -1,3 +1,66 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	Revival of the API reference for GIMP-1.3. Needs more tweaking ...
+	
+	* libgimp/Makefile.am
+	* libgimp/libgimp.types
+	* libgimpbase/Makefile.am
+	* libgimpbase/libgimpbase.types
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/libgimpcolor.types
+	* libgimpmath/Makefile.am
+	* libgimpmath/libgimpmath.types
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/libgimpwidgets.types: updated.
+
+	* libgimpbase/libgimp-include.c
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp.args
+	* libgimp/libgimp.hierarchy
+	* libgimp/libgimp.signals: removed from CVS.
+
+	* libgimpbase/libgimpbase-include.c
+	* libgimpbase/libgimpbase-decl.txt
+	* libgimpbase/libgimpbase.args
+	* libgimpbase/libgimpbase.hierarchy
+	* libgimpbase/libgimpbase.signals: removed from CVS.
+
+	* libgimpcolor/libgimpcolor-include.c
+	* libgimpcolor/libgimpcolor-decl.txt
+	* libgimpcolor/libgimpcolor.args
+	* libgimpcolor/libgimpcolor.hierarchy
+	* libgimpcolor/libgimpcolor.signals: removed from CVS.
+	
+	* libgimpmath/libgimpmath-include.c
+	* libgimpmath/libgimpmath-decl.txt
+	* libgimpmath/libgimpmath.args
+	* libgimpmath/libgimpmath.hierarchy
+	* libgimpmath/libgimpmath.signals: removed from CVS.
+
+	* libgimpwidgets/libgimpwidgets-decl.txt
+	* libgimpwidgets/libgimpwidgets.args
+	* libgimpwidgets/libgimpwidgets.hierarchy
+	* libgimpwidgets/libgimpwidgets.signals: removed from CVS.
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpcolorselector.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimpmenu.sgml
+	* libgimp/tmpl/gimptools.sgml
+	* libgimpbase/tmpl/gimpprotocol.sgml
+	* libgimpbase/tmpl/gimputils.sgml
+	* libgimpmath/tmpl/gimpmath.sgml
+	* libgimpmathwidgets/tmpl/gimpchainbutton.sgml
+	* libgimpmathwidgets/tmpl/gimpcolorbutton.sgml
+	* libgimpmathwidgets/tmpl/gimpdialog.sgml
+	* libgimpmathwidgets/tmpl/gimphelpui.sgml
+	* libgimpmathwidgets/tmpl/gimpquerybox.sgml
+	* libgimpmathwidgets/tmpl/gimpsizeentry.sgml
+	* libgimpmathwidgets/tmpl/gimpwidgets.sgml
+	* libgimpmathwidgets/tmpl/gimpwidgetstypes.sgml: regenerated.
+	
 2001-06-08  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am

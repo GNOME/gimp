@@ -30,6 +30,8 @@ Overview of Changes in GIMP 1.3.4
 - Added GimpItem class to generalize core code even further [Mitch]
 - Improved preferences dialog [Mitch, Sven, Jimmac]
 - New tool icons [Jimmac]
+- Editor widgets for brushes, gradients and palettes [Mitch]
+- Revival of the API reference [Sven]
 - Bugfixes
 - More stuff not mentioned here (see the ChangeLog)
 

@@ -51,6 +51,8 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 </para>
 
 @gcb: 
+@active: 
+<!-- # Unused Parameters # -->
 @is_active: 
 
 

@@ -166,7 +166,7 @@ Note that you have to g_free() the returned string.
 @title: 
 @help_func: 
 @help_data: 
-@eek: 
+@stock_id: 
 @message: 
 @true_button: 
 @false_button: 
@@ -175,5 +175,7 @@ Note that you have to g_free() the returned string.
 @callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@eek: 
 
 

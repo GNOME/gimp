@@ -1,7 +1,12 @@
 Makefile
 Makefile.in
-libgimpcolor.html
+libgimpcolor.args
+libgimpcolor.hierarchy
+libgimpcolor.signals
+libgimpcolor-decl.txt
 libgimpcolor-decl-list.txt
 libgimpcolor-unused.txt
+libgimpcolor-undocumented.txt
 html
 sgml
+*.stamp

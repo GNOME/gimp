@@ -96,10 +96,12 @@ gtk_object_set_user_data().</entry>
 
 @menu_only: 
 @menu_item_callback: 
-@data: 
+@menu_item_callback_data: 
 @initial: 
 @Varargs: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@data: 
 
 
 <!-- ##### FUNCTION gimp_option_menu_set_history ##### -->
@@ -108,6 +110,8 @@ gtk_object_set_user_data().</entry>
 </para>
 
 @option_menu: 
+@item_data: 
+<!-- # Unused Parameters # -->
 @user_data: 
 
 
@@ -194,10 +198,12 @@ gtk_object_set_user_data().</entry>
 @in_frame: 
 @frame_title: 
 @radio_button_callback: 
-@data: 
+@radio_button_callback_data: 
 @initial: 
 @Varargs: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@data: 
 
 
 <!-- ##### FUNCTION gimp_spin_button_new ##### -->
@@ -266,8 +272,8 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @column: 
 @row: 
 @text: 
-@scale_usize: 
-@spinbutton_usize: 
+@scale_width: 
+@spinbutton_width: 
 @value: 
 @lower: 
 @upper: 
@@ -280,6 +286,9 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @tooltip: 
 @help_data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@scale_usize: 
+@spinbutton_usize: 
 
 
 <!-- ##### MACRO GIMP_RANDOM_SEED_SPINBUTTON ##### -->
@@ -335,7 +344,7 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @unit_format: 
 @menu_show_pixels: 
 @menu_show_percent: 
-@spinbutton_usize: 
+@spinbutton_width: 
 @update_policy: 
 @chainbutton_active: 
 @chain_constrains_ratio: 
@@ -354,6 +363,8 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @ysize_0: 
 @ysize_100: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@spinbutton_usize: 
 
 
 <!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_SPINBUTTON ##### -->

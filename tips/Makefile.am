@@ -14,7 +14,6 @@ $(GETTEXT_PACKAGE)-tips.pot: $(srcdir)/gimp-tips.xml.in
 	$(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --pot
 
 oldtips = \
-	gimp_tips.txt		\
 	gimp_tips.cs.txt	\
 	gimp_tips.es.txt 	\
 	gimp_tips.fr.txt	\

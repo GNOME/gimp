@@ -286,22 +286,6 @@ all other GIMP Library headers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_use_xshm ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_color_cube ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_min_colors ##### -->
 <para>
 
