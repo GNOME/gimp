@@ -1,5 +1,14 @@
 2004-11-01  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/pdb/color_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpcolor_pdb.c
+	* libgimp/gimpcolor_pdb.h: regenerated
+	* tools/pdbgen/pdb/color.pdb: added levels-stretch to @procs, removed
+	metainformation from deprecated levels-auto.
+
+2004-11-01  Øyvind Kolås  <pippin@gimp.org>
+
 	* app/actions/drawable-actions.c
 	* app/actions/drawable-commands.c
 	* app/actions/drawable-commands.h

@@ -185,21 +185,6 @@ CODE
 sub levels_auto {
     &std_pdb_deprecated ('gimp_levels_stretch');
 
-    $blurb = 'Automatically modifies intensity levels in the specified drawable.';
-
-    $help = <<'HELP';
-This procedure allows intensity levels in the specified drawable to be
-remapped according to a set of guessed parameters. It is equivalent to
-clicking the "Auto" button in the Levels tool. This procedure is
-only valid on RGB color and grayscale images. It will not operate on
-indexed drawables.
-HELP
-
-    $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
-    $date = '2003';
-
-    &std_pdb_misc;
-
     @inargs = ( &drawable_arg );
 
     %invoke = (
@@ -909,7 +894,7 @@ CODE
               "core/gimpdrawable.h" "core/gimpimage.h"
               "gimp-intl.h");
 
-@procs = qw(brightness_contrast levels levels_auto posterize desaturate
+@procs = qw(brightness_contrast levels levels_auto levels_stretch posterize desaturate
 	    equalize invert curves_spline curves_explicit color_balance
 	    colorize histogram hue_saturation threshold);
 %exports = (app => [@procs], lib => [@procs]);

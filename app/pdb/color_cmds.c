@@ -51,6 +51,7 @@
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
 static ProcRecord levels_auto_proc;
+static ProcRecord levels_stretch_proc;
 static ProcRecord posterize_proc;
 static ProcRecord desaturate_proc;
 static ProcRecord equalize_proc;
@@ -69,6 +70,7 @@ register_color_procs (Gimp *gimp)
   procedural_db_register (gimp, &brightness_contrast_proc);
   procedural_db_register (gimp, &levels_proc);
   procedural_db_register (gimp, &levels_auto_proc);
+  procedural_db_register (gimp, &levels_stretch_proc);
   procedural_db_register (gimp, &posterize_proc);
   procedural_db_register (gimp, &desaturate_proc);
   procedural_db_register (gimp, &equalize_proc);
@@ -349,6 +351,57 @@ static ProcRecord levels_auto_proc =
   0,
   NULL,
   { { levels_auto_invoker } }
+};
+
+static Argument *
+levels_stretch_invoker (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp_drawable_is_indexed (drawable))
+        success = FALSE;
+
+      if (success)
+        gimp_drawable_levels_stretch (drawable, context);
+    }
+
+  return procedural_db_return_args (&levels_stretch_proc, success);
+}
+
+static ProcArg levels_stretch_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcRecord levels_stretch_proc =
+{
+  "gimp_levels_stretch",
+  "Automatically modifies intensity levels in the specified drawable.",
+  "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool. This procedure is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  levels_stretch_inargs,
+  0,
+  NULL,
+  { { levels_stretch_invoker } }
 };
 
 static Argument *

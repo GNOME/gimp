@@ -148,6 +148,39 @@ gimp_levels_auto (gint32 drawable_ID)
 }
 
 /**
+ * gimp_levels_stretch:
+ * @drawable_ID: The drawable.
+ *
+ * Automatically modifies intensity levels in the specified drawable.
+ *
+ * This procedure allows intensity levels in the specified drawable to
+ * be remapped according to a set of guessed parameters. It is
+ * equivalent to clicking the \"Auto\" button in the Levels tool. This
+ * procedure is only valid on RGB color and grayscale images. It will
+ * not operate on indexed drawables.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_levels_stretch (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_levels_stretch",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_posterize:
  * @drawable_ID: The drawable.
  * @levels: Levels of posterization.
