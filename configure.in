@@ -589,13 +589,7 @@ elif test "x$shmtype" = "xposix"; then
 
   RT_LIBS=
   if test "$have_shm_open" != "yes"; then
-    gimp_save_LIBS=$LIBS
-    LIBS=""
-
-    AC_CHECK_LIB(rt, shm_open, have_shm_open=yes)
-
-    RT_LIBS="$LIBS"
-    LIBS=$gimp_save_LIBS
+    AC_CHECK_LIB(rt, shm_open, RT_LIBS="-lrt" have_shm_open=yes)
   fi
   AC_SUBST(RT_LIBS)
 

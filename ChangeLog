@@ -1,5 +1,9 @@
 2004-01-03  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: fix setting of RT_LIBS.
+
+2004-01-03  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: check for shm_open in libc too, and define RT_LIBS
 	accordingly.
 
