@@ -44,6 +44,8 @@ EXTRA_DIST = \
 	cursors/selection_subtract_mask.xbm	\
 	cursors/selection_intersect.xbm		\
 	cursors/selection_intersect_mask.xbm	\
+	cursors/selection_move.xbm		\
+	cursors/selection_move_mask.xbm		\
 	cursors/bad.xbm				\
 	cursors/bad_mask.xbm			\
 	cursors/dropper.xbm			\

@@ -1,3 +1,25 @@
+2000-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* cursors/selection_move.xbm
+	* cursors/selection_move_mask.xbm
+	* app/cursorutil.[ch]: new cursor for moving the selection
+	mask. Looks imho nicer than the ugly GDK_DIAMOND_CROSS.
+
+	* app/move.c
+	* app/rect_select.c: use the new cursor.
+
+	* app/paint_core.c: check for the statusbar's context_id in the
+	cursor_update function. Fixes gdk_criticals with the line preview
+	(which doesn't need a mouse click). Minor cleanups.
+
+	* app/tool_options.c: put the paint_pressure options in a
+	GtkHWrapBox instead of a GtkHBox. Makes the size of the dialog a
+	bit less locale-dependent.
+
+	* plug-ins/common/xbm.c: use accessor functions instead of using
+	the parasite's fields directly.
+
 Fri Mar  3 19:35:43 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.18 release

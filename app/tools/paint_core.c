@@ -25,7 +25,6 @@
 #include "brush_scale.h"
 #include "devices.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpbrushpipe.h"
@@ -38,10 +37,10 @@
 #include "undo.h"
 #include "cursorutil.h"
 
-#include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
-
 #include "tile.h"			/* ick. */
+
+#include "libgimp/gimpmath.h"
+#include "libgimp/gimpintl.h"
 
 /*  target size  */
 #define  TARGET_HEIGHT  15
@@ -191,13 +190,14 @@ paint_core_button_press (Tool           *tool,
   PaintCore * paint_core;
   GDisplay * gdisp;
   gboolean draw_line;
-  double x, y;
+  gdouble x, y;
   GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
-  gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y, &x, &y, TRUE);
+  gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y,
+				 &x, &y, TRUE);
   drawable = gimage_active_drawable (gdisp->gimage);
 
   if (! paint_core_init (paint_core, drawable, x, y))
@@ -212,14 +212,16 @@ paint_core_button_press (Tool           *tool,
   paint_core->curwheel = bevent->wheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
   paint_core->state = bevent->state;
-  
-  if (gdisp_ptr != tool->gdisp_ptr)
+
+  if (gdisp_ptr != tool->gdisp_ptr ||
+      paint_core->context_id < 1)
     {
       /* initialize the statusbar display */
       paint_core->context_id = 
 	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "paint");
     }
- /*  if this is a new image, reinit the core vals  */
+
+  /*  if this is a new image, reinit the core vals  */
   if ((gdisp_ptr != tool->gdisp_ptr) || ! (bevent->state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
@@ -251,13 +253,13 @@ paint_core_button_press (Tool           *tool,
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (bevent->state & GDK_CONTROL_MASK)
 	{
-	  int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
-	  int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
-	  int dx, dy, i, radius, frac;
-	  
+	  gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+	  gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
+	  gint dx, dy, i, radius, frac;
+
 	  dx = paint_core->curx - paint_core->lastx;
 	  dy = paint_core->cury - paint_core->lasty;
-	  
+
 	  if (dy)
 	    {
 	      radius = sqrt (SQR (dx) + SQR (dy));
@@ -285,14 +287,16 @@ paint_core_button_press (Tool           *tool,
   /* add motion memory if perfectmouse is set */
   if (perfectmouse != 0)
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		      GDK_BUTTON1_MOTION_MASK |
+		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   else
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		      GDK_POINTER_MOTION_HINT_MASK |
+		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
-  
+
   /*  Let the specific painting function initialize itself  */
   (* paint_core->paint_func) (paint_core, drawable, INIT_PAINT);
 
@@ -345,17 +349,16 @@ paint_core_button_press (Tool           *tool,
   gdisplay_flush_now (gdisp);
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
      (* paint_core->paint_func) (paint_core, drawable, POSTTRACE_PAINT);
-  
 }
 
 void
-paint_core_button_release (Tool           *tool, 
-			   GdkEventButton *bevent, 
+paint_core_button_release (Tool           *tool,
+			   GdkEventButton *bevent,
 			   gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
-  GImage * gimage;
-  PaintCore * paint_core;
+  GDisplay  *gdisp;
+  GImage    *gimage;
+  PaintCore *paint_core;
 
   gdisp = (GDisplay *) gdisp_ptr;
   gimage = gdisp->gimage;
@@ -395,11 +398,12 @@ paint_core_motion (Tool           *tool,
 				 &paint_core->curx, &paint_core->cury, TRUE);
 
   if (paint_core->pick_state)
-  {
-    paint_core_sample_color (gimage_active_drawable (gdisp->gimage),
-			     paint_core->curx, paint_core->cury, mevent->state);
-    return;
-  }
+    {
+      paint_core_sample_color (gimage_active_drawable (gdisp->gimage),
+			       paint_core->curx, paint_core->cury,
+			       mevent->state);
+      return;
+    }
 
   paint_core->curpressure = mevent->pressure;
   paint_core->curxtilt = mevent->xtilt;
@@ -436,7 +440,7 @@ paint_core_cursor_update (Tool           *tool,
   Layer *layer;
   PaintCore * paint_core;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
+  gint x, y;
   gchar status_str[STATUSBAR_SIZE];
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -444,6 +448,15 @@ paint_core_cursor_update (Tool           *tool,
 
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
+
+  if (gdisp_ptr != tool->gdisp_ptr ||
+      paint_core->context_id < 1)
+    {
+      /* initialize the statusbar display */
+      paint_core->context_id = 
+	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "paint");
+    }
+
   if (paint_core->context_id)
     gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), paint_core->context_id);
 
@@ -464,15 +477,15 @@ paint_core_cursor_update (Tool           *tool,
 
 	  dx = paint_core->curx - paint_core->lastx;
 	  dy = paint_core->cury - paint_core->lasty;
-		  
+
 	  /* Restrict to multiples of 15 degrees if ctrl is pressed */
 	  if (mevent->state & GDK_CONTROL_MASK)
 	    {
-	      int idx = dx;
-	      int idy = dy;
-	      int tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
-	      int cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
-	      int i, radius, frac;
+	      gint idx = dx;
+	      gint idy = dy;
+	      gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
+	      gint cosinus[7]  = { 256, 247, 222, 181, 128,   66, 0 };
+	      gint i, radius, frac;
       
 	      if (idy)
 		{
@@ -499,17 +512,20 @@ paint_core_cursor_update (Tool           *tool,
 	    }
 	  else
 	    {
-	      gchar *format_str = g_strdup_printf ("%%.%df %s",
-						   gimp_unit_get_digits (gdisp->gimage->unit),
-						   gimp_unit_get_symbol (gdisp->gimage->unit));
-	      d = gimp_unit_get_factor (gdisp->gimage->unit) * 
-		sqrt (SQR (dx / gdisp->gimage->xresolution) + SQR (dy / gdisp->gimage->yresolution));
-	      
+	      gchar *format_str =
+		g_strdup_printf ("%%.%df %s",
+				 gimp_unit_get_digits (gdisp->gimage->unit),
+				 gimp_unit_get_symbol (gdisp->gimage->unit));
+	      d = (gimp_unit_get_factor (gdisp->gimage->unit) * 
+		   sqrt (SQR (dx / gdisp->gimage->xresolution) +
+			 SQR (dy / gdisp->gimage->yresolution)));
+
 	      g_snprintf (status_str, STATUSBAR_SIZE, format_str, d);
 	      g_free (format_str);
 	    }
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), paint_core->context_id,
-			      status_str);
+
+	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+			      paint_core->context_id, status_str);
 
 	  if (paint_core->core->gc == NULL)
 	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
@@ -521,19 +537,20 @@ paint_core_cursor_update (Tool           *tool,
 	    }
 	} 
       /* If Ctrl or Mod1 is pressed, pick colors */ 
-      else if (paint_core->pick_colors
-	  && !(mevent->state & GDK_SHIFT_MASK) 
-	  && (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+      else if (paint_core->pick_colors &&
+	       !(mevent->state & GDK_SHIFT_MASK) &&
+	       (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
       /* Normal operation -- no modifier pressed or first stroke */
       else 
 	{
-	  int off_x, off_y;
+	  gint off_x, off_y;
 
 	  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-	  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
+	  gdisplay_untransform_coords (gdisp,
+				       (double) mevent->x, (double) mevent->y,
 				       &x, &y, TRUE, FALSE);
  
 	  if (x >= off_x && y >= off_y &&
@@ -558,8 +575,8 @@ paint_core_control (Tool       *tool,
 		    ToolAction  action, 
 		    gpointer    gdisp_ptr)
 {
-  PaintCore * paint_core;
-  GDisplay *gdisp;
+  PaintCore    *paint_core;
+  GDisplay     *gdisp;
   GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -588,9 +605,9 @@ paint_core_control (Tool       *tool,
 void
 paint_core_draw (Tool *tool)
 {
-  GDisplay *gdisp;
-  PaintCore * paint_core;
-  int tx1, ty1, tx2, ty2;
+  GDisplay  *gdisp;
+  PaintCore *paint_core;
+  gint tx1, ty1, tx2, ty2;
 
   paint_core = (PaintCore *) tool->private;
 
@@ -605,10 +622,11 @@ paint_core_draw (Tool *tool)
       gdisplay_transform_coords (gdisp, paint_core->curx, paint_core->cury,
 				 &tx2, &ty2, 1);
 
-      /* Only draw line if it's in the visible area
-         thus preventing from drawing rubbish		*/
+      /*  Only draw line if it's in the visible area
+       *  thus preventing from drawing rubbish
+       */
 
-      if (tx2>0 && ty2>0)
+      if (tx2 > 0 && ty2 > 0)
         {
 	  /*  Draw start target  */
 	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
@@ -625,7 +643,7 @@ paint_core_draw (Tool *tool)
 	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
 			tx2, ty2 - (TARGET_HEIGHT >> 1),
 			tx2, ty2 + (TARGET_HEIGHT >> 1));
-      
+
 	  /*  Draw the line between the start and end coords  */
 	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
 			tx1, ty1, tx2, ty2);
@@ -682,11 +700,11 @@ paint_core_free (Tool *tool)
   g_free (paint_core);
 }
 
-int
+gboolean
 paint_core_init (PaintCore    *paint_core, 
 		 GimpDrawable *drawable, 
-		 double        x, 
-		 double        y)
+		 gdouble       x, 
+		 gdouble       y)
 {
   static GimpBrush *brush = NULL;
   
@@ -752,15 +770,15 @@ paint_core_init (PaintCore    *paint_core,
 
 void
 paint_core_get_color_from_gradient (PaintCore *paint_core, 
-				    double     gradient_length, 
-				    double    *r, 
-				    double    *g, 
-				    double    *b, 
-				    double    *a, 
-				    int        mode)
+				    gdouble    gradient_length, 
+				    gdouble   *r, 
+				    gdouble   *g, 
+				    gdouble   *b, 
+				    gdouble   *a, 
+				    gint       mode)
 {
-  double y;
-  double distance;      /* distance in current brush stroke */
+  gdouble y;
+  gdouble distance;  /* distance in current brush stroke */
 
   distance = paint_core->pixel_dist;
   y = ((double) distance / gradient_length);
@@ -776,7 +794,7 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
 
   gradient_get_color_at (gimp_context_get_gradient (NULL), y, r, g, b, a);
 }
-  
+
 
 void
 paint_core_interpolate (PaintCore    *paint_core, 
@@ -881,9 +899,9 @@ paint_core_interpolate (PaintCore    *paint_core,
 void
 paint_core_finish (PaintCore    *paint_core, 
 		   GimpDrawable *drawable, 
-		   int           tool_id)
+		   gint          tool_id)
 {
-  GImage *gimage;
+  GImage    *gimage;
   PaintUndo *pu;
 
   if (! (gimage = drawable_gimage (drawable)))
@@ -898,7 +916,7 @@ paint_core_finish (PaintCore    *paint_core,
 
   undo_push_group_start (gimage, PAINT_CORE_UNDO);
 
-  pu = (PaintUndo *) g_malloc (sizeof (PaintUndo));
+  pu = g_new (PaintUndo, 1);
   pu->tool_ID = tool_id;
   pu->lastx = paint_core->startx;
   pu->lasty = paint_core->starty;
@@ -927,7 +945,7 @@ paint_core_finish (PaintCore    *paint_core,
 }
 
 void
-paint_core_cleanup ()
+paint_core_cleanup (void)
 {
   /*  CLEANUP  */
   /*  If the undo tiles exist, nuke them  */
@@ -958,11 +976,11 @@ paint_core_get_paint_area (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
 			   gdouble       scale)
 {
-  int x, y;
-  int x1, y1, x2, y2;
-  int bytes;
-  int dwidth, dheight;
-  int bwidth, bheight;
+  gint x, y;
+  gint x1, y1, x2, y2;
+  gint bytes;
+  gint dwidth, dheight;
+  gint bwidth, bheight;
 
   bytes = drawable_has_alpha (drawable) ?
     drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
@@ -995,15 +1013,18 @@ paint_core_get_paint_area (PaintCore    *paint_core,
 TempBuf *
 paint_core_get_orig_image (PaintCore    *paint_core, 
 			   GimpDrawable *drawable, 
-			   int x1, int y1, int x2, int y2)
+			   gint          x1,
+			   gint          y1,
+			   gint          x2,
+			   gint          y2)
 {
   PixelRegion srcPR, destPR;
   Tile *undo_tile;
-  int h;
-  int refd;
-  int pixelwidth;
-  int dwidth, dheight;
-  unsigned char * s, * d;
+  gint h;
+  gint refd;
+  gint pixelwidth;
+  gint dwidth, dheight;
+  guchar *s, *d;
   void * pr;
 
   orig_buf = temp_buf_resize (orig_buf, drawable_bytes (drawable),
@@ -1069,8 +1090,8 @@ paint_core_get_orig_image (PaintCore    *paint_core,
 void
 paint_core_paste_canvas (PaintCore	     *paint_core, 
 			 GimpDrawable	     *drawable, 
-			 int		      brush_opacity, 
-			 int		      image_opacity, 
+			 gint		      brush_opacity, 
+			 gint		      image_opacity, 
 			 LayerModeEffects     paint_mode,
 			 BrushApplicationMode brush_hardness,
 			 gdouble              brush_scale,
@@ -1092,8 +1113,8 @@ paint_core_paste_canvas (PaintCore	     *paint_core,
 void
 paint_core_replace_canvas (PaintCore	       *paint_core, 
 			   GimpDrawable	       *drawable, 
-			   int			brush_opacity, 
-			   int			image_opacity, 
+			   gint			brush_opacity, 
+			   gint			image_opacity, 
 			   BrushApplicationMode brush_hardness,
 			   gdouble              brush_scale,
 			   PaintApplicationMode mode)
@@ -1125,10 +1146,10 @@ paint_core_invalidate_cache (GimpBrush *brush,
  ************************************************************/
 
 static void
-paint_core_calculate_brush_size (MaskBuf   *mask,
-				 double     scale,
-				 int       *width,
-				 int       *height)
+paint_core_calculate_brush_size (MaskBuf *mask,
+				 gdouble  scale,
+				 gint    *width,
+				 gint    *height)
 {
   if (current_device == GDK_CORE_POINTER)
     {
@@ -1137,7 +1158,7 @@ paint_core_calculate_brush_size (MaskBuf   *mask,
     }
   else
     {
-      double ratio;
+      gdouble ratio;
 
       if (scale < 1/256)
 	ratio = 1/16;
@@ -1151,18 +1172,18 @@ paint_core_calculate_brush_size (MaskBuf   *mask,
 
 static MaskBuf *
 paint_core_subsample_mask (MaskBuf *mask, 
-			   double   x, 
-			   double   y)
+			   gdouble  x, 
+			   gdouble  y)
 {
-  MaskBuf * dest;
-  double left;
-  unsigned char * m, * d;
-  const int * k;
-  int index1, index2;
-  const int * kernel;
-  int new_val;
-  int i, j;
-  int r, s;
+  MaskBuf *dest;
+  gdouble left;
+  guchar *m, *d;
+  const gint *k;
+  gint index1, index2;
+  const gint *kernel;
+  gint new_val;
+  gint i, j;
+  gint r, s;
 
   x += (x < 0) ? mask->width : 0;
   left = x - floor(x) + 0.125;
@@ -1218,19 +1239,19 @@ paint_core_subsample_mask (MaskBuf *mask,
 
 static MaskBuf *
 paint_core_pressurize_mask (MaskBuf *brush_mask, 
-			    double   x, 
-			    double   y, 
-			    double   pressure)
+			    gdouble  x, 
+			    gdouble  y, 
+			    gdouble  pressure)
 {
   static MaskBuf *last_brush = NULL;
-  static unsigned char mapi[256];
-  unsigned char *source;
-  unsigned char *dest;
+  static guchar mapi[256];
+  guchar *source;
+  guchar *dest;
   MaskBuf *subsample_mask;
-  int i;
+  gint i;
 #ifdef FANCY_PRESSURE
-  static double map[256];
-  double ds,s,c;
+  static gdouble map[256];
+  gdouble ds, s, c;
 #endif
 
   /* Get the raw subsampled mask */
@@ -1324,8 +1345,8 @@ static MaskBuf *
 paint_core_solidify_mask (MaskBuf *brush_mask)
 {
   static MaskBuf *last_brush = NULL;
-  int i, j;
-  unsigned char * data, * src;
+  gint i, j;
+  guchar * data, * src;
 
   if (brush_mask == last_brush && !cache_invalid)
     return solid_brush;
@@ -1367,7 +1388,7 @@ paint_core_scale_mask (MaskBuf *brush_mask,
 
   if (scale == 1.0)
     return brush_mask;
-  
+
   paint_core_calculate_brush_size (brush_mask, scale, 
 				   &dest_width, &dest_height);
 
@@ -1381,7 +1402,7 @@ paint_core_scale_mask (MaskBuf *brush_mask,
   last_brush  = brush_mask;
   last_width  = dest_width;
   last_height = dest_height;
- 
+
   scale_brush = brush_scale_mask (brush_mask, dest_width, dest_height);
   cache_invalid = TRUE;
 
@@ -1402,7 +1423,7 @@ paint_core_scale_pixmap (MaskBuf *brush_mask,
 
   if (scale == 1.0)
     return brush_mask;
-  
+
   paint_core_calculate_brush_size (brush_mask, scale, 
 				   &dest_width, &dest_height);
 
@@ -1416,7 +1437,7 @@ paint_core_scale_pixmap (MaskBuf *brush_mask,
   last_brush  = brush_mask;
   last_width  = dest_width;
   last_height = dest_height;
- 
+
   scale_pixmap = brush_scale_pixmap (brush_mask, dest_width, dest_height);
   cache_invalid = TRUE;
 
@@ -1428,13 +1449,13 @@ paint_core_get_brush_mask (PaintCore	       *paint_core,
 			   BrushApplicationMode brush_hardness,
 			   gdouble              scale)
 {
-  MaskBuf * mask;
+  MaskBuf *mask;
 
   if (current_device == GDK_CORE_POINTER)
     mask = paint_core->brush->mask;
   else
     mask = paint_core_scale_mask (paint_core->brush->mask, scale);
-  
+
   switch (brush_hardness)
     {
     case SOFT:
@@ -1458,15 +1479,15 @@ static void
 paint_core_paste (PaintCore	      *paint_core, 
 		  MaskBuf	      *brush_mask, 
 		  GimpDrawable	      *drawable, 
-		  int		       brush_opacity, 
-		  int		       image_opacity, 
+		  gint		       brush_opacity, 
+		  gint		       image_opacity, 
 		  LayerModeEffects     paint_mode, 
 		  PaintApplicationMode mode)
 {
   GImage *gimage;
   PixelRegion srcPR;
   TileManager *alt = NULL;
-  int offx, offy;
+  gint offx, offy;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -1536,14 +1557,14 @@ static void
 paint_core_replace (PaintCore		*paint_core, 
 		    MaskBuf		*brush_mask, 
 		    GimpDrawable	*drawable, 
-		    int			 brush_opacity, 
-		    int			 image_opacity, 
+		    gint		 brush_opacity, 
+		    gint		 image_opacity, 
 		    PaintApplicationMode mode)
 {
   GImage *gimage;
   PixelRegion srcPR, maskPR;
   TileManager *alt = NULL;
-  int offx, offy;
+  gint offx, offy;
 
   if (!drawable_has_alpha (drawable))
     {
@@ -1562,32 +1583,32 @@ paint_core_replace (PaintCore		*paint_core,
 		  canvas_buf->width, canvas_buf->height);
 
   if (mode == CONSTANT) 
-  {
-    /*  initialize any invalid canvas tiles  */
-    set_canvas_tiles (canvas_buf->x, canvas_buf->y,
-		      canvas_buf->width, canvas_buf->height);
+    {
+      /*  initialize any invalid canvas tiles  */
+      set_canvas_tiles (canvas_buf->x, canvas_buf->y,
+			canvas_buf->width, canvas_buf->height);
 
-    /* combine the brush mask and the canvas tiles */
-    brush_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
+      /* combine the brush mask and the canvas tiles */
+      brush_to_canvas_tiles (paint_core, brush_mask, brush_opacity);
 
-    /* set the alt source as the unaltered undo_tiles */ 
-    alt = undo_tiles;
+      /* set the alt source as the unaltered undo_tiles */ 
+      alt = undo_tiles;
 
-    /* initialize the maskPR from the canvas tiles */
-    pixel_region_init (&maskPR, canvas_tiles,
-		       canvas_buf->x, canvas_buf->y,
-		       canvas_buf->width, canvas_buf->height, FALSE);
-  }
+      /* initialize the maskPR from the canvas tiles */
+      pixel_region_init (&maskPR, canvas_tiles,
+			 canvas_buf->x, canvas_buf->y,
+			 canvas_buf->width, canvas_buf->height, FALSE);
+    }
   else   
-  {
-    /* The mask is just the brush mask */
-    maskPR.bytes = 1;
-    maskPR.x = 0; maskPR.y = 0;
-    maskPR.w = canvas_buf->width;
-    maskPR.h = canvas_buf->height;
-    maskPR.rowstride = maskPR.bytes * brush_mask->width;
-    maskPR.data = mask_buf_data (brush_mask);
-  }
+    {
+      /* The mask is just the brush mask */
+      maskPR.bytes = 1;
+      maskPR.x = 0; maskPR.y = 0;
+      maskPR.w = canvas_buf->width;
+      maskPR.h = canvas_buf->height;
+      maskPR.rowstride = maskPR.bytes * brush_mask->width;
+      maskPR.data = mask_buf_data (brush_mask);
+    }
   
   /*  intialize canvas buf source pixel regions  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1642,11 +1663,11 @@ canvas_tiles_to_canvas_buf(PaintCore *paint_core)
 static void
 brush_to_canvas_tiles (PaintCore *paint_core, 
 		       MaskBuf   *brush_mask, 
-		       int        brush_opacity)
+		       gint       brush_opacity)
 {
   PixelRegion srcPR, maskPR;
-  int x, y;
-  int xoff, yoff;
+  gint x, y;
+  gint xoff, yoff;
 
   /*   combine the brush mask and the canvas tiles  */
   pixel_region_init (&srcPR, canvas_tiles,
@@ -1672,11 +1693,11 @@ brush_to_canvas_tiles (PaintCore *paint_core,
 static void
 brush_to_canvas_buf (PaintCore *paint_core,
 		     MaskBuf   *brush_mask,
-		     int        brush_opacity)
+		     gint       brush_opacity)
 {
   PixelRegion srcPR, maskPR;
-  int x, y;
-  int xoff, yoff;
+  gint x, y;
+  gint xoff, yoff;
 
   x = (int) paint_core->curx - (brush_mask->width >> 1);
   y = (int) paint_core->cury - (brush_mask->height >> 1);
@@ -1706,11 +1727,11 @@ brush_to_canvas_buf (PaintCore *paint_core,
 static void
 paint_to_canvas_tiles (PaintCore *paint_core, 
 		       MaskBuf   *brush_mask, 
-		       int        brush_opacity)
+		       gint       brush_opacity)
 {
   PixelRegion srcPR, maskPR;
-  int x, y;
-  int xoff, yoff;
+  gint x, y;
+  gint xoff, yoff;
 
   /*   combine the brush mask and the canvas tiles  */
   pixel_region_init (&srcPR, canvas_tiles,
@@ -1751,11 +1772,11 @@ paint_to_canvas_tiles (PaintCore *paint_core,
 static void
 paint_to_canvas_buf (PaintCore *paint_core, 
 		     MaskBuf   *brush_mask, 
-		     int        brush_opacity)
+		     gint       brush_opacity)
 {
   PixelRegion srcPR, maskPR;
-  int x, y;
-  int xoff, yoff;
+  gint x, y;
+  gint xoff, yoff;
 
   x = (int) paint_core->curx - (brush_mask->width >> 1);
   y = (int) paint_core->cury - (brush_mask->height >> 1);
@@ -1785,9 +1806,12 @@ paint_to_canvas_buf (PaintCore *paint_core,
 
 static void
 set_undo_tiles (GimpDrawable *drawable, 
-		int x, int y, int w, int h)
+		gint          x,
+		gint          y,
+		gint          w,
+		gint          h)
 {
-  int i, j;
+  gint i, j;
   Tile *src_tile;
   Tile *dest_tile;
 
@@ -1813,9 +1837,12 @@ set_undo_tiles (GimpDrawable *drawable,
 }
 
 static void
-set_canvas_tiles (int x, int y, int w, int h)
+set_canvas_tiles (gint x,
+		  gint y,
+		  gint w,
+		  gint h)
 {
-  int i, j;
+  gint i, j;
   Tile *tile;
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
@@ -1841,7 +1868,7 @@ set_canvas_tiles (int x, int y, int w, int h)
 
 
 static void
-free_paint_buffers ()
+free_paint_buffers (void)
 {
   if (orig_buf)
     temp_buf_free (orig_buf);
@@ -1863,16 +1890,15 @@ paint_core_color_area_with_pixmap (PaintCore    *paint_core,
 				   GimpDrawable *drawable,
 				   TempBuf      *area,
 				   gdouble       scale,
-				   int           mode)
+				   gint          mode)
 {
-
   PixelRegion destPR;
-  void *pr;
+  void   *pr;
   guchar *d;
-  int ulx, uly, offsetx, offsety, y;
+  gint ulx, uly, offsetx, offsety, y;
   TempBuf *pixmap_mask;
   TempBuf *brush_mask;
-  
+
   g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush));
 
   /*  scale the brushes  */
@@ -1921,14 +1947,14 @@ paint_line_pixmap_mask (GImage          *dest,
 			TempBuf         *pixmap_mask,
 			TempBuf         *brush_mask,
 			guchar	        *d,
-			int		 x,
-			int              y,
-			int              bytes,
-			int              width,
-			int              mode)
+			gint             x,
+			gint             y,
+			gint             bytes,
+			gint             width,
+			gint             mode)
 {
   guchar *b, *p;
-  int x_index;
+  gint x_index;
   gdouble alpha;
   gdouble factor = 0.00392156986;  /* 1.0/255.0 */
   gint i;

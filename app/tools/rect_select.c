@@ -570,7 +570,7 @@ rect_select_cursor_update (Tool           *tool,
       gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
       break;
     case SELECTION_MOVE_MASK:
-      gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+      gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
       break;
     case SELECTION_MOVE: 
       gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);

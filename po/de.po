@@ -207,11 +207,11 @@ msgstr "Formangepasst (dimpled)"
 
 #: app/blend.c:307
 msgid "Spiral (clockwise)"
-msgstr "Spirale (im Uhrzeigersinn)"
+msgstr "Spirale (rechtsdrehend)"
 
 #: app/blend.c:308
 msgid "Spiral (anticlockwise)"
-msgstr "Spirale (gegen Uhrzeigersinn)"
+msgstr "Spirale (linksdrehend)"
 
 #: app/blend.c:312
 msgid "Gradient:"

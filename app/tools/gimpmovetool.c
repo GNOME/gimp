@@ -16,7 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "edit_selection.h"
 #include "errors.h"
@@ -35,8 +37,8 @@
 typedef struct _MoveTool MoveTool;
 struct _MoveTool
 {
-  Layer *layer;
-  Guide *guide;
+  Layer    *layer;
+  Guide    *guide;
   GDisplay *disp;
 };
 
@@ -308,7 +310,7 @@ move_tool_cursor_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
 
   if (mevent->state & GDK_MOD1_MASK)
-    gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+    gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
   else if (mevent->state & GDK_SHIFT_MASK)
     gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
   else
@@ -445,7 +447,7 @@ move_tool_start_vguide (Tool *tool,
 }
 
 Tool *
-tools_new_move_tool ()
+tools_new_move_tool (void)
 {
   Tool * tool;
   MoveTool * private;

@@ -23,6 +23,7 @@
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "selection_options.h"
+#include "gtkhwrapbox.h"
 
 #include "libgimp/gimpunitmenu.h"
 
@@ -92,8 +93,6 @@ tool_options_paint_mode_changed (GimpContext      *context,
 				 LayerModeEffects  paint_mode,
 				 gpointer          data)
 {
-  g_print ("tool_options_paint_mode_changed\n");
-
   gimp_option_menu_set_history (GTK_OPTION_MENU (data), (gpointer) paint_mode);
 }
 
@@ -660,7 +659,7 @@ paint_pressure_options_new (ToolType tool_type)
 {
   PaintPressureOptions *pressure = NULL;
   GtkWidget *frame = NULL;
-  GtkWidget *hbox = NULL;
+  GtkWidget *wbox = NULL;
 
   pressure = g_new (PaintPressureOptions, 1);
 
@@ -687,9 +686,10 @@ paint_pressure_options_new (ToolType tool_type)
     case PENCIL:
     case SMUDGE:
       frame = gtk_frame_new (_("Pressure Sensitivity"));
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_widget_show (hbox);
+      wbox = gtk_hwrap_box_new (FALSE);
+      gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 6);
+      gtk_container_add (GTK_CONTAINER (frame), wbox);
+      gtk_widget_show (wbox);
       break;
     default:
       break;
@@ -705,7 +705,7 @@ paint_pressure_options_new (ToolType tool_type)
     case PENCIL:
       pressure->opacity_w =
 	gtk_check_button_new_with_label (_("Opacity"));
-      gtk_container_add (GTK_CONTAINER (hbox), pressure->opacity_w);
+      gtk_container_add (GTK_CONTAINER (wbox), pressure->opacity_w);
       gtk_signal_connect (GTK_OBJECT (pressure->opacity_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->opacity);
@@ -728,7 +728,7 @@ paint_pressure_options_new (ToolType tool_type)
     case PAINTBRUSH:
     case SMUDGE:
       pressure->pressure_w = gtk_check_button_new_with_label (_("Pressure"));
-      gtk_container_add (GTK_CONTAINER (hbox), pressure->pressure_w);
+      gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
       gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->pressure);
@@ -748,7 +748,7 @@ paint_pressure_options_new (ToolType tool_type)
     case SMUDGE:
       pressure->rate_w =
 	gtk_check_button_new_with_label (_("Rate"));
-      gtk_container_add (GTK_CONTAINER (hbox), pressure->rate_w);
+      gtk_container_add (GTK_CONTAINER (wbox), pressure->rate_w);
       gtk_signal_connect (GTK_OBJECT (pressure->rate_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->rate);
@@ -772,7 +772,7 @@ paint_pressure_options_new (ToolType tool_type)
     case PENCIL:
       pressure->size_w =
 	gtk_check_button_new_with_label (_("Size"));
-      gtk_container_add (GTK_CONTAINER (hbox), pressure->size_w);
+      gtk_container_add (GTK_CONTAINER (wbox), pressure->size_w);
       gtk_signal_connect (GTK_OBJECT (pressure->size_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->size);
@@ -792,7 +792,7 @@ paint_pressure_options_new (ToolType tool_type)
     case PENCIL:
       pressure->color_w =
 	gtk_check_button_new_with_label (_("Color"));
-      gtk_container_add (GTK_CONTAINER (hbox), pressure->color_w);
+      gtk_container_add (GTK_CONTAINER (wbox), pressure->color_w);
       gtk_signal_connect (GTK_OBJECT (pressure->color_w), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			  &pressure->color);

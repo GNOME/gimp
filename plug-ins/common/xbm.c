@@ -306,9 +306,14 @@ run (gchar   *name,
 
       if (parasite)
 	{
-	  strncpy (xsvals.comment, parasite->data,
-		   MIN (parasite->size, MAX_COMMENT));
-	  xsvals.comment[MIN (parasite->size, MAX_COMMENT) + 1] = 0;
+	  gpointer data;
+	  gint     size;
+
+	  data = parasite_data (parasite);
+	  size = parasite_data_size (parasite);
+
+	  strncpy (xsvals.comment, data, MIN (size, MAX_COMMENT));
+	  xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
 
 	  parasite_free (parasite);
 	}
@@ -317,9 +322,12 @@ run (gchar   *name,
 
       if (parasite)
 	{
-	  gint x, y;
+	  gpointer data;
+	  gint     x, y;
 
-	  if (sscanf (parasite->data, "%i %i", &x, &y) == 2)
+	  data = parasite_data (parasite);
+
+	  if (sscanf (data, "%i %i", &x, &y) == 2)
 	    {
 	      xsvals.use_hot = TRUE;
 	      xsvals.x_hot = x;
@@ -637,14 +645,16 @@ load_image (gchar *filename)
   FILE *fp;
   gint32 image_ID, layer_ID;
 
-  GPixelRgn pixel_rgn;
+  GPixelRgn  pixel_rgn;
   GDrawable *drawable;
   guchar *data;
-  gint width, height, intbits;
-  gint x_hot = 0;
-  gint y_hot = 0;
-  gint c, i, j, k;
-  gint tileheight, rowoffset;
+  gint    intbits;
+  gint    width = 0;
+  gint    height = 0;
+  gint    x_hot = 0;
+  gint    y_hot = 0;
+  gint    c, i, j, k;
+  gint    tileheight, rowoffset;
 
   gchar *name_buf;
   gchar *comment;
@@ -784,7 +794,7 @@ load_image (gchar *filename)
   if (x_hot > 0 || y_hot > 0)
     {
       Parasite *parasite;
-      gchar *str;
+      gchar    *str;
 
       str = g_strdup_printf ("%d %d", x_hot, y_hot);
       parasite = parasite_new ("hot-spot", PARASITE_PERSISTENT,

@@ -42,6 +42,8 @@
 #include "cursors/selection_subtract_mask.xbm"
 #include "cursors/selection_intersect.xbm"
 #include "cursors/selection_intersect_mask.xbm"
+#include "cursors/selection_move.xbm"
+#include "cursors/selection_move_mask.xbm"
 #include "cursors/bad.xbm"
 #include "cursors/bad_mask.xbm"
 #include "cursors/dropper.xbm"
@@ -117,6 +119,11 @@ static BM_Cursor gimp_cursors[] =
     selection_intersect_bits, selection_intersect_mask_bits,
     selection_intersect_width, selection_intersect_height,
     selection_intersect_x_hot, selection_intersect_y_hot, NULL
+  },
+  {
+    selection_move_bits, selection_move_mask_bits,
+    selection_move_width, selection_move_height,
+    selection_move_x_hot, selection_move_y_hot, NULL
   },
   {
     bad_bits, bad_mask_bits,
