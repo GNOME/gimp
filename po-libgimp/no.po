@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2003-01-04 00:20+0100\n"
-"PO-Revision-Date: 2003-01-04 00:22+0100\n"
+"POT-Creation-Date: 2003-01-22 01:08+0100\n"
+"PO-Revision-Date: 2003-01-22 01:10+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,20 +14,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-msgid "can't handle layers"
-msgstr "kan ikke håndtere lag"
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s kan ikke håndtere lag"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "Flett sammen synlige lag"
 
 #: libgimp/gimpexport.c:179
-msgid "can't handle layer offsets, size or opacity"
-msgstr "kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-msgid "can only handle layers as animation frames"
-msgstr "kan kun håndtere lag som animasjonsbilder"
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s kan kun håndtere lag som animasjonsbilder"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -38,28 +41,32 @@ msgid "Flatten Image"
 msgstr "Flat ut bilde"
 
 #: libgimp/gimpexport.c:215
-msgid "can't handle transparency"
-msgstr "kan ikke håndtere gjennomsiktighet"
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s kan ikke håndtere gjennomsiktighet"
 
 #: libgimp/gimpexport.c:224
-msgid "can only handle RGB images"
-msgstr "kan kun håndtere RGB-bilder"
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s kan kun håndtere RGB-bilder"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "Konverter til RGB"
 
 #: libgimp/gimpexport.c:233
-msgid "can only handle grayscale images"
-msgstr "kan kun håndtere bilder i gråtoner"
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s kan kun håndtere bilder i gråtoner"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "Konverter til gråtoner"
 
 #: libgimp/gimpexport.c:242
-msgid "can only handle indexed images"
-msgstr "kan kun håndtere indekserte bilder"
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s kan kun håndtere indekserte bilder"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
@@ -71,20 +78,24 @@ msgstr ""
 "finjustere resultatet)"
 
 #: libgimp/gimpexport.c:252
-msgid "can only handle RGB or grayscale images"
-msgstr "kan kun håndtere RGB eller gråskala bilder"
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s kan kun håndtere RGB eller gråskala bilder"
 
 #: libgimp/gimpexport.c:261
-msgid "can only handle RGB or indexed images"
-msgstr "kan kun håndtere RGB eller indekserte bilder"
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s kan kun håndtere RGB eller indekserte bilder"
 
 #: libgimp/gimpexport.c:271
-msgid "can only handle grayscale or indexed images"
-msgstr "kan kun håndtere gråtone eller indekserte bilder"
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s kan kun håndtere gråtone eller indekserte bilder"
 
 #: libgimp/gimpexport.c:282
-msgid "needs an alpha channel"
-msgstr "må ha en alfakanal"
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s må ha en alfakanal"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
@@ -95,26 +106,17 @@ msgstr "Legg til alfakanal"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:357
 msgid "Confirm Save"
 msgstr "Bekreft lagring"
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:361
 msgid "Confirm"
 msgstr "Bekreft"
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:363
 msgid "Cancel"
 msgstr "Avbryt"
-
-#: libgimp/gimpexport.c:376
-#, c-format
-msgid ""
-"You are about to save %s as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Du er i ferd med å lagre %s som %s.\n"
-"Dette vil ikke lagre synlige lag."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -140,17 +142,27 @@ msgid ""
 msgstr "Du bør eksportere bildet ditt før det kan lagres av følgende gunner:"
 
 #. the footline
-#: libgimp/gimpexport.c:527
+#: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen under eksport vil ikke endre ditt originale bilde."
 
 #: libgimp/gimpexport.c:595
-msgid "a layer mask"
-msgstr "en lagmaske"
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er i ferd med å lagre en lagmaske som %s.\n"
+"Dette vil ikke lagre synlige lag."
 
-#: libgimp/gimpexport.c:597
-msgid "a channel (saved selection)"
-msgstr "en kanal (lagret utvalg)"
+#: libgimp/gimpexport.c:600
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er i ferd med å lagre en kanal (lagret utvalg) som %s.\n"
+"Dette vil ikke lagre synlige lag."
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
@@ -164,7 +176,7 @@ msgstr "prosent"
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Laster modul: «%s»\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
 #: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
@@ -174,27 +186,29 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
+"Feil under lasting av modul «%s»:\n"
+"%s"
 
 #: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "Hopper over modul «%s»\n"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
-msgstr ""
+msgstr "Feil med modul"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Loaded"
-msgstr ""
+msgstr "Lastet"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Load failed"
-msgstr ""
+msgstr "Lasting feilet"
 
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
-msgstr ""
+msgstr "Ikke lastet"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -288,6 +302,18 @@ msgstr "Velg mappe"
 msgid "Select File"
 msgstr "Velg fil"
 
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "KiloBytes"
+msgstr "KiloBytes"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "MegaBytes"
+msgstr "MegaBytes"
+
+#: libgimpwidgets/gimpmemsizeentry.c:188
+msgid "GigaBytes"
+msgstr "GigaBytes"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -299,12 +325,12 @@ msgid "Anchor"
 msgstr "Anker"
 
 #: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
-msgstr "Duplikat"
+msgid "_Duplicate"
+msgstr "_Duplikat"
 
 #: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
-msgstr "Rediger"
+msgid "_Edit"
+msgstr "R_ediger"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
@@ -326,35 +352,35 @@ msgstr "_Nullstill"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:128
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:129 libgimpwidgets/gimpstock.c:181
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:137
 msgid "L_etter Spacing"
 msgstr "M_ellomrom mellom bokstaver"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:138
 msgid "L_ine Spacing"
 msgstr "Mellomrom mellom l_injer"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:159
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:177
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:182
 msgid "_Shear"
 msgstr "_Klipp"
 
@@ -362,19 +388,19 @@ msgstr "_Klipp"
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:526
+#: libgimpwidgets/gimpunitmenu.c:525
 msgid "Unit Selection"
 msgstr "Utvalg for enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:571
+#: libgimpwidgets/gimpunitmenu.c:570
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:575
+#: libgimpwidgets/gimpunitmenu.c:574
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:960
+#: libgimpwidgets/gimpwidgets.c:984
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -384,36 +410,20 @@ msgstr ""
 "startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt "
 "\"tilfeldig\" operasjon"
 
-#: libgimpwidgets/gimpwidgets.c:964
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:975
+#: libgimpwidgets/gimpwidgets.c:999
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer "
 "en noen lunde tilfeldig verdi"
 
-#: libgimpwidgets/gimpwidgets.c:1289
-msgid "Bytes"
-msgstr "Bytes"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
-msgstr "KiloBytes"
-
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr "MegaBytes"
-
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "GigaBytes"
-msgstr "GigaBytes"
-
 #: modules/cdisplay_colorblind.c:101
 msgid "Colorblind display filter"
-msgstr ""
+msgstr "Visningsfilter for fargeblinde"
 
 #: modules/cdisplay_colorblind.c:167
 msgid "Color Deficient Vision"
@@ -459,11 +469,11 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr ""
 
-#: modules/colorsel_triangle.c:108
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:180
+#: modules/colorsel_triangle.c:182
 msgid "_Triangle"
 msgstr "_Trekant"
 
