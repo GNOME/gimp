@@ -349,6 +349,8 @@ create_image (const GdkPixbuf *pixbuf)
 
   drawable = gimp_drawable_get (layer);
 
+  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+
   gimp_pixel_rgn_init (&pr, drawable,
                        0, 0, width, height,
                        TRUE, FALSE);
