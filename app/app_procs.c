@@ -344,6 +344,7 @@ make_initialization_status_window(void)
 	  GtkWidget *vbox;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+
 	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
 			      GTK_SIGNAL_FUNC (gtk_true),
 			      NULL);
@@ -359,13 +360,7 @@ make_initialization_status_window(void)
 	  vbox = gtk_vbox_new(FALSE, 4);
 	  gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
 
-	  gtk_widget_push_visual (gtk_preview_get_visual ());
-	  gtk_widget_push_colormap  (gtk_preview_get_cmap ());
-
 	  logo_area = gtk_drawing_area_new ();
-
-	  gtk_widget_pop_colormap ();
-	  gtk_widget_pop_visual ();
 
 	  gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
 			      (GtkSignalFunc) splash_logo_expose, NULL);
@@ -463,6 +458,8 @@ app_init (void)
       gtk_rc_parse (filename);
     }
 
+  if (no_interface == FALSE)
+      get_standard_colormaps ();
   make_initialization_status_window();
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
     splash_text_draw (logo_area);
@@ -530,7 +527,6 @@ app_init (void)
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
-      get_standard_colormaps ();
       devices_init ();
       session_init ();
       create_toolbox ();

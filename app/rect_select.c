@@ -434,7 +434,7 @@ rect_select_button_release (Tool           *tool,
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
 
-      if ((!w || !h) && !rect_sel->fixed_width)
+     if ((!w || !h) && !rect_sel->fixed_size)
 	{
 	  /*  If there is a floating selection, anchor it  */
 	  if (gimage_floating_sel (gdisp->gimage))

@@ -1,3 +1,14 @@
+Sat Nov 14 20:02:31 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/rect_select.c: deal with zero-size selections correctly (ie,
+	select the whole image but don't show marching ants).
+
+	* app/app_procs.c: sort out colourmap before creating splash
+	window, so if we need to install a private cmap then everything
+	will use it.
+
+	* plug-ins/newsprint/newsprint.c: delete spurious debugging printf.
+
 Fri Nov 13 23:07:22 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.[ch]

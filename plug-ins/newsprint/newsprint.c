@@ -1417,8 +1417,6 @@ newsprint_dialog (GDrawable *drawable)
     {
 	channel_st **chst;
 
-	printf("making channels\n");
-
 	gen_channels(&st, pvals.colourspace);
 
 	chst = st.chst[pvals.colourspace];
