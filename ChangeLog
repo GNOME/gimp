@@ -1,3 +1,15 @@
+2005-04-02  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-cursor-16.png
+	* themes/Default/images/stock-cursor-24.png
+	* themes/Default/images/stock-sample-point-16.png
+	* themes/Default/images/stock-sample-point-24.png: new icons for
+	new dockables which are about to be added. Jimmac, I made them
+	as ugly as possible, as you said :)
+
+	* libgimpwidgets/gimpstock.[ch]: add them as stock icons.
+
 2005-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: revert previous commit because not all po files

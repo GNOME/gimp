@@ -48,6 +48,7 @@ STOCK_MENU_IMAGES = \
 	stock-convert-grayscale-16.png			\
 	stock-convert-indexed-16.png			\
 	stock-convert-rgb-16.png			\
+	stock-cursor-16.png				\
 	stock-default-colors-12.png			\
 	stock-device-status-16.png			\
 	stock-display-filter-16.png			\
@@ -101,6 +102,7 @@ STOCK_MENU_IMAGES = \
 	stock-rotate-180-16.png				\
 	stock-rotate-270-16.png				\
 	stock-rotate-90-16.png				\
+	stock-sample-point-16.png			\
 	stock-scale-16.png				\
 	stock-selection-16.png				\
 	stock-selection-all-16.png			\
@@ -142,6 +144,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-color-picker-white-18.png		\
 	stock-color-pick-from-screen-16.png	\
 	stock-color-triangle-16.png		\
+	stock-cursor-24.png			\
 	stock-curve-free-16.png			\
 	stock-curve-smooth-16.png		\
 	stock-device-status-24.png		\
@@ -180,6 +183,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-paths-22.png			\
 	stock-print-resolution-24.png		\
 	stock-reset-16.png			\
+	stock-sample-point-24.png		\
 	stock-selection-add-16.png		\
 	stock-selection-intersect-16.png	\
 	stock-selection-replace-16.png		\

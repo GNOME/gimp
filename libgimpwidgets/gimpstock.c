@@ -197,6 +197,8 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DISPLAY_FILTER,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CURSOR,                   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_SAMPLE_POINT,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -361,6 +363,8 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_24             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_24            },
   { GIMP_STOCK_DISPLAY_FILTER,           stock_display_filter_24           },
+  { GIMP_STOCK_CURSOR,                   stock_cursor_24                   },
+  { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_24             },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_24              },
@@ -466,6 +470,8 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_16             },
   { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_16            },
   { GIMP_STOCK_DISPLAY_FILTER,           stock_display_filter_16           },
+  { GIMP_STOCK_CURSOR,                   stock_cursor_16                   },
+  { GIMP_STOCK_SAMPLE_POINT,             stock_sample_point_16             },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_16                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_16              },
