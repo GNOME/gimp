@@ -1,7 +1,7 @@
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablepreview.c: increased default preview size to
-	150 pixels. Added a border of 10 pixels around the bounding box of
+	150 pixels. Added a border of 2 pixels around the bounding box of
 	the selection.
 
 	* libgimpwidgets/gimppreview.[ch]: only show the GDK_FLEUR cursor

@@ -33,7 +33,7 @@
 
 
 #define DEFAULT_SIZE      150
-#define SELECTION_BORDER  10
+#define SELECTION_BORDER  2
 
 
 static void  gimp_drawable_preview_class_init    (GimpDrawablePreviewClass *klass);
