@@ -86,6 +86,9 @@ static const LayerMode layer_modes[] =
   { FALSE, FALSE, FALSE, },  /*  GIMP_DODGE_MODE         */
   { FALSE, FALSE, FALSE, },  /*  GIMP_BURN_MODE          */
   { FALSE, FALSE, FALSE, },  /*  GIMP_HARDLIGHT_MODE     */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_SOFTLIGHT_MODE     */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_GRAIN_EXTRACT_MODE */
+  { FALSE, FALSE, FALSE, },  /*  GIMP_GRAIN_MERGE_MODE   */
   { TRUE,  FALSE, TRUE,  },  /*  GIMP_COLOR_ERASE_MODE   */
   { TRUE,  FALSE, TRUE,  },  /*  GIMP_ERASE_MODE         */
   { TRUE,  TRUE,  TRUE,  },  /*  GIMP_REPLACE_MODE       */
@@ -114,10 +117,13 @@ static LayerModeFunc layer_mode_funcs[] =
   layer_dodge_mode,
   layer_burn_mode,
   layer_hardlight_mode,
+  layer_softlight_mode,
+  layer_grain_extract_mode,
+  layer_grain_merge_mode,
   layer_color_erase_mode,
   layer_erase_mode,
   layer_replace_mode,
-  layer_anti_erase_mode,
+  layer_anti_erase_mode
 };
 
 /*  Local function prototypes  */

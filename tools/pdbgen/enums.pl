@@ -119,7 +119,8 @@ package Gimp::CodeGen::enums;
 			  GIMP_SATURATION_MODE GIMP_COLOR_MODE
 			  GIMP_VALUE_MODE GIMP_DIVIDE_MODE GIMP_DODGE_MODE
 			  GIMP_BURN_MODE GIMP_HARDLIGHT_MODE
-			  GIMP_COLOR_ERASE_MODE) ],
+			  GIMP_SOFTLIGHT_MODE GIMP_GRAIN_EXTRACT_MODE
+			  GIMP_GRAIN_MERGE_MODE GIMP_COLOR_ERASE_MODE) ],
 	  mapping => { GIMP_NORMAL_MODE => '0',
 		       GIMP_DISSOLVE_MODE => '1',
 		       GIMP_BEHIND_MODE => '2',
@@ -139,7 +140,10 @@ package Gimp::CodeGen::enums;
 		       GIMP_DODGE_MODE => '16',
 		       GIMP_BURN_MODE => '17',
 		       GIMP_HARDLIGHT_MODE => '18',
-		       GIMP_COLOR_ERASE_MODE => '19' }
+		       GIMP_SOFTLIGHT_MODE => '19',
+		       GIMP_GRAIN_EXTRACT_MODE => '20',
+		       GIMP_GRAIN_MERGE_MODE => '21',
+		       GIMP_COLOR_ERASE_MODE => '22' }
 	},
     GimpTransferMode =>
 	{ contig => 1,

@@ -1,3 +1,22 @@
+2002-11-05  Sven Neumann  <sven@gimp.org>
+	
+	* app/base/base-enums.h
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c
+	* app/widgets/gimpwidgets-constructors.c: applied a patch from
+	Guillermo S. Romero that adds three new layer modes (Softlight,
+	Grain Extract and Grain Merge, #97686).
+
+	* app/base/base-enums.c
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/misc_tools_cmds.c
+	* app/widgets/gimpwidgets-constructors.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+	
 2002-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorselector.[ch]: added virtual functions

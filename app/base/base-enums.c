@@ -49,6 +49,9 @@ static const GEnumValue gimp_layer_mode_effects_enum_values[] =
   { GIMP_DODGE_MODE, "GIMP_DODGE_MODE", "dodge-mode" },
   { GIMP_BURN_MODE, "GIMP_BURN_MODE", "burn-mode" },
   { GIMP_HARDLIGHT_MODE, "GIMP_HARDLIGHT_MODE", "hardlight-mode" },
+  { GIMP_SOFTLIGHT_MODE, "GIMP_SOFTLIGHT_MODE", "softlight-mode" },
+  { GIMP_GRAIN_EXTRACT_MODE, "GIMP_GRAIN_EXTRACT_MODE", "grain-extract-mode" },
+  { GIMP_GRAIN_MERGE_MODE, "GIMP_GRAIN_MERGE_MODE", "grain-merge-mode" },
   { GIMP_COLOR_ERASE_MODE, "GIMP_COLOR_ERASE_MODE", "color-erase-mode" },
   { 0, NULL, NULL }
 };

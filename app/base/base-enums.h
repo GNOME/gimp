@@ -73,10 +73,13 @@ typedef enum
   GIMP_DODGE_MODE,
   GIMP_BURN_MODE,
   GIMP_HARDLIGHT_MODE,
+  GIMP_SOFTLIGHT_MODE,
+  GIMP_GRAIN_EXTRACT_MODE,
+  GIMP_GRAIN_MERGE_MODE,
   GIMP_COLOR_ERASE_MODE,
-  GIMP_ERASE_MODE,         /*< skip >*/
-  GIMP_REPLACE_MODE,       /*< skip >*/
-  GIMP_ANTI_ERASE_MODE     /*< skip >*/
+  GIMP_ERASE_MODE,           /*< skip >*/
+  GIMP_REPLACE_MODE,         /*< skip >*/
+  GIMP_ANTI_ERASE_MODE       /*< skip >*/
 } GimpLayerModeEffects;
 
 

@@ -701,6 +701,7 @@ burn_pixels (const guchar *src1,
     }
 }
 
+
 static inline void
 hardlight_pixels (const guchar *src1,
 		  const guchar *src2,
@@ -731,6 +732,113 @@ hardlight_pixels (const guchar *src1,
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
       else if (has_alpha2)
 	dest[alpha] = src2[alpha];
+
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
+    }
+}
+
+
+static inline void
+softlight_pixels (const guchar *src1,
+                  const guchar *src2,
+                  guchar       *dest,
+                  guint         length,
+                  guint         bytes1,
+                  guint         bytes2)
+{
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+  const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
+  guint b, tmpS, tmpM, tmp1, tmp2, tmp3;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+        {
+          /* Mix multiply and screen */
+          tmpM = INT_MULT (src1[b], src2[b], tmpM);
+          tmpS = 255 - INT_MULT((255 - src1[b]), (255 - src2[b]), tmp1);
+          dest[b] = INT_MULT ((255 - src1[b]), tmpM, tmp2) +
+            INT_MULT (src1[b], tmpS, tmp3);
+        }
+      
+      if (has_alpha1 && has_alpha2)
+        dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (has_alpha2)
+        dest[alpha] = src2[alpha];
+      
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
+    }
+}
+
+
+static inline void
+grain_extract_pixels (const guchar *src1,
+                      const guchar *src2,
+                      guchar       *dest,
+                      guint         length,
+                      guint         bytes1,
+                      guint         bytes2)
+{
+  guint alpha, b;
+  gint diff;
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+        {
+          diff = src1[b] - src2[b] + 128;
+          dest[b] = (guchar) CLAMP (diff, 0, 255);
+        }
+
+      if (has_alpha1 && has_alpha2)
+        dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (has_alpha2)
+        dest[alpha] = src2[alpha];
+      
+      src1 += bytes1;
+      src2 += bytes2;
+      dest += bytes2;
+    }
+}
+
+
+static inline void
+grain_merge_pixels (const guchar *src1,
+                    const guchar *src2,
+                    guchar       *dest,
+                    guint         length,
+                    guint         bytes1,
+                    guint         bytes2)
+{
+  gint alpha, b;
+  gint sum;
+  const guint has_alpha1 = HAS_ALPHA (bytes1);
+  const guint has_alpha2 = HAS_ALPHA (bytes2);
+
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
+
+  while (length --)
+    {
+      for (b = 0; b < alpha; b++)
+        {
+          /* Add, re-center and clip. */
+          sum = src1[b] + src2[b] - 128;
+          dest[b] = (guchar) CLAMP (sum, 0, 255);
+        }
+
+      if (has_alpha1 && has_alpha2)
+        dest[alpha] = MIN (src1[alpha], src2[alpha]);
+      else if (has_alpha2)
+        dest[alpha] = src2[alpha];
 
       src1 += bytes1;
       src2 += bytes2;
@@ -1668,4 +1776,26 @@ layer_hardlight_mode (struct apply_layer_mode_struct *alms)
   hardlight_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
 		    alms->bytes1, alms->bytes2);
 }
+
+static void
+layer_softlight_mode (struct apply_layer_mode_struct *alms)
+{
+  softlight_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
+                    alms->bytes1, alms->bytes2);
+}
+
+static void
+layer_grain_extract_mode (struct apply_layer_mode_struct *alms)
+{
+  grain_extract_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
+                        alms->bytes1, alms->bytes2);
+}
+
+static void
+layer_grain_merge_mode (struct apply_layer_mode_struct *alms)
+{
+  grain_merge_pixels (alms->src1, alms->src2, *(alms->dest), alms->length,
+                      alms->bytes1, alms->bytes2);
+}
+
 #endif  /*  __PAINT_FUNCS_GENERIC_H__  */
