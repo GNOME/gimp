@@ -1,3 +1,7 @@
+2001-10-31  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* tips/gimp_tips.lt.txt: convert to UNIX newline format.
+
 2001-10-28  Sven Neumann  <sven@gimp.org>
 
 	* README
