@@ -1,5 +1,9 @@
 2003-02-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_class_init): oops.
+
+2003-02-28  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c
 	* app/config/gimpconfig-serialize.[ch]: transparently serialize
 	and deserialize object properties that implement the

@@ -527,7 +527,7 @@ gimp_context_class_init (GimpContextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL], NULL,
                                    GIMP_TYPE_TOOL_INFO,
-                                   0);
+                                   G_PARAM_WRITABLE);
 
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, GIMP_CONTEXT_PROP_FOREGROUND,
                                   gimp_context_prop_names[GIMP_CONTEXT_PROP_FOREGROUND],
