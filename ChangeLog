@@ -1,3 +1,9 @@
+Sat Dec 25 04:14:03 CET 1999  Marc Lehmann <pcg@goof.com>
+
+        * gimp1_1_splash.ppm: Crappy it is, but at least temporary! Feel
+        free to enhance or replace, but please do not revert it back to
+        the previous version ;)
+
 1999-12-24  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/exchange.c
@@ -99,7 +105,6 @@ Mon Dec 20 18:42:51 EST 1999  Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: Slightly more upto date spec file. Work in progress.
 
->>>>>>> 1.1949
 Mon Dec 20 17:58:59 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/edit_selection.c: Remove old movement code and unused
