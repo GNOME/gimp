@@ -157,9 +157,6 @@ browser_dialog_open (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_connect (window, gimp_standard_help_func,
-                     "gimp-help", NULL);
-
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_widget_show (vbox);

@@ -1,5 +1,10 @@
 2004-11-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: don't connect the help browser to
+	the help system.
+
+2004-11-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/selection-round.scm: register the
 	compatibility procedure with the correct name.
 
