@@ -34,11 +34,11 @@
 #include "libgimp/gimpintl.h"
 
 
-static void gdisplay_close_warning_callback  (GtkWidget *widget,
-					      gboolean   close,
-					      gpointer   data);
-static void gdisplay_close_warning_dialog    (gchar     *image_name,
-					      GDisplay  *gdisp);
+static void gdisplay_close_warning_callback  (GtkWidget   *widget,
+					      gboolean     close,
+					      gpointer     data);
+static void gdisplay_close_warning_dialog    (const gchar *image_name,
+					      GDisplay    *gdisp);
 
 /*
  *  This file is for operations on the gdisplay object
@@ -284,8 +284,8 @@ gdisplay_close_warning_callback (GtkWidget *widget,
 }
 
 static void
-gdisplay_close_warning_dialog (gchar    *image_name,
-			       GDisplay *gdisp)
+gdisplay_close_warning_dialog (const gchar *image_name,
+			       GDisplay    *gdisp)
 {
   GtkWidget *mbox;
   gchar     *warning_buf;

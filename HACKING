@@ -9,9 +9,11 @@ to have the following packages installed:
 	- GNU gettext 10.35
 		Available in ftp://alpha.gnu.org/gnu
 
-
 These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
+
+	- pkg-config 0.7.0 or better
+		Available from http://www.freedesktop.org/software/pkgconfig
 
 
 Compilation
@@ -30,30 +32,30 @@ Basically this does the following for you:
         can run the configure script in cvsroot/gimp to create all
         the Makefiles.
 
-Before running autogen.sh or configure, make sure you have libtool
-in your path. Also make sure gtk.m4 is in the same --prefix relative
+Before running autogen.sh or configure, make sure you have libtool in
+your path. Also make sure gtk-2.0.m4 is in the same --prefix relative
 to your automake installation.
 
 Note that autogen.sh runs configure for you.  If you wish to pass
-options like --prefix=/usr to configure you can give those options
-to autogen.sh and they will be passed on to configure.
+options like --prefix=/usr to configure you can give those options to
+autogen.sh and they will be passed on to configure.
 
 
 CVS
 ---
-If at all possible, please use CVS to get the latest development version of
-gimp, as well as the CVS version of gtk+.  You can do the following to get
-gimp and gtk+ from cvs:
+If at all possible, please use CVS to get the latest development
+version of gimp, as well as the CVS version of gtk-doc, glib, pango,
+atk and gtk+.  You can do the following to get them all from cvs:
 
    $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
    $ cvs login
      (there is no password, just hit return)
-   $ cvs -z3 checkout gtk+ gimp
+   $ cvs -z3 checkout gtk-doc glib pango atk gtk+ gimp
 
 
 Patches
 -------
-Please submit patches to the gimp-developer@scam.xcf.berkeley.edu mailing
+Please submit patches to the gimp-developer@lists.xcf.berkeley.edu mailing
 list.  All kinds of contributions are accepted.  Patches that you wish to go
 into the distribution should also be uploaded to ftp://ftp.gimp.org/incoming.
 Follow the rules there for naming your patches.
@@ -91,12 +93,14 @@ The GIMP coding style is defined as follows:
       in the first column of the following line. All parameters are 
       prototyped and there's a new line for each.
 
-Try to make use of GTK's object system as much as possible. Do not create 
+Try to make use of GLib's object system as much as possible. Do not create 
 wrappers around functions of parent classes. If you end up duplicating code, 
 try to create a common parent class and implement the common methods there.
 
 Don't include headers in headers except where unavoidable (e.g. for
 deriving objects). Opaque typedefs go to app/apptypes.h
+
+Don't use the GTK wrappers around the GLib object and signal system.
 
 One goal of the 1.3 development branch is to make the GIMP code more readable
 and understandable. Please help us to achieve this goal by cleaning up the

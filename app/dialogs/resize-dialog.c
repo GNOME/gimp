@@ -208,7 +208,7 @@ resize_widget_new (ResizeType    type,
 		       _("Reset"), reset_callback,
 		       resize, NULL, NULL, FALSE, FALSE,
 
-		       _("Cancel"), cancel_cb ? cancel_cb : gtk_widget_destroy,
+		       _("Cancel"), cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
 		       cancel_cb ? user_data : NULL,
 		       cancel_cb ? NULL : (gpointer) 1,
 		       NULL, FALSE, TRUE,

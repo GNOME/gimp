@@ -259,15 +259,15 @@ toolbox_tool_changed (GimpContext  *context,
 
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{
-	  gtk_signal_handler_block_by_func (GTK_OBJECT (toolbox_button),
-					    toolbox_tool_button_toggled,
-					    tool_info);
+	  g_signal_handlers_block_by_func (G_OBJECT (toolbox_button),
+					   toolbox_tool_button_toggled,
+					   tool_info);
 
 	  gtk_widget_activate (toolbox_button);
 
-	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (toolbox_button),
-					      toolbox_tool_button_toggled,
-					      tool_info);
+	  g_signal_handlers_unblock_by_func (G_OBJECT (toolbox_button),
+					     toolbox_tool_button_toggled,
+					     tool_info);
 	}
     }
 }
@@ -292,7 +292,7 @@ create_tools (GtkWidget   *wbox,
 
       button = gtk_radio_button_new (group);
 
-      gtk_object_set_data (GTK_OBJECT (tool_info), "toolbox_button", button);
+      g_object_set_data (G_OBJECT (tool_info), "toolbox_button", button);
 
       gtk_container_set_border_width (GTK_CONTAINER (button), 0);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -309,13 +309,13 @@ create_tools (GtkWidget   *wbox,
       gtk_container_add (GTK_CONTAINER (alignment), preview);
       gtk_widget_show (preview);
 
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (toolbox_tool_button_toggled),
-			  tool_info);
+      g_signal_connect (G_OBJECT (button), "toggled",
+			G_CALLBACK (toolbox_tool_button_toggled),
+			tool_info);
 
-      gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			  GTK_SIGNAL_FUNC (toolbox_tool_button_press),
-			  tool_info);
+      g_signal_connect (G_OBJECT (button), "button_press_event",
+			G_CALLBACK (toolbox_tool_button_press),
+			tool_info);
 
       gimp_help_set_help_data (button,
 			       tool_info->help,
@@ -343,17 +343,17 @@ toolbox_create (void)
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
   gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (window), "delete_event",
-		      GTK_SIGNAL_FUNC (toolbox_delete),
-		      NULL);
+  g_signal_connect (G_OBJECT (window), "delete_event",
+		    G_CALLBACK (toolbox_delete),
+		    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (toolbox_destroy),
-		      NULL);
+  g_signal_connect (G_OBJECT (window), "destroy",
+		    G_CALLBACK (toolbox_destroy),
+		    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (window), "style_set",
-		      GTK_SIGNAL_FUNC (toolbox_style_set_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (window), "style_set",
+		    G_CALLBACK (toolbox_style_set_callback),
+		    NULL);
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.
@@ -370,9 +370,9 @@ toolbox_create (void)
 
   if (! list)  /* all devices have cursor */
     {
-      gtk_signal_connect (GTK_OBJECT (window), "motion_notify_event",
-			  GTK_SIGNAL_FUNC (toolbox_check_device),
-			  NULL);
+      g_signal_connect (G_OBJECT (window), "motion_notify_event",
+			G_CALLBACK (toolbox_check_device),
+			NULL);
 
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
@@ -406,11 +406,11 @@ toolbox_create (void)
 
   create_tools (wbox, gimp_get_user_context (the_gimp));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (gimp_get_user_context (the_gimp)),
-				  "tool_changed",
-				  GTK_SIGNAL_FUNC (toolbox_tool_changed),
-				  NULL,
-				  GTK_OBJECT (wbox));
+  g_signal_connect_object (G_OBJECT (gimp_get_user_context (the_gimp)),
+			   "tool_changed",
+			   G_CALLBACK (toolbox_tool_changed),
+			   G_OBJECT (wbox),
+			   0);
 
   create_color_area (wbox);
 
