@@ -144,6 +144,8 @@ gimp_init (Gimp *gimp)
 
   gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
 					     GIMP_CONTAINER_POLICY_WEAK);
+  gimp_object_set_name (GIMP_OBJECT (gimp->images), "images");
+
   gimp->next_image_ID       = 1;
   gimp->next_guide_ID       = 1;
   gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
@@ -154,6 +156,8 @@ gimp_init (Gimp *gimp)
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
 					     GIMP_CONTAINER_POLICY_STRONG);
+  gimp_object_set_name (GIMP_OBJECT (gimp->named_buffers), "named buffers");
+
   gimp->brush_factory       = NULL;
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
@@ -168,6 +172,8 @@ gimp_init (Gimp *gimp)
 
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO,
 					     GIMP_CONTAINER_POLICY_STRONG);
+  gimp_object_set_name (GIMP_OBJECT (gimp->tool_info_list), "tool infos");
+
   gimp->standard_tool_info  = NULL;
 
   gimp_documents_init (gimp);
@@ -341,8 +347,10 @@ gimp_get_memsize (GimpObject *object)
   memsize += (g_hash_table_size (gimp->drawable_table) *
               3 * sizeof (gpointer)); /* FIXME */
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer)) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers)) +
+  if (gimp->global_buffer)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer));
+
+  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory)) +
@@ -367,7 +375,7 @@ gimp_get_memsize (GimpObject *object)
               gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context)) +
               gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context)));
 
-  return memsize = GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 Gimp *
@@ -429,6 +437,7 @@ gimp_initialize (Gimp               *gimp,
 			   G_N_ELEMENTS (brush_loader_entries),
 			   gimp_brush_new,
 			   gimp_brush_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
 
   gimp->pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
@@ -437,6 +446,7 @@ gimp_initialize (Gimp               *gimp,
 			   G_N_ELEMENTS (pattern_loader_entries),
 			   gimp_pattern_new,
 			   gimp_pattern_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
 
   gimp->gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
@@ -445,6 +455,7 @@ gimp_initialize (Gimp               *gimp,
 			   G_N_ELEMENTS (gradient_loader_entries),
 			   gimp_gradient_new,
 			   gimp_gradient_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
 
   gimp->palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
@@ -453,6 +464,7 @@ gimp_initialize (Gimp               *gimp,
 			   G_N_ELEMENTS (palette_loader_entries),
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
+  gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
 
   gimp_image_new_init (gimp);
 

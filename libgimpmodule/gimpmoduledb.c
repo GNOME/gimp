@@ -76,6 +76,8 @@ gimp_modules_init (Gimp *gimp)
 
   gimp->modules = gimp_list_new (GIMP_TYPE_MODULE_INFO,
                                  GIMP_CONTAINER_POLICY_WEAK);
+  gimp_object_set_name (GIMP_OBJECT (gimp->modules), "modules");
+
   gimp->write_modulerc = FALSE;
 }
 

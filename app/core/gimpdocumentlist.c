@@ -45,6 +45,7 @@ gimp_documents_init (Gimp *gimp)
 
   gimp->documents = gimp_list_new (GIMP_TYPE_IMAGEFILE,
 				   GIMP_CONTAINER_POLICY_STRONG);
+  gimp_object_set_name (GIMP_OBJECT (gimp->documents), "documents");
 }
 
 void 

@@ -1,5 +1,18 @@
 2002-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.c
+	* app/core/gimpdocuments.c
+	* app/core/gimpmodules.c
+	* app/core/gimppalette.c: fixed some get_memsize()
+	implementations, give useful names to some global objects so the
+	new mem profile of "the_gimp" looks nicer.
+
+	* app/gui/menus.c
+	* app/gui/commands.[ch]: added a "Debug" menu to the toolbox,
+	offer a mem profile of the global "Gimp" instance.
+
+2002-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.[ch]: removed gimp_layer_has_alpha(), use
 	gimp_drawable_has_alpha() instead.
 

@@ -165,7 +165,7 @@ gimp_palette_get_memsize (GimpObject *object)
         memsize += strlen (entry->name) + 1;
     }
 
-  return memsize += GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
 static TempBuf *
