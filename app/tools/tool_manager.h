@@ -36,10 +36,8 @@ void           tool_manager_push_tool             (Gimp             *gimp,
 void           tool_manager_pop_tool              (Gimp             *gimp);
 
 
-void           tool_manager_initialize_tool       (Gimp             *gimp,
-						   GimpTool         *tool,
+void           tool_manager_initialize_active     (Gimp             *gimp,
 						   GimpDisplay      *gdisp);
-
 void           tool_manager_control_active        (Gimp             *gimp,
 						   ToolAction        action,
 						   GimpDisplay      *gdisp);

@@ -97,28 +97,29 @@ struct _GimpEditSelectionToolClass
 };
 
 
-static GType     gimp_edit_selection_tool_get_type   (void);
+static GType   gimp_edit_selection_tool_get_type   (void);
 
-static void 	 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
-static void      gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
+static void    gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass);
+static void    gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
 
-static void      gimp_edit_selection_tool_button_release (GimpTool       *tool,
-							  GdkEventButton *bevent,
-							  GimpDisplay    *gdisp);
-static void      gimp_edit_selection_tool_motion         (GimpTool       *tool,
-							  GdkEventMotion *mevent,
-							  GimpDisplay    *gdisp);
-static void      gimp_edit_selection_tool_control        (GimpTool       *tool,
-							  ToolAction      action,
-							  GimpDisplay    *gdisp);
-static void      gimp_edit_selection_tool_cursor_update  (GimpTool       *tool,
-							  GdkEventMotion *mevent,
-							  GimpDisplay    *gdisp);
-void             gimp_edit_selection_tool_arrow_key      (GimpTool       *tool,
-							  GdkEventKey    *kevent,
-							  GimpDisplay    *gdisp);
+static void    gimp_edit_selection_tool_control        (GimpTool        *tool,
+                                                        ToolAction       action,
+                                                        GimpDisplay     *gdisp);
+static void    gimp_edit_selection_tool_button_release (GimpTool        *tool,
+                                                        GimpCoords      *coords,
+                                                        guint32          time,
+                                                        GdkModifierType  state,
+                                                        GimpDisplay     *gdisp);
+static void    gimp_edit_selection_tool_motion         (GimpTool        *tool,
+                                                        GimpCoords      *coords,
+                                                        guint32          time,
+                                                        GdkModifierType  state,
+                                                        GimpDisplay     *gdisp);
+void           gimp_edit_selection_tool_arrow_key      (GimpTool        *tool,
+                                                        GdkEventKey     *kevent,
+                                                        GimpDisplay     *gdisp);
 
-static void      gimp_edit_selection_tool_draw           (GimpDrawTool   *tool);
+static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -166,7 +167,6 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
   tool_class->control        = gimp_edit_selection_tool_control;
   tool_class->button_release = gimp_edit_selection_tool_button_release;
   tool_class->motion         = gimp_edit_selection_tool_motion;
-  tool_class->cursor_update  = gimp_edit_selection_tool_cursor_update;
 
   draw_class->draw	     = gimp_edit_selection_tool_draw;
 }
@@ -200,8 +200,6 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
   gdouble x2, y2;
   gdouble dx, dy;
 
-  gdisplay_untransform_coords_f (gdisp, x, y, &x, &y, TRUE);
-
   dx = x - edit_select->origx;
   dy = y - edit_select->origy;
   
@@ -232,14 +230,14 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
 }
 
 void
-init_edit_selection (GimpTool       *tool,
-		     GimpDisplay    *gdisp,
-		     GdkEventButton *bevent,
-		     EditType        edit_type)
+init_edit_selection (GimpTool    *tool,
+		     GimpDisplay *gdisp,
+		     GimpCoords  *coords,
+		     EditType     edit_type)
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
-  gint                   x, y;
+  gint                   off_x, off_y;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
 
@@ -247,17 +245,16 @@ init_edit_selection (GimpTool       *tool,
 
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
-  /*  Move the (x, y) point from screen to image space  */
-  gdisplay_untransform_coords (gdisp, 
-			       bevent->x, bevent->y, &x, &y, FALSE, TRUE);
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
 
-  edit_select->x = edit_select->origx = x;
-  edit_select->y = edit_select->origy = y;
+  edit_select->x = edit_select->origx = coords->x - off_x;
+  edit_select->y = edit_select->origy = coords->y - off_y;
 
   gimage_mask_boundary (gdisp->gimage,
-			&edit_select->segs_in, 
+			&edit_select->segs_in,
 			&edit_select->segs_out,
-			&edit_select->num_segs_in, 
+			&edit_select->num_segs_in,
 			&edit_select->num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
@@ -288,7 +285,9 @@ init_edit_selection (GimpTool       *tool,
 			     &edit_select->x1, &edit_select->y1,
 			     &edit_select->x2, &edit_select->y2);
 
-  gimp_edit_selection_tool_snap (edit_select, gdisp, bevent->x, bevent->y);
+  gimp_edit_selection_tool_snap (edit_select, gdisp,
+                                 RINT (edit_select->origx),
+                                 RINT (edit_select->origy));
 
   GIMP_TOOL (edit_select)->gdisp = gdisp;
   GIMP_TOOL (edit_select)->state = ACTIVE;
@@ -314,14 +313,14 @@ init_edit_selection (GimpTool       *tool,
 
 
 static void
-gimp_edit_selection_tool_button_release (GimpTool       *tool,
-					 GdkEventButton *bevent,
-					 GimpDisplay    *gdisp)
+gimp_edit_selection_tool_button_release (GimpTool        *tool,
+                                         GimpCoords      *coords,
+                                         guint32          time,
+					 GdkModifierType  state,
+					 GimpDisplay     *gdisp)
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
-  gint                   x;
-  gint                   y;
   GimpLayer             *layer;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
@@ -331,7 +330,7 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
   /*  resume the current selection and ungrab the pointer  */
   gdisplay_selection_visibility (gdisp, GIMP_SELECTION_RESUME);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), edit_select->context_id);
@@ -348,15 +347,12 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
    */
   if (edit_select->edit_type == EDIT_MASK_TRANSLATE)
     {
-      gimp_edit_selection_tool_snap (edit_select, gdisp, bevent->x, bevent->y);
-
-      x = edit_select->x;
-      y = edit_select->y;
+      gimp_edit_selection_tool_snap (edit_select, gdisp, coords->x, coords->y);
 
       /* move the selection -- whether there has been net movement or not!
        * (to ensure that there's something on the undo stack)
        */
-      gimage_mask_translate (gdisp->gimage, 
+      gimage_mask_translate (gdisp->gimage,
 			     edit_select->cumlx,
 			     edit_select->cumly);
 
@@ -397,7 +393,7 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
 
   undo_push_group_end (gdisp->gimage);
 
-  if (bevent->state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
+  if (state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
     {
       /* Operation cancelled - undo the undo-group! */
       undo_pop (gdisp->gimage);
@@ -410,9 +406,11 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
 
 
 static void
-gimp_edit_selection_tool_motion (GimpTool       *tool,
-				 GdkEventMotion *mevent,
-				 GimpDisplay    *gdisp)
+gimp_edit_selection_tool_motion (GimpTool        *tool,
+                                 GimpCoords      *coords,
+                                 guint32          time,
+				 GdkModifierType  state,
+				 GimpDisplay     *gdisp)
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
@@ -435,12 +433,24 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 
   /* Perform motion compression so that we don't lag and/or waste time. */
 
-  if (! gtkutil_compress_motion (gtk_get_event_widget ((GdkEvent *) mevent),
-				 &lastmotion_x,
-				 &lastmotion_y))
+  if (gtkutil_compress_motion (shell->canvas,
+                               &lastmotion_x,
+                               &lastmotion_y))
     {
-      lastmotion_x = mevent->x;
-      lastmotion_y = mevent->y;
+      gdisplay_untransform_coords_f (gdisp,
+                                     lastmotion_x, lastmotion_y,
+                                     &lastmotion_x, &lastmotion_y,
+                                     TRUE);
+    }
+  else
+    {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                             &off_x, &off_y);
+
+      lastmotion_x = coords->x - off_x;
+      lastmotion_y = coords->y - off_y;
     }
 
   /* now do the actual move. */
@@ -465,7 +475,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
     if (edit_select->origx != x || edit_select->origy != y)
       {
 	gint xoffset, yoffset;
-	
+ 
 	xoffset = x - edit_select->origx;
 	yoffset = y - edit_select->origy;
 
@@ -479,11 +489,11 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 	    edit_select->origx = x;
 	    edit_select->origy = y;
 	    break;
-	
+
 	  case EDIT_LAYER_TRANSLATE:
 	    if ((floating_layer = gimp_image_floating_sel (gdisp->gimage)))
 	      floating_sel_relax (floating_layer, TRUE);
-      
+
 	    /*  translate the layer--and any "linked" layers as well  */
 	    for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
 		 layer_list;
@@ -497,7 +507,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 		    gimp_layer_translate (layer, xoffset, yoffset);
 		  }
 	      }
-      
+
 	    if (floating_layer)
 	      floating_sel_rigor (floating_layer, TRUE);
 
@@ -507,7 +517,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 		edit_select->first_move = FALSE;
 	      }
 	    break;
-	
+
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
 	    if (! gimage_mask_float (gdisp->gimage, 
 				     gimp_image_active_drawable (gdisp->gimage),
@@ -533,10 +543,10 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 
 	    edit_select->edit_type = EDIT_FLOATING_SEL_TRANSLATE;
 	    break;
-      
+
 	  case EDIT_FLOATING_SEL_TRANSLATE:
 	    layer = gimp_image_get_active_layer (gdisp->gimage);
-      
+
 	    floating_sel_relax (layer, TRUE);
 	    gimp_layer_translate (layer, xoffset, yoffset);
 	    floating_sel_rigor (layer, TRUE);
@@ -563,7 +573,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (offset, STATUSBAR_SIZE, shell->cursor_format_str,
+      g_snprintf (offset, sizeof (offset), shell->cursor_format_str,
 		  _("Move: "),
 		  edit_select->cumlx,
 		  ", ",
@@ -573,7 +583,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (offset, STATUSBAR_SIZE, shell->cursor_format_str,
+      g_snprintf (offset, sizeof (offset), shell->cursor_format_str,
 		  _("Move: "), 
 		  (edit_select->cumlx) * unit_factor / 
 		  gdisp->gimage->xresolution,
@@ -608,7 +618,7 @@ selection_transform_segs (GimpEditSelectionTool *edit_select,
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (gdisp, 
+      gdisplay_transform_coords (gdisp,
 				 src_segs[i].x2 + edit_select->cumlx, 
 				 src_segs[i].y2 + edit_select->cumly,
 				 &x, &y, FALSE);
@@ -647,23 +657,23 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
       if (! floating_sel)
 	{
-	   segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
+          segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
 
-	   selection_transform_segs (edit_select,
-				     gdisp,
-				     edit_select->segs_in,
-				     segs_copy,
-				     edit_select->num_segs_in);
-      
-	   /*  Draw the items  */
-	   gdk_draw_segments (draw_tool->win, draw_tool->gc,
-			      segs_copy, select->num_segs_in);
+          selection_transform_segs (edit_select,
+                                    gdisp,
+                                    edit_select->segs_in,
+                                    segs_copy,
+                                    edit_select->num_segs_in);
 
-	   g_free (segs_copy);
+          /*  Draw the items  */
+          gdk_draw_segments (draw_tool->win, draw_tool->gc,
+                             segs_copy, select->num_segs_in);
+
+          g_free (segs_copy);
 	}
 
       segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
-      
+
       selection_transform_segs (edit_select,
 				gdisp,
 				edit_select->segs_out,
@@ -699,13 +709,13 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 	 &x2, &y2, TRUE);
 
       /*  Now, expand the rectangle to include all linked layers as well  */
-      for (layer_list= GIMP_LIST (gdisp->gimage->layers)->list;
+      for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
 	   layer_list;
 	   layer_list = g_list_next (layer_list))
 	{
 	  layer = (GimpLayer *) layer_list->data;
 
-	  if (((layer) != gdisp->gimage->active_layer) &&
+	  if ((layer != gdisp->gimage->active_layer) &&
 	      gimp_layer_get_linked (layer))
 	    {
 	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
@@ -728,7 +738,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 	}
 
       gdk_draw_rectangle (draw_tool->win,
-			  draw_tool->gc, 0,
+			  draw_tool->gc, FALSE,
 			  x1, y1,
 			  x2 - x1, y2 - y1);
       break;
@@ -756,7 +766,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-
 static void
 gimp_edit_selection_tool_control (GimpTool    *tool,
 				  ToolAction   action,
@@ -777,20 +786,7 @@ gimp_edit_selection_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
-}
-
-
-static void
-gimp_edit_selection_tool_cursor_update (GimpTool       *tool,
-					GdkEventMotion *mevent,
-					GimpDisplay    *gdisp)
-{
-  gimp_display_shell_install_tool_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                          GIMP_MOUSE_CURSOR,
-                                          GIMP_TOOL_CURSOR_NONE,
-                                          GIMP_CURSOR_MODIFIER_MOVE);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static gint
@@ -800,7 +796,9 @@ process_event_queue_keys (GdkEventKey *kevent,
  * could move this function to a more central location so it can be used
  * by other tools? */
 {
+
 #define FILTER_MAX_KEYS 50
+
   va_list          argp;
   GdkEvent        *event;
   GList           *event_list = NULL;
@@ -811,16 +809,18 @@ process_event_queue_keys (GdkEventKey *kevent,
   gint             i = 0, nkeys = 0, value = 0;
   gboolean         done = FALSE;
   gboolean         discard_event;
-  GtkWidget        *orig_widget;
+  GtkWidget       *orig_widget;
 
   va_start (argp, kevent);
+
   while (nkeys <FILTER_MAX_KEYS && (keys[nkeys] = va_arg (argp, guint)) != 0)
     {
       modifiers[nkeys] = va_arg (argp, GdkModifierType);
       values[nkeys]    = va_arg (argp, gint);
       nkeys++;
     }
-  va_end(argp);
+
+  va_end (argp);
 
   for (i = 0; i < nkeys; i++)
     {
@@ -828,42 +828,42 @@ process_event_queue_keys (GdkEventKey *kevent,
 	value += values[i];
     }
 
-  orig_widget = gtk_get_event_widget ((GdkEvent*) kevent);
+  orig_widget = gtk_get_event_widget ((GdkEvent *) kevent);
 
-  while (gdk_events_pending () > 0 && !done)
-  {
-    discard_event = FALSE;
-    event = gdk_event_get ();
+  while (gdk_events_pending () > 0 && ! done)
+    {
+      discard_event = FALSE;
+      event = gdk_event_get ();
 
-    if (!event || orig_widget != gtk_get_event_widget (event))
-      {
-	done = TRUE;
+      if (! event || orig_widget != gtk_get_event_widget (event))
+        {
+          done = TRUE;
+        }
+      else
+        {
+          if (event->any.type == GDK_KEY_PRESS)
+            {
+              for (i = 0; i < nkeys; i++)
+                if (event->key.keyval == keys[i] &&
+                    event->key.state  == modifiers[i])
+                  {
+                    discard_event = TRUE;
+                    value += values[i];
+                  }
+
+              if (! discard_event)
+                done = TRUE;
+            }
+          /* should there be more types here? */
+          else if (event->any.type != GDK_KEY_RELEASE &&
+                   event->any.type != GDK_MOTION_NOTIFY &&
+                   event->any.type != GDK_EXPOSE)
+            done = FALSE;
       }
-    else
-      {
-	if (event->any.type == GDK_KEY_PRESS)
-	  {
-	    for (i = 0; i < nkeys; i++)
-	      if (event->key.keyval == keys[i] &&
-		  event->key.state  == modifiers[i])
-		{
-		  discard_event = TRUE;
-		  value += values[i];
-		}
 
-	    if (!discard_event)
-	      done = TRUE;
-	  }
-	     /* should there be more types here? */
-	else if (event->any.type != GDK_KEY_RELEASE &&
-		 event->any.type != GDK_MOTION_NOTIFY &&
-		 event->any.type != GDK_EXPOSE)
-	  done = FALSE;
-      }
-
-    if (!event)
+    if (! event)
       ; /* Do nothing */
-    else if (!discard_event)
+    else if (! discard_event)
       event_list = g_list_prepend (event_list, event);
     else
       gdk_event_free (event);
@@ -872,17 +872,16 @@ process_event_queue_keys (GdkEventKey *kevent,
   event_list = g_list_reverse (event_list);
 
   /* unget the unused events and free the list */
-  for (list = event_list;
-       list;
-       list = g_list_next (list))
+  for (list = event_list; list; list = g_list_next (list))
     {
-      gdk_event_put ((GdkEvent*)list->data);
-      gdk_event_free ((GdkEvent*)list->data);
+      gdk_event_put ((GdkEvent *) list->data);
+      gdk_event_free ((GdkEvent *) list->data);
     }
 
   g_list_free (event_list);
 
   return value;
+
 #undef FILTER_MAX_KEYS
 }
 
@@ -993,18 +992,20 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   gdisplays_flush ();
 }
 
-/***************************************************************/
-/* gtkutil_compress_motion:
 
-   This function walks the whole GDK event queue seeking motion events
-   corresponding to the widget 'widget'.  If it finds any it will
-   remove them from the queue, write the most recent motion offset
-   to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
-   it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
-   untouched.
+/* gtkutil_compress_motion:
+ *
+ * This function walks the whole GDK event queue seeking motion events
+ * corresponding to the widget 'widget'.  If it finds any it will
+ * remove them from the queue, write the most recent motion offset
+ * to 'lastmotion_x' and 'lastmotion_y', then return TRUE.  Otherwise
+ * it will return FALSE and 'lastmotion_x' / 'lastmotion_y' will be
+ * untouched.
  */
+
 /* The gtkutil_compress_motion function source may be re-used under
-   the XFree86-style license. <adam@gimp.org> */
+ * the XFree86-style license. <adam@gimp.org>
+ */
 gboolean
 gtkutil_compress_motion (GtkWidget *widget,
 			 gdouble   *lastmotion_x,
@@ -1015,8 +1016,8 @@ gtkutil_compress_motion (GtkWidget *widget,
   GList    *list;
   gboolean  success = FALSE;
 
-  /* Move the entire GDK event queue to a private list, filtering
-     out any motion events for the desired widget. */
+  /*  Move the entire GDK event queue to a private list, filtering
+   *  out any motion events for the desired widget. */
   while (gdk_events_pending ())
     {
       event = gdk_event_get ();
@@ -1050,7 +1051,7 @@ gtkutil_compress_motion (GtkWidget *widget,
       gdk_event_put ((GdkEvent*) list->data);
       gdk_event_free ((GdkEvent*) list->data);
     }
-  
+
   g_list_free (requeued_events);
 
   return success;

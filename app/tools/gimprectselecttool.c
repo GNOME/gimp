@@ -63,17 +63,23 @@ enum
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
 static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
 
-static void   gimp_rect_select_tool_button_press     (GimpTool       *tool,
-                                                      GdkEventButton *bevent,
-                                                      GimpDisplay    *gdisp);
-static void   gimp_rect_select_tool_button_release   (GimpTool       *tool,
-                                                      GdkEventButton *bevent,
-                                                      GimpDisplay    *gdisp);
-static void   gimp_rect_select_tool_motion           (GimpTool       *tool,
-                                                      GdkEventMotion *mevent,
-                                                      GimpDisplay    *gdisp);
+static void   gimp_rect_select_tool_button_press     (GimpTool        *tool,
+                                                      GimpCoords      *coords,
+                                                      guint32          time,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
+static void   gimp_rect_select_tool_button_release   (GimpTool        *tool,
+                                                      GimpCoords      *coords,
+                                                      guint32          time,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
+static void   gimp_rect_select_tool_motion           (GimpTool        *tool,
+                                                      GimpCoords      *coords,
+                                                      guint32          time,
+                                                      GdkModifierType  state,
+                                                      GimpDisplay     *gdisp);
 
-static void   gimp_rect_select_tool_draw             (GimpDrawTool   *draw_tool);
+static void   gimp_rect_select_tool_draw             (GimpDrawTool    *draw_tool);
 
 static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
                                                       gint                x,
@@ -188,23 +194,23 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
     }
 
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
-  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 
   rect_select->x = rect_select->y = 0;
   rect_select->w = rect_select->h = 0;
 }
 
 static void
-gimp_rect_select_tool_button_press (GimpTool       *tool,
-                                    GdkEventButton *bevent,
-                                    GimpDisplay    *gdisp)
+gimp_rect_select_tool_button_press (GimpTool        *tool,
+                                    GimpCoords      *coords,
+                                    guint32          time,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
   GimpDisplayShell   *shell;
   SelectionOptions   *sel_options;
   gchar               select_mode[STATUSBAR_SIZE];
-  gint                x, y;
   GimpUnit            unit = GIMP_UNIT_PIXEL;
   gdouble             unit_factor;
 
@@ -215,10 +221,8 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
-
-  rect_sel->x = x;
-  rect_sel->y = y;
+  rect_sel->x = coords->x;
+  rect_sel->y = coords->y;
 
   rect_sel->fixed_size   = sel_options->fixed_size;
   rect_sel->fixed_width  = sel_options->fixed_width;
@@ -252,22 +256,22 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 
   rect_sel->center = FALSE;
 
+  tool->state = ACTIVE;
+  tool->gdisp = gdisp;
+
   gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
-
-  tool->state = ACTIVE;
-  tool->gdisp = gdisp;
+		    NULL, NULL, time);
 
   switch (sel_tool->op)
     {
     case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
+      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
       return;
     case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TO_LAYER_TRANSLATE);
+      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TO_LAYER_TRANSLATE);
       return;
     default:
       break;
@@ -302,9 +306,11 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 }
 
 static void
-gimp_rect_select_tool_button_release (GimpTool       *tool,
-                                      GdkEventButton *bevent,
-                                      GimpDisplay    *gdisp)
+gimp_rect_select_tool_button_release (GimpTool        *tool,
+                                      GimpCoords      *coords,
+                                      guint32          time,
+                                      GdkModifierType  state,
+                                      GimpDisplay     *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
@@ -318,7 +324,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), rect_sel->context_id);
@@ -328,7 +334,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
+  if (! (state & GDK_BUTTON3_MASK))
     {
       x1 = (rect_sel->w < 0) ? rect_sel->x + rect_sel->w : rect_sel->x;
       y1 = (rect_sel->h < 0) ? rect_sel->y + rect_sel->h : rect_sel->y;
@@ -336,7 +342,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
 
-      if ((!w || !h) && !rect_sel->fixed_size)
+      if ((! w || ! h) && ! rect_sel->fixed_size)
         {
           /*  If there is a floating selection, anchor it  */
           if (gimp_image_floating_sel (gdisp->gimage))
@@ -361,16 +367,17 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
 }
 
 static void
-gimp_rect_select_tool_motion (GimpTool       *tool,
-                              GdkEventMotion *mevent,
-                              GimpDisplay    *gdisp)
+gimp_rect_select_tool_motion (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              guint32          time,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
   GimpDisplayShell   *shell;
   gchar               size[STATUSBAR_SIZE];
   gint                ox, oy;
-  gint                x, y;
   gint                w, h, s;
   gint                tw, th;
   gdouble             ratio;
@@ -380,10 +387,6 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  needed for immediate cursor update on modifier event  */
-  sel_tool->current_x = mevent->x;
-  sel_tool->current_y = mevent->y;
-
   if (tool->state != ACTIVE)
     return;
 
@@ -391,7 +394,7 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
     {
       sel_tool->op = SELECTION_REPLACE;
 
-      gimp_tool_cursor_update (tool, mevent, gdisp);
+      gimp_tool_cursor_update (tool, coords, state, gdisp);
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -409,33 +412,31 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
       oy = rect_sel->y;
     }
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-
   if (rect_sel->fixed_size)
     {
-      if (mevent->state & GDK_SHIFT_MASK)
+      if (state & GDK_SHIFT_MASK)
 	{
-	  ratio = (double)(rect_sel->fixed_height /
-			   (double)rect_sel->fixed_width);
-	  tw = x - ox;
-	  th = y - oy;
-	  /* 
-	   * This is probably an inefficient way to do it, but it gives
+	  ratio = ((gdouble) rect_sel->fixed_height /
+                   (gdouble) rect_sel->fixed_width);
+	  tw = ROUND (coords->x) - ox;
+	  th = ROUND (coords->y) - oy;
+
+          /* This is probably an inefficient way to do it, but it gives
 	   * nicer, more predictable results than the original agorithm
 	   */
- 
-	  if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
+	  if ((abs (th) < (ratio * abs (tw))) &&
+              (abs (tw) > (abs (th) / ratio)))
 	    {
 	      w = tw;
-	      h = (int)(tw * ratio);
+	      h = (gint) (tw * ratio);
 	      /* h should have the sign of th */
 	      if ((th < 0 && h > 0) || (th > 0 && h < 0))
 		h = -h;
-	    } 
+	    }
 	  else 
 	    {
 	      h = th;
-	      w = (int)(th / ratio);
+	      w = (gint) (th / ratio);
 	      /* w should have the sign of tw */
 	      if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
 		w = -w;
@@ -443,22 +444,26 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 	}
       else
 	{
-	  w = (x - ox > 0 ? rect_sel->fixed_width  : -rect_sel->fixed_width);
-	  h = (y - oy > 0 ? rect_sel->fixed_height : -rect_sel->fixed_height);
+	  w = (ROUND (coords->x) - ox > 0 ?
+               rect_sel->fixed_width  : -rect_sel->fixed_width);
+
+	  h = (ROUND (coords->y) - oy > 0 ?
+               rect_sel->fixed_height : -rect_sel->fixed_height);
 	}
     }
   else
     {
-      w = (x - ox);
-      h = (y - oy);
+      w = (ROUND (coords->x) - ox);
+      h = (ROUND (coords->y) - oy);
     }
 
   /* If the shift key is down, then make the rectangle square (or
-      ellipse circular) */
-  if ((mevent->state & GDK_SHIFT_MASK) && !rect_sel->fixed_size)
+   * ellipse circular)
+   */
+  if ((state & GDK_SHIFT_MASK) && ! rect_sel->fixed_size)
     {
       s = MAX (abs (w), abs (h));
-	  
+
       if (w < 0)
 	w = -s;
       else
@@ -470,12 +475,13 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 	h = s;
     }
 
-  /*  If the control key is down, create the selection from the center out */
-  if (mevent->state & GDK_CONTROL_MASK)
+  /*  If the control key is down, create the selection from the center out
+   */
+  if (state & GDK_CONTROL_MASK)
     {
       if (rect_sel->fixed_size) 
 	{
-          if (mevent->state & GDK_SHIFT_MASK) 
+          if (state & GDK_SHIFT_MASK) 
             {
               rect_sel->x = ox - w;
               rect_sel->y = oy - h;
@@ -489,12 +495,12 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
               rect_sel->w = w;
               rect_sel->h = h;
             }
-	} 
-      else 
+	}
+      else
 	{
-	  w = abs(w);
-	  h = abs(h);
-	  
+	  w = abs (w);
+	  h = abs (h);
+
 	  rect_sel->x = ox - w;
 	  rect_sel->y = oy - h;
 	  rect_sel->w = 2 * w + 1;
@@ -516,19 +522,19 @@ gimp_rect_select_tool_motion (GimpTool       *tool,
 
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
-		  _("Selection: "), abs(rect_sel->w), " x ", abs(rect_sel->h));
+      g_snprintf (size, sizeof (size), shell->cursor_format_str,
+		  _("Selection: "), abs (rect_sel->w), " x ", abs (rect_sel->h));
     }
   else /* show real world units */
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (size, STATUSBAR_SIZE, shell->cursor_format_str,
+      g_snprintf (size, sizeof (size), shell->cursor_format_str,
 		  _("Selection: "),
-		  (gdouble) abs(rect_sel->w) * unit_factor /
+		  (gdouble) abs (rect_sel->w) * unit_factor /
 		  gdisp->gimage->xresolution,
 		  " x ",
-		  (gdouble) abs(rect_sel->h) * unit_factor /
+		  (gdouble) abs (rect_sel->h) * unit_factor /
 		  gdisp->gimage->yresolution);
     }
 

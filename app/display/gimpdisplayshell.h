@@ -23,6 +23,10 @@
 #include <gtk/gtkwindow.h>
 
 
+/* FIXME remmove all gui/ stuff */
+#include "gui/gui-types.h"
+
+
 /* maximal width of the string holding the cursor-coordinates for
  * the status line
  */

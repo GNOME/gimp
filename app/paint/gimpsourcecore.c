@@ -88,13 +88,16 @@ struct _CloneOptions
 static void       gimp_clone_tool_class_init   (GimpCloneToolClass *klass);
 static void       gimp_clone_tool_init         (GimpCloneTool      *tool);
 
+static void       gimp_clone_tool_cursor_update (GimpTool        *tool,
+                                                 GimpCoords      *coords,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
+
+static void       gimp_clone_tool_draw          (GimpDrawTool    *draw_tool);
+
 static void       gimp_clone_tool_paint        (GimpPaintTool   *paint_tool,
 						GimpDrawable    *drawable,
 						PaintState       state);
-static void       gimp_clone_tool_draw         (GimpDrawTool    *draw_tool);
-static void       gimp_clone_tool_cursor_update (GimpTool        *tool,
-						 GdkEventMotion  *mevent,
-						 GimpDisplay     *gdisp);
 static void       gimp_clone_tool_motion       (GimpPaintTool   *paint_tool,
 						GimpDrawable    *drawable,
 						GimpDrawable    *src_drawable,
@@ -397,45 +400,43 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 }
 
 void
-gimp_clone_tool_cursor_update (GimpTool       *tool,
-			       GdkEventMotion *mevent,
-			       GimpDisplay    *gdisp)
+gimp_clone_tool_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+			       GdkModifierType  state,
+			       GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
-  gint              x, y;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
-			       &x, &y, TRUE, FALSE);
- 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+      if (coords->x >= off_x &&
+          coords->y >= off_y &&
+	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
 	    ctype = GIMP_MOUSE_CURSOR;
-	  else if (gimage_mask_value (gdisp->gimage, x, y))
+	  else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
   
   if (clone_options->type == IMAGE_CLONE)
     {
-      if (mevent->state & GDK_CONTROL_MASK)
+      if (state & GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
-      else if (!src_drawable_)
+      else if (! src_drawable_)
 	ctype = GIMP_BAD_CURSOR;
     }
 

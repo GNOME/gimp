@@ -23,10 +23,6 @@
 #include "core/gimpobject.h"
 
 
-/* FIXME move all GTK stuff to gimpdisplayshell */
-#include "gui/gui-types.h"
-
-
 /*  some useful macros  */
 
 /* unpacking the user scale level (char) */

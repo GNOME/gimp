@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs base core xcf file pdb plug-in tools display widgets gui
+SUBDIRS = paint-funcs base core xcf file pdb plug-in display tools widgets gui
 
 scriptdata =
 

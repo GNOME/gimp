@@ -38,12 +38,7 @@ struct _GimpSelectionTool
 {
   GimpDrawTool  parent_instance;
   
-  SelectOps     op;        /*  selection operation (SELECTION_ADD etc.)  */
-  
-  gint          current_x; /*  these values are updated on every motion event  */
-  gint          current_y; /*  (enables immediate cursor updating on modifier
-			    *   key events).
-			    */
+  SelectOps     op;  /*  selection operation (SELECTION_ADD etc.)  */
 };
 
 struct _GimpSelectionToolClass

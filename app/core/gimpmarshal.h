@@ -123,7 +123,15 @@ extern void gimp_cclosure_marshal_VOID__DOUBLE (GClosure     *closure,
                                                 gpointer      invocation_hint,
                                                 gpointer      marshal_data);
 
-/* VOID:INT,INT (./gimpmarshal.list:44) */
+/* VOID:INT,BOOLEAN,INT,OBJECT (./gimpmarshal.list:44) */
+extern void gimp_cclosure_marshal_VOID__INT_BOOLEAN_INT_OBJECT (GClosure     *closure,
+                                                                GValue       *return_value,
+                                                                guint         n_param_values,
+                                                                const GValue *param_values,
+                                                                gpointer      invocation_hint,
+                                                                gpointer      marshal_data);
+
+/* VOID:INT,INT (./gimpmarshal.list:45) */
 extern void gimp_cclosure_marshal_VOID__INT_INT (GClosure     *closure,
                                                  GValue       *return_value,
                                                  guint         n_param_values,
@@ -131,7 +139,7 @@ extern void gimp_cclosure_marshal_VOID__INT_INT (GClosure     *closure,
                                                  gpointer      invocation_hint,
                                                  gpointer      marshal_data);
 
-/* VOID:INT,INT,INT (./gimpmarshal.list:45) */
+/* VOID:INT,INT,INT (./gimpmarshal.list:46) */
 extern void gimp_cclosure_marshal_VOID__INT_INT_INT (GClosure     *closure,
                                                      GValue       *return_value,
                                                      guint         n_param_values,
@@ -139,7 +147,7 @@ extern void gimp_cclosure_marshal_VOID__INT_INT_INT (GClosure     *closure,
                                                      gpointer      invocation_hint,
                                                      gpointer      marshal_data);
 
-/* VOID:INT,INT,INT,INT (./gimpmarshal.list:46) */
+/* VOID:INT,INT,INT,INT (./gimpmarshal.list:47) */
 extern void gimp_cclosure_marshal_VOID__INT_INT_INT_INT (GClosure     *closure,
                                                          GValue       *return_value,
                                                          guint         n_param_values,
@@ -147,7 +155,15 @@ extern void gimp_cclosure_marshal_VOID__INT_INT_INT_INT (GClosure     *closure,
                                                          gpointer      invocation_hint,
                                                          gpointer      marshal_data);
 
-/* VOID:INT,POINTER (./gimpmarshal.list:47) */
+/* VOID:INT,OBJECT (./gimpmarshal.list:48) */
+extern void gimp_cclosure_marshal_VOID__INT_OBJECT (GClosure     *closure,
+                                                    GValue       *return_value,
+                                                    guint         n_param_values,
+                                                    const GValue *param_values,
+                                                    gpointer      invocation_hint,
+                                                    gpointer      marshal_data);
+
+/* VOID:INT,POINTER (./gimpmarshal.list:49) */
 extern void gimp_cclosure_marshal_VOID__INT_POINTER (GClosure     *closure,
                                                      GValue       *return_value,
                                                      guint         n_param_values,
@@ -155,7 +171,7 @@ extern void gimp_cclosure_marshal_VOID__INT_POINTER (GClosure     *closure,
                                                      gpointer      invocation_hint,
                                                      gpointer      marshal_data);
 
-/* VOID:INT,POINTER,POINTER (./gimpmarshal.list:48) */
+/* VOID:INT,POINTER,POINTER (./gimpmarshal.list:50) */
 extern void gimp_cclosure_marshal_VOID__INT_POINTER_POINTER (GClosure     *closure,
                                                              GValue       *return_value,
                                                              guint         n_param_values,
@@ -163,7 +179,7 @@ extern void gimp_cclosure_marshal_VOID__INT_POINTER_POINTER (GClosure     *closu
                                                              gpointer      invocation_hint,
                                                              gpointer      marshal_data);
 
-/* VOID:OBJECT,INT (./gimpmarshal.list:49) */
+/* VOID:OBJECT,INT (./gimpmarshal.list:51) */
 extern void gimp_cclosure_marshal_VOID__OBJECT_INT (GClosure     *closure,
                                                     GValue       *return_value,
                                                     guint         n_param_values,
@@ -171,7 +187,7 @@ extern void gimp_cclosure_marshal_VOID__OBJECT_INT (GClosure     *closure,
                                                     gpointer      invocation_hint,
                                                     gpointer      marshal_data);
 
-/* VOID:OBJECT,INT,POINTER (./gimpmarshal.list:50) */
+/* VOID:OBJECT,INT,POINTER (./gimpmarshal.list:52) */
 extern void gimp_cclosure_marshal_VOID__OBJECT_INT_POINTER (GClosure     *closure,
                                                             GValue       *return_value,
                                                             guint         n_param_values,
@@ -179,7 +195,7 @@ extern void gimp_cclosure_marshal_VOID__OBJECT_INT_POINTER (GClosure     *closur
                                                             gpointer      invocation_hint,
                                                             gpointer      marshal_data);
 
-/* VOID:OBJECT,POINTER (./gimpmarshal.list:51) */
+/* VOID:OBJECT,POINTER (./gimpmarshal.list:53) */
 extern void gimp_cclosure_marshal_VOID__OBJECT_POINTER (GClosure     *closure,
                                                         GValue       *return_value,
                                                         guint         n_param_values,
@@ -187,7 +203,7 @@ extern void gimp_cclosure_marshal_VOID__OBJECT_POINTER (GClosure     *closure,
                                                         gpointer      invocation_hint,
                                                         gpointer      marshal_data);
 
-/* VOID:POINTER,INT (./gimpmarshal.list:52) */
+/* VOID:POINTER,INT (./gimpmarshal.list:54) */
 extern void gimp_cclosure_marshal_VOID__POINTER_INT (GClosure     *closure,
                                                      GValue       *return_value,
                                                      guint         n_param_values,
@@ -195,13 +211,37 @@ extern void gimp_cclosure_marshal_VOID__POINTER_INT (GClosure     *closure,
                                                      gpointer      invocation_hint,
                                                      gpointer      marshal_data);
 
-/* VOID:POINTER,POINTER (./gimpmarshal.list:53) */
+/* VOID:POINTER,INT,OBJECT (./gimpmarshal.list:55) */
+extern void gimp_cclosure_marshal_VOID__POINTER_INT_OBJECT (GClosure     *closure,
+                                                            GValue       *return_value,
+                                                            guint         n_param_values,
+                                                            const GValue *param_values,
+                                                            gpointer      invocation_hint,
+                                                            gpointer      marshal_data);
+
+/* VOID:POINTER,OBJECT (./gimpmarshal.list:56) */
+extern void gimp_cclosure_marshal_VOID__POINTER_OBJECT (GClosure     *closure,
+                                                        GValue       *return_value,
+                                                        guint         n_param_values,
+                                                        const GValue *param_values,
+                                                        gpointer      invocation_hint,
+                                                        gpointer      marshal_data);
+
+/* VOID:POINTER,POINTER (./gimpmarshal.list:57) */
 extern void gimp_cclosure_marshal_VOID__POINTER_POINTER (GClosure     *closure,
                                                          GValue       *return_value,
                                                          guint         n_param_values,
                                                          const GValue *param_values,
                                                          gpointer      invocation_hint,
                                                          gpointer      marshal_data);
+
+/* VOID:POINTER,UINT,INT,OBJECT (./gimpmarshal.list:58) */
+extern void gimp_cclosure_marshal_VOID__POINTER_UINT_INT_OBJECT (GClosure     *closure,
+                                                                 GValue       *return_value,
+                                                                 guint         n_param_values,
+                                                                 const GValue *param_values,
+                                                                 gpointer      invocation_hint,
+                                                                 gpointer      marshal_data);
 
 G_END_DECLS
 

@@ -231,13 +231,18 @@ HELP
     }
 
     %invoke = (
-        headers => [ qw ("tools/gimpbucketfilltool.h") ],
-	vars => [ 'GimpImage *gimage' ],
+        headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-  bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
-	       threshold, sample_merged, x, y);
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
+    {
+      success = FALSE;
+    }
+  else
+    {
+      gimp_drawable_bucket_fill (drawable, fill_mode, paint_mode, opacity,
+	                         threshold, sample_merged, x, y);
+    }
 }
 CODE
     );

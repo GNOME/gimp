@@ -1,3 +1,141 @@
+2001-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: build display/ before tools/.
+
+	* app/devices.c: devices_check_change(): added all events
+	which have a GdkDevice pointer.
+
+	* app/gimpprogress.c: include "display-types.h" instead of
+	"core-types.h".
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-bucket-fill.[ch]: new files: the bucket_fill
+	stuff taken from tools/gimpbucketfilltool.[ch].
+
+	* app/core/core-types.h: added "BucketFillMode".
+
+	* app/core/gimpimage-mask-select.[ch]: cleanup.
+
+	* app/core/gimpmarshal.list: added more marshallers for GimpTool's
+	new signal signatures.
+
+	* app/core/gimpmarshal.[ch]: regenerated.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-dnd.[ch]
+	* app/display/gimpdisplayshell-layer-select.[ch]: new files: the
+	canvas drop callbacks from gimpdisplayshell-callbacks.[ch] and
+	the stuff formerly knows as gui/layer-select.[ch].
+
+	* app/display/gimpdisplay.h: don't include "gui/gui-types.h".
+
+	* app/display/gximage.c: include "display-types.h".
+
+	* app/display/gimpdisplay-foreach.c
+	* app/display/gimpdisplayshell.[ch]: call gdsplay_delete(), don't
+	destroy the shell widget.
+
+	* app/gui/Makefile.am
+	* app/gui/layer-select.[ch]: removed.
+
+	* app/gui/gradients-commands.c: fixed "Save as POV" fprintf()s.
+
+	* app/gui/preferences-dialog.c: removed the layer_select stuff
+	because it is useless with the new preview system.
+
+	* app/gui/tool-options-dialog.c: send the correct data to the
+	close_callback.
+
+	* app/gui/tools-commands.c: changed to follow the new
+	gimp_tool_initialize() semantics (see below).
+
+	Tool & canvas event handling chainsawing:
+
+	* app/tools/tools-types.h: new struct GimpCoords which contains
+	x, y, pressure, tilt etc.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: added utility
+	functions which transparently retreive the current event's
+	GimpCoords or take it from the device directly if the event has
+	none. Pass GimpCoords _in_image_coordinates_ to all tool
+	functions.
+
+	Most important: don't pass GdkEvents and display coordinates to
+	tools any more.
+
+	* app/tools/gimptool.[ch]: changed virtual functions to take
+	GimpCoords, time and state separately instead of GdkEvents.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.[ch]
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.[ch]
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.[ch]
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpselectiontool.[ch]
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.[ch]
+	* app/tools/path_tool.[ch]
+	* app/tools/selection_options.c: tons and tons of changes:
+
+	- changed to use the new virtual function parameters.
+	- removed zillions of gdisplay_untransform_coords().
+	- get the active drawable's offsets manually in many cases.
+	  (questionable, but IMHO ok because it's obvious and not simply a
+	  "TRUE" passed to some function)
+	- reordered some functions to be consistent across tools.
+	- some tools had to be changed to work on image coords, not
+	  display ones (esp. crop).
+	- fixed strange rotate tool behaviour which should be backported
+	  to stable.
+	- some stuff i came across.
+	- indentation and other paranoia.
+	- rounding of coordinated may be broken in some tools.
+	- new bugs guaranteed.
+
+	* app/tools/tool_manager.[ch]: new semantic of
+	tool_manager_initialize_active() (looked at the places where it
+	was used from and put common code together). Should be a bit
+	better now :)
+
+	* app/tools/gimpblendtool.c
+	* app/tools/transform_options.c: use the new GTK+ feature that a
+	widget (toggle button) can be a frame's title for this tools' tool
+	options.
+
+	* app/widgets/widgets-types.h: stuff.
+
+	* themes/Default/gtkrc: s/GtkDialog/GimpDialog/.
+
+	* tools/pdbgen/Makefile.am: don't scan tools/gimpbucketfilltool.h
+	any more.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* tools/pdbgen/pdb/tools.pdb: changed bucket_fill wrapper.
+
+	* app/pdb/tools_cmds.c: regenerated.
+
 2001-11-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/*.c: ported fixes from stable branch (mostly 

@@ -89,16 +89,23 @@ static void   gimp_paint_tool_control         (GimpTool	           *tool,
 					       ToolAction           action,
 					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_press    (GimpTool            *tool,
-					       GdkEventButton      *bevent,
+                                               GimpCoords          *coords,
+                                               guint32              time,
+					       GdkModifierType      state,
 					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_release  (GimpTool            *tool,
-					       GdkEventButton      *bevent,
+                                               GimpCoords          *coords,
+                                               guint32              time,
+					       GdkModifierType      state,
 					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_motion          (GimpTool            *tool,
-					       GdkEventMotion      *mevent,
+                                               GimpCoords          *coords,
+                                               guint32              time,
+					       GdkModifierType      state,
 					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_cursor_update   (GimpTool            *tool,
-					       GdkEventMotion      *mevent,
+                                               GimpCoords          *coords,
+					       GdkModifierType      state,
 					       GimpDisplay         *gdisp);
 
 static void   gimp_paint_tool_draw            (GimpDrawTool        *draw_tool);
@@ -260,11 +267,11 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
 		  G_TYPE_POINTER,
 		  G_TYPE_INT);
 
+  tool_class->control        = gimp_paint_tool_control;
   tool_class->button_press   = gimp_paint_tool_button_press;
   tool_class->button_release = gimp_paint_tool_button_release;
   tool_class->motion         = gimp_paint_tool_motion;
   tool_class->cursor_update  = gimp_paint_tool_cursor_update;
-  tool_class->control        = gimp_paint_tool_control;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
 
@@ -312,44 +319,42 @@ gimp_paint_tool_control (GimpTool    *tool,
 }
 
 static void
-gimp_paint_tool_button_press (GimpTool       *tool,
-			      GdkEventButton *bevent,
-			      GimpDisplay    *gdisp)
+gimp_paint_tool_button_press (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              guint32          time,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool;
   GimpDisplayShell *shell;
   GimpBrush    	   *current_brush;
   gboolean          draw_line;
-  gdouble           x, y;
   GimpDrawable     *drawable;
-
-  g_return_if_fail (gdisp != NULL);
-  g_return_if_fail (tool != NULL);
+  gdouble           x, y;
+  gint              off_x, off_y;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y,
-				 &x, &y, TRUE);
   drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+  x = coords->x - off_x;
+  y = coords->y - off_y;
 
   if (! gimp_paint_tool_start (paint_tool, drawable, x, y))
     return;
 
   draw_line = FALSE;
 
-#ifdef __GNUC__
-#warning FIXME: tilt, pressure
-#endif
+  paint_tool->curpressure = coords->pressure;
+  paint_tool->curxtilt    = coords->xtilt;
+  paint_tool->curytilt    = coords->ytilt;
+  paint_tool->state       = state;
 
-  paint_tool->curpressure = 1.0; /* bevent->pressure; */
-  paint_tool->curxtilt    = 0.5; /* bevent->xtilt; */
-  paint_tool->curytilt    = 0.5; /* bevent->ytilt; */
-  paint_tool->state       = bevent->state;
-
-  if (gdisp != tool->gdisp ||
-      paint_tool->context_id < 1)
+  if (gdisp != tool->gdisp || paint_tool->context_id < 1)
     {
       /* initialize the statusbar display */
       paint_tool->context_id =
@@ -357,7 +362,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
     }
 
   /*  if this is a new image, reinit the core vals  */
-  if ((gdisp != tool->gdisp) || ! (bevent->state & GDK_SHIFT_MASK))
+  if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
       paint_tool->startx        = paint_tool->lastx        = paint_tool->curx = x;
@@ -370,7 +375,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
   /*  If shift is down and this is not the first paint
    *  stroke, then draw a line from the last coords to the pointer
    */
-  else if (bevent->state & GDK_SHIFT_MASK)
+  else if (state & GDK_SHIFT_MASK)
     {
       draw_line = TRUE;
       paint_tool->startx        = paint_tool->lastx;
@@ -380,7 +385,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
       paint_tool->startytilt    = paint_tool->lastytilt;
 
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
-      if (bevent->state & GDK_CONTROL_MASK)
+      if (state & GDK_CONTROL_MASK)
 	{
 	  gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
 	  gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
@@ -414,31 +419,37 @@ gimp_paint_tool_button_press (GimpTool       *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   /* add motion memory if perfectmouse is set */
-  if (gimprc.perfectmouse != 0)
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, bevent->time);
+  if (gimprc.perfectmouse)
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
   else
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK |
-		      GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, bevent->time);
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_POINTER_MOTION_HINT_MASK |
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
 
   /*  Let the specific painting function initialize itself  */
   gimp_paint_tool_paint (paint_tool, drawable, INIT_PAINT);
 
-  if (paint_tool->pick_colors
-      && !(bevent->state & GDK_SHIFT_MASK)
-      && (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+  if (paint_tool->pick_colors    &&
+      ! (state & GDK_SHIFT_MASK) &&
+      (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
     {
-      gimp_paint_tool_sample_color (drawable, x, y, bevent->state);
+      gimp_paint_tool_sample_color (drawable, coords->x, coords->y, state);
       paint_tool->pick_state = TRUE;
       return;
     }
   else
-    paint_tool->pick_state = FALSE;
+    {
+      paint_tool->pick_state = FALSE;
+    }
 
   /*  store the current brush pointer  */
   current_brush = paint_tool->brush;
@@ -447,6 +458,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
   if (draw_line)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL(paint_tool));
+
       gimp_paint_tool_interpolate (paint_tool, drawable);
 
       paint_tool->lastx        = paint_tool->curx;
@@ -500,9 +512,11 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 }
 
 static void
-gimp_paint_tool_button_release (GimpTool       *tool,
-				GdkEventButton *bevent,
-				GimpDisplay    *gdisp)
+gimp_paint_tool_button_release (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+				GdkModifierType  state,
+				GimpDisplay     *gdisp)
 {
   GimpImage     *gimage;
   GimpPaintTool *paint_tool;
@@ -513,7 +527,7 @@ gimp_paint_tool_button_release (GimpTool       *tool,
   /*  resume the current selection and ungrab the pointer  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   /*  Let the specific painting function finish up  */
@@ -534,48 +548,51 @@ gimp_paint_tool_button_release (GimpTool       *tool,
 }
 
 static void
-gimp_paint_tool_motion (GimpTool       *tool,
-			GdkEventMotion *mevent,
-			GimpDisplay    *gdisp)
+gimp_paint_tool_motion (GimpTool        *tool,
+                        GimpCoords      *coords,
+                        guint32          time,
+			GdkModifierType  state,
+			GimpDisplay     *gdisp)
 {
   GimpPaintTool *paint_tool;
+  gint           off_x, off_y;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
-  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
-				 &paint_tool->curx, &paint_tool->cury, TRUE);
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
+
+  paint_tool->curx = coords->x - off_x;
+  paint_tool->cury = coords->y - off_y;
 
   if (paint_tool->pick_state)
     {
       gimp_paint_tool_sample_color (gimp_image_active_drawable (gdisp->gimage),
-				    paint_tool->curx, paint_tool->cury,
-				    mevent->state);
+				    paint_tool->curx,
+                                    paint_tool->cury,
+				    state);
       return;
     }
 
-#ifdef __GNUC__
-#warning FIXME: tilt, pressure
-#endif
-
-  paint_tool->curpressure = 1.0; /* mevent->pressure; */
-  paint_tool->curxtilt    = 0.5; /* mevent->xtilt; */
-  paint_tool->curytilt    = 0.5; /* mevent->ytilt; */
-  paint_tool->state       = mevent->state;
+  paint_tool->curpressure = coords->pressure;
+  paint_tool->curxtilt    = coords->xtilt;
+  paint_tool->curytilt    = coords->ytilt;
+  paint_tool->state       = state;
 
   gimp_paint_tool_interpolate (paint_tool,
-			  gimp_image_active_drawable (gdisp->gimage));
+                               gimp_image_active_drawable (gdisp->gimage));
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    gimp_paint_tool_paint(paint_tool,
-				gimp_image_active_drawable (gdisp->gimage),
-				PRETRACE_PAINT);
+    gimp_paint_tool_paint (paint_tool,
+                           gimp_image_active_drawable (gdisp->gimage),
+                           PRETRACE_PAINT);
 
   gdisplay_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
-    gimp_paint_tool_paint(paint_tool,
-				gimp_image_active_drawable (gdisp->gimage),
-				POSTTRACE_PAINT);
+    gimp_paint_tool_paint (paint_tool,
+                           gimp_image_active_drawable (gdisp->gimage),
+                           POSTTRACE_PAINT);
 
   paint_tool->lastx        = paint_tool->curx;
   paint_tool->lasty        = paint_tool->cury;
@@ -587,15 +604,15 @@ gimp_paint_tool_motion (GimpTool       *tool,
 
 /* FIXME: this belongs in the individual tools */
 static void
-gimp_paint_tool_cursor_update (GimpTool       *tool,
-			       GdkEventMotion *mevent,
-			       GimpDisplay    *gdisp)
+gimp_paint_tool_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+			       GdkModifierType  state,
+			       GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool;
   GimpDrawTool     *draw_tool;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
-  gint              x, y;
   gchar             status_str[STATUSBAR_SIZE];
 
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
@@ -628,48 +645,38 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
     {
       GType type;
 
-      type = G_TYPE_FROM_CLASS (G_OBJECT_GET_CLASS (tool));
+      type = G_TYPE_FROM_INSTANCE (tool);
 
       if (type == GIMP_TYPE_ERASER_TOOL)
 	{
-	  ctype     = GIMP_MOUSE_CURSOR;
 	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	}
       else if (type == GIMP_TYPE_CONVOLVE_TOOL)
 	{
-	  ctype     = GIMP_MOUSE_CURSOR;
 	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	}
       else if (type == GIMP_TYPE_DODGEBURN_TOOL)
 	{
-	  ctype   = GIMP_MOUSE_CURSOR;
 	  ctoggle = TRUE;
-	}
-      else
-	{
-	  ctype = GIMP_MOUSE_CURSOR;
 	}
     }
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
       /* If shift is down and this is not the first paint stroke, draw a line */
-      if (gdisp == tool->gdisp && (mevent->state & GDK_SHIFT_MASK))
+      if (gdisp == tool->gdisp && (state & GDK_SHIFT_MASK))
 	{
 	  gdouble dx, dy, d;
 
 	  /*  Get the current coordinates */
-	  gdisplay_untransform_coords_f (gdisp,
-					 (double) mevent->x,
-					 (double) mevent->y,
-					 &paint_tool->curx,
-					 &paint_tool->cury, TRUE);
+          paint_tool->curx = ROUND (coords->x);
+          paint_tool->cury = ROUND (coords->y);
 
 	  dx = paint_tool->curx - paint_tool->lastx;
 	  dy = paint_tool->cury - paint_tool->lasty;
 
 	  /* Restrict to multiples of 15 degrees if ctrl is pressed */
-	  if (mevent->state & GDK_CONTROL_MASK)
+	  if (state & GDK_CONTROL_MASK)
 	    {
 	      gint idx = dx;
 	      gint idy = dy;
@@ -686,6 +693,7 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 		      if (frac < tangens2[i])
 			break;
 		    }
+
 		  dx = idx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
 		  dy = idy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
 		}
@@ -730,8 +738,8 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 	}
       /* If Ctrl or Mod1 is pressed, pick colors */
       else if (paint_tool->pick_colors &&
-	       !(mevent->state & GDK_SHIFT_MASK) &&
-	       (mevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
+	       ! (state & GDK_SHIFT_MASK) &&
+	       (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
@@ -741,20 +749,18 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 	  gint off_x, off_y;
 
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-	  gdisplay_untransform_coords (gdisp,
-				       (double) mevent->x, (double) mevent->y,
-				       &x, &y, TRUE, FALSE);
 
-	  if (x >= off_x && y >= off_y &&
-	      x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	      y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+	  if (coords->x >= off_x &&
+              coords->y >= off_y &&
+	      coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	      coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	    {
 	      /*  One more test--is there a selected region?
 	       *  if so, is cursor inside?
 	       */
 	      if (gimage_mask_is_empty (gdisp->gimage))
 		ctype = GIMP_MOUSE_CURSOR;
-	      else if (gimage_mask_value (gdisp->gimage, x, y))
+	      else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 		ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}
@@ -790,10 +796,14 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
       shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-      gdisplay_transform_coords (gdisp, paint_tool->lastx, paint_tool->lasty,
-				 &tx1, &ty1, 1);
-      gdisplay_transform_coords (gdisp, paint_tool->curx, paint_tool->cury,
-				 &tx2, &ty2, 1);
+      gdisplay_transform_coords (gdisp,
+                                 paint_tool->lastx, paint_tool->lasty,
+				 &tx1, &ty1,
+                                 TRUE);
+      gdisplay_transform_coords (gdisp,
+                                 paint_tool->curx, paint_tool->cury,
+				 &tx2, &ty2,
+                                 TRUE);
 
       /*  Only draw line if it's in the visible area
        *  thus preventing from drawing rubbish
@@ -804,8 +814,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 	  gint offx, offy;
 
 	  /* Adjust coords to start drawing from center of pixel if zoom > 1 */
-	  offx = (int) SCALEFACTOR_X (gdisp) >> 1;
-	  offy = (int) SCALEFACTOR_Y (gdisp) >> 1;
+	  offx = (gint) SCALEFACTOR_X (gdisp) >> 1;
+	  offy = (gint) SCALEFACTOR_Y (gdisp) >> 1;
 	  tx1 += offx;
 	  ty1 += offy;
 	  tx2 += offx;
@@ -832,8 +842,9 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                          tx1, ty1, tx2, ty2);
 	}
     }
+
   return;
-}	
+}
 
 /***********************************************************************/
 

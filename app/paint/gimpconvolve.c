@@ -89,6 +89,26 @@ struct _ConvolveOptions
 static void   gimp_convolve_tool_class_init    (GimpConvolveToolClass *klass);
 static void   gimp_convolve_tool_init          (GimpConvolveTool      *tool);
 
+static void   gimp_convolve_tool_modifier_key  (GimpTool             *tool,
+                                                GdkModifierType       key,
+                                                gboolean              press,
+					        GdkModifierType       state,
+						GimpDisplay          *gdisp);
+static void   gimp_convolve_tool_cursor_update (GimpTool             *tool,
+                                                GimpCoords           *coords,
+						GdkModifierType       state,
+						GimpDisplay          *gdisp);
+
+static void   gimp_convolve_tool_paint         (GimpPaintTool        *paint_tool,
+						GimpDrawable         *drawable,
+						PaintState            state);
+static void   gimp_convolve_tool_motion        (GimpPaintTool        *paint_tool,
+						GimpDrawable         *drawable, 
+						PaintPressureOptions *pressure_options,
+						ConvolveType          type,
+						gdouble               rate);
+
+
 static void   calculate_matrix                 (ConvolveType          type,
 						gdouble               rate);
 static void   integer_matrix                   (gfloat               *source,
@@ -99,21 +119,6 @@ static void   copy_matrix                      (gfloat               *src,
 						gint                  size);
 static gint   sum_matrix                       (gint                 *matrix,
 						gint                  size);
-
-static void   gimp_convolve_tool_paint         (GimpPaintTool        *paint_tool,
-						GimpDrawable         *drawable,
-						PaintState            state);
-static void   gimp_convolve_tool_cursor_update (GimpTool             *tool,
-						GdkEventMotion       *mevent,
-						GimpDisplay          *gdisp);
-static void   gimp_convolve_tool_modifier_key  (GimpTool             *tool,
-					        GdkEventKey          *kevent,
-						GimpDisplay          *gdisp);
-static void   gimp_convolve_tool_motion        (GimpPaintTool        *paint_tool,
-						GimpDrawable         *drawable, 
-						PaintPressureOptions *pressure_options,
-						ConvolveType          type,
-						gdouble               rate);
 
 static ConvolveOptions * convolve_options_new   (void);
 static void              convolve_options_reset (GimpToolOptions     *options);
@@ -218,8 +223,8 @@ gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->cursor_update = gimp_convolve_tool_cursor_update;
   tool_class->modifier_key  = gimp_convolve_tool_modifier_key;
+  tool_class->cursor_update = gimp_convolve_tool_cursor_update;
 
   paint_tool_class->paint   = gimp_convolve_tool_paint;
 }
@@ -265,71 +270,44 @@ gimp_convolve_tool_paint (GimpPaintTool    *paint_tool,
 }
 
 static void
-gimp_convolve_tool_modifier_key (GimpTool    *tool,
-				 GdkEventKey *kevent,
-				 GimpDisplay *gdisp)
+gimp_convolve_tool_modifier_key (GimpTool        *tool,
+                                 GdkModifierType  key,
+                                 gboolean         press,
+				 GdkModifierType  state,
+				 GimpDisplay     *gdisp)
 {
-  switch (kevent->keyval)
+  if ((state & GDK_CONTROL_MASK) &&
+      ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-    case GDK_Alt_L: 
-    case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: 
-    case GDK_Shift_R:
-      if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
-	{
-	  switch (convolve_options->type)
-	    {
-	    case BLUR_CONVOLVE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
-		 TRUE);
-	      break;
-	    case SHARPEN_CONVOLVE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
-		 TRUE);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      break;
-    case GDK_Control_L: 
-    case GDK_Control_R:
-      if ( !(kevent->state & GDK_SHIFT_MASK) ) /* shift enables line draw mode */
-	{
-	  switch (convolve_options->type)
-	    {
-	    case BLUR_CONVOLVE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
-		 TRUE);
-	      break;
-	    case SHARPEN_CONVOLVE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
-		 TRUE);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      break;
+      switch (convolve_options->type)
+        {
+        case BLUR_CONVOLVE:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
+             TRUE);
+          break;
+        case SHARPEN_CONVOLVE:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
+             TRUE);
+          break;
+        default:
+          break;
+        }
     }
 
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 }
 
 static void
-gimp_convolve_tool_cursor_update (GimpTool       *tool,
-				  GdkEventMotion *mevent,
-				  GimpDisplay    *gdisp)
+gimp_convolve_tool_cursor_update (GimpTool        *tool,
+                                  GimpCoords      *coords,
+				  GdkModifierType  state,
+				  GimpDisplay     *gdisp)
 {
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 
-  if (GIMP_TOOL_CLASS (parent_class)->cursor_update)
-    GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, mevent, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

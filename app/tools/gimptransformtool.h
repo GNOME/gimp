@@ -88,10 +88,6 @@ struct _GimpTransformTool
   TransformAction function;     /*  current tool activity       */
 
   gboolean        interactive;  /*  tool is interactive         */
-  gboolean        bpressed;     /*  Bug work around make sure we have 
-				 *  a button pressed before we deal with
-				 *  motion events. ALT.
-				 */
   gint		  ngx, ngy;	/*  number of grid lines in original
 				 *  x and y directions
 				 */

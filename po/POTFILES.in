@@ -22,6 +22,7 @@ app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
+app/core/gimpdrawable-bucket-fill.c
 app/core/gimpedit.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c
@@ -37,6 +38,7 @@ app/core/gimpunit.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
+app/display/gimpdisplayshell-layer-select.c
 
 app/file/file-open.c
 app/file/file-save.c
@@ -64,7 +66,6 @@ app/gui/image-commands.c
 app/gui/indicator-area.c
 app/gui/info-dialog.c
 app/gui/info-window.c
-app/gui/layer-select.c
 app/gui/layers-commands.c
 app/gui/menus.c
 app/gui/module-browser.c

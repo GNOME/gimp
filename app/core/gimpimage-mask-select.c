@@ -41,8 +41,6 @@ gimp_image_mask_select_rectangle (GimpImage  *gimage,
                                   gdouble     feather_radius_x,
                                   gdouble     feather_radius_y)
 {
-  GimpChannel *new_mask;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  if applicable, replace the current selection  */
@@ -54,25 +52,21 @@ gimp_image_mask_select_rectangle (GimpImage  *gimage,
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather)
+  if (feather || op == CHANNEL_OP_INTERSECT)
     {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
-      gimp_channel_feather (new_mask,
-			    feather_radius_x,
-			    feather_radius_y,
-                            FALSE /* no undo */);
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
-				 op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
-    }
-  else if (op == CHANNEL_OP_INTERSECT)
-    {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
-				 op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
+      GimpChannel *mask;
+
+      mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
+      gimp_channel_combine_rect (mask, CHANNEL_OP_ADD, x, y, w, h);
+
+      if (feather)
+        gimp_channel_feather (mask,
+                              feather_radius_x,
+                              feather_radius_y,
+                              FALSE /* no undo */);
+
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
+      g_object_unref (G_OBJECT (mask));
     }
   else
     {
@@ -92,8 +86,6 @@ gimp_image_mask_select_ellipse (GimpImage  *gimage,
                                 gdouble     feather_radius_x,
                                 gdouble     feather_radius_y)
 {
-  GimpChannel *new_mask;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /*  if applicable, replace the current selection  */
@@ -105,27 +97,21 @@ gimp_image_mask_select_ellipse (GimpImage  *gimage,
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather)
+  if (feather || op == CHANNEL_OP_INTERSECT)
     {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_ellipse (new_mask, CHANNEL_OP_ADD,
-				    x, y, w, h, antialias);
-      gimp_channel_feather (new_mask,
-			    feather_radius_x,
-			    feather_radius_y,
-                            FALSE /* no undo */);
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
-				 op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
-    }
-  else if (op == CHANNEL_OP_INTERSECT)
-    {
-      new_mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
-      gimp_channel_combine_ellipse (new_mask, CHANNEL_OP_ADD,
-				    x, y, w, h, antialias);
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
-				 op, 0, 0);
-      g_object_unref (G_OBJECT (new_mask));
+      GimpChannel *mask;
+
+      mask = gimp_channel_new_mask (gimage, gimage->width, gimage->height);
+      gimp_channel_combine_ellipse (mask, CHANNEL_OP_ADD, x, y, w, h, antialias);
+
+      if (feather)
+        gimp_channel_feather (mask,
+                              feather_radius_x,
+                              feather_radius_y,
+                              FALSE /* no undo */);
+
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
+      g_object_unref (G_OBJECT (mask));
     }
   else
     {
@@ -144,13 +130,14 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
                                 gdouble      feather_radius_x,
                                 gdouble      feather_radius_y)
 {
-  GimpChannel     *mask;
   GimpScanConvert *scan_convert;
+  GimpChannel     *mask;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  /*  if applicable, replace the current selection  */
-  /*  or insure that a floating selection is anchored down...  */
+  /*  if applicable, replace the current selection
+   *  or insure that a floating selection is anchored down...
+   */
   if (op == CHANNEL_OP_REPLACE)
     gimage_mask_clear (gimage);
   else
@@ -177,9 +164,7 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
 			      feather_radius_y,
                               FALSE /* no undo */);
 
-      gimp_channel_combine_mask (gimp_image_get_mask (gimage),
-                                 mask, op, 0, 0);
-
+      gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
       g_object_unref (G_OBJECT (mask));
     }
 }
@@ -221,10 +206,8 @@ gimp_image_mask_select_channel (GimpImage    *gimage,
 			  feather_radius_y,
                           FALSE /* no undo */);
 
-  gimp_channel_combine_mask (gimp_image_get_mask (gimage),
-                             channel,
-                             op,
-                             off_x, off_y);
+  gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,
+                             op, off_x, off_y);
 }
 
 void

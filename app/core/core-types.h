@@ -156,6 +156,13 @@ typedef enum
   NODESTRUCT_DITHER = 4 /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
 } ConvertDitherType;
 
+typedef enum
+{
+  FG_BUCKET_FILL,
+  BG_BUCKET_FILL,
+  PATTERN_BUCKET_FILL
+} BucketFillMode;
+
 
 /*  base objects  */
 

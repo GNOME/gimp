@@ -73,11 +73,14 @@ struct _FlipOptions
 static void          gimp_flip_tool_class_init    (GimpFlipToolClass *klass);
 static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool);
 
-static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
-						   GdkEventMotion    *mevent,
-						   GimpDisplay       *gdisp);
 static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
-						   GdkEventKey       *kevent,
+                                                   GdkModifierType    key,
+                                                   gboolean           press,
+						   GdkModifierType    state,
+						   GimpDisplay       *gdisp);
+static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
+                                                   GimpCoords        *coords,
+						   GdkModifierType    state,
 						   GimpDisplay       *gdisp);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
@@ -222,8 +225,8 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->cursor_update = gimp_flip_tool_cursor_update;
   tool_class->modifier_key  = gimp_flip_tool_modifier_key;
+  tool_class->cursor_update = gimp_flip_tool_cursor_update;
 
   draw_class->draw          = NULL;
 
@@ -248,18 +251,46 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
 					  (GimpToolOptions *) flip_options);
     }
 
+  tr_tool->trans_info[FLIP_INFO] = -1.0;
+
   tool->tool_cursor   = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
   tool->toggle_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
 
-  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
-
-  tr_tool->trans_info[FLIP_INFO] = -1.0;
+  tool->auto_snap_to  = FALSE;  /*  Don't snap to guides  */
 }
 
 static void
-gimp_flip_tool_cursor_update (GimpTool       *tool,
-			      GdkEventMotion *mevent,
-			      GimpDisplay    *gdisp)
+gimp_flip_tool_modifier_key (GimpTool        *tool,
+                             GdkModifierType  key,
+                             gboolean         press,
+			     GdkModifierType  state,
+			     GimpDisplay     *gdisp)
+{
+  if (key == GDK_CONTROL_MASK)
+    {
+      switch (flip_options->type)
+        {
+        case ORIENTATION_HORIZONTAL:
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]),
+             TRUE);
+          break;
+        case ORIENTATION_VERTICAL:
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]),
+             TRUE);
+          break;
+        default:
+          break;
+	}
+    }
+}
+
+static void
+gimp_flip_tool_cursor_update (GimpTool        *tool,
+                              GimpCoords      *coords,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
   GimpDisplayShell   *shell;
   GimpDrawable       *drawable;
@@ -270,21 +301,18 @@ gimp_flip_tool_cursor_update (GimpTool       *tool,
 
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
-      gint x, y;
       gint off_x, off_y;
 
       gimp_drawable_offsets (drawable, &off_x, &off_y);
-      gdisplay_untransform_coords (gdisp, 
-				   (double) mevent->x, (double) mevent->y,
-				   &x, &y, TRUE, FALSE);
 
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + gimp_drawable_width (drawable)) &&
-	  y < (off_y + gimp_drawable_height (drawable)))
+      if (coords->x >= off_x &&
+          coords->y >= off_y &&
+	  coords->x < (off_x + gimp_drawable_width (drawable)) &&
+	  coords->y < (off_y + gimp_drawable_height (drawable)))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
 	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, x, y))
+	      gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
 	      if (flip_options->type == ORIENTATION_HORIZONTAL)
 		ctype = GDK_SB_H_DOUBLE_ARROW;
@@ -303,32 +331,6 @@ gimp_flip_tool_cursor_update (GimpTool       *tool,
                                           ctype,
                                           tool_cursor,
                                           GIMP_CURSOR_MODIFIER_NONE);
-}
-
-static void
-gimp_flip_tool_modifier_key (GimpTool    *tool,
-			     GdkEventKey *kevent,
-			     GimpDisplay *gdisp)
-{
-  switch (kevent->keyval)
-    {
-    case GDK_Alt_L: case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: case GDK_Shift_R:
-      break;
-    case GDK_Control_L: case GDK_Control_R:
-      if (flip_options->type == ORIENTATION_HORIZONTAL)
-	{
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
-	}
-      else
-	{
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
-	}
-      break;
-    }
 }
 
 static TileManager *

@@ -19,6 +19,10 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdisplayshell.h		\
 	gimpdisplayshell-callbacks.c	\
 	gimpdisplayshell-callbacks.h	\
+	gimpdisplayshell-dnd.c		\
+	gimpdisplayshell-dnd.h		\
+	gimpdisplayshell-layer-select.c	\
+	gimpdisplayshell-layer-select.h	\
 	gimpdisplayshell-render.c	\
 	gimpdisplayshell-render.h	\
 	gimpdisplayshell-scale.c	\

@@ -90,30 +90,36 @@ typedef gdouble CRMatrix[4][4];
 static void   gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
 static void   gimp_curves_tool_init           (GimpCurvesTool      *bc_tool);
 
-static void   gimp_curves_tool_initialize     (GimpTool       *tool,
-					       GimpDisplay    *gdisp);
-static void   gimp_curves_tool_control        (GimpTool       *tool,
-					       ToolAction      action,
-					       GimpDisplay    *gdisp);
-static void   gimp_curves_tool_button_press   (GimpTool       *tool,
-					       GdkEventButton *bevent,
-					       GimpDisplay    *gdisp);
-static void   gimp_curves_tool_button_release (GimpTool       *tool,
-					       GdkEventButton *bevent,
-					       GimpDisplay    *gdisp);
-static void   gimp_curves_tool_motion         (GimpTool       *tool,
-					       GdkEventMotion *mevent,
-					       GimpDisplay    *gdisp);
+static void   gimp_curves_tool_initialize     (GimpTool        *tool,
+					       GimpDisplay     *gdisp);
+static void   gimp_curves_tool_control        (GimpTool        *tool,
+					       ToolAction       action,
+					       GimpDisplay     *gdisp);
+static void   gimp_curves_tool_button_press   (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+static void   gimp_curves_tool_button_release (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+static void   gimp_curves_tool_motion         (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
 
-static void   curves_colour_update            (GimpTool       *tool,
-					       GimpDisplay    *gdisp,
-					       GimpDrawable   *drawable,
-					       gint            x,
-					       gint            y);
-static void   curves_add_point                (GimpDrawable   *drawable,
-					       gint            x,
-					       gint            y,
-					       gint            cchan);
+static void   curves_color_update             (GimpTool        *tool,
+					       GimpDisplay     *gdisp,
+					       GimpDrawable    *drawable,
+					       gint             x,
+					       gint             y);
+static void   curves_add_point                (GimpDrawable    *drawable,
+					       gint             x,
+					       gint             y,
+					       gint             cchan);
 
 static CurvesDialog * curves_dialog_new   (void);
 
@@ -364,11 +370,12 @@ gimp_curves_tool_control (GimpTool    *tool,
 }
 
 static void
-gimp_curves_tool_button_press (GimpTool       *tool,
-			       GdkEventButton *bevent,
-			       GimpDisplay    *gdisp)
+gimp_curves_tool_button_press (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               guint32          time,
+			       GdkModifierType  state,
+			       GimpDisplay     *gdisp)
 {
-  gint          x, y;
   GimpDrawable *drawable;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
@@ -390,41 +397,37 @@ gimp_curves_tool_button_press (GimpTool       *tool,
 
   tool->state = ACTIVE;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
   curves_update (curves_dialog, GRAPH | DRAW);
 }
 
 static void
-gimp_curves_tool_button_release (GimpTool       *tool,
-				 GdkEventButton *bevent,
-				 GimpDisplay    *gdisp)
+gimp_curves_tool_button_release (GimpTool        *tool,
+                                 GimpCoords      *coords,
+                                 guint32          time,
+				 GdkModifierType  state,
+				 GimpDisplay     *gdisp)
 {
-  gint          x, y;
   GimpDrawable *drawable;
 
   if (! curves_dialog || 
-      ! gdisp || 
       ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
      return;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
 
-  if (bevent->state & GDK_SHIFT_MASK)
+  if (state & GDK_SHIFT_MASK)
     {
-      curves_add_point (drawable, x, y, curves_dialog->channel);
+      curves_add_point (drawable, coords->x, coords->y, curves_dialog->channel);
       curves_calculate_curve (curves_dialog);
     }
-  else if (bevent->state & GDK_CONTROL_MASK)
+  else if (state & GDK_CONTROL_MASK)
     {
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_VALUE);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_RED);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_GREEN);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_BLUE);
-      curves_add_point (drawable, x, y, GIMP_HISTOGRAM_ALPHA);
+      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_VALUE);
+      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_RED);
+      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_GREEN);
+      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_BLUE);
+      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_ALPHA);
       curves_calculate_curve (curves_dialog);
     }
 
@@ -432,21 +435,19 @@ gimp_curves_tool_button_release (GimpTool       *tool,
 }
 
 static void
-gimp_curves_tool_motion (GimpTool       *tool,
-			 GdkEventMotion *mevent,
-			 GimpDisplay    *gdisp)
+gimp_curves_tool_motion (GimpTool        *tool,
+                         GimpCoords      *coords,
+                         guint32          time,
+			 GdkModifierType  state,
+			 GimpDisplay     *gdisp)
 {
-  gint          x, y;
   GimpDrawable *drawable;
 
   if (! curves_dialog ||
-      ! gdisp || 
       ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
      return;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
-  curves_colour_update (tool, gdisp, drawable, x, y);
+  curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
   curves_update (curves_dialog, GRAPH | DRAW);
 }
 
@@ -498,11 +499,11 @@ curves_lut_func (CurvesDialog *cd,
 }
 
 static void
-curves_colour_update (GimpTool       *tool,
-		      GimpDisplay    *gdisp,
-		      GimpDrawable   *drawable,
-		      gint            x,
-		      gint            y)
+curves_color_update (GimpTool       *tool,
+                     GimpDisplay    *gdisp,
+                     GimpDrawable   *drawable,
+                     gint            x,
+                     gint            y)
 {
   guchar        *color;
   gint           offx;
@@ -1056,7 +1057,7 @@ curves_update (CurvesDialog *cd,
 			    RADIUS * 2, RADIUS * 2, 0, 23040);
 	  }
 
-      /* draw the colour line */
+      /* draw the color line */
       gdk_draw_line (cd->pixmap, cd->graph->style->black_gc,
 		     cd->col_value[sel_channel]+RADIUS,RADIUS,
 		     cd->col_value[sel_channel]+RADIUS,GRAPH_HEIGHT + RADIUS);

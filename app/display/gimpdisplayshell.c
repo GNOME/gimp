@@ -51,6 +51,7 @@
 #include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-render.h"
 #include "gximage.h"
 
@@ -301,14 +302,7 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->nav_popup = NULL;
     }
 
-  if (shell->gdisp)
-    {
-      gdisplay_delete (shell->gdisp);
-      shell->gdisp = NULL;
-    }
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -860,7 +854,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
-      gtk_widget_destroy (GTK_WIDGET (shell));
+      gdisplay_delete (shell->gdisp);
     }
 }
 
@@ -1452,15 +1446,18 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   gboolean   new_cursor;
   gboolean   flush = FALSE;
   gchar      buffer[CURSOR_STR_LENGTH];
-  gint       t_x;
-  gint       t_y;
+  gint       t_x = -1;
+  gint       t_y = -1;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimage = shell->gdisp->gimage;
 
-  new_cursor = shell->draw_cursor && shell->proximity;
-  
+  new_cursor = (shell->draw_cursor &&
+                shell->proximity   &&
+                x > 0              &&
+                y > 0);
+
   /* Erase old cursor, if necessary */
 
   if (shell->have_cursor && (! new_cursor         ||
@@ -1487,7 +1484,10 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
       gdisplay_flush (shell->gdisp);
     }
 
-  gdisplay_untransform_coords (shell->gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
+  if (x > 0 && y > 0)
+    {
+      gdisplay_untransform_coords (shell->gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
+    }
 
   if (t_x < 0              ||
       t_y < 0              ||
@@ -2447,6 +2447,6 @@ gimp_display_shell_close_warning_callback (GtkWidget *widget,
 
   if (close)
     {
-      gtk_widget_destroy (GTK_WIDGET (shell));
+      gdisplay_delete (shell->gdisp);
     }
 }

@@ -95,6 +95,8 @@ tool_manager_init (Gimp *gimp)
   GimpContext     *user_context;
   GimpContext     *tool_context;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   tool_manager = g_new0 (GimpToolManager, 1);
 
   tool_manager->active_tool            = NULL;
@@ -153,6 +155,8 @@ tool_manager_exit (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   tool_manager = tool_manager_get (gimp);
 
   g_object_unref (G_OBJECT (tool_manager->global_tool_context));
@@ -171,6 +175,8 @@ tool_manager_set_global_paint_options (Gimp     *gimp,
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (global == gimprc.global_paint_options)
     return;
@@ -217,6 +223,8 @@ tool_manager_get_active (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   tool_manager = tool_manager_get (gimp);
 
   return tool_manager->active_tool;
@@ -235,14 +243,19 @@ tool_manager_select_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      tool_manager_control_active (gimp,
-                                   HALT,
-                                   tool_manager->active_tool->gdisp);
+      if (tool_manager->active_tool->gdisp)
+        {
+          tool_manager_control_active (gimp,
+                                       HALT,
+                                       tool_manager->active_tool->gdisp);
+        }
 
       g_object_unref (G_OBJECT (tool_manager->active_tool));
     }
 
   tool_manager->active_tool = tool;
+
+  g_object_ref (G_OBJECT (tool_manager->active_tool));
 }
 
 void
@@ -258,10 +271,10 @@ tool_manager_push_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      g_object_ref (G_OBJECT (tool_manager->active_tool));
-
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
 						  tool_manager->active_tool);
+
+      g_object_ref (G_OBJECT (tool_manager->tool_stack->data));
     }
 
   tool_manager_select_tool (gimp, tool);
@@ -272,6 +285,8 @@ tool_manager_pop_tool (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   tool_manager = tool_manager_get (gimp);
 
   if (tool_manager->tool_stack)
@@ -279,56 +294,35 @@ tool_manager_pop_tool (Gimp *gimp)
       tool_manager_select_tool (gimp,
 				GIMP_TOOL (tool_manager->tool_stack->data));
 
+      g_object_unref (G_OBJECT (tool_manager->tool_stack->data));
+
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
 						 tool_manager->active_tool);
     }
 }
 
-
 void
-tool_manager_initialize_tool (Gimp        *gimp,
-			      GimpTool    *tool, /* FIXME: remove tool param */
-			      GimpDisplay *gdisp)
+tool_manager_initialize_active (Gimp        *gimp,
+                                GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
-  GimpToolInfo    *tool_info;
-  GType            tool_type;
+  GimpTool        *tool;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
 
-  tool_type = G_TYPE_FROM_INSTANCE (tool);
-
-  /*  Tools which have an init function have dialogs and
-   *  cannot be initialized without a display
-   */
-  if (GIMP_TOOL_GET_CLASS (tool)->initialize && ! gdisp)
+  if (tool_manager->active_tool)
     {
-      tool_info = tool_manager_get_info_by_type (gimp,
-						 GIMP_TYPE_RECT_SELECT_TOOL);
+      tool = tool_manager->active_tool;
+
+      gimp_tool_initialize (tool, gdisp);
+
+      if (gdisp)
+        tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+      else
+        tool->drawable = NULL;
     }
-  else
-    {
-      tool_info = gimp_context_get_tool (gimp_get_user_context (gimp));
-    }
-
-  if (tool_type == tool_info->tool_type)
-    {
-      gimp_context_tool_changed (gimp_get_user_context (gimp));
-    }
-  else
-    {
-      tool_info = tool_manager_get_info_by_type (gimp, tool_type);
-
-      gimp_context_set_tool (gimp_get_user_context (gimp), tool_info);
-    }
-
-  gimp_tool_initialize (tool_manager->active_tool, gdisp);
-
-  if (gdisp)
-    tool_manager->active_tool->drawable =
-      gimp_image_active_drawable (gdisp->gimage);
-
-  /*  don't set tool->gdisp here! (see commands.c)  */
 }
 
 void
@@ -337,6 +331,8 @@ tool_manager_control_active (Gimp        *gimp,
 			     GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
 
@@ -380,11 +376,6 @@ tool_manager_control_active (Gimp        *gimp,
               tool_manager->active_tool->state = INACTIVE;
 
 	      gimp_tool_control (tool_manager->active_tool, action, gdisp);
-              break;
-
-            case DESTROY:
-              g_object_unref (G_OBJECT (tool_manager->active_tool));
-	      tool_manager->active_tool = NULL;
               break;
 
             default:
@@ -647,6 +638,8 @@ tool_manager_tool_changed (GimpContext  *user_context,
     }
 
   tool_manager_select_tool (user_context->gimp, new_tool);
+
+  g_object_unref (G_OBJECT (new_tool));
 }
 
 static void
@@ -659,18 +652,26 @@ tool_manager_image_dirty (GimpImage *gimage,
 
   if (tool_manager->active_tool && ! tool_manager->active_tool->preserve)
     {
-      GimpDisplay *gdisp = tool_manager->active_tool->gdisp;
+      GimpDisplay *gdisp;
+
+      gdisp = tool_manager->active_tool->gdisp;
 
       if (gdisp)
 	{
+          /*  create a new one, deleting the current
+           */
+          gimp_context_tool_changed (gimp_get_user_context (gimage->gimp));
+
 	  if (gdisp->gimage == gimage)
-	    tool_manager_initialize_tool (gimage->gimp,
-					  tool_manager->active_tool,
-					  gdisp);
+            {
+              tool_manager_initialize_active (gimage->gimp, gdisp);
+
+              tool_manager->active_tool->gdisp = gdisp;
+            }
 	  else
-	    tool_manager_initialize_tool (gimage->gimp,
-					  tool_manager->active_tool,
-					  NULL);
+            {
+              tool_manager_initialize_active (gimage->gimp, NULL);
+            }
 	}
     }
 }

@@ -125,20 +125,27 @@ static void        gimp_ink_tool_finalize        (GObject          *object);
 static InkOptions * ink_options_new     (void);
 static void         ink_options_reset   (GimpToolOptions *tool_options);
 
-static void        ink_button_press     (GimpTool        *tool,
-					 GdkEventButton  *mevent,
-					 GimpDisplay     *gdisp);
-static void        ink_button_release   (GimpTool        *tool,
-					 GdkEventButton  *bevent,
-					 GimpDisplay     *gdisp);
-static void        ink_motion           (GimpTool        *tool,
-					 GdkEventMotion  *mevent,
-					 GimpDisplay     *gdisp);
-static void        ink_cursor_update    (GimpTool        *tool,
-					 GdkEventMotion  *mevent,
-					 GimpDisplay     *gdisp);
 static void        ink_control          (GimpTool        *tool,
 					 ToolAction       tool_action,
+					 GimpDisplay     *gdisp);
+static void        ink_button_press     (GimpTool        *tool,
+                                         GimpCoords      *coords,
+                                         guint32          time,
+					 GdkModifierType  state,
+					 GimpDisplay     *gdisp);
+static void        ink_button_release   (GimpTool        *tool,
+                                         GimpCoords      *coords,
+                                         guint32          time,
+					 GdkModifierType  state,
+					 GimpDisplay     *gdisp);
+static void        ink_motion           (GimpTool        *tool,
+                                         GimpCoords      *coords,
+                                         guint32          time,
+					 GdkModifierType  state,
+					 GimpDisplay     *gdisp);
+static void        ink_cursor_update    (GimpTool        *tool,
+                                         GimpCoords      *coords,
+					 GdkModifierType  state,
 					 GimpDisplay     *gdisp);
 
 static void        time_smoother_add    (GimpInkTool     *ink_tool,
@@ -310,6 +317,8 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
       ink_options_reset ((GimpToolOptions *) ink_options);
     }
+
+  tool->tool_cursor = GIMP_INK_TOOL_CURSOR;
 }
 
 static void
@@ -926,26 +935,50 @@ ink_pen_ellipse (gdouble x_center,
 }
 
 static void
-ink_button_press (GimpTool       *tool,
-		  GdkEventButton *bevent,
-		  GimpDisplay    *gdisp)
+ink_control (GimpTool    *tool,
+	     ToolAction   action,
+	     GimpDisplay *gdisp)
+{
+  GimpInkTool *ink_tool;
+
+  ink_tool = GIMP_INK_TOOL (tool);
+
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      ink_cleanup ();
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
+ink_button_press (GimpTool        *tool,
+                  GimpCoords      *coords,
+                  guint32          time,
+		  GdkModifierType  state,
+		  GimpDisplay     *gdisp)
 {
   GimpInkTool      *ink_tool;
   GimpDisplayShell *shell;
   GimpDrawable     *drawable;
   Blob             *b;
-  gdouble           x, y;
 
   ink_tool = GIMP_INK_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  Keep the coordinates of the target  */
-  gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y,
-				 &x, &y, TRUE);
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  ink_init (ink_tool, drawable, x, y);
+  ink_init (ink_tool, drawable, coords->x, coords->y);
 
   tool->state        = ACTIVE;
   tool->gdisp        = gdisp;
@@ -955,45 +988,48 @@ ink_button_press (GimpTool       *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   /* add motion memory if you press mod1 first ^ perfectmouse */
-  if (((bevent->state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_BUTTON1_MOTION_MASK |
-                      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, bevent->time);
+  if (((state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
   else
-    gdk_pointer_grab (shell->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK |
-                      GDK_BUTTON1_MOTION_MASK |
-		      GDK_BUTTON_RELEASE_MASK,
-		      NULL, NULL, bevent->time);
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_POINTER_MOTION_HINT_MASK |
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
   
-  tool->gdisp = gdisp;
-  tool->state = ACTIVE;
-#ifdef __GNUC__
-#warning FIXME: presure, tilt
-#endif
-  b = ink_pen_ellipse (x, y,
-		       1.0, 0.5, 0.5,
-		       /* bevent->pressure, bevent->xtilt, bevent->ytilt, */
+  b = ink_pen_ellipse (coords->x,
+                       coords->y,
+		       coords->pressure,
+                       coords->xtilt,
+                       coords->ytilt,
 		       10.0);
 
   ink_paste (ink_tool, drawable, b);
   ink_tool->last_blob = b;
 
-  time_smoother_init (ink_tool, bevent->time);
-  ink_tool->last_time = bevent->time;
+  time_smoother_init (ink_tool, time);
+  ink_tool->last_time = time;
   dist_smoother_init (ink_tool, 0.0);
   ink_tool->init_velocity = TRUE;
-  ink_tool->lastx = x;
-  ink_tool->lasty = y;
+  ink_tool->lastx = coords->x;
+  ink_tool->lasty = coords->y;
 
   gdisplay_flush_now (gdisp);
 }
 
 static void
-ink_button_release (GimpTool       *tool,
-		    GdkEventButton *bevent,
-		    GimpDisplay    *gdisp)
+ink_button_release (GimpTool        *tool,
+                    GimpCoords      *coords,
+                    guint32          time,
+		    GdkModifierType  state,
+		    GimpDisplay     *gdisp)
 {
   GimpInkTool *ink_tool;
   GimpImage   *gimage;
@@ -1005,7 +1041,7 @@ ink_button_release (GimpTool       *tool,
   /*  resume the current selection and ungrab the pointer  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   /*  Set tool state to inactive -- no longer painting */
@@ -1103,28 +1139,27 @@ time_smoother_add (GimpInkTool *ink_tool,
 
 
 static void
-ink_motion (GimpTool       *tool,
-	    GdkEventMotion *mevent,
-	    GimpDisplay    *gdisp)
+ink_motion (GimpTool        *tool,
+            GimpCoords      *coords,
+            guint32          time,
+	    GdkModifierType  state,
+	    GimpDisplay     *gdisp)
 {
   GimpInkTool  *ink_tool;
   GimpDrawable *drawable;
   Blob         *b, *blob_union;
 
-  gdouble x, y;
-  gdouble pressure;
   gdouble velocity;
   gdouble dist;
   gdouble lasttime, thistime;
   
   ink_tool = GIMP_INK_TOOL (tool);
 
-  gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   lasttime = ink_tool->last_time;
 
-  time_smoother_add (ink_tool, mevent->time);
+  time_smoother_add (ink_tool, time);
   thistime = ink_tool->last_time = time_smoother_result (ink_tool);
 
   /* The time resolution on X-based GDK motion events is
@@ -1140,33 +1175,35 @@ ink_motion (GimpTool       *tool,
   if (ink_tool->init_velocity)
     {
       dist_smoother_init (ink_tool,
-			  dist = sqrt ((ink_tool->lastx-x) * (ink_tool->lastx-x) +
-				       (ink_tool->lasty-y) * (ink_tool->lasty-y)));
+			  dist = sqrt ((ink_tool->lastx - coords->x) *
+                                       (ink_tool->lastx - coords->x) +
+				       (ink_tool->lasty - coords->y) *
+                                       (ink_tool->lasty - coords->y)));
       ink_tool->init_velocity = FALSE;
     }
   else
     {
       dist_smoother_add (ink_tool,
-			 sqrt ((ink_tool->lastx-x) * (ink_tool->lastx-x) +
-			       (ink_tool->lasty-y) * (ink_tool->lasty-y)));
+			 sqrt ((ink_tool->lastx - coords->x) *
+                               (ink_tool->lastx - coords->x) +
+			       (ink_tool->lasty - coords->y) *
+                               (ink_tool->lasty - coords->y)));
 
       dist = dist_smoother_result (ink_tool);
     }
 
-  ink_tool->lastx = x;
-  ink_tool->lasty = y;
+  ink_tool->lastx = coords->x;
+  ink_tool->lasty = coords->y;
 
-#ifdef __GNUC__
-#warning FIXME: tilt, pressure
-#endif
-  pressure = 1.0; /* mevent->pressure; */
-  velocity = 10.0 * sqrt ((dist) / (double) (thistime - lasttime));
+  velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
-#ifdef __GNUC__
-#warning FIXME: tilt, pressure
-#endif
-  b = ink_pen_ellipse (x, y, pressure, 0.5, 0.5,
-		       /* mevent->xtilt, mevent->ytilt, */ velocity);
+  b = ink_pen_ellipse (coords->x,
+                       coords->y,
+                       coords->pressure,
+                       coords->xtilt,
+		       coords->ytilt,
+                       velocity);
+
   blob_union = blob_convex_union (ink_tool->last_blob, b);
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = b;
@@ -1178,35 +1215,34 @@ ink_motion (GimpTool       *tool,
 }
 
 static void
-ink_cursor_update (GimpTool       *tool,
-		   GdkEventMotion *mevent,
-		   GimpDisplay    *gdisp)
+ink_cursor_update (GimpTool        *tool,
+                   GimpCoords      *coords,
+		   GdkModifierType  state,
+		   GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
-  gint              x, y;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &x, &y, FALSE, FALSE);
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
-      int off_x, off_y;
+      gint off_x, off_y;
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+      if (coords->x >= off_x &&
+          coords->y >= off_y &&
+	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
 	    ctype = GIMP_MOUSE_CURSOR;
-	  else if (gimage_mask_value (gdisp->gimage, x, y))
+	  else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
@@ -1215,32 +1251,6 @@ ink_cursor_update (GimpTool       *tool,
                                           ctype,
                                           GIMP_INK_TOOL_CURSOR,
                                           GIMP_CURSOR_MODIFIER_NONE);
-}
-
-static void
-ink_control (GimpTool    *tool,
-	     ToolAction   action,
-	     GimpDisplay *gdisp)
-{
-  GimpInkTool *ink_tool;
-
-  ink_tool = GIMP_INK_TOOL (tool);
-
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      ink_cleanup ();
-      break;
-
-    default:
-      break;
-    }
 }
 
 static void

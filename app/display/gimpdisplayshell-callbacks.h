@@ -53,18 +53,5 @@ gboolean   gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                                    GdkEventButton   *bevent,
                                                    GimpDisplayShell *shell);
 
-void       gimp_display_shell_drop_drawable       (GtkWidget        *widget,
-                                                   GimpViewable     *viewable,
-                                                   gpointer          data);
-void       gimp_display_shell_drop_pattern        (GtkWidget        *widget,
-                                                   GimpViewable     *viewable,
-                                                   gpointer          data);
-void       gimp_display_shell_drop_color          (GtkWidget        *widget,
-                                                   const GimpRGB    *color,
-                                                   gpointer          data);
-void       gimp_display_shell_drop_buffer         (GtkWidget        *widget,
-                                                   GimpViewable     *viewable,
-                                                   gpointer          data);
-
 
 #endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */

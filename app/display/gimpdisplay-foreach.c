@@ -120,7 +120,7 @@ gdisplays_delete (void)
     {
       gdisp = (GimpDisplay *) display_list->data;
 
-      gtk_widget_destroy (gdisp->shell);
+      gdisplay_delete (gdisp);
     }
 }
 

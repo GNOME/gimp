@@ -57,7 +57,6 @@ enum_headers = \
 	../../app/plug-in/plug-in-types.h	\
 	../../app/tools/tools-types.h		\
 	../../app/tools/gimpblendtool.h		\
-	../../app/tools/gimpbucketfilltool.h	\
 	../../app/tools/gimpclonetool.h		\
 	../../app/tools/gimpconvolvetool.h	\
 	../../app/tools/gimpdodgeburntool.h	\

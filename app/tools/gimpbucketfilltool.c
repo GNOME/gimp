@@ -25,20 +25,12 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
-#include "base/temp-buf.h"
-#include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimppattern.h"
 
 #include "pdb/procedural_db.h"
 
@@ -76,7 +68,6 @@ struct _BucketOptions
 };
 
 
-/*  the bucket fill tool options  */
 static BucketOptions *bucket_options = NULL;
 
 static GimpToolClass *parent_class   = NULL;
@@ -87,39 +78,31 @@ static GimpToolClass *parent_class   = NULL;
 static void   gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass);
 static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_fill_tool);
 
+static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
+                                                     GimpCoords      *coords,
+                                                     guint32          time,
+						     GdkModifierType  state,
+						     GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
+                                                     GimpCoords      *coords,
+                                                     guint32          time,
+						     GdkModifierType  state,
+						     GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
+                                                     GdkModifierType  key,
+                                                     gboolean         press,
+						     GdkModifierType  state,
+						     GimpDisplay     *gdisp);
+static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
+                                                     GimpCoords      *coords,
+						     GdkModifierType  state,
+						     GimpDisplay     *gdisp);
+
 static BucketOptions * bucket_options_new           (void);
 static void            bucket_options_reset         (GimpToolOptions *tool_options);
 
-static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
-						     GdkEventButton  *bevent,
-						     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
-						     GdkEventButton  *bevent,
-						     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
-						     GdkEventMotion  *mevent,
-						     GimpDisplay     *gdisp);
-static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
-						     GdkEventKey     *kevent,
-						     GimpDisplay     *gdisp);
 
-static void   bucket_fill_line_color                (guchar          *,
-						     guchar          *,
-						     guchar          *,
-						     gboolean         ,
-						     gint             ,
-						     gint             );
-static void   bucket_fill_line_pattern              (guchar          *,
-						     guchar          *,
-						     TempBuf         *,
-						     gboolean         ,
-						     gint             ,
-						     gint             ,
-						     gint             ,
-						     gint             );
-
-
-/*  functions  */
+/*  public functions  */
 
 void
 gimp_bucket_fill_tool_register (Gimp *gimp)
@@ -163,6 +146,9 @@ gimp_bucket_fill_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
 {
@@ -191,29 +177,177 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 
       tool_manager_register_tool_options (GIMP_TYPE_BUCKET_FILL_TOOL,
 					  (GimpToolOptions *) bucket_options);
-
-      bucket_options_reset ((GimpToolOptions *) bucket_options);
     }
 
   tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
-
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 }
 
 static void
-bucket_options_reset (GimpToolOptions *tool_options)
+gimp_bucket_fill_tool_button_press (GimpTool        *tool,
+                                    GimpCoords      *coords,
+                                    guint32          time,
+				    GdkModifierType  state,
+				    GimpDisplay     *gdisp)
 {
-  BucketOptions *options;
+  GimpBucketFillTool *bucket_tool;
+  GimpDisplayShell   *shell;
 
-  options = (BucketOptions *) tool_options;
+  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
-  paint_options_reset (tool_options);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    gimprc.default_threshold);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
+  bucket_tool->target_x = coords->x;
+  bucket_tool->target_y = coords->y;
+
+  if (! bucket_options->sample_merged)
+    {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                             &off_x, &off_y);
+
+      bucket_tool->target_x -= off_x;
+      bucket_tool->target_y -= off_y;
+    }
+
+  gdk_pointer_grab (shell->canvas->window, FALSE,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
+		    NULL, NULL, time);
+
+  /*  Make the tool active and set the gdisplay which owns it  */
+  tool->gdisp = gdisp;
+  tool->state = ACTIVE;
+}
+
+static void
+gimp_bucket_fill_tool_button_release (GimpTool        *tool,
+                                      GimpCoords      *coords,
+                                      guint32          time,
+				      GdkModifierType  state,
+				      GimpDisplay     *gdisp)
+{
+  GimpBucketFillTool *bucket_tool;
+  Argument           *return_vals;
+  gint                nreturn_vals;
+
+  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+
+  gdk_pointer_ungrab (time);
+  gdk_flush ();
+
+  /*  if the 3rd button isn't pressed, fill the selected region  */
+  if (! (state & GDK_BUTTON3_MASK))
+    {
+      GimpContext *context;
+
+      context = gimp_get_current_context (gdisp->gimage->gimp);
+
+      return_vals =
+	procedural_db_run_proc (gdisp->gimage->gimp,
+				"gimp_bucket_fill",
+				&nreturn_vals,
+				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
+				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,
+				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (context),
+				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (context) * 100,
+				GIMP_PDB_FLOAT, (gdouble) bucket_options->threshold,
+				GIMP_PDB_INT32, (gint32) bucket_options->sample_merged,
+				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
+				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_y,
+				GIMP_PDB_END);
+
+      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
+	gdisplays_flush ();
+      else
+	g_message (_("Bucket Fill operation failed."));
+
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+    }
+
+  tool->state = INACTIVE;
+}
+
+static void
+gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
+                                    GdkModifierType  key,
+                                    gboolean         press,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *gdisp)
+{
+  if (key == GDK_CONTROL_MASK)
+    {
+      switch (bucket_options->fill_mode)
+        {
+        case FG_BUCKET_FILL:
+	  gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[BG_BUCKET_FILL]),
+             TRUE);
+          break;
+        case BG_BUCKET_FILL:
+	  gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[FG_BUCKET_FILL]),
+             TRUE);
+          break;
+        default:
+          break;
+        }
+    }
+}
+
+static void
+gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
+                                     GimpCoords      *coords,
+				     GdkModifierType  state,
+				     GimpDisplay     *gdisp)
+{
+  GimpDisplayShell   *shell;
+  GimpLayer          *layer;
+  GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
+  GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  gint                off_x, off_y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
+    {
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+      if (coords->x >= off_x &&
+          coords->y >= off_y &&
+	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+	{
+	  /*  One more test--is there a selected region?
+	   *  if so, is cursor inside?
+	   */
+	  if (gimage_mask_is_empty (gdisp->gimage) ||
+	      gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+	    {
+	      ctype = GIMP_MOUSE_CURSOR;
+
+	      switch (bucket_options->fill_mode)
+		{
+		case FG_BUCKET_FILL:
+		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+		  break;
+		case BG_BUCKET_FILL:
+		  cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+		  break;
+		case PATTERN_BUCKET_FILL:
+		  cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
+		  break;
+		}
+	    }
+	}
+    }
+
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          GIMP_BUCKET_FILL_TOOL_CURSOR,
+                                          cmodifier);
 }
 
 static BucketOptions *
@@ -293,432 +427,23 @@ bucket_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  bucket_options_reset ((GimpToolOptions *) bucket_options);
+
   return options;
 }
 
-/*  bucket fill action functions  */
-
 static void
-gimp_bucket_fill_tool_button_press (GimpTool       *tool,
-				    GdkEventButton *bevent,
-				    GimpDisplay    *gdisp)
+bucket_options_reset (GimpToolOptions *tool_options)
 {
-  GimpBucketFillTool *bucket_tool;
-  GimpDisplayShell   *shell;
-  gboolean            use_offsets;
+  BucketOptions *options;
 
-  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+  options = (BucketOptions *) tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  paint_options_reset (tool_options);
 
-  use_offsets = (bucket_options->sample_merged) ? FALSE : TRUE;
-
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &bucket_tool->target_x,
-			       &bucket_tool->target_y, FALSE, use_offsets);
-
-  /*  Make the tool active and set the gdisplay which owns it  */
-  gdk_pointer_grab (shell->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON1_MOTION_MASK |
-		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
-
-  /*  Make the tool active and set the gdisplay which owns it  */
-  tool->gdisp = gdisp;
-  tool->state = ACTIVE;
-}
-
-static void
-gimp_bucket_fill_tool_button_release (GimpTool       *tool,
-				      GdkEventButton *bevent,
-				      GimpDisplay    *gdisp)
-{
-  GimpBucketFillTool *bucket_tool;
-  Argument           *return_vals;
-  gint                nreturn_vals;
-
-  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-
-  gdk_pointer_ungrab (bevent->time);
-  gdk_flush ();
-
-  /*  if the 3rd button isn't pressed, fill the selected region  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
-    {
-      GimpContext *context;
-
-      context = gimp_get_current_context (gdisp->gimage->gimp);
-
-      return_vals =
-	procedural_db_run_proc (gdisp->gimage->gimp,
-				"gimp_bucket_fill",
-				&nreturn_vals,
-				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
-				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,
-				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (context),
-				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (context) * 100,
-				GIMP_PDB_FLOAT, (gdouble) bucket_options->threshold,
-				GIMP_PDB_INT32, (gint32) bucket_options->sample_merged,
-				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
-				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_y,
-				GIMP_PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int == GIMP_PDB_SUCCESS)
-	gdisplays_flush ();
-      else
-	g_message (_("Bucket Fill operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-    }
-
-  tool->state = INACTIVE;
-}
-
-static void
-gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
-				     GdkEventMotion *mevent,
-				     GimpDisplay    *gdisp)
-{
-  GimpDisplayShell   *shell;
-  GimpLayer          *layer;
-  GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
-  GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
-  gint                x, y;
-  gint                off_x, off_y;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &x, &y, FALSE, FALSE);
-
-  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
-    {
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
-	{
-	  /*  One more test--is there a selected region?
-	   *  if so, is cursor inside?
-	   */
-	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, x, y))
-	    {
-	      ctype = GIMP_MOUSE_CURSOR;
-
-	      switch (bucket_options->fill_mode)
-		{
-		case FG_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
-		  break;
-		case BG_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
-		  break;
-		case PATTERN_BUCKET_FILL:
-		  cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
-		  break;
-		}
-	    }
-	}
-    }
-
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          GIMP_BUCKET_FILL_TOOL_CURSOR,
-                                          cmodifier);
-}
-
-static void
-gimp_bucket_fill_tool_modifier_key (GimpTool    *tool,
-				    GdkEventKey *kevent,
-				    GimpDisplay *gdisp)
-{
-  switch (kevent->keyval)
-    {
-    case GDK_Alt_L: case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: case GDK_Shift_R:
-      break;
-    case GDK_Control_L: case GDK_Control_R:
-      switch (bucket_options->fill_mode)
-	{
-	case FG_BUCKET_FILL:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[BG_BUCKET_FILL]), TRUE);
-	  break;
-	case BG_BUCKET_FILL:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[FG_BUCKET_FILL]), TRUE);
-	  break;
-	default:
-	  break;
-	}
-      break;
-    }
-}
-
-void
-bucket_fill (GimpImage      *gimage,
-	     GimpDrawable   *drawable,
-	     BucketFillMode  fill_mode,
-	     gint            paint_mode,
-	     gdouble         opacity,
-	     gdouble         threshold,
-	     gboolean        sample_merged,
-	     gdouble         x,
-	     gdouble         y)
-{
-  TileManager *buf_tiles;
-  PixelRegion  bufPR, maskPR;
-  GimpChannel *mask = NULL;
-  gint         bytes;
-  gboolean     has_alpha;
-  gint         x1, y1, x2, y2;
-  guchar       col [MAX_CHANNELS];
-  guchar      *d1, *d2;
-  GimpPattern *pattern;
-  TempBuf     *pat_buf;
-  gboolean     new_buf = FALSE;
-
-  pat_buf = NULL;
-
-  if (fill_mode == FG_BUCKET_FILL)
-    gimp_image_get_foreground (gimage, drawable, col);
-  else if (fill_mode == BG_BUCKET_FILL)
-    gimp_image_get_background (gimage, drawable, col);
-  else if (fill_mode == PATTERN_BUCKET_FILL)
-    {
-      pattern = gimp_context_get_pattern (gimp_get_current_context (gimage->gimp));
-
-      if (!pattern)
-	{
-	  g_message (_("No available patterns for this operation."));
-	  return;
-	}
-
-      /*  If the pattern doesn't match the image in terms of color type,
-       *  transform it.  (ie  pattern is RGB, image is indexed)
-       */
-      if (((pattern->mask->bytes == 3) && !gimp_drawable_is_rgb  (drawable)) ||
-	  ((pattern->mask->bytes == 1) && !gimp_drawable_is_gray (drawable)))
-	{
-	  int size;
-
-	  if ((pattern->mask->bytes == 1) && gimp_drawable_is_rgb (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height,
-				    3, 0, 0, NULL);
-	  else
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height,
-				    1, 0, 0, NULL);
-
-	  d1 = temp_buf_data (pattern->mask);
-	  d2 = temp_buf_data (pat_buf);
-
-	  size = pattern->mask->width * pattern->mask->height;
-	  while (size--)
-	    {
-	      gimp_image_transform_color (gimage, drawable, d1, d2,
-					  (pattern->mask->bytes == 3) ? RGB : GRAY);
-	      d1 += pattern->mask->bytes;
-	      d2 += pat_buf->bytes;
-	    }
-
-	  new_buf = TRUE;
-	}
-      else
-	pat_buf = pattern->mask;
-    }
-
-  gimp_set_busy (gimage->gimp);
-
-  bytes = gimp_drawable_bytes (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
-
-  /*  If there is no selection mask, the do a seed bucket
-   *  fill...To do this, calculate a new contiguous region
-   */
-  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
-    {
-      mask = gimp_image_contiguous_region_by_seed (gimage, drawable,
-                                                   sample_merged,
-                                                   TRUE,
-                                                   (gint) threshold,
-                                                   (gint) x,
-                                                   (gint) y);
-
-      gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
-
-      /*  make sure we handle the mask correctly if it was sample-merged  */
-      if (sample_merged)
-	{
-	  gint off_x, off_y;
-
-	  /*  Limit the channel bounds to the drawable's extents  */
-	  gimp_drawable_offsets (drawable, &off_x, &off_y);
-	  x1 = CLAMP (x1, off_x, (off_x + gimp_drawable_width (drawable)));
-	  y1 = CLAMP (y1, off_y, (off_y + gimp_drawable_height (drawable)));
-	  x2 = CLAMP (x2, off_x, (off_x + gimp_drawable_width (drawable)));
-	  y2 = CLAMP (y2, off_y, (off_y + gimp_drawable_height (drawable)));
-
-	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
-			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-	  /*  translate mask bounds to drawable coords  */
-	  x1 -= off_x;
-	  y1 -= off_y;
-	  x2 -= off_x;
-	  y2 -= off_y;
-	}
-      else
-	pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
-			   x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      /*  if the gimage doesn't have an alpha channel,
-       *  make sure that the temp buf does.  We need the
-       *  alpha channel to fill with the region calculated above
-       */
-      if (! has_alpha)
-	{
-	  bytes ++;
-	  has_alpha = TRUE;
-	}
-    }
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
-
-  if (mask)
-    bucket_fill_region (fill_mode, &bufPR, &maskPR, col, pat_buf, x1, y1, has_alpha);
-  else
-    bucket_fill_region (fill_mode, &bufPR, NULL, col, pat_buf, x1, y1, has_alpha);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
-			  (opacity * 255) / 100, paint_mode, NULL, x1, y1);
-
-  /*  update the image  */
-  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-
-  /*  free the temporary buffer  */
-  tile_manager_destroy (buf_tiles);
-
-  /*  free the mask  */
-  if (mask)
-    g_object_unref (G_OBJECT (mask));
-
-  if (new_buf)
-    temp_buf_free (pat_buf);
-
-  gimp_unset_busy (gimage->gimp);
-}
-
-static void
-bucket_fill_line_color (guchar   *buf,
-			guchar   *mask,
-			guchar   *col,
-			gboolean  has_alpha,
-			gint      bytes,
-			gint      width)
-{
-  gint alpha, b;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  while (width--)
-    {
-      for (b = 0; b < alpha; b++)
-	buf[b] = col[b];
-
-      if (has_alpha)
-	{
-	  if (mask)
-	    buf[alpha] = *mask++;
-	  else
-	    buf[alpha] = OPAQUE_OPACITY;
-	}
-
-      buf += bytes;
-    }
-}
-
-static void
-bucket_fill_line_pattern (guchar   *buf,
-			  guchar   *mask,
-			  TempBuf  *pattern,
-			  gboolean  has_alpha,
-			  gint      bytes,
-			  gint      x,
-			  gint      y,
-			  gint      width)
-{
-  guchar *pat, *p;
-  gint    alpha, b;
-  gint    i;
-
-  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = temp_buf_data (pattern) +
-    (y % pattern->height) * pattern->width * pattern->bytes;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  for (i = 0; i < width; i++)
-    {
-      p = pat + ((i + x) % pattern->width) * pattern->bytes;
-
-      for (b = 0; b < alpha; b++)
-	buf[b] = p[b];
-
-      if (has_alpha)
-	{
-	  if (mask)
-	    buf[alpha] = *mask++;
-	  else
-	    buf[alpha] = OPAQUE_OPACITY;
-	}
-
-      buf += bytes;
-    }
-}
-
-void
-bucket_fill_region (BucketFillMode  fill_mode,
-		    PixelRegion    *bufPR,
-		    PixelRegion    *maskPR,
-		    guchar         *col,
-		    TempBuf        *pattern,
-		    gint            off_x,
-		    gint            off_y,
-		    gboolean        has_alpha)
-{
-  guchar *s, *m;
-  gint    y;
-  void   *pr;
-
-  for (pr = pixel_regions_register (2, bufPR, maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      s = bufPR->data;
-      if (maskPR)
-	m = maskPR->data;
-      else
-	m = NULL;
-
-      for (y = 0; y < bufPR->h; y++)
-	{
-	  switch (fill_mode)
-	    {
-	    case FG_BUCKET_FILL:
-	    case BG_BUCKET_FILL:
-	      bucket_fill_line_color (s, m, col, has_alpha, bufPR->bytes, bufPR->w);
-	      break;
-	    case PATTERN_BUCKET_FILL:
-	      bucket_fill_line_pattern (s, m, pattern, has_alpha, bufPR->bytes,
-					off_x + bufPR->x, off_y + y + bufPR->y, bufPR->w);
-	      break;
-	    }
-	  s += bufPR->rowstride;
-
-	  if (maskPR)
-	    m += maskPR->rowstride;
-	}
-    }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				options->sample_merged_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
+			    gimprc.default_threshold);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
 }

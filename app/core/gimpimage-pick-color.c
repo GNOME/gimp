@@ -80,29 +80,32 @@ struct _GimpColorPickerToolOptions
 static void 	  gimp_color_picker_tool_class_init     (GimpColorPickerToolClass *klass);
 static void       gimp_color_picker_tool_init           (GimpColorPickerTool *color_picker_tool);
 
-static void       gimp_color_picker_tool_finalize       (GObject        *object);
+static void       gimp_color_picker_tool_finalize       (GObject         *object);
 
-static void       gimp_color_picker_tool_button_press   (GimpTool       *tool,
-							 GdkEventButton *bevent,
-							 GimpDisplay    *gdisp);
-							
-static void       gimp_color_picker_tool_button_release (GimpTool       *tool,
-					        	 GdkEventButton *bevent,
-					        	 GimpDisplay    *gdisp);
-					        	
-static void       gimp_color_picker_tool_motion         (GimpTool       *tool,
-					       		 GdkEventMotion *mevent,
-					       		 GimpDisplay    *gdisp);
-					       		
-static void       gimp_color_picker_tool_cursor_update  (GimpTool       *tool,
-					       		 GdkEventMotion *mevent,
-					       		 GimpDisplay    *gdisp);
-					       		
-static void       gimp_color_picker_tool_control        (GimpTool       *tool,
-                                                         ToolAction      action,
-					       		 GimpDisplay    *gdisp);
+static void       gimp_color_picker_tool_control        (GimpTool        *tool,
+                                                         ToolAction       action,
+					       		 GimpDisplay     *gdisp);
+static void       gimp_color_picker_tool_button_press   (GimpTool        *tool,
+                                                         GimpCoords      *coords,
+                                                         guint32          time,
+							 GdkModifierType  state,
+							 GimpDisplay     *gdisp);
+static void       gimp_color_picker_tool_button_release (GimpTool        *tool,
+                                                         GimpCoords      *coords,
+                                                         guint32          time,
+					        	 GdkModifierType  state,
+					        	 GimpDisplay     *gdisp);
+static void       gimp_color_picker_tool_motion         (GimpTool        *tool,
+                                                         GimpCoords      *coords,
+                                                         guint32          time,
+					       		 GdkModifierType  state,
+					       		 GimpDisplay     *gdisp);
+static void       gimp_color_picker_tool_cursor_update  (GimpTool        *tool,
+                                                         GimpCoords      *coords,
+					       		 GdkModifierType  state,
+					       		 GimpDisplay     *gdisp);
 
-static void       gimp_color_picker_tool_draw           (GimpDrawTool   *draw_tool);
+static void       gimp_color_picker_tool_draw           (GimpDrawTool    *draw_tool);
 
 
 
@@ -230,7 +233,9 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
 					  (GimpToolOptions *) gimp_color_picker_tool_options);
     }
 
-  tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
+  tool->tool_cursor = GIMP_COLOR_PICKER_TOOL_CURSOR;
+
+  tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 }
 
 static void
@@ -273,13 +278,15 @@ gimp_color_picker_tool_control (GimpTool     *tool,
 }
 
 static void
-gimp_color_picker_tool_button_press (GimpTool       *tool,
-				     GdkEventButton *bevent,
-			   	     GimpDisplay    *gdisp)
+gimp_color_picker_tool_button_press (GimpTool        *tool,
+                                     GimpCoords      *coords,
+                                     guint32          time,
+				     GdkModifierType  state,
+			   	     GimpDisplay     *gdisp)
 {
   GimpColorPickerTool *cp_tool;
   GimpDisplayShell    *shell;
-  gint                 x, y;
+  gint                 off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
 
@@ -298,7 +305,8 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
       GimpRGB    color;
 
       gimp_color_picker_tool_info = info_dialog_new (_("Color Picker"),
-					   tool_manager_help_func, NULL);
+                                                     tool_manager_help_func,
+                                                     NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
       switch (gimp_drawable_type (tool->drawable))
@@ -365,26 +373,27 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
     }
 
   /*  Keep the coordinates of the target  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &cp_tool->centerx, &cp_tool->centery, FALSE, 1);
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
+
+  cp_tool->centerx = coords->x - off_x;
+  cp_tool->centery = coords->y - off_y;
 
   gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
                     GDK_BUTTON1_MOTION_MASK |
                     GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
-
-  /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
+		    NULL, NULL, time);
 
   /*  if the shift key is down, create a new color.
    *  otherwise, modify the current color.
    */
-  if (bevent->state & GDK_SHIFT_MASK)
+  if (state & GDK_SHIFT_MASK)
     {
       gimp_color_picker_tool_info_update
-	(tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+	(tool, pick_color_do (gdisp->gimage, tool->drawable,
+                              coords->x,
+                              coords->y,
 			      gimp_color_picker_tool_options->sample_merged,
 			      gimp_color_picker_tool_options->sample_average,
 			      gimp_color_picker_tool_options->average_radius,
@@ -395,7 +404,9 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
   else
     {
       gimp_color_picker_tool_info_update
-	(tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+	(tool, pick_color_do (gdisp->gimage, tool->drawable,
+                              coords->x,
+                              coords->y,
 			      gimp_color_picker_tool_options->sample_merged,
 			      gimp_color_picker_tool_options->sample_average,
 			      gimp_color_picker_tool_options->average_radius,
@@ -409,79 +420,76 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
 }
 
 static void
-gimp_color_picker_tool_button_release (GimpTool       *tool,
-				       GdkEventButton *bevent,
-				       GimpDisplay    *gdisp)
+gimp_color_picker_tool_button_release (GimpTool        *tool,
+                                       GimpCoords      *coords,
+                                       guint32          time,
+				       GdkModifierType  state,
+				       GimpDisplay     *gdisp)
 {
   GimpColorPickerTool *cp_tool;
-  gint             x, y;
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
 
-  /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-
   gimp_color_picker_tool_info_update
-    (tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+    (tool, pick_color_do (gdisp->gimage, tool->drawable,
+                          coords->x,
+                          coords->y,
 			  gimp_color_picker_tool_options->sample_merged,
 			  gimp_color_picker_tool_options->sample_average,
 			  gimp_color_picker_tool_options->average_radius,
 			  gimp_color_picker_tool_options->update_active,
 			  update_type));
 
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL(cp_tool));
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
+
   tool->state = INACTIVE;
 }
 
 static void
-gimp_color_picker_tool_motion (GimpTool       *tool,
-		               GdkEventMotion *mevent,
-		               GimpDisplay    *gdisp)
+gimp_color_picker_tool_motion (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               guint32          time,
+		               GdkModifierType  state,
+		               GimpDisplay     *gdisp)
 {
   GimpColorPickerTool *cp_tool;
-  gint             x, y;
+  gint                 off_x, off_y;
 
-  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
+  cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
 
-  /*  undraw the current tool  */
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL(cp_tool));
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /*  First, transform the coordinates to gimp image space  */
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &cp_tool->centerx, &cp_tool->centery,
-			       FALSE, TRUE);
+  cp_tool->centerx = coords->x - off_x;
+  cp_tool->centery = coords->y - off_y;
 
   gimp_color_picker_tool_info_update
-    (tool, pick_color_do (gdisp->gimage, tool->drawable, x, y,
+    (tool, pick_color_do (gdisp->gimage, tool->drawable,
+                          coords->x,
+                          coords->y,
 			  gimp_color_picker_tool_options->sample_merged,
 			  gimp_color_picker_tool_options->sample_average,
 			  gimp_color_picker_tool_options->average_radius,
 			  gimp_color_picker_tool_options->update_active,
 			  update_type));
 
-  /*  redraw the current tool  */
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL(cp_tool));
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
-gimp_color_picker_tool_cursor_update (GimpTool       *tool,
-			              GdkEventMotion *mevent,
-			              GimpDisplay    *gdisp)
+gimp_color_picker_tool_cursor_update (GimpTool        *tool,
+                                      GimpCoords      *coords,
+			              GdkModifierType  state,
+			              GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
-  gint              x, y;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
 
   /*  We used to use the following code here:
    *
@@ -489,8 +497,10 @@ gimp_color_picker_tool_cursor_update (GimpTool       *tool,
    */
 
   if (gdisp->gimage &&
-      x > 0 && x < gdisp->gimage->width &&
-      y > 0 && y < gdisp->gimage->height)
+      coords->x > 0 &&
+      coords->x < gdisp->gimage->width &&
+      coords->y > 0 &&
+      coords->y < gdisp->gimage->height)
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_COLOR_PICKER_CURSOR,
@@ -505,6 +515,7 @@ gimp_color_picker_tool_cursor_update (GimpTool       *tool,
                                               GIMP_CURSOR_MODIFIER_NONE);
     }
 }
+
 
 typedef guchar * (*GetColorFunc) (GimpObject *object,
 				  gint        x,
@@ -533,7 +544,7 @@ pick_color_do (GimpImage    *gimage,
   if (!drawable && !sample_merged)
     return FALSE;
 
-  if (!sample_merged)
+  if (! sample_merged)
     {
       gimp_drawable_offsets (drawable, &offx, &offy);
       x -= offx;

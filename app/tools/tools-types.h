@@ -40,6 +40,7 @@ typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 /*  stuff  */
 
+typedef struct _GimpCoords          GimpCoords;
 typedef struct _SelectionOptions    SelectionOptions;
 
 
@@ -99,9 +100,7 @@ typedef enum /*< skip >*/
 {
   PAUSE,
   RESUME,
-  HALT,
-  DESTROY,
-  RECREATE
+  HALT
 } ToolAction;
 
 /* possible transform functions */

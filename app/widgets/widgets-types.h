@@ -107,7 +107,7 @@ typedef enum
 
 /*  non-widget objects  */
 
-typedef struct _GimpDialogFactory     GimpDialogFactory;
+typedef struct _GimpDialogFactory       GimpDialogFactory;
 
 
 /*  widgets  */

@@ -23,14 +23,6 @@
 #include "gimptool.h"
 
 
-typedef enum
-{
-  FG_BUCKET_FILL,
-  BG_BUCKET_FILL,
-  PATTERN_BUCKET_FILL
-} BucketFillMode;
-
-
 #define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())
 #define GIMP_BUCKET_FILL_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillTool))
 #define GIMP_BUCKET_FILL_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
@@ -56,29 +48,9 @@ struct _GimpBucketFillToolClass
 };
 
 
-void       gimp_bucket_fill_tool_register (Gimp           *gimp);
+void    gimp_bucket_fill_tool_register (Gimp *gimp);
 
-GType      gimp_bucket_fill_tool_get_type (void);
-
-
-void       bucket_fill                    (GimpImage      *gimage,
-                                           GimpDrawable   *drawable,
-                                           BucketFillMode  fill_mode,
-                                           gint            paint_mode,
-                                           gdouble         opacity,
-                                           gdouble         threshold,
-                                           gboolean        sample_merged,
-                                           gdouble         x,
-                                           gdouble         y);
-
-void       bucket_fill_region             (BucketFillMode  fill_mode,
-                                           PixelRegion    *bufPR,
-                                           PixelRegion    *maskPR,
-                                           guchar         *col,
-                                           TempBuf        *pattern,
-                                           gint            off_x,
-                                           gint            off_y,
-                                           gboolean        has_alpha);
+GType   gimp_bucket_fill_tool_get_type (void);
 
 
 #endif  /*  __GIMP_BUCKET_FILL_TOOL_H__  */

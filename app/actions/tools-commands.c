@@ -85,38 +85,32 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   guint      action)
 {
   GimpToolInfo *tool_info;
-  GimpTool     *active_tool;
+  GimpContext  *context;
   GimpDisplay  *gdisp;
 
   tool_info = GIMP_TOOL_INFO (data);
 
-  gdisp = gimp_context_get_display (gimp_get_user_context (tool_info->gimp));
+  context = gimp_get_user_context (tool_info->gimp);
 
-  gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
-
-#ifdef __GNUC__
-#warning FIXME (let the tool manager to this stuff)
-#endif
-
-  active_tool = tool_manager_get_active (tool_info->gimp);
-
-  /*  Paranoia  */
-  active_tool->drawable = NULL;
-
-  /*  Complete the initialisation by doing the same stuff
-   *  tools_initialize() does after it did what tools_select() does
+  /*  always allocate a new tool when selected from the image menu
    */
-  if (GIMP_TOOL_GET_CLASS (active_tool)->initialize)
+  if (gimp_context_get_tool (context) != tool_info)
     {
-      gimp_tool_initialize (active_tool, gdisp);
-
-      active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+      gimp_context_set_tool (context, tool_info);
+    }
+  else
+    {
+      gimp_context_tool_changed (context);
     }
 
-  /*  setting the tool->gdisp here is a HACK to allow the tools'
+  gdisp = gimp_context_get_display (context);
+
+  tool_manager_initialize_active (tool_info->gimp, gdisp);
+
+  /*  setting active_tool->gdisp here is a HACK to allow the tools'
    *  dialog windows being hidden if the tool was selected from
    *  a tear-off-menu and there was no mouse click in the display
    *  before deleting it
    */
-  active_tool->gdisp = gdisp;
+  tool_manager_get_active (tool_info->gimp)->gdisp = gdisp;
 }

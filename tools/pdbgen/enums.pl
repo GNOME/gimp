@@ -352,6 +352,14 @@ package Gimp::CodeGen::enums;
 		       FIXED_DITHER => '3',
 		       NODESTRUCT_DITHER => '4' }
 	},
+    BucketFillMode =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
+	  mapping => { FG_BUCKET_FILL => '0',
+		       BG_BUCKET_FILL => '1',
+		       PATTERN_BUCKET_FILL => '2' }
+	},
     RunModeType =>
 	{ contig => 1,
 	  header => 'plug-in/plug-in-types.h',
@@ -428,14 +436,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { REPEAT_NONE => '0',
 		       REPEAT_SAWTOOTH => '1',
 		       REPEAT_TRIANGULAR => '2' }
-	},
-    BucketFillMode =>
-	{ contig => 1,
-	  header => 'tools/gimpbucketfilltool.h',
-	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
-	  mapping => { FG_BUCKET_FILL => '0',
-		       BG_BUCKET_FILL => '1',
-		       PATTERN_BUCKET_FILL => '2' }
 	},
     CloneType =>
 	{ contig => 1,

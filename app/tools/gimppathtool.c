@@ -26,6 +26,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimpimage.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -35,65 +37,76 @@
 #include "tool_options.h"
 #include "path_tool.h"
 
-#include "libgimp/gimpintl.h"
-
+#include "gimprc.h"
 #include "path_curves.h"
+
+#include "libgimp/gimpintl.h"
 
 
 /*  local function prototypes  */
-static void   gimp_path_tool_class_init      (GimpPathToolClass  *klass);
-static void   gimp_path_tool_init            (GimpPathTool       *tool);
 
-static void   gimp_path_tool_finalize        (GObject            *object);
+static void   gimp_path_tool_class_init          (GimpPathToolClass  *klass);
+static void   gimp_path_tool_init                (GimpPathTool       *tool);
 
-static void   gimp_path_tool_control         (GimpTool           *tool,
-                                              ToolAction          action,
-                                              GimpDisplay        *gdisp);
-static void   gimp_path_tool_button_press    (GimpTool           *tool,
-                                              GdkEventButton     *bevent,
-                                              GimpDisplay        *gdisp);
-static gint   gimp_path_tool_button_press_canvas (GimpPathTool   *tool,
-						  GdkEventButton *bevent,
-						  GimpDisplay    *gdisp);
-static gint   gimp_path_tool_button_press_anchor (GimpPathTool   *tool,
-						  GdkEventButton *bevent,
-						  GimpDisplay    *gdisp);
-static gint   gimp_path_tool_button_press_handle (GimpPathTool   *tool,
-						  GdkEventButton *bevent,
-						  GimpDisplay    *gdisp);
-static gint   gimp_path_tool_button_press_curve  (GimpPathTool   *tool,
-						  GdkEventButton *bevent,
-						  GimpDisplay    *gdisp);
+static void   gimp_path_tool_finalize            (GObject         *object);
 
-static void   gimp_path_tool_button_release  (GimpTool       *tool,
-                                              GdkEventButton *bevent,
-                                              GimpDisplay    *gdisp);
+static void   gimp_path_tool_control             (GimpTool        *tool,
+                                                  ToolAction       action,
+                                                  GimpDisplay     *gdisp);
 
-static void   gimp_path_tool_motion          (GimpTool       *tool,
-                                              GdkEventMotion *mevent,
-                                              GimpDisplay    *gdisp);
-static void   gimp_path_tool_motion_anchor   (GimpPathTool   *path_tool,
-					      GdkEventMotion *mevent,
-					      GimpDisplay    *gdisp);
-static void   gimp_path_tool_motion_handle   (GimpPathTool   *path_tool,
-					      GdkEventMotion *mevent,
-					      GimpDisplay    *gdisp);
-static void   gimp_path_tool_motion_curve    (GimpPathTool   *path_tool,
-					      GdkEventMotion *mevent,
-					      GimpDisplay    *gdisp);
+static void   gimp_path_tool_button_press        (GimpTool        *tool,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+static gint   gimp_path_tool_button_press_canvas (GimpPathTool    *tool,
+						  guint32          time,
+						  GimpDisplay     *gdisp);
+static gint   gimp_path_tool_button_press_anchor (GimpPathTool    *tool,
+						  guint32          time,
+						  GimpDisplay     *gdisp);
+static gint   gimp_path_tool_button_press_handle (GimpPathTool    *tool,
+						  guint32          time,
+						  GimpDisplay     *gdisp);
+static gint   gimp_path_tool_button_press_curve  (GimpPathTool    *tool,
+						  guint32          time,
+						  GimpDisplay     *gdisp);
 
-static void   gimp_path_tool_cursor_update   (GimpTool       *tool,
-                                              GdkEventMotion *mevent,
-                                              GimpDisplay    *gdisp);
+static void   gimp_path_tool_button_release      (GimpTool        *tool,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 
-static void   gimp_path_tool_draw            (GimpDrawTool   *draw_tool);
+static void   gimp_path_tool_motion              (GimpTool        *tool,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+static void   gimp_path_tool_motion_anchor       (GimpPathTool    *path_tool,
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+static void   gimp_path_tool_motion_handle       (GimpPathTool    *path_tool,
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+static void   gimp_path_tool_motion_curve        (GimpPathTool    *path_tool,
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
 
+static void   gimp_path_tool_cursor_update       (GimpTool        *tool,
+                                                  GimpCoords      *coords,
+                                                  GdkModifierType  state,
+                                                  GimpDisplay     *gdisp);
+
+static void   gimp_path_tool_draw                (GimpDrawTool    *draw_tool);
 
 
 
 static GimpDrawToolClass *parent_class = NULL;
 
-/*  the move tool options  */
 static GimpToolOptions *path_options = NULL;
 
 
@@ -264,15 +277,16 @@ gimp_path_tool_control (GimpTool    *tool,
 }
 
 static void
-gimp_path_tool_button_press (GimpTool       *tool,
-                             GdkEventButton *bevent,
-                             GimpDisplay    *gdisp)
+gimp_path_tool_button_press (GimpTool        *tool,
+                             GimpCoords      *coords,
+                             guint32          time,
+                             GdkModifierType  state,
+                             GimpDisplay     *gdisp)
 {
   GimpPathTool     *path_tool;
   GimpDisplayShell *shell;
   gint              grab_pointer = 0;
-  gdouble           x, y;
-  gint              halfwidth, dummy;
+  gint              halfwidth, halfheight;
 
   path_tool = GIMP_PATH_TOOL (tool);
 
@@ -282,23 +296,21 @@ gimp_path_tool_button_press (GimpTool       *tool,
   g_printerr ("path_tool_button_press\n");
 #endif
 
-  /* Transform window-coordinates to canvas-coordinates */
-  gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y, &x, &y, TRUE);
-#ifdef PATH_TOOL_DEBUG
-  g_printerr ("Clickcoordinates %.2f, %.2f\n",x,y);
-#endif
-  path_tool->click_x = x;
-  path_tool->click_y = y;
-  path_tool->click_modifier = bevent->state;
+  path_tool->click_x        = coords->x;
+  path_tool->click_y        = coords->y;
+  path_tool->click_modifier = state;
+
   /* get halfwidth in image coord */
-  gdisplay_untransform_coords (gdisp, bevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
-  halfwidth -= x;
-  path_tool->click_halfwidth = halfwidth;
+  halfwidth  = UNSCALEX (gdisp, PATH_TOOL_HALFWIDTH);
+  halfheight = UNSCALEY (gdisp, PATH_TOOL_HALFWIDTH);
+
+  path_tool->click_halfwidth  = halfwidth;
+  path_tool->click_halfheight = halfheight;
   
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
 
-  if (!path_tool->cur_path->curves)
+  if (! path_tool->cur_path->curves)
     gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
   /* determine point, where clicked,
@@ -306,29 +318,33 @@ gimp_path_tool_button_press (GimpTool       *tool,
    */
  
   path_tool->click_type =
-	       path_tool_cursor_position (path_tool->cur_path, x, y, halfwidth,
-					  &(path_tool->click_path),
-					  &(path_tool->click_curve),
-					  &(path_tool->click_segment),
-					  &(path_tool->click_position),
-					  &(path_tool->click_handle_id));
+    path_tool_cursor_position (path_tool->cur_path,
+                               coords->x,
+                               coords->y,
+                               halfwidth,
+                               halfheight,
+                               &path_tool->click_path,
+                               &path_tool->click_curve,
+                               &path_tool->click_segment,
+                               &path_tool->click_position,
+                               &path_tool->click_handle_id);
  
   switch (path_tool->click_type)
     {
     case ON_CANVAS:
-      grab_pointer = gimp_path_tool_button_press_canvas(path_tool, bevent, gdisp);
+      grab_pointer = gimp_path_tool_button_press_canvas (path_tool, time, gdisp);
       break;
 
     case ON_ANCHOR:
-      grab_pointer = gimp_path_tool_button_press_anchor(path_tool, bevent, gdisp);
+      grab_pointer = gimp_path_tool_button_press_anchor (path_tool, time, gdisp);
       break;
 
     case ON_HANDLE:
-      grab_pointer = gimp_path_tool_button_press_handle(path_tool, bevent, gdisp);
+      grab_pointer = gimp_path_tool_button_press_handle (path_tool, time, gdisp);
       break;
 
     case ON_CURVE:
-      grab_pointer = gimp_path_tool_button_press_curve(path_tool, bevent, gdisp);
+      grab_pointer = gimp_path_tool_button_press_curve (path_tool, time, gdisp);
       break;
 
     default:
@@ -340,13 +356,13 @@ gimp_path_tool_button_press (GimpTool       *tool,
                       GDK_POINTER_MOTION_HINT_MASK |
                       GDK_BUTTON1_MOTION_MASK |
                       GDK_BUTTON_RELEASE_MASK,
-                      NULL, NULL, bevent->time);
+                      NULL, NULL, time);
 }
 
 static gint
-gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
-                                    GdkEventButton *bevent,
-                                    GimpDisplay    *gdisp)
+gimp_path_tool_button_press_anchor (GimpPathTool *path_tool,
+                                    guint32       time,
+                                    GimpDisplay  *gdisp)
 {
    static guint32 last_click_time=0;
    gboolean doubleclick=FALSE;
@@ -373,14 +389,14 @@ gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
     * disp_callback.c ignores the GDK_[23]BUTTON_EVENT's and adding them to
     * the switch statement confuses some tools.
     */
-   if (bevent->time - last_click_time < 250) {
+   if (time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
       g_printerr ("Doppelclick!\n");
 #endif
    } else
       doubleclick=FALSE;
-   last_click_time = bevent->time;
+   last_click_time = time;
 
 
    gimp_draw_tool_pause (GIMP_DRAW_TOOL(path_tool));
@@ -468,9 +484,9 @@ gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
 
 
 static gint
-gimp_path_tool_button_press_handle (GimpPathTool   *path_tool,
-				    GdkEventButton *bevent,
-				    GimpDisplay    *gdisp)
+gimp_path_tool_button_press_handle (GimpPathTool *path_tool,
+                                    guint32       time,
+				    GimpDisplay  *gdisp)
 {
    static guint32 last_click_time=0;
    gboolean doubleclick=FALSE;
@@ -491,29 +507,29 @@ gimp_path_tool_button_press_handle (GimpPathTool   *path_tool,
       return 0;
    }
    
-   /* 
+   /*   gint         click_halfwidth;
+
     * We have to determine, if this was a doubleclick for ourself, because
     * disp_callback.c ignores the GDK_[23]BUTTON_EVENT's and adding them to
     * the switch statement confuses some tools.
     */
-   if (bevent->time - last_click_time < 250) {
+   if (time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
       g_printerr ("Doppelclick!\n");
 #endif
    } else
       doubleclick=FALSE;
-   last_click_time = bevent->time;
+   last_click_time = time;
 
    return grab_pointer;
 }
 
 static gint
-gimp_path_tool_button_press_canvas (GimpPathTool   *path_tool,
-				    GdkEventButton *bevent,
-				    GimpDisplay    *gdisp)
+gimp_path_tool_button_press_canvas (GimpPathTool *path_tool,
+                                    guint32       time,
+				    GimpDisplay  *gdisp)
 {
-   
    NPath * cur_path = path_tool->cur_path;
    PathCurve * cur_curve;
    PathSegment * cur_segment;
@@ -564,9 +580,9 @@ gimp_path_tool_button_press_canvas (GimpPathTool   *path_tool,
 }
 
 static gint
-gimp_path_tool_button_press_curve (GimpPathTool   *path_tool,
-				   GdkEventButton *bevent,
-				   GimpDisplay    *gdisp)
+gimp_path_tool_button_press_curve (GimpPathTool *path_tool,
+                                   guint32       time,
+				   GimpDisplay  *gdisp)
 {
    NPath * cur_path = path_tool->cur_path;
    PathSegment * cur_segment;
@@ -606,11 +622,15 @@ gimp_path_tool_button_press_curve (GimpPathTool   *path_tool,
 
 
 static void
-gimp_path_tool_button_release (GimpTool       *tool,
-			       GdkEventButton *bevent,
-			       GimpDisplay    *gdisp)
+gimp_path_tool_button_release (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               guint32          time,
+			       GdkModifierType  state,
+			       GimpDisplay     *gdisp)
 {
-  GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
+  GimpPathTool *path_tool;
+
+  path_tool = GIMP_PATH_TOOL (tool);
 
 #ifdef PATH_TOOL_DEBUG
    g_printerr ("path_tool_button_release\n");
@@ -618,195 +638,192 @@ gimp_path_tool_button_release (GimpTool       *tool,
  
   path_tool->state &= ~PATH_TOOL_DRAG;
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 }
 
 
 static void
-gimp_path_tool_motion (GimpTool       *tool,
-                       GdkEventMotion *mevent,
-                       GimpDisplay    *gdisp)
+gimp_path_tool_motion (GimpTool        *tool,
+                       GimpCoords      *coords,
+                       guint32          time,
+                       GdkModifierType  state,
+                       GimpDisplay     *gdisp)
 {
   GimpPathTool *path_tool;
 
   path_tool = GIMP_PATH_TOOL (tool);
 
-  if (gtk_events_pending()) return;
-  
-  switch (path_tool->click_type) {
-  case ON_ANCHOR:
-     gimp_path_tool_motion_anchor (path_tool, mevent, gdisp);
-     break;
-  case ON_HANDLE:
-     gimp_path_tool_motion_handle (path_tool, mevent, gdisp);
-     break;
-  case ON_CURVE:
-     gimp_path_tool_motion_curve (path_tool, mevent, gdisp);
-     break;
-  default:
-     return;
-  }
+  switch (path_tool->click_type)
+    {
+    case ON_ANCHOR:
+      gimp_path_tool_motion_anchor (path_tool, coords, state, gdisp);
+      break;
+    case ON_HANDLE:
+      gimp_path_tool_motion_handle (path_tool, coords, state, gdisp);
+      break;
+    case ON_CURVE:
+      gimp_path_tool_motion_curve (path_tool, coords, state, gdisp);
+      break;
+    default:
+      return;
+    }
 }
 
 
-
 static void
-gimp_path_tool_motion_anchor (GimpPathTool  *path_tool,
-			      GdkEventMotion *mevent,
-			      GimpDisplay    *gdisp)
+gimp_path_tool_motion_anchor (GimpPathTool    *path_tool,
+                              GimpCoords      *coords,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
-   gdouble dx, dy, d;
-   gdouble x,y;
-   static gdouble dxsum = 0;
-   static gdouble dysum = 0;
-   
-   /*
-    * Dont do anything, if the user clicked with pressed CONTROL-Key,
-    * because he deleted an anchor.
-    */
-   if (path_tool->click_modifier & GDK_CONTROL_MASK)
-      return;
-   
-   if (!(path_tool->state & PATH_TOOL_DRAG))
-   {
+  static gdouble dxsum = 0;
+  static gdouble dysum = 0;
+
+  gdouble dx, dy, d;
+
+  /* Dont do anything, if the user clicked with pressed CONTROL-Key,
+   * because he deleted an anchor.
+   */
+  if (path_tool->click_modifier & GDK_CONTROL_MASK)
+    return;
+
+  if (! (path_tool->state & PATH_TOOL_DRAG))
+    {
       path_tool->state |= PATH_TOOL_DRAG;
       dxsum = 0;
       dysum = 0;
-   }
+    }
 
-   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
-   
-   dx = x - path_tool->click_x - dxsum;
-   dy = y - path_tool->click_y - dysum;
-   
-   /* restrict to horizontal/vertical lines, if modifiers are pressed
-    * I'm not sure, if this is intuitive for the user. Esp. When moving
-    * an endpoint of an curve I'd expect, that the *line* is
-    * horiz/vertical - not the delta to the point, where the point was
-    * originally...
-    */
-   if (mevent->state & GDK_MOD1_MASK)
-   {
-      if (mevent->state & GDK_CONTROL_MASK)
-      {
-         d  = (fabs(dx) + fabs(dy)) / 2;  
-         d  = (fabs(x - path_tool->click_x) + fabs(y - path_tool->click_y)) / 2;
-         dx = ((x < path_tool->click_x) ? -d : d ) - dxsum;
-         dy = ((y < path_tool->click_y) ? -d : d ) - dysum;
-      }
+  dx = coords->x - path_tool->click_x - dxsum;
+  dy = coords->y - path_tool->click_y - dysum;
+
+  /* restrict to horizontal/vertical lines, if modifiers are pressed
+   * I'm not sure, if this is intuitive for the user. Esp. When moving
+   * an endpoint of an curve I'd expect, that the *line* is
+   * horiz/vertical - not the delta to the point, where the point was
+   * originally...
+   */
+  if (state & GDK_MOD1_MASK)
+    {
+      if (state & GDK_CONTROL_MASK)
+        {
+          d  = (fabs (dx) + fabs (dy)) / 2;  
+          d  = (fabs (coords->x - path_tool->click_x) +
+                fabs (coords->y - path_tool->click_y)) / 2;
+          dx = ((coords->x < path_tool->click_x) ? -d : d ) - dxsum;
+          dy = ((coords->y < path_tool->click_y) ? -d : d ) - dysum;
+        }
       else
-         dx = - dxsum;
-   }
-   else if (mevent->state & GDK_CONTROL_MASK)
+        {
+          dx = - dxsum;
+        }
+    }
+  else if (state & GDK_CONTROL_MASK)
+    {
       dy = - dysum;
-   
+    }
 
-   path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
-   
-   gimp_draw_tool_pause (GIMP_DRAW_TOOL(path_tool));
+  path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
 
-   path_offset_active (path_tool->cur_path, dx, dy);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (path_tool));
 
-   dxsum += dx;
-   dysum += dy;
+  path_offset_active (path_tool->cur_path, dx, dy);
 
-   gimp_draw_tool_resume (GIMP_DRAW_TOOL (path_tool));
-   
-   path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
+  dxsum += dx;
+  dysum += dy;
 
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (path_tool));
+
+  path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
 }
 
 static void
-gimp_path_tool_motion_handle (GimpPathTool   *path_tool,
-			      GdkEventMotion *mevent,
-			      GimpDisplay    *gdisp)
+gimp_path_tool_motion_handle (GimpPathTool    *path_tool,
+                              GimpCoords      *coords,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
-   gdouble dx, dy;
-   gdouble x,y;
-   static gdouble dxsum = 0;
-   static gdouble dysum = 0;
+  static gdouble dxsum = 0;
+  static gdouble dysum = 0;
+
+  gdouble dx, dy;
    
-   /*
-    * Dont do anything, if the user clicked with pressed CONTROL-Key,
-    * because he moved the handle to the anchor an anchor. 
-    * XXX: Not yet! :-)
-    */
-   if (path_tool->click_modifier & GDK_CONTROL_MASK)
-      return;
-   
-   if (!(path_tool->state & PATH_TOOL_DRAG))
-   {
+  /* Dont do anything, if the user clicked with pressed CONTROL-Key,
+   * because he moved the handle to the anchor an anchor. 
+   * XXX: Not yet! :-)
+   */
+  if (path_tool->click_modifier & GDK_CONTROL_MASK)
+    return;
+
+  if (! (path_tool->state & PATH_TOOL_DRAG))
+    {
       path_tool->state |= PATH_TOOL_DRAG;
       dxsum = 0;
       dysum = 0;
-   }
+    }
 
-   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
-   
-   dx = x - path_tool->click_x - dxsum;
-   dy = y - path_tool->click_y - dysum;
-   
-   path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
-   
-   gimp_draw_tool_pause (GIMP_DRAW_TOOL(path_tool));
+  dx = coords->x - path_tool->click_x - dxsum;
+  dy = coords->y - path_tool->click_y - dysum;
 
-   path_curve_drag_handle (path_tool->click_segment, dx, dy, path_tool->click_handle_id);
+  path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
 
-   dxsum += dx;
-   dysum += dy;
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (path_tool));
 
-   gimp_draw_tool_resume (GIMP_DRAW_TOOL(path_tool));
-   
-   path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
+  path_curve_drag_handle (path_tool->click_segment,
+                          dx, dy,
+                          path_tool->click_handle_id);
 
+  dxsum += dx;
+  dysum += dy;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (path_tool));
+
+  path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
 }
-   
 
 static void
-gimp_path_tool_motion_curve (GimpPathTool   *path_tool,
-			     GdkEventMotion *mevent,
-			     GimpDisplay    *gdisp)
+gimp_path_tool_motion_curve (GimpPathTool    *path_tool,
+                             GimpCoords      *coords,
+			     GdkModifierType  state,
+			     GimpDisplay     *gdisp)
 {
-   gdouble dx, dy;
-   gdouble x,y;
-   static gdouble dxsum = 0;
-   static gdouble dysum = 0;
+  static gdouble dxsum = 0;
+  static gdouble dysum = 0;
+
+  gdouble dx, dy;
    
-   if (!(path_tool->state & PATH_TOOL_DRAG))
-   {
+  if (! (path_tool->state & PATH_TOOL_DRAG))
+    {
       path_tool->state |= PATH_TOOL_DRAG;
       dxsum = 0;
       dysum = 0;
-   }
+    }
 
-   gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
-   
-   dx = x - path_tool->click_x - dxsum;
-   dy = y - path_tool->click_y - dysum;
-   
-   path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
-   
-   gimp_draw_tool_pause (GIMP_DRAW_TOOL (path_tool));
+  dx = coords->x - path_tool->click_x - dxsum;
+  dy = coords->y - path_tool->click_y - dysum;
 
-   path_curve_drag_segment (path_tool->click_segment, path_tool->click_position, dx, dy);
+  path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
 
-   dxsum += dx;
-   dysum += dy;
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (path_tool));
 
-   gimp_draw_tool_resume (GIMP_DRAW_TOOL (path_tool));
-   
-   path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
+  path_curve_drag_segment (path_tool->click_segment,
+                           path_tool->click_position,
+                           dx, dy);
 
+  dxsum += dx;
+  dysum += dy;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (path_tool));
+
+  path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
 }
-   
-
-
 
 static void
-gimp_path_tool_cursor_update (GimpTool       *tool,
-			      GdkEventMotion *mevent,
-			      GimpDisplay    *gdisp)
+gimp_path_tool_cursor_update (GimpTool        *tool,
+                              GimpCoords      *coords,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
 #if 0
   gint     x, y, halfwidth, dummy, cursor_location;

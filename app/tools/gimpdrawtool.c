@@ -160,8 +160,7 @@ gimp_draw_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void
@@ -173,7 +172,7 @@ gimp_draw_tool_start (GimpDrawTool *core,
   if (core->draw_state != INVISIBLE)
     gimp_draw_tool_stop (core);  /* this seems backwards ;) */
 
-  core->win   = win;
+  core->win          = win;
   core->paused_count = 0;  /*  reset pause counter to 0  */
 
   /*  create a new graphics context  */
@@ -188,7 +187,7 @@ gimp_draw_tool_start (GimpDrawTool *core,
   gdk_gc_set_line_attributes (core->gc, core->line_width, core->line_style,
 			      core->cap_style, core->join_style);
 
-  g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
+  g_signal_emit (G_OBJECT (core), gimp_draw_tool_signals[DRAW], 0);
 
   core->draw_state = VISIBLE;
 }
@@ -200,7 +199,7 @@ gimp_draw_tool_stop (GimpDrawTool *core)
   if (core->draw_state == INVISIBLE)
     return;
 
-  g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
+  g_signal_emit (G_OBJECT (core), gimp_draw_tool_signals[DRAW], 0);
 
   core->draw_state = INVISIBLE;
 }
@@ -215,7 +214,7 @@ gimp_draw_tool_resume (GimpDrawTool *core)
     {
       core->draw_state = VISIBLE;
 
-      g_signal_emit(G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
+      g_signal_emit (G_OBJECT (core), gimp_draw_tool_signals[DRAW], 0);
     }
 }
 
@@ -227,7 +226,7 @@ gimp_draw_tool_pause (GimpDrawTool *core)
     {
       core->draw_state = INVISIBLE;
 
-      g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
+      g_signal_emit (G_OBJECT (core), gimp_draw_tool_signals[DRAW], 0);
     }
 
   core->paused_count++;

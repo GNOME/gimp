@@ -93,28 +93,32 @@ static void   by_color_select_color_drop      (GtkWidget      *widget,
 
 /*  by_color select action functions  */
 
-static void   by_color_select_initialize      (GimpTool       *tool,
-					       GimpDisplay    *gdisp);
+static void   by_color_select_initialize      (GimpTool        *tool,
+					       GimpDisplay     *gdisp);
 
-static void   by_color_select_button_press    (GimpTool       *tool,
-					       GdkEventButton *bevent,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_button_release  (GimpTool       *tool,
-					       GdkEventButton *bevent,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_modifier_update (GimpTool       *tool,
-					       GdkEventKey    *kevent,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_cursor_update   (GimpTool       *tool,
-					       GdkEventMotion *mevent,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_oper_update     (GimpTool       *tool,
-					       GdkEventMotion *mevent,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_control         (GimpTool       *tool,
-					       ToolAction      action,
-					       GimpDisplay    *gdisp);
-static void   by_color_select_mask_changed    (GimpImage      *gimage);
+static void   by_color_select_control         (GimpTool        *tool,
+					       ToolAction       action,
+					       GimpDisplay     *gdisp);
+static void   by_color_select_button_press    (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+static void   by_color_select_button_release  (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+static void   by_color_select_oper_update     (GimpTool        *tool,
+                                               GimpCoords      *coords,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+static void   by_color_select_cursor_update   (GimpTool        *tool,
+                                               GimpCoords      *coords,
+					       GdkModifierType  state,
+					       GimpDisplay     *gdisp);
+
+static void   by_color_select_mask_changed    (GimpImage       *gimage);
 
 static ByColorDialog * by_color_select_dialog_new  (void);
 
@@ -222,12 +226,11 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   tool_class->initialize     = by_color_select_initialize;
+  tool_class->control        = by_color_select_control;
   tool_class->button_press   = by_color_select_button_press;
   tool_class->button_release = by_color_select_button_release;
-  tool_class->cursor_update  = by_color_select_cursor_update;
-  tool_class->modifier_key   = by_color_select_modifier_update;
   tool_class->oper_update    = by_color_select_oper_update;
-  tool_class->control        = by_color_select_control;
+  tool_class->cursor_update  = by_color_select_cursor_update;
 }
 
 static void
@@ -247,17 +250,66 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
       tool_manager_register_tool_options (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
                                           (GimpToolOptions *) by_color_options);
     }
-  /* Temporary until we find out how to make a new one */
+
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
 
-  by_color_select->x = by_color_select->y = 0;
+  by_color_select->x = 0;
+  by_color_select->y = 0;
 }
 
 static void
-by_color_select_button_press (GimpTool       *tool,
-			      GdkEventButton *bevent,
-			      GimpDisplay    *gdisp)
+by_color_select_control (GimpTool    *tool,
+			 ToolAction   action,
+			 GimpDisplay *gdisp)
+{
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      if (by_color_dialog)
+	by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
+      break;
+
+    default:
+      break;
+    }
+}
+
+void
+by_color_select_initialize (GimpTool    *tool,
+			    GimpDisplay *gdisp)
+{
+  /*  The "by color" dialog  */
+  if (!by_color_dialog)
+    {
+      by_color_dialog = by_color_select_dialog_new ();
+      /* Catch the "mask_changed" signal and attach a handler that does 
+       * stuff with it. Need to do this somewhere with the relevant 
+       * GimpImage in context
+       */
+      g_signal_connect (G_OBJECT (gdisp->gimage), "mask_changed",
+			G_CALLBACK (by_color_select_mask_changed),
+			NULL);
+    }
+  else
+    if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
+      gtk_widget_show (by_color_dialog->shell);
+  
+  gimp_by_color_select_tool_initialize_by_image (gdisp->gimage);
+}
+
+static void
+by_color_select_button_press (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              guint32          time,
+			      GdkModifierType  state,
+			      GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
   GimpDrawTool          *draw_tool;
@@ -270,24 +322,29 @@ by_color_select_button_press (GimpTool       *tool,
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (!by_color_dialog)
+  if (! by_color_dialog)
     return;
-
-  by_color_sel->x = bevent->x;
-  by_color_sel->y = bevent->y;
 
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
+  by_color_sel->x = coords->x;
+  by_color_sel->y = coords->y;
+
+  if (! by_color_options->sample_merged)
+    {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                             &off_x, &off_y);
+
+      by_color_sel->x -= off_x;
+      by_color_sel->y -= off_y;
+    }
+
   /*  Make sure the "by color" select dialog is visible  */
   if (! GTK_WIDGET_VISIBLE (by_color_dialog->shell))
     gtk_widget_show (by_color_dialog->shell);
-
-  /*  Update the by_color_dialog's active gdisp pointer  */
-  /* if (by_color_dialog->gimage)
-   *   by_color_dialog->gimage->by_color_select = FALSE;
-   * Temporarily commented out. Do we need to do something to replace 
-   * this?*/
 
   if (by_color_dialog->gimage != gdisp->gimage)
     {
@@ -298,57 +355,58 @@ by_color_select_button_press (GimpTool       *tool,
 	 0, 0,
 	 by_color_dialog->preview->allocation.width,
 	 by_color_dialog->preview->allocation.width);
-    }
 
-  by_color_dialog->gimage = gdisp->gimage;
-  /* gdisp->gimage->by_color_select = TRUE;
-   * Temporarily commented out - do we need something to replace this? */
+      by_color_dialog->gimage = gdisp->gimage;
+    }
 
   gdk_pointer_grab (shell->canvas->window, FALSE,
                     GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
                     GDK_BUTTON_RELEASE_MASK,
-                    NULL, NULL, bevent->time);
+                    NULL, NULL, time);
 }
 
 static void
-by_color_select_button_release (GimpTool       *tool,
-				GdkEventButton *bevent,
-				GimpDisplay    *gdisp)
+by_color_select_button_release (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+				GdkModifierType  state,
+				GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
-  gint                   x, y;
   GimpDrawable          *drawable;
   guchar                *col;
   GimpRGB                color;
-  gint                   use_offsets;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
 
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
+  if (! (state & GDK_BUTTON3_MASK))
     {
-      use_offsets = (by_color_options->sample_merged) ? FALSE : TRUE;
-      gdisplay_untransform_coords (gdisp, by_color_sel->x, by_color_sel->y,
-				   &x, &y, FALSE, use_offsets);
-
-      if( x >= 0 && x < gimp_drawable_width (drawable) && 
-	  y >= 0 && y < gimp_drawable_height (drawable))
+      if (by_color_sel->x >= 0 &&
+	  by_color_sel->y >= 0 &&
+          by_color_sel->x < gimp_drawable_width (drawable) && 
+          by_color_sel->y < gimp_drawable_height (drawable))
 	{
 	  /*  Get the start color  */
 	  if (by_color_options->sample_merged)
 	    {
-	      if (!(col = gimp_image_get_color_at (gdisp->gimage, x, y)))
+	      if (!(col = gimp_image_get_color_at (gdisp->gimage,
+                                                   by_color_sel->x,
+                                                   by_color_sel->y)))
 		return;
 	    }
 	  else
 	    {
-	      if (!(col = gimp_drawable_get_color_at (drawable, x, y)))
+	      if (!(col = gimp_drawable_get_color_at (drawable,
+                                                      by_color_sel->x,
+                                                      by_color_sel->y)))
 		return;
 	    }
 
@@ -378,25 +436,62 @@ by_color_select_button_release (GimpTool       *tool,
 }
 
 static void
-by_color_select_cursor_update (GimpTool       *tool,
-			       GdkEventMotion *mevent,
-			       GimpDisplay    *gdisp)
+by_color_select_oper_update (GimpTool        *tool,
+                             GimpCoords      *coords,
+			     GdkModifierType  state,
+			     GimpDisplay     *gdisp)
+{
+  GimpByColorSelectTool *by_col_sel;
+
+  if (tool->state == ACTIVE)
+    return;
+
+  by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
+  if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+    {
+      by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
+    }
+  else if (state & GDK_SHIFT_MASK)
+    {
+      by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
+    }
+  else if (state & GDK_CONTROL_MASK)
+    {
+      by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
+    }
+  else
+    {
+      if (by_color_dialog)
+        {
+          /* To be careful, set it to by_select_dialog's default */
+          by_col_sel->operation = by_color_dialog->operation;
+        }
+      else
+        {
+          by_col_sel->operation = SELECTION_REPLACE;
+        }
+    }
+}
+
+static void
+by_color_select_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+			       GdkModifierType  state,
+			       GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
   GimpDisplayShell      *shell;
   GimpLayer             *layer;
-  gint                   x, y;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &x, &y, FALSE, FALSE);
+  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
   if (by_color_options->sample_merged ||
-      ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)) &&
-       layer == gdisp->gimage->active_layer))
+      (layer && layer == gdisp->gimage->active_layer))
     {
       switch (by_col_sel->operation)
 	{
@@ -450,132 +545,6 @@ by_color_select_cursor_update (GimpTool       *tool,
                                           GIMP_BAD_CURSOR,
                                           GIMP_TOOL_CURSOR_NONE,
                                           GIMP_CURSOR_MODIFIER_NONE);
-}
-
-static void
-by_color_select_update_op_state (GimpByColorSelectTool *by_col_sel,
-				 gint                   state,  
-				 GimpDisplay           *gdisp)
-{
-  if (tool_manager_get_active (gdisp->gimage->gimp)->state == ACTIVE)
-    return;
-
-  if ((state & GDK_SHIFT_MASK) &&
-      !(state & GDK_CONTROL_MASK))
-    by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
-  else if ((state & GDK_CONTROL_MASK) &&
-           !(state & GDK_SHIFT_MASK))
-    by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
-  else if ((state & GDK_CONTROL_MASK) &&
-           (state & GDK_SHIFT_MASK))
-    by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
-  else
-    if (by_color_dialog)
-      {
-	by_col_sel->operation = by_color_dialog->operation;
-      }
-    else
-      {
-      /* To be careful, set it to by_select_dialog's default */
-	by_col_sel->operation = SELECTION_REPLACE;
-      }
-}
-
-static void
-by_color_select_modifier_update (GimpTool    *tool,
-				 GdkEventKey *kevent,
-				 GimpDisplay *gdisp)
-{
-  GimpByColorSelectTool *by_col_sel;
-  gint                   state;
-
-  by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-
-  state = kevent->state;
-
-  switch (kevent->keyval)
-    {
-    case GDK_Alt_L: case GDK_Alt_R:
-      if (state & GDK_MOD1_MASK)
-        state &= ~GDK_MOD1_MASK;
-      else
-        state |= GDK_MOD1_MASK;
-      break;
-
-    case GDK_Shift_L: case GDK_Shift_R:
-      if (state & GDK_SHIFT_MASK)
-        state &= ~GDK_SHIFT_MASK;
-      else
-        state |= GDK_SHIFT_MASK;
-      break;
-
-    case GDK_Control_L: case GDK_Control_R:
-      if (state & GDK_CONTROL_MASK)
-        state &= ~GDK_CONTROL_MASK;
-      else
-        state |= GDK_CONTROL_MASK;
-      break;
-    }
-
-  by_color_select_update_op_state (by_col_sel, state, gdisp);
-}
-
-static void
-by_color_select_oper_update (GimpTool       *tool,
-			     GdkEventMotion *mevent,
-			     GimpDisplay    *gdisp)
-{
-  GimpByColorSelectTool *by_col_sel;
-
-  by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-
-  by_color_select_update_op_state (by_col_sel, mevent->state, gdisp);
-}
-
-static void
-by_color_select_control (GimpTool    *tool,
-			 ToolAction   action,
-			 GimpDisplay *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      if (by_color_dialog)
-	by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
-      break;
-
-    default:
-      break;
-    }
-}
-
-void
-by_color_select_initialize (GimpTool    *tool,
-			    GimpDisplay *gdisp)
-{
-  /*  The "by color" dialog  */
-  if (!by_color_dialog)
-    {
-      by_color_dialog = by_color_select_dialog_new ();
-      /* Catch the "mask_changed" signal and attach a handler that does 
-       * stuff with it. Need to do this somewhere with the relevant 
-       * GimpImage in context
-       */
-      g_signal_connect (G_OBJECT (gdisp->gimage), "mask_changed",
-			G_CALLBACK (by_color_select_mask_changed),
-			NULL);
-    }
-  else
-    if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
-      gtk_widget_show (by_color_dialog->shell);
-  
-  gimp_by_color_select_tool_initialize_by_image (gdisp->gimage);
 }
 
 void

@@ -95,7 +95,7 @@ static void            smudge_options_reset (GimpToolOptions *tool_options);
 
 /*  local variables */
 static PixelRegion  accumPR;
-static guchar      *accum_data;
+static guchar      *accum_data = NULL;
 
 static GimpPaintToolClass *parent_class = NULL;
 

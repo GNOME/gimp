@@ -60,23 +60,33 @@ struct _MagnifyOptions
 static void   gimp_magnify_tool_class_init      (GimpMagnifyToolClass *klass);
 static void   gimp_magnify_tool_init            (GimpMagnifyTool      *tool);
 
-static void   gimp_magnify_tool_button_press    (GimpTool       *tool,
-						 GdkEventButton *bevent,
-						 GimpDisplay    *gdisp);
-static void   gimp_magnify_tool_button_release  (GimpTool       *tool,
-						 GdkEventButton *bevent,
-						 GimpDisplay    *gdisp);
-static void   gimp_magnify_tool_motion          (GimpTool       *tool,
-						 GdkEventMotion *mevent,
-						 GimpDisplay    *gdisp);
-static void   gimp_magnify_tool_modifier_key    (GimpTool       *tool,
-						 GdkEventKey    *kevent,
-						 GimpDisplay    *gdisp);
-static void   gimp_magnify_tool_cursor_update   (GimpTool       *tool,
-						 GdkEventMotion *mevent,
-						 GimpDisplay    *gdisp);
+static void   gimp_magnify_tool_button_press    (GimpTool        *tool,
+                                                 GimpCoords      *coords,
+                                                 guint32          time,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
+static void   gimp_magnify_tool_button_release  (GimpTool        *tool,
+                                                 GimpCoords      *coords,
+                                                 guint32          time,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
+static void   gimp_magnify_tool_motion          (GimpTool        *tool,
+                                                 GimpCoords      *coords,
+                                                 guint32          time,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
+static void   gimp_magnify_tool_modifier_key    (GimpTool        *tool,
+                                                 GdkModifierType  key,
+                                                 gboolean         press,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
+static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
+                                                 GimpCoords      *coords,
+						 GdkModifierType  state,
+						 GimpDisplay     *gdisp);
 
-static void   gimp_magnify_tool_draw            (GimpDrawTool   *draw_tool);
+static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
+
 
 /*  magnify utility functions  */
 static void   zoom_in                   (gint           *src,
@@ -172,13 +182,15 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
 					  (GimpToolOptions *) magnify_options);
     }
 
-  tool->scroll_lock  = TRUE;   /*  Disallow scrolling    */
-  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
-
   magnify_tool->x = 0;
   magnify_tool->y = 0;
   magnify_tool->w = 0;
   magnify_tool->h = 0;
+
+  tool->tool_cursor  = GIMP_ZOOM_TOOL_CURSOR;
+
+  tool->scroll_lock  = TRUE;   /*  Disallow scrolling    */
+  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
 }
 
 
@@ -287,41 +299,42 @@ zoom_out (gint *src,
 /*  magnify action functions  */
 
 static void
-gimp_magnify_tool_button_press (GimpTool       *tool,
-				GdkEventButton *bevent,
-				GimpDisplay    *gdisp)
+gimp_magnify_tool_button_press (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+				GdkModifierType  state,
+				GimpDisplay     *gdisp)
 {
   GimpMagnifyTool  *magnify;
   GimpDisplayShell *shell;
-  gint              x, y;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
-
-  magnify->x = x;
-  magnify->y = y;
+  magnify->x = coords->x;
+  magnify->y = coords->y;
   magnify->w = 0;
   magnify->h = 0;
+
+  tool->state = ACTIVE;
+  tool->gdisp = gdisp;
 
   gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
-
-  tool->state = ACTIVE;
-  tool->gdisp = gdisp;
+		    NULL, NULL, time);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 }
 
 static void
-gimp_magnify_tool_button_release (GimpTool       *tool,
-				  GdkEventButton *bevent,
-				  GimpDisplay    *gdisp)
+gimp_magnify_tool_button_release (GimpTool        *tool,
+                                  GimpCoords      *coords,
+                                  guint32          time,
+				  GdkModifierType  state,
+				  GimpDisplay     *gdisp)
 {
   GimpMagnifyTool  *magnify;
   GimpDisplayShell *shell;
@@ -335,7 +348,7 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 
   shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -343,7 +356,7 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
   tool->state = INACTIVE;
 
   /*  First take care of the case where the user "cancels" the action  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
+  if (! (state & GDK_BUTTON3_MASK))
     {
       x1 = (magnify->w < 0) ? magnify->x + magnify->w : magnify->x;
       y1 = (magnify->h < 0) ? magnify->y + magnify->h : magnify->y;
@@ -393,12 +406,13 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 }
 
 static void
-gimp_magnify_tool_motion (GimpTool       *tool,
-			  GdkEventMotion *mevent,
-			  GimpDisplay    *gdisp)
+gimp_magnify_tool_motion (GimpTool        *tool,
+                          GimpCoords      *coords,
+                          guint32          time,
+			  GdkModifierType  state,
+			  GimpDisplay     *gdisp)
 {
   GimpMagnifyTool *magnify;
-  gint             x, y;
 
   if (tool->state != ACTIVE)
     return;
@@ -407,40 +421,42 @@ gimp_magnify_tool_motion (GimpTool       *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-
-  magnify->w = (x - magnify->x);
-  magnify->h = (y - magnify->y);
+  magnify->w = (coords->x - magnify->x);
+  magnify->h = (coords->y - magnify->y);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
-gimp_magnify_tool_modifier_key (GimpTool    *tool,
-				GdkEventKey *kevent,
-				GimpDisplay *gdisp)
+gimp_magnify_tool_modifier_key (GimpTool        *tool,
+                                GdkModifierType  key,
+                                gboolean         press,
+				GdkModifierType  state,
+				GimpDisplay     *gdisp)
 {
-  switch (kevent->keyval)
+  if (key == GDK_CONTROL_MASK)
     {
-    case GDK_Alt_L: case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: case GDK_Shift_R:
-      break;
-    case GDK_Control_L: case GDK_Control_R:
-      if (magnify_options->type == GIMP_ZOOM_IN)
-        gtk_toggle_button_set_active
-	  (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_OUT]), TRUE);
-      else
-        gtk_toggle_button_set_active
-	  (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_IN]), TRUE);
-      break;
+      switch (magnify_options->type)
+        {
+        case GIMP_ZOOM_IN:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_OUT]), TRUE);
+          break;
+        case GIMP_ZOOM_OUT:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_IN]), TRUE);
+          break;
+        default:
+          break;
+        }
     }
 }
 
 static void
-gimp_magnify_tool_cursor_update (GimpTool       *tool,
-				 GdkEventMotion *mevent,
-				 GimpDisplay    *gdisp)
+gimp_magnify_tool_cursor_update (GimpTool        *tool,
+                                 GimpCoords      *coords,
+				 GdkModifierType  state,
+				 GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
 

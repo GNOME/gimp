@@ -42,6 +42,7 @@ struct _GimpPathTool
   gdouble      click_x;         /* X-coordinate of the click         */
   gdouble      click_y;         /* Y-coordinate of the click         */
   gint         click_halfwidth;
+  gint         click_halfheight;
   guint        click_modifier;  /* what modifiers were pressed?      */
   NPath       *click_path;      /* On which Path/Curve/Segment       */
   PathCurve   *click_curve;     /* was the click?                    */

@@ -79,23 +79,26 @@ struct _DodgeBurnOptions
 static void     gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass);
 static void     gimp_dodgeburn_tool_init       (GimpDodgeBurnTool      *dodgeburn);
 
-static void     gimp_dodgeburn_tool_make_luts  (GimpPaintTool     *paint_tool,
-						gdouble            db_exposure,
-						DodgeBurnType      type,
-						GimpTransferMode   mode,
-						GimpLut           *lut,
-						GimpDrawable      *drawable);
+static void     gimp_dodgeburn_tool_make_luts  (GimpPaintTool      *paint_tool,
+						gdouble             db_exposure,
+						DodgeBurnType       type,
+						GimpTransferMode    mode,
+						GimpLut            *lut,
+						GimpDrawable       *drawable);
 
-static void     gimp_dodgeburn_tool_modifier_key  (GimpTool       *tool,
-						   GdkEventKey    *kevent,
-						   GimpDisplay    *gdisp);
-static void     gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
-						   GdkEventMotion *mevent,
-						   GimpDisplay    *gdisp);
+static void     gimp_dodgeburn_tool_modifier_key  (GimpTool        *tool,
+                                                   GdkModifierType  key,
+                                                   gboolean         press,
+						   GdkModifierType  state,
+						   GimpDisplay     *gdisp);
+static void     gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
+                                                   GimpCoords      *coords,
+						   GdkModifierType  state,
+						   GimpDisplay     *gdisp);
 
-static void     gimp_dodgeburn_tool_paint         (GimpPaintTool  *paint_tool,
-						   GimpDrawable   *drawable,
-						   PaintState      state);
+static void     gimp_dodgeburn_tool_paint         (GimpPaintTool   *paint_tool,
+						   GimpDrawable    *drawable,
+						   PaintState       state);
 
 static void     gimp_dodgeburn_tool_motion        (GimpPaintTool        *paint_tool,
 						   GimpDrawable         *drawable,
@@ -252,69 +255,42 @@ gimp_dodgeburn_tool_make_luts (GimpPaintTool    *paint_tool,
 }
 
 static void
-gimp_dodgeburn_tool_modifier_key (GimpTool    *tool,
-				  GdkEventKey *kevent,
-				  GimpDisplay *gdisp)
+gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+				  GdkModifierType  state,
+				  GimpDisplay     *gdisp)
 {
-  switch (kevent->keyval)
+  if (key == GDK_CONTROL_MASK &&
+      ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-    case GDK_Alt_L: 
-    case GDK_Alt_R:
-      break;
-
-    case GDK_Shift_L: 
-    case GDK_Shift_R:
-      if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
-	{
-	  switch (dodgeburn_options->type)
-	    {
-	    case BURN:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
-	      break;
-	    case DODGE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      break;
-
-    case GDK_Control_L:
-    case GDK_Control_R:
-      if (! (kevent->state & GDK_SHIFT_MASK)) /* shift enables line draw mode */
-	{
-	  switch (dodgeburn_options->type)
-	    {
-	    case BURN:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
-	      break;
-	    case DODGE:
-	      gtk_toggle_button_set_active
-		(GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      break; 
+      switch (dodgeburn_options->type)
+        {
+        case DODGE:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+          break;
+        case BURN:
+          gtk_toggle_button_set_active
+            (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+          break;
+        default:
+          break;
+        }
     }
 
   tool->toggled = (dodgeburn_options->type == BURN);
 }
 
 static void
-gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
-				   GdkEventMotion *mevent,
-				   GimpDisplay    *gdisp)
+gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
+                                   GimpCoords      *coords,
+				   GdkModifierType  state,
+				   GimpDisplay     *gdisp)
 {
   tool->toggled = (dodgeburn_options->type == BURN);
 
-  if (GIMP_TOOL_CLASS (parent_class)->cursor_update)
-    GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, mevent, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void
@@ -648,6 +624,7 @@ gimp_dodgeburn_tool_options_new (void)
   GtkWidget *frame;
 
   options = g_new0 (DodgeBurnOptions, 1);
+
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_DODGEBURN_TOOL,
 		      gimp_dodgeburn_tool_options_reset);
@@ -655,6 +632,7 @@ gimp_dodgeburn_tool_options_new (void)
   options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
   options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
   options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
+  options->lut      = NULL;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;

@@ -75,7 +75,9 @@ static void   gimp_eraser_tool_class_init   (GimpEraserToolClass  *klass);
 static void   gimp_eraser_tool_init         (GimpEraserTool       *eraser);
 
 static void   gimp_eraser_tool_modifier_key (GimpTool             *tool,
-                                             GdkEventKey          *kevent,
+                                             GdkModifierType       key,
+                                             gboolean              press,
+                                             GdkModifierType       state,
                                              GimpDisplay          *gdisp);
 
 static void   gimp_eraser_tool_paint        (GimpPaintTool        *paint_tool,
@@ -190,29 +192,18 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
 }
 
 static void
-gimp_eraser_tool_modifier_key (GimpTool    *tool,
-                               GdkEventKey *kevent,
-                               GimpDisplay *gdisp)
+gimp_eraser_tool_modifier_key (GimpTool        *tool,
+                               GdkModifierType  key,
+                               gboolean         press,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
-  switch (kevent->keyval)
+  if ((key == GDK_CONTROL_MASK) &&
+      ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-    case GDK_Alt_L: 
-    case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: 
-    case GDK_Shift_R:
-      if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
-	gtk_toggle_button_set_active
-	  (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w),
-	   ! eraser_options->anti_erase);
-      break;
-    case GDK_Control_L: 
-    case GDK_Control_R:
-      if (!(kevent->state & GDK_SHIFT_MASK)) /* shift enables line draw mode */
-	gtk_toggle_button_set_active
-	  (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w),
-	   ! eraser_options->anti_erase);
-      break;
+      gtk_toggle_button_set_active
+        (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w),
+         ! eraser_options->anti_erase);
     }
 
   tool->toggled = eraser_options->anti_erase;

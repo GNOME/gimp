@@ -43,7 +43,6 @@
 #include "tools/tool_manager.h"
 
 #include "gui.h"
-#include "layer-select.h"
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
@@ -917,8 +916,12 @@ prefs_cancel_callback (GtkWidget *widget,
   /*  restore variables which need some magic  */
   if (gimprc.preview_size != old_preview_size)
     {
-      /* lc_dialog_rebuild (old_preview_size); FIXME: update preview size */
-      layer_select_update_preview_size ();
+#ifdef __GNUC__
+#warning FIXME: update preview size
+#endif
+#if 0
+      lc_dialog_rebuild (old_preview_size);
+#endif
     }
   if (gimprc.nav_preview_size != old_nav_preview_size)
     {
@@ -981,6 +984,10 @@ prefs_toggle_callback (GtkWidget *widget,
   gint      *val;
 
   dialog = gtk_widget_get_toplevel (widget);
+
+  if (GTK_IS_MENU_SHELL (dialog))
+    dialog =
+      gtk_widget_get_toplevel (gtk_menu_get_attach_widget (GTK_MENU (dialog)));
 
   gimp = GIMP (g_object_get_data (G_OBJECT (dialog), "gimp"));
 
@@ -1065,8 +1072,6 @@ prefs_preview_size_callback (GtkWidget *widget,
 #if 0
   lc_dialog_rebuild ((long) g_object_get_data (G_OBJECT (widget), "user_data"));
 #endif
-
-  layer_select_update_preview_size ();
 }
 
 static void

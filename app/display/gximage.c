@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "display-types.h"
 
 #include "colormaps.h"
 #include "gximage.h"

@@ -138,16 +138,23 @@ static void    gradient_type_callback            (GtkWidget       *widget,
 						  gpointer         data);
 
 static void    gimp_blend_tool_button_press      (GimpTool        *tool,
-						  GdkEventButton  *bevent,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+						  GdkModifierType  state,
 						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_button_release    (GimpTool        *tool,
-						  GdkEventButton  *bevent,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+						  GdkModifierType  state,
 						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_motion            (GimpTool        *tool,
-						  GdkEventMotion  *mevent,
+                                                  GimpCoords      *coords,
+                                                  guint32          time,
+						  GdkModifierType  state,
 						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_cursor_update     (GimpTool        *tool,
-						  GdkEventMotion  *mevent,
+                                                  GimpCoords      *coords,
+						  GdkModifierType  state,
 						  GimpDisplay     *gdisp);
 
 static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
@@ -367,9 +374,11 @@ gimp_blend_tool_finalize (GObject *object)
 }
 
 static void
-gimp_blend_tool_button_press (GimpTool       *tool,
-                              GdkEventButton *bevent,
-                              GimpDisplay    *gdisp)
+gimp_blend_tool_button_press (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              guint32          time,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
   GimpBlendTool    *blend_tool;
   GimpDisplayShell *shell;
@@ -389,21 +398,15 @@ gimp_blend_tool_button_press (GimpTool       *tool,
       break;
     }
 
-  /*  Keep the coordinates of the target  */
-  gdisplay_untransform_coords (gdisp,
-                               bevent->x, bevent->y,
-			       &blend_tool->startx, &blend_tool->starty,
-			       FALSE, TRUE);
-
-  blend_tool->endx = blend_tool->startx;
-  blend_tool->endy = blend_tool->starty;
+  blend_tool->endx = blend_tool->startx = coords->x;
+  blend_tool->endy = blend_tool->starty = coords->y;
 
   /*  Make the tool active and set the gdisplay which owns it  */
   gdk_pointer_grab (shell->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
 		    GDK_BUTTON1_MOTION_MASK |
 		    GDK_BUTTON_RELEASE_MASK,
-		    NULL, NULL, bevent->time);
+		    NULL, NULL, time);
 
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
@@ -421,9 +424,11 @@ gimp_blend_tool_button_press (GimpTool       *tool,
 }
 
 static void
-gimp_blend_tool_button_release (GimpTool       *tool,
-                                GdkEventButton *bevent,
-                                GimpDisplay    *gdisp)
+gimp_blend_tool_button_release (GimpTool        *tool,
+                                GimpCoords      *coords,
+                                guint32          time,
+                                GdkModifierType  state,
+                                GimpDisplay     *gdisp)
 {
   GimpImage        *gimage;
   GimpBlendTool    *blend_tool;
@@ -441,7 +446,7 @@ gimp_blend_tool_button_release (GimpTool       *tool,
 
   gimage = gdisp->gimage;
 
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   gtk_statusbar_pop (GTK_STATUSBAR (shell->statusbar), blend_tool->context_id);
@@ -451,7 +456,7 @@ gimp_blend_tool_button_release (GimpTool       *tool,
   tool->state = INACTIVE;
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
-  if (! (bevent->state & GDK_BUTTON3_MASK) &&
+  if (! (state & GDK_BUTTON3_MASK) &&
       ((blend_tool->startx != blend_tool->endx) ||
        (blend_tool->starty != blend_tool->endy)))
     {
@@ -503,7 +508,7 @@ gimp_blend_tool_button_release (GimpTool       *tool,
 	     blend_tool->starty,
 	     blend_tool->endx,
 	     blend_tool->endy,
-	     progress ? progress_update_and_flush : (GimpProgressFunc) NULL, 
+	     progress ? progress_update_and_flush : NULL, 
 	     progress);
 
       if (progress)
@@ -515,13 +520,16 @@ gimp_blend_tool_button_release (GimpTool       *tool,
 }
 
 static void
-gimp_blend_tool_motion (GimpTool       *tool,
-                        GdkEventMotion *mevent,
-                        GimpDisplay    *gdisp)
+gimp_blend_tool_motion (GimpTool        *tool,
+                        GimpCoords      *coords,
+                        guint32          time,
+                        GdkModifierType  state,
+                        GimpDisplay     *gdisp)
 {
   GimpBlendTool    *blend_tool;
   GimpDisplayShell *shell;
   gchar             vector[STATUSBAR_SIZE];
+  gint              off_x, off_y;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
 
@@ -530,13 +538,15 @@ gimp_blend_tool_motion (GimpTool       *tool,
   /*  undraw the current tool  */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /*  Get the current coordinates  */
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &blend_tool->endx, &blend_tool->endy, FALSE, 1);
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
 
+  /*  Get the current coordinates  */
+  blend_tool->endx = coords->x - off_x;
+  blend_tool->endy = coords->y - off_y;
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
-  if (mevent->state & GDK_CONTROL_MASK)
+  if (state & GDK_CONTROL_MASK)
     {
       gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
       gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
@@ -592,9 +602,10 @@ gimp_blend_tool_motion (GimpTool       *tool,
 }
 
 static void
-gimp_blend_tool_cursor_update (GimpTool       *tool,
-                               GdkEventMotion *mevent,
-                               GimpDisplay    *gdisp)
+gimp_blend_tool_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
 
@@ -804,7 +815,7 @@ blend_options_new (void)
     gtk_check_button_new_with_label (_("Adaptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
 				options->supersample_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->supersample_w, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), options->supersample_w);
   gtk_widget_show (options->supersample_w);
 
   g_signal_connect (G_OBJECT (options->supersample_w), "toggled",
@@ -821,7 +832,7 @@ blend_options_new (void)
   /*  automatically set the sensitive state of the table  */
   gtk_widget_set_sensitive (table, options->supersample_d);
   g_object_set_data (G_OBJECT (options->supersample_w), "set_sensitive",
-		       table);
+                     table);
 
   /*  max depth scale  */
   options->max_depth_w =

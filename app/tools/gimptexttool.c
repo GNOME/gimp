@@ -97,14 +97,20 @@ static void   text_tool_control              (GimpTool        *tool,
 					      ToolAction       tool_action,
 					      GimpDisplay     *gdisp);
 static void   text_tool_button_press         (GimpTool        *tool,
-					      GdkEventButton  *bevent,
+                                              GimpCoords      *coords,
+                                              guint32          time,
+					      GdkModifierType  state,
 					      GimpDisplay     *gdisp);
 static void   text_tool_button_release       (GimpTool        *tool,
-					      GdkEventButton  *bevent,
+                                              GimpCoords      *coords,
+                                              guint32          time,
+					      GdkModifierType  state,
 					      GimpDisplay     *gdisp);
 static void   text_tool_cursor_update        (GimpTool        *tool,
-					      GdkEventMotion  *mevent,
+                                              GimpCoords      *coords,
+					      GdkModifierType  state,
 					      GimpDisplay     *gdisp);
+
 static void   text_tool_render               (GimpTextTool    *text_tool);
 
 static TextOptions * text_tool_options_new   (GimpTextTool    *text_tool);
@@ -344,9 +350,11 @@ text_tool_control (GimpTool    *tool,
 }
 
 static void
-text_tool_button_press (GimpTool       *tool,
-			GdkEventButton *bevent,
-			GimpDisplay    *gdisp)
+text_tool_button_press (GimpTool        *tool,
+                        GimpCoords      *coords,
+                        guint32          time,
+			GdkModifierType  state,
+			GimpDisplay     *gdisp)
 {
   GimpTextTool *text_tool;
   GimpLayer    *layer;
@@ -358,9 +366,8 @@ text_tool_button_press (GimpTool       *tool,
   tool->state = ACTIVE;
   tool->gdisp = gdisp;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &text_tool->click_x, &text_tool->click_y,
-			       TRUE, 0);
+  text_tool->click_x = coords->x;
+  text_tool->click_y = coords->y;
 
   if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
                                                 text_tool->click_x,
@@ -368,7 +375,7 @@ text_tool_button_press (GimpTool       *tool,
     /* if there is a floating selection, and this aint it, use the move tool */
     if (gimp_layer_is_floating_sel (layer))
       {
-	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
+	init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	return;
       }
 
@@ -376,42 +383,44 @@ text_tool_button_press (GimpTool       *tool,
 }
 
 static void
-text_tool_button_release (GimpTool       *tool,
-			  GdkEventButton *bevent,
-			  GimpDisplay    *gdisp)
+text_tool_button_release (GimpTool        *tool,
+                          GimpCoords      *coords,
+                          guint32          time,
+			  GdkModifierType  state,
+			  GimpDisplay     *gdisp)
 {
   tool->state = INACTIVE;
 }
 
 static void
-text_tool_cursor_update (GimpTool       *tool,
-			 GdkEventMotion *mevent,
-			 GimpDisplay    *gdisp)
+text_tool_cursor_update (GimpTool        *tool,
+                         GimpCoords      *coords,
+			 GdkModifierType  state,
+			 GimpDisplay     *gdisp)
 {
   GimpDisplayShell *shell;
   GimpLayer        *layer;
-  gint              x, y;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &x, &y, FALSE, FALSE);
+  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
-  if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
-    /* if there is a floating selection, and this aint it ... */
-    if (gimp_layer_is_floating_sel (layer))
-      {
-	gimp_display_shell_install_tool_cursor (shell,
-                                                GDK_FLEUR,
-                                                GIMP_MOVE_TOOL_CURSOR,
-                                                GIMP_CURSOR_MODIFIER_NONE);
-	return;
-      }
+  if (layer && gimp_layer_is_floating_sel (layer))
+    {
+      /* if there is a floating selection, and this aint it ... */
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GDK_XTERM,
-                                          GIMP_TEXT_TOOL_CURSOR,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GDK_FLEUR,
+                                              GIMP_MOVE_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
+    }
+  else
+    {
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GDK_XTERM,
+                                              GIMP_TEXT_TOOL_CURSOR,
+                                              GIMP_CURSOR_MODIFIER_NONE);
+    }
 }
 
 static void

@@ -32,12 +32,12 @@
 #include "base/base-types.h"
 #include "base/tile-manager.h"
 #include "core/core-types.h"
+#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 #include "tools/gimpairbrushtool.h"
 #include "tools/gimpblendtool.h"
-#include "tools/gimpbucketfilltool.h"
 #include "tools/gimpclonetool.h"
 #include "tools/gimpcolorpickertool.h"
 #include "tools/gimpconvolvetool.h"
@@ -426,7 +426,6 @@ bucket_fill_invoker (Gimp     *gimp,
   gboolean sample_merged;
   gdouble x;
   gdouble y;
-  GimpImage *gimage;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -456,9 +455,15 @@ bucket_fill_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
-		   threshold, sample_merged, x, y);
+      if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
+	{
+	  success = FALSE;
+	}
+      else
+	{
+	  gimp_drawable_bucket_fill (drawable, fill_mode, paint_mode, opacity,
+				     threshold, sample_merged, x, y);
+	}
     }
 
   return procedural_db_return_args (&bucket_fill_proc, success);

@@ -105,7 +105,7 @@ tool_options_dialog_create (Gimp *gimp)
 		     gimp, NULL, &options_reset_button, FALSE, FALSE,
 
 		     GTK_STOCK_CLOSE, tool_options_dialog_close_callback,
-		     gimp, NULL, NULL, TRUE, TRUE,
+		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 

@@ -296,10 +296,10 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
                                          rotate_center_changed,
                                          tool);
 
-      transform_tool->trans_info[ANGLE] = angle_val;
+      transform_tool->trans_info[ANGLE]      = angle_val;
       transform_tool->trans_info[REAL_ANGLE] = angle_val;
-      transform_tool->trans_info[CENTER_X] = center_vals[0];
-      transform_tool->trans_info[CENTER_Y] = center_vals[1];
+      transform_tool->trans_info[CENTER_X]   = center_vals[0];
+      transform_tool->trans_info[CENTER_Y]   = center_vals[1];
 
       return NULL;
       break;
@@ -316,12 +316,12 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
     case TRANSFORM_FINISH:
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       return gimp_rotate_tool_rotate (gdisp->gimage,
-       			      gimp_image_active_drawable (gdisp->gimage),
-       			      gdisp,
-       			      transform_tool->trans_info[ANGLE],
-       			      transform_tool->original,
-       			      gimp_transform_tool_smoothing (),
-       			      transform_tool->transform);
+                                      gimp_image_active_drawable (gdisp->gimage),
+                                      gdisp,
+                                      transform_tool->trans_info[ANGLE],
+                                      transform_tool->original,
+                                      gimp_transform_tool_smoothing (),
+                                      transform_tool->transform);
       break;
     }
 
@@ -336,8 +336,8 @@ rotate_info_update (GimpTool *tool)
   transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
   angle_val      = gimp_rad_to_deg (transform_tool->trans_info[ANGLE]);
-  center_vals[0] = transform_tool->cx;
-  center_vals[1] = transform_tool->cy;
+  center_vals[0] = transform_tool->trans_info[CENTER_X];
+  center_vals[1] = transform_tool->trans_info[CENTER_Y];
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
@@ -391,13 +391,18 @@ rotate_center_changed (GtkWidget *widget,
       cx = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
       cy = RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
 
-      if ((cx != transform_tool->cx) ||
-	  (cy != transform_tool->cy))
+      if ((cx != transform_tool->trans_info[CENTER_X]) ||
+	  (cy != transform_tool->trans_info[CENTER_Y]))
 	{
-	  gimp_draw_tool_pause (draw_tool);      
+	  gimp_draw_tool_pause (draw_tool);
+
+	  transform_tool->trans_info[CENTER_X] = cx;
+	  transform_tool->trans_info[CENTER_Y] = cy;
 	  transform_tool->cx = cx;
 	  transform_tool->cy = cy;
+
 	  rotate_tool_recalc (tool, tool->gdisp);
+
 	  gimp_draw_tool_resume (draw_tool);
 	}
     }
@@ -416,14 +421,16 @@ rotate_tool_motion (GimpTool    *tool,
 
   if (transform_tool->function == TRANSFORM_HANDLE_CENTER)
     {
+      transform_tool->trans_info[CENTER_X] = transform_tool->curx;
+      transform_tool->trans_info[CENTER_Y] = transform_tool->cury;
       transform_tool->cx = transform_tool->curx;
       transform_tool->cy = transform_tool->cury;
 
       return;
     }
 
-  cx = transform_tool->cx;
-  cy = transform_tool->cy;
+  cx = transform_tool->trans_info[CENTER_X];
+  cy = transform_tool->trans_info[CENTER_Y];
 
   x1 = transform_tool->curx - cx;
   x2 = transform_tool->lastx - cx;
@@ -471,8 +478,11 @@ rotate_tool_recalc (GimpTool    *tool,
 
   transform_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  cx = transform_tool->cx;
-  cy = transform_tool->cy;
+  cx = transform_tool->trans_info[CENTER_X];
+  cy = transform_tool->trans_info[CENTER_Y];
+
+  transform_tool->cx = cx;
+  transform_tool->cy = cy;
 
   /*  assemble the transformation matrix  */
   gimp_matrix3_identity  (transform_tool->transform);

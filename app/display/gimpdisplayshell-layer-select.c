@@ -21,23 +21,20 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "gui-types.h"
+#include "display-types.h"
 
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimppreview.h"
 
-#include "layer-select.h"
+#include "gimpdisplay-foreach.h"
+#include "gimpdisplayshell-layer-select.h"
 
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
-
-
-#define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
 
 typedef struct _LayerSelect LayerSelect;
@@ -53,34 +50,29 @@ struct _LayerSelect
 };
 
 
-/*  layer widget function prototypes  */
-static void   layer_select_advance    (LayerSelect *layer_select, 
-				       gint         move);
-static void   layer_select_forward    (LayerSelect *layer_select);
-static void   layer_select_backward   (LayerSelect *layer_select);
-static void   layer_select_end        (LayerSelect *layer_select, 
-				       guint32      time);
-static void   layer_select_set_gimage (LayerSelect *layer_select, 
-				       GimpImage   *gimage);
-static gint   layer_select_events     (GtkWidget   *widget, 
-				       GdkEvent    *event);
+/*  local function prototypes  */
+
+static void   layer_select_advance   (LayerSelect *layer_select, 
+                                      gint         move);
+static void   layer_select_end       (LayerSelect *layer_select, 
+                                      guint32      time);
+static void   layer_select_set_image (LayerSelect *layer_select, 
+                                      GimpImage   *gimage);
+static gint   layer_select_events    (GtkWidget   *widget, 
+                                      GdkEvent    *event);
 
 
-/*
- *  Local variables
- */
-LayerSelect *layer_select = NULL;
+/*  private variables  */
+
+static LayerSelect *layer_select = NULL;
 
 
-/**********************/
-/*  Public functions  */
-/**********************/
-
+/*  public functions  */
 
 void
-layer_select_init (GimpImage *gimage,
-		   gint       move,
-		   guint32    time)
+gimp_display_shell_layer_select_init (GimpImage *gimage,
+                                      gint       move,
+                                      guint32    time)
 {
   GimpLayer *layer;
   GtkWidget *frame1;
@@ -88,21 +80,23 @@ layer_select_init (GimpImage *gimage,
   GtkWidget *hbox;
   GtkWidget *alignment;
 
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   layer = gimp_image_get_active_layer (gimage);
 
   if (! layer)
     return;
 
-  if (!layer_select)
+  if (! layer_select)
     {
       layer_select = g_new0 (LayerSelect, 1);
 
-      layer_select->preview      = gimp_preview_new (GIMP_VIEWABLE (layer),
-						     gimprc.preview_size, 1, 
-						     FALSE);
-      layer_select->label        = gtk_label_new (NULL);
+      layer_select->preview = gimp_preview_new (GIMP_VIEWABLE (layer),
+                                                gimprc.preview_size, 1, 
+                                                FALSE);
+      layer_select->label = gtk_label_new (NULL);
 
-      layer_select_set_gimage (layer_select, gimage);
+      layer_select_set_image (layer_select, gimage);
       layer_select_advance (layer_select, move);
 
       /*  The shell and main vbox  */
@@ -152,7 +146,7 @@ layer_select_init (GimpImage *gimage,
     }
   else
     {
-      layer_select_set_gimage (layer_select, gimage);
+      layer_select_set_image (layer_select, gimage);
       layer_select_advance (layer_select, move);
 
       if (! GTK_WIDGET_VISIBLE (layer_select->shell))
@@ -162,31 +156,15 @@ layer_select_init (GimpImage *gimage,
   gdk_keyboard_grab (layer_select->shell->window, FALSE, time);
 }
 
-void
-layer_select_update_preview_size (void)
-{
-  if (layer_select != NULL)
-    {
-      gimp_preview_set_size (GIMP_PREVIEW (layer_select->preview), 
-			     gimprc.preview_size, 1);
-    }  
-}
 
-
-/***********************/
-/*  Private functions  */
-/***********************/
-
+/*  private functions  */
 
 static void
 layer_select_advance (LayerSelect *layer_select,
 		      gint         move)
 {
-  gint       index;
-  gint       count;
-  GSList    *list;
-  GSList    *nth;
   GimpLayer *layer;
+  gint       index;
 
   index = 0;
 
@@ -197,24 +175,18 @@ layer_select_advance (LayerSelect *layer_select,
   if (gimp_image_floating_sel (layer_select->gimage))
     return;
 
-  for (list = layer_select->gimage->layer_stack, count = 0; 
-       list; 
-       list = g_slist_next (list), count++)
-    {
-      layer = (GimpLayer *) list->data;
-
-      if (layer == layer_select->current_layer)
-	index = count;
-    }
+  index = gimp_container_get_child_index (layer_select->gimage->layers,
+                                          GIMP_OBJECT (layer_select->current_layer));
 
   index += move;
-  index = CLAMP (index, 0, count - 1);
+  index = CLAMP (index, 0,
+                 gimp_container_num_children (layer_select->gimage->layers) - 1);
 
-  nth = g_slist_nth (layer_select->gimage->layer_stack, index);
+  layer = (GimpLayer *)
+    gimp_container_get_child_by_index (layer_select->gimage->layers, index);
 
-  if (nth)
+  if (layer && layer != layer_select->current_layer)
     {
-      layer = (GimpLayer *) nth->data;
       layer_select->current_layer = layer;
 
       gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
@@ -223,18 +195,6 @@ layer_select_advance (LayerSelect *layer_select,
       gtk_label_set_text (GTK_LABEL (layer_select->label),
 			  GIMP_OBJECT (layer_select->current_layer)->name);
     }
-}
-
-static void
-layer_select_forward (LayerSelect *layer_select)
-{
-  layer_select_advance (layer_select, 1);
-}
-
-static void
-layer_select_backward (LayerSelect *layer_select)
-{
-  layer_select_advance (layer_select, -1);
 }
 
 static void
@@ -256,7 +216,7 @@ layer_select_end (LayerSelect *layer_select,
 }
 
 static void
-layer_select_set_gimage (LayerSelect *layer_select,
+layer_select_set_image (LayerSelect *layer_select,
 			 GimpImage   *gimage)
 {
   layer_select->gimage        = gimage;
@@ -291,9 +251,9 @@ layer_select_events (GtkWidget *widget,
 	{
 	case GDK_Tab:
 	  if (kevent->state & GDK_MOD1_MASK)
-	    layer_select_forward (layer_select);
+	    layer_select_advance (layer_select, 1);
 	  else if (kevent->state & GDK_CONTROL_MASK)
-	    layer_select_backward (layer_select);
+	    layer_select_advance (layer_select, -1);
 	  break;
 	}
       return TRUE;
@@ -309,6 +269,9 @@ layer_select_events (GtkWidget *widget,
 	  break;
 	case GDK_Control_L: case GDK_Control_R:
 	  kevent->state &= ~GDK_CONTROL_MASK;
+	  break;
+	case GDK_Shift_L: case GDK_Shift_R:
+	  kevent->state &= ~GDK_SHIFT_MASK;
 	  break;
 	}
 

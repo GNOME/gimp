@@ -16,14 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __LAYER_SELECT_H__
-#define  __LAYER_SELECT_H__
+#ifndef  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__
+#define  __GIMP_DISPLAY_SHELLLAYER_SELECT_H__
 
 
-void   layer_select_init                (GimpImage *gimage, 
-					 gint       move, 
-					 guint32    time);
-void   layer_select_update_preview_size (void);
+void   gimp_display_shell_layer_select_init (GimpImage *gimage, 
+                                             gint       move, 
+                                             guint32    time);
 
 
-#endif  /*  __LAYER_SELECT_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELLLAYER_SELECT_H__  */

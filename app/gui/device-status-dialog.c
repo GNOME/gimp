@@ -543,15 +543,26 @@ devices_check_change (GdkEvent *event)
     case GDK_MOTION_NOTIFY:
       device = ((GdkEventMotion *) event)->device;
       break;
+
     case GDK_BUTTON_PRESS:
+    case GDK_2BUTTON_PRESS:
+    case GDK_3BUTTON_PRESS:
     case GDK_BUTTON_RELEASE:
       device = ((GdkEventButton *) event)->device;
       break;
+
+    case GDK_PROXIMITY_IN:
     case GDK_PROXIMITY_OUT:
       device = ((GdkEventProximity *) event)->device;
       break;
+
+    case GDK_SCROLL:
+      device = ((GdkEventScroll *) event)->device;
+      break;
+
     default:
       device = current_device;
+      break;
     }
 
   if (device != current_device)

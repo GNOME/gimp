@@ -49,23 +49,32 @@
 static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);
 static void   gimp_move_tool_init       (GimpMoveTool      *move_tool);
 
-static void   move_tool_button_press    (GimpTool          *tool,
-					 GdkEventButton    *bevent,
-					 GimpDisplay       *gdisp);
-static void   move_tool_button_release  (GimpTool          *tool,
-					 GdkEventButton    *bevent,
-					 GimpDisplay       *gdisp);
-static void   move_tool_motion          (GimpTool          *tool,
-					 GdkEventMotion    *mevent,
-					 GimpDisplay       *gdisp);
-static void   move_tool_cursor_update   (GimpTool          *tool,
-					 GdkEventMotion    *mevent,
-					 GimpDisplay       *gdisp);
 static void   move_tool_control	        (GimpTool          *tool,
 					 ToolAction         tool_action,
 					 GimpDisplay       *gdisp);
+static void   move_tool_button_press    (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         guint32            time,
+					 GdkModifierType    state,
+					 GimpDisplay       *gdisp);
+static void   move_tool_button_release  (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         guint32            time,
+					 GdkModifierType    state,
+					 GimpDisplay       *gdisp);
+static void   move_tool_motion          (GimpTool          *tool,
+                                         GimpCoords        *coords,
+                                         guint32            time,
+					 GdkModifierType    state,
+					 GimpDisplay       *gdisp);
+static void   move_tool_cursor_update   (GimpTool          *tool,
+                                         GimpCoords        *coords,
+					 GdkModifierType    state,
+					 GimpDisplay       *gdisp);
 
 static void   move_create_gc            (GimpDisplay       *gdisp);
+static void   move_draw_guide           (GimpDisplay       *gdisp, 
+                                         GimpGuide         *guide);
 
 
 /*  the move tool options  */
@@ -132,8 +141,8 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   tool_class->button_press   = move_tool_button_press;
   tool_class->button_release = move_tool_button_release;
   tool_class->motion         = move_tool_motion;
-  tool_class->cursor_update  = move_tool_cursor_update;
   tool_class->arrow_key      = gimp_edit_selection_tool_arrow_key;
+  tool_class->cursor_update  = move_tool_cursor_update;
 }
 
 static void
@@ -155,6 +164,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->layer = NULL;
   move_tool->guide = NULL;
   move_tool->disp  = NULL;
+
+  tool->tool_cursor  = GIMP_MOVE_TOOL_CURSOR;
 
   tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
 }
@@ -194,15 +205,16 @@ move_tool_control (GimpTool    *tool,
 }
 
 static void
-move_tool_button_press (GimpTool       *tool,
-			GdkEventButton *bevent,
-			GimpDisplay    *gdisp)
+move_tool_button_press (GimpTool        *tool,
+                        GimpCoords      *coords,
+                        guint32          time,
+			GdkModifierType  state,
+			GimpDisplay     *gdisp)
 {
   GimpMoveTool     *move;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   GimpGuide        *guide;
-  gint              x, y;
 
   move = GIMP_MOVE_TOOL (tool);
 
@@ -213,24 +225,20 @@ move_tool_button_press (GimpTool       *tool,
   move->guide = NULL;
   move->disp  = NULL;
 
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-
-  if (bevent->state & GDK_MOD1_MASK &&
-      !gimage_mask_is_empty (gdisp->gimage))
+  if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
     {
-      init_edit_selection (tool, gdisp, bevent, EDIT_MASK_TRANSLATE);
+      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
       tool->state = ACTIVE;
     }
-  else if (bevent->state & GDK_SHIFT_MASK)
+  else if (state & GDK_SHIFT_MASK)
     {
-      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
+      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
       tool->state = ACTIVE;
     }
   else
     {
       if (gdisp->draw_guides &&
-	  (guide = gimp_image_find_guide (gdisp->gimage, x, y)))
+	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
 	{
 	  undo_push_guide (gdisp->gimage, guide);
 
@@ -245,9 +253,11 @@ move_tool_button_press (GimpTool       *tool,
 	  tool->scroll_lock = TRUE;
 	  tool->state       = ACTIVE;
 
-	  move_tool_motion (tool, NULL, gdisp);
+	  move_draw_guide (gdisp, move->guide);
 	}
-      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
+      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                                         coords->x,
+                                                         coords->y)))
 	{
 	  /*  If there is a floating selection, and this aint it,
 	   *  use the move tool
@@ -261,7 +271,7 @@ move_tool_button_press (GimpTool       *tool,
 	  else
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
-	      init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
+	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 	  tool->state = ACTIVE;
 	}
@@ -274,62 +284,16 @@ move_tool_button_press (GimpTool       *tool,
 			GDK_POINTER_MOTION_HINT_MASK |
 			GDK_BUTTON1_MOTION_MASK |
 			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, bevent->time);
+			NULL, NULL, time);
     }
 }
 
 static void
-move_draw_guide (GimpDisplay *gdisp, 
-		 GimpGuide   *guide)
-{
-  GimpDisplayShell *shell;
-  gint              x1, y1;
-  gint              x2, y2;
-  gint              w, h;
-  gint              x, y;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if (!move_gc)
-    move_create_gc (gdisp);
-
-  if (guide->position == -1)
-    return;
-  
-  gdisplay_transform_coords (gdisp, gdisp->gimage->width, 
-			     gdisp->gimage->height, &x2, &y2, FALSE); 
-
-  w = shell->canvas->allocation.width;
-  h = shell->canvas->allocation.height;
-
-  switch (guide->orientation)
-    {
-    case ORIENTATION_HORIZONTAL:
-      gdisplay_transform_coords (gdisp, 0, guide->position, &x1, &y, FALSE);
-      if (x1 < 0) x1 = 0;
-      if (x2 > w) x2 = w;
-
-      gdk_draw_line (shell->canvas->window, move_gc, x1, y, x2, y); 
-      break;
-
-    case ORIENTATION_VERTICAL:
-      gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y1, FALSE);
-      if (y1 < 0) y1 = 0;
-      if (y2 > h) y2 = h;
-
-      gdk_draw_line (shell->canvas->window, move_gc, x, y1, x, y2);
-      break;
-
-    default:
-      g_warning ("mdg / BAD FALLTHROUGH");
-      break;
-    }
-}
-
-static void
-move_tool_button_release (GimpTool       *tool,
-			  GdkEventButton *bevent,
-			  GimpDisplay    *gdisp)
+move_tool_button_release (GimpTool        *tool,
+                          GimpCoords      *coords,
+                          guint32          time,
+			  GdkModifierType  state,
+			  GimpDisplay     *gdisp)
 {
   GimpMoveTool *move;
   gboolean      delete_guide;
@@ -338,10 +302,10 @@ move_tool_button_release (GimpTool       *tool,
 
   move = GIMP_MOVE_TOOL (tool);
 
-  gdk_flush ();
-
   tool->state = INACTIVE;
-  gdk_pointer_ungrab (bevent->time);
+
+  gdk_pointer_ungrab (time);
+  gdk_flush ();
 
   if (move->guide)
     {
@@ -384,16 +348,13 @@ move_tool_button_release (GimpTool       *tool,
 
       gdisplays_expose_guide (gdisp->gimage, move->guide);
 
+      move_draw_guide (gdisp, move->guide);
+
       if (delete_guide)
 	{
-	  move_draw_guide (gdisp, move->guide);
 	  gimp_image_delete_guide (gdisp->gimage, move->guide);
 	  move->guide = NULL;
-	  move->disp = NULL;
-	}
-      else
-	{
-	  move_tool_motion (tool, NULL, gdisp);
+	  move->disp  = NULL;
 	}
 
       gdisplay_selection_visibility (gdisp, GIMP_SELECTION_RESUME);
@@ -405,7 +366,7 @@ move_tool_button_release (GimpTool       *tool,
   else
     {
       /*  Take care of the case where the user "cancels" the action  */
-      if (! (bevent->state & GDK_BUTTON3_MASK))
+      if (! (state & GDK_BUTTON3_MASK))
 	{
 	  if (move->layer)
 	    {
@@ -417,72 +378,73 @@ move_tool_button_release (GimpTool       *tool,
 }
 
 static void
-move_tool_motion (GimpTool       *tool,
-		  GdkEventMotion *mevent,
-		  GimpDisplay    *gdisp)
+move_tool_motion (GimpTool        *tool,
+                  GimpCoords      *coords,
+                  guint32          time,
+		  GdkModifierType  state,
+		  GimpDisplay     *gdisp)
 
 {
   GimpMoveTool *move;
-  gint          x, y;
 
   move = GIMP_MOVE_TOOL (tool);
 
   if (move->guide)
     {
       GimpDisplayShell *shell;
+      gint              tx, ty;
 
       shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
       move_draw_guide (gdisp, move->guide);
 
-      if (mevent && mevent->window != shell->canvas->window)
+      gdisplay_transform_coords (gdisp,
+                                 coords->x, coords->y,
+                                 &tx, &ty,
+                                 FALSE);
+
+      if (tx < 0 ||
+          ty < 0 ||
+          tx >= shell->disp_width ||
+          ty >= shell->disp_height)
 	{
 	  move->guide->position = -1;
-	  return;
 	}
-      
-      if (mevent)
-	{
-	  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, 
-				       &x, &y, TRUE, FALSE);
+      else
+        {
+          if (move->guide->orientation == ORIENTATION_HORIZONTAL)
+            move->guide->position = ROUND (coords->y);
+          else
+            move->guide->position = ROUND (coords->x);
 
-	  if (move->guide->orientation == ORIENTATION_HORIZONTAL)
-	    move->guide->position = y;
-	  else
-	    move->guide->position = x;
-	  
-	  move_draw_guide (gdisp, move->guide);
-	}
+          move_draw_guide (gdisp, move->guide);
+        }
     }
 }
 
 static void
-move_tool_cursor_update (GimpTool       *tool,
-			 GdkEventMotion *mevent,
-			 GimpDisplay    *gdisp)
+move_tool_cursor_update (GimpTool        *tool,
+                         GimpCoords      *coords,
+			 GdkModifierType  state,
+			 GimpDisplay     *gdisp)
 {
   GimpMoveTool     *move;
   GimpDisplayShell *shell;
   GimpGuide        *guide;
   GimpLayer        *layer;
-  gint              x, y;
 
   move = GIMP_MOVE_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
-
-  if (mevent->state & GDK_MOD1_MASK &&
-      ! gimage_mask_is_empty (gdisp->gimage))
+  if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,
                                               GIMP_RECT_SELECT_TOOL_CURSOR,
                                               GIMP_CURSOR_MODIFIER_MOVE);
     }
-  else if (mevent->state & GDK_SHIFT_MASK)
+  else if (state & GDK_SHIFT_MASK)
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,
@@ -492,7 +454,7 @@ move_tool_cursor_update (GimpTool       *tool,
   else
     {
       if (gdisp->draw_guides &&
-	  (guide = gimp_image_find_guide (gdisp->gimage, x, y)))
+	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
 	{
 	  tool->gdisp = gdisp;
 
@@ -521,7 +483,8 @@ move_tool_cursor_update (GimpTool       *tool,
 	      move->disp  = gdisp;
 	    }
 	}
-      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
+      else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                                         coords->x, coords->y)))
 	{
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
@@ -571,6 +534,54 @@ move_create_gc (GimpDisplay *gdisp)
       values.function         = GDK_INVERT;
       move_gc = gdk_gc_new_with_values (shell->canvas->window, &values,
 					GDK_GC_FUNCTION);
+    }
+}
+
+static void
+move_draw_guide (GimpDisplay *gdisp, 
+		 GimpGuide   *guide)
+{
+  GimpDisplayShell *shell;
+  gint              x1, y1;
+  gint              x2, y2;
+  gint              w, h;
+  gint              x, y;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (!move_gc)
+    move_create_gc (gdisp);
+
+  if (guide->position == -1)
+    return;
+  
+  gdisplay_transform_coords (gdisp, gdisp->gimage->width, 
+			     gdisp->gimage->height, &x2, &y2, FALSE); 
+
+  w = shell->canvas->allocation.width;
+  h = shell->canvas->allocation.height;
+
+  switch (guide->orientation)
+    {
+    case ORIENTATION_HORIZONTAL:
+      gdisplay_transform_coords (gdisp, 0, guide->position, &x1, &y, FALSE);
+      if (x1 < 0) x1 = 0;
+      if (x2 > w) x2 = w;
+
+      gdk_draw_line (shell->canvas->window, move_gc, x1, y, x2, y); 
+      break;
+
+    case ORIENTATION_VERTICAL:
+      gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y1, FALSE);
+      if (y1 < 0) y1 = 0;
+      if (y2 > h) y2 = h;
+
+      gdk_draw_line (shell->canvas->window, move_gc, x, y1, x, y2);
+      break;
+
+    default:
+      g_warning ("mdg / BAD FALLTHROUGH");
+      break;
     }
 }
 

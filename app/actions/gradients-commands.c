@@ -203,7 +203,7 @@ gradients_save_as_pov_ok_callback (GtkWidget    *widget,
           g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
                            1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
 
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
+	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
 		   seg->middle,
 		   buf[0], buf[1], buf[2], buf[3]);
 
@@ -217,7 +217,7 @@ gradients_save_as_pov_ok_callback (GtkWidget    *widget,
           g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
                            1.0 - seg->right_color.a);
 
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
+	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
 		   seg->right,
 		   buf[0], buf[1], buf[2], buf[3]);
 	}

@@ -54,12 +54,16 @@ struct _GimpCropTool
   gint          x1, y1;     /*  upper left hand coordinate  */
   gint          x2, y2;     /*  lower right hand coords     */
 
-  gint          srw, srh;   /*  width and height of corners */
-
-  gint          tx1, ty1;   /*  transformed coords          */
-  gint          tx2, ty2;   /*                              */
+  gint          cw, ch;     /*  corners in image  coords    */
 
   guint         function;   /*  moving or resizing          */
+
+
+  gint          dx1, dy1;   /*  display coords              */
+  gint          dx2, dy2;   /*                             */ 
+
+  gint          dcw, dch;   /*  width and height of corners */
+
   guint         context_id; /*  for the statusbar           */
 };
 

@@ -114,19 +114,26 @@ static void    gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 static void    gimp_transform_tool_finalize    (GObject                *object);
 
 static void   gimp_transform_tool_button_press (GimpTool               *tool,
-                                                GdkEventButton         *bevent,
+                                                GimpCoords             *coords,
+                                                guint32                 time,
+                                                GdkModifierType         state,
 			                        GimpDisplay            *gdisp);
 			          
 static void gimp_transform_tool_button_release (GimpTool               *tool,
-			                        GdkEventButton         *bevent,
+                                                GimpCoords             *coords,
+                                                guint32                 time,
+			                        GdkModifierType         state,
 			                        GimpDisplay            *gdisp);
 			                        
 static void    gimp_transform_tool_motion      (GimpTool               *tool,
-		                                GdkEventMotion         *mevent,
+                                                GimpCoords             *coords,
+                                                guint32                 time,
+		                                GdkModifierType         state,
 		                                GimpDisplay            *gdisp);
 		                                
 static void  gimp_transform_tool_cursor_update (GimpTool               *tool,
-	                 		        GdkEventMotion         *mevent,
+                                                GimpCoords             *coords,
+	                 		        GdkModifierType         state,
 			                        GimpDisplay            *gdisp);
 			                        
 static void    gimp_transform_tool_control     (GimpTool               *tool,
@@ -200,11 +207,11 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 
   object_class->finalize     = gimp_transform_tool_finalize;
 
+  tool_class->control        = gimp_transform_tool_control;
   tool_class->button_press   = gimp_transform_tool_button_press;
   tool_class->button_release = gimp_transform_tool_button_release;
   tool_class->motion         = gimp_transform_tool_motion;
   tool_class->cursor_update  = gimp_transform_tool_cursor_update;
-  tool_class->control        = gimp_transform_tool_control;
 
   draw_class->draw           = gimp_transform_tool_draw;
 }
@@ -217,8 +224,6 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   tr_tool->function = TRANSFORM_CREATING;
   tr_tool->original = NULL;
-
-  tr_tool->bpressed = FALSE;
 
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     tr_tool->trans_info[i] = 0;
@@ -352,24 +357,23 @@ gimp_transform_tool_control (GimpTool    *tool,
 }
 
 static void
-gimp_transform_tool_button_press (GimpTool       *tool,
-                                  GdkEventButton *bevent,
-			          GimpDisplay    *gdisp)
+gimp_transform_tool_button_press (GimpTool        *tool,
+                                  GimpCoords      *coords,
+                                  guint32          time,
+                                  GdkModifierType  state,
+			          GimpDisplay     *gdisp)
 {
   GimpTransformTool *gt_tool;
   GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
   gint               dist;
   gint               closest_dist;
-  gint               x, y;
   gint               i;
   gint               off_x, off_y;
 
   gt_tool = GIMP_TRANSFORM_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gt_tool->bpressed = TRUE; /* ALT */
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -389,51 +393,45 @@ gimp_transform_tool_button_press (GimpTool       *tool,
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
-      x = bevent->x;
-      y = bevent->y;
-
-      closest_dist = SQR (x - gt_tool->sx1) + SQR (y - gt_tool->sy1);
+      closest_dist = SQR (coords->x - gt_tool->tx1) + SQR (coords->y - gt_tool->ty1);
       gt_tool->function = TRANSFORM_HANDLE_1;
 
-      dist = SQR (x - gt_tool->sx2) + SQR (y - gt_tool->sy2);
+      dist = SQR (coords->x - gt_tool->tx2) + SQR (coords->y - gt_tool->ty2);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_2;
 	}
 
-      dist = SQR (x - gt_tool->sx3) + SQR (y - gt_tool->sy3);
+      dist = SQR (coords->x - gt_tool->tx3) + SQR (coords->y - gt_tool->ty3);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_3;
 	}
 
-      dist = SQR (x - gt_tool->sx4) + SQR (y - gt_tool->sy4);
+      dist = SQR (coords->x - gt_tool->tx4) + SQR (coords->y - gt_tool->ty4);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_4;
 	}
 
-      if ((SQR (x - gt_tool->scx) +
-	   SQR (y - gt_tool->scy)) <= 100)
+      if ((SQR (coords->x - gt_tool->tcx) +
+	   SQR (coords->y - gt_tool->tcy)) <= 100)
 	{
 	  gt_tool->function = TRANSFORM_HANDLE_CENTER;
 	}
 
       /*  Save the current pointer position  */
-      gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-				   &gt_tool->startx,
-				   &gt_tool->starty, TRUE, 0);
-      gt_tool->lastx = gt_tool->startx;
-      gt_tool->lasty = gt_tool->starty;
+      gt_tool->lastx = gt_tool->startx = coords->x;
+      gt_tool->lasty = gt_tool->starty = coords->y;
 
       gdk_pointer_grab (shell->canvas->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
 			GDK_BUTTON1_MOTION_MASK |
 			GDK_BUTTON_RELEASE_MASK,
-			NULL, NULL, bevent->time);
+			NULL, NULL, time);
 
       tool->state = ACTIVE;
       return;
@@ -443,16 +441,15 @@ gimp_transform_tool_button_press (GimpTool       *tool,
   /*  Initialisation stuff: if the cursor is clicked inside the current
    *  selection, show the bounding box and handles...
    */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
-			       FALSE, FALSE);
-
   gimp_drawable_offsets (drawable, &off_x, &off_y);
-  if (x >= off_x && y >= off_y &&
-      x < (off_x + gimp_drawable_width (drawable)) &&
-      y < (off_y + gimp_drawable_height (drawable)))
+
+  if (coords->x >= off_x &&
+      coords->y >= off_y &&
+      coords->x < (off_x + gimp_drawable_width (drawable)) &&
+      coords->y < (off_y + gimp_drawable_height (drawable)))
     {
       if (gimage_mask_is_empty (gdisp->gimage) ||
-	  gimage_mask_value (gdisp->gimage, x, y))
+	  gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 	{
 	  if (GIMP_IS_LAYER (drawable) &&
 	      gimp_layer_get_mask (GIMP_LAYER (drawable)))
@@ -475,22 +472,18 @@ gimp_transform_tool_button_press (GimpTool       *tool,
 	  tool->state    = ACTIVE;
 
 	  /*  Grab the pointer if we're in non-interactive mode  */
-	  if (!gt_tool->interactive)
+	  if (! gt_tool->interactive)
 	    gdk_pointer_grab (shell->canvas->window, FALSE,
 			      GDK_POINTER_MOTION_HINT_MASK |
                               GDK_BUTTON1_MOTION_MASK |
                               GDK_BUTTON_RELEASE_MASK,
-			      NULL, NULL, bevent->time);
+			      NULL, NULL, time);
 
 	  /*  Find the transform bounds for some tools (like scale,
 	   *  perspective) that actually need the bounds for
 	   *  initializing
 	   */
 	  gimp_transform_tool_bounds (gt_tool, gdisp);
-
-	  /*  Calculate the grid line endpoints  */
-	  if (gimp_transform_tool_show_grid ())
-	    gimp_transform_tool_setup_grid (gt_tool);
 
 	  /*  Initialize the transform tool */
 	  gimp_transform_tool_transform (gt_tool, gdisp, TRANSFORM_INIT);
@@ -527,36 +520,36 @@ gimp_transform_tool_button_press (GimpTool       *tool,
 
 	  /*  recall this function to find which handle we're dragging  */
 	  if (gt_tool->interactive)
-	    gimp_transform_tool_button_press (tool, bevent, gdisp);
+	    gimp_transform_tool_button_press (tool, coords, time, state, gdisp);
 	}
     }
 }
 
 static void
-gimp_transform_tool_button_release (GimpTool       *tool,
-			            GdkEventButton *bevent,
-			            GimpDisplay    *gdisp)
+gimp_transform_tool_button_release (GimpTool        *tool,
+                                    GimpCoords      *coords,
+                                    guint32          time,
+			            GdkModifierType  state,
+			            GimpDisplay     *gdisp)
 {
   GimpTransformTool *gt_tool;
   gint               i;
 
   gt_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  gt_tool->bpressed = FALSE; /* ALT */
-
   /*  if we are creating, there is nothing to be done...exit  */
   if (gt_tool->function == TRANSFORM_CREATING && gt_tool->interactive)
     return;
 
   /*  release of the pointer grab  */
-  gdk_pointer_ungrab (bevent->time);
+  gdk_pointer_ungrab (time);
   gdk_flush ();
 
   /*  if the 3rd button isn't pressed, transform the selected mask  */
-  if (! (bevent->state & GDK_BUTTON3_MASK))
+  if (! (state & GDK_BUTTON3_MASK))
     {
       /* Shift-clicking is another way to approve the transform  */
-      if ((bevent->state & GDK_SHIFT_MASK) || GIMP_IS_FLIP_TOOL (tool))
+      if ((state & GDK_SHIFT_MASK) || GIMP_IS_FLIP_TOOL (tool))
 	{
 	  gimp_transform_tool_doit (gt_tool, gdisp);
 	}
@@ -588,7 +581,7 @@ gimp_transform_tool_button_release (GimpTool       *tool,
     }
 
   /*  if this tool is non-interactive, make it inactive after use  */
-  if (!gt_tool->interactive)
+  if (! gt_tool->interactive)
     tool->state = INACTIVE;
 }
 
@@ -672,7 +665,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
        */
       tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      undo_push_transform (gdisp->gimage, (void *) tu);
+      undo_push_transform (gdisp->gimage, tu);
     }
 
   /*  push the undo group end  */
@@ -730,31 +723,27 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 }
 
 static void
-gimp_transform_tool_motion (GimpTool       *tool,
-		            GdkEventMotion *mevent,
-		            GimpDisplay    *gdisp)
+gimp_transform_tool_motion (GimpTool        *tool,
+                            GimpCoords      *coords,
+                            guint32          time,
+		            GdkModifierType  state,
+		            GimpDisplay     *gdisp)
 {
   GimpTransformTool *tr_tool;
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (! tr_tool->bpressed)
-    return;
-
   /*  if we are creating or this tool is non-interactive, there is
    *  nothing to be done so exit.
    */
-  if (tr_tool->function == TRANSFORM_CREATING ||
-      !tr_tool->interactive)
+  if (tr_tool->function == TRANSFORM_CREATING || ! tr_tool->interactive)
     return;
 
-  /*  stop the current tool drawing process  */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &tr_tool->curx,
-			       &tr_tool->cury, TRUE, 0);
-  tr_tool->state = mevent->state;
+  tr_tool->curx  = coords->x;
+  tr_tool->cury  = coords->y;
+  tr_tool->state = state;
 
   /*  recalculate the tool's transformation matrix  */
   gimp_transform_tool_transform (tr_tool, gdisp, TRANSFORM_MOTION);
@@ -762,49 +751,46 @@ gimp_transform_tool_motion (GimpTool       *tool,
   tr_tool->lastx = tr_tool->curx;
   tr_tool->lasty = tr_tool->cury;
 
-  /*  resume drawing the current tool  */
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
-gimp_transform_tool_cursor_update (GimpTool       *tool,
-			           GdkEventMotion *mevent,
-			           GimpDisplay    *gdisp)
+gimp_transform_tool_cursor_update (GimpTool        *tool,
+                                   GimpCoords      *coords,
+			           GdkModifierType  state,
+			           GimpDisplay     *gdisp)
 {
-  GimpTransformTool  *tr_tool;
-  GimpDisplayShell   *shell;
-  GimpDrawable       *drawable;
-  GdkCursorType       ctype = GDK_TOP_LEFT_ARROW;
-  gint                x, y;
+  GimpTransformTool *tr_tool;
+  GimpDrawable      *drawable;
+  GdkCursorType      ctype = GDK_TOP_LEFT_ARROW;
 
   tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
-
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
+
       if (GIMP_IS_LAYER (drawable) &&
-	  gimp_layer_get_mask (GIMP_LAYER (drawable)))
+          gimp_layer_get_mask (GIMP_LAYER (drawable)))
 	{
 	  ctype = GIMP_BAD_CURSOR;
 	}
-      else if (x >= drawable->offset_x &&
-	       y >= drawable->offset_y &&
-	       x < (drawable->offset_x + drawable->width) &&
-	       y < (drawable->offset_y + drawable->height))
+      else if (coords->x >= off_x &&
+	       coords->y >= off_y &&
+	       coords->x < (off_x + drawable->width) &&
+	       coords->y < (off_y + drawable->height))
 	{
 	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, x, y))
+	      gimage_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
 	      ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
+  gimp_display_shell_install_tool_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
                                           ctype,
                                           tool->tool_cursor,
                                           GIMP_CURSOR_MODIFIER_NONE);

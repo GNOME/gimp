@@ -44,7 +44,7 @@ style "gimp-dialog-style"
   GtkDialog::action_area_border  = 4
 }
 
-widget "*GtkDialog*" style "gimp-dialog-style"
+widget "*GimpDialog*" style "gimp-dialog-style"
 
 
 style "gimp-hscale-style"

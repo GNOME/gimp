@@ -31,7 +31,7 @@ typedef enum
 
 void   init_edit_selection (GimpTool       *tool,
                             GimpDisplay    *gdisp,
-                            GdkEventButton *bevent,
+                            GimpCoords     *coords,
                             EditType        edit_type);
 
 
