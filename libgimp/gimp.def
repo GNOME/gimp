@@ -61,6 +61,8 @@ EXPORTS
 	gimp_drawable_flush
 	gimp_drawable_get
 	gimp_drawable_get_name
+	gimp_drawable_get_image
+	gimp_drawable_get_linked
 	gimp_drawable_get_tattoo
 	gimp_drawable_get_visible
 	gimp_drawable_get_thumbnail_data
@@ -68,7 +70,6 @@ EXPORTS
 	gimp_drawable_get_tile2
 	gimp_drawable_has_alpha
 	gimp_drawable_height
-	gimp_drawable_image
 	gimp_drawable_is_channel
 	gimp_drawable_is_gray
 	gimp_drawable_is_indexed
@@ -77,13 +78,13 @@ EXPORTS
 	gimp_drawable_is_rgb
 	gimp_drawable_mask_bounds
 	gimp_drawable_merge_shadow
-	gimp_drawable_name
 	gimp_drawable_offset
 	gimp_drawable_offsets
 	gimp_drawable_parasite_attach
 	gimp_drawable_parasite_detach
 	gimp_drawable_parasite_find
 	gimp_drawable_parasite_list
+	gimp_drawable_set_linked
 	gimp_drawable_set_name
 	gimp_drawable_set_visible
 	gimp_drawable_set_tattoo
@@ -233,7 +234,6 @@ EXPORTS
 	gimp_layer_create_mask
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
-	gimp_layer_get_linked
 	gimp_layer_get_mode
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
@@ -247,7 +247,6 @@ EXPORTS
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
-	gimp_layer_set_linked
 	gimp_layer_set_mode
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
