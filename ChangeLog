@@ -1,5 +1,25 @@
 2001-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp.c: split "destroy" up in "dispose" and "finalize".
+
+	* app/core/gimpcontext.c: objects need to be passed around with
+	g_param_spec_object() or bad things will happen.
+
+	* app/gui/channels-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/gui.c
+	* app/gui/layers-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/select-commands.c
+	* app/tools/gimpclonetool.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimppreview.c: removed many connections to
+	"destroy": Connect to "dispose" or use g_object_weak_ref()
+	instead.
+
+2001-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: fsck^^^ -- lovely autofoo wants "changequote([,])dnl"
 
 	* app/core/gimpcontext.[ch]: lots of GObject porting.

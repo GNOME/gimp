@@ -594,9 +594,9 @@ layers_new_layer_query (GimpImage *gimage)
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -777,9 +777,9 @@ layers_edit_layer_query (GimpLayer *layer)
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   g_signal_connect_object (G_OBJECT (layer), "removed",
 			   G_CALLBACK (gtk_widget_destroy),
@@ -882,9 +882,9 @@ layers_add_mask_query (GimpLayer *layer)
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   g_signal_connect_object (G_OBJECT (layer), "removed",
 			   G_CALLBACK (gtk_widget_destroy),
@@ -1018,9 +1018,9 @@ layers_scale_layer_query (GimpImage *gimage,
 		       NULL,
 		       options);
 
-  g_signal_connect_swapped (G_OBJECT (options->resize->resize_shell), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
+		     (GWeakNotify) g_free,
+		     options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
@@ -1106,9 +1106,9 @@ layers_resize_layer_query (GimpImage *gimage,
 		       NULL,
 		       options);
 
-  g_signal_connect_swapped (G_OBJECT (options->resize->resize_shell), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
+		     (GWeakNotify) g_free,
+		     options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
@@ -1176,9 +1176,9 @@ layers_layer_merge_query (GimpImage   *gimage,
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);

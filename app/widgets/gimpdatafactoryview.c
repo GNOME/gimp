@@ -424,7 +424,7 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				       str,
 				       GIMP_STOCK_DELETE, GTK_STOCK_CANCEL,
 				       G_OBJECT (data),
-				       "destroy",
+				       "disconnect",
 				       gimp_data_factory_view_delete_callback,
 				       delete_data);
 

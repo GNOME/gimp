@@ -131,7 +131,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
-			      G_OBJECT (gdisp->gimage), "destroy",
+			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimage_mask_feather_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
@@ -167,7 +167,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 			 MIN (gdisp->gimage->xresolution,
 			      gdisp->gimage->yresolution),
 			 gdisp->dot_for_dot,
-			 G_OBJECT (gdisp->gimage), "destroy",
+			 G_OBJECT (gdisp->gimage), "disconnect",
 			 gimage_mask_shrink_callback, gdisp->gimage);
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
@@ -201,7 +201,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
-			      G_OBJECT (gdisp->gimage), "destroy",
+			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimage_mask_grow_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
@@ -224,7 +224,7 @@ select_border_cmd_callback (GtkWidget *widget,
 			      MIN (gdisp->gimage->xresolution,
 				   gdisp->gimage->yresolution),
 			      gdisp->dot_for_dot,
-			      G_OBJECT (gdisp->gimage), "destroy",
+			      G_OBJECT (gdisp->gimage), "disconnect",
 			      gimage_mask_border_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }

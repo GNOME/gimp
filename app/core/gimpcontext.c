@@ -355,9 +355,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, image_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[DISPLAY_CHANGED] =
     g_signal_new (gimp_context_signal_names[DISPLAY_CHANGED],
@@ -375,9 +375,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, tool_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
     g_signal_new (gimp_context_signal_names[FOREGROUND_CHANGED],
@@ -425,9 +425,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, brush_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[PATTERN_CHANGED] =
     g_signal_new (gimp_context_signal_names[PATTERN_CHANGED],
@@ -435,9 +435,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, pattern_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[GRADIENT_CHANGED] =
     g_signal_new (gimp_context_signal_names[GRADIENT_CHANGED],
@@ -445,9 +445,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, gradient_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[PALETTE_CHANGED] =
     g_signal_new (gimp_context_signal_names[PALETTE_CHANGED],
@@ -455,9 +455,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, palette_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   gimp_context_signals[BUFFER_CHANGED] =
     g_signal_new (gimp_context_signal_names[BUFFER_CHANGED],
@@ -465,9 +465,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpContextClass, buffer_changed),
 		  NULL, NULL,
-		  g_cclosure_marshal_VOID__POINTER,
+		  g_cclosure_marshal_VOID__OBJECT,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_POINTER);
+		  G_TYPE_OBJECT);
 
   object_class->set_property = gimp_context_set_property;
   object_class->get_property = gimp_context_get_property;
@@ -496,9 +496,10 @@ gimp_context_class_init (GimpContextClass *klass)
 
   g_object_class_install_property (object_class,
 				   PROP_IMAGE,
-				   g_param_spec_pointer (gimp_context_prop_names[IMAGE_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[IMAGE_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_IMAGE,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_DISPLAY,
@@ -508,9 +509,10 @@ gimp_context_class_init (GimpContextClass *klass)
 
   g_object_class_install_property (object_class,
 				   PROP_TOOL,
-				   g_param_spec_pointer (gimp_context_prop_names[TOOL_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[TOOL_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_TOOL_INFO,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_FOREGROUND,
@@ -544,33 +546,38 @@ gimp_context_class_init (GimpContextClass *klass)
 
   g_object_class_install_property (object_class,
 				   PROP_BRUSH,
-				   g_param_spec_pointer (gimp_context_prop_names[BRUSH_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[BRUSH_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_BRUSH,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_PATTERN,
-				   g_param_spec_pointer (gimp_context_prop_names[PATTERN_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[PATTERN_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_PATTERN,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_GRADIENT,
-				   g_param_spec_pointer (gimp_context_prop_names[GRADIENT_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[GRADIENT_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_GRADIENT,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_PALETTE,
-				   g_param_spec_pointer (gimp_context_prop_names[PALETTE_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[PALETTE_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_PALETTE,
+							G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
 				   PROP_BUFFER,
-				   g_param_spec_pointer (gimp_context_prop_names[BUFFER_CHANGED],
-							 NULL, NULL,
-							 G_PARAM_READWRITE));
+				   g_param_spec_object (gimp_context_prop_names[BUFFER_CHANGED],
+							NULL, NULL,
+							GIMP_TYPE_BUFFER,
+							G_PARAM_READWRITE));
 }
 
 static void
@@ -699,13 +706,13 @@ gimp_context_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      gimp_context_set_image (context, g_value_get_pointer (value));
+      gimp_context_set_image (context, g_value_get_object (value));
       break;
     case PROP_DISPLAY:
       gimp_context_set_display (context, g_value_get_pointer (value));
       break;
     case PROP_TOOL:
-      gimp_context_set_tool (context, g_value_get_pointer (value));
+      gimp_context_set_tool (context, g_value_get_object (value));
       break;
     case PROP_FOREGROUND:
       gimp_context_set_foreground (context, g_value_get_pointer (value));
@@ -720,19 +727,19 @@ gimp_context_set_property (GObject      *object,
       gimp_context_set_paint_mode (context, g_value_get_int (value));
       break;
     case PROP_BRUSH:
-      gimp_context_set_brush (context, g_value_get_pointer (value));
+      gimp_context_set_brush (context, g_value_get_object (value));
       break;
     case PROP_PATTERN:
-      gimp_context_set_pattern (context, g_value_get_pointer (value));
+      gimp_context_set_pattern (context, g_value_get_object (value));
       break;
     case PROP_GRADIENT:
-      gimp_context_set_gradient (context, g_value_get_pointer (value));
+      gimp_context_set_gradient (context, g_value_get_object (value));
       break;
     case PROP_PALETTE:
-      gimp_context_set_palette (context, g_value_get_pointer (value));
+      gimp_context_set_palette (context, g_value_get_object (value));
       break;
     case PROP_BUFFER:
-      gimp_context_set_buffer (context, g_value_get_pointer (value));
+      gimp_context_set_buffer (context, g_value_get_object (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -753,13 +760,13 @@ gimp_context_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_IMAGE:
-      g_value_set_pointer (value, gimp_context_get_image (context));
+      g_value_set_object (value, gimp_context_get_image (context));
       break;
     case PROP_DISPLAY:
       g_value_set_pointer (value, gimp_context_get_display (context));
       break;
     case PROP_TOOL:
-      g_value_set_pointer (value, gimp_context_get_tool (context));
+      g_value_set_object (value, gimp_context_get_tool (context));
       break;
     case PROP_FOREGROUND:
       gimp_context_get_foreground (context, g_value_get_pointer (value));
@@ -774,19 +781,19 @@ gimp_context_get_property (GObject    *object,
       g_value_set_int (value, gimp_context_get_paint_mode (context));
       break;
     case PROP_BRUSH:
-      g_value_set_pointer (value, gimp_context_get_brush (context));
+      g_value_set_object (value, gimp_context_get_brush (context));
       break;
     case PROP_PATTERN:
-      g_value_set_pointer (value, gimp_context_get_pattern (context));
+      g_value_set_object (value, gimp_context_get_pattern (context));
       break;
     case PROP_GRADIENT:
-      g_value_set_pointer (value, gimp_context_get_gradient (context));
+      g_value_set_object (value, gimp_context_get_gradient (context));
       break;
     case PROP_PALETTE:
-      g_value_set_pointer (value, gimp_context_get_palette (context));
+      g_value_set_object (value, gimp_context_get_palette (context));
       break;
     case PROP_BUFFER:
-      g_value_set_pointer (value, gimp_context_get_buffer (context));
+      g_value_set_object (value, gimp_context_get_buffer (context));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

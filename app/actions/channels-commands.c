@@ -360,9 +360,9 @@ channels_new_channel_query (GimpImage *gimage)
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -513,9 +513,9 @@ channels_edit_channel_query (GimpChannel *channel)
 
 		     NULL);
 
-  g_signal_connect_swapped (G_OBJECT (options->query_box), "destroy",
-			    G_CALLBACK (g_free),
-			    options);
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
 
   g_signal_connect_object (G_OBJECT (channel), "removed",
 			   G_CALLBACK (gtk_widget_destroy),

@@ -55,13 +55,14 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_class_init               (GimpClass *klass);
-static void   gimp_init                     (Gimp      *gimp);
+static void   gimp_class_init                  (GimpClass   *klass);
+static void   gimp_init                        (Gimp        *gimp);
 
-static void   gimp_destroy                  (GtkObject *object);
+static void   gimp_dispose                     (GObject     *object);
+static void   gimp_finalize                    (GObject     *object);
 
-static void   gimp_context_destroy_callback (GimpContext *context,
-					     Gimp        *gimp);
+static void   gimp_context_disconnect_callback (GimpContext *context,
+						Gimp        *gimp);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -98,13 +99,14 @@ gimp_get_type (void)
 static void
 gimp_class_init (GimpClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_destroy;
+  object_class->dispose  = gimp_dispose;
+  object_class->finalize = gimp_finalize;
 }
 
 static void
@@ -167,7 +169,29 @@ gimp_init (Gimp *gimp)
 }
 
 static void
-gimp_destroy (GtkObject *object)
+gimp_dispose (GObject *object)
+{
+  Gimp *gimp;
+
+  gimp = GIMP (object);
+
+  if (gimp->brush_factory)
+    gimp_data_factory_data_free (gimp->brush_factory);
+
+  if (gimp->pattern_factory)
+    gimp_data_factory_data_free (gimp->pattern_factory);
+
+  if (gimp->gradient_factory)
+    gimp_data_factory_data_free (gimp->gradient_factory);
+
+  if (gimp->palette_factory)
+    gimp_data_factory_data_free (gimp->palette_factory);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_finalize (GObject *object)
 {
   Gimp *gimp;
 
@@ -205,28 +229,24 @@ gimp_destroy (GtkObject *object)
 
   if (gimp->brush_factory)
     {
-      gimp_data_factory_data_free (gimp->brush_factory);
       g_object_unref (G_OBJECT (gimp->brush_factory));
       gimp->brush_factory = NULL;
     }
 
   if (gimp->pattern_factory)
     {
-      gimp_data_factory_data_free (gimp->pattern_factory);
       g_object_unref (G_OBJECT (gimp->pattern_factory));
       gimp->pattern_factory = NULL;
     }
 
   if (gimp->gradient_factory)
     {
-      gimp_data_factory_data_free (gimp->gradient_factory);
       g_object_unref (G_OBJECT (gimp->gradient_factory));
       gimp->gradient_factory = NULL;
     }
 
   if (gimp->palette_factory)
     {
-      gimp_data_factory_data_free (gimp->palette_factory);
       g_object_unref (G_OBJECT (gimp->palette_factory));
       gimp->palette_factory = NULL;
     }
@@ -267,8 +287,7 @@ gimp_destroy (GtkObject *object)
   if (gimp->user_units)
     gimp_units_exit (gimp);
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 Gimp *
@@ -594,8 +613,8 @@ gimp_create_context (Gimp        *gimp,
 
   gimp->context_list = g_list_prepend (gimp->context_list, context);
 
-  g_signal_connect_object (G_OBJECT (context), "destroy",
-			   G_CALLBACK (gimp_context_destroy_callback),
+  g_signal_connect_object (G_OBJECT (context), "disconnect",
+			   G_CALLBACK (gimp_context_disconnect_callback),
 			   G_OBJECT (gimp),
 			   0);
 
@@ -603,8 +622,8 @@ gimp_create_context (Gimp        *gimp,
 }
 
 static void
-gimp_context_destroy_callback (GimpContext *context,
-			       Gimp        *gimp)
+gimp_context_disconnect_callback (GimpContext *context,
+				  Gimp        *gimp)
 {
   gimp->context_list = g_list_remove (gimp->context_list, context);
 }

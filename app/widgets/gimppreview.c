@@ -407,9 +407,9 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 					NULL);
 	}
 
-      g_signal_connect (G_OBJECT (preview->viewable), "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &preview->viewable);
+      g_object_weak_ref (G_OBJECT (preview->viewable),
+			 (GWeakNotify) gtk_widget_destroyed,
+			 &preview->viewable);
 
       g_signal_connect_swapped (G_OBJECT (preview->viewable),
                                 "invalidate_preview",

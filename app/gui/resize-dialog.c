@@ -215,9 +215,9 @@ resize_widget_new (ResizeType    type,
 
 		       NULL);
 
-    g_signal_connect_swapped (G_OBJECT (resize->resize_shell), "destroy",
-			      G_CALLBACK (g_free),
-			      private);
+    g_object_weak_ref (G_OBJECT (resize->resize_shell),
+		       (GWeakNotify) g_free,
+		       private);
   }
 
   /*  handle the image disappearing under our feet  */
