@@ -286,8 +286,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     GIMP_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_UNDO_PREVIEW_SIZE,
                                  "undo-preview-size", UNDO_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_PREVIEW_SIZE,
-                                 GIMP_PREVIEW_SIZE_LARGE,
+                                 GIMP_TYPE_VIEW_SIZE,
+                                 GIMP_VIEW_SIZE_LARGE,
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
@@ -301,8 +301,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
                                  "layer-preview-size", LAYER_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_PREVIEW_SIZE,
-                                 GIMP_PREVIEW_SIZE_MEDIUM,
+                                 GIMP_TYPE_VIEW_SIZE,
+                                 GIMP_VIEW_SIZE_MEDIUM,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
                                  "thumbnail-size", THUMBNAIL_SIZE_BLURB,

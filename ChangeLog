@@ -1,3 +1,41 @@
+2004-08-29  DindinX  <david@dindinx.org>
+
+	* app/core/core-enums.h: Renamed GimpPreviewSize to GimpViewSize.
+
+	* app/core/core-enums.c: Regenerated.
+
+	* app/actions/dockable-actions.c
+	
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpcoreconfig.h
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpdisplayconfig.h
+	
+	* app/core/gimpundo.c
+	
+	* app/display/gimpnavigationeditor.c
+	
+	* app/gui/dialogs.c
+	* app/gui/file-open-location-dialog.c
+	
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimptextoptions.c
+	
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpsessioninfo.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimpundoeditor.c
+	* app/widgets/gimpundoeditor.h
+	* app/widgets/gimpviewablebutton.c: Changed accordingly.
+
 2004-08-28  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-sse.c

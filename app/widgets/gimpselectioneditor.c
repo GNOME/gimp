@@ -130,12 +130,12 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
 
   editor->preview = gimp_view_new_by_types (GIMP_TYPE_VIEW,
                                             GIMP_TYPE_SELECTION,
-                                            GIMP_PREVIEW_SIZE_HUGE,
+                                            GIMP_VIEW_SIZE_HUGE,
                                             0, TRUE);
   gimp_view_renderer_set_background (GIMP_VIEW (editor->preview)->renderer,
                                      GIMP_STOCK_TEXTURE);
   gtk_widget_set_size_request (editor->preview,
-                               GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
+                               GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE);
   gimp_view_set_expand (GIMP_VIEW (editor->preview), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);

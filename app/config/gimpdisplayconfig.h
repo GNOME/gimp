@@ -59,7 +59,7 @@ struct _GimpDisplayConfig
   gdouble             monitor_xres;
   gdouble             monitor_yres;
   gboolean            monitor_res_from_gdk;
-  GimpPreviewSize     nav_preview_size;
+  GimpViewSize        nav_preview_size;
   GimpDisplayOptions *default_view;
   GimpDisplayOptions *default_fullscreen_view;
   gboolean            activate_on_focus;

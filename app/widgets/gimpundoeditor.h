@@ -39,7 +39,7 @@ struct _GimpUndoEditor
 
   GimpContainer   *container;
   GtkWidget       *view;
-  GimpPreviewSize  preview_size;
+  GimpViewSize     preview_size;
 
   GimpUndo        *base_item;
 

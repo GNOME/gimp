@@ -123,8 +123,8 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
                                    PROP_PREVIEW_SIZE,
                                    g_param_spec_enum ("preview-size",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_PREVIEW_SIZE,
-                                                      GIMP_PREVIEW_SIZE_LARGE,
+                                                      GIMP_TYPE_VIEW_SIZE,
+                                                      GIMP_VIEW_SIZE_LARGE,
                                                       G_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 }

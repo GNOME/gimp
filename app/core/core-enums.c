@@ -404,26 +404,26 @@ gimp_rotation_type_get_type (void)
 }
 
 GType
-gimp_preview_size_get_type (void)
+gimp_view_size_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_PREVIEW_SIZE_TINY, N_("Tiny"), "tiny" },
-    { GIMP_PREVIEW_SIZE_EXTRA_SMALL, N_("Very small"), "extra-small" },
-    { GIMP_PREVIEW_SIZE_SMALL, N_("Small"), "small" },
-    { GIMP_PREVIEW_SIZE_MEDIUM, N_("Medium"), "medium" },
-    { GIMP_PREVIEW_SIZE_LARGE, N_("Large"), "large" },
-    { GIMP_PREVIEW_SIZE_EXTRA_LARGE, N_("Very large"), "extra-large" },
-    { GIMP_PREVIEW_SIZE_HUGE, N_("Huge"), "huge" },
-    { GIMP_PREVIEW_SIZE_ENORMOUS, N_("Enormous"), "enormous" },
-    { GIMP_PREVIEW_SIZE_GIGANTIC, N_("Gigantic"), "gigantic" },
+    { GIMP_VIEW_SIZE_TINY, N_("Tiny"), "tiny" },
+    { GIMP_VIEW_SIZE_EXTRA_SMALL, N_("Very small"), "extra-small" },
+    { GIMP_VIEW_SIZE_SMALL, N_("Small"), "small" },
+    { GIMP_VIEW_SIZE_MEDIUM, N_("Medium"), "medium" },
+    { GIMP_VIEW_SIZE_LARGE, N_("Large"), "large" },
+    { GIMP_VIEW_SIZE_EXTRA_LARGE, N_("Very large"), "extra-large" },
+    { GIMP_VIEW_SIZE_HUGE, N_("Huge"), "huge" },
+    { GIMP_VIEW_SIZE_ENORMOUS, N_("Enormous"), "enormous" },
+    { GIMP_VIEW_SIZE_GIGANTIC, N_("Gigantic"), "gigantic" },
     { 0, NULL, NULL }
   };
 
   static GType type = 0;
 
   if (! type)
-    type = g_enum_register_static ("GimpPreviewSize", values);
+    type = g_enum_register_static ("GimpViewSize", values);
 
   return type;
 }

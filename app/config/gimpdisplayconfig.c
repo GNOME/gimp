@@ -235,8 +235,8 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
                                  NAVIGATION_PREVIEW_SIZE_BLURB,
-                                 GIMP_TYPE_PREVIEW_SIZE,
-                                 GIMP_PREVIEW_SIZE_MEDIUM,
+                                 GIMP_TYPE_VIEW_SIZE,
+                                 GIMP_VIEW_SIZE_MEDIUM,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,

@@ -109,7 +109,7 @@ file_open_location_dialog_show (Gimp      *gimp,
   gtk_widget_show (label);
 
   entry = gimp_container_entry_new (gimp->documents, NULL,
-                                    GIMP_PREVIEW_SIZE_SMALL, 1);
+                                    GIMP_VIEW_SIZE_SMALL, 1);
 
   completion = gtk_entry_get_completion (GTK_ENTRY (entry));
   gtk_entry_completion_set_match_func (completion,

@@ -300,22 +300,22 @@ typedef enum
 } GimpRotationType;
 
 
-#define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
+#define GIMP_TYPE_VIEW_SIZE (gimp_view_size_get_type ())
 
-GType gimp_preview_size_get_type (void) G_GNUC_CONST;
+GType gimp_view_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PREVIEW_SIZE_TINY        = 12,   /*< desc="Tiny"        >*/
-  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 16,   /*< desc="Very small"  >*/
-  GIMP_PREVIEW_SIZE_SMALL       = 24,   /*< desc="Small"       >*/
-  GIMP_PREVIEW_SIZE_MEDIUM      = 32,   /*< desc="Medium"      >*/
-  GIMP_PREVIEW_SIZE_LARGE       = 48,   /*< desc="Large"       >*/
-  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 64,   /*< desc="Very large"  >*/
-  GIMP_PREVIEW_SIZE_HUGE        = 96,   /*< desc="Huge"        >*/
-  GIMP_PREVIEW_SIZE_ENORMOUS    = 128,  /*< desc="Enormous"    >*/
-  GIMP_PREVIEW_SIZE_GIGANTIC    = 192   /*< desc="Gigantic"    >*/
-} GimpPreviewSize;
+  GIMP_VIEW_SIZE_TINY        = 12,   /*< desc="Tiny"        >*/
+  GIMP_VIEW_SIZE_EXTRA_SMALL = 16,   /*< desc="Very small"  >*/
+  GIMP_VIEW_SIZE_SMALL       = 24,   /*< desc="Small"       >*/
+  GIMP_VIEW_SIZE_MEDIUM      = 32,   /*< desc="Medium"      >*/
+  GIMP_VIEW_SIZE_LARGE       = 48,   /*< desc="Large"       >*/
+  GIMP_VIEW_SIZE_EXTRA_LARGE = 64,   /*< desc="Very large"  >*/
+  GIMP_VIEW_SIZE_HUGE        = 96,   /*< desc="Huge"        >*/
+  GIMP_VIEW_SIZE_ENORMOUS    = 128,  /*< desc="Enormous"    >*/
+  GIMP_VIEW_SIZE_GIGANTIC    = 192   /*< desc="Gigantic"    >*/
+} GimpViewSize;
 
 
 #define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())

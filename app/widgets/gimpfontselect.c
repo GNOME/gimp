@@ -110,12 +110,12 @@ gimp_font_select_constructor (GType                  type,
   dialog->view = gimp_font_view_new (GIMP_VIEW_TYPE_LIST,
                                      dialog->context->gimp->fonts,
                                      dialog->context,
-                                     GIMP_PREVIEW_SIZE_MEDIUM, 1,
+                                     GIMP_VIEW_SIZE_MEDIUM, 1,
                                      dialog->menu_factory);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
-                                       6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
-                                       6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
+                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2),
+                                       6 * (GIMP_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), dialog->view);

@@ -426,7 +426,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_viewable_button_new (GIMP_CONTEXT (options)->gimp->fonts,
                                      GIMP_CONTEXT (options),
-                                     GIMP_PREVIEW_SIZE_SMALL, 1,
+                                     GIMP_VIEW_SIZE_SMALL, 1,
                                      dialog_factory,
                                      "gimp-font-list|gimp-font-grid",
                                      GIMP_STOCK_FONT,
@@ -436,7 +436,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   entry = gimp_container_entry_new (GIMP_CONTEXT (options)->gimp->fonts,
                                     GIMP_CONTEXT (options),
-                                    GIMP_PREVIEW_SIZE_SMALL, 1);
+                                    GIMP_VIEW_SIZE_SMALL, 1);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 

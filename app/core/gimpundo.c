@@ -484,7 +484,7 @@ gimp_undo_create_preview_private (GimpUndo *undo)
 {
   GimpImage       *image = undo->gimage;
   GimpViewable    *preview_viewable;
-  GimpPreviewSize  preview_size;
+  GimpViewSize     preview_size;
   gint             width;
   gint             height;
 

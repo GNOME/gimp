@@ -180,12 +180,12 @@ gimp_brush_select_constructor (GType                  type,
                                  GIMP_DATA_SELECT (dialog)->edit_func,
                                  dialog->context,
                                  FALSE,
-                                 GIMP_PREVIEW_SIZE_MEDIUM, 1,
+                                 GIMP_VIEW_SIZE_MEDIUM, 1,
                                  dialog->menu_factory);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
-                                       5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
-                                       5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
+                                       5 * (GIMP_VIEW_SIZE_MEDIUM + 2),
+                                       5 * (GIMP_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), dialog->view);

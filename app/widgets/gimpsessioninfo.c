@@ -764,8 +764,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
               GimpSessionInfoDockable *dockable_info = pages->data;
               GtkWidget               *dockable;
 
-              if (dockable_info->preview_size < GIMP_PREVIEW_SIZE_TINY ||
-                  dockable_info->preview_size > GIMP_PREVIEW_SIZE_GIGANTIC)
+              if (dockable_info->preview_size < GIMP_VIEW_SIZE_TINY ||
+                  dockable_info->preview_size > GIMP_VIEW_SIZE_GIGANTIC)
                 dockable_info->preview_size = -1;
 
               /*  use the new dock's dialog factory to create dockables

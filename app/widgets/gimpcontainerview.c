@@ -216,7 +216,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                        g_param_spec_int ("preview-size",
                                                          NULL, NULL,
                                                          1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
-                                                         GIMP_PREVIEW_SIZE_MEDIUM,
+                                                         GIMP_VIEW_SIZE_MEDIUM,
                                                          G_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,

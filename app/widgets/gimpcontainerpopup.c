@@ -161,8 +161,8 @@ static void
 gimp_container_popup_init (GimpContainerPopup *popup)
 {
   popup->view_type            = GIMP_VIEW_TYPE_LIST;
-  popup->default_preview_size = GIMP_PREVIEW_SIZE_SMALL;
-  popup->preview_size         = GIMP_PREVIEW_SIZE_SMALL;
+  popup->default_preview_size = GIMP_VIEW_SIZE_SMALL;
+  popup->preview_size         = GIMP_VIEW_SIZE_SMALL;
   popup->preview_border_width = 1;
 
   popup->frame = gtk_frame_new (NULL);
@@ -533,7 +533,7 @@ gimp_container_popup_smaller_clicked (GtkWidget          *button,
   preview_size = gimp_container_view_get_preview_size (popup->editor->view,
                                                        NULL);
 
-  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, preview_size * 0.8);
+  preview_size = MAX (GIMP_VIEW_SIZE_TINY, preview_size * 0.8);
 
   if (preview_size != popup->preview_size)
     {
@@ -554,7 +554,7 @@ gimp_container_popup_larger_clicked (GtkWidget          *button,
   preview_size = gimp_container_view_get_preview_size (popup->editor->view,
                                                        NULL);
 
-  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, preview_size * 1.2);
+  preview_size = MAX (GIMP_VIEW_SIZE_TINY, preview_size * 1.2);
 
   if (preview_size != popup->preview_size)
     {

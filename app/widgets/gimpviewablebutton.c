@@ -105,9 +105,9 @@ static void
 gimp_viewable_button_init (GimpViewableButton *button)
 {
   button->popup_view_type      = GIMP_VIEW_TYPE_LIST;
-  button->popup_preview_size   = GIMP_PREVIEW_SIZE_SMALL;
+  button->popup_preview_size   = GIMP_VIEW_SIZE_SMALL;
 
-  button->preview_size         = GIMP_PREVIEW_SIZE_SMALL;
+  button->preview_size         = GIMP_VIEW_SIZE_SMALL;
   button->preview_border_width = 1;
 }
 

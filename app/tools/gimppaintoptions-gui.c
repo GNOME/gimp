@@ -138,7 +138,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       button = gimp_viewable_button_new (context->gimp->brush_factory->container,
                                          context,
-                                         GIMP_PREVIEW_SIZE_SMALL, 1,
+                                         GIMP_VIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-brush-grid|gimp-brush-list",
                                          GIMP_STOCK_BRUSH,
@@ -155,7 +155,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       button = gimp_viewable_button_new (context->gimp->pattern_factory->container,
                                          context,
-                                         GIMP_PREVIEW_SIZE_SMALL, 1,
+                                         GIMP_VIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-pattern-grid|gimp-pattern-list",
                                          GIMP_STOCK_PATTERN,
@@ -179,7 +179,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gradient_button =
         gimp_viewable_button_new (context->gimp->gradient_factory->container,
                                   context,
-                                  GIMP_PREVIEW_SIZE_LARGE, 1,
+                                  GIMP_VIEW_SIZE_LARGE, 1,
                                   dialog_factory,
                                   "gimp-gradient-list|gimp-gradient-grid",
                                   GIMP_STOCK_GRADIENT,
@@ -187,7 +187,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       /*  use smaller previews for the popup  */
       GIMP_VIEWABLE_BUTTON (gradient_button)->preview_size =
-        GIMP_PREVIEW_SIZE_SMALL;
+        GIMP_VIEW_SIZE_SMALL;
 
       gtk_box_pack_start (GTK_BOX (hbox), gradient_button, FALSE, FALSE, 0);
       gtk_widget_show (gradient_button);
