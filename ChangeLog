@@ -1,5 +1,18 @@
 2005-04-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-path.[ch] (gimp_param_spec_config_path):
+	declare default_value as const and allocate a copy.
+
+	* app/config/gimpbaseconfig.[ch]: gives access to the default values
+	for temp and swap path.
+
+	* app/base/base.c (base_init): create the temp directory if it
+	doesn't exist (bug #172682).
+
+	* plug-ins/uri/uri-backend-gnomevfs.c: fixed path in error message.
+
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
 	* docs/Makefile.am: install a link to the gimp(1) man-page for
 	gimp-console(1).
 

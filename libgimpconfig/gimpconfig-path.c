@@ -138,7 +138,7 @@ gimp_param_spec_config_path (const gchar        *name,
                              const gchar        *nick,
                              const gchar        *blurb,
                              GimpConfigPathType  type,
-                             gchar              *default_value,
+                             const gchar        *default_value,
                              GParamFlags         flags)
 {
   GParamSpecString *pspec;
@@ -146,7 +146,7 @@ gimp_param_spec_config_path (const gchar        *name,
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_CONFIG_PATH,
                                  name, nick, blurb, flags);
 
-  pspec->default_value = default_value;
+  pspec->default_value = g_strdup (default_value);
 
   GIMP_PARAM_SPEC_CONFIG_PATH (pspec)->type = type;
 

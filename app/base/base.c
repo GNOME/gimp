@@ -72,6 +72,7 @@ base_init (GimpBaseConfig *config,
            gboolean        use_cpu_accel)
 {
   gboolean  swap_is_ok;
+  gchar    *temp_dir;
 
   g_return_val_if_fail (GIMP_IS_BASE_CONFIG (config), FALSE);
   g_return_val_if_fail (base_config == NULL, FALSE);
@@ -87,11 +88,29 @@ base_init (GimpBaseConfig *config,
 
   /* Add the swap file */
   if (! config->swap_path)
-    g_object_set (config, "swap_path", "${gimp_dir}", NULL);
+    g_object_set (config,
+                  "swap-path", gimp_base_config_default_swap_path,
+                  NULL);
 
   tile_swap_init (config->swap_path);
 
   swap_is_ok = tile_swap_test ();
+
+  /*  create the temp directory if it doesn't exist  */
+  if (! config->temp_path)
+    g_object_set (config,
+                  "temp-path", gimp_base_config_default_temp_path,
+                  NULL);
+
+  temp_dir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
+
+  if (! g_file_test (temp_dir, G_FILE_TEST_EXISTS))
+    g_mkdir (temp_dir,
+             S_IRUSR | S_IXUSR | S_IWUSR |
+             S_IRGRP | S_IXGRP |
+             S_IROTH | S_IXOTH);
+
+  g_free (temp_dir);
 
   pixel_processor_init (config->num_processors);
   g_signal_connect (config, "notify::num-processors",

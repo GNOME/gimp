@@ -57,7 +57,7 @@ GParamSpec        * gimp_param_spec_config_path      (const gchar  *name,
                                                       const gchar  *nick,
                                                       const gchar  *blurb,
                                                       GimpConfigPathType  type,
-                                                      gchar        *default_value,
+                                                      const gchar  *default_value,
                                                       GParamFlags   flags);
 
 GimpConfigPathType  gimp_param_spec_config_path_type (GParamSpec   *pspec);

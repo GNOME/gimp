@@ -213,7 +213,7 @@ copy_uri (const gchar  *src_uri,
     {
       g_set_error (error, 0, 0,
                    _("Could not open '%s' for writing: %s"),
-                   src_uri, gnome_vfs_result_to_string (result));
+                   dest_uri, gnome_vfs_result_to_string (result));
       gnome_vfs_close (read_handle);
       return FALSE;
     }

@@ -51,6 +51,10 @@ struct _GimpBaseConfigClass
 };
 
 
+extern const gchar *gimp_base_config_default_swap_path;
+extern const gchar *gimp_base_config_default_temp_path;
+
+
 GType  gimp_base_config_get_type (void) G_GNUC_CONST;
 
 
