@@ -64,7 +64,7 @@ static void	run   (const gchar      *name,
 static void	compute_luts   (void);
 static void	sharpen        (void);
 
-static gint	sharpen_dialog (void);
+static gboolean sharpen_dialog (void);
 
 static void	dialog_iscale_update (GtkAdjustment *, gint *);
 
@@ -487,7 +487,7 @@ sharpen (void)
  * 'sharpen_dialog()' - Popup a dialog window for the filter box size...
  */
 
-static gint
+static gboolean
 sharpen_dialog (void)
 {
   GtkWidget *dialog;
@@ -511,27 +511,14 @@ sharpen_dialog (void)
 
                             NULL);
 
-   /*
-   * Top-level table for dialog...
-   */
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  /*
-   * Preview window...
-   */
-
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
   ptable = gtk_table_new (2, 2, FALSE);
@@ -581,17 +568,9 @@ sharpen_dialog (void)
 
   preview_init ();
 
-  /*
-   * Sharpness control...
-   */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

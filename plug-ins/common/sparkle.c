@@ -81,7 +81,7 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gint      sparkle_dialog        (void);
+static gboolean  sparkle_dialog        (void);
 
 static gint      compute_luminosity    (const guchar *pixel,
                                         gboolean      gray,
@@ -325,17 +325,15 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
+static gboolean
 sparkle_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
-  GtkWidget *sep;
   GtkWidget *r1, *r2, *r3;
   GtkObject *scale_data;
   gboolean   run;
@@ -351,20 +349,15 @@ sparkle_dialog (void)
 
                          NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   table = gtk_table_new (9, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -461,15 +454,11 @@ sparkle_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_saturation);
 
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
-
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -510,10 +499,6 @@ sparkle_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.border);
 
-  sep = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
-
   /*  colortype  */
   vbox = gimp_int_radio_group_new (FALSE, NULL,
                                    G_CALLBACK (gimp_radio_button_update),
@@ -525,7 +510,6 @@ sparkle_dialog (void)
 
                                    NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 

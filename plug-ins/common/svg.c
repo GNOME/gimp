@@ -633,7 +633,8 @@ load_dialog (const gchar *filename)
 
   gimp_ui_init ("svg", FALSE);
 
-  dialog = gimp_dialog_new (_("Open SVG"), "svg",
+  /* Scalable Vector Graphics is SVG, should perhaps not be translated */
+  dialog = gimp_dialog_new (_("Render Scalable Vector Graphics"), "svg",
                             NULL, 0,
                             gimp_standard_help_func, "file-svg-load",
 
@@ -644,20 +645,14 @@ load_dialog (const gchar *filename)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  /* Scalable Vector Graphics is SVG, should perhaps not be translated */
-  frame = gtk_frame_new (_("Render Scalable Vector Graphics"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
+                      TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
   /*  The SVG preview  */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -689,23 +684,22 @@ load_dialog (const gchar *filename)
   svg_height = vals.height;
 
   table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 8);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 2);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /*  Width and Height  */
   label = gtk_label_new (_("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -728,7 +722,7 @@ load_dialog (const gchar *filename)
   size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                                TRUE, FALSE, FALSE, 10,
                                                GIMP_SIZE_ENTRY_UPDATE_SIZE));
-  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 6);
 
   gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
@@ -760,7 +754,7 @@ load_dialog (const gchar *filename)
 
   table2 = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 4);
   gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
 
   spinbutton =
@@ -778,9 +772,9 @@ load_dialog (const gchar *filename)
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
-  label = gtk_label_new_with_mnemonic (_("Ratio _X:"));
+  label = gtk_label_new_with_mnemonic (_("_X Ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -800,9 +794,9 @@ load_dialog (const gchar *filename)
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
-  label = gtk_label_new_with_mnemonic (_("_Y:"));
+  label = gtk_label_new_with_mnemonic (_("_Y Ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -820,7 +814,7 @@ load_dialog (const gchar *filename)
 
   /*  Resolution   */
   label = gtk_label_new (_("Resolution:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -828,7 +822,7 @@ load_dialog (const gchar *filename)
   res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
                              FALSE, FALSE, FALSE, 10,
                              GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-  gtk_table_set_col_spacing (GTK_TABLE (res), 1, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (res), 1, 6);
 
   gtk_table_attach (GTK_TABLE (table), res, 1, 2, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

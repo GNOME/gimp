@@ -172,7 +172,7 @@ static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  gint          y,
 					  gint          w);
 
-static gint randomize_dialog             (void);
+static gboolean    randomize_dialog      (void);
 
 
 /************************************ Guts ***********************************/
@@ -707,11 +707,10 @@ randomize (GimpDrawable *drawable,
  *
  ********************************/
 
-static gint
+static gboolean
 randomize_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *seed_hbox;
@@ -729,27 +728,17 @@ randomize_dialog (void)
 
 			 NULL);
 
-  /*
-   *  Parameter settings
-   *
-   *  First set up the basic containers, label them, etc.
-   */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.seed, &pivals.randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random Seed:"), 1.0, 0.5,
+				     _("_Random Seed:"), 0.0, 0.5,
 				     seed_hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));

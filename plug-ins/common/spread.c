@@ -46,7 +46,7 @@ static void      run           (const gchar      *name,
 
 static void      spread        (GimpDrawable     *drawable);
 
-static gint      spread_dialog (gint32            image_ID,
+static gboolean  spread_dialog (gint32            image_ID,
                                 GimpDrawable     *drawable);
 
 
@@ -282,7 +282,7 @@ spread (GimpDrawable *drawable)
   gimp_rgn_iterator_free (iter);
 }
 
-static gint
+static gboolean
 spread_dialog (gint32        image_ID,
 	       GimpDrawable *drawable)
 {
@@ -305,9 +305,8 @@ spread_dialog (gint32        image_ID,
 
                          NULL);
 
-  /*  parameter settings  */
   frame = gimp_frame_new (_("Spread Amount"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -329,7 +328,6 @@ spread_dialog (gint32        image_ID,
 			       _("_Vertical:"), spvals.spread_amount_y, yres,
 			       0, MAX (drawable->width, drawable->height),
 			       0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
   gtk_widget_show (size);
 

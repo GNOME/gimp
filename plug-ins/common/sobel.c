@@ -56,7 +56,7 @@ static void   sobel  (GimpDrawable     *drawable,
 /*
  * Sobel interface
  */
-static gint      sobel_dialog (void);
+static gboolean  sobel_dialog (void);
 
 /*
  * Sobel helper functions
@@ -209,7 +209,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint
+static gboolean
 sobel_dialog (void)
 {
   GtkWidget *dlg;
@@ -229,7 +229,7 @@ sobel_dialog (void)
                          NULL);
 
   /*  parameter settings  */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);

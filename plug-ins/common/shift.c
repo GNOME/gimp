@@ -51,18 +51,18 @@ typedef struct
 
 /* Declare local functions.
  */
-static void    query  (void);
-static void    run    (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+static void      query  (void);
+static void      run    (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
-static void    shift  (GimpDrawable *drawable);
+static void      shift  (GimpDrawable     *drawable);
 
-static gint    shift_dialog                 (gint32     image_ID);
-static void    shift_amount_update_callback (GtkWidget *widget,
-                                             gpointer   data);
+static gboolean  shift_dialog          (gint32     image_ID);
+static void      shift_amount_callback (GtkWidget *widget,
+                                        gpointer   data);
 
 
 /***** Local vars *****/
@@ -304,13 +304,12 @@ shift (GimpDrawable *drawable)
 }
 
 
-static gint
+static gboolean
 shift_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *radio_vbox;
-  GtkWidget *sep;
+  GtkWidget *vbox;
   GtkWidget *size_entry;
   GimpUnit   unit;
   gdouble    xres;
@@ -328,8 +327,12 @@ shift_dialog (gint32 image_ID)
 
                          NULL);
 
-  /*  parameter settings  */
-  frame = gimp_int_radio_group_new (TRUE, _("Parameter Settings"),
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &shvals.orientation, shvals.orientation,
 
@@ -337,16 +340,8 @@ shift_dialog (gint32 image_ID)
                                     _("Shift _Vertically"),   VERTICAL,   NULL,
 
                                     NULL);
-
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  radio_vbox = GTK_BIN (frame)->child;
-  gtk_container_set_border_width (GTK_CONTAINER (radio_vbox), 4);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (radio_vbox), sep, FALSE, FALSE, 3);
-  gtk_widget_show (sep);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -368,12 +363,10 @@ shift_dialog (gint32 image_ID)
 				_("Shift _Amount:"), 1, 0, 0.0);
 
   g_signal_connect (size_entry, "value_changed",
-                    G_CALLBACK (shift_amount_update_callback),
+                    G_CALLBACK (shift_amount_callback),
                     &shvals.shift_amount);
-  gtk_box_pack_start (GTK_BOX (radio_vbox), size_entry, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), size_entry, FALSE, FALSE, 0);
   gtk_widget_show (size_entry);
-
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 
@@ -385,8 +378,8 @@ shift_dialog (gint32 image_ID)
 }
 
 static void
-shift_amount_update_callback (GtkWidget *widget,
-                              gpointer   data)
+shift_amount_callback (GtkWidget *widget,
+                       gpointer   data)
 {
   shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget),
 						    0);

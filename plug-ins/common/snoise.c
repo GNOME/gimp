@@ -105,15 +105,15 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static void    solid_noise        (GimpDrawable *drawable);
-static void    solid_noise_init   (void);
-static gdouble plain_noise        (gdouble       x,
-                                   gdouble       y,
-                                   guint         s);
-static gdouble noise              (gdouble       x,
-                                   gdouble       y);
+static void      solid_noise        (GimpDrawable *drawable);
+static void      solid_noise_init   (void);
+static gdouble   plain_noise        (gdouble       x,
+                                     gdouble       y,
+                                     guint         s);
+static gdouble   noise              (gdouble       x,
+                                     gdouble       y);
 
-static gint    solid_noise_dialog (void);
+static gboolean  solid_noise_dialog (void);
 
 
 /*---- Variables ----*/
@@ -488,11 +488,10 @@ noise (gdouble x,
 }
 
 
-static gint
+static gboolean
 solid_noise_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *label;
@@ -513,17 +512,12 @@ solid_noise_dialog (void)
 
                          NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   /*  Table  */
   table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  Random Seed  */
@@ -538,7 +532,7 @@ solid_noise_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
 				     1, 15, 1, 3, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Detail:"), 1.0, 0.5,
+			     _("_Detail:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

@@ -68,21 +68,21 @@ static void    run    (const gchar      *name,
 		       gint             *nreturn_vals,
 		       GimpParam       **return_vals);
 
-static void    ripple              (GimpDrawable *drawable);
+static void      ripple              (GimpDrawable *drawable);
 
-static gint    ripple_dialog       (void);
+static gboolean  ripple_dialog       (void);
 
-static gdouble displace_amount     (gint      location);
-static void    average_two_pixels  (guchar   *dest,
-                                    guchar    pixels[4][4],
-                                    gdouble   x,
-                                    gint      bpp,
-                                    gboolean  has_alpha);
-static void    average_four_pixels (guchar   *dest,
-                                    guchar    pixels[4][4],
-                                    gdouble   x,
-                                    gint      bpp,
-                                    gboolean  has_alpha);
+static gdouble   displace_amount     (gint      location);
+static void      average_two_pixels  (guchar   *dest,
+                                      guchar    pixels[4][4],
+                                      gdouble   x,
+                                      gint      bpp,
+                                      gboolean  has_alpha);
+static void      average_four_pixels (guchar   *dest,
+                                      guchar    pixels[4][4],
+                                      gdouble   x,
+                                      gint      bpp,
+                                      gboolean  has_alpha);
 
 /***** Local vars *****/
 
@@ -407,7 +407,7 @@ ripple (GimpDrawable *drawable)
   gimp_pixel_fetcher_destroy (param.pft);
 }
 
-static gint
+static gboolean
 ripple_dialog (void)
 {
   GtkWidget *dlg;
@@ -431,25 +431,26 @@ ripple_dialog (void)
 			 NULL);
 
   /*  The main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      FALSE, FALSE, 0);
 
   /* The table to hold the four frames of options */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*  Options section  */
-  frame = gtk_frame_new ( _("Options"));
+  frame = gimp_frame_new ( _("Options"));
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (frame);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
+  toggle_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  gtk_widget_show (toggle_vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -468,9 +469,6 @@ ripple_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.tile);
-
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
 
   /*  Orientation toggle box  */
   frame = gimp_int_radio_group_new (TRUE, _("Orientation"),
@@ -515,15 +513,10 @@ ripple_dialog (void)
 
   gtk_widget_show (table);
 
-  /*  Parameter Settings  */
-  frame = gtk_frame_new ( _("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*  Period  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

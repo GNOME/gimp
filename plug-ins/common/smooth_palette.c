@@ -398,7 +398,6 @@ static gboolean
 dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *sizeentry;
@@ -418,11 +417,6 @@ dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);
@@ -440,13 +434,14 @@ dialog (GimpDrawable *drawable)
 				    config.height, yres,
 				    1, GIMP_MAX_IMAGE_SIZE,
 				    1, GIMP_MAX_IMAGE_SIZE);
-  gtk_container_add (GTK_CONTAINER (frame), sizeentry);
-  gtk_widget_show (sizeentry);
+  gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), sizeentry,
+                      FALSE, FALSE, 0);  gtk_widget_show (sizeentry);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
-			     _("_Search Depth:"), 1.0, 0.5,
+			     _("_Search Depth:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),

@@ -1090,15 +1090,15 @@ typedef struct
 
 
 /* --- Declare local functions --- */
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
-static gint struc_dialog (void);
-static void strucpi      (GimpDrawable *drawable);
+static gboolean  struc_dialog (void);
+static void      strucpi      (GimpDrawable *drawable);
 
 
 /* --- Variables --- */
@@ -1245,7 +1245,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
+static gboolean
 struc_dialog (void)
 {
   GtkWidget *dlg;
@@ -1266,15 +1266,9 @@ struc_dialog (void)
 
                          NULL);
 
-  /* Parameter settings */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Direction"),
@@ -1292,7 +1286,7 @@ struc_dialog (void)
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 

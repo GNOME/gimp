@@ -151,7 +151,7 @@ static int read_msb_first = 1;
 static RLEBUF rlebuf;
 
 /* Dialog-handling */
-static gint   save_dialog    (void);
+static gboolean  save_dialog (void);
 
 /* Portability kludge */
 static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream);
@@ -1572,7 +1572,7 @@ save_rgb (FILE   *ofp,
 
 /*  Save interface functions  */
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
@@ -1598,7 +1598,7 @@ save_dialog (void)
 
 				    NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

@@ -59,8 +59,8 @@ static gint        randomize_value     (gint    now,
 					gint    mod_p,
 					gint    rand_max);
 
-static gint	scatter_hsv_dialog         (void);
-static gint	preview_event_handler      (GtkWidget     *widget,
+static gboolean scatter_hsv_dialog         (void);
+static gboolean	preview_event_handler      (GtkWidget     *widget,
 					    GdkEvent      *event);
 static void	scatter_hsv_preview_update (void);
 static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
@@ -323,7 +323,7 @@ static void scatter_hsv_scatter (guchar *r,
 }
 
 /* dialog stuff */
-static gint
+static gboolean
 scatter_hsv_dialog (void)
 {
   GtkWidget *dlg;
@@ -346,21 +346,21 @@ scatter_hsv_dialog (void)
 
 			 NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Preview (1:4) - Right Click to Jump"));
+  frame = gimp_frame_new (_("Right-Click Preview to Jump"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
   pframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
   gtk_container_add (GTK_CONTAINER (abox), pframe);
   gtk_widget_show (pframe);
 
@@ -388,15 +388,10 @@ scatter_hsv_dialog (void)
 
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -435,10 +430,6 @@ scatter_hsv_dialog (void)
                     G_CALLBACK (scatter_hsv_iscale_update),
                     &VALS.value_distance);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
-
-  gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
@@ -448,7 +439,7 @@ scatter_hsv_dialog (void)
   return run;
 }
 
-static gint
+static gboolean
 preview_event_handler (GtkWidget *widget,
 		       GdkEvent  *event)
 {
