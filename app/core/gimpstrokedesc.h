@@ -56,15 +56,17 @@ struct _GimpStrokeDescClass
 };
 
 
-GType            gimp_stroke_desc_get_type (void) G_GNUC_CONST;
+GType            gimp_stroke_desc_get_type  (void) G_GNUC_CONST;
 
-GimpStrokeDesc * gimp_stroke_desc_new      (Gimp           *gimp,
-                                            GimpContext    *context);
+GimpStrokeDesc * gimp_stroke_desc_new       (Gimp           *gimp,
+                                             GimpContext    *context);
 
-void             gimp_stroke_desc_prepare  (GimpStrokeDesc *desc,
-                                            GimpContext    *context,
-                                            gboolean        use_default_values);
-void             gimp_stroke_desc_finish   (GimpStrokeDesc *desc);
+GimpStrokeDesc * gimp_stroke_desc_duplicate (GimpStrokeDesc *desc);
+
+void             gimp_stroke_desc_prepare   (GimpStrokeDesc *desc,
+                                             GimpContext    *context,
+                                             gboolean        use_default_values);
+void             gimp_stroke_desc_finish    (GimpStrokeDesc *desc);
 
 
 #endif  /*  __GIMP_STROKE_DESC_H__  */

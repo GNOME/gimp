@@ -301,6 +301,34 @@ gimp_stroke_desc_new (Gimp        *gimp,
   return desc;
 }
 
+GimpStrokeDesc *
+gimp_stroke_desc_duplicate (GimpStrokeDesc *desc)
+{
+  GimpStrokeDesc    *new_desc;
+  GimpStrokeOptions *stroke_options = NULL;
+  GimpPaintInfo     *paint_info     = NULL;
+  GimpPaintOptions  *paint_options  = NULL;
+
+  new_desc = gimp_stroke_desc_new (desc->gimp,
+                                   GIMP_CONTEXT (desc->stroke_options));
+
+  new_desc->method = desc->method;
+
+  g_object_get (G_OBJECT (desc),
+                "stroke-options", stroke_options,
+                "paint-info", paint_info,
+                "paint-options", paint_options,
+                NULL);
+
+  g_object_set (G_OBJECT (new_desc),
+                "stroke-options", stroke_options,
+                "paint-info", paint_info,
+                "paint-options", paint_options,
+                NULL);
+
+  return new_desc;
+}
+
 void
 gimp_stroke_desc_prepare (GimpStrokeDesc *desc,
                           GimpContext    *context,

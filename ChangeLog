@@ -1,3 +1,9 @@
+2005-03-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpstrokedesc.h
+	* app/core/gimpstrokedesc.c (gimp_stroke_desc_duplicate):
+	New function, will be needed for shape layers.
+	
 2005-03-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/deinterlace.c
@@ -17,7 +23,7 @@
 	* plug-ins/uri/url-backend-wget.c: force the server-response wget
 	option off so it doesn't screw up our parsing.
 
-2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2005-03-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: lots of code for dealing
 	with constraints.  Almost functional now ...
