@@ -117,8 +117,9 @@ gimp_image_undo_push_image (GimpImage    *gimage,
 
       image_undo = new->data;
 
-      /*  If we cannot create a new temp buf--either because our parameters are
-       *  degenerate or something else failed, simply return an unsuccessful push.
+      /*  If we cannot create a new temp buf -- either because our
+       *  parameters are degenerate or something else failed, simply
+       *  return an unsuccessful push.
        */
       tiles = tile_manager_new ((x2 - x1), (y2 - y1),
 				gimp_drawable_bytes (drawable));
@@ -249,7 +250,8 @@ undo_pop_image (GimpUndo            *undo,
 		{
 		  /* swap tiles, not pixels! */
 
-		  src_tile = tile_manager_get_tile (tiles, j, i, TRUE, FALSE /* TRUE */);
+		  src_tile = tile_manager_get_tile (tiles,
+                                                    j, i, TRUE, FALSE /*TRUE*/);
 		  dest_tile = tile_manager_get_tile (gimp_drawable_data (image_undo->drawable), j, i, TRUE, FALSE /* TRUE */);
 
 		  tile_manager_map_tile (tiles, j, i, dest_tile);
@@ -1391,8 +1393,8 @@ undo_push_layer_mask (GimpImage     *gimage,
 
       lmu = new->data;
 
-      lmu->layer = g_object_ref (mask);
-      lmu->mask  = mask;
+      lmu->layer = layer;
+      lmu->mask  = g_object_ref (mask);
 
       return TRUE;
     }
