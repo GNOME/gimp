@@ -5,7 +5,7 @@
 	* app/gimage_mask.[ch]
 	* app/gimage_mask_cmds.c
 	* tools/pdbgen/pdb/gimage_mask.pdb
-	* app/interface.c: propagated the indepentent x/y values for
+	* app/interface.c: propagated the independent x/y values for
 	shrink/grow/border to the interface but not yet to the PDB.
 
 	* app/*_select.c
