@@ -1,3 +1,10 @@
+2003-04-12  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/png.c (save_image):
+	Fixed a bug caused by myself previously. png saving
+	should now work reasonably correctly with alpha on indexed 
+	images.
+
 2003-04-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):

@@ -156,9 +156,9 @@ static int find_unused_ia_colour (guchar * pixels,
 
   for (i = 0; i < numpixels; i++)
     {
-      /* If there is no alpha, then the index associated with 
-       * this pixel is taken */
-      if (pixels[i * 2 + 1])
+      /* If alpha is over a threshold, the colour index in the 
+       * palette is taken. Otherwise, this pixel is transparent. */
+      if (pixels[i * 2 + 1] > 127)
         ix_used[pixels[i * 2]] = TRUE;
       else
         trans_used = TRUE;
@@ -1053,8 +1053,9 @@ save_image (gchar * filename,   /* I - File to save to */
                   fixed = pixels[i];
                   for (k = 0; k < drawable->width; ++k)
                     {
-                      fixed[k] = remap[fixed[2 * k]];
-
+                      fixed[k] = (fixed[k*2+1] > 127) ? 
+                                 remap[fixed[k*2]] : 
+                                 0;
                     }
                 }
             }
