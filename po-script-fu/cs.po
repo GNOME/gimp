@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-06-27 23:32+0200\n"
+"POT-Creation-Date: 2003-07-24 12:08+0200\n"
+"PO-Revision-Date: 2003-07-24 23:45+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -806,9 +806,8 @@ msgstr "Přechod"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient Reverse"
-msgstr "Přechod"
+msgstr "Obrácený přechod"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
@@ -840,7 +839,7 @@ msgstr "Po záři"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Vpálení: Potřebuji celkem dvě vrstvy!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona Width"
