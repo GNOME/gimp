@@ -960,17 +960,8 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
-  /* we have to stop the dialog from being closed with strength < 1 */
-  /* since we use spinbuttons this should never happen ...          */
-  if (config.strength < 1)
-    {
-      g_message (_("Wind Strength must be greater than 0."));
-    }
-  else
-    {
-      dialog_result = 1;
-      gtk_widget_destroy (GTK_WIDGET (data));
-    }
+  dialog_result = 1;
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
@@ -1079,10 +1070,10 @@ dialog_box (GimpDrawable *drawable)
 				 &config.alg,
                                  GINT_TO_POINTER (config.alg),
 
-				 _("Wind"),
+				 _("_Wind"),
                                  GINT_TO_POINTER (RENDER_WIND), &style1,
 
-				 _("Blast"),
+				 _("_Blast"),
                                  GINT_TO_POINTER (RENDER_BLAST), &style2,
 
 				 NULL);
@@ -1103,10 +1094,10 @@ dialog_box (GimpDrawable *drawable)
 				 &config.direction,
                                  GINT_TO_POINTER (config.direction),
 
-				 _("Left"),
+				 _("_Left"),
                                  GINT_TO_POINTER (LEFT), &dir1,
 
-				 _("Right"),
+				 _("_Right"),
                                  GINT_TO_POINTER (RIGHT), &dir2,
 
 				 NULL);
@@ -1127,13 +1118,13 @@ dialog_box (GimpDrawable *drawable)
 				 &config.edge,
                                  GINT_TO_POINTER (config.edge),
 
-				 _("Leading"),
+				 _("L_eading"),
                                  GINT_TO_POINTER (LEADING), &edge1,
 
-				 _("Trailing"),
+				 _("Tr_ailing"),
                                  GINT_TO_POINTER (TRAILING), &edge2,
 
-				 _("Both"),
+				 _("Bot_h"),
                                  GINT_TO_POINTER (BOTH), &edge3,
 
 				 NULL);
@@ -1161,7 +1152,7 @@ dialog_box (GimpDrawable *drawable)
     ***************************************************/
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Threshold:"), SCALE_WIDTH, 0,
+			      _("_Threshold:"), SCALE_WIDTH, 0,
 			      config.threshold,
 			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
 			      TRUE, 0, 0,
@@ -1180,7 +1171,7 @@ dialog_box (GimpDrawable *drawable)
     ****************************************************/
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Strength:"), SCALE_WIDTH, 0,
+			      _("_Strength:"), SCALE_WIDTH, 0,
 			      config.strength,
 			      MIN_STRENGTH, MAX_STRENGTH, 1.0, 10.0, 0,
 			      TRUE, 0, 0,

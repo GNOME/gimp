@@ -2067,9 +2067,7 @@ CML_copy_parameters_callback (GtkWidget *widget,
       gdk_flush ();
       return;
     }
-  memcpy (channel_params[copy_destination],
-	  channel_params[copy_source],
-	  sizeof (CML_PARAM));
+  *channel_params[copy_destination] = *channel_params[copy_source];
   CML_preview_defer = TRUE;
   widgets = widget_pointers[copy_destination];
   for (index = 0; index < CML_PARAM_NUM; index++)
@@ -2501,9 +2499,10 @@ CML_load_parameter_file (const gchar *filename,
     {
       if ((selective_load_source == 0) || (selective_load_destination == 0))
 	{
-	  memcpy (&(VALS.hue), (void *)&ch[0], sizeof (CML_PARAM));
-	  memcpy (&(VALS.sat), (void *)&ch[1], sizeof (CML_PARAM));
-	  memcpy (&(VALS.val), (void *)&ch[2], sizeof (CML_PARAM));
+	  VALS.hue = ch[0];
+	  VALS.sat = ch[1];
+	  VALS.val = ch[2];
+
 	  VALS.initial_value = initial_value;
 	  VALS.scale = scale;
 	  VALS.start_offset = start_offset;

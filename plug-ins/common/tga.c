@@ -1202,7 +1202,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /*  rle  */
-  toggle = gtk_check_button_new_with_label (_("RLE compression"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_RLE compression"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
   gtk_widget_show (toggle);
@@ -1212,7 +1212,7 @@ save_dialog (void)
                     &tsvals.rle);
 
   /*  origin  */
-  origin = gtk_check_button_new_with_label (_("Origin at bottom left"));
+  origin = gtk_check_button_new_with_mnemonic (_("Or_igin at bottom left"));
   gtk_box_pack_start (GTK_BOX (vbox), origin, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (origin), tsvals.origin);
   gtk_widget_show (origin);

@@ -46,15 +46,15 @@ const gint   pattern_width[MAX_PATTERNS] = { 2, 4, 1, 1, 2, 3, 6, 6, 5 };
 const gint   pattern_height[MAX_PATTERNS] = { 6, 12, 3, 6, 12, 3, 6, 18, 15 };
 const gchar *pattern_name[MAX_PATTERNS] =
 {
-  N_("Staggered"),
-  N_("Large staggered"),
-  N_("Striped"),
-  N_("Wide-striped"),
-  N_("Long-staggered"),
-  N_("3x3"),
-  N_("Large 3x3"),
-  N_("Hex"),
-  N_("Dots")
+  N_("_Staggered"),
+  N_("_Large staggered"),
+  N_("S_triped"),
+  N_("_Wide-striped"),
+  N_("Lo_ng-staggered"),
+  N_("_3x3"),
+  N_("Larg_e 3x3"),
+  N_("_Hex"),
+  N_("_Dots")
 };
 
 const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
@@ -2047,8 +2047,8 @@ video (GimpDrawable *drawable)
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
+  src_row = (guchar *) g_malloc ((x2 - x1) * bytes);
+  dest_row = (guchar *) g_malloc ((x2 - x1) * bytes);
 
 
   /*  initialize the pixel regions  */
@@ -2082,8 +2082,8 @@ video (GimpDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 
-  free (src_row);
-  free (dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 }
 
 static void
@@ -2188,7 +2188,7 @@ video_dialog (void)
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
-  toggle = gtk_check_button_new_with_label (_("Additive"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Additive"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
@@ -2198,7 +2198,7 @@ video_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
 
-  toggle = gtk_check_button_new_with_label ( _("Rotated"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Rotated"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
@@ -2229,7 +2229,7 @@ video_dialog (void)
   /* radio buttons */
   for (y = 0; y < MAX_PATTERNS; y++)
     {
-      toggle = gtk_radio_button_new_with_label (group,
+      toggle = gtk_radio_button_new_with_mnemonic (group,
                                                 gettext(pattern_name[y]));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

@@ -609,7 +609,7 @@ ripple_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Antialiasing"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
   gtk_widget_show (toggle);
@@ -618,7 +618,7 @@ ripple_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.antialias);
 
-  toggle = gtk_check_button_new_with_label ( _("Retain Tilability"));
+  toggle = gtk_check_button_new_with_mnemonic ( _("_Retain Tilability"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
   gtk_widget_show (toggle);
@@ -636,10 +636,10 @@ ripple_dialog (void)
                                  &rvals.orientation,
                                  GINT_TO_POINTER (rvals.orientation),
 
-                                 _("Horizontal"),
+                                 _("_Horizontal"),
                                  GINT_TO_POINTER (HORIZONTAL), NULL,
 
-                                 _("Vertical"),
+                                 _("_Vertical"),
                                  GINT_TO_POINTER (VERTICAL), NULL,
 
                                  NULL);
@@ -653,9 +653,9 @@ ripple_dialog (void)
 				 G_CALLBACK (gimp_radio_button_update),
 				 &rvals.edges, (gpointer) rvals.edges,
 
-				 _("Wrap"),  (gpointer) WRAP, NULL,
-				 _("Smear"), (gpointer) SMEAR, NULL,
-				 _("Black"), (gpointer) BLACK, NULL,
+				 _("_Wrap"),  (gpointer) WRAP, NULL,
+				 _("_Smear"), (gpointer) SMEAR, NULL,
+				 _("_Black"), (gpointer) BLACK, NULL,
 
 				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
@@ -667,8 +667,8 @@ ripple_dialog (void)
 				 G_CALLBACK (gimp_radio_button_update),
 				 &rvals.waveform, (gpointer) rvals.waveform,
 
-				 _("Sawtooth"), (gpointer) SAWTOOTH, NULL,
-				 _("Sine"),     (gpointer) SINE, NULL,
+				 _("Saw_tooth"), (gpointer) SAWTOOTH, NULL,
+				 _("S_ine"),     (gpointer) SINE, NULL,
 
 				 NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
@@ -690,7 +690,7 @@ ripple_dialog (void)
 
   /*  Period  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Period:"), SCALE_WIDTH, 0,
+				     _("_Period:"), SCALE_WIDTH, 0,
 				     rvals.period, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -700,7 +700,7 @@ ripple_dialog (void)
 
   /*  Amplitude  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Amplitude:"), SCALE_WIDTH, 0,
+				     _("A_mplitude:"), SCALE_WIDTH, 0,
 				     rvals.amplitude, 0, 200, 1, 10, 0,
 				     TRUE, 0, 0,
 				     NULL, NULL);

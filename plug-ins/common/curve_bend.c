@@ -778,7 +778,7 @@ run (char    *name,           /* name of plugin */
 
                gimp_get_data(PLUG_IN_DATA_ITER_FROM, &bval_from); 
                gimp_get_data(PLUG_IN_DATA_ITER_TO,   &bval_to); 
-               memcpy(&bval, &bval_from, sizeof(bval));
+	       bval = bval_from;
     
                p_delta_gdouble(&bval.rotation, bval_from.rotation, bval_to.rotation, total_steps, current_step);
                /* note: iteration of curve and points arrays would not give useful results.
@@ -1076,7 +1076,6 @@ p_cd_to_bval (BenderDialog *cd,
       bval->points[i][j][0] = cd->points[i][j][0];  /* x */
       bval->points[i][j][1] = cd->points[i][j][1];  /* y */
     }
-  
   }
   
   bval->curve_type = cd->curve_type;
@@ -1106,7 +1105,6 @@ p_cd_from_bval(BenderDialog *cd, BenderValues *bval)
       cd->points[i][j][0] = bval->points[i][j][0];  /* x */
       cd->points[i][j][1] = bval->points[i][j][1];  /* y */
     }
-  
   }
   
   cd->curve_type = bval->curve_type;
@@ -1151,16 +1149,15 @@ p_retrieve_values (BenderDialog *cd)
     cd->bval_from = g_new (BenderValues, 1);
     cd->bval_to   = g_new (BenderValues, 1);
     cd->bval_curr = g_new (BenderValues, 1);
-    memcpy(cd->bval_curr, &l_bval, sizeof(l_bval));
+    *cd->bval_curr = l_bval;
    
     /* it seems that we are called from GAP with "Varying Values" */
     gimp_get_data(PLUG_IN_DATA_ITER_FROM, cd->bval_from);
     gimp_get_data(PLUG_IN_DATA_ITER_TO,   cd->bval_to);
-    memcpy(cd->bval_curr, &l_bval, sizeof(l_bval));
+    *cd->bval_curr = l_bval;
     p_cd_from_bval(cd, cd->bval_curr);
     cd->work_on_copy = FALSE;
   }
-  
 }
 
 

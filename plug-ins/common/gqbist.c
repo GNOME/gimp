@@ -160,7 +160,7 @@ modify_info (ExpInfo *o_info,
 {
   gint k, n;
 
-  memcpy (n_info, o_info, sizeof (ExpInfo));
+  *n_info = *o_info;
   n = rand () % MAX_TRANSFORMS;
   for (k = 0; k < n; k++)
     {
@@ -193,25 +193,25 @@ static gint used_trans_flag[MAX_TRANSFORMS];
 static gint used_reg_flag[NUM_REGISTERS];
 
 static void
-check_last_modified (ExpInfo info,
+check_last_modified (ExpInfo *info,
 		     gint    p,
 		     gint    n)
 {
   p--;
-  while ((p >= 0) && (info.dest[p] != n))
+  while ((p >= 0) && (info->dest[p] != n))
     p--;
   if (p < 0)
     used_reg_flag[n] = 1;
   else
     {
       used_trans_flag[p] = 1;
-      check_last_modified (info, p, info.source[p]);
-      check_last_modified (info, p, info.control[p]);
+      check_last_modified (info, p, info->source[p]);
+      check_last_modified (info, p, info->control[p]);
     }
 }
 
 static void
-optimize (ExpInfo info)
+optimize (ExpInfo *info)
 {
   gint i;
 
@@ -222,12 +222,12 @@ optimize (ExpInfo info)
       if (i < NUM_REGISTERS)
 	used_reg_flag[i] = 0;
       /* double-arg fix: */
-      switch (info.transformSequence[i])
+      switch (info->transformSequence[i])
 	{
 	case ROTATE:
 	case ROTATE2:
 	case COMPLEMENT:
-	  info.control[i] = info.dest[i];
+	  info->control[i] = info->dest[i];
 	  break;
 
 	default:
@@ -239,7 +239,7 @@ optimize (ExpInfo info)
 }
 
 static void
-qbist (ExpInfo  info,
+qbist (ExpInfo *info,
        gchar   *buffer,
        gint     xp,
        gint     yp,
@@ -282,12 +282,12 @@ qbist (ExpInfo  info,
 		{
 		  gushort sr, cr, dr;
 
-		  sr = info.source[i];
-		  cr = info.control[i];
-		  dr = info.dest[i];
+		  sr = info->source[i];
+		  cr = info->control[i];
+		  dr = info->dest[i];
 
 		  if (used_trans_flag[i])
-		    switch (info.transformSequence[i])
+		    switch (info->transformSequence[i])
 		      {
 		      case PROJECTION:
 			{
@@ -526,7 +526,7 @@ run (gchar      *name,
 	  gimp_pixel_rgn_init (&imagePR, drawable, 
 			       0, 0, img_width, img_height, TRUE, TRUE);
 
-	  optimize (qbist_info.info);
+	  optimize (&qbist_info.info);
 
 	  gimp_progress_init (_("Qbist ..."));
 
@@ -538,7 +538,7 @@ run (gchar      *name,
 
 	      for (row = 0; row < imagePR.h; row++)
 		{
-		  qbist (qbist_info.info, 
+		  qbist (&qbist_info.info, 
 			 imagePR.data + row * imagePR.rowstride, 
 			 imagePR.x, 
 			 imagePR.y + row, 
@@ -603,10 +603,10 @@ dialog_update_previews (GtkWidget *widget,
 
   for (j = 0; j < 9; j++)
     {
-      optimize (info[(j + 5) % 9]);
+      optimize (&info[(j + 5) % 9]);
       for (i = 0; i < PREVIEW_SIZE; i++)
 	{
-	  qbist (info[(j + 5) % 9], (gchar *) buf,
+	  qbist (&info[(j + 5) % 9], (gchar *) buf,
 		 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3, 1);
 	  gtk_preview_draw_row (GTK_PREVIEW (preview[j]), buf,
 				0, i, PREVIEW_SIZE);
@@ -620,7 +620,7 @@ static void
 dialog_select_preview (GtkWidget *widget,
 		       ExpInfo   *n_info)
 {
-  memcpy (&(info[0]), n_info, sizeof (ExpInfo));
+  info[0] = *n_info;
   dialog_new_variations (widget, NULL);
   dialog_update_previews (widget, NULL);
 }
@@ -833,7 +833,7 @@ dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  memcpy ((char *) &(info[0]), (char *) &qbist_info, sizeof (ExpInfo));
+  info[0] = qbist_info.info;
   dialog_new_variations (NULL, NULL);
 
   for (i = 0; i < 9; i++)
@@ -854,7 +854,7 @@ dialog_create (void)
       gtk_widget_show (preview[i]);
     }
 
-  button = gtk_check_button_new_with_label (_("Antialiasing"));
+  button = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
 				qbist_info.oversampling > 1);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -893,7 +893,7 @@ dialog_create (void)
   gdk_flush ();
 
   if (result)
-    memcpy ((gchar *) &qbist_info.info, (gchar *) &(info[0]), sizeof (ExpInfo));
+    qbist_info.info = info[0];
 
   return result;
 }

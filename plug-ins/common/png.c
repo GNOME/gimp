@@ -1071,7 +1071,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_label (_("Interlacing (Adam7)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Interlacing (Adam7)"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.interlaced);
@@ -1081,7 +1081,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.interlaced);
 
-  toggle = gtk_check_button_new_with_label (_("Save background color"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _background color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.bkgd);
@@ -1091,7 +1091,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.bkgd);
 
-  toggle = gtk_check_button_new_with_label (_("Save gamma"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.gama);
@@ -1101,7 +1101,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.gama);
 
-  toggle = gtk_check_button_new_with_label (_("Save layer offset"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _layer offset"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.offs);
@@ -1111,7 +1111,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.offs);
 
-  toggle = gtk_check_button_new_with_label (_("Save resolution"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _resolution"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 4, 5,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.phys);
@@ -1121,7 +1121,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.phys);
 
-  toggle = gtk_check_button_new_with_label (_("Save creation time"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save creation _time"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
 		    GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pngvals.time);
@@ -1139,7 +1139,7 @@ save_dialog (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-			     _("Compression Level:"), 1.0, 1.0,
+			     _("Co_mpression Level:"), 1.0, 1.0,
 			     scale, 1, FALSE);
   gtk_widget_show (scale);
 

@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h> /* memcpy */
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -64,8 +62,7 @@ gimp_image_new_values_new (Gimp      *gimp,
     }
   else
     {
-      memcpy (values, &gimp->image_new_last_values, 
-              sizeof (GimpImageNewValues));
+      *values = gimp->image_new_last_values;
     }
 
   if (gimp->global_buffer && gimp->have_current_cut_buffer)
@@ -83,7 +80,7 @@ gimp_image_new_set_default_values (Gimp               *gimp,
 {
   g_return_if_fail (values != NULL);
 
-  memcpy (&gimp->image_new_last_values, values, sizeof (GimpImageNewValues));
+  gimp->image_new_last_values = *values;
 
   gimp->have_current_cut_buffer = FALSE;
 }

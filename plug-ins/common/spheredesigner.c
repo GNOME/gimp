@@ -732,7 +732,7 @@ double checktri(ray *r, triangle *tri)
   vector *orig, dir;
 
   orig = &r->v1;
-  memcpy(&dir, &r->v2, sizeof(vector));
+  dir = r->v2;
   vsub(&dir, orig);
 
   ed1.x = tri->c.x - tri->a.x;
@@ -1669,10 +1669,10 @@ void duptexture(void)
   texture *t = currenttexture();
   int n = s.com.numtexture;
 
-  if(n == MAXTEXTUREPEROBJ-1) return;
+  if (n == MAXTEXTUREPEROBJ-1) return;
   if(!t) return;
 
-  memcpy(&s.com.texture[n], t, sizeof(texture));
+  s.com.texture[n] = *t;
 
   item = gtk_list_item_new_with_label(mklabel(&s.com.texture[n]));
   gtk_object_set_data (GTK_OBJECT(item), "texture", &s.com.texture[n]);
@@ -1694,7 +1694,7 @@ void rebuildlist(void)
     if(s.com.numtexture && (s.com.texture[n].majtype < 0)) {
       int i;
       for(i = n; i < s.com.numtexture-1; i++)
-	memcpy(&s.com.texture[i],&s.com.texture[i+1],sizeof(texture));
+	s.com.texture[i] = s.com.texture[i + 1];
       s.com.numtexture--;
       n--;
     }
@@ -1860,7 +1860,7 @@ void initworld(void)
   s.a.x = s.a.y = s.a.z = 0.0;
   s.r = 4.0;
 
-  memcpy(&world.obj[0], &s, sizeof(s));
+  world.obj[0] = s;
   world.numobj = 1;
 
   world.obj[0].com.numtexture = 0;
@@ -1873,14 +1873,14 @@ void initworld(void)
     if((t->amount <= 0.0) || (t->majtype < 0)) continue;
     if(t->majtype == 0) { /* Normal texture */
       if(t->type == PHONG) {
-	memcpy(&t->phongcolor, &t->color1, sizeof(t->color1));
+	t->phongcolor = t->color1;
 	t->phongsize = t->oscale / 25.0;
       }
-      memcpy(&d->texture[d->numtexture],t,sizeof(texture));
+      d->texture[d->numtexture] = *t;
       vmul(&d->texture[d->numtexture].scale, d->texture[d->numtexture].oscale);
       d->numtexture++;
     } else if(t->majtype == 1) { /* Bumpmap */
-      memcpy(&d->normal[d->numnormal],t,sizeof(texture));
+      d->normal[d->numnormal] = *t;
       vmul(&d->normal[d->numnormal].scale, d->texture[d->numnormal].oscale);
       d->numnormal++;
     } else if(t->majtype == 2) { /* Lightsource */
@@ -1888,7 +1888,7 @@ void initworld(void)
       vcopy(&l.a, &t->translate);
       vcopy(&l.color, &t->color1);
       vmul(&l.color, t->amount);
-      memcpy(&world.light[world.numlight], &l, sizeof(l));
+      world.light[world.numlight = l;
       world.numlight++;
     }
   }

@@ -1,3 +1,26 @@
+2002-06-13  Maurits Rijk  <maurits@linux.local>
+
+	* plug-ins/common/wind.c (dialog_box): enable mnemonics, minor code
+	cleanup.
+
+	* plug-ins/common/tga.c (save_dialog): 
+	* plug-ins/common/ripple.c (ripple_dialog)
+	* plug-ins/common/whirlpinch.c (whirl_pinch_dialog)
+	* plug-ins/common/png.c (save_dialog): enable mnemonics
+
+2002-06-13  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* app/core/gimpimage-new.c :replaced memcpy by structure assignment.
+
+	* plug-ins/common/gqbist.c (dialog_create): enable mnemonics, 
+	replaced several memcpy's by structure assignment, pass structure 
+	variable by reference iso value.
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/spheredesigner.c replaced memcpy by 
+	structure assignment
+
 2002-06-13  Sven Neumann  <sven@gimp.org>
 
         * plug-ins/common/unsharp.c: merged fix for bug #83420 from stable
