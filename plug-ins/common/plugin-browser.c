@@ -235,7 +235,7 @@ details_callback (GtkWidget *widget,
       gtk_label_set_text (lab, _("Details >>"));
       gtk_widget_hide (pdesc->descr_scroll);
       gtk_paned_set_position (GTK_PANED (pdesc->paned),
-                              p->allocation.width);
+                              GTK_PANED (pdesc->paned)->child1->allocation.width);
       pdesc->details_showing = FALSE;
     }
 }
