@@ -273,9 +273,9 @@
 
 2005-03-07  Kevin Cozens  <kcozens@cvs.gimp.org>
 
-	* plug-ins/script-fu/scripts/perspective-shadow.scm: Fixed the options
-	for SF-ENU	* in the register block which were changed (read broken) when
-	the entry was changed from SF-OPTION.
+	* plug-ins/script-fu/scripts/perspective-shadow.scm: Fixed the
+	options for SF-ENUM in the register block which were changed (read
+	broken) when the entry was changed from SF-OPTION.
 
 2005-03-07  RaphaÃ«l Quinet  <raphael@gimp.org>
 
