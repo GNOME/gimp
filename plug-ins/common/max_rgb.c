@@ -85,7 +85,11 @@ static ValueType pvals =
 };
 
 static GimpRunMode     run_mode;
-static GimpOldPreview *preview;
+
+#define PREVIEW_SIZE 128
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 MAIN ()
 
@@ -223,7 +227,23 @@ main_function (GimpDrawable *drawable,
 
   if (preview_mode)
     {
-      gimp_old_preview_update (preview, max_rgb_func, &param);
+      gint    i;
+      guchar *buffer = g_new (guchar,
+                              preview_width * preview_height * preview_bpp);
+      for (i=0 ; i<preview_width * preview_height ; i++)
+      {
+        max_rgb_func (preview_cache + i * preview_bpp,
+                      buffer        + i * preview_bpp,
+                      preview_bpp,
+                      &param);
+        
+      }
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, preview_width, preview_height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buffer,
+                              preview_width * preview_bpp);
+      g_free (buffer);
     }
   else
     {
@@ -270,11 +290,15 @@ dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_old_preview_new (drawable);
-  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
-
-  main_function (drawable, TRUE);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   frame = gimp_int_radio_group_new (FALSE, NULL,
                                     G_CALLBACK (radio_callback),
@@ -295,6 +319,8 @@ dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
+
+  main_function (drawable, TRUE);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
