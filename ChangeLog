@@ -1,3 +1,10 @@
+2001-01-02  Simon Budig  <simon@gimp.org>
+
+	* app/paint_core.c: use floor() before casting to gint when 
+	calculating the current brush coordinates. Fixes the jagged brush 
+	stroke when stroking a path that leaves the image at the top or left
+	edge (bug #6043).
+	
 2001-01-02  Daniel Egger  <egger@suse.de>
 
 	* app/clone.c:
