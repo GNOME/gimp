@@ -151,12 +151,6 @@ gimp_prop_check_button_notify (GObject    *config,
 /*  option menus  */
 /******************/
 
-static GtkWidget * gimp_prop_enum_option_menu_new_full (GObject     *config,
-                                                        const gchar *property_name,
-                                                        gint         minimum,
-                                                        gint         maximum,
-                                                        gint         n_values,
-                                                        va_list      args);
 static void        gimp_prop_option_menu_callback      (GtkWidget   *widget,
                                                         GObject     *config);
 static void        gimp_prop_option_menu_notify        (GObject     *config,
@@ -208,50 +202,6 @@ gimp_prop_enum_option_menu_new (GObject     *config,
                                 gint         minimum,
                                 gint         maximum)
 {
-  return gimp_prop_enum_option_menu_new_full (config, property_name,
-                                              minimum, maximum, 
-                                              0, NULL);
-}
-
-GtkWidget *
-gimp_prop_enum_option_menu_new_with_values (GObject     *config,
-                                            const gchar *property_name,
-                                            gint         n_values,
-                                            ...)
-{
-  GtkWidget  *optionmenu;
-  va_list     args;
-
-  va_start (args, n_values);
-
-  optionmenu = gimp_prop_enum_option_menu_new_full (config, property_name,
-                                                    0, 0,
-                                                    n_values, args);
-
-  va_end (args);
-
-  return optionmenu;
-}
-
-GtkWidget *
-gimp_prop_enum_option_menu_new_valist (GObject     *config,
-                                       const gchar *property_name,
-                                       gint         n_values,
-                                       va_list      args)
-{
-  return gimp_prop_enum_option_menu_new_full (config, property_name,
-                                              0, 0,
-                                              n_values, args);
-}
-
-static GtkWidget *
-gimp_prop_enum_option_menu_new_full (GObject     *config,
-                                     const gchar *property_name,
-                                     gint         minimum,
-                                     gint         maximum,
-                                     gint         n_values,
-                                     va_list      args)
-{
   GParamSpec *param_spec;
   GtkWidget  *optionmenu;
   gint        value;
@@ -265,31 +215,20 @@ gimp_prop_enum_option_menu_new_full (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  if (n_values > 0)
+  if (minimum != maximum)
     {
       optionmenu =
-        gimp_enum_option_menu_new_with_values_valist (param_spec->value_type,
-                                                      G_CALLBACK (gimp_prop_option_menu_callback),
-                                                      config,
-                                                      n_values, args);
+        gimp_enum_option_menu_new_with_range (param_spec->value_type,
+                                              minimum, maximum,
+                                              G_CALLBACK (gimp_prop_option_menu_callback),
+                                              config);
     }
   else
     {
-      if (minimum != maximum)
-        {
-          optionmenu =
-            gimp_enum_option_menu_new_with_range (param_spec->value_type,
-                                                  minimum, maximum,
-                                                  G_CALLBACK (gimp_prop_option_menu_callback),
-                                                  config);
-        }
-      else
-        {
-          optionmenu =
-            gimp_enum_option_menu_new (param_spec->value_type,
-                                       G_CALLBACK (gimp_prop_option_menu_callback),
-                                       config);
-        }
+      optionmenu =
+        gimp_enum_option_menu_new (param_spec->value_type,
+                                   G_CALLBACK (gimp_prop_option_menu_callback),
+                                   config);
     }
 
   gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),

@@ -40,15 +40,6 @@ GtkWidget     * gimp_prop_enum_option_menu_new    (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         minimum,
                                                    gint         maximum);
-GtkWidget *
-gimp_prop_enum_option_menu_new_with_values        (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gint         n_values,
-                                                   ...);
-GtkWidget * gimp_prop_enum_option_menu_new_valist (GObject     *config,
-                                                   const gchar *property_name,
-                                                   gint         n_values,
-                                                   va_list      args);
 
 
 /*  GParamInt, GParamUInt, GParamLong, GParamULong, GParamDouble  */

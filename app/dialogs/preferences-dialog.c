@@ -694,35 +694,6 @@ prefs_enum_option_menu_add (GObject     *config,
   return menu;
 }
 
-#if 0
-static GtkWidget *
-prefs_enum_option_menu_add_with_values (GObject     *config,
-                                        const gchar *property_name,
-                                        const gchar *label,
-                                        GtkTable    *table,
-                                        gint         table_row,
-                                        gint         n_values,
-                                        ...)
-{
-  GtkWidget  *menu;
-  va_list     args;
-
-  va_start (args, n_values);
-
-  menu = gimp_prop_enum_option_menu_new_valist (config, property_name,
-                                                n_values, args);
-
-  va_end (args);
-
-  if (menu)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 1.0, 0.5,
-                               menu, 1, TRUE);
-
-  return menu;
-}
-#endif
-
 static GtkWidget *
 prefs_boolean_option_menu_add (GObject     *config,
                                const gchar *property_name,

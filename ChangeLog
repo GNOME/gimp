@@ -1,3 +1,11 @@
+2003-01-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppropwidgets.[ch]: removed unused function
+	gimp_prop_enum_option_menu_new_with_values() which caused problems
+	on some platforms (fixes bug #102514).
+
+	* app/gui/preferences_dialog.c: removed some unused code.
+
 2003-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/module-browser.c: pack the button box non-expanding,
