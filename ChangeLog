@@ -1,3 +1,8 @@
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_set_uri): added
+	missing casts to gint64.
+
 2004-01-06  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimpdasheditor.c (gimp_dash_editor_new): remove
