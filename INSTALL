@@ -14,12 +14,15 @@ There are some basic steps to building and installing the GIMP:
      by side with GTK+-1.2.
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
      you have FreeType2 installed before you compile Pango.
-  4. You may want to install other third party libraries or programs that
+  4. We use libart2, grab the module libart_lgpl out of GNOME CVS or
+     fetch the tarball from 
+     ftp://ftp.gnome.org/pub/gnome/pre-gnome2/sources/libart_lgpl/
+  5. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG.
-  5. Configure the GIMP by running the `configure' script.
+  6. Configure the GIMP by running the `configure' script.
      You may want to pass some options to it, see below.
-  6. Build the GIMP by running `make'.
-  7. Install the GIMP by running `make install'. In order to avoid clashes
+  7. Build the GIMP by running `make'.
+  8. Install the GIMP by running `make install'. In order to avoid clashes
      with an installed stable version of The GIMP, we install a binary
      called gimp-1.3.
 
