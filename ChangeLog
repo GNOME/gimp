@@ -1,3 +1,9 @@
+1998-02-26  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* app/app_procs.c (make_initialization_status_window): Push/pop
+	correct visuals for drawing area creation.
+	(splash_logo_load): Use a correct gc.
+
 Thu Feb 26 12:19:44 EET 1998 Lauri Alanko <la@iki.fi>
 
 	* Another patch in gimp.h to name more GParam-types for gimple.
