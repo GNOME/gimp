@@ -74,6 +74,7 @@ static void extract_rgb      (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_red      (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_green    (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_blue     (guchar *src, gint bpp, gint numpix, guchar **dst);
+static void extract_rgba     (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_alpha    (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_hsv      (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_hue      (guchar *src, gint bpp, gint numpix, guchar **dst);
@@ -115,6 +116,10 @@ static EXTRACT extract[] =
 				  N_("blue") }, extract_rgb },
   { N_("Red"),        FALSE, 1, { N_("red") }, extract_red },
   { N_("Green"),      FALSE, 1, { N_("green") }, extract_green },
+  { N_("RGBA"),       TRUE,  4, { N_("red"),
+				  N_("green"),
+				  N_("blue"),
+				  N_("alpha") }, extract_rgba },
   { N_("Blue"),       FALSE, 1, { N_("blue") }, extract_blue },
   { N_("HSV"),        TRUE,  3, { N_("hue"),
 				  N_("saturation"),
@@ -184,7 +189,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "decompose_type", "What to decompose: RGB, Red, Green, Blue, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha" }
+    { GIMP_PDB_STRING, "decompose_type", "What to decompose: RGB, Red, Green, Blue, RGBA, Red, Green, Blue, Alpha, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha" }
   };
   static GimpParamDef return_vals[] =
   {
@@ -349,7 +354,8 @@ decompose (gint32  image_ID,
       g_message ("decompose: not an RGB image");
       return (-1);
     }
-  if ((extract[extract_idx].extract_fun == extract_alpha) &&
+  if ((extract[extract_idx].extract_fun == extract_alpha || 
+       extract[extract_idx].extract_fun == extract_rgba) &&
       (!gimp_drawable_has_alpha (drawable_ID)))
     {
       g_message ("decompose: No alpha channel available");
@@ -507,6 +513,28 @@ extract_rgb (guchar  *src,
     }
 }
 
+static void 
+extract_rgba (guchar  *src, 
+	      gint     bpp, 
+	      gint     numpix,
+	      guchar **dst)
+{
+  register guchar *rgba_src = src;
+  register guchar *red_dst = dst[0];
+  register guchar *green_dst = dst[1];
+  register guchar *blue_dst = dst[2];
+  register guchar *alpha_dst = dst[3];
+  register gint count = numpix, offset = bpp-4;
+  
+  while (count-- > 0)
+    {
+      *(red_dst++) = *(rgba_src++);
+      *(green_dst++) = *(rgba_src++);
+      *(blue_dst++) = *(rgba_src++);
+      *(alpha_dst++) = *(rgba_src++);
+      rgba_src += offset;
+    }
+}
 
 static void 
 extract_red (guchar  *src, 
