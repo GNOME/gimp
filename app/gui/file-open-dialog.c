@@ -424,35 +424,22 @@ file_open_create_thumbnail (Gimp              *gimp,
 {
   if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
     {
-      GimpImagefile *imagefile;
-      gchar         *basename;
-      gchar         *uri;
+      gchar *uri;
+      gchar *basename;
 
       uri = g_filename_to_uri (filename, NULL, NULL);
-
-      imagefile = gimp_imagefile_new (gimp, uri);
-
-      if (always_create)
-        {
-          gimp_imagefile_create_thumbnail (imagefile, size);
-        }
-      else
-        {
-          if (gimp_thumbnail_peek_thumb (imagefile->thumbnail,
-                                         size) < GIMP_THUMB_STATE_FAILED)
-            gimp_imagefile_create_thumbnail (imagefile, size);
-        }
-
-      g_object_unref (imagefile);
-
       basename = file_utils_uri_to_utf8_basename (uri);
+
       gtk_label_set_text (GTK_LABEL (open_options_title), basename);
       g_free (basename);
 
       gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
-      gimp_imagefile_update (open_options_imagefile);
-
       g_free (uri);
+
+      if (always_create ||
+          gimp_thumbnail_peek_thumb (open_options_imagefile->thumbnail, size)
+          < GIMP_THUMB_STATE_FAILED)
+        gimp_imagefile_create_thumbnail (open_options_imagefile, size);
     }
 }
 
@@ -570,11 +557,7 @@ file_open_thumbnail_button_press (GtkWidget      *widget,
                                   GdkEventButton *bevent,
                                   GtkWidget      *open_dialog)
 {
-  gboolean always_create;
-
-  always_create = (bevent->state & GDK_CONTROL_MASK) ? TRUE : FALSE;
-
-  file_open_create_thumbnails (open_dialog, always_create);
+  file_open_thumbnail_clicked (widget, bevent->state, open_dialog);
 
   return TRUE;
 }
@@ -584,11 +567,8 @@ file_open_thumbnail_clicked (GtkWidget       *widget,
                              GdkModifierType  state,
                              GtkWidget       *open_dialog)
 {
-  gboolean always_create;
-
-  always_create = (state & GDK_CONTROL_MASK) ? TRUE : FALSE;
-
-  file_open_create_thumbnails (open_dialog, always_create);
+  file_open_create_thumbnails (open_dialog,
+                               (state & GDK_CONTROL_MASK) ? TRUE : FALSE);
 }
 
 static void

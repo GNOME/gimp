@@ -1,3 +1,12 @@
+2004-01-18  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-open-dialog.c (file_open_create_thumbnail): redone
+	to make it work again.
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_load_thumb): fixed
+	stupid mistake that caused thumbnails not to load under certain
+	circumstances.
+
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (undo_pop_layer): removed broken

@@ -739,7 +739,7 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
 
   state = gimp_thumbnail_peek_thumb (thumbnail, size);
 
-  if (state != GIMP_THUMB_STATE_EXISTS)
+  if (state < GIMP_THUMB_STATE_EXISTS || state == GIMP_THUMB_STATE_FAILED)
     return NULL;
 
   pixbuf = gdk_pixbuf_new_from_file (thumbnail->thumb_filename, NULL);
