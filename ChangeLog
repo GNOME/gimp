@@ -1,3 +1,17 @@
+Fri Dec 17 20:29:12 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/edit_selection.c: Fixed a couple of bugs with translating
+	the selection mask (move tool, alt-drag):
+	
+	- Selection mask was being clipped whilst moved around, not just
+	  at its final resting place.
+        - Selection mask translation was being performed 'live' like the
+          opaque moves even though there's simply nothing exciting to see.
+	  Now the process is much faster.
+
+	Will remove the edit_selection.c dead-code later if this change
+	does not cause new trouble.
+
 1999-12-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphelp.c

@@ -210,12 +210,35 @@ edit_selection_button_release (Tool           *tool,
   tool->scroll_lock         = edit_select.old_scroll_lock;
   tool->auto_snap_to        = edit_select.old_auto_snap_to;
 
+  /* MaskTranslate is performed here at movement end, not 'live' like
+   *  the other translation types.
+   */
+  if (edit_select.edit_type == MaskTranslate)
+  {
+    edit_selection_snap (gdisp, bevent->x, bevent->y);
+    x = edit_select.x;
+    y = edit_select.y;
+    
+    /* move the selection -- whether there has been net movement or not!
+     * (to ensure that there's something on the undo stack)
+     */
+    gimage_mask_translate (gdisp->gimage, 
+			   edit_select.cumlx,
+			   edit_select.cumly);
+
+    if (edit_select.first_move)
+      {
+	gimp_image_undo_freeze (gdisp->gimage);
+	edit_select.first_move = FALSE;
+      }
+  }
+  
 #if 0
-  /****************************************************************************/
+  /********************************************************************a.d.m.**/
   /****************************************************************************/
   /*  This work is all done in the motion handler now - will be removed soon  */
   /****************************************************************************/
-  /****************************************************************************/
+  /************************************************* & this time I mean it. ***/
   /*  If the cancel button is down...Do nothing  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
@@ -301,7 +324,6 @@ edit_selection_button_release (Tool           *tool,
       /* The user either didn't actually move the selection,
 	 or moved it around and eventually just put it back in
 	 exactly the same spot. */
-
       if ((edit_select.edit_type == MaskTranslate) ||
 	  (edit_select.edit_type == MaskToLayerTranslate))
 	gimage_mask_clear (gdisp->gimage);
@@ -382,19 +404,21 @@ edit_selection_motion (Tool           *tool,
 	  {
 	  case MaskTranslate:
 	    /*  translate the selection  */
-	    gimage_mask_translate (gdisp->gimage, xoffset, yoffset);
-	    /*g_warning("%d,%d  %d,%d  %d,%d  %d,%d  %d,%d  %d,%d",
+	    /*	    gimage_mask_translate (gdisp->gimage, xoffset, yoffset);
+	    g_warning("%d,%d  %d,%d  %d,%d  %d,%d  %d,%d  %d,%d",
 		      edit_select.origx,edit_select.origy,
 		      edit_select.cumlx,edit_select.cumly,
 		      xoffset,yoffset,
 		      x,y,
 		      edit_select.x1,edit_select.y1,
 		      edit_select.x2,edit_select.y2);*/
+	    /*
 	    if (edit_select.first_move)
 	      {
 		gimp_image_undo_freeze (gdisp->gimage);
 		edit_select.first_move = FALSE;
 	      }
+	    */
 	    edit_select.origx = x;
 	    edit_select.origy = y;
 	    break;
