@@ -1,3 +1,9 @@
+2005-03-31  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated.
+
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

@@ -759,6 +759,7 @@
       <xi:include href="xml/gimpcolorpanel.xml" />
       <xi:include href="xml/gimpdasheditor.xml" />
       <xi:include href="xml/gimpfgbgeditor.xml" />
+      <xi:include href="xml/gimpfgbgview.xml" />
       <xi:include href="xml/gimpfileprocview.xml" />
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />

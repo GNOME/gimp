@@ -4664,6 +4664,23 @@ GIMP_FG_BG_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpfgbgview</FILE>
+<TITLE>GimpFgBgView</TITLE>
+GimpFgBgView
+gimp_fg_bg_view_new
+gimp_fg_bg_view_set_context
+<SUBSECTION Standard>
+GimpFgBgViewClass
+GIMP_FG_BG_VIEW
+GIMP_IS_FG_BG_VIEW
+GIMP_TYPE_FG_BG_VIEW
+gimp_fg_bg_view_get_type
+GIMP_FG_BG_VIEW_CLASS
+GIMP_IS_FG_BG_VIEW_CLASS
+GIMP_FG_BG_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpfiledialog</FILE>
 <TITLE>GimpFileDialog</TITLE>
 GimpFileDialog
@@ -4671,6 +4688,7 @@ gimp_file_dialog_new
 gimp_file_dialog_set_file_proc
 gimp_file_dialog_set_image
 gimp_file_dialog_set_sensitive
+gimp_file_overwrite_dialog
 <SUBSECTION Standard>
 GimpFileDialogClass
 GIMP_FILE_DIALOG
@@ -6741,6 +6759,7 @@ gimp_marshal_VOID__INT_INT
 gimp_marshal_VOID__INT_INT_INT_INT
 gimp_marshal_VOID__OBJECT
 gimp_marshal_VOID__OBJECT_INT
+gimp_marshal_VOID__OBJECT_OBJECT
 gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
 gimp_marshal_VOID__STRING
