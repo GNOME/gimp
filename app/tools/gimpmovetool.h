@@ -36,11 +36,16 @@ typedef struct _GimpMoveToolClass GimpMoveToolClass;
 
 struct _GimpMoveTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool         parent_instance;
 
-  GimpLayer    *layer;
-  GimpGuide    *guide;
-  GimpDisplay  *disp;
+  GimpLayer           *layer;
+
+  GimpGuide           *guide;
+  GimpDisplay         *guide_disp;
+
+  gboolean             moving_guide;
+  gint                 guide_position;
+  GimpOrientationType  guide_orientation;
 };
 
 struct _GimpMoveToolClass

@@ -20,16 +20,26 @@
 #define __GIMP_IMAGE_GUIDES_H__
 
 
-GimpGuide * gimp_image_add_hguide     (GimpImage *gimage);
-GimpGuide * gimp_image_add_vguide     (GimpImage *gimage);
+GimpGuide * gimp_image_add_hguide     (GimpImage *gimage,
+                                       gint       position,
+                                       gboolean   push_undo);
+GimpGuide * gimp_image_add_vguide     (GimpImage *gimage,
+                                       gint       position,
+                                       gboolean   push_undo);
+
+GimpGuide * gimp_image_guide_ref      (GimpGuide *guide);
+void        gimp_image_guide_unref    (GimpGuide *guide);
 
 void        gimp_image_add_guide      (GimpImage *gimage,
-                                       GimpGuide *guide);
+                                       GimpGuide *guide,
+                                       gint       position);
 void        gimp_image_remove_guide   (GimpImage *gimage,
-                                       GimpGuide *guide);
-
-void        gimp_image_delete_guide   (GimpImage *gimage,
-                                       GimpGuide *guide);
+                                       GimpGuide *guide,
+                                       gboolean   push_undo);
+void        gimp_image_move_guide     (GimpImage *gimage,
+                                       GimpGuide *guide,
+                                       gint       position,
+                                       gboolean   push_undo);
 
 GimpGuide * gimp_image_find_guide     (GimpImage *gimage,
                                        gdouble    x,

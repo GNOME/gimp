@@ -75,9 +75,7 @@ image_add_hguide_invoker (Gimp     *gimp,
     {
       if (offset < gimage->height)
 	{
-	  guide = gimp_image_add_hguide (gimage);
-	  gimp_image_undo_push_image_guide (gimage, _("Add Horizontal Guide"), guide);
-	  guide->position = offset;
+	  guide = gimp_image_add_hguide (gimage, offset, TRUE);
 	  guide_ID = guide->guide_ID;
 	}
       else
@@ -154,9 +152,7 @@ image_add_vguide_invoker (Gimp     *gimp,
     {
       if (offset < gimage->width)
 	{
-	  guide = gimp_image_add_vguide (gimage);
-	  gimp_image_undo_push_image_guide (gimage, _("Add Vertical Guide"), guide);
-	  guide->position = offset;
+	  guide = gimp_image_add_vguide (gimage, offset, TRUE);
 	  guide_ID = guide->guide_ID;
 	}
       else
@@ -235,9 +231,7 @@ image_delete_guide_invoker (Gimp     *gimp,
     
 	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
-	      gimp_image_undo_push_image_guide (gimage, _("Remove Guide"), g);
-	      gimp_image_delete_guide (gimage, g);
-    
+	      gimp_image_remove_guide (gimage, g, TRUE);
 	      success = TRUE;
 	      break;
 	    }

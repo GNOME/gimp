@@ -42,6 +42,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-guides.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-projection.h"
@@ -568,7 +569,7 @@ gimp_image_finalize (GObject *object)
 
   if (gimage->guides)
     {
-      g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
+      g_list_foreach (gimage->guides, (GFunc) gimp_image_guide_unref, NULL);
       g_list_free (gimage->guides);
       gimage->guides = NULL;
     }

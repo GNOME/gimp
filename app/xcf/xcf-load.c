@@ -441,10 +441,9 @@ xcf_load_image_props (XcfInfo   *info,
 
 	case PROP_GUIDES:
 	  {
-	    GimpGuide *guide;
-	    gint32     position;
-	    gint8      orientation;
-	    gint       i, nguides;
+	    gint32 position;
+	    gint8  orientation;
+	    gint   i, nguides;
 
 	    nguides = prop_size / (4 + 1);
 	    for (i = 0; i < nguides; i++)
@@ -457,19 +456,17 @@ xcf_load_image_props (XcfInfo   *info,
 		switch (orientation)
 		  {
 		  case XCF_ORIENTATION_HORIZONTAL:
-		    guide = gimp_image_add_hguide (gimage);
+		    gimp_image_add_hguide (gimage, position, FALSE);
 		    break;
 
 		  case XCF_ORIENTATION_VERTICAL:
-		    guide = gimp_image_add_vguide (gimage);
+		    gimp_image_add_vguide (gimage, position, FALSE);
 		    break;
 
 		  default:
 		    g_message ("guide orientation out of range in XCF file");
 		    continue;
 		  }
-
-		guide->position = position;
 	      }
 
 	    /*  this is silly as the order of guides doesn't really matter,

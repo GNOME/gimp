@@ -31,6 +31,7 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
+#include "gimpimage-guides.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
@@ -215,20 +216,11 @@ gimp_image_crop (GimpImage *gimage,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
 
-	  for (list = gimage->guides; list; list = g_list_next (list))
-	    {
-              GimpGuide *guide;
-
-              guide = (GimpGuide *) list->data;
-
-	      gimp_image_undo_push_image_guide (gimage, NULL, guide);
-	    }
-
-	  gimp_image_undo_group_end (gimage);
-  
 	  /* Adjust any guides we might have laying about */
 	  gimp_image_crop_adjust_guides (gimage, x1, y1, x2, y2);
-	}
+
+	  gimp_image_undo_group_end (gimage);
+  	}
 
       gimp_image_update (gimage,
                          0, 0,
@@ -431,15 +423,15 @@ gimp_image_crop_adjust_guides (GimpImage *gimage,
 
       if (remove_guide)
 	{
-	  guide->position = -1;
+          gimp_image_remove_guide (gimage, guide, TRUE);
           guide = NULL;
 	}
       else
 	{
 	  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
-            guide->position -= y1;
+            gimp_image_move_guide (gimage, guide, guide->position - y1, TRUE);
 	  else
-            guide->position -= x1;
+            gimp_image_move_guide (gimage, guide, guide->position - x1, TRUE);
 	}
     }
 }

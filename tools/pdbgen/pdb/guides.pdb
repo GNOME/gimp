@@ -23,7 +23,7 @@ sub pdb_misc {
 }
 
 sub image_add_guide {
-    my ($desc, $help_desc, $type, $max, $pos) = @_;
+    my ($desc, $type, $max, $pos) = @_;
 
     $blurb = "Add a $desc guide to an image.";
 
@@ -54,9 +54,7 @@ HELP
 {
   if (offset < gimage->$max)
     {
-      guide = gimp_image_add_${func}guide (gimage);
-      gimp_image_undo_push_image_guide (gimage, _("${help_desc}"), guide);
-      guide->position = offset;
+      guide = gimp_image_add_${func}guide (gimage, offset, TRUE);
       guide_ID = guide->guide_ID;
     }
   else
@@ -69,11 +67,11 @@ CODE
 # The defs
 
 sub image_add_hguide {
-    &image_add_guide('horizontal', 'Add Horizontal Guide', 'y', 'height', 'top');
+    &image_add_guide('horizontal', 'y', 'height', 'top');
 }
 
 sub image_add_vguide {
-    &image_add_guide('vertical', 'Add Vertical Guide', 'x', 'width', 'left');
+    &image_add_guide('vertical', 'x', 'width', 'left');
 }
 
 sub image_delete_guide {
@@ -104,9 +102,7 @@ HELP
 
       if ((g->guide_ID == guide) && (g->position >= 0))
 	{
-	  gimp_image_undo_push_image_guide (gimage, _("Remove Guide"), g);
-          gimp_image_delete_guide (gimage, g);
-
+          gimp_image_remove_guide (gimage, g, TRUE);
 	  success = TRUE;
 	  break;
 	}

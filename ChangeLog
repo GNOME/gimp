@@ -1,5 +1,34 @@
 2003-03-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-guides.[ch]: added "position" and "push_undo"
+	parameters to gimp_image_add_[vh]guide(). Start with a refcount
+	of 1, not 0 (EEK). Added gimp_image_guide_[un]ref(). Added
+	"position" parameter to gimp_image_add_guide(). Added new
+	function gimp_image_move_guide(). All functions push guide
+	undos correctly and call gimp_image_update_guide() so this
+	doesn't need to be done by callers.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/tools/gimpmeasuretool.c
+	* app/xcf/xcf-load.c
+	* tools/pdbgen/pdb/guides.pdb: greatly simplyfied all places which
+	modify guides: don't fiddle with undo and guide properties
+	manually but simply use the API provided.
+
+	* app/tools/gimpmovetool.[ch]: ditto. Changed everything to
+	create/move the guide on button_release, not button_press. Enable
+	canceling the operation by clicking button3 before releasing
+	button1. Keep the guide drawn at its old position until the move
+	is finished (fixes bug #75349 and bug #109267).
+
+	* app/pdb/guides_cmds.c: regenerated.
+
+2003-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagefile.c (gimp_imagefile_save_thumbnail):
 	call gimp_imagefile_update() on success. Ensures that the
 	previews are updated whenever we write the thumbnail.

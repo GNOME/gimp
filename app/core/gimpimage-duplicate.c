@@ -57,7 +57,6 @@ gimp_image_duplicate (GimpImage *gimage)
   GimpLayer        *floating_layer;
   GimpChannel      *channel, *new_channel;
   GList            *list;
-  GimpGuide        *guide                     = NULL;
   GimpLayer        *active_layer              = NULL;
   GimpChannel      *active_channel            = NULL;
   GimpDrawable     *new_floating_sel_drawable = NULL;
@@ -195,20 +194,16 @@ gimp_image_duplicate (GimpImage *gimage)
   /*  Copy any Guides  */
   for (list = gimage->guides; list; list = g_list_next (list))
     {
-      GimpGuide *new_guide;
-
-      guide = (GimpGuide *) list->data;
+      GimpGuide *guide = list->data;
 
       switch (guide->orientation)
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
-	  new_guide = gimp_image_add_hguide (new_gimage);
-	  new_guide->position = guide->position;
+	  gimp_image_add_hguide (new_gimage, guide->position, FALSE);
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
-	  new_guide = gimp_image_add_vguide (new_gimage);
-	  new_guide->position = guide->position;
+	  gimp_image_add_vguide (new_gimage, guide->position, FALSE);
 	  break;
 
 	default:

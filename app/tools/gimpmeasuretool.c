@@ -263,9 +263,9 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 	    {
 	      if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
+		  GimpGuide *guide;
                   gboolean   create_hguide;
                   gboolean   create_vguide;
-		  GimpGuide *guide;
 
                   create_hguide = ((state & GDK_CONTROL_MASK) && 
                                    (measure_tool->y[i] ==
@@ -286,23 +286,17 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
 		  if (create_hguide)
 		    {
-		      guide = gimp_image_add_hguide (gdisp->gimage);
-		      gimp_image_undo_push_image_guide (gdisp->gimage,
-                                                        _("Add Horizontal Guide"),
-                                                        guide);
-		      guide->position = measure_tool->y[i];
-
+		      guide = gimp_image_add_hguide (gdisp->gimage,
+                                                     measure_tool->y[i],
+                                                     TRUE);
 		      gimp_image_update_guide (gdisp->gimage, guide);
 		    }
 
 		  if (create_vguide)
 		    {
-		      guide = gimp_image_add_vguide (gdisp->gimage);
-		      gimp_image_undo_push_image_guide (gdisp->gimage,
-                                                        _("Add Vertical Guide"),
-                                                        guide);
-		      guide->position = measure_tool->x[i];
-
+		      guide = gimp_image_add_vguide (gdisp->gimage,
+                                                     measure_tool->x[i],
+                                                     TRUE);
 		      gimp_image_update_guide (gdisp->gimage, guide);
 		    }
 

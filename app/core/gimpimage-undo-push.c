@@ -630,7 +630,7 @@ typedef struct _GuideUndo GuideUndo;
 struct _GuideUndo
 {
   GimpGuide *guide;
-  GimpGuide  orig;
+  gint       position;
 };
 
 static gboolean undo_pop_image_guide  (GimpUndo            *undo,
@@ -661,10 +661,8 @@ gimp_image_undo_push_image_guide (GimpImage   *gimage,
 
       gu = new->data;
 
-      guide->ref_count++;
-
-      gu->guide = guide;
-      gu->orig  = *guide;
+      gu->guide    = gimp_image_guide_ref (guide);
+      gu->position = guide->position;
 
       return TRUE;
     }
@@ -678,22 +676,20 @@ undo_pop_image_guide (GimpUndo            *undo,
                       GimpUndoAccumulator *accum)
 {
   GuideUndo *gu;
-  GimpGuide  tmp_guide;
-  gint       tmp_ref;
+  gint       old_position;
 
   gu = (GuideUndo *) undo->data;
 
-  gimp_image_update_guide (undo->gimage, gu->guide);
+  old_position = gu->guide->position;
 
-  tmp_ref   = gu->guide->ref_count;
-  tmp_guide = *(gu->guide);
+  if (gu->guide->position == -1)
+    gimp_image_add_guide (undo->gimage, gu->guide, gu->position);
+  else if (gu->position == -1)
+    gimp_image_remove_guide (undo->gimage, gu->guide, FALSE);
+  else
+    gimp_image_move_guide (undo->gimage, gu->guide, gu->position, FALSE);
 
-  *(gu->guide) = gu->orig;
-
-  gu->guide->ref_count = tmp_ref;
-  gu->orig             = tmp_guide;
-
-  gimp_image_update_guide (undo->gimage, gu->guide);
+  gu->position = old_position;
 
   return TRUE;
 }
@@ -706,12 +702,7 @@ undo_free_image_guide (GimpUndo     *undo,
 
   gu = (GuideUndo *) undo->data;
 
-  gu->guide->ref_count--;
-  if (gu->guide->position < 0 && gu->guide->ref_count <= 0)
-    {
-      gimp_image_remove_guide (undo->gimage, gu->guide);
-      g_free (gu->guide);
-    }
+  gimp_image_guide_unref (gu->guide);
   g_free (gu);
 }
 
