@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-30 20:24+0000\n"
-"PO-Revision-Date: 2004-01-22 18:59+0100\n"
+"PO-Revision-Date: 2004-02-02 18:59+0100\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish  <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -738,11 +738,11 @@ msgstr ""
 
 #: app/core/core-enums.c:36 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
-msgstr ""
+msgstr "Dulra do Cúlra (RGB)"
 
 #: app/core/core-enums.c:37
 msgid "FG to BG (HSV)"
-msgstr ""
+msgstr "Dulra do Cúlra (HSV)"
 
 #: app/core/core-enums.c:38 app/core/gimp-gradients.c:85
 msgid "FG to Transparent"
@@ -1387,12 +1387,12 @@ msgstr ""
 #: app/gui/dialogs-constructors.c:564 app/gui/preferences-dialog.c:2063
 #: app/pdb/internal_procs.c:114
 msgid "Fonts"
-msgstr ""
+msgstr "Clófhoireanna"
 
 #. initialize the document history
 #: app/core/gimp.c:904
 msgid "Documents"
-msgstr ""
+msgstr "Caipéiseanna"
 
 #. initialize the template list
 #: app/core/gimp.c:908 app/gui/dialogs-constructors.c:440
@@ -1407,7 +1407,7 @@ msgstr ""
 #: app/core/gimp.c:1043 app/widgets/gimperrorconsole.c:259
 #: app/widgets/gimpwidgets-utils.c:93
 msgid "GIMP"
-msgstr ""
+msgstr "GIMP"
 
 #: app/core/gimpbrush.c:556
 #, c-format
@@ -1474,7 +1474,7 @@ msgstr ""
 
 #: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:1122
 msgid "Move Channel"
-msgstr ""
+msgstr "Bóg Bealach"
 
 #: app/core/gimpchannel.c:256
 msgid "Feather Channel"
@@ -1486,7 +1486,7 @@ msgstr ""
 
 #: app/core/gimpchannel.c:258
 msgid "Clear Channel"
-msgstr ""
+msgstr "Bánaigh Bealach"
 
 #: app/core/gimpchannel.c:259
 msgid "Fill Channel"
@@ -1820,11 +1820,11 @@ msgstr ""
 
 #: app/core/gimpimage.c:2450
 msgid "Add Layer"
-msgstr ""
+msgstr "Suimigh Sraith"
 
 #: app/core/gimpimage.c:2524
 msgid "Remove Layer"
-msgstr ""
+msgstr "Scríos Sraith"
 
 #: app/core/gimpimage.c:2586
 msgid "Layer cannot be raised higher."
@@ -2537,9 +2537,8 @@ msgid "/_Edit Channel Attributes..."
 msgstr ""
 
 #: app/gui/channels-menu.c:52
-#, fuzzy
 msgid "/_New Channel..."
-msgstr "Sraith Nua"
+msgstr "/_Bealach _Nua..."
 
 #: app/gui/channels-menu.c:57
 msgid "/_Raise Channel"
@@ -2550,53 +2549,44 @@ msgid "/_Lower Channel"
 msgstr ""
 
 #: app/gui/channels-menu.c:67
-#, fuzzy
 msgid "/D_uplicate Channel"
-msgstr "/Dúbáil an Gárdán"
+msgstr ""
 
 #: app/gui/channels-menu.c:72
-#, fuzzy
 msgid "/_Delete Channel"
-msgstr "/Roghnaigh/Faobhraigh"
+msgstr "/_Dealach Bealach"
 
 #: app/gui/channels-menu.c:80
-#, fuzzy
 msgid "/Channel to Sele_ction"
-msgstr "Athchuma"
+msgstr ""
 
 #: app/gui/channels-menu.c:85 app/gui/vectors-menu.c:95
-#, fuzzy
 msgid "/_Add to Selection"
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #: app/gui/channels-menu.c:90 app/gui/vectors-menu.c:100
-#, fuzzy
 msgid "/_Subtract from Selection"
-msgstr "Athchuma"
+msgstr ""
 
 #: app/gui/channels-menu.c:95 app/gui/vectors-menu.c:105
-#, fuzzy
 msgid "/_Intersect with Selection"
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #: app/gui/color-notebook.c:190
 msgid "Add the current color to the color history"
 msgstr ""
 
 #: app/gui/colormap-editor-menu.c:41 app/gui/palette-editor-menu.c:40
-#, fuzzy
 msgid "/_Edit Color..."
-msgstr "/Eagar an Dáth..."
+msgstr "/_Eagar an Dáth..."
 
 #: app/gui/colormap-editor-menu.c:46
-#, fuzzy
 msgid "/_Add Color from FG"
-msgstr "/Dáth Nua"
+msgstr "/_Suimigh Dath as Dulra..."
 
 #: app/gui/colormap-editor-menu.c:51
-#, fuzzy
 msgid "/_Add Color from BG"
-msgstr "/Dáth Nua"
+msgstr "/_Suimigh Dath as Cúlra"
 
 #: app/gui/convert-dialog.c:132
 msgid "Indexed Color Conversion"
@@ -2645,7 +2635,7 @@ msgstr ""
 
 #: app/gui/convert-dialog.c:342
 msgid "[ Warning ]"
-msgstr ""
+msgstr "[ Rabhadh ]"
 
 #: app/gui/convert-dialog.c:352
 msgid ""
@@ -2662,20 +2652,19 @@ msgstr ""
 #: app/gui/dialogs-constructors.c:193 app/gui/gui.c:350
 #: app/gui/preferences-dialog.c:1345 app/gui/preferences-dialog.c:1348
 msgid "Tool Options"
-msgstr ""
+msgstr "Roghnachais na hUirlisí"
 
 #: app/gui/dialogs-constructors.c:213
-#, fuzzy
 msgid "Devices"
-msgstr "Leibhéalí"
+msgstr "Gaireasanna"
 
 #: app/gui/dialogs-constructors.c:213
 msgid "Device Status"
-msgstr ""
+msgstr "Stádas na Gaireasanna"
 
 #: app/gui/dialogs-constructors.c:233
 msgid "Errors"
-msgstr ""
+msgstr "Earraidheanna"
 
 #: app/gui/dialogs-constructors.c:233
 msgid "Error Console"
@@ -2683,11 +2672,11 @@ msgstr ""
 
 #: app/gui/dialogs-constructors.c:257 app/gui/dialogs-constructors.c:464
 msgid "Images"
-msgstr ""
+msgstr "Íomhanna"
 
 #: app/gui/dialogs-constructors.c:375 app/gui/dialogs-constructors.c:582
 msgid "Tools"
-msgstr ""
+msgstr "Uirlísí"
 
 #: app/gui/dialogs-constructors.c:394 app/gui/dialogs-constructors.c:601
 msgid "Buffers"
@@ -2698,22 +2687,20 @@ msgid "History"
 msgstr "Stair"
 
 #: app/gui/dialogs-constructors.c:414 app/gui/dialogs-constructors.c:621
-#, fuzzy
 msgid "Document History"
-msgstr "/Comhad/Deireanach Oscailte/Stair an Doicim©ad"
+msgstr "Stair na Capéiseanna"
 
 #: app/gui/dialogs-constructors.c:440
-#, fuzzy
 msgid "Image Templates"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-constructors.c:651
 msgid "Layers"
-msgstr ""
+msgstr "Sraitheanna"
 
 #: app/gui/dialogs-constructors.c:682
 msgid "Channels"
-msgstr ""
+msgstr "Bealachanna"
 
 #: app/gui/dialogs-constructors.c:719 app/pdb/internal_procs.c:162
 #: app/tools/gimpvectortool.c:158
@@ -2759,12 +2746,11 @@ msgstr ""
 
 #: app/gui/dialogs-constructors.c:861
 msgid "FG/BG"
-msgstr ""
+msgstr "Dulra/Cúlra"
 
 #: app/gui/dialogs-constructors.c:861
-#, fuzzy
 msgid "FG/BG Color"
-msgstr "/Dáth Nua"
+msgstr "Dath Dulra/Cúlra"
 
 #: app/gui/dialogs-constructors.c:881
 msgid "Brush Editor"
@@ -2776,37 +2762,31 @@ msgstr ""
 
 #: app/gui/dialogs-constructors.c:943
 msgid "Palette Editor"
-msgstr ""
+msgstr "Eagarthóir Paléid"
 
 #: app/gui/dialogs-menu.c:66
-#, fuzzy
 msgid "/_Add Tab"
-msgstr "/Dáth Nua"
+msgstr "/_Suimigh Cluaisín"
 
 #: app/gui/dialogs-menu.c:68
-#, fuzzy
 msgid "/Add Tab/Tool _Options"
-msgstr "/Dáth Nua"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:70
-#, fuzzy
 msgid "/Add Tab/_Device Status"
-msgstr "/Comhad/Sábháil mar..."
+msgstr ""
 
 #: app/gui/dialogs-menu.c:75
-#, fuzzy
 msgid "/Add Tab/_Layers"
-msgstr "Sraith Nua"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:77
-#, fuzzy
 msgid "/Add Tab/_Channels"
-msgstr "/Comhad/Dún"
+msgstr "/Suimigh Cluaisín/_Bealachanna"
 
 #: app/gui/dialogs-menu.c:79
-#, fuzzy
 msgid "/Add Tab/_Paths"
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/dialogs-menu.c:81
 #, fuzzy
@@ -4679,7 +4659,7 @@ msgstr ""
 #: app/gui/info-window.c:518
 #, c-format
 msgid "pixels/%s"
-msgstr ""
+msgstr "picsil/%s"
 
 #: app/gui/info-window.c:520
 #, c-format
@@ -4689,11 +4669,11 @@ msgstr "%g x %g %s"
 #: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
 #: app/gui/user-install-dialog.c:1296
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: app/gui/info-window.c:551
 msgid "RGB Color"
-msgstr ""
+msgstr "Dath RGB"
 
 #: app/gui/info-window.c:558
 msgid "Indexed Color"
@@ -4701,16 +4681,15 @@ msgstr ""
 
 #: app/gui/info-window.c:558
 msgid "colors"
-msgstr ""
+msgstr "dathanna"
 
 #: app/gui/layers-commands.c:357
 msgid "Crop Layer"
 msgstr ""
 
 #: app/gui/layers-commands.c:435
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "Athchuma"
+msgstr ""
 
 #: app/gui/layers-commands.c:647
 msgid "Empty Layer Copy"
@@ -4770,37 +4749,32 @@ msgid "Invalid width or height. Both must be positive."
 msgstr ""
 
 #: app/gui/layers-menu.c:44
-#, fuzzy
 msgid "/_Edit Layer Attributes..."
-msgstr "/Eagar an Scuab..."
+msgstr ""
 
 #: app/gui/layers-menu.c:52
-#, fuzzy
 msgid "/_New Layer..."
-msgstr "Sraith Nua"
+msgstr "/Sraith _Nua..."
 
 #: app/gui/layers-menu.c:58
-#, fuzzy
 msgid "/_Raise Layer"
-msgstr "Sraith Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:63
 msgid "/Layer to _Top"
 msgstr ""
 
 #: app/gui/layers-menu.c:68
-#, fuzzy
 msgid "/_Lower Layer"
-msgstr "Sraith Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:73
 msgid "/Layer to _Bottom"
 msgstr ""
 
 #: app/gui/layers-menu.c:79
-#, fuzzy
 msgid "/D_uplicate Layer"
-msgstr "/Dúbáil an Gárdán"
+msgstr ""
 
 #: app/gui/layers-menu.c:84
 msgid "/_Anchor Layer"
@@ -4811,24 +4785,20 @@ msgid "/Merge Do_wn"
 msgstr ""
 
 #: app/gui/layers-menu.c:94
-#, fuzzy
 msgid "/_Delete Layer"
-msgstr "Dealaigh an Sraith"
+msgstr "/_Dealaigh an Sraith"
 
 #: app/gui/layers-menu.c:102
-#, fuzzy
 msgid "/Layer B_oundary Size..."
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:107
-#, fuzzy
 msgid "/Layer to _Image Size"
-msgstr "/Radharc/Radharc Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:112
-#, fuzzy
 msgid "/_Scale Layer..."
-msgstr "Sraith Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:120
 msgid "/Add La_yer Mask..."
@@ -4839,51 +4809,44 @@ msgid "/Apply Layer _Mask"
 msgstr ""
 
 #: app/gui/layers-menu.c:128
-#, fuzzy
 msgid "/Delete Layer Mas_k"
-msgstr "Dealaigh an Sraith"
+msgstr ""
 
 #: app/gui/layers-menu.c:133
-#, fuzzy
 msgid "/Mask to Sele_ction"
-msgstr "Athchuma"
+msgstr ""
 
 #: app/gui/layers-menu.c:141
 msgid "/Add Alpha C_hannel"
 msgstr ""
 
 #: app/gui/layers-menu.c:146
-#, fuzzy
 msgid "/Al_pha to Selection"
-msgstr "/Eagar/Gearr"
+msgstr ""
 
 #: app/gui/layers-menu.c:154
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/layers-menu.c:159
-#, fuzzy
 msgid "/Flatten Image"
-msgstr "Dealaigh an Sraith"
+msgstr ""
 
 #: app/gui/menus.c:113
 msgid "Toolbox Menu"
-msgstr ""
+msgstr "Clár Uirlís"
 
 #: app/gui/menus.c:120
-#, fuzzy
 msgid "Image Menu"
-msgstr "/Radharc/Radharc Nua"
+msgstr "Clár íomha"
 
 #: app/gui/menus.c:127
 msgid "Open Menu"
-msgstr ""
+msgstr "Oscáil Chlár"
 
 #: app/gui/menus.c:134
-#, fuzzy
 msgid "Save Menu"
-msgstr "/Radharc/Radharc Nua"
+msgstr "Sábháil Clár"
 
 #: app/gui/menus.c:142
 msgid "Layers Menu"
@@ -4927,16 +4890,15 @@ msgstr ""
 
 #: app/gui/menus.c:212
 msgid "Documents Menu"
-msgstr ""
+msgstr "Clár Capéiseanna"
 
 #: app/gui/menus.c:219
 msgid "Templaes Menu"
 msgstr ""
 
 #: app/gui/menus.c:226
-#, fuzzy
 msgid "Images Menu"
-msgstr "/Radharc/Radharc Nua"
+msgstr "Clár Íomhanna"
 
 #: app/gui/menus.c:233
 msgid "Gradient Editor Menu"
@@ -5083,39 +5045,33 @@ msgstr ""
 
 #: app/gui/offset-dialog.c:207
 msgid "_Background"
-msgstr ""
+msgstr "_Cúlra"
 
 #: app/gui/offset-dialog.c:210
 msgid "_Transparent"
 msgstr ""
 
 #: app/gui/palette-editor-menu.c:48
-#, fuzzy
 msgid "/New Color from _FG"
-msgstr "/Dáth Nua"
+msgstr "/Dáth Nua as _Dulra"
 
 #: app/gui/palette-editor-menu.c:53
-#, fuzzy
 msgid "/New Color from _BG"
-msgstr "/Dáth Nua"
+msgstr "/Dath Nua as _Cúlra"
 
 #: app/gui/palette-editor-menu.c:58
-#, fuzzy
 msgid "/_Delete Color"
-msgstr "Dealaigh an Sraith"
+msgstr "/_Dealaigh an Dath"
 
 #: app/gui/palette-editor-menu.c:66
-#, fuzzy
 msgid "/Zoom _Out"
-msgstr "Formhéadaigh Amach"
+msgstr "/Súmáil _Amach"
 
 #: app/gui/palette-editor-menu.c:71
-#, fuzzy
 msgid "/Zoom _In"
-msgstr "Formhéadaigh Isteach"
+msgstr "/Súmáil _Isteach"
 
 #: app/gui/palette-editor-menu.c:76
-#, fuzzy
 msgid "/Zoom _All"
 msgstr "Formhéadaigh Isteach"
 
@@ -5188,33 +5144,28 @@ msgid "Enter a name for the merged palette"
 msgstr ""
 
 #: app/gui/palettes-menu.c:46
-#, fuzzy
 msgid "/_Edit Palette..."
-msgstr "/Eagar an Gárdán..."
+msgstr "/Eagar an Paléid..."
 
 #: app/gui/palettes-menu.c:54
-#, fuzzy
 msgid "/_New Palette"
-msgstr "/Gárdán Nua"
+msgstr "/Palêid Nua"
 
 #: app/gui/palettes-menu.c:59
 msgid "/_Import Palette..."
 msgstr ""
 
 #: app/gui/palettes-menu.c:64
-#, fuzzy
 msgid "/D_uplicate Palette"
-msgstr "/Dúbáil an Gárdán"
+msgstr ""
 
 #: app/gui/palettes-menu.c:69
-#, fuzzy
 msgid "/_Merge Palettes..."
-msgstr "/Comhad/Dún"
+msgstr ""
 
 #: app/gui/palettes-menu.c:73
-#, fuzzy
 msgid "/_Delete Palette"
-msgstr "/Dealaigh an Gárdán..."
+msgstr "/Dealaigh Paléid"
 
 #: app/gui/palettes-menu.c:81
 msgid "/_Refresh Palettes"
@@ -5268,9 +5219,8 @@ msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:858
-#, fuzzy
 msgid "Show _Menubar"
-msgstr "/Radharc/Radharc Nua"
+msgstr "Taispeán _Barra na Cláranna"
 
 #: app/gui/preferences-dialog.c:861
 msgid "Show _Rulers"
