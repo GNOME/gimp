@@ -1,3 +1,8 @@
+Thu Jan 21 00:10:33 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/gimpimage.c: Backed out last change for now, since I'm a
+	coward and yosh was threatening to make a release...!
+
 Wed Jan 20 22:37:13 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/gimpimage.c: Enabled the gimage->projection copy-on-write

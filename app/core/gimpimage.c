@@ -1333,7 +1333,8 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 		      gboolean can_use_cowproject)
 {
 
-#if 1
+      gimage->construct_flag = 0;
+#if 0
       int xoff, yoff;
   
       /*  set the construct flag, used to determine if anything
@@ -1404,9 +1405,9 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
       {
 	PixelRegion srcPR, destPR;
 	void * pr;
-/*	
-	g_warning("Can use cow-projection hack.  Yay!");
 	
+	g_warning("Can use cow-projection hack.  Yay!");
+	/*	
 	//	gimp_image_initialize_projection (gimage, x, y, w, h);
 */
 	pixel_region_init (&srcPR, gimp_drawable_data
@@ -1438,6 +1439,7 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 	  }
 
 	gimage->construct_flag = 1;
+	gimp_image_construct_channels (gimage, x, y, w, h);
 	return;
       }
     }
