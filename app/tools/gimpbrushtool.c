@@ -463,7 +463,10 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->button_release (tool,
                                                   coords, time, state, gdisp);
 
-  gimp_paint_core_finish (core, drawable);
+  if (state & GDK_BUTTON3_MASK)
+    gimp_paint_core_cancel (core, drawable);
+  else
+    gimp_paint_core_finish (core, drawable);
 
   gimp_image_flush (gdisp->gimage);
 }

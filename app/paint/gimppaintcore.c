@@ -496,6 +496,70 @@ gimp_paint_core_finish (GimpPaintCore *core,
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
+static void
+gimp_paint_core_copy_valid_tiles (TileManager *src_tiles,
+                                  TileManager *dest_tiles,
+                                  gint         x,
+                                  gint         y,
+                                  gint         w,
+                                  gint         h)
+{
+  Tile *src_tile;
+  gint  i, j;
+
+  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
+    {
+      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
+        {
+          src_tile = tile_manager_get_tile (src_tiles,
+                                            j, i, FALSE, FALSE);
+
+          if (tile_is_valid (src_tile) == TRUE)
+            {
+              src_tile = tile_manager_get_tile (src_tiles,
+                                                j, i, TRUE, FALSE);
+
+              tile_manager_map_tile (dest_tiles, j, i, src_tile);
+
+              tile_release (src_tile, FALSE);
+            }
+        }
+    }
+}
+
+void
+gimp_paint_core_cancel (GimpPaintCore *core,
+			GimpDrawable  *drawable)
+{
+  GimpImage   *gimage;
+
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  /*  Determine if any part of the image has been altered--
+   *  if nothing has, then just return...
+   */
+  if ((core->x2 == core->x1) || (core->y2 == core->y1))
+    return;
+
+  gimp_paint_core_copy_valid_tiles (core->undo_tiles,
+                                    gimp_drawable_data (drawable),
+                                    core->x1, core->y1,
+                                    core->x2 - core->x1,
+                                    core->y2 - core->y1);
+
+  tile_manager_unref (core->undo_tiles);
+  core->undo_tiles = NULL;
+
+  gimp_drawable_update (drawable,
+                        core->x1, core->y1,
+                        core->x2 - core->x1, core->y2 - core->y1);
+}
+
 void
 gimp_paint_core_cleanup (GimpPaintCore *core)
 {

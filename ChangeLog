@@ -1,5 +1,18 @@
 2003-09-17  Michael Natterer  <mitch@gimp.org>
 
+	Added nomis' favorite feature ;)
+
+	* app/paint/gimppaintcore.[ch]: added gimp_paint_core_cancel()
+	which can be called instead of gimp_paint_core_finish().
+	It simply copies core->undo_tiles back to the drawable instead of
+	pushing them to the undo stack.
+
+	* app/tools/gimppainttool.c (gimp_paint_core_button_release): call
+	_cancel() instead of _finish() if the right mouse button is
+	pressed.
+
+2003-09-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpvectortool.[ch]: added "GimpVectorMode saved_mode"
 	to the GimpVectorTool struct.
 

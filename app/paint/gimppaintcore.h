@@ -154,6 +154,8 @@ gboolean  gimp_paint_core_start       (GimpPaintCore       *core,
                                        GimpCoords          *coords);
 void      gimp_paint_core_finish      (GimpPaintCore       *core,
                                        GimpDrawable        *drawable);
+void      gimp_paint_core_cancel      (GimpPaintCore       *core,
+                                       GimpDrawable        *drawable);
 void      gimp_paint_core_cleanup     (GimpPaintCore       *core);
 
 void      gimp_paint_core_constrain   (GimpPaintCore       *core);
