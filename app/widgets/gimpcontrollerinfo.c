@@ -178,7 +178,10 @@ static void
 gimp_controller_info_init (GimpControllerInfo *info)
 {
   info->controller = NULL;
-  info->mapping    = NULL;
+  info->mapping    = g_hash_table_new_full (g_str_hash,
+                                            g_str_equal,
+                                            (GDestroyNotify) g_free,
+                                            (GDestroyNotify) g_free);
 }
 
 static void

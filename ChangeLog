@@ -1,3 +1,10 @@
+2004-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollerinfo.c (gimp_controller_info_init):
+	always create the event mapping table. Fixes tons of warnings and
+	non-functional controller mapping dialog when an empty controller
+	was deserialized from controllerrc. Spotted by drc.
+
 2004-11-22  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c (app_exit_after_callback): call base_exit()
