@@ -28,7 +28,7 @@ sub get_vguides {
     $i=0;
     my @vguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == &Gimp::VERTICAL_GUIDE){
+        if ($img->get_guide_orientation($i) == &Gimp::VERTICAL){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $vkeys{$keyval} = $i;
             }
@@ -49,7 +49,7 @@ sub get_hguides {
     $i=0;
     my @hguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == &Gimp::HORIZONTAL_GUIDE){
+        if ($img->get_guide_orientation($i) == &Gimp::HORIZONTAL){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $hkeys{$keyval} = $i;
             }
