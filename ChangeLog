@@ -1,3 +1,12 @@
+Tue Jan 11 23:50:53 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/layer.c: in layer_new_from_tiles check if image_type has alpha 
+	to avoid obscure bugs if the function is not called correctly
+
+	* app/text_tool_cmds.c
+	* tools/pdbgen/pdb/text_tool.pdb: added a hint about using border = -1
+	to suppress cropping of empty spaces around the text
+
 Tue Jan 11 14:36:55 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimpcompat.h: let's not be redundant redundant. Made

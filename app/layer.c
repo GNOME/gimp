@@ -411,6 +411,9 @@ layer_new_from_tiles (GimpImage        *gimage,
   /*  If no image or no tile manager, return NULL  */
   if (!gimage || !tiles )
     return NULL;
+  
+  /*  the layer_type needs to have alpha */
+  g_return_val_if_fail (TYPE_HAS_ALPHA (layer_type), NULL);
 
    /*  Create the new layer  */
   new_layer = layer_new (0, tiles->width, tiles->height,

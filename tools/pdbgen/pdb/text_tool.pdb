@@ -113,7 +113,9 @@ will require the same amount of memory with or without antialiasing. If the
 specified drawable parameter is valid, the text will be created as a floating
 selection attached to the drawable. If the drawable parameter is not valid
 (-1), the text will appear as a new layer. Finally, a border can be specified
-around the final rendered text. The border is measured in pixels.
+around the final rendered text. The border is measured in pixels. If the
+border is specified as -1, empty spaces around the text will not be cropped.
+
 HELP
 
     &pdb_misc;
@@ -203,7 +205,8 @@ amount of memory with or without antialiasing. If the specified drawable
 parameter is valid, the text will be created as a floating selection attached
 to the drawable. If the drawable parameter is not valid (-1), the text will
 appear as a new layer. Finally, a border can be specified around the final
-rendered text. The border is measured in pixels.
+rendered text. The border is measured in pixels. If the border is specified 
+as -1, empty spaces around the text will not be cropped.
 HELP
 
     &pdb_misc;
