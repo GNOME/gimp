@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:11+0100\n"
-"PO-Revision-Date: 2004-02-23 20:23-0500\n"
+"POT-Creation-Date: 2004-04-10 20:02-0400\n"
+"PO-Revision-Date: 2004-04-10 20:03-0400\n"
 "Last-Translator: Adam Weinberger <adamw@FreeBSD.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
@@ -59,7 +59,7 @@ msgstr "About"
 #. Previews: frame
 #. * Misc: Preview settings *
 #. Misc: Preview settings: Continuous update ?!
-#: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
+#: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
@@ -68,7 +68,7 @@ msgstr "About"
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
-#: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:665
+#: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2324
 #: plug-ins/gflare/gflare.c:3242 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
@@ -324,7 +324,7 @@ msgstr "Cosine"
 
 #: plug-ins/FractalExplorer/Dialogs.c:998
 #: plug-ins/FractalExplorer/Dialogs.c:1039
-#: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:504
+#: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
 #: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
 #: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
@@ -424,7 +424,7 @@ msgstr "_Fractals"
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
-#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1297
+#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
 #: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
@@ -434,7 +434,7 @@ msgstr "_Fractals"
 #: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
-#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
+#: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -469,7 +469,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
-#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:760
+#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
 #: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
@@ -629,113 +629,118 @@ msgstr "High _Quality Preview"
 msgid "Enable/disable high quality preview"
 msgstr "Enable/disable high quality preview"
 
-#: plug-ins/Lighting/lighting_ui.c:411
+#: plug-ins/Lighting/lighting_ui.c:413
 msgid "E_nable Antialiasing"
 msgstr "E_nable Antialiasing"
 
-#: plug-ins/Lighting/lighting_ui.c:432 plug-ins/MapObject/mapobject_ui.c:636
+#: plug-ins/Lighting/lighting_ui.c:434 plug-ins/MapObject/mapobject_ui.c:636
 #: plug-ins/common/bumpmap.c:1070 plug-ins/common/emboss.c:554
 #: plug-ins/common/fractaltrace.c:845 plug-ins/common/struc.c:1296
 msgid "_Depth:"
 msgstr "_Depth:"
 
-#: plug-ins/Lighting/lighting_ui.c:435 plug-ins/MapObject/mapobject_ui.c:639
+#: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Antialiasing quality. Higher is better, but slower"
 
-#: plug-ins/Lighting/lighting_ui.c:442
+#: plug-ins/Lighting/lighting_ui.c:444
 msgid "T_hreshold:"
 msgstr "T_hreshold:"
 
-#: plug-ins/Lighting/lighting_ui.c:445 plug-ins/MapObject/mapobject_ui.c:656
+#: plug-ins/Lighting/lighting_ui.c:447 plug-ins/Lighting/lighting_ui.c:463
+#: plug-ins/MapObject/mapobject_ui.c:656
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Stop when pixel differences are smaller than this value"
 
-#: plug-ins/Lighting/lighting_ui.c:487 plug-ins/MapObject/mapobject_ui.c:682
+#: plug-ins/Lighting/lighting_ui.c:459 plug-ins/common/threshold_alpha.c:244
+msgid "Threshold:"
+msgstr "Threshold:"
+
+#: plug-ins/Lighting/lighting_ui.c:490 plug-ins/MapObject/mapobject_ui.c:682
 msgid "Light Settings"
 msgstr "Light Settings"
 
-#: plug-ins/Lighting/lighting_ui.c:505
+#: plug-ins/Lighting/lighting_ui.c:508
 msgid "Directional"
 msgstr "Directional"
 
-#: plug-ins/Lighting/lighting_ui.c:506
+#: plug-ins/Lighting/lighting_ui.c:509
 msgid "Point"
 msgstr "Point"
 
-#: plug-ins/Lighting/lighting_ui.c:511
+#: plug-ins/Lighting/lighting_ui.c:514
 msgid "L_ight Type:"
 msgstr "L_ight Type:"
 
-#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:707
+#: plug-ins/Lighting/lighting_ui.c:517 plug-ins/MapObject/mapobject_ui.c:707
 msgid "Type of light source to apply"
 msgstr "Type of light source to apply"
 
-#: plug-ins/Lighting/lighting_ui.c:516 plug-ins/MapObject/mapobject_ui.c:709
+#: plug-ins/Lighting/lighting_ui.c:519 plug-ins/MapObject/mapobject_ui.c:709
 msgid "Select Lightsource Color"
 msgstr "Select Lightsource Colour"
 
-#: plug-ins/Lighting/lighting_ui.c:527
+#: plug-ins/Lighting/lighting_ui.c:530
 msgid "Lig_ht Color:"
 msgstr "Lig_ht Colour:"
 
-#: plug-ins/Lighting/lighting_ui.c:531 plug-ins/MapObject/mapobject_ui.c:722
+#: plug-ins/Lighting/lighting_ui.c:534 plug-ins/MapObject/mapobject_ui.c:722
 msgid "Set light source color"
 msgstr "Set light source colour"
 
-#: plug-ins/Lighting/lighting_ui.c:533 plug-ins/MapObject/mapobject_ui.c:724
+#: plug-ins/Lighting/lighting_ui.c:536 plug-ins/MapObject/mapobject_ui.c:724
 #: plug-ins/MapObject/mapobject_ui.c:1033
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Position"
 msgstr "Position"
 
-#: plug-ins/Lighting/lighting_ui.c:551 plug-ins/common/flarefx.c:740
+#: plug-ins/Lighting/lighting_ui.c:554 plug-ins/common/flarefx.c:740
 #: plug-ins/common/nova.c:463 plug-ins/common/papertile.c:270
 #: plug-ins/flame/flame.c:1178 plug-ins/gflare/gflare.c:2650
 msgid "_X:"
 msgstr "_X:"
 
-#: plug-ins/Lighting/lighting_ui.c:562 plug-ins/MapObject/mapobject_ui.c:749
+#: plug-ins/Lighting/lighting_ui.c:565 plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X position in XYZ space"
 msgstr "Light source X position in XYZ space"
 
-#: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
+#: plug-ins/Lighting/lighting_ui.c:571 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
 #: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2654
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:579 plug-ins/MapObject/mapobject_ui.c:763
+#: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:763
 msgid "Light source Y position in XYZ space"
 msgstr "Light source Y position in XYZ space"
 
-#: plug-ins/Lighting/lighting_ui.c:585
+#: plug-ins/Lighting/lighting_ui.c:588
 msgid "_Z:"
 msgstr "_Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:777
+#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:777
 msgid "Light source Z position in XYZ space"
 msgstr "Light source Z position in XYZ space"
 
-#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:780
+#: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Direction Vector"
 msgstr "Direction Vector"
 
 #. X
-#: plug-ins/Lighting/lighting_ui.c:614 plug-ins/MapObject/mapobject_ui.c:741
+#: plug-ins/Lighting/lighting_ui.c:617 plug-ins/MapObject/mapobject_ui.c:741
 #: plug-ins/MapObject/mapobject_ui.c:796
 #: plug-ins/MapObject/mapobject_ui.c:1045
 #: plug-ins/MapObject/mapobject_ui.c:1092 plug-ins/ifscompose/ifscompose.c:556
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:625 plug-ins/MapObject/mapobject_ui.c:804
+#: plug-ins/Lighting/lighting_ui.c:628 plug-ins/MapObject/mapobject_ui.c:804
 msgid "Light source X direction in XYZ space"
 msgstr "Light source X direction in XYZ space"
 
 #. Y
-#: plug-ins/Lighting/lighting_ui.c:630 plug-ins/MapObject/mapobject_ui.c:755
+#: plug-ins/Lighting/lighting_ui.c:633 plug-ins/MapObject/mapobject_ui.c:755
 #: plug-ins/MapObject/mapobject_ui.c:809
 #: plug-ins/MapObject/mapobject_ui.c:1057
 #: plug-ins/MapObject/mapobject_ui.c:1102
@@ -743,11 +748,11 @@ msgstr "Light source X direction in XYZ space"
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:640 plug-ins/MapObject/mapobject_ui.c:817
+#: plug-ins/Lighting/lighting_ui.c:643 plug-ins/MapObject/mapobject_ui.c:817
 msgid "Light source Y direction in XYZ space"
 msgstr "Light source Y direction in XYZ space"
 
-#: plug-ins/Lighting/lighting_ui.c:645 plug-ins/MapObject/mapobject_ui.c:769
+#: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:769
 #: plug-ins/MapObject/mapobject_ui.c:822
 #: plug-ins/MapObject/mapobject_ui.c:1069
 #: plug-ins/MapObject/mapobject_ui.c:1112
@@ -755,172 +760,156 @@ msgstr "Light source Y direction in XYZ space"
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:655 plug-ins/MapObject/mapobject_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:658 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
 msgstr "Light source Z direction in XYZ space"
 
-#: plug-ins/Lighting/lighting_ui.c:681 plug-ins/MapObject/mapobject_ui.c:855
+#: plug-ins/Lighting/lighting_ui.c:684 plug-ins/MapObject/mapobject_ui.c:855
 msgid "Intensity Levels"
 msgstr "Intensity Levels"
 
-#: plug-ins/Lighting/lighting_ui.c:699
+#: plug-ins/Lighting/lighting_ui.c:702
 msgid "_Ambient:"
 msgstr "_Ambient:"
 
-#: plug-ins/Lighting/lighting_ui.c:717 plug-ins/MapObject/mapobject_ui.c:887
+#: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Amount of original colour to show where no direct light falls"
 
-#: plug-ins/Lighting/lighting_ui.c:729
+#: plug-ins/Lighting/lighting_ui.c:732
 msgid "_Diffuse:"
 msgstr "_Diffuse:"
 
-#: plug-ins/Lighting/lighting_ui.c:747 plug-ins/MapObject/mapobject_ui.c:913
+#: plug-ins/Lighting/lighting_ui.c:750 plug-ins/MapObject/mapobject_ui.c:913
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensity of original colour when lit by a light source"
 
-#: plug-ins/Lighting/lighting_ui.c:755 plug-ins/MapObject/mapobject_ui.c:921
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/MapObject/mapobject_ui.c:921
 msgid "Reflectivity"
 msgstr "Reflectivity"
 
-#: plug-ins/Lighting/lighting_ui.c:773
+#: plug-ins/Lighting/lighting_ui.c:776
 msgid "D_iffuse:"
 msgstr "D_iffuse:"
 
-#: plug-ins/Lighting/lighting_ui.c:792 plug-ins/MapObject/mapobject_ui.c:953
+#: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Higher values makes the object reflect more light (appear lighter)"
 
-#: plug-ins/Lighting/lighting_ui.c:804
+#: plug-ins/Lighting/lighting_ui.c:807
 msgid "_Specular:"
 msgstr "_Specular:"
 
-#: plug-ins/Lighting/lighting_ui.c:823 plug-ins/MapObject/mapobject_ui.c:979
+#: plug-ins/Lighting/lighting_ui.c:826 plug-ins/MapObject/mapobject_ui.c:979
 msgid "Controls how intense the highlights will be"
 msgstr "Controls how intense the highlights will be"
 
-#: plug-ins/Lighting/lighting_ui.c:835
+#: plug-ins/Lighting/lighting_ui.c:838
 msgid "_Highlight:"
 msgstr "_Highlight:"
 
-#: plug-ins/Lighting/lighting_ui.c:853 plug-ins/MapObject/mapobject_ui.c:1005
+#: plug-ins/Lighting/lighting_ui.c:856 plug-ins/MapObject/mapobject_ui.c:1005
 msgid "Higher values makes the highlights more focused"
 msgstr "Higher values makes the highlights more focused"
 
-#: plug-ins/Lighting/lighting_ui.c:887
+#: plug-ins/Lighting/lighting_ui.c:890
 msgid "E_nable Bump Mapping"
 msgstr "E_nable Bump Mapping"
 
-#: plug-ins/Lighting/lighting_ui.c:898
+#: plug-ins/Lighting/lighting_ui.c:904
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Enable/disable bump-mapping (image depth)"
 
-#: plug-ins/Lighting/lighting_ui.c:916
+#: plug-ins/Lighting/lighting_ui.c:922
 msgid "Bumpm_ap Image:"
 msgstr "Bumpm_ap Image:"
 
-#: plug-ins/Lighting/lighting_ui.c:923 plug-ins/flame/flame.c:706
+#: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:706
 msgid "Linear"
 msgstr "Linear"
 
-#: plug-ins/Lighting/lighting_ui.c:924
+#: plug-ins/Lighting/lighting_ui.c:930
 msgid "Logarithmic"
 msgstr "Logarithmic"
 
-#: plug-ins/Lighting/lighting_ui.c:925 plug-ins/flame/flame.c:707
+#: plug-ins/Lighting/lighting_ui.c:931 plug-ins/flame/flame.c:707
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:926 plug-ins/flame/flame.c:708
+#: plug-ins/Lighting/lighting_ui.c:932 plug-ins/flame/flame.c:708
 msgid "Spherical"
 msgstr "Spherical"
 
-#: plug-ins/Lighting/lighting_ui.c:929
+#: plug-ins/Lighting/lighting_ui.c:935
 msgid "Cu_rve:"
 msgstr "Cu_rve:"
 
-#: plug-ins/Lighting/lighting_ui.c:935
+#: plug-ins/Lighting/lighting_ui.c:941
 msgid "Ma_ximum Height:"
 msgstr "Ma_ximum Height:"
 
-#: plug-ins/Lighting/lighting_ui.c:942
+#: plug-ins/Lighting/lighting_ui.c:951
 msgid "Maximum height for bumps"
 msgstr "Maximum height for bumps"
 
-#: plug-ins/Lighting/lighting_ui.c:948
-msgid "M_inimum Height:"
-msgstr "M_inimum Height:"
-
-#: plug-ins/Lighting/lighting_ui.c:955
-msgid "Minimum height for bumps"
-msgstr "Minimum height for bumps"
-
-#: plug-ins/Lighting/lighting_ui.c:958
-msgid "Auto_stretch to Fit Value Range"
-msgstr "Auto_stretch to Fit Value Range"
-
-#: plug-ins/Lighting/lighting_ui.c:968
-msgid "Fit into value range"
-msgstr "Fit into value range"
-
-#: plug-ins/Lighting/lighting_ui.c:993
+#: plug-ins/Lighting/lighting_ui.c:976
 msgid "E_nable Environment Mapping"
 msgstr "E_nable Environment Mapping"
 
-#: plug-ins/Lighting/lighting_ui.c:1004
+#: plug-ins/Lighting/lighting_ui.c:990
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Enable/disable environment-mapping (reflection)"
 
-#: plug-ins/Lighting/lighting_ui.c:1022
+#: plug-ins/Lighting/lighting_ui.c:1008
 msgid "En_vironment Image:"
 msgstr "En_vironment Image:"
 
-#: plug-ins/Lighting/lighting_ui.c:1026
+#: plug-ins/Lighting/lighting_ui.c:1012
 msgid "Environment image to use"
 msgstr "Environment image to use"
 
-#: plug-ins/Lighting/lighting_ui.c:1049
+#: plug-ins/Lighting/lighting_ui.c:1035
 msgid "Op_tions"
 msgstr "Op_tions"
 
-#: plug-ins/Lighting/lighting_ui.c:1053 plug-ins/MapObject/mapobject_ui.c:1334
+#: plug-ins/Lighting/lighting_ui.c:1039 plug-ins/MapObject/mapobject_ui.c:1334
 msgid "_Light"
 msgstr "_Light"
 
-#: plug-ins/Lighting/lighting_ui.c:1057 plug-ins/MapObject/mapobject_ui.c:1338
+#: plug-ins/Lighting/lighting_ui.c:1043 plug-ins/MapObject/mapobject_ui.c:1338
 msgid "_Material"
 msgstr "_Material"
 
-#: plug-ins/Lighting/lighting_ui.c:1061
+#: plug-ins/Lighting/lighting_ui.c:1047
 msgid "_Bump Map"
 msgstr "_Bump Map"
 
-#: plug-ins/Lighting/lighting_ui.c:1065
+#: plug-ins/Lighting/lighting_ui.c:1051
 msgid "_Environment Map"
 msgstr "_Environment Map"
 
-#: plug-ins/Lighting/lighting_ui.c:1108
+#: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Lighting Effects"
 msgstr "Lighting Effects"
 
-#: plug-ins/Lighting/lighting_ui.c:1162 plug-ins/gimpressionist/preview.c:122
+#: plug-ins/Lighting/lighting_ui.c:1148 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "_Update"
 
-#: plug-ins/Lighting/lighting_ui.c:1169 plug-ins/MapObject/mapobject_ui.c:1438
+#: plug-ins/Lighting/lighting_ui.c:1155 plug-ins/MapObject/mapobject_ui.c:1438
 msgid "Recompute preview image"
 msgstr "Recompute preview image"
 
-#: plug-ins/Lighting/lighting_ui.c:1171
+#: plug-ins/Lighting/lighting_ui.c:1157
 msgid "I_nteractive"
 msgstr "I_nteractive"
 
-#: plug-ins/Lighting/lighting_ui.c:1186
+#: plug-ins/Lighting/lighting_ui.c:1172
 msgid "Enable/disable real time preview of changes"
 msgstr "Enable/disable real time preview of changes"
 
-#: plug-ins/Lighting/lighting_ui.c:1189
+#: plug-ins/Lighting/lighting_ui.c:1175
 msgid "Preview Options"
 msgstr "Preview Options"
 
@@ -1187,7 +1176,7 @@ msgstr "Bad colourmap"
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
-#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:767
+#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:775
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
@@ -1225,7 +1214,7 @@ msgstr "Error reading BMP file header from '%s'"
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:925 plug-ins/common/pcx.c:333
+#: plug-ins/common/jpeg.c:933 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
@@ -1255,7 +1244,7 @@ msgstr "Cannot operate on unknown image types."
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
-#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1252
+#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
@@ -2014,7 +2003,7 @@ msgstr "Align Visible Layers"
 #: plug-ins/common/emboss.c:525 plug-ins/common/engrave.c:216
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
-#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1717
+#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1725
 #: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
@@ -2028,7 +2017,7 @@ msgstr "Align Visible Layers"
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
 #: plug-ins/common/vpropagate.c:1073 plug-ins/common/waves.c:343
-#: plug-ins/common/whirlpinch.c:687 plug-ins/common/wind.c:892
+#: plug-ins/common/whirlpinch.c:698 plug-ins/common/wind.c:892
 #: plug-ins/common/xpm.c:783 plug-ins/maze/maze_face.c:202
 #: plug-ins/xjt/xjt.c:856
 msgid "Parameter Settings"
@@ -3306,7 +3295,7 @@ msgstr "R_ecursive"
 
 #: plug-ins/common/despeckle.c:739 plug-ins/common/nlfilt.c:382
 #: plug-ins/common/nova.c:364 plug-ins/common/unsharp.c:665
-#: plug-ins/common/whirlpinch.c:717 plug-ins/gflare/gflare.c:2685
+#: plug-ins/common/whirlpinch.c:728 plug-ins/gflare/gflare.c:2685
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr "_Radius:"
@@ -3586,7 +3575,7 @@ msgstr "<Image>/Filters/Combine/_Film..."
 msgid "Composing Images..."
 msgstr "Composing Images..."
 
-#: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:176
+#: plug-ins/common/film.c:444 plug-ins/common/guillotine.c:185
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -4331,7 +4320,7 @@ msgstr "The amount of cellspacing."
 msgid "<Image>/Image/Transform/_Guillotine"
 msgstr "<Image>/Image/Transform/_Guillotine"
 
-#: plug-ins/common/guillotine.c:110
+#: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
 msgstr "Guillotine..."
 
@@ -4571,85 +4560,85 @@ msgstr "Each piece has curved sides"
 msgid "Export Preview"
 msgstr "Export Preview"
 
-#: plug-ins/common/jpeg.c:918
+#: plug-ins/common/jpeg.c:926
 msgid "JPEG preview"
 msgstr "JPEG preview"
 
-#: plug-ins/common/jpeg.c:1171
+#: plug-ins/common/jpeg.c:1179
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Size: %ld bytes (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1605 plug-ins/common/jpeg.c:1707
+#: plug-ins/common/jpeg.c:1613 plug-ins/common/jpeg.c:1715
 msgid "Size: unknown"
 msgstr "Size: unknown"
 
-#: plug-ins/common/jpeg.c:1670
+#: plug-ins/common/jpeg.c:1678
 msgid "Save as JPEG"
 msgstr "Save as JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1686 plug-ins/print/gimp_color_window.c:253
+#: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:253
 msgid "Image Preview"
 msgstr "Image Preview"
 
-#: plug-ins/common/jpeg.c:1694
+#: plug-ins/common/jpeg.c:1702
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr "Preview (in image window, will modify image's undo history!)"
 
-#: plug-ins/common/jpeg.c:1727 plug-ins/xjt/xjt.c:888
+#: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
 msgstr "Quality:"
 
-#: plug-ins/common/jpeg.c:1750 plug-ins/xjt/xjt.c:897
+#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:897
 msgid "Smoothing:"
 msgstr "Smoothing:"
 
-#: plug-ins/common/jpeg.c:1778
+#: plug-ins/common/jpeg.c:1786
 msgid "Restart markers"
 msgstr "Restart markers"
 
-#: plug-ins/common/jpeg.c:1787
+#: plug-ins/common/jpeg.c:1795
 msgid "Restart frequency (rows):"
 msgstr "Restart frequency (rows):"
 
-#: plug-ins/common/jpeg.c:1816 plug-ins/xjt/xjt.c:866
+#: plug-ins/common/jpeg.c:1824 plug-ins/xjt/xjt.c:866
 msgid "Optimize"
 msgstr "Optimize"
 
-#: plug-ins/common/jpeg.c:1830
+#: plug-ins/common/jpeg.c:1838
 msgid "Progressive"
 msgstr "Progressive"
 
-#: plug-ins/common/jpeg.c:1849
+#: plug-ins/common/jpeg.c:1857
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Force baseline JPEG (Readable by all decoders)"
 
-#: plug-ins/common/jpeg.c:1865
+#: plug-ins/common/jpeg.c:1873
 msgid "Save EXIF data"
 msgstr "Save EXIF data"
 
-#: plug-ins/common/jpeg.c:1891
+#: plug-ins/common/jpeg.c:1899
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: plug-ins/common/jpeg.c:1905
+#: plug-ins/common/jpeg.c:1913
 msgid "Fast Integer"
 msgstr "Fast Integer"
 
-#: plug-ins/common/jpeg.c:1906
+#: plug-ins/common/jpeg.c:1914
 msgid "Integer"
 msgstr "Integer"
 
-#: plug-ins/common/jpeg.c:1907
+#: plug-ins/common/jpeg.c:1915
 msgid "Floating-Point"
 msgstr "Floating-Point"
 
-#: plug-ins/common/jpeg.c:1912
+#: plug-ins/common/jpeg.c:1920
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT method (Speed/quality tradeoff):"
 
-#: plug-ins/common/jpeg.c:1916
+#: plug-ins/common/jpeg.c:1924
 msgid "Image comments"
 msgstr "Image comments"
 
@@ -5573,8 +5562,6 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Error while saving '%s'. Could not save image."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -6909,10 +6896,6 @@ msgstr "Threshold Alpha: Colouring Transparency..."
 msgid "Threshold Alpha"
 msgstr "Threshold Alpha"
 
-#: plug-ins/common/threshold_alpha.c:244
-msgid "Threshold:"
-msgstr "Threshold:"
-
 #: plug-ins/common/tiff.c:831
 #, c-format
 msgid "Page %d"
@@ -7377,7 +7360,7 @@ msgstr "Main Options"
 msgid "Step Size:"
 msgstr "Step Size:"
 
-#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1293
+#: plug-ins/common/warp.c:439 plug-ins/ifscompose/ifscompose.c:1295
 msgid "Iterations:"
 msgstr "Iterations:"
 
@@ -7539,19 +7522,19 @@ msgstr ""
 msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
 msgstr "<Image>/Filters/Distorts/W_hirl and Pinch..."
 
-#: plug-ins/common/whirlpinch.c:377
+#: plug-ins/common/whirlpinch.c:388
 msgid "Whirling and Pinching..."
 msgstr "Whirling and Pinching..."
 
-#: plug-ins/common/whirlpinch.c:649
+#: plug-ins/common/whirlpinch.c:660
 msgid "Whirl and Pinch"
 msgstr "Whirl and Pinch"
 
-#: plug-ins/common/whirlpinch.c:699
+#: plug-ins/common/whirlpinch.c:710
 msgid "_Whirl Angle:"
 msgstr "_Whirl Angle:"
 
-#: plug-ins/common/whirlpinch.c:708
+#: plug-ins/common/whirlpinch.c:719
 msgid "_Pinch Amount:"
 msgstr "_Pinch Amount:"
 
@@ -7774,7 +7757,6 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9302,9 +9284,8 @@ msgid "How much to blur the drop shadow"
 msgstr "How much to blur the drop shadow"
 
 #: plug-ins/gimpressionist/general.c:210
-#, fuzzy
 msgid "Deviation threshold:"
-msgstr "Deviation treshold:"
+msgstr "Deviation threshold:"
 
 #: plug-ins/gimpressionist/general.c:214
 msgid "A bailout-value for adaptive selections"
@@ -9318,7 +9299,6 @@ msgstr "<Image>/Filters/Artistic/_GIMPressionist..."
 msgid "Painting..."
 msgstr "Painting..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -9796,7 +9776,7 @@ msgstr "The GIMP help files are not installed."
 
 #: plug-ins/help/domain.c:163
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "There is a problem with the GIMP help files."
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
@@ -9813,6 +9793,8 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
+"Parse error in '%s':\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -9925,117 +9907,108 @@ msgstr "Render Options"
 msgid "Auto"
 msgstr "Auto"
 
-#: plug-ins/ifscompose/ifscompose.c:985 plug-ins/imagemap/imap_menu.c:270
+#: plug-ins/ifscompose/ifscompose.c:986 plug-ins/imagemap/imap_menu.c:270
 msgid "Select _All"
 msgstr "Select _All"
 
-#: plug-ins/ifscompose/ifscompose.c:992
+#: plug-ins/ifscompose/ifscompose.c:993
 msgid "Recompute _Center"
 msgstr "Recompute _Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1020
+#: plug-ins/ifscompose/ifscompose.c:1021
 msgid "Spatial Transformation"
 msgstr "Spatial Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:1026
+#: plug-ins/ifscompose/ifscompose.c:1027
 msgid "Color Transformation"
 msgstr "Colour Transformation"
 
-#: plug-ins/ifscompose/ifscompose.c:1036
+#: plug-ins/ifscompose/ifscompose.c:1037
 msgid "Relative Probability:"
 msgstr "Relative Probability:"
 
-#: plug-ins/ifscompose/ifscompose.c:1191
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1192
 msgid "/Move"
-msgstr "Move"
+msgstr "/Move"
 
-#: plug-ins/ifscompose/ifscompose.c:1193
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1194
 msgid "/Rotate\\/Scale"
-msgstr "Rotate/Scale"
+msgstr "/Rotate\\/Scale"
 
-#: plug-ins/ifscompose/ifscompose.c:1195
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1196
 msgid "/Stretch"
-msgstr "Stretch"
+msgstr "/Stretch"
 
-#: plug-ins/ifscompose/ifscompose.c:1198
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1199
 msgid "/New"
-msgstr "New"
+msgstr "/New"
 
-#: plug-ins/ifscompose/ifscompose.c:1200
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1201
 msgid "/Delete"
-msgstr "Delete"
+msgstr "/Delete"
 
-#: plug-ins/ifscompose/ifscompose.c:1202
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1203
 msgid "/Undo"
-msgstr "Undo"
+msgstr "/Undo"
 
-#: plug-ins/ifscompose/ifscompose.c:1204
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1205
 msgid "/Redo"
-msgstr "Redo"
+msgstr "/Redo"
 
-#: plug-ins/ifscompose/ifscompose.c:1206
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1207
 msgid "/Select All"
-msgstr "Select All"
+msgstr "/Select All"
 
-#: plug-ins/ifscompose/ifscompose.c:1208
-#, fuzzy
+#: plug-ins/ifscompose/ifscompose.c:1209
 msgid "/Recompute Center"
-msgstr "Recompute _Centre"
+msgstr "/Recompute Centre"
 
-#: plug-ins/ifscompose/ifscompose.c:1258
+#: plug-ins/ifscompose/ifscompose.c:1260
 msgid "IfsCompose Options"
 msgstr "IfsCompose Options"
 
-#: plug-ins/ifscompose/ifscompose.c:1280
+#: plug-ins/ifscompose/ifscompose.c:1282
 msgid "Max. Memory:"
 msgstr "Max. Memory:"
 
-#: plug-ins/ifscompose/ifscompose.c:1307
+#: plug-ins/ifscompose/ifscompose.c:1309
 msgid "Subdivide:"
 msgstr "Subdivide:"
 
-#: plug-ins/ifscompose/ifscompose.c:1320
+#: plug-ins/ifscompose/ifscompose.c:1322
 msgid "Spot Radius:"
 msgstr "Spot Radius:"
 
-#: plug-ins/ifscompose/ifscompose.c:1393
+#: plug-ins/ifscompose/ifscompose.c:1395
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Rendering IFS (%d/%d)..."
 
 #. transfer the image to the drawable
-#: plug-ins/ifscompose/ifscompose.c:1412
+#: plug-ins/ifscompose/ifscompose.c:1414
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copying IFS to image (%d/%d)..."
 
-#: plug-ins/ifscompose/ifscompose.c:1551
+#: plug-ins/ifscompose/ifscompose.c:1553
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: plug-ins/ifscompose/ifscompose.c:2678 plug-ins/ifscompose/ifscompose.c:2690
+#: plug-ins/ifscompose/ifscompose.c:2684 plug-ins/ifscompose/ifscompose.c:2696
 msgid "Open failed"
 msgstr "Open failed"
 
-#: plug-ins/ifscompose/ifscompose.c:2685
+#: plug-ins/ifscompose/ifscompose.c:2691
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "File '%s' doesn't seem to be an IFS Compose file."
 
-#: plug-ins/ifscompose/ifscompose.c:2721
+#: plug-ins/ifscompose/ifscompose.c:2731
 msgid "Save as IFS file"
 msgstr "Save as IFS file"
 
-#: plug-ins/ifscompose/ifscompose.c:2746
+#: plug-ins/ifscompose/ifscompose.c:2756
 msgid "Open IFS file"
 msgstr "Open IFS file"
 
@@ -10547,9 +10520,8 @@ msgid "About ImageMap..."
 msgstr "About ImageMap..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "Delete GFlare"
+msgstr "Delete Area"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -11752,23 +11724,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
 
-#~ msgid ""
-#~ "Failed to open help files:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Failed to open help files:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Parse error in help domain:\n"
-#~ "%s\n"
-#~ "\n"
-#~ "(Added entires before error anyway)"
-#~ msgstr ""
-#~ "Parse error in help domain:\n"
-#~ "%s\n"
-#~ "\n"
-#~ "(Added entires before error anyway)"
-
-#~ msgid "The requested help files are not installed."
-#~ msgstr "The requested help files are not installed."
