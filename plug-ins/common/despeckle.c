@@ -652,20 +652,20 @@ despeckle_median (guchar   *src,
                       count++;
                     }
                 }
+            }
 
-              if (count < 2)
-                {
-                  pixel_copy (dst + off, src + off, bpp);
-                }
-              else
-                {
-                  pixel = buf[quick_median_select (buf, ibuf, count)];
+          if (count < 2)
+            {
+              pixel_copy (dst + off, src + off, bpp);
+            }
+          else
+            {
+              pixel = buf[quick_median_select (buf, ibuf, count)];
 
-                  if (filter_type & FILTER_RECURSIVE)
-                    pixel_copy (src + off, pixel, bpp);
+              if (filter_type & FILTER_RECURSIVE)
+                pixel_copy (src + off, pixel, bpp);
 
-                  pixel_copy (dst + off, pixel, bpp);
-                }
+              pixel_copy (dst + off, pixel, bpp);
             }
 
           /*
