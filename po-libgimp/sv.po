@@ -1,13 +1,15 @@
 # Swedish translations for GIMP.
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
-# Christian Rose <menthos@menthos.com>, 2000.
+# Christian Rose <menthos@menthos.com>, 2000, 2001.
+#
+# $Id$
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-11-23 23:54+0100\n"
-"PO-Revision-Date: 2000-09-24 01:50+0200\n"
+"Project-Id-Version: libgimp\n"
+"POT-Creation-Date: 2001-12-03 02:23+0100\n"
+"PO-Revision-Date: 2001-12-03 02:23+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,9 +25,8 @@ msgid "Merge Visible Layers"
 msgstr "Slå samman synliga lager"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "kan inte hantera lager"
+msgstr "kan inte hantera lageravstånd, lagerstorlek eller lageropacitet"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -37,7 +38,7 @@ msgstr "Spara som animation"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
-msgstr "Platta till bilden"
+msgstr "Platta till bild"
 
 #: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
@@ -98,11 +99,11 @@ msgstr "Lägg till alfakanal"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Bekräfta sparande"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Bekräfta"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
@@ -114,6 +115,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Du kommer att spara %s som %s.\n"
+"Detta kommer inte att spara de synliga lagren."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -145,20 +148,20 @@ msgstr "Konverteringen vid export modifierar inte originalbilden."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
-msgstr ""
+msgstr "en lagermask"
 
 #: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "en kanal (sparad markering)"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:52
 msgid "pixel"
-msgstr "pixel"
+msgstr "bildpunkt"
 
 #: libgimp/gimpunit.c:52
 msgid "pixels"
-msgstr "pixlar"
+msgstr "bildpunkter"
 
 #. standard units
 #: libgimp/gimpunit.c:55
@@ -198,28 +201,25 @@ msgstr "picas"
 msgid "percent"
 msgstr "procent:"
 
-#: libgimpwidgets/gimpcolorbutton.c:82
-#, fuzzy
+#: libgimpwidgets/gimpcolorbutton.c:81
 msgid "/Foreground Color"
-msgstr "/Använd förgrundsfärg"
+msgstr "/Förgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
-#, fuzzy
+#: libgimpwidgets/gimpcolorbutton.c:83
 msgid "/Background Color"
-msgstr "/Använd bakgrundsfärg"
+msgstr "/Bakgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Black"
-msgstr ""
+msgstr "/Svart"
 
-#: libgimpwidgets/gimpcolorbutton.c:89
+#: libgimpwidgets/gimpcolorbutton.c:88
 msgid "/White"
-msgstr ""
+msgstr "/Vit"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Directory"
-msgstr "Välj fil"
+msgstr "Välj katalog"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -241,19 +241,19 @@ msgstr "Enhet "
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:769
+#: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Om du inte trycker \"Tid\"-knappen kan du ange ett värde här för generering "
+"Om du inte trycker \"Tid\"-knappen kan du här ange ett värde för generering "
 "av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
 
-#: libgimpwidgets/gimpwidgets.c:774
+#: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
 msgstr "Tid"
 
-#: libgimpwidgets/gimpwidgets.c:783
+#: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -261,15 +261,15 @@ msgstr ""
 "Skapa slumptalsfrö till slumptalsgeneratorn baserat på den aktuella tiden - "
 "detta garanterar en vettig slumpfunktion"
 
-#: libgimpwidgets/gimpwidgets.c:1097
+#: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
 msgstr "byte"
 
-#: libgimpwidgets/gimpwidgets.c:1098
+#: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
 msgstr "kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1099
+#: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "megabyte"
 
