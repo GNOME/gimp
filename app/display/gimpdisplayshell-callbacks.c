@@ -106,7 +106,7 @@ static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
 static GdkModifierType
                 gimp_display_shell_key_to_state      (gint              key);
 
-GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
+static GdkEvent * gimp_display_shell_compress_motion (GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -785,6 +785,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
+            if (! shell->space_pressed && ! shell->space_release_pending)
+              gdk_display_keyboard_ungrab (gdk_display, time);
+
+            gdk_display_pointer_ungrab (gdk_display, time);
+
+            gtk_grab_add (canvas);
+
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
                  gimp_tool_control_handles_empty_image (active_tool->control)))
@@ -808,10 +815,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                              &image_coords, state,
                                              gdisp);
 
-            if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_display_keyboard_ungrab (gdk_display, time);
-
-            gdk_display_pointer_ungrab (gdk_display, time);
+            gtk_grab_remove (canvas);
 
             if (shell->space_release_pending)
               {
@@ -1738,7 +1742,7 @@ gimp_display_shell_key_to_state (gint key)
  * The gimp_display_shell_compress_motion function source may be re-used under
  * the XFree86-style license. <adam@gimp.org>
  */
-GdkEvent *
+static GdkEvent *
 gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 {
   GdkEvent *event;
