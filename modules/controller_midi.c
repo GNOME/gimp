@@ -461,7 +461,7 @@ midi_set_device (ControllerMidi *midi,
             }
 
           /* hack to avoid new message to translate */
-          alsa = g_strdup_printf ("ALSA: %d:%d",
+          alsa = g_strdup_printf ("ALSA (%d:%d)",
                                   snd_seq_client_id (midi->sequencer),
                                   ret);
           name = g_strdup_printf (_("Reading from %s"), alsa);
