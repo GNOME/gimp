@@ -32,10 +32,77 @@
                           GDK_LEAVE_NOTIFY_MASK
 
 /*  Global variables  */
+static void
+brush_popup_open (GimpBrushP brush, int x, int y);
 
 /*  Static variables  */
 static GtkWidget *indicator_table;
 static GtkWidget *brush_preview;
+static GtkWidget *device_bpopup = NULL; 
+static GtkWidget *device_bpreview = NULL; 
+
+static void
+brush_popup_close ()
+{
+}
+
+
+static void
+brush_popup_open (GimpBrushP brush,
+		  int          x,
+                  int          y)
+{
+  gint x_org, y_org;
+  gint scr_w, scr_h;
+  gchar *src, *buf;
+  /* make sure the popup exists and is not visible */
+  if (device_bpopup == NULL)
+    {
+      GtkWidget *frame;
+
+      device_bpopup = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_window_set_policy (GTK_WINDOW (device_bpopup), FALSE, FALSE, TRUE);
+
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+      gtk_container_add (GTK_CONTAINER (device_bpopup), frame);
+      gtk_widget_show (frame);
+      device_bpreview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+      gtk_container_add (GTK_CONTAINER (frame), device_bpreview);
+      gtk_widget_show (device_bpreview);
+    }
+  else
+    {
+      gtk_widget_hide (device_bpopup);
+    }
+
+  /* decide where to put the popup */
+  gdk_window_get_origin (brush_preview->window, &x_org, &y_org);
+  scr_w = gdk_screen_width ();
+  scr_h = gdk_screen_height ();
+  x = x_org + x - (brush->mask->width >> 1);
+  y = y_org + y - (brush->mask->height >> 1);
+  x = (x < 0) ? 0 : x;
+  y = (y < 0) ? 0 : y;
+  x = (x + brush->mask->width > scr_w) ? scr_w - brush->mask->width : x;
+  y = (y + brush->mask->height > scr_h) ? scr_h - brush->mask->height : y;
+  gtk_preview_size (GTK_PREVIEW (device_bpreview), brush->mask->width, brush->mask->height);
+  gtk_widget_popup (device_bpopup, x, y);
+ 
+  /*  Draw the brush  */
+  buf = g_new (gchar, brush->mask->width);
+  src = (gchar *)temp_buf_data (brush->mask);
+  for (y = 0; y < brush->mask->height; y++)
+    {
+      for (x = 0; x < brush->mask->width; x++)
+        buf[x] = 255 - src[x];
+      gtk_preview_draw_row (GTK_PREVIEW (device_bpreview), (guchar *)buf, 0, y, brush->mask->width);
+      src += brush->mask->width;
+    }
+  g_free(buf);
+  /*  Draw the brush preview  */
+  gtk_widget_draw (device_bpreview, NULL);
+}
 
 /* brush_area_edit */
 static gint
@@ -44,11 +111,16 @@ brush_area_events (GtkWidget *widget,
 {
   GdkEventButton *bevent;
   
+  GimpBrushP brush;
+  brush = get_active_brush();
+
   switch (event->type)
     {
     case GDK_EXPOSE: 
       break;
     case GDK_BUTTON_RELEASE:
+      if (device_bpopup != NULL)
+         gtk_widget_hide (device_bpopup);
       brush_area_update();
       break;
 
@@ -59,6 +131,11 @@ brush_area_events (GtkWidget *widget,
 	{
 	/* pop up the brush selection dialog accordingly */
 	create_brush_dialog();
+	/*  Show the brush popup window if the brush is too large  */
+        if (brush->mask->width > CELL_SIZE ||
+            brush->mask->height > CELL_SIZE)
+       		 brush_popup_open (brush, bevent->x, bevent->y);
+
 	}
       break;
     case GDK_DELETE:

@@ -1,3 +1,8 @@
+Wed Jun  2 23:13:30 CST 1999 Seth Burgess <sjburges@gimp.org>
+
+	* indicator_area.c : Added popup previews if the brush is bigger
+	than the indicator area.
+
 Wed Jun  2 19:43:30 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
 	* TODO: Removed entries that have been accomplished.  Still
