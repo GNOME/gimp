@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.2.1a;  2001/07/07   hof: p_file_copy use binary modes in fopen (hope that fixes bug #52890 in video/duplicate)
  * 1.1.29a; 2000/11/23   hof: gap locking (changed to procedures and placed here)
  * 1.1.28a; 2000/11/05   hof: check for GIMP_PDB_SUCCESS (not for FALSE)
  * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_vid_edit_clear
@@ -316,7 +317,6 @@ int p_file_copy(char *fname, char *fname_copy)
   struct stat               l_stat_buf;
   long	       l_len;
 
-
   if(gap_debug) printf("p_file_copy src:%s dst:%s\n", fname, fname_copy);
 
   /* File Laenge ermitteln */
@@ -336,7 +336,7 @@ int p_file_copy(char *fname, char *fname_copy)
   }
 
   /* load File into Buffer */
-  l_fp = fopen(fname, "r");		    /* open read */
+  l_fp = fopen(fname, "rb");		    /* open read */
   if(l_fp == NULL)
   {
     fprintf (stderr, "open(read) error on '%s'\n", fname);
@@ -346,7 +346,7 @@ int p_file_copy(char *fname, char *fname_copy)
   fread(l_buffer, 1, (size_t)l_len, l_fp);
   fclose(l_fp);
   
-  l_fp = fopen(fname_copy, "w");		    /* open write */
+  l_fp = fopen(fname_copy, "wb");		    /* open write */
   if(l_fp == NULL)
   {
     fprintf (stderr, "file_copy: open(write) error on '%s' \n", fname_copy);

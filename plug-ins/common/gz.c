@@ -575,30 +575,29 @@ find_extension (gchar *filename)
   gchar *ext;
 
   /* we never free this copy - aren't we evil! */
-  filename_copy = g_malloc (strlen (filename) + 1);
-  strcpy (filename_copy, filename);
+  filename_copy = g_strdup (filename);
 
   /* find the extension, boy! */
   ext = strrchr (filename_copy, '.');
 
-  while (1)
+  while (TRUE)
     {
-      if (!ext || ext[1] == 0 || strchr (ext, '/'))
+      if (!ext || ext[1] == '\0' || strchr (ext, '/'))
 	{
 	  return NULL;
 	}
-      if (0 == strcmp (ext, ".xcfgz"))
+      if (0 == g_strcasecmp (ext, ".xcfgz"))
 	{
 	  return ".xcf";  /* we've found it */
 	}
-      if (0 != strcmp (ext,".gz"))
+      if (0 != g_strcasecmp (ext,".gz"))
 	{
 	  return ext;
 	}
       else
 	{
 	  /* we found ".gz" so strip it, loop back, and look again */
-	  *ext = 0;
+	  *ext = '\0';
 	  ext = strrchr (filename_copy, '.');
 	}
     }

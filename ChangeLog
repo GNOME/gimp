@@ -1,3 +1,16 @@
+2001-07-10  Sven Neumann  <sven@gimp.org>
+
+	Bugfixes from the stable branch:
+	
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c: a fix for bug #57217 based on a patch from
+	Raphael Quinet.
+
+	* plug-ins/gap/gap_lib.c (p_file_copy): open files in binary mode. 
+	A patch from Wolfgang Hofer that possibly fixes bug #52890.
+
+	* tools/Makefile.am: added gimppath2svg.py to EXTRA_DIST.
+	
 2001-07-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.[ch]: removed the gimp_busy boolean, check whether
@@ -7,7 +20,7 @@
 	many other cleanups.
 
 	* app/appenums.h: added MessageHandlerType and StackTraceMode.
-
+	
 	* app/appenv.h: removed MessageHandlerType, declare all global
 	variables from main.c (no more hidden global stuff please).
 
