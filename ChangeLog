@@ -3,6 +3,11 @@
 	* README.i18n: added a section that mentions the GNOME translation
 	project that coordinates translation efforts in the GNOME CVS tree.
 
+	Mention the fact that po files as well as the tips files need to be
+	UTF-8 encoded to work with GTK+-2.0.
+
+	* tips/gimp_tips.de.txt: converted to UTF-8.
+
 2001-08-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gtkhwrapbox.[ch]

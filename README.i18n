@@ -163,6 +163,15 @@ Actually this one is maintained by me, that is Daniel Egger
  at startup about bad translations. So do always test your translations and
  watch the console for output.
 
+ The version of The GIMP you are holding in your hand uses GTK+-2.0. GTK+-2.0
+ requires that all strings are UTF-8 encoded. Therefore to make 
+ internationalisation work, po files need to be UTF-8 encoded. Unfortunately
+ most editors don't support UTF-8, so to edit your po file, you need to 
+ convert it to an encoding your editor can handle and convert it back to
+ UTF-8 before commiting your changes back. The gnome-i18n module in CVS has 
+ some scripts that help with this task, but it can also easily done using
+ iconv.
+
 7. Adding additional textdomains
 
  Third-party plug-ins (plug-ins that are not distributed with The GIMP) can't 
@@ -185,6 +194,8 @@ Actually this one is maintained by me, that is Daniel Egger
  #: app/tips_dialog.c:72
  msgid "gimp_tips.txt"
  msgstr "gimp_tips.<lang>.txt"
+
+ This file needs to be UTF-8 encoded just like the po files (see section 6).
 
 9. How to contribute
 
