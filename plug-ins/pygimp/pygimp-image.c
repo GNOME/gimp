@@ -1229,7 +1229,9 @@ img_init(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     self->ID = gimp_image_new(width, height, type);
 
     if (self->ID < 0) {
-	PyErr_SetString(pygimp_error, "could not create image");
+	PyErr_Format(pygimp_error,
+		     "could not create image (width: %d, height: %d, type: %d)",
+		     width, height, type);
 	return -1;
     }
 

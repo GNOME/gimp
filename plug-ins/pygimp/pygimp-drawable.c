@@ -65,14 +65,17 @@ drw_update(PyGimpDrawable *self, PyObject *args)
 
 
 static PyObject *
-drw_merge_shadow(PyGimpDrawable *self, PyObject *args)
+drw_merge_shadow(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    int u;
+    gboolean undo = FALSE;
 
-    if (!PyArg_ParseTuple(args, "i:merge_shadow", &u))
+    static char *kwlist[] = { "undo", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|i:merge_shadow", kwlist,
+				     &undo))
 	return NULL;
 
-    if (!gimp_drawable_merge_shadow(self->ID, u)) {
+    if (!gimp_drawable_merge_shadow(self->ID, undo)) {
 	PyErr_Format(pygimp_error,
 		     "could not merge the shadow buffer on drawable (ID %d)",
 		     self->ID);
@@ -85,17 +88,19 @@ drw_merge_shadow(PyGimpDrawable *self, PyObject *args)
 
 
 static PyObject *
-drw_fill(PyGimpDrawable *self, PyObject *args)
+drw_fill(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    int f;
+    int fill = GIMP_FOREGROUND_FILL;
 
-    if (!PyArg_ParseTuple(args, "i:fill", &f))
+    static char *kwlist[] = { "fill", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|i:fill", kwlist, &fill))
 	return NULL;
 
-    if (!gimp_drawable_fill(self->ID, f)) {
+    if (!gimp_drawable_fill(self->ID, fill)) {
 	PyErr_Format(pygimp_error,
 		     "could not fill drawable (ID %d) with fill mode %d",
-		     self->ID, f);
+		     self->ID, fill);
 	return NULL;
     }
 
@@ -105,27 +110,33 @@ drw_fill(PyGimpDrawable *self, PyObject *args)
 
 
 static PyObject *
-drw_get_tile(PyGimpDrawable *self, PyObject *args)
+drw_get_tile(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     GimpTile *t;
-    int shadow, r, c;
+    int shadow, row, col;
 
-    if (!PyArg_ParseTuple(args, "iii:get_tile", &shadow, &r, &c))
+    static char *kwlist[] = { "shadow", "row", "col", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "iii:get_tile", kwlist,
+				     &shadow, &row, &col))
 	return NULL;
 
     ensure_drawable(self);
 
-    t = gimp_drawable_get_tile(self->drawable, shadow, r, c);
+    t = gimp_drawable_get_tile(self->drawable, shadow, row, col);
     return pygimp_tile_new(t, self);
 }
 
 static PyObject *
-drw_get_tile2(PyGimpDrawable *self, PyObject *args)
+drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     GimpTile *t;
     int shadow, x, y;
 
-    if (!PyArg_ParseTuple(args, "iii:get_tile2", &shadow, &x ,&y))
+    static char *kwlist[] = { "shadow", "x", "y", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "iii:get_tile2", kwlist,
+				     &shadow, &x ,&y))
 	return NULL;
 
     ensure_drawable(self);
@@ -135,28 +146,37 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args)
 }
 
 static PyObject *
-drw_get_pixel_rgn(PyGimpDrawable *self, PyObject *args)
+drw_get_pixel_rgn(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    int x, y, w, h, dirty = 1, shadow = 0;
+    int x, y, width, height, dirty = 1, shadow = 0;
 
-    if (!PyArg_ParseTuple(args, "iiii|ii:get_pixel_rgn", &x, &y, &w, &h,
-			  &dirty, &shadow))
+    static char *kwlist[] = { "x", "y", "width", "height", "dirty", "shadow",
+			      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "iiii|ii:get_pixel_rgn", kwlist,
+				     &x, &y, &width, &height, &dirty, &shadow))
 	return NULL;
 
     ensure_drawable(self);
 
-    return pygimp_pixel_rgn_new(self, x, y, w, h, dirty, shadow);
+    return pygimp_pixel_rgn_new(self, x, y, width, height, dirty, shadow);
 }
 
 static PyObject *
-drw_offset(PyGimpDrawable *self, PyObject *args)
+drw_offset(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     int wrap_around;
     GimpOffsetType fill_type;
     int offset_x, offset_y;
 
-    if (!PyArg_ParseTuple(args, "iiii:offset", &wrap_around, &fill_type,
-			   &offset_x, &offset_y))
+    static char *kwlist[] = { "wrap_around", "fill_type",
+			      "offset_x", "offset_y",
+			      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "iiii:offset", kwlist,
+				     &wrap_around, &fill_type,
+				     &offset_x, &offset_y))
 	return NULL;
 
     if (!gimp_drawable_offset(self->ID, wrap_around, fill_type,
@@ -213,13 +233,16 @@ drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 }
 
 static PyObject *
-drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args)
+drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     char *name, *data;
     int flags, size;
 
-    if (!PyArg_ParseTuple(args, "sis#:attach_new_parasite", &name, &flags,
-			  &data, &size))
+    static char *kwlist[] = { "name", "flags", "data", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "sis#:attach_new_parasite", kwlist,
+				     &name, &flags, &data, &size))
 	return NULL;
 
     if (!gimp_drawable_attach_new_parasite(self->ID, name, flags, size, data)) {
@@ -405,24 +428,495 @@ drw_mask_intersect(PyGimpDrawable *self)
     return ret;
 }
 
+static PyObject *
+transform_result(PyGimpDrawable *self, gint32 id, const char *err_desc)
+{
+    if (id == self->ID) {
+	Py_INCREF(self);
+	return (PyObject *)self;
+    } else if (id != -1) {
+	return pygimp_drawable_new(NULL, id);
+    } else {
+	PyErr_Format(pygimp_error, "could not %s drawable (ID %d)",
+		     err_desc, self->ID);
+	return NULL;
+    }
+}
+
+static PyObject *
+drw_transform_flip(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1;
+    int transform_direction, interpolation, recursion_level = 3;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ddddii|iii:transform_flip", kwlist,
+				     &x0, &y0, &x1, &y1, &transform_direction,
+				     &interpolation, &supersample,
+				     &recursion_level, &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_flip(self->ID, x0, y0, x1, y1,
+				      transform_direction, interpolation,
+				      supersample, recursion_level,
+				      clip_result);
+
+    return transform_result(self, id, "flip");
+}
+
+static PyObject *
+drw_transform_flip_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    int flip_type;
+    gboolean auto_center, clip_result = FALSE;
+    double axis;
+    gint32 id;
+
+    static char *kwlist[] = { "flip_type", "auto_center", "axis",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "iid|:transform_flip_simple", kwlist,
+				     &flip_type, &auto_center, &axis,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_flip_simple(self->ID, flip_type, auto_center,
+					     axis, clip_result);
+
+    return transform_result(self, id, "flip");
+}
+
+static PyObject *
+drw_transform_flip_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1", "interpolate",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddd|ii:transform_flip_default", kwlist,
+				     &x0, &y0, &x1, &y1, &interpolate,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_flip_default(self->ID, x0, y0, x1, y1,
+					      interpolate, clip_result);
+
+    return transform_result(self, id, "flip");
+}
+
+static PyObject *
+drw_transform_perspective(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1, x2, y2, x3, y3;
+    int transform_direction, interpolation, recursion_level = 3;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1", "x2", "y2", "x3", "y3",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ddddddddii|iii:transform_perspective",
+				     kwlist,
+				     &x0, &y0, &x1, &y1, &x2, &y2, &x3, &y3,
+				     &transform_direction, &interpolation,
+				     &supersample, &recursion_level,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_perspective(self->ID,
+					     x0, y0, x1, y1, x2, y2, x3, y3,
+					     transform_direction, interpolation,
+					     supersample, recursion_level,
+					     clip_result);
+
+    return transform_result(self, id, "apply perspective transform to");
+}
+
+static PyObject *
+drw_transform_perspective_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1, x2, y2, x3, y3;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1", "x2", "y2", "x3", "y3",
+			      "interpolate", "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddddddd|ii:transform_perspective_default",
+				     kwlist,
+				     &x0, &y0, &x1, &y1, &x2, &y2, &x3, &y3,
+				     &interpolate, &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_perspective_default(self->ID,
+						     x0, y0, x1, y1,
+						     x2, y2, x3, y3,
+						     interpolate, clip_result);
+
+    return transform_result(self, id, "apply perspective transform to");
+}
+
+static PyObject *
+drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double angle;
+    gboolean auto_center, supersample = FALSE, clip_result = FALSE;
+    int center_x, center_y, transform_direction, interpolation,
+	recursion_level = 3;
+    gint32 id;
+
+    static char *kwlist[] = { "angle", "auto_center", "center_x", "center_y",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "diiii|iii:transform_rotate", kwlist,
+				     &angle, &auto_center, &center_x, &center_y,
+				     &transform_direction, &interpolation,
+				     &supersample, &recursion_level,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_rotate(self->ID, angle, auto_center,
+					center_x, center_y,
+					transform_direction, interpolation,
+					supersample, recursion_level,
+					clip_result);
+
+    return transform_result(self, id, "rotate");
+}
+
+static PyObject *
+drw_transform_rotate_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    int rotate_type, center_x, center_y;
+    gboolean auto_center, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "rotate_type", "auto_center",
+			      "center_x", "center_y",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "iiii|i:transform_rotate_simple", kwlist,
+				     &rotate_type, &auto_center,
+				     &center_x, &center_y,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_rotate_simple(self->ID, rotate_type,
+					       auto_center,
+					       center_x, center_y,
+					       clip_result);
+
+    return transform_result(self, id, "rotate");
+}
+
+static PyObject *
+drw_transform_rotate_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double angle;
+    gboolean auto_center, interpolate = FALSE, clip_result = FALSE;
+    int center_x, center_y;
+    gint32 id;
+
+    static char *kwlist[] = { "angle", "auto_center", "center_x", "center_y",
+			      "interpolate", "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddd|ii:transform_rotate_default", kwlist,
+				     &angle, &auto_center, &center_x, &center_y,
+				     &interpolate, &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_rotate_default(self->ID, angle, auto_center,
+	                                        center_x, center_y,
+						interpolate, clip_result);
+
+    return transform_result(self, id, "rotate");
+}
+
+static PyObject *
+drw_transform_scale(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1;
+    int transform_direction, interpolation, recursion_level = 3;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ddddii|iii:transform_scale", kwlist,
+				     &x0, &y0, &x1, &y1, &transform_direction,
+				     &interpolation, &supersample,
+				     &recursion_level, &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_scale(self->ID, x0, y0, x1, y1,
+				       transform_direction, interpolation,
+				       supersample, recursion_level,
+				       clip_result);
+
+    return transform_result(self, id, "scale");
+}
+
+static PyObject *
+drw_transform_scale_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double x0, y0, x1, y1;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "x0", "y0", "x1", "y1", "interpolate",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddd|ii:transform_scale_default", kwlist,
+				     &x0, &y0, &x1, &y1, &interpolate,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_scale_default(self->ID, x0, y0, x1, y1,
+					       interpolate, clip_result);
+
+    return transform_result(self, id, "scale");
+}
+
+static PyObject *
+drw_transform_shear(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    int shear_type, transform_direction, interpolation, recursion_level = 3;
+    double magnitude;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "shear_type", "magnitude",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "idii|iii:transform_shear", kwlist,
+				     &shear_type, &magnitude,
+				     &transform_direction, &interpolation,
+				     &supersample, &recursion_level,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_shear(self->ID, shear_type, magnitude,
+				       transform_direction, interpolation,
+				       supersample, recursion_level,
+				       clip_result);
+
+    return transform_result(self, id, "shear");
+}
+
+static PyObject *
+drw_transform_shear_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    int shear_type;
+    double magnitude;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "shear_type", "magnitude", "interpolate",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "id|ii:transform_shear_default", kwlist,
+				     &shear_type, &magnitude, &interpolate,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_shear_default(self->ID, shear_type,
+					       magnitude, interpolate,
+					       clip_result);
+
+    return transform_result(self, id, "shear");
+}
+
+static PyObject *
+drw_transform_2d(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double source_x, source_y, scale_x, scale_y, angle, dest_x, dest_y;
+    int transform_direction, interpolation, recursion_level = 3;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "source_x", "source_y", "scale_x", "scale_y",
+			      "angle", "dest_x", "dest_y",
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddddddii|iii:transform_2d", kwlist,
+				     &source_x, &source_y, &scale_x, &scale_y,
+				     &angle, &dest_x, &dest_y,
+				     &transform_direction, &interpolation,
+				     &supersample, &recursion_level,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_2d(self->ID, source_x, source_y,
+				    scale_x, scale_y, angle, dest_x, dest_y,
+				    transform_direction, interpolation,
+				    supersample, recursion_level, clip_result);
+
+    return transform_result(self, id, "apply 2d transform to");
+}
+
+static PyObject *
+drw_transform_2d_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double source_x, source_y, scale_x, scale_y, angle, dest_x, dest_y;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "source_x", "source_y", "scale_x", "scale_y",
+			      "angle", "dest_x", "dest_y", "interpolate",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ddddddd|ii:transform_2d_default", kwlist,
+				     &source_x, &source_y, &scale_x, &scale_y,
+				     &angle, &dest_x, &dest_y, &interpolate,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_2d_default(self->ID, source_x, source_y,
+					    scale_x, scale_y, angle,
+					    dest_x, dest_y, interpolate,
+					    clip_result);
+
+    return transform_result(self, id, "apply 2d transform to");
+}
+
+static PyObject *
+drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double coeff_0_0, coeff_0_1, coeff_0_2,
+	   coeff_1_0, coeff_1_1, coeff_1_2,
+	   coeff_2_0, coeff_2_1, coeff_2_2;
+    int transform_direction, interpolation, recursion_level = 3;
+    gboolean supersample = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "coeff_0_0", "coeff_0_1", "coeff_0_2",
+			      "coeff_1_0", "coeff_1_1", "coeff_1_2",
+			      "coeff_2_0", "coeff_2_1", "coeff_2_2", 
+			      "transform_direction", "interpolation",
+			      "supersample", "recursion_level",
+			      "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "dddddddddii|iii:transform_matrix", kwlist,
+				     &coeff_0_0, &coeff_0_1, &coeff_0_2,
+				     &coeff_1_0, &coeff_1_1, &coeff_1_2,
+				     &coeff_2_0, &coeff_2_1, &coeff_2_2, 
+				     &transform_direction, &interpolation,
+				     &supersample, &recursion_level,
+				     &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_matrix(self->ID,
+					coeff_0_0, coeff_0_1, coeff_0_2,
+					coeff_1_0, coeff_1_1, coeff_1_2,
+					coeff_2_0, coeff_2_1, coeff_2_2, 
+					transform_direction, interpolation,
+					supersample, recursion_level,
+					clip_result);
+
+    return transform_result(self, id, "apply 2d matrix transform to");
+}
+
+static PyObject *
+drw_transform_matrix_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    double coeff_0_0, coeff_0_1, coeff_0_2,
+	   coeff_1_0, coeff_1_1, coeff_1_2,
+	   coeff_2_0, coeff_2_1, coeff_2_2;
+    gboolean interpolate = FALSE, clip_result = FALSE;
+    gint32 id;
+
+    static char *kwlist[] = { "coeff_0_0", "coeff_0_1", "coeff_0_2",
+			      "coeff_1_0", "coeff_1_1", "coeff_1_2",
+			      "coeff_2_0", "coeff_2_1", "coeff_2_2", 
+			      "interpolate", "clip_result", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "ddddddddd|ii:transform_matrix_default",
+				     kwlist,
+				     &coeff_0_0, &coeff_0_1, &coeff_0_2,
+				     &coeff_1_0, &coeff_1_1, &coeff_1_2,
+				     &coeff_2_0, &coeff_2_1, &coeff_2_2, 
+				     &interpolate, &clip_result))
+	return NULL;
+
+    id = gimp_drawable_transform_matrix_default(self->ID,
+						coeff_0_0, coeff_0_1, coeff_0_2,
+						coeff_1_0, coeff_1_1, coeff_1_2,
+						coeff_2_0, coeff_2_1, coeff_2_2,
+						interpolate, clip_result);
+
+    return transform_result(self, id, "apply 2d matrix transform to");
+}
+
 /* for inclusion with the methods of layer and channel objects */
 static PyMethodDef drw_methods[] = {
     {"flush",	(PyCFunction)drw_flush,	METH_NOARGS},
     {"update",	(PyCFunction)drw_update,	METH_VARARGS},
-    {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS},
-    {"fill",	(PyCFunction)drw_fill,	METH_VARARGS},
-    {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS},
-    {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS},
-    {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS},
-    {"offset", (PyCFunction)drw_offset, METH_VARARGS},
+    {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS | METH_KEYWORDS},
+    {"fill",	(PyCFunction)drw_fill,	METH_VARARGS | METH_KEYWORDS},
+    {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS | METH_KEYWORDS},
+    {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS | METH_KEYWORDS},
+    {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS | METH_KEYWORDS},
+    {"offset", (PyCFunction)drw_offset, METH_VARARGS | METH_KEYWORDS},
     {"parasite_find",       (PyCFunction)drw_parasite_find, METH_VARARGS},
     {"parasite_attach",     (PyCFunction)drw_parasite_attach, METH_VARARGS},
-    {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS},
+    {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS | METH_KEYWORDS},
     {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS},
     {"parasite_list",     (PyCFunction)drw_parasite_list, METH_VARARGS},
     {"get_pixel",	(PyCFunction)drw_get_pixel, METH_VARARGS},
     {"set_pixel",	(PyCFunction)drw_set_pixel, METH_VARARGS},
     {"mask_intersect",	(PyCFunction)drw_mask_intersect, METH_NOARGS},
+    {"transform_flip",	(PyCFunction)drw_transform_flip, METH_VARARGS | METH_KEYWORDS},
+    {"transform_flip_simple",	(PyCFunction)drw_transform_flip_simple, METH_VARARGS | METH_KEYWORDS},
+    {"transform_flip_default",	(PyCFunction)drw_transform_flip_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_perspective",	(PyCFunction)drw_transform_perspective, METH_VARARGS | METH_KEYWORDS},
+    {"transform_perspective_default",	(PyCFunction)drw_transform_perspective_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_rotate",	(PyCFunction)drw_transform_rotate, METH_VARARGS | METH_KEYWORDS},
+    {"transform_rotate_simple",	(PyCFunction)drw_transform_rotate_simple, METH_VARARGS | METH_KEYWORDS},
+    {"transform_rotate_default",	(PyCFunction)drw_transform_rotate_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_scale",	(PyCFunction)drw_transform_scale, METH_VARARGS | METH_KEYWORDS},
+    {"transform_scale_default",	(PyCFunction)drw_transform_scale_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_shear",	(PyCFunction)drw_transform_shear, METH_VARARGS | METH_KEYWORDS},
+    {"transform_shear_default",	(PyCFunction)drw_transform_shear_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_2d",	(PyCFunction)drw_transform_2d, METH_VARARGS | METH_KEYWORDS},
+    {"transform_2d_default",	(PyCFunction)drw_transform_2d_default, METH_VARARGS | METH_KEYWORDS},
+    {"transform_matrix",	(PyCFunction)drw_transform_matrix, METH_VARARGS | METH_KEYWORDS},
+    {"transform_matrix_default",	(PyCFunction)drw_transform_matrix_default, METH_VARARGS | METH_KEYWORDS},
     {NULL, NULL, 0}
 };
 
@@ -803,7 +1297,7 @@ lay_create_mask(PyGimpLayer *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "i:create_mask", &type))
 	return NULL;
 
-    return pygimp_channel_new(gimp_layer_create_mask(self->ID,type));
+    return pygimp_channel_new(gimp_layer_create_mask(self->ID, type));
 }
 
 static PyObject *
@@ -828,12 +1322,31 @@ lay_resize(PyGimpLayer *self, PyObject *args)
 			  &offs_x, &offs_y))
 	return NULL;
 
-    gimp_layer_resize(self->ID, new_w, new_h, offs_x, offs_y);
+    if (!gimp_layer_resize(self->ID, new_w, new_h, offs_x, offs_y)) {
+	PyErr_Format(pygimp_error,
+		     "could not resize layer (ID %d) to size %dx%d "
+		     "(offset %d, %d)",
+		     self->ID, new_w, new_h, offs_x, offs_y);
+	return NULL;
+    }
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
+static PyObject *
+lay_resize_to_image_size(PyGimpLayer *self)
+{
+    if (!gimp_layer_resize_to_image_size(self->ID)) {
+	PyErr_Format(pygimp_error,
+		     "could not resize layer (ID %d) to image size",
+		     self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
 
 static PyObject *
 lay_scale(PyGimpLayer *self, PyObject *args)
@@ -888,6 +1401,7 @@ static PyMethodDef lay_methods[] = {
     {"create_mask",	(PyCFunction)lay_create_mask,	METH_VARARGS},
     {"remove_mask",     (PyCFunction)lay_remove_mask,   METH_VARARGS},
     {"resize",	(PyCFunction)lay_resize,	METH_VARARGS},
+    {"resize_to_image_size",	(PyCFunction)lay_resize_to_image_size,	METH_NOARGS},
     {"scale",	(PyCFunction)lay_scale,	METH_VARARGS},
     {"translate",	(PyCFunction)lay_translate,	METH_VARARGS},
     {"set_offsets",	(PyCFunction)lay_set_offsets,	METH_VARARGS},
@@ -1236,7 +1750,7 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
     GimpRGB colour;
 
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "cannot delete colour");
+        PyErr_SetString(PyExc_TypeError, "cannot delete color");
         return -1;
     }
 

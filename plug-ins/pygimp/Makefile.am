@@ -34,7 +34,7 @@ gimpmodule_la_SOURCES = \
 	pygimp.h
 
 gimpmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex 'initgimp|PLUG_IN_INFO'
+	-export-symbols-regex initgimp
 
 gimpmodule_la_LIBADD = \
 	$(libgimp)		\

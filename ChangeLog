@@ -1,3 +1,16 @@
+2005-03-04  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/Makefile.am: no need to export PLUG_IN_INFO symbol.
+
+	* plug-ins/pygimp/pygimp-image.c: more descriptive exception for
+	Image constructor.
+
+	* plug-ins/pygimp/pygimp-pdb.c: cosmetic changes.
+
+	* plug-ins/pygimp/pygimp-drawable.c: wrap transform API, add keyword
+	arguments to several drawable methods, wrap
+	layer_resize_to_image_size.
+
 2005-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c
