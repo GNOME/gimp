@@ -70,11 +70,6 @@ static void   gimp_text_tool_button_press   (GimpTool          *tool,
 					     guint32            time,
 					     GdkModifierType    state,
 					     GimpDisplay       *gdisp);
-static void   gimp_text_tool_button_release (GimpTool          *tool,
-					     GimpCoords        *coords,
-					     guint32            time,
-					     GdkModifierType    state,
-					     GimpDisplay       *gdisp);
 static void   gimp_text_tool_motion         (GimpTool          *tool,
 					     GimpCoords        *coords,
 					     guint32            time,
@@ -88,7 +83,9 @@ static void   gimp_text_tool_cursor_update  (GimpTool          *tool,
 static void   gimp_text_tool_draw           (GimpDrawTool      *draw_tool);
 
 static void   gimp_text_tool_connect        (GimpTextTool      *tool,
-					     GimpText          *text);
+					     GimpText          *text,
+                                             gint               off_x,
+                                             gint               off_y);
 
 static void   gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
@@ -164,13 +161,12 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->control        = gimp_text_tool_control;
-  tool_class->button_press   = gimp_text_tool_button_press;
-  tool_class->button_release = gimp_text_tool_button_release;
-  tool_class->motion         = gimp_text_tool_motion;
-  tool_class->cursor_update  = gimp_text_tool_cursor_update;
+  tool_class->control       = gimp_text_tool_control;
+  tool_class->button_press  = gimp_text_tool_button_press;
+  tool_class->motion        = gimp_text_tool_motion;
+  tool_class->cursor_update = gimp_text_tool_cursor_update;
 
-  draw_tool_class->draw      = gimp_text_tool_draw;
+  draw_tool_class->draw     = gimp_text_tool_draw;
 }
 
 static void
@@ -178,7 +174,9 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
 
-  text_tool->text = NULL;
+  text_tool->text     = NULL;
+  text_tool->offset_x = 0;
+  text_tool->offset_y = 0;
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
@@ -201,7 +199,7 @@ gimp_text_tool_control (GimpTool       *tool,
       if (GIMP_TEXT_TOOL (tool)->editor)
         gtk_widget_destroy (GIMP_TEXT_TOOL (tool)->editor);
 
-      gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), NULL);
+      gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), NULL, 0, 0);
       break;
 
     default:
@@ -220,7 +218,9 @@ gimp_text_tool_button_press (GimpTool        *tool,
 {
   GimpTextTool *text_tool;
   GimpDrawable *drawable;
-  GimpText     *text = NULL;
+  GimpText     *text  = NULL;
+  gint          off_x = 0;
+  gint          off_y = 0;
 
   text_tool = GIMP_TEXT_TOOL (tool);
 
@@ -245,22 +245,15 @@ gimp_text_tool_button_press (GimpTool        *tool,
           coords->y > 0 && coords->y < item->height)
         {
           text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
+
+          gimp_item_offsets (item, &off_x, &off_y);
         }
     }
 
   if (!text || text == text_tool->text)
     gimp_text_tool_editor (text_tool);
 
-  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text);
-}
-
-static void
-gimp_text_tool_button_release (GimpTool        *tool,
-			       GimpCoords      *coords,
-			       guint32          time,
-			       GdkModifierType  state,
-			       GimpDisplay     *gdisp)
-{
+  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text, off_x, off_y);
 }
 
 static void
@@ -300,7 +293,8 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 
   vectors = gimp_text_vectors_new (gimage, text_tool->text);
 
-  /* FIXME: position vectors */
+  gimp_item_translate (GIMP_ITEM (vectors),
+                       text_tool->offset_x, text_tool->offset_y, FALSE);
 
   gimp_image_add_vectors (gimage, vectors, -1);
 }
@@ -328,7 +322,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
   if (!layer)
     return;
 
-  gimp_text_tool_connect (text_tool, text);
+  gimp_text_tool_connect (text_tool, text, text_tool->x1, text_tool->y1);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
@@ -345,7 +339,9 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
 static void
 gimp_text_tool_connect (GimpTextTool *tool,
-                        GimpText     *text)
+                        GimpText     *text,
+                        gint          off_x,
+                        gint          off_y)
 {
   GimpTextOptions *options;
   GtkWidget       *button;
@@ -372,6 +368,9 @@ gimp_text_tool_connect (GimpTextTool *tool,
       g_object_unref (tool->text);
       tool->text = NULL;
 
+      tool->offset_x = 0;
+      tool->offset_y = 0;
+
       g_object_set (options->text, "text", NULL, NULL);
     }
 
@@ -383,6 +382,9 @@ gimp_text_tool_connect (GimpTextTool *tool,
 				   G_OBJECT (options->text));
 
       gimp_config_connect (G_OBJECT (options->text), G_OBJECT (tool->text));
+
+      tool->offset_x = off_x;
+      tool->offset_y = off_y;
 
       if (button)
         {

@@ -39,6 +39,9 @@ struct _GimpTextTool
   gint           x1, y1;
   gint           x2, y2;
 
+  gint           offset_x;
+  gint           offset_y;
+
   GimpDisplay   *gdisp;
   GimpText      *text;
 
