@@ -78,9 +78,7 @@ tips_dialog_create (void)
       filename = g_build_filename (gimp_data_directory (), "tips", 
                                    "gimp-tips.xml", NULL);
 
-      tips = gimp_tips_from_file (filename, 
-                                  setlocale (LC_MESSAGES, NULL), 
-                                  &error);
+      tips = gimp_tips_from_file (filename, &error);
       g_free (filename);
 
       if (error)

@@ -37,7 +37,6 @@ GimpTip * gimp_tip_new        (const gchar  *welcome,
 void      gimp_tip_free       (GimpTip      *tip);
 
 GList   * gimp_tips_from_file (const gchar  *filename,
-                               const gchar  *locale,
                                GError      **error);
 void      gimp_tips_free      (GList        *tips);
 

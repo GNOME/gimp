@@ -1,3 +1,12 @@
+2002-02-25  Sven Neumann  <sven@gimp.org>
+
+	* README.i18n: updated
+	
+	* app/gui/tips-dialog.c
+	* app/gui/tips-parser.[ch]: dropped the locale matching magic since
+	it would never work for all cases. Instead introduced a special 
+	message so translators can specify the exact tips locale.
+
 2002-02-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am

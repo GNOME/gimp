@@ -126,11 +126,11 @@ gimp_tip_free (GimpTip *tip)
 
 GList *
 gimp_tips_from_file (const gchar  *filename,
-                     const gchar  *locale,
                      GError      **error)
 {
   GMarkupParseContext *context;
   TipsParser          *parser;
+  const gchar         *tips_locale;
   FILE   *fp;
   gsize   bytes;
   gchar   buf[4096];
@@ -140,19 +140,31 @@ gimp_tips_from_file (const gchar  *filename,
   fp = fopen (filename, "r");
   if (!fp)
     {
-      g_set_error (error,
-                   0, /* error domain */
-                   0, /* error code   */
+      g_set_error (error, 0, 0,
                    _("Your GIMP tips file appears to be missing!\n"
-                     "There should be a file called gimp-tips.xml in "
-                     "the tips subfolder of the GIMP data folder.\n"
-                     "Please check your installation."));
+                     "There should be a file called '%s'.\n"
+                     "Please check your installation."), filename);
       return NULL;
     }
 
   parser = g_new0 (TipsParser, 1);
-  parser->locale = locale;
   parser->value  = g_string_new (NULL);
+
+  /* This is a special string to specify the language identifier to
+     look for in the gimp-tips.xml file. Please translate the C in it
+     according to the name of the po file used for gimp-tips.xml.
+     E.g. for the german translation, that would be "tips-locale:de".
+   */
+  tips_locale = _("tips-locale:C");
+
+  if (strncmp (tips_locale, "tips-locale:", 12) == 0)
+    {
+      tips_locale += 12;
+      if (*tips_locale && *tips_locale != 'C')
+        parser->locale = tips_locale;
+    }
+  else
+    g_warning ("Wrong translation for 'tips-locale:', fix the translation!");
 
   context = g_markup_parse_context_new (&markup_parser, 0, parser, NULL);
 
@@ -175,11 +187,9 @@ gimp_tips_from_file (const gchar  *filename,
 
   if (parser->state != TIPS_START)
     {
-      g_set_error (error,
-                   0, /* error domain */
-                   0, /* error code   */
-                     _("Your GIMP tips file could not be parsed correctly!\n"
-                       "Please check your installation."));
+      g_set_error (error, 0, 0,
+                   _("Your GIMP tips file could not be parsed correctly!\n"
+                     "Please check your installation."));
     }
 
   tips = g_list_reverse (parser->tips);
@@ -370,11 +380,9 @@ tips_parser_parse_locale (TipsParser   *parser,
     {
       if (strcmp (*names, "xml:lang") == 0 && **values)
         {
-          parser->locale_state = ((parser->locale &&
-                                   (strcmp (*values, parser->locale) == 0 ||
-                                    strncmp (*values, parser->locale, 2) == 0))
-                                  ? TIPS_LOCALE_MATCH 
-                                  : TIPS_LOCALE_MISMATCH);
+          parser->locale_state = (parser->locale &&
+                                  strcmp (*values, parser->locale) == 0 ? 
+                                  TIPS_LOCALE_MATCH : TIPS_LOCALE_MISMATCH);
         }
 
       names++;
