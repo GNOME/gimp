@@ -34,8 +34,9 @@
  * V 1.94, PK, 12-Oct-97: No progress bars for non-interactive mode
  * V 1.95, nn, 20-Dec-97: Initialize some variable
  * V 1.96, PK, 21-Nov-99: Internationalization
+ * V 1.97, PK, 20-Dec-00: Recognize extensions .rs and .ras too
  */
-static char ident[] = "@(#) GIMP SunRaster file-plugin v1.96  21-Nov-99";
+static char ident[] = "@(#) GIMP SunRaster file-plugin v1.97  20-Dec-00";
 
 #include "config.h"
 
@@ -241,11 +242,11 @@ query (void)
 
   /* Magic information for sunras would be "0,long,0x59a66a95" */
   gimp_register_magic_load_handler ("file_sunras_load", 
-				    "im1,im8,im24,im32", 
+				    "im1,im8,im24,im32,rs,ras",
 				    "",
 				    "0,long,0x59a66a95");
   gimp_register_save_handler       ("file_sunras_save", 
-				    "im1,im8,im24,im32", 
+				    "im1,im8,im24,im32,rs,ras",
 				    "");
 }
 

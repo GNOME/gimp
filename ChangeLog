@@ -1,5 +1,11 @@
 2000-12-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/sunras.c: applied gimp-kirchgessner-001220-0
+	which makes the sunras plug-in recognize files with the .ras and 
+	.rs extensions (used by StarOffice and Suns Image Tool).
+
+2000-12-21  Sven Neumann  <sven@gimp.org>
+
 	* docs/Wilber_Construction_Kit.xcf.gz: a new hat for Wilber courtesy 
 	of Seth Burgess. 
 
