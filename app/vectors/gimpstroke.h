@@ -58,6 +58,7 @@ struct _GimpStrokeClass
                                           const gdouble          precision,
                                           GimpCoords            *ret_point,
                                           GimpAnchor           **ret_segment_start,
+                                          GimpAnchor           **ret_segment_end,
                                           gdouble               *ret_pos);
   GimpAnchor  * (* anchor_get_next)      (const GimpStroke      *stroke,
                                           const GimpAnchor      *prev);
@@ -161,6 +162,7 @@ gdouble      gimp_stroke_nearest_point_get    (const GimpStroke      *stroke,
                                                const gdouble          precision,
                                                GimpCoords            *ret_point,
                                                GimpAnchor           **ret_segment_start,
+                                               GimpAnchor           **ret_segment_end,
                                                gdouble               *ret_pos);
 
 

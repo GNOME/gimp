@@ -59,6 +59,7 @@ static gdouble gimp_stroke_real_nearest_point_get    (const GimpStroke *stroke,
                                                       const gdouble     precision,
                                                       GimpCoords       *ret_point,
                                                       GimpAnchor      **ret_segment_start,
+                                                      GimpAnchor      **ret_segment_end,
                                                       gdouble          *ret_pos);
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
@@ -398,6 +399,7 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
                                const gdouble     precision,
                                GimpCoords       *ret_point,
                                GimpAnchor      **ret_segment_start,
+                               GimpAnchor      **ret_segment_end,
                                gdouble          *ret_pos)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
@@ -408,6 +410,7 @@ gimp_stroke_nearest_point_get (const GimpStroke *stroke,
                                                             precision,
                                                             ret_point,
                                                             ret_segment_start,
+                                                            ret_segment_end,
                                                             ret_pos);
 }
 
@@ -417,6 +420,7 @@ gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
                                     const gdouble     precision,
                                     GimpCoords       *ret_point,
                                     GimpAnchor      **ret_segment_start,
+                                    GimpAnchor      **ret_segment_end,
                                     gdouble          *ret_pos)
 {
   g_printerr ("gimp_stroke_nearest_point_get: default implementation\n");

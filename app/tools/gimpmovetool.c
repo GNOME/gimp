@@ -258,7 +258,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
           if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
                                          coords, 7, 7,
-                                         NULL, NULL, NULL, NULL, &vectors))
+                                         NULL, NULL, NULL, NULL, NULL, &vectors))
             {
               gimp_image_set_active_vectors (gdisp->gimage, vectors);
               init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
@@ -604,7 +604,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
         {
           if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), gdisp,
                                          coords, 7, 7,
-                                         NULL, NULL, NULL, NULL, NULL))
+                                         NULL, NULL, NULL, NULL, NULL, NULL))
             {
               gimp_tool_set_cursor (tool, gdisp,
                                     GDK_HAND2,

@@ -1,3 +1,17 @@
+2003-09-18  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: (gimp_stroke_nearest_point_get)
+	added the endpoint of the segment to the list of returned values.
+
+	* app/tools/gimpdrawtool.[ch]: (gimp_draw_tool_on_vectors_curve)
+	return the endpoint also.
+
+	* app/tools/gimpvectortool.[ch]: Use that to activate the
+	to-be-changed anchors when dragging on the curve directly.
+
+	* app/tools/gimpmovetool.[ch]: changed accordingly.
+
 2003-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.[ch]: cosmetics.

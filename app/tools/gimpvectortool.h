@@ -73,6 +73,7 @@ struct _GimpVectorTool
                                         /* ..._button_press?                 */
 
   GimpAnchor           *cur_anchor;     /* the current Anchor                */
+  GimpAnchor           *cur_anchor2;    /* secondary Anchor (end on_curve)   */
   GimpStroke           *cur_stroke;     /* the current Stroke                */
   gdouble               cur_position;   /* the current Position on a segment */
   GimpVectors          *cur_vectors;    /* the vectors the tool is hovering  */

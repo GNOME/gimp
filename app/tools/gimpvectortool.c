@@ -218,6 +218,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->have_undo      = FALSE;
 
   vector_tool->cur_anchor     = NULL;
+  vector_tool->cur_anchor2    = NULL;
   vector_tool->cur_stroke     = NULL;
   vector_tool->cur_position   = 0.0;
   vector_tool->cur_vectors    = NULL;
@@ -304,7 +305,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   if (vector_tool->function == VECTORS_SELECT_VECTOR)
     {
       if (gimp_draw_tool_on_vectors (draw_tool, gdisp, coords, TARGET, TARGET,
-                                     NULL, NULL, NULL, NULL, &vectors))
+                                     NULL, NULL, NULL, NULL, NULL, &vectors))
         {
           gimp_vector_tool_set_vectors (vector_tool, vectors); 
           gimp_image_set_active_vectors (gdisp->gimage, vectors);
@@ -454,6 +455,28 @@ gimp_vector_tool_button_press (GimpTool        *tool,
     }
 
 
+  /* move a curve segment directly */
+
+  if (vector_tool->function == VECTORS_MOVE_CURVE)
+    {
+      gimp_vector_tool_undo_push (vector_tool, _("Drag Curve"));
+
+      /* the magic numbers are taken from the "feel good" parameter
+       * from gimp_bezier_stroke_point_move_relative in gimpbezierstroke.c. */
+      if (vector_tool->cur_position < 5.0 / 6.0)
+        gimp_vectors_anchor_select (vector_tool->vectors,
+                                    vector_tool->cur_stroke,
+                                    vector_tool->cur_anchor, TRUE, TRUE);
+        
+      if (vector_tool->cur_position > 1.0 / 6.0)
+        gimp_vectors_anchor_select (vector_tool->vectors,
+                                    vector_tool->cur_stroke,
+                                    vector_tool->cur_anchor2, TRUE,
+                                    (vector_tool->cur_position >= 5.0 / 6.0));
+        
+    }
+
+
   /* connect two strokes */
 
   if (vector_tool->function == VECTORS_CONNECT_STROKES)
@@ -478,18 +501,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                   vector_tool->sel_anchor, TRUE, TRUE);
 
       vector_tool->function = VECTORS_FINISHED;
-    }
-
-
-  /* move a curve segment directly */
-
-  if (vector_tool->function == VECTORS_MOVE_CURVE)
-    {
-      gimp_vector_tool_undo_push (vector_tool, _("Drag Curve"));
-
-      gimp_vectors_anchor_select (vector_tool->vectors,
-                                  vector_tool->cur_stroke,
-                                  vector_tool->cur_anchor, TRUE, TRUE);
     }
 
 
@@ -833,6 +844,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   GimpDrawTool      *draw_tool;
   GimpVectorOptions *options;
   GimpAnchor        *anchor         = NULL;
+  GimpAnchor        *anchor2        = NULL;
   GimpStroke        *stroke         = NULL;
   gdouble            position       = -1;
   gboolean           on_handle      = FALSE;
@@ -865,7 +877,8 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                                                     coords,
                                                     TARGET, TARGET,
                                                     NULL,
-                                                    &position, &anchor, &stroke);
+                                                    &position, &anchor,
+                                                    &anchor2, &stroke);
     }
 
   if (on_handle || on_curve)
@@ -876,12 +889,13 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
     {
       on_vectors = gimp_draw_tool_on_vectors (draw_tool, gdisp, coords,
                                               TARGET, TARGET,
-                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL, NULL, NULL, NULL,
                                               &(vector_tool->cur_vectors));
     }
 
   vector_tool->cur_position   = position;
   vector_tool->cur_anchor     = anchor;
+  vector_tool->cur_anchor2    = anchor2;
   vector_tool->cur_stroke     = stroke;
 
   switch (options->edit_mode)

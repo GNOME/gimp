@@ -44,6 +44,7 @@ static gdouble gimp_bezier_stroke_nearest_point_get (const GimpStroke *stroke,
                                                      const gdouble     precision,
                                                      GimpCoords       *ret_point,
                                                      GimpAnchor      **ret_segment_start,
+                                                     GimpAnchor      **ret_segment_end,
                                                      gdouble          *ret_pos);
 static gdouble
        gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
@@ -454,6 +455,10 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
   g_return_if_fail (segment_start != NULL);
 
+  /* dragging close to endpoints just moves the handle related to
+   * the endpoint. Just make sure that feel_good is in the range from
+   * 0 to 1. The 1.0 / 6.0 and 5.0 / 6.0 are duplicated in 
+   * tools/gimpvectortool.c.  */
   if (position <= 1.0 / 6.0)
     feel_good = 0;
   else if (position <= 0.5)
@@ -583,13 +588,14 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
                                       const gdouble         precision,
                                       GimpCoords           *ret_point,
                                       GimpAnchor          **ret_segment_start,
+                                      GimpAnchor          **ret_segment_end,
                                       gdouble              *ret_pos)
 {
   gdouble     min_dist, dist, pos;
   GimpCoords  point;
   GimpCoords  segmentcoords[4];
   GList      *anchorlist;
-  GimpAnchor *segment_start, *anchor;
+  GimpAnchor *segment_start, *segment_end, *anchor;
   gint        count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), - 1.0);
@@ -615,6 +621,7 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
 
       if (count == 4)
         {
+          segment_end = anchorlist->data;
           dist = gimp_bezier_stroke_segment_nearest_point_get (segmentcoords,
                                                                coord, precision,
                                                                &point, &pos,
@@ -629,6 +636,8 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
                 *ret_point = point;
               if (ret_segment_start)
                 *ret_segment_start = segment_start;
+              if (ret_segment_end)
+                *ret_segment_end = segment_end;
             }
           segment_start = anchorlist->data;
           segmentcoords[0] = segmentcoords[3];
@@ -647,7 +656,10 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
         }
       anchorlist = g_list_next (anchorlist);
       if (anchorlist)
-        segmentcoords[3] = GIMP_ANCHOR (anchorlist->data)->position;
+        {
+          segment_end = GIMP_ANCHOR (anchorlist->data);
+          segmentcoords[3] = segment_end->position;
+        }
 
       dist = gimp_bezier_stroke_segment_nearest_point_get (segmentcoords,
                                                            coord, precision,
@@ -663,6 +675,8 @@ gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,
             *ret_point = point;
           if (ret_segment_start)
             *ret_segment_start = segment_start;
+          if (ret_segment_end)
+            *ret_segment_end = segment_end;
         }
     }
 

@@ -197,6 +197,7 @@ gboolean   gimp_draw_tool_on_vectors_curve         (GimpDrawTool   *draw_tool,
                                                     GimpCoords     *ret_coords,
                                                     gdouble        *ret_pos,
                                                     GimpAnchor    **ret_segment_start,
+                                                    GimpAnchor    **ret_segment_end,
                                                     GimpStroke    **ret_stroke);
 
 gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool   *draw_tool,
@@ -207,6 +208,7 @@ gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool   *draw_tool,
                                                     GimpCoords     *ret_coords,
                                                     gdouble        *ret_pos,
                                                     GimpAnchor    **ret_segment_start,
+                                                    GimpAnchor    **ret_segment_end,
                                                     GimpStroke    **ret_stroke,
                                                     GimpVectors   **ret_vectors);
 

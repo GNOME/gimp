@@ -982,10 +982,12 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
                                  GimpCoords    *ret_coords,
                                  gdouble       *ret_pos,
                                  GimpAnchor   **ret_segment_start,
+                                 GimpAnchor   **ret_segment_end,
                                  GimpStroke   **ret_stroke)
 {
   GimpStroke *stroke = NULL;
   GimpAnchor *segment_start;
+  GimpAnchor *segment_end;
   GimpCoords  min_coords, cur_coords;
   gdouble     min_dist, cur_dist, cur_pos;
 
@@ -997,6 +999,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
   if (ret_coords)        *ret_coords        = *coord;
   if (ret_pos)           *ret_pos           = -1.0;
   if (ret_segment_start) *ret_segment_start = NULL;
+  if (ret_segment_start) *ret_segment_end   = NULL;
   if (ret_stroke)        *ret_stroke        = NULL;
 
   min_dist = -1.0;
@@ -1006,6 +1009,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
       cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
 	                                        &cur_coords,
                                                 &segment_start,
+                                                &segment_end,
                                                 &cur_pos);
 
       if (cur_dist < min_dist || min_dist < 0)
@@ -1016,6 +1020,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
           if (ret_coords)        *ret_coords        = cur_coords;
           if (ret_pos)           *ret_pos           = cur_pos;
           if (ret_segment_start) *ret_segment_start = segment_start;
+          if (ret_segment_end)   *ret_segment_end   = segment_end;
           if (ret_stroke)        *ret_stroke        = stroke;
         }
     }
@@ -1046,6 +1051,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
                            GimpCoords   *ret_coords,
                            gdouble      *ret_pos,
                            GimpAnchor  **ret_segment_start,
+                           GimpAnchor  **ret_segment_end,
                            GimpStroke  **ret_stroke,
                            GimpVectors **ret_vectors)
 {
@@ -1053,11 +1059,12 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
   GimpVectors *vectors;
   gboolean on_curve;
 
-  if (ret_coords)        *ret_coords  = *coords;
-  if (ret_pos)           *ret_pos     = -1.0;
+  if (ret_coords)        *ret_coords         = *coords;
+  if (ret_pos)           *ret_pos            = -1.0;
   if (ret_segment_start) *ret_segment_start  = NULL;
-  if (ret_stroke)        *ret_stroke  = NULL;
-  if (ret_vectors)       *ret_vectors = NULL;
+  if (ret_segment_end)   *ret_segment_end    = NULL;
+  if (ret_stroke)        *ret_stroke         = NULL;
+  if (ret_vectors)       *ret_vectors        = NULL;
 
   for (list = GIMP_LIST (gdisp->gimage->vectors)->list;
        list;
@@ -1075,6 +1082,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
                                                   ret_coords,
                                                   ret_pos,
                                                   ret_segment_start,
+                                                  ret_segment_end,
                                                   ret_stroke);
 
       if (on_curve)
