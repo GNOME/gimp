@@ -37,6 +37,7 @@ struct _CurvesDialog
   GtkWidget    *yrange;
   GtkWidget    *graph;
   GdkPixmap    *pixmap;
+  GtkWidget    *curve_type_menu;
 
   GimpDrawable *drawable;
   ImageMap      image_map;
@@ -49,7 +50,7 @@ struct _CurvesDialog
   gint          last;
   gint          leftmost;
   gint          rightmost;
-  gint          curve_type;
+  gint          curve_type[5];
   gint          points[5][17][2];
   guchar        curve[5][256];
   gint          col_value[5];

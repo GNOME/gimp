@@ -1,3 +1,11 @@
+Thu Jan 20 13:20:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/color_cmds.c
+	* app/curves.c
+	* app/curves.h
+	* tools/pdbgen/pdb/color.pdb: added load and save functionality
+	to the Curves tool
+
 Wed Jan 19 21:03:00 CST 2000  Seth Burgess <sjburges@gimp.org>
 
 	* app/gdisplay_ops.c: make shrink wrap work.  Not an elegant

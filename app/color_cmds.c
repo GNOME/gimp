@@ -579,10 +579,12 @@ curves_spline_invoker (Argument *args)
 		cd.points[i][j][1] = -1;
 	      }
     
+	  for (i = 0; i < 5; i++)
+	      cd.curve_type[i] = SMOOTH;
+    
 	  cd.drawable = drawable;
 	  cd.channel = channel;
 	  cd.color = gimp_drawable_is_rgb (drawable);
-	  cd.curve_type = SMOOTH;
     
 	  for (j = 0; j < num_points / 2; j++)
 	    {
