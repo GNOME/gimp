@@ -289,7 +289,7 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
 
   if (cellviewable->renderer)
     {
-      if (! flags & GTK_CELL_RENDERER_SELECTED)
+      if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
           GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
 
@@ -316,20 +316,20 @@ gimp_cell_renderer_viewable_activate (GtkCellRenderer      *cell,
 
   cellviewable = GIMP_CELL_RENDERER_VIEWABLE (cell);
 
-  if (cellviewable->renderer && event)
+  if (cellviewable->renderer)
     {
-      if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
-          ((GdkEventButton *) event)->button == 1)
-        {
-          g_signal_emit (cell, viewable_cell_signals[CLICKED], 0,
-                         path, ((GdkEventButton *) event)->state);
+      GdkModifierType state = 0;
 
-          return gimp_preview_popup_show (widget,
-                                          (GdkEventButton *) event,
-                                          cellviewable->renderer->viewable,
-                                          cellviewable->renderer->width,
-                                          cellviewable->renderer->height,
-                                          TRUE);
+      if (event && ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
+        state = ((GdkEventButton *) event)->state;
+
+      if (! event ||
+          (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
+           ((GdkEventButton *) event)->button == 1))
+        {
+          gimp_cell_renderer_viewable_clicked (cellviewable, path, state);
+
+          return TRUE;
         }
     }
 
@@ -358,7 +358,6 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
 
   if (event)
     {
-
       if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
           ((GdkEventButton *) event)->button == 1)
         gimp_preview_popup_show (gtk_get_event_widget (event),

@@ -417,15 +417,15 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
 
   celltoggle = GTK_CELL_RENDERER_TOGGLE (cell);
 
-  if (celltoggle->activatable && event)
+  if (celltoggle->activatable)
     {
       GdkModifierType state = 0;
 
-      if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
+      if (event && ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
         state = ((GdkEventButton *) event)->state;
 
-      g_signal_emit (cell, toggle_cell_signals[CLICKED], 0,
-                     path, state);
+      gimp_cell_renderer_toggle_clicked (GIMP_CELL_RENDERER_TOGGLE (cell),
+                                         path, state);
 
       return TRUE;
     }
