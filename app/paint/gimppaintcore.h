@@ -27,15 +27,9 @@
 
 typedef enum
 {
-  INIT_PAINT,       /* Setup PaintFunc internals */
-  MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
-  FINISH_PAINT,     /* Cleanup and/or reset PaintFunc operation */
-  PRETRACE_PAINT,   /* PaintFunc performs window tracing activity
-                     * prior to rendering
-                     */
-  POSTTRACE_PAINT   /* PaintFunc performs window tracing activity
-                     * following rendering
-                     */
+  INIT_PAINT,    /*  Setup PaintFunc internals                    */
+  MOTION_PAINT,  /*  PaintFunc performs motion-related rendering  */
+  FINISH_PAINT   /*  Cleanup and/or reset PaintFunc operation     */
 } GimpPaintCoreState;
 
 
@@ -81,12 +75,6 @@ struct _GimpPaintCore
 struct _GimpPaintCoreClass
 {
   GimpObjectClass  parent_class;
-
-  /*  Set for tools that perform temporary rendering directly to the
-   *  window. These require sequencing with gimp_display_flush().
-   *  See gimpclone.c for example.
-   */
-  gboolean traces_on_window;
 
   /*  virtual functions  */
   gboolean  (* start)          (GimpPaintCore      *core,

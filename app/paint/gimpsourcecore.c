@@ -125,8 +125,7 @@ gimp_clone_class_init (GimpCloneClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  paint_core_class->traces_on_window = TRUE;
-  paint_core_class->paint            = gimp_clone_paint;
+  paint_core_class->paint                  = gimp_clone_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
 }
@@ -134,24 +133,18 @@ gimp_clone_class_init (GimpCloneClass *klass)
 static void
 gimp_clone_init (GimpClone *clone)
 {
-  clone->set_source         = FALSE;
+  clone->set_source   = FALSE;
 
-  clone->src_drawable       = NULL;
-  clone->src_x              = 0.0;
-  clone->src_y              = 0.0;
+  clone->src_drawable = NULL;
+  clone->src_x        = 0.0;
+  clone->src_y        = 0.0;
 
-  clone->orig_src_x         = 0;
-  clone->orig_src_y         = 0;
+  clone->orig_src_x   = 0;
+  clone->orig_src_y   = 0;
 
-  clone->offset_x           = 0;
-  clone->offset_y           = 0;
-  clone->first_stroke       = TRUE;
-
-  clone->init_callback      = NULL;
-  clone->finish_callback    = NULL;
-  clone->pretrace_callback  = NULL;
-  clone->posttrace_callback = NULL;
-  clone->callback_data      = NULL;
+  clone->offset_x     = 0;
+  clone->offset_y     = 0;
+  clone->first_stroke = TRUE;
 }
 
 static void
@@ -167,16 +160,6 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
   switch (paint_state)
     {
-    case PRETRACE_PAINT:
-      if (clone->pretrace_callback)
-        clone->pretrace_callback (clone, clone->callback_data);
-      break;
-
-    case POSTTRACE_PAINT:
-      if (clone->posttrace_callback)
-        clone->posttrace_callback (clone, clone->callback_data);
-      break;
-
     case INIT_PAINT:
       if (clone->set_source)
 	{
@@ -194,9 +177,6 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
 	  clone->first_stroke = TRUE;
 	}
-
-      if (clone->init_callback)
-        clone->init_callback (clone, clone->callback_data);
 
       if (options->clone_type == GIMP_PATTERN_CLONE)
 	if (! gimp_context_get_pattern (context))
@@ -244,9 +224,6 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
       break;
 
     case FINISH_PAINT:
-      if (clone->finish_callback)
-        clone->finish_callback (clone, clone->callback_data);
-
       if (options->align_mode == GIMP_CLONE_ALIGN_NO && ! clone->first_stroke)
 	{
 	  clone->src_x = clone->orig_src_x;

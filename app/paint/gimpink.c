@@ -173,12 +173,6 @@ gimp_ink_paint (GimpPaintCore      *paint_core,
 
   switch (paint_state)
     {
-    case PRETRACE_PAINT:
-      break;
-
-    case POSTTRACE_PAINT:
-      break;
-
     case INIT_PAINT:
       if (ink->last_blob                                        &&
           paint_core->cur_coords.x == paint_core->last_coords.x &&

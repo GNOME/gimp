@@ -1,5 +1,18 @@
 2004-06-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.[ch]: removed PRETRACE_PAINT and
+	POSTTRACE_PAINT from the GimpPaintCoreState enum. Removed
+	"gboolean traces_on_window" from GimpPaintCoreClass.
+
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpink.c
+	* app/tools/gimpclonetool.c: changed accordingly.
+
+	* app/tools/gimppainttool.c: ditto. Show the brush outline
+	while painting. Fixes bug #118348.
+
+2004-06-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.c: use gimp_draw_tool_is_active()
 	instead of GIMP_IS_DISPLAY(draw_tool->gdisp).
 

@@ -377,9 +377,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   curr_coords.x -= off_x;
   curr_coords.y -= off_y;
 
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_stop (draw_tool);
-
   if (tool->gdisp          &&
       tool->gdisp != gdisp &&
       tool->gdisp->gimage == gdisp->gimage)
@@ -435,11 +432,10 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
+  gimp_draw_tool_pause (draw_tool);
+
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT, time);
-
-  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
-    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
   /*  Paint to the image  */
   if (paint_tool->draw_line)
@@ -453,8 +449,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   gimp_display_flush_now (gdisp);
 
-  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
-    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void
@@ -464,12 +459,11 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 				GdkModifierType  state,
 				GimpDisplay     *gdisp)
 {
-  GimpPaintTool    *paint_tool;
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
   GimpDrawable     *drawable;
 
-  paint_tool    = GIMP_PAINT_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
@@ -525,15 +519,16 @@ gimp_paint_tool_motion (GimpTool        *tool,
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     return;
 
-  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
-    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   gimp_paint_core_interpolate (core, drawable, paint_options, time);
 
   gimp_display_flush_now (gdisp);
 
-  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
-    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
+  paint_tool->brush_x = coords->x;
+  paint_tool->brush_y = coords->y;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
@@ -543,28 +538,29 @@ gimp_paint_tool_key_press (GimpTool     *tool,
 {
   if (tool->gdisp)
     {
-      GimpContext *context;
-      gdouble opacity;
+      GimpContext *context = GIMP_CONTEXT (tool->tool_info->tool_options);
+      gdouble      opacity;
 
-      context = gimp_get_user_context (tool->gdisp->gimage->gimp);
       opacity = gimp_context_get_opacity (context);
+
       switch (kevent->keyval)
         {
-          case GDK_Left:
-            opacity = CLAMP (opacity - 0.01, 0, 1);
-            break;
-          case GDK_Right:
-            opacity = CLAMP (opacity + 0.01, 0, 1);
-            break;
-          case GDK_Up:
-            opacity = CLAMP (opacity + 0.1, 0, 1);
-            break;
-          case GDK_Down:
-            opacity = CLAMP (opacity - 0.1, 0, 1);
-            break;
-          default:
-            break;
+        case GDK_Left:
+          opacity = CLAMP (opacity - 0.01, 0, 1);
+          break;
+        case GDK_Right:
+          opacity = CLAMP (opacity + 0.01, 0, 1);
+          break;
+        case GDK_Up:
+          opacity = CLAMP (opacity + 0.1, 0, 1);
+          break;
+        case GDK_Down:
+          opacity = CLAMP (opacity - 0.1, 0, 1);
+          break;
+        default:
+          break;
         }
+
       gimp_context_set_opacity (context, opacity);
     }
 }
@@ -576,11 +572,8 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool;
-  GimpDrawTool  *draw_tool;
-
-  paint_tool = GIMP_PAINT_TOOL (tool);
-  draw_tool  = GIMP_DRAW_TOOL (tool);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
   if (key != GDK_CONTROL_MASK)
     return;
@@ -621,15 +614,13 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpPaintTool    *paint_tool;
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
   GimpPaintOptions *paint_options;
-  GimpDrawTool     *draw_tool;
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
   GimpDrawable     *drawable;
 
-  paint_tool = GIMP_PAINT_TOOL (tool);
-  draw_tool  = GIMP_DRAW_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
@@ -718,18 +709,15 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                                g_type_name (G_TYPE_FROM_INSTANCE (tool)),
                                status_str);
 
-          paint_tool->brush_x = core->cur_coords.x + off_x;
-          paint_tool->brush_y = core->cur_coords.y + off_y;
-
           paint_tool->draw_line = TRUE;
         }
       else
         {
-          paint_tool->brush_x = coords->x;
-          paint_tool->brush_y = coords->y;
-
           paint_tool->draw_line = FALSE;
         }
+
+      paint_tool->brush_x = coords->x;
+      paint_tool->brush_y = coords->y;
 
       gimp_draw_tool_start (draw_tool, gdisp);
     }
@@ -745,7 +733,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
       GimpPaintCore *core       = paint_tool->core;
 
-      if (paint_tool->draw_line)
+      if (paint_tool->draw_line &&
+          ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
           /*  Draw start target  */
           gimp_draw_tool_draw_handle (draw_tool,

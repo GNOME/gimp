@@ -131,7 +131,6 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 
   object_class->finalize  = gimp_paint_core_finalize;
 
-  klass->traces_on_window = FALSE;
   klass->start            = gimp_paint_core_real_start;
   klass->pre_paint        = gimp_paint_core_real_pre_paint;
   klass->paint            = gimp_paint_core_real_paint;
