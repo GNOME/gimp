@@ -37,6 +37,7 @@
 #include "paint_funcs.h"
 #include "rect_select.h"
 #include "temp_buf.h"
+#include "tools.h"
 
 /*  local structures  */
 
@@ -273,6 +274,7 @@ selection_to_bezier(GtkWidget *w, gpointer none)
 	iscissors = (Iscissors *) last_tool->private;
 	last_tool->state = INACTIVE;
 	bezierify_boundary (last_tool);
+	tools_select(BEZIER_SELECT);
     }
    return;
 };
@@ -482,6 +484,7 @@ iscissors_button_press (Tool           *tool,
 			gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  GimpDrawable *drawable;
   Iscissors *iscissors;
   int replace, op;
   int x, y;
@@ -489,13 +492,14 @@ iscissors_button_press (Tool           *tool,
   last_tool = tool;
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   /*message_box ("Intelligent Scissors is currently not enabled\nfor use with
   the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);*/
   /*  return;*/
   
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &iscissors->x, &iscissors->y, FALSE, TRUE);
+			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
 
   /*  If the tool was being used in another image...reset it  */
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
@@ -536,8 +540,8 @@ iscissors_button_press (Tool           *tool,
       /*  If the edge map blocks haven't been allocated, do so now  */
       if (!edge_map_blocks)
 	allocate_edge_map_blocks (BLOCK_WIDTH, BLOCK_HEIGHT,
-				  gdisp->gimage->width,
-				  gdisp->gimage->height);
+				  drawable_width(drawable),
+				  drawable_height(drawable));
 				  
       iscissors->num_segs = 0;
 	x = bevent->x;
@@ -750,10 +754,10 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  geometry[i][1] = pts[indices[i]].dy * SUPERSAMPLE;
 	  break;
 	case SCREEN_COORDS:
-	  gdisplay_transform_coords_f (gdisp, (int) pts[indices[i]].dx,
-				       (int) pts[indices[i]].dy, &x, &y, TRUE);
-	  geometry[i][0] = x;
-	  geometry[i][1] = y;
+	  /*gdisplay_transform_coords_f (gdisp, (int) pts[indices[i]].dx,
+				       (int) pts[indices[i]].dy, &x, &y, TRUE);*/
+	  geometry[i][0] = pts[indices[i]].dx/*x*/;
+	  geometry[i][1] = pts[indices[i]].dy/*y*/;
 	  break;
 	}
       geometry[i][2] = 0;
@@ -1292,12 +1296,6 @@ shape_of_boundary (Tool *tool)
       kinks[j].x = segs[i].x1;
       kinks[j].y = segs[i].y1;
       
-      /*  transform from screen to image coordinates  */
-      /*gdisplay_untransform_coords (gdisp, kinks[j].x, kinks[j].y,
-				   &x, &y, FALSE, TRUE);*/
-
-      kinks[j].x = BOUNDS (kinks[j].x, 0, (gdisp->gimage->width - 1));
-      kinks[j].y = BOUNDS (kinks[j].y, 0, (gdisp->gimage->height - 1));
 	if(j) {
 	   if((kinks[i].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
 		++j;
@@ -1370,21 +1368,24 @@ process_kinks (Tool *tool)
   Iscissors * iscissors;
   GDisplay * gdisp;
   Kink * kinks, * k_left, * k_right;
-  /* int x, y; */
+  int x, y;
   int i;
+  GimpDrawable *drawable;
+
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
+  drawable = gimage_active_drawable (gdisp->gimage);
   iscissors = (Iscissors *) tool->private;
   kinks = iscissors->kinks;
 
   for (i = 0; i < iscissors->num_kinks; i++)
     {
        /* transform from screen to image coordinates  */
-      /*gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
-				   &x, &y, FALSE, TRUE); */
-
-      kinks[i].x = BOUNDS (kinks[i].x, 0, (gdisp->gimage->width - 1));
-      kinks[i].y = BOUNDS (kinks[i].y, 0, (gdisp->gimage->height - 1));
+      gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
+				   &x, &y, FALSE, TRUE);
+      /*FIXME*/
+      kinks[i].x = BOUNDS (kinks[i].x, 0, (drawable_width(drawable) - 1));
+      kinks[i].y = BOUNDS (kinks[i].y, 0, (drawable_height(drawable) - 1));
 
       /*  get local maximums  */
       k_left = get_kink (kinks, i-1, iscissors->num_kinks);
@@ -1463,26 +1464,29 @@ edge_map_from_boundary (Tool *tool)
   int x, y, w, h;
   int x1, y1, x2, y2;
   int i;
+  GimpDrawable *drawable;
 
+  
   gdisp = (GDisplay *) tool->gdisp_ptr;
+  drawable = gimage_active_drawable (gdisp->gimage);
   iscissors = (Iscissors *) tool->private;
 
   x = y = w = h = x1 = y1 = x2 = y2 = 0;
   
-  x1 = gdisp->gimage->width;
-  y1 = gdisp->gimage->height;
+  x1 = drawable_width(drawable);
+  y1 = drawable_height(drawable);
 
   /*  Find the edge map extents  */
   for (i = 0; i < iscissors->num_pts; i++)
     {
       x = BOUNDS (pts[i].x - LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->width);
+		  drawable_width(drawable));
       y = BOUNDS (pts[i].y - LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->height);
+		  drawable_height(drawable));
       w = BOUNDS (pts[i].x + LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->width);
+		  drawable_width(drawable));
       h = BOUNDS (pts[i].y + LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->height);
+		  drawable_height(drawable));
 		  
       w -= x;
       h -= y;
@@ -1717,11 +1721,12 @@ post_process_boundary (Tool *tool)
    */
   for (i = 0; i < iscissors->num_pts; i++)
     {
-      pts[i].x = BOUNDS (pts[i].x, 0, (gdisp->gimage->width - 1));
+/*   iff you uncomment this, change it to use the drawable width&height
+   pts[i].x = BOUNDS (pts[i].x, 0, (gdisp->gimage->width - 1));
       pts[i].y = BOUNDS (pts[i].y, 0, (gdisp->gimage->height - 1));
       pts[i].dx = BOUNDS (pts[i].dx, 0, (gdisp->gimage->width - 1));
       pts[i].dy = BOUNDS (pts[i].dy, 0, (gdisp->gimage->height - 1));
-   
+*/   
       if (pts[i].dir == 0 || pts[i].stable == 0)
 	{
 	  left = (i == 0) ? iscissors->num_pts - 1 : i - 1;
@@ -1841,10 +1846,10 @@ calculate_edge_map (GImage *gimage,
   edge_map = temp_buf_new (w, h, EDGE_WIDTH, x, y, NULL);
 
   /*  calculate the extent of the search make a 1 pixel border */
-  x1 = BOUNDS (x, 0, gimage->width);
-  y1 = BOUNDS (y, 0, gimage->height);
-  x2 = BOUNDS (x + w, 0, gimage->width);
-  y2 = BOUNDS (y + h, 0, gimage->height);
+  x1 = BOUNDS (x, 0, drawable_width(drawable));
+  y1 = BOUNDS (y, 0, drawable_height(drawable));
+  x2 = BOUNDS (x + w, 0, drawable_width(drawable));
+  y2 = BOUNDS (y + h, 0, drawable_height(drawable));
 
   width = x2 - x1;
   height = y2 - y1;
@@ -2090,12 +2095,14 @@ set_edge_map_blocks (void *gimage_ptr,
   int x2, y2;
   int row, col;
   int width, height;
+  GimpDrawable *drawable;
 
   width = height = 0;
 
   gimage = (GImage *) gimage_ptr;
-  width = gimage->width;
-  height = gimage->height;
+  drawable = gimage_active_drawable (gimage);
+  width = drawable_width(drawable);
+  height = drawable_height(drawable);
 
   startx = x;
   endx = x + w;
