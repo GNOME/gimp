@@ -1,3 +1,9 @@
+Mon Jul  5 22:51:37 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* TODO: Removed zoom indicator in titlebar, since we already have
+	    that.  Added more on progress indications, and dodge/burn. New
+	    entries for active brushes and named undos.
+
 Mon Jul  5 20:39:42 BST 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/levels.c: change from greyscale bars to colour ones similar

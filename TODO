@@ -10,9 +10,7 @@ to leave out.
 
 A few GUI things suggestions...
 
-   1) Zoom-indicator to titlebar [   Foo.xcf.gz-1.0 (50%, RGB) ]
-
-   2) Crop tool could have an optional shader for the outside area
+   1) Crop tool could have an optional shader for the outside area
       so when you crop, the area outside would show in a darker color /
       user definable color / black / white etc.. (maybe a selector for
       the outside area:                  ____________ 
@@ -84,7 +82,8 @@ keybindings for simple "binary" tools:
 
 	(for ex, flip should flip horiz normal, and shift+click to
 	shift vertically). The more that can be done by power-users
-	without having to delve through dialogs the better.
+	without having to delve through dialogs the better.  This is
+	mostly implemented already.
 
 curve deal in the gradient editor?:
 
@@ -152,6 +151,10 @@ progress bars on long proccesses:
 
 	We have some of this in place thanks to Aspirin and Austin now.
 	--Yosh
+
+	Currently, long-term ops like blend run from a recursive event
+	loop, not the idle loop like they should.  This should be cleaned up a
+	little. -- Austin.
 
 status bars on image window: 
 
@@ -232,6 +235,13 @@ brush-shaped cursors:
 	ideas?  Raphs caanvas might offer the oppurtunity to do this
 	in color and anti-aliased.
 
+active brushes:
+	Use module system to dynamically load new brush types, eg
+	Raph's(?) watercolour brushes, pixmap brushes, or image hose
+	style brushes.  Need to define a proper API for hooking.
+	Maybe really want to define new tool types, rather than new brush
+	types.
+
 pixmap brushes:
 
 	Should be simple. maybe need a new format that would include
@@ -269,6 +279,8 @@ dodge/burn/sponge/smudge tools:
 	Maybe integrate iwarp stuff into 'convolve' tool (or into a separate
 	one)? Iwarp gui could be put into the tool options dialog 
 	-tigert
+
+	Calvin has committed dodge/burn/smudge stuff recently (5/July/1999).
 
 big cad style cross-hairs cursor:
 	guides come close, but we probabaly dont wont somethign like
@@ -366,6 +378,13 @@ Undo groups
 
 	basically for snapshots for the UNDO stack instead of realying on
 	everything to be recorded. Particualr useful in scripts.
+
+named undo
+	Each pushing of an undo operation should include a textual
+	string for human consumption.  That way, the "undo" menu
+	option can list exactly what will be undone.  Also allows
+	meaningful undo history display, so you can undo multiple
+	levels in one go.
 
 gradient map layer
 
