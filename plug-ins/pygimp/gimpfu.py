@@ -379,7 +379,7 @@ def _interact(func_name):
 	desc = params[i][2]
 	def_val = defaults[i]
 
-	label = gtk.Label(name)
+	label = gtk.Label(desc)
 	label.set_alignment(1.0, 0.5)
 	table.attach(label, 1,2, i,i+1, xoptions=gtk.FILL)
 	label.show()

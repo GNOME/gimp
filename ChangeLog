@@ -1,3 +1,9 @@
+2004-01-17  DindinX  <david@dindinx.org>
+
+	* plug-ins/pygimp/gimpfu.py: Show the description of params in dialog
+	boxes, rather than the internal variable name.  This is more
+	consistent with script-fu.  (reported by Florian Traverse)
+
 2004-01-16  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/plugindetails.c: some cleanup, restore old internal
