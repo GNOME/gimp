@@ -632,15 +632,14 @@ blend_motion (Tool           *tool,
     {
       if (mevent->state & GDK_CONTROL_MASK)
 	{
-	  double dx, dy;
+	  int dx, dy, d;
 	  
 	  dx = blend_tool->endx - blend_tool->startx;
 	  dy = blend_tool->endy - blend_tool->starty;
-	  
-	  blend_tool->endx = blend_tool->endx + 
-	    ((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
-	  blend_tool->endy = blend_tool->endy + 
-	    ((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	  d  = (abs(dx) + abs(dy)) >> 1;
+
+	  blend_tool->endx = blend_tool->startx + ((dx < 0) ? -d : d);
+	  blend_tool->endy = blend_tool->starty + ((dy < 0) ? -d : d);
 	}
       else
 	blend_tool->endx = blend_tool->startx;
@@ -653,9 +652,9 @@ blend_motion (Tool           *tool,
     {
       g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
 		  _("Blend: "),
-		  abs(blend_tool->endx - blend_tool->startx),
+		  blend_tool->endx - blend_tool->startx,
 		  ", ",
-		  abs(blend_tool->endy - blend_tool->starty));
+		  blend_tool->endy - blend_tool->starty);
     }
   else /* show real world units */
     {
@@ -663,10 +662,10 @@ blend_motion (Tool           *tool,
 
       g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
 		  _("Blend: "),
-		  abs(blend_tool->endx - blend_tool->startx) * unit_factor /
+		  blend_tool->endx - blend_tool->startx * unit_factor /
 		  gdisp->gimage->xresolution,
 		  ", ",
-		  abs(blend_tool->endy - blend_tool->starty) * unit_factor /
+		  blend_tool->endy - blend_tool->starty * unit_factor /
 		  gdisp->gimage->yresolution);
     }
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id,

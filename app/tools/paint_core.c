@@ -191,6 +191,7 @@ paint_core_button_press (Tool           *tool,
       paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt;
       paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt;
     }
+
   /*  If shift is down and this is not the first paint
    *  stroke, then draw a line from the last coords to the pointer
    */
@@ -249,11 +250,11 @@ paint_core_button_press (Tool           *tool,
   if (paint_core->pick_colors
       && !(bevent->state & GDK_SHIFT_MASK) 
       && (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-  {
-    paint_core_sample_color (drawable, x, y, bevent->state);
-    paint_core->pick_state = TRUE;
-    return;
-  }
+    {
+      paint_core_sample_color (drawable, x, y, bevent->state);
+      paint_core->pick_state = TRUE;
+      return;
+    }
   else
     paint_core->pick_state = FALSE;
 
@@ -378,15 +379,14 @@ paint_core_cursor_update (Tool           *tool,
 	    {
 	      if (mevent->state & GDK_CONTROL_MASK)
 		{
-		  double dx, dy;
+		  double dx, dy, d;
 
 		  dx = paint_core->curx - paint_core->lastx;
 		  dy = paint_core->cury - paint_core->lasty;
+		  d  = (fabs(dx) + fabs(dy)) / 2;  
 
-		  paint_core->curx = paint_core->lastx + 
-		    ((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
-		  paint_core->cury = paint_core->lasty + 
-		    ((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+		  paint_core->curx = paint_core->lastx + ((dx < 0) ? -d : d);
+		  paint_core->cury = paint_core->lasty + ((dy < 0) ? -d : d);
 		}
 	      else
 		paint_core->curx = paint_core->lastx;
