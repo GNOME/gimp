@@ -511,7 +511,7 @@ paint_core_16_cursor_update  (
            */
           if (gimage_mask_is_empty (gdisp->gimage))
             ctype = GDK_PENCIL;
-          else if (gimage_mask_value (gdisp->gimage, x, y))
+          else if (gimage_mask_value (gdisp->gimage, x, y) != 0)
             ctype = GDK_PENCIL;
         }
     }

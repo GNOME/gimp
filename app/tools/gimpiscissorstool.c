@@ -568,7 +568,7 @@ iscissors_button_press (Tool           *tool,
 		       tool);
       break;
     case BOUNDARY_MODE:
-      if (/*channel_value (iscissors->mask, iscissors->x, iscissors->y)*/ TRUE)
+      if (channel_value (iscissors->mask, iscissors->x, iscissors->y) != 0)
 	{
 	  replace = 0;
 
@@ -2668,7 +2668,7 @@ CR_convert (Iscissors *iscissors,
 		  if (w+x > width) w = width - x;
 		  
 	      if (!antialias)
-		 channel_add_segment (iscissors->mask, x, i+offy, w, 255);
+		 channel_add_segment (iscissors->mask, x, i+offy, w, 1.0);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;

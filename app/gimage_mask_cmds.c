@@ -131,7 +131,7 @@ gimage_mask_value_invoker (Argument *args)
 {
   GImage *gimage;
   int x, y;
-  int value;
+  gfloat value;
 
   value = 0;
 
@@ -153,7 +153,7 @@ gimage_mask_value_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_mask_value_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = value;
+    return_args[1].value.pdb_int = value * 255;
 
   return return_args;
 }

@@ -36,6 +36,28 @@ static unsigned char no_mask = OPAQUE_8BIT;
 
 
 void 
+invert_row_u8  (
+                PixelRow * dest_row,
+                PixelRow * mask_row
+                )
+{
+  gint    b;
+  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
+  guint8 *mask         = (guint8*) pixelrow_data (mask_row);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint    width        = pixelrow_width (dest_row);  
+
+  while (width--)
+    {
+      for (b = 0; b < num_channels; b++)
+        dest[b] = 255 - dest[b];
+
+      dest += num_channels;
+    }
+}
+
+
+void 
 absdiff_row_u8  (
                  PixelRow * image,
                  PixelRow * mask,

@@ -239,6 +239,58 @@ paint_funcs_area_free  (
 /*    AREA FUNCTIONS                              */
 /**************************************************/
 
+typedef void (*InvertFunc) (PixelRow*, PixelRow*);
+static InvertFunc invert_area_funcs (Tag);
+
+
+static InvertFunc 
+invert_area_funcs (
+                   Tag tag
+                   )
+	  
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return invert_row_u8;
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("bad precision");
+    } 
+
+  return NULL;
+}
+ 
+void
+invert_area (
+             PixelArea * image,
+             PixelArea * mask
+             )
+{
+  void * pag;
+  Tag tag = pixelarea_tag (image); 
+  InvertFunc invert_row = invert_area_funcs (tag);
+  /* put in tags check*/
+
+  for (pag = pixelarea_register (2, image, mask);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow irow;
+      PixelRow mrow;
+      gint h = pixelarea_height (image);
+      while (h--)
+        {
+          pixelarea_getdata (image, &irow, h);
+          pixelarea_getdata (mask, &mrow, h);
+          (*invert_row) (&irow, &mrow);
+        }
+    }
+}
+
+
 typedef void (*AbsDiffFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat, int);
 static AbsDiffFunc absdiff_area_funcs (Tag);
 

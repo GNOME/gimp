@@ -354,6 +354,7 @@ generate_boundary (BoundaryType type,
     }
 }
 
+#define FIXME /* precision wrappers */
 BoundSeg *
 find_mask_boundary (PixelArea  *maskPR,
 		    int          *num_elems,

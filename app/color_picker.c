@@ -31,7 +31,7 @@
 
 /* maximum information buffer size */
 
-#define MAX_INFO_BUF    8
+#define MAX_INFO_BUF    16
 
 
 /*  local function prototypes  */
@@ -43,18 +43,18 @@ static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
 static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
-static int   (*get_color)                 (GImage *, GimpDrawable *, int, int, int, int);
-static void  (*color_picker_info_update)  (Tool *, int);
-static void  color_picker_funcs (Tag);
+static int  get_color  (GImage *, GimpDrawable *, int, int, int, int);
+static void color_picker_info_update  (Tool *, int);
 
 static Argument *color_picker_invoker (Argument *);
 
 /*  local variables  */
 
-static int            col_value [5] = { 0, 0, 0, 0, 0 };
+static guchar         _color [TAG_MAX_BYTES];
+static PixelRow       color;
+
 static GimpDrawable * active_drawable;
 static int            update_type;
-static Tag            sample_tag;
 static InfoDialog *   color_picker_info = NULL;
 static char           red_buf   [MAX_INFO_BUF];
 static char           green_buf [MAX_INFO_BUF];
@@ -181,9 +181,6 @@ color_picker_button_press (Tool           *tool,
 	  break;
 	}
 
-      /* set up the funtion pointers */
-      color_picker_funcs (drawable_tag (active_drawable));
-  
       /* Create the action area  */
       action_items[0].user_data = color_picker_info;
       build_action_area (GTK_DIALOG (color_picker_info->shell), action_items, 1, 0);
@@ -286,19 +283,17 @@ color_picker_control (Tool     *tool,
 }
 
 static int 
-get_color_u8  (
-               GImage * gimage,
-               GimpDrawable * drawable,
-               int x,
-               int y,
-               int sample_merged,
-               int final
-               )
+get_color  (
+            GImage * gimage,
+            GimpDrawable * drawable,
+            int x,
+            int y,
+            int sample_merged,
+            int final
+            )
 {
-  unsigned char *src;
-  unsigned char *cmap;
+  PixelRow pixel;
   Canvas *tiles;
-  int offx, offy;
   int width, height;
 
   if (!drawable && !sample_merged) 
@@ -306,83 +301,35 @@ get_color_u8  (
 
   if (! sample_merged)
     {
+      int offx, offy;
       drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
       width = drawable_width (drawable);
       height = drawable_height (drawable);
       tiles = drawable_data (drawable);
-      sample_tag = drawable_tag (drawable);
-      cmap = drawable_cmap (drawable);
+      pixelrow_init (&color, drawable_tag (drawable), _color, 1);
     }
   else
     {
       width = gimage->width;
       height = gimage->height;
       tiles = gimage_projection (gimage);
-      sample_tag = gimage_tag (gimage);
-      cmap = gimage_cmap (gimage);
+      pixelrow_init (&color, gimage_tag (gimage), _color, 1);
     }
 
-  if (x >= 0 && y >= 0 && x < width && y < height)
-    canvas_portion_refro (tiles, x, y);
-  else
+  if (x < 0 || y < 0 || x >= width || y >= height)
     return FALSE;
 
-  src = canvas_portion_data (tiles, x, y);
+  canvas_portion_refro (tiles, x, y);
+
+  pixelrow_init (&pixel, canvas_tag (tiles), canvas_portion_data (tiles, x, y), 1);
+
+  copy_row (&pixel, &color);
   
-  /*  If the image is color, get RGB  */
-  switch (tag_format (sample_tag))
-    {
-    case FORMAT_RGB:
-      col_value [RED_PIX] = src [RED_PIX];
-      col_value [GREEN_PIX] = src [GREEN_PIX];
-      col_value [BLUE_PIX] = src [BLUE_PIX];
-      if (tag_alpha (sample_tag) == ALPHA_YES)
-        col_value [ALPHA_PIX] = src[ALPHA_PIX];
-      break;
-
-    case FORMAT_INDEXED:
-      {
-        int index;
-        col_value [4] = src [0];
-        index = src [0] * 3;
-        col_value [RED_PIX] = cmap [index + 0];
-        col_value [GREEN_PIX] = cmap [index + 1];
-        col_value [BLUE_PIX] = cmap [index + 2];
-        if (tag_alpha (sample_tag) == ALPHA_YES)
-          col_value [ALPHA_I_PIX] = src[ALPHA_I_PIX];
-      }
-      break;
-
-    case FORMAT_GRAY:
-      col_value [RED_PIX] = src [GRAY_PIX];
-      col_value [GREEN_PIX] = src [GRAY_PIX];
-      col_value [BLUE_PIX] = src [GRAY_PIX];
-      if (tag_alpha (sample_tag) == ALPHA_YES)
-        col_value [ALPHA_G_PIX] = src[ALPHA_G_PIX];
-      break;
-
-    case FORMAT_NONE:
-    default:
-      g_warning ("bad format");
-      break;
-    }
-
   canvas_portion_unref (tiles, x, y);
 
-  {
-    PixelRow col;
-    guchar d[3];
-
-    d[0] = col_value[0];
-    d[1] = col_value[1];
-    d[2] = col_value[2];
-
-    pixelrow_init (&col, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
-
-    palette_set_active_color (&col, final);
-  }
+  palette_set_active_color (&color, final);
 
   return TRUE;
 }
@@ -390,9 +337,158 @@ get_color_u8  (
 
 static void 
 color_picker_info_update_u8  (
-                              Tool * tool,
-                              int valid
+                              void
                               )
+{
+  guint8 * src = pixelrow_data (&color);
+  Tag sample_tag = pixelrow_tag (&color);
+  
+  switch (tag_format (sample_tag))
+    {
+    case FORMAT_RGB:
+      sprintf (red_buf, "%d", src [0]);
+      sprintf (green_buf, "%d", src [1]);
+      sprintf (blue_buf, "%d", src [2]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [3]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "#%.2x%.2x%.2x",
+               src [0], src [1], src [2]);
+      break;
+
+    case FORMAT_INDEXED:
+      sprintf (index_buf, "%d", src [0]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [1]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (red_buf, "N/A");
+      sprintf (green_buf, "N/A");
+      sprintf (blue_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_GRAY:
+      sprintf (gray_buf, "%d", src [0]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [1]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "#%.2x%.2x%.2x", src [0],
+               src [0], src [0]);
+      break;
+          
+    case FORMAT_NONE:
+    default:
+      g_warning ("bad format");
+      break;
+    }
+}
+
+static void 
+color_picker_info_update_u16  (
+                               void
+                               )
+{
+  guint16 * src = (guint16*) pixelrow_data (&color);
+  Tag sample_tag = pixelrow_tag (&color);
+  
+  switch (tag_format (sample_tag))
+    {
+    case FORMAT_RGB:
+      sprintf (red_buf, "%d", src [0]);
+      sprintf (green_buf, "%d", src [1]);
+      sprintf (blue_buf, "%d", src [2]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [3]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "#%.4x%.4x%.4x",
+               src [0], src [1], src [2]);
+      break;
+
+    case FORMAT_INDEXED:
+      sprintf (index_buf, "%d", src [0]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [1]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (red_buf, "N/A");
+      sprintf (green_buf, "N/A");
+      sprintf (blue_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_GRAY:
+      sprintf (gray_buf, "%d", src [0]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%d", src [1]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "#%.4x%.4x%.4x", src [0],
+               src [0], src [0]);
+      break;
+          
+    case FORMAT_NONE:
+    default:
+      g_warning ("bad format");
+      break;
+    }
+}
+
+static void 
+color_picker_info_update_float  (
+                                 void
+                                 )
+{
+  gfloat * src = (gfloat*) pixelrow_data (&color);
+  Tag sample_tag = pixelrow_tag (&color);
+  
+  switch (tag_format (sample_tag))
+    {
+    case FORMAT_RGB:
+      sprintf (red_buf, "%7.6f", src [0]);
+      sprintf (green_buf, "%7.6f", src [1]);
+      sprintf (blue_buf, "%7.6f", src [2]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%7.6f", src [3]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_INDEXED:
+      sprintf (index_buf, "N/A");
+      sprintf (alpha_buf, "N/A");
+      sprintf (red_buf, "N/A");
+      sprintf (green_buf, "N/A");
+      sprintf (blue_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+
+    case FORMAT_GRAY:
+      sprintf (gray_buf, "%7.6f", src [0]);
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        sprintf (alpha_buf, "%7.6f", src [1]);
+      else
+        sprintf (alpha_buf, "N/A");
+      sprintf (hex_buf, "N/A");
+      break;
+          
+    case FORMAT_NONE:
+    default:
+      g_warning ("bad format");
+      break;
+    }
+}
+
+
+static void 
+color_picker_info_update  (
+                           Tool * tool,
+                           int valid
+                           )
 {
   if (!valid)
     {
@@ -406,76 +502,29 @@ color_picker_info_update_u8  (
     }
   else
     {
-      switch (tag_format (sample_tag))
+      switch (tag_precision (pixelrow_tag (&color)))
 	{
-	case FORMAT_RGB:
-	  sprintf (red_buf, "%d", col_value [RED_PIX]);
-	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
-	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
-	  if (tag_alpha (sample_tag) == ALPHA_YES)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
-	  else
-	    sprintf (alpha_buf, "N/A");
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
-		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
-	  break;
+	case PRECISION_U8:
+	  color_picker_info_update_u8 ();
+          break;
 
-	case FORMAT_INDEXED:
-	  sprintf (index_buf, "%d", col_value [4]);
-	  if (tag_alpha (sample_tag) == ALPHA_YES)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
-	  else
-	    sprintf (alpha_buf, "N/A");
-	  sprintf (red_buf, "%d", col_value [RED_PIX]);
-	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
-	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
-		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
-	  break;
+	case PRECISION_U16:
+	  color_picker_info_update_u16 ();
+          break;
 
-	case FORMAT_GRAY:
-	  sprintf (gray_buf, "%d", col_value [GRAY_PIX]);
-	  if (tag_alpha (sample_tag) == ALPHA_YES)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
-	  else
-	    sprintf (alpha_buf, "N/A");
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [GRAY_PIX],
-		   col_value [GRAY_PIX], col_value [GRAY_PIX]);
-	  break;
-          
-	case FORMAT_NONE:
+	case PRECISION_FLOAT:
+	  color_picker_info_update_float ();
+          break;
+
+	case PRECISION_NONE:
         default:
-          g_warning ("bad format");
+          g_warning ("bad precision");
           break;
 	}
     }
 
   info_dialog_update (color_picker_info);
   info_dialog_popup (color_picker_info);
-}
-
-
-static void
-color_picker_funcs (
-                    Tag t
-                    )
-{
-  switch (tag_precision (t))
-    {
-    case PRECISION_U8:
-      get_color = get_color_u8;
-      color_picker_info_update = color_picker_info_update_u8;
-      break;
-    case PRECISION_U16:
-    case PRECISION_FLOAT:
-    case PRECISION_NONE:
-    default:
-#define FIXME
-      g_warning ("bad precision in color_picker");
-      get_color = get_color_u8;
-      color_picker_info_update = color_picker_info_update_u8;
-      return;
-    }
 }
 
 
@@ -586,7 +635,6 @@ color_picker_invoker (Argument *args)
   int save_color;
   int int_value;
   Argument *return_args;
-  unsigned char *color;
 
   drawable = NULL;
   x             = 0;
@@ -631,9 +679,6 @@ color_picker_invoker (Argument *args)
     if (!drawable || (drawable_gimage (drawable)) != gimage)
       success = FALSE;
 
-  /* set up the funcs */
-  color_picker_funcs (drawable_tag (drawable));
-
   /*  call the color_picker procedure  */
   if (success)
     success = get_color (gimage, drawable, (int) x, (int) y, sample_merged, save_color);
@@ -642,11 +687,11 @@ color_picker_invoker (Argument *args)
 
   if (success)
     {
-      color = (unsigned char *) g_malloc (3);
-      color[RED_PIX] = col_value[RED_PIX];
-      color[GREEN_PIX] = col_value[GREEN_PIX];
-      color[BLUE_PIX] = col_value[BLUE_PIX];
-      return_args[1].value.pdb_pointer = color;
+      PixelRow c;
+      guchar * _c = (unsigned char *) g_malloc (3);
+      pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), _c, 1);
+      copy_row (&color, &c);
+      return_args[1].value.pdb_pointer = _c;
     }
 
   return return_args;

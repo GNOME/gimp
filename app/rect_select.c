@@ -475,7 +475,7 @@ rect_select_cursor_update (Tool           *tool,
   /*  if the cursor is over the selected region, but no modifiers
    *  are depressed, use a fleur cursor--for cutting and moving the selection
    */
-  else if (gdisplay_mask_value (gdisp, mevent->x, mevent->y) &&
+  else if ((gdisplay_mask_value (gdisp, mevent->x, mevent->y) != 0) &&
 	   ! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) &&
 	   ! (mevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
 	   ! active)

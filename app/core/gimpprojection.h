@@ -95,7 +95,7 @@ struct _GDisplay
 
 GDisplay * gdisplay_new                    (GImage *, unsigned int);
 void       gdisplay_remove_and_delete      (GDisplay *);
-int        gdisplay_mask_value             (GDisplay *, int, int);
+gfloat     gdisplay_mask_value             (GDisplay *, int, int);
 int        gdisplay_mask_bounds            (GDisplay *, int *, int *, int *, int *);
 void       gdisplay_transform_coords       (GDisplay *, int, int, int *, int *, int);
 void       gdisplay_untransform_coords     (GDisplay *, int, int, int *,

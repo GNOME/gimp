@@ -152,7 +152,7 @@ gimage_mask_invalidate (gimage)
 }
 
 
-int
+gfloat
 gimage_mask_value (gimage, x, y)
      GImage * gimage;
      int x, y;

@@ -376,7 +376,7 @@ bucket_fill_cursor_update (tool, mevent, gdisp_ptr)
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
 	    ctype = GDK_TCROSS;
-	  else if (gimage_mask_value (gdisp->gimage, x, y))
+	  else if (gimage_mask_value (gdisp->gimage, x, y) != 0)
 	    ctype = GDK_TCROSS;
 	}
     }

@@ -383,7 +383,7 @@ bezier_select_button_press (Tool           *tool,
 	  points = points->next;
 	} while (points != start_pt);
 
-      if (!grab_pointer && channel_value (bezier_sel->mask, x, y))
+      if (!grab_pointer && channel_value (bezier_sel->mask, x, y) != 0)
 	{
 	  /*  If we're antialiased, then recompute the
 	   *  mask...
@@ -1148,7 +1148,7 @@ bezier_convert (BezierSelect *bezier_sel,
 	      w = x2 - x;
 
 	      if (!antialias)
-		channel_add_segment (bezier_sel->mask, x, i, w, 255);
+		channel_add_segment (bezier_sel->mask, x, i, w, 1.0);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;

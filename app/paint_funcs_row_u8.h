@@ -21,6 +21,12 @@
 struct _PixelRow;
 
 void
+invert_row_u8 (
+               struct _PixelRow *,
+               struct _PixelRow *
+               );
+
+void
 absdiff_row_u8 (
                 struct _PixelRow *,
                 struct _PixelRow *,
@@ -28,6 +34,7 @@ absdiff_row_u8 (
                 gfloat,
                 int
                 );
+
 void
 copy_row_u8  (
               struct _PixelRow *,

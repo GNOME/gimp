@@ -112,6 +112,12 @@ void paint_funcs_area_free (void);
 
 
 void
+invert_area (
+             struct _PixelArea * image,
+             struct _PixelArea * mask
+             );
+
+void
 absdiff_area (
               struct _PixelArea * image,
               struct _PixelArea * mask,

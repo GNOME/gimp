@@ -178,7 +178,6 @@ channel_copy (Channel *channel)
   char * channel_name;
   Channel * new_channel;
   PixelArea src_area, dest_area;
-  Tag tag = drawable_tag (GIMP_DRAWABLE(channel));
   
   /*  formulate the new channel name  */
   channel_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(channel)->name) + 6);
@@ -188,22 +187,22 @@ channel_copy (Channel *channel)
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage_ID, 
                              drawable_width (GIMP_DRAWABLE(channel)), 
                              drawable_height (GIMP_DRAWABLE(channel)),
-                             tag_precision (tag), 
+                             tag_precision (drawable_tag (GIMP_DRAWABLE(channel))), 
                              channel_name, channel->opacity, &channel->col);
   GIMP_DRAWABLE(new_channel)->visible = GIMP_DRAWABLE(channel)->visible;
   new_channel->show_masked = channel->show_masked;
 
   /*  copy the contents across channels  */
-  pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles,
+  pixelarea_init (&src_area, drawable_data (GIMP_DRAWABLE (channel)),
                   0, 0, 
-                  drawable_width (GIMP_DRAWABLE(channel)),
-                  drawable_height (GIMP_DRAWABLE(channel)),
-                  FALSE);
-  pixelarea_init (&dest_area, GIMP_DRAWABLE(new_channel)->tiles, 
                   0, 0,
-                  drawable_width (GIMP_DRAWABLE(channel)),
-                  drawable_height (GIMP_DRAWABLE(channel)),
+                  FALSE);
+
+  pixelarea_init (&dest_area, drawable_data (GIMP_DRAWABLE (new_channel)),
+                  0, 0,
+                  0, 0,
                   TRUE);
+
   copy_area (&src_area, &dest_area);
 
   /*  free up the channel_name memory  */
@@ -266,18 +265,17 @@ channel_scale (Channel *channel, int new_width, int new_height)
                    0, 0,
                    0, 0);
 
-  /*  Configure the pixel areas  */
-  pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles, 
-                  0, 0,
-                  0, 0,
-                  FALSE);
-
   /*  Allocate the new channel, configure dest region  */
   new_canvas = canvas_new (drawable_tag (GIMP_DRAWABLE(channel)), 
                            new_width, new_height,
                            STORAGE_TILED);
 
   /*  Scale the area  */
+  pixelarea_init (&src_area, drawable_data (GIMP_DRAWABLE(channel)),
+                  0, 0,
+                  0, 0,
+                  FALSE);
+
   pixelarea_init (&dest_area, new_canvas, 
                   0, 0,
                   0, 0,
@@ -307,7 +305,6 @@ channel_resize (Channel *channel, int new_width, int new_height,
 {
   PixelArea src_area, dest_area;
   Canvas *new_canvas;
-  int clear;
   int w, h;
   int x1, y1, x2, y2;
 
@@ -348,32 +345,21 @@ channel_resize (Channel *channel, int new_width, int new_height,
                    0, 0,
                    0, 0);
 
-  /*  Configure the pixel regions  */
-  pixelarea_init (&src_area, GIMP_DRAWABLE(channel)->tiles, 
-                  x1, y1,
-                  w, h,
-                  FALSE);
+  /*  Allocate the new channel, configure dest region  */
+  new_canvas = canvas_new (drawable_tag (GIMP_DRAWABLE (channel)), 
+                           new_width, new_height,
+                           STORAGE_TILED);
 
   /*  Determine whether the new channel needs to be initially cleared  */
   if ((new_width > drawable_width (GIMP_DRAWABLE(channel))) ||
       (new_height > drawable_height (GIMP_DRAWABLE(channel))) ||
       (x2 || y2))
-    clear = TRUE;
-  else
-    clear = FALSE;
-
-  /*  Allocate the new channel, configure dest region  */
-  new_canvas = canvas_new (drawable_tag (GIMP_DRAWABLE(channel)), 
-                           new_width, new_height,
-                           STORAGE_TILED);
-
-  /*  Set to black (empty--for selections)  */
-  if (clear)
     {
-      COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(channel)) );
+      COLOR16_NEW (bg_color, drawable_tag (GIMP_DRAWABLE (channel)));
       COLOR16_INIT (bg_color);
+      
       palette_get_black (&bg_color);
-
+      
       pixelarea_init (&dest_area, new_canvas, 
                       0, 0,
                       0, 0,
@@ -383,14 +369,21 @@ channel_resize (Channel *channel, int new_width, int new_height,
     }
 
   /*  copy from the old to the new  */
-  pixelarea_init (&dest_area, new_canvas,
-                  x2, y2,
-                  w, h,
-                  TRUE);
-
   if (w && h)
-    copy_area (&src_area, &dest_area);
+    {
+      pixelarea_init (&src_area, drawable_data (GIMP_DRAWABLE(channel)),
+                      x1, y1,
+                      w, h,
+                      FALSE);
 
+      pixelarea_init (&dest_area, new_canvas,
+                      x2, y2,
+                      w, h,
+                      TRUE);
+
+      copy_area (&src_area, &dest_area);
+    }
+  
   /*  Push the channel on the undo stack  */
   undo_push_channel_mod (gimage_get_ID (GIMP_DRAWABLE(channel)->gimage_ID), channel);
 
@@ -504,6 +497,7 @@ channel_new_mask (int gimage_ID, int width, int height, Precision p)
                              "Selection Mask", 0.5, &black);
 
   /*  Set the validate procedure  */
+#define FIXME
   /*tile_manager_set_validate_proc (GIMP_DRAWABLE(new_channel)->tiles, channel_validate);*/
 
   return new_channel;
@@ -575,14 +569,14 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 }
 
 #define FIXME
-/* this returns a 0-255 value.  not entirely clear what the function
-   signature should be here... */
-int
+/* i've made this return a gfloat.  masks are FORMAT_GRAY always, so a
+   single return value is sufficient.  this might come back to bite us
+   when we support headroom/footroom, but it's okay for the moment */
+gfloat
 channel_value (Channel *mask, int x, int y)
 {
-  Canvas *canvas = GIMP_DRAWABLE(mask)->tiles;
-  int val;
-  guchar *data;
+  Canvas *canvas = drawable_data (GIMP_DRAWABLE (mask));
+  gfloat val = 0;
 
   /*  Some checks to cut back on unnecessary work  */
   if (mask->bounds_known)
@@ -594,14 +588,37 @@ channel_value (Channel *mask, int x, int y)
     }
   else
     {
-      if (x < 0 || x >= drawable_width (GIMP_DRAWABLE(mask)) ||
-          y < 0 || y >= drawable_height (GIMP_DRAWABLE(mask)))
+      if (x < 0 || x >= canvas_width (canvas) ||
+          y < 0 || y >= canvas_height (canvas))
 	return 0;
     }
+  
   canvas_portion_refro (canvas, x, y);
-  data = canvas_portion_data (canvas, x, y);
-  val = *data;
+
+  switch (tag_precision (canvas_tag (canvas)))
+    {
+    case PRECISION_U8:
+      {
+        guint8 * data = (guint8*) canvas_portion_data (canvas, x, y);
+        val = *data / 255;
+      }
+      break;
+      
+    case PRECISION_U16:
+      {
+        guint16 * data = (guint16*) canvas_portion_data (canvas, x, y);
+        val = *data / 65535;
+      }
+      break;
+
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("bad precision");
+      break;
+    }
+      
   canvas_portion_unref (canvas, x, y);
+
   return val;
 }
 
@@ -745,15 +762,91 @@ channel_is_empty (Channel *mask)
 }
 
 
-#define FIXME /* int value should be pixelrow */
 void
-channel_add_segment (Channel *mask, int x, int y, int width, int value)
+channel_add_segment (Channel *mask, int x, int y, int width, gfloat value)
 {
   PixelArea maskPR;
-  unsigned char *data;
-  int val;
-  int x2;
   void * pr;
+  int x2;
+
+  /*  check horizontal extents...  */
+  x2 = x + width;
+  if (x2 < 0) x2 = 0;
+  if (x2 > drawable_width (GIMP_DRAWABLE(mask))) x2 = drawable_width (GIMP_DRAWABLE(mask));
+  if (x < 0) x = 0;
+  if (x > drawable_width (GIMP_DRAWABLE(mask))) x = drawable_width (GIMP_DRAWABLE(mask));
+  width = x2 - x;
+
+  if (!width) return;
+
+  if (y < 0 || y > drawable_height (GIMP_DRAWABLE(mask)))
+    return;
+
+  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
+                  x, y,
+                  width, 1,
+                  TRUE);
+
+  switch (tag_precision (drawable_tag (GIMP_DRAWABLE (mask))))
+    {
+    case PRECISION_U8:
+      {
+        guint8 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data + (value * 255);
+                if (val > 255)
+                  val = 255;
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_U16:
+      {
+        guint16 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data + (value * 65535);
+                if (val > 65535)
+                  val = 65535;
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("bad precision");
+      break;
+    }
+}
+
+
+void
+channel_sub_segment (Channel *mask, int x, int y, int width, gfloat value)
+{
+  PixelArea maskPR;
+  void * pr;
+  int x2;
 
   /*  check horizontal extents...  */
   x2 = x + width;
@@ -771,27 +864,63 @@ channel_add_segment (Channel *mask, int x, int y, int width, int value)
                   x, y,
                   width, 1,
                   TRUE);
-
-  for (pr = pixelarea_register (1, &maskPR); 
-	pr != NULL; 
-	pr = pixelarea_process (pr))
+  
+  switch (tag_precision (drawable_tag (GIMP_DRAWABLE (mask))))
     {
-      data = pixelarea_data (&maskPR);
-      width = pixelarea_width (&maskPR);
-      while (width--)
-	{
-	  val = *data + value;
-	  if (val > 255)
-	    val = 255;
-	  *data++ = val;
-	}
+    case PRECISION_U8:
+      {
+        guint8 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data - (value * 255);
+                if (val < 0)
+                  val = 0;
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_U16:
+      {
+        guint16 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = *data - (value * 65535);
+                if (val < 0)
+                  val = 0;
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("bad precision");
+      break;
     }
 }
 
 
-#define FIXME /* int value should be pixelrow */
 void
-channel_sub_segment (Channel *mask, int x, int y, int width, int value)
+channel_inter_segment (Channel *mask, int x, int y, int width, gfloat value)
 {
   PixelArea maskPR;
   unsigned char *data;
@@ -816,65 +945,55 @@ channel_sub_segment (Channel *mask, int x, int y, int width, int value)
                   width, 1,
                   TRUE);
   
-  for (pr = pixelarea_register (1, &maskPR); 
-	pr != NULL; 
-	pr = pixelarea_process (pr))
+  switch (tag_precision (drawable_tag (GIMP_DRAWABLE (mask))))
     {
-      data = pixelarea_data (&maskPR);
-      width = pixelarea_width (&maskPR);
-      while (width--)
-	{
-	  val = *data - value;
-	  if (val < 0)
-	    val = 0;
-	  *data++ = val;
-	}
+    case PRECISION_U8:
+      {
+        guint8 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = MINIMUM(*data, (value * 255));
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_U16:
+      {
+        guint16 * data;
+        int val;
+        
+        for (pr = pixelarea_register (1, &maskPR); 
+             pr != NULL; 
+             pr = pixelarea_process (pr))
+          {
+            data = (guint16*) pixelarea_data (&maskPR);
+            width = pixelarea_width (&maskPR);
+            while (width--)
+              {
+                val = MINIMUM(*data, (value * 65535));
+                *data++ = val;
+              }
+          }
+      }
+      break;
+
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("bad precision");
+      break;
     }
 }
 
-
-#define FIXME /* int value should be pixelrow */
-void
-channel_inter_segment (Channel *mask, int x, int y, int width, int value)
-{
-  PixelArea maskPR;
-  unsigned char *data;
-  int val;
-  int x2;
-  void * pr;
-
-  /*  check horizontal extents...  */
-  x2 = x + width;
-  if (x2 < 0) x2 = 0;
-  if (x2 > drawable_width (GIMP_DRAWABLE(mask))) x2 = drawable_width (GIMP_DRAWABLE(mask));
-  if (x < 0) x = 0;
-  if (x > drawable_width (GIMP_DRAWABLE(mask))) x = drawable_width (GIMP_DRAWABLE(mask));
-  width = x2 - x;
-  if (!width) return;
-
-  if (y < 0 || y > drawable_height (GIMP_DRAWABLE(mask)))
-    return;
-
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
-                  x, y,
-                  width, 1,
-                  TRUE);
-  
-  for (pr = pixelarea_register (1, &maskPR); 
-        pr != NULL; 
-	pr = pixelarea_process (pr))
-    {
-      data = pixelarea_data (&maskPR);
-      width = pixelarea_width (&maskPR);
-      while (width--)
-	{
-	  val = MINIMUM(*data, value);
-	  *data++ = val;
-	}
-    }
-}
-
-#define FIXME /* precision wrappers */
 void
 channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 {
@@ -886,13 +1005,13 @@ channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 	switch (op)
 	  {
 	  case ADD: case REPLACE:
-	    channel_add_segment (mask, x, i, w, 255);
+	    channel_add_segment (mask, x, i, w, 1.0);
 	    break;
 	  case SUB:
-	    channel_sub_segment (mask, x, i, w, 255);
+	    channel_sub_segment (mask, x, i, w, 1.0);
 	    break;
 	  case INTERSECT:
-	    channel_inter_segment (mask, x, i, w, 255);
+	    channel_inter_segment (mask, x, i, w, 1.0);
 	    break;
 	  }
     }
@@ -970,13 +1089,13 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 	      switch (op)
 		{
 		case ADD: case REPLACE:
-		  channel_add_segment (mask, x1, i, (x2 - x1), 255);
+		  channel_add_segment (mask, x1, i, (x2 - x1), 1.0);
 		  break;
 		case SUB :
-		  channel_sub_segment (mask, x1, i, (x2 - x1), 255);
+		  channel_sub_segment (mask, x1, i, (x2 - x1), 1.0);
 		  break;
 		case INTERSECT:
-		  channel_inter_segment (mask, x1, i, (x2 - x1), 255);
+		  channel_inter_segment (mask, x1, i, (x2 - x1), 1.0);
 		  break;
 		}
 	    }
@@ -1013,6 +1132,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		      switch (op)
 			{
 			case ADD: case REPLACE:
+#define FIXME
 			  channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
 			case SUB:
@@ -1033,6 +1153,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 	      if (last)
 		{
 		  if (op == ADD || op == REPLACE)
+#define FIXME
 		    channel_add_segment (mask, x0, i, j - x0, last);
 		  else if (op == SUB)
 		    channel_sub_segment (mask, x0, i, j - x0, last);
@@ -1188,11 +1309,19 @@ channel_push_undo (Channel *mask)
   if (channel_bounds (mask, &x1, &y1, &x2, &y2))
     {
       undo_canvas = canvas_new (drawable_tag(GIMP_DRAWABLE(mask)),
-			x2 - x1, y2 - y1, STORAGE_FLAT);
+                                x2 - x1, y2 - y1,
+                                STORAGE_FLAT);
+
       pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles,
-		x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      FALSE);
+
       pixelarea_init (&destPR, undo_canvas, 
-		0, 0, (x2 - x1), (y2 - y1), TRUE);
+                      0, 0,
+                      (x2 - x1), (y2 - y1),
+                      TRUE);
+
       copy_area (&srcPR, &destPR);
     }
   else
@@ -1216,29 +1345,30 @@ void
 channel_clear (Channel *mask)
 {
   PixelArea mask_area;
-  COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
-  COLOR16_INIT (bg_color);
-  palette_get_black (&bg_color);
+  COLOR16_NEW (bg_color, drawable_tag (GIMP_DRAWABLE (mask)));
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
   if (mask->bounds_known && !mask->empty)
     {
-      pixelarea_init (&mask_area, GIMP_DRAWABLE(mask)->tiles, mask->x1, mask->y1,
-			 (mask->x2 - mask->x1), (mask->y2 - mask->y1), TRUE);
-      color_area (&mask_area, &bg_color);
+      pixelarea_init (&mask_area, drawable_data (GIMP_DRAWABLE(mask)),
+                      mask->x1, mask->y1,
+                      (mask->x2 - mask->x1), (mask->y2 - mask->y1),
+                      TRUE);
     }
   else
     {
-      /*  clear the mask  */
-      pixelarea_init (&mask_area, GIMP_DRAWABLE(mask)->tiles, 
+      pixelarea_init (&mask_area, drawable_data (GIMP_DRAWABLE(mask)),
                       0, 0,
                       0, 0,
                       TRUE);
-
-      color_area (&mask_area, &bg_color);
     }
+
+  COLOR16_INIT (bg_color);
+  palette_get_black (&bg_color);
+
+  color_area (&mask_area, &bg_color);
 
   /*  we know the bounds  */
   mask->bounds_known = TRUE;
@@ -1249,16 +1379,11 @@ channel_clear (Channel *mask)
 }
 
 
-#define FIXME /* precision wrappers */
 void
 channel_invert (Channel *mask)
 {
   PixelArea maskPR;
-  unsigned char *data;
-  int size;
-  void * pr;
 
-  /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
   pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles,
@@ -1266,20 +1391,8 @@ channel_invert (Channel *mask)
                   0, 0,
                   TRUE);
 
-  for (pr = pixelarea_register (1, &maskPR); 
-	pr != NULL; 
-	pr = pixelarea_process (pr))
-    {
-      /*  subtract each pixel in the mask from 255  */
-      data = pixelarea_data (&maskPR);
-      size = pixelarea_width (&maskPR) * pixelarea_height (&maskPR);
-      while (size --)
-	{
-	  *data = 255 - *data;
-	  data++;
-	}
-    }
-
+  invert_area (&maskPR, NULL);
+  
   mask->bounds_known = FALSE;
 }
 
@@ -1310,7 +1423,7 @@ channel_sharpen (Channel *mask)
       size = pixelarea_width (&maskPR) * pixelarea_height (&maskPR);
       while (size--)
 	{
-	  if (*data > HALF_WAY)
+	  if (*data > 127)
 	    *data++ = 255;
 	  else
 	    *data++ = 0;
@@ -1329,10 +1442,11 @@ channel_all (Channel *mask)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  /*  clear the mask  */
+  /*  fill the mask  */
   {
-    COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
+    COLOR16_NEW (bg_color, drawable_tag (GIMP_DRAWABLE (mask)));
     COLOR16_INIT (bg_color);
+
     palette_get_white (&bg_color);
 
     pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 
@@ -1369,33 +1483,33 @@ channel_border (Channel *mask, int radius)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
-		x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
+
   bs =  find_mask_boundary (&bPR, &num_segs, WithinBounds, x1, y1, x2, y2);
 
   /*  clear the channel  */
   if (mask->bounds_known && !mask->empty)
     {
-      pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles,
+      pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
                       mask->x1, mask->y1,
                       (mask->x2 - mask->x1), (mask->y2 - mask->y1),
                       TRUE);
-
-      color_area (&bPR, &bg_color);
     }
   else
     {
-      /*  clear the mask  */
-      pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
+      pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
                       0, 0,
                       0, 0,
                       TRUE);
-
-      color_area (&bPR, &bg_color);
     }
+  
+  color_area (&bPR, &bg_color);
 
   /*  calculate a border of specified radius based on the boundary segments  */
-  pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
+  pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
                   0, 0,
                   0, 0,
                   TRUE);
@@ -1420,7 +1534,7 @@ channel_grow (Channel *mask, int steps)
   channel_push_undo (mask);
 
   /*  need full extents for grow  */
-  pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
+  pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
                   0, 0,
                   0, 0,
                   TRUE);
@@ -1444,8 +1558,10 @@ channel_shrink (Channel *mask, int steps)
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
-  pixelarea_init (&bPR, GIMP_DRAWABLE(mask)->tiles, 
-		x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixelarea_init (&bPR, drawable_data (GIMP_DRAWABLE (mask)), 
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  TRUE);
 
   while (steps--)
     thin_area (&bPR, SHRINK_REGION);
@@ -1492,9 +1608,15 @@ channel_translate (Channel *mask, int off_x, int off_y)
                                    tag_precision (tag));
       
       pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles, 
-                      x1 - off_x, y1 - off_y, width, height, FALSE);
+                      x1 - off_x, y1 - off_y,
+                      width, height,
+                      FALSE);
+
       pixelarea_init (&destPR, GIMP_DRAWABLE(tmp_mask)->tiles, 
-                      0, 0, width, height, TRUE);
+                      0, 0,
+                      width, height,
+                      TRUE);
+
       copy_area (&srcPR, &destPR);
     }
 

@@ -27,7 +27,7 @@ struct _Canvas;
 int             gimage_mask_boundary      (GImage *, BoundSeg **, BoundSeg **, int *, int *);
 int             gimage_mask_bounds        (GImage *, int *, int *, int *, int *);
 void            gimage_mask_invalidate    (GImage *);
-int             gimage_mask_value         (GImage *, int, int);
+gfloat          gimage_mask_value         (GImage *, int, int);
 int             gimage_mask_is_empty      (GImage *);
 void            gimage_mask_translate     (GImage *, int, int);
 struct _Canvas * gimage_mask_extract      (GImage *, GimpDrawable *, int, int);

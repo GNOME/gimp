@@ -35,8 +35,7 @@ struct _PixelRow;
 #define INTERSECT 3
 
 /*  Half way point where a region is no longer visible in a selection  */
-#define FIXME /* 127 is 8 bit only */
-#define HALF_WAY 127
+#define HALF_WAY 0.5
 
 /* structure declarations */
 
@@ -98,11 +97,11 @@ Channel *       channel_new_mask        (int, int, int, Precision);
 int             channel_boundary        (Channel *, BoundSeg **, BoundSeg **,
 					 int *, int *, int, int, int, int);
 int             channel_bounds          (Channel *, int *, int *, int *, int *);
-int             channel_value           (Channel *, int, int);
+gfloat          channel_value           (Channel *, int, int);
 int             channel_is_empty        (Channel *);
-void            channel_add_segment     (Channel *, int, int, int, int);
-void            channel_sub_segment     (Channel *, int, int, int, int);
-void            channel_inter_segment   (Channel *, int, int, int, int);
+void            channel_add_segment     (Channel *, int, int, int, gfloat);
+void            channel_sub_segment     (Channel *, int, int, int, gfloat);
+void            channel_inter_segment   (Channel *, int, int, int, gfloat);
 void            channel_combine_rect    (Channel *, int, int, int, int, int);
 void            channel_combine_ellipse (Channel *, int, int, int, int, int, int);
 void            channel_combine_mask    (Channel *, Channel *, int, int, int);

@@ -144,7 +144,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
 	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
 	if (gimage_mask_is_empty (gdisp->gimage) ||
-	    gimage_mask_value (gdisp->gimage, x, y))
+	    (gimage_mask_value (gdisp->gimage, x, y) != 0))
 	  {
 	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
 	      {
@@ -392,7 +392,7 @@ transform_core_cursor_update (tool, mevent, gdisp_ptr)
 	y < (GIMP_DRAWABLE(layer)->offset_y + drawable_height (GIMP_DRAWABLE(layer))))
       {
 	if (gimage_mask_is_empty (gdisp->gimage) ||
-	    gimage_mask_value (gdisp->gimage, x, y))
+	    (gimage_mask_value (gdisp->gimage, x, y) != 0))
 	  use_transform_cursor = TRUE;
       }
 

@@ -743,7 +743,7 @@ gdisplay_display_area (GDisplay *gdisp,
 }
 
 
-int
+gfloat
 gdisplay_mask_value (GDisplay *gdisp,
 		     int       x,
 		     int       y)
