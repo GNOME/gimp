@@ -36,7 +36,8 @@ IGNORE_HFILES = \
 	gimp-composite-sse2.h		\
 	gimp-composite-vis.h		\
 	gimphelp-ids.h			\
-	gimprc-blurbs.h
+	gimprc-blurbs.h			\
+	paint-funcs-generic.h
 
 # Images to copy into HTML directory
 HTML_IMAGES=

@@ -1,3 +1,12 @@
+2003-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: ignore paint-funcs-generic.h
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: added all class typedefs, removed struct
+	typedefs from the -types sections and removed all -types sections
+	which were empty after that. Lots of updates.
+
 2003-09-07  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am

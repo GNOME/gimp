@@ -18,7 +18,6 @@
    <chapter>
     <title>Paint Functions</title>
     <xi:include href="xml/paint-funcs.xml"/>
-    <xi:include href="xml/paint-funcs-generic.xml"/>
     <xi:include href="xml/paint-funcs-types.xml"/>
   </chapter>
 
@@ -62,7 +61,6 @@
 
   <chapter>
     <title>Config</title>
-    <xi:include href="xml/config-types.xml"/>
     <xi:include href="xml/gimpconfig.xml"/>
     <xi:include href="xml/gimpconfig-serialize.xml"/>
     <xi:include href="xml/gimpconfig-deserialize.xml"/>
@@ -92,6 +90,7 @@
     <xi:include href="xml/gimpbuffer.xml"/>
     <xi:include href="xml/gimpchannel.xml"/>
     <xi:include href="xml/gimpcontainer.xml"/>
+    <xi:include href="xml/gimpcontainer-filter.xml"/>
     <xi:include href="xml/gimpcontext.xml"/>
     <xi:include href="xml/gimpdata.xml"/>
     <xi:include href="xml/gimpdatafactory.xml"/>
@@ -206,7 +205,6 @@
   <chapter>
     <title>Procedural Database</title>
     <xi:include href="xml/internal_procs.xml"/>
-    <xi:include href="xml/pdb-types.xml"/>
     <xi:include href="xml/pdb_glue.xml"/>
     <xi:include href="xml/procedural_db.xml"/>
   </chapter>
@@ -257,7 +255,7 @@
   <chapter>
     <title>Text</title>
     <xi:include href="xml/text-enums.xml"/>
-    <xi:include href="xml/text-types.xml"/>
+    <xi:include href="xml/gimpfonts.xml"/>
     <xi:include href="xml/gimpfont.xml"/>
     <xi:include href="xml/gimpfontlist.xml"/>
     <xi:include href="xml/gimptext.xml"/>
@@ -284,7 +282,6 @@
   <chapter>
     <title>Display</title>
     <xi:include href="xml/display-enums.xml"/>
-    <xi:include href="xml/display-types.xml"/>
     <xi:include href="xml/gimpdisplay.xml"/>
     <xi:include href="xml/gimpdisplay-area.xml"/>
     <xi:include href="xml/gimpdisplay-foreach.xml"/>
@@ -304,7 +301,6 @@
     <xi:include href="xml/gimpdisplayshell-selection.xml"/>
     <xi:include href="xml/gimpdisplayshell-title.xml"/>
     <xi:include href="xml/gimpdisplayshell-transform.xml"/>
-    <xi:include href="xml/gimpdisplayshell.xml"/>
     <xi:include href="xml/gimpnavigationview.xml"/>
     <xi:include href="xml/gimpprogress.xml"/>
     <xi:include href="xml/gimpstatusbar.xml"/>
@@ -446,7 +442,7 @@
     <xi:include href="xml/gimppreviewrendererdrawable.xml"/>
     <xi:include href="xml/gimppreviewrenderergradient.xml"/>
     <xi:include href="xml/gimppreviewrendererimage.xml"/>
-    <xi:include href="xml/gimppreviewrenderertextlayer.xml"/>
+    <xi:include href="xml/gimppreviewrendererlayer.xml"/>
     <xi:include href="xml/gimppropwidgets.xml"/>
     <xi:include href="xml/gimpselectioneditor.xml"/>
     <xi:include href="xml/gimptemplateeditor.xml"/>
@@ -507,7 +503,6 @@
     <xi:include href="xml/gradients-commands.xml"/>
     <xi:include href="xml/gradients-menu.xml"/>
     <xi:include href="xml/grid-dialog.xml"/>
-    <xi:include href="xml/gui-types.xml"/>
     <xi:include href="xml/gui.xml"/>
     <xi:include href="xml/help-commands.xml"/>
     <xi:include href="xml/image-commands.xml"/>
