@@ -9,4 +9,12 @@ extern gboolean gimp_composite_vis_init (void);
  */
 extern gboolean gimp_composite_vis_install (void);
 
+#if defined(USE_VIS)
+#if defined(ARCH_SPARC)
+#if __GNUC__ >= 3
+#define COMPILE_VIS_IS_OKAY (1)
+#endif /* __GNUC__ > 3 */
+#endif /* defined(ARCH_SPARC) */
+#endif /* defined(USE_VIS) */
+
 #endif

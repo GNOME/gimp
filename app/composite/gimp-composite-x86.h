@@ -21,10 +21,16 @@
 
 #if __GNUC__ >= 3
 
+/*
+ * Convert the low 8bit byte of the src to 16bit words in dst.
+ */
 #define mmx_low_bytes_to_words(src,dst,zero) \
          "\tmovq      %%"#src", %%"#dst"; " \
          "\tpunpcklbw %%"#zero", %%"#dst"\n"
 
+/*
+ * Convert the high 8bit byte of the src to 16bit words in dst.
+ */
 #define mmx_high_bytes_to_words(src,dst,zero) \
          "\tmovq      %%"#src", %%"#dst"; " \
          "\tpunpckhbw %%"#zero", %%"#dst"\n"
@@ -230,5 +236,18 @@
                   "\tpsrlw     $8,        %%"#opr2"\n"
 
 typedef unsigned long long uint64;
- 
+
+extern const guint32 rgba8_alpha_mask_64[2];
+extern const guint32 rgba8_b1_64[2];
+extern const guint32 rgba8_b255_64[2];
+extern const guint32 rgba8_w1_64[2];
+extern const guint32 rgba8_w2_64[2];
+extern const guint32 rgba8_w128_64[2];
+extern const guint32 rgba8_w256_64[2];
+extern const guint32 rgba8_w255_64[2];
+
+extern const guint32 va8_alpha_mask[2];
+extern const guint32 va8_b255[2];
+extern const guint32 va8_w1[2];
+extern const guint32 va8_w255[2];
 #endif /* __GNUC__ >= 3 */

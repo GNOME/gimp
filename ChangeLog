@@ -1,3 +1,35 @@
+2004-07-20  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite.c (gimp_composite_init): Print the
+	list of active instruction sets if the --verbose command line
+	switch is ON (via be_verbose)
+
+	* app/composite/gimp-composite-x86.h: Factored code from the mmx,
+	and sse implementations.
+	
+	* app/composite/make-installer.py: Raised the number of test
+	iterations from 1 to 10.
+
+	* app/composite/gimp-composite-3dnow.[ch]
+	* app/composite/gimp-composite-3dnow-test.c
+	* app/composite/gimp-composite-3dnow-installer.c
+	* app/composite/gimp-composite-altivec.[ch]
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-mmx.[ch]
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-sse.[ch]
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse2.[ch]
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-sse2-installer.c
+	* app/composite/gimp-composite-vis.[ch]
+	* app/composite/gimp-composite-vis-test.c:
+	Regenerated sources via make-installer.py
+	
+
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c
