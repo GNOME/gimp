@@ -16,16 +16,9 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; perspective-shadow.scm   version 1.03   1999/12/21
+; perspective-shadow.scm   version 1.2   2000/11/08
 ;
-; CHANGE-LOG:
-; 1.00 - initial release
-; 1.01 - fixed the problem with a remaining copy of the selection
-; 1.02 - some code cleanup, no real changes
-; 1.03 - only call blur plugin when blut-radius >= 1.0
-;
-;
-; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
+; Copyright (C) 1997-2000 Sven Neumann <sven@gimp.org>
 ; 
 ;  
 ; Adds a perspective shadow of the current selection or alpha-channel 
@@ -40,8 +33,7 @@
 				      shadow-blur
 				      shadow-color
 				      shadow-opacity
-				      interpolate
-				      allow-resize)
+				      interpolate				      allow-resize)
   (let* ((shadow-blur (max shadow-blur 0))
 	 (shadow-opacity (min shadow-opacity 100))
 	 (shadow-opacity (max shadow-opacity 0))
@@ -54,9 +46,9 @@
 	 (from-selection 0)
 	 (active-selection 0)
 	 (shadow-layer 0))
-
     
   (if (= rel-distance 0) (set! rel-distance 999999))
+
   (gimp-undo-push-group-start image)
   
   (gimp-layer-add-alpha drawable)
@@ -104,6 +96,9 @@
 					    "Perspective Shadow"
 					    shadow-opacity
 					    NORMAL)))
+
+
+    (gimp-image-add-layer image shadow-layer -1)
     (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
     (gimp-drawable-fill shadow-layer TRANS-IMAGE-FILL)
     (gimp-palette-set-background shadow-color)
@@ -136,8 +131,6 @@
 			     new-image-height
 			     image-offset-x
 			     image-offset-y)))
-
-    (gimp-image-add-layer image shadow-layer -1)
   
     (gimp-perspective shadow-layer
 		      interpolate
@@ -182,10 +175,10 @@
 		    "Add a perspective shadow"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "1999/12/21"
+		    "2000/11/08"
 		    "RGB* GRAY*"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
+		    SF-IMAGE       "Image" 0
+		    SF-DRAWABLE    "Drawable" 0
 		    SF-ADJUSTMENT _"Angle" '(45 0 180 1 10 1 0)
 		    SF-ADJUSTMENT _"Relative Distance of Horizon" '(5 0 24 .1 1 1 1)
 		    SF-ADJUSTMENT _"Relative Length of Shadow" '(1 0 24 .1 1 1 1)

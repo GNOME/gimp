@@ -1,5 +1,10 @@
 2000-11-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/perspective-shadow.scm: fixed bug 
+	#10151 (Script-fu shadow perspective doesn't work properly).
+
+2000-11-08  Sven Neumann  <sven@gimp.org>	
+
 	* plug-ins/common/jpeg.c: fixed the option_menu code for the
 	DCT and subsampling options. Fixes bug #31253.
 
