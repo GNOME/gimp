@@ -677,12 +677,8 @@ unsharp_preview_new (void)
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  if (gimp_drawable_type (drawable->drawable_id) == GIMP_GRAY_IMAGE ||
-      gimp_drawable_type (drawable->drawable_id) == GIMP_GRAYA_IMAGE)
-    preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  else
-    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -739,7 +735,7 @@ unsharp_mask_dialog (void)
   GtkWidget *dialog;
   GtkWidget *table;
   GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *aligment;
   GtkWidget *scrollbar;
   GtkObject *adj;
   gboolean   run;
@@ -761,12 +757,12 @@ unsharp_mask_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  aligment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), aligment, FALSE, FALSE, 0);
+  gtk_widget_show (aligment);
 
   table = unsharp_preview_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (aligment), table);
   gtk_widget_show (table);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -859,7 +855,6 @@ preview_update (void)
 
   /* preview */
   guchar    *render_buffer = NULL; /* Buffer to hold rendered image */
-  guchar    *row_buffer    = NULL;
   gint       preview_width;        /* Width of preview widget */
   gint       preview_height;       /* Height of preview widget */
   gint       preview_x1;           /* Upper-left X of preview */
@@ -873,10 +868,6 @@ preview_update (void)
   gint       preview_buf_y1;       /* Upper-left Y of preview */
   gint       preview_buf_x2;       /* Lower-right X of preview */
   gint       preview_buf_y2;       /* Lower-right Y of preview */
-
-  const guchar check_light = GIMP_CHECK_LIGHT * 255;
-  const guchar check_dark  = GIMP_CHECK_DARK  * 255;
-  guchar       check;
 
   GimpPixelRgn srcPR, destPR;      /* Pixel regions */
   gint         x, y;               /* Current location in image */
@@ -940,105 +931,14 @@ preview_update (void)
   row   = 0;
   buf_y = y + preview_height;
 
-  if (gimp_drawable_type (drawable->drawable_id) == GIMP_GRAY_IMAGE ||
-      gimp_drawable_type (drawable->drawable_id) == GIMP_GRAYA_IMAGE)
-    row_buffer = g_new (guchar, preview_width);
-  else
-    row_buffer = g_new (guchar, preview_width * 3);
+  offset = (x * bytes) + (y * preview_buf_width * bytes);
 
-  for ( ; y < buf_y ; y++ )
-    {
-      offset = (x * bytes) + (y * preview_buf_width * bytes);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          render_buffer + offset,
+                          preview_buf_width * bytes);
 
-      switch (gimp_drawable_type (drawable->drawable_id))
-        {
-        case GIMP_GRAY_IMAGE:
-          memcpy (row_buffer, render_buffer + offset, preview_width);
-          break;
-
-        case GIMP_GRAYA_IMAGE:
-          {
-            gint    j;
-            guchar *rowptr = row_buffer;
-            guchar *bufptr = render_buffer + offset;
-
-            for (j = 0; j < preview_width; j++)
-              {
-                if (bufptr[1] == 255)
-                  *rowptr = bufptr[0];
-                else
-                  {
-                    if ((row & GIMP_CHECK_SIZE) ^ (j & GIMP_CHECK_SIZE))
-                      check = check_light;
-                    else
-                      check = check_dark;
-
-                    if (bufptr[1] == 0)
-                      *rowptr = check;
-                    else
-                      *rowptr = check + (((gint) (bufptr[0] - check) * bufptr[1]) >> 8);
-                  }
-
-                rowptr ++;
-                bufptr += 2;
-              }
-          }
-          break;
-
-        default:
-        case GIMP_RGB_IMAGE:
-          memcpy (row_buffer, render_buffer + offset, preview_width * 3);
-          break;
-
-        case GIMP_RGBA_IMAGE:
-          {
-            gint    j;
-            guchar *rowptr = row_buffer;
-            guchar *bufptr = render_buffer + offset;
-
-            for (j = 0; j < preview_width; j++)
-              {
-                if (bufptr[3] == 255)
-                  {
-                    rowptr[0] = bufptr[0];
-                    rowptr[1] = bufptr[1];
-                    rowptr[2] = bufptr[2];
-                  }
-                else
-                  {
-                    if ((row & GIMP_CHECK_SIZE) ^ (j & GIMP_CHECK_SIZE))
-                      check = check_light;
-                    else
-                      check = check_dark;
-
-                    if (bufptr[3] == 0)
-                      {
-                        rowptr[0] = check;
-                        rowptr[1] = check;
-                        rowptr[2] = check;
-                      }
-                    else
-                      {
-                        rowptr[0] = check + (((gint) (bufptr[0] - check) * bufptr[3]) >> 8);
-                        rowptr[1] = check + (((gint) (bufptr[1] - check) * bufptr[3]) >> 8);
-                        rowptr[2] = check + (((gint) (bufptr[2] - check) * bufptr[3]) >> 8);
-                      }
-                  }
-
-                rowptr += 3;
-                bufptr += 4;
-              }
-          }
-          break;
-        }
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), row_buffer, 0,
-                            row++, preview_width);
-    }
-
-  gtk_widget_queue_draw (preview);
-
-  g_free (row_buffer);
   g_free (render_buffer);
 }
 
