@@ -1,3 +1,12 @@
+Sat Dec  5 04:27:44 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpentry.[ch]: New files. Adds a new widget 
+	that allows to specify lengths in pixels, inches and centimeters.
+	It is tested, but not yet used anywhere.  As I don't have the time 
+	to finish this now, I add this here for later use or for someone else 
+	to integrate it into all gimp dialogs...
+
 Fri Dec  4 01:43:59 EST 1998 Nick Fetchak <nuke@bayside.net>
 
 	* app/crop.[ch]: Added option to crop the active layer only
