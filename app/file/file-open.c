@@ -2,6 +2,8 @@
  * Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Josh MacDonald
  *
+ * file-open.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -53,7 +55,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in.h"
-#include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in-proc-def.h"
 
 #include "file-open.h"
 #include "file-utils.h"

@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * plug-ins.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -41,7 +43,7 @@
 #include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-params.h"
-#include "plug-in-proc.h"
+#include "plug-in-proc-def.h"
 #include "plug-in-progress.h"
 #include "plug-in-rc.h"
 #include "plug-in-run.h"

@@ -1,5 +1,36 @@
 2004-09-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-proc.[ch]: removed...
+	* app/plug-in/plug-in-proc-def.[ch]: ...and added with a new name.
+
+	* app/plug-in/plug-in-def.[ch]
+	* app/plug-in/plug-in-message.[ch]
+	* app/plug-in/plug-in-progress.[ch]
+	* app/plug-in/plug-in-rc.[ch]
+	* app/plug-in/plug-in-run.[ch]
+	* app/plug-in/plug-in.[ch]
+	* app/plug-in/plug-ins.[ch]
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.c
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/file/file-utils.[ch]
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimppluginaction.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly plus some
+	minor cosmetic cleanups.
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimplayertreeview.c
 	(gimp_layer_tree_view_floating_selection_changed): removed the
 	hack that was displaying "Floating Selection" instead of the

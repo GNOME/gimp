@@ -30,7 +30,7 @@
 
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-def.h"
-#include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in-proc-def.h"
 
 #include "widgets/gimpuimanager.h"
 

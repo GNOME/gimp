@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * PlugInRc
+ * plug-in-rc.c
  * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@
 
 #include "plug-ins.h"
 #include "plug-in-def.h"
-#include "plug-in-proc.h"
+#include "plug-in-proc-def.h"
 #include "plug-in-rc.h"
 
 #include "gimp-intl.h"

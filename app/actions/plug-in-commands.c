@@ -33,7 +33,7 @@
 #include "pdb/procedural_db.h"
 
 #include "plug-in/plug-in-run.h"
-#include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in-proc-def.h"
 
 #include "widgets/gimphelp-ids.h"
 
