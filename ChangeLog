@@ -1,5 +1,10 @@
 2003-11-06  Sven Neumann  <sven@gimp.org>
 
+	* devel-docs/gbr.txt: documented what I found out about the GIMP
+	brush version 3 file format.
+
+2003-11-06  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: update contributed by Eric Pierce.
 
 2003-11-06  Sven Neumann  <sven@gimp.org>
