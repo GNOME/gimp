@@ -201,24 +201,23 @@ gimp_image_merge_layers (GimpImage     *gimage,
 			 GSList        *merge_list, 
 			 GimpMergeType  merge_type)
 {
-  GList                *list;
-  GSList               *reverse_list = NULL;
-  PixelRegion          src1PR, src2PR, maskPR;
-  PixelRegion          *mask;
-  GimpLayer            *merge_layer;
-  GimpLayer            *layer;
-  GimpLayer            *bottom_layer;
-  GimpLayerModeEffects  bottom_mode;
-  guchar                bg[4] = {0, 0, 0, 0};
-  GimpImageType         type;
-  gint                  count;
-  gint                  x1, y1, x2, y2;
-  gint                  x3, y3, x4, y4;
-  CombinationMode       operation;
-  gint                  position;
-  gboolean              active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
-  gint                  off_x, off_y;
-  gchar                *name;
+  GList           *list;
+  GSList          *reverse_list = NULL;
+  PixelRegion      src1PR, src2PR, maskPR;
+  PixelRegion     *mask;
+  GimpLayer       *merge_layer;
+  GimpLayer       *layer;
+  GimpLayer       *bottom_layer;
+  guchar           bg[4] = {0, 0, 0, 0};
+  GimpImageType    type;
+  gint             count;
+  gint             x1, y1, x2, y2;
+  gint             x3, y3, x4, y4;
+  CombinationMode  operation;
+  gint             position;
+  gboolean         active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
+  gint             off_x, off_y;
+  gchar           *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -227,7 +226,6 @@ gimp_image_merge_layers (GimpImage     *gimage,
   x1 = y1      = 0;
   x2 = y2      = 0;
   bottom_layer = NULL;
-  bottom_mode  = GIMP_NORMAL_MODE;
 
   /*  Get the layer extents  */
   count = 0;
@@ -378,36 +376,27 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	gimp_container_num_children (gimage->layers) - 
 	gimp_container_get_child_index (gimage->layers, GIMP_OBJECT (layer));
     }
-  /* set the mode of the bottom layer to normal so that the contents
-   *  aren't lost when merging with the all-alpha merge_layer
-   *  Keep a pointer to it so that we can set the mode right after it's
-   *  been merged so that undo works correctly.
-   */
-  bottom_layer = layer;
-  bottom_mode  = bottom_layer->mode;
 
-  /* DISSOLVE_MODE is special since it is the only mode that does not
-   *  work on the projection with the lower layer, but only locally on
-   *  the layers alpha channel. 
-   */
-  if (bottom_layer->mode != GIMP_DISSOLVE_MODE)
-    gimp_layer_set_mode (bottom_layer, GIMP_NORMAL_MODE);
+  bottom_layer = layer;
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
-                        gimp_item_get_tattoo (GIMP_ITEM (layer)));
+                        gimp_item_get_tattoo (GIMP_ITEM (bottom_layer)));
   GIMP_ITEM (merge_layer)->parasites =
-    gimp_parasite_list_copy (GIMP_ITEM (layer)->parasites);
+    gimp_parasite_list_copy (GIMP_ITEM (bottom_layer)->parasites);
 
   while (reverse_list)
     {
+      GimpLayerModeEffects  mode;
+
       layer = (GimpLayer *) reverse_list->data;
 
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
        */
-      operation = gimp_image_get_combination_mode (gimp_drawable_type (GIMP_DRAWABLE (merge_layer)),
-                                                   gimp_drawable_bytes (GIMP_DRAWABLE (layer)));
+      operation =
+	gimp_image_get_combination_mode (gimp_drawable_type (GIMP_DRAWABLE (merge_layer)),
+					 gimp_drawable_bytes (GIMP_DRAWABLE (layer)));
 
       if (operation == -1)
 	{
@@ -447,19 +436,23 @@ gimp_image_merge_layers (GimpImage     *gimage,
 	  mask = NULL;
 	}
 
+      /* DISSOLVE_MODE is special since it is the only mode that does not
+       *  work on the projection with the lower layer, but only locally on
+       *  the layers alpha channel. 
+       */
+      mode = layer->mode;
+      if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
+	mode = GIMP_NORMAL_MODE;
+
       combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
 		       layer->opacity * 255.999,
-                       layer->mode,
+                       mode,
                        active,
                        operation);
 
       gimp_image_remove_layer (gimage, layer);
       reverse_list = g_slist_next (reverse_list);
     }
-
-  /* Save old mode in undo */
-  if (bottom_layer)
-    gimp_layer_set_mode (bottom_layer, bottom_mode);
 
   g_slist_free (reverse_list);
 
