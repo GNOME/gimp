@@ -1,0 +1,127 @@
+
+typedef GType (* GimpGetTypeFunc) (void);
+
+static GimpGetTypeFunc get_type_funcs[] =
+{
+  gimp_add_mask_type_get_type,
+  gimp_blend_mode_get_type,
+  gimp_brush_application_mode_get_type,
+  gimp_bucket_fill_mode_get_type,
+  gimp_channel_ops_get_type,
+  gimp_channel_type_get_type,
+  gimp_clone_type_get_type,
+  gimp_convert_dither_type_get_type,
+  gimp_convert_palette_type_get_type,
+  gimp_convolution_type_get_type,
+  gimp_convolve_type_get_type,
+  gimp_dodge_burn_type_get_type,
+  gimp_fill_type_get_type,
+  gimp_gradient_segment_color_get_type,
+  gimp_gradient_segment_type_get_type,
+  gimp_gradient_type_get_type,
+  gimp_histogram_channel_get_type,
+  gimp_hue_range_get_type,
+  gimp_icon_type_get_type,
+  gimp_image_base_type_get_type,
+  gimp_image_type_get_type,
+  gimp_interpolation_type_get_type,
+  gimp_layer_mode_effects_get_type,
+  gimp_mask_apply_mode_get_type,
+  gimp_merge_type_get_type,
+  gimp_message_handler_type_get_type,
+  gimp_offset_type_get_type,
+  gimp_orientation_type_get_type,
+  gimp_pdb_arg_type_get_type,
+  gimp_pdb_proc_type_get_type,
+  gimp_pdb_status_type_get_type,
+  gimp_paint_application_mode_get_type,
+  gimp_progress_command_get_type,
+  gimp_repeat_mode_get_type,
+  gimp_rotation_type_get_type,
+  gimp_run_mode_get_type,
+  gimp_size_type_get_type,
+  gimp_stack_trace_mode_get_type,
+  gimp_transfer_mode_get_type,
+  gimp_transform_direction_get_type
+};
+
+static const gchar *type_names[] =
+{
+  "GimpAddMaskType",
+  "GimpBlendMode",
+  "GimpBrushApplicationMode",
+  "GimpBucketFillMode",
+  "GimpChannelOps",
+  "GimpChannelType",
+  "GimpCloneType",
+  "GimpConvertDitherType",
+  "GimpConvertPaletteType",
+  "GimpConvolutionType",
+  "GimpConvolveType",
+  "GimpDodgeBurnType",
+  "GimpFillType",
+  "GimpGradientSegmentColor",
+  "GimpGradientSegmentType",
+  "GimpGradientType",
+  "GimpHistogramChannel",
+  "GimpHueRange",
+  "GimpIconType",
+  "GimpImageBaseType",
+  "GimpImageType",
+  "GimpInterpolationType",
+  "GimpLayerModeEffects",
+  "GimpMaskApplyMode",
+  "GimpMergeType",
+  "GimpMessageHandlerType",
+  "GimpOffsetType",
+  "GimpOrientationType",
+  "GimpPDBArgType",
+  "GimpPDBProcType",
+  "GimpPDBStatusType",
+  "GimpPaintApplicationMode",
+  "GimpProgressCommand",
+  "GimpRepeatMode",
+  "GimpRotationType",
+  "GimpRunMode",
+  "GimpSizeType",
+  "GimpStackTraceMode",
+  "GimpTransferMode",
+  "GimpTransformDirection"
+};
+
+void
+_gimp_enums_init (void)
+{
+  GimpGetTypeFunc *funcs;
+  gint             i;
+
+  for (i = 0, funcs = get_type_funcs;
+       i < G_N_ELEMENTS (get_type_funcs);
+       i++, funcs++)
+    {
+      GType type = (*funcs) ();
+
+      g_type_class_ref (type);
+    }
+}
+
+/**
+ * gimp_enums_get_type_names:
+ * @n_type_names: return location for the number of names
+ *
+ * This function gives access to the list of enums registered by libgimp.
+ * The returned array is static and must not be modified.
+ *
+ * Return value: an array with type names
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar **
+gimp_enums_get_type_names (gint *n_type_names)
+{
+  g_return_val_if_fail (n_type_names != NULL, NULL);
+
+  *n_type_names = G_N_ELEMENTS (type_names);
+
+  return type_names;
+}

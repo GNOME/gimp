@@ -65,12 +65,6 @@ INCLUDES = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-EXTRA_DIST = \
-	COPYING		\
-	makefile.msc	\
-	gimp.def	\
-	gimpui.def
-
 lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
 
 PDB_WRAPPERS_C = \
@@ -223,6 +217,15 @@ libgimp_2_0_la_sources = \
 
 libgimp_2_0_la_built_sources = \
 	gimpenums.c
+
+libgimp_2_0_la_extra_sources = gimpenums.c.tail
+
+EXTRA_DIST = \
+	COPYING				\
+	makefile.msc			\
+	gimp.def			\
+	gimpui.def			\
+	$(libgimp_2_0_la_extra_sources)
 
 libgimp_2_0_la_SOURCES = \
 	$(libgimp_2_0_la_sources)	\

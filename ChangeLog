@@ -1,3 +1,11 @@
+2004-10-27  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/enumcode.pl: Don't declare $first twice.
+
+	* libgimp/Makefile.am: Be sure to distribute gimpenums.c.tail.
+
+	* libgimp/gimpenums.c.tail: Added into CVS.
+
 2004-10-27  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-bezier.[ch]: added a notebook page for the

@@ -144,7 +144,7 @@ static const gchar *type_names[] =
 {
 CODE
 
-my $first = 1;
+$first = 1;
 foreach (sort keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
