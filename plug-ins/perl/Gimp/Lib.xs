@@ -793,7 +793,7 @@ static int check_int (char *croak_str, SV *sv)
   if (as_ref)							\
     av = newAV ();						\
   else								\
-    av = 0, EXTEND (SP, arg[-1].data.d_int32);			\
+    { av = 0; EXTEND (SP, arg[-1].data.d_int32); }		\
   for (j = 0; j < arg[-1].data.d_int32; j++)			\
     if (as_ref)							\
       av_push (av, newsv (arg->data.datatype[j]));		\
