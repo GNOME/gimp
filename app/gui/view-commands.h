@@ -33,7 +33,9 @@ void   view_dot_for_dot_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
 void   view_info_window_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
-void   view_nav_window_cmd_callback            (GtkWidget *widget,
+void   view_navigation_window_cmd_callback     (GtkWidget *widget,
+                                                gpointer   data);
+void   view_display_filters_cmd_callback       (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_selection_cmd_callback      (GtkWidget *widget,
                                                 gpointer   data);

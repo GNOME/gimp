@@ -1,3 +1,22 @@
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: pass an additional "Gimp"
+	pointer to gimp_display_shell_set_menu_sensitivity() so we can
+	correctly set the state of some items even without a display.
+	Set the sensitivity of much more items. Never set submenus
+	insensitive so the user can always browse the whole menu
+	(according to the GNOME HIG).
+
+	* app/image_map.c
+	* app/display/gimpdisplay.c
+	* app/gui/gui.c: changed accordingly.
+
+	* app/gui/view-commands.[ch]: added a callback for the display
+	filters dialog because display releted dialogs are going to
+	be handled different soon.
+
+	* app/gui/menus.c: use the new callback.
+
 2002-03-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]: registered GimpConvertDitherType and

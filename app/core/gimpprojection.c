@@ -571,7 +571,8 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
   if (! now && gimp_context_get_display (gimp_get_user_context
                                          (gdisp->gimage->gimp)) == gdisp)
     {
-      gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell));
+      gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                               gdisp->gimage->gimp);
     }
 }
 

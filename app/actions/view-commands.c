@@ -34,6 +34,9 @@
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-selection.h"
 
+#include "widgets/gimpdialogfactory.h"
+
+#include "dialogs.h"
 #include "info-dialog.h"
 #include "info-window.h"
 #include "view-commands.h"
@@ -124,8 +127,8 @@ view_info_window_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_nav_window_cmd_callback (GtkWidget *widget,
-			      gpointer   data)
+view_navigation_window_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
@@ -144,6 +147,20 @@ view_nav_window_cmd_callback (GtkWidget *widget,
     {
       nav_dialog_follow_auto ();
     }
+}
+
+void
+view_display_filters_cmd_callback (GtkWidget *widget,
+                                   gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                  "gimp:display-filters-dialog", -1);
 }
 
 void

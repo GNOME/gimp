@@ -94,7 +94,8 @@ image_map_create (GimpDisplay  *gdisp,
    * to avert any unintented undo interaction through the UI
    */
   gimp_image_undo_freeze (image_map->gdisp->gimage);
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell));
+  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
+                                           image_map->gdisp->gimage->gimp);
 
   return image_map;
 }
@@ -245,7 +246,8 @@ image_map_commit (ImageMap *image_map)
 				 x1, y1, x2, y2, image_map->undo_tiles, FALSE);
     }
 
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell));
+  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
+                                           image_map->gdisp->gimage->gimp);
   g_free (image_map);
 }
 
@@ -297,7 +299,8 @@ image_map_clear (ImageMap *image_map)
 	  g_message ("image depth change, unable to restore original image");
 	  tile_manager_destroy (image_map->undo_tiles);
           gimp_image_undo_thaw (image_map->gdisp->gimage);
-          gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell));
+          gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
+                                                   image_map->gdisp->gimage->gimp);
 	  g_free (image_map);
 	  return;
 	}
@@ -322,7 +325,8 @@ image_map_abort (ImageMap *image_map)
 
   image_map_clear (image_map);
   gimp_image_undo_thaw (image_map->gdisp->gimage);
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell));
+  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (image_map->gdisp->shell),
+                                           image_map->gdisp->gimage->gimp);
   g_free (image_map);
 }
 

@@ -128,7 +128,8 @@ void        gimp_display_shell_untransform_coords    (GimpDisplayShell *shell,
                                                       GimpCoords       *display_coords,
                                                       GimpCoords       *image_coords);
 
-void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell);
+void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
+                                                      Gimp             *gimp);
 
 GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
                                                       gdouble           x,

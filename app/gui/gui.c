@@ -85,7 +85,7 @@ static void         gui_really_quit_callback        (GtkWidget   *button,
 
 static void         gui_display_changed             (GimpContext *context,
                                                      GimpDisplay *display,
-                                                     gpointer     data);
+                                                     Gimp        *gimp);
 static void         gui_image_disconnect            (GimpImage   *gimage,
                                                      gpointer     data);
 
@@ -343,10 +343,14 @@ gui_get_screen_resolution (gdouble   *xres,
 void
 gui_really_quit_dialog (GCallback quit_func)
 {
-  GtkWidget *dialog;
+  GtkItemFactory *item_factory;
+  GtkWidget      *dialog;
 
-  gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", FALSE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Quit", FALSE);
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
+
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
 
   dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
 				   gimp_standard_help_func,
@@ -524,8 +528,13 @@ gui_really_quit_callback (GtkWidget *button,
     }
   else
     {
-      gimp_menu_item_set_sensitive ("<Toolbox>/File/Quit", TRUE);
-      gimp_menu_item_set_sensitive ("<Image>/File/Quit", TRUE);
+      GtkItemFactory *item_factory;
+
+      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
+      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", TRUE);
+
+      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
+      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", TRUE);
     }
 }
 
@@ -535,16 +544,14 @@ gui_really_quit_callback (GtkWidget *button,
 static void
 gui_display_changed (GimpContext *context,
 		     GimpDisplay *display,
-		     gpointer     data)
+		     Gimp        *gimp)
 {
-  Gimp *gimp;
-
-  gimp = (Gimp *) data;
+  GimpDisplayShell *shell = NULL;
 
   if (display)
-    gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (display->shell));
-  else
-    gimp_display_shell_set_menu_sensitivity (NULL);
+    shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_display_shell_set_menu_sensitivity (shell, gimp);
 }
 
 static void
