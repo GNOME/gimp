@@ -22,6 +22,12 @@
 	    Still no fix for Bug#33403: Curves/Levels Tool does not work
 	    on GRAYA-Images.
 
+2000-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.c: use RINT() instead or rint(). Sprinkled
+	some GPOINTER_TO_INT() and other macros where we used to cast
+	directly. Minor doc fixes.
+
 2000-11-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpwidgets.c (gimp_int_adjustment_update): use rint(). 
