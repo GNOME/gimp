@@ -50,8 +50,6 @@ static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
 static void   gimp_container_view_init        (GimpContainerView      *panel);
 
 static void   gimp_container_view_destroy     (GtkObject              *object);
-static void   gimp_container_view_style_set   (GtkWidget              *widget,
-					       GtkStyle               *prev_style);
 
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
 						      GimpContainer     *container);
@@ -85,7 +83,7 @@ static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
 
-static GtkVBoxClass *parent_class = NULL;
+static GimpEditorClass *parent_class = NULL;
 
 
 GType
@@ -108,7 +106,7 @@ gimp_container_view_get_type (void)
         (GInstanceInitFunc) gimp_container_view_init,
       };
 
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
+      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
                                           "GimpContainerView",
                                           &view_info, 0);
     }
@@ -120,10 +118,8 @@ static void
 gimp_container_view_class_init (GimpContainerViewClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkWidgetClass *widget_class;
 
   object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -162,8 +158,6 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 
   object_class->destroy   = gimp_container_view_destroy;
 
-  widget_class->style_set = gimp_container_view_style_set;
-
   klass->select_item      = NULL;
   klass->activate_item    = NULL;
   klass->context_item     = NULL;
@@ -174,22 +168,6 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->reorder_item     = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("content_spacing",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
-                                                             G_PARAM_READABLE));
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("button_spacing",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
-                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -205,7 +183,6 @@ gimp_container_view_init (GimpContainerView *view)
 
   view->get_name_func = NULL;
 
-  view->button_box    = NULL;
   view->dnd_widget    = NULL;
 }
 
@@ -230,32 +207,6 @@ gimp_container_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_container_view_style_set (GtkWidget *widget,
-			       GtkStyle  *prev_style)
-{
-  GimpContainerView *view;
-  gint               content_spacing;
-  gint               button_spacing;
-
-  view = GIMP_CONTAINER_VIEW (widget);
-
-  gtk_widget_style_get (widget,
-                        "content_spacing", &content_spacing,
-			"button_spacing",  &button_spacing,
-			NULL);
-
-  gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
-
-  if (view->button_box)
-    {
-      gtk_box_set_spacing (GTK_BOX (view->button_box), button_spacing);
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 void
@@ -466,52 +417,6 @@ gimp_container_view_set_name_func (GimpContainerView   *view,
     {
       view->get_name_func = get_name_func;
     }
-}
-
-GtkWidget *
-gimp_container_view_add_button (GimpContainerView *view,
-				const gchar       *stock_id,
-				const gchar       *tooltip,
-				const gchar       *help_data,
-				GCallback          callback,
-				GCallback          extended_callback,
-				gpointer           callback_data)
-{
-  GtkWidget *button;
-  GtkWidget *image;
-
-  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
-
-  if (! view->button_box)
-    {
-      view->button_box = gtk_hbox_new (TRUE, 2);
-      gtk_box_pack_end (GTK_BOX (view), view->button_box, FALSE, FALSE, 0);
-      gtk_widget_show (view->button_box);
-    }
-
-  button = gimp_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  if (tooltip || help_data)
-    gimp_help_set_help_data (button, tooltip, help_data);
-
-  if (callback)
-    g_signal_connect (G_OBJECT (button), "clicked",
-		      callback,
-		      callback_data);
-
-  if (extended_callback)
-    g_signal_connect (G_OBJECT (button), "extended_clicked",
-		      extended_callback,
-		      callback_data);
-
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  return button;
 }
 
 void

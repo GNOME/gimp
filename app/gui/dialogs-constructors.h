@@ -20,6 +20,8 @@
 #define __DIALOGS_CONSTRUCTORS_H__
 
 
+/*  toplevel dialogs  */
+
 GtkWidget * dialogs_toolbox_get            (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
@@ -60,20 +62,8 @@ GtkWidget * dialogs_about_get              (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 
-GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-void        dialogs_edit_brush_func        (GimpData          *data);
 
-GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-void        dialogs_edit_gradient_func     (GimpData          *data);
-
-GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-void        dialogs_edit_palette_func      (GimpData          *data);
+/*  docks & dockables  */
 
 GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
 					    GimpContext       *context,
@@ -142,6 +132,21 @@ GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
 GtkWidget * dialogs_document_history_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+
+GtkWidget * dialogs_brush_editor_get       (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+void        dialogs_edit_brush_func        (GimpData          *data);
+
+GtkWidget * dialogs_gradient_editor_get    (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+void        dialogs_edit_gradient_func     (GimpData          *data);
+
+GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+void        dialogs_edit_palette_func      (GimpData          *data);
 
 GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory,
 					    GimpContext       *context,

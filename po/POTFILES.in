@@ -53,7 +53,6 @@ app/file/file-open.c
 app/file/file-save.c
 
 app/gui/about-dialog.c
-app/gui/brush-editor.c
 app/gui/brush-select.c
 app/gui/channels-commands.c
 app/gui/color-area.c
@@ -70,7 +69,6 @@ app/gui/file-commands.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-save-dialog.c
-app/gui/gradient-editor.c
 app/gui/gradient-editor-commands.c
 app/gui/gradient-select.c
 app/gui/gradients-commands.c
@@ -83,7 +81,6 @@ app/gui/layers-commands.c
 app/gui/menus.c
 app/gui/module-browser.c
 app/gui/offset-dialog.c
-app/gui/palette-editor.c
 app/gui/palette-import-dialog.c
 app/gui/palette-select.c
 app/gui/palettes-commands.c
@@ -161,6 +158,7 @@ app/tools/selection_options.c
 app/tools/tool_options.c
 app/tools/transform_options.c
 
+app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c
 app/widgets/gimpchannellistview.c
@@ -170,10 +168,12 @@ app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpfontselection-dialog.c
+app/widgets/gimpgradienteditor.c
 app/widgets/gimpimagedock.c
 app/widgets/gimpitemfactory.c
 app/widgets/gimpitemlistview.c
 app/widgets/gimplayerlistview.c
+app/widgets/gimppaletteeditor.c
 app/widgets/gimpvectorslistview.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c

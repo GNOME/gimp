@@ -151,32 +151,32 @@ gimp_document_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
   document_view->open_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_OPEN,
-				    _("Open the selected entry\n"
-                                      "<Shift> Raise window if already open\n"
-                                      "<Ctrl> Open image dialog"),
-                                    NULL,
-				    G_CALLBACK (gimp_document_view_open_clicked),
-				    G_CALLBACK (gimp_document_view_open_extended_clicked),
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_OPEN,
+                            _("Open the selected entry\n"
+                              "<Shift> Raise window if already open\n"
+                              "<Ctrl> Open image dialog"),
+                            NULL,
+                            G_CALLBACK (gimp_document_view_open_clicked),
+                            G_CALLBACK (gimp_document_view_open_extended_clicked),
+                            editor);
 
   document_view->delete_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_DELETE,
-				    _("Remove selected entry"), NULL,
-				    G_CALLBACK (gimp_document_view_delete_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_DELETE,
+                            _("Remove selected entry"), NULL,
+                            G_CALLBACK (gimp_document_view_delete_clicked),
+                            NULL,
+                            editor);
 
   document_view->refresh_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_REFRESH,
-				    _("Refresh (check files for existence)"),
-                                    NULL,
-				    G_CALLBACK (gimp_document_view_refresh_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_REFRESH,
+                            _("Refresh (check files for existence)"),
+                            NULL,
+                            G_CALLBACK (gimp_document_view_refresh_clicked),
+                            NULL,
+                            editor);
 
   /*  set button sensitivity  */
   if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)

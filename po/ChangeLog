@@ -1,3 +1,7 @@
+2002-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: updated.
+
 2002-03-07  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
@@ -13,7 +17,7 @@
 2002-03-06  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* no.po: Updated Norwegian (bokmål) translation.
-	
+
 2002-03-06  Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>
 
 	* nl.po: Massive translation-update (copy-paste from gimp-1-2).
@@ -33,7 +37,7 @@
 2002-02-28  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing files.
-	
+
 	* de.po: updated german translation.
 
 2002-02-25  Sven Neumann  <sven@gimp.org>
@@ -43,16 +47,16 @@
 2002-02-22  Sven Neumann  <sven@gimp.org>
 
 	* po/Makefile.in.in: changed by glib-gettextize and intltoolize.
-	
+
 	* po/po2tbl.sed.in
 	* po/update.pl
 	* po/update.sh: removed, we use intltool now
 
 	* README.tools: mention intltool-update.
-	
+
 	* po/POTFILES.in: added data/misc/gimp.desktop.in.in
-	
-	* po/de.po: updated german translation.cvs
+
+	* po/de.po: updated german translation.
 
 2002-02-22  Michael Natterer  <mitch@gimp.org>
 

@@ -190,44 +190,44 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   factory_view->new_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_NEW,
-				    _("New"), NULL,
-				    G_CALLBACK (gimp_data_factory_view_new_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_NEW,
+                            _("New"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_new_clicked),
+                            NULL,
+                            editor);
 
   factory_view->duplicate_button =
-    gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_DUPLICATE,
-				    _("Duplicate"), NULL,
-				    G_CALLBACK (gimp_data_factory_view_duplicate_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GIMP_STOCK_DUPLICATE,
+                            _("Duplicate"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_duplicate_clicked),
+                            NULL,
+                            editor);
 
   factory_view->edit_button =
-    gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_EDIT,
-				    _("Edit"), NULL,
-				    G_CALLBACK (gimp_data_factory_view_edit_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GIMP_STOCK_EDIT,
+                            _("Edit"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_edit_clicked),
+                            NULL,
+                            editor);
 
   factory_view->delete_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_DELETE,
-				    _("Delete"), NULL,
-				    G_CALLBACK (gimp_data_factory_view_delete_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_DELETE,
+                            _("Delete"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_delete_clicked),
+                            NULL,
+                            editor);
 
   factory_view->refresh_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_REFRESH,
-				    _("Refresh"), NULL,
-				    G_CALLBACK (gimp_data_factory_view_refresh_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_REFRESH,
+                            _("Refresh"), NULL,
+                            G_CALLBACK (gimp_data_factory_view_refresh_clicked),
+                            NULL,
+                            editor);
 
   /*  set button sensitivity  */
   if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)

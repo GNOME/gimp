@@ -19,8 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENT_EDITOR_H__
-#define __GRADIENT_EDITOR_H__
+#ifndef __GIMP_GRADIENT_EDITOR_H__
+#define __GIMP_GRADIENT_EDITOR_H__
+
+
+#include "gimpdataeditor.h"
 
 
 #define GRAD_NUM_COLORS 10
@@ -43,18 +46,26 @@ typedef enum
 } GradientEditorUpdateMask;
 
 
-struct _GradientEditor
+#define GIMP_TYPE_GRADIENT_EDITOR            (gimp_gradient_editor_get_type ())
+#define GIMP_GRADIENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditor))
+#define GIMP_GRADIENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditorClass))
+#define GIMP_IS_GRADIENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_EDITOR))
+#define GIMP_IS_GRADIENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_EDITOR))
+#define GIMP_GRADIENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_EDITOR, GimpGradientEditorClass))
+
+
+typedef struct _GimpGradientEditorClass GimpGradientEditorClass;
+
+struct _GimpGradientEditor
 {
-  GtkWidget   *shell;
+  GimpDataEditor  parent_instance;
 
-  GtkWidget   *name;
-
-  GtkWidget   *hint_label;
+  GtkWidget   *hint_label1;
+  GtkWidget   *hint_label2;
+  GtkWidget   *hint_label3;
   GtkWidget   *scrollbar;
   GtkWidget   *preview;
   GtkWidget   *control;
-
-  GimpContext *context;
 
   /*  Zoom and scrollbar  */
   guint        zoom_factor;
@@ -97,15 +108,16 @@ struct _GradientEditor
   gboolean             right_saved_dirty;
 };
 
-
-GradientEditor * gradient_editor_new (Gimp                     *gimp);
-
-void   gradient_editor_set_gradient  (GradientEditor           *gradient_editor,
-				      GimpGradient             *gradient);
-void   gradient_editor_free          (GradientEditor           *gradient_editor);
-
-void   gradient_editor_update        (GradientEditor           *gradient_editor,
-                                      GradientEditorUpdateMask  flags);
+struct _GimpGradientEditorClass
+{
+  GimpDataEditorClass  parent_class;
+};
 
 
-#endif  /* __GRADIENT_EDITOR_H__ */
+GimpDataEditor * gimp_gradient_editor_new    (Gimp                     *gimp);
+
+void             gimp_gradient_editor_update (GimpGradientEditor       *editor,
+                                              GradientEditorUpdateMask  flags);
+
+
+#endif  /* __GIMP_GRADIENT_EDITOR_H__ */

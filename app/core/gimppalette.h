@@ -34,8 +34,6 @@
 #define GIMP_PALETTE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE, GimpPaletteClass))
 
 
-typedef struct _GimpPaletteEntry GimpPaletteEntry;
-
 struct _GimpPaletteEntry
 {
   GimpRGB  color;

@@ -6,8 +6,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	about-dialog.c			\
 	about-dialog.h			\
 	authors.h			\
-	brush-editor.c			\
-	brush-editor.h			\
 	brush-select.c			\
 	brush-select.h			\
 	brushes-commands.c		\
@@ -56,8 +54,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	file-open-dialog.h		\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
-	gradient-editor.c		\
-	gradient-editor.h		\
 	gradient-editor-commands.c	\
 	gradient-editor-commands.h	\
 	gradient-select.h		\
@@ -83,8 +79,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	module-browser.h		\
 	offset-dialog.c			\
 	offset-dialog.h			\
-	palette-editor.c		\
-	palette-editor.h		\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
 	palette-select.c		\

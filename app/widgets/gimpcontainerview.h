@@ -23,7 +23,7 @@
 #define __GIMP_CONTAINER_VIEW_H__
 
 
-#include <gtk/gtkvbox.h>
+#include "gimpeditor.h"
 
 
 #define GIMP_TYPE_CONTAINER_VIEW            (gimp_container_view_get_type ())
@@ -38,7 +38,7 @@ typedef struct _GimpContainerViewClass  GimpContainerViewClass;
 
 struct _GimpContainerView
 {
-  GtkVBox              parent_instance;
+  GimpEditor           parent_instance;
 
   GimpContainer       *container;
   GimpContext         *context;
@@ -50,15 +50,13 @@ struct _GimpContainerView
 
   GimpItemGetNameFunc  get_name_func;
 
-  GtkWidget           *button_box;
-
   /*  initialized by subclass  */
   GtkWidget           *dnd_widget;
 };
 
 struct _GimpContainerViewClass
 {
-  GtkVBoxClass  parent_class;
+  GimpEditorClass  parent_class;
 
   /*  signals  */
   void     (* select_item)      (GimpContainerView *view,
@@ -100,13 +98,6 @@ void      gimp_container_view_set_preview_size (GimpContainerView   *view,
 void      gimp_container_view_set_name_func    (GimpContainerView   *view,
 						GimpItemGetNameFunc  get_name_func);
 
-GtkWidget * gimp_container_view_add_button     (GimpContainerView   *editor,
-						const gchar         *stock_id,
-						const gchar         *tooltip,
-						const gchar         *help_data,
-						GCallback            callback,
-						GCallback            extended_callback,
-						gpointer             callback_data);
 void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
 						GtkButton           *button,
 						GType                children_type);

@@ -1,3 +1,47 @@
+2002-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added GimpPaletteEntry typedef.
+
+	* app/core/gimppalette.h: removed it here.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpeditor.[ch]: new widget which is the base class
+	for everything which is a vbox and has a button area at the
+	bottom.
+
+	* app/widgets/gimpcontainerview.[ch]: derived from GimpEditor now.
+
+	* app/widgets/gimpdataeditor.[ch]: a GimpEditor subclass which is
+	the base class for the new data editors below.
+
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpitemlistview.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimpvectorslistview.c
+	* themes/Default/gtkrc: chagec accordingly.
+
+	* app/gui/Makefile.am
+	* app/gui/brush-editor.[ch]
+	* app/gui/gradient-editor.[ch]
+	* app/gui/palette-editor.[ch]: removed...
+
+	* app/widgets/gimpbrusheditor.[ch]
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: ...and added back as
+	GimpDataEditor subclasses. Lots of cleanup and stuff...
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gui-types.h
+	* app/gui/palette-select.c
+	* app/tools/gimpcolorpickertool.c: changed accordingly.
+
 2002-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: back to a still splash image.

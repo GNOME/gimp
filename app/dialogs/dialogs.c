@@ -50,11 +50,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:undo-history-dialog",    dialogs_undo_history_get,    32, FALSE, FALSE, FALSE, TRUE  },
   { "gimp:display-filters-dialog", dialogs_display_filters_get, 32, FALSE, FALSE, FALSE, TRUE  },
   { "gimp:tips-dialog",            dialogs_tips_get,            32, TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:about-dialog",           dialogs_about_get,           32, TRUE,  FALSE, FALSE, TRUE  },
-
-  { "gimp:brush-editor",           dialogs_brush_editor_get,    32, TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp:gradient-editor",        dialogs_gradient_editor_get, 32, TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp:palette-editor",         dialogs_palette_editor_get,  32, TRUE,  TRUE,  TRUE,  FALSE }
+  { "gimp:about-dialog",           dialogs_about_get,           32, TRUE,  FALSE, FALSE, TRUE  }
 };
 
 static const GimpDialogFactoryEntry dock_entries[] =
@@ -83,7 +79,11 @@ static const GimpDialogFactoryEntry dock_entries[] =
 
   { "gimp:document-history", dialogs_document_history_new,   48, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:error-console",    dialogs_error_console_get,      32, TRUE,  FALSE, FALSE, TRUE }
+  { "gimp:brush-editor",     dialogs_brush_editor_get,        0, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp:gradient-editor",  dialogs_gradient_editor_get,     0, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp:palette-editor",   dialogs_palette_editor_get,      0, TRUE,  FALSE, FALSE, TRUE },
+
+  { "gimp:error-console",    dialogs_error_console_get,       0, TRUE,  FALSE, FALSE, TRUE }
 };
 
 
@@ -128,9 +128,15 @@ dialogs_init (Gimp *gimp)
 void
 dialogs_exit (Gimp *gimp)
 {
-  g_object_unref (G_OBJECT (global_dialog_factory));
-  g_object_unref (G_OBJECT (global_dock_factory));
+  if (global_dialog_factory)
+    {
+      g_object_unref (G_OBJECT (global_dialog_factory));
+      global_dialog_factory = NULL;
+    }
 
-  global_dialog_factory = NULL;
-  global_dock_factory   = NULL;
+  if (global_dock_factory)
+    {
+      g_object_unref (G_OBJECT (global_dock_factory));
+      global_dock_factory = NULL;
+    }
 }

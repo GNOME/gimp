@@ -24,7 +24,6 @@
 
 
 typedef struct _ColorNotebook    ColorNotebook;
-typedef struct _GradientEditor   GradientEditor;
 typedef struct _InfoDialog       InfoDialog;
 typedef struct _NavigationDialog NavigationDialog;
 

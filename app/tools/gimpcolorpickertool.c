@@ -33,11 +33,12 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimptoolinfo.h"
 
+#include "display/gimpdisplay.h"
+
+#include "widgets/gimppaletteeditor.h"
+
 #include "gui/color-area.h"
 #include "gui/info-dialog.h"
-#include "gui/palette-editor.h"
-
-#include "display/gimpdisplay.h"
 
 #include "gimpdrawtool.h"
 #include "gimpcolorpickertool.h"
@@ -551,16 +552,18 @@ gimp_color_picker_tool_pick_color (GimpImage            *gimage,
 
   if (update_active)
     {
-      palette_editor_update_color (gimp_get_user_context (gimage->gimp),
-                                   &color,
-                                   update_state);
+      GimpContext *user_context;
+
+      user_context = gimp_get_user_context (gimage->gimp);
+
+#if 0
+      gimp_palette_editor_update_color (user_context, &color, update_state);
+#endif
 
       if (active_color == FOREGROUND)
-        gimp_context_set_foreground (gimp_get_user_context (gimage->gimp),
-                                     &color);
+        gimp_context_set_foreground (user_context, &color);
       else if (active_color == BACKGROUND)
-        gimp_context_set_background (gimp_get_user_context (gimage->gimp),
-                                     &color);
+        gimp_context_set_background (user_context, &color);
     }
 
   return retval;

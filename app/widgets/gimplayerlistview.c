@@ -204,14 +204,14 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   /*  Anchor button  */
 
   view->anchor_button =
-    gimp_container_view_add_button (GIMP_CONTAINER_VIEW (view),
-				    GIMP_STOCK_ANCHOR,
-				    _("Anchor"), NULL,
-				    G_CALLBACK (gimp_layer_list_view_anchor_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (GIMP_EDITOR (view),
+                            GIMP_STOCK_ANCHOR,
+                            _("Anchor"), NULL,
+                            G_CALLBACK (gimp_layer_list_view_anchor_clicked),
+                            NULL,
+                            view);
 
-  gtk_box_reorder_child (GTK_BOX (GIMP_CONTAINER_VIEW (view)->button_box),
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
 			 view->anchor_button, 5);
 
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),

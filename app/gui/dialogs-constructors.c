@@ -37,10 +37,12 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
+#include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpimagedock.h"
@@ -49,12 +51,13 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimpgradienteditor.h"
 #include "widgets/gimplistitem.h"
+#include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpvectorslistview.h"
 
 #include "about-dialog.h"
-#include "brush-editor.h"
 #include "brush-select.h"
 #include "brushes-commands.h"
 #include "buffers-commands.h"
@@ -66,13 +69,11 @@
 #include "dialogs-constructors.h"
 #include "documents-commands.h"
 #include "error-console-dialog.h"
-#include "gradient-editor.h"
 #include "gradient-select.h"
 #include "gradients-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "module-browser.h"
-#include "palette-editor.h"
 #include "palette-select.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"
@@ -278,121 +279,6 @@ dialogs_about_get (GimpDialogFactory *factory,
                    gint               preview_size)
 {
   return about_dialog_create ();
-}
-
-
-/*  editors  */
-
-#ifdef __GNUC__
-#warning: FIXME: remove EEKWrapper (make editors dockable)
-#endif
-
-typedef struct
-{
-  GtkWidget *shell;
-} EEKWrapper;
-
-
-/*  the brush editor  */
-
-static BrushEditor *brush_editor_dialog = NULL;
-
-GtkWidget *
-dialogs_brush_editor_get (GimpDialogFactory *factory,
-			  GimpContext       *context,
-                          gint               preview_size)
-{
-  if (! brush_editor_dialog)
-    {
-      brush_editor_dialog = brush_editor_new (context->gimp);
-    }
-
-  return ((EEKWrapper *) brush_editor_dialog)->shell;
-}
-
-void
-dialogs_edit_brush_func (GimpData *data)
-{
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (data);
-
-  if (GIMP_IS_BRUSH_GENERATED (brush))
-    {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory,
-					"gimp:brush-editor",
-                                        -1);
-
-      brush_editor_set_brush (brush_editor_dialog, brush);
-    }
-  else
-    {
-      g_message (_("This brush cannot be edited."));
-    }
-}
-
-
-/*  the gradient editor  */
-
-static GradientEditor *gradient_editor_dialog = NULL;
-
-GtkWidget *
-dialogs_gradient_editor_get (GimpDialogFactory *factory,
-			     GimpContext       *context,
-                             gint               preview_size)
-{
-  if (! gradient_editor_dialog)
-    {
-      gradient_editor_dialog = gradient_editor_new (context->gimp);
-    }
-
-  return ((EEKWrapper *) gradient_editor_dialog)->shell;
-}
-
-void
-dialogs_edit_gradient_func (GimpData *data)
-{
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (data);
-
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
-				    "gimp:gradient-editor",
-                                    -1);
-
-  gradient_editor_set_gradient (gradient_editor_dialog, gradient);
-}
-
-
-/*  the palette editor  */
-
-static PaletteEditor *palette_editor_dialog = NULL;
-
-GtkWidget *
-dialogs_palette_editor_get (GimpDialogFactory *factory,
-			    GimpContext       *context,
-                            gint               preview_size)
-{
-  if (! palette_editor_dialog)
-    {
-      palette_editor_dialog = palette_editor_new (context->gimp);
-    }
-
-  return ((EEKWrapper *) palette_editor_dialog)->shell;
-}
-
-void
-dialogs_edit_palette_func (GimpData *data)
-{
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (data);
-
-  gimp_dialog_factory_dialog_raise (global_dialog_factory,
-				    "gimp:palette-editor",
-                                    -1);
-
-  palette_editor_set_palette (palette_editor_dialog, palette);
 }
 
 
@@ -885,6 +771,89 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 		    dockable);
 
   return dockable;
+}
+
+
+/*  editors  */
+
+/*  the brush editor  */
+
+static GimpDataEditor *brush_editor = NULL;
+
+GtkWidget *
+dialogs_brush_editor_get (GimpDialogFactory *factory,
+			  GimpContext       *context,
+                          gint               preview_size)
+{
+  brush_editor = gimp_brush_editor_new (context->gimp);
+
+  return dialogs_dockable_new (GTK_WIDGET (brush_editor),
+                               "Brush Editor", "Brush Editor",
+                               NULL, NULL);
+}
+
+void
+dialogs_edit_brush_func (GimpData *data)
+{
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    "gimp:brush-editor",
+                                    -1);
+
+  gimp_data_editor_set_data (brush_editor, data);
+}
+
+
+/*  the gradient editor  */
+
+static GimpDataEditor *gradient_editor = NULL;
+
+GtkWidget *
+dialogs_gradient_editor_get (GimpDialogFactory *factory,
+			     GimpContext       *context,
+                             gint               preview_size)
+{
+  gradient_editor = gimp_gradient_editor_new (context->gimp);
+
+  return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
+			       "Gradient Editor", "Gradient Editor",
+			       NULL, NULL);
+}
+
+void
+dialogs_edit_gradient_func (GimpData *data)
+{
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+				    "gimp:gradient-editor",
+                                    -1);
+
+  gimp_data_editor_set_data (gradient_editor, data);
+}
+
+
+/*  the palette editor  */
+
+static GimpDataEditor *palette_editor = NULL;
+
+GtkWidget *
+dialogs_palette_editor_get (GimpDialogFactory *factory,
+			    GimpContext       *context,
+                            gint               preview_size)
+{
+  palette_editor = gimp_palette_editor_new (context->gimp);
+
+  return dialogs_dockable_new (GTK_WIDGET (palette_editor),
+			       "Palette Editor", "Palette Editor",
+			       NULL, NULL);
+}
+
+void
+dialogs_edit_palette_func (GimpData *data)
+{
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+				    "gimp:palette-editor",
+                                    -1);
+
+  gimp_data_editor_set_data (palette_editor, data);
 }
 
 

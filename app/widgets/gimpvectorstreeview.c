@@ -121,40 +121,40 @@ gimp_vectors_list_view_class_init (GimpVectorsListViewClass *klass)
 static void
 gimp_vectors_list_view_init (GimpVectorsListView *view)
 {
-  GimpContainerView    *container_view;
+  GimpEditor *editor;
 
-  container_view = GIMP_CONTAINER_VIEW (view);
+  editor = GIMP_EDITOR (view);
 
   /*  To Selection button  */
 
   view->toselection_button =
-    gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_SELECTION_REPLACE,
-				    _("Path to Selection\n"
-				      "<Shift> Add\n"
-				      "<Ctrl> Subtract\n"
-				      "<Shift><Ctrl> Intersect"), NULL,
-				    G_CALLBACK (gimp_vectors_list_view_toselection_clicked),
-				    G_CALLBACK (gimp_vectors_list_view_toselection_extended_clicked),
-				    view);
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_SELECTION_REPLACE,
+                            _("Path to Selection\n"
+                              "<Shift> Add\n"
+                              "<Ctrl> Subtract\n"
+                              "<Shift><Ctrl> Intersect"), NULL,
+                            G_CALLBACK (gimp_vectors_list_view_toselection_clicked),
+                            G_CALLBACK (gimp_vectors_list_view_toselection_extended_clicked),
+                            view);
 
   view->stroke_button =
-    gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_PATH_STROKE,
-				    _("Stroke Path"), NULL,
-				    G_CALLBACK (gimp_vectors_list_view_stroke_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_PATH_STROKE,
+                            _("Stroke Path"), NULL,
+                            G_CALLBACK (gimp_vectors_list_view_stroke_clicked),
+                            NULL,
+                            view);
 
-  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+  gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->toselection_button, 5);
-  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+  gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->stroke_button, 6);
 
-  gimp_container_view_enable_dnd (container_view,
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
 				  GTK_BUTTON (view->toselection_button),
 				  GIMP_TYPE_VECTORS);
-  gimp_container_view_enable_dnd (container_view,
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
 				  GTK_BUTTON (view->stroke_button),
 				  GIMP_TYPE_VECTORS);
 

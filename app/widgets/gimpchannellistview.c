@@ -169,17 +169,17 @@ gimp_channel_list_view_init (GimpChannelListView *view)
   /*  To Selection button  */
 
   view->toselection_button =
-    gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_SELECTION_REPLACE,
-				    _("Channel to Selection\n"
-				      "<Shift> Add\n"
-				      "<Ctrl> Subtract\n"
-				      "<Shift><Ctrl> Intersect"), NULL,
-				    G_CALLBACK (gimp_channel_list_view_toselection_clicked),
-				    G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
-				    view);
+    gimp_editor_add_button (GIMP_EDITOR (container_view),
+                            GIMP_STOCK_SELECTION_REPLACE,
+                            _("Channel to Selection\n"
+                              "<Shift> Add\n"
+                              "<Ctrl> Subtract\n"
+                              "<Shift><Ctrl> Intersect"), NULL,
+                            G_CALLBACK (gimp_channel_list_view_toselection_clicked),
+                            G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
+                            view);
 
-  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (container_view)->button_box),
 			 view->toselection_button, 5);
 
   gimp_container_view_enable_dnd (container_view,
@@ -259,7 +259,7 @@ gimp_channel_list_view_select_item (GimpContainerView *view,
 
       floating_sel = (gimp_image_floating_sel (item_view->gimage) != NULL);
 
-      gtk_widget_set_sensitive (view->button_box, !floating_sel);
+      gtk_widget_set_sensitive (GIMP_EDITOR (view)->button_box, ! floating_sel);
     }
 
   gtk_widget_set_sensitive (list_view->toselection_button, item != NULL);

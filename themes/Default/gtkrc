@@ -99,13 +99,11 @@ class "GtkHScale" style "gimp-hscale-style"
 
 style "gimp-dock-style"
 {
-  GimpDock::separator_height           = 6
-  GimpDockbook::tab_border             = 0
-  GimpDockable::content_border         = 2
-  GimpContainerView::content_spacing   = 2
-  GimpContainerView::button_spacing    = 2
-  GimpContainerEditor::content_spacing = 2
-  GimpContainerEditor::button_spacing  = 2
+  GimpDock::separator_height   = 6
+  GimpDockbook::tab_border     = 0
+  GimpDockable::content_border = 2
+  GimpEditor::content_spacing  = 2
+  GimpEditor::button_spacing   = 2
 }
 
 widget "*Gimp*Dock*" style "gimp-dock-style"

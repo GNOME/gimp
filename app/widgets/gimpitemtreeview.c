@@ -178,63 +178,63 @@ gimp_item_list_view_class_init (GimpItemListViewClass *klass)
 static void
 gimp_item_list_view_init (GimpItemListView *view)
 {
-  GimpContainerView *container_view;
+  GimpEditor *editor;
 
-  container_view = GIMP_CONTAINER_VIEW (view);
+  editor = GIMP_EDITOR (view);
 
-  view->gimage        = NULL;
-  view->item_type = G_TYPE_NONE;
-  view->signal_name   = NULL;
+  view->gimage      = NULL;
+  view->item_type   = G_TYPE_NONE;
+  view->signal_name = NULL;
 
   view->new_button =
-    gimp_container_view_add_button (container_view,
-				    GTK_STOCK_NEW,
-				    _("New"), NULL,
-				    G_CALLBACK (gimp_item_list_view_new_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (editor,
+                            GTK_STOCK_NEW,
+                            _("New"), NULL,
+                            G_CALLBACK (gimp_item_list_view_new_clicked),
+                            NULL,
+                            view);
 
   view->raise_button =
-    gimp_container_view_add_button (container_view,
-				    GTK_STOCK_GO_UP,
-				    _("Raise\n"
-				      "<Shift> To Top"), NULL,
-				    G_CALLBACK (gimp_item_list_view_raise_clicked),
-				    G_CALLBACK (gimp_item_list_view_raise_extended_clicked),
-				    view);
+    gimp_editor_add_button (editor,
+                            GTK_STOCK_GO_UP,
+                            _("Raise\n"
+                              "<Shift> To Top"), NULL,
+                            G_CALLBACK (gimp_item_list_view_raise_clicked),
+                            G_CALLBACK (gimp_item_list_view_raise_extended_clicked),
+                            view);
 
   view->lower_button =
-    gimp_container_view_add_button (container_view,
-				    GTK_STOCK_GO_DOWN,
-				    _("Lower\n"
-				      "<Shift> To Bottom"), NULL,
-				    G_CALLBACK (gimp_item_list_view_lower_clicked),
-				    G_CALLBACK (gimp_item_list_view_lower_extended_clicked),
-				    view);
+    gimp_editor_add_button (editor,
+                            GTK_STOCK_GO_DOWN,
+                            _("Lower\n"
+                              "<Shift> To Bottom"), NULL,
+                            G_CALLBACK (gimp_item_list_view_lower_clicked),
+                            G_CALLBACK (gimp_item_list_view_lower_extended_clicked),
+                            view);
 
   view->duplicate_button =
-    gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_DUPLICATE,
-				    _("Duplicate"), NULL,
-				    G_CALLBACK (gimp_item_list_view_duplicate_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_DUPLICATE,
+                            _("Duplicate"), NULL,
+                            G_CALLBACK (gimp_item_list_view_duplicate_clicked),
+                            NULL,
+                            view);
 
   view->edit_button =
-    gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_EDIT,
-				    _("Edit"), NULL,
-				    G_CALLBACK (gimp_item_list_view_edit_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_EDIT,
+                            _("Edit"), NULL,
+                            G_CALLBACK (gimp_item_list_view_edit_clicked),
+                            NULL,
+                            view);
 
   view->delete_button =
-    gimp_container_view_add_button (container_view,
-				    GTK_STOCK_DELETE,
-				    _("Delete"), NULL,
-				    G_CALLBACK (gimp_item_list_view_delete_clicked),
-				    NULL,
-				    view);
+    gimp_editor_add_button (editor,
+                            GTK_STOCK_DELETE,
+                            _("Delete"), NULL,
+                            G_CALLBACK (gimp_item_list_view_delete_clicked),
+                            NULL,
+                            view);
 
   gtk_widget_set_sensitive (view->new_button,       FALSE);
   gtk_widget_set_sensitive (view->raise_button,     FALSE);

@@ -144,36 +144,36 @@ gimp_buffer_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (buffer_view);
 
   buffer_view->paste_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_PASTE,
-				    _("Paste"), NULL,
-				    G_CALLBACK (gimp_buffer_view_paste_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_PASTE,
+                            _("Paste"), NULL,
+                            G_CALLBACK (gimp_buffer_view_paste_clicked),
+                            NULL,
+                            editor);
 
   buffer_view->paste_into_button =
-    gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_PASTE_INTO,
-				    _("Paste Into"), NULL,
-				    G_CALLBACK (gimp_buffer_view_paste_into_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GIMP_STOCK_PASTE_INTO,
+                            _("Paste Into"), NULL,
+                            G_CALLBACK (gimp_buffer_view_paste_into_clicked),
+                            NULL,
+                            editor);
 
   buffer_view->paste_as_new_button =
-    gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_PASTE_AS_NEW,
-				    _("Paste as New"), NULL,
-				    G_CALLBACK (gimp_buffer_view_paste_as_new_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GIMP_STOCK_PASTE_AS_NEW,
+                            _("Paste as New"), NULL,
+                            G_CALLBACK (gimp_buffer_view_paste_as_new_clicked),
+                            NULL,
+                            editor);
 
   buffer_view->delete_button =
-    gimp_container_view_add_button (editor->view,
-				    GTK_STOCK_DELETE,
-				    _("Delete"), NULL,
-				    G_CALLBACK (gimp_buffer_view_delete_clicked),
-				    NULL,
-				    editor);
+    gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                            GTK_STOCK_DELETE,
+                            _("Delete"), NULL,
+                            G_CALLBACK (gimp_buffer_view_delete_clicked),
+                            NULL,
+                            editor);
 
   /*  set button sensitivity  */
   if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)

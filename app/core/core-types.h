@@ -246,6 +246,8 @@ typedef struct _GimpProgress        GimpProgress;
 
 typedef         guint32             GimpTattoo;
 
+typedef struct _GimpPaletteEntry    GimpPaletteEntry;
+
 
 /*  EEK stuff  */
 

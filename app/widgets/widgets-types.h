@@ -152,6 +152,12 @@ typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
 
 typedef struct _GimpMenuItem            GimpMenuItem;
 
+typedef struct _GimpEditor              GimpEditor;
+typedef struct _GimpDataEditor          GimpDataEditor;
+typedef struct _GimpBrushEditor         GimpBrushEditor;
+typedef struct _GimpGradientEditor      GimpGradientEditor;
+typedef struct _GimpPaletteEditor       GimpPaletteEditor;
+
 typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerListView   GimpContainerListView;
 typedef struct _GimpContainerGridView   GimpContainerGridView;

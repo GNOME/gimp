@@ -107,7 +107,6 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_end (GTK_BOX (view), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   view->spacing_adjustment =
@@ -185,6 +184,11 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
     }
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
+
+  /*  eek  */
+  gtk_box_pack_end (GTK_BOX (editor->view),
+                    factory_view->spacing_scale->parent,
+                    FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
     gimp_container_add_handler (editor->view->container, "spacing_changed",

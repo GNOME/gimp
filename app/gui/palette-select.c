@@ -35,9 +35,9 @@
 
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimppaletteeditor.h"
 
 #include "dialogs-constructors.h"
-#include "palette-editor.h"
 #include "palette-select.h"
 
 #include "libgimp/gimpintl.h"

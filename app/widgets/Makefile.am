@@ -4,6 +4,8 @@ noinst_LIBRARIES = libappwidgets.a
 
 libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	widgets-types.h			\
+	gimpbrusheditor.c		\
+	gimpbrusheditor.h		\
 	gimpbrushfactoryview.c		\
 	gimpbrushfactoryview.h		\
 	gimpbrushpreview.c		\
@@ -36,6 +38,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpcontainerview-utils.h	\
 	gimpcursor.c			\
 	gimpcursor.h			\
+	gimpdataeditor.c		\
+	gimpdataeditor.h		\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
 	gimpdeviceinfo.c		\
@@ -60,10 +64,14 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpdrawablelistview.h		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
+	gimpeditor.c			\
+	gimpeditor.h			\
 	gimpfontselection.c		\
 	gimpfontselection.h		\
 	gimpfontselection-dialog.c	\
 	gimpfontselection-dialog.h	\
+	gimpgradienteditor.c		\
+	gimpgradienteditor.h		\
 	gimpgradientpreview.c		\
 	gimpgradientpreview.h		\
 	gimphistogramview.c		\
@@ -90,6 +98,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpmenuitem.h			\
 	gimpnavigationpreview.c		\
 	gimpnavigationpreview.h		\
+	gimppaletteeditor.c		\
+	gimppaletteeditor.h		\
 	gimppalettepreview.c		\
 	gimppalettepreview.h		\
 	gimppatternpreview.c		\
