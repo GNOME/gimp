@@ -1,15 +1,16 @@
 # French translation of gimp-libgimp.
-# Copyright (C) 1998-2002 Free Software Foundation, Inc.
+# Copyright (C) 1998-2003 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2002.
+# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.11\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
-"PO-Revision-Date: 2002-12-19 19:41+0100\n"
+"Project-Id-Version: gimp-libgimp 1.3.16\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-29 14:59+0200\n"
+"PO-Revision-Date: 2003-06-29 14:59+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,28 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpbrushmenu.c:321
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Sélection des unités"
+msgstr "Sélection des brosses"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "ne peut gérer les calques"
+msgstr "%s ne peut gérer les calques"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Fusionner les calques visibles"
 
 #: libgimp/gimpexport.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "ne peut gérer les décalages de calque, la taille ou l'opacité"
+msgstr "%s ne peut gérer les décalages de calque, la taille ou l'opacité"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "ne gère les calques qu'en tant qu'images d'une animation"
+msgstr "%s ne peut gérer les calques qu'en tant qu'images d'une animation"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -49,32 +49,32 @@ msgid "Flatten Image"
 msgstr "Aplatir l'image"
 
 #: libgimp/gimpexport.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "ne peut gérer la transparence"
+msgstr "%s ne peut gérer la transparence"
 
 #: libgimp/gimpexport.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "ne gère que les images RVB"
+msgstr "%s ne peut gérer que les images RVB"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Convertir en RVB"
 
 #: libgimp/gimpexport.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "ne peut gérer que les images en niveaux de gris"
+msgstr "%s ne peut gérer que les images en niveaux de gris"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Convertir en niveaux de gris"
 
 #: libgimp/gimpexport.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "ne peut gérer que les images indexées"
+msgstr "%s ne peut gérer que les images indexées"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
@@ -86,24 +86,24 @@ msgstr ""
 "pour régler le résultat)"
 
 #: libgimp/gimpexport.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "ne gère que les images RVB ou en niveaux de gris"
+msgstr "%s ne peut gérer que les images RVB ou en niveaux de gris"
 
 #: libgimp/gimpexport.c:274
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "ne gère que les images RVB ou indexées"
+msgstr "%s ne gérer que les images RVB ou indexées"
 
 #: libgimp/gimpexport.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "ne gère que les images en niveau de gris ou indexées"
+msgstr "%s ne peut gérer que les images en niveau de gris ou indexées"
 
 #: libgimp/gimpexport.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "a besoin d'un canal alpha"
+msgstr "%s a besoin d'un canal alpha"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
@@ -171,14 +171,12 @@ msgstr ""
 "Cela ne sauvegardera pas les calques visibles."
 
 #: libgimp/gimpfontmenu.c:80
-#, fuzzy
 msgid "Font Selection"
-msgstr "Sélection des unités"
+msgstr "Sélection des polices"
 
 #: libgimp/gimpgradientmenu.c:172
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Sélection des unités"
+msgstr "Sélection des dégradés"
 
 #: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
 #: libgimp/gimpmenu.c:593
@@ -187,7 +185,7 @@ msgstr "Aucun"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Aperçu"
 
 #: libgimp/gimpmiscui.c:529
 #, c-format
@@ -199,43 +197,42 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimppatternmenu.c:321
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Sélection des unités"
+msgstr "Sélection des motifs"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "pourcent"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "Octets"
+msgstr "%d octets"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f ko"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f ko"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d ko"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f Mo"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f Mo"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -291,9 +288,8 @@ msgid "/White"
 msgstr "/Blanc"
 
 #: libgimpwidgets/gimpcolorscales.c:142
-#, fuzzy
 msgid "Scales"
-msgstr "Redimensionner"
+msgstr "Échelles"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
@@ -390,14 +386,12 @@ msgid "Anchor"
 msgstr "Ancre"
 
 #: libgimpwidgets/gimpstock.c:102
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Dupliquer"
+msgstr "_Dupliquer"
 
 #: libgimpwidgets/gimpstock.c:103
-#, fuzzy
 msgid "_Edit"
-msgstr "Éditer"
+msgstr "_Éditer"
 
 #: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
@@ -421,24 +415,23 @@ msgstr "Visible"
 
 #: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Espacement des l_ettres"
 
 #: libgimpwidgets/gimpstock.c:157
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Espacement des l_ignes"
 
 #: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
-msgstr "_Redimenssionner"
+msgstr "_Redimensionner"
 
 #: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
-#, fuzzy
 msgid "_Scale"
-msgstr "Redimensionner"
+msgstr "_Étirer"
 
 #: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
-msgstr ""
+msgstr "Découper"
 
 #: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"

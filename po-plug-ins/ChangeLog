@@ -1,3 +1,7 @@
+2003-06-29  Christophe Merlet  <redfox@redfoxcenter.org>
+
+	* fr.po: Updated French translation.
+
 2003-06-28  Michael Natterer  <mitch@gimp.org>
 
 	* cs.po: fixed Czech translation so it doesn't break the build.

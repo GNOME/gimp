@@ -11,15 +11,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.3.15\n"
-"POT-Creation-Date: 2003-06-26 22:13+0200\n"
-"PO-Revision-Date: 2003-06-18 23:29+0200\n"
-"Last-Translator: Thomas Morin <t0m@free.fr>\n"
+"Project-Id-Version: gimp 1.3.16\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-29 15:00+0200\n"
+"PO-Revision-Date: 2003-06-29 13:37+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: app/app_procs.c:174
 msgid ""
@@ -409,7 +409,7 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"Si vous choisissez cette option chaque pixel d'une image correspondra à un "
+"Si cette option est activée, chaque pixel d'une image correspondra à un "
 "pixel de l'écran."
 
 #: app/config/gimprc-blurbs.h:78
@@ -443,16 +443,16 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:137
 msgid "When enabled, the GIMP will use a different info window per image view."
 msgstr ""
-"Avec cette option, Gimp utilisera une fenêtre d'information différente pour "
-"chaque vue d'image."
+"Si cette option est activée, Gimp utilisera une fenêtre d'information "
+"différente pour chaque vue d'image."
 
 #: app/config/gimprc-blurbs.h:140
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Si cette option est activée, une image sera visible intégralement à son "
-"ouverture. Sinon, elle sera affichée à l'échelle 1:1."
+"Si cette option est activée, les images seront intégralement visible à leur "
+"ouverture, sinon elles seront affichées à l'échelle 1:1."
 
 #: app/config/gimprc-blurbs.h:144
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -548,16 +548,16 @@ msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 msgstr ""
-"Si cette option est activée, une fenêtre d'image se redimensionne "
-"automatiquement lorsque la taille de l'image change."
+"Si cette option est activée, la fenêtre d'image se redimensionnera "
+"automatiquement lorsque la taille de l'image changera."
 
 #: app/config/gimprc-blurbs.h:225
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
 msgstr ""
-"Si cette option est activée, la fenêtre d'image se redimensionne "
-"automatiquement lorsque vous faite un zoom avant ou arrière."
+"Si cette option est activée, la fenêtre d'image se redimensionnera "
+"automatiquement lorsque vous fairez un zoom avant ou arrière."
 
 #: app/config/gimprc-blurbs.h:229
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -782,7 +782,7 @@ msgstr "_Sélection"
 
 #: app/core/core-enums.c:17
 msgid "_Grayscale Copy of Layer"
-msgstr "Copie du calque en tons de _gris"
+msgstr "Copie du calque en niveaux de _gris"
 
 #: app/core/core-enums.c:35 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
@@ -1130,7 +1130,7 @@ msgstr "Couper"
 msgid "Copy"
 msgstr "Copier"
 
-#: app/core/core-enums.c:496 app/tools/gimptexttool.c:114
+#: app/core/core-enums.c:496 app/tools/gimptexttool.c:115
 msgid "Text"
 msgstr "Texte"
 
@@ -1390,7 +1390,7 @@ msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s
 #: app/core/gimpbrush.c:606 app/core/gimpbrushpipe.c:374
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
-#: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
+#: app/core/gimppattern.c:412 app/gui/templates-commands.c:126
 #: app/tools/gimpvectortool.c:276
 msgid "Unnamed"
 msgstr "SansNom"
@@ -1559,7 +1559,7 @@ msgstr ""
 "Avertissement : le chargement des données a échoué :\n"
 "%s"
 
-#: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:94
+#: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:96
 msgid "Blend"
 msgstr "Dégradé"
 
@@ -1567,7 +1567,7 @@ msgstr "Dégradé"
 msgid "No patterns available for this operation."
 msgstr "Pas de motif disponible pour cette opération."
 
-#: app/core/gimpdrawable-bucket-fill.c:320 app/tools/gimpbucketfilltool.c:86
+#: app/core/gimpdrawable-bucket-fill.c:336 app/tools/gimpbucketfilltool.c:88
 msgid "Bucket Fill"
 msgstr "Remplissage"
 
@@ -1769,7 +1769,7 @@ msgstr "Inverser la sélection"
 
 #: app/core/gimpimage-mask.c:515 app/gui/select-commands.c:238
 msgid "Border Selection"
-msgstr "Sélection du bord"
+msgstr "Border la sélection"
 
 #: app/core/gimpimage-mask.c:532 app/gui/select-commands.c:216
 msgid "Grow Selection"
@@ -2219,28 +2219,17 @@ msgstr "Noir"
 msgid "Unknown pattern format version %d in '%s'."
 msgstr "Format de motif inconnu version n°%d dans « %s »."
 
-#: app/core/gimppattern.c:380
-#, c-format
-msgid ""
-"Unsupported pattern depth %d\n"
-"in file '%s'.\n"
-"GIMP Patterns must be GRAY or RGB.\n"
-msgstr ""
-"Motif %d non supporté\n"
-"dans le fichier « %s ».\n"
-"Les motifs GIMP doivent être TONS DE GRIS ou RVB\n"
-
-#: app/core/gimppattern.c:395
+#: app/core/gimppattern.c:397
 #, c-format
 msgid "Error in GIMP pattern file '%s'."
 msgstr "Erreur dans le fichier de motifs de GIMP « %s »."
 
-#: app/core/gimppattern.c:402
+#: app/core/gimppattern.c:404
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Erreur dans le fichier de motifs de GIMP « %s »."
 
-#: app/core/gimppattern.c:421
+#: app/core/gimppattern.c:423
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
 msgstr ""
@@ -3173,7 +3162,7 @@ msgid "/Save Selection to File..."
 msgstr "/Enregistrer la sélection dans un fichier..."
 
 #: app/gui/file-commands.c:187 app/gui/file-open-dialog.c:703
-#: app/widgets/gimpdnd.c:1005 app/widgets/gimpdocumentview.c:451
+#: app/widgets/gimpdocumentview.c:451 app/widgets/gimpdnd.c:1005
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3650,81 +3639,81 @@ msgstr "/Rafraîchir les dégradés"
 msgid "/Save as POV-Ray..."
 msgstr "/Enregistrer en POV-Ray..."
 
-#: app/gui/grid-dialog.c:102
+#: app/gui/grid-dialog.c:103
 #, fuzzy
 msgid "Configure Grid"
 msgstr "Grille des polices"
 
-#: app/gui/grid-dialog.c:103
+#: app/gui/grid-dialog.c:104
 #, fuzzy
 msgid "Configure Image Grid"
 msgstr "Confirmer la taille de l'image"
 
-#: app/gui/grid-dialog.c:132
+#: app/gui/grid-dialog.c:133
 #, fuzzy
 msgid "S_how Grid"
 msgstr "Ne pas afficher la grille"
 
-#: app/gui/grid-dialog.c:140
+#: app/gui/grid-dialog.c:141
 #, fuzzy
 msgid "S_nap to Grid"
 msgstr "/Affichage/Aligner sur les guides"
 
 #. the appearence frame
-#: app/gui/grid-dialog.c:151
+#: app/gui/grid-dialog.c:152
 #, fuzzy
 msgid "Appearence"
 msgstr "Apparence"
 
-#: app/gui/grid-dialog.c:165
+#: app/gui/grid-dialog.c:166
 #, fuzzy
 msgid "Line _Style:"
 msgstr "_Style :"
 
-#: app/gui/grid-dialog.c:169
+#: app/gui/grid-dialog.c:170
 #, fuzzy
 msgid "Grid Foreground Color"
 msgstr "Éditer la couleur de premier plan"
 
-#: app/gui/grid-dialog.c:173
+#: app/gui/grid-dialog.c:174
 #, fuzzy
 msgid "_Foreground Color:"
 msgstr "Éditer la couleur de premier plan"
 
-#: app/gui/grid-dialog.c:177
+#: app/gui/grid-dialog.c:178
 #, fuzzy
 msgid "Grid Background Color"
 msgstr "Éditer la couleur d'arrière-plan"
 
-#: app/gui/grid-dialog.c:181
+#: app/gui/grid-dialog.c:182
 #, fuzzy
 msgid "_Background Color:"
 msgstr "Éditer la couleur d'arrière-plan"
 
 #. the spacing frame
-#: app/gui/grid-dialog.c:187
+#: app/gui/grid-dialog.c:188
 #, fuzzy
 msgid "Spacing"
 msgstr "Espacement :"
 
-#: app/gui/grid-dialog.c:214 app/gui/grid-dialog.c:255
+#: app/gui/grid-dialog.c:215 app/gui/grid-dialog.c:256
 #: app/gui/preferences-dialog.c:1047
 msgid "Width"
 msgstr "Largeur"
 
-#: app/gui/grid-dialog.c:216 app/gui/grid-dialog.c:257
+#: app/gui/grid-dialog.c:217 app/gui/grid-dialog.c:258
 #: app/gui/preferences-dialog.c:1049
 msgid "Height"
 msgstr "Hauteur"
 
-#: app/gui/grid-dialog.c:218 app/gui/grid-dialog.c:259
+#: app/gui/grid-dialog.c:219 app/gui/grid-dialog.c:260
 #: app/gui/preferences-dialog.c:1051 app/gui/preferences-dialog.c:1064
 #: app/gui/user-install-dialog.c:1278 app/widgets/gimptemplateeditor.c:221
 msgid "Pixels"
 msgstr "Pixels"
 
 #. the offset frame
-#: app/gui/grid-dialog.c:226 app/gui/offset-dialog.c:102
+#: app/gui/grid-dialog.c:227 app/gui/offset-dialog.c:102
 #: app/gui/resize-dialog.c:442
 msgid "Offset"
 msgstr "Décalage"
@@ -3786,12 +3775,12 @@ msgstr "Rogné à la taille du calque le plus bas"
 
 #: app/gui/image-commands.c:423
 msgid "Resizing..."
-msgstr "Redimensionement..."
+msgstr "Redimensionnement..."
 
 #: app/gui/image-commands.c:439
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
+"Erreur de redimensionnement : Les hauteurs et largeurs doivent être "
 "supérieures à zéro."
 
 #: app/gui/image-commands.c:472
@@ -3810,13 +3799,13 @@ msgstr ""
 
 #: app/gui/image-commands.c:543 app/tools/gimpscaletool.c:164
 msgid "Scaling..."
-msgstr "Mise à l'échelle..."
+msgstr "Étirement..."
 
 #: app/gui/image-commands.c:556
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
-"Erreur de redimensionnement: Les hauteurs et largeurs doivent être "
-"supérieures à zéro."
+"Erreur d'étirement : Les hauteurs et largeurs doivent être supérieures à "
+"zéro."
 
 #. <Image>/File
 #: app/gui/image-menu.c:83 app/gui/toolbox-menu.c:48
@@ -4178,7 +4167,7 @@ msgstr "/Image/Taille du canevas..."
 
 #: app/gui/image-menu.c:536
 msgid "/Image/Scale Image..."
-msgstr "/Image/Échelle de l'image..."
+msgstr "/Image/Étirer l'image..."
 
 #: app/gui/image-menu.c:541
 msgid "/Image/Crop Image"
@@ -4393,7 +4382,7 @@ msgstr "/Calque/Mettre aux dimensions de l'image"
 
 #: app/gui/image-menu.c:810
 msgid "/Layer/Scale Layer..."
-msgstr "/Calque/Changer l'échelle du calque..."
+msgstr "/Calque/Étirer le calque..."
 
 #: app/gui/image-menu.c:815
 msgid "/Layer/Crop Layer"
@@ -5015,7 +5004,7 @@ msgstr "Décalage du canal"
 
 #: app/gui/offset-dialog.c:147
 msgid "Offset _X:"
-msgstr "Décalage _X :"
+msgstr "Décalage en _X :"
 
 #: app/gui/offset-dialog.c:149
 msgid "_Y:"
@@ -5768,7 +5757,7 @@ msgstr "/Configurer la couleur et l'opacité..."
 
 #: app/gui/resize-dialog.c:194
 msgid "Scale Layer Options"
-msgstr "Options de mise à l'échelle du calque"
+msgstr "Options d'étirement du calque"
 
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
 #: app/tools/paint_options.c:305
@@ -5777,7 +5766,7 @@ msgstr "Taille"
 
 #: app/gui/resize-dialog.c:202
 msgid "Scale Image Options"
-msgstr "Options de mise à l'échelle de l'image"
+msgstr "Options d'étirement de l'image"
 
 #: app/gui/resize-dialog.c:204
 msgid "Pixel Dimensions"
@@ -5832,6 +5821,7 @@ msgid "Resolution X:"
 msgstr "Résolution X :"
 
 #: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:317
+#, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
@@ -5873,7 +5863,7 @@ msgstr "Agrandir la sélection de :"
 
 #: app/gui/select-commands.c:241
 msgid "Border Selection by:"
-msgstr "Épaisseur du bord à sélectionner :"
+msgstr "Border la sélection de :"
 
 #: app/gui/splash.c:56
 msgid "GIMP Startup"
@@ -6719,13 +6709,13 @@ msgstr "/Éditer les attributs du chemin..."
 msgid "Airbrush"
 msgstr "Aérographe"
 
-#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:97
+#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:98
 msgid "Clone"
 msgstr "Cloner"
 
 #: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:90
 msgid "Convolve"
-msgstr "Convolution"
+msgstr "Circonvolution"
 
 #: app/paint/gimpdodgeburn.c:86 app/tools/gimpdodgeburntool.c:70
 msgid "Dodge/Burn"
@@ -6735,7 +6725,7 @@ msgstr "Éclaircir/Assombrir"
 msgid "Eraser"
 msgstr "Gomme"
 
-#: app/paint/gimppaintbrush.c:67 app/tools/gimppaintbrushtool.c:55
+#: app/paint/gimppaintbrush.c:67 app/tools/gimppaintbrushtool.c:56
 msgid "Paintbrush"
 msgstr "Pinceau"
 
@@ -6992,8 +6982,8 @@ msgstr "Extension GIMP"
 msgid "Temporary Procedure"
 msgstr "Procédure temporaire"
 
-#: app/pdb/selection_tools_cmds.c:326 app/tools/gimpfreeselecttool.c:96
-#: app/tools/tools-enums.c:98
+#: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:98
+#: app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
 msgstr "Sélection à main levée"
 
@@ -7088,7 +7078,7 @@ msgstr ""
 "Portez ce vieux whisky\n"
 "au juge blond qui fume."
 
-#: app/text/gimptext-compat.c:107 app/tools/gimptexttool.c:312
+#: app/text/gimptext-compat.c:107 app/tools/gimptexttool.c:313
 msgid "Add Text Layer"
 msgstr "Ajouter un calque de texte"
 
@@ -7211,28 +7201,28 @@ msgstr "Profondeur max :"
 msgid "Threshold:"
 msgstr "Seuil :"
 
-#: app/tools/gimpblendtool.c:95
+#: app/tools/gimpblendtool.c:97
 msgid "Fill with a color gradient"
 msgstr "Remplit avec un dégradé de couleur"
 
-#: app/tools/gimpblendtool.c:96
+#: app/tools/gimpblendtool.c:98
 msgid "/Tools/Paint Tools/Blend"
 msgstr "/Outils/Outils de dessin/Mélange"
 
-#: app/tools/gimpblendtool.c:184
+#: app/tools/gimpblendtool.c:186
 msgid "Blend: Invalid for indexed images."
 msgstr "Mélange : Non valide pour les images en couleurs indexées."
 
 #. initialize the statusbar display
-#: app/tools/gimpblendtool.c:202
+#: app/tools/gimpblendtool.c:204
 msgid "Blend: 0, 0"
 msgstr "Mélange : 0, 0"
 
-#: app/tools/gimpblendtool.c:238
+#: app/tools/gimpblendtool.c:240
 msgid "Blending..."
 msgstr "Mélange en cours..."
 
-#: app/tools/gimpblendtool.c:321
+#: app/tools/gimpblendtool.c:323
 msgid "Blend: "
 msgstr "Mélange : "
 
@@ -7293,11 +7283,11 @@ msgstr "Remplir les régions transparentes"
 msgid "Sample Merged"
 msgstr "Échantillonner sur tous les calques"
 
-#: app/tools/gimpbucketfilltool.c:87
+#: app/tools/gimpbucketfilltool.c:89
 msgid "Fill with a color or pattern"
 msgstr "Remplit avec une couleur ou un motif"
 
-#: app/tools/gimpbucketfilltool.c:88
+#: app/tools/gimpbucketfilltool.c:90
 msgid "/Tools/Paint Tools/Bucket Fill"
 msgstr "/Outils/Outils de dessin/Remplissage"
 
@@ -7313,19 +7303,19 @@ msgstr "Sélectionne des régions par couleur"
 msgid "/Tools/Selection Tools/By Color Select"
 msgstr "/Outils/Outils de sélection/Sélection par couleur"
 
-#: app/tools/gimpclonetool.c:98
+#: app/tools/gimpclonetool.c:99
 msgid "Paint using Patterns or Image Regions"
 msgstr "Peint avec des motifs ou des portions d'image"
 
-#: app/tools/gimpclonetool.c:99
+#: app/tools/gimpclonetool.c:100
 msgid "/Tools/Paint Tools/Clone"
 msgstr "/Outils/Outils de dessin/Cloner"
 
-#: app/tools/gimpclonetool.c:368
+#: app/tools/gimpclonetool.c:369
 msgid "Source"
 msgstr "Source"
 
-#: app/tools/gimpclonetool.c:374
+#: app/tools/gimpclonetool.c:375
 msgid "Alignment"
 msgstr "Alignement"
 
@@ -7478,13 +7468,13 @@ msgstr "Rendre flou ou augmenter la netteté"
 
 #: app/tools/gimpconvolvetool.c:92
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Outils/Outils de dessin/Convolution"
+msgstr "/Outils/Outils de dessin/Circonvolution"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:224
 #, c-format
 msgid "Convolve Type  %s"
-msgstr "Type de convolution %s"
+msgstr "Type de circonvolution  %s"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:190 app/tools/gimpmagnifyoptions.c:224
@@ -7505,7 +7495,7 @@ msgstr "Permet d'élargir  %s"
 
 #: app/tools/gimpcroptool.c:159
 msgid "Crop & Resize"
-msgstr "Découper & Redimensioner"
+msgstr "Découper & Redimensionner"
 
 #: app/tools/gimpcroptool.c:160
 msgid "Crop or Resize an image"
@@ -7849,15 +7839,15 @@ msgstr "Type"
 msgid "Shape"
 msgstr "Forme"
 
-#: app/tools/gimpinktool.c:166 app/tools/gimpinktool.c:703
+#: app/tools/gimpinktool.c:167 app/tools/gimpinktool.c:704
 msgid "Ink"
 msgstr "Stylo-plume"
 
-#: app/tools/gimpinktool.c:167
+#: app/tools/gimpinktool.c:168
 msgid "Draw in ink"
 msgstr "Dessine à l'encre"
 
-#: app/tools/gimpinktool.c:168
+#: app/tools/gimpinktool.c:169
 msgid "/Tools/Paint Tools/Ink"
 msgstr "/Outils/Outils de dessin/Stylo-plume"
 
@@ -8030,11 +8020,11 @@ msgstr "Déplace les calques & sélections"
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Outils/Outils de transformation/Déplacer"
 
-#: app/tools/gimppaintbrushtool.c:56
+#: app/tools/gimppaintbrushtool.c:57
 msgid "Paint fuzzy brush strokes"
 msgstr "Peint au pinceau, d'une façon un peu floue"
 
-#: app/tools/gimppaintbrushtool.c:57
+#: app/tools/gimppaintbrushtool.c:58
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Outils/Outils de dessin/Pinceau"
 
@@ -8136,7 +8126,7 @@ msgstr "Centre X :"
 
 #: app/tools/gimpscaletool.c:97
 msgid "Scale"
-msgstr "Étirement"
+msgstr "Étirer"
 
 #: app/tools/gimpscaletool.c:98
 msgid "Scale the layer or selection"
@@ -8144,11 +8134,11 @@ msgstr "Étire le calque ou la sélection"
 
 #: app/tools/gimpscaletool.c:99
 msgid "/Tools/Transform Tools/Scale"
-msgstr "/Outils/Outil de transformation/Étirement"
+msgstr "/Outils/Outil de transformation/Étirer"
 
 #: app/tools/gimpscaletool.c:163
 msgid "Scaling Information"
-msgstr "Informations de mise à l'échelle"
+msgstr "Informations d'étirement"
 
 #: app/tools/gimpscaletool.c:180
 msgid "Current Width:"
@@ -8272,15 +8262,15 @@ msgid ""
 "Spacing:"
 msgstr "Interligne :"
 
-#: app/tools/gimptexttool.c:115
+#: app/tools/gimptexttool.c:116
 msgid "Add text to the image"
 msgstr "Ajouter du texte à l'image"
 
-#: app/tools/gimptexttool.c:116
+#: app/tools/gimptexttool.c:117
 msgid "/Tools/Text"
 msgstr "/Outils/Texte"
 
-#: app/tools/gimptexttool.c:372
+#: app/tools/gimptexttool.c:373
 msgid "GIMP Text Editor"
 msgstr "Éditeur de texte GIMP"
 
@@ -8427,7 +8417,7 @@ msgstr "Couleur à partir du dégradé"
 msgid "Type:"
 msgstr "Type :"
 
-#: app/tools/tool_manager.c:214
+#: app/tools/tool_manager.c:190
 msgid "This tool has no options."
 msgstr "Cet outil n'a pas d'option."
 
@@ -9250,6 +9240,15 @@ msgstr "Créé et édite des images ou des photographies"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "The GIMP (instable)"
+
+#~ msgid ""
+#~ "Unsupported pattern depth %d\n"
+#~ "in file '%s'.\n"
+#~ "GIMP Patterns must be GRAY or RGB.\n"
+#~ msgstr ""
+#~ "Motif %d non supporté\n"
+#~ "dans le fichier « %s ».\n"
+#~ "Les motifs GIMP doivent être TONS DE GRIS ou RVB\n"
 
 #~ msgid "PDB calling error %s"
 #~ msgstr "Erreur d'appel de la procédure %s."

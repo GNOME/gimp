@@ -1,14 +1,15 @@
 # French translation of gimp-script-fu.
-# Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# Copyright (C) 2000-2003 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2002.
+# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
 # Raymond Ostertag <raymond@linuxgraphic.org>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.3.11\n"
-"POT-Creation-Date: 2003-06-26 22:18+0200\n"
-"PO-Revision-Date: 2002-12-19 20:42+0100\n"
+"Project-Id-Version: gimp-script-fu 1.3.16\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-29 14:57+0200\n"
+"PO-Revision-Date: 2003-06-29 13:45+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -105,18 +106,18 @@ msgstr "Sélection des dégradés (Script-Fu)"
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 #: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 #: plug-ins/script-fu/script-fu-scripts.c:1864
+#: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 #: plug-ins/script-fu/script-fu-scripts.c:1870
+#: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Date :"
 
@@ -1484,17 +1485,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Dégradé personnalisé..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Grid..."
-msgstr "<Image>/Script-Fu/Rendu/Circuit..."
+msgstr "<Image>/Script-Fu/Rendu/Grille..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "Divisions en X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "Divisions en Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
@@ -1861,7 +1861,7 @@ msgstr "<Image>/Script-Fu/Sélection/Vers brosse..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "Nom de la brosse"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -1932,14 +1932,12 @@ msgid "Airbrush"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-#, fuzzy
 msgid "Brush"
-msgstr "Utiliser une brosse"
+msgstr "Brosse"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-#, fuzzy
 msgid "Circle"
-msgstr "Carreau"
+msgstr "Cercle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 #, fuzzy
@@ -1964,9 +1962,8 @@ msgid "Gradient: Loop Triangle"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Hexagon"
-msgstr "Hexagones"
+msgstr "Hexagone"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 #, fuzzy
@@ -1996,9 +1993,8 @@ msgid "Pencil"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Pentagon"
-msgstr "Orientation"
+msgstr "Pentagone"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
@@ -2021,18 +2017,16 @@ msgid "Shape"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-#, fuzzy
 msgid "Solid Color"
-msgstr "Couleur des filtres"
+msgstr "Couleur unie"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Spyrograph"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Square"
-msgstr "Carrés"
+msgstr "Carré"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
@@ -2041,17 +2035,15 @@ msgstr "Angle de départ"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Tool"
-msgstr ""
+msgstr "Outil"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#, fuzzy
 msgid "Triangle"
-msgstr "Carreau"
+msgstr "Triangle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
-#, fuzzy
 msgid "Type"
-msgstr "Type de flou"
+msgstr "Type"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
