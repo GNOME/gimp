@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-03-28 01:56-0800\n"
-"PO-Revision-Date: 2000-03-17 16:41+01:00\n"
+"PO-Revision-Date: 2000-04-25 16:41+01:00\n"
 "Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -147,14 +147,12 @@ msgid "Script-Fu Server Options"
 msgstr "Skript-Fu tjenerindstillinger"
 
 #: plug-ins/script-fu/script-fu-server.c:574
-#, fuzzy
 msgid "Server Port:"
 msgstr "Tjenerport: "
 
 #: plug-ins/script-fu/script-fu-server.c:580
-#, fuzzy
 msgid "Server Logfile:"
-msgstr "Tjenerlogfil: "
+msgstr "Tjenerlogfil:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -482,23 +480,3 @@ msgstr ""
 #, fuzzy
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr "Skript-Fu filvalg"
-
-#, fuzzy
-#~ msgid "AutoCrop"
-#~ msgstr "Udvikler:"
-
-#, fuzzy
-#~ msgid "Color"
-#~ msgstr "Luk"
-
-#, fuzzy
-#~ msgid "Diameter"
-#~ msgstr "Dato:"
-
-#, fuzzy
-#~ msgid "Image Size"
-#~ msgstr "Billedtyper:"
-
-#, fuzzy
-#~ msgid "Use Growing Selection"
-#~ msgstr "Skript-Fu overgangsvælger"
