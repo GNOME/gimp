@@ -19,7 +19,8 @@ EXTRA_DIST = \
 	makefile.msc		\
 	module.def		\
 	gimpmodregister.c	\
-	gimpmodregister.h
+	gimpmodregister.h	\
+	colorsel_water.c
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
 	libcolorsel_triangle.la		\

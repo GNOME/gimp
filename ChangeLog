@@ -1,5 +1,9 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* modules/Makefile.am: added colorsel_water.c to EXTRA_DIST.
+
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* NEWS: some more stuff.
 
 2001-11-13  Sven Neumann  <sven@gimp.org>
