@@ -61,11 +61,10 @@ current work: 	well, currently there are only a few plans:
 		  resolution info in the core 
 commit access: yes
 
-
-Name: Marc Lehman
+Name: Marc Lehmann
 Email: pcg@goof.com
 url: http://gimp.pages.de/
-ircnick:
+ircnick: schmorp
 expertise: perl, language binding issues
 current work: perl-interface, language interface design
 commit access: yes                      
