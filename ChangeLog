@@ -1,3 +1,9 @@
+2002-04-16  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb
+	* app/color_cmds.c (curves_spline_invoker): fixed wrong range check
+	for number of points. Bug #78877 spotted by regisr@regix.com.
+
 2002-04-12  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: don't set gtk_quit_add_destroy() on fileload and
