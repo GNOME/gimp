@@ -115,7 +115,7 @@ struct _PaletteDialog
   GtkWidget      *delete_menu_item;
   GtkWidget      *edit_menu_item;
 
-  ColorNotebookP  color_notebook;
+  ColorNotebook  *color_notebook;
   gboolean        color_notebook_active;
 
   PaletteEntries *entries;

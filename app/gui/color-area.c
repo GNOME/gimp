@@ -50,16 +50,16 @@ gint active_color = FOREGROUND;
 GDisplay *color_area_gdisp = NULL;
 
 /*  Static variables  */
-static GdkGC          *color_area_gc = NULL;
-static GtkWidget      *color_area = NULL;
-static GdkPixmap      *color_area_pixmap = NULL;
-static GdkPixmap      *default_pixmap = NULL;
-static GdkPixmap      *swap_pixmap = NULL;
-static ColorNotebookP  color_notebook = NULL;
-static gboolean        color_notebook_active = FALSE;
-static gint            edit_color;
-static guchar          revert_fg_r, revert_fg_g, revert_fg_b;
-static guchar          revert_bg_r, revert_bg_g, revert_bg_b;
+static GdkGC         *color_area_gc = NULL;
+static GtkWidget     *color_area = NULL;
+static GdkPixmap     *color_area_pixmap = NULL;
+static GdkPixmap     *default_pixmap = NULL;
+static GdkPixmap     *swap_pixmap = NULL;
+static ColorNotebook *color_notebook = NULL;
+static gboolean       color_notebook_active = FALSE;
+static gint           edit_color;
+static guchar         revert_fg_r, revert_fg_g, revert_fg_b;
+static guchar         revert_bg_r, revert_bg_g, revert_bg_b;
 
 /*  dnd stuff  */
 static GtkTargetEntry color_area_target_table[] =

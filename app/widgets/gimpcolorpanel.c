@@ -36,8 +36,8 @@ struct _ColorPanelPrivate
 
   gboolean   button_down;
 
-  ColorNotebookP  color_notebook;
-  gboolean        color_notebook_active;
+  ColorNotebook *color_notebook;
+  gboolean       color_notebook_active;
 };
 
 /*  local function prototypes  */

@@ -19,35 +19,57 @@
 #ifndef __COLOR_NOTEBOOK_H__
 #define __COLOR_NOTEBOOK_H__
 
-typedef enum {
+#include <gtk/gtk.h>
+
+typedef enum
+{
   COLOR_NOTEBOOK_OK,
   COLOR_NOTEBOOK_CANCEL,
   COLOR_NOTEBOOK_UPDATE
 } ColorNotebookState;
 
-typedef struct _ColorNotebook _ColorNotebook, *ColorNotebookP;
-typedef void (*ColorNotebookCallback) (int, int, int, ColorNotebookState,
-				       void *);
+typedef void (* ColorNotebookCallback) (gint               red,
+					gint               green,
+					gint               blue,
+					ColorNotebookState state,
+					gpointer           data);
 
-struct _ColorSelectorInstance;
+typedef struct _ColorSelectorInstance ColorSelectorInstance;
 
-struct _ColorNotebook {
-  GtkWidget *shell;
-  GtkWidget *notebook;
-  int values[3];
-  int orig_values[3];
-  ColorNotebookCallback callback;
-  void *client_data;
-  int wants_updates;
-  struct _ColorSelectorInstance *selectors;
-  struct _ColorSelectorInstance *cur_page;
+typedef struct _ColorNotebook ColorNotebook;
+
+struct _ColorNotebook
+{
+  GtkWidget             *shell;
+  GtkWidget             *notebook;
+
+  gint                   values[3];
+  gint                   orig_values[3];
+
+  ColorNotebookCallback  callback;
+  gpointer               client_data;
+
+  gint                   wants_updates;
+
+  ColorSelectorInstance *selectors;
+  ColorSelectorInstance *cur_page;
 };
 
-ColorNotebookP color_notebook_new (int, int, int, ColorNotebookCallback, void *, int);
-void color_notebook_show (ColorNotebookP);
-void color_notebook_hide (ColorNotebookP);
-void color_notebook_free (ColorNotebookP);
-void color_notebook_set_color (ColorNotebookP, int, int, int, int);
+ColorNotebook * color_notebook_new       (gint                  red,
+					  gint                  green,
+					  gint                  blue,
+					  ColorNotebookCallback callback,
+					  gpointer              data,
+				          gboolean              wants_update);
 
+void            color_notebook_show      (ColorNotebook        *cnb);
+void            color_notebook_hide      (ColorNotebook        *cnb);
+void            color_notebook_free      (ColorNotebook        *cnb);
+
+void            color_notebook_set_color (ColorNotebook        *cnb,
+					  gint                  red,
+					  gint                  green,
+					  gint                  blue,
+					  gboolean              set_current);
 
 #endif /* __COLOR_NOTEBOOK_H__ */
