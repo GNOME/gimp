@@ -116,6 +116,14 @@ static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
                                                     gint               offset_x,
                                                     gint               offset_y);
 
+static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
+                                                    const gchar       *undo_desc,
+                                                    TileManager       *tiles,
+                                                    gboolean           sparse,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height);
 static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     TileManager       *tiles,
                                                     gboolean           sparse,
@@ -218,6 +226,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->apply_region                = gimp_drawable_real_apply_region;
   klass->replace_region              = gimp_drawable_real_replace_region;
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
+  klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
 
   klass->scale_desc                  = NULL;
@@ -618,6 +627,41 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
 }
 
 static void
+gimp_drawable_real_push_undo (GimpDrawable *drawable,
+                              const gchar  *undo_desc,
+                              TileManager  *tiles,
+                              gboolean      sparse,
+                              gint          x,
+                              gint          y,
+                              gint          width,
+                              gint          height)
+{
+  gboolean new_tiles = FALSE;
+
+  if (! tiles)
+    {
+      PixelRegion srcPR, destPR;
+
+      tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, tiles,
+                         0, 0, width, height, TRUE);
+      copy_region (&srcPR, &destPR);
+
+      new_tiles = TRUE;
+    }
+
+  gimp_image_undo_push_drawable (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                 undo_desc, drawable,
+                                 tiles, sparse,
+                                 x, y, width, height);
+
+  if (new_tiles)
+    tile_manager_unref (tiles);
+}
+
+static void
 gimp_drawable_real_swap_pixels (GimpDrawable      *drawable,
                                 TileManager       *tiles,
                                 gboolean           sparse,
@@ -879,8 +923,8 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
                          gboolean      sparse)
 {
   GimpItem *item;
-  gint      x, y, width, height;
-  gboolean  new_tiles = FALSE;
+  gint      x, y;
+  gint      width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (sparse == FALSE || tiles != NULL);
@@ -908,27 +952,9 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
       return;
     }
 
-  if (! tiles)
-    {
-      PixelRegion srcPR, destPR;
-
-      tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 x, y, width, height, FALSE);
-      pixel_region_init (&destPR, tiles,
-			 0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
-
-      new_tiles = TRUE;
-    }
-
-  gimp_image_undo_push_drawable (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                 undo_desc, drawable,
-                                 tiles, sparse,
-                                 x, y, width, height);
-
-  if (new_tiles)
-    tile_manager_unref (tiles);
+  GIMP_DRAWABLE_GET_CLASS (drawable)->push_undo (drawable, undo_desc,
+                                                 tiles, sparse,
+                                                 x, y, width, height);
 }
 
 TileManager *

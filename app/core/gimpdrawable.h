@@ -88,6 +88,15 @@ struct _GimpDrawableClass
                                   GimpImageType         type,
                                   gint                  offset_x,
                                   gint                  offset_y);
+
+  void (* push_undo)             (GimpDrawable         *drawable,
+                                  const gchar          *undo_desc,
+                                  TileManager          *tiles,
+                                  gboolean              sparse,
+                                  gint                  x,
+                                  gint                  y,
+                                  gint                  width,
+                                  gint                  height);
   void (* swap_pixels)           (GimpDrawable         *drawable,
                                   TileManager          *tiles,
                                   gboolean              sparse,

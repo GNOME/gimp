@@ -421,6 +421,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="QuickMask"                   >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,         /*< desc="Grid"                        >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/
+  GIMP_UNDO_GROUP_DRAWABLE,           /*< desc="Drawable"                    >*/
+  GIMP_UNDO_GROUP_DRAWABLE_MOD,       /*< desc="Drawable Mod"                >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection Mask"              >*/
   GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"             >*/
   GIMP_UNDO_GROUP_ITEM_DISPLACE,      /*< desc="Move Item"                   >*/
@@ -470,6 +472,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set Layer Opacity"         >*/
   GIMP_UNDO_LAYER_PRESERVE_TRANS,     /*< desc="Set Preserve Trans"        >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text"                      >*/
+  GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text Modified"             >*/
   GIMP_UNDO_CHANNEL_ADD,              /*< desc="New Channel"               >*/
   GIMP_UNDO_CHANNEL_REMOVE,           /*< desc="Delete Channel"            >*/
   GIMP_UNDO_CHANNEL_REPOSITION,       /*< desc="Reposition Channel"        >*/

@@ -513,8 +513,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   GObject          *src;
   GObject          *dest;
   GList            *list;
-  gboolean          push_undo  = TRUE;
-  gboolean          undo_group = FALSE;
+  gboolean          push_undo = TRUE;
 
   if (text_tool->idle_id)
     {
@@ -575,15 +574,13 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   if (push_undo)
     {
-      /*  If the layer contains a mask,
-       *  gimp_text_layer_render() might have to resize it.
-       */
-      undo_group = ((GIMP_LAYER (layer)->mask != NULL) || layer->modified);
-      if (undo_group)
-        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
 
       if (layer->modified)
-        gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer));
+        {
+          gimp_image_undo_push_text_layer_modified (image, NULL, layer);
+          gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer));
+        }
 
       gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
     }
@@ -622,8 +619,12 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify, text_tool);
 
-  if (push_undo && undo_group)
-    gimp_image_undo_group_end (image);
+  if (push_undo)
+    {
+      g_object_set (layer, "modified", FALSE, NULL);
+
+      gimp_image_undo_group_end (image);
+    }
 
   gimp_image_flush (image);
 }

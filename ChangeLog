@@ -1,3 +1,43 @@
+2004-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch] (enum GimpUndoType): added undo type
+	GIMP_UNDO_TEXT_LAYER_MODIFIED and undo group types
+	GIMP_UNDO_GROUP_DRAWABLE and GIMP_UNDO_GROUP_DRAWABLE_MOD.
+
+	* app/core/gimpimage-undo-push.[ch]: added new new function
+	gimp_image_undo_push_text_layer_modified() which makes
+	modifications of the text_layer's "modified" boolean undoable.
+
+	* app/core/gimpdrawable.[ch]: added new virtual function
+	GimpDrawable::push_undo() and moved the actual undo pushing into
+	the default implementation gimp_drawable_real_push_undo().
+
+	* app/text/gimptextlayer.c (gimp_text_layer_push_undo): new
+	function. Pushes the text_layer's modified state to the undo stack
+	after upchaining and sets modified to TRUE.
+
+	(gimp_text_layer_set_tiles): ditto.
+
+	(gimp_lext_layer_apply_region)
+	(gimp_text_layer_replace_region): removed because their default
+	implementations already call gimp_drawable_push_undo().
+
+	(gimp_text_layer_swap_pixels): removed because swap_pixels() is
+	used by undo only and doesn't need to care about the text_layer's
+	modified state.
+
+	(gimp_text_layer_render): don't set modified to FALSE here because
+	we can't push an undo step here.
+
+	(gimp_text_layer_set): push the modified state to the undo stack
+	and set it to FALSE here. Also push the layer's tiles if the
+	layer was modified.
+
+	* app/tools/gimptexttool.c (gimp_text_tool_apply): push "modified"
+	to the undo stack and set it to FALSE here, too.
+
+	Fixes bug #137767.
+
 2004-03-31  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimptransformtool.c: One really should use braces
