@@ -1,3 +1,10 @@
+2004-11-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-templates.[ch]
+	* app/dialogs/user-install-dialog.c: merge the migrated user
+	templaterc with the system templaterc so the users who have used
+	gimp-2.0 before get our changes to the default templates.
+
 2004-11-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: added new function

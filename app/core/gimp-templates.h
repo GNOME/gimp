@@ -20,8 +20,10 @@
 #define __GIMP_TEMPLATES_H__
 
 
-void  gimp_templates_load (Gimp *gimp);
-void  gimp_templates_save (Gimp *gimp);
+void  gimp_templates_load    (Gimp *gimp);
+void  gimp_templates_save    (Gimp *gimp);
+
+void  gimp_templates_migrate (void);
 
 
 #endif  /*  __GIMP_TEMPLATES_H__  */

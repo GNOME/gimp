@@ -43,6 +43,8 @@
 #include "config/gimpconfig-utils.h"
 #include "config/gimprc.h"
 
+#include "core/gimp-templates.h"
+
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -339,39 +341,38 @@ user_install_response (GtkWidget *widget,
                        gint       response_id,
                        GimpRc    *gimprc)
 {
-  static gint notebook_index = GPL_PAGE;
+  static gint index = GPL_PAGE;
 
   if (response_id != GTK_RESPONSE_OK)
     {
       exit (EXIT_SUCCESS);
     }
 
-  switch (notebook_index)
+  switch (index)
     {
     case GPL_PAGE:
       if (oldgimp)
-        notebook_index = MIGRATION_PAGE;
+        index = MIGRATION_PAGE;
       else
-        notebook_index = TREE_PAGE;
+        index = TREE_PAGE;
 
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), notebook_index);
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), index);
       break;
 
     case MIGRATION_PAGE:
       if (migrate)
         {
-          notebook_index = TREE_PAGE;
+          index = TREE_PAGE;
           /* fallthrough */
         }
       else
         {
-          user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
-                                          ++notebook_index);
+          user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
           break;
         }
 
     case TREE_PAGE:
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
 
       /*  Creating the directories can take some time on NFS, so inform
        *  the user and set the buttons insensitive
@@ -395,7 +396,7 @@ user_install_response (GtkWidget *widget,
                               _("Installation failed.  "
                                 "Contact system administrator."));
 
-          notebook_index = TUNING_PAGE; /* skip to last page */
+          index = TUNING_PAGE; /* skip to last page */
         }
 
       gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
@@ -405,8 +406,7 @@ user_install_response (GtkWidget *widget,
     case LOG_PAGE:
       if (! migrate)
         {
-          user_install_notebook_set_page (GTK_NOTEBOOK (notebook),
-                                          ++notebook_index);
+          user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++index);
           user_install_tuning (gimprc);
           break;
         }
@@ -1293,6 +1293,8 @@ user_install_migrate_files (const gchar   *oldgimp,
 
       return FALSE;
     }
+
+  gimp_templates_migrate ();
 
   return TRUE;
 }

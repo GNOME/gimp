@@ -105,3 +105,37 @@ gimp_templates_save (Gimp *gimp)
 
   g_free (filename);
 }
+
+
+/**
+ * gimp_templates_migrate:
+ *
+ * Migrating the templaterc from GIMP 2.0 to GIMP 2.2 needs this special
+ * hack since we changed the way that units are handled. This function
+ * merges the user's templaterc with the systemwide templaterc. The goal
+ * is to replace the unit for a couple of default templates with "pixels".
+ **/
+void
+gimp_templates_migrate (void)
+{
+  GimpContainer *templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
+  gchar         *filename  = gimp_personal_rc_file ("templaterc");
+
+  if (gimp_config_deserialize_file (GIMP_CONFIG (templates), filename,
+                                    NULL, NULL))
+    {
+      gchar *tmp = g_build_filename (gimp_sysconf_directory (),
+                                     "templaterc", NULL);
+
+      gimp_config_deserialize_file (GIMP_CONFIG (templates), tmp, NULL, NULL);
+
+      g_free (tmp);
+
+      gimp_list_reverse (GIMP_LIST (templates));
+
+      gimp_config_serialize_to_file (GIMP_CONFIG (templates), filename,
+                                     NULL, NULL, NULL, NULL);
+    }
+
+  g_free (filename);
+}
