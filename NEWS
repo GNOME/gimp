@@ -2,8 +2,8 @@ The GNU Image Manipulation Program Version 2.1
 ----------------------------------------------
 
 This is the development branch of The GIMP. Here's where new features
-are being added. Sometime this summer the next stable GIMP release,
-GIMP 2.2, will emerge out of this.
+are being added. In a not too distant future the next stable GIMP
+release, GIMP 2.2, will emerge out of this.
 
 
 Overview of Changes since 2.0
@@ -26,32 +26,35 @@ GIMP 2.1 includes the following enhancements:
 
    * New widgets and frameworks provided by GTK+ 2.4 are used; this means
 
-     + uses the new GtkFileChooser dialog, vastly improving the file dialogs.
-     + includes port of menus to GtkUIManager, which creates all core menus
-       from XML files at runtime. This means that menu items can be rearranged
-       by users simply by editing these files.
-     + uses a global accelerator table in all docks and image windows. This 
-       means that a hotkey will do the same thing regardless of which dock
-       or image window you are using.
+     + uses the new GtkFileChooser dialog, vastly improving the file
+       dialogs.
+     + includes port of menus to GtkUIManager, which creates all core
+       menus from XML files at runtime. This means that menu items can
+       be rearranged by users simply by editing these files.
+     + uses a global accelerator table in all docks and image windows.
+       This means that a hotkey will do the same thing regardless of
+       which dock or image window you are using.
      + adds replacement widgets based on GtkComboBox for most uses of
        GtkOptionMenu (GimpUnitMenu remains to be ported)
-     * adds GimpContainerEntry, a GtkEntry with completion based on
+     + adds GimpContainerEntry, a GtkEntry with completion based on
        the contents of a GimpContainer.
      + makes the order and visibility of tools in the toolbox configurable
-     + allows keeping toolbox and dock windows above other windows (if the WM 
-       supports this hint)
+     + allows keeping toolbox and dock windows above other windows (if
+       the WM supports this hint)
 
    * The toolbox now has an optional preview of the active image.
 
-- More internal cleanup and refactoring of the core object model.
+   * The image window now accepts file/uri drops.
 
-- The brush rendering code has been separated from the generic paint
-  tool code. The ink tool is now a paint tool (it can do straight
-  lines) and the new infrastructure allows to implement new kinds of
-  paint methods like vector based painting.
+ - More internal cleanup and refactoring of the core object model.
 
-- Gradients can now be created, deleted, renamed and edited through
-  the PDB.
+ - The brush rendering code has been separated from the generic paint
+   tool code. The ink tool is now a paint tool (it can do straight
+   lines) and the new infrastructure allows to implement new kinds of
+   paint methods like vector based painting.
+
+ - Gradients can now be created, deleted, renamed and edited through
+   the PDB.
 
  - Some changes to plug-ins.
 
@@ -66,9 +69,12 @@ GIMP 2.1 includes the following enhancements:
    * All plug-in dialogs have been reviewed and changed to make them
      comply better with the GNOME Human Interface Guidelines.
 
-   * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap 2 does
-     everything than AlienMap did, and the GIMP-specific GIcon format has not
-     been used by anything for quite some time now.
+   * All plug-ins that need to access files use the new GtkFileChooser
+     dialog.
+
+   * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap2
+     does everything than AlienMap did, and the GIMP-specific GIcon format
+     has not been used by anything for quite some time now.
 
    * A plug-in to load and save windows icon files has been added.
 
@@ -76,7 +82,7 @@ GIMP 2.1 includes the following enhancements:
 Contributors:
 
    Michael Natterer, Sven Neumann, Maurits Rijk, Manish Singh,
-   Henrik Brix Andersen, Philip Lafleur, Raphae«l Quinet, Simon Budig,
+   Henrik Brix Andersen, Philip Lafleur, Raphael Quinet, Simon Budig,
    William Skaggs, Shlomi Fish, Kevin, Cozens, Jakub Steiner, Daniel
    Kobras, Jordi Gay, Yeti, Marco Munari, David Necas, Nils Philippsen,
    Soeren Wedel Nielsen, Joao S. O. Bueno, lots of translators and
