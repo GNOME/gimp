@@ -400,7 +400,7 @@
 		    SF-ADJUSTMENT _"Shadow depth"      '(75  0 100 1 10 1 1)
 		    SF-ADJUSTMENT _"Thread length"     '(200 0 256 1 10 1 1)
 		    SF-ADJUSTMENT _"Thread density"    '(50  0 100 1 10 1 1)
-		    SF-ADJUSTMENT _"Thread intensity"  '(100 0 512 1 10 1 1))
+		    SF-ADJUSTMENT _"Thread intensity"  '(100 0 100 1 10 1 1))
 
 (script-fu-menu-register "script-fu-weave"
 			 _"<Image>/Script-Fu/Alchemy")

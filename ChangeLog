@@ -1,3 +1,9 @@
+2004-12-25  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/weave.scm: limit the "Thread
+	intensity" parameter to [0..100] because it's used as layer
+	opacity. Fixes bug #162182.
+
 2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/documents-commands.c
