@@ -29,7 +29,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "text-types.h"
 
 #include "config/gimpconfig-path.h"
 #include "config/gimpcoreconfig.h"
