@@ -104,7 +104,6 @@ libexec_PROGRAMS = \
 	randomize \
 	ripple \
 	rotate \
-	rotators \
 	sample_colorize \
 	scatter_hsv \
 	screenshot \
@@ -882,14 +881,6 @@ rotate_SOURCES = \
 	rotate.c
 
 rotate_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
-rotators_SOURCES = \
-	rotators.c
-
-rotators_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
 	$(INTLLIBS)

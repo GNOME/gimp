@@ -1,3 +1,13 @@
+Sat Nov 13 22:13:01 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/rotators.c: removed
+	* plug-ins/common/rotate.c: merged rotators and rotate plug-in.
+	The dialog has gone and the menus are installed under 
+	Image->Image->Transform and Image-->Layers. You will want to remove
+	the rotators binary out of your plug-in path.
+
 Sat Nov 13 20:14:49 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am

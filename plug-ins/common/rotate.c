@@ -1,6 +1,6 @@
 /*  
- *  Rotate plug-in v0.9 by Sven Neumann <sven@gimp.org>  
- *  1999/11/13
+ *  Rotate plug-in v0.9 
+ *  by Sven Neumann <sven@gimp.org> and Adam D. Moss <adam@gimp.org>
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -42,7 +42,8 @@
  *                     systems               
  *  (05/28/98)  v0.7   use the new gimp_message function for error output
  *  (10/09/99)  v0.8   rotate guides too
- *  (11/13/99)  v0.9   code cleanup
+ *  (11/13/99)  v0.9   merge rotators and rotate plug-ins 
+ *                     -> drop the dialog, register directly into menus instead
  */
 
 /* TODO List
@@ -50,6 +51,7 @@
  *  - rewrite the main function to make it work on tiles rather than
  *    process the image row by row. This should result in a significant
  *    speedup (thanks to quartic for this suggestion). 
+ *  - do something magical so that only one rotate can be occuring at a time!
  */  
 
 #include <stdlib.h>
@@ -59,34 +61,17 @@
 #include "libgimp/stdplugins-intl.h"
 
 /* Defines */
-#define PLUG_IN_NAME        "plug_in_rotate"
-#define PLUG_IN_VERSION     "v0.8 (1999/10/09)"
+#define PLUG_IN_VERSION     "v0.9 (1999/11/13)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, INDEXED*, GRAY*"
-#define PLUG_IN_AUTHOR      "Sven Neumann <sven@gimp.org>"
-#define PLUG_IN_COPYRIGHT   "Sven Neumann"
+#define PLUG_IN_AUTHOR      "Sven Neumann <sven@gimp.org>, Adam D. Moss <adam@gimp.org>"
+#define PLUG_IN_COPYRIGHT   "Sven Neumann, Adam D. Moss"
 
-#define NUMBER_IN_ARGS 5
-#define IN_ARGS { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
-		{ PARAM_IMAGE,    "image",      "Input image" },\
-		{ PARAM_DRAWABLE, "drawable",   "Input drawable"},\
-                { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
-                { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }"}
 
-#define NUMBER_OUT_ARGS 0 
-#define OUT_ARGS NULL
-
-#define NUM_ANGLES 4
-
-gchar *angle_label[NUM_ANGLES] = { "0", "90", "180", "270" };
-
-typedef struct {
+typedef struct 
+{
   gint angle;
   gint everything;
 } RotateValues;
-
-typedef struct {
-  gint run;
-} RotateInterface;
 
 typedef struct 
 {
@@ -99,11 +84,6 @@ static RotateValues rotvals =
 { 
   1,        /* default to 90 degrees */
   1         /* default to whole image */
-};
-
-static RotateInterface rotint =
-{
-  FALSE	    /* run */
 };
 
 
@@ -122,14 +102,6 @@ static void  rotate_compute_offsets (gint       *offsetx,
 				     gint       image_height,
 				     gint       width, 
 				     gint       height);
-static gint  rotate_dialog          (void);
-static void  rotate_close_callback  (GtkWidget *widget,
-				     gpointer   data);
-static void  rotate_ok_callback     (GtkWidget *widget,
-				     gpointer   data);
-static void  rotate_toggle_update   (GtkWidget *widget,
-				     gpointer   data);
-
 
 /* Global Variables */
 GPlugInInfo PLUG_IN_INFO =
@@ -150,28 +122,107 @@ MAIN ()
 
 static void query (void)
 {
+static GParamDef args[] = {
+  { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
+  { PARAM_IMAGE,    "image",      "Input image" },\
+  { PARAM_DRAWABLE, "drawable",   "Input drawable"},\
+  { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees"},\
+  { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }"} 
+};
+static gint nargs = sizeof (args) / sizeof (args[0]);
 
-static GParamDef args[] = { IN_ARGS };
-static gint nargs = NUMBER_IN_ARGS;
-static GParamDef *return_vals = OUT_ARGS;
-static gint nreturn_vals = NUMBER_OUT_ARGS;
+static GParamDef menuargs[] = {
+  { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},\
+  { PARAM_IMAGE,    "image",      "Input image" },\
+  { PARAM_DRAWABLE, "drawable",   "Input drawable"},\
+};
+static gint nmenuargs = sizeof (menuargs) / sizeof (menuargs[0]);
 
- INIT_I18N(); 
+static GParamDef *return_vals = NULL;
+static gint nreturn_vals      = 0;
 
-/* the actual installation of the plugin */
-gimp_install_procedure (PLUG_IN_NAME,
+INIT_I18N(); 
+
+/*install the plugin */
+gimp_install_procedure ("plug_in_rotate",
                         _("Rotates a layer or the whole image by 90, 180 or 270 degrees"),
                         _("This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is choosen, the image is resized if necessary."),
 			PLUG_IN_AUTHOR,
 			PLUG_IN_COPYRIGHT,
 			PLUG_IN_VERSION,
-			N_("<Image>/Image/Transforms/Rotate"),
+			NULL,
 			PLUG_IN_IMAGE_TYPES,
 			PROC_PLUG_IN,		
-			nargs,
-			nreturn_vals,
-			args,
-			return_vals);
+			nargs, nreturn_vals,
+			args, return_vals);
+
+gimp_install_procedure ("plug_in_layer_rot90",
+			_("Rotates the given layer 90 degrees clockwise."),
+			_("Rotates the given layer 90 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Layers/Rotate/90"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
+gimp_install_procedure ("plug_in_layer_rot180",
+			_("Rotates the given layer 180 degrees clockwise."),
+			_("Rotates the given layer 180 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Layers/Rotate/180"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
+gimp_install_procedure ("plug_in_layer_rot270",
+			_("Rotates the given layer 270 degrees clockwise."),
+			_("Rotates the given layer 270 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Layers/Rotate/270"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
+
+gimp_install_procedure ("plug_in_image_rot90",
+			_("Rotates the given image 90 degrees clockwise."),
+			_("Rotates the given image 90 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Image/Transforms/Rotate/90"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
+gimp_install_procedure ("plug_in_image_rot180",
+			_("Rotates the given image 180 degrees clockwise."),
+			_("Rotates the given image 180 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Image/Transforms/Rotate/180"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
+gimp_install_procedure ("plug_in_image_rot270",
+			_("Rotates the given image 270 degrees clockwise."),
+			_("Rotates the given image 270 degrees clockwise."),
+			PLUG_IN_AUTHOR,
+			PLUG_IN_COPYRIGHT,
+			PLUG_IN_VERSION,
+			N_("<Image>/Image/Transforms/Rotate/270"),
+			PLUG_IN_IMAGE_TYPES,
+			PROC_PLUG_IN,
+			nmenuargs, nreturn_vals,
+			menuargs, return_vals);
 }
 
 static void 
@@ -206,46 +257,70 @@ run (gchar    *name,
   image_ID = param[1].data.d_int32;
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
   
-  /*how are we running today? */
-  switch (run_mode)
+  /* Check the procedure name we were called with, to decide
+     what needs to be done. */
+  if (strcmp (name, "plug_in_rotate") == 0)
     {
-    case RUN_INTERACTIVE:
-      /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_NAME, &rotvals);
-      rotvals.angle = rotvals.angle % NUM_ANGLES;
-
-      /* Get information from the dialog */
-      if ( !rotate_dialog() )
-	return;
-      break;
-
-    case RUN_NONINTERACTIVE:
-      /* check to see if invoked with the correct number of parameters */
-      if (nparams == NUMBER_IN_ARGS)
+      switch (run_mode)
 	{
-	  rotvals.angle = (gint) param[3].data.d_int32;
-	  rotvals.angle = rotvals.angle % NUM_ANGLES;
-	  rotvals.everything = (gint) param[4].data.d_int32;
+	case RUN_INTERACTIVE:
+	case RUN_NONINTERACTIVE:
+	  /* check to see if invoked with the correct number of parameters */
+	  if (nparams == 5)
+	    {
+	      rotvals.angle = (gint) param[3].data.d_int32;
+	      rotvals.angle = rotvals.angle % 4;
+	      rotvals.everything = (gint) param[4].data.d_int32;
+	      /* Store variable states for next run */
+	      gimp_set_data ("plug_in_rotate", &rotvals, sizeof (RotateValues));
+	    }
+	  else
+	    status = STATUS_CALLING_ERROR;
+	  break;
+	case RUN_WITH_LAST_VALS:
+	  /* Possibly retrieve data from a previous run */
+	  gimp_get_data ("plug_in_rotate", &rotvals);
+	  rotvals.angle = rotvals.angle % 4;
+	  break;
+	default:
+	  break;
 	}
-      else
-	status = STATUS_CALLING_ERROR;
-      break;
-      
-    case RUN_WITH_LAST_VALS:
-      /* Possibly retrieve data from a previous run */
-      gimp_get_data (PLUG_IN_NAME, &rotvals);
-      rotvals.angle = rotvals.angle % NUM_ANGLES;
-      break;
-    
-    default:
-      break;
-    } /* switch */
+    }
+  else if (strcmp (name, "plug_in_layer_rot90") == 0)
+    {
+      rotvals.angle      = 1;
+      rotvals.everything = FALSE;
+    }
+  else if (strcmp (name, "plug_in_layer_rot180") == 0)
+    {
+      rotvals.angle      = 2;
+      rotvals.everything = FALSE;
+    }
+  else if (strcmp (name, "plug_in_layer_rot270") == 0)
+    {
+      rotvals.angle      = 3;
+      rotvals.everything = FALSE;
+    }
+  else if (strcmp (name, "plug_in_image_rot90") == 0)
+    {
+      rotvals.angle      = 1;
+      rotvals.everything = TRUE;
+    }
+  else if (strcmp (name, "plug_in_image_rot180") == 0)
+    {
+      rotvals.angle      = 2;
+      rotvals.everything = TRUE;
+    }
+  else if (strcmp (name, "plug_in_image_rot270") == 0)
+    {
+      rotvals.angle      = 3;
+      rotvals.everything = TRUE;
+    }
+  else 
+    status = STATUS_CALLING_ERROR;
 
   if (status == STATUS_SUCCESS)
     {
-      /* Set the number of tiles you want to cache */
-      /* gimp_tile_cache_ntiles ( ); */
-      
       /* Run the main function */
       rotate ();
       
@@ -253,10 +328,6 @@ run (gchar    *name,
 	 do it, as the screen updates would make the scripts slow */
       if (run_mode != RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
-      
-      /* Store variable states for next run */
-      if (run_mode == RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_NAME, &rotvals, sizeof (RotateValues));
     }
   values[0].data.d_status = status; 
 }
@@ -582,217 +653,5 @@ rotate (void)
   gimp_undo_push_group_end (image_ID);
 
   return;
-}
-
-
-
-/* Rotate dialog */
-
-static gint 
-rotate_dialog (void)
-{
-  GtkWidget *dialog;
-  GtkWidget *button;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *radio_label; 
-  GtkWidget *unit_label; 
-  GtkWidget *hbox;
-  GtkWidget *radio_button;
-  GtkWidget *check_button;
-  GSList    *radio_group = NULL;
-  gint radio_pressed[NUM_ANGLES];
-  gint everything;
-  gint argc = 1;
-  gint i;
-  gchar **argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Rotate");
-
-  for (i=0;i<NUM_ANGLES;i++)
-    {
-      radio_pressed[i] = (rotvals.angle == i);
-    }
-  everything = rotvals.everything;
-
-  /* Init GTK  */
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm ());
-
-  /* Main Dialog */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Rotate"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      (GtkSignalFunc) rotate_close_callback,
-		      NULL);
-  /*  Action area  */
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) rotate_ok_callback,
-                      dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), 
-		      button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), 
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Rotate clockwise by"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      frame, TRUE, TRUE, 0);
-
-  /* table for radio_buttons */
-  table = gtk_table_new (6, 6, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 8);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 1);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  /* radio buttons */
-
-  /* 0 degrees */
-  radio_label = gtk_label_new ( angle_label[0] );
-  gtk_table_attach ( GTK_TABLE (table), radio_label, 2, 3, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show (radio_label);
-  radio_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (radio_button) );  
-  gtk_table_attach ( GTK_TABLE (table), radio_button, 2, 3, 1, 2, 0, 0, 0, 0);
-  gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
-		       (GtkSignalFunc) rotate_toggle_update,
-		       &radio_pressed[0]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
-				   radio_pressed[0]);
-  gtk_widget_show (radio_button);
-
-  /* 90 degrees */  
-  radio_label = gtk_label_new ( angle_label[1] );
-  gtk_table_attach ( GTK_TABLE (table), radio_label, 4, 5, 2, 3, 0, 0, 0, 0);
-  gtk_widget_show (radio_label);
-  radio_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (radio_button) );  
-  gtk_table_attach ( GTK_TABLE (table), radio_button, 3, 4, 2, 3, 0, 0, 0, 0);
-  gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
-		       (GtkSignalFunc) rotate_toggle_update,
-		       &radio_pressed[1]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
-				   radio_pressed[1]);
-  gtk_widget_show (radio_button);
-
-  /* 180 degrees */
-  radio_label = gtk_label_new ( angle_label[2] );
-  gtk_table_attach ( GTK_TABLE (table), radio_label, 2, 3, 4, 5, 0, 0, 0, 0);
-  gtk_widget_show (radio_label);
-  radio_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (radio_button) );  
-  gtk_table_attach ( GTK_TABLE (table), radio_button, 2, 3, 3, 4, 0, 0, 0, 0);
-  gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
-		       (GtkSignalFunc) rotate_toggle_update,
-		       &radio_pressed[2]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
-				   radio_pressed[2]);
-  gtk_widget_show (radio_button);
-
-  /* 270 degrees */ 
-  radio_label = gtk_label_new ( angle_label[3] );
-  gtk_table_attach ( GTK_TABLE (table), radio_label, 0, 1, 2, 3, 0, 0, 0, 0);
-  gtk_widget_show (radio_label);
-  radio_button = gtk_radio_button_new ( radio_group );
-  radio_group = gtk_radio_button_group ( GTK_RADIO_BUTTON (radio_button) );  
-  gtk_table_attach ( GTK_TABLE (table), radio_button, 1, 2, 2, 3, 0, 0, 0, 0);
-  gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
-		       (GtkSignalFunc) rotate_toggle_update,
-		       &radio_pressed[3]);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
-				   radio_pressed[3]);
-  gtk_widget_show (radio_button);
-
-  /* label: degrees */
-
-  unit_label = gtk_label_new ( _("degrees") );
-  gtk_table_attach ( GTK_TABLE (table), unit_label, 5, 6, 5, 6, 0, 0, 0, 0);
-  gtk_widget_show (unit_label);
-
- 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
-
-  /* hbox for check-button */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
-		      hbox, TRUE, TRUE, 0);
-  /* check button */
-  check_button = gtk_check_button_new_with_label ( _("Rotate the whole image"));
-  gtk_box_pack_end (GTK_BOX (hbox), check_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
-		      (GtkSignalFunc) rotate_toggle_update,
-		      &everything);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
-			       rotvals.everything);
-  gtk_widget_show (check_button);
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (dialog);
-
-  gtk_main ();
-  gdk_flush ();
-
-  rotvals.angle=0;
-  for (i = 0; i < NUM_ANGLES; i++)
-    {
-      if (radio_pressed[i]==TRUE)
-	{
-	  rotvals.angle = i;
-	  break;
-	}
-    }
-  rotvals.everything = everything;
-
-  return rotint.run;
-}
-
-
-/*  Rotate interface functions  */
-
-static void
-rotate_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
-rotate_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  rotint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-rotate_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
 }
 
