@@ -92,8 +92,10 @@ plug-ins/common/rotate.c
 plug-ins/common/sample_colorize.c
 plug-ins/common/screenshot.c
 plug-ins/common/spheredesigner.c
+plug-ins/common/sunras.c
 plug-ins/common/threshold_alpha.c
 plug-ins/common/warp.c
+plug-ins/common/winprint.c
 plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
