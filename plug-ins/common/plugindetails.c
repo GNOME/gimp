@@ -813,10 +813,11 @@ get_plugin_info (PDesc       *pdesc,
           tx = time_ints[loop];
           if (tx)
             {
+              const gchar *format = "%c";  /* gcc workaround to avoid warning */
               gchar *utf8;
 
               x = localtime (&tx);
-              ret = strftime (xtimestr, sizeof (xtimestr), "%c", x);
+              ret = strftime (xtimestr, sizeof (xtimestr), format, x);
               xtimestr[ret] = 0;
 
               if ((utf8 = g_locale_to_utf8 (xtimestr, -1, NULL, NULL, NULL)))

@@ -1,3 +1,8 @@
+2004-08-28  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/plugindetails.c: workaround to avoid a warning
+	by gcc about the use of "%c" in the format string.
+
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.[ch]: applied a patch from Joao
