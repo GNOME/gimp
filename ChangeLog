@@ -1,3 +1,14 @@
+2004-10-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/drawable-commands.c (drawable_rotate_cmd_callback):
+	if the drawable is a channel, pass clip_result as FALSE. Need to
+	do this here for rotating only because it can't be decided
+	generically in GimpChannel. Fixes crash when rotating channels
+	or layer masks.
+
+	Use the undo_desc from GimpItemClass instead of passing "Flip
+	Layer" and "Rotate Layer".
+
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-open.c: minor cleanup.

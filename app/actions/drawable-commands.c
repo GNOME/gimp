@@ -25,7 +25,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
@@ -186,7 +186,7 @@ drawable_flip_cmd_callback (GtkAction *action,
 
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                                 _("Flip Layer"));
+                                 GIMP_ITEM_GET_CLASS (item)->flip_desc);
 
   gimp_item_flip (item, context, (GimpOrientationType) value, axis, FALSE);
 
@@ -211,6 +211,7 @@ drawable_rotate_cmd_callback (GtkAction *action,
   GimpItem     *item;
   gint          off_x, off_y;
   gdouble       center_x, center_y;
+  gboolean      clip_result = FALSE;
   return_if_no_drawable (gimage, drawable, data);
   return_if_no_context (context, data);
 
@@ -223,10 +224,13 @@ drawable_rotate_cmd_callback (GtkAction *action,
 
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                                 _("Rotate Layer"));
+                                 GIMP_ITEM_GET_CLASS (item)->rotate_desc);
+
+  if (GIMP_IS_CHANNEL (item))
+    clip_result = TRUE;
 
   gimp_item_rotate (item, context, (GimpRotationType) value,
-                    center_x, center_y, FALSE);
+                    center_x, center_y, clip_result);
 
   if (gimp_item_get_linked (item))
     {
