@@ -18,7 +18,7 @@ sub Gimp::Tile::get_data($) {
    my($tile)=@_;
    my($pdl)=new_from_specification PDL (byte,width(),height(),
                                         $tile->bpp > 1 ? $tile->bpp : ());
-   ${$pdl->get_dataref} = &Gimp::Tile::_get_data;
+   ${$pdl->get_dataref} = Gimp::Tile::_get_data(@_);
    $pdl->upd_data;
    return $pdl;
 };
@@ -26,7 +26,7 @@ sub Gimp::Tile::get_data($) {
 sub Gimp::PixelRgn::get_pixel {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp);
-   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_pixel;
+   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_pixel(@_);
    $pdl->upd_data;
    return $pdl;
 };
@@ -34,7 +34,7 @@ sub Gimp::PixelRgn::get_pixel {
 sub Gimp::PixelRgn::get_col {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = &Gimp::PixelRgn::__get_col;
+   ${$pdl->get_dataref} = Gimp::PixelRgn::__get_col(@_);
    $pdl->upd_data;
    return $pdl;
 };
@@ -42,14 +42,14 @@ sub Gimp::PixelRgn::get_col {
 sub Gimp::PixelRgn::get_row {
    my($rgn)=@_;
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3]);
-   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_row;
+   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_row(@_);
    $pdl->upd_data;
    return $pdl;
 };
 
 sub Gimp::PixelRgn::get_rect {
    my($pdl)=new_from_specification PDL (byte,$_[0]->bpp,$_[3],$_[4]);
-   ${$pdl->get_dataref} = &Gimp::PixelRgn::_get_rect;
+   ${$pdl->get_dataref} = Gimp::PixelRgn::_get_rect(@_);
    $pdl->upd_data;
    return $pdl;
 };

@@ -1,6 +1,6 @@
 Revision history for Gimp-Perl extension.
 
-	- added examples/yinyang, examples/image_tile.
+	- added examples/yinyang, examples/image_tile, examples/stamps.
         - bangpath is no longer updated inplace. As a result, only plug-ins
           that are going to get installed are being fixed, the examples are
           not.
@@ -8,6 +8,10 @@ Revision history for Gimp-Perl extension.
 	  error handling.
 	- reworked callback handling, should be more flexible in the future.
         - changed implementation of PF_CUSTOM (still untested).
+        - fixed some rather scientific memory leaks, fixed more bugs.
+        - the case when "not enough arguments" were supplied for a function
+          was not reliably detected.
+        - gimp_progress_init now accepts either one or two arguments.
 
 1.061 Fri Mar 12 21:27:26 CET 1999
 	- closed big, BIG security hole on password authenticitation

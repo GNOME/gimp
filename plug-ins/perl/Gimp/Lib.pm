@@ -35,6 +35,14 @@ sub import {}
 
 bootstrap Gimp::Lib $VERSION;
 
+# various functions for 1.0 compatibility
+
+sub gimp_progress_init {
+   push @_,-1 if @_<2;
+   eval { gimp_call_procedure "gimp_progress_init",@_ };
+   gimp_call_procedure "gimp_progress_init",shift if $@;
+}
+
 # functions to "autobless" where the autobless mechanism
 # does not work.
 
@@ -72,11 +80,12 @@ sub gimp_tile_bpp		{ $_[0]->{_bpp}		}
 sub gimp_tile_shadow		{ $_[0]->{_shadow}	}
 sub gimp_tile_gdrawable		{ $_[0]->{_gdrawable}	}
 
+# be careful not to require AUTOLOAD here
 sub Gimp::PixelRgn::DESTROY {
    my $self = shift;
    return unless $self =~ /=HASH/;
-   $self->{_drawable}->{_id}->update($self->{_x},$self->{_y},$self->{_w},$self->{_h})
-      if $self->dirty;
+   gimp_call_procedure "gimp_drawable_update",$self->{_drawable}->{_id},$self->{_x},$self->{_y},$self->{_w},$self->{_h}
+      if gimp_pixel_rgn_dirty($self);
 };
 
 # this is here to be atomic over the perl-server

@@ -81,21 +81,28 @@ void
 _exit()
 	CODE:
 #ifdef HAVE__EXIT
-        _exit(0);
+	_exit(0);
 #elif defined(SIGKILL)
-        raise(SIGKILL);
+	raise(SIGKILL);
 #else
-        raise(9);
+	raise(9);
 #endif
-        abort();
+	abort();
+
+void
+xs_exit(status)
+	int	status
+	CODE:
+	exit (status);
 
 # this one is for prefix mismatch check.
+# should be replaced by a generic config mechanism
 char *
 _gimp_prefix()
 	CODE:
-        RETVAL = GIMP_PREFIX;
+	RETVAL = GIMP_PREFIX;
 	OUTPUT:
-        RETVAL
+	RETVAL
 
 BOOT:
 {

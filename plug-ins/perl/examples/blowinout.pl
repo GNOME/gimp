@@ -3,7 +3,7 @@
 # Blow In/Out
 # John Pitney
 
-use Gimp;
+use Gimp 1.06;
 use Gimp::Fu;
 
 # print "hello there\n";
@@ -102,6 +102,8 @@ register
 	 [PF_RADIO, "direction", "Blow direction", 0, [["In", 1],["Out", 0]]],
          [PF_RADIO, "series", "Kind of series", 1, [["Arithmetic",1],["Geometric",0]]]
 	],
+        [],
+        ['gtk-1.2'],
 	\&blowinout;
 
 exit main;

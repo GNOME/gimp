@@ -68,3 +68,5 @@ examples/sethspin.pl
 examples/animate_cells
 examples/yinyang
 examples/image_tile
+examples/stamps
+

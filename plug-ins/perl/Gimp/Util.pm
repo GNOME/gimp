@@ -271,7 +271,6 @@ sub gimp_image_layertype {
 
 sub gimp_image_add_new_layer {
    my ($image,$index,$filltype,$alpha)=@_;
-   print "ALPHA $alpha\n";
    my $layer = new Layer ($image, $image->width, $image->height, $image->layertype (defined $alpha ? $alpha : 1), join(":",(caller)[1,2]), 100, NORMAL_MODE);
    $layer->fill (defined $filltype ? $filltype : BG_IMAGE_FILL);
    $image->add_layer ($layer, $index*1);

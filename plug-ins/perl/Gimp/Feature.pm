@@ -41,7 +41,8 @@ sub import {
 
    while(@_) {
       $_=shift;
-      s/^:// and need($_);
+      s/^://;
+      need($_);
    }
 }
 
@@ -115,7 +116,7 @@ Gimp::Features - check for specific features to be present before registering th
 
 or
 
-  use Gimp::Features qw(:feature1 :feature2 ...);
+  use Gimp::Features qw(feature1 feature2 ...);
 
 =head1 DESCRIPTION
 

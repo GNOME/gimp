@@ -56,7 +56,7 @@ sub generate_log {
 
 sub gtkview_log {
    if ($_[0]) {
-      destroy $_[0];
+      $_[0]->destroy;
       undef $_[0];
    } else {
       my($title,$log)=@_[1,2];

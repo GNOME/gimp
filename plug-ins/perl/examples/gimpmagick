@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp::Feature qw(:gtk :perl-5.005);
+use Gimp::Feature qw(gtk perl-5.005);
 use Gimp 1.06;
 use Gimp::Fu;
 use Gtk;

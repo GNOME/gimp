@@ -2,7 +2,7 @@
 
 #BEGIN {$^W=1};
 
-use Gimp::Feature qw(:perl-5.005 :gtk);
+use Gimp::Feature qw(perl-5.005 gtk);
 use Gimp ();
 use Gimp::Fu;
 use Gtk;

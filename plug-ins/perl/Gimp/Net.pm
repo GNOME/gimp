@@ -236,7 +236,8 @@ sub gimp_init {
 sub gimp_end {
    $initialized = 0;
 
-   close $server_fh;
+   close $server_fh if $server_fh;
+   undef $server_fh;
    kill 'KILL',$gimp_pid if $gimp_pid;
    undef $gimp_pid;
 }

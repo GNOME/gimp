@@ -5,7 +5,7 @@ use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
             @PREFIXES $_PROT_VERSION
-            @gimp_gui_functions $function $ignore_die
+            @gimp_gui_functions $function
             $help $verbose $host);
 
 require DynaLoader;
@@ -269,6 +269,8 @@ EOF
 
 my @log;
 my $caller;
+my $ignore_die;
+my $in_quit;
 
 sub format_msg {
    $_=shift;
@@ -297,12 +299,12 @@ sub logger {
    $args{function} = ""                   unless defined $args{function};
    $args{fatal}    = 1                    unless defined $args{fatal};
    push(@log,[$file,@args{'function','message','fatal'}]);
-   print STDERR format_msg($log[-1]),"\n" if $verbose || $interface_type eq 'net';
+   print STDERR format_msg($log[-1]),"\n";
    _initialized_callback if initialized();
 }
 
 sub die_msg {
-   logger(message => substr($_[0],0,-1), fatal => 1, function => 'DIE');
+   logger(message => substr($_[0],0,-1), fatal => 1, function => 'ERROR');
 }
 
 sub call_callback {
@@ -328,14 +330,17 @@ sub callback {
    } elsif ($type eq "-query") {
       call_callback 1,"query";
    } elsif ($type eq "-quit") {
-      local $ignore_die = 0;
+      $ignore_die = 1;
       call_callback 0,"quit";
+      undef $ignore_die;
    }
 }
 
 sub main {
    $caller=caller;
-   &{"${interface_pkg}::gimp_main"};
+   #d# #D# # BIG BUG LURKING SOMEWHERE
+   # just calling exit() will be too much for bigexitbug.pl
+   xs_exit(&{"${interface_pkg}::gimp_main"});
 }
 
 # same as main, but callbacks are ignored
@@ -346,7 +351,7 @@ sub quiet_main {
 $SIG{__DIE__} = sub {
    if (!$^S && $ignore_die) {
       die_msg $_[0];
-      initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit main();
+      initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
    } else {
      die $_[0];
    }
@@ -356,7 +361,7 @@ $SIG{__WARN__} = sub {
    if ($ignore_die) {
      warn $_[0];
    } else {
-     logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARN');
+     logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
    }
 };
 
@@ -401,7 +406,7 @@ sub ignore_functions(@) {
 
 sub _croak($) {
   $_[0] =~ s/ at .*? line \d+.*$//s;
-  Carp::croak $_[0];
+  croak($_[0]);
 }
 
 sub AUTOLOAD {
@@ -643,7 +648,14 @@ In a Gimp::Fu-script, you should call C<Gimp::Fu::main> instead:
  exit main;		# Gimp::Fu::main is exported by default as well.
 
 This is similar to Gtk, Tk or similar modules, where you have to call the
-main eventloop.
+main eventloop. Attention: although you call C<exit> with the result of
+C<main>, the main function might not actually return. This depends on both
+the version of Gimp and the version of the Gimp-Perl module that is in
+use.  Do not depend on C<main> to return at all, but still call C<exit>
+immediately.
+
+If you need to do cleanups before exiting you should use the C<quit>
+callback (which is not yet available if you use Gimp::Fu).
 
 =head1 CALLBACKS
 
