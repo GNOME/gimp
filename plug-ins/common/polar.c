@@ -737,6 +737,7 @@ dialog_update_preview (void)
   GimpRGB  background;
   guchar   outside[4];
   guchar  *buffer;
+  guchar   k;
 
   gimp_palette_get_background (&background);
   gimp_rgb_set_alpha (&background, 0.0);
@@ -780,10 +781,8 @@ dialog_update_preview (void)
 	  else
 	    i = outside;
 
-	  p_ul[0] = i[0];
-	  p_ul[1] = i[1];
-	  p_ul[2] = i[2];
-	  p_ul[3] = i[3];
+          for (k = 0; k < bpp; k ++)
+            p_ul[k] = i[k];
 
 	  p_ul += bpp;
 
