@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.25\n"
-"POT-Creation-Date: 2000-08-25 21:42+0400\n"
-"PO-Revision-Date: 2000-08-25 22:03+04:00\n"
+"POT-Creation-Date: 2000-08-27 14:50+0400\n"
+"PO-Revision-Date: 2000-08-27 14:51+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,13 +117,13 @@ msgstr "Выход"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -1606,7 +1606,11 @@ msgstr "безымянное"
 msgid "Layer type %d not supported."
 msgstr "Слои типа %d не поддерживаются."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:190
+msgid "Could not find GIMP Help Browser"
+msgstr "Не удалось найти программу просмотра справки GIMP"
+
+#: app/gimphelp.c:192
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1615,6 +1619,10 @@ msgstr ""
 "Не удалось найти процедуру справочной системы Gimp.\n"
 "Возможно она не была скомпилирована потому что\n"
 "у вас не была установлена GtkXmHTML."
+
+#: app/gimphelp.c:195
+msgid "Use Netscape instead"
+msgstr "Использовать Netscape вместо нее"
 
 #: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
@@ -2858,7 +2866,9 @@ msgstr "Уменьшение масштаба"
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "\nНедопустимый параметр.\n"
+msgstr ""
+"\n"
+"Недопустимый параметр.\n"
 
 #: app/main.c:301
 msgid "GIMP version"
@@ -2870,7 +2880,10 @@ msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "\nИспользуйте: %s [Параметры ...] [Файлы ...]\n\n"
+msgstr ""
+"\n"
+"Используйте: %s [Параметры ...] [Файлы ...]\n"
+"\n"
 
 #: app/main.c:306
 msgid "Options:\n"
@@ -2884,13 +2897,17 @@ msgstr "  -b --batch <команды>     Запустить в командном режиме.\n"
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr "  -c, --console-messages       Показывать предупреждения на консоли вместо диалоговых окон.\n"
+msgstr ""
+"  -c, --console-messages       Показывать предупреждения на консоли вместо "
+"диалоговых окон.\n"
 
 #: app/main.c:309
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data                Не загружать шаблоны, градиенты, палитры и кисти.\n"
+msgstr ""
+"  -d, --no-data                Не загружать шаблоны, градиенты, палитры и "
+"кисти.\n"
 
 #: app/main.c:310
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2906,7 +2923,8 @@ msgstr "  -h, --help                Вывести эту подсказку.\n"
 
 #: app/main.c:313
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+msgstr ""
+"  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
 
 #: app/main.c:314
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -2914,7 +2932,8 @@ msgstr "  -s, --no-splash              Не показывать окно запуска.\n"
 
 #: app/main.c:315
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
+msgstr ""
+"  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
 
 #: app/main.c:316
 msgid "  -v, --version            Output version information.\n"
@@ -2960,7 +2979,9 @@ msgstr ""
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
-msgstr "                          Режим отладки для фатальных сигналов.\n\n"
+msgstr ""
+"                          Режим отладки для фатальных сигналов.\n"
+"\n"
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
@@ -6399,12 +6420,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Цветовая история"
-
-#~ msgid "attach parasite to image"
-#~ msgstr "прицепить паразита к изображению"
-
-#~ msgid "detach parasite from image"
-#~ msgstr "отцепить паразита от изображения"
-
-#~ msgid "  --enable-stack-trace {never|query|always}\n"
-#~ msgstr "  --enable-stack-trace {never|query|always}\n"
