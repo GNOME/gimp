@@ -1,3 +1,11 @@
+2003-12-28  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpdasheditor.[ch]: Added functions to shift the
+	dash pattern to the left or right.
+	
+	* app/widgets/gimpstrokeeditor.c: Improve the appearance of the
+	widget and add left/right buttons.
+
 2003-12-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdasheditor.c: some minor cleanups.

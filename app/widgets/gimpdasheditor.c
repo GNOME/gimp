@@ -338,13 +338,6 @@ gimp_dash_editor_expose (GtkWidget      *widget,
                  editor->x0 - 1, editor->y0 - 1,
                  editor->x0 - 1, editor->y0 + h);
 
-  gtk_paint_shadow (widget->style, widget->window,
-                    GTK_STATE_NORMAL, GTK_SHADOW_IN,
-                    NULL, widget, NULL,
-                    0, 0,
-                    widget->allocation.width,
-                    widget->allocation.height);
-
   return FALSE;
 }
 
@@ -433,6 +426,38 @@ gimp_dash_editor_new (GimpStrokeOptions *stroke_options)
                                    NULL));
 }
 
+
+void
+gimp_dash_editor_shift_right (GimpDashEditor *editor)
+{
+  gint i;
+  gboolean swap;
+  
+  g_return_if_fail (editor->n_segments > 0);
+
+  swap = editor->segments[editor->n_segments - 1];
+  for (i = editor->n_segments - 1; i > 0; i--)
+    editor->segments[i] = editor->segments[i-1];
+  editor->segments[0] = swap;
+
+  update_options_from_segments (editor);
+}
+
+void
+gimp_dash_editor_shift_left (GimpDashEditor *editor)
+{
+  gint i;
+  gboolean swap;
+  
+  g_return_if_fail (editor->n_segments > 0);
+
+  swap = editor->segments[0];
+  for (i = 1; i < editor->n_segments; i++)
+    editor->segments[i-1] = editor->segments[i];
+  editor->segments[editor->n_segments - 1] = swap;
+
+  update_options_from_segments (editor);
+}
 
 static void
 update_segments_from_options (GimpDashEditor *editor)

@@ -54,6 +54,9 @@ static void      gimp_stroke_editor_get_property (GObject         *object,
                                                   GValue          *value,
                                                   GParamSpec      *pspec);
 static void      gimp_stroke_editor_finalize     (GObject         *object);
+static gboolean  gimp_stroke_editor_paint_button (GtkWidget       *widget,
+                                                  GdkEventExpose  *event,
+                                                  gpointer         user_data);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -167,6 +170,7 @@ gimp_stroke_editor_constructor (GType                   type,
   GimpStrokeEditor *editor;
   GtkWidget        *table;
   GtkWidget        *box;
+  GtkWidget        *frame;
   GtkWidget        *size;
   GtkWidget        *dash_editor;
   GtkWidget        *button;
@@ -212,10 +216,45 @@ gimp_stroke_editor_constructor (GType                   type,
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 
+  box = gtk_hbox_new (FALSE, 0);
   dash_editor = gimp_dash_editor_new (editor->options);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash Pattern:"), 1.0, 0.5, dash_editor, 1, FALSE);
   gtk_widget_show (dash_editor);
+
+  button = g_object_new (GTK_TYPE_BUTTON,
+                         "width-request", 14,
+                         NULL);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+  g_signal_connect_object (G_OBJECT (button), "clicked",
+                           G_CALLBACK (gimp_dash_editor_shift_left),
+                           dash_editor, G_CONNECT_SWAPPED);
+  g_signal_connect_after (G_OBJECT (button), "expose-event",
+                          G_CALLBACK (gimp_stroke_editor_paint_button),
+                          button);
+  gtk_widget_show (button);
+
+  gtk_box_pack_start (GTK_BOX (box), dash_editor, TRUE, TRUE, 0);
+
+  gtk_widget_show (dash_editor);
+
+  button = g_object_new (GTK_TYPE_BUTTON,
+                         "width-request", 14,
+                         NULL);
+  gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+  g_signal_connect_object (G_OBJECT (button), "clicked",
+                           G_CALLBACK (gimp_dash_editor_shift_right),
+                           dash_editor, G_CONNECT_SWAPPED);
+  g_signal_connect_after (G_OBJECT (button), "expose-event",
+                          G_CALLBACK (gimp_stroke_editor_paint_button),
+                          NULL);
+  gtk_widget_show (button);
+  gtk_widget_show (box);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (frame), box);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Dash Pattern:"), 1.0, 0.5, frame, 2, FALSE);
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
                                        _("_Antialiasing"));
@@ -258,4 +297,26 @@ gimp_stroke_editor_new (GimpStrokeOptions *options,
                        "options",    options,
                        "resolution", resolution,
                        NULL);
+}
+
+static gboolean
+gimp_stroke_editor_paint_button (GtkWidget       *widget,
+                                 GdkEventExpose  *event,
+                                 gpointer         user_data)
+{
+  GtkAllocation *alloc;
+  gint           w;
+
+  alloc = &widget->allocation;
+
+  w = MIN (alloc->width, alloc->height) * 2 / 3;
+
+  gtk_paint_arrow (widget->style, widget->window,
+                   widget->state, GTK_SHADOW_IN,
+                   &event->area, widget, NULL,
+                   user_data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
+                   alloc->x + (alloc->width - w) / 2,
+                   alloc->y + (alloc->height - w) / 2,
+                   w, w);
+  return FALSE;
 }

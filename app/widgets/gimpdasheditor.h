@@ -66,8 +66,12 @@ struct _GimpDashEditorClass
 };
 
 
-GType           gimp_dash_editor_get_type (void) G_GNUC_CONST;
+GType         gimp_dash_editor_get_type    (void) G_GNUC_CONST;
+                                         
+GtkWidget   * gimp_dash_editor_new         (GimpStrokeOptions *stroke_options);
 
-GtkWidget     * gimp_dash_editor_new      (GimpStrokeOptions *stroke_options);
+void          gimp_dash_editor_shift_left  (GimpDashEditor *editor);
+void          gimp_dash_editor_shift_right (GimpDashEditor *editor);
+
 
 #endif /* __GIMP_DASH_EDITOR_H__ */
