@@ -138,8 +138,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },
     { GIMP_PDB_INT32,    "type",     "Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
-    { GIMP_PDB_INT32,    "black",    "Black level (-1 to 255)" },
-    { GIMP_PDB_INT32,    "white",    "White level (0 to 256)" }
+    { GIMP_PDB_INT32,    "black",    "Black level (0 to 255)" },
+    { GIMP_PDB_INT32,    "white",    "White level (0 to 255)" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -382,7 +382,6 @@ despeckle_dialog (void)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *button;
@@ -418,20 +417,9 @@ despeckle_dialog (void)
                     G_CALLBACK (preview_update),
                     NULL);
 
-  /*
-   * Filter type controls...
-   */
-
-  frame = gimp_frame_new (_("Type"));
+  frame = gimp_frame_new (_("Median"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /*  parameter settings  */
-  frame = gimp_frame_new (_("Median"));
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -456,9 +444,6 @@ despeckle_dialog (void)
   g_signal_connect (button, "toggled",
                     G_CALLBACK (dialog_recursive_callback),
                     NULL);
-
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -488,7 +473,7 @@ despeckle_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              black_level, -1, 255, 1, 8, 0,
+                              black_level, 0, 255, 1, 8, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
@@ -504,7 +489,7 @@ despeckle_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              white_level, 0, 256, 1, 8, 0,
+                              white_level, 0, 255, 1, 8, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
@@ -609,18 +594,15 @@ despeckle_median (guchar   *src,
                   gint      radius,
                   gboolean  preview)
 {
-  gint      pos1, pos2, med, x, y, jh,jv, box, hist0, hist255, diameter;
-  guchar  **buf;
-  guchar   *ibuf;
-  guchar   *pixel;
-  guint     progress;
-  guint     max_progress;
-
-  if (!preview)
-    {
-      gimp_progress_init(_("Despeckle"));
-      gimp_progress_update (0.0);
-    }
+  guchar **buf;
+  guchar  *ibuf;
+  guchar  *pixel;
+  guint    progress;
+  guint    max_progress;
+  gint     x, y;
+  gint     u, v;
+  gint     diameter;
+  gint     box;
 
   progress     = 0;
   max_progress = width * height;
@@ -630,63 +612,60 @@ despeckle_median (guchar   *src,
   buf      = g_new (guchar *, box);
   ibuf     = g_new (guchar, box);
 
-  for (x = 0; x < width; x++)
+  if (!preview)
+    gimp_progress_init(_("Despeckle"));
+
+  for (y = 0; y < height; y++)
     {
-      for (y = 0; y < height; y++)
+      gint off  = y * width * bpp;
+      gint ymin = MAX (0, y - radius);
+      gint ymax = MIN (height, y + radius);
+
+      for (x = 0; x < width; x++, off += bpp)
         {
-          hist0   = 0;
-          hist255 = 0;
+          gint xmin    = MAX (0, x - radius);
+          gint xmax    = MIN (width, x + radius);
+          gint hist0   = 0;
+          gint hist255 = 0;
+          gint count   = 0;
 
-          if (x >= radius && x + radius < width  &&
-              y >= radius && y + radius < height)
+          for (v = ymin; v <= ymax; v++)
             {
-              /* Make sure Svm is ininialized to a sufficient large value */
-              med = -1;
+              gint off2 = v * width * bpp;
 
-              for (jh = x - radius; jh <= x + radius; jh++)
+              for (u = xmin, off2 += xmin * bpp; u <= xmax; u++, off2 += bpp)
                 {
-                  for (jv = y - radius, pos1 = 0; jv <= y + radius; jv++)
+                  guchar value = pixel_intensity (src + off2, bpp);
+
+                  if (value < black_level)
                     {
-                      pos2 = (jh + (jv * width)) * bpp;
-
-                      if (src[pos2] > black_level && src[pos2] < white_level)
-                        {
-                          med++;
-                          buf[med]  = src + pos2;
-                          ibuf[med] = pixel_intensity (src + pos2, bpp);
-                        }
-                      else
-                        {
-                          if (src[pos2] > black_level)
-                            hist0++;
-
-                          if (src[pos2] >= white_level)
-                            hist255++;
-                        }
+                      hist0++;
+                    }
+                  else if (value > white_level)
+                    {
+                      hist255++;
+                    }
+                  else
+                    {
+                      buf[count]  = src + off2;
+                      ibuf[count] = value;
+                      count++;
                     }
                 }
 
-              if (med < 1)
+              if (count < 2)
                 {
-                  pos1 = (x + (y * width)) * bpp;
-                  pixel_copy (dst + pos1, src + pos1, bpp);
+                  pixel_copy (dst + off, src + off, bpp);
                 }
               else
                 {
-                  pos1 = (x + (y * width)) * bpp;
-                  med  = quick_median_select (buf, ibuf, med + 1);
-                  pixel = buf[med];
+                  pixel = buf[quick_median_select (buf, ibuf, count)];
 
                   if (filter_type & FILTER_RECURSIVE)
-                    pixel_copy (src + pos1, pixel, bpp);
+                    pixel_copy (src + off, pixel, bpp);
 
-                  pixel_copy (dst + pos1, pixel, bpp);
+                  pixel_copy (dst + off, pixel, bpp);
                 }
-            }
-          else
-            {
-              pos1 = (x + (y * width)) * bpp;
-              pixel_copy (dst + pos1, src + pos1, bpp);
             }
 
           /*
@@ -704,19 +683,20 @@ despeckle_median (guchar   *src,
                   radius--;
                 }
             }
+
         }
 
-      progress += height;
+      progress += width;
 
-      if (!preview && x % 20 == 0)
+      if (!preview && y % 20 == 0)
         gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   if (!preview)
     gimp_progress_update (1.0);
 
-  g_free (buf);
   g_free (ibuf);
+  g_free (buf);
 }
 
 /*
