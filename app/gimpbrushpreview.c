@@ -231,6 +231,10 @@ gimp_brush_preview_popup_open (GimpBrushPreview *gbp,
   gint width, height;
   guchar bg;
 
+  g_return_if_fail (gbp != NULL);
+  if (!gbp->brush)
+    return;
+
   width = gbp->brush->mask->width;
   height = gbp->brush->mask->height;
   
@@ -334,7 +338,7 @@ gimp_brush_preview_draw (GimpBrushPreview *gbp)
   guchar bg;
   gint x, y;
 
-  g_return_if_fail (gbp->brush != NULL);
+  g_return_if_fail (gbp != NULL && gbp->brush != NULL);
  
   brush_width = gbp->brush->mask->width;
   brush_height = gbp->brush->mask->height;

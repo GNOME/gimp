@@ -205,6 +205,10 @@ gimp_pattern_preview_popup_open (GimpPatternPreview *gpp,
   guchar *mask;
   gint width, height;
 
+  g_return_if_fail (gpp != NULL);
+  if (!gpp->pattern)
+    return;
+
   width = gpp->pattern->mask->width;
   height = gpp->pattern->mask->height;
   
@@ -296,7 +300,7 @@ gimp_pattern_preview_draw (GimpPatternPreview *gpp)
   guchar *mask, *buf, *b;
   gint x, y;
 
-  g_return_if_fail (gpp->pattern != NULL);
+  g_return_if_fail (gpp != NULL && gpp->pattern != NULL);
  
   pattern_width = gpp->pattern->mask->width;
   pattern_height = gpp->pattern->mask->height;
