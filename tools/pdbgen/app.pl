@@ -676,8 +676,6 @@ GPL
 
     foreach $group (@main::groups) {
 	my $out = $out{$group};
-        my $tool_eek = 0;
-        my $paint_eek = 0;
         my $widgets_eek = 0;
         my $display_eek = 0;
         my $gui_eek = 0;
@@ -685,16 +683,6 @@ GPL
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
 	delete $out->{headers}->{q/"config.h"/};
-
-        if (exists $out->{headers}->{q|"tools/tools-types.h"|}) {
-	    $tool_eek = 1;
-	    delete $out->{headers}->{q|"tools/tools-types.h"|};
-	}
-
-        if (exists $out->{headers}->{q|"paint/paint-types.h"|}) {
-	    $paint_eek = 1;
-	    delete $out->{headers}->{q|"paint/paint-types.h"|};
-	}
 
         if (exists $out->{headers}->{q|"widgets/widgets-types.h"|}) {
 	    $widgets_eek = 1;
@@ -738,8 +726,7 @@ GPL
 		$eek      = 1;
 		$headers .= "\n";
 
-		if ($tool_eek == 1 || $paint_eek == 1 || $widgets_eek == 1 ||
-		    $display_eek == 1 || $gui_eek == 1) {
+		if ($widgets_eek == 1 || $display_eek == 1 || $gui_eek == 1) {
 		    $headers .= '#include <gtk/gtk.h>';
 		} else {
 		    $headers .= '#include <glib-object.h>';
@@ -750,11 +737,6 @@ GPL
 		$headers .= "\n\n";
 		$headers .= '#include "pdb-types.h"';
 		$headers .= "\n";
-
-		if ($tool_eek == 1) {
-		    $headers .= '#include "tools/tools-types.h"';
-		    $headers .= "\n";		    
-		}
 
 		if ($widgets_eek == 1) {
 		    $headers .= '#include "widgets/widgets-types.h"';

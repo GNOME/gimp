@@ -21,7 +21,7 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
@@ -47,6 +47,7 @@
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
 #include "paint/paint-enums.h"
+#include "paint/paint-types.h"
 
 #include "libgimpmath/gimpmath.h"
 

@@ -68,54 +68,6 @@ gimp_path_list (gint32  image_ID,
 }
 
 /**
- * gimp_path_get_points:
- * @image_ID: The ID of the image to list the paths from.
- * @pathname: the name of the path whose points should be listed.
- * @path_closed: Return if the path is closed. {0=path open, 1= path closed}.
- * @num_path_point_details: The number of points returned. Each point is made up of (x,y,pnt_type) of floats.
- * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution.
- *
- * List the points associated with the named path.
- *
- * List the points associated with the named path.
- *
- * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
- */
-gint
-gimp_path_get_points (gint32    image_ID,
-		      gchar    *pathname,
-		      gint     *path_closed,
-		      gint     *num_path_point_details,
-		      gdouble **points_pairs)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint path_type = 0;
-
-  return_vals = gimp_run_procedure ("gimp_path_get_points",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, pathname,
-				    GIMP_PDB_END);
-
-  *num_path_point_details = 0;
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      path_type = return_vals[1].data.d_int32;
-      *path_closed = return_vals[2].data.d_int32;
-      *num_path_point_details = return_vals[3].data.d_int32;
-      *points_pairs = g_new (gdouble, *num_path_point_details);
-      memcpy (*points_pairs, return_vals[4].data.d_floatarray,
-	      *num_path_point_details * sizeof (gdouble));
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return path_type;
-}
-
-/**
  * gimp_path_get_current:
  * @image_ID: The ID of the image to get the current paths from.
  *
@@ -178,12 +130,92 @@ gimp_path_set_current (gint32  image_ID,
 }
 
 /**
+ * gimp_path_delete:
+ * @image_ID: The ID of the image to list delete the paths from.
+ * @path_name_to_del: The name of the path to delete.
+ *
+ * Delete the named paths associated with the passed image.
+ *
+ * Delete the named path.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_path_delete (gint32  image_ID,
+		  gchar  *path_name_to_del)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_path_delete",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, path_name_to_del,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_path_get_points:
+ * @image_ID: The ID of the image to list the paths from.
+ * @pathname: the name of the path whose points should be listed.
+ * @path_closed: Return if the path is closed. (0 = path open, 1 = path closed).
+ * @num_path_point_details: The number of points returned. Each point is made up of (x, y, pnt_type) of floats.
+ * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL). Note all points are returned in pixel resolution.
+ *
+ * List the points associated with the named path.
+ *
+ * List the points associated with the named path.
+ *
+ * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
+ */
+gint
+gimp_path_get_points (gint32    image_ID,
+		      gchar    *pathname,
+		      gint     *path_closed,
+		      gint     *num_path_point_details,
+		      gdouble **points_pairs)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint path_type = 0;
+
+  return_vals = gimp_run_procedure ("gimp_path_get_points",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, pathname,
+				    GIMP_PDB_END);
+
+  *num_path_point_details = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      path_type = return_vals[1].data.d_int32;
+      *path_closed = return_vals[2].data.d_int32;
+      *num_path_point_details = return_vals[3].data.d_int32;
+      *points_pairs = g_new (gdouble, *num_path_point_details);
+      memcpy (*points_pairs, return_vals[4].data.d_floatarray,
+	      *num_path_point_details * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return path_type;
+}
+
+/**
  * gimp_path_set_points:
  * @image_ID: The ID of the image to set the paths in.
  * @pathname: The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will be set as the current path.
  * @ptype: The type of the path. Currently only one type (1 = Bezier) is supported.
- * @num_path_points: The number of points in the path. Each point is made up of (x,y,type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. For BEZIERS. Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.
- * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution.
+ * @num_path_points: The number of points in the path. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. For BEZIERS. Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.
+ * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL). Note all points are returned in pixel resolution.
  *
  * Set the points associated with the named path.
  *
@@ -330,6 +362,45 @@ gimp_path_get_tattoo (gint32  image_ID,
 }
 
 /**
+ * gimp_path_set_tattoo:
+ * @image_ID: The image.
+ * @pathname: the name of the path whose tattoo should be set.
+ * @tattovalue: The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here.
+ *
+ * Sets the tattoo associated with the name path.
+ *
+ * This procedure sets the tattoo associated with the specified path. A
+ * tattoo is a unique and permenant identifier attached to a path that
+ * can be used to uniquely identify a path within an image even between
+ * sessions. Note that the value passed to this function must have been
+ * obtained from a previous call to path_get_tattoo.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_path_set_tattoo (gint32  image_ID,
+		      gchar  *pathname,
+		      gint    tattovalue)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_path_set_tattoo",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, pathname,
+				    GIMP_PDB_INT32, tattovalue,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_get_path_by_tattoo:
  * @image_ID: The image.
  * @tattoo: The tattoo of the required path.
@@ -364,38 +435,6 @@ gimp_get_path_by_tattoo (gint32 image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return path_name;
-}
-
-/**
- * gimp_path_delete:
- * @image_ID: The ID of the image to list delete the paths from.
- * @path_name_to_del: The name of the path to delete.
- *
- * Delete the named paths associated with the passed image.
- *
- * Delete the named path.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_path_delete (gint32  image_ID,
-		  gchar  *path_name_to_del)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_path_delete",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, path_name_to_del,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
 }
 
 /**
@@ -461,45 +500,6 @@ gimp_path_set_locked (gint32  image_ID,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_STRING, pathname,
 				    GIMP_PDB_INT32, lockstatus,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_path_set_tattoo:
- * @image_ID: The image.
- * @pathname: the name of the path whose tattoo should be set.
- * @tattovalue: The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here.
- *
- * Sets the tattoo associated with the name path.
- *
- * This procedure sets the tattoo associated with the specified path. A
- * tattoo is a unique and permenant identifier attached to a path that
- * can be used to uniquely identify a path within an image even between
- * sessions. Note that the value passed to this function must have been
- * obtained from a previous call to path_get_tattoo.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_path_set_tattoo (gint32  image_ID,
-		      gchar  *pathname,
-		      gint    tattovalue)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_path_set_tattoo",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_STRING, pathname,
-				    GIMP_PDB_INT32, tattovalue,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

@@ -1,3 +1,19 @@
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: removed PDB access to the old paths
+	and ported everything to GimpVectors. Note that everything except
+	gimp_path_set_points() is untested and that
+	gimp_path_get_point_at_dist() is currently unimplemented. Changed
+	order of the generated functions and fixed some help texts.
+
+	* tools/pdbgen/app.pl: removed $tools_eek and $paint_eek hacks
+	because pdb/ doesn't include stuff from tools/ any more and paint/
+	no longer depends on GTK+.
+
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
 2003-05-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c
@@ -16,10 +32,10 @@
 	vectors_selection_to_vectors() which invokes the sel2path Plug-In.
 
 	* app/gui/dialogs-constructors.c: make the new function known to
-	GimpVectorTreeView.
+	GimpVectorsTreeView.
 
 	* app/widgets/gimpvectorstreeview.[ch]: Added a "Selection to Path"
-	button anc call the new function.
+	button and call the new function.
 
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
