@@ -1,3 +1,8 @@
+2005-01-26  Bill Skaggs
+
+	* libgimpconfig/Makefile.am: add necessary stuff to 
+	LIBADD -- reported by schumaml, fix explained by yosh.
+
 2005-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb

@@ -103,6 +103,9 @@ libgimpconfig_2_0_la_LDFLAGS = \
 libgimpconfig_2_0_la_DEPENDENCIES = $(gimpconfig_def)
 
 libgimpconfig_2_0_la_LIBADD = $(GLIB_LIBS)
+	$(libgimpbase)	\
+	$(libgimpcolor) \
+	$(libgimpmath)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
