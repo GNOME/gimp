@@ -103,7 +103,7 @@ static void     sample_lanczos    (const gdouble *kernel,
                                    gint           su,
                                    gint           sv,
                                    guchar        *color,
-                                   guchar        *buffer,
+                                   const guchar  *buffer,
                                    gint           bytes,
                                    gint           alpha);
 
@@ -309,7 +309,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       break;
     case GIMP_INTERPOLATION_LANCZOS:
       kernel = kernel_lanczos ();
-      buffer = g_new0 (guchar, LANCZOS_WIDTH2 * bytes);
+      buffer = g_new0 (guchar, SQR (LANCZOS_WIDTH2) * bytes);
       break;
     }
 
@@ -329,8 +329,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     {
       if (progress && !(y & 0xf))
         gimp_progress_set_value (progress,
-                                 (gdouble) (y - y1) /
-                                 (gdouble) (y2 - y1));
+                                 (gdouble) (y - y1) / (gdouble) (y2 - y1));
 
       /* set up inverse transform steps */
       tu[0] = uinc * x1 + m.coeff[0][1] * y + m.coeff[0][2];
@@ -387,8 +386,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
           if (interpolation_type == GIMP_INTERPOLATION_NONE)
             {
               guchar color[MAX_CHANNELS];
-              gint   iu = (gint) u [0];
-              gint   iv = (gint) v [0];
+              gint   iu = (gint) u[0];
+              gint   iv = (gint) v[0];
               gint   b;
 
               if (iu >= u1 && iu < u2 &&
@@ -414,9 +413,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
           else if (interpolation_type == GIMP_INTERPOLATION_LANCZOS)
             {
               guchar color[MAX_CHANNELS];
-              gint   iu = (gint) u [0];
-              gint   iv = (gint) v [0];
-              gint   fu,fv;
+              gint   iu = (gint) u[0];
+              gint   iv = (gint) v[0];
               gint   b;
 
               if (iu >= u1 && iu < u2 &&
@@ -427,17 +425,15 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                   gint v = iv - v1;
 
                   read_pixel_data (orig_tiles,
-                                   u-LANCZOS_WIDTH+1,
-                                   v-LANCZOS_WIDTH+1,
-                                   u+LANCZOS_WIDTH,
-                                   v+LANCZOS_WIDTH,
+                                   u - LANCZOS_WIDTH + 1,
+                                   v - LANCZOS_WIDTH + 1,
+                                   u + LANCZOS_WIDTH,
+                                   v + LANCZOS_WIDTH,
                                    buffer,
-                                   bytes*LANCZOS_WIDTH2);
+                                   bytes * LANCZOS_WIDTH2);
 
-                  fu = u-iu;
-                  su = (gint)( fu * LANCZOS_SPP );
-                  fv = v-iv;
-                  sv = (gint)( fv * LANCZOS_SPP );
+                  su = (gint) ((u - iu) * LANCZOS_SPP);
+                  sv = (gint) ((v - iv) * LANCZOS_SPP);
 
                   sample_lanczos (kernel, su, sv, color, buffer, bytes, alpha);
 
@@ -1722,17 +1718,18 @@ lanczos_sum (const guchar *buffer,
 }
 
 static inline gdouble
-lanczos_sum_mul (guchar   *buffer,
-                 gdouble  *l,
-                 gint      row,
-                 gint      bytes,
-                 gint      byte,
-                 gint      alpha)
+lanczos_sum_mul (const guchar  *buffer,
+                 const gdouble *l,
+                 gint           row,
+                 gint           bytes,
+                 gint           byte,
+                 gint           alpha)
 {
   gdouble sum = 0;
   gint    j, k, p;
 
   p = row * bytes * LANCZOS_WIDTH2;
+
   for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k++)
     sum += (l[k] *
             (buffer + p)[j * bytes + byte] *
@@ -1766,7 +1763,7 @@ sample_lanczos (const gdouble *kernel,
                 gint           su,
                 gint           sv,
                 guchar        *color,
-                guchar        *buffer,
+                const guchar  *buffer,
                 gint           bytes,
                 gint           alpha)
 {

@@ -234,11 +234,10 @@ expand_line (gdouble               *dest,
     case GIMP_INTERPOLATION_NONE:
       g_assert_not_reached ();
       break;
-/* Lanczos */
+
     case GIMP_INTERPOLATION_LANCZOS:
       g_assert_not_reached ();
       break;
-/* Lanczos */
     }
 }
 
@@ -415,13 +414,11 @@ scale_region (PixelRegion           *srcPR,
       scale_region_no_resample (srcPR, destPR);
       return;
     }
-/* Lanczos */
   else if (interpolation == GIMP_INTERPOLATION_LANCZOS)
     {
-      scale_region_lanczos(srcPR, destPR);
+      scale_region_lanczos (srcPR, destPR);
       return;
     }
-/* Lanczos */
 
   orig_width = srcPR->w;
   orig_height = srcPR->h;
@@ -544,11 +541,10 @@ scale_region (PixelRegion           *srcPR,
             case GIMP_INTERPOLATION_NONE:
               g_assert_not_reached ();
               break;
-/* Lanczos */
+
             case GIMP_INTERPOLATION_LANCZOS:
               g_assert_not_reached ();
               break;
-/* Lanczos */
             }
         }
       else /* height == orig_height */
@@ -807,12 +803,12 @@ sinc (gdouble x)
 }
 
 static inline gdouble
-lanczos_sum (guchar  **src,
-             gdouble  *l,
-             gint      row,
-             gint      col,
-             gint      bytes,
-             gint      byte)
+lanczos_sum (guchar        **src,
+             const gdouble  *l,
+             gint            row,
+             gint            col,
+             gint            bytes,
+             gint            byte)
 {
   gdouble sum = 0;
   gint    j, k;
@@ -835,13 +831,13 @@ lanczos_sum (guchar  **src,
 }
 
 static inline gdouble
-lanczos_sum_mul (guchar  **src,
-                 gdouble  *l,
-                 gint      row,
-                 gint      col,
-                 gint      bytes,
-                 gint      byte,
-                 gint      alpha)
+lanczos_sum_mul (guchar        **src,
+                 const gdouble  *l,
+                 gint            row,
+                 gint            col,
+                 gint            bytes,
+                 gint            byte,
+                 gint            alpha)
 {
   gdouble sum = 0;
   gint    j, k;
@@ -975,19 +971,20 @@ scale_region_lanczos (PixelRegion *srcPR,
            v = (gint) dv;
 
            /* make sure we have enough data available */
-           if ( srcrow < v+LANCZOS_WIDTH && srcrow < src_height-1 )
+           if (srcrow < v + LANCZOS_WIDTH && srcrow < src_height-1 )
              {
-               for ( i = srcrow+1 ; i <= v+LANCZOS_WIDTH ; i++)
+               for (i = srcrow + 1; i <= v + LANCZOS_WIDTH; i++)
                  {
                    /* 2nd row in src buffer becomes first */
-                   rotate_pointers(src, LANCZOS_WIDTH2);
+                   rotate_pointers (src, LANCZOS_WIDTH2);
                    /* Make sure we do not read past the end of image */
                    srcrow = ( i < src_height ) ? i : src_height - 1;
                    /* append row at the end src buffer*/
-                   pos = LANCZOS_WIDTH2-1;
+                   pos = LANCZOS_WIDTH2 - 1;
                    pixel_region_get_row (srcPR,
                                          0, srcrow, src_width, src[pos], 1);
                  }
+
                  /* current src(v) line in sliding window */
                  cur_buf = src[LANCZOS_WIDTH-1];
              }
@@ -1080,4 +1077,3 @@ scale_region_lanczos (PixelRegion *srcPR,
   g_free (dst_buf);
   g_free (kernel);
 }
-/* End Lanczos */

@@ -1,3 +1,9 @@
+2005-01-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	* app/paint-funcs/scale-funcs.c: minor cleanups to the new Lanczos
+	interpolation routines. Drawable transformations do still crash :(
+
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.[ch]: added new function
