@@ -30,6 +30,7 @@
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimpselection.h"
 
@@ -110,11 +111,16 @@ gimp_image_set_qmask_state (GimpImage *gimage,
     {
       if (mask)
         {
+          GimpLayer *floating_sel = gimp_image_floating_sel (gimage);
+
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
                                        _("Disable QuickMask"));
 
           if (gimage->qmask_inverted)
             gimp_channel_invert (mask, TRUE);
+
+          if (floating_sel && floating_sel->fs.drawable == GIMP_DRAWABLE (mask))
+            floating_sel_anchor (floating_sel);
 
           gimp_selection_load (gimp_image_get_mask (gimage), mask);
           gimp_image_remove_channel (gimage, mask);

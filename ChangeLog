@@ -1,10 +1,20 @@
 2004-03-20  Simon Budig  <simon@gimp.org>
 
+	* app/core/gimpimage-qmask.c: Applied slightly modified patch
+	from Sven. When the quickmask has a floating selection, anchor
+	it before loading the selection and deleting the qmask channel.
+
+	Fixes bug #137170.
+
+2004-03-20  Simon Budig  <simon@gimp.org>
+
 	* app/gui/select-commands.[ch]: new callbacks to convert the
 	current vector to the selection.
 
 	* app/gui/image-menu.c: hook it into the menu. Default shortcut
 	is Shift+V.
+	
+	Fixes bug #137754.
 
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
