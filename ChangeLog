@@ -1,3 +1,11 @@
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
+	Finally enable global accelerators in all docks:
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_constructor):
+	iterate all of the UI manager's actions and enable their
+	accelerators manually. Fixes bug #119878.
+
 2004-05-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewabledialog.c: added construct properties to
