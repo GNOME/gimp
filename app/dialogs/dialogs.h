@@ -25,8 +25,9 @@ extern GimpDialogFactory *global_dock_factory;
 extern GimpDialogFactory *global_toolbox_factory;
 
 
-void        dialogs_init        (Gimp *gimp);
-void        dialogs_exit        (Gimp *gimp);
+void        dialogs_init        (Gimp            *gimp,
+                                 GimpMenuFactory *menu_factory);
+void        dialogs_exit        (Gimp            *gimp);
 
 GtkWidget * dialogs_get_toolbox (void);
 

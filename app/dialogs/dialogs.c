@@ -26,8 +26,7 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
-
-#include "menus/menus.h"
+#include "widgets/gimpmenufactory.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -198,11 +197,13 @@ static const GimpDialogFactoryEntry dock_entries[] =
 /*  public functions  */
 
 void
-dialogs_init (Gimp *gimp)
+dialogs_init (Gimp            *gimp,
+              GimpMenuFactory *menu_factory)
 {
   gint i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
   global_dialog_factory = gimp_dialog_factory_new ("toplevel",
 						   gimp_get_user_context (gimp),
@@ -211,12 +212,12 @@ dialogs_init (Gimp *gimp)
 
   global_toolbox_factory = gimp_dialog_factory_new ("toolbox",
                                                     gimp_get_user_context (gimp),
-                                                    global_menu_factory,
+                                                    menu_factory,
                                                     dialogs_toolbox_get);
 
   global_dock_factory = gimp_dialog_factory_new ("dock",
 						 gimp_get_user_context (gimp),
-						 global_menu_factory,
+						 menu_factory,
 						 dialogs_dock_new);
 
   for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)

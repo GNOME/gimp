@@ -1,3 +1,14 @@
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/dialogs.[ch] (dialogs_init): added GimpMenuFactory
+	parameter and removed inclusion on "menus/menus.h".
+
+	* app/menus/menus.[ch] (menus_init): added GimpActionFactory
+	parameter and removed inclusion of "actions/actions.h".
+
+	* app/gui/gui.c (gui_restore_callback): pass the factories to the
+	above functions.
+
 2004-09-20  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.1.6.

@@ -383,10 +383,10 @@ gui_restore_callback (Gimp               *gimp,
     }
 
   actions_init (gimp);
-  menus_init (gimp);
+  menus_init (gimp, global_action_factory);
   render_init (gimp);
 
-  dialogs_init (gimp);
+  dialogs_init (gimp, global_menu_factory);
 
   gimp_clipboard_init (gimp);
   gimp_devices_init (gimp, gui_device_change_notify);

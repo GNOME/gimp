@@ -37,9 +37,8 @@
 
 #include "core/gimp.h"
 
+#include "widgets/gimpactionfactory.h"
 #include "widgets/gimpmenufactory.h"
-
-#include "actions/actions.h"
 
 #include "image-menu.h"
 #include "menus.h"
@@ -67,9 +66,11 @@ static gboolean   menurc_deleted      = FALSE;
 /*  public functions  */
 
 void
-menus_init (Gimp *gimp)
+menus_init (Gimp              *gimp,
+            GimpActionFactory *action_factory)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_ACTION_FACTORY (action_factory));
   g_return_if_fail (global_menu_factory == NULL);
 
   /* We need to make sure the property is installed before using it */
@@ -80,7 +81,7 @@ menus_init (Gimp *gimp)
   g_signal_connect (gimp->config, "notify::can-change-accels",
                     G_CALLBACK (menu_can_change_accels), NULL);
 
-  global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
+  global_menu_factory = gimp_menu_factory_new (gimp, action_factory);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
                                       "file",
