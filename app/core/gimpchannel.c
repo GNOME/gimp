@@ -596,7 +596,6 @@ gimp_channel_stroke (GimpItem     *item,
   channel = GIMP_CHANNEL (item);
 
   gimage = gimp_item_get_image (GIMP_ITEM (channel));
-  gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -607,6 +606,8 @@ gimp_channel_stroke (GimpItem     *item,
       g_message (_("Cannot stroke empty channel."));
       return FALSE;
     }
+
+  gimp_item_offsets (GIMP_ITEM (channel), &offset_x, &offset_y);
 
   if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
     {
@@ -628,8 +629,7 @@ gimp_channel_stroke (GimpItem     *item,
       retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                 paint_info->paint_options,
                                                 segs_in, n_segs_in,
-                                                0, 0);
-
+                                                offset_x, offset_y);
       g_object_unref (core);
     }
 

@@ -1,5 +1,10 @@
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_stroke): pass the channel's
+	offsets to gimp_paint_core_stroke_boundary().
+
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainergridview.c
 	* app/widgets/gimpcontainertreeview.c: implement
 	GtkWidget::popup_menu() and pop up the menu from the selected
