@@ -330,7 +330,8 @@ HELP
       goto done;
     }
 
-  load_procs = g_slist_prepend (load_procs, file_proc);
+  if (! g_slist_find (load_procs, file_proc))
+    load_procs = g_slist_prepend (load_procs, file_proc);
 
   success = TRUE;
 
@@ -400,7 +401,8 @@ HELP
       goto done;
     }
 
-  save_procs = g_slist_prepend (save_procs, file_proc);
+  if (! g_slist_find (save_procs, file_proc))
+    save_procs = g_slist_prepend (save_procs, file_proc);
 
   success = TRUE;
 

@@ -1,3 +1,20 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 #include "config.h"
 
 #include <errno.h>
@@ -120,15 +137,15 @@ static void xcf_save_tile_rle      (XcfInfo     *info,
 				    guchar      *rlebuf);
 
 static GImage*  xcf_load_image         (XcfInfo     *info);
-static gint     xcf_load_image_props   (XcfInfo     *info,
+static gboolean xcf_load_image_props   (XcfInfo     *info,
 					GImage      *gimage);
-static gint     xcf_load_layer_props   (XcfInfo     *info,
+static gboolean xcf_load_layer_props   (XcfInfo     *info,
 					GImage      *gimage,
 					Layer       *layer);
-static gint     xcf_load_channel_props (XcfInfo     *info,
+static gboolean xcf_load_channel_props (XcfInfo     *info,
 					GImage      *gimage,
 					Channel     *channel);
-static gint     xcf_load_prop          (XcfInfo     *info,
+static gboolean xcf_load_prop          (XcfInfo     *info,
 					PropType    *prop_type,
 					guint32     *prop_size);
 static Layer*   xcf_load_layer         (XcfInfo     *info,
@@ -137,20 +154,20 @@ static Channel* xcf_load_channel       (XcfInfo     *info,
 					GImage      *gimage);
 static LayerMask* xcf_load_layer_mask  (XcfInfo     *info,
 					GImage      *gimage);
-static gint     xcf_load_hierarchy     (XcfInfo     *info,
+static gboolean xcf_load_hierarchy     (XcfInfo     *info,
 					TileManager *tiles);
-static gint     xcf_load_level         (XcfInfo     *info,
+static gboolean xcf_load_level         (XcfInfo     *info,
 					TileManager *tiles);
-static gint     xcf_load_tile          (XcfInfo     *info,
+static gboolean xcf_load_tile          (XcfInfo     *info,
 					Tile        *tile);
-static gint     xcf_load_tile_rle      (XcfInfo     *info,
+static gboolean xcf_load_tile_rle      (XcfInfo     *info,
 					Tile        *tile,
-					int         data_length);
+					gint         data_length);
 
 #ifdef SWAP_FROM_FILE
-static int      xcf_swap_func          (int          fd,
+static gboolean xcf_swap_func          (gint         fd,
 					Tile        *tile,
-					int          cmd,
+					gint         cmd,
 					gpointer     user_data);
 #endif
 
@@ -287,10 +304,10 @@ static XcfLoader* xcf_loaders[] =
   xcf_load_image			/* version 1 */
 };
 
-static int N_xcf_loaders=(sizeof(xcf_loaders)/sizeof(xcf_loaders[0]));
+static gint N_xcf_loaders=(sizeof(xcf_loaders)/sizeof(xcf_loaders[0]));
 
 void
-xcf_init ()
+xcf_init (void)
 {
   /* So this is sort of a hack, but its better than it was before.  To do this
    * right there would be a file load-save handler type and the whole interface
@@ -312,9 +329,9 @@ xcf_load_invoker (Argument *args)
   XcfInfo info;
   Argument *return_args;
   GImage *gimage;
-  char *filename;
-  int success;
-  char id[14];
+  gchar *filename;
+  gboolean success;
+  gchar id[14];
 
   gimp_add_busy_cursors();
 
@@ -386,8 +403,8 @@ xcf_save_invoker (Argument *args)
   XcfInfo info;
   Argument *return_args;
   GImage *gimage;
-  char *filename;
-  int success;
+  gchar *filename;
+  gboolean success;
 
   gimp_add_busy_cursors();
 
@@ -431,7 +448,7 @@ static void
 xcf_save_choose_format (XcfInfo *info,
 			GImage  *gimage)
 {
-  int save_version = 0;			/* default to oldest */
+  gint save_version = 0;                /* default to oldest */
 
   if (gimage->cmap) 
     save_version = 1;			/* need version 1 for colormaps */
@@ -451,9 +468,9 @@ xcf_save_image (XcfInfo *info,
   guint nlayers;
   guint nchannels;
   GSList *list;
-  int have_selection;
-  int t1, t2, t3, t4;
-  char version_tag[14];
+  gboolean have_selection;
+  gint t1, t2, t3, t4;
+  gchar version_tag[14];
 
   floating_layer = gimage_floating_sel (gimage);
   if (floating_layer)
@@ -647,7 +664,7 @@ xcf_save_layer_props (XcfInfo *info,
   xcf_save_prop (info, PROP_OFFSETS, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y);
   xcf_save_prop (info, PROP_MODE, layer->mode);
   xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(layer)->tattoo);
-  if (parasite_list_length(GIMP_DRAWABLE(layer)->parasites) > 0)
+  if (parasite_list_length (GIMP_DRAWABLE(layer)->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(layer)->parasites);
 
   xcf_save_prop (info, PROP_END);
@@ -669,42 +686,49 @@ xcf_save_channel_props (XcfInfo *info,
   xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
   xcf_save_prop (info, PROP_COLOR, channel->col);
   xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(channel)->tattoo);
-  if (parasite_list_length(GIMP_DRAWABLE(channel)->parasites) > 0)
+  if (parasite_list_length (GIMP_DRAWABLE(channel)->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(channel)->parasites);
 
   xcf_save_prop (info, PROP_END);
 }
 
-static void write_a_parasite(char *key, Parasite *p, XcfInfo *info)
+static void 
+write_a_parasite (gchar    *key, 
+		  Parasite *p, 
+		  XcfInfo  *info)
 {
   if ((p->flags & PARASITE_PERSISTENT))
   {
-    info->cp += xcf_write_string(info->fp, &p->name, 1);
-    info->cp += xcf_write_int32(info->fp, &p->flags, 1);
-    info->cp += xcf_write_int32(info->fp, &p->size, 1);
-    info->cp += xcf_write_int8(info->fp, p->data, p->size);
+    info->cp += xcf_write_string (info->fp, &p->name, 1);
+    info->cp += xcf_write_int32 (info->fp, &p->flags, 1);
+    info->cp += xcf_write_int32 (info->fp, &p->size, 1);
+    info->cp += xcf_write_int8 (info->fp, p->data, p->size);
   }
 }
 
-static Parasite *read_a_parasite(XcfInfo *info)
+static Parasite*
+read_a_parasite (XcfInfo *info)
 {
   Parasite *p;
-  p = g_new(Parasite, 1);
-  info->cp += xcf_read_string(info->fp, &p->name, 1);
-  info->cp += xcf_read_int32(info->fp, &p->flags, 1);
-  info->cp += xcf_read_int32(info->fp, &p->size, 1);
-  p->data = g_new (char, p->size);
-  info->cp += xcf_read_int8(info->fp, p->data, p->size);
+
+  p = g_new (Parasite, 1);
+  info->cp += xcf_read_string (info->fp, &p->name, 1);
+  info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
+  info->cp += xcf_read_int32 (info->fp, &p->size, 1);
+  p->data = g_new (gchar, p->size);
+  info->cp += xcf_read_int8 (info->fp, p->data, p->size);
+
   return p;
 }
 
 static void 
-write_bz_point (gpointer pptr, gpointer iptr)
+write_bz_point (gpointer pptr, 
+		gpointer iptr)
 {
   PathPoint *bpt = (PathPoint*)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
-  gfloat   xfloat = (gfloat)bpt->x;
-  gfloat   yfloat = (gfloat)bpt->y;
+  gfloat xfloat = (gfloat)bpt->x;
+  gfloat yfloat = (gfloat)bpt->y;
 
   /* (all gint)
    * type
@@ -712,22 +736,22 @@ write_bz_point (gpointer pptr, gpointer iptr)
    * y
    */
 
-  info->cp += xcf_write_int32(info->fp, &bpt->type,1);
-  info->cp += xcf_write_float(info->fp, &xfloat,1);
-  info->cp += xcf_write_float(info->fp, &yfloat,1);
+  info->cp += xcf_write_int32 (info->fp, &bpt->type, 1);
+  info->cp += xcf_write_float (info->fp, &xfloat, 1);
+  info->cp += xcf_write_float (info->fp, &yfloat, 1);
 }
 
 static PathPoint* 
-v1read_bz_point(XcfInfo *info)
+v1read_bz_point (XcfInfo *info)
 {
   PathPoint *ptr;
   guint32 type;
   gint32 x;
   gint32 y;
 
-  info->cp += xcf_read_int32(info->fp, &type,1);
-  info->cp += xcf_read_int32(info->fp, (guint32*)&x,1);
-  info->cp += xcf_read_int32(info->fp, (guint32*)&y,1);
+  info->cp += xcf_read_int32 (info->fp, &type, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32*)&x, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32*)&y, 1);
 
   ptr = path_point_new (type, (gdouble)x, (gdouble)y);
 
@@ -735,16 +759,16 @@ v1read_bz_point(XcfInfo *info)
 }
 
 static PathPoint * 
-read_bz_point(XcfInfo *info)
+read_bz_point (XcfInfo *info)
 {
   PathPoint *ptr;
   guint32 type;
   gfloat x;
   gfloat y;
  
-  info->cp += xcf_read_int32(info->fp, &type,1);
-  info->cp += xcf_read_float(info->fp, &x,1);
-  info->cp += xcf_read_float(info->fp, &y,1);
+  info->cp += xcf_read_int32 (info->fp, &type, 1);
+  info->cp += xcf_read_float (info->fp, &x, 1);
+  info->cp += xcf_read_float (info->fp, &y, 1);
  
   ptr = path_point_new (type, (gdouble)x, (gdouble)y);
 
@@ -752,7 +776,8 @@ read_bz_point(XcfInfo *info)
 }
 
 static void 
-write_one_path (gpointer pptr, gpointer iptr)
+write_one_path (gpointer pptr, 
+		gpointer iptr)
 {
   Path *bzp = (Path*)pptr;
   XcfInfo *info = (XcfInfo *)iptr;
@@ -771,22 +796,23 @@ write_one_path (gpointer pptr, gpointer iptr)
    * then each point.
    */
  
-  info->cp += xcf_write_string(info->fp, &bzp->name, 1);
-  info->cp += xcf_write_int32(info->fp, &bzp->locked,1);
-  info->cp += xcf_write_int8(info->fp, &state,1);
+  info->cp += xcf_write_string (info->fp, &bzp->name, 1);
+  info->cp += xcf_write_int32 (info->fp, &bzp->locked, 1);
+  info->cp += xcf_write_int8 (info->fp, &state, 1);
   closed = bzp->closed;
-  info->cp += xcf_write_int32(info->fp, &closed,1);
-  num_points = g_slist_length(bzp->path_details);
-  info->cp += xcf_write_int32(info->fp, &num_points,1);
+  info->cp += xcf_write_int32 (info->fp, &closed, 1);
+  num_points = g_slist_length (bzp->path_details);
+  info->cp += xcf_write_int32 (info->fp, &num_points, 1);
   version = 3;
-  info->cp += xcf_write_int32(info->fp, &version,1);
-  info->cp += xcf_write_int32(info->fp, &bzp->pathtype,1);
-  info->cp += xcf_write_int32(info->fp, &bzp->tattoo,1); 
-  g_slist_foreach(bzp->path_details,write_bz_point,info);
+  info->cp += xcf_write_int32 (info->fp, &version, 1);
+  info->cp += xcf_write_int32 (info->fp, &bzp->pathtype, 1);
+  info->cp += xcf_write_int32 (info->fp, &bzp->tattoo, 1); 
+  g_slist_foreach (bzp->path_details, write_bz_point, info);
 }
 
 static Path*
-read_one_path (GImage *gimage,XcfInfo *info)
+read_one_path (GImage  *gimage,
+	       XcfInfo *info)
 {
   Path *bzp;
   gchar *name;
@@ -799,61 +825,62 @@ read_one_path (GImage *gimage,XcfInfo *info)
   GSList *pts_list = NULL;
   PathType ptype;
 
-  info->cp += xcf_read_string(info->fp, &name, 1);
-  info->cp += xcf_read_int32(info->fp, &locked,1);
-  info->cp += xcf_read_int8(info->fp, &state,1);
-  info->cp += xcf_read_int32(info->fp, &closed,1);
-  info->cp += xcf_read_int32(info->fp, &num_points,1);
-  info->cp += xcf_read_int32(info->fp, &version,1);
+  info->cp += xcf_read_string (info->fp, &name, 1);
+  info->cp += xcf_read_int32 (info->fp, &locked, 1);
+  info->cp += xcf_read_int8 (info->fp, &state, 1);
+  info->cp += xcf_read_int32 (info->fp, &closed, 1);
+  info->cp += xcf_read_int32 (info->fp, &num_points, 1);
+  info->cp += xcf_read_int32 (info->fp, &version, 1);
 
-  if(version == 1)
+  if (version == 1)
     {
       ptype = BEZIER;
-      while(num_points-- > 0)
+      while (num_points-- > 0)
       {
         PathPoint *bpt;
         /* Read in a path */
-        bpt = v1read_bz_point(info);
-        pts_list = g_slist_append(pts_list,bpt);
+        bpt = v1read_bz_point (info);
+        pts_list = g_slist_append (pts_list, bpt);
       }
     }
-  else if(version == 2)
+  else if (version == 2)
     {
       /* Had extra type field and points are stored as doubles */
-      info->cp += xcf_read_int32(info->fp, (guint32 *)&ptype,1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *)&ptype, 1);
       while(num_points-- > 0)
       {
         PathPoint *bpt;
         /* Read in a path */
-        bpt = read_bz_point(info);
-        pts_list = g_slist_append(pts_list,bpt);
+        bpt = read_bz_point (info);
+        pts_list = g_slist_append (pts_list, bpt);
       }
     }
-  else if(version == 3)
+  else if (version == 3)
     {
       /* Has extra tatto field */
-      info->cp += xcf_read_int32(info->fp, (guint32 *)&ptype,1);
-      info->cp += xcf_read_int32(info->fp, (guint32 *)&tattoo,1);
-      while(num_points-- > 0)
-      {
-        PathPoint *bpt;
-        /* Read in a path */
-        bpt = read_bz_point(info);
-        pts_list = g_slist_append(pts_list,bpt);
-      }
+      info->cp += xcf_read_int32 (info->fp, (guint32 *)&ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *)&tattoo, 1);
+      while (num_points-- > 0)
+	{
+	  PathPoint *bpt;
+	  /* Read in a path */
+	  bpt = read_bz_point (info);
+	  pts_list = g_slist_append (pts_list, bpt);
+	}
     }
   else
     {
-      g_warning("Unknown path type..Possibly corrupt XCF file");
+      g_warning ("Unknown path type. Possibly corrupt XCF file");
     }
-
+  
   bzp = path_new (gimage, ptype, pts_list, closed, (gint)state, locked, tattoo, name);
 
   return(bzp);
 }
 
 static void 
-write_bzpaths (PathList *paths, XcfInfo *info)
+write_bzpaths (PathList *paths, 
+	       XcfInfo  *info)
 {
   guint32 num_paths;
   /* Write out the following:-
@@ -864,34 +891,35 @@ write_bzpaths (PathList *paths, XcfInfo *info)
    * then each path:-
    */
   
-  info->cp += xcf_write_int32(info->fp,(guint32*)&paths->last_selected_row,1);
-  num_paths = g_slist_length(paths->bz_paths);
-  info->cp += xcf_write_int32(info->fp,&num_paths,1);
-  g_slist_foreach(paths->bz_paths,write_one_path,info);  
+  info->cp += xcf_write_int32 (info->fp, (guint32*)&paths->last_selected_row, 1);
+  num_paths = g_slist_length (paths->bz_paths);
+  info->cp += xcf_write_int32(info->fp, &num_paths, 1);
+  g_slist_foreach( paths->bz_paths, write_one_path, info);  
 }
 
 static PathList* 
-read_bzpaths (GImage *gimage, XcfInfo *info)
+read_bzpaths (GImage  *gimage, 
+	      XcfInfo *info)
 {
   guint32 num_paths;
   guint32 last_selected_row;
   PathList *paths;
   GSList *bzp_list = NULL;
 
-  info->cp += xcf_read_int32(info->fp,&last_selected_row,1);
-  info->cp += xcf_read_int32(info->fp,&num_paths,1);
+  info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
+  info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
 
   while(num_paths-- > 0)
     {
       Path *bzp;
       /* Read in a path */
-      bzp = read_one_path(gimage,info);
-      bzp_list = g_slist_append(bzp_list,bzp);
+      bzp = read_one_path (gimage, info);
+      bzp_list = g_slist_append (bzp_list, bzp);
     }
 
   paths = path_list_new (gimage, last_selected_row, bzp_list);
 
-  return(paths);
+  return (paths);
 }
 
 static void
@@ -1356,9 +1384,9 @@ xcf_save_channel (XcfInfo *info,
   saved_pos = info->cp;
 }
 
-static int
-xcf_calc_levels (int size,
-		 int tile_size)
+static gint
+xcf_calc_levels (gint size,
+		 gint tile_size)
 {
   int levels;
 
@@ -1379,9 +1407,9 @@ xcf_save_hierarchy (XcfInfo     *info,
 {
   guint32 saved_pos;
   guint32 offset;
-  int i;
-  int nlevels, tmp1, tmp2;
-  int h, w;
+  gint i;
+  gint nlevels, tmp1, tmp2;
+  gint h, w;
 
   info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->width, 1);
   info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->height, 1);
@@ -1449,7 +1477,7 @@ xcf_save_level (XcfInfo     *info,
   guint32 saved_pos;
   guint32 offset;
   guint ntiles;
-  int i;
+  gint i;
   guchar *rlebuf;
 
   info->cp += xcf_write_int32 (info->fp, (guint32*) &level->width, 1);
@@ -1535,13 +1563,13 @@ xcf_save_tile_rle (XcfInfo *info,
 {
   guchar *data, *t;
   unsigned int last;
-  int state;
-  int length;
-  int count;
-  int size;
-  int bpp;
-  int i, j;
-  int len = 0;
+  gint state;
+  gint length;
+  gint count;
+  gint size;
+  gint bpp;
+  gint i, j;
+  gint len = 0;
 
   tile_lock (tile);
 
@@ -1647,10 +1675,10 @@ xcf_load_image (XcfInfo *info)
   Channel *channel;
   guint32 saved_pos;
   guint32 offset;
-  int width;
-  int height;
-  int image_type;
-  int num_successful_elements = 0;
+  gint width;
+  gint height;
+  gint image_type;
+  gint num_successful_elements = 0;
 
   /* read in the image width, height and type */
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
@@ -1762,7 +1790,7 @@ xcf_load_image (XcfInfo *info)
   return NULL;
 }
 
-static gint
+static gboolean
 xcf_load_image_props (XcfInfo *info,
 		      GImage  *gimage)
 {
@@ -1778,6 +1806,7 @@ xcf_load_image_props (XcfInfo *info,
 	{
 	case PROP_END:
 	  return TRUE;
+
 	case PROP_COLORMAP:
 	  if (info->file_version == 0) 
 	    {
@@ -1802,6 +1831,7 @@ xcf_load_image_props (XcfInfo *info,
 	      info->cp += xcf_read_int8 (info->fp, (guint8*) gimage->cmap, gimage->num_cols*3);
 	    }
 	  break;
+
 	case PROP_COMPRESSION:
 	  {
 	    guint8 compression;
@@ -1820,12 +1850,13 @@ xcf_load_image_props (XcfInfo *info,
 	    info->compression = compression;
 	  }
 	  break;
+
 	case PROP_GUIDES:
 	  {
 	    Guide *guide;
 	    gint32 position;
 	    gint8 orientation;
-	    int i, nguides;
+	    gint i, nguides;
 
 	    nguides = prop_size / (4 + 1);
 	    for (i = 0; i < nguides; i++)
@@ -1845,58 +1876,63 @@ xcf_load_image_props (XcfInfo *info,
 	    gimage->guides = g_list_reverse (gimage->guides);
 	  }
 	  break;
-	 case PROP_RESOLUTION:
-	 {
-	   float xres, yres;
 
-	   info->cp += xcf_read_float (info->fp, &xres, 1);
-	   info->cp += xcf_read_float (info->fp, &yres, 1);
-	   if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
-	       yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
-	     {
-	       g_message ("Warning, resolution out of range in XCF file");
-	       xres = default_xresolution;
-	       yres = default_yresolution;
-	     }
-	   gimage->xresolution = xres;
-	   gimage->yresolution = yres;
-	 }
-	 break;
-	 case PROP_TATTOO:
-	 {
-	   info->cp += xcf_read_int32 (info->fp, &gimage->tattoo_state, 1);
-	 }
-	 break;
-	 case PROP_PARASITES:
-	 {
-	   long base = info->cp;
-	   Parasite *p;
-	   while (info->cp - base < prop_size)
-	   {
-	     p = read_a_parasite(info);
-	     gimp_image_parasite_attach(gimage, p);
-	     parasite_free(p);
-	   }
-	   if (info->cp - base != prop_size)
-	     g_message ("Error detected while loading an image's parasites");
-	 }
-	 break;
-	 case PROP_UNIT:
-	 {
-	   guint32 unit;
+	case PROP_RESOLUTION:
+	  {
+	    gfloat xres, yres;
+	    
+	    info->cp += xcf_read_float (info->fp, &xres, 1);
+	    info->cp += xcf_read_float (info->fp, &yres, 1);
+	    if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
+		yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+	      {
+		g_message ("Warning, resolution out of range in XCF file");
+		xres = default_xresolution;
+		yres = default_yresolution;
+	      }
+	    gimage->xresolution = xres;
+	    gimage->yresolution = yres;
+	  }
+	  break;
 
-	   info->cp += xcf_read_int32 (info->fp, &unit, 1);
+	case PROP_TATTOO:
+	  {
+	    info->cp += xcf_read_int32 (info->fp, &gimage->tattoo_state, 1);
+	  }
+	  break;
 
-	   if ((unit <= GIMP_UNIT_PIXEL) ||
-	       (unit >= gimp_unit_get_number_of_units()))
-	     {
-	       g_message ("Warning, unit out of range in XCF file, falling back to inches");
-	       unit = GIMP_UNIT_INCH;
-	     }
+	case PROP_PARASITES:
+	  {
+	    glong base = info->cp;
+	    Parasite *p;
+	    while (info->cp - base < prop_size)
+	      {
+		p = read_a_parasite(info);
+		gimp_image_parasite_attach(gimage, p);
+		parasite_free(p);
+	      }
+	    if (info->cp - base != prop_size)
+	      g_message ("Error detected while loading an image's parasites");
+	  }
+	  break;
 
-	   gimage->unit = unit;
-	 }
-	 break;
+	case PROP_UNIT:
+	  {
+	    guint32 unit;
+	    
+	    info->cp += xcf_read_int32 (info->fp, &unit, 1);
+	    
+	    if ((unit <= GIMP_UNIT_PIXEL) ||
+		(unit >= gimp_unit_get_number_of_units()))
+	      {
+		g_message ("Warning, unit out of range in XCF file, falling back to inches");
+		unit = GIMP_UNIT_INCH;
+	      }
+	    
+	    gimage->unit = unit;
+	  }
+	  break;
+
 	case PROP_PATHS:
 	  {
 	    PathList *paths = read_bzpaths (gimage, info);
@@ -1904,6 +1940,7 @@ xcf_load_image_props (XcfInfo *info,
 	    gimp_image_set_paths (gimage, paths);
 	  }
 	  break;
+
 	case PROP_USER_UNIT:
 	  {
 	    gchar    *unit_strings[5];
@@ -1953,6 +1990,7 @@ xcf_load_image_props (XcfInfo *info,
 	      g_free (unit_strings[i]);
 	  }
 	 break;
+
 	default:
 	  g_message ("unexpected/unknown image property: %d (skipping)", prop_type);
 
@@ -1974,7 +2012,7 @@ xcf_load_image_props (XcfInfo *info,
   return FALSE;
 }
 
-static gint
+static gboolean
 xcf_load_layer_props (XcfInfo *info,
 		      GImage  *gimage,
 		      Layer   *layer)
@@ -2066,7 +2104,7 @@ xcf_load_layer_props (XcfInfo *info,
   return FALSE;
 }
 
-static gint
+static gboolean
 xcf_load_channel_props (XcfInfo *info,
 			GImage  *gimage,
 			Channel *channel)
@@ -2143,7 +2181,7 @@ xcf_load_channel_props (XcfInfo *info,
   return FALSE;
 }
 
-static gint
+static gboolean
 xcf_load_prop (XcfInfo  *info,
 	       PropType *prop_type,
 	       guint32  *prop_size)
@@ -2247,10 +2285,10 @@ xcf_load_channel (XcfInfo *info,
 {
   Channel *channel;
   guint32 hierarchy_offset;
-  int width;
-  int height;
-  int add_floating_sel;
-  char *name;
+  gint width;
+  gint height;
+  gint add_floating_sel;
+  gchar *name;
   guchar color[3] = { 0, 0, 0 };
 
   /* check and see if this is the drawable the floating selection
@@ -2304,10 +2342,10 @@ xcf_load_layer_mask (XcfInfo *info,
 {
   LayerMask *layer_mask;
   guint32 hierarchy_offset;
-  int width;
-  int height;
-  int add_floating_sel;
-  char *name;
+  gint width;
+  gint height;
+  gint add_floating_sel;
+  gchar *name;
   guchar color[3] = { 0, 0, 0 };
 
   /* check and see if this is the drawable the floating selection
@@ -2355,16 +2393,16 @@ error:
   return NULL;
 }
 
-static gint
+static gboolean
 xcf_load_hierarchy (XcfInfo     *info,
 		    TileManager *tiles)
 {
   guint32 saved_pos;
   guint32 offset;
   guint32 junk;
-  int width;
-  int height;
-  int bpp;
+  gint width;
+  gint height;
+  gint bpp;
 
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
@@ -2414,17 +2452,17 @@ xcf_load_hierarchy (XcfInfo     *info,
 }
 
 
-static gint
+static gboolean
 xcf_load_level (XcfInfo     *info,
 		TileManager *tiles)
 {
   guint32 saved_pos;
   guint32 offset, offset2;
   guint ntiles;
-  int width;
-  int height;
-  int i;
-  int fail;
+  gint width;
+  gint height;
+  gint i;
+  gint fail;
   Tile *previous;
   Tile *tile;
 
@@ -2544,7 +2582,7 @@ xcf_load_level (XcfInfo     *info,
   return TRUE;
 }
 
-static gint
+static gboolean
 xcf_load_tile (XcfInfo *info,
 	       Tile    *tile)
 {
@@ -2570,25 +2608,25 @@ xcf_load_tile (XcfInfo *info,
   return TRUE;
 }
 
-static gint
+static gboolean
 xcf_load_tile_rle (XcfInfo *info,
 		   Tile    *tile,
 		   int     data_length)
 {
   guchar *data;
   guchar val;
-  int size;
-  int count;
-  int length;
-  int bpp;
-  int i, j;
-  int nmemb_read_successfully;
+  gint size;
+  gint count;
+  gint length;
+  gint bpp;
+  gint i, j;
+  gint nmemb_read_successfully;
   guchar *xcfdata, *xcfodata, *xcfdatalimit;
   
   data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
  
-  xcfdata = xcfodata = g_malloc(data_length);
+  xcfdata = xcfodata = g_malloc (data_length);
 
   /* we have to use fread instead of xcf_read_* because we may be
      reading past the end of the file here */
@@ -2684,28 +2722,28 @@ xcf_load_tile_rle (XcfInfo *info,
 	    }
 	}
     }
-  g_free(xcfodata);
+  g_free (xcfodata);
   return TRUE;
 
  bogus_rle:
   if (xcfodata)
-    g_free(xcfodata);
+    g_free (xcfodata);
   return FALSE;
 }
 
 
 #ifdef SWAP_FROM_FILE
 
-static int
-xcf_swap_func (int       fd,
+static gboolean
+xcf_swap_func (gint       fd,
 	       Tile     *tile,
-	       int       cmd,
-	       gpointer  user_data)
+	       gint       cmd,
+	       gpointer   user_data)
 {
-  int bytes;
-  int err;
-  int nleft;
-  int *ref_count;
+  gint bytes;
+  gint err;
+  gint nleft;
+  gint *ref_count;
 
   switch (cmd)
     {
@@ -2809,7 +2847,7 @@ xcf_read_int8 (FILE     *fp,
 	       gint      count)
 {
   guint total;
-  int bytes;
+  gint bytes;
 
   total = count;
   while (count > 0)
@@ -2831,7 +2869,7 @@ xcf_read_string (FILE     *fp,
 {
   guint32 tmp;
   guint total;
-  int i;
+  gint i;
 
   total = 0;
   for (i = 0; i < count; i++)
@@ -2857,7 +2895,7 @@ xcf_write_int32 (FILE     *fp,
 		 gint      count)
 {
   guint32 tmp;
-  int i;
+  gint i;
 
   if (count > 0)
     {
@@ -2885,12 +2923,12 @@ xcf_write_int8 (FILE     *fp,
 		gint      count)
 {
   guint total;
-  int bytes;
+  gint bytes;
 
   total = count;
   while (count > 0)
     {
-      bytes = fwrite ((char*) data, sizeof (char), count, fp);
+      bytes = fwrite ((gchar*) data, sizeof (gchar), count, fp);
       count -= bytes;
       data += bytes;
     }
@@ -2905,7 +2943,7 @@ xcf_write_string (FILE     *fp,
 {
   guint32 tmp;
   guint total;
-  int i;
+  gint i;
 
   total = 0;
   for (i = 0; i < count; i++)

@@ -1,3 +1,17 @@
+Thu Feb 24 17:06:02 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/fileops_cmds.c
+	* tools/pdbgen/pdb/fileops.pdb: don't add an already registered
+	load|save handler twice to the list. This fixes the problem
+	that extension were listed twice if a load|save plugin changed.
+
+	* app/plug_in.[ch]: code cleanup, indentation 
+
+	* app/xcf.[ch]: same here, include copyright headers
+	
+	* plug-ins/common/wmf.c: properly cancel the load if the user
+	pressed Cancel in the dialog (fixes bug #6500)
+
 2000-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/paths_dialog.c: we were also leaking all path preview

@@ -1102,21 +1102,24 @@ run (gchar   *name,
 	  break;
 	}
 
-      check_load_vals ();
+      if (status == STATUS_SUCCESS)
+	{
+	  check_load_vals ();
       
-      image_ID = load_image (param[1].data.d_string);
-
-      if (image_ID != -1)
-	{
-	  gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
-
-	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
-      else
-	{
-	  status = STATUS_EXECUTION_ERROR;
+	  image_ID = load_image (param[1].data.d_string);
+	  
+	  if (image_ID != -1)
+	    {
+	      gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
+	      
+	      *nreturn_vals = 2;
+	      values[1].type         = PARAM_IMAGE;
+	      values[1].data.d_image = image_ID;
+	    }
+	  else
+	    {
+	      status = STATUS_EXECUTION_ERROR;
+	    }
 	}
     }
   else

@@ -109,16 +109,16 @@ typedef struct _PlugInBlocked  PlugInBlocked;
 struct _PlugInBlocked
 {
   PlugIn *plug_in;
-  char *proc_name;
+  gchar  *proc_name;
 };
 
 
-static int  plug_in_write                 (GIOChannel	     *channel,
+static gboolean plug_in_write             (GIOChannel	     *channel,
 					   guint8            *buf,
 				           gulong             count);
-static int  plug_in_flush                 (GIOChannel        *channel);
-static void plug_in_push                  (PlugIn            *plug_in);
-static void plug_in_pop                   (void);
+static gboolean plug_in_flush             (GIOChannel        *channel);
+static void     plug_in_push              (PlugIn            *plug_in);
+static void     plug_in_pop               (void);
 static gboolean plug_in_recv_message	  (GIOChannel	     *channel,
 					   GIOCondition	      cond,
 					   gpointer	      data);
@@ -129,9 +129,9 @@ static void plug_in_handle_proc_run       (GPProcRun         *proc_run);
 static void plug_in_handle_proc_return    (GPProcReturn      *proc_return);
 static void plug_in_handle_proc_install   (GPProcInstall     *proc_install);
 static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
-static void plug_in_write_rc              (char              *filename);
-static void plug_in_init_file             (char              *filename);
-static void plug_in_query                 (char              *filename,
+static void plug_in_write_rc              (gchar             *filename);
+static void plug_in_init_file             (gchar             *filename);
+static void plug_in_query                 (gchar             *filename,
 				           PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
@@ -142,24 +142,24 @@ static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def,
 static void plug_in_proc_def_dead         (void *freed_proc_def);
 static void plug_in_proc_def_remove       (PlugInProcDef     *proc_def);
 static void plug_in_proc_def_destroy      (PlugInProcDef     *proc_def,
-					   int                data_only);
+					   gboolean           data_only);
 
 static Argument* plug_in_temp_run       (ProcRecord *proc_rec,
   					 Argument   *args,
-  					 int         argc);
-static Argument* plug_in_params_to_args (GPParam   *params,
-  					 int        nparams,
-  					 int        full_copy);
-static GPParam*  plug_in_args_to_params (Argument  *args,
-  					 int        nargs,
-  					 int        full_copy);
-static void      plug_in_params_destroy (GPParam   *params,
-  					 int        nparams,
-  					 int        full_destroy);
-static void      plug_in_args_destroy   (Argument  *args,
-  					 int        nargs,
-  					 int        full_destroy);
-static void      plug_in_init_shm (void);
+  					 gint        argc);
+static Argument* plug_in_params_to_args (GPParam    *params,
+  					 gint        nparams,
+					 gboolean    full_copy);
+static GPParam*  plug_in_args_to_params (Argument   *args,
+  					 gint        nargs,
+  					 gboolean    full_copy);
+static void      plug_in_params_destroy (GPParam    *params,
+  					 gint        nparams,
+  					 gboolean    full_destroy);
+static void      plug_in_args_destroy   (Argument   *args,
+  					 gint        nargs,
+  					 gboolean    full_destroy);
+static void      plug_in_init_shm       (void);
 
 PlugIn *current_plug_in = NULL;
 GSList *proc_defs = NULL;
@@ -172,21 +172,21 @@ static GSList *blocked_plug_ins = NULL;
 static GSList *plug_in_stack = NULL;
 static GIOChannel *current_readchannel = NULL;
 static GIOChannel *current_writechannel = NULL;
-static int current_write_buffer_index = 0;
-static char *current_write_buffer = NULL;
+static gint current_write_buffer_index = 0;
+static gchar *current_write_buffer = NULL;
 static Argument *current_return_vals = NULL;
-static int current_return_nvals = 0;
+static gint current_return_nvals = 0;
 
 static ProcRecord *last_plug_in = NULL;
 
-static int shm_ID = -1;
+static gint shm_ID = -1;
 static guchar *shm_addr = NULL;
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 static HANDLE shm_handle;
 #endif
 
-static int write_pluginrc = FALSE;
+static gboolean write_pluginrc = FALSE;
 
 static gchar *std_plugins_domain = "gimp-std-plugins";
 
@@ -444,16 +444,16 @@ plug_in_kill (void)
 }
 
 void
-plug_in_add (char *prog,
-	     char *menu_path,
-	     char *accelerator)
+plug_in_add (gchar *prog,
+	     gchar *menu_path,
+	     gchar *accelerator)
 {
   PlugInProcDef *proc_def;
   GSList *tmp;
 
   if (strncmp ("plug_in_", prog, 8) != 0)
     {
-      char *t = g_strdup_printf ("plug_in_%s", prog);
+      gchar *t = g_strdup_printf ("plug_in_%s", prog);
       g_free (prog);
       prog = t;
     }
@@ -500,8 +500,8 @@ plug_in_add (char *prog,
   gimprc_proc_defs = g_slist_prepend (gimprc_proc_defs, proc_def);
 }
 
-char*
-plug_in_image_types (char *name)
+gchar*
+plug_in_image_types (gchar *name)
 {
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
@@ -530,7 +530,7 @@ plug_in_image_types (char *name)
 }
 
 GSList*
-plug_in_extensions_parse (char *extensions)
+plug_in_extensions_parse (gchar *extensions)
 {
   GSList *list;
   gchar *extension;
@@ -560,10 +560,10 @@ plug_in_add_internal (PlugInProcDef *proc_def)
 }
 
 PlugInProcDef*
-plug_in_file_handler (char *name,
-		      char *extensions,
-		      char *prefixes,
-		      char *magics)
+plug_in_file_handler (gchar *name,
+		      gchar *extensions,
+		      gchar *prefixes,
+		      gchar *magics)
 {
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
@@ -669,7 +669,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
   GSList *tmp;
   PlugInDef *tplug_in_def;
   PlugInProcDef *proc_def;
-  char *t1, *t2;
+  gchar *t1, *t2;
 
   t1 = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
   if (t1)
@@ -772,7 +772,7 @@ plug_in_new (gchar *name)
       path = search_in_path (plug_in_path, name);
       if (!path)
 	{
-	  g_message (_("unable to locate plug-in: \"%s\""), name);
+	  g_message (_("Unable to locate plug-in: \"%s\""), name);
 	  return NULL;
 	}
     }
@@ -792,8 +792,8 @@ plug_in_new (gchar *name)
   plug_in->pid = 0;
   plug_in->args[0] = g_strdup (path);
   plug_in->args[1] = g_strdup ("-gimp");
-  plug_in->args[2] = g_new (char, 32);
-  plug_in->args[3] = g_new (char, 32);
+  plug_in->args[2] = g_new (gchar, 32);
+  plug_in->args[3] = g_new (gchar, 32);
   plug_in->args[4] = NULL;
   plug_in->args[5] = NULL;
   plug_in->args[6] = NULL;
@@ -847,18 +847,18 @@ plug_in_destroy (PlugIn *plug_in)
  * this is essential to get scripting extension up and running.
  * Following the replacement function xspawnv().
  */
-int
-xspawnv (int                mode,
-	 const char        *cmdname,
-	 const char *const *argv )
+gint
+xspawnv (gint                mode,
+	 const gchar        *cmdname,
+	 const gchar *const *argv )
 {
-  char sExecutable[_MAX_PATH*2];
-  char** sArgsList;
-  char sCmndLine[1024];
-  char* sPath;
+  gchar sExecutable[_MAX_PATH*2];
+  gchar** sArgsList;
+  gchar sCmndLine[1024];
+  gchar* sPath;
   HINSTANCE hInst;
-  int i;
-  int pid;
+  gint i;
+  gint pid;
 
   /* only use it if _spawnv fails */
   pid = _spawnv(mode, cmdname, argv);
@@ -895,11 +895,11 @@ xspawnv (int                mode,
 
 #endif /* G_OS_WIN32 */
 
-gint
+gboolean
 plug_in_open (PlugIn *plug_in)
 {
-  int my_read[2];
-  int my_write[2];
+  gint my_read[2];
+  gint my_write[2];
 
   if (plug_in)
     {
@@ -908,7 +908,7 @@ plug_in_open (PlugIn *plug_in)
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
 	  g_message ("unable to open pipe");
-	  return 0;
+	  return FALSE;
 	}
 
 #if defined(G_WITH_CYGWIN) || defined(__EMX__)
@@ -956,8 +956,8 @@ plug_in_open (PlugIn *plug_in)
 	}
       else
 	{
-	  plug_in->args[4] = g_new (char, 16);
-	  plug_in->args[5] = g_new (char, 16);
+	  plug_in->args[4] = g_new (gchar, 16);
+	  plug_in->args[5] = g_new (gchar, 16);
 
 	  sprintf (plug_in->args[4], "%d", TILE_WIDTH);
 	  sprintf (plug_in->args[5], "%d", TILE_WIDTH);
@@ -998,7 +998,7 @@ plug_in_open (PlugIn *plug_in)
 	{
           g_message ("unable to run plug-in: %s", plug_in->args[0]);
           plug_in_destroy (plug_in);
-          return 0;
+          return FALSE;
 	}
 
       g_io_channel_close (plug_in->his_read);
@@ -1016,7 +1016,7 @@ plug_in_open (PlugIn *plug_in)
 	    {
 	      g_message ("unable to read plug-ins's thread id");
 	      plug_in_destroy (plug_in);
-	      return 0;
+	      return FALSE;
 	    }
 	}
 #endif
@@ -1039,8 +1039,8 @@ plug_in_open (PlugIn *plug_in)
 }
 
 void
-plug_in_close (PlugIn *plug_in,
-	       gint    kill_it)
+plug_in_close (PlugIn   *plug_in,
+	       gboolean  kill_it)
 {
   gint status;
 #ifndef G_OS_WIN32
@@ -1191,7 +1191,7 @@ static Argument *
 plug_in_get_current_return_vals (ProcRecord *proc_rec)
 {
   Argument *return_vals;
-  int nargs;
+  gint nargs;
 
   /* Return the status code plus the current return values. */
   nargs = proc_rec->num_values + 1;
@@ -1227,10 +1227,10 @@ plug_in_get_current_return_vals (ProcRecord *proc_rec)
 Argument*
 plug_in_run (ProcRecord *proc_rec,
 	     Argument   *args,
-	     int         argc,
-	     int         synchronous,   
-	     int         destroy_values,
-	     int         gdisp_ID)
+	     gint        argc,
+	     gboolean    synchronous,   
+	     gboolean    destroy_values,
+	     gint        gdisp_ID)
 {
   GPConfig config;
   GPProcRun proc_run;
@@ -1310,11 +1310,11 @@ done:
 }
 
 void
-plug_in_repeat (int with_interface)
+plug_in_repeat (gboolean with_interface)
 {
   GDisplay *gdisplay;
   Argument *args;
-  int i;
+  gint i;
 
   if (last_plug_in)
     {
@@ -1729,9 +1729,9 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   ProcRecord *proc = NULL;
   GSList *tmp = NULL;
   GimpItemFactoryEntry entry;
-  char *prog = NULL;
-  int add_proc_def;
-  int i;
+  gchar *prog = NULL;
+  gboolean add_proc_def;
+  gint i;
 
   /*
    *  Argument checking
@@ -1839,6 +1839,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       break;
 
     case PDB_TEMPORARY:
+      plug_in_def = current_plug_in->user_data;
       prog = "none";
 
       tmp = current_plug_in->temp_proc_defs;
@@ -1855,7 +1856,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if (proc_install->type == PDB_TEMPORARY)
 	    plug_in_proc_def_remove (proc_def);
 	  else
-	    plug_in_proc_def_destroy (proc_def, TRUE);
+	    plug_in_proc_def_destroy (proc_def, TRUE);  /* destroys data_only */ 
+
 	  break;
 	}
 
@@ -1979,7 +1981,7 @@ plug_in_handle_proc_uninstall (GPProcUninstall *proc_uninstall)
     }
 }
 
-static int
+static gboolean
 plug_in_write (GIOChannel *channel,
 	       guint8      *buf,
 	       gulong       count)
@@ -2010,11 +2012,11 @@ plug_in_write (GIOChannel *channel,
   return TRUE;
 }
 
-static int
+static gboolean
 plug_in_flush (GIOChannel *channel)
 {
   GIOError error;
-  int count;
+  gint count;
   guint bytes;
 
   if (current_write_buffer_index > 0)
@@ -2097,8 +2099,8 @@ plug_in_pop (void)
 }
 
 static void
-plug_in_write_rc_string (FILE *fp,
-			 char *str)
+plug_in_write_rc_string (FILE  *fp,
+			 gchar *str)
 {
   fputc ('"', fp);
 
@@ -2133,13 +2135,13 @@ plug_in_write_rc_string (FILE *fp,
 }
 
 static void
-plug_in_write_rc (char *filename)
+plug_in_write_rc (gchar *filename)
 {
   FILE *fp;
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
   GSList *tmp, *tmp2;
-  int i;
+  gint i;
 
   fp = fopen (filename, "w");
   if (!fp)
@@ -2241,12 +2243,12 @@ plug_in_write_rc (char *filename)
 }
 
 static void
-plug_in_init_file (char *filename)
+plug_in_init_file (gchar *filename)
 {
   GSList *tmp;
   PlugInDef *plug_in_def;
-  char *plug_in_name;
-  char *name;
+  gchar *plug_in_name;
+  gchar *name;
 
   name = strrchr (filename, G_DIR_SEPARATOR);
   if (name)
@@ -2285,7 +2287,7 @@ plug_in_init_file (char *filename)
 }
 
 static void
-plug_in_query (char      *filename,
+plug_in_query (gchar     *filename,
 	       PlugInDef *plug_in_def)
 {
   PlugIn *plug_in;
@@ -2478,9 +2480,9 @@ plug_in_callback (GtkWidget *widget,
   GDisplay *gdisplay;
   ProcRecord *proc_rec;
   Argument *args;
-  int i;
-  int gdisp_ID = -1;
-  int argc = 0; /* calm down a gcc warning.  */
+  gint i;
+  gint gdisp_ID = -1;
+  gint argc = 0; /* calm down a gcc warning.  */
 
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
@@ -2663,9 +2665,9 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
 
 static void
 plug_in_proc_def_destroy (PlugInProcDef *proc_def,
-			  int            data_only)
+			  gboolean       data_only)
 {
-  int i;
+  gint i;
 
   if (proc_def->prog)
     g_free (proc_def->prog);
@@ -2722,7 +2724,7 @@ plug_in_proc_def_destroy (PlugInProcDef *proc_def,
 static Argument *
 plug_in_temp_run (ProcRecord *proc_rec,
 		  Argument   *args,
-		  int         argc)
+		  gint        argc)
 {
   Argument *return_vals;
   PlugIn *plug_in;
@@ -2776,14 +2778,14 @@ done:
 
 static Argument*
 plug_in_params_to_args (GPParam *params,
-			int      nparams,
-			int      full_copy)
+			gint     nparams,
+			gboolean full_copy)
 {
   Argument *args;
   gchar **stringarray;
   guchar *colorarray;
-  int count;
-  int i, j;
+  gint count;
+  gint i, j;
 
   if (nparams == 0)
     return NULL;
@@ -2930,13 +2932,13 @@ plug_in_params_to_args (GPParam *params,
 
 static GPParam*
 plug_in_args_to_params (Argument *args,
-			int       nargs,
-			int       full_copy)
+			gint       nargs,
+			gboolean   full_copy)
 {
   GPParam *params;
   gchar **stringarray;
   guchar *colorarray;
-  int i, j;
+  gint i, j;
 
   if (nargs == 0)
     return NULL;
@@ -3121,10 +3123,10 @@ plug_in_args_to_params (Argument *args,
 
 static void
 plug_in_params_destroy (GPParam *params,
-			int      nparams,
-			int      full_destroy)
+			gint      nparams,
+			gboolean  full_destroy)
 {
-  int i, j;
+  gint i, j;
 
   for (i = 0; i < nparams; i++)
     {
@@ -3199,12 +3201,12 @@ plug_in_params_destroy (GPParam *params,
 
 static void
 plug_in_args_destroy (Argument *args,
-		      int       nargs,
-		      int       full_destroy)
+		      gint       nargs,
+		      gboolean   full_destroy)
 {
   gchar **stringarray;
-  int count;
-  int i, j;
+  gint count;
+  gint i, j;
 
   for (i = 0; i < nargs; i++)
     {
@@ -3279,10 +3281,10 @@ plug_in_args_destroy (Argument *args,
   g_free (args);
 }
 
-int
-plug_in_image_types_parse (char *image_types)
+gint
+plug_in_image_types_parse (gchar *image_types)
 {
-  int types = 0;
+  gint types = 0;
 
   /* 
    *  If the plug_in registers with image_type == NULL or "", return 0
@@ -3376,8 +3378,8 @@ plug_in_progress_cancel (GtkWidget *widget,
 
 void
 plug_in_progress_init (PlugIn *plug_in,
-		       char   *message,
-		       gint   gdisp_ID)
+		       gchar  *message,
+		       gint    gdisp_ID)
 {
   GDisplay *gdisp = NULL;
 
@@ -3396,8 +3398,8 @@ plug_in_progress_init (PlugIn *plug_in,
 }
 
 void
-plug_in_progress_update (PlugIn *plug_in,
-			 double  percentage)
+plug_in_progress_update (PlugIn  *plug_in,
+			 gdouble  percentage)
 {
   if (!plug_in->progress)
     plug_in_progress_init (plug_in, NULL, -1);

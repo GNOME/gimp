@@ -47,26 +47,26 @@ typedef enum
 
 struct _PlugIn
 {
-  unsigned int open : 1;                 /* Is the plug-in open */
-  unsigned int destroy : 1;              /* Should the plug-in by destroyed */
-  unsigned int query : 1;                /* Are we querying the plug-in? */
-  unsigned int synchronous : 1;          /* Is the plug-in running synchronously or not */
-  unsigned int recurse : 1;              /* Have we called 'gtk_main' recursively? */
-  unsigned int busy : 1;                 /* Is the plug-in busy with a temp proc? */
+  guint open : 1;                        /* Is the plug-in open */
+  guint destroy : 1;                     /* Should the plug-in by destroyed */
+  guint query : 1;                       /* Are we querying the plug-in? */
+  guint synchronous : 1;                 /* Is the plug-in running synchronously or not */
+  guint recurse : 1;                     /* Have we called 'gtk_main' recursively? */
+  guint busy : 1;                        /* Is the plug-in busy with a temp proc? */
   pid_t pid;                             /* Plug-ins process id */
-  char *args[7];                         /* Plug-ins command line arguments */
+  gchar *args[7];                         /* Plug-ins command line arguments */
 
   GIOChannel *my_read, *my_write;        /* App's read and write channels */
   GIOChannel *his_read, *his_write;      /* Plug-in's read and write channels */
 #ifdef G_OS_WIN32
   guint his_thread_id;			 /* Plug-in's thread ID */
-  int his_read_fd;			 /* Plug-in's read pipe fd */
+  gint his_read_fd;			 /* Plug-in's read pipe fd */
 #endif
 
   guint32 input_id;                      /* Id of input proc */
 
-  char write_buffer[WRITE_BUFFER_SIZE];  /* Buffer for writing */
-  int write_buffer_index;                /* Buffer index for writing */
+  gchar write_buffer[WRITE_BUFFER_SIZE]; /* Buffer for writing */
+  gint write_buffer_index;               /* Buffer index for writing */
 
   GSList *temp_proc_defs;                /* Temporary procedures  */
 
@@ -87,19 +87,19 @@ struct _PlugInDef
 
 struct _PlugInProcDef
 {
-  char *prog;
-  char *menu_path;
-  char *accelerator;
-  char *extensions;
-  char *prefixes;
-  char *magics;
-  char *image_types;
-  int   image_types_val;
+  gchar  *prog;
+  gchar  *menu_path;
+  gchar  *accelerator;
+  gchar  *extensions;
+  gchar  *prefixes;
+  gchar  *magics;
+  gchar  *image_types;
+  gint    image_types_val;
   ProcRecord db_info;
   GSList *extensions_list;
   GSList *prefixes_list;
   GSList *magics_list;
-  time_t mtime;
+  time_t  mtime;
 };
 
 
@@ -113,20 +113,20 @@ void plug_in_kill (void);
  *  and query the plug-in for information if
  *  necessary.
  */
-void plug_in_add (char *name,
-		  char *menu_path,
-		  char *accelerator);
+void plug_in_add (gchar *name,
+		  gchar *menu_path,
+		  gchar *accelerator);
 
 /* Get the "image_types" the plug-in works on.
  */
-char* plug_in_image_types (char *name);
+gchar* plug_in_image_types (gchar *name);
 
 /* Add in the file load/save handler fields procedure.
  */
-PlugInProcDef* plug_in_file_handler (char *name,
-				     char *extensions,
-				     char *prefixes,
-				     char *magics);
+PlugInProcDef* plug_in_file_handler (gchar *name,
+				     gchar *extensions,
+				     gchar *prefixes,
+				     gchar *magics);
 
 /* Add a plug-in definition.
  */
@@ -140,10 +140,10 @@ void        plug_in_def_free (PlugInDef *plug_in_def,
 
 /* Retrieve a plug-ins menu path
  */
-char* plug_in_menu_path (char *name);
+gchar* plug_in_menu_path (gchar *name);
 
 /* Create a new plug-in structure */
-PlugIn* plug_in_new (char *name);
+PlugIn* plug_in_new (gchar *name);
 
 /* Destroy a plug-in structure. This will close the plug-in
  *  first if necessary.
@@ -151,10 +151,10 @@ PlugIn* plug_in_new (char *name);
 void plug_in_destroy (PlugIn *plug_in);
 
 /* Open a plug-in. This cause the plug-in to run.
- * If returns 1, you must destroy the plugin.  If returns 0 you
- * may not destroy the plugin.
+ * If returns TRUE, you must destroy the plugin.  
+ * If returns FALSE, you must not destroy the plugin.
  */
-int plug_in_open (PlugIn *plug_in);
+gboolean plug_in_open (PlugIn *plug_in);
 
 /* Close a plug-in. This kills the plug-in and releases
  *  its resources.
@@ -165,15 +165,15 @@ void plug_in_close (PlugIn *plug_in,
 /* Run a plug-in as if it were a procedure database procedure */
 Argument* plug_in_run (ProcRecord *proc_rec,
 		       Argument   *args,
-		       int         argc,
-		       int         synchronous,
-		       int         destroy_values,
-		       int         gdisp_ID);
+		       gint        argc,
+		       gboolean    synchronous,
+		       gboolean    destroy_values,
+		       gint        gdisp_ID);
 
 /* Run the last plug-in again with the same arguments. Extensions
  *  are exempt from this "privelege".
  */
-void plug_in_repeat (int with_interface);
+void plug_in_repeat (gboolean with_interface);
 
 /* Set the sensitivity for plug-in menu items based on the image
  * type.
@@ -184,12 +184,12 @@ void plug_in_set_menu_sensitivity (GimpImageType type);
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void plug_in_add_internal (PlugInProcDef* proc_def);
-GSList* plug_in_extensions_parse  (char     *extensions);
-int     plug_in_image_types_parse (char     *image_types);
+void    plug_in_add_internal      (PlugInProcDef *proc_def);
+GSList* plug_in_extensions_parse  (gchar *extensions);
+gint    plug_in_image_types_parse (gchar *image_types);
 
-void plug_in_progress_init   (PlugIn *plug_in, char *message, gint gdisp_ID);
-void plug_in_progress_update (PlugIn *plug_in, double percentage);
+void plug_in_progress_init   (PlugIn *plug_in, gchar *message, gint gdisp_ID);
+void plug_in_progress_update (PlugIn *plug_in, gdouble percentage);
 
 extern PlugIn *current_plug_in;
 extern GSList *proc_defs;

@@ -472,7 +472,8 @@ register_magic_load_handler_invoker (Argument *args)
 	  goto done;
 	}
     
-      load_procs = g_slist_prepend (load_procs, file_proc);
+      if (! g_slist_find (load_procs, file_proc))
+	load_procs = g_slist_prepend (load_procs, file_proc);
     
       success = TRUE;
     
@@ -617,7 +618,8 @@ register_save_handler_invoker (Argument *args)
 	  goto done;
 	}
     
-      save_procs = g_slist_prepend (save_procs, file_proc);
+      if (! g_slist_find (save_procs, file_proc))
+	save_procs = g_slist_prepend (save_procs, file_proc);
     
       success = TRUE;
     
