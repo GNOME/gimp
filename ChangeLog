@@ -1,3 +1,7 @@
+Thu Jun 11 23:37:06 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimp.m4: .m4 file for autoconf gimptool stuff
+
 Thu Jun 11 00:34:51 1998  Owen Taylor  <otaylor@gtk.org>
 
         * app/color_area.c (color_area_events): Create/resize
