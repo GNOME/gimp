@@ -46,6 +46,7 @@
 
 
 #define RESPONSE_RESET         1
+#define RESPONSE_ABOUT         2
 
 #define TEXT_WIDTH           100
 #define COLOR_SAMPLE_WIDTH   100
@@ -129,8 +130,6 @@ typedef struct
 {
   GtkWidget     *dialog;
 
-  GtkWidget     *status;
-
   GtkWidget     *args_table;
   GtkWidget    **args_widgets;
 
@@ -155,8 +154,8 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
-static void       script_fu_load_script (const GimpDatafileData   *file_data,
-                                         gpointer                  user_data);
+static void       script_fu_load_script   (const GimpDatafileData *file_data,
+                                           gpointer                user_data);
 static gboolean   script_fu_install_script      (gpointer          foo,
                                                  SFScript         *script,
                                                  gpointer          bar);
@@ -180,11 +179,10 @@ static void       script_fu_response            (GtkWidget        *widget,
                                                  SFScript         *script);
 static void       script_fu_ok                  (SFScript         *script);
 static void       script_fu_reset               (SFScript         *script);
-static void       script_fu_about_callback      (GtkWidget        *widget,
-                                                 SFScript         *script);
+static void       script_fu_about               (SFScript         *script);
 
 static void       script_fu_file_entry_callback (GtkWidget        *widget,
-                                                 SFFilename       *fil);
+                                                 SFFilename       *file);
 
 static void       script_fu_pattern_callback    (const gchar      *name,
                                                  gint              width,
@@ -600,7 +598,7 @@ script_fu_add_script (LISP a)
 		   * default one must hang around.
 		   */
 		  script->arg_values[i].sfa_brush.name =
-		    g_strdup(script->arg_defaults[i].sfa_brush.name);
+		    g_strdup (script->arg_defaults[i].sfa_brush.name);
 
 		  args[i + 1].type = GIMP_PDB_STRING;
 		  args[i + 1].name = "brush";
@@ -1084,9 +1082,8 @@ script_fu_free_script (SFScript *script)
 
 	    case SF_OPTION:
 	      g_slist_foreach (script->arg_defaults[i].sfa_option.list,
-			       (GFunc)g_free, NULL);
-	      if (script->arg_defaults[i].sfa_option.list)
-		g_slist_free (script->arg_defaults[i].sfa_option.list);
+			       (GFunc) g_free, NULL);
+              g_slist_free (script->arg_defaults[i].sfa_option.list);
 	      break;
 
 	    default:
@@ -1165,11 +1162,9 @@ script_fu_interface (SFScript *script)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *button;
   GtkWidget *menu;
   GtkWidget *vbox;
   GtkWidget *vbox2;
-  GtkWidget *hbox;
   GSList    *list;
   gchar     *title;
   gchar     *buf;
@@ -1220,6 +1215,7 @@ script_fu_interface (SFScript *script)
                      NULL, 0,
                      gimp_standard_help_func, script->pdb_name,
 
+                     _("_About"),      RESPONSE_ABOUT,
                      GIMP_STOCK_RESET, RESPONSE_RESET,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -1242,24 +1238,6 @@ script_fu_interface (SFScript *script)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  sf_interface->status = gtk_label_new (sf_interface->title);
-  gtk_misc_set_alignment (GTK_MISC (sf_interface->status), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 0);
-  gtk_widget_show (sf_interface->status);
-
-  button = gtk_button_new_with_label (_("About"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-		    G_CALLBACK (script_fu_about_callback),
-		    script);
 
   /* the script arguments frame */
   frame = gimp_frame_new (_("Script Arguments"));
@@ -1667,6 +1645,10 @@ script_fu_response (GtkWidget *widget,
 {
   switch (response_id)
     {
+    case RESPONSE_ABOUT:
+      script_fu_about (script);
+      break;
+
     case RESPONSE_RESET:
       script_fu_reset (script);
       break;
@@ -2016,8 +1998,7 @@ script_fu_reset (SFScript *script)
 }
 
 static void
-script_fu_about_callback (GtkWidget *widget,
-                          SFScript  *script)
+script_fu_about (SFScript *script)
 {
   GtkWidget     *dialog = sf_interface->about_dialog;
   GtkWidget     *frame;

@@ -1,5 +1,11 @@
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: removed the script title
+	label and moved the "About" button to the action_area. Minor
+	cleanups.
+
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-transform.[ch]: added GimpProgress
 	parameter to gimp_drawable_transform_affine().
 
