@@ -389,43 +389,6 @@ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
 }
 
 void
-gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
-                          GimpImage       *gimage,
-                          const gchar     *uri)
-{
-  gchar *real_uri  = NULL;
-
-  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
-  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
-
-  if (gimage)
-    {
-      real_uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (gimage)));
-    }
-  else if (uri)
-    {
-      real_uri = g_strdup (uri);
-    }
-
-  if (real_uri)
-    {
-      gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), real_uri);
-    }
-  else
-    {
-      gchar *current = g_get_current_dir ();
-
-      real_uri = g_filename_to_uri (current, NULL, NULL);
-      g_free (current);
-
-      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                               real_uri);
-    }
-
-  g_free (real_uri);
-}
-
-void
 gimp_file_dialog_set_image (GimpFileDialog *dialog,
                             GimpImage      *gimage,
                             gboolean        save_a_copy)
@@ -448,10 +411,20 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   if (uri)
     uri_set = gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
 
-  if (! uri_set)
-    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
-
   gimp_file_dialog_set_file_proc (dialog, NULL);
+
+  if (! uri_set)
+    {
+      const gchar *name = gimp_image_get_uri (gimage);
+      gchar       *current;
+
+      if (! name)
+        name = "";
+
+      current = g_path_get_basename (name);
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), current);
+      g_free (current);
+    }
 }
 
 

@@ -68,7 +68,8 @@ static gboolean   file_save_dialog_save_image  (GtkWidget     *save_dialog,
 GtkWidget *
 file_save_dialog_new (Gimp *gimp)
 {
-  GtkWidget *dialog;
+  GtkWidget   *dialog;
+  const gchar *uri;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -77,6 +78,26 @@ file_save_dialog_new (Gimp *gimp)
                                  _("Save Image"), "gimp-file-save",
                                  GTK_STOCK_SAVE,
                                  GIMP_HELP_FILE_SAVE);
+
+  uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-last-uri");
+
+  if (uri)
+    {
+      gchar *folder_uri = g_path_get_dirname (uri);
+
+#ifdef __GNUC__
+#warning: FIXME: should use set_uri() but idle stuff in the file chooser seems to override set_current_name() when called immediately after set_uri()
+#endif
+
+      if (folder_uri)
+        {
+          gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                                   folder_uri);
+          g_free (folder_uri);
+        }
+
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
+    }
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_save_dialog_response),
@@ -234,6 +255,8 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
+  g_object_ref (gimage);
+
   status = file_save_as (gimage,
                          gimp_get_user_context (gimage->gimp),
                          GIMP_PROGRESS (save_dialog),
@@ -243,6 +266,12 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                          GIMP_RUN_INTERACTIVE,
                          save_a_copy,
                          &error);
+
+  if (status == GIMP_PDB_SUCCESS)
+    g_object_set_data_full (G_OBJECT (gimage->gimp), "gimp-file-save-last-uri",
+                            g_strdup (uri), (GDestroyNotify) g_free);
+
+  g_object_unref (gimage);
 
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)
