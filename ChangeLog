@@ -1,3 +1,11 @@
+2004-08-01  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/sample_colorize.c: ported to GimpPreviewArea.
+
+	* plug-ins/common/newsprint.c: ported to GimpPreviewArea, even though
+	it should use some pngs instead.
+
 2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* configure.in: modified the checks. hopefully it works on all

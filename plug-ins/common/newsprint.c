@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -53,11 +53,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -83,13 +78,14 @@ static char rcsid[] = "$Id$";
 
 #define TILE_CACHE_SIZE     16
 #define SCALE_WIDTH        125
-#define DEF_OVERSAMPLE	     1 /* default for how much to oversample by */
-#define SPOT_PREVIEW_SZ	    16
+#define DEF_OVERSAMPLE       1 /* default for how much to oversample by */
+#define SPOT_PREVIEW_SZ     16
+#define PREVIEW_SIZE        (2 * SPOT_PREVIEW_SZ + 1)
 #define PREVIEW_OVERSAMPLE   3
 
 
-#define ISNEG(x)	(((x) < 0)? 1 : 0)
-#define DEG2RAD(d)	((d) * G_PI / 180)
+#define ISNEG(x)        (((x) < 0)? 1 : 0)
+#define DEG2RAD(d)      ((d) * G_PI / 180)
 #define CLAMPED_ADD(a, b) (((a)+(b) > 0xff)? 0xff : (a) + (b))
 
 
@@ -97,16 +93,16 @@ static char rcsid[] = "$Id$";
  * 123 of Alan Watt and Mark Watt, Advanced Animation and Rendering
  * Techniques, theory and practice. Addison-Wesley, 1992. ISBN
  * 0-201-54412-1 */
-#define BARTLETT(x,y)	(((oversample/2)+1-ABS(x)) * ((oversample/2)+1-ABS(y)))
-#define WGT(x,y)	wgt[((y+oversample/2)*oversample) + x+oversample/2]
+#define BARTLETT(x,y)   (((oversample/2)+1-ABS(x)) * ((oversample/2)+1-ABS(y)))
+#define WGT(x,y)        wgt[((y+oversample/2)*oversample) + x+oversample/2]
 
 /* colourspaces we can separate to: */
-#define CS_GREY		0
-#define CS_RGB		1
-#define CS_CMYK		2
-#define CS_INTENSITY	3
-#define NUM_CS		4
-#define VALID_CS(x)	((x) >= 0 && (x) <= NUM_CS-1)
+#define CS_GREY         0
+#define CS_RGB          1
+#define CS_CMYK         2
+#define CS_INTENSITY    3
+#define NUM_CS          4
+#define VALID_CS(x)     ((x) >= 0 && (x) <= NUM_CS-1)
 
 /* Spot function related types and definitions */
 
@@ -189,10 +185,10 @@ static spot_info_t spotfn_list[] =
   }
 };
 
-#define NUM_SPOTFN	(G_N_ELEMENTS (spotfn_list))
-#define VALID_SPOTFN(x)	((x) >= 0 && (x) < NUM_SPOTFN)
-#define THRESH(x,y)	(thresh[(y)*width + (x)])
-#define THRESHn(n,x,y)	((thresh[n])[(y)*width + (x)])
+#define NUM_SPOTFN      (G_N_ELEMENTS (spotfn_list))
+#define VALID_SPOTFN(x) ((x) >= 0 && (x) < NUM_SPOTFN)
+#define THRESH(x,y)     (thresh[(y)*width + (x)])
+#define THRESHn(n,x,y)  ((thresh[n])[(y)*width + (x)])
 
 
 /* Arguments to filter */
@@ -231,9 +227,9 @@ typedef struct
 /* bits of state used by the UI, but not visible from the PDB */
 typedef struct
 {
-  gint	  input_spi;     /* input samples per inch */
+  gint    input_spi;     /* input samples per inch */
   gdouble output_lpi;    /* desired output lines per inch */
-  gint	  lock_channels; /* changes to one channel affect all */
+  gint    lock_channels; /* changes to one channel affect all */
 } NewsprintUIValues;
 
 
@@ -456,15 +452,15 @@ static const gint cspace_nchans[] =
 
 
 /* Declare local functions.  */
-static void	query	(void);
-static void	run	(const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+static void     query   (void);
+static void     run     (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static gboolean newsprint_dialog            (GimpDrawable  *drawable);
-static void	newsprint_cspace_update     (GtkWidget     *widget,
+static void     newsprint_cspace_update     (GtkWidget     *widget,
                                              gpointer       data);
 
 static void     newsprint_menu_callback     (GtkWidget     *widget,
@@ -480,17 +476,18 @@ static void     cellsize_callback           (GtkAdjustment *adjustment,
 static void     newsprint_defaults_callback (GtkWidget     *widget,
                                              gpointer       data);
 
-static void	newsprint	            (GimpDrawable  *drawable);
-static guchar *	spot2thresh	            (gint           type,
+static void     newsprint                   (GimpDrawable  *drawable);
+static guchar * spot2thresh                 (gint           type,
                                              gint           width);
 
+static void     preview_update              (channel_st    *st);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	 /* init_proc  */
-  NULL,	 /* quit_proc  */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run	 /* run_proc   */
+  run    /* run_proc   */
 };
 
 
@@ -526,20 +523,20 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_newsprint",
-			  "Re-sample the image to give a newspaper-like effect",
-			  "Halftone the image, trading off resolution to "
-			  "represent colors or grey levels using the process "
-			  "described both in the PostScript language "
-			  "definition, and also by Robert Ulichney, \"Digital "
-			  "halftoning\", MIT Press, 1987.",
-			  "Austin Donnelly",
-			  "Austin Donnelly",
-			  "1998 (" VERSION ")",
-			  N_("Newsprin_t..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Re-sample the image to give a newspaper-like effect",
+                          "Halftone the image, trading off resolution to "
+                          "represent colors or grey levels using the process "
+                          "described both in the PostScript language "
+                          "definition, and also by Robert Ulichney, \"Digital "
+                          "halftoning\", MIT Press, 1987.",
+                          "Austin Donnelly",
+                          "Austin Donnelly",
+                          "1998 (" VERSION ")",
+                          N_("Newsprin_t..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_newsprint",
                              N_("<Image>/Filters/Distorts"));
@@ -583,19 +580,19 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! newsprint_dialog (drawable))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 15)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
 
       pvals.cell_width  = param[3].data.d_int32;
       pvals.colourspace = param[4].data.d_int32;
@@ -612,14 +609,14 @@ run (const gchar      *name,
 
       /* check values are within permitted ranges */
       if (!VALID_SPOTFN (pvals.gry_spotfn) ||
-	  !VALID_SPOTFN (pvals.red_spotfn) ||
-	  !VALID_SPOTFN (pvals.grn_spotfn) ||
-	  !VALID_SPOTFN (pvals.blu_spotfn) ||
-	  !VALID_CS (pvals.colourspace) ||
-	  pvals.k_pullout < 0 || pvals.k_pullout > 100)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+          !VALID_SPOTFN (pvals.red_spotfn) ||
+          !VALID_SPOTFN (pvals.grn_spotfn) ||
+          !VALID_SPOTFN (pvals.blu_spotfn) ||
+          !VALID_CS (pvals.colourspace) ||
+          pvals.k_pullout < 0 || pvals.k_pullout > 100)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -635,33 +632,33 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Newsprint..."));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Newsprint..."));
 
-	  /*  set the tile cache size  */
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          /*  set the tile cache size  */
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  /*  run the newsprint effect  */
-	  newsprint (drawable);
+          /*  run the newsprint effect  */
+          newsprint (drawable);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    {
-	      gimp_set_data ("plug_in_newsprint",
-			     &pvals, sizeof (NewsprintValues));
-	      gimp_set_data ("plug_in_newsprint_ui",
-			     &pvals_ui, sizeof (NewsprintUIValues));
-	    }
-	}
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            {
+              gimp_set_data ("plug_in_newsprint",
+                             &pvals, sizeof (NewsprintValues));
+              gimp_set_data ("plug_in_newsprint_ui",
+                             &pvals_ui, sizeof (NewsprintUIValues));
+            }
+        }
       else
-	{
-	  /*gimp_message ("newsprint: cannot operate on indexed images");*/
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /*gimp_message ("newsprint: cannot operate on indexed images");*/
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -686,10 +683,12 @@ new_preview (gint *sfn)
   /* make the preview widgets */
   for (i = 0; i < 3; i++)
     {
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (preview),
-			SPOT_PREVIEW_SZ*2 + 1, SPOT_PREVIEW_SZ*2 + 1);
+      preview = gimp_preview_area_new ();
+      gtk_widget_set_size_request (preview,
+                                   PREVIEW_SIZE, PREVIEW_SIZE);
       gtk_widget_show (preview);
+      g_signal_connect_swapped (preview, "size_allocate",
+                                G_CALLBACK (preview_update), st);
 
       label = gtk_label_new ("");
       gtk_widget_show (label);
@@ -718,14 +717,13 @@ preview_update (channel_st *st)
   guchar     *thresh;
   gchar       pct[12];
   guchar      value;
-  guchar      row[3 * (2 * SPOT_PREVIEW_SZ + 1)];
-
+  guchar      rgb[3 * PREVIEW_SIZE * PREVIEW_SIZE ];
   /* If we don't yet have a preview threshold matrix for this spot
    * function, generate one now. */
   if (!spotfn_list[sfn].prev_thresh)
     {
       spotfn_list[sfn].prev_thresh =
-	spot2thresh (sfn, SPOT_PREVIEW_SZ*PREVIEW_OVERSAMPLE);
+        spot2thresh (sfn, SPOT_PREVIEW_SZ*PREVIEW_OVERSAMPLE);
     }
 
   thresh = spotfn_list[sfn].prev_thresh;
@@ -736,58 +734,59 @@ preview_update (channel_st *st)
 
       value = spotfn_list[sfn].prev_lvl[i] * 0xff;
 
-      for (y = 0; y <= SPOT_PREVIEW_SZ*2; y++)
-	{
-	  for (x = 0; x <= SPOT_PREVIEW_SZ*2; x++)
-	    {
-	      guint32 sum = 0;
-	      gint sx, sy;
-	      gint tx, ty;
-	      gint rx, ry;
+      for (y = 0; y < PREVIEW_SIZE ; y++)
+        {
+          for (x = 0; x < PREVIEW_SIZE ; x++)
+            {
+              guint32 sum = 0;
+              gint sx, sy;
+              gint tx, ty;
+              gint rx, ry;
 
-	      rx = x * PREVIEW_OVERSAMPLE;
-	      ry = y * PREVIEW_OVERSAMPLE;
+              rx = x * PREVIEW_OVERSAMPLE;
+              ry = y * PREVIEW_OVERSAMPLE;
 
-	      for (sy = -oversample/2; sy <= oversample/2; sy++)
-		for (sx = -oversample/2; sx <= oversample/2; sx++)
-		  {
-		    tx = rx+sx;
-		    ty = ry+sy;
-		    while (tx < 0)  tx += width;
-		    while (ty < 0)  ty += width;
-		    while (tx >= width)  tx -= width;
-		    while (ty >= width)  ty -= width;
+              for (sy = -oversample/2; sy <= oversample/2; sy++)
+                for (sx = -oversample/2; sx <= oversample/2; sx++)
+                  {
+                    tx = rx+sx;
+                    ty = ry+sy;
+                    while (tx < 0)  tx += width;
+                    while (ty < 0)  ty += width;
+                    while (tx >= width)  tx -= width;
+                    while (ty >= width)  ty -= width;
 
-		    if (value > THRESH (tx, ty))
-		      sum += 0xff * BARTLETT (sx, sy);
-		  }
-	      sum /= BARTLETT (0, 0) * BARTLETT (0, 0);
+                    if (value > THRESH (tx, ty))
+                      sum += 0xff * BARTLETT (sx, sy);
+                  }
+              sum /= BARTLETT (0, 0) * BARTLETT (0, 0);
 
-	      /* blue lines on cell boundaries */
-	      if ((x % SPOT_PREVIEW_SZ) == 0 ||
-		  (y % SPOT_PREVIEW_SZ) == 0)
-		{
-		  row[x*3+0] = 0;
-		  row[x*3+1] = 0;
-		  row[x*3+2] = 0xff;
-		}
-	      else
-		{
-		  row[x*3+0] = sum;
-		  row[x*3+1] = sum;
-		  row[x*3+2] = sum;
-		}
-	    }
-
-	  gtk_preview_draw_row (GTK_PREVIEW (prev->widget),
-				row, 0, y, SPOT_PREVIEW_SZ*2+1);
-	}
+              /* blue lines on cell boundaries */
+              if ((x % SPOT_PREVIEW_SZ) == 0 ||
+                  (y % SPOT_PREVIEW_SZ) == 0)
+                {
+                  rgb[(y*PREVIEW_SIZE+x)*3+0] = 0;
+                  rgb[(y*PREVIEW_SIZE+x)*3+1] = 0;
+                  rgb[(y*PREVIEW_SIZE+x)*3+2] = 0xff;
+                }
+              else
+                {
+                  rgb[(y*PREVIEW_SIZE+x)*3+0] = sum;
+                  rgb[(y*PREVIEW_SIZE+x)*3+1] = sum;
+                  rgb[(y*PREVIEW_SIZE+x)*3+2] = sum;
+                }
+            }
+        }
 
       /* redraw preview widget */
-      gtk_widget_queue_draw (prev->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (prev->widget),
+                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
+                              GIMP_RGB_IMAGE,
+                              rgb,
+                              PREVIEW_SIZE * 3);
 
       g_snprintf (pct, sizeof (pct), "%2d%%",
-		  (int) RINT (spotfn_list[sfn].prev_lvl[i] * 100));
+                  (int) RINT (spotfn_list[sfn].prev_lvl[i] * 100));
       gtk_label_set_text (GTK_LABEL(prev->label), pct);
     }
 }
@@ -795,7 +794,7 @@ preview_update (channel_st *st)
 
 static void
 newsprint_menu_callback (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   channel_st      *st = data;
   gint             value;
@@ -827,15 +826,15 @@ newsprint_menu_callback (GtkWidget *widget,
       gint        old_value;
 
       while (c != st)
-	{
+        {
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (c->combo), value);
 
-	  old_value = *(c->spotfn_num);
-	  *(c->spotfn_num) = value;
-	  if (old_value != value)
-	    preview_update (c);
-	  c = c->next;
-	}
+          old_value = *(c->spotfn_num);
+          *(c->spotfn_num) = value;
+          if (old_value != value)
+            preview_update (c);
+          c = c->next;
+        }
     }
 
   in_progress = FALSE;
@@ -844,7 +843,7 @@ newsprint_menu_callback (GtkWidget *widget,
 
 static void
 angle_callback (GtkAdjustment *adjustment,
-		gpointer       data)
+                gpointer       data)
 {
   channel_st *st = data;
   channel_st *c;
@@ -862,10 +861,10 @@ angle_callback (GtkAdjustment *adjustment,
       c = st->next;
 
       while (c != st)
-	{
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (c->angle_adj), *angle_ptr);
-	  c = c->next;
-	}
+        {
+          gtk_adjustment_set_value (GTK_ADJUSTMENT (c->angle_adj), *angle_ptr);
+          c = c->next;
+        }
 
       in_progress = FALSE;
     }
@@ -873,7 +872,7 @@ angle_callback (GtkAdjustment *adjustment,
 
 static void
 lpi_callback (GtkAdjustment *adjustment,
-	      gpointer       data)
+              gpointer       data)
 {
   NewsprintDialog_st *st = data;
 
@@ -884,7 +883,7 @@ lpi_callback (GtkAdjustment *adjustment,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->cellsize),
-			    pvals_ui.input_spi / pvals_ui.output_lpi);
+                            pvals_ui.input_spi / pvals_ui.output_lpi);
 
   g_signal_handlers_unblock_by_func (st->cellsize,
                                      cellsize_callback,
@@ -893,7 +892,7 @@ lpi_callback (GtkAdjustment *adjustment,
 
 static void
 spi_callback (GtkAdjustment *adjustment,
-	      gpointer       data)
+              gpointer       data)
 {
   NewsprintDialog_st *st = data;
 
@@ -904,7 +903,7 @@ spi_callback (GtkAdjustment *adjustment,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
-			    pvals_ui.input_spi / pvals.cell_width);
+                            pvals_ui.input_spi / pvals.cell_width);
 
   g_signal_handlers_unblock_by_func (st->output_lpi,
                                      lpi_callback,
@@ -913,7 +912,7 @@ spi_callback (GtkAdjustment *adjustment,
 
 static void
 cellsize_callback (GtkAdjustment *adjustment,
-		   gpointer       data)
+                   gpointer       data)
 {
   NewsprintDialog_st *st = data;
 
@@ -924,7 +923,7 @@ cellsize_callback (GtkAdjustment *adjustment,
                                    data);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
-			    pvals_ui.input_spi / pvals.cell_width);
+                            pvals_ui.input_spi / pvals.cell_width);
 
   g_signal_handlers_unblock_by_func (st->output_lpi,
                                      lpi_callback,
@@ -933,7 +932,7 @@ cellsize_callback (GtkAdjustment *adjustment,
 
 static void
 newsprint_defaults_callback (GtkWidget *widget,
-			     gpointer   data)
+                             gpointer   data)
 {
   NewsprintDialog_st  *st = data;
   gint                 saved_lock;
@@ -955,24 +954,24 @@ newsprint_defaults_callback (GtkWidget *widget,
 
       /* skip this colourspace if we haven't used it yet */
       if (!chst[0])
-	continue;
+        continue;
 
       c = 0;
       while (ct->name)
-	{
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (chst[c]->angle_adj),
-				    *(ct->factory_angle));
+        {
+          gtk_adjustment_set_value (GTK_ADJUSTMENT (chst[c]->angle_adj),
+                                    *(ct->factory_angle));
 
-	  /* change the popup menu and also activate the menuitem in
-	   * question, in order to run the handler that re-computes
-	   * the preview area */
-	  spotfn = *(ct->factory_spotfn);
+          /* change the popup menu and also activate the menuitem in
+           * question, in order to run the handler that re-computes
+           * the preview area */
+          spotfn = *(ct->factory_spotfn);
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (chst[c]->combo),
                                          spotfn);
 
-	  c++;
-	  ct++;
-	}
+          c++;
+          ct++;
+        }
     }
 
   pvals_ui.lock_channels = saved_lock;
@@ -1009,11 +1008,11 @@ new_channel (const chan_tmpl *ct)
 
   /* angle slider */
   chst->angle_adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("_Angle:"), SCALE_WIDTH, 0,
-					  *ct->angle,
-					  -90, 90, 1, 15, 1,
-					  TRUE, 0, 0,
-					  NULL, NULL);
+                                          _("_Angle:"), SCALE_WIDTH, 0,
+                                          *ct->angle,
+                                          -90, 90, 1, 15, 1,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
   g_object_set_data (G_OBJECT (chst->angle_adj), "angle", ct->angle);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (chst->angle_adj));
@@ -1072,13 +1071,13 @@ new_channel (const chan_tmpl *ct)
 
     for (i = 0; i < 3; i++)
       {
-	gtk_table_attach (GTK_TABLE (sub), chst->prev[i].widget,
-			  i, i+1, 0, 1,
-			  GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+        gtk_table_attach (GTK_TABLE (sub), chst->prev[i].widget,
+                          i, i+1, 0, 1,
+                          GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
-	gtk_table_attach (GTK_TABLE (sub), chst->prev[i].label,
-			  i, i+1, 1, 2,
-			  GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+        gtk_table_attach (GTK_TABLE (sub), chst->prev[i].label,
+                          i, i+1, 1, 2,
+                          GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
       }
 
     gtk_widget_show (sub);
@@ -1105,7 +1104,7 @@ new_channel (const chan_tmpl *ct)
  * the respective channel state fields in "st". */
 static void
 gen_channels (NewsprintDialog_st *st,
-	      gint                colourspace)
+              gint                colourspace)
 {
   const chan_tmpl  *ct;
   channel_st      **chst;
@@ -1118,9 +1117,9 @@ gen_channels (NewsprintDialog_st *st,
 
   st->channel_notebook[colourspace] = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (st->vbox), st->channel_notebook[colourspace],
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (st->vbox),
-			 st->channel_notebook[colourspace], 3);
+                         st->channel_notebook[colourspace], 3);
   gtk_widget_show (st->channel_notebook[colourspace]);
 
   while (ct->name)
@@ -1128,13 +1127,13 @@ gen_channels (NewsprintDialog_st *st,
       chst[i] = new_channel (ct);
 
       if (i)
-	chst[i-1]->next = chst[i];
+        chst[i-1]->next = chst[i];
       else
-	base = chst[i];
+        base = chst[i];
 
       gtk_notebook_append_page (GTK_NOTEBOOK (st->channel_notebook[colourspace]),
-				chst[i]->vbox,
-				gtk_label_new_with_mnemonic (gettext (ct->name)));
+                                chst[i]->vbox,
+                                gtk_label_new_with_mnemonic (gettext (ct->name)));
       gtk_widget_show (chst[i]->vbox);
 
       i++;
@@ -1182,22 +1181,22 @@ newsprint_dialog (GimpDrawable *drawable)
   else
     {
       if (pvals.colourspace == CS_GREY)
-	pvals.colourspace = CS_RGB;
+        pvals.colourspace = CS_RGB;
     }
 
   st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
                             NULL, 0,
-			    gimp_standard_help_func, "plug-in-newsprint",
+                            gimp_standard_help_func, "plug-in-newsprint",
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /* resolution settings  */
@@ -1212,7 +1211,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (table);
 
   gimp_image_get_resolution (gimp_drawable_get_image (drawable->drawable_id),
-			     &xres, &yres);
+                             &xres, &yres);
   /* XXX hack: should really note both resolutions, and use
    * rectangular cells, not square cells.  But I'm being lazy,
    * and the majority of the world works with xres == yres */
@@ -1220,32 +1219,32 @@ newsprint_dialog (GimpDrawable *drawable)
 
   st.input_spi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("_Input SPI:"), SCALE_WIDTH, 7,
-			  pvals_ui.input_spi,
-			  1.0, 1200.0, 1.0, 10.0, 0,
-			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-			  NULL, NULL);
+                          _("_Input SPI:"), SCALE_WIDTH, 7,
+                          pvals_ui.input_spi,
+                          1.0, 1200.0, 1.0, 10.0, 0,
+                          FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                          NULL, NULL);
   g_signal_connect (st.input_spi, "value_changed",
                     G_CALLBACK (spi_callback),
                     &st);
 
   st.output_lpi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("O_utput LPI:"), SCALE_WIDTH, 7,
-			  pvals_ui.output_lpi,
-			  1.0, 1200.0, 1.0, 10.0, 1,
-			  FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                          _("O_utput LPI:"), SCALE_WIDTH, 7,
+                          pvals_ui.output_lpi,
+                          1.0, 1200.0, 1.0, 10.0, 1,
+                          FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                           NULL, NULL);
   g_signal_connect (st.output_lpi, "value_changed",
                     G_CALLBACK (lpi_callback),
                     &st);
 
   st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				      _("C_ell size:"), SCALE_WIDTH, 7,
-				      pvals.cell_width,
-				      3.0, 100.0, 1.0, 5.0, 0,
-				      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
-				      NULL, NULL);
+                                      _("C_ell size:"), SCALE_WIDTH, 7,
+                                      pvals.cell_width,
+                                      3.0, 100.0, 1.0, 5.0, 0,
+                                      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
+                                      NULL, NULL);
   g_signal_connect (st.cellsize, "value_changed",
                     G_CALLBACK (cellsize_callback),
                     &st);
@@ -1270,11 +1269,11 @@ newsprint_dialog (GimpDrawable *drawable)
 
       /* black pullout */
       st.pull = gimp_scale_entry_new (GTK_TABLE (st.pull_table), 0, 0,
-				      _("B_lack pullout (%):"), SCALE_WIDTH, 0,
-				      pvals.k_pullout,
-				      0, 100, 1, 10, 0,
-				      TRUE, 0, 0,
-				      NULL, NULL);
+                                      _("B_lack pullout (%):"), SCALE_WIDTH, 0,
+                                      pvals.k_pullout,
+                                      0, 100, 1, 10, 0,
+                                      TRUE, 0, 0,
+                                      NULL, NULL);
       gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
       gtk_widget_show (st.pull_table);
 
@@ -1342,13 +1341,13 @@ newsprint_dialog (GimpDrawable *drawable)
 
       toggle = gtk_check_button_new_with_mnemonic (_("_Lock channels"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    pvals_ui.lock_channels);
+                                    pvals_ui.lock_channels);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
-			G_CALLBACK (gimp_toggle_button_update),
-			&pvals_ui.lock_channels);
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pvals_ui.lock_channels);
 
       button = gtk_button_new_with_mnemonic (_("_Factory defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1381,11 +1380,11 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("O_versample:"), SCALE_WIDTH, 0,
-			      pvals.oversample,
-			      1.0, 15.0, 1.0, 5.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("O_versample:"), SCALE_WIDTH, 0,
+                              pvals.oversample,
+                              1.0, 15.0, 1.0, 5.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.oversample);
@@ -1394,6 +1393,8 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   gtk_widget_show (st.dlg);
+
+  preview_update(st.chst[pvals.colourspace][0]);
 
   run = (gimp_dialog_run (GIMP_DIALOG (st.dlg)) == GTK_RESPONSE_OK);
 
@@ -1406,7 +1407,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
 static void
 newsprint_cspace_update (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   NewsprintDialog_st  *st;
   gint new_cs = GPOINTER_TO_INT (data);
@@ -1421,32 +1422,33 @@ newsprint_cspace_update (GtkWidget *widget,
     {
       /* the CMYK widget looks after the black pullout widget */
       if (new_cs == CS_CMYK)
-	{
-	  gtk_widget_set_sensitive (st->pull_table,
-				    GTK_TOGGLE_BUTTON (widget)->active);
-	}
+        {
+          gtk_widget_set_sensitive (st->pull_table,
+                                    GTK_TOGGLE_BUTTON (widget)->active);
+        }
 
       /* if we're not activate, then there's nothing more to do */
       if (!GTK_TOGGLE_BUTTON (widget)->active)
-	return;
+        return;
 
       pvals.colourspace = new_cs;
 
       /* make sure we have the necessary channels for the new
        * colourspace */
       if (!st->chst[new_cs][0])
-	gen_channels (st, new_cs);
+        gen_channels (st, new_cs);
 
       /* hide the old channels (if any) */
       if (st->channel_notebook[old_cs])
-	{
-	  gtk_widget_hide (st->channel_notebook[old_cs]);
-	}
+        {
+          gtk_widget_hide (st->channel_notebook[old_cs]);
+        }
 
       /* show the new channels */
       gtk_widget_show (st->channel_notebook[new_cs]);
 
       gtk_notebook_set_current_page (GTK_NOTEBOOK (st->channel_notebook[new_cs]), 0);
+      preview_update (st->chst[new_cs][0]);
     }
 }
 
@@ -1491,14 +1493,14 @@ newsprint_cspace_update (GtkWidget *widget,
  *
  * #define a(r) \
  *     ((r<=1)? G_PI * (r*r) : \
- *	4 * sqrt(r*r - 1)  +  G_PI*r*r  -  4*r*r*acos(1/r))
+ *      4 * sqrt(r*r - 1)  +  G_PI*r*r  -  4*r*r*acos(1/r))
  *
  *   radius = sqrt(x*x + y*y);
  *
  * return a(radius) / 4; */
 static gdouble
 spot_round (gdouble x,
-	    gdouble y)
+            gdouble y)
 {
   return 1 - (x * x + y * y);
 }
@@ -1507,7 +1509,7 @@ spot_round (gdouble x,
  * balanced. */
 static gdouble
 spot_line (gdouble x,
-	   gdouble y)
+           gdouble y)
 {
   return ABS (y);
 }
@@ -1515,13 +1517,13 @@ spot_line (gdouble x,
 /* Square/Diamond dot that never becomes round.  Tonally balanced. */
 static gdouble
 spot_diamond (gdouble x,
-	      gdouble y)
+              gdouble y)
 {
   gdouble xy = ABS (x) + ABS (y);
   /* spot only valid for 0 <= xy <= 2 */
   return ((xy <= 1) ?
-	  2 * xy * xy :
-	  2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
+          2 * xy * xy :
+          2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
 }
 
 /* The following functions were derived from a peice of PostScript by
@@ -1546,28 +1548,28 @@ spot_diamond (gdouble x,
 /* Square (or Euclidean) dot.  Also very common. */
 static gdouble
 spot_PSsquare (gdouble x,
-	       gdouble y)
+               gdouble y)
 {
   gdouble ax = ABS (x);
   gdouble ay = ABS (y);
 
   return ((ax + ay) > 1 ?
-	  ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) - 1 :
-	  1 - (ay * ay + ax * ax));
+          ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) - 1 :
+          1 - (ay * ay + ax * ax));
 }
 
 /* Diamond spot function, again from Peter Fink's PostScript
  * original.  Copyright as for previous function. */
 static gdouble
 spot_PSdiamond (gdouble x,
-		gdouble y)
+                gdouble y)
 {
   gdouble ax = ABS (x);
   gdouble ay = ABS (y);
 
   return ((ax + ay) <= 0.75 ? 1 - (ax * ax + ay * ay) :     /* dot */
-	  ((ax + ay) <= 1.23 ?  1 - ((ay * 0.76) + ax) :    /* to diamond (0.76 distort) */
-	   ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) -1)); /* back to dot */
+          ((ax + ay) <= 1.23 ?  1 - ((ay * 0.76) + ax) :    /* to diamond (0.76 distort) */
+           ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) -1)); /* back to dot */
 }
 
 /* end of Adobe Systems Incorporated copyrighted functions */
@@ -1587,7 +1589,7 @@ typedef struct
 /* qsort(3) compare function */
 static gint
 order_cmp (const void *va,
-	   const void *vb)
+           const void *vb)
 {
   const order_t *a = va;
   const order_t *b = vb;
@@ -1625,7 +1627,7 @@ order_cmp (const void *va,
  * entry of 0 never causes output pixels to be illuminated.  */
 static guchar *
 spot2thresh (gint type,
-	     gint width)
+             gint width)
 {
   gdouble   sx, sy;
   gdouble   val;
@@ -1646,17 +1648,17 @@ spot2thresh (gint type,
   for (y = 0; y < width; y++)
     {
       for (x = 0; x < width; x++)
-	{
-	  /* scale x & y to -1 ... +1 inclusive */
-	  sx = (((gdouble)x) / (width-1) - 0.5) * 2;
-	  sy = (((gdouble)y) / (width-1) - 0.5) * 2;
-	  val = spotfn(sx, sy);
-	  val = CLAMP (val, -1, 1);  /* interval is inclusive */
+        {
+          /* scale x & y to -1 ... +1 inclusive */
+          sx = (((gdouble)x) / (width-1) - 0.5) * 2;
+          sy = (((gdouble)y) / (width-1) - 0.5) * 2;
+          val = spotfn(sx, sy);
+          val = CLAMP (val, -1, 1);  /* interval is inclusive */
 
-	  order[i].index = i;
-	  order[i].value = val;
-	  i++;
-	}
+          order[i].index = i;
+          order[i].value = val;
+          i++;
+        }
     }
 
   if (!balanced)
@@ -1673,9 +1675,9 @@ spot2thresh (gint type,
        * unmolested.  It would be bad to filter a completely white
        * image and end up with black speckles.  */
       if (balanced)
-	thresh[order[i].index] = order[i].value * 0xfe;
+        thresh[order[i].index] = order[i].value * 0xfe;
       else
-	thresh[order[i].index] = i * 0xff / wid2;
+        thresh[order[i].index] = i * 0xff / wid2;
     }
 
   g_free (order);
@@ -1747,7 +1749,7 @@ newsprint (GimpDrawable *drawable)
   else
     {
       if (colourspace == CS_GREY)
-	colourspace = CS_RGB;
+        colourspace = CS_RGB;
     }
 
   /* Bartlett window matrix optimisation */
@@ -1761,13 +1763,13 @@ newsprint (GimpDrawable *drawable)
       WGT (x, y) = BARTLETT (x, y);
 #endif /* 0 */
 
-#define ASRT(_x)						\
-do {								\
-    if (!VALID_SPOTFN(_x))					\
-    {								\
-	printf("newsprint: %d is not a valid spot type\n", _x);	\
-	_x = SPOTFN_DOT;					\
-    }								\
+#define ASRT(_x)                                                \
+do {                                                            \
+    if (!VALID_SPOTFN(_x))                                      \
+    {                                                           \
+        printf("newsprint: %d is not a valid spot type\n", _x); \
+        _x = SPOTFN_DOT;                                        \
+    }                                                           \
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */
@@ -1795,23 +1797,23 @@ do {								\
        * spot functions are actually different */
       ASRT (gf);
       if (!spotfn_list[gf].thresh)
-	spotfn_list[gf].thresh = spot2thresh (gf, width);
+        spotfn_list[gf].thresh = spot2thresh (gf, width);
       thresh[1] = spotfn_list[gf].thresh;
 
       ASRT (bf);
       if (!spotfn_list[bf].thresh)
-	spotfn_list[bf].thresh = spot2thresh (bf, width);
+        spotfn_list[bf].thresh = spot2thresh (bf, width);
       thresh[2] = spotfn_list[bf].thresh;
 
       if (colourspace == CS_CMYK)
-	{
-	  rot[3] = DEG2RAD (pvals.gry_ang);
-	  gf = pvals.gry_spotfn;
-	  ASRT (gf);
-	  if (!spotfn_list[gf].thresh)
-	    spotfn_list[gf].thresh = spot2thresh (gf, width);
-	  thresh[3] = spotfn_list[gf].thresh;
-	}
+        {
+          rot[3] = DEG2RAD (pvals.gry_ang);
+          gf = pvals.gry_spotfn;
+          ASRT (gf);
+          if (!spotfn_list[gf].thresh)
+            spotfn_list[gf].thresh = spot2thresh (gf, width);
+          thresh[3] = spotfn_list[gf].thresh;
+        }
     }
 
   /* Initialize progress */
@@ -1821,51 +1823,51 @@ do {								\
   for (y = y1; y < y2; y += tile_width - (y % tile_width))
     {
       for (x = x1; x < x2; x += tile_width - (x % tile_width))
-	{
-	  /* snap to tile boundary */
-	  x_step = tile_width - (x % tile_width);
-	  y_step = tile_width - (y % tile_width);
-	  /* don't step off the end of the image */
-	  x_step = MIN (x_step, x2-x);
-	  y_step = MIN (y_step, y2-y);
+        {
+          /* snap to tile boundary */
+          x_step = tile_width - (x % tile_width);
+          y_step = tile_width - (y % tile_width);
+          /* don't step off the end of the image */
+          x_step = MIN (x_step, x2-x);
+          y_step = MIN (y_step, y2-y);
 
-	  /* set up the source and dest regions */
-	  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step,
-			       FALSE/*dirty*/, FALSE/*shadow*/);
+          /* set up the source and dest regions */
+          gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step,
+                               FALSE/*dirty*/, FALSE/*shadow*/);
 
-	  gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
-			       TRUE/*dirty*/, TRUE/*shadow*/);
+          gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
+                               TRUE/*dirty*/, TRUE/*shadow*/);
 
-	  /* page in the image, one tile at a time */
-	  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-	       pr != NULL;
-	       pr = gimp_pixel_rgns_process (pr))
-	    {
-	      src_row  = src_rgn.data;
-	      dest_row = dest_rgn.data;
+          /* page in the image, one tile at a time */
+          for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+               pr != NULL;
+               pr = gimp_pixel_rgns_process (pr))
+            {
+              src_row  = src_rgn.data;
+              dest_row = dest_rgn.data;
 
-	      for (row = 0; row < src_rgn.h; row++)
-		{
-		  src  = src_row;
-		  dest = dest_row;
-		  for (col = 0; col < src_rgn.w; col++)
-		    {
-		      guchar data[4];
+              for (row = 0; row < src_rgn.h; row++)
+                {
+                  src  = src_row;
+                  dest = dest_row;
+                  for (col = 0; col < src_rgn.w; col++)
+                    {
+                      guchar data[4];
 
-		      rx = (x + col) * oversample;
-		      ry = (y + row) * oversample;
+                      rx = (x + col) * oversample;
+                      ry = (y + row) * oversample;
 
-		      /* convert rx and ry to polar (r, theta) */
-		      r = sqrt (((double)rx)*rx + ((double)ry)*ry);
-		      theta = atan2 (((gdouble)ry), ((gdouble)rx));
+                      /* convert rx and ry to polar (r, theta) */
+                      r = sqrt (((double)rx)*rx + ((double)ry)*ry);
+                      theta = atan2 (((gdouble)ry), ((gdouble)rx));
 
-		      for (b = 0; b < colour_bpp; b++)
-			data[b] = src[b];
+                      for (b = 0; b < colour_bpp; b++)
+                        data[b] = src[b];
 
-		      /* do colour space conversion */
-		      switch (colourspace)
-			{
-			case CS_CMYK:
+                      /* do colour space conversion */
+                      switch (colourspace)
+                        {
+                        case CS_CMYK:
                           {
                             gint r,g,b,k;
 
@@ -1881,100 +1883,100 @@ do {								\
                             data[2] = b;
                             data[3] = k;
                           }
-			  break;
+                          break;
 
-			case CS_INTENSITY:
-			  data[3] = data[0]; /* save orig for later */
-			  data[0] = GIMP_RGB_INTENSITY (data[0],
+                        case CS_INTENSITY:
+                          data[3] = data[0]; /* save orig for later */
+                          data[0] = GIMP_RGB_INTENSITY (data[0],
                                                         data[1],
                                                         data[2]) + 0.5;
-			  break;
+                          break;
 
-			default:
-			  break;
-			}
+                        default:
+                          break;
+                        }
 
-		      for (b = 0; b < cspace_nchans[colourspace]; b++)
-			{
-			  rx = RINT (r * cos (theta + rot[b]));
-			  ry = RINT (r * sin (theta + rot[b]));
+                      for (b = 0; b < cspace_nchans[colourspace]; b++)
+                        {
+                          rx = RINT (r * cos (theta + rot[b]));
+                          ry = RINT (r * sin (theta + rot[b]));
 
-			  /* Make sure rx and ry are positive and within
-			   * the range 0 .. width-1 (incl).  Can't use %
-			   * operator, since its definition on negative
-			   * numbers is not helpful.  Can't use ABS(),
-			   * since that would cause reflection about the
-			   * x- and y-axes.  Relies on integer division
-			   * rounding towards zero. */
-			  rx -= ((rx - ISNEG (rx) * (width-1)) / width) * width;
-			  ry -= ((ry - ISNEG (ry) * (width-1)) / width) * width;
+                          /* Make sure rx and ry are positive and within
+                           * the range 0 .. width-1 (incl).  Can't use %
+                           * operator, since its definition on negative
+                           * numbers is not helpful.  Can't use ABS(),
+                           * since that would cause reflection about the
+                           * x- and y-axes.  Relies on integer division
+                           * rounding towards zero. */
+                          rx -= ((rx - ISNEG (rx) * (width-1)) / width) * width;
+                          ry -= ((ry - ISNEG (ry) * (width-1)) / width) * width;
 
-			  {
-			    guint32 sum = 0;
-			    gint sx, sy;
-			    gint tx, ty;
-			    for (sy = -oversample/2; sy <= oversample/2; sy++)
-			      for (sx = -oversample/2; sx <= oversample/2; sx++)
-				{
-				  tx = rx+sx;
-				  ty = ry+sy;
-				  while (tx < 0)  tx += width;
-				  while (ty < 0)  ty += width;
-				  while (tx >= width)  tx -= width;
-				  while (ty >= width)  ty -= width;
-				  if (data[b] > THRESHn(b, tx, ty))
-				    sum += 0xff * BARTLETT(sx, sy);
-				}
-			    sum /= w002;
-			    data[b] = sum;
-			  }
-			}
-		      if (has_alpha)
-			dest[colour_bpp] = src[colour_bpp];
+                          {
+                            guint32 sum = 0;
+                            gint sx, sy;
+                            gint tx, ty;
+                            for (sy = -oversample/2; sy <= oversample/2; sy++)
+                              for (sx = -oversample/2; sx <= oversample/2; sx++)
+                                {
+                                  tx = rx+sx;
+                                  ty = ry+sy;
+                                  while (tx < 0)  tx += width;
+                                  while (ty < 0)  ty += width;
+                                  while (tx >= width)  tx -= width;
+                                  while (ty >= width)  ty -= width;
+                                  if (data[b] > THRESHn(b, tx, ty))
+                                    sum += 0xff * BARTLETT(sx, sy);
+                                }
+                            sum /= w002;
+                            data[b] = sum;
+                          }
+                        }
+                      if (has_alpha)
+                        dest[colour_bpp] = src[colour_bpp];
 
-		      /* re-pack the colours into RGB */
-		      switch (colourspace)
-			{
-			case CS_CMYK:
-			  data[0] = CLAMPED_ADD (data[0], data[3]);
-			  data[1] = CLAMPED_ADD (data[1], data[3]);
-			  data[2] = CLAMPED_ADD (data[2], data[3]);
-			  data[0] = 0xff - data[0];
-			  data[1] = 0xff - data[1];
-			  data[2] = 0xff - data[2];
-			  break;
+                      /* re-pack the colours into RGB */
+                      switch (colourspace)
+                        {
+                        case CS_CMYK:
+                          data[0] = CLAMPED_ADD (data[0], data[3]);
+                          data[1] = CLAMPED_ADD (data[1], data[3]);
+                          data[2] = CLAMPED_ADD (data[2], data[3]);
+                          data[0] = 0xff - data[0];
+                          data[1] = 0xff - data[1];
+                          data[2] = 0xff - data[2];
+                          break;
 
-			case CS_INTENSITY:
-			  if (has_alpha)
-			    {
-			      dest[colour_bpp] = data[0];
-			      data[0] = 0xff;
-			    }
-			  data[1] = data[1] * data[0] / 0xff;
-			  data[2] = data[2] * data[0] / 0xff;
-			  data[0] = data[3] * data[0] / 0xff;
-			  break;
+                        case CS_INTENSITY:
+                          if (has_alpha)
+                            {
+                              dest[colour_bpp] = data[0];
+                              data[0] = 0xff;
+                            }
+                          data[1] = data[1] * data[0] / 0xff;
+                          data[2] = data[2] * data[0] / 0xff;
+                          data[0] = data[3] * data[0] / 0xff;
+                          break;
 
-			default:
-			  /* no other special cases */
-			  break;
-			}
+                        default:
+                          /* no other special cases */
+                          break;
+                        }
 
-		      for (b = 0; b < colour_bpp; b++)
-			dest[b] = data[b];
+                      for (b = 0; b < colour_bpp; b++)
+                        dest[b] = data[b];
 
-		      src  += src_rgn.bpp;
-		      dest += dest_rgn.bpp;
-		    }
-		  src_row  += src_rgn.rowstride;
-		  dest_row += dest_rgn.rowstride;
-		}
+                      src  += src_rgn.bpp;
+                      dest += dest_rgn.bpp;
+                    }
+                  src_row  += src_rgn.rowstride;
+                  dest_row += dest_rgn.rowstride;
+                }
 
-	      /* Update progress */
-	      progress += src_rgn.w * src_rgn.h;
-	      gimp_progress_update ((double) progress / (double) max_progress);
-	    }
-	}
+              /* Update progress */
+              progress += src_rgn.w * src_rgn.h;
+              gimp_progress_update ((double) progress / (double) max_progress);
+            }
+        }
     }
 
 #ifdef TIMINGS

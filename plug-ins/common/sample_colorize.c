@@ -26,11 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -112,13 +107,13 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *dialog;
-  GtkWidget *sample_preview;
-  GtkWidget *dst_preview;
-  GtkWidget *sample_colortab_preview;
-  GtkWidget *sample_drawarea;
-  GtkWidget *in_lvl_gray_preview;
-  GtkWidget *in_lvl_drawarea;
+  GtkWidget     *dialog;
+  GtkWidget     *sample_preview;
+  GtkWidget     *dst_preview;
+  GtkWidget     *sample_colortab_preview;
+  GtkWidget     *sample_drawarea;
+  GtkWidget     *in_lvl_gray_preview;
+  GtkWidget     *in_lvl_drawarea;
   GtkAdjustment *adj_lvl_in_min;
   GtkAdjustment *adj_lvl_in_max;
   GtkAdjustment *adj_lvl_in_gamma;
@@ -128,11 +123,11 @@ typedef struct
   gint           active_slider;
   gint           slider_pos[5];  /*  positions for the five sliders  */
 
-  gint32     enable_preview_update;
-  gint32     sample_show_selection;
-  gint32     dst_show_selection;
-  gint32     sample_show_color;
-  gint32     dst_show_color;
+  gint32         enable_preview_update;
+  gint32         sample_show_selection;
+  gint32         dst_show_selection;
+  gint32         sample_show_color;
+  gint32         dst_show_color;
 }   t_samp_interface;
 
 
@@ -157,24 +152,24 @@ typedef struct
 typedef struct
 {
    GimpDrawable *drawable;
-   void      *sel_gdrw;
+   void         *sel_gdrw;
    GimpPixelRgn  pr;
-   gint       x1;
-   gint       y1;
-   gint       x2;
-   gint       y2;
-   gint       index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
-   gint       bpp;
+   gint          x1;
+   gint          y1;
+   gint          x2;
+   gint          y2;
+   gint          index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
+   gint          bpp;
    GimpTile     *tile;
-   gint       tile_row;
-   gint       tile_col;
-   gint       tile_width;
-   gint       tile_height;
-   gint       tile_dirty;
-   gint       shadow;
-   gint32     seldeltax;
-   gint32     seldeltay;
-   gint32     tile_swapcount;
+   gint          tile_row;
+   gint          tile_col;
+   gint          tile_width;
+   gint          tile_height;
+   gint          tile_dirty;
+   gint          shadow;
+   gint32        seldeltax;
+   gint32        seldeltay;
+   gint32        tile_swapcount;
 } t_GDRW;
 
 /*
@@ -666,7 +661,7 @@ static void
 p_refresh_dst_preview (GtkWidget *preview,
                        guchar    *src_buffer)
 {
-  guchar  l_rowbuf[4 * PREVIEW_SIZE_X];
+  guchar  l_allrowsbuf[3 * PREVIEW_SIZE_X * PREVIEW_SIZE_Y];
   guchar *l_ptr;
   guchar *l_src_ptr;
   guchar  l_lum;
@@ -678,9 +673,10 @@ p_refresh_dst_preview (GtkWidget *preview,
   l_preview_bpp = PREVIEW_BPP;
   l_src_bpp = PREVIEW_BPP +1;   /* 3 colors + 1 maskbyte */
   l_src_ptr = src_buffer;
+
+  l_ptr = l_allrowsbuf;
   for(l_y = 0; l_y < PREVIEW_SIZE_Y; l_y++)
     {
-      l_ptr = &l_rowbuf[0];
       for(l_x = 0; l_x < PREVIEW_SIZE_X; l_x++)
         {
           if((l_maskbyte = l_src_ptr[3]) == 0)
@@ -716,39 +712,22 @@ p_refresh_dst_preview (GtkWidget *preview,
                 }
             }
           l_ptr += l_preview_bpp;
-       l_src_ptr += l_src_bpp;
-     }
-
-     gtk_preview_draw_row (GTK_PREVIEW (preview),
-                           &l_rowbuf[0], 0, l_y, PREVIEW_SIZE_X);
-  }
-
-  gtk_widget_queue_draw (preview);
+          l_src_ptr += l_src_bpp;
+        }
+    }
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                          GIMP_RGB_IMAGE,
+                          l_allrowsbuf,
+                          PREVIEW_SIZE_X * 3);
 }        /* end p_refresh_dst_preview */
 
 static void
 p_clear_preview (GtkWidget *preview)
 {
-  gint    l_x, l_y;
-  guchar  l_rowbuf[4 * PREVIEW_SIZE_X];
-  guchar *l_ptr;
-
-  l_ptr = &l_rowbuf[0];
-  for (l_x = 0; l_x < PREVIEW_SIZE_X; l_x++)
-    {
-      l_ptr[0] = 170;
-      l_ptr[1] = 170;
-      l_ptr[2] = 170;
-      l_ptr += PREVIEW_BPP;
-    }
-
-  for (l_y = 0; l_y < PREVIEW_SIZE_Y; l_y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW(preview),
-                            &l_rowbuf[0], 0, l_y, PREVIEW_SIZE_X);
-    }
-
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_fill (GIMP_PREVIEW_AREA (preview),
+                          0, 0, PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                          170, 170, 170);
 }        /* end p_clear_preview */
 
 static void
@@ -758,7 +737,7 @@ p_update_pv (GtkWidget *preview,
              guchar    *dst_buffer,
              gint       is_color)
 {
-  guchar  l_rowbuf[4 * PREVIEW_SIZE_X];
+  guchar  l_allrowsbuf[4 * PREVIEW_SIZE_X * PREVIEW_SIZE_Y];
   guchar  l_pixel[4];
   guchar *l_ptr;
   gint    l_x, l_y;
@@ -770,7 +749,6 @@ p_update_pv (GtkWidget *preview,
   guchar  l_dummy[4];
   guchar  l_maskbytes[4];
   gint    l_dstep;
-  guchar  l_check;
   guchar  l_alpha;
 
 
@@ -827,10 +805,9 @@ p_update_pv (GtkWidget *preview,
 
 
   /* render preview */
+  l_ptr = l_allrowsbuf;
   for (l_y = 0; l_y < PREVIEW_SIZE_Y; l_y++)
     {
-      l_ptr = &l_rowbuf[0];
-
       for(l_x = 0; l_x < PREVIEW_SIZE_X; l_x++)
         {
           if (gdrw->drawable)
@@ -852,80 +829,38 @@ p_update_pv (GtkWidget *preview,
             }
 
           l_alpha = l_pixel[gdrw->index_alpha];
-          if ((gdrw->index_alpha == 0)             /* has no alpha channel */
-             || (l_alpha == 255))                    /* or is full opaque */
+          if (is_color && (gdrw->bpp > 2))
             {
-              if (is_color && (gdrw->bpp > 2))
-                {
-                  l_buf_ptr[0] = l_ptr[0] = l_pixel[0];
-                  l_buf_ptr[1] = l_ptr[1] = l_pixel[1];
-                  l_buf_ptr[2] = l_ptr[2] = l_pixel[2];
-                }
-              else
-                {
-                  if(gdrw->bpp > 2)  *l_ptr = LUMINOSITY_1(l_pixel);
-                  else               *l_ptr = l_pixel[0];
-
-                  *l_buf_ptr   = *l_ptr;
-                  l_buf_ptr[1] = l_ptr[1] = *l_ptr;
-                  l_buf_ptr[2] = l_ptr[2] = *l_ptr;
-                }
-              l_buf_ptr[3] = l_maskbytes[0];
+              l_buf_ptr[0] = l_ptr[0] = l_pixel[0];
+              l_buf_ptr[1] = l_ptr[1] = l_pixel[1];
+              l_buf_ptr[2] = l_ptr[2] = l_pixel[2];
             }
           else
             {
-              if( ( l_y % (GIMP_CHECK_SIZE*2) < GIMP_CHECK_SIZE ) ^
-                  ( l_x % (GIMP_CHECK_SIZE*2) < GIMP_CHECK_SIZE ) )
-                {
-                  l_check = GIMP_CHECK_LIGHT * 255;
-                }
-              else
-                {
-                  l_check = GIMP_CHECK_DARK * 255;
-                }
+              if(gdrw->bpp > 2)  *l_ptr = LUMINOSITY_1(l_pixel);
+              else               *l_ptr = l_pixel[0];
 
-              if (l_alpha == 0)
-                {
-                  /* full transparent */
-                  *l_buf_ptr   = *l_ptr   = l_check;
-                  l_buf_ptr[1] = l_ptr[1] = l_check;
-                  l_buf_ptr[2] = l_ptr[2] = l_check;
-                }
-              else
-                {
-                  /* more or less  transparent */
-                  if (is_color && (gdrw->bpp > 2))
-                    {
-                      *l_buf_ptr    = *l_ptr   = MIX_CHANNEL(l_pixel[0], l_check, l_alpha);
-                      l_buf_ptr[1] = l_ptr[1] = MIX_CHANNEL(l_pixel[1], l_check, l_alpha);
-                      l_buf_ptr[2] = l_ptr[2] = MIX_CHANNEL(l_pixel[2], l_check, l_alpha);
-                    }
-                  else
-                    {
-                      if(gdrw->bpp > 2)  *l_ptr =  MIX_CHANNEL(LUMINOSITY_1(l_pixel), l_check, l_alpha);
-                      else               *l_ptr =  MIX_CHANNEL(l_pixel[0], l_check, l_alpha);
-
-                      *l_buf_ptr   = *l_ptr;
-                      l_buf_ptr[1] = l_ptr[1] = *l_ptr;
-                      l_buf_ptr[2] = l_ptr[2] = *l_ptr;
-                    }
-                }
-              l_buf_ptr[3] = MIN(l_maskbytes[0], l_alpha);
+              *l_buf_ptr   = *l_ptr;
+              l_buf_ptr[1] = l_ptr[1] = *l_ptr;
+              l_buf_ptr[2] = l_ptr[2] = *l_ptr;
             }
-
+          if (gdrw->index_alpha == 0)             /* has no alpha channel */
+            l_buf_ptr[3] = l_ptr[3] = 255;
+          else          
+            l_buf_ptr[3] = l_ptr[3] = MIN(l_maskbytes[0], l_alpha);
           l_buf_ptr += l_dstep;   /* advance (or stay at dummy byte) */
-          l_ptr += PREVIEW_BPP;
+          l_ptr += 4;
         }
 
-      if (dst_buffer == NULL)
-        {
-          gtk_preview_draw_row (GTK_PREVIEW(preview),
-                                &l_rowbuf[0], 0, l_y, PREVIEW_SIZE_X);
-        }
     }
 
   if (dst_buffer == NULL)
     {
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                              GIMP_RGBA_IMAGE,
+                              l_allrowsbuf,
+                              PREVIEW_SIZE_X * 4);
       gtk_widget_queue_draw (preview);
     }
 }        /* end p_update_pv */
@@ -1008,7 +943,8 @@ p_levels_erase_slider (GdkWindow *window,
 static void
 p_smp_get_colors (GtkWidget *dialog)
 {
-  gint i;
+  gint   i;
+  guchar buffer[3 * DA_WIDTH * GRADIENT_HEIGHT];
 
   p_update_preview (&g_values.sample_id);
 
@@ -1022,12 +958,15 @@ p_smp_get_colors (GtkWidget *dialog)
     }
   for (i = 0; i < GRADIENT_HEIGHT; i++)
     {
-      gtk_preview_draw_row (GTK_PREVIEW (g_di.sample_colortab_preview),
-                            g_sample_color_tab, 0, i, DA_WIDTH);
+      memcpy (buffer+i*3*DA_WIDTH, g_sample_color_tab, 3*DA_WIDTH);
     }
   p_update_preview (&g_values.dst_id);
 
-  gtk_widget_queue_draw (g_di.sample_colortab_preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (g_di.sample_colortab_preview),
+                          0, 0, DA_WIDTH, GRADIENT_HEIGHT,
+                          GIMP_RGB_IMAGE,
+                          buffer,
+                          DA_WIDTH * 3);
 }
 
 
@@ -1073,16 +1012,16 @@ p_levels_update (gint update)
     }
   if (update & INPUT_LEVELS)
     {
+      guchar buffer[DA_WIDTH * GRADIENT_HEIGHT];
       for (i = 0; i < GRADIENT_HEIGHT; i++)
         {
-          gtk_preview_draw_row (GTK_PREVIEW (g_di.in_lvl_gray_preview),
-                                &g_lvl_trans_tab[0], 0, i, DA_WIDTH);
+          memcpy (buffer+DA_WIDTH*i, g_lvl_trans_tab, DA_WIDTH);
         }
-
-      if (update & DRAW)
-        {
-          gtk_widget_queue_draw (g_di.in_lvl_gray_preview);
-        }
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (g_di.in_lvl_gray_preview),
+                              0, 0, DA_WIDTH, GRADIENT_HEIGHT,
+                              GIMP_GRAY_IMAGE,
+                              buffer,
+                              DA_WIDTH);
     }
 
   if (update & INPUT_SLIDERS)
@@ -1503,9 +1442,9 @@ p_smp_dialog (void)
                     frame, 0, 2, l_ty, l_ty + 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  g_di.dst_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (g_di.dst_preview),
-                    PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
+  g_di.dst_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (g_di.dst_preview,
+                               PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.dst_preview);
   gtk_widget_show (g_di.dst_preview);
 
@@ -1517,9 +1456,9 @@ p_smp_dialog (void)
                     frame, 3, 5, l_ty, l_ty + 1, 0, 0, 0, 0);
   gtk_widget_show (frame);
 
-  g_di.sample_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (g_di.sample_preview),
-                    PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
+  g_di.sample_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (g_di.sample_preview,
+                               PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.sample_preview);
   gtk_widget_show (g_di.sample_preview);
 
@@ -1533,9 +1472,9 @@ p_smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table),
                     frame, 0, 2, l_ty, l_ty + 1, 0, 0, 0, 0);
 
-  g_di.in_lvl_gray_preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (g_di.in_lvl_gray_preview),
-                    DA_WIDTH, GRADIENT_HEIGHT);
+  g_di.in_lvl_gray_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (g_di.in_lvl_gray_preview,
+                               DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.in_lvl_gray_preview, FALSE, TRUE, 0);
   gtk_widget_show (g_di.in_lvl_gray_preview);
@@ -1567,9 +1506,9 @@ p_smp_dialog (void)
   gtk_table_attach (GTK_TABLE (table),
                     frame, 3, 5, l_ty, l_ty + 1, 0, 0, 0, 0);
 
-  g_di.sample_colortab_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (g_di.sample_colortab_preview),
-                    DA_WIDTH, GRADIENT_HEIGHT);
+  g_di.sample_colortab_preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (g_di.sample_colortab_preview,
+                               DA_WIDTH, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.sample_colortab_preview, FALSE, TRUE, 0);
   gtk_widget_show (g_di.sample_colortab_preview);
 
