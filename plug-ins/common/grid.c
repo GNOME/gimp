@@ -344,9 +344,6 @@ doit (gint32     image_ID,
   
   if (preview_mode) 
     {
-      if (gimp_drawable_is_indexed (drawable->id))
-	return;
-
       memcpy (hcolor, grid_cfg.hcolor, 4);
       memcpy (vcolor, grid_cfg.vcolor, 4);
       memcpy (icolor, grid_cfg.icolor, 4);
@@ -486,7 +483,7 @@ doit (gint32     image_ID,
         }
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + GTK_PREVIEW (preview)->rowstride,
+	  memcpy (GTK_PREVIEW (preview)->buffer + (GTK_PREVIEW (preview)->rowstride * y),
 		  dest,
 		  GTK_PREVIEW (preview)->rowstride);
 	} 
@@ -611,9 +608,6 @@ update_preview_callback (GtkWidget *widget,
 
   drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
 
-  if (gimp_drawable_is_indexed (drawable->id))
-    return;
-
   entry = gtk_object_get_data (GTK_OBJECT (widget), "width");
   grid_cfg.hwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 0) + 0.5);
   grid_cfg.vwidth = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 1) + 0.5);
@@ -718,7 +712,6 @@ dialog (gint32     image_ID,
 		      GTK_SIGNAL_FUNC (update_preview_callback),
 		      NULL);
   gtk_container_add (GTK_CONTAINER (abox), button);
-  gtk_widget_set_sensitive (button, !gimp_drawable_is_indexed (drawable->id));
   gtk_widget_show (button);
   /* left side of the UI is done */
  
@@ -977,20 +970,11 @@ preview_widget (GDrawable *drawable)
   gint       size;
   GtkWidget *preview;
 
-  if (gimp_drawable_indexed (drawable->id))
-    {
-      preview = gtk_label_new (_("Sorry, no preview\n"
-				 "for indexed images."));
-      gtk_misc_set_padding (GTK_MISC (preview), 4, 4);
-    } 
-  else
-    {
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      fill_preview (preview, drawable);
-      size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-      preview_bits = g_malloc (size);
-      memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
-    }
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  fill_preview (preview, drawable);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
+  preview_bits = g_malloc (size);
+  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
   
   return preview;
 }

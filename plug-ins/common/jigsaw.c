@@ -2475,7 +2475,7 @@ dialog_box (void)
   GtkWidget *table;
   GtkObject *adj;
 
-  gimp_ui_init ("jigsaw", FALSE);
+  gimp_ui_init ("jigsaw", TRUE);
 
   dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
 			 gimp_standard_help_func, "filters/jigsaw.html",

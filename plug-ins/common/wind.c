@@ -839,7 +839,7 @@ dialog_box (GDrawable *drawable)
   GtkWidget *edge2;
   GtkWidget *edge3;
 
-  gimp_ui_init ("wind", FALSE);
+  gimp_ui_init ("wind", TRUE);
 
   dlg = gimp_dialog_new ( _("Wind"), "wind",
 			 gimp_standard_help_func, "filters/wind.html",

@@ -1,3 +1,14 @@
+2000-05-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/grid.c: enabled preview in indexed 
+	mode. Of course the colors do not reflect the result 
+	exactly, but it's better than nothing.
+
+	* jigsaw.c
+	* plasma.c
+	* wind.c: forgot to set preview flag to TRUE in the 
+	calls to gimp_ui_init().
+
 2000-05-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c

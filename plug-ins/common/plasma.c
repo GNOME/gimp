@@ -296,7 +296,7 @@ plasma_dialog (GDrawable *drawable)
   GtkWidget *seed;
   GtkObject *adj;
 
-  gimp_ui_init ("plasma", FALSE);
+  gimp_ui_init ("plasma", TRUE);
 
   dlg = gimp_dialog_new (_("Plasma"), "plasma",
 			 gimp_standard_help_func, "filters/plasma.html",
