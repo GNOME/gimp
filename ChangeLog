@@ -1,3 +1,7 @@
+2004-02-23  Adam Weinberger  <adamw@FreeBSD.org>
+
+	* configure.in: added "en_CA" (Canadian English) to ALL_LINGUAS.
+
 2004-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-types.h: added #defines for GimpCoords' default
