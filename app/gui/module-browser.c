@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -55,6 +56,19 @@ static const char * const statename[] = {
   "ST_UNLOAD_REQUESTED",
   "ST_UNLOADED_OK"
 };
+
+#ifdef __EMX__
+extern void gimp_color_selector_register();
+extern void gimp_color_selector_unregister();
+static struct main_funcs_struc {
+  gchar *name;
+  void (*func)();
+} gimp_main_funcs[] = {
+  { "gimp_color_selector_register", gimp_color_selector_register },
+  { "gimp_color_selector_unregister", gimp_color_selector_unregister },
+  { NULL, NULL }
+};
+#endif
 
 
 /* one of these objects is kept per-module */
@@ -385,7 +399,7 @@ valid_module_name (const char *filename)
 
   len = strlen (basename);
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(__EMX__)
   if (len < 3 + 1 + 3)
     return FALSE;
 
@@ -451,6 +465,12 @@ mod_load (module_info *mod, gboolean verbose)
       return;
     }
 
+#ifdef __EMX__
+  if (g_module_symbol (mod->module, "gimp_main_funcs", &symbol))
+    {
+      *(struct main_funcs_struc **)symbol = gimp_main_funcs;
+    }
+#endif
   /* find the module_init symbol */
   if (!g_module_symbol (mod->module, "module_init", &symbol))
     {
