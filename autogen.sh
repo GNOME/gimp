@@ -106,9 +106,6 @@ echo "Running gettextize...  Ignore non-fatal messages."
 echo "no" | gettextize --copy --force
 
 autogen_dirs="."
-#if test -z "$NO_GCG"; then
-#	autogen_dirs="$autogen_dirs tools/gcg"
-#fi
 
 for i in $autogen_dirs; do
 	echo "Processing $i..."

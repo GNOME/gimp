@@ -68,11 +68,11 @@ gimp_unit_menu_destroy (GtkObject *object)
 }
 
 static void
-gimp_unit_menu_class_init (GimpUnitMenuClass *class)
+gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass*) class;
+  object_class = (GtkObjectClass*) klass;
 
   parent_class = gtk_type_class (gtk_option_menu_get_type ());
 
@@ -87,7 +87,7 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *class)
   gtk_object_class_add_signals (object_class, gimp_unit_menu_signals, 
 				LAST_SIGNAL);
 
-  class->unit_changed = NULL;
+  klass->unit_changed = NULL;
 
   object_class->destroy = gimp_unit_menu_destroy;
 }

@@ -54,24 +54,6 @@ dnl,
 dnl if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
 dnl   with_gnu_make=yes
 dnl fi)
-dnl
-dnl AC_ARG_WITH(gcg, [  --with-gcg              build 'gcg' code generation tool],
-dnl,
-dnl with_gcg=$enable_maintainer_mode)
-dnl
-dnl if test "x$with_gcg" = xyes; then
-dnl   AC_CONFIG_SUBDIRS(tools/gcg)
-dnl fi
-dnl
-dnl AC_ARG_ENABLE(gcg-deps, [  --enable-gcg-deps       turn on dynamic gcg dependency tracking (need gcc and gnu make)],
-dnl ,
-dnl if eval "test x$GCC$with_gnu_make$with_gcg = xyesyesyes"; then
-dnl   enable_gcg_deps=yes
-dnl fi)
-dnl
-dnl AM_CONDITIONAL(WITH_GCG, test x$with_gcg = xyes)
-dnl AM_CONDITIONAL(WITH_GNU_MAKE, test x$with_gnu_make = xyes)
-dnl AM_CONDITIONAL(ENABLE_GCG_DEPS, test x$enable_gcg_deps = xyes)
 
 AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
 		    , enable_ansi=no)

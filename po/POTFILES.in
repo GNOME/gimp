@@ -19,7 +19,7 @@ app/color_balance.c
 app/color_notebook.c
 app/color_picker.c
 app/color_select.c
-app/colormap_dialog.i.c
+app/colormap_dialog.c
 app/commands.c
 app/convert.c
 app/convolve.c

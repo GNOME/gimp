@@ -66,8 +66,6 @@ struct _GimpSetClass
 };
 
 
-typedef guint GimpSetHandlerId;
-
 GtkType            gimp_set_get_type       (void);
 GimpSet          * gimp_set_new            (GtkType           type,
 					    gboolean          weak);

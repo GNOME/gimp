@@ -16,24 +16,64 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef _g_gimp_colormap_dialog_funcs
-#define _g_gimp_colormap_dialog_funcs
+#ifndef __COLORMAP_DIALOG_H__
+#define __COLORMAP_DIALOG_H__
 
-#include <colormap_dialog.t.h>
-#include <gimpset.h>
-#include <gimpimage.h>
 
-GimpColormapDialog* gimp_colormap_dialog_create (
-        GimpSet* context);
-GimpImage* gimp_colormap_dialog_image (
-	const GimpColormapDialog* colormap_dialog);
-gint gimp_colormap_dialog_col_index (
-	const GimpColormapDialog* colormap_dialog);
-typedef void (*GimpColormapDialogHandler_selected)(GimpColormapDialog*,
-	gpointer);
-void gimp_colormap_dialog_connect_selected (
-	GimpColormapDialogHandler_selected handler,
-	gpointer user_data,
-	GimpColormapDialog* colormap_dialog);
+#include <gtk/gtkdialog.h>
 
-#endif /* _g_gimp_colormap_dialog_funcs */
+
+#define GIMP_TYPE_COLORMAP_DIALOG            (gimp_colormap_dialog_get_type ())
+#define GIMP_COLORMAP_DIALOG(obj)            (GTK_CHECK_CAST((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialog))
+#define GIMP_COLORMAP_DIALOG_CLASS(klass)    (GTK_CHECK_CLASS_CAST((klass), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
+#define GIMP_IS_COLORMAP_DIALOG(obj)         (GTK_CHECK_TYPE((obj), GIMP_TYPE_COLORMAP_DIALOG))
+#define GIMP_IS_COLORMAP_DIALOG_CLASS(klass) (GTK_CHECK_CLASS_TYPE((klass), GIMP_TYPE_COLORMAP_DIALOG))
+
+
+typedef struct _GimpColormapDialog      GimpColormapDialog;
+typedef struct _GimpColormapDialogClass GimpColormapDialogClass;
+
+struct _GimpColormapDialog
+{
+  GtkDialog parent;
+
+  GimpImage        *image;
+  gint              col_index;
+  gint              dnd_col_index;
+  GtkWidget        *vbox;
+  GtkPreview       *palette;
+  GtkWidget        *image_menu;
+  GtkWidget        *popup_menu;
+  GtkOptionMenu    *option_menu;
+  GimpSet          *context;
+  guint             event_handler;
+  gint              xn;
+  gint              yn;
+  gint              cellsize;
+  GtkWidget        *index_spinbutton;
+  GtkAdjustment    *index_adjustment;
+  GtkEntry         *color_entry;
+  GimpSetHandlerId  rename_handler;
+  GimpSetHandlerId  cmap_changed_handler;
+  GtkWidget        *add_item;
+  ColorNotebook    *color_notebook;
+};
+
+struct _GimpColormapDialogClass
+{
+  GtkDialogClass parent_class;
+
+  void (* selected) (GimpColormapDialog *gcd);
+};
+
+
+GtkType              gimp_colormap_dialog_get_type (void);
+GimpColormapDialog * gimp_colormap_dialog_create   (GimpSet* context);
+
+void        gimp_colormap_dialog_selected  (GimpColormapDialog       *colormap_dialog);
+
+GimpImage * gimp_colormap_dialog_image     (const GimpColormapDialog *colormap_dialog);
+gint        gimp_colormap_dialog_col_index (const GimpColormapDialog *colormap_dialog);
+
+
+#endif /* __COLORMAP_DIALOG_H__ */

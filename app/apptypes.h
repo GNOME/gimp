@@ -345,6 +345,8 @@ typedef enum /*< skip >*/
 typedef struct _GimpObject          GimpObject;
 
 typedef struct _GimpSet             GimpSet;
+typedef        guint                GimpSetHandlerId;
+
 typedef struct _GimpList            GimpList;
 
 typedef struct _GimpContext         GimpContext;
@@ -382,6 +384,8 @@ typedef struct _BezierPoint         BezierPoint;
 typedef struct _BezierSelect        BezierSelect;
 
 typedef struct _BoundSeg            BoundSeg;
+
+typedef struct _ColorNotebook       ColorNotebook;
 
 typedef struct _DrawCore            DrawCore;
 

@@ -29,10 +29,4 @@ INCLUDES = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-#if WITH_GCG
-#D_gcg=gcg
-#else 
-#D_gcg=
-#endif
-
-SUBDIRS = $(D_pdbgen) $(D_authorgen) #$(D_gcg)
+SUBDIRS = $(D_pdbgen) $(D_authorgen)

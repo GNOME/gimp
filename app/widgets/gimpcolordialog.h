@@ -36,8 +36,6 @@ typedef void (* ColorNotebookCallback) (gint               red,
 
 typedef struct _ColorSelectorInstance ColorSelectorInstance;
 
-typedef struct _ColorNotebook ColorNotebook;
-
 struct _ColorNotebook
 {
   GtkWidget             *shell;

@@ -29,7 +29,7 @@
 #include "about_dialog.h"
 #include "app_procs.h"
 #include "brush_select.h"
-#include "colormap_dialog.i.h"
+#include "colormap_dialog.h"
 #include "color_area.h"
 #include "commands.h"
 #include "convert.h"
@@ -1185,13 +1185,13 @@ dialogs_palette_cmd_callback (GtkWidget *widget,
 }
 
 static void
-dialogs_indexed_palette_select_callback (ColormapDialog *dialog,
-					 gpointer        data)
+dialogs_indexed_palette_select_callback (GimpColormapDialog *dialog,
+					 gpointer            data)
 {
   guchar    *color;
-  GimpImage *image = colormap_dialog_image (dialog);
+  GimpImage *image = gimp_colormap_dialog_image (dialog);
 
-  color = &image->cmap[colormap_dialog_col_index (dialog) * 3];
+  color = &image->cmap[gimp_colormap_dialog_col_index (dialog) * 3];
 
   if (active_color == FOREGROUND)
     gimp_context_set_foreground (gimp_context_get_user (),
@@ -1205,16 +1205,22 @@ void
 dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
-  static ColormapDialog *cmap_dlg;
+  static GimpColormapDialog *cmap_dlg;
 
   if (!cmap_dlg)
     {
-      cmap_dlg = colormap_dialog_create (image_context);
-      colormap_dialog_connect_selected (dialogs_indexed_palette_select_callback,
-					NULL, cmap_dlg);
+      cmap_dlg = gimp_colormap_dialog_create (image_context);
+
+      gtk_signal_connect
+	(GTK_OBJECT (cmap_dlg), "selected",
+	 GTK_SIGNAL_FUNC (dialogs_indexed_palette_select_callback),
+	 NULL);
     }
 
-  gtk_widget_show (GTK_WIDGET (cmap_dlg));
+  if (! GTK_WIDGET_VISIBLE (cmap_dlg))
+    gtk_widget_show (GTK_WIDGET (cmap_dlg));
+  else
+    gdk_window_raise (GTK_WIDGET (cmap_dlg)->window);
 }
 
 void
