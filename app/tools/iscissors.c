@@ -191,7 +191,7 @@ static IScissorsOptions *iscissors_options = NULL;
 
 /*  Local function prototypes  */
 
-static void   selection_to_bezier	    (GtkWidget* , gpointer);
+static void   selection_to_bezier	(GtkWidget* , gpointer);
 
 static void   iscissors_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_button_release  (Tool *, GdkEventButton *, gpointer);
@@ -321,7 +321,7 @@ iscissors_selection_options (void)
   gtk_widget_show (label);
 
   /*  the antialias toggle button  */
-  antialias_toggle = gtk_toggle_button_new_with_label ("Antialiasing");
+  antialias_toggle = gtk_check_button_new_with_label ("Antialiasing");
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(antialias_toggle),
 			       options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
@@ -331,7 +331,7 @@ iscissors_selection_options (void)
   gtk_widget_show (antialias_toggle);
 
   /*  the feather toggle button  */
-  feather_toggle = gtk_toggle_button_new_with_label ("Feather");
+  feather_toggle = gtk_check_button_new_with_label ("Feather");
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(feather_toggle),
 			       options->feather);
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);

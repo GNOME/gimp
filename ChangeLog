@@ -1,3 +1,8 @@
+Wed Apr 15 17:40:55 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/iscissors.c: changed toggle_buttons to check_buttons since
+	all tools use them in the options dialog
+
 Wed Apr 15 02:44:58 1998  George Lebl  <jirka@5z.com>
 
 	* plug-ins/film/film.c: del_list_item_callback was calling
