@@ -521,8 +521,8 @@ _gp_tile_data_destroy (WireMessage *msg)
   GPTileData *tile_data;
 
   tile_data = msg->data;
-  if (tile_data->data)
-    g_free (tile_data->data);
+
+  g_free (tile_data->data);
   g_free (tile_data);
 }
 
@@ -561,6 +561,7 @@ _gp_proc_run_destroy (WireMessage *msg)
 
   proc_run = msg->data;
   _gp_params_destroy (proc_run->params, proc_run->nparams);
+
   g_free (proc_run->name);
   g_free (proc_run);
 }
@@ -597,6 +598,8 @@ _gp_proc_return_destroy (WireMessage *msg)
 
   proc_return = msg->data;
   _gp_params_destroy (proc_return->params, proc_return->nparams);
+
+  g_free (proc_return->name);
   g_free (proc_return);
 }
 
