@@ -359,10 +359,16 @@ gimage_mask_float_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if (drawable == NULL)                                        
-        success = FALSE;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
   if (success)
     {
@@ -969,9 +975,14 @@ gimage_mask_layer_alpha_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)) == NULL)
-        success = FALSE;
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (GIMP_DRAWABLE(layer));
+        {
+	  gimage = drawable_gimage (GIMP_DRAWABLE(layer));
+	}
     }
   if (success)
     gimage_mask_layer_alpha (gimage, layer);
@@ -1025,7 +1036,10 @@ gimage_mask_load_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)) == NULL)
-	success = FALSE;
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
         {
 	  success = (drawable_width (GIMP_DRAWABLE(channel)) == gimage->width && 

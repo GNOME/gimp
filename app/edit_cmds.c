@@ -51,10 +51,15 @@ edit_cut_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
   /*  create the new image  */
   if (success)
@@ -112,10 +117,15 @@ edit_copy_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
 
   /*  create the new image  */
@@ -176,10 +186,15 @@ edit_paste_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
   if (success)
     {
@@ -260,10 +275,15 @@ edit_clear_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
 
   /*  create the new image  */
@@ -321,10 +341,15 @@ edit_fill_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
 
   /*  create the new image  */
@@ -383,10 +408,15 @@ edit_stroke_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
+      if (drawable == NULL)
+        {
+	  success = FALSE;
+	  gimage  = NULL;
+	}
       else
-        gimage = drawable_gimage (drawable);
+        {
+	  gimage = drawable_gimage (drawable);
+	}
     }
 
   /*  create the new image  */

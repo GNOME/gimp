@@ -1,3 +1,9 @@
+Mon Nov 16 21:46:39 1998  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/edit_cmds.c
+	* app/gimage_mask_cmds.c: fix warnings about using uninitialized
+	gimage args + one real uninited variable bug.
+
 Mon Nov 16 19:04:54 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/gimage_cmds.[ch]
