@@ -3,6 +3,8 @@
 	* Makefile.am
 	* pdb/*: removed as we use gtk-doc now.
 
+	* README: updated.
+
 2001-06-08  Michael Natterer  <mitch@gimp.org>
 
 	* pdb/Makefile.am: fixed location of the *_cmds.c files.
