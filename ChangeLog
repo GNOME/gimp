@@ -1,3 +1,11 @@
+1998-11-15  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp.spec: changed wilbur to wilber in RPM/*.xpm,
+	updated gimp.spec accordingly. Can someone like Marc
+	check that I didnt break anything, I tried to be very 
+	gentle :)
+	
+
 Sun Nov 15 13:09:43 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* app/blend.c: allow the use of DIVIDE_MODE.

@@ -15,6 +15,11 @@ Requires: gtk+ >= 1.1.0
 
 
 %changelog
+* Sun Nov 15 1998 Tuomas Kuosmanen <tigert@gimp.org>
+- renamed wilbur to be wilber like he's always been :)
+- updated gimp.wmconfig accordingly, as well as this file 
+  below (the part that installs the xpm's)
+
 * Mon Apr 20 1998 Marc Ewing <marc@redhat.com>
 - include *.xpm and .wmconfig in CVS source
 - removed explicit glibc require
@@ -128,8 +133,8 @@ make prefix=$RPM_BUILD_ROOT/usr install
 #gzip -9 $RPM_BUILD_ROOT/usr/info/*
 strip $RPM_BUILD_ROOT/usr/bin/gimp
 install RPM/gimp.wmconfig $RPM_BUILD_ROOT/etc/X11/wmconfig/gimp
-install RPM/wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/
-install RPM/mini-wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/mini/
+install RPM/wilber.xpm $RPM_BUILD_ROOT/usr/share/icons/
+install RPM/mini-wilber.xpm $RPM_BUILD_ROOT/usr/share/icons/mini/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
