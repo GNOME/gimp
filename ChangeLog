@@ -1,3 +1,9 @@
+2003-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-new-dialog.c: added Portrait/Landscape radio
+	buttons which follow the state of the width/height entered and can
+	be used to swap them.
+
 2003-04-10  Sven Neumann  <sven@gimp.org>
 
 	* etc/templaterc: added more standard paper sizes.

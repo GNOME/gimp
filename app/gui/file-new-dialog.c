@@ -37,6 +37,7 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainermenuimpl.h"
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -54,6 +55,9 @@ typedef struct
   GtkWidget    *confirm_dialog;
 
   GtkWidget    *template_menu;
+
+  GtkWidget    *aspect_button;
+  gboolean      block_aspect;
 
   GtkWidget    *size_se;
   GtkWidget    *memsize_label;
@@ -75,6 +79,8 @@ static void   file_new_cancel_callback (GtkWidget         *widget,
                                         NewImageInfo      *info);
 static void   file_new_reset_callback  (GtkWidget         *widget,
                                         NewImageInfo      *info);
+static void   file_new_aspect_callback (GtkWidget         *widget,
+                                        NewImageInfo      *info);
 static void   file_new_template_notify (GimpTemplate      *template,
                                         GParamSpec        *param_spec,
                                         NewImageInfo      *info);
@@ -94,6 +100,7 @@ file_new_dialog_create (Gimp      *gimp,
   NewImageInfo *info;
   GtkWidget    *main_vbox;
   GtkWidget    *hbox;
+  GtkWidget    *hbox2;
   GtkWidget    *vbox;
   GtkWidget    *abox;
   GtkWidget    *frame;
@@ -147,19 +154,16 @@ file_new_dialog_create (Gimp      *gimp,
 		      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("From _Template:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   optionmenu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
-  gtk_widget_show (optionmenu);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("From _Template:"),  1.0, 0.5,
+                             optionmenu, 1, FALSE);
 
   info->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), info->template_menu);
@@ -283,17 +287,26 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (spinbutton);
 
   /*  width in pixels  */
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 0, 1);
-  gtk_widget_show (abox);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 1);
+  gtk_widget_show (hbox);
 
   spinbutton2 = gimp_spin_button_new (&adjustment,
                                      1, 1, 1, 1, 10, 0,
                                      1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton2), SB_WIDTH);
   /*  add the "width in pixels" spinbutton to the main table  */
-  gtk_container_add (GTK_CONTAINER (abox), spinbutton2);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton2);
+
+  hbox2 = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
+                                   "gimp", GTK_ICON_SIZE_MENU,
+                                   G_CALLBACK (file_new_aspect_callback),
+                                   info,
+                                   &info->aspect_button);
+  gtk_widget_hide (info->aspect_button); /* hide "square" */
+  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
 
   /*  register the width spinbuttons with the sizeentry  */
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (info->size_se),
@@ -448,10 +461,59 @@ file_new_reset_callback (GtkWidget    *widget,
 }
 
 static void
+file_new_aspect_callback (GtkWidget    *widget,
+                          NewImageInfo *info)
+{
+  if (! info->block_aspect && GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      gint    width;
+      gint    height;
+      gdouble xresolution;
+      gdouble yresolution;
+
+      width       = info->template->width;
+      height      = info->template->height;
+      xresolution = info->template->xresolution;
+      yresolution = info->template->yresolution;
+
+      if (info->template->width == info->template->height)
+        {
+          info->block_aspect = TRUE;
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->aspect_button),
+                                       GINT_TO_POINTER (GIMP_ASPECT_SQUARE));
+          info->block_aspect = FALSE;
+          return;
+       }
+
+      g_signal_handlers_block_by_func (info->template,
+                                       file_new_template_notify,
+                                       info);
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+                                      yresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+                                      xresolution, FALSE);
+
+      g_object_set (info->template,
+                    "width",       height,
+                    "height",      width,
+                    "xresolution", yresolution,
+                    "yresolution", xresolution,
+                    NULL);
+
+      g_signal_handlers_unblock_by_func (info->template,
+                                         file_new_template_notify,
+                                         info);
+    }
+}
+
+static void
 file_new_template_notify (GimpTemplate *template,
                           GParamSpec   *param_spec,
                           NewImageInfo *info)
 {
+  GimpAspectType aspect;
+
   if (param_spec)
     {
       if (! strcmp (param_spec->name, "xresolution"))
@@ -483,6 +545,18 @@ file_new_template_notify (GimpTemplate *template,
       gtk_widget_set_sensitive (info->ok_button,
                                 ! template->initial_size_too_large);
     }
+
+  if (info->template->width > info->template->height)
+    aspect = GIMP_ASPECT_LANDSCAPE;
+  else if (info->template->height > info->template->width)
+    aspect = GIMP_ASPECT_PORTRAIT;
+  else
+    aspect = GIMP_ASPECT_SQUARE;
+
+  info->block_aspect = TRUE;
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->aspect_button),
+                               GINT_TO_POINTER (aspect));
+  info->block_aspect = FALSE;
 }
 
 static void
