@@ -1217,10 +1217,42 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  gsef = (GimpSizeEntryField*) gse->fields->data;
+  gsef = gse->fields->data;
+  if (gsef)
+    gtk_widget_grab_focus (gse->show_refval ?
+                           gsef->refval_spinbutton : gsef->value_spinbutton);
+}
 
-  gtk_widget_grab_focus (gse->show_refval ?
-			 gsef->refval_spinbutton : gsef->value_spinbutton);
+/**
+ * gimp_size_entry_set_activates_default:
+ * @gse: A #GimpSizeEntr
+ * @setting: %TRUE to activate window's default widget on Enter keypress
+ *
+ * Iterates over all entries in the #GimpSizeEntry and calls
+ * gtk_entry_set_activates_default() on them.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
+                                       gboolean       setting)
+{
+  GSList *list;
+
+  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+
+  for (list = gse->fields; list; list = g_slist_next (list))
+    {
+      GimpSizeEntryField *gsef = list->data;
+
+      if (gsef->value_spinbutton)
+        gtk_entry_set_activates_default (GTK_ENTRY (gsef->value_spinbutton),
+                                         setting);
+
+      if (gsef->refval_spinbutton)
+        gtk_entry_set_activates_default (GTK_ENTRY (gsef->refval_spinbutton),
+                                         setting);
+    }
 }
 
 /**

@@ -83,6 +83,7 @@ image_new_dialog_new (Gimp *gimp)
   ImageNewDialog *dialog;
   GtkWidget      *main_vbox;
   GtkWidget      *table;
+  GimpSizeEntry  *entry;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -143,6 +144,10 @@ image_new_dialog_new (Gimp *gimp)
   dialog->editor = gimp_template_editor_new (dialog->template, gimp, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
+
+  entry = GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se);
+  gimp_size_entry_set_activates_default (entry, TRUE);
+  gimp_size_entry_grab_focus (entry);
 
   return dialog->dialog;
 }
