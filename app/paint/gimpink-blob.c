@@ -24,12 +24,12 @@
 #include "blob.h"
 #include <glib.h>
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "appenv.h"
+#include "libgimp/gimpmath.h"
 
 static Blob *
 blob_new (int y, int height)

@@ -18,13 +18,14 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <glib.h>
 
 #include "appenv.h"
 #include "gimplut.h"
 #include "gimphistogram.h"
+
+#include "libgimp/gimpmath.h"
 
 /* ---------- Brightness/Contrast -----------*/
 

@@ -17,8 +17,8 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include "appenv.h"
+#include "libgimp/gimpmath.h"
 #include "color_transfer.h"
 
 /*  for lightening  */
