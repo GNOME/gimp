@@ -20,6 +20,8 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "gdisplay.h"
+#include "gimpcontext.h"
+#include "gimpset.h"
 #include "gimpui.h"
 #include "gximage.h"
 #include "info_dialog.h"
@@ -67,6 +69,7 @@ static gchar *visual_classes[] =
   N_("Direct Color"),
 };
 
+static gchar * info_window_title(GDisplay   *gdisp);
 
 static void
 get_shades (GDisplay *gdisp,
@@ -117,11 +120,16 @@ info_window_image_rename_callback (GimpImage *gimage,
 {
   InfoDialog *id;
   gchar *title;
+  GDisplay * gdisp;
+  InfoWinData *iwd;
 
   id = (InfoDialog *) data;
 
-  title = g_strdup_printf (_("%s: Window Info"),
-			   g_basename (gimage_filename (gimage)));
+  iwd = (InfoWinData *) id->user_data;
+
+  gdisp = (GDisplay *) iwd->gdisp;
+
+  title = info_window_title(gdisp);
   gtk_window_set_title (GTK_WINDOW (id->shell), title);
   g_free (title);
 }
@@ -288,7 +296,7 @@ info_window_create (GDisplay *gdisp)
   type = gimage_base_type (gdisp->gimage);
 
   /*  create the info dialog  */
-  title_buf = g_strdup_printf (_("%s: Window Info"), title);
+  title_buf = info_window_title(gdisp);
   info_win = info_dialog_notebook_new (title_buf,
 				       gimp_standard_help_func,
 				       "dialogs/info_window.html");
@@ -341,7 +349,8 @@ info_window_create (GDisplay *gdisp)
 			   iwd->shades_str);
 
   /*  update the fields  */
-  info_window_update (info_win);
+  /*gdisp->window_info_dialog = info_win;*/
+  info_window_update (gdisp);
 
   /*  Add extra tabs  */
   info_window_image_preview_book (info_win);
@@ -354,23 +363,118 @@ info_window_create (GDisplay *gdisp)
   return info_win;
 }
 
+static InfoDialog *info_window_auto = NULL;
+
+static gchar *
+info_window_title(GDisplay   *gdisp)
+{
+  char       *title;
+  gchar       *title_buf;
+  
+  title = g_basename (gimage_filename (gdisp->gimage));
+  
+  /*  create the info dialog  */
+  title_buf = g_strdup_printf (_("Window Info:%s-%d.%d"), 
+			       title,
+			       pdb_image_to_id (gdisp->gimage),
+			       gdisp->instance);
+  
+  return title_buf;
+}
+
+static void
+info_window_change_display (GimpContext *context, /* NOT USED */
+			    GDisplay    *newdisp,
+			    gpointer     data /* Not used */)
+{
+  GDisplay * gdisp = newdisp;
+  GDisplay * old_gdisp;
+  GimpImage * gimage;
+  InfoWinData *iwd;
+
+  iwd = (InfoWinData *) info_window_auto->user_data;
+
+  old_gdisp = (GDisplay *) iwd->gdisp;
+
+  if (!info_window_auto || gdisp == old_gdisp || !gdisp)
+    {
+      return;
+    }
+
+  gimage = gdisp->gimage;
+
+  if (gimage && gimp_set_have (image_context, gimage))
+    {
+      iwd->gdisp = gdisp;
+      info_window_update(gdisp);
+    }
+}
+
+void
+info_window_follow_auto()
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active (); 
+  
+  if (!gdisp) 
+    return;
+
+  if(!info_window_auto)
+    {
+      info_window_auto = info_window_create ((void *) gdisp);
+      gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), "display_changed",
+			  GTK_SIGNAL_FUNC (info_window_change_display), NULL);
+      info_window_update(gdisp); /* Update to include the info */
+    }
+
+  info_dialog_popup (info_window_auto);
+  /*
+  iwd = (NavWinData *)nav_window_auto->user_data;
+  gtk_widget_set_sensitive(nav_window_auto->vbox,TRUE);
+  iwd->frozen = FALSE;
+  */
+}
+
 void  
-info_window_update_RGB  (InfoDialog  *info_win,
+info_window_update_RGB  (GDisplay *gdisp,
 			 gdouble      tx,
 			 gdouble      ty)
 {
   InfoWinData *iwd;
-  GDisplay *gdisp;
   gchar buff[5];
   guchar *color;
   gint has_alpha;
   gint sample_type;
+  InfoDialog *info_win = gdisp->window_info_dialog;
+  gboolean force_update = FALSE;
+
+  if(!info_win && info_window_auto != NULL)
+    {
+      info_win = info_window_auto;
+    }
 
   if (!info_win)
     return;
 
   iwd = (InfoWinData *) info_win->user_data;
-  gdisp = iwd->gdisp;
+
+  if(iwd->gdisp != gdisp)
+    force_update = TRUE;
+
+  iwd->gdisp = gdisp;
+
+  if(force_update == TRUE)
+    {
+      gchar       *title_buf;
+      info_window_update(gdisp);
+      title_buf = info_window_title(gdisp);
+      
+      gtk_window_set_title (GTK_WINDOW (info_window_auto->shell), title_buf);
+      
+      g_free (title_buf);
+    }
+
 
   if (!iwd || iwd->showingPreview == FALSE)
     return;
@@ -414,6 +518,13 @@ void
 info_window_free (InfoDialog *info_win)
 {
   InfoWinData *iwd;
+  extern gint gimage_image_count (void);
+
+  if(!info_win && info_window_auto)
+    {
+      gtk_widget_set_sensitive(info_window_auto->vbox,FALSE);
+      return;
+    }
 
   iwd = (InfoWinData *) info_win->user_data;
 
@@ -424,17 +535,35 @@ info_window_free (InfoDialog *info_win)
 }
 
 void
-info_window_update (InfoDialog *info_win)
+info_window_update (GDisplay *gdisp)
 {
   InfoWinData *iwd;
-  GDisplay    *gdisp;
   gint         type;
   gdouble      unit_factor;
   gint         unit_digits;
   gchar        format_buf[32];
+  InfoDialog *info_win = gdisp->window_info_dialog;
+
+  if(!info_win && info_window_auto != NULL)
+    {
+      info_win = info_window_auto;
+    }
+
+  if (!info_win)
+    return;
 
   iwd = (InfoWinData *) info_win->user_data;
-  gdisp = iwd->gdisp;
+
+  /* Make it sensitive... */
+  if(info_window_auto)
+    gtk_widget_set_sensitive(info_window_auto->vbox,TRUE);
+
+  /* If doing info_window_auto then return if this display
+   * is not the one we are showing.
+   */
+
+  if(info_window_auto && iwd->gdisp != gdisp)
+     return;
 
   /*  width and height  */
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);

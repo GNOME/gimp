@@ -557,10 +557,18 @@ view_info_window_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  if (! gdisp->window_info_dialog)
-    gdisp->window_info_dialog = info_window_create ((void *) gdisp);
+  if (!info_window_follows_mouse) 
+    {
+      if (! gdisp->window_info_dialog)
+	gdisp->window_info_dialog = info_window_create ((void *) gdisp);
+      info_window_update(gdisp);
+      info_dialog_popup (gdisp->window_info_dialog);
+    }
+  else
+    {
+      info_window_follow_auto();
+    }
 
-  info_dialog_popup (gdisp->window_info_dialog);
 }
 
 void

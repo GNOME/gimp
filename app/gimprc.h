@@ -83,6 +83,7 @@ extern int       thumbnail_mode;
 extern int	 trust_dirty_flag;
 extern int       use_help;
 extern int       nav_window_per_display;
+extern int       info_window_follows_mouse;
 
 /*  function prototypes  */
 void       parse_buffers_init (); /* this has to be called before any file

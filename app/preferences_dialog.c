@@ -109,6 +109,7 @@ static int 	  old_show_indicators;
 static int	  old_trust_dirty_flag;
 static int        old_use_help;
 static int        old_nav_window_per_display;
+static int        old_info_window_follows_mouse;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -127,6 +128,7 @@ static char *     edit_pattern_path = NULL;
 static char *     edit_palette_path = NULL;
 static char *     edit_gradient_path = NULL;
 static int        edit_nav_window_per_display;
+static int        edit_info_window_follows_mouse;
 
 static GtkWidget *prefs_dlg = NULL;
 
@@ -306,6 +308,7 @@ file_prefs_save_callback (GtkWidget *widget,
   int    save_last_opened_size;
   int    save_num_processors;
   int    save_nav_window_per_display;
+  int    save_info_window_follows_mouse;
   gchar *save_temp_path;
   gchar *save_swap_path;
   gchar *save_plug_in_path;
@@ -337,6 +340,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_palette_path = palette_path;
   save_gradient_path = gradient_path;
   save_nav_window_per_display = nav_window_per_display;
+  save_info_window_follows_mouse = info_window_follows_mouse;
 
   if (levels_of_undo != old_levels_of_undo)
     update = g_list_append (update, "undo-levels");
@@ -549,6 +553,13 @@ file_prefs_save_callback (GtkWidget *widget,
       nav_window_per_display = edit_nav_window_per_display;
       restart_notification = TRUE;
     }
+  if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
+    {
+      update = g_list_append (update, "info-window-follows-mouse");
+      remove = g_list_append (remove, "info-window-per-display");
+      info_window_follows_mouse = edit_info_window_follows_mouse;
+      restart_notification = TRUE;
+    }
 
   save_gimprc (&update, &remove);
 
@@ -572,6 +583,7 @@ file_prefs_save_callback (GtkWidget *widget,
   palette_path = save_palette_path;
   gradient_path = save_gradient_path;
   nav_window_per_display = save_nav_window_per_display;
+  info_window_follows_mouse = save_info_window_follows_mouse;
 
   if (restart_notification)
     g_message (_("You will need to restart GIMP for these changes to take "
@@ -618,6 +630,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   trust_dirty_flag = old_trust_dirty_flag;
   use_help = old_use_help;
   nav_window_per_display = old_nav_window_per_display;
+  info_window_follows_mouse = old_info_window_follows_mouse;
 
   if (preview_size != old_preview_size)
     {
@@ -650,6 +663,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_cycled_marching_ants = old_cycled_marching_ants;
   edit_last_opened_size = old_last_opened_size;
   edit_nav_window_per_display = nav_window_per_display;
+  edit_info_window_follows_mouse = info_window_follows_mouse;
 
   file_prefs_strset (&edit_temp_path, old_temp_path);
   file_prefs_strset (&edit_swap_path, old_swap_path);
@@ -729,6 +743,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     use_help = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &edit_nav_window_per_display)
     edit_nav_window_per_display = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &edit_info_window_follows_mouse)
+    edit_info_window_follows_mouse = GTK_TOGGLE_BUTTON (widget)->active;
   else
     {
       /* Are you a gimp-hacker who is getting this message?  You
@@ -1149,6 +1165,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_module_path = file_prefs_strdup (module_path);
       edit_gradient_path = file_prefs_strdup (gradient_path);
       edit_nav_window_per_display = nav_window_per_display;
+      edit_info_window_follows_mouse = info_window_follows_mouse;
     }
   old_perfectmouse = perfectmouse;
   old_transparency_type = transparency_type;
@@ -1191,6 +1208,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_trust_dirty_flag = trust_dirty_flag;
   old_use_help = use_help;
   old_nav_window_per_display = nav_window_per_display;
+  old_info_window_follows_mouse = info_window_follows_mouse;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_temp_path, edit_temp_path);
@@ -1555,6 +1573,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &edit_nav_window_per_display);
+  gtk_widget_show (button);
+
+  button = gtk_check_button_new_with_label (_("Info Window Follows Mouse"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				edit_info_window_follows_mouse);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      &edit_info_window_follows_mouse);
   gtk_widget_show (button);
 
   /* Interface / Help System */

@@ -1,3 +1,21 @@
+Mon Nov 29 23:51:26 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/info_window.c
+	* app/info_window.h
+	* app/preferences_dialog.c
+	* app/undo_history.c
+
+	Info dialog now has option to follow the mouse movements or
+	the old behaviour of one dialog per display.
+	This dialog still needs some work.
+
+	Undo dialog now obeys the "tab" key in the display.
+
 Mon Nov 29 23:43:15 MET 1999  Sven Neumann <sven@gimp.org>
 	
 	* app/layers_dialog.c: 

@@ -204,7 +204,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_LEAVE_NOTIFY:
       gdisplay_update_cursor (gdisp, 0, 0);
       gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), "");
-      info_window_update_RGB (gdisp->window_info_dialog, -1, -1);
+      info_window_update_RGB (gdisp, -1, -1);
 
     case GDK_PROXIMITY_OUT:
       gdisp->proximity = FALSE;

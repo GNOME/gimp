@@ -358,8 +358,7 @@ gdisplay_delete (GDisplay *gdisp)
    */
 
   /*  insure that if a window information dialog exists, it is removed  */
-  if (gdisp->window_info_dialog)
-    info_window_free (gdisp->window_info_dialog);
+  info_window_free (gdisp->window_info_dialog);
 
   /* Remove navigation dialog */
   nav_window_free(gdisp,gdisp->window_nav_dialog);
@@ -675,8 +674,7 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
   gdisplay_flush_displays_only (gdisp);
 
   /*  update the gdisplay's info dialog  */
-  if (gdisp->window_info_dialog)
-    info_window_update (gdisp->window_info_dialog);
+  info_window_update (gdisp);
  
   /* update the gdisplay's qmask buttons */
   qmask_buttons_update (gdisp);
@@ -1056,7 +1054,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	  t_y >= active_drawable->height)
 	{
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
-	  info_window_update_RGB (gdisp->window_info_dialog, -1, -1);
+	  info_window_update_RGB (gdisp, -1, -1);
 	} 
       else 
 	{
@@ -1077,7 +1075,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 		 (double) t_y * unit_factor / gdisp->gimage->yresolution);
 	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
-	  info_window_update_RGB (gdisp->window_info_dialog, t_x, t_y);
+	  info_window_update_RGB (gdisp, t_x, t_y);
 	}
     }
 

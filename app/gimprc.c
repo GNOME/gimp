@@ -160,6 +160,7 @@ int       thumbnail_mode = 1;
 int	  trust_dirty_flag = FALSE;
 int       use_help = TRUE;
 int       nav_window_per_display = FALSE;
+int       info_window_follows_mouse = FALSE;
 
 extern char * module_db_load_inhibit;
 
@@ -314,7 +315,9 @@ static ParseFunc funcs[] =
   { "use-help",                  TT_BOOLEAN,    &use_help, NULL },
   { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help },
   { "nav-window-per-display",    TT_BOOLEAN,    &nav_window_per_display, NULL },
-  { "nav-window-follows-auto",    TT_BOOLEAN,    NULL, &nav_window_per_display }
+  { "nav-window-follows-auto",    TT_BOOLEAN,    NULL, &nav_window_per_display },
+  { "info-window-follows-mouse",    TT_BOOLEAN,    &info_window_follows_mouse, NULL },
+  { "info-window-per-display",    TT_BOOLEAN,    NULL, &info_window_follows_mouse }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
