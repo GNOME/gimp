@@ -350,7 +350,7 @@ color_balance_dialog_new (void)
   cbd = g_new (ColorBalanceDialog, 1);
   cbd->preserve_luminosity = TRUE;
   cbd->preview             = TRUE;
-  cbd->application_mode    = SHADOWS;
+  cbd->application_mode    = GIMP_SHADOWS;
 
   /*  The shell and main vbox  */
   cbd->shell = gimp_dialog_new (_("Color Balance"), "color_balance",
@@ -426,9 +426,9 @@ color_balance_dialog_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
 
-  gtk_signal_connect (GTK_OBJECT (cbd->cyan_red_data), "value_changed",
-		      GTK_SIGNAL_FUNC (color_balance_cr_adjustment_update),
-		      cbd);
+  g_signal_connect (G_OBJECT (cbd->cyan_red_data), "value_changed",
+                    G_CALLBACK (color_balance_cr_adjustment_update),
+                    cbd);
 
   end_label = gtk_label_new (_("Red"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
@@ -451,9 +451,9 @@ color_balance_dialog_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 1, 2);
 
-  gtk_signal_connect (GTK_OBJECT (cbd->magenta_green_data), "value_changed",
-		      GTK_SIGNAL_FUNC (color_balance_mg_adjustment_update),
-		      cbd);
+  g_signal_connect (G_OBJECT (cbd->magenta_green_data), "value_changed",
+                    G_CALLBACK (color_balance_mg_adjustment_update),
+                    cbd);
 
   end_label = gtk_label_new (_("Green"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
@@ -476,9 +476,9 @@ color_balance_dialog_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 2, 3);
 
-  gtk_signal_connect (GTK_OBJECT (cbd->yellow_blue_data), "value_changed",
-		      GTK_SIGNAL_FUNC (color_balance_yb_adjustment_update),
-		      cbd);
+  g_signal_connect (G_OBJECT (cbd->yellow_blue_data), "value_changed",
+                    G_CALLBACK (color_balance_yb_adjustment_update),
+                    cbd);
 
   end_label = gtk_label_new (_("Blue"));
   gtk_misc_set_alignment (GTK_MISC (end_label), 0.0, 1.0);
@@ -503,10 +503,11 @@ color_balance_dialog_new (void)
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (hbox), radio_button, TRUE, FALSE, 0);
 
-      gtk_object_set_user_data (GTK_OBJECT (radio_button), (gpointer) i);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  GTK_SIGNAL_FUNC (color_balance_range_callback),
-			  cbd);
+      g_object_set_data (G_OBJECT (radio_button), "transfer_mode", 
+                         GINT_TO_POINTER (i));
+      g_signal_connect (G_OBJECT (radio_button), "toggled",
+                        G_CALLBACK (color_balance_range_callback),
+                        cbd);
 
       gtk_widget_show (radio_button);
     }
@@ -522,18 +523,18 @@ color_balance_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				cbd->preserve_luminosity);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (color_balance_preserve_update),
-		      cbd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (color_balance_preserve_update),
+                    cbd);
   gtk_widget_show (toggle);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cbd->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (color_balance_preview_update),
-		      cbd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (color_balance_preview_update),
+                    cbd);
   gtk_widget_show (toggle);
 
   gtk_widget_show (hbox);
@@ -575,15 +576,15 @@ color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
   gint32 r_n, g_n, b_n;
 
   /*  Set the transfer arrays  (for speed)  */
-  cyan_red_transfer[SHADOWS] = (cbd->cyan_red[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  cyan_red_transfer[MIDTONES] = (cbd->cyan_red[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  cyan_red_transfer[HIGHLIGHTS] = (cbd->cyan_red[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  magenta_green_transfer[SHADOWS] = (cbd->magenta_green[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  magenta_green_transfer[MIDTONES] = (cbd->magenta_green[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  magenta_green_transfer[HIGHLIGHTS] = (cbd->magenta_green[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  yellow_blue_transfer[SHADOWS] = (cbd->yellow_blue[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  yellow_blue_transfer[MIDTONES] = (cbd->yellow_blue[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  yellow_blue_transfer[HIGHLIGHTS] = (cbd->yellow_blue[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+  cyan_red_transfer[GIMP_SHADOWS] = (cbd->cyan_red[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
+  cyan_red_transfer[GIMP_MIDTONES] = (cbd->cyan_red[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
+  cyan_red_transfer[GIMP_HIGHLIGHTS] = (cbd->cyan_red[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+  magenta_green_transfer[GIMP_SHADOWS] = (cbd->magenta_green[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
+  magenta_green_transfer[GIMP_MIDTONES] = (cbd->magenta_green[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
+  magenta_green_transfer[GIMP_HIGHLIGHTS] = (cbd->magenta_green[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+  yellow_blue_transfer[GIMP_SHADOWS] = (cbd->yellow_blue[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
+  yellow_blue_transfer[GIMP_MIDTONES] = (cbd->yellow_blue[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
+  yellow_blue_transfer[GIMP_HIGHLIGHTS] = (cbd->yellow_blue[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
 
   for (i = 0; i < 256; i++)
     {
@@ -591,25 +592,25 @@ color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
       g_n = i;
       b_n = i;
 
-      r_n += cbd->cyan_red[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
+      r_n += cbd->cyan_red[GIMP_SHADOWS] * cyan_red_transfer[GIMP_SHADOWS][r_n];
       r_n = CLAMP0255 (r_n);
-      r_n += cbd->cyan_red[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
+      r_n += cbd->cyan_red[GIMP_MIDTONES] * cyan_red_transfer[GIMP_MIDTONES][r_n];
       r_n = CLAMP0255 (r_n);
-      r_n += cbd->cyan_red[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
+      r_n += cbd->cyan_red[GIMP_HIGHLIGHTS] * cyan_red_transfer[GIMP_HIGHLIGHTS][r_n];
       r_n = CLAMP0255 (r_n);
 
-      g_n += cbd->magenta_green[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
+      g_n += cbd->magenta_green[GIMP_SHADOWS] * magenta_green_transfer[GIMP_SHADOWS][g_n];
       g_n = CLAMP0255 (g_n);
-      g_n += cbd->magenta_green[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
+      g_n += cbd->magenta_green[GIMP_MIDTONES] * magenta_green_transfer[GIMP_MIDTONES][g_n];
       g_n = CLAMP0255 (g_n);
-      g_n += cbd->magenta_green[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
+      g_n += cbd->magenta_green[GIMP_HIGHLIGHTS] * magenta_green_transfer[GIMP_HIGHLIGHTS][g_n];
       g_n = CLAMP0255 (g_n);
 
-      b_n += cbd->yellow_blue[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
+      b_n += cbd->yellow_blue[GIMP_SHADOWS] * yellow_blue_transfer[GIMP_SHADOWS][b_n];
       b_n = CLAMP0255 (b_n);
-      b_n += cbd->yellow_blue[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
+      b_n += cbd->yellow_blue[GIMP_MIDTONES] * yellow_blue_transfer[GIMP_MIDTONES][b_n];
       b_n = CLAMP0255 (b_n);
-      b_n += cbd->yellow_blue[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
+      b_n += cbd->yellow_blue[GIMP_HIGHLIGHTS] * yellow_blue_transfer[GIMP_HIGHLIGHTS][b_n];
       b_n = CLAMP0255 (b_n);
 
       cbd->r_lookup[i] = r_n;
@@ -716,11 +717,12 @@ color_balance_range_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   ColorBalanceDialog *cbd;
-  TransferMode range;
+  GimpTransferMode    range;
 
   cbd = (ColorBalanceDialog *) data;
 
-  range = (TransferMode) gtk_object_get_user_data (GTK_OBJECT (widget));
+  range = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), 
+                                              "transfer_mode"));
   cbd->application_mode = range;
 
   color_balance_update (cbd, ALL);

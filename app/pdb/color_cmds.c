@@ -35,6 +35,7 @@
 #include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
+#include "core/core-types.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
@@ -805,7 +806,7 @@ color_balance_invoker (Gimp     *gimp,
     success = FALSE;
 
   transfer_mode = args[1].value.pdb_int;
-  if (transfer_mode < SHADOWS || transfer_mode > HIGHLIGHTS)
+  if (transfer_mode < GIMP_SHADOWS || transfer_mode > GIMP_HIGHLIGHTS)
     success = FALSE;
 
   preserve_lum = args[2].value.pdb_int ? TRUE : FALSE;

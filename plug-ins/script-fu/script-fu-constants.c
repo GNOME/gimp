@@ -83,10 +83,6 @@ init_generated_constants (void)
   setvar (cintern ("SHARPEN-CONVOLVE"), flocons (1), NIL);
   setvar (cintern ("CUSTOM-CONVOLVE"), flocons (2), NIL);
 
-  setvar (cintern ("DODGEBURN-HIGHLIGHTS"), flocons (0), NIL);
-  setvar (cintern ("DODGEBURN-MIDTONES"), flocons (1), NIL);
-  setvar (cintern ("DODGEBURN-SHADOWS"), flocons (2), NIL);
-
   setvar (cintern ("DODGE"), flocons (0), NIL);
   setvar (cintern ("BURN"), flocons (1), NIL);
 
@@ -144,6 +140,10 @@ init_generated_constants (void)
   setvar (cintern ("PDB-PASS-THROUGH"), flocons (2), NIL);
   setvar (cintern ("PDB-SUCCESS"), flocons (3), NIL);
   setvar (cintern ("PDB-CANCEL"), flocons (4), NIL);
+
+  setvar (cintern ("SHADOWS"), flocons (0), NIL);
+  setvar (cintern ("MIDTONES"), flocons (1), NIL);
+  setvar (cintern ("HIGHLIGHTS"), flocons (2), NIL);
 
   setvar (cintern ("UNIT-PIXEL"), flocons (0), NIL);
   setvar (cintern ("UNIT-INCH"), flocons (1), NIL);
@@ -235,10 +235,6 @@ init_generated_constants (void)
   setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
   setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
   setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
-
-  setvar (cintern ("SHADOWS"), flocons (0), NIL);
-  setvar (cintern ("MIDTONES"), flocons (1), NIL);
-  setvar (cintern ("HIGHLIGHTS"), flocons (2), NIL);
 
   return;
 }

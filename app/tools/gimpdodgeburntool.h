@@ -29,13 +29,6 @@ typedef enum
   BURN
 } DodgeBurnType;
 
-typedef enum
-{
-  DODGEBURN_HIGHLIGHTS,
-  DODGEBURN_MIDTONES,
-  DODGEBURN_SHADOWS
-} DodgeBurnMode;
-
 
 #define GIMP_TYPE_DODGEBURN_TOOL            (gimp_dodgeburn_tool_get_type ())
 #define GIMP_DODGEBURN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGEBURN_TOOL, GimpDodgeBurnTool))
@@ -58,16 +51,16 @@ struct _GimpDodgeBurnToolClass
 };
 
 
-void       gimp_dodgeburn_tool_register        (Gimp          *gimp);
+void       gimp_dodgeburn_tool_register     (Gimp          *gimp);
 
-GtkType    gimp_dodgeburn_tool_get_type        (void);
+GType      gimp_dodgeburn_tool_get_type     (void);
 
-gboolean   gimp_dodgeburn_tool_non_gui         (GimpDrawable  *drawable,
-						gdouble        exposure,
-						DodgeBurnType  type, 
-						DodgeBurnMode  mode, 
-						gint           num_strokes, 
-						gdouble       *stroke_array);
+gboolean   gimp_dodgeburn_tool_non_gui      (GimpDrawable     *drawable,
+                                             gdouble           exposure,
+                                             DodgeBurnType     type, 
+                                             GimpTransferMode  mode, 
+                                             gint              num_strokes, 
+                                             gdouble          *stroke_array);
 
 gboolean   gimp_dodgeburn_tool_non_gui_default (GimpDrawable  *drawable,
 						gint           num_strokes,

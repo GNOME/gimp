@@ -23,14 +23,6 @@
 #include "gimpimagemaptool.h"
 
 
-typedef enum
-{
-  SHADOWS,
-  MIDTONES,
-  HIGHLIGHTS
-} TransferMode;
-
-
 #define GIMP_TYPE_COLOR_BALANCE_TOOL            (gimp_color_balance_tool_get_type ())
 #define GIMP_COLOR_BALANCE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceTool))
 #define GIMP_IS_COLOR_BALANCE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL))
@@ -56,26 +48,26 @@ typedef struct _ColorBalanceDialog ColorBalanceDialog;
 
 struct _ColorBalanceDialog
 {
-  GtkWidget     *shell;
+  GtkWidget        *shell;
 
-  GtkAdjustment *cyan_red_data;
-  GtkAdjustment *magenta_green_data;
-  GtkAdjustment *yellow_blue_data;
+  GtkAdjustment    *cyan_red_data;
+  GtkAdjustment    *magenta_green_data;
+  GtkAdjustment    *yellow_blue_data;
 
-  GimpDrawable  *drawable;
-  ImageMap      *image_map;
+  GimpDrawable     *drawable;
+  ImageMap         *image_map;
 
-  gdouble        cyan_red[3];
-  gdouble        magenta_green[3];
-  gdouble        yellow_blue[3];
+  gdouble           cyan_red[3];
+  gdouble           magenta_green[3];
+  gdouble           yellow_blue[3];
 
-  guchar         r_lookup[256];
-  guchar         g_lookup[256];
-  guchar         b_lookup[256];
+  guchar            r_lookup[256];
+  guchar            g_lookup[256];
+  guchar            b_lookup[256];
 
-  gboolean       preserve_luminosity;
-  gboolean       preview;
-  TransferMode   application_mode;
+  gboolean          preserve_luminosity;
+  gboolean          preview;
+  GimpTransferMode  application_mode;
 };
 
 

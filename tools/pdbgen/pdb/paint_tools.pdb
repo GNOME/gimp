@@ -1440,7 +1440,7 @@ HELP
 	   desc => 'The exposer of the  strokes (%%desc%%)' },
         { name => 'dodgeburn_type', type => 'enum DodgeBurnType',
 	  desc => 'The type either dodge or burn: { %%desc%% }' },
-        { name => 'dodgeburn_mode', type => 'enum DodgeBurnMode',
+        { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
 	  desc => 'The mode: { %%desc%% }' },
 	&stroke_arg
     );

@@ -71,6 +71,14 @@ typedef enum
   NO_FILL		/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
 
+/* Transfer modes */
+typedef enum  /*< chop=GIMP_ >*/
+{
+  GIMP_SHADOWS,
+  GIMP_MIDTONES,
+  GIMP_HIGHLIGHTS
+} GimpTransferMode;
+
 
 /*  base objects  */
 

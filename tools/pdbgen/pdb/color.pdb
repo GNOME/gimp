@@ -480,7 +480,7 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'transfer_mode', type => 'enum TransferMode',
+	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
 	  desc => 'Transfer mode: { %%desc%% }' },
 	{ name => 'preserve_lum', type => 'boolean',
 	  desc => 'Preserve luminosity values at each pixel' }

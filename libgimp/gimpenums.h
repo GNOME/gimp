@@ -124,13 +124,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_DODGEBURN_HIGHLIGHTS,
-  GIMP_DODGEBURN_MIDTONES,
-  GIMP_DODGEBURN_SHADOWS
-} GimpDodgeBurnMode;
-
-typedef enum
-{
   GIMP_DODGE,
   GIMP_BURN
 } GimpDodgeBurnType;
@@ -166,6 +159,13 @@ typedef enum
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
+
+typedef enum
+{
+  GIMP_SHADOWS,
+  GIMP_MIDTONES,
+  GIMP_HIGHLIGHTS
+} GimpTransferMode;
 
 typedef enum
 {
@@ -292,13 +292,6 @@ typedef enum
   GIMP_STACK_TRACE_QUERY,
   GIMP_STACK_TRACE_ALWAYS
 } GimpStackTraceMode;
-
-typedef enum
-{
-  GIMP_SHADOWS,
-  GIMP_MIDTONES,
-  GIMP_HIGHLIGHTS
-} GimpTransferMode;
 
 #ifdef __cplusplus
 }

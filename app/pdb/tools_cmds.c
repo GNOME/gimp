@@ -32,6 +32,7 @@
 #include "appenums.h"
 #include "base/base-types.h"
 #include "base/tile-manager.h"
+#include "core/core-types.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "tools/gimpairbrushtool.h"
@@ -1112,7 +1113,7 @@ dodgeburn_invoker (Gimp     *gimp,
     success = FALSE;
 
   dodgeburn_mode = args[3].value.pdb_int;
-  if (dodgeburn_mode < DODGEBURN_HIGHLIGHTS || dodgeburn_mode > DODGEBURN_SHADOWS)
+  if (dodgeburn_mode < GIMP_SHADOWS || dodgeburn_mode > GIMP_HIGHLIGHTS)
     success = FALSE;
 
   num_strokes = args[4].value.pdb_int;
@@ -1149,7 +1150,7 @@ static ProcArg dodgeburn_inargs[] =
   {
     GIMP_PDB_INT32,
     "dodgeburn_mode",
-    "The mode: { DODGEBURN_HIGHLIGHTS (0), DODGEBURN_MIDTONES (1), DODGEBURN_SHADOWS (2) }"
+    "The mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }"
   },
   {
     GIMP_PDB_INT32,

@@ -336,6 +336,17 @@ package Gimp::CodeGen::enums;
 		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
 		       NO_FILL => 'NO_IMAGE_FILL' }
 	},
+    GimpTransferMode =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
+	  mapping => { GIMP_SHADOWS => '0',
+		       GIMP_MIDTONES => '1',
+		       GIMP_HIGHLIGHTS => '2' },
+	  nicks   => { GIMP_SHADOWS => 'SHADOWS',
+		       GIMP_MIDTONES => 'MIDTONES',
+		       GIMP_HIGHLIGHTS => 'HIGHLIGHTS' }
+	},
     GimpOffsetType =>
 	{ contig => 1,
 	  header => 'core/gimpdrawable-offset.h',
@@ -431,14 +442,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { IMAGE_CLONE => '0',
 		       PATTERN_CLONE => '1' }
 	},
-    TransferMode =>
-	{ contig => 1,
-	  header => 'tools/gimpcolorbalancetool.h',
-	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
-	  mapping => { SHADOWS => '0',
-		       MIDTONES => '1',
-		       HIGHLIGHTS => '2' }
-	},
     ConvolveType =>
 	{ contig => 1,
 	  header => 'tools/gimpconvolvetool.h',
@@ -453,15 +456,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(DODGE BURN) ],
 	  mapping => { DODGE => '0',
 		       BURN => '1' }
-	},
-    DodgeBurnMode =>
-	{ contig => 1,
-	  header => 'tools/gimpdodgeburntool.h',
-	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES
-			  DODGEBURN_SHADOWS) ],
-	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
-		       DODGEBURN_MIDTONES => '1',
-		       DODGEBURN_SHADOWS => '2' }
 	},
     HueRange =>
 	{ contig => 1,

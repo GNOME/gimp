@@ -566,7 +566,7 @@ gboolean
 gimp_dodgeburn (gint32             drawable_ID,
 		gdouble            exposure,
 		GimpDodgeBurnType  dodgeburn_type,
-		GimpDodgeBurnMode  dodgeburn_mode,
+		GimpTransferMode   dodgeburn_mode,
 		gint               num_strokes,
 		gdouble           *strokes)
 {

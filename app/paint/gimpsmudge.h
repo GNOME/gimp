@@ -29,13 +29,6 @@ typedef enum
   SMUDGE_TYPE_STREAK 
 } SmudgeType;
 
-typedef enum
-{
-  SMUDGE_MODE_HIGHLIGHTS,
-  SMUDGE_MODE_MIDTONES,
-  SMUDGE_MODE_SHADOWS 
-} SmudgeMode;
-
 
 #define GIMP_TYPE_SMUDGE_TOOL            (gimp_smudge_tool_get_type ())
 #define GIMP_SMUDGE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SMUDGE_TOOL, GimpSmudgeTool))

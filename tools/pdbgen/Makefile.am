@@ -59,7 +59,6 @@ enum_headers = \
 	../../app/tools/gimpblendtool.h		\
 	../../app/tools/gimpbucketfilltool.h	\
 	../../app/tools/gimpclonetool.h		\
-	../../app/tools/gimpcolorbalancetool.h	\
 	../../app/tools/gimpconvolvetool.h	\
 	../../app/tools/gimpdodgeburntool.h	\
 	../../app/tools/gimphuesaturationtool.h	\

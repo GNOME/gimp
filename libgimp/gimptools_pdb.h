@@ -98,7 +98,7 @@ gboolean gimp_convolve_default   (gint32                    drawable_ID,
 gboolean gimp_dodgeburn          (gint32                    drawable_ID,
 				  gdouble                   exposure,
 				  GimpDodgeBurnType         dodgeburn_type,
-				  GimpDodgeBurnMode         dodgeburn_mode,
+				  GimpTransferMode          dodgeburn_mode,
 				  gint                      num_strokes,
 				  gdouble                  *strokes);
 gboolean gimp_dodgeburn_default  (gint32                    drawable_ID,

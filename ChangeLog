@@ -1,5 +1,25 @@
 2001-08-01  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-types.h: defined GimpTransferMode enum.
+	
+	* app/tools/gimpcolorbalancetool.[ch]
+	* app/tools/gimpdodgeburntool.[ch]: use it here instead of defining
+	the same enum again. Some GObject porting.
+	
+	* app/tools/gimpsmudgetool.h: removed unused enum SmudgeMode.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/tools_cmds.c
+	* libgimp/gimpenums.h
+	* libgimp/gimptools_pdb.[ch]
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly (mostly generated)
+
+2001-08-01  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added GTK_DISABLE_COMPAT_H back to CPPFLAGS.
 	
 	* app/user_install.c

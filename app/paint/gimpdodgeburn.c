@@ -55,7 +55,7 @@
 
 #define DODGEBURN_DEFAULT_EXPOSURE 50.0
 #define DODGEBURN_DEFAULT_TYPE     DODGE
-#define DODGEBURN_DEFAULT_MODE     DODGEBURN_HIGHLIGHTS
+#define DODGEBURN_DEFAULT_MODE     GIMP_HIGHLIGHTS
 
 /*  the dodgeburn structures  */
 
@@ -63,33 +63,33 @@ typedef struct _DodgeBurnOptions DodgeBurnOptions;
 
 struct _DodgeBurnOptions
 {
-  PaintOptions   paint_options;
+  PaintOptions      paint_options;
 
-  DodgeBurnType  type;
-  DodgeBurnType  type_d;
-  GtkWidget     *type_w[2];
+  DodgeBurnType     type;
+  DodgeBurnType     type_d;
+  GtkWidget        *type_w[2];
 
-  DodgeBurnMode  mode;     /*highlights, midtones, shadows*/
-  DodgeBurnMode  mode_d;
-  GtkWidget     *mode_w[3];
+  GimpTransferMode  mode;     /*highlights, midtones, shadows*/
+  GimpTransferMode  mode_d;
+  GtkWidget        *mode_w[3];
 
-  gdouble        exposure;
-  gdouble        exposure_d;
-  GtkObject     *exposure_w;
+  gdouble           exposure;
+  gdouble           exposure_d;
+  GtkObject        *exposure_w;
 
-  GimpLut       *lut;
+  GimpLut          *lut;
 };
 
 
 static void     gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass);
 static void     gimp_dodgeburn_tool_init       (GimpDodgeBurnTool      *dodgeburn);
 
-static void     gimp_dodgeburn_tool_make_luts     (GimpPaintTool  *paint_tool,
-						   gdouble         db_exposure,
-						   DodgeBurnType   type,
-						   DodgeBurnMode   mode,
-						   GimpLut        *lut,
-						   GimpDrawable   *drawable);
+static void     gimp_dodgeburn_tool_make_luts  (GimpPaintTool     *paint_tool,
+						gdouble            db_exposure,
+						DodgeBurnType      type,
+						GimpTransferMode   mode,
+						GimpLut           *lut,
+						GimpDrawable      *drawable);
 
 static void     gimp_dodgeburn_tool_modifier_key  (GimpTool       *tool,
 						   GdkEventKey    *kevent,
@@ -215,12 +215,12 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
 }
 
 static void 
-gimp_dodgeburn_tool_make_luts (GimpPaintTool *paint_tool,
-  		               gdouble        db_exposure,
-		               DodgeBurnType  type,
-		               DodgeBurnMode  mode,
-		               GimpLut       *lut,
-		               GimpDrawable  *drawable)
+gimp_dodgeburn_tool_make_luts (GimpPaintTool    *paint_tool,
+  		               gdouble           db_exposure,
+		               DodgeBurnType     type,
+		               GimpTransferMode  mode,
+		               GimpLut          *lut,
+		               GimpDrawable     *drawable)
 {
   GimpLutFunc   lut_func;
   gint          nchannels = gimp_drawable_bytes (drawable);
@@ -234,13 +234,13 @@ gimp_dodgeburn_tool_make_luts (GimpPaintTool *paint_tool,
 
   switch (mode)
     {
-    case DODGEBURN_HIGHLIGHTS:
+    case GIMP_HIGHLIGHTS:
       lut_func = gimp_dodgeburn_tool_highlights_lut_func; 
       break;
-    case DODGEBURN_MIDTONES:
+    case GIMP_MIDTONES:
       lut_func = gimp_dodgeburn_tool_midtones_lut_func; 
       break;
-    case DODGEBURN_SHADOWS:
+    case GIMP_SHADOWS:
       lut_func = gimp_dodgeburn_tool_shadows_lut_func; 
       break;
     default:
@@ -561,7 +561,7 @@ gimp_dodgeburn_tool_non_gui_default (GimpDrawable *drawable,
 {
   gdouble           exposure = DODGEBURN_DEFAULT_EXPOSURE;
   DodgeBurnType     type     = DODGEBURN_DEFAULT_TYPE;
-  DodgeBurnMode     mode     = DODGEBURN_DEFAULT_MODE;
+  GimpTransferMode  mode     = DODGEBURN_DEFAULT_MODE;
   DodgeBurnOptions *options  = dodgeburn_options;
 
   if (options)
@@ -576,12 +576,12 @@ gimp_dodgeburn_tool_non_gui_default (GimpDrawable *drawable,
 }
 
 gboolean
-gimp_dodgeburn_tool_non_gui (GimpDrawable  *drawable,
-		             gdouble        exposure,
-		             DodgeBurnType  type,
-		             DodgeBurnMode  mode,
-		             gint           num_strokes,
-		             gdouble       *stroke_array)
+gimp_dodgeburn_tool_non_gui (GimpDrawable     *drawable,
+		             gdouble           exposure,
+		             DodgeBurnType     type,
+		             GimpTransferMode  mode,
+		             gint              num_strokes,
+		             gdouble          *stroke_array)
 {
   static GimpDodgeBurnTool *non_gui_dodgeburn = NULL;
 
@@ -677,9 +677,9 @@ gimp_dodgeburn_tool_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
-  gtk_signal_connect (GTK_OBJECT (options->exposure_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->exposure);
+  g_signal_connect (G_OBJECT (options->exposure_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->exposure);
 
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
@@ -705,13 +705,13 @@ gimp_dodgeburn_tool_options_new (void)
     gimp_radio_group_new2 (TRUE, _("Mode"),
 			   G_CALLBACK (gimp_radio_button_update),
 			   &options->mode,
-			   (gpointer) options->mode,
+			   GINT_TO_POINTER (options->mode),
 
-			   _("Highlights"), (gpointer) DODGEBURN_HIGHLIGHTS, 
+			   _("Highlights"), GINT_TO_POINTER (GIMP_HIGHLIGHTS), 
 			   &options->mode_w[0],
-			   _("Midtones"), (gpointer) DODGEBURN_MIDTONES,
+			   _("Midtones"), GINT_TO_POINTER (GIMP_MIDTONES),
 			   &options->mode_w[1],
-			   _("Shadows"), (gpointer) DODGEBURN_SHADOWS,
+			   _("Shadows"), GINT_TO_POINTER (GIMP_SHADOWS),
 			   &options->mode_w[2],
 
 			   NULL);
@@ -734,7 +734,9 @@ gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
 			    options->exposure_d);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gtk_toggle_button_set_active 
+    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE);
+  gtk_toggle_button_set_active 
+    (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE);
 }
