@@ -3,6 +3,8 @@
 noinst_LIBRARIES = libappactions.a
 
 libappactions_a_SOURCES = \
+	actions-types.h			\
+	\
 	brushes-actions.c		\
 	brushes-actions.h		\
 	buffers-actions.c		\

@@ -1,5 +1,10 @@
 2004-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/Makefile.am
+	* app/actions/actions-types.h: oops, forgot to commit this one.
+
+2004-04-19  Michael Natterer  <mitch@gimp.org>
+
 	* menus/Makefile.am
 	* menus/toolbox-menu.xml: added the toolbox menu.
 
