@@ -64,25 +64,35 @@ static gint32    create_new_image (const gchar    *filename,
 				   GimpPixelRgn   *pixel_rgn);
 
 static void  compose_rgb       (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_rgba      (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_hsv       (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_cmy       (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *ds,
+                                gboolean dst_has_alpha);
 static void  compose_cmyk      (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_lab       (guchar **src,
-                                gint    *incr, gint numpix, guchar *dst);
+                                gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_ycbcr470  (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_ycbcr709  (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_ycbcr470f (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+				gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 static void  compose_ycbcr709f (guchar **src,
-				gint    *incr, gint numpix, guchar *dst);
+                                gint    *incr, gint numpix, guchar *dst,
+                                gboolean dst_has_alpha);
 
 static gboolean  compose_dialog (const gchar *compose_type,
                                  gint32       drawable_ID);
@@ -117,7 +127,8 @@ typedef struct
   void  (* compose_fun) (guchar **src,
 			 gint    *incr_src,
 			 gint     numpix,
-			 guchar  *dst);
+			 guchar  *dst,
+                         gboolean dst_has_alpha);
 } COMPOSE_DSC;
 
 /* Array of available compositions. */
@@ -531,6 +542,7 @@ compose (const gchar *compose_type,
   GimpImageType  gdtype_dst;
   GimpDrawable  *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
   GimpPixelRgn   pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
+  GimpPixelRgn   pixel_rgn_dst_read;
 
   /* Search type of composing */
   compose_idx = -1;
@@ -646,6 +658,10 @@ compose (const gchar *compose_type,
                            drawable_dst->width,
                            drawable_dst->height,
                            TRUE, TRUE);
+      gimp_pixel_rgn_init (&pixel_rgn_dst_read, drawable_dst, 0, 0,
+                           drawable_dst->width,
+                           drawable_dst->height,
+                           FALSE, FALSE);
       image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
 
     }
@@ -681,11 +697,16 @@ compose (const gchar *compose_type,
 	gimp_pixel_rgn_get_rect (&(pixel_rgn_src[j]), src[j], 0, i,
 				 width, scan_lines);
 
+      if (composevals.do_recompose)
+	gimp_pixel_rgn_get_rect (&pixel_rgn_dst_read, dst, 0, i,
+				 width, scan_lines);
+
       /* Do the composition */
       compose_dsc[compose_idx].compose_fun (src,
 					    incr_src,
 					    width * tile_height,
-					    dst);
+					    dst,
+                                            gimp_drawable_has_alpha (layer_ID_dst));
 
       /* Set destination pixel region */
       gimp_pixel_rgn_set_rect (&pixel_rgn_dst, dst, 0, i, width, scan_lines);
@@ -755,7 +776,8 @@ static void
 compose_rgb (guchar **src,
              gint    *incr_src,
              gint     numpix,
-             guchar  *dst)
+             guchar  *dst,
+             gboolean dst_has_alpha)
 {
   register const guchar *red_src   = src[0];
   register const guchar *green_src = src[1];
@@ -773,6 +795,8 @@ compose_rgb (guchar **src,
 	  *(rgb_dst++) = *(red_src++);
 	  *(rgb_dst++) = *(green_src++);
 	  *(rgb_dst++) = *(blue_src++);
+          if (dst_has_alpha)
+            rgb_dst++;
 	}
     }
   else
@@ -782,6 +806,8 @@ compose_rgb (guchar **src,
 	  *(rgb_dst++) = *red_src;     red_src += red_incr;
 	  *(rgb_dst++) = *green_src;   green_src += green_incr;
 	  *(rgb_dst++) = *blue_src;    blue_src += blue_incr;
+          if (dst_has_alpha)
+            rgb_dst++;
 	}
     }
 }
@@ -791,7 +817,8 @@ static void
 compose_rgba (guchar **src,
               gint    *incr_src,
               gint     numpix,
-              guchar  *dst)
+              guchar  *dst,
+              gboolean dst_has_alpha)
 {
   register const guchar *red_src   = src[0];
   register const guchar *green_src = src[1];
@@ -832,7 +859,8 @@ static void
 compose_hsv (guchar **src,
              gint    *incr_src,
              gint     numpix,
-             guchar  *dst)
+             guchar  *dst,
+             gboolean dst_has_alpha)
 {
   register const guchar *hue_src = src[0];
   register const guchar *sat_src = src[1];
@@ -852,6 +880,9 @@ compose_hsv (guchar **src,
       hue_src += hue_incr;
       sat_src += sat_incr;
       val_src += val_incr;
+
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -860,7 +891,8 @@ static void
 compose_cmy (guchar **src,
              gint    *incr_src,
              gint     numpix,
-             guchar  *dst)
+             guchar  *dst,
+             gboolean dst_has_alpha)
 {
   register const guchar *cyan_src    = src[0];
   register const guchar *magenta_src = src[1];
@@ -878,6 +910,8 @@ compose_cmy (guchar **src,
 	  *(rgb_dst++) = 255 - *(cyan_src++);
 	  *(rgb_dst++) = 255 - *(magenta_src++);
 	  *(rgb_dst++) = 255 - *(yellow_src++);
+          if (dst_has_alpha)
+            rgb_dst++;
 	}
     }
   else
@@ -890,6 +924,8 @@ compose_cmy (guchar **src,
 	  cyan_src += cyan_incr;
 	  magenta_src += magenta_incr;
 	  yellow_src += yellow_incr;
+          if (dst_has_alpha)
+            rgb_dst++;
 	}
     }
 }
@@ -899,7 +935,8 @@ static void
 compose_cmyk (guchar **src,
               gint    *incr_src,
               gint     numpix,
-              guchar  *dst)
+              guchar  *dst,
+              gboolean dst_has_alpha)
 {
   register const guchar *cyan_src    = src[0];
   register const guchar *magenta_src = src[1];
@@ -940,6 +977,9 @@ compose_cmyk (guchar **src,
       magenta_src += magenta_incr;
       yellow_src += yellow_incr;
       black_src += black_incr;
+
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -947,7 +987,8 @@ static void
 compose_lab (guchar **src,
              gint    *incr_src,
              gint     numpix,
-             guchar  *dst)
+             guchar  *dst,
+             gboolean dst_has_alpha)
 {
   register guchar *l_src = src[0];
   register guchar *a_src = src[1];
@@ -1011,6 +1052,9 @@ compose_lab (guchar **src,
       l_src += l_incr;
       a_src += a_incr;
       b_src += b_incr;
+
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -1026,7 +1070,8 @@ static void
 compose_ycbcr470 (guchar **src,
                   gint    *incr_src,
                   gint     numpix,
-                  guchar  *dst)
+                  guchar  *dst,
+                  gboolean dst_has_alpha)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
@@ -1058,6 +1103,8 @@ compose_ycbcr470 (guchar **src,
       *(rgb_dst++) = r;
       *(rgb_dst++) = g;
       *(rgb_dst++) = b;
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -1066,7 +1113,8 @@ static void
 compose_ycbcr709 (guchar **src,
                   gint    *incr_src,
                   gint     numpix,
-                  guchar  *dst)
+                  guchar  *dst,
+                  gboolean dst_has_alpha)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
@@ -1098,6 +1146,8 @@ compose_ycbcr709 (guchar **src,
       *(rgb_dst++) = r;
       *(rgb_dst++) = g;
       *(rgb_dst++) = b;
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -1106,7 +1156,8 @@ static void
 compose_ycbcr470f (guchar **src,
                    gint    *incr_src,
                    gint     numpix,
-                   guchar  *dst)
+                   guchar  *dst,
+                   gboolean dst_has_alpha)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
@@ -1138,6 +1189,8 @@ compose_ycbcr470f (guchar **src,
       *(rgb_dst++) = r;
       *(rgb_dst++) = g;
       *(rgb_dst++) = b;
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
@@ -1146,7 +1199,8 @@ static void
 compose_ycbcr709f (guchar **src,
                    gint    *incr_src,
                    gint     numpix,
-                   guchar  *dst)
+                   guchar  *dst,
+                   gboolean dst_has_alpha)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
@@ -1178,6 +1232,8 @@ compose_ycbcr709f (guchar **src,
       *(rgb_dst++) = r;
       *(rgb_dst++) = g;
       *(rgb_dst++) = b;
+      if (dst_has_alpha)
+        rgb_dst++;
     }
 }
 
