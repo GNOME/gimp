@@ -1,5 +1,18 @@
 2000-05-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/grid.c: applied a heavily modified version
+	of gimp-timecop-200005-6.grid which adds a preview to the
+	grid plug-in. Not much of the initial patch is left however
+	since it doesn't make sense to use a scaled-down preview of
+	the image, then draw an unscaled grid upon it. Changed it
+	so that the preview shows the upper left corner of the image.
+
+	Will look into the other gimp-timecop patches too. Even if it is
+	only to proof that I'm not the asshole he stated me to be in 
+	gimp-timecop-readme.
+
+2000-05-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mapcolor.c: fixed possible divide by zero 
 	spotted by Scott Heavner. Closes bug #11731.
 
