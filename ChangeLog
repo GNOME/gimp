@@ -1,5 +1,9 @@
 2004-06-24  Michael Natterer  <mitch@gimp.org>
 
+	* etc/controllerrc: fix typo in wheel controller mapping.
+
+2004-06-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptool.[ch]
 	* app/tools/tool_manager.[ch]: added boolean return value to
 	GimpTool::key_press() which indicates if the event was handled.

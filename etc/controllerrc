@@ -12,8 +12,8 @@
         (map "scroll-down-shift-alt"         "context-pattern-previous")
         (map "scroll-up-shift-control"       "context-brush-next")
         (map "scroll-down-shift-control"     "context-brush-previous")
-        (map "scroll-up-shift-control-alt"   "context-font-next")))
-        (map "scroll-down-shift-control-alt" "context-font-previous")
+        (map "scroll-up-shift-control-alt"   "context-font-next")
+        (map "scroll-down-shift-control-alt" "context-font-previous")))
 
 (GimpControllerInfo "Main Keyboard"
     (enabled yes)
