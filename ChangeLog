@@ -1,3 +1,8 @@
+2003-12-29  Simon Budig  <simon@gimp.org>
+
+	* app/gui/about-dialog.c: Redone to have a fancy graphical
+	effect. Will be tweaked further.
+
 2003-12-28  Simon Budig  <simon@gimp.org>
 
 	* app/core/core-enums.h: Some default dash pattern enum.

@@ -42,349 +42,193 @@
 
 #include "gimp-intl.h"
 
+static gchar *founders[] =
+{
+  N_("Version %s brought to you by"),
+  "Spencer Kimball & Peter Mattis"
+};
 
-#define ANIMATION_STEPS 16
-#define ANIMATION_SIZE   2
+static gchar *translators[] =
+{
+  N_("Translation by"),
+  N_("<Translator: insert your name here>"),
+  N_("Contributions by")
+};
 
+typedef struct
+{
+  GtkWidget    *about_dialog;
+  GtkWidget    *logo_area;
+  GdkPixmap    *logo_pixmap;
+  GdkRectangle  pixmaparea;
 
-static char * wilber2_xpm[] = {
-"95 95 9 1",
-"       c None",
-".      c #FFFFFF",
-"+      c #B6B6B6",
-"@      c #494949",
-"#      c #DBDBDB",
-"$      c #6D6D6D",
-"%      c #929292",
-"&      c #242424",
-"*      c #000000",
-"                                              .+.                                              ",
-"                                     .+.     .+@#     ..+.                                     ",
-"                                     #@+.    .$@#     .%&.                                     ",
-"                                     #&+.    .&@#.   .+&$.     ..#.                            ",
-"                            .++.     +*$..   .$*%.   .%*%.    ..%%.                            ",
-"                            .$@.     #@*%.   .#*&.   .#&@.    .%*%.                            ",
-"                            .$&+.    .#&&+   .%*&#   .#&*#    #&@..                            ",
-"                            .+*&+.   .#*&+  .#&*$.  .#@*&#    #&$.                             ",
-"                    .+#.    ..%&&+.  .%*&#  .%**+.  .$**%.   .+&@.    ..++.                    ",
-"                    .%@#.    ..@*$.  #@*&#. .$**+.  #**@.. ..+@*@.   .#$&%.                    ",
-"                    .+&$..    .@*%.  .@**%. .#&*@.. #&*@.  .%**&+.   .%*%..                    ",
-"                     #&*@+.   #&*@.. .+&*&+. .%**%. .$*&#. #&*&+.    .$*#.                     ",
-"                  .#+.+$*&+.  #&*&%.. .+&*&+..#&*&#..+**%. #&*@.   ..+&*#                      ",
-"              ... .@&...@*%.  .%***$#. .%**&# .@**%. #&*@. .@*@.  .+@&*&.     ....             ",
-"              +%..#&$+..@*@.. ..+@**&+..#&**+ .@**$..#**&# .$*&#  #&**@+.   .#+@%.             ",
-"              +&%.+*@+#.@**%#.. .#@**@. #&**+.#&**+..%**&. .$*&+  +**$#.    .$*@#.             ",
-"              #@&$@**%+#%***@%#...+**&#.+&*@##@**$..%&**$..#&**+ .+**+.    .#&&#.              ",
-"              .+@&***@##.%&***&%. #&*&#.@*&+#@**$.#@**&%..#$**&+ .%*&#  ..#+$*%.               ",
-"               ..+&**&#...#+&**&#.#&*$.%**@.#&**+.%**&+.#$&***$. .$*&# .#$&**&+.               ",
-"                 .@***%.....+&**+.%**+.%**@.#&**+.$**@..@***&%#..+&*&# .%***@%.                ",
-"        ...      .$***@......$**+.@**+.+***+.@**$.%**@.+&**$#..#%&**&#..$**%#..   .....        ",
-"        #$#.     .$***&%.....#@*#.@**@#.$**&+#&**+#&*&#+**&#.%&*****%.#$@*@..    ..%@&+        ",
-"        #@@++#.. .$****&$+....#$#.%***@+#$**&+%**@.$**+#&*@.#&***&@%#%$+$*%.     .%*&%.        ",
-"        .+&*&&$. .@******&%.....++#%&**&+#@**$#***#%**$#&*&#+**&%##+@%##&*+. .#+++@&+..        ",
-"         .+%$**+..$********$.....#+++@**&+%**&#&**#%**@#@*&#%**$#$&*%..%*&# .+&****$.          ",
-"          ...@*&%#%*****@$@*@#....#&$+&**$+**&+***#@**$#&*&+%**&***@..#&*$. .@***&@#.          ",
-"            .+***&&*****&##+@@+....%&&&**@+**&@**@%***+$**&+$*****@#..#@%#..+&*@+#..           ",
-"             .@**********%..#@&+...#&$%&*&@**&**&@***@%&***&*****&+.........$*&#.              ",
-"    ...      ..+++%&*****@...#&@...#&@##@*********************@%&%....++###$**$.      ..##..   ",
-"    +$+..#..     ..+*****&#...+&+..+@&$.#&@%+%$$@&&**&***&&@$+#%&#...$&*&&&**&+. .....#@&&%.   ",
-"    #@&@@&$#.      #@*****@#...%$...#@&.+$#......##++%%%%+#.+$@&%...+&*******@. .#%$++@*$%#.   ",
-"    .#&*&**$#..#++#.#******&+..#%....+%....................#&@%+....@**&$$@&$#..#@*****$...    ",
-"     ..#.%**&@&***&+.$*******&%%++%$@&$.............##++#..#+......+**&#........$***&&@#.      ",
-"        ..@********@##&*************&%..........+##....+$%#.......+@**%.#++#...%&*@+##..       ",
-"         .#@@@%%$&**+.+&************%..........%&&@$.....$$#.....+&**&##@**&$%@**&#.           ",
-"          .......+&*&##@***********@...........%$%+@+.....$%.#%$$@***%#@*********%.            ",
-"                 .%***&&***********+...............+@#....#$+#+##+@&%#$***@@&***$.. ...  ..... ",
-" .##..#+#.  ..###.#&**************&#........#$#.....%#.....#@.....#$%$&*&%#.#%$+....+%#..+@@%# ",
-" #@@$$&*@#..+@&&@+.%&*&&@&*********@+#......+*@$$+..........@#.....#&***%..##... ..$&*&$$&&&@+ ",
-" .#@**@**&@&*****&#.####.#%*******@&*&$+....+%+++$$#.....##.%+......&**@#+@&@%...#$******&+... ",
-"  ..+#.%&****&&***$#.#+$&@&******&+##%@&@#........$+.....%&@%%......@&$#+&****@%$@**@%%$$#.    ",
-"      ..%&&$+##+@**&@&***********&#....%&#..#......#.....@**&%...#+.@+#+&**********$#.....     ",
-"       ..##..  .#&***************&#....+&#.#$........+.#%****%...$*%&@&***@%+$****@#.          ",
-"            .....+&**&@%%$*******&#....+@#.#&&@$@$..#*&&*****#.+#$*******$#...+@@%#.           ",
-"           .#%@$#.+%%##++%&******&#...#@+...+%+$$$%.#&******&.#&&&**&**&$##%%#.......#..       ",
-"    .###...+&***&#...+@&*********&+...$%.....#.......%&*****%.#@****%%%+#%&**&+.  .#%&@+..#+#..",
-".##.+@*&%%$******&++$&************%..+&#.....+#.......%@&**&+..#+@**@%%%@*****&+##+@***&$%&*&%#",
-"#$&&*&&*****&$$@*******&&&********@..%$.......%%#......#$@++@$%$@&&*************&&***&&***&$$$#",
-".#%@@##$**&$#...%****&$##+&*******&#.%$........%@%%%%%$$%#..#+++%$$@@&***&*********&+##%@$#....",
-" .......+$+..  ..%&&@+#+@&*********$.+@.........#+++++#.............+&**$+$****&**@#. .....    ",
-"        ... ..#+#.##..$*************$#&$..........%$@$$%...........#&**@+$&****$+#..           ",
-"           .#$&*&%#.#$***************$@*$.......+@&@@@$+..........#@***********@#  ....        ",
-"          .#$*****@@&**&@%%***********&&*%.....$@%#...............%************&#..#%%#.       ",
-"     ..+#.#$***&&*****&%#+@**************&#....#.................#&*************$%$&**&#...    ",
-"   ..#@*&&&**@+##%&**&+#@*****************@+....................#@&********************&%%@.   ",
-" .#+%@*&****$#. ..+$%##$*******************&&$%+###............#$&@***********&&**&$+%&***&.   ",
-" #$&*&%#%@&$#...##....+&**@%@***************@@@&&&@@$+#......#%@**@&*********&@@$%#...+@@%%.   ",
-" ..#++....#....%&&@%+%&**%#+&***********&%@*@##&&@&***&@%%%%$&****&$********@$@#...   .....    ",
-"             .%*********@#$************&@+&&@$.&*+%****************&%@&**&@$@$#.               ",
-"            .#&**&&****&#+&***&*******&+$&*$#$%&*$$*$&***&**********&@@@@$@&*@+###++#.         ",
-"        ....#@**$##+$&$+.@**&+%&********&&*%.#@&&@@*@$*&&***************$+#@***&&&**$..        ",
-"       .#%%$&**%.. .....+**&#+&***********@+..#&%+*&$&&+%****************$.+*********%....     ",
-"      .#@*****@#..#+%+#+&**%#&***&*********&$+.+#.@$#+++&***@***$%@@&&&**&#.%@@@%+%&*&%%%$.    ",
-"    ..#%*&@&&@#..#@**&&&**&#%***%%&**********&@+#.####+&****%***@+####+@*&+...#....#@*****.    ",
-"    #$&*@#.###. .$********%.@**$#@**************&@@@&****&**%$****@$%#.#**$..      .#%%+%..    ",
-"    #%$%#.      #&**@%%$@+.#&*&#$***$%&*****************&$**@#$******@#.&**$#.....  ....       ",
-"    .....      .+**$#......%**@#&**$+&**&@&**********&**@%***%#+$@&***%.@***&@@@%#.            ",
-"            ...#@*@#...+%%$&**$#&*&#$**&%@**&$**&$&*&%**&#@***$+..+@**$.+&*******%.            ",
-"           .#%$&**%..#$******&+#&*@.@**$+&**%@**$%**@+***++@****@#.#&*$..#%$$$@**@..           ",
-"           #@****@#..%****&&&+.#**@#&**+%**@+&**+%**&#@**@+#%&***@#.&*@........%&*%##.         ",
-"          .+*&@@$+. .@**@+###..%**@.@**#%**@#&**++**&++&**&%##$***+.&**%..    ..$**&@+.        ",
-"        ..+@&#....  .&*&#...#+$&**$.$**++**@#@**%.&**@#+&***$.#@*&+.@***$+#..  .#%$@&@#        ",
-"        .$*&$.     .#**%..#$*****&#.$**%#@*&+%**&#+&**@##@***#.$*&#.+&*****@+.  ....+@%        ",
-"        #++#..    ..$*&+..%***&@%+.#@**$.$**$.@**$.+&**$.#&**%.@*&#..+$@&***@.      .##        ",
-"                ..+$**&# .$**@#...+@***+.%**@.+***#.%**&#.@**##@**+. ...#+&*&#                 ",
-"                .$****$. .@**+..#@****$..$**@.#&**+.#**&##@*@..@**&+..   .#**+..               ",
-"                #&*@$+.. .$*@. .@***$#.#%&**%.#&**+.+**$.+**%..+&**&$+..  .@*&%+.              ",
-"               .+*$#..   .@*@. .&**%..#@**&%##@**$.#@*&#.$**$. .+@&**&$.  .+@&*&#.             ",
-"              .#@*+.    .#&*@. .&*&#..%**&+..$**$#.%**$..%**&#. ..+$**&#   ..#%*%.             ",
-"              #&&%.    .#@**$. .@*&. .@**$. +**&#..@**%..#&**@#.. ..$**+     ..$@.             ",
-"              #+#..   .+&**&+. .%*&. .$**+. +**@# .$**@#..+@**&%.. .#&*+.     ..#.             ",
-"                      .$*@%#.  .%*&# .+**%. #&*&#..+&*&+. .#%&**%.  #&*$#.                     ",
-"                      .@&#..  ..$**+  .&*$. .$**+. .+&*&+. ..%**$.  .%&*@+.                    ",
-"                     .#@&.   ..%**&#  .$*&#...@*&#. .+&*&#. .#&*%.  ..#%*$.                    ",
-"                     .$&$.   .%**@+.  .%**%. .+**$.  .$**%.  #&*+.    ..@@.                    ",
-"                     #@%#.   .$*@#.  ..@**+.  #**&.  .%**+.  #&*%..    .+$#                    ",
-"                     ##..    .%*+.   .%**$.  .+**$.  .%*&#   .%&&%.     ...                    ",
-"                             .+*%.   #@*$..  .@*@#.  .@*$.   ..#&&#                            ",
-"                             #@&+.   .$*+.   .@*%.   .%&@#.    .%&#                            ",
-"                             +&%.    .+*%.   .$*%.   ..%*$.    .+@#                            ",
-"                             ##..    .+*$.   .#&&#    .#@@.     .#.                            ",
-"                                     .$&#.    .$&#     .@$.                                    ",
-"                                     .$%.     .@@.     .%+.                                    ",
-"                                     .#..     .%+.     ....                                    ",
-"                                              ...                                              "};
+  GdkRectangle  textarea;
+  gdouble       text_size;
+  gdouble       min_text_size;
+  PangoLayout  *layout;
+  PangoColor    foreground;
+  PangoColor    background;
 
+  gint          timer;
+
+  gint          index;
+  gboolean      visible;
+  gint          textrange[2];
+  gint          state;
+
+} GimpAboutInfo;
+
+PangoColor gradient[] =
+{
+    { 31868, 33153, 32382 },
+    { 10000, 10000, 10000 },
+    { 65535, 65535, 65535 },
+};
+
+static GimpAboutInfo about_info = { 0 };
 
 static gboolean  about_dialog_load_logo   (GtkWidget      *window);
 static void      about_dialog_destroy     (GtkObject      *object,
-					   gpointer        data);
+                                           gpointer        data);
 static void      about_dialog_unmap       (GtkWidget      *widget,
                                            gpointer        data);
 static gint      about_dialog_logo_expose (GtkWidget      *widget,
-					   GdkEventExpose *event,
-					   gpointer        data);
+                                           GdkEventExpose *event,
+                                           gpointer        data);
 static gint      about_dialog_button      (GtkWidget      *widget,
-					   GdkEventButton *event,
-					   gpointer        data);
+                                           GdkEventButton *event,
+                                           gpointer        data);
 static gint      about_dialog_key         (GtkWidget      *widget,
-					   GdkEventKey    *event,
-					   gpointer        data);
-static void      about_dialog_tool_drop   (GtkWidget      *widget,
-					   GimpViewable   *viewable,
-					   gpointer        data);
+                                           GdkEventKey    *event,
+                                           gpointer        data);
 static gboolean  about_dialog_timer       (gpointer        data);
 
 
 static gboolean     double_speed     = FALSE;
 
-static GtkWidget   *about_dialog     = NULL;
-static GtkWidget   *logo_area        = NULL;
-static GtkWidget   *scroll_area      = NULL;
-static GdkPixmap   *logo_pixmap      = NULL;
-static GdkPixmap   *scroll_pixmap    = NULL;
-static PangoLayout *scroll_layout    = NULL;
-static guchar      *dissolve_map     = NULL;
-static gint         dissolve_width;
-static gint         dissolve_height;
-static gint         logo_width       = 0;
-static gint         logo_height      = 0;
-static gboolean     do_animation     = FALSE;
-static gboolean     do_scrolling     = FALSE;
-static gint         scroll_state     = 0;
-static gint         frame            = 0;
-static gint         offset           = 0;
-static gint         timer            = 0;
-static gint         hadja_state      = 0;
+static PangoFontDescription *font_desc = NULL;
 static gchar      **scroll_text      = authors;
 static gint         nscroll_texts    = G_N_ELEMENTS (authors);
-static gint         scroll_text_widths[G_N_ELEMENTS (authors)];
-static gint         cur_scroll_text  = 0;
-static gint         cur_scroll_index = 0;
 static gint         shuffle_array[G_N_ELEMENTS (authors)];
-
-static gchar *drop_text[] =
-{
-  "We are The GIMP." ,
-  "Prepare to be manipulated.",
-  "Resistance is futile."
-};
-
-static gchar *hadja_text[] =
-{
-  "Hadjaha!",
-  "Nej!",
-  "Tvärtom!"
-};
 
 
 GtkWidget *
 about_dialog_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *aboutframe;
-  GtkWidget *label;
-  GtkWidget *alignment;
-  gint       max_width;
-  gint       width;
-  gint       height;
-  gint       i;
-  gchar     *label_text;
+  GdkModifierType mask;
 
-  if (! about_dialog)
+  if (! about_info.about_dialog)
     {
-      about_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-      gtk_window_set_type_hint (GTK_WINDOW (about_dialog),
-				GDK_WINDOW_TYPE_HINT_DIALOG);
-      gtk_window_set_role (GTK_WINDOW (about_dialog), "gimp-about");
-      gtk_window_set_title (GTK_WINDOW (about_dialog), _("About The GIMP"));
-      gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
-      gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
+      GtkWidget *widget;
 
-      gimp_help_connect (about_dialog, gimp_standard_help_func,
-			 GIMP_HELP_ABOUT_DIALOG, NULL);
+      about_info.textarea.x = 0;
+      about_info.textarea.y = 265;
+      about_info.textarea.width = 300;
+      about_info.textarea.height = 60;
 
-      g_signal_connect (about_dialog, "destroy",
-			G_CALLBACK (about_dialog_destroy),
-			NULL);
-      g_signal_connect (about_dialog, "unmap",
-			G_CALLBACK (about_dialog_unmap),
-			NULL);
-      g_signal_connect (about_dialog, "button_press_event",
-			G_CALLBACK (about_dialog_button),
-			NULL);
-      g_signal_connect (about_dialog, "key_press_event",
-			G_CALLBACK (about_dialog_key),
-			NULL);
+      about_info.foreground.red   = 65535;
+      about_info.foreground.green = 65535;
+      about_info.foreground.blue  = 65535;
+      about_info.background.red   = 31868;
+      about_info.background.green = 33153;
+      about_info.background.blue  = 32382;
 
-      /*  dnd stuff  */
-      gtk_drag_dest_set (about_dialog,
-                         GTK_DEST_DEFAULT_MOTION |
-                         GTK_DEST_DEFAULT_DROP,
-                         NULL, 0,
-                         GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_add (about_dialog,
-				  GIMP_TYPE_TOOL_INFO,
-				  about_dialog_tool_drop, NULL);
+      about_info.visible = FALSE;
+      about_info.state = 0;
 
-      gtk_widget_set_events (about_dialog, GDK_BUTTON_PRESS_MASK);
+      widget = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      about_info.about_dialog = widget;
 
-      if (! about_dialog_load_logo (about_dialog))
-	{
-	  gtk_widget_destroy (about_dialog);
-	  about_dialog = NULL;
+      gtk_window_set_type_hint (GTK_WINDOW (widget),
+                                GDK_WINDOW_TYPE_HINT_DIALOG);
+      gtk_window_set_wmclass (GTK_WINDOW (widget), "about_dialog", "Gimp");
+      gtk_window_set_title (GTK_WINDOW (widget), _("About The GIMP"));
+      gtk_window_set_position (GTK_WINDOW (widget), GTK_WIN_POS_CENTER);
+
+      /* The window must not be resizeable, since otherwise
+       * the copying of nonexisting parts of the image pixmap
+       * would result in an endless loop due to the X-Server
+       * generating expose events on the pixmap. */
+
+      gtk_window_set_resizable (GTK_WINDOW (widget), FALSE);
+
+      g_signal_connect (widget, "destroy",
+                        G_CALLBACK (about_dialog_destroy),
+                        NULL);
+      g_signal_connect (widget, "unmap",
+                        G_CALLBACK (about_dialog_unmap),
+                        NULL);
+      g_signal_connect (widget, "button_press_event",
+                        G_CALLBACK (about_dialog_button),
+                        NULL);
+      g_signal_connect (widget, "key_press_event",
+                        G_CALLBACK (about_dialog_key),
+                        NULL);
+      
+      gtk_widget_set_events (widget, GDK_BUTTON_PRESS_MASK);
+
+      if (! about_dialog_load_logo (widget))
+        {
+	  gtk_widget_destroy (widget);
+	  about_info.about_dialog = NULL;
 	  return NULL;
 	}
 
-      vbox = gtk_vbox_new (FALSE, 1);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (about_dialog), vbox);
-      gtk_widget_show (vbox);
+      widget = gtk_drawing_area_new ();
+      about_info.logo_area = widget;
 
-      aboutframe = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (aboutframe), 0);
-      gtk_box_pack_start (GTK_BOX (vbox), aboutframe, TRUE, TRUE, 0);
-      gtk_widget_show (aboutframe);
+      gtk_widget_set_size_request (widget,
+                                   about_info.pixmaparea.width,
+                                   about_info.pixmaparea.height);
+      gtk_widget_set_events (widget, GDK_EXPOSURE_MASK);
+      gtk_container_add (GTK_CONTAINER (about_info.about_dialog),
+                         widget);
+      gtk_widget_show (widget);
 
-      logo_area = gtk_drawing_area_new ();
-      gtk_widget_set_size_request (logo_area, logo_width, logo_height);
-      gtk_widget_set_events (logo_area, GDK_EXPOSURE_MASK);
-      gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
-      gtk_widget_show (logo_area);
-
-      g_signal_connect (logo_area, "expose_event",
+      g_signal_connect (widget, "expose_event",
 			G_CALLBACK (about_dialog_logo_expose),
 			NULL);
 
-      gtk_widget_realize (logo_area);
-      gdk_window_set_background (logo_area->window, &logo_area->style->black);
+      gtk_widget_realize (widget);
+      gdk_window_set_background (widget->window,
+                                 &(widget->style)->black);
 
-      label_text = g_strdup_printf (_("Version %s brought to you by"),
-				    GIMP_VERSION);
-      label = gtk_label_new (label_text);
-      g_free (label_text);
-      label_text = NULL;
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-      gtk_widget_show (label);
+      about_info.layout = gtk_widget_create_pango_layout (about_info.logo_area, NULL);
+      g_object_weak_ref (G_OBJECT (about_info.logo_area), 
+                         (GWeakNotify) g_object_unref, about_info.layout);
 
-      label = gtk_label_new ("Spencer Kimball & Peter Mattis");
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-      gtk_widget_show (label);
+      font_desc = pango_font_description_from_string ("Bitstream Vera Sans,"
+                                                      "Trebuchet MS,"
+                                                      "Helvetica,"
+                                                      "Sans,"
+                                                      "Bold 13");
 
-      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, TRUE, 0);
-      gtk_widget_show (alignment);
+      pango_layout_set_font_description (about_info.layout, font_desc);
+      pango_layout_set_justify (about_info.layout, PANGO_ALIGN_CENTER);
 
-      aboutframe = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (aboutframe), 0);
-      gtk_container_add (GTK_CONTAINER (alignment), aboutframe);
-      gtk_widget_show (aboutframe);
-
-      scroll_layout = gtk_widget_create_pango_layout (aboutframe, NULL);
-      g_object_weak_ref (G_OBJECT (aboutframe),
-                         (GWeakNotify) g_object_unref, scroll_layout);
-
-      max_width = 0;
-      for (i = 0; i < nscroll_texts; i++)
-	{
-          pango_layout_set_text (scroll_layout, scroll_text[i], -1);
-	  pango_layout_get_pixel_size (scroll_layout,
-                                       &scroll_text_widths[i], &height);
-	  max_width = MAX (max_width, scroll_text_widths[i]);
-	}
-      for (i = 0; i < (sizeof (drop_text) / sizeof (drop_text[0])); i++)
-	{
-          pango_layout_set_text (scroll_layout, drop_text[i], -1);
-          pango_layout_get_pixel_size (scroll_layout, &width, NULL);
-	  max_width = MAX (max_width, width);
-	}
-      for (i = 0; i < (sizeof (hadja_text) / sizeof (hadja_text[0])); i++)
-	{
-          pango_layout_set_text (scroll_layout, hadja_text[i], -1);
-          pango_layout_get_pixel_size (scroll_layout, &width, NULL);
-	  max_width = MAX (max_width, width);
-        }
-      scroll_area = gtk_drawing_area_new ();
-      gtk_widget_set_size_request (scroll_area, max_width + 6, height + 1);
-      gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
-      gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
-      gtk_widget_show (scroll_area);
-
-      label =
-	gtk_label_new (_("Visit http://www.gimp.org/ for more information"));
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-      gtk_widget_show (label);
-
-      gtk_widget_realize (scroll_area);
-      gdk_window_set_background (scroll_area->window,
-				 &scroll_area->style->white);
     }
 
-  if (! GTK_WIDGET_VISIBLE (about_dialog))
-    {
-      do_animation    = TRUE;
-      do_scrolling    = FALSE;
-      scroll_state    = 0;
-      frame           = 0;
-      offset          = 0;
-      cur_scroll_text = 0;
+  /* for future enhancements */
+  gdk_window_get_pointer (NULL, NULL, NULL, &mask);
 
-      if (! double_speed && hadja_state != 7)
+  if (! GTK_WIDGET_VISIBLE (about_info.about_dialog))
+    {
+      if (! double_speed)
 	{
 	  GRand *gr = g_rand_new ();
+          gint i;
 
-	  for (i = 0; i < nscroll_texts; i++)
+	  for (i = 0; i < nscroll_texts; i++) 
 	    {
 	      shuffle_array[i] = i;
 	    }
 
-	  for (i = 0; i < nscroll_texts; i++)
+	  for (i = 0; i < nscroll_texts; i++) 
 	    {
 	      gint j;
 
 	      j = g_rand_int_range (gr, 0, nscroll_texts);
-	      if (i != j)
+	      if (i != j) 
 		{
 		  gint t;
 
@@ -394,17 +238,15 @@ about_dialog_create (void)
 		}
 	    }
 
-	  cur_scroll_text = g_rand_int_range (gr, 0, nscroll_texts);
-          pango_layout_set_text (scroll_layout,
-                                 scroll_text[cur_scroll_text], -1);
+          pango_layout_set_text (about_info.layout, "", -1);
 
 	  g_rand_free (gr);
 	}
     }
 
-  gtk_window_present (GTK_WINDOW (about_dialog));
+  gtk_window_present (GTK_WINDOW (about_info.about_dialog));
 
-  return about_dialog;
+  return about_info.about_dialog;
 }
 
 static gboolean
@@ -413,57 +255,42 @@ about_dialog_load_logo (GtkWidget *window)
   gchar     *filename;
   GdkPixbuf *pixbuf;
   GdkGC     *gc;
-  gint       i, j, k;
-  GRand     *gr;
 
-  if (logo_pixmap)
+  if (about_info.logo_pixmap)
     return TRUE;
 
   filename = g_build_filename (gimp_data_directory (), "images",
                                "gimp_logo.png", NULL);
 
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-
   g_free (filename);
 
   if (! pixbuf)
     return FALSE;
 
-  logo_width  = gdk_pixbuf_get_width (pixbuf);
-  logo_height = gdk_pixbuf_get_height (pixbuf);
+  about_info.pixmaparea.x = 0;
+  about_info.pixmaparea.y = 0;
+  about_info.pixmaparea.width = gdk_pixbuf_get_width (pixbuf);
+  about_info.pixmaparea.height = gdk_pixbuf_get_height (pixbuf);
 
   gtk_widget_realize (window);
 
-  logo_pixmap = gdk_pixmap_new (window->window,
-                                logo_width, logo_height,
+  about_info.logo_pixmap = gdk_pixmap_new (window->window,
+                                about_info.pixmaparea.width,
+                                about_info.pixmaparea.height,
                                 gtk_widget_get_visual (window)->depth);
 
-  gc = gdk_gc_new (logo_pixmap);
+  gc = gdk_gc_new (about_info.logo_pixmap);
 
-  gdk_draw_pixbuf (GDK_DRAWABLE (logo_pixmap), gc, pixbuf,
-                   0, 0, 0, 0, logo_width, logo_height,
+  gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
+                   gc, pixbuf,
+                   0, 0, 0, 0,
+                   about_info.pixmaparea.width,
+                   about_info.pixmaparea.height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
 
   g_object_unref (gc);
   g_object_unref (pixbuf);
-
-  dissolve_width =
-    (logo_width / ANIMATION_SIZE) +
-    (logo_width % ANIMATION_SIZE == 0 ? 0 : 1);
-
-  dissolve_height =
-    (logo_height / ANIMATION_SIZE) +
-    (logo_height % ANIMATION_SIZE == 0 ? 0 : 1);
-
-  dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
-
-  gr = g_rand_new ();
-
-  for (i = 0, k = 0; i < dissolve_height; i++)
-    for (j = 0; j < dissolve_width; j++, k++)
-      dissolve_map[k] = g_rand_int_range (gr, 0, ANIMATION_STEPS);
-
-  g_rand_free (gr);
 
   return TRUE;
 }
@@ -472,7 +299,7 @@ static void
 about_dialog_destroy (GtkObject *object,
 		      gpointer   data)
 {
-  about_dialog = NULL;
+  about_info.about_dialog = NULL;
   about_dialog_unmap (NULL, NULL);
 }
 
@@ -480,10 +307,10 @@ static void
 about_dialog_unmap (GtkWidget *widget,
                     gpointer   data)
 {
-  if (timer)
+  if (about_info.timer)
     {
-      g_source_remove (timer);
-      timer = 0;
+      g_source_remove (about_info.timer);
+      about_info.timer = 0;
     }
 }
 
@@ -492,30 +319,65 @@ about_dialog_logo_expose (GtkWidget      *widget,
 			  GdkEventExpose *event,
 			  gpointer        data)
 {
-  if (do_animation)
-    {
-      if (!timer)
-	{
-	  about_dialog_timer (widget);
-	  timer = g_timeout_add (75, about_dialog_timer, NULL);
-	}
-    }
-  else
-    {
-      /* If we draw beyond the boundaries of the pixmap, then X
-	 will generate an expose area for those areas, starting
-	 an infinite cycle. We now set allow_grow = FALSE, so
-	 the drawing area can never be bigger than the preview.
-         Otherwise, it would be necessary to intersect event->area
-         with the pixmap boundary rectangle. */
+  gint width, height;
 
-      gdk_draw_drawable (widget->window,
-			 widget->style->black_gc,
-			 logo_pixmap,
-			 event->area.x, event->area.y,
-			 event->area.x, event->area.y,
-			 event->area.width, event->area.height);
+  if (!about_info.timer)
+    about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
+
+  /* only operate on the region covered by the pixmap */
+  if (! gdk_rectangle_intersect (&(about_info.pixmaparea),
+                                 &(event->area),
+                                 &(event->area)))
+    return FALSE;
+
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, &(event->area));
+
+  gdk_draw_drawable (widget->window,
+                     widget->style->white_gc,
+                     about_info.logo_pixmap,
+                     event->area.x, event->area.y,
+                     event->area.x, event->area.y,
+                     event->area.width, event->area.height);
+
+  if (about_info.visible == TRUE)
+    {
+      gint layout_x, layout_y;
+
+      pango_layout_get_pixel_size (about_info.layout, &width, &height);
+
+      layout_x = about_info.textarea.x +
+                        (about_info.textarea.width - width) / 2;
+      layout_y = about_info.textarea.y +
+                        (about_info.textarea.height - height) / 2;
+      
+      if (about_info.textrange[1] > 0)
+        {
+          GdkRegion *covered_region = NULL;
+          GdkRegion *rect_region;
+
+          covered_region = gdk_pango_layout_get_clip_region
+                              (about_info.layout,
+                               layout_x, layout_y,
+                               about_info.textrange, 1);
+
+          rect_region = gdk_region_rectangle (&(event->area));
+
+          gdk_region_intersect (covered_region, rect_region);
+          gdk_region_destroy (rect_region);
+
+          gdk_gc_set_clip_region (about_info.logo_area->style->text_gc[GTK_STATE_NORMAL],
+                                  covered_region);
+          gdk_region_destroy (covered_region);
+        }
+
+      gdk_draw_layout (widget->window,
+                       widget->style->text_gc[GTK_STATE_NORMAL],
+                       layout_x, layout_y,
+                       about_info.layout);
+
     }
+
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
 
   return FALSE;
 }
@@ -525,15 +387,7 @@ about_dialog_button (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     gpointer        data)
 {
-  if (timer)
-    {
-      g_source_remove (timer);
-      timer = 0;
-    }
-
-  frame = 0;
-
-  gtk_widget_hide (about_dialog);
+  gtk_widget_hide (about_info.about_dialog);
 
   return FALSE;
 }
@@ -543,251 +397,402 @@ about_dialog_key (GtkWidget      *widget,
 		  GdkEventKey    *event,
 		  gpointer        data)
 {
-  gint i;
-
-  if (hadja_state == 7)
-    return FALSE;
-
+  /* placeholder */
   switch (event->keyval)
     {
-    case GDK_h:
-    case GDK_H:
-      if (hadja_state == 0 || hadja_state == 5)
-	hadja_state++;
-      else
-	hadja_state = 1;
-      break;
     case GDK_a:
     case GDK_A:
-      if (hadja_state == 1 || hadja_state == 4 || hadja_state == 6)
-	hadja_state++;
-      else
-	hadja_state = 0;
-      break;
-    case GDK_d:
-    case GDK_D:
-      if (hadja_state == 2)
-	hadja_state++;
-      else
-	hadja_state = 0;
-      break;
-    case GDK_j:
-    case GDK_J:
-      if (hadja_state == 3)
-	hadja_state++;
-      else
-	hadja_state = 0;
-      break;
+    case GDK_b:
+    case GDK_B:
     default:
-      hadja_state = 0;
+        break;
     }
-
-  if (hadja_state == 7)
-    {
-      scroll_text = hadja_text;
-      nscroll_texts = G_N_ELEMENTS (hadja_text);
-
-      for (i = 0; i < nscroll_texts; i++)
-	{
-	  shuffle_array[i] = i;
-          pango_layout_set_text (scroll_layout, scroll_text[i], -1);
-          pango_layout_get_pixel_size (scroll_layout,
-                                       &scroll_text_widths[i], NULL);
-	}
-
-      scroll_state     = 0;
-      cur_scroll_index = 0;
-      cur_scroll_text  = 0;
-      offset           = 0;
-      pango_layout_set_text (scroll_layout, scroll_text[cur_scroll_text], -1);
-    }
-
+  
   return FALSE;
 }
 
-static void
-about_dialog_tool_drop (GtkWidget    *widget,
-			GimpViewable *viewable,
-			gpointer      data)
+static gchar *
+insert_spacers (const gchar *string)
 {
-  GdkPixmap *pixmap = NULL;
-  GdkBitmap *mask   = NULL;
-  gint       width  = 0;
-  gint       height = 0;
-  gint       i;
+  gchar *normalized, *ptr;
+  gunichar unichr;
+  GString *str;
 
-  if (do_animation)
-    return;
+  str = g_string_new (NULL);
 
-  if (timer)
-    g_source_remove (timer);
+  normalized = g_utf8_normalize (string, -1, G_NORMALIZE_DEFAULT_COMPOSE);
+  ptr = normalized;
 
-  timer = g_timeout_add (75, about_dialog_timer, NULL);
-
-  frame        = 0;
-  do_animation = TRUE;
-  do_scrolling = FALSE;
-
-  gdk_draw_rectangle (logo_pixmap,
-		      logo_area->style->white_gc,
-		      TRUE,
-		      0, 0,
-		      logo_area->allocation.width,
-		      logo_area->allocation.height);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
-					 &mask,
-					 NULL,
-					 wilber2_xpm);
-
-  gdk_drawable_get_size (pixmap, &width, &height);
-
-  if (logo_area->allocation.width  >= width &&
-      logo_area->allocation.height >= height)
+  while ((unichr = g_utf8_get_char (ptr)))
     {
-      gint x, y;
-
-      x = (logo_area->allocation.width  - width) / 2;
-      y = (logo_area->allocation.height - height) / 2;
-
-      gdk_gc_set_clip_mask (logo_area->style->black_gc, mask);
-      gdk_gc_set_clip_origin (logo_area->style->black_gc, x, y);
-
-      gdk_draw_drawable (logo_pixmap,
-                         logo_area->style->black_gc,
-                         pixmap, 0, 0,
-                         x, y,
-                         width, height);
-
-      gdk_gc_set_clip_mask (logo_area->style->black_gc, NULL);
-      gdk_gc_set_clip_origin (logo_area->style->black_gc, 0, 0);
+      g_string_append_unichar (str, unichr);
+      g_string_append_unichar (str, 0x200b);  /* ZERO WIDTH SPACE */
+      ptr = g_utf8_next_char (ptr);
     }
 
-  g_object_unref (pixmap);
-  g_object_unref (mask);
+  g_free (normalized);
 
-  scroll_text = drop_text;
-  nscroll_texts = G_N_ELEMENTS (drop_text);
+  return g_string_free (str, FALSE);
+}
 
-  for (i = 0; i < nscroll_texts; i++)
+static void
+mix_gradient (PangoColor *gradient, guint ncolors,
+              PangoColor *target, gdouble pos)
+{
+  gint index;
+
+  g_return_if_fail (gradient != NULL);
+  g_return_if_fail (ncolors > 1);
+  g_return_if_fail (target != NULL);
+  g_return_if_fail (pos >= 0.0  &&  pos <= 1.0);
+
+  if (pos == 1.0)
     {
-      shuffle_array[i] = i;
-      pango_layout_set_text (scroll_layout, scroll_text[i], -1);
-      pango_layout_get_pixel_size (scroll_layout,
-                                   &scroll_text_widths[i], NULL);
+      target->red   = gradient[ncolors-1].red;
+      target->green = gradient[ncolors-1].green;
+      target->blue  = gradient[ncolors-1].blue;
+      return;
     }
+  
+  index = (int) floor (pos * (ncolors-1));
+  pos = pos * (ncolors - 1) - index;
 
-  scroll_state     = 0;
-  cur_scroll_index = 0;
-  cur_scroll_text  = 0;
-  offset           = 0;
-  pango_layout_set_text (scroll_layout, scroll_text[cur_scroll_text], -1);
+  target->red   = gradient[index].red   * (1.0 - pos) + gradient[index+1].red   * pos;
+  target->green = gradient[index].green * (1.0 - pos) + gradient[index+1].green * pos;
+  target->blue  = gradient[index].blue  * (1.0 - pos) + gradient[index+1].blue  * pos;
 
-  double_speed = TRUE;
+}
+
+static void
+mix_colors (PangoColor *start, PangoColor *end,
+            PangoColor *target,
+            gdouble pos)
+{
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+  g_return_if_fail (target != NULL);
+  g_return_if_fail (pos >= 0.0  &&  pos <= 1.0);
+
+  target->red   = start->red   * (1.0 - pos) + end->red   * pos;
+  target->green = start->green * (1.0 - pos) + end->green * pos;
+  target->blue  = start->blue  * (1.0 - pos) + end->blue  * pos;
+}
+
+static void
+decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
+{
+  gint letter_count = 0;
+  gint text_length = 0;
+  gint text_bytelen = 0;
+  gint cluster_start, cluster_end;
+  const gchar *text;
+  const gchar *ptr;
+  gunichar unichr;
+  PangoAttrList *attrlist = NULL;
+  PangoAttribute *attr;
+  PangoRectangle irect = {0, 0, 0, 0};
+  PangoRectangle lrect = {0, 0, 0, 0};
+  PangoColor mix;
+
+  mix_colors (&(about_info.background),
+              &(about_info.foreground),
+              &mix, time);
+
+  text = pango_layout_get_text (layout);
+  text_length = g_utf8_strlen (text, -1);
+  text_bytelen = strlen (text);
+
+  attrlist = pango_attr_list_new ();
+
+  about_info.textrange[0] = 0;
+  about_info.textrange[1] = text_bytelen;
+
+  switch (anim_type)
+  {
+    case 0: /* Fade in */
+      attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
+      attr->start_index = 0;
+      attr->end_index = text_bytelen;
+      pango_attr_list_insert (attrlist, attr);
+      break;
+
+    case 1: /* Fade in, spread */
+      attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
+      attr->start_index = 0;
+      attr->end_index = text_bytelen;
+      pango_attr_list_change (attrlist, attr);
+
+      ptr = text;
+
+      cluster_start = 0;
+      while ((unichr = g_utf8_get_char (ptr)))
+        {
+          ptr = g_utf8_next_char (ptr);
+          cluster_end = (ptr - text);
+
+          if (unichr == 0x200b)
+            {
+              lrect.width = (1.0 - time) * 15.0 * PANGO_SCALE + 0.5;
+              attr = pango_attr_shape_new (&irect, &lrect);
+              attr->start_index = cluster_start;
+              attr->end_index = cluster_end;
+              pango_attr_list_change (attrlist, attr);
+            }
+          cluster_start = cluster_end;
+        }
+      break;
+
+    case 2: /* Fade in, sinewave */
+      attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
+      attr->start_index = 0;
+      attr->end_index = text_bytelen;
+      pango_attr_list_change (attrlist, attr);
+
+      ptr = text;
+
+      cluster_start = 0;
+      while ((unichr = g_utf8_get_char (ptr)))
+        {
+          if (unichr == 0x200b)
+            {
+              cluster_end = ptr - text;
+              attr = pango_attr_rise_new ((1.0 -time) * 18000 *
+                                          sin (4.0 * time +
+                                               (float) letter_count * 0.7));
+              attr->start_index = cluster_start;
+              attr->end_index = cluster_end;
+              pango_attr_list_change (attrlist, attr);
+
+              letter_count++;
+              cluster_start = cluster_end;
+            }
+
+          ptr = g_utf8_next_char (ptr);
+        }
+      break;
+
+    case 3: /* letterwise Fade in */
+      ptr = text;
+
+      letter_count = 0;
+      cluster_start = 0;
+      while ((unichr = g_utf8_get_char (ptr)))
+        {
+          gint border;
+          gdouble pos;
+
+          border = (text_length + 15) * time - 15;
+
+          if (letter_count < border)
+            pos = 0;
+          else if (letter_count > border + 15)
+            pos = 1;
+          else
+            pos = ((gdouble) (letter_count - border)) / 15;
+
+          mix_colors (&(about_info.foreground),
+                      &(about_info.background),
+                      &mix, pos);
+
+          ptr = g_utf8_next_char (ptr);
+
+          cluster_end = ptr - text;
+
+          attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
+          attr->start_index = cluster_start;
+          attr->end_index = cluster_end;
+          pango_attr_list_change (attrlist, attr);
+
+          if (pos < 1.0)
+            about_info.textrange[1] = cluster_end;
+
+          letter_count++;
+          cluster_start = cluster_end;
+        }
+
+      break;
+
+    case 4: /* letterwise Fade in, triangular */
+      ptr = text;
+
+      letter_count = 0;
+      cluster_start = 0;
+      while ((unichr = g_utf8_get_char (ptr)))
+        {
+          gint border;
+          gdouble pos;
+
+          border = (text_length + 15) * time - 15;
+
+          if (letter_count < border)
+            pos = 1.0;
+          else if (letter_count > border + 15)
+            pos = 0.0;
+          else
+            pos = 1.0 - ((gdouble) (letter_count - border)) / 15;
+
+          mix_gradient (gradient, G_N_ELEMENTS (gradient), &mix, pos);
+
+          ptr = g_utf8_next_char (ptr);
+
+          cluster_end = ptr - text;
+
+          attr = pango_attr_foreground_new (mix.red, mix.green, mix.blue);
+          attr->start_index = cluster_start;
+          attr->end_index = cluster_end;
+          pango_attr_list_change (attrlist, attr);
+
+          if (pos > 0.0)
+            about_info.textrange[1] = cluster_end;
+
+          letter_count++;
+          cluster_start = cluster_end;
+        }
+      break;
+
+    default:
+      g_printerr ("Unknown animation type %d\n", anim_type);
+  }
+
+  
+  pango_layout_set_attributes (layout, attrlist);
+  pango_attr_list_unref (attrlist);
+
 }
 
 static gboolean
 about_dialog_timer (gpointer data)
 {
-  gint i, j, k;
-  gint return_val;
-
+  static gint count = -1;
+  gboolean return_val;
+  gint width, height;
+  gdouble size;
+  gchar *text;
   return_val = TRUE;
 
-  if (do_animation)
+  if (count == 0)
     {
-      if (logo_area->allocation.width != 1)
-	{
-	  for (i = 0, k = 0; i < dissolve_height; i++)
-	    for (j = 0; j < dissolve_width; j++, k++)
-	      if (frame == dissolve_map[k])
-		{
-		  gdk_draw_drawable (logo_area->window,
-				     logo_area->style->black_gc,
-				     logo_pixmap,
-				     j * ANIMATION_SIZE, i * ANIMATION_SIZE,
-				     j * ANIMATION_SIZE, i * ANIMATION_SIZE,
-				     ANIMATION_SIZE, ANIMATION_SIZE);
-		}
+      size = 13.0;
+      text = NULL;
+      if (about_info.state == 0)
+        {
+          about_info.visible = TRUE;
+          if (about_info.index >= G_N_ELEMENTS (founders))
+            {
+              about_info.index = 0;
+              about_info.state++;
 
-	  frame += 1;
+              /* skip the translators section when the translator
+               * did not provide a translation with his name
+               */
+              if (gettext (translators[1]) == translators[1])
+                about_info.index = G_N_ELEMENTS (translators) - 1;
+            }
+          else
+            {
+              if (about_info.index == 0)
+                {
+                  gchar *tmp;
+                  tmp = g_strdup_printf (gettext (founders[0]), GIMP_VERSION);
+                  text = insert_spacers (tmp);
+                  g_free (tmp);
+                }
+              else
+                {
+                  text = insert_spacers (gettext (founders[about_info.index]));
+                }
+              about_info.index++;
+            }
+        }
 
-	  if (frame == ANIMATION_STEPS)
-	    {
-	      do_animation = FALSE;
-	      do_scrolling = TRUE;
-	      frame        = 0;
+      if (about_info.state == 1)
+        {
+          about_info.visible = TRUE;
+          if (about_info.index >= G_N_ELEMENTS (translators))
+            {
+              about_info.index = 0;
+              about_info.state++;
+            }
+          else
+            {
+              text = insert_spacers (gettext (translators[about_info.index]));
+              about_info.index++;
+            }
+        }
+      
+      if (about_info.state == 2)
+        {
+          about_info.visible = TRUE;
+        
+          about_info.index += 1;
+          if (about_info.index == nscroll_texts)
+            about_info.index = 0;
+        
+          text = insert_spacers (scroll_text[shuffle_array[about_info.index]]);
+        }
 
-	      timer = g_timeout_add (75, about_dialog_timer, NULL);
+      if (text == NULL)
+        {
+          g_printerr ("TEXT == NULL\n");
+          return TRUE;
+        }
+      pango_layout_set_text (about_info.layout, text, -1);
+      pango_layout_set_attributes (about_info.layout, NULL);
 
-	      return FALSE;
-	    }
-	}
+      pango_font_description_set_size (font_desc, size * PANGO_SCALE);
+      pango_layout_set_font_description (about_info.layout, font_desc);
+
+      pango_layout_get_pixel_size (about_info.layout, &width, &height);
+
+      while (width >= about_info.textarea.width && size >= 6.0)
+        {
+          size -= 0.5;
+          pango_font_description_set_size (font_desc, size * PANGO_SCALE);
+          pango_layout_set_font_description (about_info.layout, font_desc);
+
+          pango_layout_get_pixel_size (about_info.layout, &width, &height);
+        }
     }
 
-  if (do_scrolling)
+  count++;
+
+  if (count < 16)
     {
-      if (! scroll_pixmap)
-	scroll_pixmap = gdk_pixmap_new (scroll_area->window,
-					scroll_area->allocation.width,
-					scroll_area->allocation.height,
-					-1);
-
-      switch (scroll_state)
-	{
-	case 1:
-	  scroll_state = 2;
-	  timer = g_timeout_add (700, about_dialog_timer, NULL);
-	  return_val = FALSE;
-	  break;
-	case 2:
-	  scroll_state = 3;
-	  timer = g_timeout_add (75, about_dialog_timer, NULL);
-	  return_val = FALSE;
-	  break;
-	}
-
-      if (offset > (scroll_text_widths[cur_scroll_text] +
-		    scroll_area->allocation.width))
-	{
-	  scroll_state = 0;
-	  cur_scroll_index += 1;
-	  if (cur_scroll_index == nscroll_texts)
-	    cur_scroll_index = 0;
-
-	  cur_scroll_text = shuffle_array[cur_scroll_index];
-          pango_layout_set_text (scroll_layout,
-                                 scroll_text[cur_scroll_text], -1);
-	  offset = 0;
-	}
-
-      gdk_draw_rectangle (scroll_pixmap,
-			  scroll_area->style->white_gc,
-			  TRUE, 0, 0,
-			  scroll_area->allocation.width,
-			  scroll_area->allocation.height);
-      gdk_draw_layout (scroll_pixmap,
-                       scroll_area->style->black_gc,
-                       scroll_area->allocation.width - offset, 0,
-                       scroll_layout);
-      gdk_draw_drawable (scroll_area->window,
-		 	 scroll_area->style->black_gc,
-			 scroll_pixmap, 0, 0, 0, 0,
-			 scroll_area->allocation.width,
-			 scroll_area->allocation.height);
-
-      offset += 15;
-      if (scroll_state == 0)
-	{
-	  if (offset > ((scroll_area->allocation.width +
-			 scroll_text_widths[cur_scroll_text]) / 2))
-	    {
-	      scroll_state = 1;
-	      offset = (scroll_area->allocation.width +
-			scroll_text_widths[cur_scroll_text]) / 2;
-	    }
-	}
+      decorate_text (about_info.layout, 4, ((float) count) / 15.0);
     }
+  else if (count == 16)
+    {
+      about_info.timer = g_timeout_add (800, about_dialog_timer, NULL);
+      return_val = FALSE;
+    }
+  else if (count == 17)
+    {
+      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
+      return_val = FALSE;
+    }
+  else if (count < 33)
+    {
+      decorate_text (about_info.layout, 1, 1.0 - ((float) (count-17)) / 15.0);
+    }
+  else if (count == 33)
+    {
+      about_info.timer = g_timeout_add (300, about_dialog_timer, NULL);
+      return_val = FALSE;
+      about_info.visible = FALSE;
+    }
+  else
+    {
+      count = 0;
+      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
+      return_val = FALSE;
+      about_info.visible = FALSE;
+    }
+
+  gtk_widget_queue_draw_area (about_info.logo_area,
+                              about_info.textarea.x,
+                              about_info.textarea.y,
+                              about_info.textarea.width,
+                              about_info.textarea.height);
 
   return return_val;
 }
