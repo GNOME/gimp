@@ -1,3 +1,12 @@
+1998-03-25  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* app/asupsample.c (adaptive_supersample_area): Removed Sopwith's
+	"speed optimizations", as they introduced bugs (exposed by using a
+	high threshold value for supersampling).  They weren't much of a
+	speed improvement, anyway (memcpy on very small regions, etc.).
+	Also, assuming that all-bytes-zero is a floating-point 0 value is
+	not portable.
+
 Wed Mar 25 16:22:00 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/app_procs.c: now prints messages when starting up --no-splash
