@@ -39,7 +39,6 @@ static gint             zoommax = 0;
 
 static gint              oldxpos = -1;
 static gint              oldypos = -1;
-static GdkCursor        *MyCursor;
 static gdouble           x_press = -1.0;
 static gdouble           y_press = -1.0;
 
@@ -401,8 +400,6 @@ static gboolean
 preview_leave_notify_event (GtkWidget      *widget,
                             GdkEventButton *event)
 {
-  GdkDisplay *display;
-
   if (oldypos != -1)
     {
       preview_draw_crosshair (oldxpos, oldypos);
@@ -412,9 +409,7 @@ preview_leave_notify_event (GtkWidget      *widget,
 
   preview_redraw ();
 
-  display = gtk_widget_get_display (maindlg);
-  MyCursor = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
-  gdk_window_set_cursor (maindlg->window, MyCursor);
+  gdk_window_set_cursor (maindlg->window, NULL);
 
   return TRUE;
 }
@@ -423,11 +418,17 @@ static gboolean
 preview_enter_notify_event (GtkWidget      *widget,
                             GdkEventButton *event)
 {
-  GdkDisplay *display;
+  static GdkCursor *cursor = NULL;
 
-  display = gtk_widget_get_display (maindlg);
-  MyCursor = gdk_cursor_new_for_display (display, GDK_TCROSS);
-  gdk_window_set_cursor (maindlg->window, MyCursor);
+  if (! cursor)
+    {
+      GdkDisplay *display = gtk_widget_get_display (maindlg);
+
+      cursor = gdk_cursor_new_for_display (display, GDK_TCROSS);
+
+    }
+
+  gdk_window_set_cursor (maindlg->window, cursor);
 
   return TRUE;
 }
@@ -495,7 +496,6 @@ explorer_dialog (void)
   GtkWidget *vbox;
   GtkWidget *hbbox;
   GtkWidget *frame;
-  GtkWidget *pframe;
   GtkWidget *toggle;
   GtkWidget *toggle_vbox;
   GtkWidget *toggle_vbox2;
@@ -505,10 +505,9 @@ explorer_dialog (void)
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *gradient;
-  GtkWidget *sep;
-  gchar   *gradient_name;
-  GSList  *group = NULL;
-  gint     i;
+  gchar     *gradient_name;
+  GSList    *group = NULL;
+  gint       i;
 
   gimp_ui_init ("fractalexplorer", TRUE);
 
@@ -564,38 +563,33 @@ explorer_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  top_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 6);
+  top_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_hbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (top_hbox);
 
-  left_vbox = gtk_vbox_new (FALSE, 6);
+  left_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (top_hbox), left_vbox, FALSE, FALSE, 0);
   gtk_widget_show (left_vbox);
 
   /*  Preview  */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (left_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   wint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (wint.preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), wint.preview);
+  gtk_container_add (GTK_CONTAINER (frame), wint.preview);
 
   g_signal_connect (wint.preview, "button_press_event",
                     G_CALLBACK (preview_button_press_event),
@@ -639,14 +633,29 @@ explorer_dialog (void)
   gimp_help_set_help_data (button, _("Redraw preview"), NULL);
 
   /*  Zoom Options  */
-  frame = gtk_frame_new (_("Zoom Options"));
-  gtk_box_pack_end (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
+  frame = gimp_frame_new (_("Zoom"));
+  gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (dialog_step_in_callback),
+                    dialog);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_OUT);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (dialog_step_out_callback),
+                    dialog);
 
   button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -668,44 +677,26 @@ explorer_dialog (void)
                     G_CALLBACK (dialog_redo_zoom_callback),
                     dialog);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (dialog_step_in_callback),
-                    dialog);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_OUT);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (dialog_step_out_callback),
-                    dialog);
-
-
   /*  Create notebook  */
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (top_hbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
   /*  "Parameters" page  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_Parameters")));
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Fractal Parameters"));
+  frame = gimp_frame_new (_("Fractal Parameters"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (8, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 6, 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 6, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -789,7 +780,7 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
-  hbbox = gtk_hbox_new (FALSE, 4);
+  hbbox = gtk_hbox_new (FALSE, 6);
   gtk_table_attach_defaults (GTK_TABLE (table), hbbox, 0, 3, 7, 8);
   gtk_widget_show (hbbox);
 
@@ -819,12 +810,13 @@ explorer_dialog (void)
   gimp_help_set_help_data (button, _("Save active fractal to file"), NULL);
 
   /*  Fractal type toggle box  */
-  frame = gtk_frame_new (_("Fractal Type"));
+  frame = gimp_frame_new (_("Fractal Type"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   toggle_vbox =
     gimp_int_radio_group_new (FALSE, NULL,
@@ -852,7 +844,7 @@ explorer_dialog (void)
 
                               NULL);
 
-  toggle_vbox2 = gtk_vbox_new (FALSE, 1);
+  toggle_vbox2 = gtk_vbox_new (FALSE, 2);
   for (i = TYPE_BARNSLEY_2; i <= TYPE_SPIDER; i++)
     {
       g_object_ref (elements->type[i]);
@@ -866,7 +858,7 @@ explorer_dialog (void)
       g_object_unref (elements->type[i]);
     }
 
-  toggle_vbox3 = gtk_vbox_new (FALSE, 1);
+  toggle_vbox3 = gtk_vbox_new (FALSE, 2);
   for (i = TYPE_MAN_O_WAR; i <= TYPE_SIERPINSKI; i++)
     {
       g_object_ref (elements->type[i]);
@@ -880,7 +872,6 @@ explorer_dialog (void)
       g_object_unref (elements->type[i]);
     }
 
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 0);
   gtk_box_pack_start (GTK_BOX (hbox), toggle_vbox, FALSE, FALSE, 0);
   gtk_widget_show (toggle_vbox);
 
@@ -890,25 +881,21 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), toggle_vbox3, FALSE, FALSE, 0);
   gtk_widget_show (toggle_vbox3);
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (frame);
-
   /*  Color page  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("Co_lors")));
   gtk_widget_show (vbox);
 
   /*  Number of Colors frame  */
-  frame = gtk_frame_new (_("Number of Colors"));
+  frame = gimp_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -935,14 +922,13 @@ explorer_dialog (void)
                                      "\"banding\" in the result"), NULL);
 
   /*  Color Density frame  */
-  frame = gtk_frame_new (_("Color Density"));
+  frame = gimp_frame_new (_("Color Density"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -977,12 +963,11 @@ explorer_dialog (void)
                     &wvals.bluestretch);
 
   /*  Color Function frame  */
-  frame = gtk_frame_new (_("Color Function"));
+  frame = gimp_frame_new (_("Color Function"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -1110,12 +1095,11 @@ explorer_dialog (void)
                              "versa"), NULL);
 
   /*  Colormode toggle box  */
-  frame = gtk_frame_new (_("Color Mode"));
+  frame = gimp_frame_new (_("Color Mode"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   toggle_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   gtk_widget_show (toggle_vbox);
 
@@ -1167,10 +1151,6 @@ explorer_dialog (void)
   g_free (gradient_name);
   gtk_box_pack_start (GTK_BOX (hbox), gradient, FALSE, FALSE, 0);
   gtk_widget_show (gradient);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), sep, FALSE, FALSE, 1);
-  gtk_widget_show (sep);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   {
@@ -1610,129 +1590,99 @@ make_color_map (void)
 static void
 explorer_logo_dialog (GtkWidget *parent)
 {
-  static GtkWidget *logodlg;
-  GtkWidget *xdlg;
-  GtkWidget *xlabel = NULL;
-  GtkWidget *xlogo_box;
-  GtkWidget *xpreview;
-  GtkWidget *xframe;
-  GtkWidget *xframe2;
-  GtkWidget *xframe3;
-  GtkWidget *xvbox;
-  GtkWidget *xhbox;
-  GtkWidget *vpaned;
-  guchar    *temp;
-  guchar    *temp2;
-  guchar    *datapointer;
-  gint       y;
-  gint       x;
+  static GtkWidget *dialog = NULL;
 
-  if (logodlg)
+  GtkWidget *label;
+  GtkWidget *vbox;
+  GtkWidget *abox;
+  GtkWidget *preview;
+  GtkWidget *frame;
+
+  if (dialog)
     {
-      gtk_window_present (GTK_WINDOW (logodlg));
+      gtk_window_present (GTK_WINDOW (dialog));
       return;
     }
 
-  xdlg = logodlg =
-    gimp_dialog_new (_("About"), "fractalexplorer",
-                     parent, 0,
-                     gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("About"), "fractalexplorer",
+                            parent, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-                     NULL);
+                            NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-
-  g_signal_connect (xdlg, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
-  g_signal_connect (xdlg, "destroy",
+  g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &logodlg);
+                    &dialog);
 
-  xframe = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (xdlg)->vbox), xframe, TRUE, TRUE, 0);
-
-  xvbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (xvbox), 4);
-  gtk_container_add (GTK_CONTAINER (xframe), xvbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /*  The logo frame & drawing area  */
-  xhbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
+  gtk_widget_show (abox);
 
-  xlogo_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type(GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
-  xframe2 = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(xframe2), GTK_SHADOW_IN);
-  gtk_box_pack_start(GTK_BOX(xlogo_box), xframe2, FALSE, FALSE, 0);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
 
-  xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
-  temp = g_malloc ((logo_width + 10) * 3);
-  datapointer = header_data + logo_width * logo_height - 1;
+  {
+    guchar *temp;
+    guchar *datapointer;
+    gint    x, y;
 
-  for (y = 0; y < logo_height; y++)
-    {
-      temp2 = temp;
-      for (x = 0; x < logo_width; x++)
-        {
-          HEADER_PIXEL(datapointer, temp2);
-          temp2 += 3;
-        }
+    temp = g_malloc ((logo_width + 10) * 3);
+    datapointer = header_data + logo_width * logo_height - 1;
 
-      gtk_preview_draw_row (GTK_PREVIEW (xpreview),
-                            temp,
-                            0, y, logo_width);
-    }
+    for (y = 0; y < logo_height; y++)
+      {
+        guchar *temp2 = temp;
 
-  g_free (temp);
-  gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
-  gtk_widget_show (xpreview);
-  gtk_widget_show (xframe2);
-  gtk_widget_show (xlogo_box);
-  gtk_widget_show (xhbox);
+        for (x = 0; x < logo_width; x++)
+          {
+            HEADER_PIXEL (datapointer, temp2);
+            temp2 += 3;
+          }
 
-  xhbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (xvbox), xhbox, TRUE, TRUE, 0);
+        gtk_preview_draw_row (GTK_PREVIEW (preview), temp, 0, y, logo_width);
+      }
 
-  vpaned = gtk_vpaned_new ();
-  gtk_box_pack_start (GTK_BOX (xhbox), vpaned, TRUE, TRUE, 0);
-  gtk_widget_show (vpaned);
+    g_free (temp);
+  }
 
-  xframe3 = gtk_frame_new (NULL);
-  gtk_paned_add1 (GTK_PANED (vpaned), xframe3);
-  gtk_widget_show (xframe3);
+  label = gtk_label_new ("Fractal Chaos Explorer\n"
+                         "Plug-In for the GIMP\n"
+                         "Version 2.00 (Multilingual)");
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  xlabel = gtk_label_new ("\nCotting Software Productions\n"
-                          "Quellenstrasse 10\n"
-                          "CH-8005 Zuerich (Switzerland)\n\n"
-                          "Fractal Chaos Explorer\nPlug-In for the GIMP\n"
-                          "Version 2.00 (Multilingual)\n");
-  gtk_container_add (GTK_CONTAINER (xframe3),  xlabel);
-  gtk_widget_show (xlabel);
+  label = gtk_label_new ("\nContains code from:\n\n"
+                         "Daniel Cotting  <cotting@mygale.org>\n"
+                         "Peter Kirchgessner  <Pkirchg@aol.com>\n"
+                         "Scott Draves  <spot@cs.cmu.edu>\n"
+                         "Andy Thomas  <alt@picnic.demon.co.uk>\n"
+                         "and the GIMP distribution.");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  xframe3 = gtk_frame_new (NULL);
-  gtk_paned_add2 (GTK_PANED (vpaned), xframe3);
-  gtk_widget_show (xframe3);
-
-  xlabel = gtk_label_new ("\nContains code from:\n\n"
-                          "Daniel Cotting\n<cotting@mygale.org>\n"
-                          "Peter Kirchgessner\n<Pkirchg@aol.com>\n"
-                          "Scott Draves\n<spot@cs.cmu.edu>\n"
-                          "Andy Thomas\n<alt@picnic.demon.co.uk>\n"
-                          "and the GIMP distribution.\n");
-  gtk_container_add (GTK_CONTAINER (xframe3),  xlabel);
-  gtk_widget_show (xlabel);
-
-  gtk_widget_show (xhbox);
-
-  gtk_widget_show (xvbox);
-  gtk_widget_show (xframe);
-  gtk_widget_show (xdlg);
+  gtk_widget_show (dialog);
 }
 
 /**********************************************************************

@@ -1,6 +1,12 @@
+2004-05-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c: HIG-ification and
+	some code cleanup.
+
 2004-05-19  Manish Singh  <yosh@gimp.org>
 
-        * plug-ins/pygimp/gimpfu.py: Actually return values from the run
+	* plug-ins/pygimp/gimpfu.py: Actually return values from the run
         function. Fixes #141338.
 
 2004-05-20  Sven Neumann  <sven@gimp.org>

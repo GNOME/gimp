@@ -144,8 +144,8 @@ explorer_vals_t wvals =
   0
 };				/* wvals */
 
-fractalexplorerOBJ *current_obj;
-static GtkWidget *delete_dialog = NULL;
+fractalexplorerOBJ *current_obj   = NULL;
+static GtkWidget   *delete_dialog = NULL;
 
 static void query (void);
 static void run   (const gchar      *name,
@@ -859,24 +859,26 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
                     options);
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox),
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /*  the name entry hbox, label and entry  */
-  hbox = gtk_hbox_new (FALSE, 1);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   label = gtk_label_new (_("Fractal name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),obj->draw_name);
-
   gtk_widget_show (options->name_entry);
-  gtk_widget_show (hbox);
 
-  gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
 
@@ -1245,13 +1247,13 @@ add_objects_list (void)
   GtkWidget *list;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Choose Fractal by double-clicking on it"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  frame = gimp_frame_new (_("Choose Fractal by double-clicking on it"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -1364,7 +1366,7 @@ fractalexplorer_rescan_list (void)
 
   patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"),
                                      fractalexplorer_path);
-  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
                       TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
