@@ -1,5 +1,20 @@
 2003-04-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmarshal.list: added VOID__DOUBLE_DOUBLE
+
+	* app/widgets/gimpnavigationpreview.[ch]: applied patch from
+	Pedro Gimeno that fixes mapping of preview scroll offsets to
+	image scroll offsets. Changed the x, y, width, height members
+	from gint to gdouble. Changed the external API to use exact
+	doubles instead of rounded ints.
+
+	* app/display/gimpnavigationview.c: speak to the navigation
+	preview in exact double values.
+
+	Alltogether fixes bug #109648.
+
+2003-04-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpeditor.c: factored button_box creation out to a
 	utility function.
 

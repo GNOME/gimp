@@ -125,10 +125,10 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, marker_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT_INT,
+		  gimp_marshal_VOID__DOUBLE_DOUBLE,
 		  G_TYPE_NONE, 2,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
+		  G_TYPE_DOUBLE,
+		  G_TYPE_DOUBLE);
 
   preview_signals[ZOOM] =
     g_signal_new ("zoom",
@@ -170,10 +170,10 @@ gimp_navigation_preview_init (GimpNavigationPreview *preview)
   gtk_widget_add_events (GTK_WIDGET (preview), (GDK_POINTER_MOTION_MASK |
                                                 GDK_KEY_PRESS_MASK));
 
-  preview->x               = 0;
-  preview->y               = 0;
-  preview->width           = 0;
-  preview->height          = 0;
+  preview->x               = 0.0;
+  preview->y               = 0.0;
+  preview->width           = 0.0;
+  preview->height          = 0.0;
 
   preview->p_x             = 0;
   preview->p_y             = 0;
@@ -256,7 +256,7 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   GimpPreview *preview;
   GimpImage   *gimage;
   gdouble      ratiox, ratioy;
-  gint         x, y;
+  gdouble      x, y;
 
   preview = GIMP_PREVIEW (nav_preview);
 
@@ -282,11 +282,20 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   gimage = GIMP_IMAGE (preview->viewable);
 
   /*  transform to image coordinates  */
-  ratiox = ((gdouble) preview->renderer->width  / (gdouble) gimage->width);
-  ratioy = ((gdouble) preview->renderer->height / (gdouble) gimage->height);
+  if (gimage->width == nav_preview->width)
+    ratiox = 1.0;
+  else
+    ratiox = ((gdouble) (preview->renderer->width - nav_preview->p_width) /
+	      (gdouble) (gimage->width - nav_preview->width));
 
-  x = RINT (tx / ratiox);
-  y = RINT (ty / ratioy);
+  if (gimage->height == nav_preview->height)
+    ratioy = 1.0;
+  else
+    ratioy = ((gdouble) (preview->renderer->height - nav_preview->p_height) /
+	      (gdouble) (gimage->height - nav_preview->height));
+
+  x = tx / ratiox;
+  y = ty / ratioy;
 
   g_signal_emit (preview, preview_signals[MARKER_CHANGED], 0, x, y);
 }
@@ -570,8 +579,8 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 
 	  gdk_draw_rectangle (GTK_WIDGET (preview)->window, nav_preview->gc,
 			      FALSE,
-			      nav_preview->p_x,
-			      nav_preview->p_y,
+			      nav_preview->p_x + 1,
+			      nav_preview->p_y + 1,
 			      nav_preview->p_width  - BORDER_PEN_WIDTH + 1,
 			      nav_preview->p_height - BORDER_PEN_WIDTH + 1);
 
@@ -583,10 +592,10 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 
 void
 gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
-				    gint                   x,
-				    gint                   y,
-				    gint                   width,
-				    gint                   height)
+				    gdouble                x,
+				    gdouble                y,
+				    gdouble                width,
+				    gdouble                height)
 {
   GimpPreview *preview;
   GimpImage   *gimage;
@@ -603,17 +612,17 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
   if (GTK_WIDGET_DRAWABLE (preview))
     gimp_navigation_preview_draw_marker (nav_preview, NULL);
 
-  nav_preview->x = CLAMP (x, 0, gimage->width  - 1);
-  nav_preview->y = CLAMP (y, 0, gimage->height - 1);
+  nav_preview->x = CLAMP (x, 0.0, gimage->width  - 1.0);
+  nav_preview->y = CLAMP (y, 0.0, gimage->height - 1.0);
 
-  if (width == -1)
+  if (width < 0.0)
     width = gimage->width;
 
-  if (height == -1)
+  if (height < 0.0)
     height = gimage->height;
 
-  nav_preview->width  = CLAMP (width,  1, gimage->width  - nav_preview->x);
-  nav_preview->height = CLAMP (height, 1, gimage->height - nav_preview->y);
+  nav_preview->width  = CLAMP (width,  1.0, gimage->width  - nav_preview->x);
+  nav_preview->height = CLAMP (height, 1.0, gimage->height - nav_preview->y);
 
   gimp_navigation_preview_transform (nav_preview);
 

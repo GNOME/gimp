@@ -63,8 +63,8 @@ static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
                                                      GdkEventButton     *bevent,
                                                      GimpDisplayShell   *shell);
 static void   gimp_navigation_view_marker_changed   (GimpNavigationPreview *preview,
-                                                     gint                x,
-                                                     gint                y,
+                                                     gdouble             x,
+                                                     gdouble             y,
                                                      GimpNavigationView *view);
 static void   gimp_navigation_view_zoom             (GimpNavigationPreview *preview,
                                                      GimpZoomType        direction,
@@ -462,8 +462,8 @@ gimp_navigation_view_button_release (GtkWidget        *widget,
 
 static void
 gimp_navigation_view_marker_changed (GimpNavigationPreview *preview,
-                                     gint                   x,
-                                     gint                   y,
+                                     gdouble                x,
+                                     gdouble                y,
                                      GimpNavigationView    *view)
 {
   if (view->shell)
@@ -476,8 +476,8 @@ gimp_navigation_view_marker_changed (GimpNavigationPreview *preview,
       xratio = SCALEFACTOR_X (view->shell);
       yratio = SCALEFACTOR_Y (view->shell);
 
-      xoffset = x * xratio - view->shell->offset_x;
-      yoffset = y * yratio - view->shell->offset_y;
+      xoffset = RINT (x * xratio - view->shell->offset_x);
+      yoffset = RINT (y * yratio - view->shell->offset_y);
 
       gimp_display_shell_scroll (view->shell, xoffset, yoffset);
     }
@@ -680,8 +680,8 @@ gimp_navigation_view_update_marker (GimpNavigationView *view)
                                   view->shell->dot_for_dot);
 
   gimp_navigation_preview_set_marker (GIMP_NAVIGATION_PREVIEW (view->preview),
-                                      RINT (view->shell->offset_x    / xratio),
-                                      RINT (view->shell->offset_y    / yratio),
-                                      RINT (view->shell->disp_width  / xratio),
-                                      RINT (view->shell->disp_height / yratio));
+                                      view->shell->offset_x    / xratio,
+                                      view->shell->offset_y    / yratio,
+                                      view->shell->disp_width  / xratio,
+                                      view->shell->disp_height / yratio);
 }

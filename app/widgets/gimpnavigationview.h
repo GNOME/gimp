@@ -43,10 +43,10 @@ struct _GimpNavigationPreview
   GimpPreview  parent_instance;
 
   /*  values in image coordinates  */
-  gint         x;
-  gint         y;
-  gint         width;
-  gint         height;
+  gdouble      x;
+  gdouble      y;
+  gdouble      width;
+  gdouble      height;
 
   /*  values in preview coordinates  */
   gint         p_x;
@@ -66,8 +66,8 @@ struct _GimpNavigationPreviewClass
   GimpPreviewClass  parent_class;
 
   void (* marker_changed) (GimpNavigationPreview *preview,
-			   gint                   x,
-			   gint                   y);
+			   gdouble                x,
+			   gdouble                y);
   void (* zoom)           (GimpNavigationPreview *preview,
 			   GimpZoomType           direction);
   void (* scroll)         (GimpNavigationPreview *preview,
@@ -78,10 +78,10 @@ struct _GimpNavigationPreviewClass
 GType   gimp_navigation_preview_get_type     (void) G_GNUC_CONST;
 
 void    gimp_navigation_preview_set_marker   (GimpNavigationPreview *preview,
-                                              gint                   x,
-                                              gint                   y,
-                                              gint                   width,
-                                              gint                   height);
+                                              gdouble                x,
+                                              gdouble                y,
+                                              gdouble                width,
+                                              gdouble                height);
 void    gimp_navigation_preview_grab_pointer (GimpNavigationPreview *preview);
 
 
