@@ -109,6 +109,9 @@ HELP
 sub layer_get_prop_proc {
     my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
+    $core_type = 'layer' unless $core_type;
+    $core_var  = 'layer' unless $core_var;
+
     $blurb = "Get the $desc of the specified layer.";
 
     $help = "This procedure returns the specified layer's $desc. ";
@@ -143,6 +146,9 @@ sub layer_get_prop_proc {
 sub layer_set_prop_proc {
     my ($prop, $type, $desc, $func, $core_type, $core_var) = @_;
 
+    $core_type = 'layer' unless $core_type;
+    $core_var  = 'layer' unless $core_var;
+
     $blurb = "Set the $desc of the specified layer.";
 
     $help = "This procedure sets the specified layer's $desc. ";
@@ -174,7 +180,11 @@ CODE
 }
 
 sub layer_accessors {
-    my ($prop, $type, $desc, $func, $setting, $core_type, $core_var, $extra) = @_;
+    my ($prop, $type, $desc, $func, $setting, $extra, $core_type, $core_var) = @_;
+
+    $core_type = 'layer' unless $core_type;
+    $core_var  = 'layer' unless $core_var;
+
     my (@extra, %extra); my $once = 0;
 
      my $change = "s/ ($desc)/'s \$1 setting/";
@@ -480,17 +490,15 @@ HELP
     );
 }
 
-&layer_accessors('name', 'string', 'name', 1, 0,
+&layer_accessors('name', 'string', 'name', 1, 0, undef,
                  'object', 'GIMP_OBJECT (layer)');
 
-&layer_accessors('visible', 'boolean', 'visibility', 1, 0,
+&layer_accessors('visible', 'boolean', 'visibility', 1, 0, undef,
                  'drawable', 'GIMP_DRAWABLE (layer)');
 
-&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1,
-                 'layer', 'layer');
+&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
 
 &layer_accessors('apply_mask', 'boolean', 'apply mask', 1, 0,
-                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
 If the value is non-zero, then the layer mask for this layer is currently being
@@ -504,7 +512,6 @@ HELP
 CODE2
 
 &layer_accessors('show_mask', 'boolean', 'show mask', 1, 0,
-                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
 If the value is non-zero, then the layer mask for this layer is currently being
@@ -519,7 +526,6 @@ HELP
 CODE2
 
 &layer_accessors('edit_mask', 'boolean', 'show mask', 1, 0,
-                 'layer', 'layer',
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
  If the value is non-zero, then the layer mask for this layer is currently
@@ -534,17 +540,14 @@ HELP
 CODE2
 
 &layer_accessors('opacity', '0 <= float <= 100', 'opacity', 1, 0,
-                 'layer', 'layer',
 		 [ '$outargs[0]->{alias} =
 		        "gimp_layer_get_opacity (layer) * 100.0"',
 		   '$invoke{code} =~
 			s%opacity\);%opacity / 100.0\);%' ]);
 
-&layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 1, 0,
-                 'layer', 'layer');
+&layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 1, 0);
 
 &layer_accessors('linked', 'boolean', 'linked state', 1, 0,
-                 'layer', 'layer',
 		 <<'CODE');
     $author = $copyright = 'Wolfgang Hofer';
     $date = '1998';
@@ -555,8 +558,7 @@ CODE2
 CODE
 
 &layer_accessors('tattoo', 'tattoo', 'tattoo', 1, 0,
-                 'item', 'GIMP_ITEM (layer)',
-		 <<'CODE');
+		 <<'CODE', 'item', 'GIMP_ITEM (layer)');
     $help .= <<'HELP';
 A tattoo is a unique and permanent identifier attached to a 
 layer that can be used to uniquely identify a layer within an image even between sessions

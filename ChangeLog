@@ -1,3 +1,11 @@
+2002-09-18  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: use X_CFLAGS when checking for Xmu headers too
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: slight tweak to mitch's change
+	to have default parameters for the common case
+
 2002-09-18  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: use X_CFLAGS when checking for xpm.h.
