@@ -1,5 +1,9 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/scale-dialog.c (scale_dialog_reset): same fix here.
+
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: fixed typo (bug #157513).
 
 2004-11-06  Sven Neumann  <sven@gimp.org>

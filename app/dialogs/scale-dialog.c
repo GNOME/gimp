@@ -280,6 +280,7 @@ scale_dialog_reset (ScaleDialog *private)
   gimp_image_get_resolution (image, &xres, &yres);
 
   g_object_set (private->box,
+                "keep-aspect",     FALSE,
                 "width",           width,
                 "height",          height,
                 "unit",            private->unit,
