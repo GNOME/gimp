@@ -311,7 +311,7 @@ run (char    *name,
       init_gtk ();
       
       image_ID     = param[1].data.d_int32;
-      drawable_ID  = param[1].data.d_int32;
+      drawable_ID  = param[2].data.d_int32;
       
       /*  eventually export the image */ 
       switch (run_mode)
