@@ -1,5 +1,11 @@
 2003-10-16  Dave Neary  <bolsh@gimp.org>
 
+	* libgimpcolor/gimpcolorspace.c: Corrected mistake - two 
+	definitions of gimp_hsl_value (both static). I changed the 
+	latter to gimp_hsl_value_int.
+
+2003-10-16  Dave Neary  <bolsh@gimp.org>
+
 	* app/base/color-balance.c
 	* app/base/hue-saturation.c
 	* app/composite/gimp-composite-generic.c

@@ -776,9 +776,9 @@ gimp_rgb_to_l_int (gint red,
 }
 
 static gint
-gimp_hsl_value (gdouble n1,
-		gdouble n2,
-		gdouble hue)
+gimp_hsl_value_int (gdouble n1,
+		    gdouble n2,
+		    gdouble hue)
 {
   gdouble value;
 
@@ -841,9 +841,9 @@ gimp_hsl_to_rgb_int (gint *hue,
       m1 = (l / 127.5) - m2;
 
       /*  chromatic case  */
-      *hue        = gimp_hsl_value (m1, m2, h + 85);
-      *saturation  = gimp_hsl_value (m1, m2, h);
-      *lightness = gimp_hsl_value (m1, m2, h - 85);
+      *hue        = gimp_hsl_value_int (m1, m2, h + 85);
+      *saturation  = gimp_hsl_value_int (m1, m2, h);
+      *lightness = gimp_hsl_value_int (m1, m2, h - 85);
     }
 }
 
