@@ -186,7 +186,7 @@
 
 (script-fu-register
     "script-fu-fade-outline"
-    "<Image>/Script-Fu/Selection/Fade Outline"
+    "<Image>/Script-Fu/Selection/Fade Outline..."
     "Blend the Layers outline border from one alpha value (opaque) to another (transparent) by generating a Layermask"
     "Wolfgang Hofer <hof@hotbot.com>"
     "Wolfgang Hofer"

@@ -100,7 +100,7 @@
 
 
 (script-fu-register "script-fu-cool-metal-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
 		    "Metallic logos with reflections and perspective shadows"
 		    "Spencer Kimball & Rob Malda"
 		    "Spencer Kimball & Rob Malda"

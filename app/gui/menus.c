@@ -90,7 +90,7 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
   N_("/Xtns/Script-Fu"),
   N_("/Xtns/Script-Fu/Logos"),
   N_("/Xtns/Script-Fu/Patterns"),
-  N_("/Xtns/Script-Fu/Web page themes"),
+  N_("/Xtns/Script-Fu/Web Page Themes"),
   N_("/Xtns/Script-Fu/Utils"),
   N_("/Xtns/Script-Fu/Buttons"),
   N_("/Xtns/Script-Fu/Make Brush"),
@@ -215,7 +215,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "help/dialogs/help.html", NULL },
   { { N_("/Help/Context Help..."), "<shift>F1", help_context_help_cmd_callback, 0 },
     "help/context_help.html", NULL },
-  { { N_("/Help/Tip of the day..."), NULL, help_tips_cmd_callback, 0 },
+  { { N_("/Help/Tip of the Day..."), NULL, help_tips_cmd_callback, 0 },
     "help/dialogs/tip_of_the_day.html", NULL },
   { { N_("/Help/About..."), NULL, help_about_cmd_callback, 0 },
     "help/dialogs/about.html", NULL },
@@ -243,7 +243,7 @@ static GimpItemFactoryEntry image_entries[] =
     "file/open/dialogs/file_open.html", NULL },
   { { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
     "file/save/dialogs/file_save.html", NULL },
-  { { N_("/File/Save as..."), NULL, file_save_as_cmd_callback, 0 },
+  { { N_("/File/Save As..."), NULL, file_save_as_cmd_callback, 0 },
     "file/save/dialogs/file_save.html", NULL },
   { { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
     "file/revert.html", NULL },
@@ -277,7 +277,7 @@ static GimpItemFactoryEntry image_entries[] =
     "edit/paste.html", NULL },
   { { N_("/Edit/Paste Into"), NULL, edit_paste_into_cmd_callback, 0 },
     "edit/paste_into.html", NULL },
-  { { N_("/Edit/Paste As New"), NULL, edit_paste_as_new_cmd_callback, 0 },
+  { { N_("/Edit/Paste as New"), NULL, edit_paste_as_new_cmd_callback, 0 },
     "edit/paste_as_new.html", NULL },
 
   /*  <Image>/Edit/Buffer  */
@@ -331,7 +331,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { "/Select/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
+  { { N_("/Select/Save to Channel"), NULL, select_save_cmd_callback, 0 },
     "select/save_to_channel.html", NULL },
 
   /*  <Image>/View  */
@@ -366,7 +366,7 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/View/Zoom/1:16"), NULL, view_zoom_1_16_cmd_callback, 0 },
     "view/zoom.html", NULL },
 
-  { { N_("/View/Dot for dot"), NULL, view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
+  { { N_("/View/Dot for Dot"), NULL, view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
     "view/dot_for_dot.html", NULL },
 
   { { "/View/---", NULL, NULL, 0, "<Separator>" },
@@ -375,7 +375,7 @@ static GimpItemFactoryEntry image_entries[] =
     "view/dialogs/info_window.html", NULL },
   { { N_("/View/Nav. Window..."), "<control><shift>N", view_nav_window_cmd_callback, 0 },
     "view/dialogs/navigation_window.html", NULL },
-  { { N_("/View/Undo history..."), NULL, view_undo_history_cmd_callback, 0},
+  { { N_("/View/Undo History..."), NULL, view_undo_history_cmd_callback, 0},
     "view/dialogs/undo_history.html", NULL },
 
   { { "/View/---", NULL, NULL, 0, "<Separator>" },
@@ -388,7 +388,7 @@ static GimpItemFactoryEntry image_entries[] =
     "view/toggle_statusbar.html", NULL },
   { { N_("/View/Toggle Guides"), "<control><shift>T", view_toggle_guides_cmd_callback, 0, "<ToggleItem>" },
     "view/toggle_guides.html", NULL },
-  { { N_("/View/Snap To Guides"), NULL, view_snap_to_guides_cmd_callback, 0, "<ToggleItem>" },
+  { { N_("/View/Snap to Guides"), NULL, view_snap_to_guides_cmd_callback, 0, "<ToggleItem>" },
     "view/snap_to_guides.html", NULL },
 
   { { "/View/---", NULL, NULL, 0, "<Separator>" },
@@ -506,7 +506,7 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Layers/Rotate"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
 
-  { { N_("/Layers/Resize to Image"), NULL, layers_resize_to_image_cmd_callback, 0 },
+  { { N_("/Layers/Layer to Imagesize"), NULL, layers_resize_to_image_cmd_callback, 0 },
     "layers/resize_to_image.html", NULL },
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
@@ -520,14 +520,14 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/Layers/Mask To Selection"), NULL, layers_mask_select_cmd_callback, 0 },
+  { { N_("/Layers/Mask to Selection"), NULL, layers_mask_select_cmd_callback, 0 },
     "layers/mask_to_selection.html", NULL },
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
     "layers/add_alpha_channel.html", NULL },
-  { { N_("/Layers/Alpha To Selection"), NULL, layers_alpha_select_cmd_callback, 0 },
+  { { N_("/Layers/Alpha to Selection"), NULL, layers_alpha_select_cmd_callback, 0 },
     "layers/alpha_to_selection.html", NULL },
 
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
@@ -551,9 +551,9 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Filters"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  { { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
+  { { N_("/Filters/Repeat Last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
     "filters/repeat_last.html", NULL },
-  { { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
+  { { N_("/Filters/Re-Show Last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
     "filters/reshow_last.html", NULL },
 
   { { "/Filters/---", NULL, NULL, 0, "<Separator>" },
@@ -715,7 +715,7 @@ static GimpItemFactoryEntry layers_entries[] =
     NULL, NULL },
   { { N_("/Layer Boundary Size..."), "<control>R", layers_dialog_resize_layer_callback, 0 },
     "dialogs/resize_layer.html", NULL },
-  { { N_("/Resize to Image"), NULL, layers_dialog_resize_to_image_callback, 0 },
+  { { N_("/Layer to Imagesize"), NULL, layers_dialog_resize_to_image_callback, 0 },
     "resize_to_image.html", NULL },
   { { N_("/Scale Layer..."), "<control>S", layers_dialog_scale_layer_callback, 0 },
     "dialogs/scale_layer.html", NULL },
@@ -768,9 +768,9 @@ static GimpItemFactoryEntry channels_entries[] =
     "channel_to_selection.html", NULL },
   { { N_("/Add to Selection"), NULL, channels_dialog_add_channel_to_sel_callback, 0 },
     "channel_to_selection.html#add", NULL },
-  { { N_("/Subtract From Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { { N_("/Subtract from Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
     "channel_to_selection.html#subtract", NULL },
-  { { N_("/Intersect With Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { { N_("/Intersect with Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
     "channel_to_selection.html#intersect", NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>" },

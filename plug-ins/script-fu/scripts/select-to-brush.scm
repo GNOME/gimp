@@ -92,7 +92,7 @@
 (script-fu-register "script-fu-selection-to-brush"
  ; I like this script under the main selection menu, but that doesnt seem quite kosher
 ;		    "<Image>/Select/Selection To Brush"
-		    "<Image>/Script-Fu/Selection/To Brush"
+		    "<Image>/Script-Fu/Selection/To Brush..."
 		    "Convert a selection to a brush"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

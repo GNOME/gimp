@@ -104,7 +104,7 @@ eraser_options_new (void)
   vbox = ((ToolOptions *) options)->main_vbox;
 
   /* the hard toggle */
-  options->hard_w = gtk_check_button_new_with_label (_("Hard edge"));
+  options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
   gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->hard_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
@@ -114,7 +114,7 @@ eraser_options_new (void)
   gtk_widget_show (options->hard_w);
 
   /* the anti_erase toggle */
-  options->anti_erase_w = gtk_check_button_new_with_label (_("Anti erase"));
+  options->anti_erase_w = gtk_check_button_new_with_label (_("Anti Erase"));
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->anti_erase_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,

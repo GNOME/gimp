@@ -78,7 +78,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-swirly-pattern"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)"
+		    "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
 		    "Create a swirly pattern"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

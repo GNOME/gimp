@@ -129,7 +129,7 @@
 ; Register!
 
 (script-fu-register "script-fu-alien-glow-button"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Alien Glow/Button"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 		    "Button with an eerie glow"
 		    "Adrian Likins"
 		    "Adrian Likins"

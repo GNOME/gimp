@@ -1,3 +1,28 @@
+Tue Dec 14 15:10:16 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/blend.c
+	* app/channels_dialog.c
+	* app/crop.c
+	* app/eraser.c
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/global_edit.c
+	* app/layers_dialog.c
+	* app/menus.c
+	* app/plug_in.c
+	* app/preferences_dialog.c
+	* app/tool_options.c
+	* app/transform_tool.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/gap/gap_frontends_main.c: 
+	Cosmetic stuff: first try to make the use of capital letters in menus 
+	and dialogs consistent. Please watch out for warnings about menus
+	that don't exist and report them to me.
+	
+	* plug-ins/gap/sel-to-anim-img.scm
+	* plug-ins/script-fu/scripts/*.scm: same fix as above and add 
+	dots where appropriate
+
 Mon Dec 13 19:25:39 GMT 1999  Adam D. Moss <adam@gimp.org
 
 	* app/tile.c 

@@ -148,7 +148,7 @@
 
 (script-fu-register
     "script-fu-fuzzy-border"
-    "<Image>/Script-Fu/Decor/Fuzzy Border"
+    "<Image>/Script-Fu/Decor/Fuzzy Border..."
     "foo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

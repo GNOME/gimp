@@ -74,7 +74,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-blended-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Blended"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
 		    "Creates logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

@@ -123,7 +123,7 @@
 
 
 (script-fu-register "script-fu-selection-round"
-		    "<Image>/Script-Fu/Selection/Round"
+		    "<Image>/Script-Fu/Selection/Round..."
 		    "Rounds the active selection. The selection should be 
                      rectangular."
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"

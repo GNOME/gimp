@@ -94,7 +94,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-heading"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Beveled pattern/Heading"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
 		    "Beveled pattern heading"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

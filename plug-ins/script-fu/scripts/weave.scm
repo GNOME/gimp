@@ -350,7 +350,7 @@
 ; Register!
 
 (script-fu-register "script-fu-weave"
-		    "<Image>/Script-Fu/Alchemy/Weave"
+		    "<Image>/Script-Fu/Alchemy/Weave..."
 		    "Weave effect a la Alien Skin"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

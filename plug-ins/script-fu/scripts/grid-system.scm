@@ -72,7 +72,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-grid-system"
-		    "<Image>/Script-Fu/Render/Make Grid System"
+		    "<Image>/Script-Fu/Render/Make Grid System..."
 		    "Draw grid as specified by X-DIVIDES (list of propotions relative to the drawable) and Y-DIVIDES. The color and width of grid is detemined by the current settings of brush."
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"

@@ -69,7 +69,7 @@
 
 
 (script-fu-register "script-fu-bovinated-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Bovination"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
 		    "Makes Cow-spotted logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"

@@ -69,8 +69,8 @@
 (script-fu-register "script-fu-selection-to-image"
 ; I prefer this to go under the main selection menu, but this seems more 
 ; approriate for mass consumption
-;		    "<Image>/Select/Selection To Image"
-		    "<Image>/Script-Fu/Selection/To image"
+;		    "<Image>/Select/Selection to Image"
+		    "<Image>/Script-Fu/Selection/To Image"
 		    "Convert a selection to image"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

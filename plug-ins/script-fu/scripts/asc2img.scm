@@ -226,7 +226,7 @@
 
 (script-fu-register
  "script-fu-asc-2-img"
- "<Toolbox>/Xtns/Script-Fu/Utils/ASCII 2 Image"
+ "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
  "foo"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "8th April 1998"
@@ -244,7 +244,7 @@
 
 (script-fu-register
  "script-fu-asc-2-img-layer"
- "<Image>/Script-Fu/Utils/ASCII 2 Image Layer"
+ "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
  "foo"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "30th April 1998"

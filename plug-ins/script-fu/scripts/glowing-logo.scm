@@ -58,7 +58,7 @@
 
 
 (script-fu-register "script-fu-glowing-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
 		    "Glowing hot logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

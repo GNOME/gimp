@@ -115,7 +115,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-button"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Beveled pattern/Button"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
 		    "Beveled pattern button"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

@@ -79,7 +79,7 @@
 
 (script-fu-register
     "script-fu-old-photo"
-    "<Image>/Script-Fu/Decor/Old Photo"
+    "<Image>/Script-Fu/Decor/Old Photo..."
     "foo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

@@ -67,7 +67,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chalk-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/Chalk"
+                    "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
                     "Chalk scribbled logos"
                     "Manish Singh <msingh@uclink4.berkeley.edu>"
                     "Manish Singh"

@@ -86,7 +86,7 @@
 
 
 (script-fu-register "script-fu-i26-gunya2"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
 		    "Two-colored text by hand"
 		    "Shuji Narazaki"
 		    "Shuji Narazaki"

@@ -1637,7 +1637,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
         menus_set_state ("<Image>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("File/Save", gdisp);
-  SET_SENSITIVE ("File/Save as...", gdisp);
+  SET_SENSITIVE ("File/Save As...", gdisp);
   SET_SENSITIVE ("File/Revert", gdisp);
   SET_SENSITIVE ("File/Close", gdisp);
 
@@ -1651,7 +1651,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Edit/Copy", lp);
       SET_SENSITIVE ("Edit/Paste", lp);
       SET_SENSITIVE ("Edit/Paste Into", lp);
-      SET_SENSITIVE ("Edit/Paste As New", lp);
+      SET_SENSITIVE ("Edit/Paste as New", lp);
       SET_SENSITIVE ("Edit/Buffer/Cut Named...", lp);
       SET_SENSITIVE ("Edit/Buffer/Copy Named...", lp);
       SET_SENSITIVE ("Edit/Buffer/Paste Named...", lp);
@@ -1661,7 +1661,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
     }
 
   SET_SENSITIVE ("Select", gdisp && lp);
-  SET_SENSITIVE ("Select/Save To Channel", !fs);
+  SET_SENSITIVE ("Select/Save to Channel", !fs);
 
   SET_SENSITIVE ("View", gdisp);
   SET_SENSITIVE ("View/Zoom", gdisp);
@@ -1671,10 +1671,10 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_STATE ("View/Toggle Rulers",
 		 GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
       SET_STATE ("View/Toggle Guides", gdisp->draw_guides);
-      SET_STATE ("View/Snap To Guides", gdisp->snap_to_guides);
+      SET_STATE ("View/Snap to Guides", gdisp->snap_to_guides);
       SET_STATE ("View/Toggle Statusbar",
 		 GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
-      SET_STATE ("View/Dot for dot", gdisp->dot_for_dot);
+      SET_STATE ("View/Dot for Dot", gdisp->dot_for_dot);
     }
 
   SET_SENSITIVE ("Image", gdisp);
@@ -1730,8 +1730,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   SET_SENSITIVE ("Layers/Anchor Layer", gdisp && fs && !aux && lp);
   SET_SENSITIVE ("Layers/Merge Visible Layers...", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("Layers/Flatten Image", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layers/Alpha To Selection", gdisp && !aux && lp && alpha);
-  SET_SENSITIVE ("Layers/Mask To Selection", gdisp && !aux && lm && lp);
+  SET_SENSITIVE ("Layers/Alpha to Selection", gdisp && !aux && lp && alpha);
+  SET_SENSITIVE ("Layers/Mask to Selection", gdisp && !aux && lm && lp);
   SET_SENSITIVE ("Layers/Add Alpha Channel",
 		 gdisp && !fs && !aux && lp && !lm && !alpha);
 

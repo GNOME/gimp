@@ -182,7 +182,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-sota-chrome-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
 		    "State of the art chromed logos."
 		    "Spencer Kimball"
 		    "Spencer Kimball"

@@ -51,7 +51,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic2-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic II"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
 		    "Creates a simple logo with a shadow and a highlight"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

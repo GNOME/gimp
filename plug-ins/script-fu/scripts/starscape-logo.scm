@@ -106,7 +106,7 @@
 
 
 (script-fu-register "script-fu-starscape-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Starscape"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
 		    "Starscape using the Nova plug-in"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

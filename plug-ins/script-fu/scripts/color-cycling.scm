@@ -210,7 +210,7 @@
   (gimp-display-new image)))
 
 (script-fu-register "script-fu-colorcycling-anim"
-		    "<Image>/Script-Fu/Animators/Color Cycling"
+		    "<Image>/Script-Fu/Animators/Color Cycling..."
 		    "Creates an animation with the help of the alienmap plug-in"
 		    "Daniel Cotting (cotting@mygale.org)"
 		    "Daniel Cotting"

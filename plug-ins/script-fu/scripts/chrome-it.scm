@@ -182,7 +182,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-sota-chrome-it"
-		    "<Image>/Script-Fu/Stencil Ops/Chrome-It"
+		    "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
 		    "Use the specified [GRAY] drawable as a stencil to run the chrome effect on."
 		    "Spencer Kimball"
 		    "Spencer Kimball"

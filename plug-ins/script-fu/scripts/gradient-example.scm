@@ -54,7 +54,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-gradient-example"
-		    "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient"
+		    "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 		    "Create an example image of a custom gradient"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

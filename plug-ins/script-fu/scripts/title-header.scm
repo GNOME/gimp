@@ -167,7 +167,7 @@ verted to use the *-fontname form.
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-title-header"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Web title header"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 		    "Web title header"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

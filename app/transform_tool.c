@@ -173,13 +173,13 @@ transform_options_new (void)
 {
   TransformOptions *options;
 
-  GtkWidget *main_box;
+  GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
   GSList    *group;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
+  GtkWidget *frame;
+  GtkWidget *fbox;
   GtkWidget *radio_button;
   GtkWidget *grid_density;
 
@@ -211,22 +211,22 @@ transform_options_new (void)
   options->grid_size = options->grid_size_d = 32;
   options->show_grid = options->show_grid_d = TRUE;
 
-  /* the main hbox */
-  main_box = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), main_box,
+  /* the main table */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), table,
 		      FALSE, FALSE, 0);
 
   /*  the left vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_box), vbox, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 0, 1, 0, 1);
 
   /*  the first radio frame and box, for transform type  */
-  radio_frame = gtk_frame_new (_("Transform"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gtk_frame_new (_("Transform"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+  fbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (fbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), fbox);
   
   /*  the radio buttons  */
   group = NULL;
@@ -236,7 +236,7 @@ transform_options_new (void)
 	gtk_radio_button_new_with_label (group,
 					 gettext(transform_button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (fbox), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) transform_type_callback,
 			  (gpointer) ((long) ROTATE + i));
@@ -244,37 +244,22 @@ transform_options_new (void)
 
       options->type_w[i] = radio_button;
     }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
-
-  /*  the smoothing toggle button  */
-  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
-		      &options->smoothing);
-  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->smoothing_w);
-
-  options->showpath_w = gtk_check_button_new_with_label (_("Show path"));
-  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
-                    (GtkSignalFunc) transform_show_path_update,
-                    &options->showpath);
-  gtk_box_pack_start (GTK_BOX (vbox), options->showpath_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->showpath_w);
+  gtk_widget_show (fbox);
+  gtk_widget_show (frame);
 
   gtk_widget_show (vbox);
 
   /*  the right vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_box), vbox, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 0, 1);
 
   /*  the second radio frame and box, for transform direction  */
-  radio_frame = gtk_frame_new (_("Tool paradigm"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  frame = gtk_frame_new (_("Tool Paradigm"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
+  fbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (fbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), fbox);
 
   /*  the radio buttons  */
   group = NULL;
@@ -284,7 +269,7 @@ transform_options_new (void)
 	gtk_radio_button_new_with_label (group,
 					 gettext(direction_button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (fbox), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) transform_direction_callback,
 			  (gpointer) ((long) i));
@@ -292,22 +277,30 @@ transform_options_new (void)
 
       options->direction_w[i] = radio_button;
     }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+  gtk_widget_show (fbox);
+  gtk_widget_show (frame);
 
-  /* the show grid toggle button */
-  options->show_grid_w = gtk_check_button_new_with_label (_("Show grid"));
+  /*  the grid frame  */
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+  fbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (fbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), fbox);
+
+  /*  the show grid toggle button  */
+  options->show_grid_w = gtk_check_button_new_with_label (_("Show Grid"));
   gtk_signal_connect (GTK_OBJECT (options->show_grid_w), "toggled",
 		      (GtkSignalFunc) transform_show_grid_update,
 		      &options->show_grid);
-  gtk_box_pack_start (GTK_BOX (vbox), options->show_grid_w, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (fbox), options->show_grid_w, FALSE, FALSE, 0);
   gtk_widget_show (options->show_grid_w);
   
   /*  the grid density entry  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Grid density:"));
+  gtk_box_pack_start (GTK_BOX (fbox), hbox, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Density:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -327,8 +320,25 @@ transform_options_new (void)
   gtk_object_set_data (GTK_OBJECT (options->show_grid_w), "set_sensitive", grid_density);
   gtk_object_set_data (GTK_OBJECT (grid_density), "set_sensitive", label);  
 
+  gtk_widget_show (fbox);
+  gtk_widget_show (frame);
+
+  gtk_widget_show (vbox);
+
+  /*  the left vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 0, 1, 1, 2);
+
+  /*  the smoothing toggle button  */
+  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
+  gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
+		      (GtkSignalFunc) tool_options_toggle_update,
+		      &options->smoothing);
+  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->smoothing_w);
+
   /*  the clip resulting image toggle button  */
-  options->clip_w = gtk_check_button_new_with_label (_("Clip result"));
+  options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
   gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
 		      (GtkSignalFunc) tool_options_toggle_update,
 		      &options->clip);
@@ -336,7 +346,22 @@ transform_options_new (void)
   gtk_widget_show (options->clip_w);
 
   gtk_widget_show (vbox);
-  gtk_widget_show (main_box);
+
+  /*  the right vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
+
+  /*  the show_path toggle button  */
+  options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
+  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
+                    (GtkSignalFunc) transform_show_path_update,
+                    &options->showpath);
+  gtk_box_pack_start (GTK_BOX (vbox), options->showpath_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->showpath_w);
+
+  gtk_widget_show (vbox);
+
+  gtk_widget_show (table);
   
   return options;
 }

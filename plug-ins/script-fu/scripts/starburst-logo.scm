@@ -66,7 +66,7 @@
 
 
 (script-fu-register "script-fu-starburst-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Starburst"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
 		    "Starburst as inspired by GIMP News"
 		    "Spencer Kimball & Xach Beane"
 		    "Spencer Kimball & Xach Beane"

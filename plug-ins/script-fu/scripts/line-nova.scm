@@ -71,7 +71,7 @@
 
 (script-fu-register
  "script-fu-line-nova"
- "<Image>/Script-Fu/Render/Line Nova"
+ "<Image>/Script-Fu/Render/Line Nova..."
  "Line Nova. Draw lines with Foreground color from the center of image to the edges. 1st undo cancels bucket-fill. 2nd undo gets orignal selection."
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"

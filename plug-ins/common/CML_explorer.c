@@ -491,7 +491,7 @@ query ()
 			  "Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Filters/Render/Pattern/CML explorer..."),
+			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

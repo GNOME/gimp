@@ -61,7 +61,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-font-map"
-		    "<Toolbox>/Xtns/Script-Fu/Utils/Font Map"
+		    "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 		    "Generate a listing of the specified fonts"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

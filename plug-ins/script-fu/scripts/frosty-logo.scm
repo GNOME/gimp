@@ -76,7 +76,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-frosty-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Frosty"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
 		    "Frozen logos with drop shadows"
 		    "Spencer Kimball & Ed Mackey"
 		    "Spencer Kimball & Ed Mackey"

@@ -71,7 +71,7 @@
 
 
 (script-fu-register "script-fu-gradient-bevel-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
 		    "Makes Shiny Bevelly text"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"

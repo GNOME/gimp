@@ -337,7 +337,7 @@
 
 (script-fu-register
  "script-fu-hsv-graph"
- "<Image>/Script-Fu/Utils/Draw HSV Graph"
+ "<Image>/Script-Fu/Utils/Draw HSV Graph..."
  "Draph the graph of H/S/V values on the drawable"
  "Shuji Narazaki <narazaki@InetQ.or.jp>"
  "Shuji Narazaki"

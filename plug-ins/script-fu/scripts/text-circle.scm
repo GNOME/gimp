@@ -164,7 +164,7 @@
 
 (script-fu-register
  "script-fu-text-circle"
- "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle"
+ "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
  "Render the specified text along the perimeter of a circle"
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"

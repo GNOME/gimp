@@ -382,7 +382,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-trochoid"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid"
+		    "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
 		    "Draw Trochoid Curve"
 		    "Shuji Narazaki <narazaki@InetQ.or.jp>"
 		    "Shuji Narazaki"

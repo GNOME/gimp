@@ -105,7 +105,7 @@
 
 
 (script-fu-register "script-fu-tube-button-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/Tube Button Label"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
@@ -116,7 +116,7 @@
 		    SF-TOGGLE "Index Image" TRUE)
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/Tube Sub-Button Label"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
@@ -127,7 +127,7 @@
 		    SF-TOGGLE "Index Image" TRUE)
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/Tube Sub-Sub-Button Label"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
@@ -139,7 +139,7 @@
 
 
 (script-fu-register "script-fu-labels-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/General Tube Labels"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 		    "Tube Button Label Header for gimp.org"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"

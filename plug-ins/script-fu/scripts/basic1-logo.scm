@@ -35,7 +35,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-basic1-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic I"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
 		    "Creates a simple logo with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

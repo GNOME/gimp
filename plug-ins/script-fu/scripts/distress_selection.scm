@@ -88,7 +88,7 @@
 
 (script-fu-register
     "script-fu-distress-selection"
-    "<Image>/Script-Fu/Selection/Distress Selection"
+    "<Image>/Script-Fu/Selection/Distress Selection..."
     "foo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

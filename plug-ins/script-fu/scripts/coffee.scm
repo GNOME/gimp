@@ -56,7 +56,7 @@
 
 (script-fu-register
     "script-fu-coffee-stain"
-    "<Image>/Script-Fu/Decor/Coffee Stain"
+    "<Image>/Script-Fu/Decor/Coffee Stain..."
     "foo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

@@ -38,7 +38,7 @@
 
 
 (script-fu-register "script-fu-alien-glow-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
 		    "Create an X-Files-esque logo with the specified glow color"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

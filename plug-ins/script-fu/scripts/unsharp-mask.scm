@@ -59,7 +59,7 @@
 
 (script-fu-register
  "script-fu-unsharp-mask"
- "<Image>/Script-Fu/Alchemy/Unsharp Mask"
+ "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
  "Make a sharp image of IMAGE's DRAWABLE by applying unsharp mask method"
  "Shuji Narazaki <narazaki@gimp.org>"
  "Shuji Narazaki"

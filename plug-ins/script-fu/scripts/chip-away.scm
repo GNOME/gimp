@@ -112,7 +112,7 @@
 
 
 (script-fu-register "script-fu-logo-chip-away"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
 		    "Chip away effect"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins <adrian@gimp.org>"

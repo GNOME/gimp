@@ -695,7 +695,7 @@ paste_named_buffer (GDisplay *gdisp)
   {
     N_("Paste"),
     N_("Paste Into"),
-    N_("Paste As New"),
+    N_("Paste as New"),
   };
 
   static GtkSignalFunc paste_action_functions[] =

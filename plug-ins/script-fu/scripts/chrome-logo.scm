@@ -67,7 +67,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-chrome-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Chrome"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
 		    "Somewhat simplistic, but cool chromed logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball & Peter Mattis"

@@ -383,7 +383,7 @@ selection_options_init (SelectionOptions     *options,
       GtkWidget *height_spinbutton;
 
       options->fixed_size_w =
-	gtk_check_button_new_with_label (_("Fixed size / aspect ratio"));
+	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
       gtk_box_pack_start (GTK_BOX (vbox), options->fixed_size_w,
 			  FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_size_w), "toggled",
@@ -780,7 +780,7 @@ paint_pressure_options_new (ToolType tool_type)
     case PAINTBRUSH:
     case PENCIL:
     case SMUDGE:
-      frame = gtk_frame_new (_("Pressure sensitivity"));
+      frame = gtk_frame_new (_("Pressure Sensitivity"));
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
       gtk_widget_show (hbox);

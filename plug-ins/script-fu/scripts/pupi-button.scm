@@ -190,7 +190,7 @@
 ; Register!
 
 (script-fu-register "script-fu-round-button"
-		    "<Toolbox>/Xtns/Script-Fu/Buttons/Round button"
+		    "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
 		    "Round button"
 		    "Arturo Espinosa (stolen from quartic's beveled button)"
 		    "Arturo Espinosa & Federico Mena Quintero"

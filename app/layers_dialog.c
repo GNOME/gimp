@@ -1048,7 +1048,7 @@ layers_dialog_set_menu_sensitivity (void)
   SET_OPS_SENSITIVE (5, ac && gimage && lp);
 
   SET_SENSITIVE ("Layer Boundary Size...", ac && gimage && lp);
-  SET_SENSITIVE ("Resize to Image", ac && gimage && lp);
+  SET_SENSITIVE ("Layer to Imagesize", ac && gimage && lp);
   SET_SENSITIVE ("Scale Layer...", ac && gimage && lp);
 
   SET_SENSITIVE ("Merge Visible Layers...", fs && ac && gimage && lp);

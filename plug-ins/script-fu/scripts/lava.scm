@@ -99,7 +99,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-lava"
-		    "<Image>/Script-Fu/Decor/Lava"
+		    "<Image>/Script-Fu/Decor/Lava..."
 		    "Fills the current selection with lava."
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

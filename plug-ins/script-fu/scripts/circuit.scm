@@ -125,7 +125,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-circuit"
-		    "<Image>/Script-Fu/Decor/Circuit"
+		    "<Image>/Script-Fu/Decor/Circuit..."
 		    "Fills the current selection with something that looks 
                      vaguely like a circuit board."
 		    "Adrian Likins <adrian@gimp.org>"

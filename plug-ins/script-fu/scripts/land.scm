@@ -66,7 +66,7 @@
 ))
 
 (script-fu-register "script-fu-land"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Land"
+		    "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
 		    "A Topgraphic Map  pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"

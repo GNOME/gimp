@@ -77,7 +77,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-speed-text"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Speed text"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 		    "give text a speedy effect"
 		    "Austin Donnelly"
 		    "Austin Donnelly"

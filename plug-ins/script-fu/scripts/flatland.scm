@@ -55,7 +55,7 @@
 ))
 
 (script-fu-register "script-fu-flatland"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland"
+		    "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
 		    "A Land Pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"

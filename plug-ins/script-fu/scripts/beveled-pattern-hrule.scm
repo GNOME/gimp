@@ -63,7 +63,7 @@
 
 
 (script-fu-register "script-fu-beveled-pattern-hrule"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Beveled pattern/Hrule"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 		    "Beveled pattern hrule"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

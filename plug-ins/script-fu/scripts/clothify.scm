@@ -38,7 +38,7 @@
 
 
 (script-fu-register "script-fu-clothify"
-		    "<Image>/Script-Fu/Alchemy/Clothify"
+		    "<Image>/Script-Fu/Alchemy/Clothify..."
 		    "Render the specified text along the perimeter of a circle"
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"

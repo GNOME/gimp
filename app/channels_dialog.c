@@ -643,8 +643,8 @@ channels_dialog_set_menu_sensitivity (void)
   SET_OPS_SENSITIVE (4, aux_sens);
 
   SET_SENSITIVE ("Add to Selection", aux_sens);
-  SET_SENSITIVE ("Subtract From Selection", aux_sens);
-  SET_SENSITIVE ("Intersect With Selection", aux_sens);
+  SET_SENSITIVE ("Subtract from Selection", aux_sens);
+  SET_SENSITIVE ("Intersect with Selection", aux_sens);
 
   SET_SENSITIVE ("Delete Channel", !fs_sens && aux_sens);
   SET_OPS_SENSITIVE (5, !fs_sens && aux_sens);

@@ -1641,7 +1641,7 @@ file_dialog_show (GtkWidget *filesel)
   menus_set_sensitive ("<Toolbox>/File/Open...", FALSE);
   menus_set_sensitive ("<Image>/File/Open...", FALSE);
   menus_set_sensitive ("<Image>/File/Save", FALSE);
-  menus_set_sensitive ("<Image>/File/Save as...", FALSE);
+  menus_set_sensitive ("<Image>/File/Save As...", FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1657,7 +1657,7 @@ file_dialog_hide (GtkWidget *filesel)
   if (gdisplay_active ())
     {
       menus_set_sensitive ("<Image>/File/Save", TRUE);
-      menus_set_sensitive ("<Image>/File/Save as...", TRUE);
+      menus_set_sensitive ("<Image>/File/Save As...", TRUE);
     }
 
   return TRUE;

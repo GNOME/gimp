@@ -177,7 +177,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-perspective-shadow"
-		    "<Image>/Script-Fu/Shadow/Perspective"
+		    "<Image>/Script-Fu/Shadow/Perspective..."
 		    "Add a perspective shadow"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
 		    "Sven Neumann"

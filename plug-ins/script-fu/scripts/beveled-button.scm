@@ -152,7 +152,7 @@
 ; Register!
 
 (script-fu-register "script-fu-button00"
-		    "<Toolbox>/Xtns/Script-Fu/Buttons/Simple beveled button"
+		    "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
 		    "Simple beveled button"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"

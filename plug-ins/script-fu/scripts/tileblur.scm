@@ -62,7 +62,7 @@
 
 (script-fu-register
     "script-fu-tile-blur"
-	"<Image>/Filters/Blur/Tilable Blur"
+	"<Image>/Filters/Blur/Tilable Blur..."
     "foo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."

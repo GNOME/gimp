@@ -100,7 +100,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
-		    "<Image>/Script-Fu/Decor/Predator"
+		    "<Image>/Script-Fu/Decor/Predator..."
 		    "Fills the current selection with test"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

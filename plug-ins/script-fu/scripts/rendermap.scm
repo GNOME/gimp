@@ -60,7 +60,7 @@
 
 (script-fu-register
  "script-fu-render-map"
- "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map"
+ "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
  "foo"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "28th April 1998"

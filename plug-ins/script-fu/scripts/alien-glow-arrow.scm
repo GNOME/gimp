@@ -121,7 +121,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Alien Glow/Arrow"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
 		    "Create aan X-file deal"
 		    "Adrian Likins"
 		    "Adrian Likins"

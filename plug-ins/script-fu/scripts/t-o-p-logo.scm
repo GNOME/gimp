@@ -79,7 +79,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-t-o-p-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
 		    "Trace of Particles Effect"
 		    "Shuji Narazaki (narazaki@InetQ.or.jp)"
 		    "Shuji Narazaki"

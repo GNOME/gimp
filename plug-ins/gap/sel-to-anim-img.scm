@@ -105,7 +105,7 @@
 )
 
 (script-fu-register "script-fu-selection-to-anim-image"
-		    "<Image>/Script-Fu/Animators/Sel To AnimImage"
+		    "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 		    "Create a multilayer image from current selection and apply any PDB Filter to all layer-copies"
 		    "Wolfgang Hofer <hof@hotbot.com>"
 		    "Wolfgang Hofer"

@@ -152,7 +152,7 @@
 
 
 (script-fu-register "script-fu-neon-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Neon"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
 		    "Neon logos"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

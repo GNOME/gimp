@@ -57,7 +57,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-newsprint-text"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint text"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 		    "apply a screen to text"
 		    "Austin Donnelly"
 		    "Austin Donnelly"

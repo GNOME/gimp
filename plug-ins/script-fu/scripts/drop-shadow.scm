@@ -156,7 +156,7 @@
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-drop-shadow"
-		    "<Image>/Script-Fu/Shadow/Drop-Shadow"
+		    "<Image>/Script-Fu/Shadow/Drop-Shadow..."
 		    "Add a drop-shadow of the current selection or 
                      alpha-channel"
 		    "Sven Neumann (neumanns@uni-duesseldorf.de)"

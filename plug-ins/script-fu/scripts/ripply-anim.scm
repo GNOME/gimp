@@ -90,7 +90,7 @@
       (gimp-display-new out-imagestack))))
 
 (script-fu-register "script-fu-ripply-anim"
-		    "<Image>/Script-Fu/Animators/Rippling"
+		    "<Image>/Script-Fu/Animators/Rippling..."
 		    "Ripple any image by creating animation frames as layers"
 		    "Adam D. Moss (adam@foxbox.org)"
 		    "Adam D. Moss"

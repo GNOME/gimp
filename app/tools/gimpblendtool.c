@@ -262,7 +262,7 @@ blend_options_new ()
       (gpointer) FG_BG_HSV_MODE, NULL, NULL },
     { N_("FG to Transparent"), 0, 0, blend_mode_callback,
       (gpointer) FG_TRANS_MODE, NULL, NULL },
-    { N_("Custom from editor"), 0, 0, blend_mode_callback,
+    { N_("Custom from Editor"), 0, 0, blend_mode_callback,
       (gpointer) CUSTOM_MODE, NULL, NULL },
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
@@ -296,9 +296,9 @@ blend_options_new ()
   {
     { N_("None"), 0, 0, repeat_type_callback,
       (gpointer) REPEAT_NONE, NULL, NULL },
-    { N_("Sawtooth wave"), 0, 0, repeat_type_callback,
+    { N_("Sawtooth Wave"), 0, 0, repeat_type_callback,
       (gpointer) REPEAT_SAWTOOTH, NULL, NULL },
-    { N_("Triangular wave"), 0, 0, repeat_type_callback,
+    { N_("Triangular Wave"), 0, 0, repeat_type_callback,
       (gpointer) REPEAT_TRIANGULAR, NULL, NULL },
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
@@ -378,7 +378,7 @@ blend_options_new ()
 
   /*  supersampling toggle  */
   options->supersample_w =
-    gtk_check_button_new_with_label (_("Adaptive supersampling"));
+    gtk_check_button_new_with_label (_("Adaptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
 				options->supersample_d);
   gtk_signal_connect (GTK_OBJECT (options->supersample_w), "toggled",

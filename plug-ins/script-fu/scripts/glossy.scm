@@ -118,7 +118,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-glossy-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/Glossy"
+                    "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
                     "Creates anything you can create with it :)"
 
                     "Hrvoje Horvat (hhorvat@open.hr)"

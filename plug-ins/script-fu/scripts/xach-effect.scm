@@ -111,7 +111,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-xach-effect"
-		    "<Image>/Script-Fu/Decor/Xach-Effect"
+		    "<Image>/Script-Fu/Decor/Xach-Effect..."
 		    "Add a subtle translucent 3-d effect to the current selection or alpha channel"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

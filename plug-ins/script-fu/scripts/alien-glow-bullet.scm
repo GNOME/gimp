@@ -75,7 +75,7 @@
 
 
 (script-fu-register "script-fu-alien-glow-bullet"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Alien Glow/Bullet"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
 		    "Create a Bullet with an Alien Glow them for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"

@@ -151,7 +151,7 @@
     (gimp-image-undo-enable img)))
 
 (script-fu-register "script-fu-carved-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Carved"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
 		    "Carve the text from the specified image.  The image will be automatically tiled to accomodate the rendered text string.  The \"Carve Raised Text\" parameter determines whether to carve the text itself, or around the text."
 		    "Spencer Kimball"
 		    "Spencer Kimball"

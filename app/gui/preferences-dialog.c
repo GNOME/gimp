@@ -1986,7 +1986,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
       
-  button = gtk_button_new_with_label (_("Clear Saved Window Positions"));
+  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (file_prefs_clear_session_info_callback),

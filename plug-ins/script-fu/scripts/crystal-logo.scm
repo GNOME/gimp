@@ -187,7 +187,7 @@
 
 
 (script-fu-register "script-fu-crystal-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Crystal"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 		    "Crystal/Gel effect which displaces the image underneath"
 		    "Spencer Kimball"
 		    "Spencer Kimball"

@@ -75,7 +75,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-3d-outline-logo"
-                    "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline"
+                    "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
                     "Creates outlined texts with drop shadow"
                     "Hrvoje Horvat (hhorvat@open.hr)"
                     "Hrvoje Horvat"

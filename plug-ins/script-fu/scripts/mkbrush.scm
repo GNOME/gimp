@@ -77,7 +77,7 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular"
+            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
@@ -155,7 +155,7 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-rectangular-feathered"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered"
+            "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
@@ -226,7 +226,7 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical"
+            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
@@ -306,7 +306,7 @@
 ; Register with the PDB
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
-            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered"
+            "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
             "Create size of brush"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"

@@ -155,7 +155,7 @@
   )
 
 (script-fu-register "script-fu-3dtruchet"
-		    "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet"
+		    "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
 		    "3D Truchet pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"

@@ -134,7 +134,7 @@
 
 
 (script-fu-register "script-fu-big-header-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/Big Header"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
 		    "Big Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"
@@ -153,7 +153,7 @@
 		    SF-VALUE "# of colors" "15")
 
 (script-fu-register "script-fu-small-header-gimp-org"
-		    "<Toolbox>/Xtns/Script-Fu/Web page themes/Gimp.Org/Small Header"
+		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
 		    "Small Gimp.org Header"
 		    "Adrian Likins & Jens Lautenbacher"
 		    "Adrian Likins & Jens Lautenbacher"

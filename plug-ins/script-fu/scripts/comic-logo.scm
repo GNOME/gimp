@@ -79,7 +79,7 @@
 
 
 (script-fu-register "script-fu-comic-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 		    "Comic-book Style Logos"
 		    "Brian McFee <keebler@wco.com>"
 		    "Brian McFee"

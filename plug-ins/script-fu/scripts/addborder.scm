@@ -162,7 +162,7 @@
 
 
 (script-fu-register "script-fu-addborder"
-		    "<Image>/Script-Fu/Modify/Add Border"
+		    "<Image>/Script-Fu/Modify/Add Border..."
 		    "Add a border around an image"
 		    "Andy Thomas <alt@picnic.demon.co.uk>"
 		    "Andy Thomas"

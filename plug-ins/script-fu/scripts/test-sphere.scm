@@ -154,7 +154,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-test-sphere"
-		    "<Toolbox>/Xtns/Script-Fu/Test/Sphere"
+		    "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
 		    "Simple script to test and show the usage of the new Script-Fu API extensions. \n\nNote the use of spinbuttons, sliders, the font, pattern, brush and gradient selectors and do not forget the about dialog..."
 		    "Spencer Kimball, Sven Neumann"
 		    "Spencer Kimball"

@@ -76,7 +76,7 @@
     (gimp-display-new img)))
 
 (script-fu-register "script-fu-textured-logo"
-		    "<Toolbox>/Xtns/Script-Fu/Logos/Textured"
+		    "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
 		    "Creates textured logos with blended backgrounds, highlights, and shadows"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
