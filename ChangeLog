@@ -1,3 +1,15 @@
+2005-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpbutton.c (gimp_button_button_press): don't
+	reset button->press_state on double clicks because
+	GDK_2BUTTON_PRESS always arrive immediately after
+	GDK_BUTTON_PRESS, so resetting the state causes the second click
+	of a double click to be always interpreted as "clicked", not
+	"extended-clicked", breaking e.g. adding of multiple layers by
+	shift-clicking the layers dialog's "new" button. Phew, too much
+	text for a one-liner bug fix, blah... Spotted by Jimmac.
+	Cleaned up this antique file a bit.
+
 2005-02-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/*/Makefile.am
