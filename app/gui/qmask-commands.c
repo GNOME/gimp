@@ -73,11 +73,10 @@ qmask_toggle_cmd_callback (GtkWidget *widget,
                            gpointer   data,
                            guint      action)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
-  shell = GIMP_DISPLAY_SHELL (data);
-
-  if (GTK_CHECK_MENU_ITEM (widget)->active != shell->gdisp->gimage->qmask_state)
+  if (GTK_CHECK_MENU_ITEM (widget)->active !=
+      gimp_image_get_qmask_state (shell->gdisp->gimage))
     {
       gimp_image_set_qmask_state (shell->gdisp->gimage,
                                   GTK_CHECK_MENU_ITEM (widget)->active);
@@ -91,9 +90,7 @@ qmask_invert_cmd_callback (GtkWidget *widget,
                            gpointer   data,
                            guint      action)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
   if (GTK_CHECK_MENU_ITEM (widget)->active)
     {
@@ -101,7 +98,7 @@ qmask_invert_cmd_callback (GtkWidget *widget,
         {
           gimp_image_qmask_invert (shell->gdisp->gimage);
 
-          if (shell->gdisp->gimage->qmask_state)
+          if (gimp_image_get_qmask_state (shell->gdisp->gimage))
             gimp_image_flush (shell->gdisp->gimage);
         }
     }
@@ -112,9 +109,7 @@ qmask_configure_cmd_callback (GtkWidget *widget,
                               gpointer   data,
                               guint      action)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
   qmask_channel_query (shell);
 }
@@ -221,7 +216,8 @@ qmask_query_response (GtkWidget        *widget,
       GimpChannel *channel;
       GimpRGB      color;
 
-      channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
+      channel = gimp_image_get_channel_by_name (options->gimage,
+                                                GIMP_IMAGE_QMASK_NAME);
 
       if (options->gimage && channel)
         {
@@ -247,7 +243,7 @@ static void
 qmask_query_scale_update (GtkAdjustment *adjustment,
 			  gpointer       data)
 {
-  GimpRGB  color;
+  GimpRGB color;
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
   gimp_rgb_set_alpha (&color, adjustment->value / 100.0);

@@ -894,7 +894,6 @@ xcf_load_channel (XcfInfo   *info,
   gint         width;
   gint         height;
   gboolean     is_fs_drawable;
-  gboolean     is_qmask = FALSE;
   gchar       *name;
   GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
@@ -907,9 +906,6 @@ xcf_load_channel (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
-
-  if (name)
-    is_qmask = (strcmp (name, "Qmask") == 0);
 
   /* create a new channel */
   channel = gimp_channel_new (gimage, width, height, name, &color);
@@ -933,9 +929,6 @@ xcf_load_channel (XcfInfo   *info,
 
   if (is_fs_drawable)
     info->floating_sel_drawable = GIMP_DRAWABLE (channel);
-
-  if (is_qmask)
-    gimage->qmask_state = TRUE;
 
   return channel;
 

@@ -1,3 +1,44 @@
+2004-02-14  Michael Natterer  <mitch@gimp.org>
+
+	Fixed lots of QuickMask brokenness by letting the image adjust
+	its qmask_state automatically:
+
+	* app/core/gimpimage-qmask.h: #define GIMP_IMAGE_QMASK_NAME "Qmask".
+	Use the define in all files below.
+
+	* app/core/gimpimage.[ch]: split gimp_image_drawable_add,_remove()
+	into separate handlers for layers and channels. Added a
+	"name_changed" handler for all channels. In the channel "add",
+	"remove" and "name_changed" handlers, check if it was a channel
+	named "Qmask" that was added, removed or renamed and call
+	gimp_image_set_qmask_state() accordingly.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/core/gimpundo.c: removed all Qmask undo code because the image
+	does the right thing without undo interaction now.
+
+	* app/core/gimpimage-qmask.c (gimp_image_set_qmask_state): set
+	gimage->qmask_state early so we can return early when called
+	recursively. Removed calls to gimp_image_undo_push_image_qmask().
+	Returned "removed" callback (it was utterly broken the way it was
+	implemented).
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_qmask_toggled): check if the image's
+	qmask state needs to be changed before changing it.
+
+	* app/xcf/xcf-load.c (xcf_load_channel): removed code which
+	recognized the qmask. GimpImage does this automatically now.
+
+	* app/gui/qmask-commands.c: cleanup.
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_constructor):
+	destroy the "/Select/By Color" and "/Select/Toggle QuickMask" menu
+	items.
+
+	* app/widgets/image-menu.c (image_menu_update): changed accordingly.
+
 2004-02-13  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/psd.c (load_image): Initialize dest to NULL,

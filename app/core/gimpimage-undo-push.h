@@ -44,8 +44,6 @@ gboolean gimp_image_undo_push_image_size            (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
 gboolean gimp_image_undo_push_image_resolution      (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
-gboolean gimp_image_undo_push_image_qmask           (GimpImage     *gimage,
-                                                     const gchar   *undo_desc);
 gboolean gimp_image_undo_push_image_grid            (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpGrid      *grid);

@@ -1491,7 +1491,9 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Select/None",             lp && sel);
   SET_SENSITIVE ("/Select/Invert",           lp && sel);
   SET_SENSITIVE ("/Select/Float",            lp && sel);
-  SET_SENSITIVE ("/Select/By Color",         lp);
+
+  if (display_items)
+    SET_SENSITIVE ("/Select/By Color",       lp);
 
   SET_SENSITIVE ("/Select/Feather...",       lp && sel);
   SET_SENSITIVE ("/Select/Sharpen",          lp && sel);
@@ -1499,7 +1501,9 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Select/Grow...",          lp && sel);
   SET_SENSITIVE ("/Select/Border...",        lp && sel);
 
-  SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
+  if (display_items)
+    SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
+
   SET_SENSITIVE ("/Select/Save to Channel",  sel && !fs);
   SET_SENSITIVE ("/Select/To Path",          sel && !fs);
 

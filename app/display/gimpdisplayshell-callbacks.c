@@ -1481,10 +1481,14 @@ void
 gimp_display_shell_qmask_toggled (GtkWidget        *widget,
                                   GimpDisplayShell *shell)
 {
-  gimp_image_set_qmask_state (shell->gdisp->gimage,
-                              GTK_TOGGLE_BUTTON (widget)->active);
+  if (GTK_TOGGLE_BUTTON (widget)->active !=
+      gimp_image_get_qmask_state (shell->gdisp->gimage))
+    {
+      gimp_image_set_qmask_state (shell->gdisp->gimage,
+                                  GTK_TOGGLE_BUTTON (widget)->active);
 
-  gimp_image_flush (shell->gdisp->gimage);
+      gimp_image_flush (shell->gdisp->gimage);
+    }
 }
 
 gboolean

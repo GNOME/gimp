@@ -277,6 +277,9 @@ gimp_image_dock_constructor (GType                  type,
   DESTROY ("/Layer/Stack/Layer to Top");
   DESTROY ("/Layer/Stack/Layer to Bottom");
 
+  DESTROY ("/Select/By Color");
+  DESTROY ("/Select/Toggle QuickMask");
+
   DESTROY ("/Tools/Toolbox");
   DESTROY ("/Tools/Default Colors");
   DESTROY ("/Tools/Swap Colors");

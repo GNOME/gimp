@@ -381,7 +381,6 @@ gimp_undo_create_preview_private (GimpUndo *undo)
     {
     case GIMP_UNDO_GROUP_IMAGE_QMASK:
     case GIMP_UNDO_GROUP_MASK:
-    case GIMP_UNDO_IMAGE_QMASK:
     case GIMP_UNDO_MASK:
       preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (undo->gimage));
       break;

@@ -20,6 +20,9 @@
 #define __GIMP_IMAGE_QMASK_H__
 
 
+#define GIMP_IMAGE_QMASK_NAME "Qmask"
+
+
 void       gimp_image_set_qmask_state (GimpImage       *gimage,
                                        gboolean         qmask_state);
 gboolean   gimp_image_get_qmask_state (const GimpImage *gimage);

@@ -452,7 +452,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_TYPE,               /*< desc="Image Type"                >*/
   GIMP_UNDO_IMAGE_SIZE,               /*< desc="Image Size"                >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Resolution Change"         >*/
-  GIMP_UNDO_IMAGE_QMASK,              /*< desc="QuickMask"                 >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                      >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/

@@ -46,6 +46,7 @@
 #include "gimpimage-guides.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-projection.h"
+#include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -134,11 +135,19 @@ static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
                                                   GimpImage      *gimage);
 static void     gimp_image_drawable_visibility   (GimpItem       *item,
                                                   GimpImage      *gimage);
-static void     gimp_image_drawable_add          (GimpContainer  *container,
-                                                  GimpItem       *item,
+static void     gimp_image_layer_add             (GimpContainer  *container,
+                                                  GimpLayer      *layer,
                                                   GimpImage      *gimage);
-static void     gimp_image_drawable_remove       (GimpContainer  *container,
-                                                  GimpItem       *item,
+static void     gimp_image_layer_remove          (GimpContainer  *container,
+                                                  GimpLayer      *layer,
+                                                  GimpImage      *gimage);
+static void     gimp_image_channel_add           (GimpContainer  *container,
+                                                  GimpChannel    *channel,
+                                                  GimpImage      *gimage);
+static void     gimp_image_channel_remove        (GimpContainer  *container,
+                                                  GimpChannel    *channel,
+                                                  GimpImage      *gimage);
+static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
                                                   GimpImage      *gimage);
 
 
@@ -507,18 +516,23 @@ gimp_image_init (GimpImage *gimage)
                                 G_CALLBACK (gimp_image_drawable_visibility),
                                 gimage);
 
+  gimage->channel_name_changed_handler =
+    gimp_container_add_handler (gimage->channels, "name_changed",
+                                G_CALLBACK (gimp_image_channel_name_changed),
+                                gimage);
+
   g_signal_connect (gimage->layers, "add",
-                    G_CALLBACK (gimp_image_drawable_add),
+                    G_CALLBACK (gimp_image_layer_add),
                     gimage);
-  g_signal_connect (gimage->channels, "add",
-                    G_CALLBACK (gimp_image_drawable_add),
+  g_signal_connect (gimage->layers, "remove",
+                    G_CALLBACK (gimp_image_layer_remove),
                     gimage);
 
-  g_signal_connect (gimage->layers, "remove",
-                    G_CALLBACK (gimp_image_drawable_remove),
+  g_signal_connect (gimage->channels, "add",
+                    G_CALLBACK (gimp_image_channel_add),
                     gimage);
   g_signal_connect (gimage->channels, "remove",
-                    G_CALLBACK (gimp_image_drawable_remove),
+                    G_CALLBACK (gimp_image_channel_remove),
                     gimage);
 
   gimage->active_layer          = NULL;
@@ -568,18 +582,22 @@ gimp_image_dispose (GObject *object)
   gimp_container_remove_handler (gimage->channels,
                                  gimage->channel_visible_handler);
 
-  g_signal_handlers_disconnect_by_func (gimage->layers,
-                                        gimp_image_drawable_add,
-                                        gimage);
-  g_signal_handlers_disconnect_by_func (gimage->channels,
-                                        gimp_image_drawable_add,
-                                        gimage);
+  gimp_container_remove_handler (gimage->channels,
+                                 gimage->channel_name_changed_handler);
 
   g_signal_handlers_disconnect_by_func (gimage->layers,
-                                        gimp_image_drawable_remove,
+                                        gimp_image_layer_add,
                                         gimage);
+  g_signal_handlers_disconnect_by_func (gimage->layers,
+                                        gimp_image_layer_remove,
+                                        gimage);
+
   g_signal_handlers_disconnect_by_func (gimage->channels,
-                                        gimp_image_drawable_remove,
+                                        gimp_image_channel_add,
+                                        gimage);
+
+  g_signal_handlers_disconnect_by_func (gimage->channels,
+                                        gimp_image_channel_remove,
                                         gimage);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -899,21 +917,76 @@ gimp_image_drawable_visibility (GimpItem  *item,
 }
 
 static void
-gimp_image_drawable_add (GimpContainer *container,
-                         GimpItem      *item,
-                         GimpImage     *gimage)
+gimp_image_layer_add (GimpContainer *container,
+                      GimpLayer     *layer,
+                      GimpImage     *gimage)
 {
+  GimpItem *item = GIMP_ITEM (layer);
+
   if (gimp_item_get_visible (item))
     gimp_image_drawable_visibility (item, gimage);
 }
 
 static void
-gimp_image_drawable_remove (GimpContainer *container,
-                            GimpItem      *item,
-                            GimpImage     *gimage)
+gimp_image_layer_remove (GimpContainer *container,
+                         GimpLayer     *layer,
+                         GimpImage     *gimage)
 {
+  GimpItem *item = GIMP_ITEM (layer);
+
   if (gimp_item_get_visible (item))
     gimp_image_drawable_visibility (item, gimage);
+}
+
+static void
+gimp_image_channel_add (GimpContainer *container,
+                        GimpChannel   *channel,
+                        GimpImage     *gimage)
+{
+  GimpItem *item = GIMP_ITEM (channel);
+
+  if (gimp_item_get_visible (item))
+    gimp_image_drawable_visibility (item, gimage);
+
+  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+                gimp_object_get_name (GIMP_OBJECT (channel))))
+    {
+      gimp_image_set_qmask_state (gimage, TRUE);
+    }
+}
+
+static void
+gimp_image_channel_remove (GimpContainer *container,
+                           GimpChannel   *channel,
+                           GimpImage     *gimage)
+{
+  GimpItem *item = GIMP_ITEM (channel);
+
+  if (gimp_item_get_visible (item))
+    gimp_image_drawable_visibility (item, gimage);
+
+  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+                gimp_object_get_name (GIMP_OBJECT (channel))))
+    {
+      gimp_image_set_qmask_state (gimage, FALSE);
+    }
+}
+
+static void
+gimp_image_channel_name_changed (GimpChannel *channel,
+                                 GimpImage   *gimage)
+{
+  if (! strcmp (GIMP_IMAGE_QMASK_NAME,
+                gimp_object_get_name (GIMP_OBJECT (channel))))
+    {
+      gimp_image_set_qmask_state (gimage, TRUE);
+    }
+  else if (gimp_image_get_qmask_state (gimage) &&
+           ! gimp_container_get_child_by_name (gimage->channels,
+                                               GIMP_IMAGE_QMASK_NAME))
+    {
+      gimp_image_set_qmask_state (gimage, FALSE);
+    }
 }
 
 
