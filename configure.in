@@ -32,7 +32,7 @@ GIMPPRINT_REQUIRED_VERSION=4.2.0
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=18
+GIMP_MICRO_VERSION=19
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -864,7 +864,7 @@ fi
 #################
 
 
-AC_ARG_WITH(aa,  [  --without-aa           do not build the AA plug-in])
+AC_ARG_WITH(aa,  [  --without-aa            do not build the AA plug-in])
 if test x$with_aa != xno && test -z "$LIBAA"; then
   AC_CHECK_LIB(aa, aa_printf,
     [AC_CHECK_HEADER(aalib.h,
