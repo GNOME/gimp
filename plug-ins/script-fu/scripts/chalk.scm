@@ -30,7 +30,8 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-image-resize img width height 0 0)
+    (gimp-selection-none img)
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)

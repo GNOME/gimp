@@ -81,7 +81,7 @@
 	 (selection 0)
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-resize img width height 0 0)
+    (script-fu-util-image-resize-from-layer img tube-layer)
     (gimp-image-add-layer img bg-layer 1)
     (if (not (= shadow 0))
 	(begin

@@ -53,7 +53,7 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-pattern (car (gimp-patterns-get-pattern))))   
-    (gimp-image-resize img width height 0 0)
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-patterns-set-pattern pattern)

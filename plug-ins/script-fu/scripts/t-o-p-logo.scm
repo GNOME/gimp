@@ -23,7 +23,7 @@
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
-    (gimp-image-resize img width height 0 0)
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img sparkle-layer 2)
     (gimp-image-add-layer img shadow-layer 3)
     (gimp-image-add-layer img bg-layer 4)
