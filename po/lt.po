@@ -5,16 +5,16 @@
 # Karina Gribanova <buratina@delfi.lt>, 2001-2002.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Žygimantas Beručka <uid0@akl.lt>, 2004.
-# Giedrius Naudžiūnas <gimp@projektas.lt>, 2004.
+# Giedrius Naudžiūnas <gimp@akl.lt>, 2004.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 21:00+0100\n"
-"PO-Revision-Date: 2004-07-02 20:46+0300\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2004-11-16 07:38+0200\n"
+"PO-Revision-Date: 2004-11-16 07:37+0200\n"
+"Last-Translator: Linas Vasiliauskas <linas@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,9 @@ msgstr ""
 #: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "'%s' atidarymas nepavyko: %s"
+msgstr ""
+"%s atidarymas nepavyko.\n"
+"%s"
 
 #: app/main.c:218
 msgid ""
@@ -697,7 +699,7 @@ msgstr "Rodyti naudingus patarimus GIMP paleidimo metu."
 
 #: app/config/gimprc-blurbs.h:302
 msgid "Enable to display tooltips."
-msgstr "Rodyti patarimus."
+msgstr "Rodyti patarimus"
 
 #: app/config/gimprc-blurbs.h:305
 msgid ""
@@ -821,15 +823,15 @@ msgstr "Klaida įrašant %s"
 
 #: app/core/core-enums.c:13
 msgid "_White (Full Opacity)"
-msgstr "_Balta (visiškas nepermatomumas)"
+msgstr "Balta (visiškas nepermatomumas)"
 
 #: app/core/core-enums.c:14
 msgid "_Black (Full Transparency)"
-msgstr "_Juoda (visiškas permatomumas)"
+msgstr "Juoda (visiškas permatomumas)"
 
 #: app/core/core-enums.c:15
 msgid "Layer's _Alpha Channel"
-msgstr "Sluoksnio _alfa kanalas"
+msgstr "Sluoksnio alfa kanalas"
 
 #: app/core/core-enums.c:16
 msgid "_Transfer Layer's Alpha Channel"
@@ -837,15 +839,15 @@ msgstr "_Perkelti sluoksnio alfą kanalą"
 
 #: app/core/core-enums.c:17
 msgid "_Selection"
-msgstr "Pažymėjima_s"
+msgstr "Pažymėjimas"
 
 #: app/core/core-enums.c:18
 msgid "_Grayscale Copy of Layer"
-msgstr "_Nespalvota sluoksnio kopija"
+msgstr "Nespalvota sluoksnio kopija"
 
 #: app/core/core-enums.c:36 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
-msgstr "Iš priekinio plano spalvos į fono spalvą (RGB)"
+msgstr "IŠ priekinio plano spalvos į fono spalvą (RGB)"
 
 #: app/core/core-enums.c:37
 msgid "FG to BG (HSV)"
@@ -1027,7 +1029,7 @@ msgstr "Ilgi brūkšneliai"
 
 #: app/core/core-enums.c:323
 msgid "Medium Dashes"
-msgstr "Viduiniai brūkšneliai"
+msgstr "Viduriniai brūkšneliai"
 
 #: app/core/core-enums.c:324
 msgid "Short Dashes"
@@ -1986,7 +1988,7 @@ msgstr "Nuleisti sluoksnį iki apačios"
 #: app/core/gimpimage.c:2799
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
-msgstr "Sluoksnis '%s' neturi alfa kanalo. Sluoksnis bus patalpintas aukščiau."
+msgstr "Sluoksnis %s neturi alfa kanalo. Sluoksnis bus patalpintas aukščiau"
 
 #: app/core/gimpimage.c:2853
 msgid "Add Channel"
@@ -2006,7 +2008,7 @@ msgstr "Pakelti kanalą"
 
 #: app/core/gimpimage.c:2964
 msgid "Channel cannot be lowered more."
-msgstr "Kanalo žemiau nuleisti negalima."
+msgstr "Kanalo žemiau nuleisti negalima"
 
 #: app/core/gimpimage.c:2969 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
@@ -2102,12 +2104,11 @@ msgstr ""
 "tai ne plaukiojantis pažymėjimas."
 
 #: app/core/gimplayer-floating-sel.c:210
-#, fuzzy
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
-"Neina sukurti naujo sluoksnio iš plaukiojančio\n"
+"Negalima sukurti naujo sluoksnio iš plaukiojančio\n"
 "pažymėjimo kadangi jis priklauso sluoksnio kaukei ar kanalui"
 
 #: app/core/gimplayer.c:247 app/pdb/internal_procs.c:134
@@ -2150,7 +2151,7 @@ msgstr "%s kaukė"
 #, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
-"Neina pridėti sluoksnio kaukės prie sluoksnio,\n"
+"Negalima pridėti sluoksnio kaukės prie sluoksnio,\n"
 "neturinčio alfa kanalo"
 
 #: app/core/gimplayer.c:955
@@ -2626,13 +2627,10 @@ msgstr "Vertė"
 #: app/gui/about-dialog.c:54
 msgid "translator-credits"
 msgstr ""
-"Giedrius Naudžiūnas,\n"
-"Rimas Kudelis,\n"
-"Linas Vasiliauskas,\n"
-"Žygimantas Beručka,\n"
-"Mantas Kriaučiūnas,\n"
-"Eglė Kriaučiūnienė,\n"
-"Karina Gribanova."
+"Mantas Kriaučiūnas <mantas@akl.lt>\n"
+"Eglė Kriaučiūnienė <egle@akl.lt>\n"
+"Karina Gribanova <buratina@delfi.lt>\n"
+"Linas Vasiliauskas <linasv@centras.lt>"
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
@@ -2659,39 +2657,39 @@ msgstr ""
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
-msgstr "/K_eisti teptuko savybes..."
+msgstr "/Keisti teptuko savybes..."
 
 #: app/gui/brushes-menu.c:53
 msgid "/_New Brush"
-msgstr "/_Naujas teptukas"
+msgstr "/Naujas teptukas"
 
 #: app/gui/brushes-menu.c:58
 msgid "/D_uplicate Brush"
-msgstr "/Padaryti tept_uko kopiją"
+msgstr "/Padaryti teptuko kopiją"
 
 #: app/gui/brushes-menu.c:63
 msgid "/_Delete Brush"
-msgstr "/_Pašalinti teptuką"
+msgstr "/Pašalinti teptuką"
 
 #: app/gui/brushes-menu.c:71
 msgid "/_Refresh Brushes"
-msgstr "/_Atnaujinti teptukus"
+msgstr "/Atnaujinti teptukus"
 
 #: app/gui/buffers-menu.c:42
 msgid "/_Paste Buffer"
-msgstr "/Į_dėti buferį"
+msgstr "/Įdėti buferį"
 
 #: app/gui/buffers-menu.c:47
 msgid "/Paste Buffer _Into"
-msgstr "/Įdėt_i buferį į"
+msgstr "Įdėti buferį į"
 
 #: app/gui/buffers-menu.c:52
 msgid "/Paste Buffer as _New"
-msgstr "/Įdėti buferį kaip _naują"
+msgstr "Įdėti buferį kaip naują"
 
 #: app/gui/buffers-menu.c:57
 msgid "/_Delete Buffer"
-msgstr "/Išt_rinti buferį"
+msgstr "/Ištrinti buferį"
 
 #: app/gui/channels-commands.c:143
 #, c-format
@@ -2732,43 +2730,43 @@ msgstr "Keisti kanalo savybes"
 
 #: app/gui/channels-menu.c:44
 msgid "/_Edit Channel Attributes..."
-msgstr "/K_eisti kanalo savybes..."
+msgstr "/Keisti kanalo savybes..."
 
 #: app/gui/channels-menu.c:52
 msgid "/_New Channel..."
-msgstr "/_Naujas kanalas..."
+msgstr "/Naujas kanalas..."
 
 #: app/gui/channels-menu.c:57
 msgid "/_Raise Channel"
-msgstr "/_Pakelti kanalą"
+msgstr "/Pakelti kanalą"
 
 #: app/gui/channels-menu.c:62
 msgid "/_Lower Channel"
-msgstr "/Nu_leisti kanalą"
+msgstr "/Nuleisti kanalą"
 
 #: app/gui/channels-menu.c:67
 msgid "/D_uplicate Channel"
-msgstr "/Padaryti kanalo k_opiją"
+msgstr "/Padaryti kanalo kopiją"
 
 #: app/gui/channels-menu.c:72
 msgid "/_Delete Channel"
-msgstr "/Iš_trinti kanalą"
+msgstr "/Ištrinti kanalą"
 
 #: app/gui/channels-menu.c:80
 msgid "/Channel to Sele_ction"
-msgstr "/Pakeisti _kanalą pažymėjimu"
+msgstr "/Pakeisti kanalą pažymėjimu"
 
 #: app/gui/channels-menu.c:85 app/gui/vectors-menu.c:95
 msgid "/_Add to Selection"
-msgstr "/Pri_dėti prie pažymėjimo"
+msgstr "/Pridėti prie pažymėjimo"
 
 #: app/gui/channels-menu.c:90 app/gui/vectors-menu.c:100
 msgid "/_Subtract from Selection"
-msgstr "/_Atimti iš pažymėjimo"
+msgstr "/Atimti iš pažymėjimo"
 
 #: app/gui/channels-menu.c:95 app/gui/vectors-menu.c:105
 msgid "/_Intersect with Selection"
-msgstr "/Sank_irta su pažymėjimu"
+msgstr "/Sankirta su pažymėjimu"
 
 #: app/gui/color-notebook.c:184
 msgid "Add the current color to the color history"
@@ -2776,15 +2774,15 @@ msgstr ""
 
 #: app/gui/colormap-editor-menu.c:41 app/gui/palette-editor-menu.c:40
 msgid "/_Edit Color..."
-msgstr "/K_eisti spalvą..."
+msgstr "/Keisti spalvą..."
 
 #: app/gui/colormap-editor-menu.c:46
 msgid "/_Add Color from FG"
-msgstr "/Pri_dėti spalvą iš priekinio plano"
+msgstr "/Pridėti spalvą iš priekinio plano"
 
 #: app/gui/colormap-editor-menu.c:51
 msgid "/_Add Color from BG"
-msgstr "/Pri_dėti spalvą iš fono"
+msgstr "/Pridėti spalvą iš fono"
 
 #: app/gui/convert-dialog.c:132
 msgid "Indexed Color Conversion"
@@ -2976,55 +2974,55 @@ msgstr "Paletės savybių nustatymas"
 
 #: app/gui/dialogs-menu.c:66
 msgid "/_Add Tab"
-msgstr "/Pri_dėti kortelę"
+msgstr "/Pridėti kortelę"
 
 #: app/gui/dialogs-menu.c:68
 msgid "/Add Tab/Tool _Options"
-msgstr "/Pridėti kortelę/Įrankių _savybės"
+msgstr "/Pridėti kortelę/Įrankių savybės"
 
 #: app/gui/dialogs-menu.c:70
 msgid "/Add Tab/_Device Status"
-msgstr "/Pridėti kortelę/Įren_ginio būsena"
+msgstr "/Pridėti kortelę/Įrenginio būsena"
 
 #: app/gui/dialogs-menu.c:75
 msgid "/Add Tab/_Layers"
-msgstr "/Pridėti kortelę/_Sluoksniai"
+msgstr "/Pridėti kortelę/Sluoksniai"
 
 #: app/gui/dialogs-menu.c:77
 msgid "/Add Tab/_Channels"
-msgstr "/Pridėti kortelę/_Kanalai"
+msgstr "/Pridėti kortelę/Kanalai"
 
 #: app/gui/dialogs-menu.c:79
 msgid "/Add Tab/_Paths"
-msgstr "/Pridėti kortelę/K_ontūrai"
+msgstr "/Pridėti kortelę/Kontūrai"
 
 #: app/gui/dialogs-menu.c:81
 msgid "/Add Tab/Inde_xed Palette"
-msgstr "/Pridėti kortelę/In_deksuota paletė..."
+msgstr "/Pridėti kortelę/Indeksuota paletė..."
 
 #: app/gui/dialogs-menu.c:83
 msgid "/Add Tab/Histogra_m"
-msgstr "/Pridėti kortelę/Histogra_ma"
+msgstr "/Pridėti kortelę/Histograma"
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/_Selection Editor"
-msgstr "/Pridėti kortelę/Pažymėjimo _savybių nustatymas"
+msgstr "/Pridėti kortelę/Pažymėjimo savybių nustatymas"
 
 #: app/gui/dialogs-menu.c:87
 msgid "/Add Tab/Na_vigation"
-msgstr "/Pridėti kortelę/Na_vigacija"
+msgstr "/Pridėti kortelę/Navigacija"
 
 #: app/gui/dialogs-menu.c:89
 msgid "/Add Tab/_Undo History"
-msgstr "/Pridėti kortelę/Atša_ukimų istorija"
+msgstr "/Pridėti kortelę/Atšaukimų istorija"
 
 #: app/gui/dialogs-menu.c:94
 msgid "/Add Tab/Colo_rs"
-msgstr "/Pridėti kortelę/Spalv_os"
+msgstr "/Pridėti kortelę/Spalvos"
 
 #: app/gui/dialogs-menu.c:96
 msgid "/Add Tab/Brus_hes"
-msgstr "/Pridėti kortelę/_Teptukai"
+msgstr "/Pridėti kortelę/Teptukai"
 
 #: app/gui/dialogs-menu.c:98
 msgid "/Add Tab/P_atterns"
@@ -3140,11 +3138,11 @@ msgstr "/Kortelių stilius/_Būklė ir tekstas"
 
 #: app/gui/dialogs-menu.c:165
 msgid "/View as _List"
-msgstr "/Matyti kaip _sąrašą"
+msgstr "/Rodyti kaip  paveiksliukus ir sąrašą"
 
 #: app/gui/dialogs-menu.c:169
 msgid "/View as _Grid"
-msgstr "/Matyti kaip _groteles"
+msgstr "/Rodyti tik paveiksliukus"
 
 #: app/gui/dialogs-menu.c:176
 msgid "/Show Image _Menu"
@@ -3701,7 +3699,7 @@ msgstr "/Padaryti perėjimo kopiją"
 
 #: app/gui/gradients-menu.c:64
 msgid "/Save as _POV-Ray..."
-msgstr "Išsaugoti kaip POV-Ray"
+msgstr "/Išsaugoti kaip _POV-Ray..."
 
 #: app/gui/gradients-menu.c:69
 msgid "/_Delete Gradient..."
@@ -3742,9 +3740,8 @@ msgid "Rotating..."
 msgstr "Suka..."
 
 #: app/gui/image-commands.c:269 app/gui/layers-commands.c:373
-#, fuzzy
 msgid "Cannot crop because the current selection is empty."
-msgstr "Neina iškirpti/kopijuoti, kadangi pasirinktas regionas tuščias "
+msgstr "Negalima iškirpti/kopijuoti, kadangi pasirinktas regionas tuščias"
 
 #: app/gui/image-commands.c:398
 msgid "Layers Merge Options"
@@ -6821,11 +6818,11 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Sveiki atvykę į\n"
-"GIMP vartotojo įdiegimą"
+"GIMP·vartotojo·įdiegimą"
 
 #: app/gui/user-install-dialog.c:752
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Spauskite „Tęsti“ kad pradėtumėte GIMP·vartotojo·įdiegimą."
+msgstr "Spauskite \"Tęsti\" kad pradėtumėte GIMP·vartotojo·įdiegimą."
 
 #: app/gui/user-install-dialog.c:757
 msgid ""
@@ -6833,12 +6830,11 @@ msgid ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"GIMP - GNU paveikslėlių manipuliavimo programa\n"
+"GIMP - GNU paveikslėlių apdorojimo programa (Image Manipulation Program)\n"
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 
 #: app/gui/user-install-dialog.c:767
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -6851,10 +6847,9 @@ msgstr ""
 "licencijos)\n"
 "reikalavimus, kaip aprašė the Free Software Foundation\n"
 "(Laisvosios Programinės Įrangos Fondas); arba remiantis\n"
-"antrąja ar kuria kita licencijos versija pagal pasirinkimą."
+"antrąja ar kuria kita vėlesne licencijos versija pagal pasirinkimą."
 
 #: app/gui/user-install-dialog.c:773
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -6865,10 +6860,9 @@ msgstr ""
 "bet BE JOKIOS GARANTIJOS; net be turimos mintyje garantijos,\n"
 "kad ji bus tinkama PREKYBAI ar SPECIALIZUOTAM PANAUDOJIMUI.\n"
 "Peržiūrėkite the GNU General Public License,\n"
-"jei norite sužinoti daugiau informacijos."
+" jei norite sužinoti daugiau informacijos."
 
 #: app/gui/user-install-dialog.c:779
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -6877,7 +6871,7 @@ msgstr ""
 "Jūs turėjote gauti the GNU General Public License kopiją\n"
 "kartu su šia programa; jei ne, rašykite the Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
+"MA 02111-1307, USA.\" "
 
 #: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
@@ -6916,7 +6910,7 @@ msgstr "GIMP našumo derinimas"
 
 #: app/gui/user-install-dialog.c:953
 msgid "Click \"Continue\" to accept the settings above."
-msgstr "Spausk „Tęsti“, kad priimti aukščiau esančius nustatymus."
+msgstr "Spausk \"Tęsti\", kad priimti aukščiau esančius nustatymus."
 
 #: app/gui/user-install-dialog.c:958
 msgid ""
@@ -6925,7 +6919,7 @@ msgstr "<b>Optimaliam GIMP našumui gali reikėti pakeisti keletą nustatymų.</
 
 #: app/gui/user-install-dialog.c:965
 msgid "Click \"Continue\" to start The GIMP."
-msgstr "Tam, kad paleisti GIMP spauskit „Tęsti“."
+msgstr "Spausk \"Tęsti\", kad paleistum GIMP"
 
 #: app/gui/user-install-dialog.c:970
 msgid ""
@@ -6983,7 +6977,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:1206
 msgid "Swap Folder:"
-msgstr "Swap aplankas:"
+msgstr "Swap katalogas:"
 
 #: app/gui/user-install-dialog.c:1257
 msgid ""
@@ -7051,7 +7045,7 @@ msgstr "Eksportuoti·kelią į SVG"
 
 #: app/gui/vectors-menu.c:44
 msgid "/Path _Tool"
-msgstr "/Kon_tūrų įrankiai"
+msgstr "/Kontūrų įrankiai"
 
 #: app/gui/vectors-menu.c:49
 msgid "/_Edit Path Attributes..."
@@ -7906,8 +7900,9 @@ msgstr "Iškirpti paveikslėlio fragmentą arba pakeisti dydį"
 
 #: app/tools/gimpcroptool.c:161
 msgid "/Tools/Transform Tools/_Crop & Resize"
-msgstr "/Įrankiai/Transformavimo įrankiai/Iš_kirpimas ir dydžio keitimas"
+msgstr "/Įrankiai/Transformavimo įrankiai/Apkarpymas ir dydžio keitimas"
 
+#  initialize the statusbar display
 #. initialize the statusbar display
 #: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:932
 msgid "Crop: "
@@ -8587,7 +8582,7 @@ msgstr "Automatiškai sumažinti pažymėjimą"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
-msgstr "Kirpti"
+msgstr "Deformacija"
 
 #: app/tools/gimpsheartool.c:101
 msgid "Shear the layer or selection"
@@ -10043,7 +10038,7 @@ msgstr "Rodyti kaip sąrašą"
 
 #: app/widgets/widgets-enums.c:118
 msgid "View as Grid"
-msgstr "Matyti kaip groteles"
+msgstr "Rodyti kaip groteles"
 
 #: app/widgets/widgets-enums.c:136
 msgid "Normal Window"
