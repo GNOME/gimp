@@ -112,7 +112,6 @@ plug_ins_init (Gimp               *gimp,
   plug_in_init (gimp);
 
   /* search for binaries in the plug-in directory path */
-
   path = gimp_config_path_expand (gimp->config->plug_in_path, TRUE, NULL);
 
   gimp_datafiles_read_directories (path,
@@ -121,15 +120,20 @@ plug_ins_init (Gimp               *gimp,
 
   g_free (path);
 
+
   /* read the pluginrc file for cached data */
   if (gimp->config->plug_in_rc_path)
     {
-      if (g_path_is_absolute (gimp->config->plug_in_rc_path))
-        filename = g_strdup (gimp->config->plug_in_rc_path);
-      else
-        filename = g_build_filename (gimp_directory (),
-                                     gimp->config->plug_in_rc_path,
-                                     NULL);
+      filename = gimp_config_path_expand (gimp->config->plug_in_rc_path,
+                                          TRUE, NULL);
+
+      if (!g_path_is_absolute (filename))
+        {
+          gchar *tmp = g_build_filename (gimp_directory (), filename, NULL);
+          
+          g_free (filename);
+          filename = tmp;
+        }
     }
   else
     {
