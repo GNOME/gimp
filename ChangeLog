@@ -1,5 +1,10 @@
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* HACKING: updated info about stable CVS branches of modules we
+	depend on.
+
+2005-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpuimanager.[ch]: removed gimp_ui_manager_ui_get()
 	and implement the new virtual functions GtkUIManager::get_widget()
 	and ::get_action() instead. Menu loading happens transparently now.
