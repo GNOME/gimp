@@ -179,7 +179,8 @@ Thu Aug 12 23:15:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	New "navigator" image (accessed via <Image>/Window Nav..). This gives
 	an outline of the location of the current view on an image. Eg if your
-	image window is only showing part of an image then the Window Navigation	window will outline the area viewed. You can "drag" the outlined 
+	image window is only showing part of an image then the Window Navigation
+        window will outline the area viewed. You can "drag" the outlined 
 	square around the viewport and the main image will scroll. Additional
 	a single click outside the square will center the image at that 
 	location.
@@ -189,7 +190,8 @@ Thu Aug 12 23:15:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Both these features are currently work in progress and unfinished. 
 	In particular the Navigator does not keep in step with changes
-	to the basic image (however it does keep in step with image size changes	and if you modify the size of the image viewing window). It also
+	to the basic image (however it does keep in step with image size changes
+        and if you modify the size of the image viewing window). It also
 	does not display the transparent areas of images very nicely. 
 	 
 1999-08-13  Tor Lillqvist  <tml@iki.fi>
