@@ -16,7 +16,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; slide.scm   version 0.40   1999/5/11
+; slide.scm   version 0.41   2004/03/28
 ;
 ; CHANGE-LOG:
 ; 0.20 - first public release
@@ -24,6 +24,8 @@
 ;        now uses the rotate plug-in to improve speed
 ; 0.40 - changes to work with gimp-1.1 
 ;        if the image was rotated, rotate the whole thing back when finished
+; 0.41 - changes to work with gimp-2.0, slightly correct text offsets,
+;        Nils Philippsen <nphilipp@redhat.com> 2004/03/28
 ;
 ; !still in development!
 ; TODO: - change the script so that the film is rotated, not the image
@@ -121,6 +123,7 @@
 ; add the film layer
   (gimp-palette-set-background '(0 0 0))
   (gimp-drawable-fill film-layer BACKGROUND-FILL)
+  (gimp-image-add-layer image film-layer -1)
 
 ; add the text
   (gimp-palette-set-foreground font-color)
@@ -144,7 +147,7 @@
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer
 					    (+ hole-start (* 0.35 width))
-					    (* 0.01 height)
+					    0.0
 					    number
 					    0
 					    TRUE
@@ -153,7 +156,7 @@
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer
 					    (+ hole-start (* 0.35 width))
-					    (* 0.95 height)
+					    (* 0.94 height)
 					    number
 					    0
 					    TRUE
@@ -162,7 +165,7 @@
   (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					      film-layer
 					      (+ hole-start (* 0.85 width))
-					      (* 0.95 height)
+					      (* 0.945 height)
 					      numbera
 					      0
 					      TRUE
@@ -200,7 +203,6 @@
     (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
     (gimp-threshold film-mask 127 255)
 
-    (gimp-image-add-layer image film-layer -1)
     (gimp-layer-add-mask film-layer film-mask)
     (gimp-layer-remove-mask film-layer MASK-APPLY))
 
@@ -229,12 +231,12 @@
 		    "Gives the image the look of a slide"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "1999/05/11"
+		    "2004/03/28"
 		    "RGB GRAY"
-		    SF-IMAGE "Image" 0
-		    SF-DRAWABLE "Drawable" 0
-		    SF-STRING _"Text" "The GIMP"
-		    SF-STRING _"Number" "32"
-		    SF-FONT   _"Font" "Serif"
-		    SF-COLOR  _"Font Color" '(255 180 0)
-		    SF-TOGGLE _"Work on Copy" TRUE)
+		    SF-IMAGE    "Image"          0
+		    SF-DRAWABLE "Drawable"       0
+		    SF-STRING   _"Text"          "The GIMP"
+		    SF-STRING   _"Number"        "32"
+		    SF-FONT     _"Font"          "Serif"
+		    SF-COLOR    _"Font Color"    '(255 180 0)
+		    SF-TOGGLE   _"Work on Copy"  TRUE)
