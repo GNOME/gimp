@@ -89,9 +89,10 @@ register_gradient_edit_procs (Gimp *gimp)
 }
 
 static Argument *
-gradient_segment_get_left_color_invoker (Gimp        *gimp,
-                                         GimpContext *context,
-                                         Argument    *args)
+gradient_segment_get_left_color_invoker (Gimp         *gimp,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -196,9 +197,10 @@ static ProcRecord gradient_segment_get_left_color_proc =
 };
 
 static Argument *
-gradient_segment_set_left_color_invoker (Gimp        *gimp,
-                                         GimpContext *context,
-                                         Argument    *args)
+gradient_segment_set_left_color_invoker (Gimp         *gimp,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -296,9 +298,10 @@ static ProcRecord gradient_segment_set_left_color_proc =
 };
 
 static Argument *
-gradient_segment_get_right_color_invoker (Gimp        *gimp,
-                                          GimpContext *context,
-                                          Argument    *args)
+gradient_segment_get_right_color_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -403,9 +406,10 @@ static ProcRecord gradient_segment_get_right_color_proc =
 };
 
 static Argument *
-gradient_segment_set_right_color_invoker (Gimp        *gimp,
-                                          GimpContext *context,
-                                          Argument    *args)
+gradient_segment_set_right_color_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -503,9 +507,10 @@ static ProcRecord gradient_segment_set_right_color_proc =
 };
 
 static Argument *
-gradient_segment_get_left_pos_invoker (Gimp        *gimp,
-                                       GimpContext *context,
-                                       Argument    *args)
+gradient_segment_get_left_pos_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -600,9 +605,10 @@ static ProcRecord gradient_segment_get_left_pos_proc =
 };
 
 static Argument *
-gradient_segment_set_left_pos_invoker (Gimp        *gimp,
-                                       GimpContext *context,
-                                       Argument    *args)
+gradient_segment_set_left_pos_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -708,9 +714,10 @@ static ProcRecord gradient_segment_set_left_pos_proc =
 };
 
 static Argument *
-gradient_segment_get_middle_pos_invoker (Gimp        *gimp,
-                                         GimpContext *context,
-                                         Argument    *args)
+gradient_segment_get_middle_pos_invoker (Gimp         *gimp,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -805,9 +812,10 @@ static ProcRecord gradient_segment_get_middle_pos_proc =
 };
 
 static Argument *
-gradient_segment_set_middle_pos_invoker (Gimp        *gimp,
-                                         GimpContext *context,
-                                         Argument    *args)
+gradient_segment_set_middle_pos_invoker (Gimp         *gimp,
+                                         GimpContext  *context,
+                                         GimpProgress *progress,
+                                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -913,9 +921,10 @@ static ProcRecord gradient_segment_set_middle_pos_proc =
 };
 
 static Argument *
-gradient_segment_get_right_pos_invoker (Gimp        *gimp,
-                                        GimpContext *context,
-                                        Argument    *args)
+gradient_segment_get_right_pos_invoker (Gimp         *gimp,
+                                        GimpContext  *context,
+                                        GimpProgress *progress,
+                                        Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1010,9 +1019,10 @@ static ProcRecord gradient_segment_get_right_pos_proc =
 };
 
 static Argument *
-gradient_segment_set_right_pos_invoker (Gimp        *gimp,
-                                        GimpContext *context,
-                                        Argument    *args)
+gradient_segment_set_right_pos_invoker (Gimp         *gimp,
+                                        GimpContext  *context,
+                                        GimpProgress *progress,
+                                        Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1118,9 +1128,10 @@ static ProcRecord gradient_segment_set_right_pos_proc =
 };
 
 static Argument *
-gradient_segment_get_blending_function_invoker (Gimp        *gimp,
-                                                GimpContext *context,
-                                                Argument    *args)
+gradient_segment_get_blending_function_invoker (Gimp         *gimp,
+                                                GimpContext  *context,
+                                                GimpProgress *progress,
+                                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1216,9 +1227,10 @@ static ProcRecord gradient_segment_get_blending_function_proc =
 };
 
 static Argument *
-gradient_segment_get_coloring_type_invoker (Gimp        *gimp,
-                                            GimpContext *context,
-                                            Argument    *args)
+gradient_segment_get_coloring_type_invoker (Gimp         *gimp,
+                                            GimpContext  *context,
+                                            GimpProgress *progress,
+                                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1314,9 +1326,10 @@ static ProcRecord gradient_segment_get_coloring_type_proc =
 };
 
 static Argument *
-gradient_segment_range_set_blending_function_invoker (Gimp        *gimp,
-                                                      GimpContext *context,
-                                                      Argument    *args)
+gradient_segment_range_set_blending_function_invoker (Gimp         *gimp,
+                                                      GimpContext  *context,
+                                                      GimpProgress *progress,
+                                                      Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1435,9 +1448,10 @@ static ProcRecord gradient_segment_range_set_blending_function_proc =
 };
 
 static Argument *
-gradient_segment_range_set_coloring_type_invoker (Gimp        *gimp,
-                                                  GimpContext *context,
-                                                  Argument    *args)
+gradient_segment_range_set_coloring_type_invoker (Gimp         *gimp,
+                                                  GimpContext  *context,
+                                                  GimpProgress *progress,
+                                                  Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1556,9 +1570,10 @@ static ProcRecord gradient_segment_range_set_coloring_type_proc =
 };
 
 static Argument *
-gradient_segment_range_flip_invoker (Gimp        *gimp,
-                                     GimpContext *context,
-                                     Argument    *args)
+gradient_segment_range_flip_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1667,9 +1682,10 @@ static ProcRecord gradient_segment_range_flip_proc =
 };
 
 static Argument *
-gradient_segment_range_replicate_invoker (Gimp        *gimp,
-                                          GimpContext *context,
-                                          Argument    *args)
+gradient_segment_range_replicate_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1789,9 +1805,10 @@ static ProcRecord gradient_segment_range_replicate_proc =
 };
 
 static Argument *
-gradient_segment_range_split_midpoint_invoker (Gimp        *gimp,
-                                               GimpContext *context,
-                                               Argument    *args)
+gradient_segment_range_split_midpoint_invoker (Gimp         *gimp,
+                                               GimpContext  *context,
+                                               GimpProgress *progress,
+                                               Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -1900,9 +1917,10 @@ static ProcRecord gradient_segment_range_split_midpoint_proc =
 };
 
 static Argument *
-gradient_segment_range_split_uniform_invoker (Gimp        *gimp,
-                                              GimpContext *context,
-                                              Argument    *args)
+gradient_segment_range_split_uniform_invoker (Gimp         *gimp,
+                                              GimpContext  *context,
+                                              GimpProgress *progress,
+                                              Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2022,9 +2040,10 @@ static ProcRecord gradient_segment_range_split_uniform_proc =
 };
 
 static Argument *
-gradient_segment_range_delete_invoker (Gimp        *gimp,
-                                       GimpContext *context,
-                                       Argument    *args)
+gradient_segment_range_delete_invoker (Gimp         *gimp,
+                                       GimpContext  *context,
+                                       GimpProgress *progress,
+                                       Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2133,9 +2152,10 @@ static ProcRecord gradient_segment_range_delete_proc =
 };
 
 static Argument *
-gradient_segment_range_redistribute_handles_invoker (Gimp        *gimp,
-                                                     GimpContext *context,
-                                                     Argument    *args)
+gradient_segment_range_redistribute_handles_invoker (Gimp         *gimp,
+                                                     GimpContext  *context,
+                                                     GimpProgress *progress,
+                                                     Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2243,9 +2263,10 @@ static ProcRecord gradient_segment_range_redistribute_handles_proc =
 };
 
 static Argument *
-gradient_segment_range_blend_colors_invoker (Gimp        *gimp,
-                                             GimpContext *context,
-                                             Argument    *args)
+gradient_segment_range_blend_colors_invoker (Gimp         *gimp,
+                                             GimpContext  *context,
+                                             GimpProgress *progress,
+                                             Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2355,9 +2376,10 @@ static ProcRecord gradient_segment_range_blend_colors_proc =
 };
 
 static Argument *
-gradient_segment_range_blend_opacity_invoker (Gimp        *gimp,
-                                              GimpContext *context,
-                                              Argument    *args)
+gradient_segment_range_blend_opacity_invoker (Gimp         *gimp,
+                                              GimpContext  *context,
+                                              GimpProgress *progress,
+                                              Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -2467,9 +2489,10 @@ static ProcRecord gradient_segment_range_blend_opacity_proc =
 };
 
 static Argument *
-gradient_segment_range_move_invoker (Gimp        *gimp,
-                                     GimpContext *context,
-                                     Argument    *args)
+gradient_segment_range_move_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

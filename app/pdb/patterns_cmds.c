@@ -52,9 +52,10 @@ register_patterns_procs (Gimp *gimp)
 }
 
 static Argument *
-patterns_refresh_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+patterns_refresh_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
@@ -78,9 +79,10 @@ static ProcRecord patterns_refresh_proc =
 };
 
 static Argument *
-patterns_get_list_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+patterns_get_list_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -146,9 +148,10 @@ static ProcRecord patterns_get_list_proc =
 };
 
 static Argument *
-patterns_get_pattern_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+patterns_get_pattern_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -204,9 +207,10 @@ static ProcRecord patterns_get_pattern_proc =
 };
 
 static Argument *
-patterns_set_pattern_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+patterns_set_pattern_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -256,9 +260,10 @@ static ProcRecord patterns_set_pattern_proc =
 };
 
 static Argument *
-patterns_get_pattern_data_invoker (Gimp        *gimp,
-                                   GimpContext *context,
-                                   Argument    *args)
+patterns_get_pattern_data_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

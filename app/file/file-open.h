@@ -22,6 +22,7 @@
 
 GimpImage * file_open_image                 (Gimp               *gimp,
                                              GimpContext        *context,
+                                             GimpProgress       *progress,
                                              const gchar        *uri,
                                              const gchar        *entered_filename,
                                              PlugInProcDef      *file_proc,
@@ -32,12 +33,14 @@ GimpImage * file_open_image                 (Gimp               *gimp,
 
 GimpImage * file_open_with_display          (Gimp               *gimp,
                                              GimpContext        *context,
+                                             GimpProgress       *progress,
                                              const gchar        *uri,
                                              GimpPDBStatusType  *status,
                                              GError            **error);
 
 GimpImage * file_open_with_proc_and_display (Gimp               *gimp,
                                              GimpContext        *context,
+                                             GimpProgress       *progress,
                                              const gchar        *uri,
                                              const gchar        *entered_filename,
                                              PlugInProcDef      *file_proc,
@@ -46,6 +49,7 @@ GimpImage * file_open_with_proc_and_display (Gimp               *gimp,
 
 GimpLayer * file_open_layer                 (Gimp               *gimp,
                                              GimpContext        *context,
+                                             GimpProgress       *progress,
                                              GimpImage          *dest_image,
                                              const gchar        *uri,
                                              GimpPDBStatusType  *status,

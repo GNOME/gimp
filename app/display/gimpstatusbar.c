@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpprogress.h"
 
 #include "widgets/gimpunitstore.h"
 #include "widgets/gimpunitcombobox.h"
@@ -54,20 +55,34 @@ struct _GimpStatusbarMsg
 #define CURSOR_LEN 256
 
 
-static void   gimp_statusbar_class_init     (GimpStatusbarClass *klass);
-static void   gimp_statusbar_init           (GimpStatusbar      *statusbar);
+static void    gimp_statusbar_class_init     (GimpStatusbarClass *klass);
+static void    gimp_statusbar_init           (GimpStatusbar      *statusbar);
+static void    gimp_statusbar_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static void   gimp_statusbar_destroy        (GtkObject          *object);
+static void    gimp_statusbar_destroy            (GtkObject         *object);
 
-static void   gimp_statusbar_update         (GimpStatusbar      *statusbar);
-static void   gimp_statusbar_unit_changed   (GimpUnitComboBox   *combo,
-                                             GimpStatusbar      *statusbar);
-static void   gimp_statusbar_scale_changed  (GimpScaleComboBox  *combo,
-                                             GimpStatusbar      *statusbar);
-static void   gimp_statusbar_shell_scaled   (GimpDisplayShell   *shell,
-                                             GimpStatusbar      *statusbar);
-static guint  gimp_statusbar_get_context_id (GimpStatusbar      *statusbar,
-                                             const gchar        *context);
+static GimpProgress *
+               gimp_statusbar_progress_start     (GimpProgress      *progress,
+                                                  const gchar       *message,
+                                                  gboolean           cancelable);
+static void    gimp_statusbar_progress_end       (GimpProgress      *progress);
+static void    gimp_statusbar_progress_set_text  (GimpProgress      *progress,
+                                                  const gchar       *message);
+static void    gimp_statusbar_progress_set_value (GimpProgress      *progress,
+                                                  gdouble            percentage);
+static gdouble gimp_statusbar_progress_get_value (GimpProgress      *progress);
+static void    gimp_statusbar_progress_canceled  (GtkWidget         *button,
+                                                  GimpStatusbar     *statusbar);
+
+static void    gimp_statusbar_update             (GimpStatusbar     *statusbar);
+static void    gimp_statusbar_unit_changed       (GimpUnitComboBox  *combo,
+                                                  GimpStatusbar     *statusbar);
+static void    gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
+                                                  GimpStatusbar     *statusbar);
+static void    gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
+                                                  GimpStatusbar     *statusbar);
+static guint   gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
+                                                  const gchar       *context);
 
 
 static GtkHBoxClass *parent_class = NULL;
@@ -93,9 +108,19 @@ gimp_statusbar_get_type (void)
         (GInstanceInitFunc) gimp_statusbar_init,
       };
 
+      static const GInterfaceInfo progress_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_statusbar_progress_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       statusbar_type = g_type_register_static (GTK_TYPE_HBOX,
                                                "GimpStatusbar",
                                                &statusbar_info, 0);
+
+      g_type_add_interface_static (statusbar_type, GIMP_TYPE_PROGRESS,
+                                   &progress_iface_info);
     }
 
   return statusbar_type;
@@ -134,7 +159,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   statusbar->shell                 = NULL;
   statusbar->cursor_format_str[0]  = '\0';
-  statusbar->progressid            = 0;
+  statusbar->progress_active       = FALSE;
 
   gtk_box_set_spacing (box, 1);
 
@@ -188,10 +213,14 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GTK_PROGRESS_BAR (statusbar->progressbar)->progress.x_align = 0.0;
   GTK_PROGRESS_BAR (statusbar->progressbar)->progress.y_align = 0.5;
 
-  statusbar->cancelbutton = gtk_button_new_with_label (_("Cancel"));
-  gtk_widget_set_sensitive (statusbar->cancelbutton, FALSE);
-  gtk_box_pack_start (box, statusbar->cancelbutton, FALSE, FALSE, 0);
-  gtk_widget_show (statusbar->cancelbutton);
+  statusbar->cancel_button = gtk_button_new_with_label (_("Cancel"));
+  gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
+  gtk_box_pack_start (box, statusbar->cancel_button, FALSE, FALSE, 0);
+  gtk_widget_show (statusbar->cancel_button);
+
+  g_signal_connect (statusbar->cancel_button, "clicked",
+                    G_CALLBACK (gimp_statusbar_progress_canceled),
+                    statusbar);
 
   /* Update the statusbar once to work around a canvas size problem:
    *
@@ -208,6 +237,16 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->seq_context_id = 1;
   statusbar->messages       = NULL;
   statusbar->keys           = NULL;
+}
+
+static void
+gimp_statusbar_progress_iface_init (GimpProgressInterface *progress_iface)
+{
+  progress_iface->start     = gimp_statusbar_progress_start;
+  progress_iface->end       = gimp_statusbar_progress_end;
+  progress_iface->set_text  = gimp_statusbar_progress_set_text;
+  progress_iface->set_value = gimp_statusbar_progress_set_value;
+  progress_iface->get_value = gimp_statusbar_progress_get_value;
 }
 
 static void
@@ -234,6 +273,101 @@ gimp_statusbar_destroy (GtkObject *object)
   statusbar->keys = NULL;
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static GimpProgress *
+gimp_statusbar_progress_start (GimpProgress *progress,
+                               const gchar  *message,
+                               gboolean      cancelable)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (! statusbar->progress_active)
+    {
+      GtkWidget *bar = statusbar->progressbar;
+
+      gimp_statusbar_push (statusbar, "progress", message);
+      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
+      gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
+
+      statusbar->progress_active = TRUE;
+
+      return progress;
+    }
+
+  g_warning ("%s: progress bar already active for statusbar %p",
+             G_STRFUNC, statusbar);
+
+  return NULL;
+}
+
+static void
+gimp_statusbar_progress_end (GimpProgress *progress)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (statusbar->progress_active)
+    {
+      GtkWidget *bar = statusbar->progressbar;
+
+      gimp_statusbar_pop (statusbar, "progress");
+      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
+      gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
+
+      statusbar->progress_active = FALSE;
+    }
+}
+
+static void
+gimp_statusbar_progress_set_text (GimpProgress *progress,
+                                  const gchar  *message)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (statusbar->progress_active)
+    {
+      gimp_statusbar_replace (statusbar, "progress", message);
+    }
+}
+
+static void
+gimp_statusbar_progress_set_value (GimpProgress *progress,
+                                   gdouble       percentage)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (statusbar->progress_active)
+    {
+      GtkWidget *bar = statusbar->progressbar;
+
+      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+
+      if (GTK_WIDGET_DRAWABLE (bar))
+        gdk_window_process_updates (bar->window, TRUE);
+    }
+}
+
+static gdouble
+gimp_statusbar_progress_get_value (GimpProgress *progress)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+
+  if (statusbar->progress_active)
+    {
+      GtkWidget *bar = statusbar->progressbar;
+
+      return gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar));
+    }
+
+  return 0.0;
+}
+
+static void
+gimp_statusbar_progress_canceled (GtkWidget     *button,
+                                  GimpStatusbar *statusbar)
+{
+  if (statusbar->progress_active)
+    gimp_progress_cancel (GIMP_PROGRESS (statusbar));
 }
 
 static void

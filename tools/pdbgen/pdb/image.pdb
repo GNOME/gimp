@@ -330,7 +330,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_image_resize (gimage, context,
-                     new_width, new_height, offx, offy, NULL, NULL);
+                     new_width, new_height, offx, offy, NULL);
 }
 CODE
     );
@@ -360,7 +360,7 @@ HELP
 {
   gimp_image_scale (gimage, new_width, new_height,
                     gimp->config->interpolation_type,
-                    NULL, NULL);
+                    NULL);
 }
 CODE
     );
@@ -428,7 +428,7 @@ HELP
 	headers => [ qw("core/gimpimage-flip.h") ],
 	code => <<'CODE'
 {
-  gimp_image_flip (gimage, context, flip_type, NULL, NULL);
+  gimp_image_flip (gimage, context, flip_type, NULL);
 }
 CODE
     );
@@ -450,7 +450,7 @@ sub image_rotate {
 	headers => [ qw("core/gimpimage-rotate.h") ],
 	code => <<'CODE'
 {
-  gimp_image_rotate (gimage, context, rotate_type, NULL, NULL);
+  gimp_image_rotate (gimage, context, rotate_type, NULL);
 }
 CODE
     );

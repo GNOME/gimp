@@ -32,6 +32,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimptemplate.h"
 
 #include "file/file-open.h"
@@ -131,6 +132,7 @@ file_last_opened_cmd_callback (GtkAction *action,
       GError            *error = NULL;
 
       gimage = file_open_with_display (gimp, action_data_get_context (data),
+                                       NULL,
                                        GIMP_OBJECT (imagefile)->name,
                                        &status, &error);
 
@@ -177,6 +179,7 @@ file_save_cmd_callback (GtkAction *action,
           GError            *error = NULL;
 
           status = file_save (gdisp->gimage, action_data_get_context (data),
+                              GIMP_PROGRESS (gdisp),
                               GIMP_RUN_WITH_LAST_VALS, &error);
 
           if (status != GIMP_PDB_SUCCESS &&
@@ -278,10 +281,9 @@ file_revert_cmd_callback (GtkAction *action,
                                           GIMP_STOCK_QUESTION,
                                           text,
                                           GTK_STOCK_YES, GTK_STOCK_NO,
-                                          G_OBJECT (gdisp->gimage),
-                                          "disconnect",
+                                          G_OBJECT (gdisp), "disconnect",
                                           file_revert_confirm_callback,
-                                          gdisp->gimage);
+                                          gdisp);
 
       g_free (text);
 
@@ -340,7 +342,8 @@ file_revert_confirm_callback (GtkWidget *widget,
                               gboolean   revert,
                               gpointer   data)
 {
-  GimpImage *old_gimage = GIMP_IMAGE (data);
+  GimpDisplay *gdisp      = GIMP_DISPLAY (data);
+  GimpImage   *old_gimage = gdisp->gimage;
 
   g_object_set_data (G_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
 
@@ -357,6 +360,7 @@ file_revert_confirm_callback (GtkWidget *widget,
       uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
       new_gimage = file_open_image (gimp, gimp_get_user_context (gimp),
+                                    GIMP_PROGRESS (gdisp),
                                     uri, uri, NULL,
                                     GIMP_RUN_INTERACTIVE,
                                     &status, NULL, &error);

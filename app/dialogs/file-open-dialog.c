@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -118,6 +119,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
 {
   GSList   *uris;
   GSList   *list;
+  gboolean  success = FALSE;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -141,12 +143,17 @@ file_open_dialog_response (GtkWidget *open_dialog,
                                            list->data,
                                            GIMP_FILE_DIALOG (open_dialog)->file_proc))
             {
-              gtk_widget_hide (open_dialog);
+              success = TRUE;
+
+              gdk_window_raise (open_dialog->window);
             }
         }
 
       g_free (filename);
     }
+
+  if (success)
+    gtk_widget_hide (open_dialog);
 
   gtk_widget_set_sensitive (open_dialog, TRUE);
 
@@ -167,6 +174,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
 
   gimage = file_open_with_proc_and_display (gimp,
                                             gimp_get_user_context (gimp),
+                                            GIMP_PROGRESS (open_dialog),
                                             uri,
                                             entered_filename,
                                             load_proc,

@@ -31,27 +31,28 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
 
 void
-gimp_image_resize (GimpImage        *gimage,
-                   GimpContext      *context,
-		   gint              new_width,
-		   gint              new_height,
-		   gint              offset_x,
-		   gint              offset_y,
-                   GimpProgressFunc  progress_func,
-                   gpointer          progress_data)
+gimp_image_resize (GimpImage    *gimage,
+                   GimpContext  *context,
+		   gint          new_width,
+		   gint          new_height,
+		   gint          offset_x,
+		   gint          offset_y,
+                   GimpProgress *progress)
 {
-  GList *list;
-  gint   progress_max;
-  gint   progress_current = 1;
+  GList   *list;
+  gdouble  progress_max;
+  gdouble  progress_current = 1.0;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (new_width > 0 && new_height > 0);
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimp_set_busy (gimage->gimp);
 
@@ -84,8 +85,8 @@ gimp_image_resize (GimpImage        *gimage,
       gimp_item_resize (item, context,
                         new_width, new_height, offset_x, offset_y);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Resize all vectors  */
@@ -98,16 +99,16 @@ gimp_image_resize (GimpImage        *gimage,
       gimp_item_resize (item, context,
                         new_width, new_height, offset_x, offset_y);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                     new_width, new_height, offset_x, offset_y);
 
-  if (progress_func)
-    (* progress_func) (0, progress_max, progress_current++, progress_data);
+  if (progress)
+    gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Reposition all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -118,8 +119,8 @@ gimp_image_resize (GimpImage        *gimage,
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Reposition or remove all guides  */

@@ -31,6 +31,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimplist.h"
+#include "gimpprogress.h"
 
 
 static void  gimp_image_rotate_item_offset (GimpImage        *gimage,
@@ -46,21 +47,21 @@ void
 gimp_image_rotate (GimpImage        *gimage,
                    GimpContext      *context,
                    GimpRotationType  rotate_type,
-                   GimpProgressFunc  progress_func,
-                   gpointer          progress_data)
+                   GimpProgress     *progress)
 {
   GimpItem *item;
   GList    *list;
   gdouble   center_x;
   gdouble   center_y;
-  gint      progress_max;
-  gint      progress_current = 1;
+  gdouble   progress_max;
+  gdouble   progress_current = 1.0;
   gint      new_image_width;
   gint      new_image_height;
   gboolean  size_changed;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimp_set_busy (gimage->gimp);
 
@@ -109,8 +110,8 @@ gimp_image_rotate (GimpImage        *gimage,
       item->offset_x = 0;
       item->offset_y = 0;
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Rotate all vectors  */
@@ -132,8 +133,8 @@ gimp_image_rotate (GimpImage        *gimage,
 			   (new_image_height - gimage->height) / 2,
 			   FALSE);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Don't forget the selection mask!  */
@@ -143,8 +144,8 @@ gimp_image_rotate (GimpImage        *gimage,
   GIMP_ITEM (gimage->selection_mask)->offset_x = 0;
   GIMP_ITEM (gimage->selection_mask)->offset_y = 0;
 
-  if (progress_func)
-    (* progress_func) (0, progress_max, progress_current++, progress_data);
+  if (progress)
+    gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Rotate all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -161,8 +162,8 @@ gimp_image_rotate (GimpImage        *gimage,
 
       gimp_image_rotate_item_offset (gimage, rotate_type, item, off_x, off_y);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Rotate all Guides  */

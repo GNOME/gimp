@@ -28,6 +28,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
 
@@ -61,6 +62,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
   Gimp          *gimp;
   ProcRecord    *proc_rec;
   Argument      *args;
+  GimpDisplay   *gdisp    = NULL;
   gint           gdisp_ID = -1;
   gint           i;
   gint           argc;
@@ -93,13 +95,13 @@ plug_in_run_cmd_callback (GtkAction     *action,
       if (proc_rec->num_args >= 2 &&
           proc_rec->args[1].arg_type == GIMP_PDB_IMAGE)
         {
-          GimpDisplay *gdisplay = action_data_get_display (data);
+          gdisp = action_data_get_display (data);
 
-          if (gdisplay)
+          if (gdisp)
             {
-              gdisp_ID = gimp_display_get_ID (gdisplay);
+              gdisp_ID = gimp_display_get_ID (gdisp);
 
-              args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
+              args[1].value.pdb_int = gimp_image_get_ID (gdisp->gimage);
               argc++;
 
               if (proc_rec->num_args >= 2 &&
@@ -107,7 +109,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
                 {
                   GimpDrawable *drawable;
 
-                  drawable = gimp_image_active_drawable (gdisplay->gimage);
+                  drawable = gimp_image_active_drawable (gdisp->gimage);
 
                   if (drawable)
                     {
@@ -136,6 +138,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   /* run the plug-in procedure */
   plug_in_run (gimp, gimp_get_user_context (gimp),
+               gdisp ? GIMP_PROGRESS (gdisp) : NULL,
                proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
   /* remember only "standard" plug-ins */
@@ -171,6 +174,7 @@ plug_in_repeat_cmd_callback (GtkAction *action,
 
   plug_in_repeat (gdisp->gimage->gimp,
                   gimp_get_user_context (gdisp->gimage->gimp),
+                  GIMP_PROGRESS (gdisp),
                   gimp_display_get_ID (gdisp),
                   gimp_image_get_ID (gdisp->gimage),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),

@@ -357,7 +357,7 @@ plug_ins_init (Gimp               *gimp,
 
 	  (* status_callback) (NULL, proc_def->db_info.name, nth / n_plugins);
 
-	  plug_in_run (gimp, context, &proc_def->db_info,
+	  plug_in_run (gimp, context, NULL, &proc_def->db_info,
                        NULL, 0, FALSE, TRUE, -1);
 	}
 
@@ -956,7 +956,7 @@ plug_ins_add_to_db (Gimp        *gimp,
 	  args[3].arg_type          = GIMP_PDB_STRING;
 	  args[3].value.pdb_pointer = proc_def->magics;
 
-          g_free (procedural_db_execute (gimp, context,
+          g_free (procedural_db_execute (gimp, context, NULL,
                                          proc_def->image_types ?
                                          "gimp_register_save_handler" :
                                          "gimp_register_magic_load_handler",

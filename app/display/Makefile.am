@@ -64,8 +64,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-transform.h		\
 	gimpnavigationview.c			\
 	gimpnavigationview.h			\
-	gimpprogress.c				\
-	gimpprogress.h				\
 	gimpscalecombobox.c			\
 	gimpscalecombobox.h			\
 	gimpstatusbar.c				\

@@ -24,8 +24,7 @@ void   gimp_image_scale         (GimpImage             *gimage,
                                  gint                   new_width,
                                  gint                   new_height,
                                  GimpInterpolationType  interpolation_type,
-                                 GimpProgressFunc       progress_func,
-                                 gpointer               progress_data);
+                                 GimpProgress          *progress);
 
 GimpImageScaleCheckType
        gimp_image_scale_check   (const GimpImage       *gimage,

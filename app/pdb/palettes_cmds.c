@@ -53,9 +53,10 @@ register_palettes_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_refresh_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+palettes_refresh_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gimp_data_factory_data_save (gimp->palette_factory);
   gimp_data_factory_data_init (gimp->palette_factory, FALSE);
@@ -79,9 +80,10 @@ static ProcRecord palettes_refresh_proc =
 };
 
 static Argument *
-palettes_get_list_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+palettes_get_list_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -147,9 +149,10 @@ static ProcRecord palettes_get_list_proc =
 };
 
 static Argument *
-palettes_get_palette_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+palettes_get_palette_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -199,9 +202,10 @@ static ProcRecord palettes_get_palette_proc =
 };
 
 static Argument *
-palettes_set_palette_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+palettes_set_palette_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -251,9 +255,10 @@ static ProcRecord palettes_set_palette_proc =
 };
 
 static Argument *
-palettes_get_palette_entry_invoker (Gimp        *gimp,
-                                    GimpContext *context,
-                                    Argument    *args)
+palettes_get_palette_entry_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

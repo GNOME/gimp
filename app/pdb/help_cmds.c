@@ -39,9 +39,10 @@ register_help_procs (Gimp *gimp)
 }
 
 static Argument *
-help_invoker (Gimp        *gimp,
-              GimpContext *context,
-              Argument    *args)
+help_invoker (Gimp         *gimp,
+              GimpContext  *context,
+              GimpProgress *progress,
+              Argument     *args)
 {
   gboolean success = TRUE;
   gchar *help_domain;

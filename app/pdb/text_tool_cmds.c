@@ -48,9 +48,10 @@ register_text_tool_procs (Gimp *gimp)
 }
 
 static Argument *
-text_fontname_invoker (Gimp        *gimp,
-                       GimpContext *context,
-                       Argument    *args)
+text_fontname_invoker (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -205,9 +206,10 @@ static ProcRecord text_fontname_proc =
 };
 
 static Argument *
-text_get_extents_fontname_invoker (Gimp        *gimp,
-                                   GimpContext *context,
-                                   Argument    *args)
+text_get_extents_fontname_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -326,9 +328,10 @@ static ProcRecord text_get_extents_fontname_proc =
 };
 
 static Argument *
-text_invoker (Gimp        *gimp,
-              GimpContext *context,
-              Argument    *args)
+text_invoker (Gimp         *gimp,
+              GimpContext  *context,
+              GimpProgress *progress,
+              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -553,9 +556,10 @@ static ProcRecord text_proc =
 };
 
 static Argument *
-text_get_extents_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+text_get_extents_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

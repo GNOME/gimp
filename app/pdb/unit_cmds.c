@@ -61,9 +61,10 @@ register_unit_procs (Gimp *gimp)
 }
 
 static Argument *
-unit_get_number_of_units_invoker (Gimp        *gimp,
-                                  GimpContext *context,
-                                  Argument    *args)
+unit_get_number_of_units_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
 {
   Argument *return_args;
 
@@ -99,9 +100,10 @@ static ProcRecord unit_get_number_of_units_proc =
 };
 
 static Argument *
-unit_get_number_of_built_in_units_invoker (Gimp        *gimp,
-                                           GimpContext *context,
-                                           Argument    *args)
+unit_get_number_of_built_in_units_invoker (Gimp         *gimp,
+                                           GimpContext  *context,
+                                           GimpProgress *progress,
+                                           Argument     *args)
 {
   Argument *return_args;
 
@@ -137,9 +139,10 @@ static ProcRecord unit_get_number_of_built_in_units_proc =
 };
 
 static Argument *
-unit_new_invoker (Gimp        *gimp,
-                  GimpContext *context,
-                  Argument    *args)
+unit_new_invoker (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -253,9 +256,10 @@ static ProcRecord unit_new_proc =
 };
 
 static Argument *
-unit_get_deletion_flag_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+unit_get_deletion_flag_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -308,9 +312,10 @@ static ProcRecord unit_get_deletion_flag_proc =
 };
 
 static Argument *
-unit_set_deletion_flag_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+unit_set_deletion_flag_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   GimpUnit unit;
@@ -359,9 +364,10 @@ static ProcRecord unit_set_deletion_flag_proc =
 };
 
 static Argument *
-unit_get_identifier_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+unit_get_identifier_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -414,9 +420,10 @@ static ProcRecord unit_get_identifier_proc =
 };
 
 static Argument *
-unit_get_factor_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+unit_get_factor_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -469,9 +476,10 @@ static ProcRecord unit_get_factor_proc =
 };
 
 static Argument *
-unit_get_digits_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+unit_get_digits_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -524,9 +532,10 @@ static ProcRecord unit_get_digits_proc =
 };
 
 static Argument *
-unit_get_symbol_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+unit_get_symbol_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -579,9 +588,10 @@ static ProcRecord unit_get_symbol_proc =
 };
 
 static Argument *
-unit_get_abbreviation_invoker (Gimp        *gimp,
-                               GimpContext *context,
-                               Argument    *args)
+unit_get_abbreviation_invoker (Gimp         *gimp,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -634,9 +644,10 @@ static ProcRecord unit_get_abbreviation_proc =
 };
 
 static Argument *
-unit_get_singular_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+unit_get_singular_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -689,9 +700,10 @@ static ProcRecord unit_get_singular_proc =
 };
 
 static Argument *
-unit_get_plural_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+unit_get_plural_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpprogress.h"
 
 #include "plug-in/plug-in-run.h"
 
@@ -214,16 +215,18 @@ procedural_db_lookup (Gimp        *gimp,
 }
 
 Argument *
-procedural_db_execute (Gimp        *gimp,
-                       GimpContext *context,
-                       const gchar *name,
-                       Argument    *args)
+procedural_db_execute (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       const gchar  *name,
+                       Argument     *args)
 {
   Argument *return_args = NULL;
   GList    *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, name);
@@ -288,13 +291,14 @@ procedural_db_execute (Gimp        *gimp,
         case GIMP_INTERNAL:
           return_args =
             (* procedure->exec_method.internal.marshal_func) (gimp, context,
+                                                              progress,
                                                               args);
           break;
 
         case GIMP_PLUGIN:
         case GIMP_EXTENSION:
         case GIMP_TEMPORARY:
-          return_args = plug_in_run (gimp, context, procedure,
+          return_args = plug_in_run (gimp, context, progress, procedure,
                                      args, procedure->num_args,
                                      TRUE, FALSE, -1);
           break;
@@ -336,10 +340,11 @@ procedural_db_execute (Gimp        *gimp,
 }
 
 Argument *
-procedural_db_run_proc (Gimp        *gimp,
-                        GimpContext *context,
-                        const gchar *name,
-                        gint        *nreturn_vals,
+procedural_db_run_proc (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        const gchar  *name,
+                        gint         *nreturn_vals,
                         ...)
 {
   ProcRecord *proc;
@@ -350,6 +355,7 @@ procedural_db_run_proc (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (nreturn_vals != NULL, NULL);
 
@@ -441,7 +447,7 @@ procedural_db_run_proc (Gimp        *gimp,
 
   *nreturn_vals = proc->num_values;
 
-  return_vals = procedural_db_execute (gimp, context, name, params);
+  return_vals = procedural_db_execute (gimp, context, progress, name, params);
 
   g_free (params);
 

@@ -41,6 +41,7 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
+#include "core/gimpprogress.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -56,7 +57,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpprogress.h"
 
 #include "tools/gimptexttool.h"
 #include "tools/tool_manager.h"
@@ -1087,18 +1087,18 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       gtk_widget_set_sensitive (options->dialog->shell, FALSE);
 
-      progress = gimp_progress_start (options->gdisp,
-                                      _("Scaling..."),
-                                      TRUE, NULL, NULL);
+      progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
+                                      _("Scaling..."), FALSE);
 
       gimp_item_scale_by_origin (GIMP_ITEM (layer),
                                  options->dialog->width,
                                  options->dialog->height,
                                  options->dialog->interpolation,
-                                 gimp_progress_update_and_flush, progress,
+                                 progress,
                                  TRUE);
 
-      gimp_progress_end (progress);
+      if (progress)
+        gimp_progress_end (progress);
 
       gimp_image_flush (gimage);
 

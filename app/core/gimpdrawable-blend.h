@@ -37,8 +37,7 @@ void   gimp_drawable_blend (GimpDrawable         *drawable,
                             gdouble               starty,
                             gdouble               endx,
                             gdouble               endy,
-                            GimpProgressFunc      progress_callback,
-                            gpointer              progress_data);
+                            GimpProgress         *progress);
 
 
 #endif /* __GIMP_DRAWABLE_BLEND_H__ */

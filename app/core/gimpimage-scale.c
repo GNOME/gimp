@@ -32,6 +32,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -41,8 +42,7 @@ gimp_image_scale (GimpImage             *gimage,
 		  gint                   new_width,
 		  gint                   new_height,
                   GimpInterpolationType  interpolation_type,
-                  GimpProgressFunc       progress_func,
-                  gpointer               progress_data)
+                  GimpProgress          *progress)
 {
   GimpItem *item;
   GList    *list;
@@ -51,11 +51,12 @@ gimp_image_scale (GimpImage             *gimage,
   gint      old_height;
   gdouble   img_scale_w = 1.0;
   gdouble   img_scale_h = 1.0;
-  gint      progress_max;
-  gint      progress_current = 1;
+  gdouble   progress_max;
+  gdouble   progress_current = 1.0;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimp_set_busy (gimage->gimp);
 
@@ -92,10 +93,10 @@ gimp_image_scale (GimpImage             *gimage,
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
-                       interpolation_type, NULL, NULL);
+                       interpolation_type, NULL);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Scale all vectors  */
@@ -107,19 +108,19 @@ gimp_image_scale (GimpImage             *gimage,
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
-                       interpolation_type, NULL, NULL);
+                       interpolation_type, NULL);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (gimage)),
                    new_width, new_height, 0, 0,
-                   interpolation_type, NULL, NULL);
+                   interpolation_type, NULL);
 
-  if (progress_func)
-    (* progress_func) (0, progress_max, progress_current++, progress_data);
+  if (progress)
+    gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Scale all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -130,7 +131,7 @@ gimp_image_scale (GimpImage             *gimage,
 
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
-                                        interpolation_type, NULL, NULL))
+                                        interpolation_type, NULL))
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented
@@ -140,8 +141,8 @@ gimp_image_scale (GimpImage             *gimage,
           remove = g_list_prepend (remove, item);
         }
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /* We defer removing layers lost to scaling until now so as not to mix

@@ -53,8 +53,8 @@ struct _GimpStatusbar
   GtkWidget        *scale_combo;
 
   GtkWidget        *progressbar;
-  guint             progressid;
-  GtkWidget        *cancelbutton;
+  GtkWidget        *cancel_button;
+  gboolean          progress_active;
 };
 
 struct _GimpStatusbarClass

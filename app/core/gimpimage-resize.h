@@ -20,14 +20,13 @@
 #define __GIMP_IMAGE_RESIZE_H__
 
 
-void   gimp_image_resize (GimpImage        *gimage,
-                          GimpContext      *context,
-                          gint              new_width,
-                          gint              new_height,
-                          gint              offset_x,
-                          gint              offset_y,
-                          GimpProgressFunc  progress_func,
-                          gpointer          progress_data);
+void   gimp_image_resize (GimpImage    *gimage,
+                          GimpContext  *context,
+                          gint          new_width,
+                          gint          new_height,
+                          gint          offset_x,
+                          gint          offset_y,
+                          GimpProgress *progress);
 
 
 #endif /* __GIMP_IMAGE_RESIZE_H__ */

@@ -29,7 +29,7 @@ sub simple_invoke {
 	code => <<CODE
 {
   if (gimp_image_base_type (gimage) != $type)
-    gimp_image_convert (gimage, $type, 0, 0, FALSE, FALSE, 0, NULL, NULL, NULL);
+    gimp_image_convert (gimage, $type, 0, 0, FALSE, FALSE, 0, NULL, NULL);
   else
     success = FALSE;
 }
@@ -144,7 +144,8 @@ HELP
 
   if (success)
     gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
-		        alpha_dither, remove_unused, palette_type, palette, NULL, NULL);
+		        alpha_dither, remove_unused, palette_type, palette,
+                        NULL);
 }
 CODE
     );

@@ -85,8 +85,7 @@ struct _GimpItemClass
                               gint                    new_offset_x,
                               gint                    new_offset_y,
                               GimpInterpolationType   interpolation_type,
-                              GimpProgressFunc        progress_callback,
-                              gpointer                progress_data);
+                              GimpProgress           *progress);
   void       (* resize)      (GimpItem               *item,
                               GimpContext            *context,
                               gint                    new_width,
@@ -112,8 +111,7 @@ struct _GimpItemClass
                               gboolean                supersample,
                               gint                    recursion_level,
                               gboolean                clip_result,
-                              GimpProgressFunc        progress_callback,
-                              gpointer                progress_data);
+                              GimpProgress           *progress);
   gboolean   (* stroke)      (GimpItem               *item,
                               GimpDrawable           *drawable,
                               GimpContext            *context,
@@ -180,21 +178,18 @@ void            gimp_item_scale            (GimpItem       *item,
                                             gint            new_offset_x,
                                             gint            new_offset_y,
                                             GimpInterpolationType  interpolation,
-                                            GimpProgressFunc       progress_callback,
-                                            gpointer               progress_data);
+                                            GimpProgress   *progress);
 gboolean        gimp_item_scale_by_factors (GimpItem       *item,
                                             gdouble         w_factor,
                                             gdouble         h_factor,
                                             GimpInterpolationType interpolation,
-                                            GimpProgressFunc      progress_callback,
-                                            gpointer              progress_data);
+                                            GimpProgress   *progress);
 void            gimp_item_scale_by_origin  (GimpItem       *item,
                                             gint            new_width,
                                             gint            new_height,
                                             GimpInterpolationType interpolation,
-                                            GimpProgressFunc      progress_callback,
-                                            gpointer              progress_data,
-                                            gboolean              local_origin);
+                                            GimpProgress   *progress,
+                                            gboolean        local_origin);
 void            gimp_item_resize           (GimpItem       *item,
                                             GimpContext    *context,
                                             gint            new_width,
@@ -222,8 +217,7 @@ void            gimp_item_transform        (GimpItem       *item,
                                             gboolean        supersample,
                                             gint            recursion_level,
                                             gboolean        clip_result,
-                                            GimpProgressFunc progress_callback,
-                                            gpointer        progress_data);
+                                            GimpProgress   *progress);
 
 gboolean        gimp_item_stroke           (GimpItem       *item,
                                             GimpDrawable   *drawable,

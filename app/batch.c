@@ -132,7 +132,7 @@ batch_run_cmd (Gimp        *gimp,
   args[0].value.pdb_int     = GIMP_RUN_NONINTERACTIVE;
   args[1].value.pdb_pointer = (gpointer) cmd;
 
-  vals = procedural_db_execute (gimp, gimp_get_user_context (gimp),
+  vals = procedural_db_execute (gimp, gimp_get_user_context (gimp), NULL,
                                 "plug_in_script_fu_eval", args);
 
   switch (vals[0].value.pdb_int)
@@ -184,7 +184,7 @@ batch_perl_server (Gimp        *gimp,
   args[1].value.pdb_int = flags;
   args[2].value.pdb_int = extra;
 
-  vals = procedural_db_execute (gimp, gimp_get_user_context (gimp),
+  vals = procedural_db_execute (gimp, gimp_get_user_context (gimp), NULL,
                                 "extension_perl_server", args);
 
   switch (vals[0].value.pdb_int)

@@ -110,9 +110,10 @@ register_drawable_procs (Gimp *gimp)
 }
 
 static Argument *
-drawable_delete_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+drawable_delete_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -158,9 +159,10 @@ static ProcRecord drawable_delete_proc =
 };
 
 static Argument *
-drawable_is_layer_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+drawable_is_layer_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -213,9 +215,10 @@ static ProcRecord drawable_is_layer_proc =
 };
 
 static Argument *
-drawable_is_layer_mask_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+drawable_is_layer_mask_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -268,9 +271,10 @@ static ProcRecord drawable_is_layer_mask_proc =
 };
 
 static Argument *
-drawable_is_channel_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_is_channel_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -323,9 +327,10 @@ static ProcRecord drawable_is_channel_proc =
 };
 
 static Argument *
-drawable_type_invoker (Gimp        *gimp,
-                       GimpContext *context,
-                       Argument    *args)
+drawable_type_invoker (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -378,9 +383,10 @@ static ProcRecord drawable_type_proc =
 };
 
 static Argument *
-drawable_type_with_alpha_invoker (Gimp        *gimp,
-                                  GimpContext *context,
-                                  Argument    *args)
+drawable_type_with_alpha_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -433,9 +439,10 @@ static ProcRecord drawable_type_with_alpha_proc =
 };
 
 static Argument *
-drawable_has_alpha_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_has_alpha_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -488,9 +495,10 @@ static ProcRecord drawable_has_alpha_proc =
 };
 
 static Argument *
-drawable_is_rgb_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+drawable_is_rgb_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -543,9 +551,10 @@ static ProcRecord drawable_is_rgb_proc =
 };
 
 static Argument *
-drawable_is_gray_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+drawable_is_gray_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -598,9 +607,10 @@ static ProcRecord drawable_is_gray_proc =
 };
 
 static Argument *
-drawable_is_indexed_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_is_indexed_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -653,9 +663,10 @@ static ProcRecord drawable_is_indexed_proc =
 };
 
 static Argument *
-drawable_bpp_invoker (Gimp        *gimp,
-                      GimpContext *context,
-                      Argument    *args)
+drawable_bpp_invoker (Gimp         *gimp,
+                      GimpContext  *context,
+                      GimpProgress *progress,
+                      Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -708,9 +719,10 @@ static ProcRecord drawable_bpp_proc =
 };
 
 static Argument *
-drawable_width_invoker (Gimp        *gimp,
-                        GimpContext *context,
-                        Argument    *args)
+drawable_width_invoker (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -763,9 +775,10 @@ static ProcRecord drawable_width_proc =
 };
 
 static Argument *
-drawable_height_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+drawable_height_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -818,9 +831,10 @@ static ProcRecord drawable_height_proc =
 };
 
 static Argument *
-drawable_offsets_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+drawable_offsets_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -886,9 +900,10 @@ static ProcRecord drawable_offsets_proc =
 };
 
 static Argument *
-drawable_get_image_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_get_image_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -945,9 +960,10 @@ static ProcRecord drawable_get_image_proc =
 };
 
 static Argument *
-drawable_set_image_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_set_image_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -998,9 +1014,10 @@ static ProcRecord drawable_set_image_proc =
 };
 
 static Argument *
-drawable_get_name_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+drawable_get_name_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1053,9 +1070,10 @@ static ProcRecord drawable_get_name_proc =
 };
 
 static Argument *
-drawable_set_name_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+drawable_set_name_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1106,9 +1124,10 @@ static ProcRecord drawable_set_name_proc =
 };
 
 static Argument *
-drawable_get_visible_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+drawable_get_visible_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1161,9 +1180,10 @@ static ProcRecord drawable_get_visible_proc =
 };
 
 static Argument *
-drawable_set_visible_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+drawable_set_visible_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1212,9 +1232,10 @@ static ProcRecord drawable_set_visible_proc =
 };
 
 static Argument *
-drawable_get_linked_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_get_linked_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1267,9 +1288,10 @@ static ProcRecord drawable_get_linked_proc =
 };
 
 static Argument *
-drawable_set_linked_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_set_linked_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1318,9 +1340,10 @@ static ProcRecord drawable_set_linked_proc =
 };
 
 static Argument *
-drawable_get_tattoo_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_get_tattoo_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1373,9 +1396,10 @@ static ProcRecord drawable_get_tattoo_proc =
 };
 
 static Argument *
-drawable_set_tattoo_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+drawable_set_tattoo_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1426,9 +1450,10 @@ static ProcRecord drawable_set_tattoo_proc =
 };
 
 static Argument *
-drawable_mask_bounds_invoker (Gimp        *gimp,
-                              GimpContext *context,
-                              Argument    *args)
+drawable_mask_bounds_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1515,9 +1540,10 @@ static ProcRecord drawable_mask_bounds_proc =
 };
 
 static Argument *
-drawable_merge_shadow_invoker (Gimp        *gimp,
-                               GimpContext *context,
-                               Argument    *args)
+drawable_merge_shadow_invoker (Gimp         *gimp,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1577,9 +1603,10 @@ static ProcRecord drawable_merge_shadow_proc =
 };
 
 static Argument *
-drawable_update_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+drawable_update_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1652,9 +1679,10 @@ static ProcRecord drawable_update_proc =
 };
 
 static Argument *
-drawable_get_pixel_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_get_pixel_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1764,9 +1792,10 @@ static ProcRecord drawable_get_pixel_proc =
 };
 
 static Argument *
-drawable_set_pixel_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_set_pixel_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1865,9 +1894,10 @@ static ProcRecord drawable_set_pixel_proc =
 };
 
 static Argument *
-drawable_fill_invoker (Gimp        *gimp,
-                       GimpContext *context,
-                       Argument    *args)
+drawable_fill_invoker (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1918,9 +1948,10 @@ static ProcRecord drawable_fill_proc =
 };
 
 static Argument *
-drawable_offset_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+drawable_offset_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1998,9 +2029,10 @@ static ProcRecord drawable_offset_proc =
 };
 
 static Argument *
-drawable_thumbnail_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+drawable_thumbnail_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

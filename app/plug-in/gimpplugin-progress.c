@@ -23,6 +23,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
 
@@ -32,8 +33,8 @@
 
 /*  local function prototypes  */
 
-static void   plug_in_progress_cancel (gpointer  eek,
-                                       PlugIn   *plug_in);
+static void   plug_in_progress_cancel (GimpProgress *progress,
+                                       PlugIn       *plug_in);
 
 
 /*  public functions  */
@@ -48,16 +49,28 @@ plug_in_progress_start (PlugIn      *plug_in,
   if (! message)
     message = plug_in->prog;
 
+  if (! plug_in->progress)
+    {
+      plug_in->progress = gimp_new_progress (plug_in->gimp);
+
+      if (plug_in->progress)
+        plug_in->progress_created = TRUE;
+    }
+
   if (plug_in->progress)
-    plug_in->progress = gimp_restart_progress (plug_in->gimp,
-                                               plug_in->progress, message,
-                                               G_CALLBACK (plug_in_progress_cancel),
-                                               plug_in);
-  else
-    plug_in->progress = gimp_start_progress (plug_in->gimp,
-                                             gdisp_ID, message,
-                                             G_CALLBACK (plug_in_progress_cancel),
-                                             plug_in);
+    {
+      if (plug_in->progress_active)
+        plug_in_progress_end (plug_in);
+
+      if (gimp_progress_start (plug_in->progress, message, TRUE))
+        {
+          g_signal_connect (plug_in->progress, "cancel",
+                            G_CALLBACK (plug_in_progress_cancel),
+                            plug_in);
+
+          plug_in->progress_active = TRUE;
+        }
+    }
 }
 
 void
@@ -66,10 +79,11 @@ plug_in_progress_update (PlugIn  *plug_in,
 {
   g_return_if_fail (plug_in != NULL);
 
-  if (! plug_in->progress)
+  if (! plug_in->progress && plug_in->progress_active)
     plug_in_progress_start (plug_in, NULL, -1);
 
-  gimp_update_progress (plug_in->gimp, plug_in->progress, percentage);
+  if (plug_in->progress && plug_in->progress_active)
+    gimp_progress_set_value (plug_in->progress, percentage);
 }
 
 void
@@ -79,8 +93,21 @@ plug_in_progress_end (PlugIn *plug_in)
 
   if (plug_in->progress)
     {
-      gimp_end_progress (plug_in->gimp, plug_in->progress);
-      plug_in->progress = NULL;
+      if (plug_in->progress_active)
+        {
+          g_signal_handlers_disconnect_by_func (plug_in->progress,
+                                                plug_in_progress_cancel,
+                                                plug_in);
+          gimp_progress_end (plug_in->progress);
+
+          plug_in->progress_active = FALSE;
+        }
+
+      if (plug_in->progress_created)
+        {
+          gimp_free_progress (plug_in->gimp, plug_in->progress);
+          plug_in->progress = NULL;
+        }
     }
 }
 
@@ -88,8 +115,8 @@ plug_in_progress_end (PlugIn *plug_in)
 /*  private functions  */
 
 static void
-plug_in_progress_cancel (gpointer  eek,
-			 PlugIn   *plug_in)
+plug_in_progress_cancel (GimpProgress *progress,
+			 PlugIn       *plug_in)
 {
   if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
     {

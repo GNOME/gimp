@@ -31,23 +31,24 @@
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimplist.h"
+#include "gimpprogress.h"
 
 
 void
 gimp_image_flip (GimpImage           *gimage,
                  GimpContext         *context,
                  GimpOrientationType  flip_type,
-                 GimpProgressFunc     progress_func,
-                 gpointer             progress_data)
+                 GimpProgress        *progress)
 {
   GimpItem *item;
   GList    *list;
   gdouble   axis;
-  gint      progress_max;
-  gint      progress_current = 1;
+  gdouble   progress_max;
+  gdouble   progress_current = 1.0;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimp_set_busy (gimage->gimp);
 
@@ -82,8 +83,8 @@ gimp_image_flip (GimpImage           *gimage,
 
       gimp_item_flip (item, context, flip_type, axis, TRUE);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Flip all vectors  */
@@ -95,16 +96,16 @@ gimp_image_flip (GimpImage           *gimage,
 
       gimp_item_flip (item, context, flip_type, axis, FALSE);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                   flip_type, axis, TRUE);
 
-  if (progress_func)
-    (* progress_func) (0, progress_max, progress_current++, progress_data);
+  if (progress)
+    gimp_progress_set_value (progress, progress_current++ / progress_max);
 
   /*  Flip all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -115,8 +116,8 @@ gimp_image_flip (GimpImage           *gimage,
 
       gimp_item_flip (item, context, flip_type, axis, FALSE);
 
-      if (progress_func)
-        (* progress_func) (0, progress_max, progress_current++, progress_data);
+      if (progress)
+        gimp_progress_set_value (progress, progress_current++ / progress_max);
     }
 
   /*  Flip all Guides  */

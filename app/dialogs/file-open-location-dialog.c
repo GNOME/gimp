@@ -157,9 +157,12 @@ file_open_location_response (GtkWidget *dialog,
             {
               uri = file_utils_filename_to_uri (gimp->load_procs, text, NULL);
             }
-
+#ifdef __GNUC__
+#warning FIXME: add progress bar to open location dialog
+#endif
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
+                                                   NULL,
                                                    uri, text, NULL,
                                                    &status, &error);
 

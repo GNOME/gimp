@@ -32,12 +32,12 @@
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpprogress.h"
 
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
@@ -223,7 +223,6 @@ gimp_blend_tool_button_release (GimpTool        *tool,
   GimpBlendOptions *options;
   GimpContext      *context;
   GimpImage        *gimage;
-  GimpProgress     *progress;
 
   blend_tool    = GIMP_BLEND_TOOL (tool);
   paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
@@ -243,8 +242,10 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       ((blend_tool->startx != blend_tool->endx) ||
        (blend_tool->starty != blend_tool->endy)))
     {
-      progress = gimp_progress_start (gdisp, _("Blending..."), FALSE,
-                                      NULL, NULL);
+      GimpProgress *progress;
+
+      progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+                                      _("Blending..."), FALSE);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
                            context,
@@ -263,11 +264,10 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                            blend_tool->starty,
                            blend_tool->endx,
                            blend_tool->endy,
-                           progress ? gimp_progress_update_and_flush : NULL,
                            progress);
 
       if (progress)
-	gimp_progress_end (progress);
+        gimp_progress_end (progress);
 
       gimp_image_flush (gimage);
     }

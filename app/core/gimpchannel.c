@@ -85,8 +85,7 @@ static void       gimp_channel_scale         (GimpItem         *item,
                                               gint              new_offset_x,
                                               gint              new_offset_y,
                                               GimpInterpolationType interp_type,
-                                              GimpProgressFunc      progress_callback,
-                                              gpointer              progress_data);
+                                              GimpProgress     *progress);
 static void       gimp_channel_resize        (GimpItem         *item,
                                               GimpContext      *context,
                                               gint              new_width,
@@ -112,8 +111,7 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               gboolean          supersample,
                                               gint              recursion_level,
                                               gboolean          clip_result,
-                                              GimpProgressFunc  progress_callback,
-                                              gpointer          progress_data);
+                                              GimpProgress     *progress);
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
                                               GimpContext      *context,
@@ -510,8 +508,7 @@ gimp_channel_scale (GimpItem              *item,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
                     GimpInterpolationType  interpolation_type,
-                    GimpProgressFunc       progress_callback,
-                    gpointer               progress_data)
+                    GimpProgress          *progress)
 {
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     {
@@ -521,8 +518,7 @@ gimp_channel_scale (GimpItem              *item,
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interpolation_type,
-                                         progress_callback, progress_data);
+                                         interpolation_type, progress);
 }
 
 static void
@@ -581,8 +577,7 @@ gimp_channel_transform (GimpItem               *item,
                         gboolean                supersample,
                         gint                    recursion_level,
                         gboolean                clip_result,
-                        GimpProgressFunc        progress_callback,
-                        gpointer                progress_data)
+                        GimpProgress           *progress)
 {
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     clip_result = TRUE;
@@ -590,8 +585,7 @@ gimp_channel_transform (GimpItem               *item,
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
                                              supersample, recursion_level,
-                                             clip_result,
-                                             progress_callback, progress_data);
+                                             clip_result, progress);
 }
 
 static gboolean

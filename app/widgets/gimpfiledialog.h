@@ -48,6 +48,9 @@ struct _GimpFileDialog
   GtkWidget            *thumb_box;
   GtkWidget            *proc_expander;
   GtkWidget            *proc_view;
+
+  gboolean              progress_active;
+  GtkWidget            *progress;
 };
 
 struct _GimpFileDialogClass

@@ -48,6 +48,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
 
@@ -65,6 +66,7 @@
 GimpPDBStatusType
 file_save (GimpImage    *gimage,
            GimpContext  *context,
+           GimpProgress *progress,
            GimpRunMode   run_mode,
            GError      **error)
 {
@@ -73,6 +75,8 @@ file_save (GimpImage    *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
+                        GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
@@ -82,13 +86,15 @@ file_save (GimpImage    *gimage,
 
   file_proc = gimp_image_get_save_proc (gimage);
 
-  return file_save_as (gimage, context, uri, uri, file_proc, run_mode,
+  return file_save_as (gimage, context, progress,
+                       uri, uri, file_proc, run_mode,
                        FALSE, TRUE, error);
 }
 
 GimpPDBStatusType
 file_save_as (GimpImage      *gimage,
               GimpContext    *context,
+              GimpProgress   *progress,
               const gchar    *uri,
               const gchar    *raw_filename,
               PlugInProcDef  *file_proc,
@@ -106,6 +112,8 @@ file_save_as (GimpImage      *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
+                        GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (raw_filename != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
@@ -165,7 +173,8 @@ file_save_as (GimpImage      *gimage,
   args[3].value.pdb_pointer = (gpointer) (filename ? filename : uri);
   args[4].value.pdb_pointer = (gpointer) raw_filename;
 
-  return_vals = procedural_db_execute (gimage->gimp, context, proc->name, args);
+  return_vals = procedural_db_execute (gimage->gimp, context, progress,
+                                       proc->name, args);
 
   if (filename)
     g_free (filename);

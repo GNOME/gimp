@@ -328,7 +328,7 @@ HELP
                            supersample, max_depth,
                            threshold, dither,
                            x1, y1, x2, y2,
-	                   NULL, NULL);
+	                   NULL);
     }
 }
 CODE

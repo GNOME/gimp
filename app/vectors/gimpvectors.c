@@ -83,8 +83,7 @@ static void       gimp_vectors_scale        (GimpItem         *item,
                                              gint              new_offset_x,
                                              gint              new_offset_y,
                                              GimpInterpolationType  interp_type,
-                                             GimpProgressFunc       progress_callback,
-                                             gpointer               progress_data);
+                                             GimpProgress     *progress);
 static void       gimp_vectors_resize       (GimpItem         *item,
                                              GimpContext      *context,
                                              gint              new_width,
@@ -110,8 +109,7 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              gboolean          supersample,
                                              gint              recursion_level,
                                              gboolean          clip_result,
-                                             GimpProgressFunc  progress_callback,
-                                             gpointer          progress_data);
+                                             GimpProgress     *progress);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
                                              GimpContext      *context,
@@ -395,8 +393,7 @@ gimp_vectors_scale (GimpItem              *item,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
                     GimpInterpolationType  interpolation_type,
-                    GimpProgressFunc       progress_callback,
-                    gpointer               progress_data)
+                    GimpProgress          *progress)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   GimpImage   *image   = gimp_item_get_image (item);
@@ -417,8 +414,7 @@ gimp_vectors_scale (GimpItem              *item,
     }
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, image->width, image->height,
-                                         0, 0, interpolation_type,
-                                         progress_callback, progress_data);
+                                         0, 0, interpolation_type, progress);
 
   gimp_vectors_thaw (vectors);
 }
@@ -534,8 +530,7 @@ gimp_vectors_transform (GimpItem               *item,
                         gboolean                supersample,
                         gint                    recursion_level,
                         gboolean                clip_result,
-                        GimpProgressFunc        progress_callback,
-                        gpointer                progress_data)
+                        GimpProgress           *progress)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   GimpMatrix3  local_matrix;

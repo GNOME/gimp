@@ -40,6 +40,7 @@
 #include "gimpdrawable-blend.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -117,8 +118,7 @@ static void     gradient_precalc_shapeburst (GimpImage        *gimage,
 					     GimpDrawable     *drawable,
                                              PixelRegion      *PR,
                                              gdouble           dist,
-                                             GimpProgressFunc  progress_callback,
-                                             gpointer          progress_data);
+                                             GimpProgress     *progress);
 
 static void     gradient_render_pixel       (gdouble       x,
                                              gdouble       y,
@@ -148,8 +148,7 @@ static void     gradient_fill_region        (GimpImage        *gimage,
                                              gdouble           sy,
                                              gdouble           ex,
                                              gdouble           ey,
-                                             GimpProgressFunc  progress_callback,
-                                             gpointer          progress_data);
+                                             GimpProgress     *progress);
 
 
 /*  variables for the shapeburst algs  */
@@ -186,8 +185,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      gdouble               starty,
                      gdouble               endx,
                      gdouble               endy,
-                     GimpProgressFunc      progress_callback,
-                     gpointer              progress_data)
+                     GimpProgress         *progress)
 {
   GimpImage   *gimage;
   TileManager *buf_tiles;
@@ -197,6 +195,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -223,7 +222,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 			supersample, max_depth, threshold, dither,
 			(startx - x1), (starty - y1),
 			(endx - x1), (endy - y1),
-			progress_callback, progress_data);
+			progress);
 
   if (distR.tiles)
     {
@@ -572,12 +571,11 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
 }
 
 static void
-gradient_precalc_shapeburst (GimpImage        *gimage,
-			     GimpDrawable     *drawable,
-			     PixelRegion      *PR,
-			     gdouble           dist,
-                             GimpProgressFunc  progress_callback,
-                             gpointer          progress_data)
+gradient_precalc_shapeburst (GimpImage    *gimage,
+			     GimpDrawable *drawable,
+			     PixelRegion  *PR,
+			     gdouble       dist,
+                             GimpProgress *progress)
 {
   GimpChannel *mask;
   PixelRegion  tempR;
@@ -634,7 +632,10 @@ gradient_precalc_shapeburst (GimpImage        *gimage,
 
   pixel_region_init (&tempR, tempR.tiles, 0, 0, PR->w, PR->h, TRUE);
   pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
-  max_iteration = shapeburst_region (&tempR, &distR, progress_callback, progress_data);
+  max_iteration = shapeburst_region (&tempR, &distR,
+                                     progress ?
+                                     gimp_progress_update_and_flush : NULL,
+                                     progress);
 
   /*  normalize the shapeburst with the max iteration  */
   if (max_iteration > 0)
@@ -903,8 +904,7 @@ gradient_fill_region (GimpImage        *gimage,
 		      gdouble           sy,
 		      gdouble           ex,
 		      gdouble           ey,
-		      GimpProgressFunc  progress_callback,
-		      gpointer          progress_data)
+		      GimpProgress     *progress)
 {
   RenderBlendData  rbd;
   gint             x, y;
@@ -986,8 +986,7 @@ gradient_fill_region (GimpImage        *gimage,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist,
-                                   progress_callback, progress_data);
+      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist, progress);
       break;
 
     default:
@@ -1024,14 +1023,15 @@ gradient_fill_region (GimpImage        *gimage,
 				      max_depth, threshold,
 				      gradient_render_pixel, &rbd,
 				      gradient_put_pixel, &ppd,
-				      progress_callback, progress_data);
+				      gimp_progress_update_and_flush,
+                                      progress);
 
       g_free (ppd.row_data);
     }
   else
     {
-      gint max_progress = PR->w * PR->h;
-      gint progress     = 0;
+      gint max_progress  = PR->w * PR->h;
+      gint curr_progress = 0;
 
       for (pr = pixel_regions_register (1, PR);
 	   pr != NULL;
@@ -1129,10 +1129,12 @@ gradient_fill_region (GimpImage        *gimage,
                 }
             }
 
-          if (progress_callback)
+          if (progress)
             {
-              progress += PR->w * PR->h;
-              (* progress_callback) (0, max_progress, progress, progress_data);
+              curr_progress += PR->w * PR->h;
+
+              gimp_progress_update_and_flush (0, max_progress, curr_progress,
+                                              progress);
             }
         }
     }

@@ -498,9 +498,10 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic Argument *\n";
-	$out->{code} .= "${name}_invoker (Gimp        *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          Argument    *args)\n{\n";
+	$out->{code} .= "${name}_invoker (Gimp         *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext  *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          Argument     *args)\n{\n";
 
 	my $code = "";
 
@@ -509,7 +510,7 @@ CODE
 	    my ($exec, $fail, $argtype);
 	    my $custom = $proc->{invoke}->{code};
 
-	    $exec = "procedural_db_execute (gimp, context, $procname, $args)";
+	    $exec = "procedural_db_execute (gimp, context, progress, $procname, $args)";
 	    $fail = "procedural_db_return_args (\&${name}_proc, FALSE)";
 
 	    $argtype = 'Argument';
@@ -613,7 +614,7 @@ CODE
 	    }
 
 	    $code .= <<CODE;
-  return $invoke->{pass_through}_invoker (gimp, context, argv);
+  return $invoke->{pass_through}_invoker (gimp, context, progress, argv);
 }
 CODE
 	}

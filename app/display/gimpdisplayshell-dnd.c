@@ -34,6 +34,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
+#include "core/gimpprogress.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -300,7 +301,9 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      new_layer = file_open_layer (gimage->gimp, context, gimage, uri,
+      new_layer = file_open_layer (gimage->gimp, context,
+                                   GIMP_PROGRESS (shell->statusbar),
+                                   gimage, uri,
                                    &status, &error);
 
       if (new_layer)

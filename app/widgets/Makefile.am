@@ -206,6 +206,8 @@ libappwidgets_a_sources = \
 	gimppreviewrendererlayer.h	\
 	gimppreviewrenderervectors.c	\
 	gimppreviewrenderervectors.h	\
+	gimpprogressdialog.c		\
+	gimpprogressdialog.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpselectiondata.c		\

@@ -188,6 +188,8 @@ libappcore_a_sources = \
 	gimppickable.h			\
 	gimppreviewcache.c		\
 	gimppreviewcache.h		\
+	gimpprogress.c			\
+	gimpprogress.h			\
 	gimpprojection.c		\
 	gimpprojection.h		\
 	gimpprojection-construct.c	\

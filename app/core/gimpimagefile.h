@@ -66,6 +66,7 @@ GimpImagefile * gimp_imagefile_new              (Gimp          *gimp,
 void            gimp_imagefile_update           (GimpImagefile *imagefile);
 void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                                  GimpContext   *context,
+                                                 GimpProgress  *progress,
                                                  gint           thumb_size);
 gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
                                                  GimpImage     *gimage);

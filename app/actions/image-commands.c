@@ -41,6 +41,7 @@
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpprogress.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
@@ -49,7 +50,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpprogress.h"
 
 #include "gui/convert-dialog.h"
 #include "gui/dialogs.h"
@@ -160,7 +160,7 @@ image_convert_cmd_callback (GtkAction *action,
     case GIMP_RGB:
     case GIMP_GRAY:
       gimp_image_convert (gimage, (GimpImageBaseType) value,
-                          0, 0, FALSE, FALSE, 0, NULL, NULL, NULL);
+                          0, 0, FALSE, FALSE, 0, NULL, NULL);
       gimp_image_flush (gimage);
       break;
 
@@ -259,13 +259,14 @@ image_flip_cmd_callback (GtkAction *action,
   GimpProgress *progress;
   return_if_no_display (gdisp, data);
 
-  progress = gimp_progress_start (gdisp, _("Flipping..."), TRUE, NULL, NULL);
+  progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+                                  _("Flipping..."), FALSE);
 
   gimp_image_flip (gdisp->gimage, action_data_get_context (data),
-                   (GimpOrientationType) value,
-                   gimp_progress_update_and_flush, progress);
+                   (GimpOrientationType) value, progress);
 
-  gimp_progress_end (progress);
+  if (progress)
+    gimp_progress_end (progress);
 
   gimp_image_flush (gdisp->gimage);
 }
@@ -279,13 +280,14 @@ image_rotate_cmd_callback (GtkAction *action,
   GimpProgress *progress;
   return_if_no_display (gdisp, data);
 
-  progress = gimp_progress_start (gdisp, _("Rotating..."), TRUE, NULL, NULL);
+  progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+                                  _("Rotating..."), FALSE);
 
   gimp_image_rotate (gdisp->gimage, action_data_get_context (data),
-                     (GimpRotationType) value,
-                     gimp_progress_update_and_flush, progress);
+                     (GimpRotationType) value, progress);
 
-  gimp_progress_end (progress);
+  if (progress)
+    gimp_progress_end (progress);
 
   gimp_image_flush (gdisp->gimage);
 }
@@ -449,9 +451,8 @@ image_resize_callback (GtkWidget *widget,
     {
       GimpProgress *progress;
 
-      progress = gimp_progress_start (options->gdisp,
-                                      _("Resizing..."),
-                                      TRUE, NULL, NULL);
+      progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
+                                      _("Resizing..."), FALSE);
 
       gimp_image_resize (options->gimage,
                          options->context,
@@ -459,9 +460,10 @@ image_resize_callback (GtkWidget *widget,
 			 options->dialog->height,
 			 options->dialog->offset_x,
 			 options->dialog->offset_y,
-                         gimp_progress_update_and_flush, progress);
+                         progress);
 
-      gimp_progress_end (progress);
+      if (progress)
+        gimp_progress_end (progress);
 
       gimp_image_flush (options->gimage);
     }
@@ -605,17 +607,17 @@ image_scale_implement (ImageResizeOptions *options)
 	{
           GimpProgress *progress;
 
-          progress = gimp_progress_start (options->gdisp,
-                                          _("Scaling..."),
-                                          TRUE, NULL, NULL);
+          progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
+                                          _("Scaling..."), FALSE);
 
 	  gimp_image_scale (gimage,
 			    options->dialog->width,
 			    options->dialog->height,
                             options->dialog->interpolation,
-                            gimp_progress_update_and_flush, progress);
+                            progress);
 
-          gimp_progress_end (progress);
+          if (progress)
+            gimp_progress_end (progress);
 	}
       else
 	{

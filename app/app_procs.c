@@ -334,6 +334,7 @@ app_run (const gchar         *full_prog_name,
 
                   gimage = file_open_with_display (gimp,
                                                    gimp_get_user_context (gimp),
+                                                   NULL,
                                                    uri,
                                                    &status, &error);
 

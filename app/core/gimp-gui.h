@@ -62,20 +62,8 @@ struct _GimpGui
   void           (* menus_delete)       (Gimp          *gimp,
                                          PlugInProcDef *proc_def);
 
-  GimpProgress * (* progress_start)     (Gimp          *gimp,
-                                         gint           gdisp_ID,
-                                         const gchar   *message,
-                                         GCallback      cancel_cb,
-                                         gpointer       cancel_data);
-  GimpProgress * (* progress_restart)   (Gimp          *gimp,
-                                         GimpProgress  *progress,
-                                         const gchar   *message,
-                                         GCallback      cancel_cb,
-                                         gpointer       cancel_data);
-  void           (* progress_update)    (Gimp          *gimp,
-                                         GimpProgress  *progress,
-                                         gdouble        percentage);
-  void           (* progress_end)       (Gimp          *gimp,
+  GimpProgress * (* progress_new)       (Gimp          *gimp);
+  void           (* progress_free)      (Gimp          *gimp,
                                          GimpProgress  *progress);
 
   gboolean       (* pdb_dialog_new)     (Gimp          *gimp,
@@ -135,20 +123,8 @@ void           gimp_menus_create_entry   (Gimp               *gimp,
 void           gimp_menus_delete_entry   (Gimp               *gimp,
                                           PlugInProcDef      *proc_def);
 
-GimpProgress * gimp_start_progress       (Gimp               *gimp,
-                                          gint                gdisp_ID,
-                                          const gchar        *message,
-                                          GCallback           cancel_cb,
-                                          gpointer            cancel_data);
-GimpProgress * gimp_restart_progress     (Gimp               *gimp,
-                                          GimpProgress       *progress,
-                                          const gchar        *message,
-                                          GCallback           cancel_cb,
-                                          gpointer            cancel_data);
-void           gimp_update_progress      (Gimp               *gimp,
-                                          GimpProgress       *progress,
-                                          gdouble             percentage);
-void           gimp_end_progress         (Gimp               *gimp,
+GimpProgress * gimp_new_progress         (Gimp               *gimp);
+void           gimp_free_progress        (Gimp               *gimp,
                                           GimpProgress       *progress);
 
 const gchar  * gimp_get_program_class    (Gimp               *gimp);

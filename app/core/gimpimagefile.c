@@ -42,6 +42,7 @@
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimpmarshal.h"
+#include "gimpprogress.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
@@ -54,6 +55,7 @@ enum
   INFO_CHANGED,
   LAST_SIGNAL
 };
+
 
 static void       gimp_imagefile_class_init       (GimpImagefileClass *klass);
 static void       gimp_imagefile_init             (GimpImagefile  *imagefile);
@@ -233,12 +235,14 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 void
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                  GimpContext   *context,
+                                 GimpProgress  *progress,
                                  gint           size)
 {
   GimpThumbnail *thumbnail;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (! imagefile->gimp->config->layer_previews)
     return;
@@ -259,8 +263,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       const gchar       *mime_type = NULL;
       GError            *error     = NULL;
 
-      gimage = file_open_image (imagefile->gimp,
-                                context,
+      gimage = file_open_image (imagefile->gimp, context, progress,
                                 thumbnail->image_uri,
                                 thumbnail->image_uri,
                                 NULL,

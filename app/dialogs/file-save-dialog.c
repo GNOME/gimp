@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 
 #include "file/file-save.h"
 #include "file/file-utils.h"
@@ -300,6 +301,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
 
   status = file_save_as (gimage,
                          gimp_get_user_context (gimage->gimp),
+                         GIMP_PROGRESS (save_dialog),
                          uri,
                          raw_filename,
                          save_proc,

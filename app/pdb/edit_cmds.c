@@ -60,9 +60,10 @@ register_edit_procs (Gimp *gimp)
 }
 
 static Argument *
-edit_cut_invoker (Gimp        *gimp,
-                  GimpContext *context,
-                  Argument    *args)
+edit_cut_invoker (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -123,9 +124,10 @@ static ProcRecord edit_cut_proc =
 };
 
 static Argument *
-edit_copy_invoker (Gimp        *gimp,
-                   GimpContext *context,
-                   Argument    *args)
+edit_copy_invoker (Gimp         *gimp,
+                   GimpContext  *context,
+                   GimpProgress *progress,
+                   Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -186,9 +188,10 @@ static ProcRecord edit_copy_proc =
 };
 
 static Argument *
-edit_paste_invoker (Gimp        *gimp,
-                    GimpContext *context,
-                    Argument    *args)
+edit_paste_invoker (Gimp         *gimp,
+                    GimpContext  *context,
+                    GimpProgress *progress,
+                    Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -265,9 +268,10 @@ static ProcRecord edit_paste_proc =
 };
 
 static Argument *
-edit_clear_invoker (Gimp        *gimp,
-                    GimpContext *context,
-                    Argument    *args)
+edit_clear_invoker (Gimp         *gimp,
+                    GimpContext  *context,
+                    GimpProgress *progress,
+                    Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -312,9 +316,10 @@ static ProcRecord edit_clear_proc =
 };
 
 static Argument *
-edit_fill_invoker (Gimp        *gimp,
-                   GimpContext *context,
-                   Argument    *args)
+edit_fill_invoker (Gimp         *gimp,
+                   GimpContext  *context,
+                   GimpProgress *progress,
+                   Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -369,9 +374,10 @@ static ProcRecord edit_fill_proc =
 };
 
 static Argument *
-edit_bucket_fill_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+edit_bucket_fill_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -495,9 +501,10 @@ static ProcRecord edit_bucket_fill_proc =
 };
 
 static Argument *
-edit_blend_invoker (Gimp        *gimp,
-                    GimpContext *context,
-                    Argument    *args)
+edit_blend_invoker (Gimp         *gimp,
+                    GimpContext  *context,
+                    GimpProgress *progress,
+                    Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -585,7 +592,7 @@ edit_blend_invoker (Gimp        *gimp,
                                supersample, max_depth,
                                threshold, dither,
                                x1, y1, x2, y2,
-                               NULL, NULL);
+                               NULL);
         }
     }
 
@@ -693,9 +700,10 @@ static ProcRecord edit_blend_proc =
 };
 
 static Argument *
-edit_stroke_invoker (Gimp        *gimp,
-                     GimpContext *context,
-                     Argument    *args)
+edit_stroke_invoker (Gimp         *gimp,
+                     GimpContext  *context,
+                     GimpProgress *progress,
+                     Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

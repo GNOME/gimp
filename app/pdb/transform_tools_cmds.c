@@ -54,9 +54,10 @@ register_transform_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-flip_invoker (Gimp        *gimp,
-              GimpContext *context,
-              Argument    *args)
+flip_invoker (Gimp         *gimp,
+              GimpContext  *context,
+              GimpProgress *progress,
+              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -127,9 +128,10 @@ static ProcRecord flip_proc =
 };
 
 static Argument *
-perspective_invoker (Gimp        *gimp,
-                     GimpContext *context,
-                     Argument    *args)
+perspective_invoker (Gimp         *gimp,
+                     GimpContext  *context,
+                     GimpProgress *progress,
+                     Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -281,9 +283,10 @@ static ProcRecord perspective_proc =
 };
 
 static Argument *
-rotate_invoker (Gimp        *gimp,
-                GimpContext *context,
-                Argument    *args)
+rotate_invoker (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -380,9 +383,10 @@ static ProcRecord rotate_proc =
 };
 
 static Argument *
-scale_invoker (Gimp        *gimp,
-               GimpContext *context,
-               Argument    *args)
+scale_invoker (Gimp         *gimp,
+               GimpContext  *context,
+               GimpProgress *progress,
+               Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -505,9 +509,10 @@ static ProcRecord scale_proc =
 };
 
 static Argument *
-shear_invoker (Gimp        *gimp,
-               GimpContext *context,
-               Argument    *args)
+shear_invoker (Gimp         *gimp,
+               GimpContext  *context,
+               GimpProgress *progress,
+               Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -616,9 +621,10 @@ static ProcRecord shear_proc =
 };
 
 static Argument *
-transform_2d_invoker (Gimp        *gimp,
-                      GimpContext *context,
-                      Argument    *args)
+transform_2d_invoker (Gimp         *gimp,
+                      GimpContext  *context,
+                      GimpProgress *progress,
+                      Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

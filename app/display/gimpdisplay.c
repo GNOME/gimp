@@ -27,6 +27,7 @@
 #include "core/gimparea.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
+#include "core/gimpprogress.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
@@ -50,25 +51,39 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_display_class_init     (GimpDisplayClass *klass);
-static void   gimp_display_init           (GimpDisplay      *gdisp);
+static void    gimp_display_class_init          (GimpDisplayClass *klass);
+static void    gimp_display_init                (GimpDisplay      *gdisp);
+static void    gimp_display_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static void   gimp_display_set_property   (GObject          *object,
-                                           guint             property_id,
-                                           const GValue     *value,
-                                           GParamSpec       *pspec);
-static void   gimp_display_get_property   (GObject          *object,
-                                           guint             property_id,
-                                           GValue           *value,
-                                           GParamSpec       *pspec);
+static void    gimp_display_set_property       (GObject       *object,
+                                                guint          property_id,
+                                                const GValue  *value,
+                                                GParamSpec    *pspec);
+static void    gimp_display_get_property       (GObject       *object,
+                                                guint          property_id,
+                                                GValue        *value,
+                                                GParamSpec    *pspec);
 
-static void   gimp_display_flush_whenever (GimpDisplay      *gdisp,
-                                           gboolean          now);
-static void   gimp_display_paint_area     (GimpDisplay      *gdisp,
-                                           gint              x,
-                                           gint              y,
-                                           gint              w,
-                                           gint              h);
+static GimpProgress *
+               gimp_display_progress_start     (GimpProgress  *progress,
+                                                const gchar   *message,
+                                                gboolean       cancelable);
+static void    gimp_display_progress_end       (GimpProgress  *progress);
+static void    gimp_display_progress_set_text  (GimpProgress  *progress,
+                                                const gchar   *message);
+static void    gimp_display_progress_set_value (GimpProgress  *progress,
+                                                gdouble        percentage);
+static gdouble gimp_display_progress_get_value (GimpProgress  *progress);
+static void    gimp_display_progress_canceled  (GimpProgress  *progress,
+                                                GimpDisplay   *display);
+
+static void    gimp_display_flush_whenever     (GimpDisplay   *gdisp,
+                                                gboolean       now);
+static void    gimp_display_paint_area         (GimpDisplay   *gdisp,
+                                                gint           x,
+                                                gint           y,
+                                                gint           w,
+                                                gint           h);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -94,9 +109,19 @@ gimp_display_get_type (void)
         (GInstanceInitFunc) gimp_display_init,
       };
 
+      static const GInterfaceInfo progress_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_display_progress_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       display_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                              "GimpDisplay",
                                              &display_info, 0);
+
+      g_type_add_interface_static (display_type, GIMP_TYPE_PROGRESS,
+                                   &progress_iface_info);
     }
 
   return display_type;
@@ -137,6 +162,16 @@ gimp_display_init (GimpDisplay *gdisp)
   gdisp->shell        = NULL;
 
   gdisp->update_areas = NULL;
+}
+
+static void
+gimp_display_progress_iface_init (GimpProgressInterface *progress_iface)
+{
+  progress_iface->start     = gimp_display_progress_start;
+  progress_iface->end       = gimp_display_progress_end;
+  progress_iface->set_text  = gimp_display_progress_set_text;
+  progress_iface->set_value = gimp_display_progress_set_value;
+  progress_iface->get_value = gimp_display_progress_get_value;
 }
 
 static void
@@ -183,6 +218,61 @@ gimp_display_get_property (GObject    *object,
     }
 }
 
+static GimpProgress *
+gimp_display_progress_start (GimpProgress *progress,
+                             const gchar  *message,
+                             gboolean      cancelable)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (progress)->shell);
+
+  return gimp_progress_start (GIMP_PROGRESS (shell->statusbar),
+                              message, cancelable);
+}
+
+static void
+gimp_display_progress_end (GimpProgress *progress)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (progress)->shell);
+
+  gimp_progress_end (GIMP_PROGRESS (shell->statusbar));
+}
+
+static void
+gimp_display_progress_set_text (GimpProgress *progress,
+                                const gchar  *message)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (progress)->shell);
+
+  gimp_progress_set_text (GIMP_PROGRESS (shell->statusbar), message);
+}
+
+static void
+gimp_display_progress_set_value (GimpProgress *progress,
+                                 gdouble       percentage)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (progress)->shell);
+
+  gimp_progress_set_value (GIMP_PROGRESS (shell->statusbar), percentage);
+}
+
+static gdouble
+gimp_display_progress_get_value (GimpProgress *progress)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (progress)->shell);
+
+  return gimp_progress_get_value (GIMP_PROGRESS (shell->statusbar));
+}
+
+static void
+gimp_display_progress_canceled (GimpProgress *progress,
+                                GimpDisplay  *display)
+{
+  gimp_progress_cancel (GIMP_PROGRESS (display));
+}
+
+
+/*  public functions  */
+
 GimpDisplay *
 gimp_display_new (GimpImage       *gimage,
                   GimpUnit         unit,
@@ -208,8 +298,11 @@ gimp_display_new (GimpImage       *gimage,
   /*  create the shell for the image  */
   gdisp->shell = gimp_display_shell_new (gdisp, unit, scale,
                                          menu_factory, popup_manager);
-
   gtk_widget_show (gdisp->shell);
+
+  g_signal_connect (GIMP_DISPLAY_SHELL (gdisp->shell)->statusbar, "cancel",
+                    G_CALLBACK (gimp_display_progress_canceled),
+                    gdisp);
 
   return gdisp;
 }

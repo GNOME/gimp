@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -49,32 +50,45 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_file_dialog_class_init    (GimpFileDialogClass *klass);
+static void  gimp_file_dialog_class_init          (GimpFileDialogClass   *klass);
+static void  gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface);
 
-static gboolean   gimp_file_dialog_delete_event  (GtkWidget        *widget,
-                                                  GdkEventAny      *event);
+static gboolean   gimp_file_dialog_delete_event    (GtkWidget        *widget,
+                                                    GdkEventAny      *event);
 
-static void  gimp_file_dialog_add_preview        (GimpFileDialog   *dialog,
-                                                  Gimp             *gimp);
-static void  gimp_file_dialog_add_filters        (GimpFileDialog   *dialog,
-                                                  Gimp             *gimp,
-                                                  GSList           *file_procs);
-static void  gimp_file_dialog_add_proc_selection (GimpFileDialog   *dialog,
-                                                  Gimp             *gimp,
-                                                  GSList           *file_procs,
-                                                  const gchar      *automatic,
-                                                  const gchar      *automatic_help_id);
+static GimpProgress *
+                   gimp_file_dialog_progress_start (GimpProgress     *progress,
+                                                    const gchar      *message,
+                                                    gboolean          cancelable);
+static void  gimp_file_dialog_progress_end         (GimpProgress     *progress);
+static void  gimp_file_dialog_progress_set_text    (GimpProgress     *progress,
+                                                    const gchar      *message);
+static void  gimp_file_dialog_progress_set_value   (GimpProgress     *progress,
+                                                    gdouble           percentage);
+static gdouble gimp_file_dialog_progress_get_value (GimpProgress     *progress);
 
-static void  gimp_file_dialog_selection_changed  (GtkFileChooser   *chooser,
-                                                  GimpFileDialog   *dialog);
-static void  gimp_file_dialog_update_preview     (GtkFileChooser   *chooser,
-                                                  GimpFileDialog   *dialog);
+static void  gimp_file_dialog_add_preview          (GimpFileDialog   *dialog,
+                                                    Gimp             *gimp);
+static void  gimp_file_dialog_add_filters          (GimpFileDialog   *dialog,
+                                                    Gimp             *gimp,
+                                                    GSList           *file_procs);
+static void  gimp_file_dialog_add_proc_selection   (GimpFileDialog   *dialog,
+                                                    Gimp             *gimp,
+                                                    GSList           *file_procs,
+                                                    const gchar      *automatic,
+                                                    const gchar      *automatic_help_id,
+                                                    GtkWidget        *vbox);
 
-static void  gimp_file_dialog_proc_changed       (GimpFileProcView *view,
-                                                  GimpFileDialog   *dialog);
+static void  gimp_file_dialog_selection_changed    (GtkFileChooser   *chooser,
+                                                    GimpFileDialog   *dialog);
+static void  gimp_file_dialog_update_preview       (GtkFileChooser   *chooser,
+                                                    GimpFileDialog   *dialog);
 
-static void  gimp_file_dialog_help_func          (const gchar      *help_id,
-                                                  gpointer          help_data);
+static void  gimp_file_dialog_proc_changed         (GimpFileProcView *view,
+                                                    GimpFileDialog   *dialog);
+
+static void  gimp_file_dialog_help_func            (const gchar      *help_id,
+                                                    gpointer          help_data);
 
 
 
@@ -98,9 +112,19 @@ gimp_file_dialog_get_type (void)
         NULL,           /* instance_init  */
       };
 
+      static const GInterfaceInfo progress_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_file_dialog_progress_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       dialog_type = g_type_register_static (GTK_TYPE_FILE_CHOOSER_DIALOG,
                                             "GimpFileDialog",
                                             &dialog_info, 0);
+
+      g_type_add_interface_static (dialog_type, GIMP_TYPE_PROGRESS,
+                                   &progress_iface_info);
     }
 
   return dialog_type;
@@ -114,11 +138,108 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
   widget_class->delete_event = gimp_file_dialog_delete_event;
 }
 
+static void
+gimp_file_dialog_progress_iface_init (GimpProgressInterface *progress_iface)
+{
+  progress_iface->start     = gimp_file_dialog_progress_start;
+  progress_iface->end       = gimp_file_dialog_progress_end;
+  progress_iface->set_text  = gimp_file_dialog_progress_set_text;
+  progress_iface->set_value = gimp_file_dialog_progress_set_value;
+  progress_iface->get_value = gimp_file_dialog_progress_get_value;
+}
+
 static gboolean
 gimp_file_dialog_delete_event (GtkWidget   *widget,
                                GdkEventAny *event)
 {
   return TRUE;
+}
+
+static GimpProgress *
+gimp_file_dialog_progress_start (GimpProgress *progress,
+                                 const gchar  *message,
+                                 gboolean      cancelable)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (! dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      gtk_progress_bar_set_text (bar, message);
+      gtk_progress_bar_set_fraction (bar, 0.0);
+      /* gtk_widget_set_sensitive (dialog->cancel_button, cancelable); */
+
+      gtk_widget_show (dialog->progress);
+
+      dialog->progress_active = TRUE;
+
+      return progress;
+    }
+
+  return NULL;
+}
+
+static void
+gimp_file_dialog_progress_end (GimpProgress *progress)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      gtk_progress_bar_set_text (bar, "");
+      gtk_progress_bar_set_fraction (bar, 0.0);
+      /* gtk_widget_set_sensitive (dialog->cancel_button, FALSE); */
+
+      gtk_widget_hide (dialog->progress);
+
+      dialog->progress_active = FALSE;
+    }
+}
+
+static void
+gimp_file_dialog_progress_set_text (GimpProgress *progress,
+                                    const gchar  *message)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      gtk_progress_bar_set_text (bar, message);
+    }
+}
+
+static void
+gimp_file_dialog_progress_set_value (GimpProgress *progress,
+                                     gdouble       percentage)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      gtk_progress_bar_set_fraction (bar, percentage);
+    }
+}
+
+static gdouble
+gimp_file_dialog_progress_get_value (GimpProgress *progress)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
+
+  if (dialog->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (dialog->progress);
+
+      return gtk_progress_bar_get_fraction (bar);
+    }
+
+  return 0.0;
 }
 
 
@@ -133,6 +254,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
                       const gchar          *help_id)
 {
   GimpFileDialog *dialog;
+  GtkWidget      *extra_vbox;
   GSList         *file_procs;
   const gchar    *automatic;
   const gchar    *automatic_help_id;
@@ -182,8 +304,16 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   gimp_file_dialog_add_filters (dialog, gimp, file_procs);
 
+  extra_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), extra_vbox);
+  gtk_widget_show (extra_vbox);
+
+  dialog->progress = gtk_progress_bar_new ();
+  gtk_box_pack_start (GTK_BOX (extra_vbox), dialog->progress, FALSE, FALSE, 0);
+  /* don't gtk_widget_show (dialog->progress); */
+
   gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
-                                       automatic_help_id);
+                                       automatic_help_id, extra_vbox);
 
   return GTK_WIDGET (dialog);
 }
@@ -367,13 +497,13 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
                                      Gimp           *gimp,
                                      GSList         *file_procs,
                                      const gchar    *automatic,
-                                     const gchar    *automatic_help_id)
+                                     const gchar    *automatic_help_id,
+                                     GtkWidget      *vbox)
 {
   GtkWidget *scrolled_window;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
-                                     dialog->proc_expander);
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->proc_expander, TRUE, TRUE, 0);
   gtk_widget_show (dialog->proc_expander);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

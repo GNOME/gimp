@@ -94,8 +94,7 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_offset_x,
                                                  gint                new_offset_y,
                                                  GimpInterpolationType  interp_type,
-                                                 GimpProgressFunc       progress_callback,
-                                                 gpointer               progress_data);
+                                                 GimpProgress       *progress);
 static void       gimp_layer_resize             (GimpItem           *item,
                                                  GimpContext        *context,
                                                  gint                new_width,
@@ -121,9 +120,7 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  gboolean            supersample,
                                                  gint                recursion_level,
                                                  gboolean            clip_result,
-                                                 GimpProgressFunc    progress_callback,
-                                                 gpointer            progress_data);
-
+                                                 GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
@@ -649,21 +646,19 @@ gimp_layer_scale (GimpItem              *item,
                   gint                   new_offset_x,
                   gint                   new_offset_y,
                   GimpInterpolationType  interpolation_type,
-                  GimpProgressFunc       progress_callback,
-                  gpointer               progress_data)
+                  GimpProgress          *progress)
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
-                                         interpolation_type,
-                                         progress_callback, progress_data);
+                                         interpolation_type, progress);
 
   if (layer->mask)
     gimp_item_scale (GIMP_ITEM (layer->mask),
                      new_width, new_height,
                      new_offset_x, new_offset_y,
-                     interpolation_type, NULL, NULL);
+                     interpolation_type, progress);
 }
 
 static void
@@ -729,24 +724,21 @@ gimp_layer_transform (GimpItem               *item,
                       gboolean                supersample,
                       gint                    recursion_level,
                       gboolean                clip_result,
-                      GimpProgressFunc        progress_callback,
-                      gpointer                progress_data)
+                      GimpProgress           *progress)
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
                                              supersample, recursion_level,
-                                             clip_result,
-                                             progress_callback, progress_data);
+                                             clip_result, progress);
 
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask), context,
                          matrix, direction,
                          interpolation_type,
                          supersample, recursion_level,
-                         clip_result,
-                         progress_callback, progress_data);
+                         clip_result, progress);
 }
 
 static void

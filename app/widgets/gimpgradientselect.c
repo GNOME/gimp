@@ -178,6 +178,7 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
 
   return procedural_db_run_proc (dialog->context->gimp,
                                  dialog->context,
+                                 NULL,
                                  dialog->callback_name,
                                  n_return_vals,
                                  GIMP_PDB_STRING,     GIMP_OBJECT (gradient)->name,

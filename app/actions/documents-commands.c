@@ -196,7 +196,7 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
 
       preview_size = gimp_container_view_get_preview_size (editor->view, NULL);
 
-      gimp_imagefile_create_thumbnail (imagefile, context, preview_size);
+      gimp_imagefile_create_thumbnail (imagefile, context, NULL, preview_size);
     }
 }
 
@@ -253,7 +253,7 @@ documents_open_image (GimpContext   *context,
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  gimage = file_open_with_display (context->gimp, context,
+  gimage = file_open_with_display (context->gimp, context, NULL,
                                    uri, &status, &error);
 
   if (! gimage && status != GIMP_PDB_CANCEL)

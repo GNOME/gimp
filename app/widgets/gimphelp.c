@@ -220,7 +220,7 @@ gimp_help_internal (Gimp *gimp)
       args[0].arg_type      = GIMP_PDB_INT32;
       args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
 
-      plug_in_run (gimp, gimp_get_user_context (gimp),
+      plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    proc_rec, args, 1, FALSE, TRUE, -1);
 
       procedural_db_destroy_args (args, 1);
@@ -294,7 +294,7 @@ gimp_help_call (Gimp        *gimp,
       args[3].arg_type          = GIMP_PDB_STRINGARRAY;
       args[3].value.pdb_pointer = help_uris;
 
-      plug_in_run (gimp, gimp_get_user_context (gimp),
+      plug_in_run (gimp, gimp_get_user_context (gimp), NULL,
                    proc_rec, args, 4, FALSE, TRUE, -1);
 
       procedural_db_destroy_args (args, 4);
@@ -324,6 +324,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         procedural_db_run_proc (gimp,
                                 gimp_get_user_context (gimp),
+                                NULL,
 				"extension_gimp_help_temp",
                                 &n_return_vals,
                                 GIMP_PDB_STRING, procedure,

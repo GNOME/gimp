@@ -64,9 +64,10 @@ register_brushes_procs (Gimp *gimp)
 }
 
 static Argument *
-brushes_refresh_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+brushes_refresh_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_init (gimp->brush_factory, FALSE);
@@ -90,9 +91,10 @@ static ProcRecord brushes_refresh_proc =
 };
 
 static Argument *
-brushes_get_list_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+brushes_get_list_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -158,9 +160,10 @@ static ProcRecord brushes_get_list_proc =
 };
 
 static Argument *
-brushes_get_brush_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+brushes_get_brush_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -222,9 +225,10 @@ static ProcRecord brushes_get_brush_proc =
 };
 
 static Argument *
-brushes_set_brush_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+brushes_set_brush_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -274,9 +278,10 @@ static ProcRecord brushes_set_brush_proc =
 };
 
 static Argument *
-brushes_get_opacity_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+brushes_get_opacity_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   Argument *return_args;
 
@@ -312,9 +317,10 @@ static ProcRecord brushes_get_opacity_proc =
 };
 
 static Argument *
-brushes_set_opacity_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+brushes_set_opacity_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   gdouble opacity;
@@ -355,9 +361,10 @@ static ProcRecord brushes_set_opacity_proc =
 };
 
 static Argument *
-brushes_get_spacing_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+brushes_get_spacing_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   Argument *return_args;
 
@@ -393,9 +400,10 @@ static ProcRecord brushes_get_spacing_proc =
 };
 
 static Argument *
-brushes_set_spacing_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+brushes_set_spacing_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   gint32 spacing;
@@ -436,9 +444,10 @@ static ProcRecord brushes_set_spacing_proc =
 };
 
 static Argument *
-brushes_get_paint_mode_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+brushes_get_paint_mode_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   Argument *return_args;
 
@@ -474,9 +483,10 @@ static ProcRecord brushes_get_paint_mode_proc =
 };
 
 static Argument *
-brushes_set_paint_mode_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+brushes_set_paint_mode_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   gint32 paint_mode;
@@ -517,9 +527,10 @@ static ProcRecord brushes_set_paint_mode_proc =
 };
 
 static Argument *
-brushes_get_brush_data_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+brushes_get_brush_data_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -42,8 +42,7 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable           *draw
                                                     gboolean                supersample,
                                                     gint                    recursion_level,
                                                     gboolean                clip_result,
-                                                    GimpProgressFunc        progress_callback,
-                                                    gpointer                progress_data);
+                                                    GimpProgress           *progress);
 TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable           *drawable,
                                                     GimpContext            *context,
                                                     TileManager            *orig_tiles,

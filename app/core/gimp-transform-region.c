@@ -44,6 +44,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimpprogress.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -110,8 +111,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       gboolean                supersample,
                                       gint                    recursion_level,
                                       gboolean                clip_result,
-                                      GimpProgressFunc        progress_callback,
-                                      gpointer                progress_data)
+                                      GimpProgress           *progress)
 {
   GimpImage     *gimage;
   PixelRegion    destPR;
@@ -148,6 +148,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -302,8 +303,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   for (y = y1; y < y2; y++)
     {
-      if (progress_callback && !(y & 0xf))
-        (* progress_callback) (y1, y2, y, progress_data);
+      if (progress && !(y & 0xf))
+        gimp_progress_set_value (progress,
+                                 (gdouble) (y - y1) /
+                                 (gdouble) (y2 - y1));
 
       /* set up inverse transform steps */
       tu[0] = uinc * x1 + m.coeff[0][1] * y + m.coeff[0][2];
@@ -887,7 +890,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         supersample,
                                                         recursion_level,
                                                         FALSE,
-                                                        NULL, NULL);
+                                                        NULL);
 
       /* Free the cut/copied buffer */
       tile_manager_unref (orig_tiles);

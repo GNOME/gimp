@@ -22,10 +22,12 @@
 
 GimpPDBStatusType   file_save    (GimpImage      *gimage,
                                   GimpContext    *context,
+                                  GimpProgress   *progress,
                                   GimpRunMode     run_mode,
                                   GError        **error);
 GimpPDBStatusType   file_save_as (GimpImage      *gimage,
                                   GimpContext    *context,
+                                  GimpProgress   *progress,
                                   const gchar    *uri,
                                   const gchar    *raw_filename,
                                   PlugInProcDef  *file_proc,

@@ -23,8 +23,7 @@
 void   gimp_image_flip (GimpImage           *gimage,
                         GimpContext         *context,
                         GimpOrientationType  flip_type,
-                        GimpProgressFunc     progress_func,
-                        gpointer             progress_data);
+                        GimpProgress        *progress);
 
 
 #endif /* __GIMP_IMAGE_FLIP_H__ */

@@ -27,6 +27,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -53,10 +54,8 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.menus_init         = NULL;
   gimp->gui.menus_create       = NULL;
   gimp->gui.menus_delete       = NULL;
-  gimp->gui.progress_start     = NULL;
-  gimp->gui.progress_restart   = NULL;
-  gimp->gui.progress_update    = NULL;
-  gimp->gui.progress_end       = NULL;
+  gimp->gui.progress_new       = NULL;
+  gimp->gui.progress_free      = NULL;
   gimp->gui.pdb_dialog_set     = NULL;
   gimp->gui.pdb_dialog_close   = NULL;
   gimp->gui.pdb_dialogs_check  = NULL;
@@ -320,59 +319,25 @@ gimp_menus_delete_entry (Gimp          *gimp,
 }
 
 GimpProgress *
-gimp_start_progress (Gimp        *gimp,
-                     gint         gdisp_ID,
-                     const gchar *message,
-                     GCallback    cancel_cb,
-                     gpointer     cancel_data)
+gimp_new_progress (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  if (gimp->gui.progress_start)
-    return gimp->gui.progress_start (gimp, gdisp_ID, message,
-                                     cancel_cb, cancel_data);
-
-  return NULL;
-}
-
-GimpProgress *
-gimp_restart_progress (Gimp         *gimp,
-                       GimpProgress *progress,
-                       const gchar  *message,
-                       GCallback     cancel_cb,
-                       gpointer      cancel_data)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (progress != NULL, NULL);
-
-  if (gimp->gui.progress_restart)
-    return gimp->gui.progress_restart (gimp, progress, message,
-                                       cancel_cb, cancel_data);
+  if (gimp->gui.progress_new)
+    return gimp->gui.progress_new (gimp);
 
   return NULL;
 }
 
 void
-gimp_update_progress (Gimp         *gimp,
-                      GimpProgress *progress,
-                      gdouble       percentage)
+gimp_free_progress (Gimp         *gimp,
+                    GimpProgress *progress)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress != NULL);
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
 
-  if (gimp->gui.progress_update)
-    gimp->gui.progress_update (gimp, progress, percentage);
-}
-
-void
-gimp_end_progress (Gimp         *gimp,
-                   GimpProgress *progress)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (progress != NULL);
-
-  if (gimp->gui.progress_end)
-    gimp->gui.progress_end (gimp, progress);
+  if (gimp->gui.progress_free)
+    gimp->gui.progress_free (gimp, progress);
 }
 
 gboolean

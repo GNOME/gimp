@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpprogress.h"
 
 #include "pdb/procedural_db.h"
 
@@ -48,36 +49,39 @@
 
 /*  local function prototypes  */
 
-static Argument * plug_in_temp_run        (ProcRecord *proc_rec,
-                                           Argument   *args,
-                                           gint        argc);
-static Argument * plug_in_get_return_vals (PlugIn     *plug_in,
-                                           ProcRecord *proc_rec);
+static Argument * plug_in_temp_run        (ProcRecord   *proc_rec,
+                                           GimpProgress *progress,
+                                           Argument     *args,
+                                           gint          argc);
+static Argument * plug_in_get_return_vals (PlugIn       *plug_in,
+                                           ProcRecord   *proc_rec);
 
 
 /*  public functions  */
 
 Argument *
-plug_in_run (Gimp        *gimp,
-             GimpContext *context,
-             ProcRecord  *proc_rec,
-	     Argument    *args,
-	     gint         argc,
-	     gboolean     synchronous,
-	     gboolean     destroy_return_vals,
-	     gint         gdisp_ID)
+plug_in_run (Gimp         *gimp,
+             GimpContext  *context,
+             GimpProgress *progress,
+             ProcRecord   *proc_rec,
+	     Argument     *args,
+	     gint          argc,
+	     gboolean      synchronous,
+	     gboolean      destroy_return_vals,
+	     gint          gdisp_ID)
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (proc_rec != NULL, NULL);
   g_return_val_if_fail (argc == 0 || args != NULL, NULL);
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
-      return_vals = plug_in_temp_run (proc_rec, args, argc);
+      return_vals = plug_in_temp_run (proc_rec, progress, args, argc);
       goto done;
     }
 
@@ -95,6 +99,9 @@ plug_in_run (Gimp        *gimp,
           plug_in_unref (plug_in);
           goto done;
         }
+
+      if (progress)
+        plug_in->progress = g_object_ref (progress);
 
       config.version        = GIMP_PROTOCOL_VERSION;
       config.tile_width     = TILE_WIDTH;
@@ -177,18 +184,20 @@ plug_in_run (Gimp        *gimp,
 }
 
 void
-plug_in_repeat (Gimp        *gimp,
-                GimpContext *context,
-                gint         display_ID,
-                gint         image_ID,
-                gint         drawable_ID,
-                gboolean     with_interface)
+plug_in_repeat (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                gint          display_ID,
+                gint          image_ID,
+                gint          drawable_ID,
+                gboolean      with_interface)
 {
   Argument *args;
   gint      i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (gimp->last_plug_in)
     {
@@ -206,7 +215,7 @@ plug_in_repeat (Gimp        *gimp,
       args[2].value.pdb_int = drawable_ID;
 
       /* run the plug-in procedure */
-      plug_in_run (gimp, context, &gimp->last_plug_in->db_info,
+      plug_in_run (gimp, context, progress, &gimp->last_plug_in->db_info,
                    args, 3, FALSE, TRUE, display_ID);
 
       g_free (args);
@@ -219,9 +228,10 @@ plug_in_repeat (Gimp        *gimp,
 #define ENABLE_TEMP_RETURN 1
 
 static Argument *
-plug_in_temp_run (ProcRecord *proc_rec,
-		  Argument   *args,
-		  gint        argc)
+plug_in_temp_run (ProcRecord   *proc_rec,
+                  GimpProgress *progress,
+		  Argument     *args,
+		  gint          argc)
 {
   Argument *return_vals = NULL;
   PlugIn   *plug_in;

@@ -46,9 +46,10 @@ register_convert_procs (Gimp *gimp)
 }
 
 static Argument *
-image_convert_rgb_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+image_convert_rgb_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -60,7 +61,7 @@ image_convert_rgb_invoker (Gimp        *gimp,
   if (success)
     {
       if (gimp_image_base_type (gimage) != GIMP_RGB)
-        gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL, NULL);
+        gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
       else
         success = FALSE;
     }
@@ -94,9 +95,10 @@ static ProcRecord image_convert_rgb_proc =
 };
 
 static Argument *
-image_convert_grayscale_invoker (Gimp        *gimp,
-                                 GimpContext *context,
-                                 Argument    *args)
+image_convert_grayscale_invoker (Gimp         *gimp,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 Argument     *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -108,7 +110,7 @@ image_convert_grayscale_invoker (Gimp        *gimp,
   if (success)
     {
       if (gimp_image_base_type (gimage) != GIMP_GRAY)
-        gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL, NULL);
+        gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
       else
         success = FALSE;
     }
@@ -142,9 +144,10 @@ static ProcRecord image_convert_grayscale_proc =
 };
 
 static Argument *
-image_convert_indexed_invoker (Gimp        *gimp,
-                               GimpContext *context,
-                               Argument    *args)
+image_convert_indexed_invoker (Gimp         *gimp,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               Argument     *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -214,7 +217,8 @@ image_convert_indexed_invoker (Gimp        *gimp,
 
       if (success)
         gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
-                            alpha_dither, remove_unused, palette_type, palette, NULL, NULL);
+                            alpha_dither, remove_unused, palette_type, palette,
+                            NULL);
     }
 
   return procedural_db_return_args (&image_convert_indexed_proc, success);

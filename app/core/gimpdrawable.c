@@ -46,6 +46,7 @@
 #include "gimppattern.h"
 #include "gimppickable.h"
 #include "gimppreviewcache.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -84,8 +85,7 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_offset_x,
                                                     gint               new_offset_y,
                                                     GimpInterpolationType interp_type,
-                                                    GimpProgressFunc    progress_callback,
-                                                    gpointer            progress_data);
+                                                    GimpProgress       *progress);
 static void       gimp_drawable_resize             (GimpItem          *item,
                                                     GimpContext       *context,
                                                     gint               new_width,
@@ -111,8 +111,7 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     gboolean           supersample,
                                                     gint               recursion_level,
                                                     gboolean           clip_result,
-                                                    GimpProgressFunc   progress_callback,
-                                                    gpointer           progress_data);
+                                                    GimpProgress      *progress);
 
 static guchar   * gimp_drawable_get_color_at       (GimpPickable      *pickable,
                                                     gint               x,
@@ -401,8 +400,7 @@ gimp_drawable_scale (GimpItem              *item,
                      gint                   new_offset_x,
                      gint                   new_offset_y,
                      GimpInterpolationType  interpolation_type,
-                     GimpProgressFunc       progress_callback,
-                     gpointer               progress_data)
+                     GimpProgress          *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   PixelRegion   srcPR, destPR;
@@ -425,7 +423,8 @@ gimp_drawable_scale (GimpItem              *item,
   scale_region (&srcPR, &destPR,
                 gimp_drawable_is_indexed (drawable) ?
                 GIMP_INTERPOLATION_NONE : interpolation_type,
-                progress_callback, progress_data);
+                progress ? gimp_progress_update_and_flush : NULL,
+                progress);
 
   gimp_drawable_set_tiles_full (drawable,  TRUE, NULL,
                                 new_tiles, gimp_drawable_type (drawable),
@@ -573,8 +572,7 @@ gimp_drawable_transform (GimpItem               *item,
                          gboolean                supersample,
                          gint                    recursion_level,
                          gboolean                clip_result,
-                         GimpProgressFunc        progress_callback,
-                         gpointer                progress_data)
+                         GimpProgress           *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
@@ -592,8 +590,7 @@ gimp_drawable_transform (GimpItem               *item,
                                                 interpolation_type,
                                                 supersample, recursion_level,
                                                 clip_result,
-                                                progress_callback,
-                                                progress_data);
+                                                progress);
 
   tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
 

@@ -284,6 +284,8 @@ plug_in_new (Gimp        *gimp,
   plug_in->n_return_vals      = 0;
 
   plug_in->progress           = NULL;
+  plug_in->progress_created   = FALSE;
+
   plug_in->plug_in_def        = NULL;
 
   return plug_in;
@@ -314,6 +316,9 @@ plug_in_unref (PlugIn *plug_in)
 
       if (plug_in->progress)
         plug_in_progress_end (plug_in);
+
+      if (plug_in->progress)
+        g_object_unref (plug_in->progress);
 
       g_object_unref (plug_in->context);
 
@@ -607,6 +612,12 @@ plug_in_close (PlugIn   *plug_in,
 
   if (plug_in->progress)
     plug_in_progress_end (plug_in);
+
+  if (plug_in->progress)
+    {
+      g_object_unref (plug_in->progress);
+      plug_in->progress = NULL;
+    }
 
   while (plug_in->temp_main_loops)
     {

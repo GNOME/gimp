@@ -132,9 +132,10 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static Argument *
-airbrush_invoker (Gimp        *gimp,
-                  GimpContext *context,
-                  Argument    *args)
+airbrush_invoker (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -216,9 +217,10 @@ static ProcRecord airbrush_proc =
 };
 
 static Argument *
-airbrush_default_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+airbrush_default_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -288,9 +290,10 @@ static ProcRecord airbrush_default_proc =
 };
 
 static Argument *
-clone_invoker (Gimp        *gimp,
-               GimpContext *context,
-               Argument    *args)
+clone_invoker (Gimp         *gimp,
+               GimpContext  *context,
+               GimpProgress *progress,
+               Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -409,9 +412,10 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
-clone_default_invoker (Gimp        *gimp,
-                       GimpContext *context,
-                       Argument    *args)
+clone_default_invoker (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -481,9 +485,10 @@ static ProcRecord clone_default_proc =
 };
 
 static Argument *
-convolve_invoker (Gimp        *gimp,
-                  GimpContext *context,
-                  Argument    *args)
+convolve_invoker (Gimp         *gimp,
+                  GimpContext  *context,
+                  GimpProgress *progress,
+                  Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -578,9 +583,10 @@ static ProcRecord convolve_proc =
 };
 
 static Argument *
-convolve_default_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+convolve_default_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -650,9 +656,10 @@ static ProcRecord convolve_default_proc =
 };
 
 static Argument *
-dodgeburn_invoker (Gimp        *gimp,
-                   GimpContext *context,
-                   Argument    *args)
+dodgeburn_invoker (Gimp         *gimp,
+                   GimpContext  *context,
+                   GimpProgress *progress,
+                   Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -758,9 +765,10 @@ static ProcRecord dodgeburn_proc =
 };
 
 static Argument *
-dodgeburn_default_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+dodgeburn_default_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -830,9 +838,10 @@ static ProcRecord dodgeburn_default_proc =
 };
 
 static Argument *
-eraser_invoker (Gimp        *gimp,
-                GimpContext *context,
-                Argument    *args)
+eraser_invoker (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -927,9 +936,10 @@ static ProcRecord eraser_proc =
 };
 
 static Argument *
-eraser_default_invoker (Gimp        *gimp,
-                        GimpContext *context,
-                        Argument    *args)
+eraser_default_invoker (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -999,9 +1009,10 @@ static ProcRecord eraser_default_proc =
 };
 
 static Argument *
-paintbrush_invoker (Gimp        *gimp,
-                    GimpContext *context,
-                    Argument    *args)
+paintbrush_invoker (Gimp         *gimp,
+                    GimpContext  *context,
+                    GimpProgress *progress,
+                    Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1109,9 +1120,10 @@ static ProcRecord paintbrush_proc =
 };
 
 static Argument *
-paintbrush_default_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+paintbrush_default_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1181,9 +1193,10 @@ static ProcRecord paintbrush_default_proc =
 };
 
 static Argument *
-pencil_invoker (Gimp        *gimp,
-                GimpContext *context,
-                Argument    *args)
+pencil_invoker (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1253,9 +1266,10 @@ static ProcRecord pencil_proc =
 };
 
 static Argument *
-smudge_invoker (Gimp        *gimp,
-                GimpContext *context,
-                Argument    *args)
+smudge_invoker (Gimp         *gimp,
+                GimpContext  *context,
+                GimpProgress *progress,
+                Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1339,9 +1353,10 @@ static ProcRecord smudge_proc =
 };
 
 static Argument *
-smudge_default_invoker (Gimp        *gimp,
-                        GimpContext *context,
-                        Argument    *args)
+smudge_default_invoker (Gimp         *gimp,
+                        GimpContext  *context,
+                        GimpProgress *progress,
+                        Argument     *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

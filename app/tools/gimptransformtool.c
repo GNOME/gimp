@@ -39,6 +39,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "vectors/gimpvectors.h"
@@ -48,7 +49,6 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpprogress.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -876,8 +876,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   if (tr_tool->info_dialog)
     gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
 
-  progress = gimp_progress_start (gdisp, tr_tool->progress_text, FALSE,
-                                  NULL, NULL);
+  progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+                                  tr_tool->progress_text, FALSE);
 
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_transform (active_item, context,
@@ -887,8 +887,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->supersample,
                                 options->recursion_level,
                                 options->clip,
-                                progress ?
-                                gimp_progress_update_and_flush : NULL,
                                 progress);
 
   switch (options->type)
@@ -915,9 +913,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                 options->supersample,
                                                 options->recursion_level,
                                                 clip_result,
-                                                progress ?
-                                                gimp_progress_update_and_flush :
-                                                NULL,
                                                 progress);
       }
       break;
@@ -930,9 +925,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            options->supersample,
                            options->recursion_level,
                            options->clip,
-                           progress ?
-                           gimp_progress_update_and_flush :
-                           NULL,
                            progress);
       break;
     }

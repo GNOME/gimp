@@ -63,9 +63,10 @@ register_gradients_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_refresh_invoker (Gimp        *gimp,
-                           GimpContext *context,
-                           Argument    *args)
+gradients_refresh_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
 {
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
@@ -89,9 +90,10 @@ static ProcRecord gradients_refresh_proc =
 };
 
 static Argument *
-gradients_get_list_invoker (Gimp        *gimp,
-                            GimpContext *context,
-                            Argument    *args)
+gradients_get_list_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -157,9 +159,10 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_get_gradient_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+gradients_get_gradient_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -200,9 +203,10 @@ static ProcRecord gradients_get_gradient_proc =
 };
 
 static Argument *
-gradients_set_gradient_invoker (Gimp        *gimp,
-                                GimpContext *context,
-                                Argument    *args)
+gradients_set_gradient_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -252,9 +256,10 @@ static ProcRecord gradients_set_gradient_proc =
 };
 
 static Argument *
-gradients_sample_uniform_invoker (Gimp        *gimp,
-                                  GimpContext *context,
-                                  Argument    *args)
+gradients_sample_uniform_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -353,9 +358,10 @@ static ProcRecord gradients_sample_uniform_proc =
 };
 
 static Argument *
-gradients_sample_custom_invoker (Gimp        *gimp,
-                                 GimpContext *context,
-                                 Argument    *args)
+gradients_sample_custom_invoker (Gimp         *gimp,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -458,9 +464,10 @@ static ProcRecord gradients_sample_custom_proc =
 };
 
 static Argument *
-gradients_get_gradient_data_invoker (Gimp        *gimp,
-                                     GimpContext *context,
-                                     Argument    *args)
+gradients_get_gradient_data_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -589,9 +596,10 @@ static ProcRecord gradients_get_gradient_data_proc =
 };
 
 static Argument *
-gradients_new_invoker (Gimp        *gimp,
-                       GimpContext *context,
-                       Argument    *args)
+gradients_new_invoker (Gimp         *gimp,
+                       GimpContext  *context,
+                       GimpProgress *progress,
+                       Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -651,9 +659,10 @@ static ProcRecord gradients_new_proc =
 };
 
 static Argument *
-gradients_duplicate_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+gradients_duplicate_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -735,9 +744,10 @@ static ProcRecord gradients_duplicate_proc =
 };
 
 static Argument *
-gradients_delete_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+gradients_delete_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -807,9 +817,10 @@ static ProcRecord gradients_delete_proc =
 };
 
 static Argument *
-gradients_rename_invoker (Gimp        *gimp,
-                          GimpContext *context,
-                          Argument    *args)
+gradients_rename_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -27,6 +27,7 @@
 #include "gimpitem.h"
 #include "gimpitem-linked.h"
 #include "gimplist.h"
+#include "gimpprogress.h"
 
 
 /*  public functions  */
@@ -134,8 +135,7 @@ gimp_item_linked_transform (GimpItem               *item,
                             gboolean                supersample,
                             gint                    recursion_level,
                             gboolean                clip_result,
-                            GimpProgressFunc        progress_callback,
-                            gpointer                progress_data)
+                            GimpProgress           *progress)
 {
   GimpImage *gimage;
   GList     *linked_list;
@@ -144,6 +144,7 @@ gimp_item_linked_transform (GimpItem               *item,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   gimage = gimp_item_get_image (item);
 
@@ -156,8 +157,7 @@ gimp_item_linked_transform (GimpItem               *item,
                          matrix, direction,
                          interpolation_type,
                          supersample, recursion_level,
-                         clip_result,
-                         progress_callback, progress_data);
+                         clip_result, progress);
 
   g_list_free (linked_list);
 }

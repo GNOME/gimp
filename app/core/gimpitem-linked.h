@@ -55,8 +55,7 @@ void   gimp_item_linked_transform (GimpItem               *item,
                                    gboolean                supersample,
                                    gint                    recursion_level,
                                    gboolean                clip_result,
-                                   GimpProgressFunc        progress_callback,
-                                   gpointer                progress_data);
+                                   GimpProgress           *progress);
 
 GList * gimp_item_linked_get_list (GimpImage              *gimage,
                                    GimpItem               *item,

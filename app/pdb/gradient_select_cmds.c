@@ -43,9 +43,10 @@ register_gradient_select_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_popup_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+gradients_popup_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -124,9 +125,10 @@ static ProcRecord gradients_popup_proc =
 };
 
 static Argument *
-gradients_close_popup_invoker (Gimp        *gimp,
-                               GimpContext *context,
-                               Argument    *args)
+gradients_close_popup_invoker (Gimp         *gimp,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               Argument     *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -173,9 +175,10 @@ static ProcRecord gradients_close_popup_proc =
 };
 
 static Argument *
-gradients_set_popup_invoker (Gimp        *gimp,
-                             GimpContext *context,
-                             Argument    *args)
+gradients_set_popup_invoker (Gimp         *gimp,
+                             GimpContext  *context,
+                             GimpProgress *progress,
+                             Argument     *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;

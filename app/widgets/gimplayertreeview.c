@@ -790,9 +790,8 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      new_layer = file_open_layer (gimage->gimp, item_view->context, gimage,
-                                   uri,
-                                   &status, &error);
+      new_layer = file_open_layer (gimage->gimp, item_view->context, NULL,
+                                   gimage, uri, &status, &error);
 
       if (new_layer)
         {

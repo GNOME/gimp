@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -255,6 +256,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   args[2].value.pdb_int = -1;  /*  unused  */
 
   plug_in_run (gimage->gimp, action_data_get_context (data),
+               gdisp ? GIMP_PROGRESS (gdisp) : NULL,
                proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gdisp->ID : 0);
 
