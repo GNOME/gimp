@@ -74,8 +74,8 @@
 #include "gtk/gtk.h"
 #include <plug-ins/gpc/gpc.h>
 
-#if ! defined(__GNUC__)
-#   define inline
+#ifdef HAVE_CONFIG_H
+#include "config.h"
 #endif
 
 /*********************************

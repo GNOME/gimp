@@ -34,9 +34,12 @@
 #include <math.h>
 
 #include <libgimp/gimp.h>
-
 #include <gtk/gtk.h>
 #include <plug-ins/megawidget/megawidget.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 static mw_preview_t nlfilt_do_preview;
 

@@ -89,6 +89,10 @@ gimp_SOURCES = \
 	dialog_types.h		\
 	disp_callbacks.c	\
 	disp_callbacks.h	\
+	docindex.c		\
+	docindex.h		\
+	docindexif.c		\
+	docindexif.h		\
 	draw_core.c		\
 	draw_core.h		\
 	drawable.c		\
@@ -290,11 +294,7 @@ gimp_SOURCES = \
 	undo_cmds.h		\
 	wilber.h		\
 	xcf.c			\
-	xcf.h			\
-	docindex.c		\
-	docindex.h		\
-	docindexif.c		\
-	docindexif.h
+	xcf.h
 
 EXTRA_DIST = \
 	tools/channel.xbm	\

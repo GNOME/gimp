@@ -1,3 +1,19 @@
+Mon Jul 13 22:49:15 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: check for inline by ourselves if it's not
+	defined in glibconfig.h. So inline works if glib is compiled
+	with a different compiler than gimp. The plug-ins that use
+	inline #include "config.h" now (blur, destripe, emboss,
+	gfli, nlfilt, ps, randomize, sinus, and zealouscrop)
+
+	* app/main.c: applied gimp-kc-980707-0; fixes command line
+	parsing
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: searching by name does
+	- <-> _ translation
+
+	* Added filter pack plugin
+
 Mon Jul 13 22:00:31 EDT 1998 Adrian Likins <adrian@gimp.org>
 	
 	* app/rect_select.c : argh, s/snprintf/g_snprintf

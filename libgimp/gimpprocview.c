@@ -502,7 +502,8 @@ dialog_search_callback (GtkWidget *widget,
   int num_procs;
   int i, j;
   dbbrowser_t* dbbrowser = data;
-  gchar *func_name, *label;
+  gchar *func_name, *label, *query_text;
+  GString *query;
 
   gtk_clist_freeze(GTK_CLIST(dbbrowser->clist));
   gtk_clist_clear(GTK_CLIST(dbbrowser->clist));
@@ -513,9 +514,25 @@ dialog_search_callback (GtkWidget *widget,
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
 			    "DB Browser (by name - please wait)");
-      gimp_query_database (gtk_entry_get_text( GTK_ENTRY(dbbrowser->search_entry) ),
+
+      query = g_string_new ("");
+      query_text = gtk_entry_get_text(GTK_ENTRY(dbbrowser->search_entry));
+
+      while (*query_text)
+	{
+	  if ((*query_text == '_') || (*query_text == '-'))
+	    g_string_append (query, "[-_]");
+	  else
+	    g_string_append_c (query, *query_text);
+
+	  query_text++;
+	}
+
+      gimp_query_database (query->str,
 			   ".*", ".*", ".*", ".*", ".*", ".*", 
 			   &num_procs, &proc_list);
+
+      g_string_free (query, TRUE);
     }
   else if ( widget == (dbbrowser->blurb_button) )
     {

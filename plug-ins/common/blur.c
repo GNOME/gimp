@@ -58,6 +58,10 @@
 #include "gtk/gtk.h"
 #include <plug-ins/gpc/gpc.h>
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /*********************************
  *
  *  PLUGIN-SPECIFIC CONSTANTS

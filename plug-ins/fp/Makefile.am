@@ -2,10 +2,16 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = flarefx
+pluginlib_PROGRAMS = fp
 
-flarefx_SOURCES = \
-	flarefx.c
+fp_SOURCES = \
+	fp.c		\
+	fp.h		\
+	fp_gdk.c	\
+	fp_gtk.c	\
+	fp_hsv.c	\
+	fp_hsv.h	\
+	fp_misc.c	
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -22,7 +28,7 @@ DEPS = \
 	$(top_builddir)/libgimp/libgimpui-@LT_RELEASE@.la	\
 	$(top_builddir)/libgimp/libgimp-@LT_RELEASE@.la	
 
-flarefx_DEPENDENCIES = $(DEPS)
+fp_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 

@@ -50,6 +50,10 @@
 
 #include "fli.h"
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 static void query (void);
 static void run (gchar *name, gint nparams, GParam *param, gint *nreturn_vals, GParam **return_vals);
 

@@ -33,10 +33,12 @@
 #include <sys/types.h>
 
 #include <libgimp/gimp.h>
-
 #include <gtk/gtk.h>
-
 #include <plug-ins/megawidget/megawidget.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
