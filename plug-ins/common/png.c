@@ -37,6 +37,11 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.7.2.4  1999/01/02 23:50:31  yosh
+ *   Doh, thinko.
+ *
+ *   -Yosh
+ *
  *   Revision 1.7.2.3  1999/01/02 23:11:53  yosh
  *   * ltconfig: cases for Unixware 2.1.2 (from Geoff Clare)
  *   and BSD/OS 4.0 (from Chris P. Ross)
@@ -703,7 +708,7 @@ save_image(char   *filename,	/* I - File to save to */
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
-  info->gamma          = gamma != 1.00 ? gamma : DEFAULT_GAMMA;
+  info->gamma          = 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA);
   info->sig_bit.red    = 8;
   info->sig_bit.green  = 8;
   info->sig_bit.blue   = 8;
