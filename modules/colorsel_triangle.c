@@ -645,6 +645,7 @@ create_color_preview (ColorSelectP coldata)
   GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
   gtk_widget_set_events( GTK_WIDGET(preview), PREVIEW_MASK );
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE + 30 /* BAD! */);
 

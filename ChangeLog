@@ -1,3 +1,10 @@
+Thu Jan 21 22:58:00 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* gimp1_1_splash.ppm: new splash, from Shaw Terwilliger
+	<sterwill@io.nu>
+
+	* modules/colorsel_triangle.c: turn DITHER_MAX on
+
 Thu Jan 21 15:16:18 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* app/bucket_fill.c: correct typo in pdb invoker
@@ -47,6 +54,7 @@ Wed Jan 20 20:45:23 PST 1999 Manish Singh <yosh@gimp.org>
 	(GCGMAKEDEPEND): Likewise.
 	
 Wed Jan 20 19:57:34 EST 1999 Mandrake <mandrake@mandrake.net>
+
 	* app/gradients.c
 	  app/menus.c: 
 	  s/gtk_check_menu_item_set_state/gtk_check_menu_item_set_active/
