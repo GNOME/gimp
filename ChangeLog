@@ -1,3 +1,10 @@
+2004-07-08  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist: Various Gimpressionist Cleanups. Made most 
+	remaining non-static global variables static, and created functions 
+	that manipulate them. Created new headers. Renamed some variables and 
+	functions to make their names more menanigful.
+
 2004-07-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogrameditor.c
