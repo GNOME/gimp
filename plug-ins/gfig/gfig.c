@@ -24,21 +24,18 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-#include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
 #include "gfig-style.h"
@@ -55,6 +52,9 @@
 #include "gfig-spiral.h"
 #include "gfig-star.h"
 #include "gfig-stock.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 /***** Magic numbers *****/
 
@@ -423,7 +423,7 @@ gfig_load (const gchar *filename,
   printf ("Loading %s (%s)\n", filename, name);
 #endif /* DEBUG */
 
-  fp = fopen (filename, "r");
+  fp = g_fopen (filename, "r");
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -714,14 +714,17 @@ gfig_save_as_parasite (void)
 
   string = gfig_save_as_string ();
 
-  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
+  parasite = gimp_parasite_new ("gfig",
+                                GIMP_PARASITE_PERSISTENT |
+                                GIMP_PARASITE_UNDOABLE,
                                 string->len, string->str);
 
   g_string_free (string, TRUE);
 
   if (!gimp_drawable_parasite_attach (gfig_context->drawable_id, parasite))
     {
-      g_message (_("Error trying to save figure as a parasite: can't attach parasite to drawable.\n"));
+      g_message (_("Error trying to save figure as a parasite: "
+                   "can't attach parasite to drawable."));
       gimp_parasite_free (parasite);
       return FALSE;
     }
@@ -739,10 +742,12 @@ gfig_load_from_parasite (void)
   GFigObj      *gfig;
 
   fname = gimp_temp_name ("gfigtmp");
-  fp = fopen (fname, "w");
+  fp = g_fopen (fname, "w");
   if (!fp)
     {
-      g_message (_("Error trying to open temp file '%s'for parasite loading.\n"), fname);
+      g_message (_("Error trying to open temporary file '%s' "
+                   "for parasite loading: %s"),
+                 gimp_filename_to_utf8 (fname), g_strerror (errno));
       return NULL;
     }
 
@@ -760,7 +765,7 @@ gfig_load_from_parasite (void)
   fclose (fp);
 
   gfig = gfig_load (fname, "(none)");
-  unlink (fname);
+  g_unlink (fname);
 
   return (gfig);
 }
@@ -774,7 +779,7 @@ gfig_save_callbk (void)
 
   savename = gfig_context->current_obj->filename;
 
-  fp = fopen (savename, "w+");
+  fp = g_fopen (savename, "w+");
 
   if (!fp)
     {
@@ -788,12 +793,9 @@ gfig_save_callbk (void)
   fwrite (string->str, string->len, 1, fp);
 
   if (ferror (fp))
-    g_message ("Failed to write file\n");
+    g_message ("Failed to write file.");
   else
-    {
-      gfig_context->current_obj->obj_status &= ~(GFIG_MODIFIED | GFIG_READONLY);
-    }
+    gfig_context->current_obj->obj_status &= ~(GFIG_MODIFIED | GFIG_READONLY);
 
   fclose (fp);
-
 }

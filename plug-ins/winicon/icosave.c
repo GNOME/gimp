@@ -22,8 +22,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -236,9 +237,9 @@ ico_init (const gchar *filename,
           MsIcon      *ico,
           gint         num_icons)
 {
-  memset (ico, 0, sizeof(MsIcon));
+  memset (ico, 0, sizeof (MsIcon));
 
-  if (! (ico->fp = fopen (filename, "wb")))
+  if (! (ico->fp = g_fopen (filename, "wb")))
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

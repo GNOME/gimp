@@ -18,13 +18,9 @@
 
 #include "config.h"
 
-#include <glib.h>    /* Include early for obscure Win32 build reasons */
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #define WIN32_LEAN_AND_MEAN

@@ -19,9 +19,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -72,14 +73,14 @@ static void     envmap_combo_callback (GtkWidget       *widget,
                                        gpointer         data);
 static void     save_lighting_preset  (GtkWidget       *widget,
                                        gpointer         data);
-static void     file_chooser_response (GtkFileChooser  *chooser,
+static void     save_preset_response  (GtkFileChooser  *chooser,
                                        gint             response_id,
                                        gpointer         data);
 static void     load_lighting_preset  (GtkWidget       *widget,
                                        gpointer         data);
-static void     load_file_chooser_response (GtkFileChooser *chooser,
-                                            gint        response_id,
-                                            gpointer    data);
+static void     load_preset_response  (GtkFileChooser  *chooser,
+                                       gint             response_id,
+                                       gpointer         data);
 static void     lightselect_callback  (GimpIntComboBox *combo,
                                        gpointer         data);
 static void     apply_settings        (GtkWidget       *widget,
@@ -1088,7 +1089,7 @@ save_lighting_preset (GtkWidget *widget,
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
       g_signal_connect (window, "response",
-                        G_CALLBACK (file_chooser_response),
+                        G_CALLBACK (save_preset_response),
                         NULL);
     }
 
@@ -1119,9 +1120,9 @@ save_lighting_preset (GtkWidget *widget,
 
 
 static void
-file_chooser_response (GtkFileChooser *chooser,
-                       gint            response_id,
-                       gpointer        data)
+save_preset_response (GtkFileChooser *chooser,
+                      gint            response_id,
+                      gpointer        data)
 {
   FILE          *fp;
   gint           num_lights = 0;
@@ -1136,7 +1137,7 @@ file_chooser_response (GtkFileChooser *chooser,
     {
       gchar *filename = gtk_file_chooser_get_filename (chooser);
 
-      fp = fopen (filename, "w");
+      fp = g_fopen (filename, "w");
 
       if (!fp)
         {
@@ -1194,6 +1195,8 @@ file_chooser_response (GtkFileChooser *chooser,
 
           fclose (fp);
         }
+
+      g_free (filename);
     }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
@@ -1223,7 +1226,7 @@ load_lighting_preset (GtkWidget *widget,
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
       g_signal_connect (window, "response",
-                        G_CALLBACK (load_file_chooser_response),
+                        G_CALLBACK (load_preset_response),
                         NULL);
     }
 
@@ -1255,9 +1258,9 @@ load_lighting_preset (GtkWidget *widget,
 
 
 static void
-load_file_chooser_response (GtkFileChooser *chooser,
-                            gint            response_id,
-                            gpointer        data)
+load_preset_response (GtkFileChooser *chooser,
+                      gint            response_id,
+                      gpointer        data)
 {
   FILE          *fp;
   gint           num_lights;
@@ -1269,12 +1272,11 @@ load_file_chooser_response (GtkFileChooser *chooser,
   gchar          type_label[20];
   gchar         *endptr;
 
-
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar *filename = gtk_file_chooser_get_filename (chooser);
 
-      fp = fopen (filename, "r");
+      fp = g_fopen (filename, "r");
 
       if (!fp)
         {
@@ -1331,6 +1333,8 @@ load_file_chooser_response (GtkFileChooser *chooser,
 
           fclose (fp);
         }
+
+      g_free (filename);
 
       lightselect_callback (GIMP_INT_COMBO_BOX (lightselect_combo), NULL);
    }

@@ -33,19 +33,16 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include <errno.h>
-#include <time.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
+#include <glib-object.h>
 
 #include <libgimpcolor/gimpcolor.h>
 
@@ -1256,7 +1253,7 @@ gflare_load (const gchar *filename,
 
   g_return_val_if_fail (filename != NULL, NULL);
 
-  fp = fopen (filename, "r");
+  fp = g_fopen (filename, "r");
   if (!fp)
     {
       g_message (_("Failed to open GFlare file '%s': %s"),
@@ -1476,7 +1473,7 @@ gflare_save (GFlare *gflare)
       g_free (path);
     }
 
-  fp = fopen (gflare->filename, "w");
+  fp = g_fopen (gflare->filename, "w");
   if (!fp)
     {
       g_message (_("Failed to write GFlare file '%s': %s"),
@@ -3197,7 +3194,8 @@ dlg_selector_do_delete_callback (GtkWidget *widget,
 
       /* Delete old one from disk and memory */
       if (old_gflare->filename)
-        unlink (old_gflare->filename);
+        g_unlink (old_gflare->filename);
+
       gflare_free (old_gflare);
 
       /* Update */
@@ -4190,7 +4188,9 @@ preview_render_start (Preview *preview)
   preview->init_done = FALSE;
   preview->current_y = 0;
   preview->drawn_y = 0;
-  preview->timeout_tag = g_timeout_add (100, (GSourceFunc) preview_render_start_2, preview);
+  preview->timeout_tag = g_timeout_add (100,
+                                        (GSourceFunc) preview_render_start_2,
+                                        preview);
 }
 
 static gint

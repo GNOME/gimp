@@ -47,35 +47,32 @@ typedef struct
 } t_JpegSaveVals;
 
 
-gint  
-xjpg_save_drawable (char   *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint save_mode,
-	    t_JpegSaveVals *jsvals);
+gint
+xjpg_save_drawable (const char *filename,
+                    gint32      image_ID,
+                    gint32      drawable_ID,
+                    gint        save_mode,
+                    t_JpegSaveVals *jsvals);
 
 gint32
-xjpg_load_layer (char   *filename,
-	    gint32  image_id,
-            int     image_type,
-            char          *layer_name,
-            gdouble        layer_opacity,
-            GimpLayerModeEffects     layer_mode
-	    );
+xjpg_load_layer (const char   *filename,
+                 gint32        image_id,
+                 int           image_type,
+                 char         *layer_name,
+                 gdouble       layer_opacity,
+                 GimpLayerModeEffects     layer_mode);
 
 gint
-xjpg_load_layer_alpha (char   *filename,
-	    gint32  image_id,
-            gint32  layer_id
-	    );
+xjpg_load_layer_alpha (const char *filename,
+                       gint32      image_id,
+                       gint32      layer_id);
 
 gint32
-xjpg_load_channel (char   *filename,
-	    gint32  image_id,
-	    gint32  drawable_id,
-            char          *channel_name,
-            gdouble        channel_opacity,
-            guchar red, guchar  green, guchar blue
-	    );
+xjpg_load_channel (const char   *filename,
+                   gint32        image_id,
+                   gint32        drawable_id,
+                   char         *channel_name,
+                   gdouble       channel_opacity,
+                   guchar red, guchar  green, guchar blue);
 
 #endif

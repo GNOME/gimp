@@ -1,6 +1,4 @@
 /*
- * "$Id$"
- *
  *   SGI image file plug-in for the GIMP.
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
@@ -33,11 +31,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-
-#include <gtk/gtk.h>
+#include <string.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

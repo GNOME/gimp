@@ -18,14 +18,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#if HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
 #include "siod/siod.h"

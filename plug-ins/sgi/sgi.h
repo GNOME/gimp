@@ -1,6 +1,4 @@
 /*
- * "$Id$"
- *
  *   SGI image file format library definitions.
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
@@ -26,15 +24,6 @@
 
 #ifndef _SGI_H_
 #  define _SGI_H_
-
-#  include "config.h" 
-
-#  include <stdio.h>
-#  include <stdlib.h>
-#  ifdef HAVE_UNISTD_H
-#    include <unistd.h>
-#  endif
-#  include <string.h>
 
 #  ifdef __cplusplus
 extern "C" {

@@ -29,12 +29,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <types.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include "types.h"
 
 
 #define SCALE_WIDTH  100

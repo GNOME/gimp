@@ -18,12 +18,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include "config.h"
 
-#include <float.h>
-#include <math.h>
 #include <errno.h>
+#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 
 #include "libgimp/gimp.h"
 
@@ -87,7 +84,7 @@ my_acosd (real v)
 real
 slope (real_coordinate_type coord1, real_coordinate_type coord2)
 {
-  assert (coord2.x - coord1.x != 0);
+  g_assert (coord2.x - coord1.x != 0);
 
   return (coord2.y - coord1.y) / (coord2.x - coord1.x);
 }

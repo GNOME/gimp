@@ -22,10 +22,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -405,7 +405,7 @@ file_response_callback (GtkFileChooser *chooser,
               return;
             }
 
-          f = fopen (filename, "r");
+          f = g_fopen (filename, "r");
 
           if (f == NULL)
             {
@@ -436,7 +436,7 @@ file_response_callback (GtkFileChooser *chooser,
         }
       else
         {
-          FILE *f = fopen (filename, "w");
+          FILE *f = g_fopen (filename, "w");
 
           if (NULL == f)
             {

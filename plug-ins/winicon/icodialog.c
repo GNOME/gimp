@@ -21,8 +21,6 @@
 
 #include <config.h>
 
-#include <stdio.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

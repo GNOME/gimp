@@ -18,10 +18,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <setjmp.h>
+
+#include <glib/gstdio.h>
 
 #include <jpeglib.h>
 #include <jerror.h>
@@ -128,7 +129,7 @@ load_image (const gchar *filename,
       jerr.pub.output_message = my_output_message;
     }
 
-  if ((infile = fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (filename, "rb")) == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
@@ -830,7 +831,7 @@ load_thumbnail_image (const gchar *filename,
   jerr.pub.emit_message   = my_emit_message;
   jerr.pub.output_message = my_output_message;
 
-  if ((infile = fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (filename, "rb")) == NULL)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -29,6 +28,8 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <glib/gstdio.h>
 
 #include <jpeglib.h>
 #include <jerror.h>
@@ -136,7 +137,7 @@ background_jpeg_save (PreviewPersistent *pp)
         }
 
       /* we cleanup here (load_image doesn't run in the background) */
-      unlink (pp->file_name);
+      g_unlink (pp->file_name);
 
       if (abort_me == &(pp->abort_me))
         abort_me = NULL;
@@ -253,7 +254,7 @@ save_image (const gchar *filename,
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to write binary files.
    */
-  if ((outfile = fopen (filename, "wb")) == NULL)
+  if ((outfile = g_fopen (filename, "wb")) == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

@@ -38,11 +38,8 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
-#include <gtk/gtk.h>
-
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"

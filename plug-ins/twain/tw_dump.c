@@ -59,9 +59,15 @@
  *                     images.
  *  (07/23/04)  v0.6   Added Mac OS X support.
  */
-#include <stdio.h>
+
+#include "config.h"
+
 #include <string.h>
+
+#include <glib/gstdio.h>
+
 #include "libgimp/gimp.h"
+
 #include "tw_dump.h"
 #include "tw_func.h"
 #include "tw_util.h"
@@ -83,7 +89,7 @@ dumpPreTransferCallback(void *clientData)
    * write to the root directory.  Simplistic, but
    * gets the job done.
    */
-  outputFile = fopen(DUMP_FILE, "wb");
+  outputFile = g_fopen(DUMP_FILE, "wb");
 }
 
 /*
@@ -103,14 +109,14 @@ dumpBeginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   /* Keep going */
   return TRUE;
 }
-	
+
 /*
  * dumpDataTransferCallback
  *
  * The following function is called for each memory
  * block that is transferred from the data source.
  */
-int 
+int
 dumpDataTransferCallback(pTW_IMAGEINFO imageInfo,
 			 pTW_IMAGEMEMXFER imageMemXfer,
 			 void *clientData)
@@ -130,7 +136,7 @@ dumpDataTransferCallback(pTW_IMAGEINFO imageInfo,
   /* Keep going */
   return TRUE;
 }
-	
+
 /*
  * dumpEndTransferCallback
  *
@@ -187,7 +193,7 @@ dumpPostTransferCallback(int pendingCount, void *clientData)
   disableDS(twSession);
   closeDS(twSession);
   closeDSM(twSession);
-		
+
   /* Close the dump file */
   fclose(outputFile);
 
@@ -217,7 +223,7 @@ void readDumpedImage(pTW_SESSION twSession)
    * write to the root directory.  Simplistic, but
    * gets the job done.
    */
-  FILE *inputFile = fopen(DUMP_FILE, "rb");
+  FILE *inputFile = g_fopen(DUMP_FILE, "rb");
 
   /*
    * Inform our application that we are getting ready
@@ -242,9 +248,9 @@ void readDumpedImage(pTW_SESSION twSession)
 	  1, imageMemXfer.BytesWritten, inputFile);
 
     /* Call the data transfer callback function */
-    if (!(*twSession->transferFunctions->txfrDataCb) 
-	(&imageInfo, 
-	 &imageMemXfer,	
+    if (!(*twSession->transferFunctions->txfrDataCb)
+	(&imageInfo,
+	 &imageMemXfer,
 	 twSession->clientData))
       return;
 

@@ -56,8 +56,6 @@
 /******************************************************************************/
 
 #define                                    VERSIO  0.11
-/* Identifikation:    "@(#) <product>              <ver> <dd-mmm-yy>" */
-static char ident[] = "@(#) libfits.c              0.11  20-Dec-97  (%I%)";
 
 /******************************************************************************/
 /* FITS reading/writing library                                               */
@@ -86,12 +84,10 @@ static char ident[] = "@(#) libfits.c              0.11  20-Dec-97  (%I%)";
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+
+#include <glib/gstdio.h>
 
 #include "fitsrw.h"
 
@@ -350,7 +346,7 @@ static int fits_nan_32 (unsigned char *v)
  return (   ((k >= 0x7f7fffff) && (k <= 0x7fffffff))
          || ((k >= 0x00000001) && (k <= 0x00800000)));
 }
-     
+
 
 /*****************************************************************************/
 /* #BEG-PAR                                                                  */
@@ -519,7 +515,7 @@ FITS_FILE *fits_open (const char *filename, const char *openmode)
  if ((!reading) && (!writing))
    FITS_RETURN ("fits_open: Invalid openmode", NULL);
 
- fp = fopen (filename, reading ? "rb" : "wb");
+ fp = g_fopen (filename, reading ? "rb" : "wb");
  if (fp == NULL) FITS_RETURN ("fits_open: fopen() failed", NULL);
 
  ff = fits_new_filestruct ();
@@ -560,7 +556,7 @@ FITS_FILE *fits_open (const char *filename, const char *openmode)
    if (hdulist->used.blank_value) ff->blank_used = 1;
    if (hdulist->used.nan_value) ff->nan_used = 1;
 
-   if (n_hdr == 0)   
+   if (n_hdr == 0)
      ff->hdu_list = hdulist;
    else
      last_hdulist->next_hdu = hdulist;
@@ -572,7 +568,7 @@ FITS_FILE *fits_open (const char *filename, const char *openmode)
    if (fseek (fp, hdulist->data_offset+hdulist->data_size, SEEK_SET) < 0)
      break;
  }
- 
+
  return (ff);
 }
 
@@ -956,7 +952,7 @@ int fits_write_header (FITS_FILE *ff, FITS_HDU_LIST *hdulist)
 /*                                                                           */
 /* #END-PAR                                                                  */
 /*****************************************************************************/
- 
+
 static FITS_HDU_LIST *fits_decode_header (FITS_RECORD_LIST *hdr,
                         long hdr_offset, long dat_offset)
 
@@ -1101,7 +1097,7 @@ static FITS_HDU_LIST *fits_decode_header (FITS_RECORD_LIST *hdr,
                     || (   (hdulist->bitpix == -32)
                         && (   fits_ieee32_intel || fits_ieee32_motorola
                             || fits_ieee64_intel || fits_ieee64_motorola));
-   
+
  if (bitpix_supported)
  {
    if (hdulist->used.simple)
@@ -1165,11 +1161,11 @@ err_return:
 static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
 
 {register int maxelem;
-#define FITSNPIX 4096 
+#define FITSNPIX 4096
  unsigned char pixdat[FITSNPIX];
  int nelem, bpp;
  int blank_found = 0, nan_found = 0;
-   
+
  if (fseek (fp, hdu->data_offset, SEEK_SET) < 0)
    FITS_RETURN ("fits_eval_pixrange: cant position file", -1);
 
@@ -1191,7 +1187,7 @@ static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
        nelem -= maxelem;
        if (fread ((char *)pixdat, bpp, maxelem, fp) != maxelem)
          FITS_RETURN ("fits_eval_pixrange: error on read bitpix 8 data", -1);
-  
+
        ptr = pixdat;
        if (hdu->used.blank)
        {
@@ -1233,7 +1229,7 @@ static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
        nelem -= maxelem;
        if (fread ((char *)pixdat, bpp, maxelem, fp) != maxelem)
          FITS_RETURN ("fits_eval_pixrange: error on read bitpix 16 data", -1);
-  
+
        ptr = pixdat;
        if (hdu->used.blank)
        {FITS_BITPIX16 blankval = (FITS_BITPIX16)hdu->blank;
@@ -1278,7 +1274,7 @@ static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
        nelem -= maxelem;
        if (fread ((char *)pixdat, bpp, maxelem, fp) != maxelem)
          FITS_RETURN ("fits_eval_pixrange: error on read bitpix 32 data", -1);
-  
+
        ptr = pixdat;
        if (hdu->used.blank)
        {FITS_BITPIX32 blankval = (FITS_BITPIX32)hdu->blank;
@@ -1329,7 +1325,7 @@ static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
        nelem -= maxelem;
        if (fread ((char *)pixdat, bpp, maxelem, fp) != maxelem)
          FITS_RETURN ("fits_eval_pixrange: error on read bitpix -32 data", -1);
-  
+
        ptr = pixdat;
        while (maxelem-- > 0)
        {
@@ -1370,7 +1366,7 @@ static int fits_eval_pixrange (FILE *fp, FITS_HDU_LIST *hdu)
        nelem -= maxelem;
        if (fread ((char *)pixdat, bpp, maxelem, fp) != maxelem)
          FITS_RETURN ("fits_eval_pixrange: error on read bitpix -64 data", -1);
-  
+
        ptr = pixdat;
        while (maxelem-- > 0)
        {
@@ -1425,7 +1421,7 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
  long l_long;
  double l_double;
  char l_card[FITS_CARD_SIZE+1], msg[256];
- char *cp = ident, *dst, *end;
+ char *cp, *dst, *end;
 
  if (card == NULL) return (NULL);
 
@@ -1468,7 +1464,7 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
        FITS_RETURN ("fits_decode_card: error decoding typ_bitpixm64", NULL);
      data.bitpixm64 = (FITS_BITPIXM64)l_double;
      break;
-     
+
    case typ_fbool:
      cp = l_card+10;
      while (*cp == ' ') cp++;
@@ -1596,7 +1592,7 @@ FITS_HDU_LIST *fits_image_info (FITS_FILE *ff, int picind, int *hdupicind)
 
  if (ff->openmode != 'r')
    FITS_RETURN ("fits_image_info: file not open for reading", NULL);
-   
+
  if ((picind < 1) || (picind > ff->n_pic))
    FITS_RETURN ("fits_image_info: picind out of range", NULL);
 
@@ -1692,7 +1688,7 @@ int fits_read_pixel (FITS_FILE *ff, FITS_HDU_LIST *hdulist, int npix,
  FITS_BITPIXM64 bpm64;
 
  /* initialize */
- 
+
  bpm32 = 0;
 
  if (ff->openmode != 'r') return (-1);   /* Not open for reading */
@@ -1944,7 +1940,7 @@ int fits_to_pgmraw (char *fitsfile, char *pgmfile)
  if (hdu == NULL) goto err_return;
  if (hdu->naxis < 2) goto err_return;     /* Enough dimensions ? */
 
- pgmout = fopen (pgmfile, "wb");
+ pgmout = g_fopen (pgmfile, "wb");
  if (pgmout == NULL) goto err_return;
 
                                    /* Write PGM header with width/height */
@@ -1978,7 +1974,7 @@ int fits_to_pgmraw (char *fitsfile, char *pgmfile)
  retval = 0;
 
 err_return:
- 
+
  if (fitsin) fits_close (fitsin);
  if (pgmout) fclose (pgmout);
 
@@ -2015,7 +2011,7 @@ int pgmraw_to_fits (char *pgmfile, char *fitsfile)
  fitsout = fits_open (fitsfile, "w");
  if (fitsout == NULL) goto err_return;
 
- pgmin = fopen (pgmfile, "r");
+ pgmin = g_fopen (pgmfile, "r");
  if (pgmin == NULL) goto err_return;
 
  /* Read signature of PGM file */
@@ -2037,7 +2033,7 @@ int pgmraw_to_fits (char *pgmfile, char *fitsfile)
    if (fgets (buffer, sizeof (buffer), pgmin) == NULL) goto err_return;
  } while (buffer[0] == '#');
  /* Ignore maxval */
- 
+
  hdu = fits_add_hdu (fitsout);     /* Create a HDU for the FITS file */
  if (hdu == NULL) goto err_return;
 
@@ -2057,7 +2053,7 @@ int pgmraw_to_fits (char *pgmfile, char *fitsfile)
 
  fits_add_card (hdu, "");
  fits_add_card (hdu, "HISTORY THIS FITS FILE WAS GENERATED BY FITSRW\
- USING PGMRAW_TO_FITS"); 
+ USING PGMRAW_TO_FITS");
 
  /* Write the header. Blocking is done automatically */
  if (fits_write_header (fitsout, hdu) < 0) goto err_return;
@@ -2086,7 +2082,7 @@ int pgmraw_to_fits (char *pgmfile, char *fitsfile)
  retval = 0;
 
 err_return:
- 
+
  if (fitsout) fits_close (fitsout);
  if (pgmin) fclose (pgmin);
 

@@ -53,11 +53,9 @@
 #include <config.h>
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -417,7 +415,7 @@ get_info (const gchar *filename,
 
   *width = 0; *height = 0; *frames = 0;
 
-  file = fopen (filename ,"rb");
+  file = g_fopen (filename ,"rb");
 
   if (!file)
     {
@@ -453,7 +451,7 @@ load_image (const gchar *filename,
 
   gint cnt;
 
-  file = fopen (filename ,"rb");
+  file = g_fopen (filename ,"rb");
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -706,7 +704,7 @@ save_image (const gchar *filename,
   fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
   fli_header.oframe1  = fli_header.oframe2 = 0; /* will be fixed during the write */
 
-  file = fopen (filename ,"wb");
+  file = g_fopen (filename ,"wb");
   if (!file)
     {
       g_message (_("Could not open '%s' for writing: %s"),

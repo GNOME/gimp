@@ -24,13 +24,15 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <sys/wait.h>
-
-#include <unistd.h>
-#include <stdio.h>
 #include <string.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"

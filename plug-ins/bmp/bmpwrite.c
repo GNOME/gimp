@@ -30,12 +30,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+
+#include <glib/gstdio.h>
 
 #include <gtk/gtk.h>
 
@@ -192,7 +189,7 @@ WriteBMP (const gchar *filename,
     }
 
   /* Let's take some file */
-  outfile = fopen (filename, "wb");
+  outfile = g_fopen (filename, "wb");
   if (!outfile)
     {
       g_message (_("Could not open '%s' for writing: %s"),

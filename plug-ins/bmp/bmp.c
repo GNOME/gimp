@@ -50,7 +50,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -62,6 +61,7 @@
 #include "bmp.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 const gchar *filename  = NULL;
 gboolean     interactive_bmp;

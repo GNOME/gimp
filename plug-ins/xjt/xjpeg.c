@@ -31,10 +31,11 @@
 
 #include "config.h"
 
-#include <setjmp.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <setjmp.h>
+
+#include <glib/gstdio.h>
 
 /* Include for External Libraries */
 #include <jpeglib.h>
@@ -83,12 +84,12 @@ my_error_exit (j_common_ptr cinfo)
  */
 
 gint32
-xjpg_load_layer (char   *filename,
-	    gint32  image_id,
-            int     image_type,
-            char          *layer_name,
-            gdouble        layer_opacity,
-            GimpLayerModeEffects     layer_mode
+xjpg_load_layer (const char    *filename,
+                 gint32         image_id,
+                 int            image_type,
+                 char          *layer_name,
+                 gdouble        layer_opacity,
+                 GimpLayerModeEffects     layer_mode
 	    )
 {
   GimpPixelRgn l_pixel_rgn;
@@ -110,7 +111,7 @@ xjpg_load_layer (char   *filename,
 
   l_layer_type = GIMP_GRAY_IMAGE;
 
-  if ((infile = fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (filename, "rb")) == NULL)
   {
       g_warning ("can't open \"%s\"\n", filename);
       return -1;
@@ -267,10 +268,9 @@ xjpg_load_layer (char   *filename,
  */
 
 gint
-xjpg_load_layer_alpha (char   *filename,
-	    gint32  image_id,
-            gint32  layer_id
-	    )
+xjpg_load_layer_alpha (const char *filename,
+                       gint32      image_id,
+                       gint32      layer_id)
 {
   GimpPixelRgn l_pixel_rgn;
   GimpDrawable *l_drawable;
@@ -297,7 +297,7 @@ xjpg_load_layer_alpha (char   *filename,
   /* add alpha channel */
   gimp_layer_add_alpha (layer_id);
 
-  if ((infile = fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (filename, "rb")) == NULL)
   {
       /* No alpha found, thats OK, use full opaque alpha channel
        * (there is no need not store alpha channels on full opaque channels)
@@ -373,7 +373,7 @@ xjpg_load_layer_alpha (char   *filename,
 
   /* Check if jpeg file can be used as alpha channel
    */
-  if((cinfo.output_components != 1) || 
+  if((cinfo.output_components != 1) ||
      (cinfo.output_width  != l_drawable->width) ||
      (cinfo.output_height != l_drawable->height))
   {
@@ -381,7 +381,7 @@ xjpg_load_layer_alpha (char   *filename,
      fclose (infile);
      return -1;
   }
-  
+
   /* buffer to read in the layer and merge with the alpha from jpeg file */
   l_dstbuf = g_new (guchar, l_tile_height * l_drawable->width * l_drawable->bpp);
 
@@ -466,13 +466,12 @@ xjpg_load_layer_alpha (char   *filename,
  */
 
 gint32
-xjpg_load_channel (char   *filename,
-	    gint32  image_id,
-	    gint32  drawable_id,
-            char          *channel_name,
-            gdouble        channel_opacity,
-            guchar red, guchar  green, guchar blue
-	    )
+xjpg_load_channel (const char   *filename,
+                   gint32        image_id,
+                   gint32        drawable_id,
+                   char         *channel_name,
+                   gdouble       channel_opacity,
+                   guchar red, guchar  green, guchar blue)
 {
   GimpPixelRgn l_pixel_rgn;
   GimpDrawable *l_drawable;
@@ -493,7 +492,7 @@ xjpg_load_channel (char   *filename,
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  if ((infile = fopen (filename, "rb")) == NULL)
+  if ((infile = g_fopen (filename, "rb")) == NULL)
   {
       g_warning ("can't open \"%s\"\n", filename);
       return -1;
@@ -586,7 +585,7 @@ xjpg_load_channel (char   *filename,
   }
 
   l_drawable = gimp_drawable_get (l_drawable_id);
-  
+
   if((l_drawable->width != cinfo.output_width)
   || (l_drawable->height != cinfo.output_height)
   || (l_drawable->bpp != cinfo.output_components) )
@@ -664,17 +663,17 @@ xjpg_load_channel (char   *filename,
  *   - save the drawable without alpha channel.
  *     (optional clear full transparent pixels to 0,
  *      resulting in better compression)
- *   - save the alpha channel 
+ *   - save the alpha channel
  * ============================================================================
  */
 
 
 gint
-xjpg_save_drawable (char   *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint save_mode,
-	    t_JpegSaveVals *jsvals)
+xjpg_save_drawable (const char     *filename,
+                    gint32          image_ID,
+                    gint32          drawable_ID,
+                    gint            save_mode,
+                    t_JpegSaveVals *jsvals)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
@@ -698,7 +697,7 @@ xjpg_save_drawable (char   *filename,
   temp = NULL;
   data = NULL;
   l_alpha_sum = 0xff;
-  
+
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
   switch (drawable_type)
@@ -711,7 +710,7 @@ xjpg_save_drawable (char   *filename,
     case GIMP_RGBA_IMAGE:
     case GIMP_GRAYA_IMAGE:
       break;
-      
+
     case GIMP_INDEXED_IMAGE:
       /*g_message ("jpeg: cannot operate on indexed color images");*/
       return FALSE;
@@ -764,7 +763,7 @@ xjpg_save_drawable (char   *filename,
    * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
    * requires it in order to write binary files.
    */
-  if ((outfile = fopen (filename, "wb")) == NULL)
+  if ((outfile = g_fopen (filename, "wb")) == NULL)
     {
       g_message ("can't open %s\n", filename);
       return FALSE;
@@ -846,7 +845,7 @@ xjpg_save_drawable (char   *filename,
   temp = (guchar *) g_malloc (cinfo.image_width * cinfo.input_components);
   data = (guchar *) g_malloc (rowstride * gimp_tile_height ());
   src = data;
-  
+
   while (cinfo.next_scanline < cinfo.image_height)
   {
       if ((cinfo.next_scanline % gimp_tile_height ()) == 0)
@@ -927,7 +926,7 @@ xjpg_save_drawable (char   *filename,
      * == full opaque image. We can remove the file
      * to save diskspace
      */
-    remove(filename);
+    g_remove(filename);
   }
 
   /* Step 7: release JPEG compression object */

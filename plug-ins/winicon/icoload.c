@@ -23,7 +23,8 @@
 
 #include <errno.h>
 #include <string.h>
-#include <stdio.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -121,7 +122,7 @@ ico_init (const gchar *filename,
 {
   memset (ico, 0, sizeof (MsIcon));
 
-  if (! (ico->fp = fopen (filename, "r")))
+  if (! (ico->fp = g_fopen (filename, "r")))
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));

@@ -18,8 +18,9 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <stdio.h>
+#include <errno.h>
+
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -119,7 +120,7 @@ read_command (GString *command)
   return FALSE;
 }
 
-static void 
+static void
 script_fu_text_console_interface (void)
 {
   GString *command = g_string_new (NULL);

@@ -1,14 +1,13 @@
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
-#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
+#include <libgimpmath/gimpmath.h>
 
 #include "ppmtool.h"
 #include "gimpressionist.h"
@@ -227,11 +226,12 @@ fopen_from_search_path (const gchar * fn, const char * mode)
 {
   FILE  * f;
   gchar * full_filename;
-  f = fopen (fn, mode);
+
+  f = g_fopen (fn, mode);
   if (!f)
     {
       full_filename = findfile (fn);
-      f = fopen (full_filename, mode);
+      f = g_fopen (full_filename, mode);
       g_free (full_filename);
     }
   return f;
@@ -250,7 +250,8 @@ load_gimp_brush (const gchar *fn, ppm_t *p)
 
   if (!f)
     {
-      fprintf (stderr, "load_gimp_brush: Unable to open file \"%s\"!\n", fn);
+      g_printerr ("load_gimp_brush: Unable to open file \"%s\"!\n",
+                  gimp_filename_to_utf8 (fn));
       ppm_new (p, 10,10);
       return;
     }
@@ -274,7 +275,7 @@ load_gimp_brush (const gchar *fn, ppm_t *p)
         }
     }
   fclose (f);
-  free (ptr);
+  g_free (ptr);
 }
 
 void
@@ -296,7 +297,8 @@ ppm_load (const char *fn, ppm_t *p)
 
   if (!f)
     {
-      fprintf (stderr, "ppm_load: Unable to open file \"%s\"!\n", fn);
+      g_printerr ("ppm_load: Unable to open file \"%s\"!\n",
+                  gimp_filename_to_utf8 (fn));
       ppm_new (p, 10,10);
       return;
     }
@@ -307,8 +309,8 @@ ppm_load (const char *fn, ppm_t *p)
       if (strcmp (line, "P5"))
         {
           fclose (f);
-          printf ("ppm_load: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n",
-                  fn, line, 7);
+          g_printerr ("ppm_load: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n",
+                      gimp_filename_to_utf8 (fn), line, 7);
           ppm_new (p, 10,10);
           return;
     }
@@ -320,8 +322,8 @@ ppm_load (const char *fn, ppm_t *p)
   readline (f, line, 200);
   if (strcmp (line, "255"))
   {
-    printf ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n",
-            fn, line, 7);
+    g_printerr ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n",
+                gimp_filename_to_utf8 (fn), line, 7);
     ppm_new (p, 10,10);
     return;
   }
@@ -619,7 +621,7 @@ ppm_pad (ppm_t *p, int left,int right, int top, int bottom, guchar *bg)
 void
 ppm_save (ppm_t *p, const char *fn)
 {
-  FILE *f = fopen (fn, "wb");
+  FILE *f = g_fopen (fn, "wb");
 
   if (!f)
     {

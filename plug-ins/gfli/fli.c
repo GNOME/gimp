@@ -17,16 +17,17 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
- 
+
 /*
  * This code can be used to read and write FLI movies. It is currently
  * only used for the GIMP fli plug-in, but it can be used for other
  * programs, too.
  */
- 
-#include <stdio.h>
-#include <stdlib.h>
+
+#include "config.h"
+
 #include <string.h>
+#include <stdio.h>
 
 #include "fli.h"
 
@@ -160,7 +161,7 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frameb
 			if (chunk.size & 1) chunk.size++;
 			fseek(f,chunkpos+chunk.size,SEEK_SET);
 		}
-	} /* else: unknown, skip */ 
+	} /* else: unknown, skip */
 	fseek(f, framepos+fli_frame.size, SEEK_SET);
 }
 
@@ -180,8 +181,8 @@ void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frame
 	fli_frame.magic=FRAME;
 	fli_frame.chunks=0;
 
-	/* 
-	 * create color chunk 
+	/*
+	 * create color chunk
 	 */
 	if (fli_header->magic == HEADER_FLI) {
 		if (fli_write_color(f, fli_header, old_cmap, cmap)) fli_frame.chunks++;
@@ -208,7 +209,7 @@ void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frame
 		fli_write_lc(f, fli_header, old_framebuf, framebuf);
 	}
 	fli_frame.chunks++;
-	
+
 	frameend=ftell(f);
 	fli_frame.size=frameend-framepos;
 	fseek(f, framepos, SEEK_SET);
@@ -254,7 +255,7 @@ int fli_write_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, 
 {
 	unsigned long chunkpos;
 	unsigned short num_packets;
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 	chunkpos=ftell(f);
 	fseek(f, chunkpos+8, SEEK_SET);
 	num_packets=0;
@@ -270,12 +271,12 @@ int fli_write_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, 
 		unsigned short num_packets, cnt_skip, cnt_col, col_pos, col_start;
 		num_packets=0; col_pos=0;
 		do {
-			cnt_skip=0; 
+			cnt_skip=0;
 			while ((col_pos<256) && (old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2])) {
 				cnt_skip++; col_pos++;
 			}
 			col_start=col_pos;
-			cnt_col=0; 
+			cnt_col=0;
 			while ((col_pos<256) && !((old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2]))) {
 				cnt_col++; col_pos++;
 			}
@@ -327,14 +328,14 @@ void fli_read_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap
 				cmap[col_pos]=fli_read_char(f);
 			}
 			return;
-		} 
+		}
 		for (col_cnt=skip_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
 			cmap[col_pos]=old_cmap[col_pos];col_pos++;
 			cmap[col_pos]=old_cmap[col_pos];col_pos++;
 			cmap[col_pos]=old_cmap[col_pos];col_pos++;
 		}
 		for (col_cnt=num_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
-			cmap[col_pos++]=fli_read_char(f);				
+			cmap[col_pos++]=fli_read_char(f);
 			cmap[col_pos++]=fli_read_char(f);
 			cmap[col_pos++]=fli_read_char(f);
 		}
@@ -345,7 +346,7 @@ int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap
 {
 	unsigned long chunkpos;
 	unsigned short num_packets;
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 	chunkpos=ftell(f);
 	fseek(f, chunkpos+8, SEEK_SET);
 	num_packets=0;
@@ -361,12 +362,12 @@ int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap
 		unsigned short num_packets, cnt_skip, cnt_col, col_pos, col_start;
 		num_packets=0; col_pos=0;
 		do {
-			cnt_skip=0; 
+			cnt_skip=0;
 			while ((col_pos<256) && (old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2])) {
 				cnt_skip++; col_pos++;
 			}
 			col_start=col_pos;
-			cnt_col=0; 
+			cnt_col=0;
 			while ((col_pos<256) && !((old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2]))) {
 				cnt_col++; col_pos++;
 			}
@@ -410,7 +411,7 @@ void fli_read_black(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 
 void fli_write_black(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 {
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 
 	chunk.size=6;
 	chunk.magic=FLI_BLACK;
@@ -429,9 +430,9 @@ void fli_read_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 
 void fli_write_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 {
-	
+
 	unsigned long chunkpos;
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 	chunkpos=ftell(f);
 	fseek(f, chunkpos+6, SEEK_SET);
 	fwrite(framebuf, fli_header->width, fli_header->height, f);
@@ -441,7 +442,7 @@ void fli_write_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 	fseek(f, chunkpos, SEEK_SET);
 	fli_write_long(f, chunk.size);
 	fli_write_short(f, chunk.magic);
-	
+
 	if (chunk.size & 1) chunk.size++;
 	fseek(f,chunkpos+chunk.size,SEEK_SET);
 }
@@ -462,10 +463,10 @@ void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 			unsigned short ps;
 			ps=fli_read_char(f);
 			if (ps & 0x80) {
-				unsigned short len; 
+				unsigned short len;
 				for (len=-(signed char)ps; len>0; len--) {
 					pos[xc++]=fli_read_char(f);
-				} 
+				}
 			} else {
 				unsigned char val;
 				val=fli_read_char(f);
@@ -473,16 +474,16 @@ void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 				xc+=ps;
 			}
 		}
-	} 
+	}
 }
 
 void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 {
 	unsigned long chunkpos;
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 	unsigned short yc;
 	unsigned char *linebuf;
-	
+
 	chunkpos=ftell(f);
 	fseek(f, chunkpos+6, SEEK_SET);
 
@@ -496,7 +497,7 @@ void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 		while (xc < fli_header->width) {
 			pc=1;
 			while ((pc<120) && ((xc+pc)<fli_header->width) && (linebuf[xc+pc] == linebuf[xc])) {
-				pc++; 
+				pc++;
 			}
 			if (pc>2) {
 				if (tc>0) {
@@ -527,7 +528,7 @@ void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 			fwrite(linebuf+t1, 1, tc, f);
 			tc=0;
 		}
-		lineend=ftell(f); 
+		lineend=ftell(f);
 		fseek(f, linepos, SEEK_SET);
 		fli_write_char(f, bc);
 		fseek(f, lineend, SEEK_SET);
@@ -539,13 +540,13 @@ void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 	fseek(f, chunkpos, SEEK_SET);
 	fli_write_long(f, chunk.size);
 	fli_write_short(f, chunk.magic);
-	
+
 	if (chunk.size & 1) chunk.size++;
 	fseek(f,chunkpos+chunk.size,SEEK_SET);
 }
 
 /*
- * This is the delta-compression method from the classic Autodesk Animator. 
+ * This is the delta-compression method from the classic Autodesk Animator.
  * It's basically the RLE method from above, but it allows to skip unchanged
  * lines at the beginning and end of an image, and unchanged pixels in a line
  * This chunk is used in FLI files.
@@ -578,30 +579,30 @@ void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf,
 				xc+=ps;
 			}
 		}
-	} 
+	}
 }
 
 void fli_write_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *framebuf)
 {
 	unsigned long chunkpos;
-	s_fli_chunk chunk; 
+	s_fli_chunk chunk;
 	unsigned short yc, firstline, numline, lastline;
 	unsigned char *linebuf, *old_linebuf;
-	
+
 	chunkpos=ftell(f);
 	fseek(f, chunkpos+6, SEEK_SET);
 
 	/* first check, how many lines are unchanged at the beginning */
 	firstline=0;
 	while ((memcmp(old_framebuf+(firstline*fli_header->width), framebuf+(firstline*fli_header->width), fli_header->width)==0) && (firstline<fli_header->height)) firstline++;
-	
+
 	/* then check from the end, how many lines are unchanged */
 	if (firstline<fli_header->height) {
 		lastline=fli_header->height-1;
 		while ((memcmp(old_framebuf+(lastline*fli_header->width), framebuf+(lastline*fli_header->width), fli_header->width)==0) && (lastline>firstline)) lastline--;
 		numline=(lastline-firstline)+1;
 	} else {
-		numline=0; 
+		numline=0;
 	}
 	if (numline==0) firstline=0;
 
@@ -651,7 +652,7 @@ void fli_write_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf
 				xc+=tc;
 			}
 		}
-		lineend=ftell(f); 
+		lineend=ftell(f);
 		fseek(f, linepos, SEEK_SET);
 		fli_write_char(f, bc);
 		fseek(f, lineend, SEEK_SET);
@@ -663,7 +664,7 @@ void fli_write_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf
 	fseek(f, chunkpos, SEEK_SET);
 	fli_write_long(f, chunk.size);
 	fli_write_short(f, chunk.magic);
-	
+
 	if (chunk.size & 1) chunk.size++;
 	fseek(f,chunkpos+chunk.size,SEEK_SET);
 }
@@ -717,5 +718,5 @@ void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebu
 		}
 		if (lpf) pos[xc]=lpn;
 		yc++;
-	} 
+	}
 }

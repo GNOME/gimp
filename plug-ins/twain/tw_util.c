@@ -64,7 +64,7 @@
 
 #include <glib.h>		/* Needed when compiling with gcc */
 
-#include <stdio.h>
+#include <glib/gstdio.h>
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -91,7 +91,7 @@ LogMessage(char *format, ...)
 
   /* Open the log file as necessary */
   if (!logFile)
-    logFile = fopen(DEBUG_LOGFILE, "w");
+    logFile = g_fopen(DEBUG_LOGFILE, "w");
 
   time_of_day = time(NULL);
   ctime_string = ctime(&time_of_day);

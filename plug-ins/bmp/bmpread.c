@@ -24,9 +24,9 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <gtk/gtk.h>
 
@@ -126,7 +126,8 @@ ReadChannelMasks (FILE *fd, Bitmap_Channel *masks, guint channels)
       masks[i].shiftin = offset;
       masks[i].shiftout = 8 - nbits;
 #ifdef DEBUG
-      g_print ("Channel %d mask %08x in %d out %d\n", i, masks[i].mask, masks[i].shiftin, masks[i].shiftout);
+      g_print ("Channel %d mask %08x in %d out %d\n",
+               i, masks[i].mask, masks[i].shiftin, masks[i].shiftout);
 #endif
     }
   return TRUE;
@@ -145,7 +146,7 @@ ReadBMP (const gchar *name)
   Bitmap_Channel *masks;
 
   filename = name;
-  fd = fopen (filename, "rb");
+  fd = g_fopen (filename, "rb");
 
   if (!fd)
     {
@@ -160,17 +161,17 @@ ReadBMP (const gchar *name)
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 
-  if (!ReadOK (fd, magick, 2) || !(!strncmp (magick,"BA",2) ||
-     !strncmp (magick,"BM",2) || !strncmp (magick,"IC",2)   ||
-     !strncmp (magick,"PI",2) || !strncmp (magick,"CI",2)   ||
-     !strncmp (magick,"CP",2)))
+  if (!ReadOK (fd, magick, 2) || !(!strncmp (magick, "BA", 2) ||
+     !strncmp (magick, "BM", 2) || !strncmp (magick, "IC", 2) ||
+     !strncmp (magick, "PI", 2) || !strncmp (magick, "CI", 2) ||
+     !strncmp (magick, "CP", 2)))
     {
       g_message (_("'%s' is not a valid BMP file"),
                  gimp_filename_to_utf8 (filename));
       return -1;
     }
 
-  while (!strncmp(magick,"BA",2))
+  while (!strncmp (magick, "BA", 2))
     {
       if (!ReadOK (fd, buffer, 12))
 	{

@@ -1,9 +1,29 @@
+/**********************************************************************
+   The GIMP -- an image manipulation program
+   Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *********************************************************************/
+
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -1790,12 +1810,10 @@ save_options (FILE * fp)
 static void
 save_callback (void)
 {
-  FILE  *fp;
-  gchar *savename;
+  FILE        *fp;
+  const gchar *savename = filename;
 
-  savename = filename;
-
-  fp = fopen (savename, "wt+");
+  fp = g_fopen (savename, "wt+");
 
   if (!fp)
     {
@@ -2093,7 +2111,8 @@ explorer_load (void)
   gchar  load_buf[MAX_LOAD_LINE];
 
   g_assert (filename != NULL);
-  fp = fopen (filename, "rt");
+
+  fp = g_fopen (filename, "rt");
 
   if (!fp)
     {

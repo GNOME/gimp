@@ -20,17 +20,18 @@
  */
 #include "config.h"
 
-#include <glib.h>		/* For G_OS_WIN32 */
-
 #include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #include <sys/types.h>
-#include <string.h>
 #include <fcntl.h>
+
+#include <glib.h>		/* For G_OS_WIN32 */
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -211,7 +212,7 @@ load_image (const gchar *filename)
 
   init_byte_tab( 0, byte_tab );
 
-  fd = open (filename, O_RDONLY | _O_BINARY);
+  fd = g_open (filename, O_RDONLY | _O_BINARY);
 
   if (fd < 0)
     {
@@ -232,7 +233,7 @@ load_image (const gchar *filename)
   lseek(fd, 0L, 0);
 
   rs = read( fd, rbuf, sizeof(rbuf) );
-  if ( rs < 0 ) { perror( "read" ); close( rs ); exit(8); }
+  if ( rs < 0 ) { perror( "read" ); close( rs ); gimp_quit (); }
   rr += rs;
   gimp_progress_update ((float)rr/rsize/2.0);
 
@@ -250,7 +251,7 @@ load_image (const gchar *filename)
   while ( rs > 0 && cons_eol < 4 )	/* i.e., while (!EOF) */
   {
 #ifdef DEBUG
-    fprintf( stderr, "hibit=%2d, data=", hibit );
+    g_printerr ("hibit=%2d, data=", hibit );
     putbin( data );
 #endif
     while ( hibit < 20 )
@@ -268,7 +269,7 @@ load_image (const gchar *filename)
         if ( rs == 0 ) { goto do_write; }
       }
 #ifdef DEBUG
-      fprintf( stderr, "hibit=%2d, data=", hibit );
+      g_printerr ("hibit=%2d, data=", hibit );
       putbin( data );
 #endif
     }
@@ -287,7 +288,7 @@ load_image (const gchar *filename)
 
 	if ( p == NULL )	/* invalid code */
 	{
-	    fprintf( stderr, "invalid code, row=%d, col=%d, file offset=%lx, skip to eol\n",
+	    g_printerr ("invalid code, row=%d, col=%d, file offset=%lx, skip to eol\n",
 		     row, col, (unsigned long) lseek( fd, 0, 1 ) - rs + rp );
 	    while ( ( data & 0x03f ) != 0 )
 	    {
@@ -316,7 +317,7 @@ load_image (const gchar *filename)
 
 	    nr_pels = ( (struct g3_leaf *) p ) ->nr_pels;
 #ifdef DEBUG
-	    fprintf( stderr, "PELs: %d (%c)\n", nr_pels, '0'+color );
+	    g_printerr ("PELs: %d (%c)\n", nr_pels, '0'+color );
 #endif
 	}
 
@@ -324,7 +325,7 @@ load_image (const gchar *filename)
 	if ( nr_pels == -1 )
 	{
 #ifdef DEBUG
-	    fprintf( stderr, "hibit=%2d, data=", hibit );
+	    g_printerr ("hibit=%2d, data=", hibit );
 	    putbin( data );
 #endif
 	    /* skip filler 0bits -> seek for "1"-bit */
@@ -354,7 +355,7 @@ load_image (const gchar *filename)
 		    }
 		}
 #ifdef DEBUG
-	    fprintf( stderr, "hibit=%2d, data=", hibit );
+	    g_printerr ("hibit=%2d, data=", hibit );
 	    putbin( data );
 #endif
 	    }				/* end skip 0bits */
@@ -371,21 +372,21 @@ load_image (const gchar *filename)
 
 		/* bitmap memory full? make it larger! */
 		if ( row >= max_rows )
-		{
-		    char * p = (char *) realloc( bitmap,
-				       ( max_rows += 500 ) * MAX_COLS/8 );
+                  {
+                    gchar *p = g_try_realloc( bitmap,
+                                              ( max_rows += 500 ) * MAX_COLS/8 );
 		    if ( p == NULL )
-		    {
+                      {
 			perror( "realloc() failed, page truncated" );
 			rs = 0;
-		    }
+                      }
 		    else
-		    {
+                      {
 			bitmap = p;
 			memset( &bitmap[ row * MAX_COLS/8 ], 0,
 			       ( max_rows - row ) * MAX_COLS/8 );
-		    }
-		}
+                      }
+                  }
 
 		col=0; bp = &bitmap[ row * MAX_COLS/8 ];
 		cons_eol = 0;
@@ -418,7 +419,7 @@ do_write:      	/* write pbm (or whatever) file */
     if( fd != 0 ) close(fd);	/* close input file */
 
 #ifdef DEBUG
-    fprintf( stderr, "consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol );
+    g_printerr ("consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol );
 #endif
 
     image_id = emitgimp (hcol, row, bitmap, bperrow, filename);
@@ -454,7 +455,7 @@ emitgimp (gint         hcol,
   tmp = 0;
 
 #ifdef DEBUG
-  fprintf( stderr, "emit gimp: %d x %d\n", hcol, row);
+  g_printerr ("emit gimp: %d x %d\n", hcol, row);
 #endif
 
   image_ID = gimp_image_new (hcol, row, GIMP_GRAY);
@@ -471,7 +472,7 @@ emitgimp (gint         hcol,
                        0, 0, drawable->width, drawable->height, TRUE, FALSE);
   tile_height = gimp_tile_height ();
 #ifdef DEBUG
-  fprintf( stderr, "tile height: %d\n", tile_height);
+  g_printerr ("tile height: %d\n", tile_height);
 #endif
 
   buf = g_new (guchar, hcol*tile_height);
@@ -484,7 +485,7 @@ emitgimp (gint         hcol,
     }
     if ((y-yy) == tile_height-1) {
 #ifdef DEBUG
-      fprintf( stderr, "update tile height: %d\n", tile_height);
+      g_printerr ("update tile height: %d\n", tile_height);
 #endif
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, yy, hcol, tile_height);
       gimp_progress_update (0.5+(float)y/row/2.0);
@@ -494,7 +495,7 @@ emitgimp (gint         hcol,
   }
   if (row-yy) {
 #ifdef DEBUG
-    fprintf( stderr, "update rest: %d\n", row-yy);
+    g_printerr ("update rest: %d\n", row-yy);
 #endif
     gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, yy, hcol, row-yy);
   }

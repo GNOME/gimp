@@ -51,12 +51,15 @@
 
 #include "config.h"
 
-#include <stdio.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <glib/gstdio.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1132,9 +1135,8 @@ fractalexplorer_free_everything (fractalexplorerOBJ *fractalexplorer)
   g_assert (fractalexplorer != NULL);
 
   if (fractalexplorer->filename)
-    {
-      remove (fractalexplorer->filename);
-    }
+    g_remove (fractalexplorer->filename);
+
   fractalexplorer_free (fractalexplorer);
 }
 
@@ -1155,10 +1157,12 @@ fractalexplorer_load (const gchar *filename,
   gchar load_buf[MAX_LOAD_LINE];
 
   g_assert (filename != NULL);
-  fp = fopen (filename, "rt");
+
+  fp = g_fopen (filename, "rt");
   if (!fp)
     {
-      g_warning ("Error opening: %s", filename);
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -1212,7 +1216,7 @@ fractalexplorer_list_load_one (const GimpDatafileData *file_data,
 
   if (fractalexplorer)
     {
-      /* Read only ?*/
+      /* Read only ?*/  /* FIXME: filename handling for Win32 */
       if (access (filename, W_OK))
         fractalexplorer->obj_status |= fractalexplorer_READONLY;
 

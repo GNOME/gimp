@@ -30,11 +30,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -2399,7 +2398,7 @@ ifsfile_save_response (GtkWidget *dialog,
 
       str = ifsvals_stringify (&ifsvals, elements);
 
-      fh = fopen (filename, "w");
+      fh = g_fopen (filename, "w");
       if (! fh)
         {
           gchar *message =

@@ -559,13 +559,13 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   /* Create the GIMP image */
   theClientData->image_id = gimp_image_new(imageInfo->ImageWidth,
 					   imageInfo->ImageLength, imageType);
-  
+
   /* Set the actual resolution */
   gimp_image_set_resolution (theClientData->image_id,
                              FIX32ToFloat(imageInfo->XResolution),
                              FIX32ToFloat(imageInfo->YResolution));
   gimp_image_set_unit (theClientData->image_id, GIMP_UNIT_INCH);
-  
+
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
 					   _("Background"),

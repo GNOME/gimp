@@ -24,11 +24,7 @@
 
 #include "config.h"
 
-#include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 
@@ -36,6 +32,7 @@
 #include "gfig-grid.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /* For the isometric grid */
 #define SQRT3 1.73205080756887729353   /* Square root of 3 */

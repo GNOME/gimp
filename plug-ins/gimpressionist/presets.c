@@ -1,15 +1,16 @@
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+
 #include <sys/stat.h>
 #include <sys/types.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -90,7 +91,7 @@ get_early_line_from_preset (gchar *full_path, const gchar *prefix)
   gint prefix_len, line_idx;
 
   prefix_len = strlen (prefix);
-  f = fopen (full_path, "rt");
+  f = g_fopen (full_path, "rt");
   if (f)
     {
       /* Skip the preset magic. */
@@ -227,10 +228,11 @@ load_old_preset (const gchar *fname)
   FILE *f;
   int   len;
 
-  f = fopen (fname, "rb");
+  f = g_fopen (fname, "rb");
   if (!f)
     {
-      fprintf (stderr, "Error opening file \"%s\" for reading!%c\n", fname, 7);
+      g_printerr ("Error opening file \"%s\" for reading!\n",
+                  gimp_filename_to_utf8 (fname));
       return -1;
     }
   len = fread (&pcvals, 1, sizeof (pcvals), f);
@@ -447,10 +449,11 @@ load_preset (const gchar *fn)
   char  line[1024] = "";
   FILE *f;
 
-  f = fopen (fn, "rt");
+  f = g_fopen (fn, "rt");
   if (!f)
     {
-      fprintf (stderr, "Error opening file \"%s\" for reading!\n", fn);
+      g_printerr ("Error opening file \"%s\" for reading!\n",
+                  gimp_filename_to_utf8 (fn));
       return -1;
     }
   fgets (line, 10, f);
@@ -567,9 +570,7 @@ delete_preset (GtkWidget *w, GtkTreeSelection *selection)
             {
               /* Don't delete global presets - bug # 147483 */
               if (can_delete_preset (abs))
-                {
-                  unlink (abs);
-                }
+                g_unlink (abs);
 
               g_free (abs);
             }
@@ -693,7 +694,7 @@ save_preset (void)
 
   if (!thispath)
     {
-      g_printerr ("Internal error: (save_preset) thispath == NULL");
+      g_printerr ("Internal error: (save_preset) thispath == NULL\n");
       return;
     }
 
@@ -704,12 +705,13 @@ save_preset (void)
 
   if (!g_file_test (presets_dir_path, G_FILE_TEST_IS_DIR))
     {
-      if (mkdir (presets_dir_path,
-                 S_IRUSR | S_IWUSR | S_IXUSR |
-                 S_IRGRP | S_IXGRP |
-                 S_IROTH | S_IXOTH) == -1)
+      if (g_mkdir (presets_dir_path,
+                   S_IRUSR | S_IWUSR | S_IXUSR |
+                   S_IRGRP | S_IXGRP |
+                   S_IROTH | S_IXOTH) == -1)
         {
-          g_printerr ("Error creating folder \"%s\"!\n", presets_dir_path);
+          g_printerr ("Error creating folder \"%s\"!\n",
+                      gimp_filename_to_utf8 (presets_dir_path));
           g_free (presets_dir_path);
           return;
         }
@@ -737,10 +739,11 @@ save_preset (void)
       return;
     }
 
-  f = fopen (fname, "wt");
+  f = g_fopen (fname, "wt");
   if (!f)
     {
-      g_printerr ("Error opening file \"%s\" for writing!%c\n", fname, 7);
+      g_printerr ("Error opening file \"%s\" for writing!\n",
+                  gimp_filename_to_utf8 (fname));
       g_free (fname);
       return;
     }

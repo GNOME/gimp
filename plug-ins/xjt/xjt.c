@@ -56,7 +56,6 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -66,7 +65,8 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -74,9 +74,6 @@
 
 #ifdef G_OS_WIN32
 #include <process.h> /* getpid() */
-#include <direct.h> /* _mkdir */
-#define mkdir(path,mode) _mkdir(path)
-#define mode_t int
 #endif
 
 /* XJT includes */
@@ -1634,7 +1631,6 @@ save_xjt_image (const gchar *filename,
   gchar  *l_jpg_file;
   gchar  *l_cmd;
   FILE   *l_fp_prp;
-  mode_t  l_mode_dir;
 
   GimpImageBaseType l_image_type;
   gint32 *l_layers_list;
@@ -1690,8 +1686,7 @@ save_xjt_image (const gchar *filename,
   /* create temporary directory */
   l_dirname = gimp_temp_name (".tmpdir");
   l_prop_file = g_strdup_printf ("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
-  l_mode_dir = 0777;
-  if (mkdir (l_dirname, l_mode_dir) != 0)
+  if (g_mkdir (l_dirname, 0777) != 0)
     {
       g_message (_("Could not create working folder '%s': %s"),
                  gimp_filename_to_utf8 (l_dirname), g_strerror (errno));
@@ -1699,7 +1694,7 @@ save_xjt_image (const gchar *filename,
     }
 
   /* create property file PRP */
-  l_fp_prp = fopen (l_prop_file, "w");
+  l_fp_prp = g_fopen (l_prop_file, "w");
   if (l_fp_prp == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -3282,7 +3277,6 @@ load_xjt_image (const gchar *filename)
   gchar  *l_prop_file;
   gchar  *l_jpg_file;
   gchar  *l_cmd;
-  mode_t  l_mode_dir;
 
   gint32 *l_layers_list;
   gint32 *l_channels_list;
@@ -3318,8 +3312,8 @@ load_xjt_image (const gchar *filename)
   /* create temporary directory */
   l_dirname = gimp_temp_name (".tmpdir");
   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
-  l_mode_dir = 0777;
-  if(mkdir(l_dirname, l_mode_dir) != 0)
+
+  if(g_mkdir(l_dirname, 0777) != 0)
     {
       g_message (_("Could not create working folder '%s': %s"),
                   gimp_filename_to_utf8 (l_dirname), g_strerror (errno));

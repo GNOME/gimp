@@ -25,12 +25,7 @@
 
 #include "config.h"
 
-#include <math.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -39,6 +34,7 @@
 #include "gfig-dobject.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 static void        d_draw_ellipse   (GfigObject *obj);
 static void        d_paint_ellipse  (GfigObject *obj);

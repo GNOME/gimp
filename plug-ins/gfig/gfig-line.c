@@ -25,12 +25,6 @@
 
 #include "config.h"
 
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
-
-#include <gtk/gtk.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

@@ -2,13 +2,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <sys/types.h>
-#include <string.h>
+#include <stdio.h>
+
+#include <glib.h>
 
 #include "g3.h"
 
@@ -244,7 +241,7 @@ int i;
 	}
 	if ( p2->nr_bits != 0 )
 	{
-	    fprintf( stderr, "internal table setup error\n" ); exit(6);
+	    g_printerr ("internal table setup error\n" ); exit(6);
 	}
 	tree_add_node( p2, g3c, bit_code >> FBITS, bit_length - FBITS );
     }

@@ -32,16 +32,12 @@
  *                        (moved it from load to save)
  */
 
-static char ident[] = "@(#) GIMP FITS file-plugin v1.06  21-Nov-99";
-
 #include "config.h"
 
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
-#include <gtk/gtk.h>
+#include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -331,7 +327,7 @@ load_image (const gchar *filename)
   FITS_FILE *ifp;
   FITS_HDU_LIST *hdu;
 
-  fp = fopen (filename, "rb");
+  fp = g_fopen (filename, "rb");
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -420,7 +416,6 @@ save_image (const gchar *filename,
   FITS_FILE* ofp;
   GimpImageType drawable_type;
   gint retval;
-  char *temp = ident; /* Just to satisfy lint/gcc */
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -452,10 +447,9 @@ save_image (const gchar *filename,
       return (FALSE);
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   if ((drawable_type == GIMP_INDEXED_IMAGE) ||
       (drawable_type == GIMP_INDEXEDA_IMAGE))
@@ -986,7 +980,7 @@ load_dialog (void)
 		      TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("BLANK/NaN Pixel Replacement"),
+  frame = gimp_int_radio_group_new (TRUE, _("Replacement for undefined pixels"),
 				    G_CALLBACK (gimp_radio_button_update),
 				    &plvals.replace, plvals.replace,
 

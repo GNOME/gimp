@@ -24,17 +24,15 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <string.h>
-
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #ifdef G_OS_WIN32
 #include <libgimpbase/gimpwin32-io.h>

@@ -1,6 +1,4 @@
 /*
- * "$Id$"
- *
  *   SGI image file format library routines.
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
@@ -38,6 +36,34 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.9  2005/03/04 13:23:31  neo
+ *   2005-03-04  Sven Neumann  <sven@gimp.org>
+ *
+ *   	* plug-ins/FractalExplorer
+ *   	* plug-ins/Lighting
+ *   	* plug-ins/bmp
+ *   	* plug-ins/dbbrowser
+ *   	* plug-ins/faxg3
+ *   	* plug-ins/fits
+ *   	* plug-ins/flame
+ *   	* plug-ins/gfig
+ *   	* plug-ins/gflare
+ *   	* plug-ins/gfli
+ *   	* plug-ins/gimpressionist
+ *   	* plug-ins/ifscompose
+ *   	* plug-ins/jpeg
+ *   	* plug-ins/maze
+ *   	* plug-ins/pagecurl
+ *   	* plug-ins/print
+ *   	* plug-ins/rcm
+ *   	* plug-ins/script-fu
+ *   	* plug-ins/sel2path
+ *   	* plug-ins/sgi
+ *   	* plug-ins/twain
+ *   	* plug-ins/winicon
+ *   	* plug-ins/xjt: ported to gstdio, removed unnecessary includes,
+ *   	minor fixes to filename handling here and there.
+ *
  *   Revision 1.8  2003/04/07 11:59:33  neo
  *   2003-04-07  Sven Neumann  <sven@gimp.org>
  *
@@ -72,6 +98,13 @@
  *   Revision 1.1  1997/06/15  03:37:19  mike
  *   Initial revision
  */
+
+#include "config.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#include <glib/gstdio.h>
 
 #include "sgi.h"
 
@@ -225,9 +258,9 @@ sgiOpen(char *filename,	/* I - File to open */
 
 
   if (mode == SGI_READ)
-    file = fopen(filename, "rb");
+    file = g_fopen(filename, "rb");
   else
-    file = fopen(filename, "wb+");
+    file = g_fopen(filename, "wb+");
 
   if (file == NULL)
     return (NULL);
