@@ -39,12 +39,12 @@
 #include "gimpcolorpanel.h"
 #include "gimpitemfactory.h"
 
-#include "app_procs.h"
-
 
 struct _GimpColorPanel
 {
   GimpColorButton  parent;
+
+  GimpContext     *context;
 
   ColorNotebook   *color_notebook;
   gboolean         color_notebook_active;
@@ -123,6 +123,7 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 static void
 gimp_color_panel_init (GimpColorPanel *panel)
 {
+  panel->context               = NULL;
   panel->color_notebook        = NULL;
   panel->color_notebook_active = FALSE;
 }
@@ -153,19 +154,38 @@ gimp_color_panel_button_press (GtkWidget      *widget,
   if (bevent->button == 3)
     {
       GimpColorButton *color_button;
-      GimpRGB          fg, bg, black, white;
+      GimpColorPanel  *color_panel;
+      GimpRGB          black, white;
 
       color_button = GIMP_COLOR_BUTTON (widget);
+      color_panel  = GIMP_COLOR_PANEL (widget);
 
-      gimp_context_get_foreground (gimp_get_user_context (the_gimp), &fg);
-      gimp_context_get_background (gimp_get_user_context (the_gimp), &bg);
+      gimp_item_factory_set_visible (color_button->item_factory,
+                                     "/Foreground Color",
+                                     color_panel->context != NULL);
+      gimp_item_factory_set_visible (color_button->item_factory,
+                                     "/Background Color",
+                                     color_panel->context != NULL);
+      gimp_item_factory_set_visible (color_button->item_factory,
+                                     "/fg-bg-separator",
+                                     color_panel->context != NULL);
+
+      if (color_panel->context)
+        {
+          GimpRGB fg, bg;
+
+          gimp_context_get_foreground (color_panel->context, &fg);
+          gimp_context_get_background (color_panel->context, &bg);
+
+          gimp_item_factory_set_color (color_button->item_factory,
+                                       "/Foreground Color", &fg, FALSE);
+          gimp_item_factory_set_color (color_button->item_factory,
+                                       "/Background Color", &bg, FALSE);
+        }
+
       gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
       gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
-      gimp_item_factory_set_color (color_button->item_factory,
-                                   "/Foreground Color", &fg, FALSE);
-      gimp_item_factory_set_color (color_button->item_factory,
-                                   "/Background Color", &bg, FALSE);
       gimp_item_factory_set_color (color_button->item_factory,
                                    "/Black", &black, FALSE);
       gimp_item_factory_set_color (color_button->item_factory,
@@ -187,6 +207,7 @@ gimp_color_panel_new (const gchar       *title,
 {
   GimpColorPanel *panel;
 
+  g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   panel = g_object_new (GIMP_TYPE_COLOR_PANEL, NULL);
@@ -198,6 +219,16 @@ gimp_color_panel_new (const gchar       *title,
   gtk_widget_set_size_request (GTK_WIDGET (panel), width, height);
 
   return GTK_WIDGET (panel);
+}
+
+void
+gimp_color_panel_set_context (GimpColorPanel *panel,
+                              GimpContext    *context)
+{
+  g_return_if_fail (GIMP_IS_COLOR_PANEL (panel));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  panel->context = context;
 }
 
 static void

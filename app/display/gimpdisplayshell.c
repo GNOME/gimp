@@ -632,6 +632,8 @@ gimp_display_shell_new (GimpDisplay *gdisp,
                                                 GIMP_COLOR_AREA_FLAT,
                                                 15, 15);
   GTK_WIDGET_UNSET_FLAGS (shell->padding_button, GTK_CAN_FOCUS);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (shell->padding_button),
+                                gimp_get_user_context (gdisp->gimage->gimp));
 
   gimp_help_set_help_data (shell->padding_button,
                            _("Set canvas padding color"), "#padding_button");
@@ -655,13 +657,17 @@ gimp_display_shell_new (GimpDisplay *gdisp,
       { N_("/Dark Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
         GIMP_DISPLAY_PADDING_MODE_DARK_CHECK, NULL },
+
       { "/---", NULL, NULL, 0, "<Separator>"},
+
       { N_("/Select Custom Color..."), NULL,
         gimp_display_shell_color_button_menu_callback,
-        GIMP_DISPLAY_PADDING_MODE_CUSTOM, NULL },
+        GIMP_DISPLAY_PADDING_MODE_CUSTOM, "<StockItem>",
+        GTK_STOCK_SELECT_COLOR },
       { N_("/As in Preferences"), NULL,
         gimp_display_shell_color_button_menu_callback,
-        0xffff, NULL }
+        0xffff, "<StockItem>",
+        GIMP_STOCK_RESET }
     };
 
     gtk_item_factory_create_items (GIMP_COLOR_BUTTON (shell->padding_button)->item_factory,

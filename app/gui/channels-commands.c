@@ -307,6 +307,8 @@ channels_new_channel_query (GimpImage   *gimage,
 					       &channel_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
+                                gimp_get_user_context (gimage->gimp));
   
   /*  The dialog  */
   options->query_box =
@@ -454,6 +456,8 @@ channels_edit_channel_query (GimpChannel *channel)
 					       &channel_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
+                                gimp_get_user_context (options->gimage->gimp));
 
   /*  The dialog  */
   options->query_box =

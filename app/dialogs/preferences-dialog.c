@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 
+#include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
@@ -1357,10 +1358,12 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
                               _("Padding Mode:"),
                               GTK_TABLE (table), 0);
-  prefs_color_button_add (config, "canvas-padding-color",
-                          _("Custom Color:"),
-                          _("Select Custom Canvas Padding Color"),
-                          GTK_TABLE (table), 1);
+  button = prefs_color_button_add (config, "canvas-padding-color",
+                                   _("Custom Color:"),
+                                   _("Select Custom Canvas Padding Color"),
+                                   GTK_TABLE (table), 1);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
 
   /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
@@ -1380,9 +1383,9 @@ prefs_dialog_new (Gimp    *gimp,
                               GTK_TABLE (table), 0);
 
 
-  /****************************************************/
-  /*  Interface / Image Windows / Image Title Format  */
-  /****************************************************/
+  /****************************************************************/
+  /*  Interface / Image Windows / Image Title & Statusbar Format  */
+  /****************************************************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Title & Statusbar Format"),

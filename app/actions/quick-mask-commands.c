@@ -25,6 +25,7 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-qmask.h"
@@ -169,6 +170,8 @@ qmask_channel_query (GimpDisplayShell *shell)
 					       &options->gimage->qmask_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS, 
 					       48, 64);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
+                                gimp_get_user_context (options->gimage->gimp));
 
   /*  The dialog  */
   options->query_box =

@@ -86,7 +86,7 @@ static GtkItemFactoryEntry menu_items[] =
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_FG, NULL },
   { N_("/Background Color"), NULL, 
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BG, NULL },
-  { "/---", NULL, NULL, 0, "<Separator>"},
+  { "/fg-bg-separator", NULL, NULL, 0, "<Separator>"},
   { N_("/Black"), NULL, 
     gimp_color_button_use_color, GIMP_COLOR_BUTTON_COLOR_BLACK, NULL },
   { N_("/White"), NULL, 

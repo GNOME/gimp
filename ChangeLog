@@ -1,3 +1,18 @@
+2002-12-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorbutton.c: named the menu separator
+	"/fg-bg-separator", not just "/---".
+
+	* app/widgets/gimpcolorpanel.[ch]: added a GimpContext pointer to
+	get FG/BG from. Don't use "the_gimp" and don't include
+	"app_procs.h".  Added gimp_color_panel_set_context(). Hide the
+	FG/BG menu entries if we have no context.
+
+	* app/gui/channels-commands.c
+	* app/gui/preferences-dialog.c
+	* app/gui/qmask-commands.c
+	* app/display/gimpdisplayshell.c: set the color_panel's context.
+
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: made it a lot less deprecated.
