@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.15
 	- added italian translations by Daniele Medri (madrid@kjws.com).
         - POINTS really are decipoints: correct xlfd_size to create
           larger (& more correct) fonts.
@@ -9,6 +10,8 @@ Revision history for Gimp-Perl extension.
         - fixed "dirty" identifier clash with <= 5.005_03 && PERL_POLLUTE.
         - updated seth's scripts.
         - improved avi hunk skipping and 24 bit handling.
+        - realclean now also removes the Makefile (just to be sure)
+	- only install pdl plug-ins when pdl is available.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

@@ -140,5 +140,9 @@ fun 1,1,gimp_paintbrush,sub {
    Gimp::gimp_call_procedure('gimp_paintbrush',$drawable,$fade_out,$strokes);
 };
 
+fun 1,1,gimp_image_list,sub {
+   Gimp::gimp_call_procedure('gimp_list_images');
+};
+
 1;
 

@@ -4,18 +4,6 @@ use Config;
 
 $|=1;
 
-@examples =
-   qw(windify.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
-      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl perlcc gouge
-      sethspin.pl animate_cells image_tile yinyang stamps font_table
-      perlotine randomblends innerbevel fit-text guidegrid roundrectsel
-      repdup centerguide stampify goldenmean triangle billboard mirrorsplit
-      oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
-      logulator miff gimpmagick guide_remove guides_to_selection burst map_to_gradient
-      fire povray avi layerfuncs
-   );
-
 if ($ARGV[0] ne "--writemakefile") {
    for(@ARGV) {
       s/^prefix=/--prefix=/i;
@@ -37,6 +25,24 @@ if ($ARGV[0] ne "--writemakefile") {
    local $do_config_msg = 1;
    do './config.pl'; die $@ if $@;
 }
+
+@pins =
+   qw(windify.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
+      feedback.pl xachlego.pl xachshadow.pl parasite-editor
+      scratches.pl blowinout.pl terral_text xachvision.pl perlcc
+      sethspin.pl animate_cells image_tile yinyang stamps font_table
+      perlotine randomblends innerbevel fit-text guidegrid roundrectsel
+      repdup centerguide stampify goldenmean triangle billboard mirrorsplit
+      layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
+      logulator miff gimpmagick guide_remove guides_to_selection burst
+      fire povray avi layerfuncs
+   );
+@pdl_pins =
+   qw(
+      border.pl gouge map_to_gradient pixelmap view3d.pl
+   );
+
+push @pins, @pdl_pins if $PDL;
 
 require ExtUtils::MakeMaker;
 import ExtUtils::MakeMaker;
@@ -104,9 +110,9 @@ EOF
 
 $PRD or print <<EOF;
 
-WARNING: Parse::RecDescent not found, scm2perl, the Scheme->Perl
-         translator, will not work. Should the need arise you can install
-         Parse::RecDescent later; it is available from any CPAN mirror.
+NOTICE: Parse::RecDescent not found, scm2perl, the Scheme->Perl
+        translator, will not work. This is normally not a problem, since
+        it is quite unimportant for most people.
 
 EOF
 
@@ -171,7 +177,7 @@ install-plugins ::
 	\$(MKPATH) inst-temp
 	cd inst-temp ; \\
 	\$(UMASK_NULL) ; \\
-	\$(CP) ".join(' ',map("'../examples/$_'",@examples))." ../Perl-Server . ; \\
+	\$(CP) ".join(' ',map("'../examples/$_'",sort @pins))." ../Perl-Server . ; \\
 	\$(CHMOD) 755 * ; \\
 	\$(MY_FIXIN) * ; \\
 	for plugin in * ; do \\
@@ -180,7 +186,7 @@ install-plugins ::
 	\$(RM_RF) inst-temp
 
 uninstall :: force_uninstall_from_\$(INSTALLDIRS)dirs
-	for plugin in Perl-Server @examples; do \\
+	for plugin in Perl-Server @pins; do \\
            $UT $GT2\$\$plugin; \\
         done
 
@@ -298,7 +304,7 @@ WriteMakefile(
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],
     'macro'	=> \%cfg,
-    'realclean'	=> { FILES => "config.status config.cache config.pl config.log config.h Gimp/Config.pm" },
+    'realclean'	=> { FILES => "config.status config.cache config.pl config.log config.h Gimp/Config.pm Makefile" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
 );
 

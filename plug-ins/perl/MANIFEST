@@ -69,7 +69,7 @@ examples/example-fu.pl
 examples/example-net.pl
 examples/gimp-make-img-map
 examples/homepage-logo.pl
-examples/windy.pl
+examples/windify.pl
 examples/prep4gif.pl
 examples/ditherize.pl
 examples/view3d.pl

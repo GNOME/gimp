@@ -54,21 +54,21 @@ sub image_name {
 
 sub Gimp::UI::ImageMenu::_items {
   map [[$_],$_,image_name($_)],
-      Gimp->list_images ();
+      Gimp->image_list ();
 }
 sub Gimp::UI::LayerMenu::_items {
   map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],$i->get_layers }
-      Gimp->list_images ();
+      Gimp->image_list ();
 }
 
 sub Gimp::UI::ChannelMenu::_items {
   map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],$i->get_channels }
-      Gimp->list_images ();
+      Gimp->image_list ();
 }
 
 sub Gimp::UI::DrawableMenu::_items {
   map { my $i = $_; map [[$i,$_],$_,image_name($i)."/".$_->get_name],($i->get_layers, $i->get_channels) }
-      Gimp->list_images ();
+      Gimp->image_list ();
 }
 
 sub new($$$$) {
