@@ -101,6 +101,10 @@ gimp_edit_paste (GimpImage    *gimage,
   GimpImageType  type;
   gint           center_x;
   gint           center_y;
+  gint           offset_x;
+  gint           offset_y;
+  gint           width;
+  gint           height;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -177,8 +181,22 @@ gimp_edit_paste (GimpImage    *gimage,
       center_y = gimage->height / 2;
     }
 
-  GIMP_ITEM (layer)->offset_x = center_x - (GIMP_ITEM (layer)->width  / 2);
-  GIMP_ITEM (layer)->offset_y = center_y - (GIMP_ITEM (layer)->height / 2);
+  width  = gimp_item_width  (GIMP_ITEM (layer));
+  height = gimp_item_height (GIMP_ITEM (layer));
+
+  offset_x = center_x - width  / 2;
+  offset_y = center_y - height / 2;
+
+  /*  Ensure that the pasted layer is always within the image, if it
+   *  fits and aligned at top left if it doesn't. (See bug #142944).
+   */
+  offset_x = MIN (offset_x, gimage->width  - width);
+  offset_y = MIN (offset_y, gimage->height - height);
+  offset_x = MAX (offset_x, 0);
+  offset_y = MAX (offset_y, 0);
+
+  GIMP_ITEM (layer)->offset_x = offset_x;
+  GIMP_ITEM (layer)->offset_y = offset_y;
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,

@@ -1,3 +1,10 @@
+2004-09-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-edit.c (gimp_edit_paste): based on a patch from
+	Joao S. O. Bueno: Ensure that the pasted layer is always within
+	the image, if it fits and aligned at top left if it doesn't.
+	Fixes bug #142944.
+
 2004-09-16  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: updated.
