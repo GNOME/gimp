@@ -1,3 +1,11 @@
+2003-12-16  Dave Neary  <bolsh@gimp.org>
+
+	* */Makefile.am: Fixed long-standing gtk-doc 
+	problem caused by a problem with docbook-xml installations, 
+	dodgy debian packages and suspect Makefile checks which 
+	makes "make install" work even if some gtk docs aren't 
+	correctly built.
+
 2003-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: link against libgimpthumb.
