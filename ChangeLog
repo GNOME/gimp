@@ -1,3 +1,58 @@
+2003-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/fileops_cmds.c
+	* tools/pdbgen/pdb/fileops.pdb: this change should fix
+	file_load_thumbnail() for images with alpha channel by blending
+	the resulting tempbuf on a checkerboard (bug #113033).
+
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl (declare_args): removed generation of
+	includes for enums since including "pdb-types.h" is sufficient
+	now.
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/message_cmds.c
+	* app/pdb/misc_tools_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/paths.pdb: removed PDB access to the old paths
+	and ported everything to GimpVectors. Note that everything except
+	gimp_path_set_points() is untested and that
+	gimp_path_get_point_at_dist() is currently unimplemented. Changed
+	order of the generated functions and fixed some help texts.
+
+	* tools/pdbgen/app.pl: removed $tools_eek and $paint_eek hacks
+	because pdb/ doesn't include stuff from tools/ any more and paint/
+	no longer depends on GTK+.
+
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+2003-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): fixed typo: use x1 instead
+	of the uninitialized variable x.
+
+
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/app.pl (declare_args): removed generation of

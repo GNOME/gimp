@@ -207,18 +207,50 @@ HELP
       g_object_unref (imagefile);
     }
 
-  if (temp_buf && temp_buf->bytes != 3)
-    {
-      g_warning ("FIXME: handle thumbnails with bpp != 3");
-
-      temp_buf_free (temp_buf);
-      temp_buf = NULL;
-    }
-
   if (temp_buf)
     {
-      width      = temp_buf->width;
-      height     = temp_buf->height;
+      width  = temp_buf->width;
+      height = temp_buf->height;
+
+      switch (temp_buf->bytes)
+	{
+        case 3:
+	  break;
+
+	case 4:
+	  {
+#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_BLEND(a,b,alpha,t)  (INT_MULT((a)-(b), alpha, t) + (b))
+
+	    TempBuf *checks = temp_buf_new_check (width, height,
+		            	                  GIMP_SMALL_CHECKS,
+                                                  GIMP_GRAY_CHECKS);
+
+            guchar  *src  = temp_buf_data (temp_buf);
+            guchar  *dest = temp_buf_data (checks);
+		
+	    num_bytes = width * height;
+	    while (num_bytes--)
+	      {
+		register glong t;
+
+		dest[0] = INT_BLEND (src[0] , dest[0] , src[3], t);
+		dest[1] = INT_BLEND (src[1] , dest[1] , src[3], t);
+		dest[2] = INT_BLEND (src[2] , dest[2] , src[3], t);
+		src  += 4;
+		dest += 3;
+	      }
+
+            temp_buf_free (temp_buf);
+	    temp_buf = checks;
+	  }
+	  break;
+	      
+	default:
+	  g_assert_not_reached ();
+	  break;
+      }
+
       num_bytes  = 3 * width * height;
       thumb_data = g_memdup (temp_buf_data (temp_buf), num_bytes);
 
