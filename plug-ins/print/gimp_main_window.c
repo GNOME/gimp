@@ -478,15 +478,15 @@ create_positioning_frame (void)
   orientation_menu =
     gimp_option_menu_new (FALSE,
 			  _("Auto"), gimp_orientation_callback,
-			  (gpointer) ORIENT_AUTO, NULL, NULL, 0,
+			  GINT_TO_POINTER (ORIENT_AUTO), NULL, NULL, 0,
 			  _("Portrait"), gimp_orientation_callback,
-			  (gpointer) ORIENT_PORTRAIT, NULL, NULL, 0,
+			  GINT_TO_POINTER (ORIENT_PORTRAIT), NULL, NULL, 0,
 			  _("Landscape"), gimp_orientation_callback,
-			  (gpointer) ORIENT_LANDSCAPE, NULL, NULL, 0,
+			  GINT_TO_POINTER (ORIENT_LANDSCAPE), NULL, NULL, 0,
 			  _("Upside down"), gimp_orientation_callback,
-			  (gpointer) ORIENT_UPSIDEDOWN, NULL, NULL, 0,
+			  GINT_TO_POINTER (ORIENT_UPSIDEDOWN), NULL, NULL, 0,
 			  _("Seascape"), gimp_orientation_callback,
-			  (gpointer) ORIENT_SEASCAPE, NULL, NULL, 0,
+			  GINT_TO_POINTER (ORIENT_SEASCAPE), NULL, NULL, 0,
 			  NULL);
   gimp_help_set_help_data (orientation_menu,
                            _("Select the orientation: portrait, landscape, "
@@ -716,7 +716,8 @@ create_printer_dialog (void)
 	    g_strdup (gettext (stp_printer_get_long_name (the_printer)));
 
 	  gtk_clist_insert (GTK_CLIST (printer_driver), i, &tmp);
-	  gtk_clist_set_row_data (GTK_CLIST (printer_driver), i, (gpointer) i);
+	  gtk_clist_set_row_data (GTK_CLIST (printer_driver),
+                                  i, GINT_TO_POINTER (i));
 	}
     }
 
@@ -1493,7 +1494,7 @@ gimp_create_main_window (void)
    */
 
   gimp_build_printer_combo ();
-  gimp_plist_callback (NULL, (gpointer) plist_current);
+  gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
   gimp_update_adjusted_thumbnail ();
 
   gtk_widget_show (print_dialog);
@@ -1895,7 +1896,7 @@ gimp_plist_callback (GtkWidget *widget,
     }
   else
     {
-      plist_current = (gint) data;
+      plist_current = GPOINTER_TO_INT (data);
     }
 
   pv = &(plist[plist_current].v);
@@ -2504,7 +2505,7 @@ gimp_setup_ok_callback (void)
 
   stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
 
-  gimp_plist_callback (NULL, (gpointer) plist_current);
+  gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
 
   gtk_widget_hide (setup_dialog);
 }
@@ -2539,7 +2540,7 @@ gimp_new_printer_ok_callback (void)
 
 	  stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
 
-	  gimp_plist_callback (NULL, (gpointer) plist_current);
+	  gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
 	}
     }
 
@@ -2561,7 +2562,7 @@ gimp_print_driver_callback (GtkWidget      *widget, /* I - Driver list */
   gimp_invalidate_preview_thumbnail ();
   reset_preview ();
   data = gtk_clist_get_row_data (GTK_CLIST (widget), row);
-  current_printer = stp_get_printer_by_index ((gint) data);
+  current_printer = stp_get_printer_by_index (GPOINTER_TO_INT (data));
   gtk_label_set_text (GTK_LABEL (printer_model_label),
                       gettext (stp_printer_get_long_name (current_printer)));
 
