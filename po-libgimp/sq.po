@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 11:34+0200\n"
-"PO-Revision-Date: 2004-08-20 20:01+0200\n"
+"POT-Creation-Date: 2004-09-02 11:36+0200\n"
+"PO-Revision-Date: 2004-09-03 18:16+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,6 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Zgjedhja e penelit"
 
-#. GRUT modified this item
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
 msgstr "_Shfleto..."
@@ -36,12 +35,13 @@ msgstr "Zhyt (bashko) nivelet e dukshëm"
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr ""
+msgstr "%s nuk mund të trajtojë zhvendosjen e niveleve, madhësinë apo tejdukshmërinë"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
+#, fuzzy
 msgid "%s can only handle layers as animation frames"
-msgstr ""
+msgstr "Animacion korniza"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -89,21 +89,24 @@ msgid "%s can only handle indexed images"
 msgstr ""
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
+#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr ""
+msgstr "prezgjedhur rregullimet j Bëje"
 
 #: libgimp/gimpexport.c:306
 #, c-format
+#, fuzzy
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
+msgstr "dy"
 
 #: libgimp/gimpexport.c:307
+#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
-msgstr ""
+msgstr "prezgjedhur rregullimet j Bëje"
 
 #: libgimp/gimpexport.c:316
 #, c-format
@@ -126,94 +129,102 @@ msgid "%s needs an alpha channel"
 msgstr ""
 
 #: libgimp/gimpexport.c:347
+#, fuzzy
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "Shto Alfa Kanali"
 
 #: libgimp/gimpexport.c:382
+#, fuzzy
 msgid "Confirm Save"
-msgstr ""
+msgstr "Konfermo Ruaj"
 
-#. GRUT modified this item
 #: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Konfermo"
 
 #: libgimp/gimpexport.c:457
+#, fuzzy
 msgid "Export File"
-msgstr ""
+msgstr "Eksporto File"
 
-#. GRUT modified this item
 #: libgimp/gimpexport.c:461
 msgid "_Ignore"
 msgstr "_Shpërfill"
 
 #: libgimp/gimpexport.c:463
+#, fuzzy
 msgid "_Export"
-msgstr ""
+msgstr "Eksporto"
 
 #. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
+#, fuzzy
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr ""
+msgstr "figurë përpara për:"
 
 #: libgimp/gimpexport.c:563
+#, fuzzy
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "eksporto figurë."
 
 #: libgimp/gimpexport.c:665
 #, c-format
+#, fuzzy
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
-msgstr ""
+msgstr "Ti informacione ruaj a niveli nuk ruaj i dukshëm."
 
 #: libgimp/gimpexport.c:671
 #, c-format
+#, fuzzy
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
-msgstr ""
+msgstr "Ti informacione ruaj a nuk ruaj i dukshëm."
 
-#. GRUT modified this item
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
 msgstr "Zgjedhja e gërmave"
 
 #: libgimp/gimpgradientmenu.c:103
+#, fuzzy
 msgid "Gradient Selection"
-msgstr ""
+msgstr "Shkallëzimi Zgjedhja"
 
-#. GRUT modified this item
 #: libgimp/gimpmenu.c:407
 msgid "None"
 msgstr "Asnjë"
 
 #: libgimp/gimppatternmenu.c:115
+#, fuzzy
 msgid "Pattern Selection"
-msgstr ""
+msgstr "Motivi Zgjedhja"
 
 #: libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr ""
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+#, fuzzy
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "I pavlefshëm"
 
 #: libgimpbase/gimputils.c:244
 #, c-format
+#, fuzzy
 msgid "%d Bytes"
-msgstr ""
+msgstr "Bytes"
 
 #: libgimpbase/gimputils.c:249
 #, c-format
+#, fuzzy
 msgid "%.2f KB"
-msgstr ""
+msgstr "KB"
 
-#. GRUT modified this item
 #: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
@@ -221,21 +232,21 @@ msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:257
 #, c-format
+#, fuzzy
 msgid "%d KB"
-msgstr ""
+msgstr "KB"
 
 #: libgimpbase/gimputils.c:264
 #, c-format
+#, fuzzy
 msgid "%.2f MB"
-msgstr ""
+msgstr "MB"
 
-#. GRUT modified this item
 #: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#. GRUT modified this item
 #: libgimpbase/gimputils.c:272
 #, c-format
 msgid "%d MB"
@@ -243,10 +254,10 @@ msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:279
 #, c-format
+#, fuzzy
 msgid "%.2f GB"
-msgstr ""
+msgstr "GB"
 
-#. GRUT modified this item
 #: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
@@ -254,96 +265,113 @@ msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:287
 #, c-format
+#, fuzzy
 msgid "%d GB"
-msgstr ""
+msgstr "GB"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
+#, fuzzy
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "j"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
+#, fuzzy
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "Modulë ngarkoje gabim"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
+#, fuzzy
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "j"
 
 #: libgimpmodule/gimpmodule.c:424
+#, fuzzy
 msgid "Module error"
-msgstr ""
+msgstr "Modulë gabim"
 
 #: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr ""
 
 #: libgimpmodule/gimpmodule.c:426
+#, fuzzy
 msgid "Load failed"
-msgstr ""
+msgstr "Ngarko"
 
 #: libgimpmodule/gimpmodule.c:427
+#, fuzzy
 msgid "Not loaded"
-msgstr ""
+msgstr "Not"
 
 #: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
+#, fuzzy
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Dështoi kartelë."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
+#, fuzzy
 msgid "/_Foreground Color"
-msgstr ""
+msgstr "Plani i parë Ngjyra"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
+#, fuzzy
 msgid "/_Background Color"
-msgstr ""
+msgstr "Sfondi Ngjyra"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:100
+#, fuzzy
 msgid "/_White"
-msgstr ""
+msgstr "E bardhë"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_H"
-msgstr ""
+msgstr "H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_S"
-msgstr ""
+msgstr "S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_V"
-msgstr ""
+msgstr "V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_R"
-msgstr ""
+msgstr "R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_G"
-msgstr ""
+msgstr "G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#, fuzzy
 msgid "_B"
-msgstr ""
+msgstr "B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
+#, fuzzy
 msgid "_A"
-msgstr ""
+msgstr "A"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Tonaliteti"
@@ -353,52 +381,50 @@ msgstr "Tonaliteti"
 msgid "Saturation"
 msgstr ""
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Vlera"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "I kuq"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "I gjelbër"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Blu"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
+#, fuzzy
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Hexadecimal në HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
+#, fuzzy
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "x:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
+#, fuzzy
 msgid "Current:"
-msgstr ""
+msgstr "Aktual:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
 msgstr ""
 
 #: libgimpwidgets/gimpfileentry.c:350
+#, fuzzy
 msgid "Select Folder"
-msgstr ""
+msgstr "Zgjidh Kartelë"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Zgjidh file"
@@ -419,12 +445,10 @@ msgstr ""
 msgid "Writable"
 msgstr ""
 
-#. GRUT modified this item
 #: libgimpwidgets/gimppatheditor.c:252
 msgid "Folder"
 msgstr "Kartelë"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -433,16 +457,15 @@ msgstr ""
 "Klikoni pikatoren, e pastaj klikoni një ngjyrë kudoqoftë në ekranin tuaj për "
 "të zgjedhur atë ngjyrë."
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Spiranca"
 
 #: libgimpwidgets/gimpstock.c:114
+#, fuzzy
 msgid "_Duplicate"
-msgstr ""
+msgstr "Dyfisho"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Ndrysho"
@@ -452,42 +475,41 @@ msgid "Linked"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:117
+#, fuzzy
 msgid "Paste as New"
-msgstr ""
+msgstr "Ngjite E re"
 
 #: libgimpwidgets/gimpstock.c:118
+#, fuzzy
 msgid "Paste Into"
-msgstr ""
+msgstr "Ngjite"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Nga fillimi"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "I dukshëm"
 
 #: libgimpwidgets/gimpstock.c:168
+#, fuzzy
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "L Hapësira e ndërmjetme"
 
 #: libgimpwidgets/gimpstock.c:169
+#, fuzzy
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "L Hapësira e ndërmjetme"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "_Ripërmaso"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "_Shkallëzo"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Pre"
@@ -497,22 +519,24 @@ msgid "_Transform"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:283
+#, fuzzy
 msgid "_Rotate"
-msgstr ""
+msgstr "Rrotullo"
 
 #: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:304
+#, fuzzy
 msgid "More..."
-msgstr ""
+msgstr "Më shumë."
 
 #: libgimpwidgets/gimpunitmenu.c:614
+#, fuzzy
 msgid "Unit Selection"
-msgstr ""
+msgstr "Njësia Zgjedhja"
 
-#. GRUT modified this item
 #: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Njësia"
@@ -522,79 +546,93 @@ msgid "Factor"
 msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1291
+#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
+msgstr "për a"
 
 #: libgimpwidgets/gimpwidgets.c:1295
+#, fuzzy
 msgid "_New Seed"
-msgstr ""
+msgstr "E re Lulja"
 
 #: libgimpwidgets/gimpwidgets.c:1308
+#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
+msgstr "Lulja me a"
 
 #: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
 msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
+#, fuzzy
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Ngjyra filtro"
 
 #: modules/cdisplay_colorblind.c:190
+#, fuzzy
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Ngjyra"
 
 #: modules/cdisplay_colorblind.c:464
+#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr ""
+msgstr "Ngjyra Lloji:"
 
 #: modules/cdisplay_colorblind.c:473
+#, fuzzy
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "e kuqe"
 
 #: modules/cdisplay_colorblind.c:476
+#, fuzzy
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "jeshile"
 
 #: modules/cdisplay_colorblind.c:479
+#, fuzzy
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "blu"
 
 #: modules/cdisplay_gamma.c:90
+#, fuzzy
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Gamma filtro"
 
-#. GRUT modified this item
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
+#, fuzzy
 msgid "_Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
+#, fuzzy
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "E lartë filtro"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr ""
 
 #: modules/cdisplay_highcontrast.c:308
+#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr ""
+msgstr "C:"
 
 #: modules/cdisplay_proof.c:102
+#, fuzzy
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Ngjyra filtro profili"
 
 #: modules/cdisplay_proof.c:166
+#, fuzzy
 msgid "Color Proof"
-msgstr ""
+msgstr "Ngjyra"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
@@ -613,16 +651,19 @@ msgid "_Intent:"
 msgstr ""
 
 #: modules/cdisplay_proof.c:334
+#, fuzzy
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Ngjyra Profili"
 
 #: modules/cdisplay_proof.c:337
+#, fuzzy
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profili:"
 
 #: modules/cdisplay_proof.c:345
+#, fuzzy
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "E zezë Pikë"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -633,22 +674,25 @@ msgid "CMYK"
 msgstr ""
 
 #: modules/colorsel_cmyk.c:149
+#, fuzzy
 msgid "_C"
-msgstr ""
+msgstr "C"
 
 #: modules/colorsel_cmyk.c:150
+#, fuzzy
 msgid "_M"
-msgstr ""
+msgstr "M"
 
 #: modules/colorsel_cmyk.c:151
+#, fuzzy
 msgid "_Y"
-msgstr ""
+msgstr "Y"
 
 #: modules/colorsel_cmyk.c:152
+#, fuzzy
 msgid "_K"
-msgstr ""
+msgstr "K"
 
-#. GRUT modified this item
 #: modules/colorsel_cmyk.c:156
 msgid "Cyan"
 msgstr "Lejla"
@@ -657,25 +701,23 @@ msgstr "Lejla"
 msgid "Magenta"
 msgstr ""
 
-#. GRUT modified this item
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
 msgstr "E verdhë"
 
-#. GRUT modified this item
 #: modules/colorsel_cmyk.c:159
 msgid "Black"
 msgstr "E zezë"
 
 #: modules/colorsel_cmyk.c:193
+#, fuzzy
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "E zezë:"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#. GRUT modified this item
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
 msgstr "Trekëndësh"
@@ -688,7 +730,6 @@ msgstr ""
 msgid "Watercolor"
 msgstr ""
 
-#. GRUT modified this item
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Trysnia"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 11:35+0200\n"
-"PO-Revision-Date: 2004-08-20 20:18+0200\n"
+"POT-Creation-Date: 2004-09-02 11:37+0200\n"
+"PO-Revision-Date: 2004-09-03 18:20+0200\n"
 "Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
 "Language-Team: Albanian <gnome-albanian-perkthyesit@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,8 +17,9 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
+#, fuzzy
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Script modaliteti"
 
 #: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
@@ -33,14 +34,14 @@ msgstr "Rezultatet e SIOD"
 msgid "Current Command"
 msgstr "Komanda aktuale"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "Shfleto..."
 
 #: plug-ins/script-fu/script-fu-console.c:545
+#, fuzzy
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
+msgstr "Script modaliteti"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -53,7 +54,6 @@ msgstr "/Script-Fu/"
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/script-fu-scripts.c:1164
 msgid "About"
 msgstr "Informacione"
@@ -63,7 +63,6 @@ msgstr "Informacione"
 msgid "Script Arguments"
 msgstr "Argumentet e script"
 
-#. GRUT modified this item
 #. we add a colon after the label;
 #. some languages want an extra space here
 #: plug-ins/script-fu/script-fu-scripts.c:1202
@@ -99,19 +98,16 @@ msgstr "Zgjedhja e shkallëzimit për Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Zgjedhja e penelit për Script-Fu"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autori:"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
@@ -175,12 +171,10 @@ msgstr "Kërko sipas _Emrit"
 msgid "Search by _Blurb"
 msgstr "Kërko sipas _Blurb"
 
-#. GRUT modified this item
 #: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
 msgstr "_Kërko:"
 
-#. GRUT modified this item
 #: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
 msgstr "Emri:"
@@ -219,22 +213,23 @@ msgstr "Asnjë rezultat"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+#, fuzzy
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Alfa"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
+#, fuzzy
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "E prezgjedhur Rregullimet"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
@@ -312,14 +307,14 @@ msgstr "Gërmat"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
+#, fuzzy
 msgid "Font Size (pixels)"
-msgstr ""
+msgstr "Gërmat Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
@@ -338,16 +333,17 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
+#, fuzzy
 msgid "Shadow X Offset"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
+#, fuzzy
 msgid "Shadow Y Offset"
-msgstr ""
+msgstr "Y"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:9
@@ -389,10 +385,10 @@ msgid "Text"
 msgstr "Teksti"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr ""
+msgstr "<Toolbox> Script D."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
@@ -428,28 +424,33 @@ msgstr "Ngjyra e Sfondit"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
+#, fuzzy
 msgid "Block Size"
-msgstr ""
+msgstr "Blloqe Madhësia"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+#, fuzzy
 msgid "End Blend"
-msgstr ""
+msgstr "Fundi"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
+#, fuzzy
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "Numri nga X Gurët"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
+#, fuzzy
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Numri nga Y Gurët"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#, fuzzy
 msgid "Start Blend"
-msgstr ""
+msgstr "Fillo"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 msgid "Supersample"
@@ -462,8 +463,9 @@ msgid "Thickness"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-msgstr ""
+msgstr "<Image> Script Shto B."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
@@ -476,34 +478,40 @@ msgstr ""
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+#, fuzzy
 msgid "Work on Copy"
-msgstr ""
+msgstr "Punë në Kopjo"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr ""
+msgstr "<Image> Script Shto Korniza."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
+#, fuzzy
 msgid "Border Color"
-msgstr ""
+msgstr "Korniza Ngjyra"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
+#, fuzzy
 msgid "Border X Size"
-msgstr ""
+msgstr "Korniza X Madhësia"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
+#, fuzzy
 msgid "Border Y Size"
-msgstr ""
+msgstr "Korniza Y Madhësia"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
+#, fuzzy
 msgid "Delta Value on Color"
-msgstr ""
+msgstr "Delta Vlera në Ngjyra"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Shigjeta."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Down"
@@ -515,8 +523,9 @@ msgstr "Poshtë"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#, fuzzy
 msgid "Flatten Image"
-msgstr ""
+msgstr "Figurë e shtrirë"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -527,22 +536,20 @@ msgstr ""
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#, fuzzy
 msgid "Glow Color"
-msgstr ""
+msgstr "Ngjyra"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
 msgstr "Majtas"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
 msgstr "Orientimi"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
@@ -551,30 +558,34 @@ msgstr "Djathtas"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/lava.scm.h:7
+#, fuzzy
 msgid "Size"
-msgstr ""
+msgstr "Madhësia"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
 msgstr "Sipër"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#, fuzzy
 msgid "Bar Height"
-msgstr ""
+msgstr "Bar"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#, fuzzy
 msgid "Bar Length"
-msgstr ""
+msgstr "Bar Gjatësia"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Bullet."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -584,26 +595,26 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#, fuzzy
 msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
-msgstr ""
+msgstr "j"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat B."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
 msgstr "Zbutje"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 #: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
@@ -622,61 +633,73 @@ msgstr "Ngjyra e tekstit"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+#, fuzzy
 msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
-msgstr ""
+msgstr "j"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#, fuzzy
 msgid "Glow Size (pixels * 4)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+#, fuzzy
 msgid "Fade Away"
-msgstr ""
+msgstr "Nuk jam këtu"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#, fuzzy
 msgid "Number of Bands"
-msgstr ""
+msgstr "Numri nga"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#, fuzzy
 msgid "Width of Bands"
-msgstr ""
+msgstr "Gjerësia nga"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+#, fuzzy
 msgid "Width of Gaps"
-msgstr ""
+msgstr "Gjerësia nga"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
-msgstr ""
+msgstr "<Image> Script ASCII."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr ""
+msgstr "<Toolbox> Script ASCII."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
+#, fuzzy
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "Buffer Shuma nga Teksti"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:5
@@ -687,38 +710,46 @@ msgstr "Emri i file"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
 msgid "Transparent Background"
-msgstr ""
+msgstr "E tejdukshme Sfondi"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema Bazë."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-msgstr ""
+msgstr "<Toolbox> Script Bazë."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema B."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-msgstr ""
+msgstr "<Toolbox> Script B."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr ""
+msgstr "<Toolbox> Script Butonat E thjeshtë Butoni."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+#, fuzzy
 msgid "Bevel Width"
-msgstr ""
+msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#, fuzzy
 msgid "Lower-Right color"
-msgstr ""
+msgstr "Inferior Djathtas"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
@@ -727,34 +758,39 @@ msgid "Pressed"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#, fuzzy
 msgid "Upper-Left color"
-msgstr ""
+msgstr "Superior Majtas"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Motivi Shigjeta."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Motivi Bullet."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Motivi B."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Motivi."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Motivi."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
@@ -763,7 +799,6 @@ msgstr ""
 msgid "Height"
 msgstr "Lartësia"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:18
@@ -772,8 +807,9 @@ msgid "Width"
 msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Blend..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
@@ -788,20 +824,24 @@ msgid "Max. Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+#, fuzzy
 msgid "Blend Mode"
-msgstr ""
+msgstr "Modaliteti"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+#, fuzzy
 msgid "Custom Gradient"
-msgstr ""
+msgstr "E personalizuar"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-HSV"
@@ -812,10 +852,10 @@ msgid "FG-BG-RGB"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+#, fuzzy
 msgid "FG-Transparent"
-msgstr ""
+msgstr "E tejdukshme"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
@@ -832,84 +872,102 @@ msgstr "Shkallëzimi"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
+#, fuzzy
 msgid "Gradient Reverse"
-msgstr ""
+msgstr "Shkallëzimi"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#, fuzzy
 msgid "Offset (pixels)"
-msgstr ""
+msgstr "pixels"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#, fuzzy
 msgid "Spots density X"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#, fuzzy
 msgid "Spots density Y"
-msgstr ""
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr ""
+msgstr "<Image> Script B Zmadho."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#, fuzzy
 msgid "Add Glowing"
-msgstr ""
+msgstr "Shto"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#, fuzzy
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Zmadho dy në!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#, fuzzy
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
+msgstr "në në a tekst niveli dhe a niveli"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#, fuzzy
 msgid "Corona Width"
-msgstr ""
+msgstr "Corona Gjerësia"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#, fuzzy
 msgid "Fadeout Width"
-msgstr ""
+msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#, fuzzy
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "për"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#, fuzzy
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Shpejtësia pixels frame"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr ""
+msgstr "<Toolbox> Script Kamuflim."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
+#, fuzzy
 msgid "Color 1"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:3
+#, fuzzy
 msgid "Color 2"
-msgstr ""
+msgstr "Ngjyra 2"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:4
+#, fuzzy
 msgid "Color 3"
-msgstr ""
+msgstr "Ngjyra 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -918,8 +976,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#, fuzzy
 msgid "Image Size"
-msgstr ""
+msgstr "Madhësia"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:3
@@ -927,86 +986,105 @@ msgid "Smooth"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
-msgstr ""
+msgstr "<Image> Script C."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
+#, fuzzy
 msgid "Carve White Areas"
-msgstr ""
+msgstr "E bardhë"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
+#, fuzzy
 msgid "Image to Carve"
-msgstr ""
+msgstr "Figura"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#, fuzzy
 msgid "Background Image"
-msgstr ""
+msgstr "Figura e sfondit"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#, fuzzy
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "Teksti"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#, fuzzy
 msgid "Padding Around Text"
-msgstr ""
+msgstr "Zbutje Teksti"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema Allci."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-msgstr ""
+msgstr "<Toolbox> Script Allci."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
+#, fuzzy
 msgid "Chalk Color"
-msgstr ""
+msgstr "Allci Ngjyra"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema p."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr ""
+msgstr "<Toolbox> Script p."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
+#, fuzzy
 msgid "Blur Amount"
-msgstr ""
+msgstr "Shuma"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
+#, fuzzy
 msgid "Chip Amount"
-msgstr ""
+msgstr "Shuma"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
+#, fuzzy
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Hidh"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
+#, fuzzy
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Mbush (përshtat) me Motivi"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
+#, fuzzy
 msgid "Keep Background"
-msgstr ""
+msgstr "Sfondi"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr ""
+msgstr "<Image> Script C."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+#, fuzzy
 msgid "Chrome Balance"
-msgstr ""
+msgstr "Bilancim"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
@@ -1025,54 +1103,65 @@ msgid "Chrome Saturation"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#, fuzzy
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "E bardhë"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+#, fuzzy
 msgid "Environment Map"
-msgstr ""
+msgstr "Ambienti"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#, fuzzy
 msgid "Highlight Balance"
-msgstr ""
+msgstr "Bilancim"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema C."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr ""
+msgstr "<Toolbox> Script C."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#, fuzzy
 msgid "Offsets (pixels * 2)"
-msgstr ""
+msgstr "pixels"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Circuit..."
-msgstr ""
+msgstr "<Image> Script Qark."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
+#, fuzzy
 msgid "Circuit Seed"
-msgstr ""
+msgstr "Qark Lulja"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#, fuzzy
 msgid "Keep Selection"
-msgstr ""
+msgstr "Zgjedhja"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
+#, fuzzy
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Jo Sfondi për niveli"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
+#, fuzzy
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "Maska Madhësia"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1081,8 +1170,9 @@ msgid "Separate Layer"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1090,14 +1180,15 @@ msgid "Azimuth"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:3
+#, fuzzy
 msgid "Blur X"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:4
+#, fuzzy
 msgid "Blur Y"
-msgstr ""
+msgstr "Y"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/clothify.scm.h:5
 #: plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
@@ -1109,65 +1200,78 @@ msgid "Elevation"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
+#, fuzzy
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
-msgstr ""
+msgstr "Vetëm j për me nga E bardhë"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#, fuzzy
 msgid "Outline Color"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
+#, fuzzy
 msgid "Outline Size"
-msgstr ""
+msgstr "Madhësia"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema Interesante Metal."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-msgstr ""
+msgstr "<Toolbox> Script Interesante Metal."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#, fuzzy
 msgid "Effect Size (pixels)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
+#, fuzzy
 msgid "<Image>/Edit/Copy _Visible"
-msgstr ""
+msgstr "<Image> Ndrysho Kopjo I dukshëm"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr ""
+msgstr "<Image> Script Zgjedhja Zgjedhja."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+#, fuzzy
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "është E ulët"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
@@ -1186,13 +1290,15 @@ msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr ""
+msgstr "<Image> Script Hidh."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+#, fuzzy
 msgid "Allow Resizing"
-msgstr ""
+msgstr "Lejo Ridimenzionimi"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: plug-ins/script-fu/scripts/news-text.scm.h:3
@@ -1202,7 +1308,6 @@ msgstr ""
 msgid "Blur Radius"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
@@ -1212,13 +1317,15 @@ msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#, fuzzy
 msgid "Offset X"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#, fuzzy
 msgid "Offset Y"
-msgstr ""
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
@@ -1226,22 +1333,22 @@ msgid "Opacity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr ""
+msgstr "<Image> Script Fshi tjetër Rresht."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
 msgstr "Kollonat"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
 msgstr "Fshi"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#, fuzzy
 msgid "Erase/Fill"
-msgstr ""
+msgstr "Fshi Mbush (përshtat)"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1252,254 +1359,306 @@ msgid "Even/Odd"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+#, fuzzy
 msgid "Fill with BG"
-msgstr ""
+msgstr "Mbush (përshtat) me"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
 msgstr "Rreshtat"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#, fuzzy
 msgid "Rows/Cols"
-msgstr ""
+msgstr "Rreshtat"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr ""
+msgstr "<Image> Script Zgjedhja."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+#, fuzzy
 msgid "Apply Generated Layermask"
-msgstr ""
+msgstr "Apliko"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
+#, fuzzy
 msgid "Border Size"
-msgstr ""
+msgstr "Korniza Madhësia"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+#, fuzzy
 msgid "Clear Unselected Maskarea"
-msgstr ""
+msgstr "Pastro"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
+#, fuzzy
 msgid "Fade From %"
-msgstr ""
+msgstr "Nga"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
+#, fuzzy
 msgid "Fade To   %"
-msgstr ""
+msgstr "Për"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+#, fuzzy
 msgid "Use Growing Selection"
-msgstr ""
+msgstr "Zgjedhja"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
+#, fuzzy
 msgid "Detail Level"
-msgstr ""
+msgstr "Hollësi Etiketa"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
+#, fuzzy
 msgid "Image Height"
-msgstr ""
+msgstr "Figura Lartësia"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
+#, fuzzy
 msgid "Image Width"
-msgstr ""
+msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
+#, fuzzy
 msgid "Random Seed"
-msgstr ""
+msgstr "Pa renditje Lulja"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
 #: plug-ins/script-fu/scripts/land.scm.h:8
+#, fuzzy
 msgid "Scale X"
-msgstr ""
+msgstr "Shkalla X"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:7
 #: plug-ins/script-fu/scripts/land.scm.h:9
+#, fuzzy
 msgid "Scale Y"
-msgstr ""
+msgstr "Shkalla Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr ""
+msgstr "<Toolbox> Script Gërmat."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
+#, fuzzy
 msgid "Active Colors"
-msgstr ""
+msgstr "Aktiv Ngjyrat"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
+#, fuzzy
 msgid "Black on White"
-msgstr ""
+msgstr "E zezë në E bardhë"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
 msgid "Font _Size (pixels)"
-msgstr ""
+msgstr "Gërmat Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
+#, fuzzy
 msgid "Use Font _Name as Text"
-msgstr ""
+msgstr "Gërmat Emri Teksti"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
+#, fuzzy
 msgid "_Border (pixels)"
-msgstr ""
+msgstr "Korniza pixels"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
+#, fuzzy
 msgid "_Color Scheme"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
+#, fuzzy
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "Filtri"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
+#, fuzzy
 msgid "_Labels"
-msgstr ""
+msgstr "Etiketat"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
+#, fuzzy
 msgid "_Text"
-msgstr ""
+msgstr "Teksti"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-msgstr ""
+msgstr "<Image> Script Me gabime Korniza."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#, fuzzy
 msgid "Add Shadow"
-msgstr ""
+msgstr "Shto"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#, fuzzy
 msgid "Blur Border"
-msgstr ""
+msgstr "Korniza"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
+#, fuzzy
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "Gjerësia"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike E vogël."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+#, fuzzy
 msgid "Dark Color"
-msgstr ""
+msgstr "I Ziu Ngjyra"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
 msgid "Highlight Color"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#, fuzzy
 msgid "Index Image"
-msgstr ""
+msgstr "Treguesi"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#, fuzzy
 msgid "Number of Colors"
-msgstr ""
+msgstr "Numri nga Ngjyrat"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+#, fuzzy
 msgid "Remove Background"
-msgstr ""
+msgstr "Hiq Sfondi"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+#, fuzzy
 msgid "Select-By-Color Threshold"
-msgstr ""
+msgstr "Zgjidh Ngjyra"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#, fuzzy
 msgid "Shadow Color"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike T Nën Butoni Etiketa."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike e Nën Nën Butoni Etiketa."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike Të përgjithshme Etiketat."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr ""
+msgstr "<Toolbox> Script Web Faqja Temat Klasike Butoni Etiketa."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
+#, fuzzy
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Shkallëzimi"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
+#, fuzzy
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "Teksti"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
 msgid "Outline Gradient Reverse"
-msgstr ""
+msgstr "Shkallëzimi"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "Motivi"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
+#, fuzzy
 msgid "Pattern (Overlay)"
-msgstr ""
+msgstr "Motivi"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "Motivi Teksti"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
@@ -1507,174 +1666,214 @@ msgid "Shadow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
+#, fuzzy
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "Teksti"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
+#, fuzzy
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "Motivi"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
+#, fuzzy
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "Motivi për nga"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
+#, fuzzy
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "Motivi për Teksti nga"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#, fuzzy
 msgid "Effect Size (pixels * 3)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#, fuzzy
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "Lartësia"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+#, fuzzy
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "Korniza Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr ""
+msgstr "<Toolbox> Script E personalizuar."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
+#, fuzzy
 msgid "X Divisions"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
+#, fuzzy
 msgid "Y Divisions"
-msgstr ""
+msgstr "Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr ""
+msgstr "<Image> Script Vizato."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG Opacity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+#, fuzzy
 msgid "End X"
-msgstr ""
+msgstr "Fundi X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+#, fuzzy
 msgid "End Y"
-msgstr ""
+msgstr "Fundi Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+#, fuzzy
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "Nga Sipër Majtas Poshtë Djathtas"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+#, fuzzy
 msgid "Graph Scale"
-msgstr ""
+msgstr "Shkalla"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+#, fuzzy
 msgid "Start X"
-msgstr ""
+msgstr "Fillo X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+#, fuzzy
 msgid "Start Y"
-msgstr ""
+msgstr "Fillo Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+#, fuzzy
 msgid "Use Selection Bounds Instead of Belows"
-msgstr ""
+msgstr "Zgjedhja nga"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#, fuzzy
 msgid "Frame Color"
-msgstr ""
+msgstr "Korniza Ngjyra"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#, fuzzy
 msgid "Frame Size"
-msgstr ""
+msgstr "Korniza Madhësia"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
-msgstr ""
+msgstr "<Image> Script Shfaq."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
+#, fuzzy
 msgid "Apply Layer Mask (or discard)"
-msgstr ""
+msgstr "Apliko Maska"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
+#, fuzzy
 msgid "Create New Image"
-msgstr ""
+msgstr "Krijo E re"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
+#, fuzzy
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "Fut"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
+#, fuzzy
 msgid "Make New Background"
-msgstr ""
+msgstr "E re Sfondi"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
+#, fuzzy
 msgid "Outer Border"
-msgstr ""
+msgstr "Korniza"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
+#, fuzzy
 msgid "Pad Color"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
 msgid "Pad Opacity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
+#, fuzzy
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "Zbutje për E tejdukshme"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
+#, fuzzy
 msgid "Shear Length"
-msgstr ""
+msgstr "Gjatësia"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
+#, fuzzy
 msgid "Space Between Layers"
-msgstr ""
+msgstr "Hapësira Nivelet"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
+#, fuzzy
 msgid "Land Height"
-msgstr ""
+msgstr "Lartësia"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
+#, fuzzy
 msgid "Sea Depth"
-msgstr ""
+msgstr "Thellësia"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Lava..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1682,20 +1881,24 @@ msgid "Roughness"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm.h:5
+#, fuzzy
 msgid "Seed"
-msgstr ""
+msgstr "Lulja"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
+#, fuzzy
 msgid "Use Current Gradient"
-msgstr ""
+msgstr "Aktual"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr ""
+msgstr "<Image> Script Linja."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
+#, fuzzy
 msgid "Number of Lines"
-msgstr ""
+msgstr "Numri nga Rreshta"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Offset Radius"
@@ -1710,43 +1913,55 @@ msgid "Sharpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+#, fuzzy
 msgid ""
 ")))\n"
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+"\n"
+" j "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+#, fuzzy
 msgid ""
 ")))\n"
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+"\n"
+" j "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#, fuzzy
 msgid ""
 ")))\n"
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+"\n"
+" j "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
 msgstr "Përshkrimi"
@@ -1755,35 +1970,40 @@ msgstr "Përshkrimi"
 msgid "Feathering"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:17
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
 msgid "Spacing"
 msgstr "Hapësira e ndërmjetme"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema N."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr ""
+msgstr "<Toolbox> Script N."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+#, fuzzy
 msgid "Create Shadow"
-msgstr ""
+msgstr "Krijo"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#, fuzzy
 msgid "Effect Size (pixels * 5)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
+msgstr "<Toolbox> Script Teksti."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
+#, fuzzy
 msgid "Cell Size (pixels)"
-msgstr ""
+msgstr "Qeli Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
 #: plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -1792,8 +2012,9 @@ msgid "Density (%)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Old Photo..."
-msgstr ""
+msgstr "<Image> Script Foto."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
@@ -1808,8 +2029,9 @@ msgid "Sepia"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -1820,107 +2042,126 @@ msgid "Interpolate"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+#, fuzzy
 msgid "Relative Distance of Horizon"
-msgstr ""
+msgstr "nga"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#, fuzzy
 msgid "Relative Length of Shadow"
-msgstr ""
+msgstr "Gjatësia nga"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
+#, fuzzy
 msgid "Edge Amount"
-msgstr ""
+msgstr "Kornizë Shuma"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
+#, fuzzy
 msgid "Pixel Amount"
-msgstr ""
+msgstr "Pixel Shuma"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-msgstr ""
+msgstr "<Toolbox> Script Butonat Butoni."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+#, fuzzy
 msgid "Lower Color"
-msgstr ""
+msgstr "Inferior Ngjyra"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+#, fuzzy
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "Inferior Ngjyra Aktiv"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+#, fuzzy
 msgid "Not Pressed"
-msgstr ""
+msgstr "Not"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Not Aktiv"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+#, fuzzy
 msgid "Padding X"
-msgstr ""
+msgstr "Zbutje X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+#, fuzzy
 msgid "Padding Y"
-msgstr ""
+msgstr "Zbutje Y"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+#, fuzzy
 msgid "Round Ratio"
-msgstr ""
+msgstr "Përpjestimi"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+#, fuzzy
 msgid "Text Color (Active)"
-msgstr ""
+msgstr "Teksti Ngjyra Aktiv"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+#, fuzzy
 msgid "Upper Color"
-msgstr ""
+msgstr "Superior Ngjyra"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+#, fuzzy
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "Superior Ngjyra Aktiv"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
 msgstr "Sjellja"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
+#, fuzzy
 msgid "Detail in Middle"
-msgstr ""
+msgstr "Hollësi në Qendror"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
-msgstr ""
+msgstr "<Image> Script."
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
 msgstr "E zezë"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
 msgid "Edge Behaviour"
-msgstr ""
+msgstr "Kornizë Sjellja"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+#, fuzzy
 msgid "Number of Frames"
-msgstr ""
+msgstr "Numri nga"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
@@ -1930,124 +2171,151 @@ msgstr ""
 msgid "Smear"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
 msgstr "Mbështill"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
+#, fuzzy
 msgid "Add Background"
-msgstr ""
+msgstr "Shto Sfondi"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
+#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "Shto Hidh"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
+#, fuzzy
 msgid "Edge Radius"
-msgstr ""
+msgstr "Kornizë"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+#, fuzzy
 msgid ""
 ")))\n"
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+"\n"
+" j "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr ""
+msgstr "<Image> Script Zgjedhja Për."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#, fuzzy
 msgid "Brush Name"
-msgstr ""
+msgstr "Emri"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr ""
+msgstr "<Image> Script Zgjedhja Për"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#, fuzzy
 msgid ""
 ")))\n"
 "  (set! filename2 (string-append data-dir\n"
 "\t\t\t\t "
 msgstr ""
+"\n"
+" j "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr ""
+msgstr "<Image> Script Zgjedhja Për Motivi."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
+#, fuzzy
 msgid "Pattern Name"
-msgstr ""
+msgstr "Motivi Emri"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr ""
+msgstr "<Image> Script Zgjedhja."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
+#, fuzzy
 msgid "Font Color"
-msgstr ""
+msgstr "Gërmat Ngjyra"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
+#, fuzzy
 msgid "Number"
-msgstr ""
+msgstr "Numri"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr ""
+msgstr "<Toolbox> Script Shpejtësia Teksti."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr ""
+msgstr "<Toolbox> Script Të Ndryshme Sferë."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
+#, fuzzy
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "pixels"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
+#, fuzzy
 msgid "Sphere Color"
-msgstr ""
+msgstr "Sferë Ngjyra"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#, fuzzy
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "Treguesi j Ngjyrat"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#, fuzzy
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "Majtas Djathtas"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2057,45 +2325,48 @@ msgstr ""
 msgid "Brush"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "Rreth"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#, fuzzy
 msgid "Color Method"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#, fuzzy
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
-msgstr ""
+msgstr "dhe Më shumëhttp://netword.com/"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
 msgstr "Korniza"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#, fuzzy
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Loop"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#, fuzzy
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Loop Trekëndësh"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#, fuzzy
 msgid "Hole Ratio"
-msgstr ""
+msgstr "Përpjestimi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
@@ -2106,8 +2377,9 @@ msgid "Lissajous"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#, fuzzy
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "pixels"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer Teeth"
@@ -2141,7 +2413,6 @@ msgstr ""
 msgid "Shape"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Ngjyrë e Ngurtë"
@@ -2150,125 +2421,145 @@ msgstr "Ngjyrë e Ngurtë"
 msgid "Spyrograph"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Në katror"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
+#, fuzzy
 msgid "Start Angle"
-msgstr ""
+msgstr "Fillo"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr ""
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Trekëndësh"
 
-#. GRUT modified this item
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Lloji"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+#, fuzzy
 msgid "Burst Color"
-msgstr ""
+msgstr "Ngjyra"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+#, fuzzy
 msgid "Effect Size (pixels * 30)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#, fuzzy
 msgid "Effect Size (pixels * 4)"
-msgstr ""
+msgstr "Madhësia pixels"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr ""
+msgstr "<Toolbox> Script Swirl."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
+#, fuzzy
 msgid "Whirl Amount"
-msgstr ""
+msgstr "Shuma"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#, fuzzy
 msgid "Number of Times to Whirl"
-msgstr ""
+msgstr "Numri nga"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#, fuzzy
 msgid "Quarter Size"
-msgstr ""
+msgstr "Madhësia"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl Angle"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema Gjurma."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr ""
+msgstr "<Toolbox> Script Gjurma."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#, fuzzy
 msgid "Base Color"
-msgstr ""
+msgstr "Bazë Ngjyra"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+#, fuzzy
 msgid "Edge Only"
-msgstr ""
+msgstr "Kornizë Vetëm"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#, fuzzy
 msgid "Edge Width"
-msgstr ""
+msgstr "Kornizë Gjerësia"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+#, fuzzy
 msgid "Hit Rate"
-msgstr ""
+msgstr "Taksa"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr ""
+msgstr "<Toolbox> Script Teksti Rreth."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
+#, fuzzy
 msgid "Fill Angle"
-msgstr ""
+msgstr "Mbush (përshtat)"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-msgstr ""
+msgstr "<Image> Script Alfa Stema."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-msgstr ""
+msgstr "<Toolbox> Script."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
@@ -2279,8 +2570,9 @@ msgid "Hexagons"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+#, fuzzy
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "Lloji"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
@@ -2291,24 +2583,28 @@ msgid "Squares"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#, fuzzy
 msgid "Starting Blend"
-msgstr ""
+msgstr "Duke filluar"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+#, fuzzy
 msgid "Text Pattern"
-msgstr ""
+msgstr "Teksti Motivi"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
+#, fuzzy
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
-msgstr ""
+msgstr "<Image> Filtrat."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur Horizontally"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
+#, fuzzy
 msgid "Blur Type"
-msgstr ""
+msgstr "Lloji"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur Vertically"
@@ -2323,32 +2619,39 @@ msgid "RLE"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
+msgstr "<Toolbox> Script Web Titulli."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr ""
+msgstr "<Toolbox> Script T."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
+#, fuzzy
 msgid "Foreground Color"
-msgstr ""
+msgstr "Plani i parë Ngjyra"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-msgstr ""
+msgstr "<Image> Script Maska."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+#, fuzzy
 msgid "Mask Opacity"
-msgstr ""
+msgstr "Maska"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+#, fuzzy
 msgid "Mask Size"
-msgstr ""
+msgstr "Maska Madhësia"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Waves..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
@@ -2363,24 +2666,28 @@ msgid "Wavelength"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
+#, fuzzy
 msgid "Ribbon Spacing"
-msgstr ""
+msgstr "Shiriti Hapësira e ndërmjetme"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
+#, fuzzy
 msgid "Ribbon Width"
-msgstr ""
+msgstr "Shiriti Gjerësia"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow Darkness"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
+#, fuzzy
 msgid "Shadow Depth"
-msgstr ""
+msgstr "Thellësia"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread Density"
@@ -2391,54 +2698,67 @@ msgid "Thread Intensity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
+#, fuzzy
 msgid "Thread Length"
-msgstr ""
+msgstr "Gjatësia"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr ""
+msgstr "<Toolbox> Në linjë në"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
+#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-msgstr ""
+msgstr "<Toolbox> Në linjë Web"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
+#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
-msgstr ""
+msgstr "<Toolbox> Në linjë Web"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-msgstr ""
+msgstr "<Image> Script."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Hidh"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
 msgid "Drop Shadow Color"
-msgstr ""
+msgstr "Hidh Ngjyra"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "Hidh"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "Hidh X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "Hidh Y"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "Vër në dukje"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#, fuzzy
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "Y"
 
