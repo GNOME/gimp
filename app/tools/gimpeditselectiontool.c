@@ -266,7 +266,7 @@ init_edit_selection (GimpTool    *tool,
     }
 
   if (edit_type == EDIT_MASK_TRANSLATE)
-    undo_desc = _("Move Selection Mask");
+    undo_desc = _("Move Selection");
   else if (edit_type == EDIT_LAYER_TRANSLATE)
     undo_desc = _("Move Layer");
   else
@@ -541,7 +541,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    edit_select->y1     = 0;
 
 	    edit_select->edit_type = EDIT_FLOATING_SEL_TRANSLATE;
-	    break;
+
+            /* fall through */
 
 	  case EDIT_FLOATING_SEL_TRANSLATE:
 	    layer = gimp_image_get_active_layer (gdisp->gimage);

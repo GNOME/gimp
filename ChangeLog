@@ -1,5 +1,10 @@
 2003-04-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c: applied a (modified) patch
+	from Pedro Gimeno that fixes bug #110115.
+
+2003-04-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_apply_mask): call
 	gimp_viewable_invalidate_preview() on the layer, not on the image
 	(fixes bug #108960).
