@@ -40,6 +40,13 @@ Bugs fixed in GIMP 2.0pre2
 - 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch 
   Natterer)
 - 128112: Use a better error message if help files are not present (Dave Neary)
+- 78732: Don't paste outside the visible screen, if possible (Mitch Natterer)
+- 131561: Make "Condensed" fonts available for use (Manish Singh)
+- 71922: Fix SuperNova preview for Alpha channel (David Odin)
+- 82464: Fix SuperNova preview for greyscale images (David Odin)
+- 121966: Fix SuperNova plug-in (David Odin)
+- 110610: Allow user to choose file formats even if the current image type is 
+  not supported by them (Pedro Gimeno)
 
 Other contributions:
   David Odin, Manish Singh, Simon Budig, Mitch Natterer, Sven Neumann, Tor 

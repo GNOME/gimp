@@ -1,3 +1,7 @@
+2004-01-16  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Update NEWS file again.
+
 2004-01-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/edit-commands.[ch]: converted tabs to spaces.
