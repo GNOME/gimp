@@ -159,6 +159,11 @@ gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpColorScale *scale;
+  GtkRange       *range;
+  GdkRectangle    expose_area;	/* Relative to widget->allocation */
+  GdkRectangle    area;
+  gint            focus         = 0;
+  gint            focus_padding = 0;
   guchar         *buf;
 
   scale = GIMP_COLOR_SCALE (widget);
@@ -166,19 +171,82 @@ gimp_color_scale_expose (GtkWidget      *widget,
   if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
-  buf = scale->buf + event->area.y * scale->rowstride + event->area.x * 3;
+  if (GTK_WIDGET_CAN_FOCUS (widget))
+    gtk_widget_style_get (widget,
+                          "focus-line-width", &focus,
+                          "focus-padding",    &focus_padding,
+                          NULL);
+  focus += focus_padding;
 
-  gdk_draw_rgb_image_dithalign (widget->window,
-                                widget->style->black_gc,
-                                event->area.x,
-                                event->area.y,
-                                event->area.width,
-                                event->area.height,
-                                GDK_RGB_DITHER_MAX,
-                                buf,
-                                scale->rowstride,
-                                event->area.x,
-                                event->area.y);
+  range = GTK_RANGE (scale);
+  
+  expose_area = event->area;
+  expose_area.x -= widget->allocation.x;
+  expose_area.y -= widget->allocation.y;
+
+  /* This is ugly as it relies heavily on GTK+ internals, but I see no
+     other way to force the range to recalculate its layout. Might
+     break if GtkRange internals change.
+   */
+  GTK_WIDGET_UNSET_FLAGS (widget, GTK_REALIZED);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, &widget->allocation);
+  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+
+  if (gdk_rectangle_intersect (&expose_area, &range->range_rect, &area))
+    {
+      buf = scale->buf + area.y * scale->rowstride + area.x * 3;
+
+      area.x += widget->allocation.x;
+      area.y += widget->allocation.y;
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+                                    widget->style->black_gc,
+                                    area.x + focus,
+                                    area.y + focus,
+                                    area.width  - 2 * focus,
+                                    area.height - 2 * focus,
+                                    GDK_RGB_DITHER_MAX,
+                                    buf,
+                                    scale->rowstride,
+                                    event->area.x,
+                                    event->area.y);
+    }
+
+  if (GTK_WIDGET_IS_SENSITIVE (widget) && GTK_WIDGET_HAS_FOCUS (range))
+    gtk_paint_focus (widget->style, widget->window, GTK_WIDGET_STATE (widget),
+                     &area, widget, "trough",
+                     widget->allocation.x + range->range_rect.x,
+                     widget->allocation.y + range->range_rect.y,
+                     range->range_rect.width,
+                     range->range_rect.height);
+
+  
+  switch (range->orientation)
+    {
+    case GTK_ORIENTATION_HORIZONTAL:
+      area.x      = range->slider_start;
+      area.y      = range->range_rect.y + focus;
+      area.width  = range->slider_end - range->slider_start;
+      area.height = range->range_rect.height - 2 * focus;
+      break;
+
+    case GTK_ORIENTATION_VERTICAL:
+      area.x      = range->range_rect.x + focus;
+      area.y      = range->slider_start;
+      area.width  = range->range_rect.width - 2 * focus;
+      area.height = range->slider_end - range->slider_start;
+      break;
+    }
+
+  if (gdk_rectangle_intersect (&expose_area, &area, &area))
+    {
+      area.x += widget->allocation.x;
+      area.y += widget->allocation.y;
+  
+      gtk_paint_box (widget->style, widget->window, GTK_WIDGET_STATE (widget),
+                     GTK_SHADOW_ETCHED_OUT, &event->area, widget, "slider",
+                     area.x, area.y, area.width, area.height);
+    }
 
   return FALSE;
 }
@@ -234,4 +302,25 @@ gimp_color_scale_set_color (GimpColorScale *scale,
 static void
 gimp_color_scale_render (GimpColorScale *scale)
 {
+  guint   y;
+  guchar *buf;
+
+  if ((buf = scale->buf) == NULL)
+    return;
+
+  for (y = 0; y < scale->height; y++)
+    {
+      guchar *d = buf;
+      guint   w = scale->width;
+
+      while (w--)
+        {  
+          d[0] = w << 1;
+          d[1] = w << 1;
+          d[2] = w << 1;
+          d += 3;
+        }
+
+      buf += scale->rowstride;
+    }
 }

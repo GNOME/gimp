@@ -34,6 +34,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcolorscale.h"
 #include "gimpcolorscales.h"
 #include "gimpwidgets.h"
 
@@ -140,9 +141,12 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 static void
 gimp_color_scales_init (GimpColorScales *scales)
 {
+  GimpColorSelector *selector;
+  GtkObject *adj;
   GtkWidget *table;
   GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *color_scale;
   GSList    *group;
   gint       i;
 
@@ -177,7 +181,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
   static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
 
-  table = gtk_table_new (7, 4, FALSE);
+  table = gtk_table_new (8, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
@@ -222,6 +226,17 @@ gimp_color_scales_init (GimpColorScales *scales)
 			G_CALLBACK (gimp_color_scales_scale_update),
 			scales);
     }
+
+  selector = GIMP_COLOR_SELECTOR (scales);
+  color_scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                                      GIMP_COLOR_SELECTOR_HUE,
+                                      &selector->rgb, &selector->hsv);
+  gtk_table_attach (GTK_TABLE (table), color_scale,
+                    2, 3, 7, 8, GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (color_scale);
+
+  adj = gtk_adjustment_new (0.5, 0.0, 1.0, 0.1, 0.1, 0.0);
+  gtk_range_set_adjustment (GTK_RANGE (color_scale), GTK_ADJUSTMENT (adj));
 
   /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 4);
