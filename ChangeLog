@@ -1,3 +1,8 @@
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-installed-dialog.c: fixed some action_area uglyness
+	which occured after the switch to GtkDialog.
+
 2001-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/temp-buf.c: added some safety checks. 

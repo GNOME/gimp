@@ -77,9 +77,9 @@
 
 
 static void     user_install_continue_callback (GtkWidget *widget,
-						gpointer data);
+						gpointer   data);
 static void     user_install_cancel_callback   (GtkWidget *widget,
-						gpointer data);
+						gpointer   data);
 
 static gboolean user_install_run               (void);
 static void     user_install_tuning            (void);
@@ -521,6 +521,8 @@ user_install_dialog_create (Gimp *gimp)
   GtkWidget *page;
   GtkWidget *sep;
 
+  GtkWidget *eek_box;
+
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
 		     NULL, NULL,
@@ -539,6 +541,19 @@ user_install_dialog_create (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+
+  eek_box = gtk_hbox_new (FALSE, 8);
+
+  g_object_ref (G_OBJECT (GTK_DIALOG (dialog)->action_area));
+  gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area->parent),
+                        GTK_DIALOG (dialog)->action_area);
+  gtk_box_pack_end (GTK_BOX (eek_box), GTK_DIALOG (dialog)->action_area,
+                    FALSE, FALSE, 0);
+  g_object_unref (GTK_DIALOG (dialog)->action_area);
+
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox), eek_box,
+                    FALSE, FALSE, 0);
+  gtk_widget_show (eek_box);
 
   gdk_color_parse ("black", &black_color);
   gdk_color_parse ("white", &white_color);
@@ -574,10 +589,7 @@ user_install_dialog_create (Gimp *gimp)
   footer_label = gtk_label_new (NULL);
   PAGE_STYLE (footer_label);
   gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_RIGHT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), footer_label,
-		      FALSE, FALSE, 8);
-  gtk_box_reorder_child (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-			 footer_label, 0);
+  gtk_box_pack_end (GTK_BOX (eek_box), footer_label, FALSE, FALSE,0 );
   gtk_widget_show (footer_label);
 
   vbox = gtk_vbox_new (FALSE, 0);
