@@ -340,20 +340,23 @@ nova_dialog (GimpDrawable *drawable)
   center_frame = nova_center_create (drawable);
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
                     0, 0, 0, 0);
-  button = gimp_color_button_new (_("SuperNova Color Picker"),
-                                  SCALE_WIDTH - 8, 16,
-                                  &pvals.color, GIMP_COLOR_AREA_FLAT);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Co_lor:"), 1.0, 0.5,
-                             button, 1, TRUE);
 
-  g_signal_connect (button, "color_changed",
-                    G_CALLBACK (gimp_color_button_get_color),
-                    &pvals.color);
-  g_signal_connect_swapped (button, "color_changed",
-                            G_CALLBACK (nova),
-                            drawable);
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
+    {
+      button = gimp_color_button_new (_("SuperNova Color Picker"),
+                                      SCALE_WIDTH - 8, 16,
+                                      &pvals.color, GIMP_COLOR_AREA_FLAT);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                 _("Co_lor:"), 1.0, 0.5,
+                                 button, 1, TRUE);
 
+      g_signal_connect (button, "color_changed",
+                        G_CALLBACK (gimp_color_button_get_color),
+                        &pvals.color);
+      g_signal_connect_swapped (button, "color_changed",
+                                G_CALLBACK (nova),
+                                drawable);
+    }
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                               _("_Radius:"), SCALE_WIDTH, 8,
                               pvals.radius, 1, 100, 1, 10, 0,
@@ -377,18 +380,20 @@ nova_dialog (GimpDrawable *drawable)
                             G_CALLBACK (nova),
                             drawable);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                              _("R_andom Hue:"), SCALE_WIDTH, 8,
-                              pvals.randomhue, 0, 360, 1, 15, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &pvals.randomhue);
-  g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (nova),
-                            drawable);
-
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
+    {
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+                                  _("R_andom Hue:"), SCALE_WIDTH, 8,
+                                  pvals.randomhue, 0, 360, 1, 15, 0,
+                                  TRUE, 0, 0,
+                                  NULL, NULL);
+      g_signal_connect (adj, "value_changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &pvals.randomhue);
+      g_signal_connect_swapped (adj, "value_changed",
+                                G_CALLBACK (nova),
+                                drawable);
+    }
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

@@ -1,3 +1,8 @@
+2004-01-15  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/nova.c: Do not display the color button or the
+	"Random Hue" range when applying to a grayscale image.
+
 2004-01-15  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/gui/file-save-menu.c (file_save_menu_update): Removed the
