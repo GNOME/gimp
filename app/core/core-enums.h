@@ -583,9 +583,9 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< pdb-skip, skip >*/
 {
-  GIMP_SCALE_OK,
-  GIMP_SCALE_TOO_SMALL,
-  GIMP_SCALE_TOO_BIG
+  GIMP_IMAGE_SCALE_OK,
+  GIMP_IMAGE_SCALE_TOO_SMALL,
+  GIMP_IMAGE_SCALE_TOO_BIG
 } GimpImageScaleCheckType;
 
 #endif /* __CORE_ENUMS_H__ */

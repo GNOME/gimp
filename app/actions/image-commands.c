@@ -91,13 +91,13 @@ static void     image_resize_callback     (GtkWidget   *widget,
 				           gpointer     data);
 static void     image_scale_callback      (GtkWidget   *widget,
 				           gpointer     data);
+static void     image_scale_warn          (ImageResize *image_scale,
+                                           const gchar *warning_title,
+                                           const gchar *warning_message);
 static void     image_scale_warn_callback (GtkWidget   *widget,
 				           gboolean     do_scale,
 				           gpointer     data);
 static void     image_scale_implement     (ImageResize *image_scale);
-static void     image_scale_warn          (ImageResize *image_scale,
-                                           const gchar *warning_title,
-                                           const gchar *warning_message);
 
 
 /*  public functions  */
@@ -490,62 +490,87 @@ image_scale_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   ImageResize *image_scale = data;
-  gchar *warning_message;
-  
+  gchar       *warning_message;
+
   g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
 
   gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
 
-  GimpImageScaleCheckType scale_check = 
-      gimp_image_scale_check (image_scale->gimage,
-                              image_scale->resize->width,
-                              image_scale->resize->height);
+  GimpImageScaleCheckType scale_check =
+    gimp_image_scale_check (image_scale->gimage,
+                            image_scale->resize->width,
+                            image_scale->resize->height);
   switch (scale_check)
     {
-      case GIMP_SCALE_TOO_BIG:
-        {
-          gchar *size_str;
-          gchar *max_size_str;
+    case GIMP_IMAGE_SCALE_TOO_BIG:
+      {
+        gchar *size_str;
+        gchar *max_size_str;
 
-          size_str = gimp_memsize_to_string (gimp_object_get_memsize 
-                          (GIMP_OBJECT (image_scale->gimage), NULL) 
-                          * image_scale->resize->ratio_x 
-                          * image_scale->resize->ratio_y);
-          max_size_str = gimp_memsize_to_string 
-            (GIMP_GUI_CONFIG (image_scale->gimage->gimp->config)
-              ->max_new_image_size);
-          warning_message = g_strdup_printf (
-              _("You are trying to create an image with "
-                "a size of %s.\n\n"
-                "Choose OK to create this image anyway.\n"
-                "Choose Cancel if you did not intend to "
-                "create such a large image.\n\n"
-                "To prevent this dialog from appearing, "
-                "increase the \"Maximum Image Size\" "
-                "setting (currently %s) in the "
-                "Preferences dialog."),
-              size_str, max_size_str);
-          image_scale_warn (image_scale, 
-                            _("Image exceeds maximum image size"),
-                            warning_message);
-          break;
-        }
-      case GIMP_SCALE_TOO_SMALL:
-        warning_message = _("The chosen image size will shrink "
-                            "some layers completely away. "
-                            "Is this what you want?");
-        image_scale_warn (image_scale, 
-                          _("Layer Too Small"),
+        size_str =
+          gimp_memsize_to_string (gimp_object_get_memsize
+                                  (GIMP_OBJECT (image_scale->gimage), NULL) *
+                                  image_scale->resize->ratio_x *
+                                  image_scale->resize->ratio_y);
+        max_size_str = gimp_memsize_to_string
+          (GIMP_GUI_CONFIG (image_scale->gimage->gimp->config)->max_new_image_size);
+
+        warning_message = g_strdup_printf
+          (_("You are trying to create an image with "
+             "a size of %s.\n\n"
+             "Choose OK to create this image anyway.\n"
+             "Choose Cancel if you did not intend to "
+             "create such a large image.\n\n"
+             "To prevent this dialog from appearing, "
+             "increase the \"Maximum Image Size\" "
+             "setting (currently %s) in the "
+             "Preferences dialog."),
+           size_str, max_size_str);
+
+        image_scale_warn (image_scale,
+                          _("Image exceeds maximum image size"),
                           warning_message);
-        break;
-      case GIMP_SCALE_OK: 
-        /* If all is well, return directly after scaling image. */
-        image_scale_implement (image_scale);
-        gtk_widget_destroy (image_scale->resize->resize_shell);
-        break;
+      }
+      break;
+
+    case GIMP_IMAGE_SCALE_TOO_SMALL:
+      warning_message = _("The chosen image size will shrink "
+                          "some layers completely away. "
+                          "Is this what you want?");
+
+      image_scale_warn (image_scale,
+                        _("Layer Too Small"),
+                        warning_message);
+      break;
+
+    case GIMP_IMAGE_SCALE_OK:
+      /* If all is well, return directly after scaling image. */
+      image_scale_implement (image_scale);
+      gtk_widget_destroy (image_scale->resize->resize_shell);
+      break;
     }
-  
+}
+
+static void
+image_scale_warn (ImageResize *image_scale,
+                  const gchar *warning_title,
+                  const gchar *warning_message)
+{
+  GtkWidget *dialog;
+
+  dialog = gimp_query_boolean_box (warning_title,
+                                   image_scale->resize->resize_shell,
+                                   gimp_standard_help_func,
+                                   GIMP_HELP_IMAGE_SCALE_WARNING,
+                                   GTK_STOCK_DIALOG_QUESTION,
+                                   warning_message,
+                                   GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                   G_OBJECT (image_scale->resize->resize_shell),
+                                   "destroy",
+                                   image_scale_warn_callback,
+                                   image_scale);
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -555,38 +580,16 @@ image_scale_warn_callback (GtkWidget *widget,
 {
   ImageResize *image_scale = data;
 
-  if (do_scale) /* User doesn't mind losing layers or 
+  if (do_scale) /* User doesn't mind losing layers or
                  * creating huge image... */
     {
       image_scale_implement (image_scale);
-
       gtk_widget_destroy (image_scale->resize->resize_shell);
     }
   else
     {
       gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
     }
-}
-
-static void image_scale_warn (ImageResize *image_scale, 
-                              const gchar *warning_title, 
-                              const gchar *warning_message)
-{
-  GtkWidget *dialog;
-
-  dialog =
-    gimp_query_boolean_box (warning_title,
-                            image_scale->resize->resize_shell,
-                            gimp_standard_help_func,
-                            GIMP_HELP_IMAGE_SCALE_WARNING,
-                            GTK_STOCK_DIALOG_QUESTION,
-                            warning_message,
-                            GTK_STOCK_OK, GTK_STOCK_CANCEL,
-                            G_OBJECT (image_scale->resize->resize_shell),
-                            "destroy",
-                            image_scale_warn_callback,
-                            image_scale);
-  gtk_widget_show (dialog);
 }
 
 static void

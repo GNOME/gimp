@@ -196,18 +196,17 @@ gimp_image_scale (GimpImage             *gimage,
  * @gimage:     A #GimpImage.
  * @new_width:  The new width.
  * @new_height: The new height.
- * Returns: #GimpImageScaleCheckType
  *
- * Inventory the layer list in gimage and check that it may be 
+ * Inventory the layer list in gimage and check that it may be
  * scaled to @new_height and @new_width without problems.
  *
- * Return value: #GIMP_SCALE_OK if scaling the image will shrink none 
- *               of its layers completely away, and the new image size 
- *               is smaller than the maximum specified in the 
+ * Return value: #GIMP_IMAGE_SCALE_OK if scaling the image will shrink none
+ *               of its layers completely away, and the new image size
+ *               is smaller than the maximum specified in the
  *               preferences.
- *               #GIMP_SCALE_TOO_SMALL if scaling would remove some 
+ *               #GIMP_IMAGE_SCALE_TOO_SMALL if scaling would remove some
  *               existing layers.
- *               #GIMP_SCALE_TOO_BIG if the new image size would 
+ *               #GIMP_IMAGE_SCALE_TOO_BIG if the new image size would
  *               exceed the maximum specified in the preferences.
  **/
 GimpImageScaleCheckType
@@ -216,18 +215,20 @@ gimp_image_scale_check (const GimpImage *gimage,
                         gint             new_height)
 {
   GList *list;
-  glong new_size;
-  
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_SCALE_TOO_SMALL);
+  glong  curr_size;
+  glong  new_size;
 
-  new_size = gimp_object_get_memsize
-    (GIMP_OBJECT (gimage), NULL)
-    * (gdouble) new_width / gimp_image_get_width (gimage)
-    * (gdouble) new_height / gimp_image_get_height (gimage);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_IMAGE_SCALE_TOO_SMALL);
 
-  if (new_size > 
-      GIMP_GUI_CONFIG (gimage->gimp->config)->max_new_image_size)
-    return GIMP_SCALE_TOO_BIG;
+  curr_size = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
+
+  new_size = (curr_size *
+              ((gdouble) new_width  / gimp_image_get_width  (gimage)) *
+              ((gdouble) new_height / gimp_image_get_height (gimage)));
+
+  if (new_size > curr_size &&
+      new_size > GIMP_GUI_CONFIG (gimage->gimp->config)->max_new_image_size)
+    return GIMP_IMAGE_SCALE_TOO_BIG;
 
   for (list = GIMP_LIST (gimage->layers)->list;
        list;
@@ -236,8 +237,8 @@ gimp_image_scale_check (const GimpImage *gimage,
       GimpItem *item = list->data;
 
       if (! gimp_item_check_scaling (item, new_width, new_height))
-	return GIMP_SCALE_TOO_SMALL;
+	return GIMP_IMAGE_SCALE_TOO_SMALL;
     }
 
-  return GIMP_SCALE_OK;
+  return GIMP_IMAGE_SCALE_OK;
 }

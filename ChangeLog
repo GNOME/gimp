@@ -1,3 +1,14 @@
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.h: changed GimpImageScaleCheckType enum
+	values to GIMP_IMAGE_SCALE_*.
+
+	* app/core/gimpimage-scale.c (gimp_image_scale_check): return
+	GIMP_IMAGE_SCALE_TOO_BIG only if we are scaling up.
+
+	* app/gui/image-commands.c: changed accordingly. Whitespace and
+	indentation cleanup.
+
 2003-12-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/spyrogimp.scm: added missing parameter
