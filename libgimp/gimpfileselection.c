@@ -268,11 +268,12 @@ gimp_file_selection_realize (GtkWidget *widget)
   GtkStyle          *style;
 
   gfs = GIMP_FILE_SELECTION (widget);
-  if (! gfs->check_valid)
-    return;
 
   if (GTK_WIDGET_CLASS (parent_class)->realize)
     (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+
+  if (! gfs->check_valid)
+    return;
 
   style = gtk_widget_get_style (widget);
 
