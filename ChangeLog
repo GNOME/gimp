@@ -1,3 +1,8 @@
+2004-07-28  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-mkenums: synced with glib-mkenums (execept for the
+	newly added template feature).
+
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpbrushselect.c
