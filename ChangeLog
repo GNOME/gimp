@@ -20,10 +20,12 @@
 	here, use functions from parasiteio.c.
 
 	* plug-ins/common/gpb.c: Ditto. Add brush cell width and height
-	fields to the gih save dialog. Add cleverness to update rows and
-	columns as cell size is changes. (Still too easy for the user to
-	get confused, though.) Display corresponding guide grid on the
-	image. Unfortunately updating the guidelines doesn't seem to work.
+	fields to the gih save dialog. These are now the main entries the
+	user should use to adjust how the image's layers are divided into
+	brushes. Add some cleverness to update the rows and columns fields
+	as cell size is changed. (Still too easy for the user to get
+	confused, though.) Display corresponding guide grid on the
+	image. Unfortunately, updating the guides doesn't seem to work.
 
 	* plug-ins/common/psp.c: Use functions from parasiteio.c.
 
