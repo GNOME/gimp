@@ -1,3 +1,11 @@
+2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/paint/gimppaintoptions.[ch]: renamed all "pressure-pressure"
+	variables to "pressure-hardness".
+
+	* app/paint/gimpairbrush.c:
+	* app/tools/gimppaintoptions-gui.c: changed accordingly.
+
 2004-06-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorarea.c: replaced destroy() by

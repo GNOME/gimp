@@ -324,7 +324,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      button = gimp_prop_check_button_new (config, "pressure-pressure",
+      button = gimp_prop_check_button_new (config, "pressure-hardness",
                                            _("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);

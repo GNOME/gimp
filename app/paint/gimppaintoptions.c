@@ -38,7 +38,7 @@
 #define DEFAULT_HARD              FALSE
 
 #define DEFAULT_PRESSURE_OPACITY  TRUE
-#define DEFAULT_PRESSURE_PRESSURE FALSE
+#define DEFAULT_PRESSURE_HARDNESS FALSE
 #define DEFAULT_PRESSURE_RATE     FALSE
 #define DEFAULT_PRESSURE_SIZE     FALSE
 #define DEFAULT_PRESSURE_COLOR    FALSE
@@ -60,7 +60,7 @@ enum
   PROP_APPLICATION_MODE,
   PROP_HARD,
   PROP_PRESSURE_OPACITY,
-  PROP_PRESSURE_PRESSURE,
+  PROP_PRESSURE_HARDNESS,
   PROP_PRESSURE_RATE,
   PROP_PRESSURE_SIZE,
   PROP_PRESSURE_COLOR,
@@ -150,9 +150,9 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "pressure-opacity", NULL,
                                     DEFAULT_PRESSURE_OPACITY,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_PRESSURE,
-                                    "pressure-pressure", NULL,
-                                    DEFAULT_PRESSURE_PRESSURE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_HARDNESS,
+                                    "pressure-hardness", NULL,
+                                    DEFAULT_PRESSURE_HARDNESS,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_RATE,
                                     "pressure-rate", NULL,
@@ -252,8 +252,8 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PRESSURE_OPACITY:
       pressure_options->opacity = g_value_get_boolean (value);
       break;
-    case PROP_PRESSURE_PRESSURE:
-      pressure_options->pressure = g_value_get_boolean (value);
+    case PROP_PRESSURE_HARDNESS:
+      pressure_options->hardness = g_value_get_boolean (value);
       break;
     case PROP_PRESSURE_RATE:
       pressure_options->rate = g_value_get_boolean (value);
@@ -326,8 +326,8 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_PRESSURE_OPACITY:
       g_value_set_boolean (value, pressure_options->opacity);
       break;
-    case PROP_PRESSURE_PRESSURE:
-      g_value_set_boolean (value, pressure_options->pressure);
+    case PROP_PRESSURE_HARDNESS:
+      g_value_set_boolean (value, pressure_options->hardness);
       break;
     case PROP_PRESSURE_RATE:
       g_value_set_boolean (value, pressure_options->rate);
@@ -551,7 +551,7 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
   if (paint_options->hard)
     return GIMP_BRUSH_HARD;
 
-  if (paint_options->pressure_options->pressure)
+  if (paint_options->pressure_options->hardness)
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;

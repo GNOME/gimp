@@ -211,14 +211,14 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   opacity = options->pressure / 100.0;
 
-  saved_pressure = paint_options->pressure_options->pressure;
+  saved_pressure = paint_options->pressure_options->hardness;
 
   if (saved_pressure)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
-  paint_options->pressure_options->pressure = FALSE;
+  paint_options->pressure_options->hardness = FALSE;
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, opacity);
-  paint_options->pressure_options->pressure = saved_pressure;
+  paint_options->pressure_options->hardness = saved_pressure;
 }
 
 static gboolean
