@@ -1,3 +1,9 @@
+2000-03-30  Kjartan Maraas  <kmaraas@online.no>
+
+	* ru.po: Updated Russian translation from Valek Filippov
+	<frob@df.ru>.
+	* no.po: Updated Norwegian translation.	
+
 2000-03-29  Sven Neumann  <neo@wintermute.ochsenblut.de>
 
 	* script-fu-xgettext: removed the check for broken versions of 

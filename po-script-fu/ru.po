@@ -1,126 +1,121 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Valek Filippov <frob@df.ru>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: 1.1.18\n"
+"POT-Creation-Date: 2000-03-26 22:26+0400\n"
+"PO-Revision-Date: 2000-03-29 18:53+04:00\n"
+"Last-Translator: Valek Filippov <frob@df.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=koi8-r\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Консольный режим Скрипт-Фу позволяет только интерактивную работу"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Консоль Скрипт-Фу"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:206
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/script-fu/script-fu-console.c:207
+#: plug-ins/script-fu/script-fu-scripts.c:1867
 msgid "Close"
 msgstr "Закрыть"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:214
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "SIOD Output"
 msgstr "Вывод SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:291
+#: plug-ins/script-fu/script-fu-console.c:294
 msgid "Current Command"
 msgstr "Текущая команда"
 
-#: plug-ins/script-fu/script-fu-console.c:312
+#: plug-ins/script-fu/script-fu-console.c:315
 msgid "Browse..."
 msgstr "Просмотр..."
 
-#: plug-ins/script-fu/script-fu-console.c:575
+#: plug-ins/script-fu/script-fu-console.c:578
 msgid "Unable to open SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:626
+#: plug-ins/script-fu/script-fu-console.c:629
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1207
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
-msgstr "Консоль Скрипт-Фу"
+msgstr "/Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-#: plug-ins/script-fu/script-fu-scripts.c:1211
-#, fuzzy, c-format
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
+#, c-format
 msgid "Script-Fu: %s"
-msgstr "Консоль Скрипт-Фу"
+msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1236
+#: plug-ins/script-fu/script-fu-scripts.c:1142
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1300
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1306
+#: plug-ins/script-fu/script-fu-scripts.c:1212
 msgid "Script Toggle"
-msgstr ""
+msgstr "Переключатель скрипта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1274
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1407
+#: plug-ins/script-fu/script-fu-scripts.c:1313
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1415
+#: plug-ins/script-fu/script-fu-scripts.c:1321
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1440
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Reset to Defaults"
 msgstr "Сбросить в исходное"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1466
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "About"
 msgstr "О программе"
 
-#. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1480
-#: plug-ins/script-fu/script-fu-server.c:559
+#: plug-ins/script-fu/script-fu-scripts.c:1386
+#: plug-ins/script-fu/script-fu-server.c:552
 msgid "OK"
 msgstr "Да"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1489
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-scripts.c:1395
+#: plug-ins/script-fu/script-fu-server.c:554
 msgid "Cancel"
 msgstr "Отмена"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1594
+#: plug-ins/script-fu/script-fu-scripts.c:1500
 msgid "NOT SET"
 msgstr "НЕ УСТАНОВЛЕНО"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1665
+#: plug-ins/script-fu/script-fu-scripts.c:1571
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -128,42 +123,37 @@ msgstr ""
 "По крайней мере один из выбранных вами шрифтов неисправен.\n"
 "Пожалуйста проверьте ваши настройки.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1932
+#: plug-ins/script-fu/script-fu-scripts.c:1838
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1938
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1844
 msgid "Copyright:"
-msgstr "Авторское право: "
+msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1944
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1850
 msgid "Date:"
-msgstr "Дата: "
+msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Image Types:"
-msgstr "Типы изображений"
+msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2101
+#: plug-ins/script-fu/script-fu-scripts.c:2007
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:547
 msgid "Script-Fu Server Options"
 msgstr "Скрипт-Фу: Параметры сервера"
 
-#. The server port
-#: plug-ins/script-fu/script-fu-server.c:582
-msgid "Server Port: "
-msgstr "Шрифт сервера: "
+#: plug-ins/script-fu/script-fu-server.c:574
+msgid "Server Port:"
+msgstr "Порт сервера:"
 
-#. The server logfile
-#: plug-ins/script-fu/script-fu-server.c:595
-msgid "Server Logfile: "
-msgstr ""
+#: plug-ins/script-fu/script-fu-server.c:580
+msgid "Server Logfile:"
+msgstr "Регистрационный файл сервера:"
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
@@ -175,9 +165,326 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Перечитать все доступные скрипты"
 
 #: plug-ins/script-fu/script-fu.c:1012
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/3D Outline..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/3D Truchet..."
+
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Скрипт-Фу/Декор/Add Bevel..."
+
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Скрипт-Фу/Декор/Добавить рамку..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Стрелка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Гор.линейка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Bullet..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Кнопка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужое свечение..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужой Неон..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Изображение..."
+
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Слой изображения..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа I..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа II..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Простая выпуклая кнопка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Arrow..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Bullet..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Кнопка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Заголовок..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Beveled Pattern/Гор.линейка..."
+
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Blend..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Blended..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Bovination..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Камуфляж..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Carved..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Image>/Скрипт-Фу/Stencil Ops/Carve-It..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Мел..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Chip Away..."
+
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Скрипт-Фу/Stencil Ops/Chrome-It..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Хром..."
+
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Ток..."
+
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Clothify..."
+
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Скрипт-Фу/Декор/Кофейное пятно..."
+
+msgid "<Image>/Script-Fu/Animators/Color Cycling..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Цветовой цикл..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Комикс..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Cool Metal..."
+
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/Правка/Скопировать видимые"
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Кристалл..."
+
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Distress Selection..."
+
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Скрипт-Фу/Тень/Падающая тень..."
+
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Очистить каждую иную строку..."
+
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Fade Outline..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Flatland..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Карта шрифта..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Frosty..."
+
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Скрипт-Фу/Декор/Нечеткая рамка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Большой заголовок..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Маленький заголовок.."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr ""
+"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Button Label..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Button "
+"Label..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+"\"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/General Tube Labels..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Glossy..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Glowing Hot..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Gradient Bevel..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Пользовательский градиент..."
+
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Сделать сетчатую систему..."
+
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Скрипт-Фу/Утилиты/Построить HSV-график..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Imigre-26..."
+
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Скрипт-Фу/Утилиты/Показать структуру изображения..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Земля..."
+
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Лава..."
+
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Линейная новая..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник, Feathered..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс, Feathered..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Неон..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Газетный текст..."
+
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Скрипт-Фу/Декор/Старое фото..."
+
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Скрипт-Фу/Тень/Перспектива..."
+
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Хищник..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Круглая кнопка..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Render Map..."
+
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Рябь..."
+
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Скрипт-Фу/Декор/Закругленные уголки..."
+
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Скрипт-Фу/Выделение/Круглое..."
+
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Скрипт-Фу/Выделение/В кисть..."
+
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
+
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Скрипт-Фу/Декор/Слайд..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/SOTA Хром..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Скоростной текст..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Разное/Сфера..."
+
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Вращающийся шар..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Starburst..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Starscape..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirl-Tile..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirly (tileable)..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Тест/Сфера..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблема/Текст по кругу..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Текстура..."
+
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/Фильтры/Размывание/Tileable Blur..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Web Title Header..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/След частицы..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Trochoid..."
+
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Truchet..."
+
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Нерезкая маска..."
+
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Скрипт-Фу/Аниматры/Волны..."
+
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Скрипт-Фу/Алхимия/Weave..."
+
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Скрипт-Фу/Тень/Xach-эффект..."
+
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Выделение в аним.изображение"
