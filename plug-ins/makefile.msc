@@ -72,9 +72,6 @@ libs-clean :
 	@nmake -nologo -f makefile.msc sub-libs TARGET=clean
 
 sub-libs:
-	cd libgck\gck
-	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. LIBRARY=gck OBJECTS="gckcolor.obj" $(TARGET)
-	cd ..\..
 	cd libgimpoldpreview
 	nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. LIBRARY=gimpoldpreview OBJECTS="gimpoldpreview.obj" $(TARGET)
 	cd ..
@@ -179,8 +176,6 @@ OBJECTS = \
 	lighting_preview.obj \
 	lighting_shade.obj \
 	lighting_ui.obj
-EXTRACFLAGS = -I$(PLUGINDIR)\libgck
-EXTRALIBS = $(PLUGINDIR)\libgck\gck\gck.lib
 !ENDIF
 
 !IFDEF EXTRA_MapObject
@@ -192,8 +187,6 @@ OBJECTS = \
 	mapobject_preview.obj \
 	mapobject_shade.obj \
 	mapobject_ui.obj
-EXTRACFLAGS = -I$(PLUGINDIR)\libgck
-EXTRALIBS = $(PLUGINDIR)\libgck\gck\gck.lib
 OPTIMIZE =
 !ENDIF
 

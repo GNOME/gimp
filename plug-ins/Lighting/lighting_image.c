@@ -4,14 +4,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <gtk/gtk.h>
 
-#include <gck/gck.h>
+#include <libgimp/gimp.h>
 
 #include "lighting_main.h"
 #include "lighting_image.h"
 #include "lighting_preview.h"
 #include "lighting_ui.h"
+
 
 GimpDrawable *input_drawable,*output_drawable;
 GimpPixelRgn  source_region, dest_region;
@@ -23,7 +24,6 @@ GimpDrawable *env_drawable = NULL;
 GimpPixelRgn  env_region;
 
 guchar   *preview_rgb_data = NULL;
-GdkImage *image = NULL;
 
 glong  maxcounter;
 gint   imgtype, width, height, env_width, env_height, in_channels, out_channels;
@@ -343,10 +343,8 @@ compute_maps (void)
 
 gint
 image_setup (GimpDrawable *drawable,
-	     gint       interactive)
+	     gint          interactive)
 {
-  glong numbytes;
-
   compute_maps ();
 
   /* Get some useful info on the input drawable */
@@ -373,25 +371,9 @@ image_setup (GimpDrawable *drawable,
   if (gimp_drawable_has_alpha (input_drawable->drawable_id) == TRUE)
     in_channels++;
 
-  if (interactive == TRUE)
+  if (interactive)
     {
-      /* Allocate memory for temp. images */
-      /* ================================ */
-
-      image = gdk_image_new (GDK_IMAGE_FASTEST, visinfo->visual,
-			     PREVIEW_WIDTH, PREVIEW_HEIGHT);
-
-      if (image == NULL)
-        return FALSE;
-
-      numbytes = (glong) PREVIEW_WIDTH * (glong) PREVIEW_HEIGHT * 3;
-      preview_rgb_data = g_new0 (guchar, numbytes);
-
-      /* Convert from raw RGB to GdkImage */
-      /* ================================ */
-
-      gck_rgb_to_gdkimage (visinfo, preview_rgb_data, image,
-			   PREVIEW_WIDTH, PREVIEW_HEIGHT);
+      preview_rgb_data = g_new0 (guchar, PREVIEW_WIDTH * PREVIEW_HEIGHT * 3);
     }
 
   return TRUE;

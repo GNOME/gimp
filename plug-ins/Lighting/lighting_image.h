@@ -11,7 +11,6 @@ extern GimpDrawable *env_drawable;
 extern GimpPixelRgn  env_region;
 
 extern guchar   *preview_rgb_data;
-extern GdkImage *image;
 
 extern glong  maxcounter;
 extern gint   imgtype,width,height,env_width,env_height,in_channels,out_channels;

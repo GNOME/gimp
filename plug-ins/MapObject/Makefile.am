@@ -37,9 +37,8 @@ MapObject_SOURCES = \
 	specref2.xpm
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/plug-ins/libgck	\
-	$(GTK_CFLAGS)			\
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
@@ -49,6 +48,5 @@ LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(top_builddir)/plug-ins/libgck/gck/libgck.a			\
 	$(GTK_LIBS)							\
 	$(INTLLIBS)

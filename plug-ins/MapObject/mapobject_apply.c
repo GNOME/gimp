@@ -10,8 +10,6 @@
 
 #include <libgimp/gimp.h>
 
-#include <gck/gck.h>
-
 #include "mapobject_main.h"
 #include "mapobject_image.h"
 #include "mapobject_shade.h"
@@ -34,7 +32,7 @@ init_compute (void)
 
         /* Rotate the equator/northpole axis */
         /* ================================= */
-    
+
         gimp_vector3_set (&mapvals.firstaxis,  0.0, 0.0, -1.0);
         gimp_vector3_set (&mapvals.secondaxis, 0.0, 1.0,  0.0);
 
@@ -60,7 +58,7 @@ init_compute (void)
 
         /* Rotate the plane axis */
         /* ===================== */
-    
+
         gimp_vector3_set (&mapvals.firstaxis,  1.0, 0.0, 0.0);
         gimp_vector3_set (&mapvals.secondaxis, 0.0, 1.0, 0.0);
         gimp_vector3_set (&mapvals.normal,     0.0, 0.0, 1.0);

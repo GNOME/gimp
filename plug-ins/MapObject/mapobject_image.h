@@ -14,7 +14,6 @@ extern GimpDrawable *cylinder_drawables[2];
 extern GimpPixelRgn  cylinder_regions[2];
 
 extern guchar   *preview_rgb_data;
-extern GdkImage *image;
 
 extern glong   maxcounter, old_depth, max_depth;
 extern gint    imgtype, width,height, in_channels, out_channels;

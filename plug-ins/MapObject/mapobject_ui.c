@@ -7,8 +7,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <gck/gck.h>
-
 #include "arcball.h"
 #include "mapobject_ui.h"
 #include "mapobject_image.h"
@@ -30,7 +28,6 @@
 #include "high2.xpm"
 
 
-GckVisualInfo *visinfo     = NULL;
 GdkGC         *gc          = NULL;
 GtkWidget     *previewarea = NULL;
 
@@ -166,8 +163,17 @@ togglegrid_update (GtkWidget *widget,
     }
   else if (!mapvals.showgrid && linetab[0].x1 != -1)
     {
-      gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-      gck_gc_set_background (visinfo, gc, 0, 0, 0);
+      GdkColor  color;
+
+      color.red   = 0x0;
+      color.green = 0x0;
+      color.blue  = 0x0;
+      gdk_gc_set_rgb_bg_color (gc, &color);
+
+      color.red   = 0xFFFF;
+      color.green = 0xFFFF;
+      color.blue  = 0xFFFF;
+      gdk_gc_set_rgb_fg_color (gc, &color);
 
       gdk_gc_set_function (gc, GDK_INVERT);
 
@@ -221,8 +227,17 @@ mapmenu_callback (GtkWidget *widget,
     }
   else if (!mapvals.showgrid && linetab[0].x1 != -1)
     {
-      gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-      gck_gc_set_background (visinfo, gc, 0, 0, 0);
+      GdkColor  color;
+
+      color.red   = 0x0;
+      color.green = 0x0;
+      color.blue  = 0x0;
+      gdk_gc_set_rgb_bg_color (gc, &color);
+
+      color.red   = 0xFFFF;
+      color.green = 0xFFFF;
+      color.blue  = 0xFFFF;
+      gdk_gc_set_rgb_fg_color (gc, &color);
 
       gdk_gc_set_function (gc, GDK_INVERT);
 
@@ -1408,8 +1423,6 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (preview_events),
                     previewarea);
 
-  visinfo = gck_visualinfo_new (gtk_widget_get_screen (previewarea));
-
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -1488,7 +1501,6 @@ main_dialog (GimpDrawable *drawable)
 
   gtk_widget_destroy (appwin);
   g_free (preview_rgb_data);
-  gck_visualinfo_destroy (visinfo);
 
   return run;
 }

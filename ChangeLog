@@ -1,5 +1,28 @@
 2003-12-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/Lighting/lighting_apply.c
+	* plug-ins/Lighting/lighting_image.[ch]
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/Lighting/lighting_ui.[ch]
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/MapObject/mapobject_image.[ch]
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_shade.c	
+	* plug-ins/MapObject/mapobject_ui.[ch]: removed remaining
+	references to libgck. Use GdkRGB functionality instead.
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/makefile.msc
+	* plug-ins/libgck: removed libgck.
+
+2003-12-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpui.def: removed gimp_plug_in_get_path.
 
 	* plug-ins/Lighting/lighting_apply.c

@@ -4,11 +4,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <gdk/gdkimage.h>
+#include <gtk/gtk.h>
 
-#include <gck/gck.h>
-#include <libgimpmath/gimpvector.h>
+#include <libgimp/gimp.h>
+#include <libgimpmath/gimpmath.h>
 
 #include "lighting_main.h"
 #include "lighting_ui.h"
@@ -194,10 +193,6 @@ compute_preview (gint startx, gint starty, gint w, gint h)
             }
         }
     }
-
-  gck_rgb_to_gdkimage (visinfo,
-                       preview_rgb_data,
-                       image, PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
 
 static void
@@ -262,16 +257,16 @@ check_handle_hit (gint xpos, gint ypos)
 
 
 static void
-draw_handles ()
+draw_handles (void)
 {
   gdouble dxpos, dypos;
-  gint startx, starty, pw, ph;
+  gint    startx, starty, pw, ph;
   GimpVector3 viewpoint;
   GimpVector3 light_position;
 
   gfloat length;
-  gfloat delta_x = 0.0,
-    delta_y = 0.0;
+  gfloat delta_x = 0.0;
+  gfloat delta_y = 0.0;
 
   /* calculate handle position */
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
@@ -307,6 +302,8 @@ draw_handles ()
 
   if (mapvals.lightsource.type != NO_LIGHT)
     {
+      GdkColor  color;
+
       /* Restore background if it has been saved */
       /* ======================================= */
 
@@ -370,9 +367,15 @@ draw_handles ()
 						  backbuf.w, backbuf.h);
 	}
 
-      gck_gc_set_background (visinfo, gc, 0, 0, 0);
-      gck_gc_set_foreground (visinfo, gc, 0, 50, 255);
+      color.red   = 0x0;
+      color.green = 0x0;
+      color.blue  = 0x0;
+      gdk_gc_set_rgb_bg_color (gc, &color);
 
+      color.red   = 0x0;
+      color.green = 0x4000;
+      color.blue  = 0xFFFF;
+      gdk_gc_set_rgb_fg_color (gc, &color);
 
       /* draw circle at light position */
       switch (mapvals.lightsource.type)
@@ -445,10 +448,19 @@ update_light (gint xpos, gint ypos)
 void
 draw_preview_image (gboolean recompute)
 {
-  gint startx, starty, pw, ph;
+  gint      startx, starty, pw, ph;
+  GdkColor  color;
 
-  gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-  gck_gc_set_background (visinfo, gc, 0, 0, 0);
+  color.red   = 0x0;
+  color.green = 0x0;
+  color.blue  = 0x0;
+  gdk_gc_set_rgb_bg_color (gc, &color);
+
+  color.red   = 0xFFFF;
+  color.green = 0xFFFF;
+  color.blue  = 0xFFFF;
+  gdk_gc_set_rgb_fg_color (gc, &color);
+
   gdk_gc_set_function (gc, GDK_COPY);
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
@@ -478,8 +490,10 @@ draw_preview_image (gboolean recompute)
 	}
     }
 
-  gdk_draw_image (previewarea->window, gc, image,
-		  0, 0, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gdk_draw_rgb_image (previewarea->window, gc,
+                      0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
+                      GDK_RGB_DITHER_MAX, preview_rgb_data,
+                      3 * PREVIEW_WIDTH);
 
   /* draw symbols if enabled in UI */
   if (mapvals.interactive_preview)

@@ -27,8 +27,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <gck/gck.h>
-
 #include "arcball.h"
 #include "mapobject_ui.h"
 #include "mapobject_image.h"

@@ -22,8 +22,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <gck/gck.h>
-
 #include "lighting_ui.h"
 #include "lighting_main.h"
 #include "lighting_image.h"
@@ -45,8 +43,6 @@
 
 
 extern LightingValues mapvals;
-
-GckVisualInfo *visinfo = NULL;
 
 static GtkWidget   *appwin            = NULL;
 static GtkNotebook *options_note_book = NULL;
@@ -1159,8 +1155,6 @@ main_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
 
-  visinfo = gck_visualinfo_new (gtk_widget_get_screen (previewarea));
-
   /* create preview options, frame and vbox */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_widget_show (hbox);
@@ -1221,10 +1215,6 @@ main_dialog (GimpDrawable *drawable)
   if (preview_rgb_data != NULL)
     g_free (preview_rgb_data);
 
-  if (image != NULL)
-    g_object_unref (image);
-
-  gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);
 
   return run;

@@ -26,8 +26,7 @@ win32dirs = \
 endif
 
 
-SUBDIRS = 			\
-	libgck			\
+SUBDIRS = \
 	libgimpoldpreview	\
 	dbbrowser		\
 	script-fu		\

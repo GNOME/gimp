@@ -8,8 +8,6 @@
 
 #include <libgimp/gimp.h>
 
-#include <gck/gck.h>
-
 #include "arcball.h"
 #include "mapobject_main.h"
 #include "mapobject_ui.h"
@@ -109,7 +107,7 @@ clip_line (gdouble *x1,
       if (*y1 < *y2) *y1 = *y1 + (minx - *x1) * ((*y2 - *y1) / (*x2 - *x1));
       else           *y1 = *y1 - (minx - *x1) * ((*y1 - *y2) / (*x2 - *x1));
 
-      *x1 = minx; 
+      *x1 = minx;
     }
 
   if (*x2 > maxx)
@@ -149,7 +147,7 @@ clip_line (gdouble *x1,
 
 /**************************************************************/
 /* Computes a preview of the rectangle starting at (x,y) with */
-/* dimensions (w,h), placing the result in preview_RGB_data.  */ 
+/* dimensions (w,h), placing the result in preview_RGB_data.  */
 /**************************************************************/
 
 void
@@ -200,9 +198,9 @@ compute_preview (gint x,
       gimp_rgb_set_alpha (&background, 1.0);
     }
 
-  gimp_rgba_set (&lightcheck, 
+  gimp_rgba_set (&lightcheck,
 		 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
-  gimp_rgba_set (&darkcheck, 
+  gimp_rgba_set (&darkcheck,
 		 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
   gimp_vector3_set (&p2, -1.0, -1.0, 0.0);
 
@@ -227,7 +225,7 @@ compute_preview (gint x,
                   if (color.a == 0.0)
 		    color = lightcheck;
                   else
-		    gimp_rgb_composite (&color, &lightcheck, 
+		    gimp_rgb_composite (&color, &lightcheck,
 					GIMP_RGB_COMPOSITE_BEHIND);
                  }
               else
@@ -235,23 +233,18 @@ compute_preview (gint x,
                   if (color.a == 0.0)
 		    color = darkcheck;
                   else
-		    gimp_rgb_composite (&color, &darkcheck, 
+		    gimp_rgb_composite (&color, &darkcheck,
 					GIMP_RGB_COMPOSITE_BEHIND);
                 }
             }
 
-	  gimp_rgb_get_uchar (&color, 
+	  gimp_rgb_get_uchar (&color,
 			      preview_rgb_data + index,
 			      preview_rgb_data + index + 1,
 			      preview_rgb_data + index + 2);
 	  index += 3;
         }
     }
-
-  /* Convert to visual type */
-  /* ====================== */
-
-  gck_rgb_to_gdkimage (visinfo, preview_rgb_data, image, pw, ph);
 }
 
 /*************************************************/
@@ -288,8 +281,17 @@ static void
 draw_light_marker (gint xpos,
 		   gint ypos)
 {
-  gck_gc_set_foreground (visinfo, gc, 0, 50, 255);
-  gck_gc_set_background (visinfo, gc, 0,  0,   0);
+  GdkColor  color;
+
+  color.red   = 0x0;
+  color.green = 0x0;
+  color.blue  = 0x0;
+  gdk_gc_set_rgb_bg_color (gc, &color);
+
+  color.red   = 0x0;
+  color.green = 0x4000;
+  color.blue  = 0xFFFF;
+  gdk_gc_set_rgb_fg_color (gc, &color);
 
   gdk_gc_set_function (gc, GDK_COPY);
 
@@ -309,7 +311,7 @@ draw_light_marker (gint xpos,
       /* X doesn't like images that's outside a window, make sure */
       /* we get the backbuffer image from within the boundaries   */
       /* ======================================================== */
- 
+
       if (backbuf.x < 0)
         backbuf.x = 0;
       else if ((backbuf.x + backbuf.w) > PREVIEW_WIDTH)
@@ -338,10 +340,20 @@ clear_light_marker (void)
 
   if (backbuf.image != NULL)
     {
-      gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-      gck_gc_set_background (visinfo, gc, 0,   0,   0);
+      GdkColor  color;
+
+      color.red   = 0x0;
+      color.green = 0x0;
+      color.blue  = 0x0;
+      gdk_gc_set_rgb_bg_color (gc, &color);
+
+      color.red   = 0xFFFF;
+      color.green = 0xFFFF;
+      color.blue  = 0xFFFF;
+      gdk_gc_set_rgb_fg_color (gc, &color);
 
       gdk_gc_set_function (gc, GDK_COPY);
+
       gdk_draw_image (previewarea->window, gc,
 		      backbuf.image,
 		      0, 0,
@@ -370,7 +382,8 @@ draw_lights (gint startx,
   xpos = RINT (dxpos);
   ypos = RINT (dypos);
 
-  if (xpos >= 0 && xpos <= PREVIEW_WIDTH && ypos >= 0 && ypos <= PREVIEW_HEIGHT)
+  if (xpos >= 0 && xpos <= PREVIEW_WIDTH &&
+      ypos >= 0 && ypos <= PREVIEW_HEIGHT)
     draw_light_marker (xpos, ypos);
 }
 
@@ -402,9 +415,17 @@ void
 draw_preview_image (gint docompute)
 {
   gint startx, starty, pw, ph;
+  GdkColor  color;
 
-  gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-  gck_gc_set_background (visinfo, gc,   0,   0,   0);
+  color.red   = 0x0;
+  color.green = 0x0;
+  color.blue  = 0x0;
+  gdk_gc_set_rgb_bg_color (gc, &color);
+
+  color.red   = 0xFFFF;
+  color.green = 0xFFFF;
+  color.blue  = 0xFFFF;
+  gdk_gc_set_rgb_fg_color (gc, &color);
 
   gdk_gc_set_function (gc, GDK_COPY);
   linetab[0].x1 = -1;
@@ -432,10 +453,14 @@ draw_preview_image (gint docompute)
       clear_light_marker ();
     }
 
-  if (pw != PREVIEW_WIDTH)
+  if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
     gdk_window_clear (previewarea->window);
 
-  gdk_draw_image (previewarea->window, gc, image, 0, 0, startx, starty, pw, ph);
+  gdk_draw_rgb_image (previewarea->window, gc,
+                      startx, starty, pw, ph,
+                      GDK_RGB_DITHER_MAX,
+                      preview_rgb_data, 3 * pw);
+
   draw_lights (startx, starty, pw, ph);
 }
 
@@ -447,9 +472,17 @@ void
 draw_preview_wireframe (void)
 {
   gint startx, starty, pw, ph;
+  GdkColor  color;
 
-  gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
-  gck_gc_set_background (visinfo, gc,   0,   0,   0);
+  color.red   = 0x0;
+  color.green = 0x0;
+  color.blue  = 0x0;
+  gdk_gc_set_rgb_bg_color (gc, &color);
+
+  color.red   = 0xFFFF;
+  color.green = 0xFFFF;
+  color.blue  = 0xFFFF;
+  gdk_gc_set_rgb_fg_color (gc, &color);
 
   gdk_gc_set_function (gc, GDK_INVERT);
 
@@ -612,7 +645,7 @@ draw_wireframe_sphere (gint startx,
   /* ======================== */
 
   twopifac = (2.0 * G_PI) / WIRESIZE;
-  
+
   for (cnt = 0; cnt < WIRESIZE; cnt++)
     {
       p[cnt].x = mapvals.radius * cos ((gdouble) cnt * twopifac);
@@ -642,7 +675,7 @@ draw_wireframe_sphere (gint startx,
   p[cnt] = p[WIRESIZE+1];
   cnt++;
   cnt2 = cnt;
-  
+
   /* Find rotated axis */
   /* ================= */
 
@@ -684,7 +717,7 @@ draw_wireframe_sphere (gint startx,
 				&x1, &y1, &mapvals.viewpoint, &p[cnt]);
           gimp_vector_3d_to_2d (startx, starty, pw, ph,
 				&x2, &y2, &mapvals.viewpoint, &p[cnt + 1]);
- 
+
           if (clip_line (&x1, &y1, &x2, &y2, cx1, cy1, cx2, cy2) == TRUE)
             {
               linetab[n].x1 = (gint) (x1 + 0.5);
@@ -873,7 +906,7 @@ draw_wireframe_cylinder (gint startx,
   gint        n = 0, i;
   gdouble     cx1, cy1, cx2, cy2;
   gfloat      m[16], l, angle;
- 
+
   /* Compute wireframe points */
   /* ======================== */
 
@@ -889,12 +922,12 @@ draw_wireframe_cylinder (gint startx,
 
   for (i = 0; i < 8; i++)
     {
-      rotatemat (angle, &axis, m);     
+      rotatemat (angle, &axis, m);
 
       gimp_vector3_set (&a, mapvals.cylinder_radius, 0.0, 0.0);
 
       vecmulmat (&p[i], &a, m);
-      
+
       p[i+8] = p[i];
 
       p[i].y   += l;
@@ -905,7 +938,7 @@ draw_wireframe_cylinder (gint startx,
 
   /* Rotate and translate points */
   /* =========================== */
-  
+
   for (i = 0; i < 16; i++)
     {
       vecmulmat (&a, &p[i], rotmat);

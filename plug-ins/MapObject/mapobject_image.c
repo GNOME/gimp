@@ -11,9 +11,9 @@
 
 #include <sys/types.h>
 
-#include <libgimp/gimp.h>
+#include <gtk/gtk.h>
 
-#include <gck/gck.h>
+#include <libgimp/gimp.h>
 
 #include "mapobject_main.h"
 #include "mapobject_preview.h"
@@ -31,7 +31,6 @@ GimpDrawable *cylinder_drawables[2];
 GimpPixelRgn cylinder_regions[2];
 
 guchar   *preview_rgb_data = NULL;
-GdkImage *image = NULL;
 
 glong   maxcounter,old_depth,max_depth;
 gint    imgtype,width,height,in_channels,out_channels;
@@ -346,14 +345,12 @@ gint
 image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
-  glong  numbytes;
-
   /* Set the tile cache size */
   /* ======================= */
 
   gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
 			  gimp_tile_width ());
- 
+
   /* Get some useful info on the input drawable */
   /* ========================================== */
 
@@ -390,24 +387,7 @@ image_setup (GimpDrawable *drawable,
 
   if (interactive == TRUE)
     {
-      /* Allocate memory for temp. images */
-      /* ================================ */
-
-      numbytes = PREVIEW_HEIGHT * PREVIEW_WIDTH * 3;
-
-      image = gdk_image_new (GDK_IMAGE_FASTEST,
-			     visinfo->visual,
-			     PREVIEW_WIDTH, PREVIEW_HEIGHT);
-      if (image == NULL)
-        return FALSE;
-
-      preview_rgb_data = g_new0 (guchar, numbytes);
-
-      /* Convert from raw RGB to GdkImage */
-      /* ================================ */
-
-      gck_rgb_to_gdkimage (visinfo, preview_rgb_data, image,
-			   PREVIEW_WIDTH, PREVIEW_HEIGHT);
+      preview_rgb_data = g_new0 (guchar, PREVIEW_HEIGHT * PREVIEW_WIDTH * 3);
     }
 
   return TRUE;

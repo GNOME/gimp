@@ -22,9 +22,9 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <gtk/gtk.h>
 
-#include <gck/gck.h>
+#include <libgimp/gimp.h>
 
 #include "lighting_apply.h"
 #include "lighting_image.h"
@@ -34,6 +34,7 @@
 #include "lighting_ui.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 LightingValues mapvals;
 

@@ -8,8 +8,6 @@
 
 #include <libgimp/gimp.h>
 
-#include <gck/gck.h>
-
 #include "mapobject_apply.h"
 #include "mapobject_main.h"
 #include "mapobject_image.h"

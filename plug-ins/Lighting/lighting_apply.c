@@ -8,8 +8,6 @@
 
 #include <libgimp/gimp.h>
 
-#include <gck/gck.h>
-
 #include "lighting_main.h"
 #include "lighting_image.h"
 #include "lighting_shade.h"
