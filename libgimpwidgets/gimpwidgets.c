@@ -98,7 +98,7 @@ gimp_radio_group_new (gboolean            in_frame,
       active        = va_arg (args, gboolean);
 
       if (label != (gpointer) 1)
-	button = gtk_radio_button_new_with_label (group, label);
+	button = gtk_radio_button_new_with_mnemonic (group, label);
       else
 	button = gtk_radio_button_new (group);
 

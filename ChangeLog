@@ -1,3 +1,8 @@
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c: allow for mnemonics in radio
+	groups created with gimp_radio_group_new().
+
 2004-10-31  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c
