@@ -1,0 +1,136 @@
+#!/usr/bin/perl
+# iland.pl
+#
+# Copyright (c) Fabian Frederick 2001
+#
+# 02/06/2001
+# V1.0
+#        -The stuff works but it's still slow.
+#	  Problem resides in the brutal m/slice.
+#	  I hope to find out some artifact to use PDL more efficiently for this "non-matrix" algorithm.
+#
+#
+
+use Gimp::Feature 'pdl';
+use Gimp qw(:auto __ N_);
+use Gimp::Fu;
+use PDL::LiteF;
+
+sub landscape {
+
+	my ($image, $drawable, $floor,$component, $delta,$elevation, $camerapos) = @_;
+	
+	#gimp_tile_cache_size(20000);
+	gimp_selection_clear($image);
+	plug_in_rotate(RUN_NONINTERACTIVE, $image, -1, $camerapos, 1) if ($camerapos != 0);
+	$width=gimp_image_width($image);
+	$height=gimp_image_height($image);
+	my $gdrawable=$drawable->get();
+
+	#Pixel region of selection
+	my $src= new PixelRgn ($drawable, 0,0,$width, $height, 0, 0);
+	my $newimage=gimp_image_new($src->w, $src->h, 0);
+	$layer=gimp_layer_new($newimage,$src->w, $src->h, RGB_IMAGE, "L1", 100, NORMAL_MODE);
+	gimp_image_add_layer($layer, -1);
+	$newdrawable=gimp_image_active_drawable($newimage);
+	my $dest = new PixelRgn ($newdrawable, 0,0,$width, $height,1,1);
+	Gimp->progress_init("Rendering...");
+	my $relord=$src->w/255;
+	
+	gimp_drawable_fill($newdrawable, 0);
+	$delta=1 if ($delta<1);
+	for (my $y=0; $y<$src->h; $y++){
+		$row=$src->get_row(0, $y, $src->w);
+		my $drow=$row&0;
+		$red=$row->slice($component);
+		$dred=$drow->slice(0);
+		$dgreen=$drow->slice(1);	
+		$dblue=$drow->slice(2);
+		for(my $x=0;$x<$src->w;$x++){
+			$r=at($red,0,$x);
+			if ($r>$floor){
+				my $remain=$r;	
+				my $currentx=$width-$r*$relord+($x/$elevation);
+				#Apply elevation following the x offset in original picture
+				while ($remain>0 && $currentx<$src->w){
+					if($remain>150){
+						set ($dblue,0,$currentx,$remain);
+						set ($dred,0,$currentx,0);
+						set ($dgreen,0,$currentx,$remain);
+					}
+					if($remain<150 && $remain>50){
+						set ($dgreen,0,$currentx,$remain+55);
+						set ($dred,0,$currentx,0);
+						set ($dblue,0,$currentx,0);
+					}
+					if($remain<50){
+						set ($dred,0,$currentx,0);
+						set ($dgreen,0,$currentx,0);
+						set ($dblue,0,$currentx,$remain+200);
+					}
+					$remain-=$delta;
+					$currentx++;	
+				}
+			}
+		}
+		$dest->set_row($drow, 0,$y);
+		Gimp->progress_update($y/$src->h);
+	}
+	Gimp->progress_update(1);
+	$newdrawable->merge_shadow(1);
+	$newdrawable->update(0,0,$width, $height);
+	plug_in_rotate(RUN_NONINTERACTIVE, $newimage,-1,1,1);
+	$newdrawable->merge_shadow(1);
+	$newdrawable->update(0,0,$width, $height);
+
+	Gimp->display_new($newimage);
+
+	#Original pic => original state
+	if($camerapos==3){
+		$camerapos=1;
+	  }else{
+		if ($camerapos==1){
+			$camerapos=3;
+		}
+	}
+	plug_in_rotate(RUN_NONINTERACTIVE, $image, -1, $camerapos, 1) if ($camerapos != 0);
+
+}
+
+register "intensitylandscape",
+	 "Generate an intensity based landscape",
+	 "Generate an alpha landscape based on intensity",
+	 "Fabian Frederick", 
+	 "(c) 2001 Fabian Frederick",
+	 "20010601", 
+	 N_"<Image>/Filters/Render/Intensity Landscape", 
+	 "*",
+	 [
+		[PF_SLIDER, "floor", "Floor", 100, [0, 255]],
+		[PF_RADIO, "active_component", "Active Component", 0, [ Red => 0, Green => 1, Blue => 2]],
+		[PF_SLIDER, "delta", "delta color", 6, [0, 100]],
+		[PF_FLOAT, "elevation", "elevation argument should be 2 or 3", 2],
+		[PF_RADIO, "camera", "camera position", 0, [ Right => 0, Bottom => 3, Left => 2, Top => 1]] 
+		
+	 ],
+	 \&landscape;
+exit main;
+
+__END__
+
+=head1 NAME
+
+Intensity Landscape
+
+=head1 SYNOPSIS
+
+Intensity Landscape
+
+=head1 DESCRIPTION
+
+Intensity Landscape is a Gimp plugin generating a landscape from original picture.The result is an interpolated view as if you were looking from one side
+of the original picture (which is an taken as an apical view).
+
+=head1 AUTHOR
+
+Written by Fabian Frederick <fabian.frederick@gmx.fr>, (c) 2001
