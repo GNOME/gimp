@@ -39,6 +39,7 @@
 #define RESPONSE_ABOUT         2
 
 #define TEXT_WIDTH           100
+#define COLOR_SAMPLE_WIDTH    60
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH          80
 
@@ -249,9 +250,7 @@ script_fu_interface (SFScript *script)
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  i = (script->image_based) ? 2 : 0;
-
-  for ( ; i < script->num_args; i++)
+  for (i = script->image_based ? 2 : 0; i < script->num_args; i++)
     {
       GtkWidget *widget       = NULL;
       gchar     *label_text;
@@ -311,7 +310,7 @@ script_fu_interface (SFScript *script)
 	case SF_COLOR:
           left_align = TRUE;
 	  widget = gimp_color_button_new (_("Script-Fu Color Selection"),
-                                          -1,
+                                          COLOR_SAMPLE_WIDTH,
                                           COLOR_SAMPLE_HEIGHT,
                                           &script->arg_values[i].sfa_color,
                                           GIMP_COLOR_AREA_FLAT);
@@ -973,7 +972,7 @@ script_fu_about (SFScript *script)
       sf_interface->about_dialog = dialog =
         gimp_dialog_new (sf_interface->title, "script-fu-about",
                          sf_interface->dialog, 0,
-                         gimp_standard_help_func, script->pdb_name,
+                         NULL, NULL,
 
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 

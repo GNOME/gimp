@@ -1,3 +1,10 @@
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	set a minimum width for the color button again.
+	(script_fu_about): don't set help_func and help_id on the about
+	dialog.
+
 2004-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brush.pdb
