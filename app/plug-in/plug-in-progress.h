@@ -28,12 +28,12 @@
 
 #define WRITE_BUFFER_SIZE  512
 
-#define RGB_IMAGE_OK       0x01
-#define GRAY_IMAGE_OK      0x02
-#define INDEXED_IMAGE_OK   0x04
-#define RGBA_IMAGE_OK      0x08
-#define GRAYA_IMAGE_OK     0x10
-#define INDEXEDA_IMAGE_OK  0x20
+#define PLUG_IN_RGB_IMAGE       0x01
+#define PLUG_IN_GRAY_IMAGE      0x02
+#define PLUG_IN_INDEXED_IMAGE   0x04
+#define PLUG_IN_RGBA_IMAGE      0x08
+#define PLUG_IN_GRAYA_IMAGE     0x10
+#define PLUG_IN_INDEXEDA_IMAGE  0x20
 
 
 

@@ -1257,22 +1257,22 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	  switch (type)
 	    {
 	    case RGB_GIMAGE:
-	      sensitive = proc_def->image_types_val & RGB_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
 	      break;
 	    case RGBA_GIMAGE:
-	      sensitive = proc_def->image_types_val & RGBA_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
 	      break;
 	    case GRAY_GIMAGE:
-	      sensitive = proc_def->image_types_val & GRAY_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
 	      break;
 	    case GRAYA_GIMAGE:
-	      sensitive = proc_def->image_types_val & GRAYA_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
 	      break;
 	    case INDEXED_GIMAGE:
-	      sensitive = proc_def->image_types_val & INDEXED_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
 	      break;
 	    case INDEXEDA_GIMAGE:
-	      sensitive = proc_def->image_types_val & INDEXEDA_IMAGE_OK;
+	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
 	      break;
 	    default:
 	      sensitive = FALSE;
@@ -3114,7 +3114,7 @@ plug_in_image_types_parse (char *image_types)
   int types;
 
   if (!image_types)
-    return (RGB_IMAGE_OK | GRAY_IMAGE_OK | INDEXED_IMAGE_OK);
+    return (PLUG_IN_RGB_IMAGE | PLUG_IN_GRAY_IMAGE | PLUG_IN_INDEXED_IMAGE);
 
   types = 0;
 
@@ -3130,47 +3130,47 @@ plug_in_image_types_parse (char *image_types)
 	{
 	  if (strncmp (image_types, "RGBA", 4) == 0)
 	    {
-	      types |= RGBA_IMAGE_OK;
+	      types |= PLUG_IN_RGBA_IMAGE;
 	      image_types += 4;
 	    }
 	  else if (strncmp (image_types, "RGB*", 4) == 0)
 	    {
-	      types |= RGB_IMAGE_OK | RGBA_IMAGE_OK;
+	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE;
 	      image_types += 4;
 	    }
 	  else if (strncmp (image_types, "RGB", 3) == 0)
 	    {
-	      types |= RGB_IMAGE_OK;
+	      types |= PLUG_IN_RGB_IMAGE;
 	      image_types += 3;
 	    }
 	  else if (strncmp (image_types, "GRAYA", 5) == 0)
 	    {
-	      types |= GRAYA_IMAGE_OK;
+	      types |= PLUG_IN_GRAYA_IMAGE;
 	      image_types += 5;
 	    }
 	  else if (strncmp (image_types, "GRAY*", 5) == 0)
 	    {
-	      types |= GRAY_IMAGE_OK | GRAYA_IMAGE_OK;
+	      types |= PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE;
 	      image_types += 5;
 	    }
 	  else if (strncmp (image_types, "GRAY", 4) == 0)
 	    {
-	      types |= GRAY_IMAGE_OK;
+	      types |= PLUG_IN_GRAY_IMAGE;
 	      image_types += 4;
 	    }
 	  else if (strncmp (image_types, "INDEXEDA", 8) == 0)
 	    {
-	      types |= INDEXEDA_IMAGE_OK;
+	      types |= PLUG_IN_INDEXEDA_IMAGE;
 	      image_types += 8;
 	    }
 	  else if (strncmp (image_types, "INDEXED*", 8) == 0)
 	    {
-	      types |= INDEXED_IMAGE_OK | INDEXEDA_IMAGE_OK;
+	      types |= PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
 	      image_types += 8;
 	    }
 	  else if (strncmp (image_types, "INDEXED", 7) == 0)
 	    {
-	      types |= INDEXED_IMAGE_OK;
+	      types |= PLUG_IN_INDEXED_IMAGE;
 	      image_types += 7;
 	    }
 	  else

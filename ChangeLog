@@ -1,4 +1,13 @@
-Thu Oct 14 04:59:11 BST 1999 Nick Lamb <njl195@zepler.org>
+Thu Oct 19 05:57:10 BST 1999 Nick Lamb <njl195@zepler.org>
+
+        * app/plug_in.h
+        * app/plug_in.c
+        * app/fileops.c
+
+	Really fixed #2152 this time. Yosh asked me to rename *_OK as
+	PLUG_IN_* so that's also changed this time.
+
+Thu Oct 19 05:30:11 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* app/plug_in.h
 	* app/fileops.c
