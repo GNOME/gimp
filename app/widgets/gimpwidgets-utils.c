@@ -229,66 +229,76 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
                            GtkWidget *widget,
                            gint       enum_value)
 {
-  GtkWidget *radio;
-  GtkWidget *hbox;
-  GtkWidget *spacer;
-  gint       indicator_size;
-  gint       indicator_spacing;
-  gint       focus_width;
-  gint       focus_padding;
-  GSList    *list;
+  GtkWidget *vbox;
+  GList     *children;
+  GList     *list;
+  gint       pos;
 
   g_return_if_fail (GTK_IS_FRAME (frame));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  radio = g_object_get_data (G_OBJECT (frame), "radio-button");
+  vbox = gtk_bin_get_child (GTK_BIN (frame));
 
-  g_return_if_fail (GTK_IS_RADIO_BUTTON (radio));
+  g_return_if_fail (GTK_IS_VBOX (vbox));
 
-  gtk_widget_style_get (radio,
-                        "indicator-size",    &indicator_size,
-                        "indicator-spacing", &indicator_spacing,
-                        "focus-line-width",  &focus_width,
-                        "focus-padding",     &focus_padding,
-                        NULL);
+  children = gtk_container_get_children (GTK_CONTAINER (vbox));
 
-  hbox = gtk_hbox_new (FALSE, 0);
-
-  spacer = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_size_request (spacer,
-                               indicator_size +
-                               3 * indicator_spacing +
-                               focus_width +
-                               focus_padding +
-                               GTK_CONTAINER (radio)->border_width,
-                               -1);
-  gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
-  gtk_widget_show (spacer);
-
-  gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-  gtk_widget_show (widget);
-
-  for (list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
+  for (list = children, pos = 1;
        list;
-       list = g_slist_next (list))
+       list = g_list_next (list), pos++)
     {
-      if (GPOINTER_TO_INT (g_object_get_data (list->data, "gimp-item-data")) ==
+      if (GTK_IS_RADIO_BUTTON (list->data) &&
+          GPOINTER_TO_INT (g_object_get_data (list->data, "gimp-item-data")) ==
           enum_value)
         {
-          g_object_set_data (list->data, "set_sensitive", hbox);
-          g_signal_connect (list->data, "toggled",
+          GtkWidget *radio = list->data;
+          GtkWidget *hbox;
+          GtkWidget *spacer;
+          gint       indicator_size;
+          gint       indicator_spacing;
+          gint       focus_width;
+          gint       focus_padding;
+
+          gtk_widget_style_get (radio,
+                                "indicator-size",    &indicator_size,
+                                "indicator-spacing", &indicator_spacing,
+                                "focus-line-width",  &focus_width,
+                                "focus-padding",     &focus_padding,
+                                NULL);
+
+          hbox = gtk_hbox_new (FALSE, 0);
+
+          spacer = gtk_vbox_new (FALSE, 0);
+          gtk_widget_set_size_request (spacer,
+                                       indicator_size +
+                                       3 * indicator_spacing +
+                                       focus_width +
+                                       focus_padding +
+                                       GTK_CONTAINER (radio)->border_width,
+                                       -1);
+          gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
+          gtk_widget_show (spacer);
+
+          gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
+          gtk_widget_show (widget);
+
+          g_object_set_data (G_OBJECT (radio), "set_sensitive", hbox);
+          g_signal_connect (radio, "toggled",
                             G_CALLBACK (gimp_toggle_button_sensitive_update),
                             NULL);
 
           gtk_widget_set_sensitive (hbox,
                                     GTK_TOGGLE_BUTTON (list->data)->active);
 
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_box_reorder_child (GTK_BOX (vbox), hbox, pos);
+          gtk_widget_show (hbox);
+
           break;
         }
     }
 
-  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  g_list_free (children);
 }
 
 GtkIconSize

@@ -133,10 +133,10 @@ gimp_convert_dither_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_NO_DITHER, N_("No color dithering"), "no-dither" },
-    { GIMP_FS_DITHER, N_("Floyd-Steinberg color dithering (normal)"), "fs-dither" },
-    { GIMP_FSLOWBLEED_DITHER, N_("Floyd-Steinberg color dithering (reduced color bleeding)"), "fslowbleed-dither" },
-    { GIMP_FIXED_DITHER, N_("Positioned color dithering"), "fixed-dither" },
+    { GIMP_NO_DITHER, N_("None"), "no-dither" },
+    { GIMP_FS_DITHER, N_("Floyd-Steinberg (normal)"), "fs-dither" },
+    { GIMP_FSLOWBLEED_DITHER, N_("Floyd-Steinberg (reduced color bleeding)"), "fslowbleed-dither" },
+    { GIMP_FIXED_DITHER, N_("Positioned"), "fixed-dither" },
     { 0, NULL, NULL }
   };
 
@@ -144,6 +144,26 @@ gimp_convert_dither_type_get_type (void)
 
   if (! type)
     type = g_enum_register_static ("GimpConvertDitherType", values);
+
+  return type;
+}
+
+GType
+gimp_convert_palette_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MAKE_PALETTE, N_("Generate optimum palette"), "make-palette" },
+    { GIMP_WEB_PALETTE, N_("Use web-optimized palette"), "web-palette" },
+    { GIMP_MONO_PALETTE, N_("Use black and white (1-bit) palette"), "mono-palette" },
+    { GIMP_CUSTOM_PALETTE, N_("Use custom palette"), "custom-palette" },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    type = g_enum_register_static ("GimpConvertPaletteType", values);
 
   return type;
 }

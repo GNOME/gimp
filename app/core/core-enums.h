@@ -121,12 +121,26 @@ GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_NO_DITHER,          /*< desc="No color dithering"         >*/
-  GIMP_FS_DITHER,          /*< desc="Floyd-Steinberg color dithering (normal)" >*/
-  GIMP_FSLOWBLEED_DITHER,  /*< desc="Floyd-Steinberg color dithering (reduced color bleeding)" >*/
-  GIMP_FIXED_DITHER,       /*< desc="Positioned color dithering" >*/
-  GIMP_NODESTRUCT_DITHER   /*< pdb-skip, skip >*/
+  GIMP_NO_DITHER,         /*< desc="None"                                     >*/
+  GIMP_FS_DITHER,         /*< desc="Floyd-Steinberg (normal)"                 >*/
+  GIMP_FSLOWBLEED_DITHER, /*< desc="Floyd-Steinberg (reduced color bleeding)" >*/
+  GIMP_FIXED_DITHER,      /*< desc="Positioned"                               >*/
+  GIMP_NODESTRUCT_DITHER  /*< pdb-skip, skip >*/
 } GimpConvertDitherType;
+
+
+#define GIMP_TYPE_CONVERT_PALETTE_TYPE (gimp_convert_palette_type_get_type ())
+
+GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MAKE_PALETTE,    /*< desc="Generate optimum palette"            >*/
+  GIMP_REUSE_PALETTE,   /*< skip >*/
+  GIMP_WEB_PALETTE,     /*< desc="Use web-optimized palette"           >*/
+  GIMP_MONO_PALETTE,    /*< desc="Use black and white (1-bit) palette" >*/
+  GIMP_CUSTOM_PALETTE   /*< desc="Use custom palette"                  >*/
+} GimpConvertPaletteType;
 
 
 #define GIMP_TYPE_GRAVITY_TYPE (gimp_gravity_type_get_type ())
@@ -576,15 +590,6 @@ typedef enum  /*< pdb-skip, skip >*/
                                    GIMP_CONTEXT_TEMPLATE_MASK   |
                                    GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_MAKE_PALETTE,
-  GIMP_REUSE_PALETTE,
-  GIMP_WEB_PALETTE,
-  GIMP_MONO_PALETTE,
-  GIMP_CUSTOM_PALETTE
-} GimpConvertPaletteType;
 
 typedef enum  /*< skip >*/
 {

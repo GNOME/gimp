@@ -1,3 +1,15 @@
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: register GimpConvertPaletteType with
+	the type system.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_enum_radio_frame_add):
+	fixed to insert the widget at the right place in the radio box.
+
+	* app/dialogs/convert-dialog.c: use enum widgets and
+	gimp_enum_radio_frame_add(), resulting in a much better looking
+	dialog with much less lines of code.
+
 2004-10-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: changed "Home" button to "Index".

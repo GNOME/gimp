@@ -36,8 +36,10 @@
 
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpenumcombobox.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -52,7 +54,6 @@ typedef struct
   GimpContext            *context;
   GimpContainer          *container;
   GimpPalette            *custom_palette;
-  gboolean                have_web_palette;
 
   GimpConvertDitherType   dither_type;
   gboolean                alpha_dither;
@@ -100,7 +101,7 @@ convert_dialog_new (GimpImage    *gimage,
   GtkWidget     *frame;
   GtkWidget     *toggle;
   GtkWidget     *palette_box;
-  GSList        *group = NULL;
+  GtkWidget     *combo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -108,14 +109,13 @@ convert_dialog_new (GimpImage    *gimage,
 
   dialog = g_new0 (IndexedDialog, 1);
 
-  dialog->gimage   = gimage;
-  dialog->progress = progress;
-
-  dialog->dither_type           = saved_dither_type;
-  dialog->alpha_dither          = saved_alpha_dither;
-  dialog->remove_dups           = saved_remove_dups;
-  dialog->num_colors            = saved_num_colors;
-  dialog->palette_type          = saved_palette_type;
+  dialog->gimage       = gimage;
+  dialog->progress     = progress;
+  dialog->dither_type  = saved_dither_type;
+  dialog->alpha_dither = saved_alpha_dither;
+  dialog->remove_dups  = saved_remove_dups;
+  dialog->num_colors   = saved_num_colors;
+  dialog->palette_type = saved_palette_type;
 
   dialog->shell =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -158,160 +158,96 @@ convert_dialog_new (GimpImage    *gimage,
 		     main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("General Palette Options"));
+
+  /*  palette  */
+
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CONVERT_PALETTE_TYPE,
+                                     gtk_label_new (_("Palette")), 2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &dialog->palette_type,
+                                     &toggle);
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
+                                   dialog->palette_type);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  /*  'generate palette'  */
+  /*  max n_colors  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox, GIMP_MAKE_PALETTE);
+  gtk_widget_show (hbox);
 
-  toggle = gtk_radio_button_new_with_label (NULL,
-                                            _("Generate optimum palette:"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (GIMP_MAKE_PALETTE));
-  g_signal_connect (toggle, "toggled",
-		    G_CALLBACK (gimp_radio_button_update),
-		    &dialog->palette_type);
+  label = gtk_label_new_with_mnemonic (_("_Maximum number of colors:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   if (dialog->num_colors == 256 && gimp_image_has_alpha (gimage))
     dialog->num_colors = 255;
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_colors,
 				     2, 256, 1, 8, 0, 1, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adjustment, "value_changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_colors);
 
-  label = gtk_label_new (_("Max. number of colors:"));
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_set_sensitive (GTK_WIDGET (spinbutton), dialog->num_colors);
-  gtk_widget_set_sensitive (GTK_WIDGET (label), dialog->num_colors);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", label);
-
-  gtk_widget_show (hbox);
-
-  if (! dialog->have_web_palette)
+  /*  custom palette  */
+  if (palette_box)
     {
-      /*  'web palette'
-       * Only presented as an option to the user if they do not
-       * already have the 'Web' GIMP palette installed on their
-       * system.
-       */
-      toggle = gtk_radio_button_new_with_label (group,
-                                                _("Use WWW-Optimized Palette"));
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
+      vbox = gtk_vbox_new (FALSE, 2);
+      gimp_enum_radio_frame_add (GTK_FRAME (frame), vbox, GIMP_CUSTOM_PALETTE);
+      gtk_widget_show (vbox);
+
+      gtk_box_pack_start (GTK_BOX (vbox), palette_box, FALSE, FALSE, 0);
+      gtk_widget_show (palette_box);
+
+      toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused colors "
+                                                     "from final palette"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    dialog->remove_dups);
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
-      g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                         GINT_TO_POINTER (GIMP_WEB_PALETTE));
       g_signal_connect (toggle, "toggled",
-			G_CALLBACK (gimp_radio_button_update),
-			&dialog->palette_type);
-    }
-
-  /*  'mono palette'  */
-  toggle = gtk_radio_button_new_with_label (group, _("Use black and "
-                                                     "white (1-bit) palette"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (GIMP_MONO_PALETTE));
-  g_signal_connect (toggle, "toggled",
-		    G_CALLBACK (gimp_radio_button_update),
-		    &dialog->palette_type);
-
-  /* 'custom' palette from dialog */
-  if (palette_box)
-    {
-      GtkWidget *remove_toggle;
-
-      remove_toggle = gtk_check_button_new_with_label (_("Remove unused colors "
-                                                         "from final palette"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remove_toggle),
-                                    dialog->remove_dups);
-      g_signal_connect (remove_toggle, "toggled",
 			G_CALLBACK (gimp_toggle_button_update),
 			&dialog->remove_dups);
-
-      /* 'custom' palette from dialog */
-      hbox = gtk_hbox_new (FALSE, 6);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      toggle = gtk_radio_button_new_with_label (group,
-                                                _("Use custom palette:"));
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                         GINT_TO_POINTER (GIMP_CUSTOM_PALETTE));
-      g_signal_connect (toggle, "toggled",
-			G_CALLBACK (gimp_radio_button_update),
-			&dialog->palette_type);
-      g_object_set_data (G_OBJECT (toggle), "set_sensitive", remove_toggle);
-
-      gtk_box_pack_end (GTK_BOX (hbox), palette_box, TRUE, TRUE, 0);
-      gtk_widget_show (palette_box);
-
-      gtk_widget_set_sensitive (remove_toggle,
-				dialog->palette_type == GIMP_CUSTOM_PALETTE);
-      gtk_widget_set_sensitive (palette_box,
-                                dialog->palette_type == GIMP_CUSTOM_PALETTE);
-      g_object_set_data (G_OBJECT (toggle), "set_sensitive", remove_toggle);
-      g_object_set_data (G_OBJECT (remove_toggle), "set_sensitive",
-			 palette_box);
-
-      /*  add the remove-duplicates toggle  */
-      hbox = gtk_hbox_new (FALSE, 6);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      gtk_box_pack_start (GTK_BOX (hbox), remove_toggle, TRUE, TRUE, 20);
-      gtk_widget_show (remove_toggle);
     }
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                                   dialog->palette_type);
 
-  /*  the dither type  */
-  frame = gimp_frame_new (_("Dithering Options"));
+  /*  dithering  */
+
+  frame = gimp_frame_new (_("Dithering"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gimp_enum_radio_box_new (GIMP_TYPE_CONVERT_DITHER_TYPE,
-                                  G_CALLBACK (gimp_radio_button_update),
-                                  &dialog->dither_type,
-                                  &toggle);
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                                   dialog->dither_type);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show(vbox);
+  gtk_widget_show (vbox);
 
-  /*  the alpha-dither toggle  */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("Color _dithering:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  combo = gimp_enum_combo_box_new (GIMP_TYPE_CONVERT_DITHER_TYPE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              dialog->dither_type,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dialog->dither_type);
+
   toggle =
-    gtk_check_button_new_with_label (_("Enable dithering of transparency"));
+    gtk_check_button_new_with_mnemonic (_("Enable dithering of _transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dialog->alpha_dither);
+                                dialog->alpha_dither);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
@@ -376,8 +312,6 @@ convert_dialog_palette_box (IndexedDialog *dialog)
 
   gimp = dialog->gimage->gimp;
 
-  dialog->have_web_palette = FALSE;
-
   /* We can't dither to > 256 colors */
   dialog->container = gimp_container_filter (gimp->palette_factory->container,
                                              convert_dialog_palette_filter,
@@ -402,7 +336,6 @@ convert_dialog_palette_box (IndexedDialog *dialog)
 	  g_ascii_strcasecmp (GIMP_OBJECT (palette)->name, "Web") == 0)
 	{
 	  web_palette = palette;
-	  dialog->have_web_palette = TRUE;
 	}
 
       if (saved_palette == palette)
