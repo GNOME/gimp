@@ -1,3 +1,15 @@
+2000-05-20  Garry R. Osgood <gosgood@idt.net>
+	*app/docindex.c
+	Beware "int a; a = fgetc(fp); ... if(a == EOF)." for fgetc()
+	is advertised to get the next "unsigned character converted 
+	to an integer..." a non-negative on SGI, in particular the end-of-file
+	return value '\377' promotes to integer 255 and this is not
+	the same as EOF as defined in SGI's stdio.h:145:# define EOF (-1).
+	feof(fp) returns a hardware independent indicator, so this construct
+	was put in place instead. Put an end to infinite looping at line 239
+	(because end of file was not being recognized everywhere)
+ 	giving rise to #11578. See bug report; closes 11578.
+	
 2000-05-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/webbrowser/web-browser.scm: added links to 

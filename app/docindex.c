@@ -539,7 +539,8 @@ getinteger (FILE *fp)
   for (; isspace (nextchar); nextchar = fgetc (fp))
     /* empty statement */ ;
 
-  ungetc (nextchar, fp);
+  if (!feof(fp))
+    ungetc (nextchar, fp);
   if (negative)
     response = -response;
 
@@ -554,7 +555,7 @@ clear_white (FILE *fp)
   while (isspace (nextchar = fgetc (fp)))
     /* empty statement */ ;
 
-  if (nextchar != EOF)
+  if (!feof(fp))
     ungetc (nextchar, fp);
 }
 
