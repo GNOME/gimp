@@ -1,5 +1,9 @@
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpcolor.def: added gimp_rgb_to_cmyk_int().
+
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: don't include the plug-in name in
 	messages; GIMP takes care of this for us.
 
