@@ -131,50 +131,37 @@ get_prefix (gchar slash)
    * installation-time prefix from where gimp.exe can be found.
    */
 
-  char *path;
-  char *p;
-  char *q, *r;
+  gchar *path;
+  char *p, *q, *r;
   struct stat st;
 
-  if (prefix != NULL)
-    return prefix;
+  path = g_find_program_in_path ("gimp-1.3.exe");
 
-  p = path = g_strdup (g_getenv ("PATH"));
-
-  while ((q = strchr (p, G_SEARCHPATH_SEPARATOR)) != NULL)
+  if (path == NULL)
+    path = g_find_program_in_path ("gimp.exe");
+  
+  r = strrchr (path, G_DIR_SEPARATOR);
+  if (r != NULL)
     {
-      gchar *test;
-      *q = '\0';
-
-      test = g_strconcat (p, G_DIR_SEPARATOR_S, "gimp", EXEEXT, NULL);
-      if (stat (test, &st) == 0 &&
-	  IS_EXECUTABLE (st.st_mode))
+      *r = '\0';
+      if (strlen (path) >= 4 &&
+	  g_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
 	{
-	  r = strrchr (test, G_DIR_SEPARATOR);
-	  if (r != NULL)
-	    {
-	      *r = '\0';
-	      if (strlen (test) >= 4 &&
-		  g_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
-		{
-		  r[-4] = '\0';
-		  prefix = test;
+	  r[-4] = '\0';
+	  prefix = path;
 #ifdef G_OS_WIN32
-		  if (slash == '/')
-		    {
-		      /* Use forward slashes, less quoting trouble in Makefiles */
-		      while ((p = strchr (prefix, '\\')) != NULL)
-			*p = '/';
-		    }
-#endif
-		  return prefix;
-		}
+	  if (slash == '/')
+	    {
+	      /* Use forward slashes, less quoting trouble in Makefiles */
+	      while ((p = strchr (prefix, '\\')) != NULL)
+		*p = '/';
 	    }
+#endif
+	  return prefix;
 	}
-      p = q + 1;
     }
 
-  fprintf (stderr, "Cannot find any suitable GIMP executable in PATH\n");
+  fprintf (stderr, "Cannot determine GIMP @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@ installation location\n");
   exit (1);
 #else
   return "@prefix@";

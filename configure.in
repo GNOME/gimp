@@ -1151,6 +1151,7 @@ AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
 AC_OUTPUT([
+gimptool-win32.c
 tools/Makefile
 tools/authorsgen/Makefile
 tools/pdbgen/Makefile

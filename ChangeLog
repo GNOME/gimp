@@ -1,5 +1,11 @@
 2003-07-27  Tor Lillqvist  <tml@iki.fi>
 
+	* gimptool-win32.c.in (get_prefix): Use g_find_program_in_path().
+
+	* configure.in: Expand gimptool-win32.c.
+
+	* Makefile.am: Distribute gimptool-win32.c.in.
+
 	* plug-ins/*/Makefile.am: Use -mwindows on Win32.
 
 2003-07-27  Henrik Brix Andersen  <brix@gimp.org>
