@@ -1,3 +1,18 @@
+2005-01-24  Michael Natterer  <mitch@gimp.org>
+
+	Enabled closing docks with Ctrl-W:
+
+	* app/actions/Makefile.am
+	* app/actions/dock-actions.[ch]
+	* app/actions/dock-commands.[ch]: added new action group which
+	holds a single action, "dock-close".
+
+	* app/actions/actions.c: register the "dock" group.
+
+	* app/menus/menus.c: add it to the "<Dock>" UI manager.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_DOCK_CLOSE.
+
 2005-01-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcroptool.c (crop_aspect_changed): don't 

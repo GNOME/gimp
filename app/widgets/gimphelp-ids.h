@@ -406,6 +406,7 @@
 #define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
 
 #define GIMP_HELP_DOCK                            "gimp-dock"
+#define GIMP_HELP_DOCK_CLOSE                      "gimp-dock-close"
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
 #define GIMP_HELP_DOCK_AUTO_BUTTON                "gimp-dock-auto-button"
 #define GIMP_HELP_DOCK_TAB_ADD                    "gimp-dock-tab-add"

@@ -35,6 +35,10 @@ libappactions_a_SOURCES = \
 	dialogs-actions.h		\
 	dialogs-commands.c		\
 	dialogs-commands.h		\
+	dock-actions.c			\
+	dock-actions.h			\
+	dock-commands.c			\
+	dock-commands.h			\
 	dockable-actions.c		\
 	dockable-actions.h		\
 	dockable-commands.c		\

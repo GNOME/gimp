@@ -125,6 +125,7 @@ menus_init (Gimp              *gimp,
                                       "dialogs",
                                       "plug-in",
                                       "qmask",
+                                      "dock",
                                       NULL,
                                       NULL);
 

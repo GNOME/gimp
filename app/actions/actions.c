@@ -52,6 +52,7 @@
 #include "context-actions.h"
 #include "debug-actions.h"
 #include "dialogs-actions.h"
+#include "dock-actions.h"
 #include "dockable-actions.h"
 #include "documents-actions.h"
 #include "drawable-actions.h"
@@ -111,6 +112,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "dialogs", N_("Dialogs"), NULL,
     dialogs_actions_setup,
     dialogs_actions_update },
+  { "dock", N_("Dock"), NULL,
+    dock_actions_setup,
+    dock_actions_update },
   { "dockable", N_("Dockable"), NULL,
     dockable_actions_setup,
     dockable_actions_update },
