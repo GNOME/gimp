@@ -60,49 +60,48 @@ G_BEGIN_DECLS
  *  Widget Constructors
  */
 
-GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
+GtkWidget * gimp_int_option_menu_new        (gboolean        menu_only,
+                                             GCallback       menu_item_callback,
+                                             gpointer        menu_item_callback_data,
+                                             gint            initial, /* item_data */
 
-				    /* specify menu items as va_list:
-				     *  gchar          *label,
-				     *  GCallback       callback,
-				     *  gpointer        callback_data,
-				     *  gpointer        item_data,
-				     *  GtkWidget     **widget_ptr,
-				     *  gboolean        active
-				     */
+				            /* specify menu items as va_list:
+                                             *  gchar       *label,
+                                             *  gint         item_data,
+                                             *  GtkWidget  **widget_ptr,
+                                             */
 
-				    ...);
+                                             ...);
 
-GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
-				    GCallback           menu_item_callback,
-				    gpointer            menu_item_callback_data,
-				    gpointer            initial, /* item_data */
+void        gimp_int_option_menu_set_history (GtkOptionMenu *option_menu,
+                                              gint           item_data);
 
-				    /* specify menu items as va_list:
-				     *  gchar          *label,
-				     *  gpointer        item_data,
-				     *  GtkWidget     **widget_ptr,
-				     */
+#ifndef GIMP_DISABLE_DEPRECATED
+GtkWidget * gimp_option_menu_new     (gboolean         menu_only,
 
-				    ...);
+                                      /* specify menu items as va_list:
+                                       *  gchar       *label,
+                                       *  GCallback    callback,
+                                       *  gpointer     callback_data,
+                                       *  gpointer     item_data,
+                                       *  GtkWidget  **widget_ptr,
+                                       *  gboolean     active
+                                       */
 
-GtkWidget * gimp_int_option_menu_new (gboolean            menu_only,
-				      GCallback           menu_item_callback,
-				      gpointer            menu_item_callback_data,
-				      gint                initial, /* item_data */
+                                      ...);
+GtkWidget * gimp_option_menu_new2    (gboolean          menu_only,
+                                      GCallback         menu_item_callback,
+                                      gpointer          menu_item_callback_data,
+                                      gpointer          initial, /* item_data */
 
-				      /* specify menu items as va_list:
-				       *  gchar          *label,
-				       *  gint            item_data,
-				       *  GtkWidget     **widget_ptr,
-				       */
-
-				      ...);
-
-void  gimp_option_menu_set_history     (GtkOptionMenu    *option_menu,
-                                        gpointer          item_data);
-void  gimp_int_option_menu_set_history (GtkOptionMenu    *option_menu,
-                                        gint              item_data);
+                                      /* specify menu items as va_list:
+                                       *  gchar        *label,
+                                       *  gpointer      item_data,
+                                       *  GtkWidget   **widget_ptr,
+                                       */
+                                      ...);
+void  gimp_option_menu_set_history   (GtkOptionMenu    *option_menu,
+                                      gpointer          item_data);
 
 typedef gboolean (*GimpOptionMenuSensitivityCallback) (gpointer item_data,
                                                        gpointer callback_data);
@@ -110,6 +109,24 @@ void  gimp_option_menu_set_sensitive (GtkOptionMenu    *option_menu,
                                       GimpOptionMenuSensitivityCallback callback,
                                       gpointer          callback_data);
 
+#endif /* GIMP_DISABLE_DEPRECATED */
+
+
+GtkWidget * gimp_int_radio_group_new (gboolean          in_frame,
+				      const gchar      *frame_title,
+				      GCallback         radio_button_callback,
+				      gpointer          radio_button_callback_data,
+				      gint              initial, /* item_data */
+
+				      /* specify radio buttons as va_list:
+				       *  const gchar  *label,
+				       *  gint          item_data,
+				       *  GtkWidget   **widget_ptr,
+				       */
+
+				      ...);
+
+#ifndef GIMP_DISABLE_DEPRECATED
 GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				    const gchar        *frame_title,
 
@@ -123,7 +140,6 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				     */
 
 				    ...);
-
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				    const gchar        *frame_title,
 				    GCallback           radio_button_callback,
@@ -137,23 +153,10 @@ GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				     */
 
 				    ...);
-
-GtkWidget * gimp_int_radio_group_new (gboolean            in_frame,
-				      const gchar        *frame_title,
-				      GCallback           radio_button_callback,
-				      gpointer            radio_button_callback_data,
-				      gint                initial, /* item_data */
-
-				      /* specify radio buttons as va_list:
-				       *  const gchar    *label,
-				       *  gint            item_data,
-				       *  GtkWidget     **widget_ptr,
-				       */
-
-				      ...);
-
 void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);
+#endif /* GIMP_DISABLE_DEPRECATED */
+
 
 GtkWidget * gimp_spin_button_new   (/* return value: */
 				    GtkObject         **adjustment,

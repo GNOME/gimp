@@ -15,48 +15,30 @@ helper functions.
 
 </para>
 
-<!-- ##### FUNCTION gimp_option_menu_new ##### -->
+<!-- ##### FUNCTION gimp_int_option_menu_new ##### -->
 <para>
 
-The @va_list describing the #GtkMenuItem's has the following format:
+</para>
 
-<informaltable pgwide="1" frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
-<tbody>
+@menu_only: 
+@menu_item_callback: 
+@menu_item_callback_data: 
+@initial: 
+@Varargs: 
+@Returns: 
 
-<row>
-<entry>#gchar *label,</entry>
-<entry>The menu item's label.</entry>
-</row>
 
-<row>
-<entry>#GtkSignalFunc callback,</entry>
-<entry>The callback which will be connected to the menu item's
-"activate" signal</entry>
-</row>
+<!-- ##### FUNCTION gimp_int_option_menu_set_history ##### -->
+<para>
 
-<row>
-<entry>#gpointer data,</entry>
-<entry>The callback data which will be used in gtk_signal_connect().</entry>
-</row>
+</para>
 
-<row>
-<entry>#gpointer user_data,</entry>
-<entry>The menu item's @user_data which will be set with
-gtk_object_set_user_data().</entry>
-</row>
+@option_menu: 
+@item_data: 
 
-<row>
-<entry>#GtkWidget **widget_ptr,</entry>
-<entry>A pointer to store the created menu item in.</entry>
-</row>
 
-<row>
-<entry>#gboolean active,</entry>
-<entry>#TRUE if this should be the initially selected menu item.</entry>
-</row>
-
-</tbody></tgroup></informaltable>
+<!-- ##### FUNCTION gimp_option_menu_new ##### -->
+<para>
 
 </para>
 
@@ -67,30 +49,6 @@ gtk_object_set_user_data().</entry>
 
 <!-- ##### FUNCTION gimp_option_menu_new2 ##### -->
 <para>
-
-The @va_list describing the #GtkMenuItem's has the following format:
-
-<informaltable pgwide="1" frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
-<tbody>
-
-<row>
-<entry>#gchar *label,</entry>
-<entry>The menu item's label.</entry>
-</row>
-
-<row>
-<entry>#gpointer user_data,</entry>
-<entry>The menu item's @user_data which will be set with
-gtk_object_set_user_data().</entry>
-</row>
-
-<row>
-<entry>#GtkWidget **widget_ptr,</entry>
-<entry>A pointer to store the created menu item in.</entry>
-</row>
-
-</tbody></tgroup></informaltable>
 
 </para>
 
@@ -131,48 +89,22 @@ gtk_object_set_user_data().</entry>
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_radio_group_new ##### -->
+<!-- ##### FUNCTION gimp_int_radio_group_new ##### -->
 <para>
 
-The @va_list describing the #GtkRadioButton's has the following format:
+</para>
 
-<informaltable pgwide="1" frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
-<tbody>
+@in_frame: 
+@frame_title: 
+@radio_button_callback: 
+@radio_button_callback_data: 
+@initial: 
+@Varargs: 
+@Returns: 
 
-<row>
-<entry>#gchar *label,</entry>
-<entry>The radio button's label.</entry>
-</row>
 
-<row>
-<entry>#GtkSignalFunc callback,</entry>
-<entry>The callback which will be connected to the radio button's
-"toggled" signal</entry>
-</row>
-
-<row>
-<entry>#gpointer data,</entry>
-<entry>The callback data which will be used in gtk_signal_connect().</entry>
-</row>
-
-<row>
-<entry>#gpointer user_data,</entry>
-<entry>The radio button's @user_data which will be set with
-gtk_object_set_user_data().</entry>
-</row>
-
-<row>
-<entry>#GtkWidget **widget_ptr,</entry>
-<entry>A pointer to store the created radio button in.</entry>
-</row>
-
-<row>
-<entry>#gboolean active,</entry>
-<entry>#TRUE if this should be the initially pressed radio button.</entry>
-</row>
-
-</tbody></tgroup></informaltable>
+<!-- ##### FUNCTION gimp_radio_group_new ##### -->
+<para>
 
 </para>
 
@@ -184,30 +116,6 @@ gtk_object_set_user_data().</entry>
 
 <!-- ##### FUNCTION gimp_radio_group_new2 ##### -->
 <para>
-
-The @va_list describing the #GtkRadioButton's has the following format:
-
-<informaltable pgwide="1" frame="none" role="struct">
-<tgroup cols="2"><colspec colwidth="4*"/><colspec colwidth="8*"/>
-<tbody>
-
-<row>
-<entry>#gchar *label,</entry>
-<entry>The radio button's label.</entry>
-</row>
-
-<row>
-<entry>#gpointer user_data,</entry>
-<entry>The radio button's @user_data which will be set with
-gtk_object_set_user_data().</entry>
-</row>
-
-<row>
-<entry>#GtkWidget **widget_ptr,</entry>
-<entry>A pointer to store the created radio button in.</entry>
-</row>
-
-</tbody></tgroup></informaltable>
 
 </para>
 
