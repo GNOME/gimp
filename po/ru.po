@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-1.1.25\n"
-"POT-Creation-Date: 2000-12-19 14:22-0800\n"
-"PO-Revision-Date: 2000-12-15 12:15+03:00\n"
+"Project-Id-Version: Gimp-1.1.32\n"
+"POT-Creation-Date: 2000-12-21 12:48+0300\n"
+"PO-Revision-Date: 2000-12-21 12:53+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1545,28 +1545,28 @@ msgid "No selection to stroke!"
 msgstr "Нет выделения для обводки!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Неизвестная версия формата кистей #%d в \"%s\"\n"
+msgstr "Неизвестная версия формата кисти #%d в \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Ошибка в файле шаблонов GIMP \"%s\""
+msgstr "Ошибка в файле кисти GIMP \"%s\""
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Безымянный"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "Файл кистей GIMP вероятно оборван."
+msgstr "Файл кистей GIMP вероятно оборван: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "Файл кистей GIMP вероятно оборван."
+msgstr "Файл кистей GIMP вероятно испорчен: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1578,27 +1578,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Внимание: не удалось загрузить кисть\n"
+"Внимание: не удалось загрузить кисть-переход\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Кисть-переход должна содержать хотя бы одну кисть."
+msgstr ""
+"Кисть-переход должна содержать хотя бы одну кисть:\n"
+"\"%s\"."
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Не удалось загрузить одну из кистей в кисти-переходе."
+msgstr ""
+"Не удалось загрузить одну из кистей в кисти-переходе\n"
+"\"%s\"."
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -4180,17 +4184,17 @@ msgid "No Patterns available"
 msgstr "Нет доступных шаблонов"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Неизвестная версия формата кистей #%d в \"%s\"\n"
+msgstr "Неизвестная версия формата шаблона #%d в \"%s\""
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Ошибка в файле шаблонов GIMP \"%s\""
+msgstr "Ошибка в файле шаблона GIMP \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "Файл шаблонов GIMP \"%s\" возможно оборван."
 
@@ -6433,29 +6437,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Цветовая история"
-
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Ошибка в файле кистей GIMP... прервано."
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Внимание: не удалось загрузить кисть-картинку\n"
-#~ "\"%s\""
-
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Внимание: не удалось загрузить картинки перехода\n"
-#~ "\"%s\""
-
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Не удалось загрузить кисть-картинку."
-
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Неизвестная GIMP версия шаблона #%d в \"%s\"\n"
-
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Ошибка при загрузке шаблона \"%s\""
