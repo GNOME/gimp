@@ -1,3 +1,7 @@
+2002-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/menus.c: use GTK_STOCK_REMOVE for "<Dialogs>/Remove Tab".
+
 2002-11-11  Manish Singh  <yosh@gimp.org>
 
 	* autogen.sh: don't say "Now type 'make'" if configure failed.

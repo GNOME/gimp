@@ -1483,7 +1483,8 @@ static GimpItemFactoryEntry dialogs_entries[] =
   ADD_TAB (N_("/Add Tab/Old Paths..."),        "gimp-path-list", NULL, NULL),
 
   { { N_("/Remove Tab"), NULL,
-      dialogs_remove_tab_cmd_callback, 0 },
+      dialogs_remove_tab_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_REMOVE },
     NULL, NULL, NULL },
 
   SEPARATOR ("/view-type-separator"),
