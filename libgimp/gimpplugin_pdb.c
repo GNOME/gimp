@@ -59,7 +59,7 @@ gimp_progress_init (const gchar *message)
 
 /**
  * gimp_progress_update:
- * @percentage: Percentage of progress completed.
+ * @percentage: Percentage of progress completed which must be between 0.0 and 1.0.
  *
  * Updates the progress bar for the current plug-in.
  *

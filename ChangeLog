@@ -1,3 +1,25 @@
+2003-08-28  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/screenshot.c: rewrote a large part of the
+	screenshot plug-in. The plug-in now no longer depends on the xwd
+	utility, but uses Xlib/GDK functionality to obtain the screen shot.
+
+	The window to shoot is now selected prior to the time out. This
+	fixes bug #103852.
+
+	The ability to obtain a screen shot of a window without
+	decorations has had to go since this can not be done using plain
+	Xlib/GDK (one would have to depend on libXmu to do this).
+
+	The source is prepared for G_OS_WIN32 but the win32 specific code
+	is yet to be written.
+
+	* tools/pdbgen/pdb/plug_in.pdb (gimp_progress_update): improved the
+	inline documentation
+
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpplugin_pdb.c: regenerated
+
 2003-08-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-convert.c (gimp_image_convert): free the

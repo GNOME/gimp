@@ -152,7 +152,7 @@ static ProcArg progress_update_inargs[] =
   {
     GIMP_PDB_FLOAT,
     "percentage",
-    "Percentage of progress completed"
+    "Percentage of progress completed which must be between 0.0 and 1.0"
   }
 };
 
