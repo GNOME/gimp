@@ -309,7 +309,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                      GIMP_PREVIEW_SIZE_SMALL, 1,
                                      dialog_factory,
                                      "gimp-font-list|gimp-font-grid",
-                                     GTK_STOCK_SELECT_FONT,
+                                     GIMP_STOCK_FONT,
                                      _("Open the font selection dialog"));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,

@@ -276,7 +276,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Brushes"), NULL,
-                               GIMP_STOCK_TOOL_PAINTBRUSH,
+                               GIMP_STOCK_BRUSH,
                                GIMP_HELP_BRUSH_DIALOG);
 }
 
@@ -296,7 +296,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Patterns"), NULL,
-                               GIMP_STOCK_TOOL_BUCKET_FILL,
+                               GIMP_STOCK_PATTERN,
                                GIMP_HELP_PATTERN_DIALOG);
 }
 
@@ -316,7 +316,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
-                               GIMP_STOCK_TOOL_BLEND,
+                               GIMP_STOCK_GRADIENT,
                                GIMP_HELP_GRADIENT_DIALOG);
 }
 
@@ -336,7 +336,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,
-                               GTK_STOCK_SELECT_COLOR,
+                               GIMP_STOCK_PALETTE,
                                GIMP_HELP_PALETTE_DIALOG);
 }
 
@@ -355,7 +355,7 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Fonts"), NULL,
-                               GTK_STOCK_SELECT_FONT,
+                               GIMP_STOCK_FONT,
                                GIMP_HELP_FONT_DIALOG);
 }
 
@@ -392,7 +392,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Buffers"), NULL,
-                               GTK_STOCK_PASTE,
+                               GIMP_STOCK_BUFFER,
                                GIMP_HELP_BUFFER_DIALOG);
 }
 
@@ -483,7 +483,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Brushes"), NULL,
-                               GIMP_STOCK_TOOL_PAINTBRUSH,
+                               GIMP_STOCK_BRUSH,
                                GIMP_HELP_BRUSH_DIALOG);
 }
 
@@ -503,7 +503,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Patterns"), NULL,
-                               GIMP_STOCK_TOOL_BUCKET_FILL,
+                               GIMP_STOCK_PATTERN,
                                GIMP_HELP_PATTERN_DIALOG);
 }
 
@@ -523,7 +523,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
-                               GIMP_STOCK_TOOL_BLEND,
+                               GIMP_STOCK_GRADIENT,
                                GIMP_HELP_GRADIENT_DIALOG);
 }
 
@@ -543,7 +543,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,
-                               GTK_STOCK_SELECT_COLOR,
+                               GIMP_STOCK_PALETTE,
                                GIMP_HELP_PALETTE_DIALOG);
 }
 
@@ -562,7 +562,7 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Fonts"), NULL,
-                               GTK_STOCK_SELECT_FONT,
+                               GIMP_STOCK_FONT,
                                GIMP_HELP_FONT_DIALOG);
 }
 
@@ -599,7 +599,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Buffers"), NULL,
-                               GTK_STOCK_PASTE,
+                               GIMP_STOCK_BUFFER,
                                GIMP_HELP_BUFFER_DIALOG);
 }
 
@@ -879,7 +879,7 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (brush_editor),
                                _("Brush Editor"), NULL,
-                               GIMP_STOCK_TOOL_PAINTBRUSH,
+                               GIMP_STOCK_BRUSH,
                                GIMP_HELP_BRUSH_EDITOR_DIALOG);
 }
 
@@ -910,7 +910,7 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
 			       _("Gradient Editor"), NULL,
-                               GIMP_STOCK_TOOL_BLEND,
+                               GIMP_STOCK_GRADIENT,
                                GIMP_HELP_GRADIENT_EDITOR_DIALOG);
 }
 
@@ -941,7 +941,7 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (palette_editor),
 			       _("Palette Editor"), NULL,
-                               GTK_STOCK_SELECT_COLOR,
+                               GIMP_STOCK_PALETTE,
                                GIMP_HELP_PALETTE_EDITOR_DIALOG);
 }
 

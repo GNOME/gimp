@@ -141,7 +141,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-brush-grid|gimp-brush-list",
-                                         GIMP_STOCK_TOOL_PAINTBRUSH,
+                                         GIMP_STOCK_BRUSH,
                                          _("Open the brush selection dialog"));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
@@ -158,7 +158,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-pattern-grid|gimp-pattern-list",
-                                         GIMP_STOCK_TOOL_BUCKET_FILL,
+                                         GIMP_STOCK_PATTERN,
                                          _("Open the pattern selection dialog"));
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
@@ -182,7 +182,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                   GIMP_PREVIEW_SIZE_LARGE, 1,
                                   dialog_factory,
                                   "gimp-gradient-list|gimp-gradient-grid",
-                                  GIMP_STOCK_TOOL_BLEND,
+                                  GIMP_STOCK_GRADIENT,
                                   _("Open the gradient selection dialog"));
 
       /*  use smaller previews for the popup  */

@@ -224,6 +224,16 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TEXTURE                  "gimp-texture"
 
 
+/*  missing icons:  */
+
+#define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
+#define GIMP_STOCK_BUFFER                   GTK_STOCK_PASTE
+#define GIMP_STOCK_FONT                     GTK_STOCK_SELECT_FONT
+#define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
+#define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
+#define GIMP_STOCK_PATTERN                  GIMP_STOCK_TOOL_BUCKET_FILL
+
+
 void   gimp_stock_init (void);
 
 

@@ -1076,7 +1076,7 @@ palette_editor_edit_clicked (GtkWidget         *widget,
       editor->color_notebook =
 	color_notebook_new (GIMP_VIEWABLE (palette),
                             _("Edit Palette Color"),
-                            GTK_STOCK_SELECT_COLOR,
+                            GIMP_STOCK_PALETTE,
                             _("Edit Color Palette Entry"),
                             GTK_WIDGET (editor),
                             toplevel_factory,

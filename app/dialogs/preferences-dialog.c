@@ -725,6 +725,36 @@ prefs_check_button_add (GObject     *config,
 }
 
 static GtkWidget *
+prefs_check_button_add_with_icon (GObject     *config,
+                                  const gchar *property_name,
+                                  const gchar *label,
+                                  const gchar *stock_id,
+                                  GtkBox      *vbox)
+{
+  GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *image;
+
+  button = gimp_prop_check_button_new (config, property_name, label);
+  if (!button)
+    return NULL;
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  return button;
+}
+
+static GtkWidget *
 prefs_color_button_add (GObject     *config,
                         const gchar *property_name,
                         const gchar *label,
@@ -1381,25 +1411,15 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Paint Options Shared Between Tools"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "global-brush",
-                          _("_Brush"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "global-pattern",
-                          _("_Pattern"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "global-gradient",
-                          _("_Gradient"),
-                          GTK_BOX (vbox2));
-
-  /* Disabled, because they are not yet useful */
-#if 0
-  prefs_check_button_add (object, "global-palette",
-                          _("Pa_lette"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "global-font",
-                          _("_Font"),
-                          GTK_BOX (vbox2));
-#endif
+  prefs_check_button_add_with_icon (object, "global-brush",
+                                    _("_Brush"),    GIMP_STOCK_BRUSH,
+                                    GTK_BOX (vbox2));
+  prefs_check_button_add_with_icon (object, "global-pattern",
+                                    _("_Pattern"),  GIMP_STOCK_PATTERN,
+                                    GTK_BOX (vbox2));
+  prefs_check_button_add_with_icon (object, "global-gradient",
+                                    _("_Gradient"), GIMP_STOCK_GRADIENT,
+                                    GTK_BOX (vbox2));
 
 
   /*******************************/
