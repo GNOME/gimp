@@ -111,7 +111,7 @@ struct _ColorNode
   guchar     g;
   guchar     b;
 
-  gint       count;
+  gdouble    count;
 };
 
 
@@ -123,27 +123,29 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void doDialog (void);
-static void analyze  (GimpDrawable *drawable);
+static void doDialog    (void);
+static void analyze     (GimpDrawable *drawable);
 
-static void histogram   (guchar r,
-                         guchar g,
-                         guchar b);
+static void histogram   (guchar  r,
+                         guchar  g,
+                         guchar  b,
+                         gdouble a);
 static void fillPreview (GtkWidget *preview);
-static void insertcolor (guchar r,
-                         guchar g,
-                         guchar b);
+static void insertcolor (guchar  r,
+                         guchar  g,
+                         guchar  b,
+                         gdouble a);
 
-static void doLabel (GtkWidget  *table,
-                     const char *format,
-                     ...) G_GNUC_PRINTF (2, 3);
+static void doLabel     (GtkWidget  *table,
+                         const char *format,
+                         ...) G_GNUC_PRINTF (2, 3);
 
 /* some global variables */
 static gchar     *filename = NULL;
 static gint       width, height, bpp;
 static ColorNode *color_table = NULL;
-static gint32     hist_red[256], hist_green[256], hist_blue[256];
-static gint       maxred = 0, maxgreen = 0, maxblue = 0;
+static gdouble    hist_red[256], hist_green[256], hist_blue[256];
+static gdouble    maxred = 0.0, maxgreen = 0.0, maxblue = 0.0;
 static gint       uniques = 0;
 static gint32     imageID;
 
@@ -263,8 +265,14 @@ analyze (GimpDrawable *drawable)
   gint          x, y, numcol;
   gint          x1, y1, x2, y2;
   guchar        r, g, b;
+  gint          a;
   guchar        idx;
   gboolean      gray;
+  gboolean      has_alpha;
+  gboolean      has_sel;
+  guchar       *sel;
+  GimpPixelRgn  selPR;
+  gint          ofsx, ofsy;
 
   gimp_progress_init (_("Colorcube Analysis..."));
 
@@ -285,69 +293,101 @@ analyze (GimpDrawable *drawable)
   height = drawable->height;
   bpp = drawable->bpp;
 
-  /* allocate row buffer */
-  src_row = g_malloc ((x2 - x1) * bpp);
+  if (x2 <= x1 || y2 <= y1)
+    return;
+
+  has_sel = !gimp_selection_is_empty (imageID);
+  gimp_drawable_offsets (drawable->drawable_id, &ofsx, &ofsy);
 
   /* initialize the pixel region */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
 
   cmap = gimp_image_get_cmap (imageID, &numcol);
-  gray = gimp_drawable_is_gray (drawable->drawable_id);
+  gray = (gimp_drawable_is_gray (drawable->drawable_id)
+          || gimp_drawable_is_channel (drawable->drawable_id));
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
+  gimp_pixel_rgn_init (&selPR,
+                       gimp_drawable_get (gimp_image_get_selection (imageID)),
+                       0, 0, width, height, FALSE, FALSE);
+
+  /* allocate row buffer */
+  src_row = g_malloc ((x2 - x1) * bpp);
+  sel = g_malloc (x2 - x1);
 
   for (y = y1; y < y2; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y, (x2 - x1));
+      if (has_sel)
+        gimp_pixel_rgn_get_row (&selPR, sel, x1 + ofsx, y + ofsy, (x2 - x1));
 
       for (x = 0; x < x2 - x1; x++)
         {
+          /* Start with full opacity.  */
+          a = 255;
+
           /*
            * If the image is indexed, fetch RGB values
            * from colormap.
            */
           if (cmap)
             {
-              idx = src_row[x];
+              idx = src_row[x * bpp];
 
               r = cmap[idx * 3];
               g = cmap[idx * 3 + 1];
               b = cmap[idx * 3 + 2];
+              if (has_alpha)
+                a = src_row[x * bpp + 1];
             }
           else if (gray)
             {
               r = g = b = src_row[x * bpp];
+              if (has_alpha)
+                a = src_row[x * bpp + 1];
             }
           else
             {
               r = src_row[x * bpp];
               g = src_row[x * bpp + 1];
               b = src_row[x * bpp + 2];
+              if (has_alpha)
+                a = src_row[x * bpp + 3];
             }
 
-          insertcolor (r, g, b);
+          if (has_sel)
+            a *= sel[x];
+          else
+            a *= 255;
+
+          if (a != 0)
+            insertcolor (r, g, b, (gdouble) a * (1.0 / (255.0 * 255.0)));
         }
 
       /* tell the user what we're doing */
       if ((y % 10) == 0)
-        gimp_progress_update ((double) y / (double) (y2 - y1));
+        gimp_progress_update ((gdouble) y / (gdouble) (y2 - y1));
     }
 
   /* clean up */
   g_free (src_row);
+  g_free (sel);
 }
 
-/* here's were we actually store our color-table */
+/* here's where we actually store our color-table */
 static void
-insertcolor (guchar r,
-             guchar g,
-             guchar b)
+insertcolor (guchar  r,
+             guchar  g,
+             guchar  b,
+             gdouble a)
 {
   ColorNode *node, *next = NULL, *prev = NULL,
             *newred, *newgreen = NULL, *newblue;
   ColorType  type = RED;
 
-  histogram (r, g, b);
+  histogram (r, g, b, a);
 
-  /* lets walk the tree, and see if it already contains this color */
+  /* let's walk the tree, and see if it already contains this color */
   for (node = color_table; node != NULL; prev = node, node = next)
     {
       if (node->color == RED)
@@ -389,10 +429,10 @@ insertcolor (guchar r,
         }
     }
 
-  /* this color was already stored -> update it's count */
+  /* this color was already stored -> update its count */
   if (node)
     {
-      node->count++;
+      node->count += a;
       return;
     }
 
@@ -414,7 +454,7 @@ insertcolor (guchar r,
   newblue->r = r;
   newblue->g = g;
   newblue->b = b;
-  newblue->count = 1;
+  newblue->count = a;
 
   /* previous was green: create link to axis */
   if (prev && prev->color == GREEN && type == BLUE)
@@ -436,7 +476,7 @@ insertcolor (guchar r,
       newgreen->g = g;
 
       /* count doesn't matter here */
-      newgreen->count = -1;
+      /*newgreen->count = -1;*/
 
       /* previous was red: create link to axis */
       if (prev && prev->color == RED && type == GREEN)
@@ -459,7 +499,7 @@ insertcolor (guchar r,
       newred->r = r;
 
       /* count doesn't matter here */
-      newred->count = -1;
+      /*newred->count = -1;*/
 
       /* previous was red, update its neighbour link */
       if (prev)
@@ -477,17 +517,22 @@ insertcolor (guchar r,
  * anywhere as of yet, but they might be useful sometime).
  */
 static void
-histogram (guchar r,
-           guchar g,
-           guchar b)
+histogram (guchar  r,
+           guchar  g,
+           guchar  b,
+           gdouble a)
 {
-  if (++hist_red[r] > maxred)
+  hist_red[r] += a;
+  hist_green[g] += a;
+  hist_blue[b] += a;
+
+  if (hist_red[r] > maxred)
     maxred = hist_red[r];
 
-  if (++hist_green[g] > maxgreen)
+  if (hist_green[g] > maxgreen)
     maxgreen = hist_green[g];
 
-  if (++hist_blue[b] > maxblue)
+  if (hist_blue[b] > maxblue)
     maxblue = hist_blue[b];
 }
 
@@ -563,7 +608,7 @@ doDialog (void)
 
       doLabel (table, _("Compressed size in bytes: %u"), filesize);
       doLabel (table, _("Compression ratio (approx.): %d to 1"),
-                      (gint) RINT ((double) (width * height * bpp) / filesize));
+                      (gint) RINT ((gdouble) (width * height * bpp) / filesize));
     }
 
   /* show stuff */
@@ -607,7 +652,7 @@ fillPreview (GtkWidget *preview)
 {
   guchar *image, *pimage, *pixel;
   gint    x, y, rowstride;
-  gint    histcount, val;
+  gdouble histcount, val;
 
   image = g_malloc0 (PREWIDTH * PREHEIGHT * 3);
 
@@ -620,9 +665,9 @@ fillPreview (GtkWidget *preview)
        * and build a one-pixel bar.
        *  ... in the respective channel, preserving the other ones. --hb
        */
-      histcount = hist_red[x] ? hist_red[x] : 1;
+      histcount = hist_red[x] > 1.0 ? hist_red[x] : 1.0;
 
-      val = (gint) (log ((gdouble) histcount) * (PREHEIGHT / 12));
+      val = log (histcount) * (PREHEIGHT / 12);
 
       if (val > PREHEIGHT)
         val = PREHEIGHT;
@@ -633,9 +678,9 @@ fillPreview (GtkWidget *preview)
           *pixel = 255;
         }
 
-      histcount = hist_green[x] ? hist_green[x] : 1;
+      histcount = hist_green[x] > 1.0 ? hist_green[x] : 1.0;
 
-      val = (gint) (log ((gdouble) histcount) * (PREHEIGHT / 12));
+      val = log (histcount) * (PREHEIGHT / 12);
 
       if (val > PREHEIGHT)
         val = PREHEIGHT;
@@ -646,9 +691,9 @@ fillPreview (GtkWidget *preview)
           *(pixel + 1) = 255;
         }
 
-      histcount = hist_blue[x] ? hist_blue[x] : 1;
+      histcount = hist_blue[x] > 1.0 ? hist_blue[x] : 1.0;
 
-      val = (gint) (log ((gdouble) histcount) * (PREHEIGHT / 12));
+      val = log (histcount) * (PREHEIGHT / 12);
 
       if (val > PREHEIGHT)
         val = PREHEIGHT;

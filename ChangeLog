@@ -1,5 +1,14 @@
 2003-09-03  Pedro Gimeno  <pggimeno@wanadoo.es>
 
+	* ccanalyze.c (analyze): use Alpha channel and selection
+	channel info when available to build the histogram and to
+	include/exclude colors in the color count. Fixes bug #121097
+	and handling of INDEXEDA images which was broken.
+	(histogram, insertcolor, fillPreview): updated to use
+	gdoubles where appropriate.
+
+2003-09-03  Pedro Gimeno  <pggimeno@wanadoo.es>
+
 	* ccanalyze.c: Changed from CR/LF style to LF style in preparation
 	for the next batch of changes.
 
