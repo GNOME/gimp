@@ -422,7 +422,7 @@ ipal_clear (GimpColormapDialog* ipal)
   int i, j;
   int offset;
   gint width, height;
-  guchar* row;
+  guchar* row = NULL;
   GtkWidget* palette;
 
   g_return_if_fail(ipal);

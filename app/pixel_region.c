@@ -385,11 +385,10 @@ do_parallel_regions(struct parallel_struct *p_s)
 void pixel_regions_process_parallel(p_func f, void *data, int num_regions, ...)
 {
   int i;
-  PixelRegionIterator *PRI;
   struct parallel_struct p_s;
   IF_THREAD(pthread_t threads[MAX_THREADS];)
   IF_THREAD(pthread_attr_t pthread_attr;)
-  int nthreads;
+  IF_THREAD(int nthreads;)
   va_list ap;
 
   va_start (ap, num_regions);

@@ -22,7 +22,7 @@
 typedef void (*ActionCallback) (GtkWidget *, gpointer);
 
 typedef struct {
-  char *label;
+  const char *label;
   ActionCallback callback;
   gpointer user_data;
   GtkWidget *widget;

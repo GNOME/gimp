@@ -619,7 +619,6 @@ threshold_invoker (args)
   int high_threshold;
   int int_value;
   int x1, y1, x2, y2;
-  void *pr;
 
   drawable    = NULL;
   low_threshold  = 0;

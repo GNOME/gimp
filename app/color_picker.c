@@ -288,11 +288,7 @@ get_color (GImage *gimage,
 	   int     final)
 {
   unsigned char *color;
-  unsigned char *src, *cmap, alpha;
   int offx, offy;
-  int width, height;
-  int bytes;
-  int index;
   int has_alpha;
   int is_indexed;
   if (!drawable && !sample_merged) 

@@ -1,3 +1,41 @@
+Fri Mar 19 20:24:20 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* acinclude.m4
+	* config.guess
+	* config.sub
+	* ltconfig
+	* ltmain.sh: upgrade to libtool 1.2f
+
+	* autogen.sh: libtool is not required to autogen gtk+
+
+	* acconfig.h: remove WITH_SYMBOL_UNDERSCORE (not explictly
+	needed)
+
+	* app/actionarea.h: made the label in ActionAreaItem const
+
+	* app/convert.[ch]: made FOO_PALETTE #defines into an enum
+
+	* libgimp/parasite.c
+	* app/brightness_contrast.c
+	* app/color_picker.c
+	* app/colormap_dialog.i.c
+	* app/curves.c
+	* app/equalize.c
+	* app/gimplut.c
+	* app/histogram_tool.c
+	* app/invert.c
+	* app/levels.c
+	* app/paint_funcs.c
+	* app/pixel_regions.c
+	* app/posterize.c
+	* app/rect_select.c
+	* app/threshold.c
+	* app/xcf.c: remove unused vars, other minor code cleanups
+
+	* app/procedural_db.h: #include <glib.h>
+
+	* Makefile.am: add README.perl to EXTRA_DIST
+
 Fri Mar 19 04:01:04 EST 1999 Adrian Likins <adrian@gimp.org>
 	
 	* plug-ins/mail/mail.c: added a from: field, made

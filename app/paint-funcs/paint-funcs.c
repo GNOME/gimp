@@ -5077,9 +5077,7 @@ combine_regions (PixelRegion   *src1,
 		 int           *affect,
 		 int            type)
 {
-  int h;
   int has_alpha1, has_alpha2;
-  unsigned char * buf;
   struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */

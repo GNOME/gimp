@@ -173,18 +173,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 	   the new behavior is exactly what you want. It's hard for me
 	   to imagine a case in which the old behavior is better.
 	*/
-	/* This isn't working properly with an image with 0 saturation
-	 * e.g. a grayscale image. Comment out for now -Yosh
-	 */
-/* #define RAPH */
-#ifdef RAPH
 	saturation_transfer[hue][i] = BOUNDS((i * (255 + value)) / 255, 0, 255);
-#else
-	if (value < 0)
-	  saturation_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
-	else
-	  saturation_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
-#endif
       }
 }
 

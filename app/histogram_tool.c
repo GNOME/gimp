@@ -609,7 +609,6 @@ histogram_invoker (Argument *args)
   int no_mask;
   int x1, y1, x2, y2;
   int off_x, off_y;
-  void *pr;
 
   drawable = NULL;
   low_range   = 0;

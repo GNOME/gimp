@@ -22,6 +22,15 @@
 #include "gimpimageF.h"
 #include "palette_entries.h"
 
+/* adam's extra palette stuff */
+typedef enum {
+  MAKE_PALETTE,
+  REUSE_PALETTE,
+  WEB_PALETTE,
+  MONO_PALETTE,
+  CUSTOM_PALETTE
+} ConvertPaletteType;
+
 /*  convert functions  */
 void  convert_to_rgb        (GimpImage *);
 void  convert_to_grayscale  (GimpImage *);

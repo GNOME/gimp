@@ -30,6 +30,7 @@ EXTRA_DIST = \
 	pixmaps/zoom_out.xpm	 \
 	README.i18n		 \
 	README.win32		 \
+	README.perl		 \
 	ChangeLog.pre-1-0	 \
 	MAINTAINERS		 \
 	TODO			 \

@@ -484,7 +484,6 @@ posterize_invoker (Argument *args)
   int levels;
   int int_value;
   int x1, y1, x2, y2;
-  void *pr;
 
   drawable = NULL;
   levels = 0;

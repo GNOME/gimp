@@ -76,7 +76,6 @@ static void
 invert (GimpDrawable *drawable)
 {
   PixelRegion srcPR, destPR;
-  void *pr;
   int x1, y1, x2, y2;
   GimpLut *lut;
 

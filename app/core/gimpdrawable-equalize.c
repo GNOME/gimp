@@ -68,17 +68,11 @@ equalize(gimage, drawable, mask_only)
      GimpDrawable *drawable;
      int mask_only;
 {
-  Channel *sel_mask;
-  PixelRegion srcPR, destPR, maskPR, *sel_maskPR;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  unsigned char *mask, *m;
-  int no_mask;
-  int h, j, b;
+  PixelRegion srcPR, destPR;
+  unsigned char *mask;
   int has_alpha;
   int alpha, bytes;
   int x1, y1, x2, y2;
-  void *pr;
   GimpHistogram *hist;
   GimpLut *lut;
 

@@ -1346,7 +1346,6 @@ curves_spline_invoker (Argument *args)
   unsigned char *control_pts;
   int x1, y1, x2, y2;
   int i, j;
-  void *pr;
   GimpDrawable *drawable;
 
   /*  the drawable  */
@@ -1497,7 +1496,6 @@ curves_explicit_invoker (Argument *args)
   unsigned char *curve;
   int x1, y1, x2, y2;
   int i, j;
-  void *pr;
   GimpDrawable *drawable;
 
   /*  the drawable  */

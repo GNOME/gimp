@@ -86,7 +86,7 @@ gimp_lut_process (GimpLut     *lut,
 {
   int h, width, src_r_i, dest_r_i;
   unsigned char *src, *dest;
-  unsigned char *lut0, *lut1, *lut2, *lut3;
+  unsigned char *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
 
   if (lut->nchannels > 0)
     lut0 = lut->luts[0];

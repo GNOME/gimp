@@ -87,7 +87,6 @@ create_selection_options (ToolType tool_type)
   GtkWidget *feather_toggle;
   GtkWidget *feather_scale;
   GtkWidget *sample_merged_toggle;
-  GtkWidget *bezier_toggle;
   GtkObject *feather_scale_data;
   GtkWidget *fixed_size_toggle;
   GtkAdjustment *adj;

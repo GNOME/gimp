@@ -1485,7 +1485,7 @@ xcf_save_tile_rle (XcfInfo *info,
   int count;
   int size;
   int bpp;
-  int i, j, k;
+  int i, j;
   int len = 0;
 
   tile_lock (tile);
@@ -2521,7 +2521,6 @@ xcf_load_tile_rle (XcfInfo *info,
   int size;
   int count;
   int length;
-  int tmp;
   int bpp;
   int i, j;
   guchar *xcfdata, *xcfodata;

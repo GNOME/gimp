@@ -679,7 +679,6 @@ brightness_contrast_invoker (Argument *args)
   int brightness;
   int contrast;
   int x1, y1, x2, y2;
-  void *pr;
   GimpDrawable *drawable;
 
   drawable    = NULL;

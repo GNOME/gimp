@@ -102,13 +102,6 @@
 #define FSDITHER 1
 #define NODESTRUCTDITHER 2
 
-/* adam's extra palette stuff */
-#define MAKE_PALETTE 0
-#define REUSE_PALETTE 1
-#define WEB_PALETTE 2
-#define MONO_PALETTE 3
-#define CUSTOM_PALETTE 4
-
 #define PRECISION_R 6
 #define PRECISION_G 6
 #define PRECISION_B 5

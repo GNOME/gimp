@@ -109,10 +109,12 @@ parasite_compare (const Parasite *a, const Parasite *b)
 {
   if (a && b && a->name && b->name && strcmp(a->name, b->name) == 0 &&
       a->flags == b->flags && a->size == b->size )
-    if (a->data == NULL && b->data == NULL)  
-      return TRUE;
-    else if (a->data && b->data && memcmp(a->data, b->data, a->size) == 0)
-      return TRUE;
+    {
+      if (a->data == NULL && b->data == NULL)  
+	return TRUE;
+      else if (a->data && b->data && memcmp(a->data, b->data, a->size) == 0)
+	return TRUE;
+    }
   return FALSE;
 }
 

@@ -173,10 +173,12 @@ levels_lut_func(LevelsDialog *ld,
       inten = (double) (255.0*inten - ld->low_input[j]);
 
     if (ld->gamma[j] != 0.0)
-      if (inten >= 0.0)
-	inten =  pow ( inten, (1.0 / ld->gamma[j]));
-      else
-	inten = -pow (-inten, (1.0 / ld->gamma[j]));
+      {
+	if (inten >= 0.0)
+	  inten =  pow ( inten, (1.0 / ld->gamma[j]));
+	else
+	  inten = -pow (-inten, (1.0 / ld->gamma[j]));
+      }
 
   /*  determine the output intensity  */
     if (ld->high_output[j] >= ld->low_output[j])

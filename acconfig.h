@@ -49,8 +49,6 @@
 
 #undef USE_PTHREADS
 
-#undef WITH_SYMBOL_UNDERSCORE
-
 
 /* Leave that blank line there!!  Autoheader needs it.
    If you're adding to this file, keep in mind:
