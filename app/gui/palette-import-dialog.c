@@ -301,7 +301,7 @@ palette_import_dialog_new (Gimp *gimp)
   /*  The source's name  */
   import_dialog->entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),
-                      gradient ? GIMP_OBJECT (gradient)->name : _("new_import"));
+                      gradient ? GIMP_OBJECT (gradient)->name : _("New Import"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Palette _Name:"), 1.0, 0.5,
                              import_dialog->entry, 2, FALSE);
