@@ -1,6 +1,7 @@
 2005-01-14  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd_save.c: Much less wasted memory.  Save guides.
+	Fixes bug #151904.
 
 2005-01-14  Michael Natterer  <mitch@gimp.org>
 
