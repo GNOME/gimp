@@ -20,7 +20,7 @@
 #define __GIMP_COLOR_FRAME_H__
 
 
-#include <gtk/gtk.h>
+#include <gtk/gtkframe.h>
 
 
 #define GIMP_COLOR_FRAME_ROWS 5
@@ -67,7 +67,7 @@ void        gimp_color_frame_set_mode    (GimpColorFrame     *frame,
                                           GimpColorFrameMode  mode);
 void        gimp_color_frame_set_color   (GimpColorFrame     *frame,
                                           GimpImageType       sample_type,
-                                          GimpRGB            *color,
+                                          const GimpRGB      *color,
                                           gint                color_index);
 void        gimp_color_frame_set_invalid (GimpColorFrame     *frame);
 

@@ -1,3 +1,10 @@
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorframe.[ch] (gimp_color_frame_set_color):
+	made the "GimpRGB *color" param const.
+
+	Added API docs for all public functions.
+
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-utils.c (gimp_config_diff_internal): minor
@@ -27,7 +34,7 @@
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcolorframe.[ch]: new widget GimpColorFrame which
 	shows a picked color in an optionmenu-selectable color space.
-	Helps getting rid in InfoDialog.
+	Helps getting rid of InfoDialog.
 
 	* app/gui/info-window.c: use it for the "extended" page. Cleaned
 	up that page a lot so it can be made dockable in the next step.
