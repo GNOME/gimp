@@ -470,7 +470,11 @@ xcf_save_invoker (Argument *args)
       xcf_save_choose_format (&info, gimage);
 
       success = xcf_save_image (&info, gimage);
-      fclose (info.fp);
+      if (fclose (info.fp) == EOF)
+        {
+          g_message (_("XCF file save failed: %s"), g_strerror(errno));
+          success = FALSE;
+        }
     }
   else
     {

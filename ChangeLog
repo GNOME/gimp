@@ -1,3 +1,8 @@
+2002-12-19  Nathan Summers  <rock@gimp.org>
+
+	* app/xcf.c (xcf_save_invoker): check the return value of fclose as
+	discussed on the gimp-developer mailing list.
+
 2002-12-19  Sven Neumann  <sven@gimp.org>
 
 	* app/xcf.c: unmarked most of the strings that Nathan marked for
