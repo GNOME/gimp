@@ -1,3 +1,13 @@
+2004-11-01  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/drawable_transform.pdb: added "clip_result" to
+	the transform_options_args() utility function and changed all
+	wrappers accordingly. Removed "interpolation", "supersample" and
+	"recursion_level" args from drawable_transform_flip().
+
+	* app/pdb/drawable_transform_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
 2004-11-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c (query): fixed typo.

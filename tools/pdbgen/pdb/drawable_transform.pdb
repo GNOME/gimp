@@ -35,31 +35,18 @@ sub drawable_arg () {{
     desc => 'The affected drawable'
 }}
 
-sub clip_result_arg () {{
-          name => 'clip_result',
-          type => 'boolean',
-          desc => 'Whether to clip results'
-}}
-
-sub transform_options_args ()
-  {
-    {
-      name => 'transform_direction', type => 'enum GimpTransformDirection',
-      desc => 'Direction of Transformation: { %%desc%% } '
-    },
-    {
-      name => 'interpolation', type => 'enum GimpInterpolationType',
-      desc => 'Type of interpolation: { %%desc%% } '
-    },
-    {
-      name => 'supersample', type => 'boolean',
-      desc => 'Whether to perform supersample'
-    },
-    {
-      name => 'recursion_level', type => '0 < int32',
-      desc => 'Level of recursion (3 is a nice default)'
-    }
-  }
+sub transform_options_args () {
+    { name => 'transform_direction', type => 'enum GimpTransformDirection',
+      desc => 'Direction of Transformation: { %%desc%% }' },
+    { name => 'interpolation', type => 'enum GimpInterpolationType',
+      desc => 'Type of interpolation: { %%desc%% }' },
+    { name => 'supersample', type => 'boolean',
+      desc => 'Whether to perform supersample' },
+    { name => 'recursion_level', type => '0 < int32',
+      desc => 'Level of recursion (3 is a nice default)' },
+    { name => 'clip_result', type => 'boolean',
+      desc => 'Whether to clip results' }
+}
 
 sub drawable_out_arg {
     my $type = shift;
@@ -100,9 +87,10 @@ HELP
           desc => 'Whether to automatically position the axis in the image center' },
         { name => 'axis', type => 'float',
           desc => 'coord. of flip axis' },
-
-         &transform_options_args,
-         &clip_result_arg,
+        { name => 'transform_direction', type => 'enum GimpTransformDirection',
+          desc => 'Direction of Transformation: { %%desc%% }' },
+        { name => 'clip_result', type => 'boolean',
+          desc => 'Whether to clip results' }
     );
 
     @outargs = ( &drawable_out_arg('flipped') );
@@ -117,8 +105,7 @@ HELP
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      success = gimp_drawable_transform_flip (drawable,
-                                              context,
+      success = gimp_drawable_transform_flip (drawable, context,
                                               transform_direction,
                                               center, axis,
                                               clip_result);
@@ -160,8 +147,7 @@ HELP
         { name => 'y1', type => 'float',
           desc => 'vert. coord. of other end of axis' },
 
-         &transform_options_args,
-         &clip_result_arg,
+         &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('flipped') );
@@ -245,8 +231,7 @@ HELP
         $pos++;
     }
     @inargs = (@inargs,
-      &transform_options_args,
-      &clip_result_arg
+      &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('newly mapped') );
@@ -317,8 +302,7 @@ HELP
           desc => 'The hor. coordinate of the center of rotation' },
         { name => 'center_y', type => 'int32',
           desc => 'The vert. coordinate of the center of rotation' },
-        &transform_options_args,
-        &clip_result_arg
+        &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('rotated') );
@@ -389,8 +373,7 @@ HELP
     }
 
     @inargs = (@inargs,
-      &transform_options_args,
-      &clip_result_arg
+      &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('scaled') );
@@ -463,8 +446,7 @@ HELP
           desc => 'Type of shear: %%desc%%' },
         { name => 'magnitude', type => 'float',
           desc => 'The magnitude of the shear' },
-        &transform_options_args,
-        &clip_result_arg
+        &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('sheared') );
@@ -543,8 +525,7 @@ HELP
           desc => 'X coordinate of where the center goes' },
         { name => 'dest_y', type => 'float',
           desc => 'Y coordinate of where the center goes' },
-        &transform_options_args,
-        &clip_result_arg
+        &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('transformed') );
@@ -624,8 +605,7 @@ HELP
           desc => 'coefficient (2,1) of the transformation matrix' },
         { name => 'coeff_2_2', type => 'float',
           desc => 'coefficient (2,2) of the transformation matrix' },
-        &transform_options_args,
-        &clip_result_arg
+        &transform_options_args
     );
 
     @outargs = ( &drawable_out_arg('transformed') );

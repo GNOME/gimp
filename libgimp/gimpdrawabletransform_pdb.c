@@ -32,9 +32,6 @@
  * @center: Whether to automatically position the axis in the image center.
  * @axis: coord. of flip axis.
  * @transform_direction: Direction of Transformation.
- * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
  * @clip_result: Whether to clip results.
  *
  * Flip the specified drawable either vertically or horizontally.
@@ -59,9 +56,6 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
 			      gboolean               center,
 			      gdouble                axis,
 			      GimpTransformDirection transform_direction,
-			      GimpInterpolationType  interpolation,
-			      gboolean               supersample,
-			      gint                   recursion_level,
 			      gboolean               clip_result)
 {
   GimpParam *return_vals;
@@ -75,9 +69,6 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
 				    GIMP_PDB_INT32, center,
 				    GIMP_PDB_FLOAT, axis,
 				    GIMP_PDB_INT32, transform_direction,
-				    GIMP_PDB_INT32, interpolation,
-				    GIMP_PDB_INT32, supersample,
-				    GIMP_PDB_INT32, recursion_level,
 				    GIMP_PDB_INT32, clip_result,
 				    GIMP_PDB_END);
 

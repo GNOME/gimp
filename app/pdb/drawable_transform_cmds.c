@@ -72,9 +72,6 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   gboolean center;
   gdouble axis;
   gint32 transform_direction;
-  gint32 interpolation;
-  gboolean supersample;
-  gint32 recursion_level;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -93,17 +90,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
     success = FALSE;
 
-  interpolation = args[5].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
-    success = FALSE;
-
-  supersample = args[6].value.pdb_int ? TRUE : FALSE;
-
-  recursion_level = args[7].value.pdb_int;
-  if (recursion_level <= 0)
-    success = FALSE;
-
-  clip_result = args[8].value.pdb_int ? TRUE : FALSE;
+  clip_result = args[5].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
@@ -114,8 +101,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          success = gimp_drawable_transform_flip (drawable,
-                                                  context,
+          success = gimp_drawable_transform_flip (drawable, context,
                                                   transform_direction,
                                                   center, axis,
                                                   clip_result);
@@ -159,21 +145,6 @@ static ProcArg drawable_transform_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
-    "Type of interpolation: { GIMP_INTERPOLATION_NONE (0), GIMP_INTERPOLATION_LINEAR (1), GIMP_INTERPOLATION_CUBIC (2) }"
-  },
-  {
-    GIMP_PDB_INT32,
-    "supersample",
-    "Whether to perform supersample"
-  },
-  {
-    GIMP_PDB_INT32,
-    "recursion_level",
-    "Level of recursion (3 is a nice default)"
-  },
-  {
-    GIMP_PDB_INT32,
     "clip_result",
     "Whether to clip results"
   }
@@ -198,7 +169,7 @@ static ProcRecord drawable_transform_flip_proc =
   "2004",
   NULL,
   GIMP_INTERNAL,
-  9,
+  6,
   drawable_transform_flip_inargs,
   1,
   drawable_transform_flip_outargs,
