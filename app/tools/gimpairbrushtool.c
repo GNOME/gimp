@@ -34,10 +34,10 @@
 #include "libgimp/gimpintl.h"
 
 /*  The maximum amount of pressure that can be exerted  */
-#define             MAX_PRESSURE  0.075
+#define MAX_PRESSURE  0.075
 
-#define             OFF           0
-#define             ON            1
+#define OFF           0
+#define ON            1
 
 /*  the airbrush structures  */
 

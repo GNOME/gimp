@@ -65,7 +65,6 @@ struct _TransformOptions
   int          showpath;
   int          showpath_d;
   GtkWidget   *showpath_w;
-
 };
 
 
@@ -74,7 +73,7 @@ static TransformOptions *transform_options = NULL;
 
 
 /*  local functions  */
-static void         transform_change_type     (int);
+static void   transform_change_type (int);
 
 
 /*  functions  */
@@ -107,9 +106,9 @@ transform_show_path_update (GtkWidget *widget,
       return;
     }
 
-  transform_core_showpath_changed(1); /* pause */
+  transform_core_showpath_changed (1); /* pause */
   tool_options_toggle_update (widget, data);
-  transform_core_showpath_changed(0); /* resume */
+  transform_core_showpath_changed (0); /* resume */
 }
 
 static void
@@ -192,6 +191,7 @@ transform_options_new (void)
     N_("Shearing"),
     N_("Perspective")
   };
+
   static const char *direction_button_names[] =
   {
     N_("Traditional"),
@@ -201,7 +201,7 @@ transform_options_new (void)
   /*  the new transform tool options structure  */
   options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Transform Tool Options"),
+		     _("Transform Tool Options"),
 		     transform_options_reset);
   options->type      = options->type_d      = ROTATE;
   options->smoothing = options->smoothing_d = TRUE;

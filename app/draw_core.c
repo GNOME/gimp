@@ -15,14 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
 #include "appenv.h"
 #include "draw_core.h"
 
 
 DrawCore *
-draw_core_new (draw_func)
-     DrawCoreDraw draw_func;
+draw_core_new (DrawCoreDraw draw_func)
 {
   DrawCore * core;
 
@@ -43,10 +41,9 @@ draw_core_new (draw_func)
 
 
 void
-draw_core_start (core, win, tool)
-     DrawCore *core;
-     GdkWindow *win;
-     Tool *tool;
+draw_core_start (DrawCore  *core,
+		 GdkWindow *win,
+		 Tool      *tool)
 {
   GdkColor fg, bg;
 
@@ -76,9 +73,8 @@ draw_core_start (core, win, tool)
 
 
 void
-draw_core_stop (core, tool)
-     DrawCore * core;
-     Tool * tool;
+draw_core_stop (DrawCore *core,
+		Tool     *tool)
 {
   if (core->draw_state == INVISIBLE)
     return;
@@ -90,9 +86,8 @@ draw_core_stop (core, tool)
 
 
 void
-draw_core_resume (core, tool)
-     DrawCore * core;
-     Tool * tool;
+draw_core_resume (DrawCore *core,
+		  Tool     *tool)
 {
   core->paused_count = (core->paused_count > 0) ? core->paused_count - 1 : 0;
   if (core->paused_count == 0)
@@ -104,9 +99,8 @@ draw_core_resume (core, tool)
 
 
 void
-draw_core_pause (core, tool)
-     DrawCore * core;
-     Tool * tool;
+draw_core_pause (DrawCore *core,
+		 Tool     *tool)
 {
   if (core->paused_count == 0)
     {
@@ -118,8 +112,7 @@ draw_core_pause (core, tool)
 
 
 void
-draw_core_free (core)
-     DrawCore * core;
+draw_core_free (DrawCore *core)
 {
   if (core)
     {

@@ -625,7 +625,11 @@ tools_new_color_picker ()
   tool->state = INACTIVE;
   tool->scroll_lock = 0;  /*  Allow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->private = private;
+  tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = color_picker_button_press;
   tool->button_release_func = color_picker_button_release;
@@ -634,7 +638,6 @@ tools_new_color_picker ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = color_picker_cursor_update;
   tool->control_func = color_picker_control;
-  tool->preserve = TRUE;
 
   return tool;
 }

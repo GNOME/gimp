@@ -15,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
-#include <stdlib.h>
-#include <string.h>
+
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -89,7 +89,6 @@ histogram_tool_histogram_range (HistogramWidget *w,
   pixels = gimp_histogram_get_count(htd->hist, 0, 255);
   count = gimp_histogram_get_count(htd->hist, start, end);
 
-
   htd->mean = gimp_histogram_get_mean(htd->hist, htd->channel, start, end);
   htd->std_dev = gimp_histogram_get_std_dev(htd->hist, htd->channel,
 					    start, end);
@@ -110,34 +109,34 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
   char text[12];
 
   /*  mean  */
-  sprintf (text, "%3.1f", htd->mean);
+  g_snprintf (text, 12, "%3.1f", htd->mean);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[0]), text);
 
   /*  std dev  */
-  sprintf (text, "%3.1f", htd->std_dev);
+  g_snprintf (text, 12, "%3.1f", htd->std_dev);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[1]), text);
 
   /*  median  */
-  sprintf (text, "%3.1f", htd->median);
+  g_snprintf (text, 12, "%3.1f", htd->median);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[2]), text);
 
   /*  pixels  */
-  sprintf (text, "%8.1f", htd->pixels);
+  g_snprintf (text, 12, "%8.1f", htd->pixels);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[3]), text);
 
   /*  intensity  */
   if (start == end)
-    sprintf (text, "%d", start);
+    g_snprintf (text, 12, "%d", start);
   else
-    sprintf (text, "%d..%d", start, end);
+    g_snprintf (text, 12, "%d..%d", start, end);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[4]), text);
 
   /*  count  */
-  sprintf (text, "%8.1f", htd->count);
+  g_snprintf (text, 12, "%8.1f", htd->count);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[5]), text);
 
   /*  percentile  */
-  sprintf (text, "%2.2f", htd->percentile * 100);
+  g_snprintf (text, 12, "%2.2f", htd->percentile * 100);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[6]), text);
 }
 
@@ -151,6 +150,8 @@ histogram_tool_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -224,6 +225,10 @@ tools_new_histogram_tool ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = histogram_tool_button_press;
   tool->button_release_func = histogram_tool_button_release;
   tool->motion_func = histogram_tool_motion;
@@ -231,8 +236,6 @@ tools_new_histogram_tool ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = histogram_tool_cursor_update;
   tool->control_func = histogram_tool_control;
-
-  tool->preserve = FALSE;
 
   return tool;
 }
@@ -428,7 +431,7 @@ histogram_tool_new_dialog ()
 
 static void
 histogram_tool_close_callback (GtkWidget *widget,
-			    gpointer   client_data)
+			       gpointer   client_data)
 {
   HistogramToolDialog *htd;
 

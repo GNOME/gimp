@@ -190,7 +190,6 @@ flip_cursor_update (Tool           *tool,
 Tool *
 tools_new_flip ()
 {
-
   Tool * tool;
   TransformCore * private;
 
@@ -205,9 +204,10 @@ tools_new_flip ()
   private = tool->private;
 
   private->trans_func   = flip_tool_transform;
+  private->trans_info[FLIP_INFO] = -1.0;
+
   tool->modifier_key_func = flip_modifier_key_func;
   tool->cursor_update_func = flip_cursor_update;
-  private->trans_info[FLIP_INFO] = -1.0;
 
   return tool;
 }

@@ -340,11 +340,13 @@ fuzzy_select_button_press (Tool *tool, GdkEventButton *bevent,
   fuzzy_sel->threshold = default_threshold;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
-  tool->gdisp_ptr = gdisp_ptr;
+  tool->gdisp_ptr = gdisp;
 
   if (fuzzy_sel->op == SELECTION_MOVE_MASK)
     {
@@ -385,10 +387,11 @@ fuzzy_select_button_release (Tool *tool, GdkEventButton *bevent,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      drawable = (fuzzy_options->sample_merged) ? NULL : gimage_active_drawable (gdisp->gimage);
+      drawable = ((fuzzy_options->sample_merged) ?
+		  NULL : gimage_active_drawable (gdisp->gimage));
+
       fuzzy_select (gdisp->gimage, drawable, fuzzy_sel->op,
 		    fuzzy_options->feather, fuzzy_options->feather_radius);
-
       gdisplays_flush ();
 
       /*  adapt the threshold based on the final value of this use  */
@@ -568,6 +571,10 @@ tools_new_fuzzy_select (void)
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;

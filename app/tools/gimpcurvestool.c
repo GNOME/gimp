@@ -177,12 +177,17 @@ curves_button_press (Tool           *tool,
   gdisp = gdisp_ptr;
   drawable = gimage_active_drawable (gdisp->gimage);
 
+  tool->gdisp_ptr = gdisp;
+
   if (drawable != tool->drawable)
     {
       active_tool->preserve = TRUE;
       image_map_abort (curves_dialog->image_map);
       active_tool->preserve = FALSE;
-      curves_dialog->drawable = tool->drawable = drawable;
+
+      tool->drawable = drawable;
+
+      curves_dialog->drawable = drawable;
       curves_dialog->color = drawable_color (drawable);
       curves_dialog->image_map = image_map_create (gdisp, drawable);
     }
@@ -380,6 +385,10 @@ tools_new_curves ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = curves_button_press;
   tool->button_release_func = curves_button_release;
   tool->motion_func = curves_motion;
@@ -387,8 +396,6 @@ tools_new_curves ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = curves_cursor_update;
   tool->control_func = curves_control;
-
-  tool->preserve = FALSE;
 
   return tool;
 }
@@ -471,11 +478,10 @@ curves_initialize (GDisplay *gdisp)
        gtk_widget_set_sensitive( channel_items[i].widget, FALSE);
 
   /* set the current selection */
-  gtk_option_menu_set_history ( GTK_OPTION_MENU (curves_dialog->channel_menu), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu), 0);
 
   if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
     gtk_widget_show (curves_dialog->shell);
-
 
   curves_update (curves_dialog, GRAPH | DRAW);
 }
@@ -1174,6 +1180,9 @@ curves_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   cd->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void
@@ -1192,9 +1201,12 @@ curves_cancel_callback (GtkWidget *widget,
       image_map_abort (cd->image_map);
       active_tool->preserve = FALSE;
 
-      cd->image_map = NULL;
       gdisplays_flush ();
+      cd->image_map = NULL;
     }
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint 

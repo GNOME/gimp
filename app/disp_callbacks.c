@@ -202,6 +202,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_LEAVE_NOTIFY:
       gdisplay_update_cursor (gdisp, 0, 0);
       gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), "");
+
     case GDK_PROXIMITY_OUT:
       gdisp->proximity = FALSE;
       break;
@@ -245,21 +246,24 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  update_cursor = TRUE;
 		}
 
-	      /*  reset the current tool if ...  */
+	      /* reset the current tool if ... */
+	      if ((/* it has no drawable */
+		   ! active_tool->drawable ||
 
-	      if (/* it has no display */
-		  ! active_tool->gdisp_ptr ||   
+		   /* or a drawable different from the current one */
+		   (gimage_active_drawable (gdisp->gimage) !=
+		    active_tool->drawable)) &&
 
-		  /* or no drawable */
-		  ! active_tool->drawable  ||   
-
-		  /* or a drawable different from it's current one... */
-		  ((gimage_active_drawable (gdisp->gimage) !=
-		    active_tool->drawable) &&
-		   /* ...and doesn't want to preserve it */
-		   ! active_tool->preserve))
+		  /* and doesn't want to be preserved across drawable changes */
+		  ! active_tool->preserve)
 		{
 		  tools_initialize (active_tool->type, gdisp);
+		}
+
+	      /* otherwise set it's drawable if it has none */
+	      else if (! active_tool->drawable)
+		{
+		  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 		}
 
 	      (* active_tool->button_press_func) (active_tool, bevent, gdisp);
@@ -277,6 +281,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  state |= GDK_BUTTON3_MASK;
 	  gtk_menu_popup (GTK_MENU (gdisp->popup),
 			  NULL, NULL, NULL, NULL, 3, bevent->time);
+	  return_val = TRUE;
 	  break;
 
 	default:

@@ -1,4 +1,25 @@
-1999-06-26  Sven Neumann <sven@gimp.org>
+1999-06-26  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/[all tool related files]
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/interface.c: hopefully fixed the bugs that appeared with my
+	last fix. And some more changes...
+
+	- Slightly changed the conditions which cause the tools to be
+	  re-initialized on button_press events and the global
+	  initialisation functions.
+	- The dialog tools now explicitly set tool->gdisp_ptr so they can
+	  be properly hidden on display deletion.
+	- Create the crop info dialog only once and avoid ugly redraw bugs
+	  by blocking the sizeentries' signal when initializing them.
+	- Standardized the tools_new_<tool>() functions. They are
+	  scheduled to be moved to a common constructor in tools.c
+	- Various stuff...
+
+1999-06-26  Sven Neumann  <sven@gimp.org>
 	    Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/app_procs.c
@@ -12,8 +33,9 @@ Fri Jun 25 22:09:04 BST 1999 Andy Thomas <alt@gimp.org>
 	dialog and then the busy cursors stuff tried to change 
 	the cursor on a dialog that has been removed. (ie
 	the LCP dialog should be unregistered when it is destroyed)
-	
-	Small previews in LCP dialog image menu do not get created when 		no preview preference is set.
+
+	Small previews in LCP dialog image menu do not get created when
+ 	no preview preference is set.
 
 Thu Jun 24 18:13:35 PDT 1999 Manish Singh <yosh@gimp.org>
 

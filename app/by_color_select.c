@@ -483,6 +483,10 @@ tools_new_by_color_select ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->motion_func = by_color_select_motion;
@@ -490,9 +494,6 @@ tools_new_by_color_select ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = by_color_select_cursor_update;
   tool->control_func = by_color_select_control;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
-  tool->preserve = TRUE;
 
   return tool;
 }

@@ -1731,6 +1731,14 @@ gdisplay_expose_full (GDisplay *gdisp)
 GDisplay *
 gdisplay_active ()
 {
+  GdkEvent *event;
+
+  event = gtk_get_current_event ();
+  if (event != NULL)
+    {
+      gdk_event_free (event);
+    }
+
   return gimp_context_get_display (gimp_context_get_user ());
 }
 

@@ -174,6 +174,8 @@ levels_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -247,6 +249,10 @@ tools_new_levels ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = levels_button_press;
   tool->button_release_func = levels_button_release;
   tool->motion_func = levels_motion;
@@ -254,9 +260,6 @@ tools_new_levels ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = levels_cursor_update;
   tool->control_func = levels_control;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
   return tool;
 }
@@ -971,6 +974,9 @@ levels_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   ld->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint
@@ -999,10 +1005,12 @@ levels_cancel_callback (GtkWidget *widget,
       image_map_abort (ld->image_map);
       active_tool->preserve = FALSE;
 
-      ld->image_map = NULL;
       gdisplays_flush ();
+      ld->image_map = NULL;
     }
 
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void

@@ -372,6 +372,10 @@ tools_new_magnify (void)
   tool->auto_snap_to = FALSE;
   tool->private = (void *) private;
 
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = magnify_button_press;
   tool->button_release_func = magnify_button_release;
   tool->motion_func = magnify_motion;

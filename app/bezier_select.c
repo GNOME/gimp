@@ -202,7 +202,7 @@ Tool*
 tools_new_bezier_select ()
 {
   Tool * tool;
-  BezierSelect * bezier_sel;
+  BezierSelect * private;
 
   /*  The tool options  */
   if (! bezier_options)
@@ -213,19 +213,23 @@ tools_new_bezier_select ()
     }
 
   tool = g_malloc (sizeof (Tool));
+  private = g_malloc (sizeof (BezierSelect));
 
-  bezier_sel = g_new0(BezierSelect,1);
-
-  bezier_sel->num_points = 0;
-  bezier_sel->mask = NULL;
-  bezier_sel->core = draw_core_new (bezier_select_draw);
-  bezier_select_reset (bezier_sel);
+  private->num_points = 0;
+  private->mask = NULL;
+  private->core = draw_core_new (bezier_select_draw);
+  bezier_select_reset (private);
 
   tool->type = BEZIER_SELECT;
   tool->state = INACTIVE;
   tool->scroll_lock = 1;   /*  Do not allow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->private = (void *) bezier_sel;
+  tool->private = (void *) private;
+
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = bezier_select_button_press;
   tool->button_release_func = bezier_select_button_release;
   tool->motion_func = bezier_select_motion;
@@ -233,13 +237,12 @@ tools_new_bezier_select ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = bezier_select_cursor_update;
   tool->control_func = bezier_select_control;
-  tool->preserve = FALSE;
 
-  curCore = bezier_sel->core;
-  curSel = bezier_sel;
+  curCore = private->core;
+  curSel  = private;
   curTool = tool;
 
-  paths_new_bezier_select_tool();
+  paths_new_bezier_select_tool ();
 
   return tool;
 }
@@ -834,6 +837,9 @@ bezier_select_button_press (Tool           *tool,
   int halfwidth, dummy;
 
   gdisp = (GDisplay *) gdisp_ptr;
+
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
   bezier_sel = tool->private;
   grab_pointer = 0;
 

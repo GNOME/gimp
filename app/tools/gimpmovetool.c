@@ -447,11 +447,19 @@ tools_new_move_tool ()
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (MoveTool *) g_malloc (sizeof (MoveTool));
 
+  private->layer = NULL;
+  private->guide = NULL;
+  private->disp = NULL;
+
   tool->type = MOVE;
   tool->state = INACTIVE;
   tool->scroll_lock = 0;   /*  Allow scrolling  */
   tool->auto_snap_to = FALSE;
   tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = move_tool_button_press;
   tool->button_release_func = move_tool_button_release;
@@ -460,11 +468,6 @@ tools_new_move_tool ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = move_tool_cursor_update;
   tool->control_func = move_tool_control;
-  tool->preserve = TRUE;
-
-  private->layer = NULL;
-  private->guide = NULL;
-  private->disp = NULL;
 
   return tool;
 }

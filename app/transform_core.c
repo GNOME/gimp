@@ -42,10 +42,10 @@
 
 #include "libgimp/gimpintl.h"
 
-#define    SQR(x) ((x) * (x))
+#define SQR(x)  ((x) * (x))
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+#define M_PI  3.14159265358979323846
 #endif  /*  M_PI  */
 
 /*  variables  */
@@ -115,7 +115,7 @@ static ActionAreaItem action_items[] =
   { NULL, transform_ok_callback, NULL, NULL },
   { N_("Reset"), transform_reset_callback, NULL, NULL },
 };
-static gint naction_items = sizeof (action_items) / sizeof (action_items[0]);
+static gint n_action_items = sizeof (action_items) / sizeof (action_items[0]);
 
 static const char *action_labels[] =
 {
@@ -133,6 +133,7 @@ transform_core_button_press (Tool           *tool,
   TransformCore * transform_core;
   GDisplay * gdisp;
   Layer * layer;
+  GimpDrawable * drawable;
   int dist;
   int closest_dist;
   int x, y;
@@ -144,7 +145,7 @@ transform_core_button_press (Tool           *tool,
 
   transform_core->bpressed = TRUE; /* ALT */
 
-  tool->drawable = gimage_active_drawable (gdisp->gimage);
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   if (transform_core->function == CREATING && tool->state == ACTIVE)
     {
@@ -157,7 +158,7 @@ transform_core_button_press (Tool           *tool,
    *  check to make sure that the display which currently owns the
    *  tool is the one which just received the button pressed event
    */
-  if ((gdisp_ptr == tool->gdisp_ptr) && transform_core->interactive)
+  if ((gdisp == tool->gdisp_ptr) && transform_core->interactive)
     {
       /*  start drawing the bounding box and handles...  */
       draw_core_start (transform_core->core, gdisp->canvas->window, tool);
@@ -211,35 +212,35 @@ transform_core_button_press (Tool           *tool,
       return;
     }
 
-
   /* Initialisation stuff: if the cursor is clicked inside the current
    * selection, show the bounding box and handles...  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       if (x >= off_x && y >= off_y &&
 	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
 	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
 	  {
-	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
+	    if (layer->mask != NULL && GIMP_DRAWABLE (layer->mask))
 	      {
 		g_message (_("Transformations do not work on\nlayers that contain layer masks."));
 		tool->state = INACTIVE;
 		return;
 	      }
-	    
+
 	    /* If the tool is already active, clear the current state
              * and reset */
 	    if (tool->state == ACTIVE)
 	      transform_core_reset (tool, gdisp_ptr);
-	    
-	    /*  Set the pointer to the gdisplay that owns this tool  */
-	    tool->gdisp_ptr = gdisp_ptr;
+
+	    /*  Set the pointer to the active display  */
+	    tool->gdisp_ptr = gdisp;
+	    tool->drawable = drawable;
 	    tool->state = ACTIVE;
-	    
+
 	    /*  Grab the pointer if we're in non-interactive mode  */
 	    if (!transform_core->interactive)
 	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -247,7 +248,7 @@ transform_core_button_press (Tool           *tool,
 				 GDK_BUTTON1_MOTION_MASK |
 				 GDK_BUTTON_RELEASE_MASK),
 				NULL, NULL, bevent->time);
-	    
+
 	    /* Find the transform bounds for some tools (like scale,
 	     * perspective) that actually need the bounds for
 	     * initializing */
@@ -256,23 +257,23 @@ transform_core_button_press (Tool           *tool,
 	    /*  Calculate the grid line endpoints  */
 	    if (transform_tool_show_grid ())
 	      transform_core_setup_grid (tool);
-	    
+
 	    /*  Initialize the transform tool  */
 	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
-	    
+
 	    if (transform_info != NULL && !transform_info_inited)
 	      {
 		action_items[0].label = action_labels[tool->type - ROTATE];
 		action_items[0].user_data = tool;
 		action_items[1].user_data = tool;
 		build_action_area (GTK_DIALOG (transform_info->shell),
-				   action_items, naction_items, 0);
+				   action_items, n_action_items, 0);
 		transform_info_inited = TRUE;
 	      }
 
 	    /*  Recalculate the transform tool  */
 	    transform_core_recalc (tool, gdisp_ptr);
-	    
+
 	    /*  recall this function to find which handle we're dragging  */
 	    if (transform_core->interactive)
 	      transform_core_button_press (tool, bevent, gdisp_ptr);
@@ -717,7 +718,9 @@ transform_core_new (int type,
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
-  tool->preserve = FALSE;   /*  Destroy when the image is dirtied. */
+  tool->preserve = FALSE;   /*  Destroy when the image is dirtied  */
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;
@@ -829,8 +832,10 @@ transform_core_reset (Tool *tool,
   transform_core->function = CREATING;
   draw_core_stop (transform_core->core, tool);
   info_dialog_popdown (transform_info);
+
   tool->state = INACTIVE;
   tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 }
 
 static int

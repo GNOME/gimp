@@ -35,33 +35,33 @@
 #include "libgimp/gimpintl.h"
 
 #ifndef M_PI
-#define M_PI    3.14159265358979323846
+#define M_PI  3.14159265358979323846
 #endif /* M_PI */
 
 /*  index into trans_info array  */
-#define ANGLE          0
-#define REAL_ANGLE     1
-#define CENTER_X       2
-#define CENTER_Y       3
+#define ANGLE        0
+#define REAL_ANGLE   1
+#define CENTER_X     2
+#define CENTER_Y     3
 
-#define EPSILON        0.018  /*  ~ 1 degree  */
-#define FIFTEEN_DEG    (M_PI / 12.0)
+#define EPSILON      0.018  /*  ~ 1 degree  */
+#define FIFTEEN_DEG  (M_PI / 12.0)
 
 /*  variables local to this file  */
-static gdouble     angle_val;
-static gdouble     center_vals[2];
+static gdouble    angle_val;
+static gdouble    center_vals[2];
 
 /*  needed for size update  */
-static GtkWidget  *sizeentry;
+static GtkWidget *sizeentry;
 
 /*  forward function declarations  */
-static void *      rotate_tool_recalc  (Tool *, void *);
-static void        rotate_tool_motion  (Tool *, void *);
-static void        rotate_info_update  (Tool *);
+static void * rotate_tool_recalc  (Tool *, void *);
+static void   rotate_tool_motion  (Tool *, void *);
+static void   rotate_info_update  (Tool *);
 
 /*  callback functions for the info dialog sizeentries  */
-static void        rotate_angle_changed  (GtkWidget *entry, gpointer data);
-static void        rotate_center_changed (GtkWidget *entry, gpointer data);
+static void   rotate_angle_changed  (GtkWidget *entry, gpointer data);
+static void   rotate_center_changed (GtkWidget *entry, gpointer data);
 
 void *
 rotate_tool_transform (Tool     *tool,

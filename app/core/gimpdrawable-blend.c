@@ -1741,7 +1741,11 @@ tools_new_blend ()
   tool->state = INACTIVE;
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->private = private;
+  tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = blend_button_press;
   tool->button_release_func = blend_button_release;
@@ -1750,7 +1754,6 @@ tools_new_blend ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = blend_cursor_update;
   tool->control_func = blend_control;
-  tool->preserve = TRUE;
 
   return tool;
 }

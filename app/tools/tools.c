@@ -605,7 +605,7 @@ active_tool_free (void)
     return;
 
   tools_options_hide (active_tool->type);
-  
+
   (* tool_info[(int) active_tool->type].free_func) (active_tool);
 
   g_free (active_tool);
@@ -636,37 +636,25 @@ void
 tools_initialize (ToolType  type,
 		  GDisplay *gdisp)
 {
-  if (active_tool)
-    active_tool_free ();
+  /*  Tools which have an init function have dialogs and
+   *  cannot be initialized without a display
+   */
+  if (tool_info[(int) type].init_func && !gdisp)
+    type = RECT_SELECT;
 
-  /* If you're wondering... only these dialog type tools have init functions */
+  /*  Activate the appropriate widget.
+   *  Implicitly calls tools_select()
+   */
+  tools_select (type);
+
   if (tool_info[(int) type].init_func)
     {
-      if (gdisp)
-	{
-	  active_tool = (* tool_info[(int) type].new_func) ();
-	  (* tool_info[(int) type].init_func) (gdisp);
-	}
-      else
-	{
-	  active_tool = tools_new_rect_select ();
-	}
-    }
-  else
-    {
-      active_tool = (* tool_info[(int) type].new_func) ();
+      (* tool_info[(int) type].init_func) (gdisp);
+
+      active_tool->drawable = gimage_active_drawable (gdisp->gimage);
     }
 
-  tools_options_show (active_tool->type);
-
-  /*  Set the paused count variable to 0  */
-  active_tool->paused_count = 0;
-  active_tool->gdisp_ptr = gdisp;
-  active_tool->drawable = NULL;
-  active_tool->ID = global_tool_ID++;
-
-  if (gdisp)
-    active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+  /* don't set gdisp_ptr here !!! (see commands.c) */
 }
 
 void

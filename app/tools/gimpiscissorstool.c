@@ -431,7 +431,12 @@ tools_new_iscissors ()
   tool->type = ISCISSORS;
   tool->state = INACTIVE;
   tool->scroll_lock = 0;  /*  Allow scrolling  */
+  tool->auto_snap_to = FALSE;
   tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = iscissors_button_press;
   tool->button_release_func = iscissors_button_release;
@@ -440,8 +445,6 @@ tools_new_iscissors ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = iscissors_control;
-  tool->auto_snap_to = 0;
-  tool->preserve = TRUE;
   
   last_tool = tool;
   

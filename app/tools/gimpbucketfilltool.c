@@ -611,7 +611,11 @@ tools_new_bucket_fill (void)
   tool->state = INACTIVE;
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->private = private;
+  tool->private = (void *) private;
+
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = bucket_fill_button_press;
   tool->button_release_func = bucket_fill_button_release;
@@ -620,7 +624,6 @@ tools_new_bucket_fill (void)
   tool->modifier_key_func = bucket_fill_modifier_key_func;
   tool->cursor_update_func = bucket_fill_cursor_update;
   tool->control_func = bucket_fill_control;
-  tool->preserve = TRUE;
 
   return tool;
 }

@@ -136,6 +136,10 @@ tools_new_ellipse_select (void)
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func = rect_select_motion;
@@ -143,7 +147,6 @@ tools_new_ellipse_select (void)
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
-  tool->preserve = TRUE;
 
   return tool;
 }

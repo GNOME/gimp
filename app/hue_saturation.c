@@ -237,6 +237,8 @@ hue_saturation_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -310,6 +312,10 @@ tools_new_hue_saturation ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = hue_saturation_button_press;
   tool->button_release_func = hue_saturation_button_release;
   tool->motion_func = hue_saturation_motion;
@@ -317,9 +323,6 @@ tools_new_hue_saturation ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = hue_saturation_cursor_update;
   tool->control_func = hue_saturation_control;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
   return tool;
 }
@@ -744,6 +747,9 @@ hue_saturation_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   hsd->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint
@@ -772,9 +778,12 @@ hue_saturation_cancel_callback (GtkWidget *widget,
       image_map_abort (hsd->image_map);
       active_tool->preserve = FALSE;
 
-      hsd->image_map = NULL;
       gdisplays_flush ();
+      hsd->image_map = NULL;
     }
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void

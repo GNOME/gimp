@@ -251,6 +251,10 @@ tools_new_text ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) the_text_tool;
 
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = text_button_press;
   tool->button_release_func = text_button_release;
   tool->motion_func = text_motion;
@@ -258,8 +262,6 @@ tools_new_text ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = text_cursor_update;
   tool->control_func = text_control;
-
-  tool->preserve = TRUE;
 
   return tool;
 }

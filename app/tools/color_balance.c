@@ -157,6 +157,8 @@ color_balance_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -204,13 +206,7 @@ color_balance_control (Tool       *tool,
 
     case HALT:
       if (color_balance_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (color_balance_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  color_balance_dialog->image_map = NULL;
-	  color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
-	}
+	color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
       break;
 
     default:
@@ -237,18 +233,20 @@ tools_new_color_balance ()
   tool->type = COLOR_BALANCE;
   tool->state = INACTIVE;
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
-  tool->private = (void *) private;
   tool->auto_snap_to = TRUE;
+  tool->private = (void *) private;
+
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   tool->button_press_func = color_balance_button_press;
   tool->button_release_func = color_balance_button_release;
   tool->motion_func = color_balance_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = color_balance_cursor_update;
   tool->control_func = color_balance_control;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
   return tool;
 }
@@ -294,22 +292,18 @@ color_balance_initialize (GDisplay *gdisp)
       color_balance_dialog->yellow_blue[i] = 0.0;
     }
   color_balance_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map = image_map_create (gdisp, color_balance_dialog->drawable);
+  color_balance_dialog->image_map =
+    image_map_create (gdisp, color_balance_dialog->drawable);
+
   color_balance_update (color_balance_dialog, ALL);
 }
 
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
+/**************************/
+/*  Color Balance dialog  */
+/**************************/
 
 /*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), color_balance_ok_callback, NULL, NULL },
-  { N_("Cancel"), color_balance_cancel_callback, NULL, NULL }
-};
-
 static ColorBalanceDialog *
 color_balance_new_dialog ()
 {
@@ -326,13 +320,21 @@ color_balance_new_dialog ()
   GtkObject *data;
   GSList *group = NULL;
   int i;
-  char *appl_mode_names[3] =
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), color_balance_ok_callback, NULL, NULL },
+    { N_("Cancel"), color_balance_cancel_callback, NULL, NULL }
+  };
+
+  char *appl_mode_names[] =
   {
     N_("Shadows"),
     N_("Midtones"),
     N_("Highlights")
   };
-  ActionCallback appl_mode_callbacks[3] =
+
+  ActionCallback appl_mode_callbacks[] =
   {
     color_balance_shadows_callback,
     color_balance_midtones_callback,
@@ -657,6 +659,9 @@ color_balance_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   cbd->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint
@@ -684,10 +689,13 @@ color_balance_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (cbd->image_map);
       active_tool->preserve = FALSE;
+
       gdisplays_flush ();
+      cbd->image_map = NULL;
     }
 
-  cbd->image_map = NULL;
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void

@@ -112,6 +112,8 @@ brightness_contrast_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -186,6 +188,10 @@ tools_new_brightness_contrast ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
   tool->motion_func = brightness_contrast_motion;
@@ -193,9 +199,6 @@ tools_new_brightness_contrast ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
   return tool;
 }
@@ -236,8 +239,8 @@ brightness_contrast_initialize (GDisplay *gdisp)
   brightness_contrast_dialog->contrast = 0.0;
 
   brightness_contrast_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  brightness_contrast_dialog->image_map = image_map_create (gdisp,
-							    brightness_contrast_dialog->drawable);
+  brightness_contrast_dialog->image_map =
+    image_map_create (gdisp, brightness_contrast_dialog->drawable);
 
   brightness_contrast_update (brightness_contrast_dialog, ALL);
 }
@@ -454,6 +457,9 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   bcd->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint
@@ -485,6 +491,9 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
       bcd->image_map = NULL;
       gdisplays_flush ();
     }
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void

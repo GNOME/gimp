@@ -154,7 +154,8 @@ rect_select_button_press (Tool           *tool,
   rect_sel->center = FALSE;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
@@ -447,8 +448,10 @@ rect_select_draw (Tool *tool)
 
 
 void
-static selection_tool_update_op_state(RectSelect *rect_sel, int x, int y, int state,  
-		       GDisplay *gdisp)
+static selection_tool_update_op_state (RectSelect *rect_sel,
+				       int x, int y,
+				       int state,  
+				       GDisplay *gdisp)
 {
   if (active_tool->state == ACTIVE)
     return;
@@ -485,8 +488,8 @@ rect_select_cursor_update (Tool           *tool,
   active = (active_tool->state == ACTIVE);
   rect_sel = (RectSelect*)tool->private;
 
-  selection_tool_update_op_state(rect_sel, mevent->x, mevent->y,
-				 mevent->state, gdisp_ptr);
+  selection_tool_update_op_state (rect_sel, mevent->x, mevent->y,
+				  mevent->state, gdisp_ptr);
 
   switch (rect_sel->op)
   {
@@ -505,7 +508,7 @@ rect_select_cursor_update (Tool           *tool,
    case SELECTION_MOVE_MASK:
      gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
      break;
-   case SELECTION_MOVE:
+   case SELECTION_MOVE: 
      gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
   }
 }
@@ -572,6 +575,10 @@ tools_new_rect_select ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func = rect_select_motion;
@@ -579,8 +586,6 @@ tools_new_rect_select ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
-
-  tool->preserve = TRUE;
 
   return tool;
 }

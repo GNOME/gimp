@@ -976,20 +976,30 @@ tools_select_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   gdisp = gdisplay_active ();
 
-  /*  Activate the approriate widget.
+  /*  Activate the appropriate widget.
    *  Implicitly calls tools_select()
    */
   gtk_widget_activate (tool_info[callback_action].tool_widget);
 
+  /*  Paranoia  */
+  active_tool->drawable = NULL;
+
   /*  Complete the initialisation by doing the same stuff
    *  tools_initialize() does after it did what tools_select() does
    */
-  if (tool_info[callback_action].init_func && gdisp)
+  if (tool_info[callback_action].init_func)
     {
       (* tool_info[callback_action].init_func) (gdisp);
-      active_tool->gdisp_ptr = gdisp;
+
       active_tool->drawable = gimage_active_drawable (gdisp->gimage);
     }
+
+  /*  setting the gdisp_ptr here is a HACK to allow the tools'
+   *  dialog windows being hidden if the tool was selected from
+   *  a tear-off-menu and there was no mouse click in the display
+   *  before deleting it
+   */
+  active_tool->gdisp_ptr = gdisp;
 }
 
 void

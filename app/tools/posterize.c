@@ -98,6 +98,8 @@ posterize_button_press (Tool           *tool,
   GDisplay *gdisp;
 
   gdisp = gdisp_ptr;
+
+  tool->gdisp_ptr = gdisp;
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
@@ -178,6 +180,10 @@ tools_new_posterize ()
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
 
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+
   tool->button_press_func = posterize_button_press;
   tool->button_release_func = posterize_button_release;
   tool->motion_func = posterize_motion;
@@ -185,10 +191,6 @@ tools_new_posterize ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = posterize_cursor_update;
   tool->control_func = posterize_control;
-
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
 
   return tool;
 }
@@ -200,7 +202,7 @@ tools_free_posterize (Tool *tool)
 
   post = (Posterize *) tool->private;
 
-  /*  Close the color select dialog  */
+  /*  Close the posterize dialog  */
   if (posterize_dialog)
     posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 
@@ -222,8 +224,11 @@ posterize_initialize (GDisplay *gdisp)
   else
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
+
   posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  posterize_dialog->image_map = image_map_create (gdisp, posterize_dialog->drawable);
+  posterize_dialog->image_map =
+    image_map_create (gdisp, posterize_dialog->drawable);
+
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }
@@ -351,6 +356,9 @@ posterize_ok_callback (GtkWidget *widget,
   active_tool->preserve = FALSE;
 
   pd->image_map = NULL;
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static gint 
@@ -380,6 +388,9 @@ posterize_cancel_callback (GtkWidget *widget,
       pd->image_map = NULL;
       gdisplays_flush ();
     }
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void
@@ -418,4 +429,3 @@ posterize_levels_text_update (GtkWidget *w,
 	posterize_preview (pd);
     }
 }
-

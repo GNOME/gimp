@@ -90,16 +90,20 @@ gimage_invalidate_previews (void)
 }
 
 static void
-gimage_dirty_handler (GimpImage* gimage){
-  if (active_tool && !active_tool->preserve) {
-    GDisplay* gdisp = active_tool->gdisp_ptr;
-    if (gdisp) {
-      if (gdisp->gimage == gimage)
-        tools_initialize (active_tool->type, gdisp);
-      else
-        tools_initialize (active_tool->type, NULL);
+gimage_dirty_handler (GimpImage* gimage)
+{
+  if (active_tool && !active_tool->preserve)
+    {
+      GDisplay* gdisp = active_tool->gdisp_ptr;
+
+      if (gdisp)
+	{
+	  if (gdisp->gimage == gimage)
+	    tools_initialize (active_tool->type, gdisp);
+	  else
+	    tools_initialize (active_tool->type, NULL);
+	}
     }
-  }
 }
 
 static void
