@@ -3,6 +3,48 @@
 	* app/docindex.c
 	* app/ops_buttons.[ch]: more GObject porting.
 
+2001-07-28  Hans Breuer  <hans@breuer.org>
+
+	* */*/makefile.msc : updated for GTK2 build
+
+	* app/widgets/makefile.msc : (new file) forgot this one last time
+
+	* plug-ins/common/animationplay.c : reflect that GTK2 has its
+	gdk<x|win32|fb>.h files in the back-end sub directories
+
+	* plug-ins/common/gif.c :
+	* plug-ins/common/jpeg.c :
+	* plug-ins/dbbrowser/dbbrowser_utils.c :
+	* plug-ins/gap/gap_dbbrowser_utils.c :
+	* plug-ims/gimpressionist/presets.c :
+	* plug-ims/gimpressionist/imap_setting.c :
+	* plug-ims/gimpressionist/imap_source.c :
+	* plug-ims/script-fu/script-fu-console.c :
+	* plug-ims/script-fu/script-fu-scripts.c : #define GTK_ENABLE_BROKEN
+	and include <gtk/gtktext.h> to make them compile/work again
+
+	* plug-ins/common/spheredesigner.c : gtk_color_selction_set_opacity
+	renamed to gtk_color_selction_set_current_alpha
+
+	* plug-ins/gflare/gtkmultioptionmenu.c : ported ny removing the
+	virtual draw function and style->xthickness and ythickness via
+	direct access, klass field isn't available anymore
+
+	* plug-ins/common/nlfilt.c :
+	* plug-ims/gap/gap_movdialog.c :
+	* plug-ims/gimpressionist/gimpressionist.c : gtk_widget_set_default_visible is
+	neither available nor needed anymore
+
+	* plug-ins/common/plugindetails.c : ported to GtkTextBuffer
+	and reflect gtk_paned api changes 
+
+	* plug-ims/gimpressionist/imap_preview.c : replace GTK_WIDGET(a)->klass
+	access by GTK_WIDGET_GET_CLASS(a) 
+
+	* plug-ims/gimpressionist/imap_selection.c :
+	* plug-ims/gimpressionist/imap_toolbar.c :
+	* plug-ims/gimpressionist/imap_tools.c : gtk_toolbar api changes
+
 2001-07-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-types.h: 
