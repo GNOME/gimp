@@ -18,11 +18,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -50,10 +45,6 @@
 #include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
-
-
-#define TEXT_WIDTH      45
-#define GRADIENT_HEIGHT 15
 
 
 typedef struct _HistogramToolDialog HistogramToolDialog;
