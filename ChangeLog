@@ -1,3 +1,7 @@
+2000-02-27  14:54:18 EST Garry R. Osgood <gosgood@idt.net>
+
+	* gimp/app/gimpimage.c Fixed small typo.
+
 Sun Feb 27 20:25:45 CET 2000  Sven Neumann <sven@gimp.org>
 
 	Script-Fu now has its own textdomain. This allows full

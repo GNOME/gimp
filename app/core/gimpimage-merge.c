@@ -600,7 +600,7 @@ gimp_image_scale (GimpImage *gimage,
 
   for (list = remove; list; list = g_slist_next (list))
     {
-      layer = remove->data;
+      layer = list->data;
       gimage_remove_layer (gimage, layer);
     }
   g_slist_free (remove);
