@@ -29,8 +29,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.
  */
@@ -78,13 +79,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_semiflatten",
-			  "Flatten pixels in an RGBA image that aren't completely transparent against the current GIMP background colour",
-			  "This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background colour",
+			  _("Flatten pixels in an RGBA image that aren't completely transparent against the current GIMP background colour"),
+			  _("This plugin flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background colour"),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th January 1998",
-			  "<Image>/Filters/Colors/Semi-Flatten",
+			  N_("<Image>/Filters/Colors/Semi-Flatten"),
 			  "RGBA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -111,6 +114,7 @@ run (char    *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
+  INIT_I18N();
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -121,7 +125,7 @@ run (char    *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-	  gimp_progress_init ("Semi-Flatten...");
+	  gimp_progress_init ( _("Semi-Flatten..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
 				       + 1));
 	  semiflatten (drawable);

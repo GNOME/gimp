@@ -44,6 +44,20 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.14  2000/01/07 17:18:44  yasuhiro
+ *           * plug-ins/common/scatter_hsv.c
+ *           * plug-ins/common/semiflatten.c
+ *           * plug-ins/common/sharpen.c
+ *           * plug-ins/common/shift.c
+ *           * plug-ins/common/smooth_palette.c
+ *           * plug-ins/common/snoise.c
+ *           * plug-ins/common/sobel.c
+ *           * plug-ins/common/sparkle.c
+ *           * plug-ins/common/spread.c
+ *           * po-plug-ins/POTFILES.in: added gettext support.
+ *
+ *   -- yasuhiro
+ *
  *   Revision 1.13  1999/11/23 23:49:42  neo
  *   added dots to all menu entries of interactive plug-ins and did the usual
  *   action area fixes on lots of them
@@ -132,10 +146,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include "config.h"
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Macros...
@@ -260,14 +275,15 @@ query(void)
   static int		nargs        = sizeof(args) / sizeof(args[0]),
 			nreturn_vals = 0;
 
+  INIT_I18N();
 
   gimp_install_procedure(PLUG_IN_NAME,
-      "Sharpen filter, typically used to \'sharpen\' a photographic image.",
-      "This plug-in selectively performs a convolution filter on an image.",
+      _("Sharpen filter, typically used to \'sharpen\' a photographic image."),
+      _("This plug-in selectively performs a convolution filter on an image."),
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Sharpen...",
+      N_("<Image>/Filters/Enhance/Sharpen..."),
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
@@ -323,6 +339,7 @@ run(char   *name,		/* I - Name of filter program. */
   switch (run_mode)
   {
     case RUN_INTERACTIVE :
+      INIT_I18N_UI();
        /*
         * Possibly retrieve data...
         */
@@ -338,6 +355,7 @@ run(char   *name,		/* I - Name of filter program. */
         break;
 
     case RUN_NONINTERACTIVE :
+      INIT_I18N();
        /*
         * Make sure all the arguments are present...
         */
@@ -349,6 +367,7 @@ run(char   *name,		/* I - Name of filter program. */
         break;
 
     case RUN_WITH_LAST_VALS :
+      INIT_I18N();
        /*
         * Possibly retrieve data...
         */
@@ -460,7 +479,7 @@ sharpen(void)
   * Let the user know what we're doing...
   */
 
-  gimp_progress_init("Sharpening...");
+  gimp_progress_init( _("Sharpening..."));
 
  /*
   * Setup for filter...
@@ -625,6 +644,7 @@ sharpen_dialog(void)
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
   guchar	*color_cube;	/* Preview color cube... */
+  gchar     *title;
 
 
  /*
@@ -651,7 +671,9 @@ sharpen_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Sharpen - " PLUG_IN_VERSION);
+  title = g_strdup_printf(_("Sharpen - %s"), PLUG_IN_VERSION);
+  gtk_window_set_title(GTK_WINDOW(dialog), title);
+  g_free(title);
   gtk_window_set_wmclass(GTK_WINDOW(dialog), "sharpen", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
@@ -721,7 +743,7 @@ sharpen_dialog(void)
   * Sharpness control...
   */
 
-  dialog_create_ivalue("Sharpness", GTK_TABLE(table), 2, &sharpen_percent, 1, 99);
+  dialog_create_ivalue( _("Sharpness"), GTK_TABLE(table), 2, &sharpen_percent, 1, 99);
 
  /*
   * OK, cancel buttons...
@@ -734,7 +756,7 @@ sharpen_dialog(void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_ok_callback,
@@ -743,7 +765,7 @@ sharpen_dialog(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_cancel_callback,

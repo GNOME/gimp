@@ -31,13 +31,13 @@
    correct 'cancel' behaviour */
 
 
-#include <stdlib.h>
-#include "libgimp/gimp.h"
-#include <stdio.h>
-#include "gtk/gtk.h"
 #include <math.h>
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include "config.h"
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 typedef struct
 {
@@ -131,13 +131,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_sobel",
-			  "Edge Detection with Sobel Operation",
-			  "This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolut value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.",
+			  _("Edge Detection with Sobel Operation"),
+			  _("This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolut value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled."),
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  "<Image>/Filters/Edge-Detect/Sobel...",
+			  N_("<Image>/Filters/Edge-Detect/Sobel..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -167,6 +169,7 @@ run (gchar    *name,
   switch (run_mode)
    {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sobel", &bvals);
 
@@ -176,6 +179,7 @@ run (gchar    *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	status = STATUS_CALLING_ERROR;
@@ -188,6 +192,7 @@ run (gchar    *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sobel", &bvals);
       break;
@@ -250,7 +255,7 @@ sobel_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Sobel Edge Detection");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Sobel Edge Detection"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) sobel_close_callback,
@@ -264,7 +269,7 @@ sobel_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) sobel_ok_callback,
@@ -273,7 +278,7 @@ sobel_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -282,7 +287,7 @@ sobel_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -290,7 +295,7 @@ sobel_dialog ()
   gtk_container_border_width (GTK_CONTAINER (vbox), 10);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Sobel Horizontally");
+  toggle = gtk_check_button_new_with_label ( _("Sobel Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
@@ -298,7 +303,7 @@ sobel_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Sobel Vertically");
+  toggle = gtk_check_button_new_with_label ( _("Sobel Vertically"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
@@ -306,7 +311,7 @@ sobel_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Keep sign of result (one direction only)");
+  toggle = gtk_check_button_new_with_label ( _("Keep sign of result (one direction only)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) sobel_toggle_update,
@@ -389,7 +394,7 @@ sobel (GDrawable *drawable,
    */
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gimp_progress_init ("Sobel Edge Detect");
+  gimp_progress_init ( _("Sobel Edge Detecting..."));
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.

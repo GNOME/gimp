@@ -1,3 +1,16 @@
+2000-01-08  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spread.c
+	* po-plug-ins/POTFILES.in: added gettext support.
+
 Fri Jan  7 16:06:24 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* plug-ins/common/gauss_iir.c

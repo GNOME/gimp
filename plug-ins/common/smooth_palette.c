@@ -26,8 +26,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions. */
 static void query(void);
@@ -70,13 +72,15 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_smooth_palette",
-			 "derive smooth palette from image",
+			 _("derive smooth palette from image"),
 			 "help!",
 			 "Scott Draves",
 			 "Scott Draves",
 			 "1997",
-			 "<Image>/Filters/Colors/Smooth Palette...",
+			 N_("<Image>/Filters/Colors/Smooth Palette..."),
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -123,11 +127,13 @@ run (char    *name,
 
   switch (run_mode) {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data ("plug_in_smooth_palette", &config);
       if (! dialog ()) return;
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       if (nparams != 7)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
@@ -144,6 +150,7 @@ run (char    *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_smooth_palette", &config);
       break;
@@ -155,7 +162,7 @@ run (char    *name,
   if (status == STATUS_SUCCESS) {
     drawable = gimp_drawable_get(param[2].data.d_drawable);
     if (gimp_drawable_is_rgb(drawable->id)) {
-      gimp_progress_init ("Deriving smooth palette...");
+      gimp_progress_init ( _("Deriving smooth palette..."));
       gimp_tile_cache_ntiles (2 * (drawable->width + 1) / gimp_tile_width ());
       values[1].data.d_image = doit(drawable, &values[2].data.d_layer);
       if (run_mode == RUN_INTERACTIVE)
@@ -207,7 +214,7 @@ doit(GDrawable * drawable, gint32 *layer_id) {
   srand(time(0));
 
   new_image_id = gimp_image_new (config.width, config.height, RGB);
-  *layer_id = gimp_layer_new (new_image_id, "Background",
+  *layer_id = gimp_layer_new (new_image_id, _("Background"),
 			      config.width, config.height,
 			      gimp_drawable_type (drawable->id),
 			      100, NORMAL_MODE);
@@ -370,7 +377,7 @@ static gint dialog()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Smooth Palette");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Smooth Palette"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) close_callback, NULL);
@@ -383,7 +390,7 @@ static gint dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -392,7 +399,7 @@ static gint dialog()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -409,7 +416,7 @@ static gint dialog()
   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
 
   {
-    w = gtk_label_new("Width:");
+    w = gtk_label_new( _("Width:"));
     gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(table), w, 0, 2, 0, 1,
 		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -426,7 +433,7 @@ static gint dialog()
     gtk_widget_show(w);
   }
   {
-    w = gtk_label_new("Height:");
+    w = gtk_label_new( _("Height:"));
     gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(table), w, 0, 2, 2, 3,
 		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -443,7 +450,7 @@ static gint dialog()
     gtk_widget_show(w);
   }
   {
-    w = gtk_label_new("Search Time:");
+    w = gtk_label_new( _("Search Time:"));
     gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
     gtk_table_attach(GTK_TABLE(table), w, 0, 2, 3, 4,
 		     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

@@ -1,6 +1,6 @@
 /* scatter_hsv.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1997/10/22 01:04:54 narazaki@InetQ.or.jp>
+ * Time-stamp: <2000-01-08 02:49:39 yasuhiro>
  * Version: 0.42
  *
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -20,9 +20,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpcolorspace.h"
+#include "libgimp/stdplugins-intl.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,8 +37,6 @@
 
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
-#define PROGRESS_NAME	"scatter_hsv: scattering..."
-#define MENU_POSITION	"<Image>/Filters/Noise/Scatter HSV..."
 #define	MAIN_FUNCTION	scatter_hsv
 #define INTERFACE	scatter_hsv_interface
 #define	DIALOG		scatter_hsv_dialog
@@ -165,14 +165,16 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Scattering pixel values in HSV space",
-			  "Scattering pixel values in HSV space",
+			  _("Scattering pixel values in HSV space"),
+			  _("Scattering pixel values in HSV space"),
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  MENU_POSITION,
+              N_("<Image>/Filters/Noise/Scatter HSV..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -202,6 +204,7 @@ run (char	*name,
   switch ( run_mode )
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (!gimp_drawable_is_rgb(drawable_id))
 	{
@@ -212,12 +215,14 @@ run (char	*name,
 	return;
       break;
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       VALS.holdness = param[3].data.d_int32;
       VALS.hue_distance = param[4].data.d_int32;
       VALS.saturation_distance = param[5].data.d_int32;
       VALS.value_distance = param[6].data.d_int32;
       break;
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
@@ -252,7 +257,7 @@ MAIN_FUNCTION (gint32	drawable_id)
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  gimp_progress_init (PROGRESS_NAME);
+  gimp_progress_init ( _("scatter_hsv: scattering..."));
   srand (time (NULL));
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   
@@ -397,28 +402,28 @@ DIALOG ()
 			 (GtkSignalFunc) gtkW_close_callback);
   
   vbox = gtkW_vbox_new ((GTK_DIALOG (dlg)->vbox));
-  frame = gtkW_frame_new (vbox, "Parameter Settings");
+  frame = gtkW_frame_new (vbox, _("Parameter Settings"));
   table = gtkW_table_new (frame, 5, 2);
 
-  gtkW_table_add_scale_entry (table, "Holdness", 0, index,
+  gtkW_table_add_scale_entry (table, _("Holdness"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.holdness,
 			      1, 8, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, "Hue", 0, index,
+  gtkW_table_add_scale_entry (table, _("Hue"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.hue_distance, 
 			      0, 255, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, "Saturation", 0, index,
+  gtkW_table_add_scale_entry (table, _("Saturation"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.saturation_distance,
 			      0, 255, 1, buffer[index]);
   index++;
-  gtkW_table_add_scale_entry (table, "Value", 0, index,
+  gtkW_table_add_scale_entry (table, _("Value"), 0, index,
 			      (GtkSignalFunc) scatter_hsv_iscale_update,
 			      (GtkSignalFunc) scatter_hsv_ientry_update,
 			      &VALS.value_distance,
@@ -426,7 +431,7 @@ DIALOG ()
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
-  frame = gtkW_frame_new (vbox, "Preview (1:4) - right click to jump");
+  frame = gtkW_frame_new (vbox, _("Preview (1:4) - right click to jump"));
 
   /* preparation for preview */	
   gdk_set_use_xshm (gimp_use_xshm ());
@@ -687,7 +692,7 @@ gtkW_dialog_new (char * name,
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -696,7 +701,7 @@ gtkW_dialog_new (char * name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -720,7 +725,7 @@ gtkW_error_dialog_new (char * name)
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) gtkW_close_callback, dlg);

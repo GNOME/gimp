@@ -26,9 +26,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 
@@ -125,13 +126,15 @@ query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_shift",
-			  "Shift the contents of the specified drawable",
-			  "Shifts the pixels of the specified drawable. Each row will be displaced a random value of pixels.",
+			  _("Shift the contents of the specified drawable"),
+			  _("Shifts the pixels of the specified drawable. Each row will be displaced a random value of pixels."),
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Brian Degenhardt",
 			  "1997",
-			  "<Image>/Filters/Distorts/Shift...",
+			  N_("<Image>/Filters/Distorts/Shift..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -164,6 +167,7 @@ run (gchar  *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_shift", &shvals);
 
@@ -173,6 +177,7 @@ run (gchar  *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	status = STATUS_CALLING_ERROR;
@@ -187,6 +192,7 @@ run (gchar  *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_shift", &shvals);
       break;
@@ -200,7 +206,7 @@ run (gchar  *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Shifting...");
+	  gimp_progress_init ( _("Shifting..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -383,7 +389,7 @@ shift_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Shift");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Shift"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) shift_close_callback,
@@ -397,7 +403,7 @@ shift_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) shift_ok_callback,
@@ -406,7 +412,7 @@ shift_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -415,7 +421,7 @@ shift_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -423,7 +429,7 @@ shift_dialog ()
   gtk_container_border_width (GTK_CONTAINER (vbox), 10);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_radio_button_new_with_label (group, "Shift Horizontally");
+  toggle = gtk_radio_button_new_with_label (group, _("Shift Horizontally"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -432,7 +438,7 @@ shift_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Shift Vertically");
+  toggle = gtk_radio_button_new_with_label (group, _("Shift Vertically"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -445,7 +451,7 @@ shift_dialog ()
   hbox = gtk_hbox_new (FALSE, 5);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  amount_label = gtk_label_new ("Shift Amount:");
+  amount_label = gtk_label_new ( _("Shift Amount:"));
   gtk_misc_set_alignment (GTK_MISC (amount_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), amount_label, TRUE, TRUE, 0);
   gtk_widget_show (amount_label);

@@ -65,9 +65,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /*---- Defines ----*/
 
@@ -178,14 +179,16 @@ query (void)
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure ("plug_in_solid_noise",
-			  "Creates a grayscale noise texture",
-			  "Generates 2D textures using Perlin's classic solid noise function.",
+			  _("Creates a grayscale noise texture"),
+			  _("Generates 2D textures using Perlin's classic solid noise function."),
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",
-			  "<Image>/Filters/Render/Clouds/Solid Noise...",
+			  N_("<Image>/Filters/Render/Clouds/Solid Noise..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs,
@@ -220,6 +223,7 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
   /*  See how we will run  */
   switch (run_mode) {
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     /*  Possibly retrieve data  */
     gimp_get_data("plug_in_solid_noise", &snvals);
 
@@ -230,6 +234,7 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
     break;
 
   case RUN_NONINTERACTIVE:
+    INIT_I18N();
     /*  Test number of arguments  */
     if (nparams == 9) {
       snvals.tilable = param[3].data.d_int32;
@@ -244,6 +249,7 @@ run (char *name, int nparams, GParam *param, int *nreturn_vals,
     break;
 
   case RUN_WITH_LAST_VALS:
+    INIT_I18N();
     /*  Possibly retrieve data  */
     gimp_get_data("plug_in_solid_noise", &snvals);
     break;
@@ -302,7 +308,7 @@ solid_noise (GDrawable *drawable)
 
   /*  Initialization  */
   solid_noise_init ();
-  gimp_progress_init ("Solid Noise...");
+  gimp_progress_init ( _("Solid Noise..."));
   progress = 0;
   max_progress = sel_width * sel_height;
   chns = gimp_drawable_bpp (drawable->id);
@@ -493,7 +499,7 @@ solid_noise_dialog (void)
 
   /*  Dialog initialization  */
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Solid Noise");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Solid Noise"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -505,7 +511,7 @@ solid_noise_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  Entry #1  */
-  label = gtk_label_new ("Seed");
+  label = gtk_label_new ( _("Seed"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 1, 0);
@@ -524,7 +530,7 @@ solid_noise_dialog (void)
                       (GtkSignalFunc) dialog_entry_callback, &snvals.seed);
   gtk_widget_show (entry);
 
-  time_button = gtk_toggle_button_new_with_label ("Time");
+  time_button = gtk_toggle_button_new_with_label ( _("Time"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(time_button), snvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
 		      (GtkSignalFunc) dialog_toggle_update,
@@ -534,7 +540,7 @@ solid_noise_dialog (void)
   gtk_widget_show (seed_hbox);
 
   /*  Entry #2  */
-  label = gtk_label_new ("Detail");
+  label = gtk_label_new ( _("Detail"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 1, 0);
@@ -551,7 +557,7 @@ solid_noise_dialog (void)
   gtk_widget_show (entry);
 
   /*  Check button #1  */
-  toggle = gtk_check_button_new_with_label ("Turbulent");
+  toggle = gtk_check_button_new_with_label ( _("Turbulent"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
@@ -560,7 +566,7 @@ solid_noise_dialog (void)
   gtk_widget_show (toggle);
   
   /*  Check button #2  */
-  toggle = gtk_check_button_new_with_label ("Tilable");
+  toggle = gtk_check_button_new_with_label ( _("Tilable"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
@@ -569,7 +575,7 @@ solid_noise_dialog (void)
   gtk_widget_show (toggle);
   
   /*  Scale #1  */
-  label = gtk_label_new ("X Size");
+  label = gtk_label_new ( _("X Size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 1, 0);
@@ -589,7 +595,7 @@ solid_noise_dialog (void)
   gtk_widget_show (scale);
 
   /*  Scale #2  */
-  label = gtk_label_new ("Y Size");
+  label = gtk_label_new ( _("Y Size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_FILL, GTK_FILL, 1, 0);
@@ -616,7 +622,7 @@ solid_noise_dialog (void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_ok_callback,
@@ -625,7 +631,7 @@ solid_noise_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
