@@ -1,9 +1,23 @@
+2002-11-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimprc.[ch]: added "gboolean verbose" to GimpRc and
+	its constructor. Print messages only if verbose == TRUE.
+
+	* app/gui/user-install-dialog.[ch]: changed accordingly.
+
+	* app/app_procs.c: ditto. No need any more to parse unitrc before
+	calling user_install_dialog_create().
+
+	* app/gui/preferences-dialog.c: ditto. Added the static
+	prefs_dialog pointer again to our local help func finds the
+	current notebook page.
+
 2002-11-26  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/image-title.png:
 	unique icon. Nothing too fancy though.
 	* themes/Default/images/preferences/input-devices.png:
-   fix the border a little
+	fix the border a little
 
 2002-11-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

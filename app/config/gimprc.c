@@ -299,7 +299,8 @@ gimp_rc_load (GimpRc *rc)
 
   g_return_if_fail (GIMP_IS_RC (rc));
 
-  g_printerr ("parsing '%s'\n", rc->system_gimprc);
+  if (rc->verbose)
+    g_print (_("Parsing '%s'\n"), rc->system_gimprc);
 
   if (! gimp_config_deserialize (G_OBJECT (rc),
                                  rc->system_gimprc, NULL, &error))
@@ -310,7 +311,8 @@ gimp_rc_load (GimpRc *rc)
       g_clear_error (&error);
     }
 
-  g_printerr ("parsing '%s'\n", rc->user_gimprc);
+  if (rc->verbose)
+    g_print (_("Parsing '%s'\n"), rc->user_gimprc);
 
   if (! gimp_config_deserialize (G_OBJECT (rc),
                                  rc->user_gimprc, NULL, &error))
@@ -324,7 +326,8 @@ gimp_rc_load (GimpRc *rc)
 
 GimpRc *
 gimp_rc_new (const gchar *system_gimprc,
-             const gchar *user_gimprc)
+             const gchar *user_gimprc,
+             gboolean     verbose)
 {
   GimpRc *rc;
 
@@ -337,6 +340,8 @@ gimp_rc_new (const gchar *system_gimprc,
                               "system-gimprc", system_gimprc,
                               "user-gimprc",   user_gimprc,
                               NULL));
+
+  rc->verbose = verbose ? TRUE : FALSE;
 
   gimp_rc_load (rc);
 
@@ -443,7 +448,8 @@ gimp_rc_save (GimpRc *rc)
   
   header = g_strconcat (top, rc->system_gimprc, bottom, NULL);
 
-  g_printerr ("saving '%s'\n", rc->user_gimprc);
+  if (rc->verbose)
+    g_print (_("Saving '%s'\n"), rc->user_gimprc);
 
   if (! gimp_config_serialize (G_OBJECT (rc),
                                rc->user_gimprc, header, footer, global,

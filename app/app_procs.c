@@ -116,21 +116,22 @@ app_init (gint    gimp_argc,
 	}
       else
 	{
-          /*  this needs to be done before gimprc loading  */
-          gimp_unitrc_load (the_gimp);
-	  
           user_install_dialog_create (alternate_system_gimprc,
-                                      alternate_gimprc);
+                                      alternate_gimprc,
+                                      be_verbose);
 
 	  gtk_main ();
 	}
     }
 
-  /*  this needs to be done before gimprc loading  */
+  /*  this needs to be done before gimprc loading because gimprc can
+   *  use user defined units
+   */
   gimp_unitrc_load (the_gimp);
 
   the_gimp->config = GIMP_CORE_CONFIG (gimp_rc_new (alternate_system_gimprc,
-                                                    alternate_gimprc));
+                                                    alternate_gimprc,
+                                                    be_verbose));
 
   /* solely for debugging */
   g_signal_connect (G_OBJECT (the_gimp->config), "notify",

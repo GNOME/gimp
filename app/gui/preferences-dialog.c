@@ -76,17 +76,24 @@ static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    gpointer    data);
 
 
+/*  private variables  */
+
+static GtkWidget *prefs_dialog = NULL;
+
+
 /*  public function  */
 
 GtkWidget *
 preferences_dialog_create (Gimp *gimp)
 {
-  GtkWidget *prefs_dialog;
-  GObject   *config;
-  GObject   *config_copy;
-  GObject   *config_orig;
+  GObject *config;
+  GObject *config_copy;
+  GObject *config_orig;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (prefs_dialog)
+    return prefs_dialog;
 
   config       = G_OBJECT (gimp->config);
   config_copy  = gimp_config_duplicate (config);
@@ -100,7 +107,8 @@ preferences_dialog_create (Gimp *gimp)
     GList   *list;
 
     gimprc = gimp_rc_new (GIMP_RC (config)->system_gimprc,
-                          GIMP_RC (config)->user_gimprc);
+                          GIMP_RC (config)->user_gimprc,
+                          GIMP_RC (config)->verbose);
     config_saved = G_OBJECT (gimprc);
 
     diff = gimp_config_diff (config_saved, config_copy, GIMP_PARAM_RESTART);
@@ -133,6 +141,9 @@ preferences_dialog_create (Gimp *gimp)
 
   prefs_dialog = prefs_dialog_new (gimp, config_copy);
 
+  g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
+                             &prefs_dialog);
+
   g_object_weak_ref (G_OBJECT (prefs_dialog),
                      (GWeakNotify) g_object_unref,
                      config_copy);
@@ -156,7 +167,7 @@ prefs_config_notify (GObject    *config,
                      GObject    *config_copy)
 {
   GValue global_value = { 0, };
-  GValue copy_value = { 0, };
+  GValue copy_value   = { 0, };
 
   g_value_init (&global_value, param_spec->value_type);
   g_value_init (&copy_value,   param_spec->value_type);
@@ -805,18 +816,19 @@ prefs_memsize_entry_add (GObject     *config,
 static void
 prefs_help_func (const gchar *help_data)
 {
-#if 0
-  GtkWidget *notebook;
-  GtkWidget *event_box;
-  gint       page_num;
+  if (prefs_dialog)
+    {
+      GtkWidget *notebook;
+      GtkWidget *event_box;
+      gint       page_num;
 
-  notebook  = g_object_get_data (G_OBJECT (prefs_dialog), "notebook");
-  page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
-  event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
+      notebook  = g_object_get_data (G_OBJECT (prefs_dialog), "notebook");
+      page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+      event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
-  help_data = g_object_get_data (G_OBJECT (event_box), "gimp_help_data");
-  gimp_standard_help_func (help_data);
-#endif
+      help_data = g_object_get_data (G_OBJECT (event_box), "gimp_help_data");
+      gimp_standard_help_func (help_data);
+    }
 }
 
 static GtkWidget *

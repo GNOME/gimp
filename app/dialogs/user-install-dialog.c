@@ -515,7 +515,8 @@ user_install_tv_fix_size_request (GtkWidget     *widget,
 
 void
 user_install_dialog_create (const gchar *alternate_system_gimprc,
-                            const gchar *alternate_gimprc)
+                            const gchar *alternate_gimprc,
+                            gboolean     verbose)
 {
   GimpRc    *gimprc;
   GtkWidget *dialog;
@@ -530,7 +531,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   GdkPixbuf *wilber;
   gchar     *filename;
 
-  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc);
+  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
 
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
