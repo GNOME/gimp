@@ -1,5 +1,11 @@
 2003-04-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/tileblur.scm (script-fu-tile-blur):
+	push an undo group instead of disabling undo on the image. Fixes
+	bug #109681.
+
+2003-04-01  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/toolbox-menu.c (toolbox_menu_entries): removed some
 	debug entries which are not needed any longer. Fixes bug #109680.
 
