@@ -1,3 +1,13 @@
+2004-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am: don't skip "gimpmisc.h", it's gone.
+
+	* libgimp/tmpl/gimppixelfetcher.sgml
+	* libgimp/tmpl/gimpregioniterator.sgml: new files.
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt: added the new stuff.
+
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/tmpl/gimpsignal.sgml: updated after removal of

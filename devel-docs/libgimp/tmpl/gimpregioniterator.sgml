@@ -1,0 +1,154 @@
+<!-- ##### SECTION Title ##### -->
+gimpregioniterator
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpRgnIterator ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GimpRgnFunc1 ##### -->
+<para>
+
+</para>
+
+@src: 
+@bpp: 
+@data: 
+<!-- # Unused Parameters # -->
+@Param3: 
+
+
+<!-- ##### USER_FUNCTION GimpRgnFunc2 ##### -->
+<para>
+
+</para>
+
+@src: 
+@dest: 
+@bpp: 
+@data: 
+<!-- # Unused Parameters # -->
+@Param4: 
+
+
+<!-- ##### USER_FUNCTION GimpRgnFuncSrc ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@src: 
+@bpp: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpRgnFuncDest ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@dest: 
+@bpp: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpRgnFuncSrcDest ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@src: 
+@dest: 
+@bpp: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterator_new ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@run_mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterator_free ##### -->
+<para>
+
+</para>
+
+@iter: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterator_src ##### -->
+<para>
+
+</para>
+
+@iter: 
+@func: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterator_dest ##### -->
+<para>
+
+</para>
+
+@iter: 
+@func: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterator_src_dest ##### -->
+<para>
+
+</para>
+
+@iter: 
+@func: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterate1 ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@run_mode: 
+@func: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_rgn_iterate2 ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@run_mode: 
+@func: 
+@data: 
+
+
