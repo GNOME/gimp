@@ -39,30 +39,61 @@ void
 images_raise_views_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GimpImageView *view = GIMP_IMAGE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpImage           *image;
 
-  if (GTK_WIDGET_SENSITIVE (view->raise_button))
-    gtk_button_clicked (GTK_BUTTON (view->raise_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
+    {
+      images_raise_views (image);
+    }
 }
 
 void
 images_new_view_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpImageView *view = GIMP_IMAGE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpImage           *image;
 
-  if (GTK_WIDGET_SENSITIVE (view->new_button))
-    gtk_button_clicked (GTK_BUTTON (view->new_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
+    {
+      gimp_create_display (image->gimp, image, 1.0);
+    }
 }
 
 void
 images_delete_image_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpImageView *view = GIMP_IMAGE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpImage           *image;
 
-  if (GTK_WIDGET_SENSITIVE (view->delete_button))
-    gtk_button_clicked (GTK_BUTTON (view->delete_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  image = gimp_context_get_image (context);
+
+  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
+    {
+      if (image->disp_count == 0)
+        g_object_unref (image);
+    }
 }
 
 void

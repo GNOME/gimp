@@ -178,7 +178,8 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 					  context,
 					  preview_size, preview_border_width,
 					  menu_factory, "<Brushes>",
-                                          "/brushes-popup"))
+                                          "/brushes-popup",
+                                          "brushes"))
     {
       g_object_unref (factory_view);
       return NULL;

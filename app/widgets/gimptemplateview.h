@@ -26,11 +26,6 @@
 #include "gimpcontainereditor.h"
 
 
-typedef void (* GimpTemplateActionFunc) (Gimp         *gimp,
-                                         GimpTemplate *template,
-                                         GtkWidget    *parent);
-
-
 #define GIMP_TYPE_TEMPLATE_VIEW            (gimp_template_view_get_type ())
 #define GIMP_TEMPLATE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE_VIEW, GimpTemplateView))
 #define GIMP_TEMPLATE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE_VIEW, GimpTemplateViewClass))
@@ -43,17 +38,13 @@ typedef struct _GimpTemplateViewClass  GimpTemplateViewClass;
 
 struct _GimpTemplateView
 {
-  GimpContainerEditor     parent_instance;
+  GimpContainerEditor  parent_instance;
 
-  GimpTemplateActionFunc  create_image_func;
-  GimpTemplateActionFunc  new_template_func;
-  GimpTemplateActionFunc  edit_template_func;
-
-  GtkWidget              *create_button;
-  GtkWidget              *new_button;
-  GtkWidget              *duplicate_button;
-  GtkWidget              *edit_button;
-  GtkWidget              *delete_button;
+  GtkWidget           *create_button;
+  GtkWidget           *new_button;
+  GtkWidget           *duplicate_button;
+  GtkWidget           *edit_button;
+  GtkWidget           *delete_button;
 };
 
 struct _GimpTemplateViewClass

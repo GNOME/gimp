@@ -30,26 +30,21 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
-#include "text/gimp-fonts.h"
-#include "text/gimpfont.h"
-
 #include "gimpcontainerview.h"
 #include "gimpfontview.h"
 #include "gimphelp-ids.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_font_view_class_init      (GimpFontViewClass   *klass);
-static void   gimp_font_view_init            (GimpFontView        *view);
+static void   gimp_font_view_class_init    (GimpFontViewClass   *klass);
+static void   gimp_font_view_init          (GimpFontView        *view);
 
-static void   gimp_font_view_refresh_clicked (GtkWidget           *widget,
-                                              GimpFontView        *view);
-
-static void   gimp_font_view_select_item     (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
-static void   gimp_font_view_activate_item   (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
+static void   gimp_font_view_select_item   (GimpContainerEditor *editor,
+                                            GimpViewable        *viewable);
+static void   gimp_font_view_activate_item (GimpContainerEditor *editor,
+                                            GimpViewable        *viewable);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -128,28 +123,12 @@ gimp_font_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (font_view);
 
   font_view->refresh_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REFRESH, _("Rescan Font List"),
-                            GIMP_HELP_FONT_REFRESH,
-                            G_CALLBACK (gimp_font_view_refresh_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "fonts",
+                                   "fonts-refresh");
 
-  /*  set button sensitivity  */
-  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
-    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
-      (editor, (GimpViewable *) gimp_context_get_font (context));
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return GTK_WIDGET (font_view);
-}
-
-static void
-gimp_font_view_refresh_clicked (GtkWidget    *widget,
-                                GimpFontView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-
-  gimp_fonts_load (gimp_container_view_get_context (editor->view)->gimp);
 }
 
 static void
@@ -158,6 +137,8 @@ gimp_font_view_select_item (GimpContainerEditor *editor,
 {
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

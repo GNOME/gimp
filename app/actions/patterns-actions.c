@@ -28,11 +28,9 @@
 #include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "data-commands.h"
 #include "patterns-actions.h"
 
@@ -45,27 +43,32 @@ static GimpActionEntry patterns_actions[] =
     GIMP_HELP_PATTERN_DIALOG },
 
   { "patterns-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Pattern..."), NULL, NULL,
+    N_("_Edit Pattern..."), NULL,
+    N_("Edit Pattern"),
     G_CALLBACK (data_edit_data_cmd_callback),
     GIMP_HELP_PATTERN_EDIT },
 
   { "patterns-new", GTK_STOCK_NEW,
-    N_("_New Pattern"), "", NULL,
+    N_("_New Pattern"), "",
+    N_("New Pattern"),
     G_CALLBACK (data_new_data_cmd_callback),
     GIMP_HELP_PATTERN_NEW },
 
   { "patterns-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Pattern"), NULL, NULL,
+    N_("D_uplicate Pattern"), NULL,
+    N_("Duplicate pattern"),
     G_CALLBACK (data_duplicate_data_cmd_callback),
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-delete", GTK_STOCK_DELETE,
-    N_("_Delete Pattern..."), "", NULL,
+    N_("_Delete Pattern..."), "",
+    N_("Delete pattern"),
     G_CALLBACK (data_delete_data_cmd_callback),
     GIMP_HELP_PATTERN_DELETE },
 
   { "patterns-refresh", GTK_STOCK_REFRESH,
-    N_("_Refresh Patterns"), "", NULL,
+    N_("_Refresh Patterns"), "",
+    N_("Refresh patterns"),
     G_CALLBACK (data_refresh_data_cmd_callback),
     GIMP_HELP_PATTERN_REFRESH }
 };
@@ -83,28 +86,26 @@ void
 patterns_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpPattern         *pattern;
-  GimpData            *data = NULL;
+  GimpContext *context;
+  GimpPattern *pattern = NULL;
+  GimpData    *data    = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (user_data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (user_data);
 
-  pattern = gimp_context_get_pattern (context);
+  if (context)
+    {
+      pattern = gimp_context_get_pattern (context);
 
-  if (pattern)
-    data = GIMP_DATA (pattern);
+      if (pattern)
+        data = GIMP_DATA (pattern);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("patterns-edit",
-		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("patterns-duplicate",
-		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("patterns-delete",
-		 pattern && data->deletable);
+  SET_SENSITIVE ("patterns-edit",      pattern && FALSE);
+  SET_SENSITIVE ("patterns-duplicate", pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("patterns-delete",    pattern && data->deletable);
 
 #undef SET_SENSITIVE
 }

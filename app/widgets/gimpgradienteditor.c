@@ -263,9 +263,7 @@ gimp_gradient_editor_get_type (void)
 static void
 gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 {
-  GimpDataEditorClass *editor_class;
-
-  editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -438,9 +436,7 @@ static void
 gimp_gradient_editor_set_data (GimpDataEditor *editor,
                                GimpData       *data)
 {
-  GimpGradientEditor *gradient_editor;
-
-  gradient_editor = GIMP_GRADIENT_EDITOR (editor);
+  GimpGradientEditor *gradient_editor = GIMP_GRADIENT_EDITOR (editor);
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 

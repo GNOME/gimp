@@ -28,11 +28,10 @@
 #include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "brushes-actions.h"
 #include "data-commands.h"
 
@@ -45,27 +44,32 @@ static GimpActionEntry brushes_actions[] =
     GIMP_HELP_BRUSH_DIALOG },
 
   { "brushes-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Brush..."), NULL, NULL,
+    N_("_Edit Brush..."), NULL,
+    N_("Edit brush"),
     G_CALLBACK (data_edit_data_cmd_callback),
     GIMP_HELP_BRUSH_EDIT },
 
   { "brushes-new", GTK_STOCK_NEW,
-    N_("/New Brush"), "", NULL,
+    N_("New Brush"), "",
+    N_("New brush"),
     G_CALLBACK (data_new_data_cmd_callback),
     GIMP_HELP_BRUSH_NEW },
 
   { "brushes-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("/D_uplicate Brush"), NULL, NULL,
+    N_("D_uplicate Brush"), NULL,
+    N_("Duplicate brush"),
     G_CALLBACK (data_duplicate_data_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
   { "brushes-delete", GTK_STOCK_DELETE,
-    N_("_Delete Brush"), "", NULL,
+    N_("_Delete Brush"), "",
+    N_("Delete brush"),
     G_CALLBACK (data_delete_data_cmd_callback),
     GIMP_HELP_BRUSH_DELETE },
 
   { "brushes-refresh", GTK_STOCK_REFRESH,
-    N_("_Refresh Brushes"), "", NULL,
+    N_("_Refresh Brushes"), "",
+    N_("Refresh brushes"),
     G_CALLBACK (data_refresh_data_cmd_callback),
     GIMP_HELP_BRUSH_REFRESH }
 };
@@ -83,28 +87,26 @@ void
 brushes_actions_update (GimpActionGroup *group,
                         gpointer         user_data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpBrush           *brush;
-  GimpData            *data = NULL;
+  GimpContext *context;
+  GimpBrush   *brush = NULL;
+  GimpData    *data  = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (user_data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (user_data);
 
-  brush = gimp_context_get_brush (context);
+  if (context)
+    {
+      brush = gimp_context_get_brush (context);
 
-  if (brush)
-    data = GIMP_DATA (brush);
+      if (brush)
+        data = GIMP_DATA (brush);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("brushes-edit",
-		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("brushes-duplicate",
-		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("brushes-delete",
-		 brush && data->deletable);
+  SET_SENSITIVE ("brushes-edit",      brush);
+  SET_SENSITIVE ("brushes-duplicate", brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("brushes-delete",    brush && data->deletable);
 
 #undef SET_SENSITIVE
 }

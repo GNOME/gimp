@@ -44,23 +44,13 @@
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimppreviewrenderer.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
 
 static void   gimp_template_view_class_init (GimpTemplateViewClass *klass);
 static void   gimp_template_view_init       (GimpTemplateView      *view);
-
-static void   gimp_template_view_create_clicked    (GtkWidget        *widget,
-                                                    GimpTemplateView *view);
-static void   gimp_template_view_new_clicked       (GtkWidget        *widget,
-                                                    GimpTemplateView *view);
-static void   gimp_template_view_duplicate_clicked (GtkWidget        *widget,
-                                                    GimpTemplateView *view);
-static void   gimp_template_view_edit_clicked      (GtkWidget        *widget,
-                                                    GimpTemplateView *view);
-static void   gimp_template_view_delete_clicked    (GtkWidget        *widget,
-                                                    GimpTemplateView *view);
 
 static void   gimp_template_view_select_item    (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
@@ -118,15 +108,11 @@ gimp_template_view_class_init (GimpTemplateViewClass *klass)
 static void
 gimp_template_view_init (GimpTemplateView *view)
 {
-  view->create_image_func  = NULL;
-  view->new_template_func  = NULL;
-  view->edit_template_func = NULL;
-
-  view->create_button     = NULL;
-  view->new_button        = NULL;
-  view->duplicate_button  = NULL;
-  view->edit_button       = NULL;
-  view->delete_button     = NULL;
+  view->create_button    = NULL;
+  view->new_button       = NULL;
+  view->duplicate_button = NULL;
+  view->edit_button      = NULL;
+  view->delete_button    = NULL;
 }
 
 GtkWidget *
@@ -174,54 +160,24 @@ gimp_template_view_new (GimpViewType     view_type,
     }
 
   template_view->create_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_IMAGE,
-                            _("Create a new image from the selected template"),
-                            GIMP_HELP_TEMPLATE_IMAGE_NEW,
-                            G_CALLBACK (gimp_template_view_create_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
+                                   "templates-create-image");
 
   template_view->new_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_NEW,
-                            _("Create a new template"),
-                            GIMP_HELP_TEMPLATE_NEW,
-                            G_CALLBACK (gimp_template_view_new_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
+                                   "templates-new");
 
   template_view->duplicate_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_DUPLICATE,
-                            _("Duplicate the selected template"),
-                            GIMP_HELP_TEMPLATE_DUPLICATE,
-                            G_CALLBACK (gimp_template_view_duplicate_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
+                                   "templates-duplicate");
 
   template_view->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_EDIT,
-                            _("Edit the selected template"),
-                            GIMP_HELP_TEMPLATE_EDIT,
-                            G_CALLBACK (gimp_template_view_edit_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
+                                   "templates-edit");
 
   template_view->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_DELETE,
-                            _("Delete the selected template"),
-                            GIMP_HELP_TEMPLATE_DELETE,
-                            G_CALLBACK (gimp_template_view_delete_clicked),
-                            NULL,
-                            editor);
-
-  /*  set button sensitivity  */
-  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
-    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
-      (editor, (GimpViewable *) gimp_context_get_template (context));
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "templates",
+                                   "templates-delete");
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (template_view->create_button),
@@ -236,204 +192,19 @@ gimp_template_view_new (GimpViewType     view_type,
 				  GTK_BUTTON (template_view->delete_button),
 				  GIMP_TYPE_TEMPLATE);
 
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+
   return GTK_WIDGET (template_view);
-}
-
-static void
-gimp_template_view_create_clicked (GtkWidget        *widget,
-                                   GimpTemplateView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  template = gimp_context_get_template (context);
-
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-      if (view->create_image_func)
-        view->create_image_func (context->gimp, template, GTK_WIDGET (view));
-    }
-}
-
-static void
-gimp_template_view_new_clicked (GtkWidget        *widget,
-                                GimpTemplateView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  template = gimp_context_get_template (context);
-
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-    }
-
-  if (view->new_template_func)
-    view->new_template_func (context->gimp, NULL, GTK_WIDGET (view));
-}
-
-static void
-gimp_template_view_duplicate_clicked (GtkWidget        *widget,
-                                      GimpTemplateView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  template = gimp_context_get_template (context);
-
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-      GimpTemplate *new_template;
-
-      new_template = gimp_config_duplicate (GIMP_CONFIG (template));
-
-      gimp_list_uniquefy_name (GIMP_LIST (container),
-                               GIMP_OBJECT (new_template), TRUE);
-      gimp_container_add (container, GIMP_OBJECT (new_template));
-
-      gimp_context_set_by_type (context, container->children_type,
-                                GIMP_OBJECT (new_template));
-
-      if (view->edit_template_func)
-        view->edit_template_func (context->gimp, new_template,
-                                  GTK_WIDGET (view));
-
-      g_object_unref (new_template);
-    }
-}
-
-static void
-gimp_template_view_edit_clicked (GtkWidget        *widget,
-                                 GimpTemplateView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  template = gimp_context_get_template (context);
-
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-      if (view->edit_template_func)
-        view->edit_template_func (context->gimp, template, GTK_WIDGET (view));
-    }
-}
-
-typedef struct _GimpTemplateDeleteData GimpTemplateDeleteData;
-
-struct _GimpTemplateDeleteData
-{
-  GimpContainer *container;
-  GimpTemplate  *template;
-};
-
-static void
-gimp_template_view_delete_callback (GtkWidget *widget,
-                                    gboolean   delete,
-                                    gpointer   data)
-{
-  GimpTemplateDeleteData *delete_data = data;
-
-  if (! delete)
-    return;
-
-  if (gimp_container_have (delete_data->container,
-			   GIMP_OBJECT (delete_data->template)))
-    {
-      gimp_container_remove (delete_data->container,
-			     GIMP_OBJECT (delete_data->template));
-    }
-}
-
-static void
-gimp_template_view_delete_clicked (GtkWidget        *widget,
-                                   GimpTemplateView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  template = gimp_context_get_template (context);
-
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
-    {
-      GimpTemplateDeleteData *delete_data;
-      GtkWidget              *dialog;
-      gchar                  *str;
-
-      delete_data = g_new0 (GimpTemplateDeleteData, 1);
-
-      delete_data->container = container;
-      delete_data->template  = template;
-
-      str = g_strdup_printf (_("Are you sure you want to delete template '%s' "
-                               "from the list and from disk?"),
-			     GIMP_OBJECT (template)->name);
-
-      dialog = gimp_query_boolean_box (_("Delete Template"),
-                                       GTK_WIDGET (view),
-				       gimp_standard_help_func, NULL,
-				       GIMP_STOCK_QUESTION,
-				       str,
-				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
-				       G_OBJECT (template),
-				       "disconnect",
-				       gimp_template_view_delete_callback,
-				       delete_data);
-
-      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
-
-      g_free (str);
-
-      gtk_widget_show (dialog);
-    }
 }
 
 static void
 gimp_template_view_select_item (GimpContainerEditor *editor,
                                 GimpViewable        *viewable)
 {
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (editor);
-  GimpContainer    *container;
-  gboolean          sensitive = FALSE;
-
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  container = gimp_container_view_get_container (editor->view);
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
-    {
-      sensitive = TRUE;
-    }
-
-  gtk_widget_set_sensitive (view->create_button,    sensitive);
-  gtk_widget_set_sensitive (view->duplicate_button, sensitive);
-  gtk_widget_set_sensitive (view->edit_button,      sensitive);
-  gtk_widget_set_sensitive (view->delete_button,    sensitive);
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void
@@ -452,9 +223,7 @@ gimp_template_view_activate_item (GimpContainerEditor *editor,
 
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
-      if (view->create_image_func)
-        view->create_image_func (context->gimp, GIMP_TEMPLATE (viewable),
-                                 GTK_WIDGET (editor));
+      gtk_button_clicked (GTK_BUTTON (view->create_button));
     }
 }
 

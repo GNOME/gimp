@@ -28,10 +28,9 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "images-actions.h"
 #include "images-commands.h"
 
@@ -44,17 +43,20 @@ static GimpActionEntry images_actions[] =
     GIMP_HELP_IMAGE_DIALOG },
 
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
-    N_("_Raise Views"), "", NULL,
+    N_("_Raise Views"), "",
+    N_("Raise this image's displays"),
     G_CALLBACK (images_raise_views_cmd_callback),
     NULL },
 
   { "images-new-view", GTK_STOCK_NEW,
-    N_("_New View"), "", NULL,
+    N_("_New View"), "",
+    N_("Create a new display for this image"),
     G_CALLBACK (images_new_view_cmd_callback),
     NULL },
 
   { "images-delete", GTK_STOCK_DELETE,
-    N_("_Delete Image"), "", NULL,
+    N_("_Delete Image"), "",
+    N_("Delete this image"),
     G_CALLBACK (images_delete_image_cmd_callback),
     NULL }
 };
@@ -72,14 +74,13 @@ void
 images_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpImage           *image;
+  GimpContext *context;
+  GimpImage   *image = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (data);
 
-  image = gimp_context_get_image (context);
+  if (context)
+    image = gimp_context_get_image (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

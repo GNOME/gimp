@@ -54,28 +54,32 @@ struct _GimpEditorClass
 };
 
 
-GType       gimp_editor_get_type      (void) G_GNUC_CONST;
+GType       gimp_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_editor_new           (void);
+GtkWidget * gimp_editor_new               (void);
 
-void        gimp_editor_create_menu   (GimpEditor      *editor,
-                                       GimpMenuFactory *menu_factory,
-                                       const gchar     *menu_identifier,
-                                       const gchar     *ui_path,
-                                       gpointer         callback_data);
+void        gimp_editor_create_menu       (GimpEditor      *editor,
+                                           GimpMenuFactory *menu_factory,
+                                           const gchar     *menu_identifier,
+                                           const gchar     *ui_path,
+                                           gpointer         callback_data);
 
-GtkWidget * gimp_editor_add_button    (GimpEditor      *editor,
-                                       const gchar     *stock_id,
-                                       const gchar     *tooltip,
-                                       const gchar     *help_id,
-                                       GCallback        callback,
-                                       GCallback        extended_callback,
-                                       gpointer         callback_data);
-GtkWidget * gimp_editor_add_stock_box (GimpEditor      *editor,
-                                       GType            enum_type,
-                                       const gchar     *stock_prefix,
-                                       GCallback        callback,
-                                       gpointer         callback_data);
+GtkWidget * gimp_editor_add_button        (GimpEditor      *editor,
+                                           const gchar     *stock_id,
+                                           const gchar     *tooltip,
+                                           const gchar     *help_id,
+                                           GCallback        callback,
+                                           GCallback        extended_callback,
+                                           gpointer         callback_data);
+GtkWidget * gimp_editor_add_stock_box     (GimpEditor      *editor,
+                                           GType            enum_type,
+                                           const gchar     *stock_prefix,
+                                           GCallback        callback,
+                                           gpointer         callback_data);
+
+GtkWidget * gimp_editor_add_action_button (GimpEditor      *editor,
+                                           const gchar     *group_name,
+                                           const gchar     *action_name);
 
 void        gimp_editor_set_box_style (GimpEditor      *editor,
                                        GtkBox          *box);

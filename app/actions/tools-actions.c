@@ -32,10 +32,9 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "actions/tools-actions.h"
 #include "actions/tools-commands.h"
 
@@ -64,7 +63,8 @@ static GimpActionEntry tools_actions[] =
     GIMP_HELP_TOOLBOX_SWAP_COLORS },
 
   { "tools-reset", GIMP_STOCK_RESET,
-    N_("_Reset Order & Visibility"), NULL, NULL,
+    N_("_Reset Order & Visibility"), NULL,
+    N_("Reset tool order and visibility"),
     G_CALLBACK (tools_reset_cmd_callback),
     NULL }
 };
@@ -162,22 +162,22 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
+  GimpContext  *context;
   GimpToolInfo *tool_info = NULL;
 
-  if (GIMP_IS_CONTAINER_EDITOR (data))
-    {
-      GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
-      GimpContext         *context;
+  context = action_data_get_context (data);
 
-      context = gimp_container_view_get_context (editor->view);
+  if (context)
+    tool_info = gimp_context_get_tool (context);
 
-      tool_info = gimp_context_get_tool (context);
-    }
-
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_ACTIVE ("tools-visibility", tool_info && tool_info->visible);
+  SET_SENSITIVE ("tools-visibility", tool_info);
+  SET_ACTIVE    ("tools-visibility", tool_info && tool_info->visible);
 
+#undef SET_SENSITIVE
 #undef SET_ACTIVE
 }

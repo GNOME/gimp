@@ -27,47 +27,28 @@
 
 #include "widgets-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
-
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
-
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_buffer_view_class_init (GimpBufferViewClass *klass);
-static void   gimp_buffer_view_init       (GimpBufferView      *view);
+static void   gimp_buffer_view_class_init    (GimpBufferViewClass *klass);
+static void   gimp_buffer_view_init          (GimpBufferView      *view);
 
-static void   gimp_buffer_view_paste                (GimpBufferView *view,
-                                                     gboolean        paste_into);
-static void   gimp_buffer_view_paste_clicked        (GtkWidget      *widget,
-						     GimpBufferView *view);
-static void   gimp_buffer_view_paste_into_clicked   (GtkWidget      *widget,
-						     GimpBufferView *view);
-static void   gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
-						     GimpBufferView *view);
-static void   gimp_buffer_view_delete_clicked       (GtkWidget      *widget,
-						     GimpBufferView *view);
-
-static void   gimp_buffer_view_select_item          (GimpContainerEditor *editor,
-						     GimpViewable        *viewable);
-static void   gimp_buffer_view_activate_item        (GimpContainerEditor *editor,
-						     GimpViewable        *viewable);
+static void   gimp_buffer_view_select_item   (GimpContainerEditor *editor,
+                                              GimpViewable        *viewable);
+static void   gimp_buffer_view_activate_item (GimpContainerEditor *editor,
+                                              GimpViewable        *viewable);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -149,41 +130,20 @@ gimp_buffer_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (buffer_view);
 
   buffer_view->paste_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_PASTE, _("Paste"),
-                            GIMP_HELP_BUFFER_PASTE,
-                            G_CALLBACK (gimp_buffer_view_paste_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
+                                   "buffers-paste");
 
   buffer_view->paste_into_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_PASTE_INTO, _("Paste Into"),
-                            GIMP_HELP_BUFFER_PASTE_INTO,
-                            G_CALLBACK (gimp_buffer_view_paste_into_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
+                                   "buffers-paste-into");
 
   buffer_view->paste_as_new_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_PASTE_AS_NEW, _("Paste as New"),
-                            GIMP_HELP_BUFFER_PASTE_AS_NEW,
-                            G_CALLBACK (gimp_buffer_view_paste_as_new_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
+                                   "buffers-paste-as-new");
 
   buffer_view->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_DELETE, _("Delete"),
-                            GIMP_HELP_BUFFER_DELETE,
-                            G_CALLBACK (gimp_buffer_view_delete_clicked),
-                            NULL,
-                            editor);
-
-  /*  set button sensitivity  */
-  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
-    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
-      (editor, (GimpViewable *) gimp_context_get_buffer (context));
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
+                                   "buffers-delete");
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (buffer_view->paste_button),
@@ -198,141 +158,19 @@ gimp_buffer_view_new (GimpViewType     view_type,
 				  GTK_BUTTON (buffer_view->delete_button),
 				  GIMP_TYPE_BUFFER);
 
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+
   return GTK_WIDGET (buffer_view);
-}
-
-static void
-gimp_buffer_view_paste (GimpBufferView *view,
-                        gboolean        paste_into)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      GimpDisplay *gdisp  = gimp_context_get_display (context);
-      GimpImage   *gimage = NULL;
-      gint         x      = -1;
-      gint         y      = -1;
-      gint         width  = -1;
-      gint         height = -1;
-
-      if (gdisp)
-	{
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-          gimp_display_shell_untransform_viewport (shell,
-                                                   &x, &y, &width, &height);
-
-          gimage = gdisp->gimage;
-        }
-      else
-        {
-          gimage = gimp_context_get_image (context);
-        }
-
-      if (gimage)
-        {
-	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
-			   buffer, paste_into, x, y, width, height);
-
-	  gimp_image_flush (gimage);
-	}
-    }
-}
-
-static void
-gimp_buffer_view_paste_clicked (GtkWidget      *widget,
-				GimpBufferView *view)
-{
-  gimp_buffer_view_paste (view, FALSE);
-}
-
-static void
-gimp_buffer_view_paste_into_clicked (GtkWidget      *widget,
-				     GimpBufferView *view)
-{
-  gimp_buffer_view_paste (view, TRUE);
-}
-
-static void
-gimp_buffer_view_paste_as_new_clicked (GtkWidget      *widget,
-				       GimpBufferView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      GimpImage *gimage = gimp_context_get_image (context);
-
-      if (gimage)
-        gimp_edit_paste_as_new (gimage->gimp, gimage, buffer);
-    }
-}
-
-static void
-gimp_buffer_view_delete_clicked (GtkWidget      *widget,
-				 GimpBufferView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      gimp_container_remove (container, GIMP_OBJECT (buffer));
-    }
 }
 
 static void
 gimp_buffer_view_select_item (GimpContainerEditor *editor,
 			      GimpViewable        *viewable)
 {
-  GimpBufferView *view                   = GIMP_BUFFER_VIEW (editor);
-  GimpContainer  *container;
-  gboolean        paste_sensitive        = FALSE;
-  gboolean        paste_into_sensitive   = FALSE;
-  gboolean        paste_as_new_sensitive = FALSE;
-  gboolean        delete_sensitive       = FALSE;
-
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  container = gimp_container_view_get_container (editor->view);
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
-    {
-      paste_sensitive        = TRUE;
-      paste_into_sensitive   = TRUE;
-      paste_as_new_sensitive = TRUE;
-      delete_sensitive       = TRUE;
-    }
-
-  gtk_widget_set_sensitive (view->paste_button,        paste_sensitive);
-  gtk_widget_set_sensitive (view->paste_into_button,   paste_into_sensitive);
-  gtk_widget_set_sensitive (view->paste_as_new_button, paste_as_new_sensitive);
-  gtk_widget_set_sensitive (view->delete_button,       delete_sensitive);
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void
@@ -349,6 +187,6 @@ gimp_buffer_view_activate_item (GimpContainerEditor *editor,
 
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {
-      gimp_buffer_view_paste_clicked (NULL, view);
+      gtk_button_clicked (GTK_BUTTON (view->paste_button));
     }
 }

@@ -32,6 +32,7 @@
 #include "gimpdnd.h"
 #include "gimpenumwidgets.h"
 #include "gimpmenufactory.h"
+#include "gimpuimanager.h"
 
 
 #define DEFAULT_CONTENT_SPACING  2
@@ -325,6 +326,73 @@ gimp_editor_add_stock_box (GimpEditor  *editor,
   gtk_object_sink (GTK_OBJECT (hbox));
 
   return first_button;
+}
+
+GtkWidget *
+gimp_editor_add_action_button (GimpEditor  *editor,
+                               const gchar *group_name,
+                               const gchar *action_name)
+{
+  GimpActionGroup *group;
+  GtkAction       *action;
+  GtkWidget       *button;
+  GtkWidget       *old_child;
+  GtkWidget       *image;
+  GtkIconSize      button_icon_size;
+  gchar           *stock_id;
+  gchar           *tooltip;
+  const gchar     *help_id;
+
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (action_name != NULL, NULL);
+  g_return_val_if_fail (editor->ui_manager != NULL, NULL);
+
+  group = gimp_ui_manager_get_action_group (editor->ui_manager, group_name);
+
+  g_return_val_if_fail (group != NULL, NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        action_name);
+
+  g_return_val_if_fail (action != NULL, NULL);
+
+  button_icon_size = gimp_editor_ensure_button_box (editor);
+
+  button = gimp_button_new ();
+  gtk_action_connect_proxy (action, button);
+  gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_object_get (action,
+                "stock-id", &stock_id,
+                "tooltip",  &tooltip,
+                NULL);
+
+  help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+
+  if (tooltip || help_id)
+    gimp_help_set_help_data (button, tooltip, help_id);
+
+#if 0
+  if (extended_callback)
+    g_signal_connect (button, "extended_clicked",
+		      extended_callback,
+		      callback_data);
+#endif
+
+  old_child = gtk_bin_get_child (GTK_BIN (button));
+
+  if (old_child)
+    gtk_container_remove (GTK_CONTAINER (button), old_child);
+
+  image = gtk_image_new_from_stock (stock_id, button_icon_size);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  g_free (stock_id);
+  g_free (tooltip);
+
+  return button;
 }
 
 void

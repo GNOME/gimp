@@ -1,5 +1,49 @@
 2004-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/actions.[ch]: added action_data_get_context() and
+	macro return_if_no_context().
+
+	* app/actions/brushes-actions.c
+	* app/actions/buffers-actions.c
+	* app/actions/buffers-commands.c
+	* app/actions/data-commands.c
+	* app/actions/fonts-actions.c
+	* app/actions/fonts-commands.c
+	* app/actions/gradients-actions.c
+	* app/actions/images-actions.c
+	* app/actions/images-commands.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c
+	* app/actions/templates-actions.c
+	* app/actions/templates-commands.[ch]
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.c: moved lots of code from widgets/
+	to the resp. action callbacks.
+
+	* app/widgets/gimpeditor.[ch]: added gimp_editor_add_action_button()
+	which creates a GtkButton connected to the resp. action.
+
+	* app/widgets/gimpdatafactoryview.[ch]: added "action_group"
+	parameters so we can distinguish brushes, patterns etc. actions.
+
+	* app/widgets/gimpimageview.[ch]
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpfontview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppatternfactoryview.c
+	* app/widgets/gimptemplateview.[ch]
+	* app/widgets/gimptoolview.c: removed tons of GtkButton::clicked()
+	callbacks and use gimp_editor_add_action_button() instead
+	of simply _add_button().
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: changed accordingly.
+
+2004-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.c: correctly get the default
 	GimpContainerViewInterface implementation and chain up to it for
 	clear_items(). Update the preview renderers on "update", enable

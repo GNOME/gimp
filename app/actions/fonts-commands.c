@@ -22,8 +22,13 @@
 
 #include "actions-types.h"
 
+#include "core/gimpcontext.h"
+
+#include "text/gimp-fonts.h"
+
 #include "widgets/gimpfontview.h"
 
+#include "actions.h"
 #include "fonts-commands.h"
 
 #include "gimp-intl.h"
@@ -35,8 +40,8 @@ void
 fonts_refresh_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpFontView *view = GIMP_FONT_VIEW (data);
+  GimpContext *context = action_data_get_context (data);
 
-  if (GTK_WIDGET_SENSITIVE (view->refresh_button))
-    gtk_button_clicked (GTK_BUTTON (view->refresh_button));
+  if (context)
+    gimp_fonts_load (context->gimp);
 }

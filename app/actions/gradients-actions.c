@@ -28,11 +28,9 @@
 #include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "data-commands.h"
 #include "gradients-actions.h"
 #include "gradients-commands.h"
@@ -90,30 +88,27 @@ void
 gradients_actions_update (GimpActionGroup *group,
                           gpointer         user_data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpGradient        *gradient;
-  GimpData            *data = NULL;
+  GimpContext  *context;
+  GimpGradient *gradient = NULL;
+  GimpData     *data     = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (user_data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (user_data);
 
-  gradient = gimp_context_get_gradient (context);
+  if (context)
+    {
+      gradient = gimp_context_get_gradient (context);
 
-  if (gradient)
-    data = GIMP_DATA (gradient);
+      if (gradient)
+        data = GIMP_DATA (gradient);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("gradients-edit",
-		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("gradients-duplicate",
-		 gradient && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("gradients-save-as-pov",
-		 gradient);
-  SET_SENSITIVE ("gradients-delete",
-		 gradient && data->deletable);
+  SET_SENSITIVE ("gradients-edit",        gradient);
+  SET_SENSITIVE ("gradients-duplicate",   gradient);
+  SET_SENSITIVE ("gradients-save-as-pov", gradient);
+  SET_SENSITIVE ("gradients-delete",      gradient && data->deletable);
 
 #undef SET_SENSITIVE
 }

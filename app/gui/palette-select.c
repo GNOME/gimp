@@ -141,7 +141,8 @@ palette_select_new (Gimp        *gimp,
                                           psp->context,
                                           GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Palettes>",
-                                          "/palettes-popup");
+                                          "/palettes-popup",
+                                          "palettes");
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (psp->view)->view),
                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),

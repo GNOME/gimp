@@ -51,7 +51,6 @@ struct _GimpDataFactoryView
   GtkWidget           *new_button;
   GtkWidget           *duplicate_button;
   GtkWidget           *delete_button;
-
   GtkWidget           *refresh_button;
 };
 
@@ -71,7 +70,8 @@ GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
                                               gint              preview_border_width,
 					      GimpMenuFactory  *menu_factory,
                                               const gchar      *menu_identifier,
-                                              const gchar      *ui_identifier);
+                                              const gchar      *ui_identifier,
+                                              const gchar      *action_group);
 
 
 /*  protected  */
@@ -85,7 +85,8 @@ gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                               gint                 preview_border_width,
 					      GimpMenuFactory     *menu_factory,
                                               const gchar         *menu_identifier,
-                                              const gchar         *ui_identifier);
+                                              const gchar         *ui_identifier,
+                                              const gchar         *action_group);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

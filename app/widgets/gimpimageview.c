@@ -27,7 +27,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -35,24 +34,18 @@
 #include "gimpcontainerview.h"
 #include "gimpimageview.h"
 #include "gimpdnd.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_image_view_class_init     (GimpImageViewClass  *klass);
-static void   gimp_image_view_init           (GimpImageView       *view);
+static void   gimp_image_view_class_init    (GimpImageViewClass  *klass);
+static void   gimp_image_view_init          (GimpImageView       *view);
 
-static void   gimp_image_view_raise_clicked  (GtkWidget           *widget,
-                                              GimpImageView       *view);
-static void   gimp_image_view_new_clicked    (GtkWidget           *widget,
-                                              GimpImageView       *view);
-static void   gimp_image_view_delete_clicked (GtkWidget           *widget,
-                                              GimpImageView       *view);
-
-static void   gimp_image_view_select_item    (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
-static void   gimp_image_view_activate_item  (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
+static void   gimp_image_view_select_item   (GimpContainerEditor *editor,
+                                             GimpViewable        *viewable);
+static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
+                                             GimpViewable        *viewable);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -133,35 +126,16 @@ gimp_image_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (image_view);
 
   image_view->raise_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_GOTO_TOP,
-                            _("Raise this image's displays"),
-                            NULL,
-                            G_CALLBACK (gimp_image_view_raise_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+                                   "images-raise-views");
 
   image_view->new_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_NEW,
-                            _("Create a new display for this image"),
-                            NULL,
-                            G_CALLBACK (gimp_image_view_new_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+                                   "images-new-view");
 
   image_view->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_DELETE,
-                            _("Delete this image"), NULL,
-                            G_CALLBACK (gimp_image_view_delete_clicked),
-                            NULL,
-                            editor);
-
-  /*  set button sensitivity  */
-  if (GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item)
-    GIMP_CONTAINER_EDITOR_GET_CLASS (editor)->select_item
-      (editor, (GimpViewable *) gimp_context_get_image (context));
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+                                   "images-delete");
 
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (image_view->raise_button),
@@ -173,98 +147,20 @@ gimp_image_view_new (GimpViewType     view_type,
 				  GTK_BUTTON (image_view->delete_button),
 				  GIMP_TYPE_IMAGE);
 
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager,
+                          editor);
+
   return GTK_WIDGET (image_view);
-}
-
-static void
-gimp_image_view_raise_clicked (GtkWidget     *widget,
-                               GimpImageView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpImage           *image;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  image = gimp_context_get_image (context);
-
-  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
-    {
-      if (view->raise_displays_func)
-        view->raise_displays_func (image);
-    }
-}
-
-static void
-gimp_image_view_new_clicked (GtkWidget     *widget,
-                             GimpImageView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpImage           *image;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  image = gimp_context_get_image (context);
-
-  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
-    {
-      gimp_create_display (image->gimp, image, 1.0);
-    }
-}
-
-static void
-gimp_image_view_delete_clicked (GtkWidget     *widget,
-                                GimpImageView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpImage           *image;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  image = gimp_context_get_image (context);
-
-  if (image && gimp_container_have (container, GIMP_OBJECT (image)))
-    {
-      if (image->disp_count == 0)
-        g_object_unref (image);
-    }
 }
 
 static void
 gimp_image_view_select_item (GimpContainerEditor *editor,
                              GimpViewable        *viewable)
 {
-  GimpImageView *view             = GIMP_IMAGE_VIEW (editor);
-  GimpContainer *container;
-  gboolean       raise_sensitive  = FALSE;
-  gboolean       new_sensitive    = FALSE;
-  gboolean       delete_sensitive = FALSE;
-
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  container = gimp_container_view_get_container (editor->view);
-
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
-    {
-      raise_sensitive = TRUE;
-      new_sensitive   = TRUE;
-
-      if (GIMP_IMAGE (viewable)->disp_count == 0)
-        delete_sensitive = TRUE;
-    }
-
-  gtk_widget_set_sensitive (view->raise_button,  raise_sensitive);
-  gtk_widget_set_sensitive (view->new_button,    new_sensitive);
-  gtk_widget_set_sensitive (view->delete_button, delete_sensitive);
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

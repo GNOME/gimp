@@ -27,10 +27,9 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "templates-actions.h"
 #include "templates-commands.h"
 
@@ -44,27 +43,32 @@ static GimpActionEntry templates_actions[] =
     GIMP_HELP_TEMPLATE_DIALOG },
 
   { "templates-create-image", GIMP_STOCK_IMAGE,
-    N_("_Create Image from Template..."), "", NULL,
+    N_("_Create Image from Template..."), "",
+    N_("Create a new image from the selected template"),
     G_CALLBACK (templates_create_image_cmd_callback),
     GIMP_HELP_TEMPLATE_IMAGE_NEW },
 
   { "templates-new", GTK_STOCK_NEW,
-    N_("_New Template..."), "", NULL,
+    N_("_New Template..."), "",
+    N_("Create a new template"),
     G_CALLBACK (templates_new_template_cmd_callback),
     GIMP_HELP_TEMPLATE_NEW },
 
   { "templates-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Template..."), "", NULL,
+    N_("D_uplicate Template..."), "",
+    N_("Duplicate the selected template"),
     G_CALLBACK (templates_duplicate_template_cmd_callback),
     GIMP_HELP_TEMPLATE_DUPLICATE },
 
   { "templates-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Template..."), "", NULL,
+    N_("_Edit Template..."), "",
+    N_("Edit the selected template"),
     G_CALLBACK (templates_edit_template_cmd_callback),
     GIMP_HELP_TEMPLATE_EDIT },
 
   { "templates-delete", GTK_STOCK_DELETE,
-    N_("_Delete Template"), "", NULL,
+    N_("_Delete Template"), "",
+    N_("Delete the selected template"),
     G_CALLBACK (templates_delete_template_cmd_callback),
     GIMP_HELP_TEMPLATE_DELETE }
 };
@@ -82,14 +86,13 @@ void
 templates_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpTemplate        *template;
+  GimpContext  *context;
+  GimpTemplate *template = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (data);
 
-  template = gimp_context_get_template (context);
+  if (context)
+    template = gimp_context_get_template (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

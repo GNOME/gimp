@@ -91,7 +91,8 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
 					  context,
 					  preview_size, preview_border_width,
 					  menu_factory, "<Patterns>",
-                                          "/patterns-popup"))
+                                          "/patterns-popup",
+                                          "patterns"))
     {
       g_object_unref (factory_view);
       return NULL;

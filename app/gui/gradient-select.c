@@ -139,7 +139,8 @@ gradient_select_new (Gimp        *gimp,
                                           gsp->context,
                                           GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Gradients>",
-                                          "/gradients-popup");
+                                          "/gradients-popup",
+                                          "gradients");
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (gsp->view)->view),
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),

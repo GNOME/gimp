@@ -29,6 +29,8 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpactionfactory.h"
+#include "widgets/gimpcontainereditor.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpimageeditor.h"
 #include "widgets/gimpitemtreeview.h"
@@ -230,6 +232,26 @@ action_data_get_gimp (gpointer data)
     return data;
   else if (GIMP_IS_DOCK (data))
     return ((GimpDock *) data)->context->gimp;
+
+  return NULL;
+}
+
+GimpContext *
+action_data_get_context (gpointer data)
+{
+  if (! data)
+    return NULL;
+
+  if (GIMP_IS_DISPLAY (data))
+    return gimp_get_user_context (((GimpDisplay *) data)->gimage->gimp);
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    return gimp_get_user_context (((GimpDisplayShell *) data)->gdisp->gimage->gimp);
+  else if (GIMP_IS_CONTAINER_VIEW (data))
+    return gimp_container_view_get_context ((GimpContainerView *) data);
+  else if (GIMP_IS_CONTAINER_EDITOR (data))
+    return gimp_container_view_get_context (((GimpContainerEditor *) data)->view);
+  else if (GIMP_IS_DOCK (data))
+    return ((GimpDock *) data)->context;
 
   return NULL;
 }

@@ -20,61 +20,198 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "actions-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdata.h"
+#include "core/gimpdatafactory.h"
+
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 
+#include "actions.h"
 #include "data-commands.h"
 
 #include "gimp-intl.h"
 
 
 void
-data_new_data_cmd_callback (GtkAction *action,
-			    gpointer   data)
+data_edit_data_cmd_callback (GtkAction *action,
+			     gpointer   user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
 
-  if (GTK_WIDGET_SENSITIVE (view->new_button))
-    gtk_button_clicked (GTK_BUTTON (view->new_button));
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (view->data_edit_func && data &&
+      gimp_container_have (view->factory->container,
+			   GIMP_OBJECT (data)))
+    {
+      view->data_edit_func (data, GTK_WIDGET (view));
+    }
+}
+
+void
+data_new_data_cmd_callback (GtkAction *action,
+			    gpointer   user_data)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+
+  if (view->factory->data_new_func)
+    {
+      GimpContext *context;
+      GimpData    *data;
+
+      context =
+        gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+      data = gimp_data_factory_data_new (view->factory, _("Untitled"));
+
+      if (data)
+	{
+	  gimp_context_set_by_type (context,
+				    view->factory->container->children_type,
+				    GIMP_OBJECT (data));
+
+	  gtk_button_clicked (GTK_BUTTON (view->edit_button));
+	}
+    }
 }
 
 void
 data_duplicate_data_cmd_callback (GtkAction *action,
-				  gpointer   data)
+				  gpointer   user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
 
-  if (GTK_WIDGET_SENSITIVE (view->duplicate_button))
-    gtk_button_clicked (GTK_BUTTON (view->duplicate_button));
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (data && gimp_container_have (view->factory->container,
+				   GIMP_OBJECT (data)))
+    {
+      GimpData *new_data;
+
+      new_data = gimp_data_factory_data_duplicate (view->factory, data);
+
+      if (new_data)
+	{
+	  gimp_context_set_by_type (context,
+				    view->factory->container->children_type,
+				    GIMP_OBJECT (new_data));
+
+	  gtk_button_clicked (GTK_BUTTON (view->edit_button));
+	}
+    }
 }
 
-void
-data_edit_data_cmd_callback (GtkAction *action,
-			     gpointer   data)
-{
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
+typedef struct _GimpDataDeleteData GimpDataDeleteData;
 
-  if (GTK_WIDGET_SENSITIVE (view->edit_button))
-    gtk_button_clicked (GTK_BUTTON (view->edit_button));
+struct _GimpDataDeleteData
+{
+  GimpDataFactory *factory;
+  GimpData        *data;
+};
+
+static void
+data_delete_callback (GtkWidget *widget,
+                      gboolean   delete,
+                      gpointer   data)
+{
+  GimpDataDeleteData *delete_data = data;
+
+  if (gimp_container_have (delete_data->factory->container,
+			   GIMP_OBJECT (delete_data->data)))
+    {
+      g_object_ref (delete_data->data);
+
+      gimp_container_remove (delete_data->factory->container,
+			     GIMP_OBJECT (delete_data->data));
+
+      if (delete_data->data->filename)
+        {
+          GError *error = NULL;
+
+          if (! gimp_data_delete_from_disk (delete_data->data, &error))
+            {
+              g_message (error->message);
+              g_clear_error (&error);
+            }
+        }
+
+      g_object_unref (delete_data->data);
+    }
 }
 
 void
 data_delete_data_cmd_callback (GtkAction *action,
-			       gpointer   data)
+			       gpointer   user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
 
-  if (GTK_WIDGET_SENSITIVE (view->delete_button))
-    gtk_button_clicked (GTK_BUTTON (view->delete_button));
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+			      view->factory->container->children_type);
+
+  if (data && data->deletable && gimp_container_have (view->factory->container,
+                                                      GIMP_OBJECT (data)))
+    {
+      GimpDataDeleteData *delete_data;
+      GtkWidget          *dialog;
+      gchar              *str;
+
+      delete_data = g_new0 (GimpDataDeleteData, 1);
+
+      delete_data->factory = view->factory;
+      delete_data->data    = data;
+
+      str = g_strdup_printf (_("Are you sure you want to delete '%s' "
+			       "from the list and from disk?"),
+			     GIMP_OBJECT (data)->name);
+
+      dialog = gimp_query_boolean_box (_("Delete Data Object"),
+                                       GTK_WIDGET (view),
+				       gimp_standard_help_func, NULL,
+				       GIMP_STOCK_QUESTION,
+				       str,
+				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
+				       G_OBJECT (data),
+				       "disconnect",
+				       data_delete_callback,
+				       delete_data);
+
+      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
+
+      g_free (str);
+
+      gtk_widget_show (dialog);
+    }
 }
 
 void
 data_refresh_data_cmd_callback (GtkAction *action,
-				gpointer   data)
+				gpointer   user_data)
 {
-  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (data);
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
 
-  if (GTK_WIDGET_SENSITIVE (view->refresh_button))
-    gtk_button_clicked (GTK_BUTTON (view->refresh_button));
+  gimp_data_factory_data_save (view->factory);
+  gimp_data_factory_data_init (view->factory, FALSE);
 }

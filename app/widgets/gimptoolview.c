@@ -32,14 +32,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
-#include "tools/tools-types.h"
-
-#include "tools/gimp-tools.h"
-#include "tools/gimpimagemaptool.h"
-
 #include "gimpcontainerview.h"
 #include "gimptoolview.h"
 #include "gimphelp-ids.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -47,8 +43,6 @@
 static void   gimp_tool_view_class_init    (GimpToolViewClass   *klass);
 static void   gimp_tool_view_init          (GimpToolView        *view);
 
-static void   gimp_tool_view_reset_clicked (GtkWidget           *widget,
-                                            GimpToolView        *view);
 static void   gimp_tool_view_select_item   (GimpContainerEditor *editor,
                                             GimpViewable        *viewable);
 static void   gimp_tool_view_activate_item (GimpContainerEditor *editor,
@@ -130,49 +124,12 @@ gimp_tool_view_new (GimpViewType     view_type,
   editor = GIMP_CONTAINER_EDITOR (tool_view);
 
   tool_view->reset_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_RESET,
-                            _("Reset tool order and visibility"),
-                            NULL,
-                            G_CALLBACK (gimp_tool_view_reset_clicked),
-                            NULL,
-                            editor);
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "tools",
+                                   "tools-reset");
+
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
   return GTK_WIDGET (tool_view);
-}
-
-static void
-gimp_tool_view_reset_clicked (GtkWidget    *widget,
-                              GimpToolView *view)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GList               *list;
-  gint                 i = 0;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  for (list = gimp_tools_get_default_order (context->gimp);
-       list;
-       list = g_list_next (list))
-    {
-      GimpObject *object = gimp_container_get_child_by_name (container,
-                                                             list->data);
-
-      if (object)
-        {
-          gimp_container_reorder (container, object, i);
-
-          g_object_set (object, "visible",
-                        ! g_type_is_a (GIMP_TOOL_INFO (object)->tool_type,
-                                       GIMP_TYPE_IMAGE_MAP_TOOL),
-                        NULL);
-
-          i++;
-        }
-    }
 }
 
 static void
@@ -181,6 +138,8 @@ gimp_tool_view_select_item (GimpContainerEditor *editor,
 {
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void

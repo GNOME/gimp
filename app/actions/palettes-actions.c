@@ -28,11 +28,9 @@
 #include "core/gimpdata.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "data-commands.h"
 #include "palettes-actions.h"
 #include "palettes-commands.h"
@@ -94,30 +92,27 @@ void
 palettes_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpPalette         *palette;
-  GimpData            *data = NULL;
+  GimpContext *context;
+  GimpPalette *palette = NULL;
+  GimpData    *data    = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (user_data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (user_data);
 
-  palette = gimp_context_get_palette (context);
+  if (context)
+    {
+      palette = gimp_context_get_palette (context);
 
-  if (palette)
-    data = GIMP_DATA (palette);
+      if (palette)
+        data = GIMP_DATA (palette);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("palettes-edit",
-		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("palettes-duplicate",
-		 palette && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("palettes-merge",
-		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
-  SET_SENSITIVE ("palettes-delete",
-		 palette && data->deletable);
+  SET_SENSITIVE ("palettes-edit",      palette);
+  SET_SENSITIVE ("palettes-duplicate", palette && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("palettes-merge",     FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
+  SET_SENSITIVE ("palettes-delete",    palette && data->deletable);
 
 #undef SET_SENSITIVE
 }

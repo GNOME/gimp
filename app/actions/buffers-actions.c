@@ -27,10 +27,9 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainereditor.h"
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "buffers-actions.h"
 #include "buffers-commands.h"
 
@@ -43,22 +42,26 @@ static GimpActionEntry buffers_actions[] =
     GIMP_HELP_BUFFER_DIALOG },
 
   { "buffers-paste", GTK_STOCK_PASTE,
-    N_("_Paste Buffer"), "", NULL,
+    N_("_Paste Buffer"), "",
+    N_("Paste the selected buffer"),
     G_CALLBACK (buffers_paste_buffer_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 
   { "buffers-paste-into", GIMP_STOCK_PASTE_INTO,
-    N_("Paste Buffer _Into"), NULL, NULL,
+    N_("Paste Buffer _Into"), NULL,
+    N_("Paste the selected buffer into the selection"),
     G_CALLBACK (buffers_paste_buffer_into_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_INTO },
 
   { "buffers-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
-    N_("Paste Buffer as _New"), NULL, NULL,
+    N_("Paste Buffer as _New"), NULL,
+    N_("Paste the selected buffer as new image"),
     G_CALLBACK (buffers_paste_buffer_as_new_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW },
 
   { "buffers-delete", GTK_STOCK_DELETE,
-    N_("_Delete Buffer"), "", NULL,
+    N_("_Delete Buffer"), "",
+    N_("Delete the selected buffer"),
     G_CALLBACK (buffers_delete_buffer_cmd_callback),
     GIMP_HELP_BUFFER_DELETE }
 };
@@ -76,14 +79,13 @@ void
 buffers_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
+  GimpContext *context;
+  GimpBuffer  *buffer = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (data);
 
-  buffer = gimp_context_get_buffer (context);
+  if (context)
+    buffer = gimp_context_get_buffer (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

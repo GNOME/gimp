@@ -27,6 +27,7 @@ void          actions_init            (Gimp     *gimp);
 void          actions_exit            (Gimp     *gimp);
 
 Gimp        * action_data_get_gimp    (gpointer  data);
+GimpContext * action_data_get_context (gpointer  data);
 GimpImage   * action_data_get_image   (gpointer  data);
 GimpDisplay * action_data_get_display (gpointer  data);
 GtkWidget   * action_data_get_widget  (gpointer  data);
@@ -35,6 +36,11 @@ GtkWidget   * action_data_get_widget  (gpointer  data);
 #define return_if_no_gimp(gimp,data) \
   gimp = action_data_get_gimp (data); \
   if (! gimp) \
+    return
+
+#define return_if_no_context(context,data) \
+  context = action_data_get_context (data); \
+  if (! context) \
     return
 
 #define return_if_no_image(gimage,data) \

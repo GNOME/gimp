@@ -137,7 +137,8 @@ pattern_select_new (Gimp        *gimp,
                                           psp->context,
                                           GIMP_PREVIEW_SIZE_MEDIUM, 1,
                                           global_menu_factory, "<Patterns>",
-                                          "/patterns-popup");
+                                          "/patterns-popup",
+                                          "patterns");
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (psp->view)->view),
                                        6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),

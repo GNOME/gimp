@@ -73,9 +73,7 @@
 #include "actions/channels-commands.h"
 #include "actions/edit-commands.h"
 #include "actions/file-commands.h"
-#include "actions/images-commands.h"
 #include "actions/layers-commands.h"
-#include "actions/templates-commands.h"
 #include "actions/vectors-commands.h"
 
 #include "about-dialog.h"
@@ -254,8 +252,6 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
                               preview_size, 1,
                               factory->menu_factory);
 
-  GIMP_IMAGE_VIEW (view)->raise_displays_func = images_raise_views;
-
   return dialogs_dockable_new (view,
 			       _("Images"), NULL,
                                GIMP_STOCK_IMAGES,
@@ -311,12 +307,13 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     context->gimp->gradient_factory,
-				     dialogs_edit_gradient_func,
-				     context,
-				     preview_size, 1,
+                                     context->gimp->gradient_factory,
+                                     dialogs_edit_gradient_func,
+                                     context,
+                                     preview_size, 1,
                                      factory->menu_factory, "<Gradients>",
-                                     "/gradients-popup");
+                                     "/gradients-popup",
+                                     "gradients");
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
@@ -332,12 +329,13 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     context->gimp->palette_factory,
-				     dialogs_edit_palette_func,
-				     context,
-				     preview_size, 1,
+                                     context->gimp->palette_factory,
+                                     dialogs_edit_palette_func,
+                                     context,
+                                     preview_size, 1,
                                      factory->menu_factory, "<Palettes>",
-                                     "/palettes-popup");
+                                     "/palettes-popup",
+                                     "palettes");
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,
@@ -427,20 +425,13 @@ dialogs_template_list_new (GimpDialogFactory *factory,
                            GimpContext       *context,
                            gint               preview_size)
 {
-  GtkWidget        *view;
-  GimpTemplateView *template_view;
+  GtkWidget *view;
 
   view = gimp_template_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->templates,
                                  context,
                                  preview_size, 0,
                                  factory->menu_factory);
-
-  template_view = GIMP_TEMPLATE_VIEW (view);
-
-  template_view->create_image_func  = templates_file_new_dialog;
-  template_view->new_template_func  = templates_new_template_dialog;
-  template_view->edit_template_func = templates_edit_template_dialog;
 
   return dialogs_dockable_new (view,
 			       _("Templates"), _("Image Templates"),
@@ -463,8 +454,6 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
                               context,
                               preview_size, 1,
                               factory->menu_factory);
-
-  GIMP_IMAGE_VIEW (view)->raise_displays_func = images_raise_views;
 
   return dialogs_dockable_new (view,
 			       _("Images"), NULL,
@@ -521,12 +510,13 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     context->gimp->gradient_factory,
-				     dialogs_edit_gradient_func,
-				     context,
-				     preview_size, 1,
+                                     context->gimp->gradient_factory,
+                                     dialogs_edit_gradient_func,
+                                     context,
+                                     preview_size, 1,
                                      factory->menu_factory, "<Gradients>",
-                                     "/gradients-popup");
+                                     "/gradients-popup",
+                                     "gradients");
 
   return dialogs_dockable_new (view,
 			       _("Gradients"), NULL,
@@ -542,12 +532,13 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
   GtkWidget *view;
 
   view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     context->gimp->palette_factory,
-				     dialogs_edit_palette_func,
-				     context,
-				     preview_size, 1,
+                                     context->gimp->palette_factory,
+                                     dialogs_edit_palette_func,
+                                     context,
+                                     preview_size, 1,
                                      factory->menu_factory, "<Palettes>",
-                                     "/palettes-popup");
+                                     "/palettes-popup",
+                                     "palettes");
 
   return dialogs_dockable_new (view,
 			       _("Palettes"), NULL,

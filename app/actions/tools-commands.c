@@ -34,7 +34,8 @@
 
 #include "display/gimpdisplay.h"
 
-#include "tools/gimptool.h"
+#include "tools/gimp-tools.h"
+#include "tools/gimpimagemaptool.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
@@ -45,22 +46,20 @@ void
 tools_default_colors_cmd_callback (GtkAction *action,
 				   gpointer   data)
 {
-  Gimp *gimp = action_data_get_gimp (data);
-  if (! gimp)
-    return;
+  GimpContext *context;
+  return_if_no_context (context, data);
 
-  gimp_context_set_default_colors (gimp_get_user_context (gimp));
+  gimp_context_set_default_colors (context);
 }
 
 void
 tools_swap_colors_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
-  Gimp *gimp = action_data_get_gimp (data);
-  if (! gimp)
-    return;
+  GimpContext *context;
+  return_if_no_context (context, data);
 
-  gimp_context_swap_colors (gimp_get_user_context (gimp));
+  gimp_context_swap_colors (context);
 }
 
 void
@@ -72,10 +71,7 @@ tools_select_cmd_callback (GtkAction   *action,
   GimpToolInfo *tool_info;
   GimpContext  *context;
   GimpDisplay  *gdisp;
-
-  gimp = action_data_get_gimp (data);
-  if (! gimp)
-    return;
+  return_if_no_gimp (gimp, data);
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list, value);
@@ -103,30 +99,49 @@ void
 tools_toggle_visibility_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  if (GIMP_IS_CONTAINER_EDITOR (data))
-    {
-      GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-      GimpContext         *context;
-      GimpToolInfo        *tool_info;
-      gboolean             active;
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  gboolean      active;
+  return_if_no_context (context, data);
 
-      context = gimp_container_view_get_context (editor->view);
+  tool_info = gimp_context_get_tool (context);
 
-      tool_info = gimp_context_get_tool (context);
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-      if (active != tool_info->visible)
-        g_object_set (tool_info, "visible", active, NULL);
-    }
+  if (active != tool_info->visible)
+    g_object_set (tool_info, "visible", active, NULL);
 }
 
 void
 tools_reset_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpToolView *view = GIMP_TOOL_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GList               *list;
+  gint                 i = 0;
 
-  if (GTK_WIDGET_SENSITIVE (view->reset_button))
-    gtk_button_clicked (GTK_BUTTON (view->reset_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  for (list = gimp_tools_get_default_order (context->gimp);
+       list;
+       list = g_list_next (list))
+    {
+      GimpObject *object = gimp_container_get_child_by_name (container,
+                                                             list->data);
+
+      if (object)
+        {
+          gimp_container_reorder (container, object, i);
+
+          g_object_set (object, "visible",
+                        ! g_type_is_a (GIMP_TOOL_INFO (object)->tool_type,
+                                       GIMP_TYPE_IMAGE_MAP_TOOL),
+                        NULL);
+
+          i++;
+        }
+    }
 }

@@ -29,10 +29,9 @@
 #include "text/gimpfont.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpfontview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "actions.h"
 #include "fonts-actions.h"
 #include "fonts-commands.h"
 
@@ -45,7 +44,8 @@ static GimpActionEntry fonts_actions[] =
     GIMP_HELP_FONT_DIALOG },
 
   { "fonts-refresh", GTK_STOCK_REFRESH,
-    N_("_Rescan Font List"), "", NULL,
+    N_("_Rescan Font List"), "",
+    N_("Rescan font list"),
     G_CALLBACK (fonts_refresh_cmd_callback),
     GIMP_HELP_FONT_REFRESH }
 };
@@ -63,14 +63,13 @@ void
 fonts_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContainerEditor *editor;
-  GimpContext         *context;
-  GimpFont            *font;
+  GimpContext *context;
+  GimpFont    *font = NULL;
 
-  editor  = GIMP_CONTAINER_EDITOR (data);
-  context = gimp_container_view_get_context (editor->view);
+  context = action_data_get_context (data);
 
-  font = gimp_context_get_font (context);
+  if (context)
+    font = gimp_context_get_font (context);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

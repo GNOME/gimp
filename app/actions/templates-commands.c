@@ -33,6 +33,7 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
@@ -50,48 +51,173 @@
 /*  public functions */
 
 void
+templates_create_image_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpTemplate        *template;
+
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  template = gimp_context_get_template (context);
+
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+    {
+      templates_file_new_dialog (context->gimp, template, GTK_WIDGET (editor));
+    }
+}
+
+void
 templates_new_template_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpTemplate        *template;
 
-  gtk_button_clicked (GTK_BUTTON (view->new_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  template = gimp_context_get_template (context);
+
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+    {
+    }
+
+  templates_new_template_dialog (context->gimp, NULL, GTK_WIDGET (editor));
 }
 
 void
 templates_duplicate_template_cmd_callback (GtkAction *action,
                                            gpointer   data)
 {
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpTemplate        *template;
 
-  gtk_button_clicked (GTK_BUTTON (view->duplicate_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  template = gimp_context_get_template (context);
+
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+    {
+      GimpTemplate *new_template;
+
+      new_template = gimp_config_duplicate (GIMP_CONFIG (template));
+
+      gimp_list_uniquefy_name (GIMP_LIST (container),
+                               GIMP_OBJECT (new_template), TRUE);
+      gimp_container_add (container, GIMP_OBJECT (new_template));
+
+      gimp_context_set_by_type (context, container->children_type,
+                                GIMP_OBJECT (new_template));
+
+      templates_edit_template_dialog (context->gimp, new_template,
+                                      GTK_WIDGET (editor));
+
+      g_object_unref (new_template);
+    }
 }
 
 void
 templates_edit_template_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpTemplate        *template;
 
-  gtk_button_clicked (GTK_BUTTON (view->edit_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  template = gimp_context_get_template (context);
+
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+    {
+      templates_edit_template_dialog (context->gimp, template,
+                                      GTK_WIDGET (editor));
+    }
 }
 
-void
-templates_create_image_cmd_callback (GtkAction *action,
-                                     gpointer   data)
-{
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
+typedef struct _GimpTemplateDeleteData GimpTemplateDeleteData;
 
-  gtk_button_clicked (GTK_BUTTON (view->create_button));
+struct _GimpTemplateDeleteData
+{
+  GimpContainer *container;
+  GimpTemplate  *template;
+};
+
+static void
+templates_delete_template_callback (GtkWidget *widget,
+                                    gboolean   delete,
+                                    gpointer   data)
+{
+  GimpTemplateDeleteData *delete_data = data;
+
+  if (! delete)
+    return;
+
+  if (gimp_container_have (delete_data->container,
+			   GIMP_OBJECT (delete_data->template)))
+    {
+      gimp_container_remove (delete_data->container,
+			     GIMP_OBJECT (delete_data->template));
+    }
 }
 
 void
 templates_delete_template_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
-  GimpTemplateView *view = GIMP_TEMPLATE_VIEW (data);
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpTemplate        *template;
 
-  gtk_button_clicked (GTK_BUTTON (view->delete_button));
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  template = gimp_context_get_template (context);
+
+  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+    {
+      GimpTemplateDeleteData *delete_data;
+      GtkWidget              *dialog;
+      gchar                  *str;
+
+      delete_data = g_new0 (GimpTemplateDeleteData, 1);
+
+      delete_data->container = container;
+      delete_data->template  = template;
+
+      str = g_strdup_printf (_("Are you sure you want to delete template '%s' "
+                               "from the list and from disk?"),
+			     GIMP_OBJECT (template)->name);
+
+      dialog = gimp_query_boolean_box (_("Delete Template"),
+                                       GTK_WIDGET (editor),
+				       gimp_standard_help_func, NULL,
+				       GIMP_STOCK_QUESTION,
+				       str,
+				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
+				       G_OBJECT (template),
+				       "disconnect",
+				       templates_delete_template_callback,
+				       delete_data);
+
+      g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, delete_data);
+
+      g_free (str);
+
+      gtk_widget_show (dialog);
+    }
 }
 
 static void
