@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1998-2000 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -470,7 +470,7 @@ CODE
 
     my $lgpl_top = <<'LGPL';
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
 LGPL
 

@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * gimpfileops_pdb.c
  *

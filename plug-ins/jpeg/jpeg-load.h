@@ -35,7 +35,7 @@
  * parasite - gimp-comment - to the image.  When saving, the image is
  * checked to see if it has the gimp-comment parasite - if so, that is
  * used as the default comment in the save dialog.  Further, the other
- * jpeg parameters (quaility, smoothing, compression and progressive)
+ * jpeg parameters (quality, smoothing, compression and progressive)
  * are attached to the image as a parasite.  This allows the
  * parameters to remain consistent between saves.  I was not able to
  * figure out how to determine the quality, smoothing or compression

@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 # The GIMP -- an image manipulation program
-# Copyright (C) 1999-2000 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1999-2003 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<'GPL';
 #   Gimp-Python - allows the writing of Gimp plugins in Python.
-#   Copyright (C) 1997  James Henstridge <james@daa.com.au>
+#   Copyright (C) 1997-2003  James Henstridge <james@daa.com.au>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

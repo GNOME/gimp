@@ -1,3 +1,16 @@
+2003-07-03  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c: fix spelling of "quality" in comment
+
+	* tools/pdbgen/*.pl: update copyright strings to 2003
+
+	* libgimp/gimpenums.h
+	* libgimp/*_pdb.[ch]
+	* app/pdb/*_cmds.[ch]
+	* app/pdb/internal_procs.[ch]
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c: regenerated
+
 2003-07-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c: added support for reading and writing

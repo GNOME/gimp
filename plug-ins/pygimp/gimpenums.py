@@ -1,5 +1,5 @@
 #   Gimp-Python - allows the writing of Gimp plugins in Python.
-#   Copyright (C) 1997  James Henstridge <james@daa.com.au>
+#   Copyright (C) 1997-2003  James Henstridge <james@daa.com.au>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

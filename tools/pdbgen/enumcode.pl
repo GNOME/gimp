@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 # The GIMP -- an image manipulation program
-# Copyright (C) 1999-2000 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1999-2003 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<'GPL';
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<'LGPL';
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

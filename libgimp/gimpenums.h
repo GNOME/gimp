@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
