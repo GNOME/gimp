@@ -1,5 +1,10 @@
 2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
 
+	* configure.in: added checks for windres. Fixes bug #148443
+	together will my last commit.
+
+2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
+
 	* app/Makefile.am: added checks and rules to build and link the
 	win32 icon resource if the resource compiler windres is found by
 	configure. First part of a fix for bug #148443.

@@ -244,6 +244,9 @@ AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
 
 if test "$os_win32" = "yes"; then
   AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
+  AC_CHECK_TOOL(WINDRES, windres, :)
+  AC_MSG_RESULT([$windres])  
+  AM_CONDITIONAL(HAVE_WINDRES, test "$windres" != ":")
 fi
 AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
 
