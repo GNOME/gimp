@@ -1,10 +1,13 @@
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/uniteditor.c: use the "cell-background-gdk"
+	property to mark system units which can't be changed.
+
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/vpropagate.c: applied a patch from David Necas
 	<yeti@physics.muni.cz> that fixes bug #105741.
 
-	* plug-ins/common/uniteditor.c: cosmetics.
-	
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gifload.c (DoExtension)

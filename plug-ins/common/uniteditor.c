@@ -357,9 +357,9 @@ list_init (GtkTreeView *tv)
 
   num_units = gimp_unit_get_number_of_units ();
 
-  color.red   = 65535;
-  color.green = 50000;
-  color.blue  = 50000;
+  color.red   = 60000;
+  color.green = 60000;
+  color.blue  = 65535;
 
   for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
     {
@@ -566,13 +566,13 @@ unit_editor_dialog (void)
 
 
   rend = gtk_cell_renderer_toggle_new ();
-  col = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (col, _("Saved"));
-  gtk_tree_view_column_pack_start (col, rend, FALSE);
-  gtk_tree_view_column_set_attributes (col, rend,
-                                       "active",      SAVE,
-                                       "activatable", USER_UNIT,
-                                       NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Saved"),
+					      rend,
+					      "active",              SAVE,
+					      "activatable",         USER_UNIT,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
@@ -582,65 +582,78 @@ unit_editor_dialog (void)
                     G_CALLBACK (saved_toggled_callback),
                     list_store);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("ID"), rend,
-                                                   "text",           IDENTIFIER,
-                                                   "background-gdk", BG_COLOR,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("ID"),
+					      gtk_cell_renderer_text_new (),
+					      "text",                IDENTIFIER,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[IDENTIFIER]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Factor"), rend,
-                                                   "text", FACTOR,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Factor"),
+					      gtk_cell_renderer_text_new (),
+					      "text",               FACTOR,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[FACTOR]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Digits"), rend,
-                                                   "text", DIGITS,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Digits"),
+					      gtk_cell_renderer_text_new (),
+					      "text",                DIGITS,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[DIGITS]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Symbol"), rend,
-                                                   "text", SYMBOL,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Symbol"),
+					      gtk_cell_renderer_text_new (),
+					      "text",                SYMBOL,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[SYMBOL]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Abbreviation"), rend,
-                                                   "text", ABBREVIATION,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Abbreviation"),
+					      gtk_cell_renderer_text_new (),
+					      "text",                ABBREVIATION,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[ABBREVIATION]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Singular"), rend,
-                                                   "text", SINGULAR,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Singular"),
+					      gtk_cell_renderer_text_new (),
+					      "text", SINGULAR,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
 			   gettext (help_strings[SINGULAR]), NULL);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Plural"), rend,
-                                                   "text", PLURAL,
-                                                   NULL);
+  col =
+    gtk_tree_view_column_new_with_attributes (_("Plural"),
+					      gtk_cell_renderer_text_new (),
+					      "text",                PLURAL,
+					      "cell-background-gdk", BG_COLOR,
+					      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
   gimp_help_set_help_data (col->button,
