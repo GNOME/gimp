@@ -1,3 +1,10 @@
+2004-07-04  Tor Lillqvist  <tml@iki.fi>
+
+	* app/core/gimpdrawable-equalize.c (gimp_drawable_equalize): Drop
+	a couple of unused variables.
+
+	* libgimpmodule/gimpmodule.def: Add gimp_module_register_enum.
+
 2004-07-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmodule/gimpmodule.[ch]: added gimp_module_register_enum(),

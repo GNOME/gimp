@@ -45,8 +45,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 {
   PixelRegion    srcPR, destPR;
   guchar        *mask;
-  gint           has_alpha;
-  gint           alpha, bytes;
+  gint           bytes;
   gint           x1, y1, x2, y2;
   GimpHistogram *hist;
   GimpLut       *lut;
@@ -57,8 +56,6 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   mask = NULL;
 
   bytes     = gimp_drawable_bytes (drawable);
-  has_alpha = gimp_drawable_has_alpha (drawable);
-  alpha     = has_alpha ? (bytes - 1) : bytes;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
