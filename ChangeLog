@@ -1,5 +1,10 @@
 2004-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_constructor): g_assert() that
+	we got the essential construct properties.
+
+2004-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-convert.[ch]: use gboolean instead of gint
 	for "alpha_dither" and "remove_dups" in all public and private
 	functions. Properly prototyped private functions. Minor cleanup.

@@ -279,13 +279,19 @@ gimp_dock_constructor (GType                  type,
                        GObjectConstructParam *params)
 {
   GObject       *object;
+  GimpDock      *dock;
   GimpGuiConfig *config;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  config = GIMP_GUI_CONFIG (GIMP_DOCK (object)->context->gimp->config);
+  dock = GIMP_DOCK (object);
 
-  gimp_window_set_hint (GTK_WINDOW (object), config->dock_window_hint);
+  g_assert (GIMP_IS_CONTEXT (dock->context));
+  g_assert (GIMP_IS_DIALOG_FACTORY (dock->dialog_factory));
+
+  config = GIMP_GUI_CONFIG (dock->context->gimp->config);
+
+  gimp_window_set_hint (GTK_WINDOW (dock), config->dock_window_hint);
 
   return object;
 }
