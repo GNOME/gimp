@@ -1,3 +1,8 @@
+2004-09-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/file-actions.c (file_actions): resolved conflicting
+	mnemonics.
+
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
 	* data/images/Makefile.am (imagedata_DATA): renamed gimp_splash.png

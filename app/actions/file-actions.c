@@ -58,13 +58,9 @@ static void   file_actions_last_opened_reorder (GimpContainer   *container,
 
 static GimpActionEntry file_actions[] =
 {
-  { "file-menu", NULL, N_("_File") },
-
-  { "file-open-recent-menu", NULL,
-    N_("Open _Recent"), "", NULL },
-
-  { "file-acquire-menu", NULL,
-    N_("_Acquire"), NULL, NULL },
+  { "file-menu",             NULL, N_("_File")        },
+  { "file-open-recent-menu", NULL, N_("Open _Recent") },
+  { "file-acquire-menu",     NULL, N_("_Acquire")     },
 
   { "file-open", GTK_STOCK_OPEN,
     N_("_Open..."), NULL, NULL,
@@ -77,12 +73,12 @@ static GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layer", GIMP_STOCK_LAYER,
-    N_("Open as _Layer..."), "<control><alt>O", NULL,
+    N_("Op_en as Layer..."), "<control><alt>O", NULL,
     G_CALLBACK (file_open_as_layer_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
-    N_("_Open Location..."), NULL, NULL,
+    N_("Open _Location..."), NULL, NULL,
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
