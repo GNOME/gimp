@@ -1,5 +1,10 @@
 2004-06-19  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c (arcto_ellipsesegment): moved
+	array initialization out of variable declaration (bug #144632).
+
+2004-06-19  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c (arcto_ellipsesegment): use
 	G_SQRT2 to make circlemagic a constant value so we can initialize
 	the array on declaration. Fixes bug #144632.
