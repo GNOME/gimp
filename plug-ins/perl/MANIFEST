@@ -32,6 +32,7 @@ Gimp/Fu.pm
 Gimp/PDL.pm
 Gimp/Pixel.pod
 Gimp/UI.pm
+Gimp/Util.pm
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float

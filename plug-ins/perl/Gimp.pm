@@ -497,7 +497,7 @@ create hybrid (networked & libgimp) scripts as well.
 
 =item *
 Use either a plain pdb (scheme-like) interface or nice object-oriented
-syntax, i.e. "gimp_layer_new(600,300,RGB)" is the same as "new Image(600,300,RGB)"
+syntax, i.e. "gimp_image_new(600,300,RGB)" is the same as "new Image(600,300,RGB)"
 
 =item *
 Gimp::Fu will start The Gimp for you, if it cannot connect to an existing
@@ -523,13 +523,13 @@ callback procedures do not poass return values to The Gimp.
 All plug-ins (and extensions etc.) _must_ contain a call to C<Gimp::main>.
 The return code should be immediately handed out to exit:
 
- C<exit main;>		# Gimp::main is exported by default.
+ exit main;		# Gimp::main is exported by default.
 
 Before the call to C<Gimp::main>, I<no> other PDB function must be called.
 
 In a Gimp::Fu-script, you should call C<Gimp::Fu::main> instead:
 
- C<exit main;>		# Gimp::Fu::main is exported by default as well.
+ exit main;		# Gimp::Fu::main is exported by default as well.
 
 This is similar to Gtk, Tk or similar modules, where you have to call the
 main eventloop.
@@ -566,7 +566,7 @@ If you C<die> within the callback, the error will be reported to The Gimp
 =item net ()
 
 this is called when the plug-in is not started directly from within the
-Gimp, but instead from the I<Net-Server> (the perl network server extension you
+Gimp, but instead from the B<Net-Server> (the perl network server extension you
 hopefully have installed and started ;)
 
 =back
