@@ -1,3 +1,10 @@
+2003-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcolorpickertool.c: moved the call to
+	gimp_color_tool_enable() from GimpTool::initialize() to
+	GObject::constructor() so the right cursor is shown before the
+	first button_press. Fixes bug #122693.
+
 2003-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c: changed the hex entry to look
