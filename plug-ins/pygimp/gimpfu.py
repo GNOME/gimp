@@ -396,6 +396,8 @@ def _interact(func_name, start_params):
             self.add(box)
             box.show()
 
+            button = None
+
             for (label, value) in items:
                 button = gtk.RadioButton(button, label)
                 box.pack_start(button)

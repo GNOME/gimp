@@ -1,3 +1,9 @@
+2005-03-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py: initialize button variable before using
+	it in PF_BUTTON code. Fixes bug #169793. Thanks to Joao S. O. Bueno
+	Calligaris.
+
 2005-03-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_show_unit_menu):
