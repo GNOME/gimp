@@ -181,18 +181,28 @@ file_save_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
   GimpDisplay *gdisp;
+  GimpImage   *gimage;
   return_if_no_display (gdisp, data);
 
-  if (! gimp_image_active_drawable (gdisp->gimage))
+  gimage = gdisp->gimage;
+
+  if (! gimp_image_active_drawable (gimage))
     return;
 
   /*  Only save if the gimage has been modified  */
-  if (gdisp->gimage->dirty ||
-      ! GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->trust_dirty_flag)
+  if (gimage->dirty ||
+      ! GIMP_GUI_CONFIG (gimage->gimp->config)->trust_dirty_flag)
     {
-      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
+      const gchar   *uri;
+      PlugInProcDef *save_proc = NULL;
 
-      if (! uri)
+      uri       = gimp_object_get_name (GIMP_OBJECT (gimage));
+      save_proc = gimp_image_get_save_proc (gimage);
+
+      if (uri && ! save_proc)
+        save_proc = file_utils_find_proc (gimage->gimp->save_procs, uri);
+
+      if (! (uri && save_proc))
         {
           file_save_as_cmd_callback (action, data);
         }
@@ -201,9 +211,10 @@ file_save_cmd_callback (GtkAction *action,
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
-          status = file_save (gdisp->gimage, action_data_get_context (data),
+          status = file_save (gimage, action_data_get_context (data),
                               GIMP_PROGRESS (gdisp),
-                              GIMP_RUN_WITH_LAST_VALS, &error);
+                              uri, save_proc,
+                              GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
 
           if (status != GIMP_PDB_SUCCESS &&
               status != GIMP_PDB_CANCEL)

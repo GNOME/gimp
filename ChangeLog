@@ -1,3 +1,20 @@
+2005-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-save.[ch]: removed file_save() and renamed
+	file_save_as() to file_save() which always requires "uri" and
+	"file_proc" to be passed. This functions does no more file_proc by
+	extension finding and stuff.
+
+	* app/actions/file-commands.c (file_save_cmd_callback): only call
+	file_save() if the image has both uri and save_proc, fall back to
+	file_save_as_cmd_callback() otherwise.
+
+	* app/dialogs/file-save-dialog.c: completely chopped and
+	reconstructed. Added tons of checks for extension vs. save_proc
+	consistency and ask the user if she really wants to save weird
+	stuff. Added masive debugging output because I'm far from certain
+	that everything is correct.
+
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp*/Makefile.am: s/GIMP_THREAD_FLAGS/GTHREAD_CFLAGS/

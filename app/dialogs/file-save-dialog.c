@@ -31,6 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
+#include "plug-in/plug-in-proc-def.h"
+
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -46,21 +48,22 @@
 
 /*  local function prototypes  */
 
-static void       file_save_dialog_response    (GtkWidget     *save_dialog,
-                                                gint           response_id,
-                                                Gimp          *gimp);
-static void       file_save_overwrite          (GtkWidget     *save_dialog,
-                                                const gchar   *uri,
-                                                const gchar   *raw_filename);
-static void       file_save_overwrite_response (GtkWidget     *dialog,
-                                                gint           response_id,
-                                                gpointer       data);
-static gboolean   file_save_dialog_save_image  (GtkWidget     *save_dialog,
-                                                GimpImage     *gimage,
-                                                const gchar   *uri,
-                                                const gchar   *raw_filename,
-                                                PlugInProcDef *save_proc,
-                                                gboolean       save_a_copy);
+static void       file_save_dialog_response      (GtkWidget      *save_dialog,
+                                                  gint            response_id,
+                                                  Gimp           *gimp);
+static gboolean   file_save_dialog_check_uri     (GtkWidget      *save_dialog,
+                                                  Gimp           *gimp,
+                                                  gchar         **uri,
+                                                  PlugInProcDef **save_proc);
+static gboolean   file_save_dialog_use_extension (GtkWidget      *save_dialog,
+                                                  const gchar    *uri);
+static gboolean   file_save_dialog_overwrite     (GtkWidget      *save_dialog,
+                                                  const gchar    *uri);
+static gboolean   file_save_dialog_save_image    (GtkWidget      *save_dialog,
+                                                  GimpImage      *gimage,
+                                                  const gchar    *uri,
+                                                  PlugInProcDef  *save_proc,
+                                                  gboolean        save_a_copy);
 
 
 /*  public functions  */
@@ -121,6 +124,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
   gchar          *uri;
+  PlugInProcDef  *save_proc;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -130,60 +134,298 @@ file_save_dialog_response (GtkWidget *save_dialog,
       return;
     }
 
+  gimp_file_dialog_set_sensitive (dialog, FALSE);
+
+  if (file_save_dialog_check_uri (save_dialog, gimp, &uri, &save_proc))
+    {
+      if (file_save_dialog_save_image (save_dialog,
+                                       dialog->gimage,
+                                       uri,
+                                       save_proc,
+                                       dialog->save_a_copy))
+        {
+          gtk_widget_hide (save_dialog);
+        }
+
+      g_free (uri);
+    }
+
+  gimp_file_dialog_set_sensitive (dialog, TRUE);
+}
+
+static gboolean
+file_save_dialog_check_uri (GtkWidget      *save_dialog,
+                            Gimp           *gimp,
+                            gchar         **ret_uri,
+                            PlugInProcDef **ret_save_proc)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
+  gchar          *uri;
+  gchar          *basename;
+  PlugInProcDef  *save_proc;
+  PlugInProcDef  *uri_proc;
+  PlugInProcDef  *basename_proc;
+
   uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (save_dialog));
 
-  if (uri && strlen (uri))
-    {
-      if (gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (save_dialog), uri))
-        {
-          file_save_overwrite (save_dialog, uri, uri);
-        }
-      else
-        {
-          gimp_file_dialog_set_sensitive (dialog, FALSE);
+  if (! (uri && strlen (uri)))
+    return FALSE;
 
-          if (file_save_dialog_save_image (save_dialog,
-                                           dialog->gimage,
-                                           uri,
-                                           uri,
-                                           dialog->file_proc,
-                                           dialog->save_a_copy))
+  basename = g_path_get_basename (uri);
+
+  g_print ("\n\n%s: URI = %s\n", G_STRFUNC, uri);
+
+  save_proc     = dialog->file_proc;
+  uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
+  basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+
+  /*  first check if the user entered an extension at all  */
+  if (! basename_proc)
+    {
+      g_print ("%s: basename has no valid extension\n",
+               G_STRFUNC);
+
+      if (! strchr (basename, '.'))
+        {
+          const gchar *ext = NULL;
+
+          g_print ("%s: basename has no '.', trying to add extension\n",
+                   G_STRFUNC);
+
+          if (! save_proc)
             {
-              gtk_widget_hide (save_dialog);
+              ext = "xcf";
+            }
+          else if (save_proc->extensions_list)
+            {
+              ext = save_proc->extensions_list->data;
             }
 
-          gimp_file_dialog_set_sensitive (dialog, TRUE);
+          if (ext)
+            {
+              gchar *ext_uri      = g_strconcat (uri,      ".", ext, NULL);
+              gchar *ext_basename = g_strconcat (basename, ".", ext, NULL);
+
+              g_print ("%s: appending .%s to basename without any extension\n",
+                       G_STRFUNC, ext);
+
+              g_free (uri);
+              g_free (basename);
+
+              uri      = ext_uri;
+              basename = ext_basename;
+
+              uri_proc      = file_utils_find_proc (gimp->save_procs, uri);
+              basename_proc = file_utils_find_proc (gimp->save_procs, basename);
+            }
+          else
+            {
+              g_print ("%s: save_proc has no extensions, continuing without\n",
+                       G_STRFUNC);
+
+              /*  there may be file formats with no extension at all, use
+               *  the selected proc in this case.
+               */
+              basename_proc = save_proc;
+
+              if (! uri_proc)
+                uri_proc = basename_proc;
+            }
+
+          if (! basename_proc)
+            {
+              g_print ("%s: unable to figure save_proc, bailing out\n",
+                       G_STRFUNC);
+
+              g_message (_("The given filename does not have any known "
+                           "file extension. Please enter a known file "
+                           "extension or select a file format from the "
+                           "file format list."));
+              g_free (uri);
+              g_free (basename);
+              return FALSE;
+            }
+        }
+      else if (save_proc && ! save_proc->extensions_list)
+        {
+          g_print ("%s: basename has '.', but save_proc has no extensions, "
+                   "accepting random extension\n",
+                   G_STRFUNC);
+
+          /*  accept any random extension if the file format has
+           *  no extensions at all
+           */
+          basename_proc = save_proc;
+
+          if (! uri_proc)
+            uri_proc = basename_proc;
         }
     }
 
-  g_free (uri);
+  /*  then check if the selected format matches the entered extension  */
+  if (! save_proc)
+    {
+      g_print ("%s: no save_proc was selected from the list\n",
+               G_STRFUNC);
+
+      if (! basename_proc)
+        {
+          g_print ("%s: basename had no useful extension, bailing out\n",
+                   G_STRFUNC);
+
+          g_message (_("The given filename does not have any known "
+                       "file extension. Please enter a known file "
+                       "extension or select a file format from the "
+                       "file format list."));
+          g_free (uri);
+          g_free (basename);
+          return FALSE;
+        }
+
+      g_print ("%s: use URI's proc '%s' so indirect saving works\n",
+               G_STRFUNC, uri_proc->menu_label);
+
+      /*  use the URI's proc if no save proc was selected  */
+      save_proc = uri_proc;
+    }
+  else
+    {
+      g_print ("%s: save_proc '%s' was selected from the list\n",
+               G_STRFUNC, save_proc->menu_label);
+
+      if (save_proc != basename_proc)
+        {
+          g_print ("%s: however the basename's proc is '%s'\n",
+                   G_STRFUNC,
+                   basename_proc ? basename_proc->menu_label : "NULL");
+
+          if (uri_proc != basename_proc)
+            {
+              g_print ("%s: that's impossible for remote URIs, bailing out\n",
+                       G_STRFUNC);
+
+              /*  remote URI  */
+
+              g_message (_("Saving remote files needs to determine the "
+                           "file format from the file extension. Please "
+                           "enter a file extension that matches the selected "
+                           "file format or enter no file extension at all."));
+              g_free (uri);
+              g_free (basename);
+              return FALSE;
+            }
+          else
+            {
+              g_print ("%s: ask the user if she really wants that filename\n",
+                       G_STRFUNC);
+
+              /*  local URI  */
+
+              if (! file_save_dialog_use_extension (save_dialog, uri))
+                {
+                  g_free (uri);
+                  g_free (basename);
+                  return FALSE;
+                }
+            }
+        }
+      else if (save_proc != uri_proc)
+        {
+          g_print ("%s: use URI's proc '%s' so indirect saving works\n",
+                   G_STRFUNC, uri_proc->menu_label);
+
+          /*  need to use the URI's proc for saving because e.g.
+           *  the GIF plug-in can't save a GIF to sftp://
+           */
+          save_proc = uri_proc;
+        }
+    }
+
+  if (! save_proc)
+    {
+      g_print ("%s: EEEEEEK\n", G_STRFUNC);
+
+      g_message ("Yay! You found a bug. Please report this at "
+                 "http://bugzilla.gnome.org/ and paste the console "
+                 "output to the 'Additional Comments' field");
+
+      return FALSE;
+    }
+
+  if (gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (save_dialog), uri))
+    {
+      if (! file_save_dialog_overwrite (save_dialog, uri))
+        {
+          g_free (uri);
+          g_free (basename);
+          return FALSE;
+        }
+    }
+
+  g_free (basename);
+
+  *ret_uri       = uri;
+  *ret_save_proc = save_proc;
+
+  return TRUE;
 }
 
-typedef struct _OverwriteData OverwriteData;
-
-struct _OverwriteData
+static gboolean
+file_save_dialog_use_extension (GtkWidget   *save_dialog,
+                                const gchar *uri)
 {
-  GtkWidget *save_dialog;
-  gchar     *uri;
-  gchar     *raw_filename;
-};
+  GtkWidget *dialog;
+  gboolean   use_name = FALSE;
 
-static void
-file_save_overwrite (GtkWidget   *save_dialog,
-                     const gchar *uri,
-                     const gchar *raw_filename)
+  dialog = gimp_message_dialog_new (_("Extension Mismatch"),
+                                    GIMP_STOCK_QUESTION,
+                                    save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_NO,  GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_YES, GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("The given file extension does "
+                                       "not match the chosen file type."));
+
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Do you want to use this name anyway?"));
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
+                                     GTK_RESPONSE_CANCEL, FALSE);
+
+  g_object_ref (dialog);
+
+  use_name = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
+                                     GTK_RESPONSE_CANCEL, TRUE);
+
+  return use_name;
+}
+
+static gboolean
+file_save_dialog_overwrite (GtkWidget   *save_dialog,
+                            const gchar *uri)
 {
-  OverwriteData *overwrite_data = g_new0 (OverwriteData, 1);
-  GtkWidget     *dialog;
-  gchar         *filename;
-
-  overwrite_data->save_dialog  = save_dialog;
-  overwrite_data->uri          = g_strdup (uri);
-  overwrite_data->raw_filename = g_strdup (raw_filename);
+  GtkWidget *dialog;
+  gchar     *filename;
+  gboolean   overwrite = FALSE;
 
   dialog =
     gimp_message_dialog_new (_("File exists"), GIMP_STOCK_WARNING,
-                             save_dialog, 0,
+                             save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
                              gimp_standard_help_func, NULL,
 
                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -196,10 +438,6 @@ file_save_overwrite (GtkWidget   *save_dialog,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (file_save_overwrite_response),
-                    overwrite_data);
-
   filename = file_utils_uri_to_utf8_filename (uri);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("A file named '%s' already exists."),
@@ -210,51 +448,26 @@ file_save_overwrite (GtkWidget   *save_dialog,
                              _("Do you want to replace it with the image "
                                "you are saving?"));
 
-  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (save_dialog), FALSE);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
                                      GTK_RESPONSE_CANCEL, FALSE);
 
-  gtk_widget_show (dialog);
-}
+  g_object_ref (dialog);
 
-static void
-file_save_overwrite_response (GtkWidget *dialog,
-                              gint       response_id,
-                              gpointer   data)
-{
-  OverwriteData  *overwrite_data = data;
-  GimpFileDialog *save_dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
+  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
                                      GTK_RESPONSE_CANCEL, TRUE);
 
-  gtk_widget_destroy (dialog);
-
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      if (file_save_dialog_save_image (overwrite_data->save_dialog,
-                                       save_dialog->gimage,
-                                       overwrite_data->uri,
-                                       overwrite_data->raw_filename,
-                                       save_dialog->file_proc,
-                                       save_dialog->save_a_copy))
-        {
-          gtk_widget_hide (overwrite_data->save_dialog);
-        }
-    }
-
-  gimp_file_dialog_set_sensitive (save_dialog, TRUE);
-
-  g_free (overwrite_data->uri);
-  g_free (overwrite_data->raw_filename);
-  g_free (overwrite_data);
+  return overwrite;
 }
 
 static gboolean
 file_save_dialog_save_image (GtkWidget     *save_dialog,
                              GimpImage     *gimage,
                              const gchar   *uri,
-                             const gchar   *raw_filename,
                              PlugInProcDef *save_proc,
                              gboolean       save_a_copy)
 {
@@ -263,15 +476,10 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
 
   g_object_ref (gimage);
 
-  status = file_save_as (gimage,
-                         gimp_get_user_context (gimage->gimp),
-                         GIMP_PROGRESS (save_dialog),
-                         uri,
-                         raw_filename,
-                         save_proc,
-                         GIMP_RUN_INTERACTIVE,
-                         save_a_copy,
-                         &error);
+  status = file_save (gimage, gimp_get_user_context (gimage->gimp),
+                      GIMP_PROGRESS (save_dialog),
+                      uri, save_proc,
+                      GIMP_RUN_INTERACTIVE, save_a_copy, &error);
 
   if (status == GIMP_PDB_SUCCESS)
     g_object_set_data_full (G_OBJECT (gimage->gimp), "gimp-file-save-last-uri",
