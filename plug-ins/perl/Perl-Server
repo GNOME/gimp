@@ -1,0 +1,288 @@
+#!/usr/bin/perl
+
+#
+# you can enable unix sockets, tcp sockets, or both (or neither...)
+#
+# enabling tcp sockets can be a security risk. If you don't understand why,
+# you shouldn't enable it!
+#
+$use_unix	= 1;
+$use_tcp	= 1;	# tcp is enabled only when authorization is available
+
+use IO::Handle;
+use IO::Socket;
+
+use strict;
+use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
+            %object_dynamic $object_uid %objects $auth @authorized);
+use Gimp '';
+use Gimp::Net qw(:server);
+
+Gimp::set_trace(\$trace_res);
+Gimp::ignore_functions(qw(gimp_progress_init gimp_progress_update));
+
+#
+# the protocol is quite easy ;)
+# at connect() time the server returns
+# PERL-SERVER protocolversion [AUTH]
+#
+# length_of_packet cmd
+#
+# cmd			response		description
+# AUTH password		ok [message]		authorize yourself
+# QUIT						quit server
+# EXEC in-args		status out-args		run simple command
+# TRCE trace in-args	trace status out-args	run simple command (with tracing)
+# TEST procname		bool			check for procedure existance
+# DTRY in-args					destroy all argument objects
+#
+# args is "number of arguments" arguments preceded by length
+# type is first character
+# Sscalar-value
+# Aelem1\0elem2...
+# Rclass\0scalar-value
+#
+
+$server_quit = 0;
+
+$max_pkt = 1024*1024;
+
+sub slog {
+  return if $ps_flags & &Gimp::_PS_FLAG_QUIET;
+  print time(),": ",@_,"\n";
+}
+
+# which objects are dynamic and mustn't be destroyed at will
+%object_dynamic = (
+	'Gimp::Tile'		=>	1,
+	'Gimp::PixelRgn'	=>	1,
+	'Gimp::GDrawable'	=>	1,
+);
+
+$object_uid=0;
+
+# convert objects to, well... networkable objects
+sub deobjectify {
+   my(@args)=@_;
+   for(@args) {
+      if($object_dynamic{ref $_}) {
+         $objects{++$object_uid}=$_;
+         $_=bless \(my $x=$object_uid),ref $_;
+      }
+   }
+   @args;
+}
+
+# make real objects again
+sub objectify {
+   my(@args)=@_;
+   for(@args) {
+      if($object_dynamic{ref $_}) {
+         $_=$objects{$$_};
+      }
+   }
+   @args;
+}
+
+sub destroy_objects {
+   delete @objects{map $$_,@_};
+}
+
+# this is hardcoded into handle_request!
+sub reply {
+  my $fh=shift;
+  my $data=Gimp::Net::args2net(@_);
+  print $fh pack("N",length($data)).$data;
+}
+
+sub handle_request($) {
+   my($fh)=@_;
+   my($length,$req,$data,@args,$trace_level);
+   
+   $fh->timeout(6) unless $ps_flags & &Gimp::_PS_FLAG_BATCH;
+   $fh->read($length,4) == 4 or return 0;
+   $length=unpack("N",$length);
+   $length>0 && $length<$max_pkt or return 0;
+   $fh->read($req,4) == 4 or return 0;
+   $fh->read($data,$length-4) == $length-4 or return 0;
+   
+   if(!$auth or $authorized[fileno($fh)]) {
+      if($req eq "EXEC") {
+         no strict 'refs';
+         ($req,@args)=Gimp::Net::net2args($data);
+         @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
+         $data=Gimp::Net::args2net($@,@args);
+         print $fh pack("N",length($data)).$data;
+      } elsif ($req eq "TEST") {
+         no strict 'refs';
+         print $fh (defined(*{"Gimp::Lib::$data"}{CODE}) || Gimp::_gimp_procedure_available($data)) ? "1" : "0";
+      } elsif ($req eq "DTRY") {
+         destroy_objects Gimp::Net::net2args($data);
+      } elsif($req eq "TRCE") {
+         no strict 'refs';
+         ($trace_level,$req,@args)=Gimp::Net::net2args($data);
+         Gimp::set_trace($trace_level);
+         $trace_res="";
+         @args=deobjectify(eval { Gimp->$req(objectify(@args)) });
+         $data=Gimp::Net::args2net($trace_res,$@,@args);
+         print $fh pack("N",length($data)).$data;
+         Gimp::set_trace(0);
+      } elsif ($req eq "QUIT") {
+         slog "received QUIT request";
+         $server_quit = 1;
+      } elsif($req eq "AUTH") {
+         $data=Gimp::Net::args2net(1,"authorization unnecessary");
+         print $fh pack("N",length($data)).$data;
+      } else {
+         print $fh pack("N",0);
+         slog "illegal command received, aborting connection";
+         return 0;
+      }
+   } else {
+      if($req eq "AUTH") {
+         my($ok,$msg);
+         ($req)=Gimp::Net::net2args($data);
+         if($req eq $auth) {
+            $ok=1;
+            $authorized[fileno($fh)]=1;
+         } else {
+            $ok=0;
+            $msg="wrong authorization, aborting connection";
+            slog $msg;
+            sleep 10; # safety measure
+         }
+         $data=Gimp::Net::args2net($ok,$msg);
+         print $fh pack("N",length($data)).$data;
+         return $ok;
+      } else {
+         print $fh pack("N",0);
+         slog "unauthorized command received, aborting connection";
+         return 0;
+      }
+   }
+   return 1;
+}
+
+sub extension_perl_server {
+  my $run_mode=$_[0];
+  $ps_flags=$_[1];
+  my $extra=$_[2];
+  
+  if ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
+     if ($ps_flags & &Gimp::_PS_FLAG_BATCH) {
+        my($fh)=new_from_fd IO::Handle $extra,"r+";
+        $fh or die "unable to open Gimp::Net communications socket\n";
+        $fh->autoflush(1); # compatibility for old perls
+        reply $fh,"PERL-SERVER",$Gimp::_PROT_VERSION;
+        while(!$server_quit and !eof($fh)) {
+           last unless handle_request($fh);
+        }
+#        Gimp::gimp_quit(0);	# borken in libgimp #d#FIXME#
+        kill 'KILL',getppid();	# borken do not do this.. #d#FIXME#
+        exit(0);
+#        close $fh;
+        return;
+     }
+  } else {
+     $run_mode=&Gimp::RUN_INTERACTIVE;
+     $ps_flags=0;
+  }
+  
+  $auth = $ENV{'GIMP_HOST'}=~s/^(.*)\@// ? $1 : undef;	# get authorization
+  
+  slog "server version $Gimp::VERSION started".($auth ? ", authorization required" : "");
+  
+  $SIG{PIPE}='IGNORE'; # may not work, since libgimp (eech) overwrites it.        
+  my($unix_path)=$Gimp::Net::default_unix_dir.$Gimp::Net::default_unix_sock;
+  my($rm,%handles,$r,$fh,$f);
+  
+  if ($use_unix) {
+    unlink $unix_path;
+    rmdir $Gimp::Net::default_unix_dir;
+    mkdir $Gimp::Net::default_unix_dir,0700 or die "$!";
+    $unix = new IO::Socket::UNIX (Local => $unix_path, Listen => 5) or die "$!";
+    slog "accepting connections on $unix_path";
+    vec($rm,$unix->fileno,1)=1;
+  }
+  if ($use_tcp && $auth) {
+    $tcp = new IO::Socket::INET (LocalPort => $Gimp::Net::default_tcp_port, Listen => 5,
+                                 Reuse => 1) or die "$!";
+    slog "accepting connections on port $Gimp::Net::default_tcp_port";
+    vec($rm,$tcp->fileno,1)=1;
+  }
+  
+  sub new_connection {
+     my $fh = shift;
+     $fh->autoflush (1); # for compatibility with old perls..
+     $handles{fileno($fh)}=$fh;
+     my @r = ("PERL-SERVER",$Gimp::_PROT_VERSION);
+     push(@r,"AUTH") if $auth;
+     reply $fh,@r;
+     vec($rm,$fh->fileno,1)=1;
+  }
+
+  while(!$server_quit) {
+    if(select($r=$rm,undef,undef,undef)>0) {
+      if ($tcp && vec($r,$tcp->fileno,1)) {
+        my $h=$tcp->accept;
+        new_connection($h);
+        slog("accepted tcp connection from ",$h->peerhost);
+      }
+      if ($unix && vec($r,$unix->fileno,1)) {
+        new_connection($unix->accept);
+        slog("accepted unix connection");
+      }
+      for $f (keys(%handles)) {
+        if(vec($r,$f,1)) {
+          $fh=$handles{$f};
+          unless(handle_request($fh)) {
+            slog "closing connection ",$f;
+            vec($rm,$f,1)=0;
+            delete $handles{$f};
+            undef $fh;
+          }
+        }
+      }
+    }
+  }
+  
+  slog "server going down...";
+  if ($use_tcp) {
+    undef $tcp;
+  }
+  if ($use_unix) {
+    undef $unix;
+    unlink $unix_path;
+    rmdir $Gimp::Net::default_unix_dir;
+  }
+}
+
+sub query {
+  Gimp->install_procedure("extension_perl_server", "Start the Gimp-Perl Server",
+                          "This is the server for plug-ins written using the Gimp::Net module",
+                          "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1998-07-22",
+                          "<Toolbox>/Xtns/Perl Server", "*",&Gimp::PROC_EXTENSION,
+                          [
+                           [&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"],
+                           [&Gimp::PARAM_INT32, "flags", "internal flags (must be 0)"],
+                           [&Gimp::PARAM_INT32, "extra", "multi-purpose ;)"],
+                          ],[]);
+}
+
+sub quit {
+}
+
+exit &Gimp::main;
+
+
+
+
+
+
+
+
+
+
+
+
+

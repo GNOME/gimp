@@ -1,0 +1,107 @@
+#!/usr/bin/perl
+
+# Send to me by Jason van Zyl <jason@bookshelf.ca>
+# see the accompanying file image_list
+
+# This is just a complete rip-off of Marc's first plug-in.
+# Doesn't really do much, but hey, we'll get there!
+
+use Gimp;
+
+$black  = "#000000";
+$white  = "#FFFFFF";
+#$font   = "frutiger";
+$font   = "engraver";
+
+# enable example mode... if disabled, it will write out some logos, and not
+# wont' display anything.
+$example = 1;
+
+# set trace level to watch functions as they are executed
+Gimp::set_trace(TRACE_NAME);
+
+# convert image to indexed
+# and automatically save it as interlaced gif.
+sub index_and_save($$) {
+  my($img,$path)=@_;
+  gimp_image_flatten($img);
+  gimp_convert_indexed_palette($img,1,0,32,"");
+  file_gif_save(RUN_NONINTERACTIVE,$img,-1,$path,$path,1,0,0,0) unless $example;
+}
+
+sub Create_Image {
+    my($text,$size)=@_;
+    my($Image,$Text_Layer,$Background_Layer,$Width,$Height);
+
+    # Let's see if we can plug a little daemon in here.
+    
+    $border = 10;
+    $size = 100;
+    $Background_Colour = $white;
+    $Text_Colour = $black;
+
+    # Create an image. We'll just set whatever size here because we want
+    # to resize the image when we figure out how big the text is.
+    $Image = gimp_image_new(256,256,RGB);
+    
+    # Create a layer for the text.
+    $Text_Layer = gimp_text($Image,-1,0,0,$text,$border,1,$size,PIXELS,"*",$font,"*","*","*","*");
+    
+    # Do the fun stuff with the text.
+    gimp_palette_set_background($Text_Colour);
+    gimp_layer_set_preserve_trans($Text_Layer, TRUE);
+    #gimp_edit_fill($Image, $Text_Layer);
+
+    # Now figure out the size of $Text_Layer.
+    $Width = gimp_drawable_width($Text_Layer);
+    $Height = gimp_drawable_height($Text_Layer);
+			  
+    # Create a layer for the background based on the size of the text.
+    $Background_Layer = gimp_layer_new($Image,$Width,$Height,RGB_IMAGE,"Background",100,NORMAL_MODE);
+
+    # Resize the $Image based on size of text.
+    gimp_image_resize($Image,$Width,$Height,0,0);
+    
+    # Add the $Background_Layer to the image.
+    gimp_image_add_layer($Image, $Background_Layer, 1);
+	     
+    # Set the background colour and fill it in with that colour.
+    gimp_palette_set_background($Background_Colour);
+    gimp_drawable_fill($Background_Layer,BG_IMAGE_FILL);
+    
+    #index_and_save ($Image, "/tmp/${text}_" . ".gif");
+  
+    gimp_display_new ($Image) if $example;
+    
+    #gimp_image_delete($Image) unless $example;
+
+}
+
+sub extension_create_images {
+    #Get our list of strings that we want to make images with.
+    
+    $Image_Directory = "/tmp";
+    
+    $active = 0;
+    
+    open(IMAGE_LIST, "/tmp/image_list");
+    
+    while( <IMAGE_LIST> ) {
+        chop;
+        Create_Image (split(/\|/));
+    }
+}
+
+sub query {
+  gimp_install_procedure("extension_create_images", "a test extension in perl",
+                        "try it out", "Marc Lehmann", "Marc Lehmann", "1997-02-06",
+                        "<Toolbox>/Xtns/Create_Images", "*", PROC_EXTENSION,
+                        [[PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
+}
+
+sub net {
+  extension_create_images;
+}
+
+exit gimp_main;
+

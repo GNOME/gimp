@@ -1,0 +1,49 @@
+gchar						T_IV
+gint						T_IV
+gint32						T_IV
+guchar						T_U_CHAR
+guint						T_IV
+gulong						T_U_LONG
+guint32						T_IV
+gdouble						T_DOUBLE
+gchar *						T_PV
+gint *						T_PTROBJ
+guchar *					T_PV
+
+GLayerMode					T_IV
+GDrawableType					T_IV
+GImageType					T_IV
+
+GDrawable *					T_GDRAWABLE
+GTile *						T_TILE
+GPixelRgn *					T_PIXELRGN
+
+GtkWidget *					T_IV
+
+IMAGE						T_PREF
+LAYER						T_PREF
+COLOR						T_PREF
+CHANNEL						T_PREF
+DRAWABLE					T_PREF
+DISPLAY						T_PREF
+REGION						T_PREF
+
+INPUT
+
+T_PREF
+	$var = unbless ($arg, PKG_$ntype, 0)
+
+T_GDRAWABLE
+	$var = old_gdrawable ($arg)
+
+T_TILE
+	$var = old_tile ($arg)
+
+T_PIXELRGN
+	$var = old_pixelrgn ($arg)
+
+OUTPUT
+
+T_PREF
+	$arg = autobless (newSViv($var), PARAM_$ntype);
+

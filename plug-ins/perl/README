@@ -1,0 +1,86 @@
+NAME
+       Gimp - Perl extension for writing Gimp Extensions/Plug-
+       ins/Load & Save-Handlers
+
+SYNOPSIS
+       my $img = new Image (600, 300, RGB);
+       my $bg = $img->layer_new(600,300,RGB_IMAGE,"BAckground",100,NOTMAL_MODE);
+       $img->add_layer($bg, 1);
+       $img->edit_fill($bg);
+       $img->display_new;
+
+DOCUMENTATION
+       The Manpages in html format, the newest version and other
+       information can be found on the Gimp-perl homepage, where
+       you should get an overview over the Gimp-perl extension:
+       
+       http://lehmann.home.ml.org/gimp.html
+       
+       Dov Grobgeld has written a nice tutorial as well, you
+       can find it at:
+       
+       http://imagic.weizmann.ac.il/~dov/gimp/perl-tut.html
+
+PREREQUISITES
+       To install/use this perl extension, you need to have the
+       following software packages installed installed:
+       
+       Perl5.005_02 (or higher):
+       While this extension should run fine with older versions (it has been
+       tested with 5.004_04), I get many unreproducable bug reports with
+       5.004 that I don't get with 5.005. When in doubt, upgrade.
+       
+       The GNU Image Manipulation Program, i.e. The GIMP:
+       ftp://ftp.gimp.org/pub/gimp/
+       
+       GTK+, the X11 toolkit:
+       ftp://ftp.gimp.org/pub/gtk/
+       
+       Gtk, the perl extension for the above:
+       ftp://ftp.gimp.org/pub/gtk/perl/
+       
+       Optionally, you can install PDL (the perl data language), to easily
+       manipulate pixel data. PDL is available at any CPAN mirror, version
+       1.9906 or higher is recommended.
+       
+       General Information about The Gimp can be found at
+       http://www.gimp.org/
+
+INSTALLATION
+       On unix, you should be able to run "perl Makefile.PL"
+       make, make test && make install. To get a listing
+       of configuration options, enter
+       
+       perl ./Makefile.PL --help
+       
+       a straight "perl Makefile.PL" should do the job on most systems, but
+       watch out for warnings. If everything went fine, enter "make", "make
+       test", "make install" and, if you want to install the Perl-Server and
+       some other plug-ins, "make install-plugins"
+       
+       After installation, these perl plug-ins should be visible from with
+       The Gimp:
+       
+       <Toolbox>/Xtns/Perl-Server
+       <Image>/Filters/Artistic/Windify
+       <Image>/Filters/Misc/Prepare for GIF
+       <Image>/Filters/Misc/Webify
+       
+       If you don't have unix, you can install linux instead
+       (http://www.linux.org)
+
+SUPPORT/MAILING LISTS/MORE INFO
+       If you want to get notified of new versions automatically, send
+       a mail with the single line:
+       
+       subscribe notify-gimp
+       
+       to majordomo@gcc.ml.org.
+       
+       You can also upload your scripts to the gimp registry at
+       http://registry.gimp.org/, there is a special "version" available for
+       gimp-perl.
+       
+       Scheme is the crappiest language ever. Have a look at Haskell
+       (http://www.haskell.org) to see how functional is done right.
+

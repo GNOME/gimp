@@ -1,0 +1,449 @@
+#!/usr/local/bin/perl
+######################################################################
+#  This program is an automatic way of scaling and tiling lots of
+#  images in order to create an index image.
+#
+#  Todo:
+#    - Add more layout algorithms. (fixed grid, dynamic grid, better
+#      orphan handling)
+#    - Add more decoration algorithms (e.g. negative strip, slides,
+#      sunken windows).
+#    - Create a way of supplying a template HTML index file into which
+#      the image map will be added.
+#    - Create a way of supplying a template HTML file in which
+#      full size images will be displayed. This file may include
+#      image annotations that come from the input file.
+#    - Define format of input file. This file should include
+#      annotations on/below images, comments in the full size html
+#      file, perhaps baloon text on top of images.
+#    - Make all parameters of tiling algorithms into options.
+#    - Change background of simple-shadow algorithm.
+#    - Option for either keeping image in gimp, or flattening and
+#      saving to disk.
+#    - Add a modular way of adding new layout and decoration algorithms.
+#
+#  Availability:
+#    - You can always find the latest version of this script at
+#      http://imagic.weizmann.ac.il/~dov/gimp/perl
+#
+#  Author:
+#    Dov Grobgeld <dov@imagic.weizmann.ac.il>
+#
+#  Bugs:
+#    -  -padx px means at least px and not exactly px. This should
+#       be fixed.
+#
+#  Version: 0.11
+######################################################################
+
+use Gimp;
+
+# Defaults
+$max_height = 64;
+$layout_width = 600;
+$bgcolor = [194,194,194];
+$decoration = 'drop-shadow';
+$gutter_x = 15;
+$gutter_y = 15;
+$pad_x = 20;
+$pad_y = 20;
+chop($PWD = `pwd`);
+
+# Routine for parsing the input format
+sub get_next_record {
+    return (undef,undef) if eof(IN);
+    local $_ = <IN>;
+    /^(\S+)\s+(.*)/;
+    return ($1,$2);
+}
+
+# Load an image and return its id
+sub load_img {
+    my($fn) = shift;
+    my($max_height) = shift;
+    $fn = "$PWD/$fn" unless $fn=~ m:^/:;
+    my ($img);
+    $img = gimp_file_load(RUN_NONINTERACTIVE,$fn,$fn);
+    my ($w, $h) = ($img->width, $img->height);
+
+    # Resize the img
+    if ($h > $max_height) {
+	my $scale = $max_height/$h;
+	my $new_w = int($w * $scale+0.5);
+	my $new_h = int($h * $scale+0.5);
+#	print "New w,h = ($new_w, $new_h)\n";
+	gimp_image_scale($img, $new_w, $new_h);
+    }
+
+    return $img;
+}
+
+######################################################################
+#  hbox/vbox algorithm. This algorithm is much like a text flowing
+#  algorithm with centered paragraphs.
+######################################################################
+sub hbox_vbox_add_row {
+    my($imgs, $layout_width, $row_start_idx, $row_end_idx, $ypos, $gutter_x) = @_;
+    my(@row_layout);
+
+    # Calculate teh row width
+    my $row_width = 0;
+    my $row_height = 0;
+    for $i ($row_start_idx..$row_end_idx) {
+	my($w,$h) = ($imgs->[$i]->width, $imgs->[$i]->height);
+	$row_width += $gutter_x + $w;
+	$row_height = $h if $h > $row_height;
+    }
+    $row_width -= $gutter_x;
+    
+    # Do the layout
+    my $xpos = ($layout_width-$row_width)/2;
+    for $i ($row_start_idx..$row_end_idx) {
+	my $y = $ypos + ($row_height-$imgs->[$i]->height)/2;
+	push(@row_layout, [$imgs->[$i], $xpos, $y]);
+	$xpos+= $gutter_x + $imgs->[$i]->width;
+    }
+    return(@row_layout);
+}
+
+sub hbox_vbox_create_layout {
+    my($imgs) = @_;
+    my(@layout);        # The positions of all the images
+
+    # A simple maximal row algorithm
+    my ($row_start_idx, $row_end_idx);
+    my $ypos = $pad_y;
+    my $xpos = 0;
+    print "imsg->[0] = $imgs->[0]\n";
+    my $row_height = $imgs->[0]->height();
+    my $i;
+    foreach $img_idx (0..@$imgs-1) {
+	print "Layouting image #$img_idx\n";
+	my $w = $imgs->[$img_idx]->width();
+	my $h = $imgs->[$img_idx]->height();
+
+#	print "row_width = $row_width\n";
+	# Check for the creation of a new row
+	if ($row_width + $pad_x * 2 + $w > $layout_width) {
+
+	    push(@layout,
+		 hbox_vbox_add_row($imgs, $layout_width,
+				   $row_start_idx, $row_end_idx,
+				   $ypos, $gutter_x));
+	    $total_width = $row_width if $row_width > $total_width;
+	    
+	    # Move to next row
+	    $ypos+= $gutter_y + $row_height;
+	    
+	    # Zero out various things
+	    $row_start_idx = $row_end_idx+1;
+	    $row_end_idx = $row_start_idx;
+	    $row_width = 0;
+	    if ($row_start_idx < @imgs) {
+		$row_width = $imgs->[$row_start_idx]->width;
+		$row_height = $imgs->[$row_start_idx]->height;
+		$xpos = 0;
+	    } 
+	}
+	else {
+	    $row_width += $gutter_x + $w;
+	    $row_end_idx = $img_idx;
+	    $row_height = $h if $h > $row_height;
+	}
+    }
+
+    if ($row_start_idx < @imgs) {
+	push(@layout,
+	     hbox_vbox_add_row($imgs, $layout_width,
+			       $row_start_idx, $row_end_idx,
+			       $ypos, $gutter_x));
+	$total_width = $row_width if $row_width > $total_width;
+	
+	$ypos+= $row_height;
+    }
+    
+    $total_width = $layout_width;
+    $total_height = $ypos + $pad_y;
+    return ($total_width, $total_height, \@layout);
+}
+
+######################################################################
+#  The decoration_drop_shadow creates one layer with the images
+#  and puts a drop shadow behind them.
+######################################################################
+sub decoration_drop_shadow {
+    my($layout) = shift;
+    $shadow_xoffs = 7;
+    $shadow_yoffs = 7;
+    
+    # Put them on a row
+    $tiled_img = gimp_image_new($total_width, $total_height, RGB);
+    $tiled_drw = gimp_layer_new($tiled_img, $total_width, $total_height,
+				RGB_IMAGE, "Tiled", 100, NORMAL_MODE);
+    $tiled_shadow = gimp_layer_new($tiled_img, $total_width, $total_height,
+				   RGB_IMAGE, "Shadow", 50, NORMAL_MODE);
+    $tiled_background = gimp_layer_new($tiled_img, $total_width, $total_height,
+				       RGB_IMAGE, "Background", 100, NORMAL_MODE);
+    
+    # Create masks
+    $tiled_drw_msk = $tiled_drw->create_mask(1);
+    $tiled_shadow_msk = $tiled_shadow->create_mask(1);
+    
+    # Make sure respective images have alpha channels
+    $tiled_drw->layer_add_alpha();
+    $tiled_shadow->layer_add_alpha();
+    
+    # Connect masks to respective layers
+    $tiled_img->add_layer_mask($tiled_drw, $tiled_drw_msk);
+    $tiled_img->add_layer_mask($tiled_shadow, $tiled_shadow_msk);
+    
+    # Fill all the layers with some contents
+    gimp_palette_set_background([128,128,128]); 
+    $tiled_drw->fill(BG_IMAGE_FILL);
+    
+    gimp_palette_set_background($bgcolor);
+    $tiled_background->fill(BG_IMAGE_FILL);
+    if ($bgpattern) {
+	print "Setting pattern\n";
+	gimp_patterns_set_pattern($bgpattern);
+	$tiled_img->bucket_fill($tiled_background, PATTERN_BUCKET_FILL,
+				NORMAL, 100, 0, FALSE, 0,0);
+    }
+    gimp_palette_set_background([0, 0, 0]);  # Shadow color
+    $tiled_shadow->fill(BG_IMAGE_FILL);
+    
+    # Add all the layers to the image
+    $tiled_img->add_layer($tiled_background,-1);
+    $tiled_img->add_layer($tiled_shadow,-1);
+    $tiled_img->add_layer($tiled_drw,-1);
+    gimp_display_new($tiled_img);
+    
+    my $xpos = 0;
+    
+    # Set color for drawing in mask
+    gimp_palette_set_background([255, 255, 255]);
+    for $ly_idx (0..@$layout-1) {
+	my ($img, $xpos, $ypos) = @{$layout->[$ly_idx]};
+	($layer) = @{gimp_image_get_layers($img)};
+	my($w,$h) = ($img->width, $img->height);
+	$img->selection_all();
+	$img->edit_copy($layer);
+	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
+	$tiled_img->edit_paste($tiled_drw, 0)
+	    ->floating_sel_anchor;
+	
+	# why is the selection cleared?
+	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
+	$tiled_img->edit_fill($tiled_drw_msk);
+	
+	# why is the selection cleared?
+	$tiled_img->rect_select($xpos+$shadow_xoffs,
+				$ypos+$shadow_yoffs, $w, $h, 0, 0, 0);
+	$tiled_img->edit_fill($tiled_shadow_msk);
+	
+	$tiled_img->selection_none();
+	
+    }
+    
+    # Blur the shadow
+    plug_in_gauss_rle(1, $tiled_img, $tiled_shadow_msk, 7, 1, 1);
+    
+    # Apply the shadow mask
+    $tiled_img->remove_layer_mask($tiled_shadow, APPLY);
+}
+
+sub decoration_sunken_windows {
+    my($layout) = shift;
+    $shadow_xoffs = 7;
+    $shadow_yoffs = 7;
+    
+    # Create needed image and layers
+    $tiled_img = gimp_image_new($total_width, $total_height, RGB);
+    $tiled_drw = gimp_layer_new($tiled_img, $total_width, $total_height,
+				RGB_IMAGE, "Tiled", 100, NORMAL_MODE);
+    $tiled_punch_layer = gimp_layer_new($tiled_img, $total_width, $total_height,
+				RGB_IMAGE, "Punched", 100, NORMAL_MODE);
+    $tiled_punch_stencil = gimp_layer_new($tiled_img, $total_width, $total_height,
+				RGB_IMAGE, "Punch mask", 100, NORMAL_MODE);
+    # Create masks
+    $tiled_punch_mask = $tiled_punch_layer->create_mask(0);
+    
+    # Make sure respective images have alpha channels
+    $tiled_punch_layer->layer_add_alpha();
+    
+    # Connect masks to respective layers
+    $tiled_img->add_layer_mask($tiled_punch_layer, $tiled_punch_mask);
+    
+    # Fill all the layers with some contents
+    gimp_palette_set_background([128,128,128]); 
+    $tiled_drw->fill(BG_IMAGE_FILL);
+    
+    gimp_palette_set_background($bgcolor);
+    $tiled_punch_layer->fill(BG_IMAGE_FILL);
+    if ($bgpattern) {
+	print "Setting pattern\n";
+	gimp_patterns_set_pattern($bgpattern);
+	$tiled_img->bucket_fill($tiled_punch_layer, PATTERN_BUCKET_FILL,
+				NORMAL, 100, 0, FALSE, 0,0);
+    }
+    gimp_palette_set_background([255, 255, 255]);  # Punch stencil
+    $tiled_punch_stencil->fill(BG_IMAGE_FILL);
+    
+    # Add all the layers to the image
+    $tiled_img->add_layer($tiled_punch_stencil,-1);
+    $tiled_img->add_layer($tiled_drw,-1);
+    $tiled_img->add_layer($tiled_punch_layer,-1);
+    gimp_display_new($tiled_img);
+    
+    my $xpos = 0;
+    
+    # Set color for drawing in mask
+    gimp_palette_set_background([0, 0, 0]);
+    for $ly_idx (0..@$layout-1) {
+	my ($img, $xpos, $ypos) = @{$layout->[$ly_idx]};
+	($layer) = @{gimp_image_get_layers($img)};
+	my($w,$h) = ($img->width, $img->height);
+	$img->selection_all();
+	$img->edit_copy($layer);
+	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
+	$tiled_img->edit_paste($tiled_drw, 0)
+	    ->floating_sel_anchor;
+	
+	# why is the selection cleared?
+	$bw = 3;
+	$tiled_img->rect_select($xpos-$bw,
+				$ypos-$bw, $w+2*$bw, $h+2*$bw, 0, 0, 0);
+	$tiled_img->edit_fill($tiled_punch_stencil);
+	
+	# why is the selection cleared?
+	$tiled_img->selection_none();
+	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
+	$tiled_img->edit_fill($tiled_punch_mask);
+	
+	$tiled_img->selection_none();
+    }
+    
+    # Blur the punch stencil
+    plug_in_gauss_rle(1, $tiled_img, $tiled_punch_stencil, 7, 1, 1);
+
+    # Bump map
+    plug_in_bump_map(1, $tiled_img, $tiled_punch_layer, $tiled_punch_stencil,
+		     135, 45, 4,0,0,0,0,1,0, SPHERICAL);
+
+    # Apply the shadow mask
+    $tiled_img->remove_layer_mask($tiled_punch_layer, APPLY);
+}
+
+sub delete_images {
+    my $imgs = shift;
+    foreach $img (@$imgs) {
+	$img->delete();
+    }
+}
+
+######################################################################
+#  Net is where gimp_main continues after it has connected to
+#  gimp.
+######################################################################
+sub net {
+    open(IN, shift(@ARGV));
+
+    # Read the file list
+    while(($fn,$descr) = get_next_record()) {
+	last unless $fn;
+	next unless -e $fn;
+	print "fn = $fn\n";
+	push(@imgs, load_img($fn, $max_height));
+	push(@filenames, $fn);
+    }
+
+    print "Done reading ", scalar(@imgs), " images\n";
+    
+    # Now create a layout of the images. The layout algorithm
+    # should really be parameterized.
+    my ($total_width, $total_height, $layout) = hbox_vbox_create_layout(\@imgs);
+
+    print "total_size = ($total_width $total_height)\n";
+    
+    # This is an example decoration. Others will be created in the future
+    if ($decoration eq "drop-shadow") {
+	decoration_drop_shadow($layout);
+    } elsif ($decoration eq "sunken-windows") {
+	decoration_sunken_windows($layout);
+    } else {
+	delete_images(\@imgs);
+	die "Unknown decoration $decoration!\n";
+    }
+
+    $tiled_img->flatten() if $do_flatten;
+    gimp_displays_flush();
+
+    # Now create the index file
+    if ($index_file) {
+	open(INDEX, ">$index_file");
+	for $idx (0..@filenames-1) {
+	    my ($img, $xpos, $ypos) = @{$layout->[$idx]};
+	    my($w,$h) = ($img->width, $img->height);
+	    
+	    printf INDEX "%s %.0f %.0f %.0f %.0f %s\n",
+	        $filenames[$idx], $xpos, $ypos, $xpos+$w, $ypos+$h, $descr;
+	}
+	close(INDEX);
+    }
+
+    # Clean up
+    delete_images(\@imgs);
+}
+
+# Parse command line arguments
+while($_ = $ARGV[0], /^-/) {
+    shift;
+    /^-help/ and do { print <<__; exit; };
+make-img-map - Make an image map from a list of images
+
+Syntax:
+    gimp-make-img-map [-max_height mh] [-htmlindex hi] [-layoutwidth lw]
+	         [-flatten] [-bgcolor clr] [-bgpattern ptn] list
+
+Description:
+    gimp-make-img-map communicates with Gimp through the Perl Net-Server
+    and automizes the process of combining a list of images into an
+    image map for use e.g. within a HTML page.
+
+Options:
+    -max_height mh   Set max height of images. (Default $max_height)
+    -index if        Create an index file mapping filename to bounding box
+	             coordinates in output image, where if is the name of
+		     the index file. The index file may e.g. be translated by
+		     a subsequent program into a html index file. 
+    -layoutwidth lw  Set total width of layout. (Default $layout_width)
+    -flatten         Flatten the final image.
+    -bgcolor         Set bg color.
+    -bgpattern       Set bg pattern. Overrides the bgcolor.
+    -padx px         Extra space around all images in x-direction. (Default $pad_x)
+    -pady py         Extra space around all images in y-direction. (Default $pad_y)
+    -gutterx gx      Space between images in x-direction. (Default $gutter_x) 
+    -gutterx gy      Space between images in y-direction. (Default $gutter_y) 
+    -decoration alg  Choose algorithm for drawing the decoration in the layout.
+		     Known algorithms are:
+			   drop-shadow
+			   sunken-windows
+		     Default is 'drop_shadow'.
+__
+		     
+    /^-max_height/  and do { $max_height = shift; next; };
+    /^-index/       and do { $index_file = shift; next; };
+    /^-layoutwidth/ and do { $layout_width = shift; next; };
+    /^-flatten/     and do { $do_flatten++; next; };
+    /^-bgcolor/     and do { $background = shift; next; };
+    /^-bgpattern/   and do { $bgpattern = shift; next; };
+    /^-decoration/  and do { $decoration = shift; next; };
+    /^-gutterx/	    and do { $gutter_x = shift; next; };
+    /^-guttery/	    and do { $gutter_y = shift; next; };
+    /^-padx/	    and do { $pad_x = shift; next; };
+    /^-pady/	    and do { $pad_x = shift; next; };
+    die "Unknown option $_!\n";
+}
+
+# Translate background into a color according to the X11 color dbase.
+exit gimp_main;

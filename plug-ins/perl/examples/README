@@ -1,0 +1,57 @@
+This file describes the various files in the example/ directory. It also
+contains links to applications/scripts people have written. If you
+want to be added, drop me a note at <pcg@goof.com>
+
+example-fu.pl
+	a very small, bare-bones Gimp::Fu script. it is useful
+	as a starting point for experiments.
+
+webify.pl
+	a small plugin that flattens an image, makes the background
+	transparent, converts it to indexed and then crops it
+	to the right size. Useful to save small & transparent gifs
+	from a higher-quality source. It also features most
+	Gimp::Fu UI-elements.
+
+border.pl
+	a "port" of the similarly named plug-in written in C, to
+	demonstrate direct and fast pixel access. IT also differentiates
+	between interactive and nonineractive use, and returns a colour
+	value.
+
+windy.pl
+	this will windify your image. curious? well then ...
+
+prep4gif.pl
+	this will create a copy of your image prepared for saving
+	as indexed gif. it will create a border around your image
+	as well. I guess its for saving logos...
+
+gimp-make-img-map
+	"This program is an automatic way of scaling and tiling lots of
+	images in order to create an index image."
+
+homepage-logo.pl
+	the very first gimp-perl script. I wanted to draw some buttons
+	with script-fu and instead wrote a perl interface. It
+	was probably faster to do it that way rather than using scheme ^_-
+
+Create_Images/image_list
+	this script takes a filename containing strings and
+	sizes (look at image_list for an example), and writes
+	.gif pictures with these strings into your /tmp
+
+example-oo.pl
+	a small nonsense extension just showing the object-oriented
+	pdb syntax. its mostly obsoleted by example-fu.pl, since it doesn't
+	use Gimp::Fu
+
+example-net.pl
+	a small nonsense extension showing a bare-bones networked script.
+	this is obsoleted by Gimp::Fu
+
+http://members.xoom.com/bewebe
+	create contact sheets with comments in tex.
+
+
+

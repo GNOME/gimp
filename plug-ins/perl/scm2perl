@@ -1,0 +1,442 @@
+#!/usr/bin/perl
+
+#require 5.005;
+
+# Copyright Marc Lehmann <pcg@goof.com>
+#
+# This is part of the Gimp-Perl extension, and shares its copright with it.
+
+# TODO
+# more syntax ;) more functions ;) more exprns ;) more constants ;)
+# ui/args
+# too many parens
+# comments(!)
+
+=cut
+
+Watch out for these:
+
+=head1 NAME
+
+scm2perl - convert script-fu to perl
+
+=head1 SYNOPSIS
+
+ scm2perl filename.scm...
+
+=head1 DESCRIPTION
+
+This program tries to convert Script-Fu (Scheme) scripts written for The
+Gimp into a Perl script.
+
+Don't expect too much from this version. To run it, you need the
+Parse::RecDescent module from CPAN.
+
+=head1 CONVERSION TIPS
+
+=head2 PDB functions returning arrays
+
+Perls knows the length of arrays, Script-Fu doesn't. Functions returning
+single arrays return them as a normal perl array, Functions returning more
+then one array return it as an array-ref. Script-Fu (and the converted
+script) expect to get a length argument and then the arguments. Each
+occurence (common ones are C<gimp_list_images> or C<gimp_image_get_layers>)
+must be fixed by hand.
+
+=head1 AUTHOR
+
+Marc Lehmann <pcg@goof.com>
+
+=head1 SEE ALSO
+
+gimp(1), L<Gimp>.
+
+=cut
+
+$|=1;
+
+use Parse::RecDescent;
+
+$RD_HINT=1;
+
+unless(@ARGV) {
+   print STDERR "Script-Fu to Perl Translater 1.0\n";
+   print STDERR "Usage: $0 file.scm ...\n";
+   exit(1);
+}
+
+print STDERR "creating parser..." unless $quiet;
+
+$parser = new Parse::RecDescent <<'EOA';
+
+{
+#   use re 'eval';
+   $Parse::RecDescent::tokensep = '(?:\s*(?:(;[^\n]*\n))?)*';
+   
+   my $indent = 0;
+   my %sf2pf = (
+      'SF-IMAGE'	=> 'PF_IMAGE,     ',
+      'SF-LAYER'	=> 'PF_LAYER,     ',
+      'SF-CHANNEL'	=> 'PF_CHANNEL,   ',
+      'SF-VALUE'	=> 'PF_VALUE,     ',
+      'SF-TOGGLE'	=> 'PF_TOGGLE,    ',
+      'SF-DRAWABLE'	=> 'PF_DRAWABLE,  ',
+      'SF-STRING'	=> 'PF_STRING,    ',
+      'SF-COLOR'	=> 'PF_COLOUR,    ',
+      'SF-ADJUSTMENT'	=> 'PF_ADJUSTMENT,',
+      'SF-FONT'		=> 'PF_FONT,      ',
+   );
+   my %constant = qw(
+      TRUE		1
+      FALSE		0
+      #t		1
+      #f		0
+      
+      RGB		RGB_IMAGE
+      RGBA		RGBA_IMAGE
+      
+      ADD		SELECTION_ADD
+      SUB		SELECTION_SUB
+      REPLACE		SELECTION_REPLACE
+      
+      NORMAL		NORMAL_MODE
+      ADDITION		ADDITION_MODE
+      MULTIPLY		MULTIPLY_MODE
+      DIFFERENCE	DIFFERENCE_MODE
+      DARKEN_ONLY	DARKEN_ONLY_MODE
+      LIGHTEN_ONLY	LIGHTEN_ONLY_MODE
+      BEHIND		BEHIND_MODE
+      COLOR		COLOR_MODE
+      DISSOLVE		DISSOLVE_MODE
+      HUE		HUE_MODE
+      OVERLAY		OVERLAY_MODE
+      SATURATION	SATURATION_MODE
+      SCREEN		SCREEN_MODE
+      SUBTRACT		SUBTRACT_MODE
+      VALUE		VALUE_MODE
+      
+      *pi*		3.14159265
+   );
+   my $constants = join("|",map {quotemeta} sort {length($b) <=> length($a)} keys %constant);
+   my %compat_fun = (
+cdr	=> 'sub cdr {
+   my(@x)=@{$_[0]};
+   shift(@x);
+   @x >1 ? [@x] : $x[1];
+}',
+
+cddr	=> 'sub cddr {
+   my(@x)=@{$_[0]};
+   shift(@x); shift(@x);
+   @x >1 ? [@x] : $x[1];
+}',
+
+max	=> 'sub max {
+   $_[0] > $_[1] ? $_[0] : $_[1];
+}',
+
+min	=> 'sub min {
+   $_[0] < $_[1] ? $_[0] : $_[1];
+}',
+
+fmod	=> 'sub fmod {
+   $_[0] - int($_[0]/$_[1])*$_[0];
+}',
+
+'number->string' => 'sub number2string {
+   sprintf "%$_[1]d",$_[0];
+}',
+
+nth	=> 'sub nth {
+   $_[1]->[$_[0]];
+}',
+
+   );
+   my $compat_fun = join("|",map {quotemeta} sort {length($b) <=> length($a)} keys %compat_fun);
+   my $skip;
+   
+   sub func2perl {
+      my($name)=@_;
+      $name=~s/->/2/g;
+      $name=~y/-*<>?!:\//_/;
+      $name=~/^[A-Za-z_]/ ? $name : "_$name";
+   }
+   
+   sub sf2pf {
+      my $name=lc $_[0];
+      $name=~y/ -?!:<>\[]/__/d;
+      $name=~s/_*[()].*$/"/;
+      $name=~s/_\d*_/_/g;
+      $name=~s/_+$//;
+      sprintf "%-20s","'$name',";
+   }
+}
+
+script	: (...!/$/ stmt)(s) nl /$/
+	| <error:unable to recognize next statement>
+
+stmts	: (...!')' nl stmt)(s?)
+
+stmt	: '(' command ')'
+	| expr gen[";"]
+
+command	: cp_expr gen[";"]
+	| c_let
+	| c_set
+	| c_if
+	| c_while
+	| e_cond gen[";"]
+	| c_aset
+	| c_defun
+	| c_define
+	| c_reg
+	| /print\b/ gen["print "] expr gen[",'\n';"]
+	| e_call gen[";"]
+	| atom gen[";"]
+	| <error:unrecognized statement>
+
+expr	: '(' e_if ')'
+	| '(' gen["("] e_cond gen[")"] ')'
+	| '(' cp_expr ')'
+	| '(' ...!pdbfun e_call ')'
+	| '(' ...pdbfun gen["["] e_call gen["]"] ')'
+	| '(' gen["do {"] incindent nl command decindent nl gen["}"] ')'
+	| atom
+	| ...!')' <error:unrecognized expression>
+
+cp_expr	: /car\b/   '(' ...pdbfun e_call ')'
+	
+	| e_begin
+	| e_list
+	| '=' expr 'TRUE'
+	| '=' 'TRUE' expr
+	| '=' gen["!"] expr 'FALSE'
+	| '=' gen["!"] 'FALSE' expr
+	| '-' gen["-("] expr ...')' gen[")"]
+	| m{[-+]|and\b} gen["("] e_binop[$item[1]] gen[")"]
+	| m{<=|>=|!=|[*/<>]|or\b} e_binop[$item[1]]
+	| '=' e_binop["=="]
+	| /eq\?|eqv\?|equal\?/ '()' expr gen[" eq ''"]			#X#
+	| /eq\?|eqv\?|equal\?/ e_binop["eq"]
+	| /realtime\b/ gen["time"]
+	| /modulo\b/ expr gen[" % "] expr
+	| 'divide?' gen["!"] expr gen["%"] expr
+	| 'string-append' expr (...!')' gen["."] expr)(s?)
+	| 'number->string' expr ...')'
+	| 'cons-array' gen["("] expr (gen[","] expr)(?) gen[",[])"]
+	| 'symbol-bound?' string '(' ident ')' gen["0"]
+	
+	| /aref\b/ expr gen["->["] expr gen["]"]
+	
+	| /$compat_fun/ { $::add_funcs{$compat_fun{$item[1]}}++ } <reject>
+	| /car\b/   gen["\@{"] expr gen["}[0]"]
+	| /cadr\b/  gen["\@{"] expr gen["}[1]"]
+	| /caddr\b/ gen["\@{"] expr gen["}[2]"]
+	| 'null?' gen["!\@{"] expr gen["}"]
+	| /cons\b/  gen["["] expr gen[", "] expr gen["]"]
+	
+	| ...')' gen["[]"]
+	| '(' cp_expr ')'
+	| constant
+
+pdbfun	: /gimp-|plug-in-|script-fu-|file-|extension-/
+
+atom	: constant
+	| 'gimp-data-dir' gen["'/usr/local/share/gimp'"]
+	| ident gen["\$$item[-1]"]
+	| numeral
+	| string gen[$item[-1]]
+	| list
+	| "'not-guile" gen["1"]
+
+e_dot	: 'string-append' expr gen["."] expr
+
+c_defun	: 'define' '(' <commit> ident
+		nl gen["sub $item[-2] {"] incindent
+		nl (...!')'
+			gen["my ("]
+			pardef (...!')' gen[", "] pardef)(s?)
+			gen[") = \@_;"]
+		)(?)
+	  ')'
+	  stmts decindent
+	  nl gen["}"] nl
+
+#c_define: 'define' ident gen["sub $item[-1] {"] incindent
+#	  (nl command | stmts ) decindent
+#	  nl gen["}"] nl
+
+c_define: 'define' ident gen["\$$item[-1] = "] expr gen[";"]
+
+pardef	: ident gen["\$$item[-1]"]
+
+c_reg	: 'script-fu-register' <commit>
+	  string string string
+	  string string string
+	  string
+	  {
+	    $item[1]=func2perl(substr($item[3],1,length($item[3])-2));
+	    $item[3]=~s/script-fu/perl_fu/;
+	    $item[3]=~y/-/_/;
+	    $item[4]=~s/Script-Fu/Perl-Fu/;
+	    $item[5]=~s/\s{2,}/ /g;
+	  }
+	  nl gen["register "] incindent
+	     gen[$item[3]] gen[","]
+	  nl gen[$item[5]] gen[","]
+	  nl gen[$item[5]] gen[","]
+	  nl gen[$item[6]] gen[","]
+	  nl gen[$item[7]] gen[","]
+	  nl gen[$item[8]] gen[","]
+	  nl gen[$item[4]] gen[","]
+	  nl gen[$item[9]] gen[","]
+	  nl gen["["] incindent
+	  ( <reject:$arg[0]!~/^.<Image>/> skip paramdef paramdef unskip )[$item[4]](?)
+	  (...!')' paramdef)(s?)
+	  decindent
+	  nl gen["],"]
+	  nl gen["\\&$item[1];"]
+	  decindent
+
+paramdef: /SF-\w+/
+	  nl
+	  gen["["] gen[$sf2pf{$item[1]}]
+	  string gen[sf2pf($item[-1])."$item[-1], "]
+	  ( '"TRUE"' gen["1"]
+	  | '"FALSE"' gen["0"]
+	  | expr
+	  ) gen["],"]
+
+e_call	: ( /script-fu-[A-Za-z_*][A-Za-z0-9-_*]*/
+	    gen["\"$item[-1]\"->(RUN_NONINTERACTIVE, "]
+	  | ident gen["$item[-1] ("]
+	  )
+	  (...!')'
+	  	expr (...!')' gen[", "] expr)(s?)
+	  )[@arg](?)
+	  gen[")"]
+
+c_set	: /set!?/ <commit>
+	  ident gen["\$$item[-1] = "]
+	  expr
+	  gen[";"]
+
+c_aset	: /aset\b/ <commit>
+	  ident gen["\$$item[-1]\->["] expr gen["] = "] expr gen[";"]
+
+c_let	: /let(\*|rec)?/ <commit>
+	  gen["do {"] incindent
+	  '(' let_expr(s) ')' nl
+	  stmts (expr gen[";"])(?) decindent
+	  nl gen["};"]
+
+let_expr: ...!')' nl '(' ident gen["my \$$item[-1] = "] expr gen[";"] ')'
+
+e_begin	: /begin\b|prog1\b/ <commit>
+	  gen["do {"] incindent
+	  stmts decindent
+	  nl gen["}"]
+
+e_if	: 'if' <commit>
+	  gen["("] expr gen[") ? ("] expr gen[") : ("] expr gen[")"]
+
+c_if	: 'if' <commit>
+	  gen["if ("] expr gen[") {"] incindent
+	  nl stmt decindent
+	  nl gen["}"]
+	  ( '(' ')'
+	  |
+	     (...!')'
+	        gen[" else {"] incindent
+	        nl stmt decindent
+	        nl gen["}"]
+	     )(?)
+	  )
+
+c_while	: 'while' <commit>
+	  nl gen["while ("] expr gen[") {"] incindent
+	  stmts decindent
+	  nl gen["}"]
+
+e_cond	: 'cond' <commit>
+	  cond
+
+cond	: '(' 
+	  ( /'?else\b/ expr ')'
+	  | expr gen[" ? "] expr incindent nl gen[": "] ')' decindent
+	    ( ...'(' cond | gen["die 'cond fell off the end'"] )
+	  )
+
+e_binop	: expr
+          (...!')'
+	     gen[" $arg[0] "]
+	     expr
+	  )[@arg](s?)
+	
+e_list	: 'list' gen["["] (expr (...!')' gen[", "] expr)(s?))(?) gen["]"]
+
+ident	: /[A-Za-z0-9-#_*!?<>=\/]+/ <reject:$item[1]!~/[A-Za-z]/>
+	  { func2perl($item[1]) }
+
+numeral	: /-?(?:\d+(?:\.\d*)?|\.\d+)/ gen[$item[-1]]
+
+string	: /"([^\\"]+|\\.)*"/        { $item[1]=~s/([\$\@])/\\$1/g; $item[1] }
+	| /'[A-Za-z0-9-_*!?<>=\/]+/ { $item[1]=~s/([\$\@])/\\$1/g; '"'.substr($item[1],1).'"' }
+
+list	: "'(" gen["["] (expr (...!')' gen[", "] expr)(s?))(?) gen["]"] ')'
+
+constant: /(?:$constants)(?=[ \t;)\n\r])/ gen[$constant{$item[-1]}]
+	| /[A-Z-_]{3,}/                   gen[func2perl($item[-1])]
+
+
+nl:		gen["\n".("   " x $indent)]
+incindent:	{ printf STDERR " %2d%%\b\b\b\b",$thisoffset*100/$::filesize unless $::quiet } { $indent++ }
+decindent:	{ $indent-- }
+skip:		{ $skip++ }
+unskip:		{ $skip-- }
+gen:		( <reject:$skip> <defer: print ::OUT $arg[0] > )[@arg](?)
+#gen:		{ $skip or print $arg[0] } #d#
+
+EOA
+
+$parser or die;
+print STDERR "done\n" unless $quiet;
+
+#$RD_TRACE=15;
+
+sub convert {
+   my($in,$out)=@_;
+   
+   open IN,"<$in\0"   or die "unable to open '$in' for reading: $!";
+   open OUT,">$out\0" or die "unable to open '$out' for writing: $!";
+   
+   print STDERR "header..." unless $quiet;
+   print OUT <<EOA;
+#!/usr/bin/perl
+
+use Gimp qw(:auto);
+use Gimp::Fu;
+EOA
+
+   print STDERR "reading($in)..." unless $quiet;
+   { local $/; $file = <IN> }
+   $::filesize = length $file; # make it clear this is a _global_ variable
+
+   print STDERR "translating..." unless $quiet;
+   $parser->script ($file);
+
+   print STDERR "trailer..." unless $quiet;
+   print OUT "\n",join("\n\n",keys %add_funcs),"\n" if %add_funcs;
+   print OUT <<'EOA';
+
+exit main;
+EOA
+   
+   print STDERR "wrote($out)\n" unless $quiet;
+}
+
+for $x (@ARGV) {
+   (my $y=$x)=~s/\.scm/.pl/i or die "source file '$x' has no .scm extension";
+   convert($x,$y);
+}
+

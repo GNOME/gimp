@@ -1,0 +1,25 @@
+# this is ugly, but it makes Gimp installable from within CPAN
+
+$CPPFLAGS	= q[@CPPFLAGS@];
+$CFLAGS		= q[@CFLAGS@];
+$LDFLAGS	= q[@LDFLAGS@];
+$prefix		= q[@prefix@];
+
+$IN_GIMP	= q[@IN_GIMP@];
+
+$PERL		= q[@PERL@];
+$GIMP		= q[@GIMP@];
+$GIMPTOOL	= q[@GIMPTOOL@];
+$GIMP_INC	= q[@GIMP_CFLAGS@];
+$GIMP_INC_NOUI	= q[@GIMP_CFLAGS_NOUI@];
+$GIMP_LIBS	= q[@GIMP_LIBS@];
+$GIMP_LIBS_NOUI	= q[@GIMP_LIBS_NOUI@];
+
+$EXTENSIVE_TESTS= q[@EXTENSIVE_TESTS@];
+
+if (defined $topdir) {
+   $GIMP_INC		=~ s/\$topdir/$topdir/g;
+   $GIMP_INC_NOUI	=~ s/\$topdir/$topdir/g;
+   $GIMP_LIBS		=~ s/\$topdir/$topdir/g;
+   $GIMP_LIBS_NOUI	=~ s/\$topdir/$topdir/g;
+}

@@ -1,0 +1,114 @@
+=head1 NAME
+
+Gimp::Pixel - how to operate on raw pixels
+
+=head1 SYNOPSIS
+
+  use Gimp;	# all you need is in Gimp.
+
+  # Gimp::GDrawable	- The GDrawable structure
+  # Gimp::Tile		- The Tile family of functions.
+  # Gimp::PixelRgn	- The PixelRgn family of functions.
+
+=head1 DESCRIPTION
+
+You can access the pixels in a drawable through tiles or pixel regions. This
+manpage explains how this is done in perl. All classes (Gimp::GDrawable,
+Gimp::Tile, Gimp::PixelRgn) are available with and without the C<Gimp::> prefix.
+
+=head1 GDRAWABLES
+
+Well, you know drawables? (also known as PARAM_DRAWABLE or Gimp::Drawable)?
+In the Gimp, drawables are things you can draw on: layers, channels or whole
+images. While most functions named C<gimp_drawable_something> operate on
+C<drawable_ID>s, some functions (notably the ones operating on raw pixel
+data!) need a C<GDrawable> instead. Every drawable has a corresponding
+C<GDrawable>, you can get it with the C<gimp_drawable_get> function:
+
+ my $gdrawable = $drawable->get;
+
+When the $gdrawable is destroyed, it is automatically flushed & detached, so
+you don't need to do this yourself.
+
+=head1 TILES
+
+Tiles are the basic building blocks of all drawables. Each drawable consists
+of a "grid" of tiles, each tile having the same size. The size of a tile is
+always the same (it's hardcoded in your Gimp program).
+
+The C<gimp_tile_width> and C<gimp_tile_height> functions return the current
+width/height of a tile (at the moment, this is 64x64).
+
+How do I get a tile? First, you have to grab a GDrawable structure. You can
+get one from any drawable, by calling the C<get> function:
+
+ my $gdrawable = $drawable->get;
+
+in a sense, <$gdrawable> contains all tiles. Changes you make to them might
+not be reflected in the image until you destroy this variable. (Thats the
+reason I used "my" int he above example. Once $gdrawable gets out of scope,
+the drawable in the gimp automatically gets updated).
+
+To get access to a tile, you have to call C<get_tile> or C<get_tile2>.
+C<get_tile> expects row/column numbers of the tile, while C<get_tile2>
+expects pixel coordinates and will return the tile that pixel is in:
+
+ my $tile = $gdrawable->get_tile2(1,75,60);
+
+The C<data> method returns and sets the raw pixel data.
+
+ $packed_data = $tile->data;	# you don't want this, use Gimp::PDL
+ $tile->data($packed_data);	# and modify the tile
+
+=head1 PIXELREGIONS
+
+C<PixelRgn>s are rectangular parts of a drawable. You can access single
+pixels, rows, columns and rectangles within these regions. Don't expect me
+to explain everything now, I don't understand the mechanism too well
+myself..
+
+How do I create a pixel region? First, you have to grab a GDrawable structure. You can
+get one from any drawable, by calling the C<get> function:
+
+ my $gdrawable = $drawable->get;
+
+Now you can create as many PixelRgn structures as you want from
+the C<GDrawable>:
+
+ my $region = new PixelRgn($gdrawable,0,0,50,30,1,0);	# with "new"
+ my $region = $gdrawable->pixel_rgn(0,0,50,30,1,0);	# or from a drawable
+
+which method you choose is purely a question of style...
+
+The following functions return packed pixel data (see L<Gimp::PDL> for an
+easier way to manipulate on image data):
+
+ $packed_data = $region->get_pixel(45,60);	# return the pixel at (45|60)
+ $packed_data = $region->get_row(45,60,10);	# return ten horizontal pixels
+ $packed_data = $region->get_col(45,60,10);	# same but vertically
+ $packed_data = $region->get_rect(45,60,10,12);	# a 10x12 rectangle
+
+To modify pixels, the dirty bit of the region must be set (I believe, but I
+don't see the reason what the dirty bit in a region is for so I might be
+wrong), and you can write pixel data to the region with the following
+functions, each one corresponding to a get-function:
+
+ $region->set_pixel($packed_data,45,60);	# set pixel at (45|60)
+ $region->set_row($packed_data,45,60);		# set a row
+ $region->set_col($packed_data,45,60);		# set a column
+ $region->set_rect($packed_data,45,60,10);	# a 10 pixel wide rectangle
+
+Please note that (different to the C functions they call), the last
+parameter (width or height) is missing, it can be calculcated from the perl
+string (if you use piddles, C<set_rect> can calculcate both dimensions from the
+piddle).
+
+=head1 AUTHOR
+
+Marc Lehmann <pcg@goof.com>
+
+=head1 SEE ALSO
+
+perl(1), Gimp(1).
+
+=cut

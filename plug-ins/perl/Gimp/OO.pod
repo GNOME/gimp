@@ -1,0 +1,190 @@
+=head1 NAME
+
+Gimp::OO - Pseudo-OO for Gimp functions.
+
+=head1 SYNOPSIS
+
+  use Gimp;		# Gimp::OO is now part of Gimp.
+
+=head1 DESCRIPTION
+
+As you might have noticed, you can sort most gimp functions fall into three
+groups, depending on the name-prefix: C<gimp_>, C<plug_in_>, C<extension_>
+etc..
+
+Whats more, there are functions groups like C<gimp_image_> or
+C<gimp_selection_>, operating on a common object, B<Images> and B<Selection>
+in this case.
+
+If you only had the plain syntax, your scripts would quickly aquire
+the "vertical gimp syndrome":
+
+ gimp_palette_set_foreground(...)
+ gimp_layer_new(...)
+ gimp_palette_set_background(...)
+ gimp_image_add_layer(...)
+
+etc. Of course, your fingers will suffer from severe injuries as well.
+
+A solution to this situation is to use OO-syntax. Gimp plays some (very)
+dirty tricks and provides a number of classes, like C<Gimp::Image> and
+C<Gimp::Palette> that allow shorter identifiers to be used (all these appear
+with the C<Gimp::> prefix as well as without, i.e. C<Gimp::Palette> is the
+same class as C<Palette>).
+
+If you call a method, C<Gimp> tries to find a gimp function by
+prepending a number of prefixes until it finds a valid function:
+
+ $image = Gimp->image_new(...); # calls gimp_image_new(...)
+ $image = Image->new(...);	# calls gimp_image_new as well
+ $image = new Image(...);	# the same in green
+ Palette->set_foreground(...)	# calls gimp_palette_set_foreground(..)
+
+Return values from functions are automatically blessed (through
+The Magic Autobless feature ;) to their corresponding classes, i.e.
+
+ $image = new Image(...);	# $image is now blessed to Gimp::Image
+ $image->height;		# calls gimp_image_height($image)
+ $image->flatten;		# likewise gimp_flatten($image)
+ $image->histogram(...);	# calls gimp_histogram($image,...), since
+				# gimp_image_histogram does not exist
+
+The class argument (C<$image> in the above examples) is prepended to the
+argument list.
+
+Another shortcut: many functions want a (redundant) image argument, like
+
+ $image->shear ($layer, ...)
+
+Since all you want is to shear the C<$layer>, not the C<$image>, this is
+confusing as well. In cases like this, Gimp allows you to write:
+
+ $layer->shear (...)
+
+And automatically infers the additional IMAGE-type argument.
+
+You can call all sorts of sensible and not-so-sensible functions,
+so this feature can be abused:
+
+ patterns_list Image;		# will call gimp_patterns_list
+ quit Plugin;			# will quit the Gimp, not an Plugin.
+
+there is no image involved here whatsoever...
+
+=head1 AVAILABLE CLASSES
+
+The following classes (with and without Gimp::) are available. The prefixes
+that are checked are shown as well (the null prefix "" is implicit).
+
+=over 4
+
+=item Gimp (there is no Gimp::Gimp, only Gimp::)
+
+ gimp_
+
+=item Layer
+
+ gimp_layer_
+ gimp_drawable_
+ gimp_image_
+ gimp_
+
+=item Image
+
+ gimp_image_
+ gimp_drawable_
+ gimp_
+
+=item Drawable
+
+ gimp_drawable_
+ gimp_layer_
+ gimp_image_
+ gimp_
+
+=item Selection
+
+ gimp_selection_
+
+=item Channel
+
+ gimp_channel_
+ gimp_drawable_
+ gimp_image_
+ gimp_
+
+=item Display
+
+ gimp_display_
+ gimp_
+
+=item Palette
+
+ gimp_palette_
+
+=item Plugin
+
+ plug_in_
+
+=item Gradients
+
+ gimp_gradients_
+
+=item Edit
+
+ gimp_edit_
+
+=item Progress
+
+ gimp_progress_
+
+=item Region
+
+(none except the implicit null prefix)
+
+=item Tile
+
+ gimp_tile_
+
+=item PixelRgn
+
+ gimp_pixel_rgn_
+
+=item GDrawable
+
+ gimp_drawable_
+
+=item Brushes
+
+ gimp_brushes_
+
+=item Edit
+
+ gimp_edit_
+
+=item Gradients
+
+ gimp_gradients_
+
+=item Selection
+
+ gimp_selection_
+
+=item Patterns
+
+ gimp_patterns_
+
+=item Parasite
+
+ parasite_
+
+=back
+
+=head1 AUTHOR
+
+Marc Lehmann <pcg@goof.com>
+
+=head1 SEE ALSO
+
+perl(1), L<Gimp>.
+

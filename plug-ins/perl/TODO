@@ -1,0 +1,55 @@
+this is mostly my personal worksheet and notepad, which may not be
+up-to-date and may not even be readable ;)
+
+shortcuts (don't ask)
+
+  gimp pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
+
+bugs
+
+  * perl_fu_webify in homepage-logo.pl
+  * save_image should be called for non-null return values
+[DONE]  * attempt to free unreferenced
+  * drawable is compatible to layer AND VICE VERSA (convert_sv2gimp)
+[DONE]  * return values do not at all work
+  * enable t/run.t again (but how? different solutions
+    for gimp-1.0 and gimp-1.1???)
+  * wait for working gimp_file_load (or do it myself?)
+  * block display_new &c when Net
+  * Gimp::import should croak on import "garbage".
+  * memory leak on croak()? de-croakify the code!
+  
+important issues
+
+  * zero-copy PDL support
+  * gimp_init, gimp_deinit
+  * duplicate HAVE_VPRINTF in gimp
+  * get rid of superflus image arguments
+  * put it into the cvs tree
+  * weighted movement in drawing tools
+  * -DMIN_PERL_DEFINE
+  * PF_PALETTE (maybe not)
+[DONE]  * reset to defaults button
+  * kill RUN_INTERACTIVE/run_mode-shit
+  * --function localfunc to select one of the registered scripts
+  * brush etc. buttons (maybe use gimp's interface, but
+    only when local(?))
+  * help button ;)
+  * create working progress when Net and $verbose
+  * require Storable soon(!)
+  * Gimp::Fu::command(?)
+  * Untitled/0 Untitled/1 etc..
+  * default parameters at end(!)
+  * try to deduce default parameters
+[DONE]  * return values for run()
+
+long term issues and ideas
+
+  * default function parameters (with hash %defaults?)
+  * gimp_text(text => "hallo", family => "engraver", size => 20);
+  
+  * do not know how to sensibly convert these => perl is NOT C.
+  
+    gimp_pixel_rgns_register(nrgns, ...)
+    gimp_pixel_rgns_process(pri_ptr)
+

@@ -1,0 +1,38 @@
+AC_INIT(config.pl.in)
+
+AC_PREFIX_DEFAULT($prefix)dnl from Makefile.PL
+
+AC_CONFIG_HEADER(config.h)
+
+AC_ARG_WITH(cflags,  [  --with-cflags=FLAGS     Set CFLAGS to FLAGS (optional)],
+   CFLAGS="$with_cflags")
+
+AC_ARG_WITH(ldflags, [  --with-ldflags=FLAGS    Set LDFLAGS to FLAGS (optional)],
+   LDFLAGS="$with_ldflags")
+
+AC_ARG_WITH(includes,[  --with-includes=DIR     Additionally search for includes in dir DIR (optional)],
+   CPPFLAGS="$CPPFLAGS -I$with_includes")
+
+AC_ARG_WITH(libs,    [  --with-libs=DIR         Additionally search for libraries in dir in DIR (optional)],
+   LIBS="$LIBS -L$with_libs")
+
+AC_CHECK_PROGS(GIMP,gimp,gimp)
+
+AM_PATH_GIMP(1.0.0,, AC_MSG_ERROR(
+** unable to find gimp, make sure it's in your path (version 1.0+ required!)
+** You can get the Gimp from ftp://ftp.gimp.org/pub/gimp.
+))
+
+ac_save_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $GIMP_CFLAGS"
+AC_EGREP_CPP(DIVIDE_MODE,[#include <libgimp/gimp.h>],AC_DEFINE(HAVE_DIVIDE_MODE))
+CPPFLAGS="$ac_save_CPPFLAGS"
+
+CONFIG_H="config.h"
+
+sinclude(configure.frag)
+
+AC_OUTPUT(config.pl)
+
+echo "now invoking perl to complete the configuration..."
+exec $PERL $MAKEFILE_PL --writemakefile PREFIX="$prefix"

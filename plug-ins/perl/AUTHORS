@@ -1,0 +1,14 @@
+Marc Lehmann <pcg@goof.com>
+	"everything"
+
+Additional example/plug-in authors (may not be complete), please see the
+scripts in the examples/ directory:
+
+Dov Grobgeld <dov@imagic.weizmann.ac.il>
+        contributed some examples and many
+        ideas, many, many bugfixes, the initial version of
+        Gtk/ColorSelectButton.pm, and, most importantly, a tutorial.
+
+Jason van Zyl <jason@bookshelf.ca>
+	sent the first example script
+

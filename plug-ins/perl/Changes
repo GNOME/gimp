@@ -1,0 +1,361 @@
+Revision history for Gimp-Perl extension.
+
+1.044
+	- allow PF_PATTERN etc. to be usable as commandline arguments
+	- added parasite support -> untested so far
+	- Gimp::Fu wasn't calling Gtk->init anymore
+	- Gimp/Lib.xs wasn't including config.h, and nobody ever noticed ;)
+	- we no longer link against ui-libraries, unless necessary.
+	- added <5.005 warning
+	- many, many configuration changes and hacks
+	- this is now part of the gimp cvs tree
+	- changed LIBS by LDLOADLIBS... hacky, but works
+
+1.0431 Thu Oct  8 20:01:32 CEST 1998
+	- compile fix for gimp-1.0
+
+1.043 Thu Oct  8 07:27:23 CEST 1998
+	- allow <None> as menupath
+	- added HORIZONTAL, VERTICAL
+	- implemented PF_BRUSH, PF_PATTERN and PF_GRADIENT
+	- examples/example-fu.pl shows all possible dialog widgets
+	- fixed Gimp::Fu::xlfd_size to correctly return the pointsize
+	  (rather than pointsize*10)
+	- added FG_IMAGE_FILL (and fixed the values of the other FILL
+	  constants, which were documented incorrectly)
+	- please note that you can upload your perl-scripts to the
+	  Gimp-registry now(!!!!). Visit http://registry.gimp.org/
+	  and deposit your script ;)
+
+1.042 Mon Oct  5 00:50:04 CEST 1998
+	- implemented PF_ADJUSTMENT to aid scm2perl's job, its undocumented
+	  and should not be used by new code.
+	- fixed a coredump problem when tracing.
+	- removed debugging code I accidently left in. Yuck Yuck!
+	- an array size parameter in argument lists is now accepted and
+	  silently ignored. This is for script-fu compatibility.
+	- better error handling (I'm on the right track!)
+	- added scm2perl (scheme to perl) to the distribution. Look at
+	  "perldoc scm2perl". Needs Parse::RecDescent from CPAN.
+
+1.041 Sat Oct  3 21:58:09 CEST 1998
+	- a 5.004 compatibility fix. Another one and I'll simply "require
+	  5.005".
+	- Gimp::Fu doesn't display image and drawable widgets in commandline
+	  mode unless the script really is an <Image>-type script.
+	- Gimp::Net now passes colour values correctly (and also
+	  undefs, which makes it slower but perl doesn't warn
+	  anymore. argh.)
+	- constants now have empty prototypes (so "RGB_IMAGE ? ... : ..." parses as
+	  question operator rather than pattern match.
+	- Gimp::Fu/Cancel button works in commandline mode
+
+1.04  Thu Oct  1 22:42:57 CEST 1998
+	- don't disallow drawable arguments as layer parameters.
+	- fixed error reporting again (it should work now but still
+	  compiler with older perls ;)
+	- implemented PF_FONT, see also Gimp::Fu::xlfd_size
+	- implemented PF_SPINNER
+	- another "Attempt to free unrecerenced scalar" warning fixed
+
+1.035 Wed Sep 30 23:58:02 CEST 1998
+	- Gimp::ignore_functions can be used to ignore AUTOLOADING
+	  of some functions. This is mainly for the benefit of interface
+	  modules.
+	- Gimp::Net/spawn will ignore gimp_progress_init and other, similar
+	  gui dependent functions.
+	- changed lookup order again to ease overwriting functions.
+	- fixed the bug with not using the perl version of some functions
+	  (like gimp_list_images)
+
+1.034 Wed Sep 16 21:21:42 CEST 1998
+	- various bugfixes in Gimp::Fu
+	- added slider type to Gimp::Fu (PF_SLIDER), see webify.pl
+	  for a demo.
+
+1.033 Tue Sep 15 17:53:50 CEST 1998
+	- added mailing list info to the README
+	- compatibility fix for 5.004
+
+1.032 Mon Sep 14 02:29:55 CEST 1998
+	- Gimp::Fu now has (some) support for return values. I told you to
+	  return undef ;)
+	- fixed memory problem in Gimp::Lib when param array was empty.
+	- removed bogus plug_in_ name prefix form the examples
+	- don't install border.pl by default, gimp is just too buggy ;)
+	- webify.pl now doesn't cut the layer away if the selection is empty.
+	- added FG/BG buttons to fetch colours to Gimp::Fu (try Filters/Misc/Webify)
+	- disabled intensive tests (batch mode now requires script-fu...
+	  bleeech)
+
+1.031 Sun Sep 13 21:50:51 CEST 1998
+	- non-OO syntax works again (silly me) (and is no longer deprecated,
+	  but the default!)
+	- Gimp::function syntax officially does not work anymore. Use
+	  Gimp->function syntax now (or use :auto)
+	- made compatible with the newest gimp snapshit. wrote
+	  lamentation to gimp-developers. commited suicide.
+	- added examples/webify.pl
+	- first try to implement return values in Gimp. Gimp::Fu still
+	  lacks support.
+
+1.03  Wed Sep  9 21:04:54 CEST 1998
+	- all files are now readable/exec'able by group owner
+	- updated some examples to the new syntax
+	- small documentation changes (still waaay to go..)
+	- Gimp::Fu now allows any string as colour specifier.
+	- the Perl-Server doesn't eat the string "Gimp" as first argument
+	  anymore, but still gimp_some_function("Gimp") is indistinguishable
+	  from Gimp->gimp_some_function().
+	- not use'ing Gimp from interface modules makes everything so much
+	  easier..
+	- fixed make clean
+	- added more tests, including starting and testing The Gimp itself
+	- passwords can now be used for the Perl-Server (and tcp is open
+	  by default)
+
+1.02  Wed Sep  2 23:35:37 CEST 1998
+	- added Gimp::Patterns
+	- Gimp::Fu now doesn't gratitiously share LAST_VALS with other
+	  Gimp::Fu-plugins anymore ;)
+	- reworked AUTOLOAD again, no it even seems to work.
+	- fixed Fu::interact
+
+1.01  Tue Sep  1 23:18:25 CEST 1998
+	- PARAM_IMAGEs (et al.) can now be passed into an INT32ARRAY
+	  (*shudder*)
+	- arrays as return value now work. if a single array is being returned,
+	  return it flat, else return it as reference (this does not include
+	  colours, though)
+	- INT8 values will now be returned UNSIGNED (!)
+	- totally reworked autoloading, I hope its cleaner that way:
+	  - Gimp is now a class like any other (Gimp::Layer, Palette)
+	  - flat calling syntax is now deprecated ("gimp_image_new"),
+	    OO-syntax should be used ("new Image" or "Gimp->image_new"),
+	    which allows better compatibility.
+
+1.005 Mon Aug 24 23:09:17 CEST 1998
+1.004 (internal release for debian)
+	- requires Gtk-0.3 now... since this version finally works,
+	  I can code again:
+	- added "Defaults" button to Gimp::Fu
+	- prototypes enabled for pixel/region/pdl functions
+	- various bugfixes to PDL functions
+
+1.003 Sat Aug 15 21:06:41 CEST 1998
+	- gimp-1.1 removes some functions, so don't prototype them.
+	- a drawable first argument substitues for an image, i.e.
+	  you can omit the first IMAGE
+	- error reporting is now much better and reports the correct
+	  source position, I hope ;)
+
+1.002 Mon Jul 27 12:44:46 CEST 1998
+	- Patch by Dov Grobgeld (default values for arguments, bugfixes)
+	- gimp_displays_flush called always after a Fu-script
+
+1.001 Sat Jul 25 04:01:55 CEST 1998
+	- another fix by Aaron Sherman
+
+1.0   Thu Jul 23 23:35:13 CEST 1998
+	- prefix wrongly defaulted to /usr/local
+	- other configuration changes
+	- fixed(?) mod. of read-only variable...
+
+0.996 Wed Jul 22 14:39:23 CEST 1998
+	- greatly reduced code bloat, almost all functions
+	  can be traced now, at expense of speed and possible
+	  libgimp-bashing ;-<
+	- _some_ plug-ins are installed by default now
+	- if this surives the test, it will be 1.0. really.
+
+0.995 Tue Jul 21 20:08:32 CEST 1998
+	- do not depend on origargc and origargv anymore, as
+	  these do not exist in perl5.004_76 (due to a bug, but
+	  the new solution is better)
+	- this is the release 1.0 candidate
+
+0.994 Tue Jul 21 04:57:28 CEST 1998
+	- check wether DIVIDE_MODE is available
+	- commented out gimp_channel_get_show_masked
+	  and gimp_channel_set_show_masked, since they are
+	  implemented in gimp-1.0
+	- implemented strings as colour specifiers, i.e.
+	  gimp_palette_set_foreground "slategrey"
+	  see Gimp::set_rgb_db
+
+0.993 Tue Jul 21 04:38:01 CEST 1998
+	- incorporated Dov's patch to enable --output
+	  (man Gimp::Fu, save_image)
+
+0.992 Thu Jul 16 17:10:46 CEST 1998
+	- added more constants (see DIVIDE_MODE, gimp_color_balance)
+	- Perl-Server now clears the trace result from the last command,
+	  in case the command doesn't set it.
+
+0.991 Thu Jul 15 19:00:50 CEST 1998
+	- gimp_set/get_data now uses gimp_data_get_size when available
+	  (the test will fail with some cpp's, though ...)
+
+0.99  Tue Jul  7 03:23:07 CEST 1998
+	- --info switch deleted from Fu
+	- implemented --interact switch, default is now NOT
+	  to interact when any script-arguments are given.
+	- switched to using vi, instead of joe, for editing
+	- killed configure, a Makefile.PL is now used (which
+	  calls configure ;-)
+	- got rid of the top-level configure, now use the Makefile.PL
+	- implemented RUN_WITH_LAST_VALS in Fu, with hopefully useful
+	  semantics. \0\0 is currently illegal in arguments, otherwise I had
+	  required Data::Dumper or Storable
+
+0.98  (not correctly issued)
+	- 0.98 was wrongly issued to CPAN.
+
+0.97  Tue Jun 30 19:36:23 CEST 1998
+	- bugfixes, changes for gimp-1.1
+	- Gtk-0.2.3 required
+
+0.96  Sun Jun  7 16:24:46 CEST 1998
+	- added windy.pl to the manifest.
+	- Gimp::Tile & friends now work with Gimp::Net
+	- Gimp::Fu now supports all PARAM_xxx-types
+	- Gimp::Fu now supports some of the switches
+
+0.95  Fri May 29 13:47:48 CEST 1998
+	- thanks mr. libgimpui developer for this braindamaged "use static
+	  structures" attitude. I reimplemented the libgimpui in perl.
+	  not that it got worse...
+
+0.94  Wed May 27 04:19:24 CEST 1998
+	- PixelRgn and Tile manpages merged.
+	- Gtk-0.2.2 required
+	- Lib.xs (and _only_ Lib.xs!) now compiles & links against
+	  gtk-config --whatever, since we need widget support.
+
+0.93  Tue May 26 03:09:59 CEST 1998
+	- documentation updates.
+	- bugfixes.
+	- added windy.pl plug-in.
+
+0.92  Sat May 23 23:46:33 CEST 1998
+	- preliminary GDrawable support (NOT Gimp::Net)
+	- preliminary GTile support (NOT Gimp::Net)
+	- preliminary GPixelRgn support (NOT Gimp::Net)
+	- preliminary PDL support (in Gimp::PDL)
+	- moved Gimp::OO into Gimp
+	- bugfixes
+
+0.91  Fri May 22 01:55:30 CEST 1998
+	- Gimp::ColorSelectButton is no longer installed, Gtk-0.2.2 is
+	  required.
+	- commandline parameters supported
+	- gimp_image_get_layers, gimp_image_get_cmap, gimp_image_get_channels
+	  commented out, use pdb functions instead
+	- fixed a bug in Fu handling of <Image> plug-ins
+
+0.90  Tue May 12 15:26:50 CEST 1998
+	- BUGFIX ONLY RELEASE
+	- tracing works in Perl-Server (Oleg Bartunov)
+	- fixes for Gtk-0.2.1
+	- Gtk::ColorSelectButton renamed to Gimp::ColorSelectButton
+	  until Gtk is fixed.
+	- _I_ made the error of writing udp when I meant unix. _ARGH_
+
+0.89  Mon May 11 03:29:30 CEST 1998
+	- added common commandline options (--help, --host, --verbose)
+	- help option for Gimp::Fu
+	- added a whole bunch of --with-*= switches
+	- well.... still more bugfixes!
+	- Gimp::Net will autostart gimp
+
+0.88  Wed May  6 17:00:57 CEST 1998
+	- fixed "script-fu-whatever-garbage"->(arguments...)
+	- renamed Net-Server to Perl-Server (why?)
+	- more (untested) configuration changes. Does it work at all now?
+	- removed Gimp::Util (it _was_ not convincing)
+	- even more fixes
+	- Gimp::Fu! including some documentation ;)
+	- added Gtk/ColorSelectButton.pm
+
+0.87  Mon Apr 27 15:38:23 CEST 1998
+	- mainly a bugfix release, none of the new features work yet!
+	- started to code Gimp::Fu for simple dialogs.
+	- added more autoflush for old perls *sigh*
+	- autoconf'd. not good, but its a start
+	- AUTOLOAD is no longer exported, instead, @ISA is used
+
+0.86  Thu Apr  2 19:59:06 CEST 1998
+	- missing __STDC__VERSION__ only gives a warning now
+	- got rid of alloca
+	- added gimp_set_data & gimp_get_data
+	- new module Gimp::Data
+
+0.85  Fri Mar 27 17:43:35 CET 1998
+	- compatibility autoflush added in Net-Server, better upgrade to 5.004_04
+	- better signal handling in Net-Server... why does libgimp need SIGPIPE?
+	- add -lglib to the libraries for Lib.xs, to cater for yet more broken systems
+
+0.84  Fri Mar 13 21:23:07 CET 1998
+	- calling "new Object" now actually works the second time.
+
+0.83  Tue Feb 24 17:29:34 CET 1998
+	- use strict always everywhere.
+	- more errors fixed (by compiling under solaris ;), thanks
+	  to dov@Orbotech.Co.IL for pointing it out!
+	- change to support gnuc, c9x, and old (none) varargs macro syntax
+	  could be done much easier, but I like the correct approach
+
+0.82  Mon Feb 16 12:20:42 CET 1998
+	- array types implemented... the gimp pdb wasn't thoughtfully
+	  designed, or better: not _too_ thoughtfully.
+	- network protocl changed (dunno why, not necessarily better..
+	  also I was infected by versionitis (but Data::Dumper has the same
+	  problem ;)))
+	- floats are now displayed as such ;)
+
+0.81  Sun Feb 15 20:57:53 CET 1998
+	- tracing now works for networked scripts.
+	- tcp supported in the server & client, but not enabled by default.
+	- simplified Gimp::OO.pm
+	- IO-syntax now support, i.e. new Image(..), which is still a hacky
+	  namespace game
+
+0.80  Fri Feb 13 17:15:48 CET 1998
+	- version 1.0 is the first one generally usable.. we're getting
+	- close!  Gimp::Net and Gimp::Lib are only internal modules, there
+	  is not much of a distinction between networked modules and modules
+	  using libgimp!
+	- Gimp::OO usable over the network.
+
+0.07  Thu Feb 12 06:51:56 CET 1998
+	- some bugfixes, and the addition of Gimp::Net and an accompanying
+	  server. See example-net.pl for a demo.
+
+0.06  Wed Feb 11 02:42:24 CET 1998
+	- the first user sent an example script ;)
+	- PARAM_STRING's are now correctly displayed in traces
+	- start of Gimp::Util, not very convincing
+	- pseudo-oo interface, see Gimp::OO
+
+0.05  Sat Feb  7 23:31:08 CET 1998
+	- added set_trace and trace capabilities. helps to track down bugs in
+	  pdb calls
+
+0.04  Sat Feb  7 21:43:56 CET 1998
+	- gimp_channel_set_color uses a d_color argument, like everybody else
+	- libgimp functions will be used instead of pdb calls
+	  wherever possible. libgimp functions using different calling
+	  conventions than equivalent pdb functions (gimp_layer_copy, etc..)
+	  are NOT exported.
+
+0.03  Sat Feb  7 06:15:09 CET 1998
+	- even more usable. although only pdb calls are implemented,
+	  most gimp functions are available. dealing with tiles
+	  directly in perl is probably too slow anyway (ha-ha ;)
+	- the example plugin does slightly more now.
+
+0.02  Sat Feb  7 04:18:17 CET 1998
+	- first working version
+
+0.01  Fri Feb  6 17:51:56 CET 1998
+	- original version; created by h2xs 1.18
