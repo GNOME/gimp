@@ -269,10 +269,13 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
+  g_signal_handlers_disconnect_by_func (display_config->default_fullscreen_view,
+                                        gimp_display_shell_padding_notify_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (display_config->default_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (display_config->default_fullscreen_view,
+  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_monitor_res_notify_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
@@ -600,7 +603,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       if (fullscreen)
         {
           gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
-       }
+        }
       else
         {
           shell->fullscreen_options->padding_mode  = padding_mode;
@@ -614,16 +617,16 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
       padding_mode  = display_config->default_view->padding_mode;
       padding_color = display_config->default_view->padding_color;
 
-       if (fullscreen)
+      if (fullscreen)
         {
           shell->options->padding_mode  = padding_mode;
           shell->options->padding_color = padding_color;
-       }
+        }
       else
         {
           gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
         }
-   }
+    }
 }
 
 static void
