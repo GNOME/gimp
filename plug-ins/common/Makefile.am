@@ -3,6 +3,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 EXTRA_DIST = \
 	mkgen.pl	\
 	plugin-defs.pl	\
+	winclipboard.c	\
 	winprint.c
 
 AM_CPPFLAGS = \

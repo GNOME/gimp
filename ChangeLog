@@ -1,3 +1,13 @@
+1999-08-08  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/winclipboard.c: New Windows-only plug-in, an
+	interface to the Windows clipboard. (Now we can cut and paste
+	images between the GIMP and other applications!). Thanks to Hans
+	Breuer for the implementation.
+
+	* plug-ins/makefile.{cygwin,msc}
+	* plug-ins/common/Makefile.am (EXTRA_DIST): Add it.
+
 Sat Aug  7 15:30 1999 Seth Burgess <sjburges@gimp.org> 
 	* channel.c
 	* channel.h : more public accessors; eventually things should be 
