@@ -256,8 +256,6 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
        i++)
     c_tool->col_value[i] = -1;
 
-  gimp_tool_control_set_tool_cursor (GIMP_TOOL (c_tool)->control,
-                                     GIMP_COLOR_PICKER_TOOL_CURSOR);
 }
 
 static void
@@ -1435,34 +1433,22 @@ file_dialog_ok_callback (GimpCurvesTool *c_tool)
   filename =
     gtk_file_selection_get_filename (GTK_FILE_SELECTION (c_tool->file_dialog));
 
-  if (! c_tool->is_save)
+  file = fopen (filename, c_tool->is_save ? "wt" : "rt");
+
+  if (! file)
     {
-      file = fopen (filename, "rt");
-
-      if (! file)
-	{
-	  g_message (_("Failed to open file: '%s': %s"),
-                     filename, g_strerror (errno));
-	  return;
-	}
-
-      if (! curves_read_from_file (c_tool, file))
-	{
-	  g_message (("Error in reading file '%s'."), filename);
-	}
+      g_message (_("Failed to open file: '%s': %s"),
+                 filename, g_strerror (errno));
+      return;
     }
-  else
+
+  if (c_tool->is_save)
     {
-      file = fopen (filename, "wt");
-
-      if (! file)
-	{
-	  g_message (_("Failed to open file: '%s': %s"),
-                     filename, g_strerror (errno));
-	  return;
-	}
-
       curves_write_to_file (c_tool, file);
+    }
+  else if (! curves_read_from_file (c_tool, file))
+    {
+      g_message (("Error in reading file '%s'."), filename);
     }
 
   if (file)

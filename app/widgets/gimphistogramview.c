@@ -134,7 +134,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
   GimpHistogramView *view;
-  gint               i;
+  gint               x, y;
   gint               width, height;
   gdouble            max;
 
@@ -159,11 +159,10 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                  1, height + 1, width, height + 1);
   
   /*  Draw the spikes  */
-  for (i = 0; i < 256; i++)
+  for (x = 0; x < width; x++)
     {
-      gint    y;
-      gint    x = (width * i) / 256 + 1;
-      gdouble v = gimp_histogram_get_value (view->histogram, view->channel, i);
+      gdouble v = gimp_histogram_get_value (view->histogram, view->channel,
+                                            (x * 256) / width);
 
       if (v > 0.0)
         y = (gint) ((height * log (v)) / max);
@@ -172,14 +171,14 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
       gdk_draw_line (widget->window,
                      widget->style->black_gc,
-                     x, height + 1,
-                     x, height + 1 - y);
+                     x + 1, height + 1,
+                     x + 1, height + 1 - y);
     }
 
   if (view->start >= 0 && view->end >= 0)
     {
-      gint x1 = (width * MIN (view->start, view->end)) / 256 + 1;
-      gint x2 = (width * MAX (view->start, view->end)) / 256 + 1;
+      gint x1 = (width * MIN (view->start, view->end)) / 256;
+      gint x2 = (width * MAX (view->start, view->end)) / 255;
 
       if (!view->range_gc)
         {
@@ -188,7 +187,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
         }
 
       gdk_draw_rectangle (widget->window, view->range_gc, TRUE,
-                          x1, 1, (x2 - x1) + 1, height);
+                          x1 + 1, 1, (x2 - x1), height);
     }
 
   return TRUE;

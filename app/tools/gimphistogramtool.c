@@ -265,12 +265,9 @@ histogram_tool_histogram_range (GimpHistogramView *widget,
   pixels = gimp_histogram_get_count (htd->hist, 0, 255);
   count  = gimp_histogram_get_count (htd->hist, start, end);
 
-  htd->mean       = gimp_histogram_get_mean (htd->hist, htd->channel,
-					     start, end);
-  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, htd->channel,
-						start, end);
-  htd->median     = gimp_histogram_get_median (htd->hist, htd->channel,
-					       start, end);
+  htd->mean       = gimp_histogram_get_mean    (htd->hist, htd->channel, start, end);
+  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, htd->channel, start, end);
+  htd->median     = gimp_histogram_get_median  (htd->hist, htd->channel, start, end);
   htd->pixels     = pixels;
   htd->count      = count;
   htd->percentile = count / pixels;
@@ -398,7 +395,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
       y = (i % 3);
       x = (i / 3) * 2;
 
-      label = gtk_label_new (gettext(histogram_info_names[i]));
+      label = gtk_label_new (gettext (histogram_info_names[i]));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
 			GTK_FILL, GTK_FILL, 2, 2);

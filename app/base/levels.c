@@ -61,14 +61,14 @@ levels_channel_reset (Levels               *levels,
 void
 levels_auto (Levels        *levels,
              GimpHistogram *hist,
-             gboolean       color)
+             gboolean       is_color)
 {
   GimpHistogramChannel channel;
 
   g_return_if_fail (levels != NULL);
   g_return_if_fail (hist != NULL);
 
-  if (color)
+  if (is_color)
     {
       /*  Set the overall value to defaults  */
       levels_channel_reset (levels, GIMP_HISTOGRAM_VALUE);
@@ -142,6 +142,24 @@ levels_channel_auto (Levels               *levels,
 	    }
 	}
     }
+}
+
+void
+levels_adjust_by_colors (Levels               *levels,
+                         GimpHistogramChannel  channel,
+                         guchar               *black,
+                         guchar               *gray,
+                         guchar               *white)
+{
+  g_return_if_fail (levels != NULL);
+
+  if (black)
+    levels->low_input[channel] = black[channel];
+
+  /* FIXME: gray adjustment */
+
+  if (white)
+    levels->high_input[channel] = white[channel];
 }
 
 void

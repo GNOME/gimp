@@ -49,6 +49,7 @@ struct _GimpLevelsTool
 
   GimpHistogram        *hist;
   GtkWidget            *hist_view;
+  GtkWidget            *active_picker;
   GtkAdjustment        *low_input_data;
   GtkAdjustment        *gamma_data;
   GtkAdjustment        *high_input_data;

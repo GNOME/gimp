@@ -39,10 +39,15 @@ void     levels_channel_reset       (Levels               *levels,
                                      GimpHistogramChannel  channel);
 void     levels_auto                (Levels               *levels,
                                      GimpHistogram        *hist,
-                                     gboolean              color);
+                                     gboolean              is_color);
 void     levels_channel_auto        (Levels               *levels,
                                      GimpHistogram        *hist,
                                      GimpHistogramChannel  channel);
+void     levels_adjust_by_colors    (Levels               *levels,
+                                     GimpHistogramChannel  channel,
+                                     guchar               *black,
+                                     guchar               *gray,
+                                     guchar               *white);
 void     levels_calculate_transfers (Levels               *levels);
 gfloat   levels_lut_func            (Levels               *levels,
                                      gint                  n_channels,
