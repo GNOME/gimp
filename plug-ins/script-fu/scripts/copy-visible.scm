@@ -46,7 +46,7 @@
     (while (> num-layers 0)
 	   (let* ((layer (aref layer-array (- num-layers 1)))
 		  (is-visible (car (gimp-drawable-get-visible layer))))
-	     (if (eq? is-visible TRUE)
+	     (if (= is-visible TRUE)
 		 (begin
 		   (set! num-visible-layers (+ num-visible-layers 1))
 		   (set! visible-layer layer)))

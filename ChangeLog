@@ -1,3 +1,8 @@
+2004-11-21  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: Fixed incorrect
+	comparison in if statement. Partial(?) fix for bug #138662. 
+
 2004-11-22  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/Makefile.am
