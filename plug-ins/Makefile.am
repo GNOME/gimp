@@ -1,7 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = 			\
+	libgck			\
 	megawidget		\
+	MapObject		\
 	AlienMap		\
 	dbbrowser		\
 	script-fu		\
@@ -53,6 +55,7 @@ SUBDIRS = 			\
 	gauss_iir		\
 	gauss_rle		\
 	gbr			\
+	gfig			\
 	gfli			\
 	gicon			\
 	gif			\

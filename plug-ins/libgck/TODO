@@ -1,0 +1,13 @@
+
+The General Convenience Kit (GCK) 1.0.0 TODO list
+=================================================
+
+* More colorspace conversions (RGB<->HWB among others)
+* Conversion support for grayscale-and *A images
+* Documentation and more examples
+* More math stuff (fast square root, smoothing stuff, spline
+  functions etc.)
+* Create gckconvolve.c
+* Add more basic functions
+
+

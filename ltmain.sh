@@ -1460,6 +1460,9 @@ else
     echo=\"$qecho\"
     file=\"\$0\"
   fi
+"
+        $echo >> $output \
+"
 
   # Find the directory that this script lives in.
   thisdir=\`\$echo \"X\$file\" | \$Xsed -e 's%/[^/]*$%%'\`
