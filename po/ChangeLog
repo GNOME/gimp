@@ -1,3 +1,7 @@
+2003-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: removed app/gui/palette-editor-commands.c
+
 2003-05-27  Jan Morén  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
