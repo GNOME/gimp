@@ -1,3 +1,8 @@
+2004-11-15  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/images/stock-ellipse.png: better icon for the ellipse
+	tool (a lot more elliptical) by Jimmac and Zigomar.
+
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
@@ -50,7 +55,7 @@
 	* plug-ins/gfig/gfig-dobject.c
 	* plug-ins/gfig/gfig-dobject.h: fixed a crash (the one triggered by
 	this sequence: draw a line, delete it, redraw something), and
-	corected some ui spacing.
+	corrected some ui spacing.
 
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
