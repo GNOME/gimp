@@ -188,7 +188,7 @@ static HANDLE shm_handle;
 
 static int write_pluginrc = FALSE;
 
-
+static gchar *std_plugins_domain = "gimp-std-plugins";
 
 
 static void
@@ -1952,7 +1952,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  if (plug_in_def && plug_in_def->locale_domain)
 	    menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, proc);
 	  else
-	    menus_create_item_from_full_path (&entry, "gimp-std-plugins", proc);
+	    menus_create_item_from_full_path (&entry, std_plugins_domain, proc);
 	}
       break;
     }
@@ -2384,8 +2384,12 @@ plug_in_make_menu (void)
   GSList *tmp;
 
 #ifdef ENABLE_NLS
-  bindtextdomain ("gimp-std-plugins", LOCALEDIR);
-  bindtextdomain ("gimp-perl", LOCALEDIR);          /* this will go away */
+  bindtextdomain (std_plugins_domain, LOCALEDIR);
+  domains = g_slist_append (domains, std_plugins_domain);
+
+  /* this will go away */
+  bindtextdomain ("gimp-perl", LOCALEDIR);         
+  domains = g_slist_append (domains, "gimp-perl");
 #endif 
 
   tmp = plug_in_defs;
@@ -2451,12 +2455,15 @@ plug_in_make_menu (void)
 	      entry.description = NULL;
 	      
 	      if (plug_in_def->locale_domain)
-		menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, &proc_def->db_info);
+		menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, 
+						  &proc_def->db_info);
 	      /* this will go away */
 	      else if (strncmp (proc_def->db_info.name, "perl_fu", 7) == 0)
-		menus_create_item_from_full_path (&entry, "gimp-perl", &proc_def->db_info);
+		menus_create_item_from_full_path (&entry, "gimp-perl", 
+						  &proc_def->db_info);
 	      else
-		menus_create_item_from_full_path (&entry, "gimp-std-plugins", &proc_def->db_info);
+		menus_create_item_from_full_path (&entry, std_plugins_domain, 
+						  &proc_def->db_info);
 	    }
 	}
     }

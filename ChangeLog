@@ -1,3 +1,8 @@
+Thu Feb 24 00:10:29 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/plug_in.c: don't bind to the default textdomain twice if
+	a plug-in adds it using gimp_plugin_domain_add ()
+
 Wed Feb 23 23:31:07 CET 2000  Sven Neumann <sven@gimp.org>
 	
 	* app/plug_in.c: plugged memleaks
