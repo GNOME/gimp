@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
-"PO-Revision-Date: 2004-07-12 05:03+0200\n"
+"POT-Creation-Date: 2004-08-17 19:35+0200\n"
+"PO-Revision-Date: 2004-08-18 01:05+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -328,8 +328,8 @@ msgstr "Cosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:1039
 #: plug-ins/FractalExplorer/Dialogs.c:1080 plug-ins/Lighting/lighting_ui.c:507
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
-#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
-#: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
+#: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2841
+#: plug-ins/common/postscript.c:2853 plug-ins/common/psp.c:418
 #: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Geen"
@@ -1064,7 +1064,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Z-positie van object in XYZ-ruimte"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3002
+#: plug-ins/MapObject/mapobject_ui.c:1080 plug-ins/common/postscript.c:3005
 msgid "Rotation"
 msgstr "Draaiing"
 
@@ -1240,7 +1240,7 @@ msgstr "Fout bij het laden van BMP-bestandsheader van '%s'"
 
 #: plug-ins/bmp/bmpread.c:435
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Niet herkend of ongeldig BMP compressieformaat."
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -2627,7 +2627,7 @@ msgid "Colorify"
 msgstr "Verkleuren"
 
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
-#: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
+#: plug-ins/common/postscript.c:2826 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
@@ -3441,7 +3441,7 @@ msgid "Create _Histogram"
 msgstr "Histogram maken"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
-#: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
+#: plug-ins/common/postscript.c:2782 plug-ins/common/postscript.c:2941
 #: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3630,8 +3630,8 @@ msgid "_Limit Line Width"
 msgstr "Beperk lijnbreedte"
 
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
-#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
-#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2791
+#: plug-ins/common/postscript.c:2950 plug-ins/common/smooth_palette.c:436
 #: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -4699,7 +4699,7 @@ msgstr "Exportvooruitblik"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "EXIF data zal worden genegeerd."
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -5894,95 +5894,95 @@ msgstr "PostScript-opslaan kan niet met afbeeldingen met alphakanalen werken"
 msgid "Error starting ghostscript (%s)"
 msgstr "Fout bij het starten van ghostscript (%s)"
 
-#: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
-#: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
+#: plug-ins/common/postscript.c:2300 plug-ins/common/postscript.c:2432
+#: plug-ins/common/postscript.c:2582 plug-ins/common/postscript.c:2710
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occurred"
 msgstr "Er was een schrijffout"
 
-#: plug-ins/common/postscript.c:2733
+#: plug-ins/common/postscript.c:2736
 msgid "Load PostScript"
 msgstr "PostScript laden"
 
 #. Rendering
-#: plug-ins/common/postscript.c:2753
+#: plug-ins/common/postscript.c:2756
 msgid "Rendering"
 msgstr "Renderen"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
+#: plug-ins/common/postscript.c:2773 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Resolutie:"
 
-#: plug-ins/common/postscript.c:2798
+#: plug-ins/common/postscript.c:2801
 msgid "Pages:"
 msgstr "Pagina's:"
 
 # Kept the PS terminology intact
-#: plug-ins/common/postscript.c:2804
+#: plug-ins/common/postscript.c:2807
 msgid "Try Bounding Box"
 msgstr "Probeer 'Bounding Box'"
 
 #. Colouring
-#: plug-ins/common/postscript.c:2817
+#: plug-ins/common/postscript.c:2820
 msgid "Coloring"
 msgstr "Inkleuren"
 
-#: plug-ins/common/postscript.c:2821
+#: plug-ins/common/postscript.c:2824
 msgid "B/W"
 msgstr "Z/W"
 
 #. * Gray *
-#: plug-ins/common/postscript.c:2822 plug-ins/rcm/rcm_dialog.c:409
+#: plug-ins/common/postscript.c:2825 plug-ins/rcm/rcm_dialog.c:409
 msgid "Gray"
 msgstr "Grijs"
 
-#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1001
+#: plug-ins/common/postscript.c:2827 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: plug-ins/common/postscript.c:2834
+#: plug-ins/common/postscript.c:2837
 msgid "Text Antialiasing"
 msgstr "Anti-aliasen tekst"
 
-#: plug-ins/common/postscript.c:2839 plug-ins/common/postscript.c:2851
+#: plug-ins/common/postscript.c:2842 plug-ins/common/postscript.c:2854
 msgid "Weak"
 msgstr "Zwak"
 
-#: plug-ins/common/postscript.c:2840 plug-ins/common/postscript.c:2852
+#: plug-ins/common/postscript.c:2843 plug-ins/common/postscript.c:2855
 msgid "Strong"
 msgstr "Sterk"
 
-#: plug-ins/common/postscript.c:2846
+#: plug-ins/common/postscript.c:2849
 msgid "Graphic Antialiasing"
 msgstr "Anti-aliasen afbeelding"
 
-#: plug-ins/common/postscript.c:2898
+#: plug-ins/common/postscript.c:2901
 msgid "Save as PostScript"
 msgstr "Opslaan als PostScript"
 
 #. Image Size
-#: plug-ins/common/postscript.c:2921
+#: plug-ins/common/postscript.c:2924
 msgid "Image Size"
 msgstr "Afbeeldingsgrootte"
 
-#: plug-ins/common/postscript.c:2956
+#: plug-ins/common/postscript.c:2959
 msgid "_X-Offset:"
 msgstr "X-verspringing:"
 
-#: plug-ins/common/postscript.c:2965
+#: plug-ins/common/postscript.c:2968
 msgid "_Y-Offset:"
 msgstr "Y-verspringing:"
 
 # What is the Dutch translation of 'aspect ratio'?
-#: plug-ins/common/postscript.c:2971
+#: plug-ins/common/postscript.c:2974
 msgid "_Keep Aspect Ratio"
 msgstr "Behoud aspectratio"
 
 # What is the Dutch translation of 'aspect ratio'?
-#: plug-ins/common/postscript.c:2977
+#: plug-ins/common/postscript.c:2980
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5991,36 +5991,36 @@ msgstr ""
 "opgegeven grootte te passen zonder de aspectratio te veranderen."
 
 #. Unit
-#: plug-ins/common/postscript.c:2986
+#: plug-ins/common/postscript.c:2989
 msgid "Unit"
 msgstr "Eenheid"
 
-#: plug-ins/common/postscript.c:2990
+#: plug-ins/common/postscript.c:2993
 msgid "_Inch"
 msgstr "Duim"
 
-#: plug-ins/common/postscript.c:2991
+#: plug-ins/common/postscript.c:2994
 msgid "_Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/postscript.c:3017
+#: plug-ins/common/postscript.c:3020
 msgid "Output"
 msgstr "Uitvoer"
 
-#: plug-ins/common/postscript.c:3024
+#: plug-ins/common/postscript.c:3027
 msgid "_PostScript Level 2"
 msgstr "PostScript Niveau 2"
 
-#: plug-ins/common/postscript.c:3033
+#: plug-ins/common/postscript.c:3036
 msgid "_Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/postscript.c:3042
+#: plug-ins/common/postscript.c:3045
 msgid "P_review"
 msgstr "Vooruitblik"
 
-#: plug-ins/common/postscript.c:3063
+#: plug-ins/common/postscript.c:3066
 msgid "Preview _Size:"
 msgstr "Vooruitblikgrootte:"
 
