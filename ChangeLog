@@ -1,3 +1,14 @@
+2004-09-25  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/imagemap/imap_stock.[ch]
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/imagemap/*.xpm: get rid of all .xpm images
+
+	* configure.in 
+	* plug-ins/imagemap/images/*: and add them as .png here
+
+	* plug-ins/imagemap/imap_browse.c: remove unused include.
+	
 2004-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrenderer.h: removed trailing whitespace.
