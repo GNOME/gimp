@@ -11,7 +11,8 @@
 	completeness' sake.
 
 	* app/main.c (main)
-	* app/plug_in.c (plug_in_make_menu): If on Win32, call
+	* app/plug_in.c (plug_in_make_menu) 
+	* libgimp/stdplugins-intl.h: If on Win32, call
 	bind_textdomain_codeset() to get messages from gettext in UTF-8,
 	which is what the GTK+ 1.3.0 used on Win32 wants.
 

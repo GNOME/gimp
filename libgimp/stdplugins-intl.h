@@ -24,18 +24,27 @@
 
 #include "gimpintl.h"
 
+#if defined (HAVE_BIND_TEXTDOMAIN_CODESET) && defined (GDK_WINDOWING_WIN32)
+#define BTDCS(d) bind_textdomain_codeset (d, "UTF-8")
+#else
+#define BTDCS(d)
+#endif
 
 #ifdef HAVE_LC_MESSAGES
 #define INIT_I18N()	G_STMT_START{			\
   setlocale(LC_MESSAGES, ""); 				\
   bindtextdomain("gimp-libgimp", LOCALEDIR);            \
+  BTDCS("gimp-libgimp");				\
   bindtextdomain("gimp-std-plugins", LOCALEDIR);	\
+  BTDCS("gimp-std-plugins");				\
   textdomain("gimp-std-plugins");			\
   			}G_STMT_END
 #else
 #define INIT_I18N()	G_STMT_START{			\
   bindtextdomain("gimp-libgimp", LOCALEDIR);            \
+  BTDCS("gimp-libgimp");				\
   bindtextdomain("gimp-std-plugins", LOCALEDIR);	\
+  BTDCS("gimp-std-plugins");				\
   textdomain("gimp-std-plugins");			\
   			}G_STMT_END
 #endif
